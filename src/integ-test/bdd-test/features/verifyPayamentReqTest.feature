@@ -1,15 +1,11 @@
 Feature:  Controlli sintattici per la primitiva verifyPaymentReq
 
-
-   Background:
-
-      Given systems up 
-         | name                    | url                                                    | healtcheck                          | service |
-         | nodo-dei-pagamenti      | http://localhost:8081                                  | /monitor/health                     | /webservices/input |
-         | mock-ec                 | http://localhost:8080/servizi/PagamentiTelematiciRPT   | /api/v1/info | |
-         
-      And valid verifyPaymentNoticeReq soap-request
-
+  Background:
+    Given systems up
+      | name               | url                                                  | healtcheck      | service            |
+      | nodo-dei-pagamenti | http://localhost:8081                                | /monitor/health | /webservices/input |
+      | mock-ec            | http://localhost:8080/servizi/PagamentiTelematiciRPT | /api/v1/info    |                    |
+    And valid verifyPaymentNoticeReq soap-request
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
          <soapenv:Header/>
@@ -28,33 +24,18 @@ Feature:  Controlli sintattici per la primitiva verifyPaymentReq
       </soapenv:Envelope>
       """
 
-   Scenario: Check valid URL in WSDL namespace
 
-      # Given a valid WSDL
-
-      When psp sends verifyPaymentNoticeReq to nodo-dei-pagamenti
-
-      Then nodo-dei-pagamenti sends verifyPaymentNoticeRes with outcome OK
-
-      # Examples:
-
-      # | url |
-
-      # | http://schemas.xmlsoap.org/soap/envelope/ |
+  Scenario: Check valid URL in WSDL namespace
+    # Given a valid WSDL
+    When psp sends verifyPaymentNoticeReq to nodo-dei-pagamenti
+    Then outcome is OK
 
 
-   # Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error on invalid wsdl namespace 
-
-   #    Given a invalid <url> in wsdl 
-
-   #    When psp sends verifyPaymentNoticeReq to nodo-dei-pagamenti
-
-   #    Then nodo-dei-pagamenti sends verifyPaymentNoticeRes with outcome KO 
-
-   #    And faultCode PPT_SINTASSI_EXTRAXSD
-
-   #    Examples:
-
-   #    | url |
-
-   #    | http://schemas.xmlsoap.org/ciao/envelope/ |
+  Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error on invalid wsdl namespace
+    Given <attribute> set <value> in verifyPaymentNoticeReq
+    When psp sends verifyPaymentNoticeReq to nodo-dei-pagamenti
+    Then outcome is KO
+    And faultCode is PPT_SINTASSI_EXTRAXSD
+    Examples:
+      | attribute     | value                                     |
+      | xmlns:soapenv | http://schemas.xmlsoap.org/ciao/envelope/ |

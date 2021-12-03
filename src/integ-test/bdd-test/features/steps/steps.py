@@ -1,12 +1,12 @@
 import requests
-from requests.models import Response
 
 from behave import *
-
+from xml.dom.minidom import parseString
 
 valid_verify_payment_notice_req = None
 nodo_response = None
 url_nodo = None
+
 
 # Background
 @given('systems up')
@@ -16,12 +16,13 @@ def step_impl(context):
     """
     responses = True
     for row in context.table:
-        resp=requests.get(row['url']+row['healtcheck'])   
+        resp = requests.get(row['url'] + row['healtcheck'])
         responses &= (resp.status_code == 200)
-        if row['name']=="nodo-dei-pagamenti":
-            global url_nodo 
-            url_nodo = row['url']+row['service']
-    assert(responses)
+        if row['name'] == "nodo-dei-pagamenti":
+            global url_nodo
+            url_nodo = row['url'] + row['service']
+    assert (responses)
+
 
 @given('valid verifyPaymentNoticeReq soap-request')
 def step_impl(context):
@@ -30,17 +31,28 @@ def step_impl(context):
     """
     global valid_verify_payment_notice_req
     valid_verify_payment_notice_req = context.text
-    print(valid_verify_payment_notice_req)
 
-    
+
+@given('{elem} with {value} in verifyPaymentNoticeReq')
+def step_impl(context, elem, value):
+    pass
+
+
+@given('{attribute} set {value} in verifyPaymentNoticeReq')
+def step_impl(context, attribute, value):
+    pass
+
+
 # Scenario : Check valid URL in WSDL namespace
 @when('psp sends verifyPaymentNoticeReq to nodo-dei-pagamenti')
 def step_impl(context):
-    headers = {'Content-Type': 'application/xml'} # set what your server accepts
-    nodo_response=requests.post(url_nodo,valid_verify_payment_notice_req,headers=headers)
-    assert(nodo_response.status_code == 200)
+    headers = {'Content-Type': 'application/xml'}  # set what your server accepts
+    global nodo_response
+    nodo_response = requests.post(url_nodo, valid_verify_payment_notice_req, headers=headers)
+    assert (nodo_response.status_code == 200)
 
-@then('nodo-dei-pagamenti sends verifyPaymentNoticeRes with outcome OK')
-def step_impl(context):
-    print(nodo_response)
-    assert nodo_response
+
+@then('{tag} is {value}')
+def step_impl(context, tag, value):
+    my_document = parseString(nodo_response.content)
+    assert value == my_document.getElementsByTagName(tag)[0].firstChild.data
