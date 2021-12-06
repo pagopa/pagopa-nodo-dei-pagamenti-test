@@ -2,10 +2,10 @@ Feature:  syntax checks for verifyPaymentReq
 
   Background:
     Given systems up
-      | name               | url                                                  | healtcheck      | service            |
-      | nodo-dei-pagamenti | http://localhost:8081                                | /monitor/health | /webservices/input |
-      | mock-ec            | http://localhost:8087/Pof                            | /api/v1/info    |                    |
-      | api-config         | http://localhost:8080/apiconfig/api/v1               | /info           |                    |
+      | name               | url                                                  | healthcheck      | service            |
+#      | nodo-dei-pagamenti | http://localhost:8081                                | /monitor/health | /webservices/input |
+#      | mock-ec            | http://localhost:8087/Pof                            | /api/v1/info    |                    |
+#      | api-config         | http://localhost:8080/apiconfig/api/v1               | /info           |                    |
 
     And valid verifyPaymentNoticeReq soap-request
       """
@@ -25,7 +25,6 @@ Feature:  syntax checks for verifyPaymentReq
          </soapenv:Body>
       </soapenv:Envelope>
       """
-
 
   Scenario: Check valid URL in WSDL namespace
     # Given a valid WSDL
@@ -72,4 +71,3 @@ Feature:  syntax checks for verifyPaymentReq
       | noticeNumber        | Null                                      |
       | noticeNumber        | 12345678901234567                         |
       | noticeNumber        | 1234567890123456789                       |
-  
