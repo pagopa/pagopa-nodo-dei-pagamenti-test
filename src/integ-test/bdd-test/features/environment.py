@@ -1,8 +1,8 @@
-import requests
 import json
 
-# TODO remove the following variable
-ec="77777777777"
+from behave.model import Table
+
+import apiconfig
 
 
 def before_all(context):
@@ -10,22 +10,45 @@ def before_all(context):
 
     more_userdata = json.load(open(context.config.base_dir + "/../resources/config.json"))
     context.config.update_userdata(more_userdata)
+    services = context.config.userdata.get("services")
 
-    url_api_config = context.config.userdata.get("api-config").get("url") + context.config.userdata.get("api-config").get("service") + "/creditorinstitutions"
-    headers = {'Content-Type': 'application/json'}  # set what your server accepts
-
-    with open(context.config.base_dir + '/../resources/creditorinstitutions.json', 'r') as reader:
-        payload = reader.read().replace('#creditor_institution_code#', ec)
-        nodo_response = requests.post(url_api_config, payload, headers=headers)
-        # check created or conflict
-        assert nodo_response.status_code == 201 or nodo_response.status_code == 409, f"creditorinstitutions {ec}"
+    # apiconfig configuration
+    apiconfig_url = services.get("api-config").get("url") + services.get("api-config").get("service")
+    pagopa_apiconfig = apiconfig.ApiConfig(apiconfig_url)
+    setattr(context, "apiconfig", pagopa_apiconfig)
 
 
 def before_feature(context, feature):
-    keys = [key for key in context.config.userdata.keys() if not key.startswith("_")]
-    for system_name in keys:
+    services = context.config.userdata.get("services")
+    # add heading
+    feature.background.steps[0].table = Table(headings=("name", "url", "healthcheck", "service"))
+    # add data in the table
+    for system_name in services.keys():
         row = (system_name,
-               context.config.userdata.get(system_name).get("url"),
-               context.config.userdata.get(system_name).get("healthcheck"),
-               context.config.userdata.get(system_name).get("service"))
+               services.get(system_name).get("url"),
+               services.get(system_name).get("healthcheck"),
+               services.get(system_name).get("service"))
         feature.background.steps[0].table.add_row(row)
+
+    for tag in feature.tags:
+        if tag == 'config-ec':
+            config_ec(context)
+
+
+def after_feature(context, feature):
+    global_configuration = context.config.userdata.get("global_configuration")
+
+    for tag in feature.tags:
+        if tag == 'config-ec':
+            # reset apiconfig
+            context.apiconfig.delete_creditor_institution(global_configuration.get("creditor_institution_code"))
+
+
+def config_ec(context):
+    global_configuration = context.config.userdata.get("global_configuration")
+
+    with open(context.config.base_dir + '/../resources/creditorinstitutions.json', 'r') as reader:
+        creditor_institution_code = global_configuration.get("creditor_institution_code")
+        payload = reader.read().replace('#creditor_institution_code#', creditor_institution_code)
+
+        context.apiconfig.create_creditor_institution(payload)
