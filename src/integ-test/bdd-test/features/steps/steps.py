@@ -3,7 +3,6 @@ import requests
 from behave import *
 from xml.dom.minidom import parseString
 
-# valid_verify_payment_notice_req = None
 
 
 def get_url_nodo(context):
