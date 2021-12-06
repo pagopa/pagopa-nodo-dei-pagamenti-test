@@ -1,0 +1,16 @@
+{
+    "creditor_institution_code": "#creditor_institution_code#",
+    "enabled": true,
+    "business_name": "PagoPa Mock EC",
+    "address": {
+      "location": "Via dei mock 1",
+      "city": "Rome",
+      "zip_code": "00187",
+      "country_code": "RM",
+      "tax_domicile": "00111"
+    },
+    "fk_int_quadrature": null,
+    "psp_payment": true,
+    "reporting_ftp": false,
+    "reporting_zip": true
+  }

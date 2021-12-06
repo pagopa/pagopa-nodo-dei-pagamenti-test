@@ -106,3 +106,6 @@ dist
 # local
 .DS_Store
 launch.json
+
+nodo-de-pagamenti-env
+tmp_
