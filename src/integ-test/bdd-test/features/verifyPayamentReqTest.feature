@@ -25,13 +25,13 @@ Feature:  syntax checks for verifyPaymentReq
   Scenario: Check valid URL in WSDL namespace
     # Given a valid WSDL
     When psp sends verifyPaymentNoticeReq to nodo-dei-pagamenti
-    Then outcome is OK
+    Then check outcome is OK
 
 
   Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error on invalid wsdl namespace
     Given <attribute> set <value> for <elem> in verifyPaymentNoticeReq
     When psp sends verifyPaymentNoticeReq to nodo-dei-pagamenti
-    Then outcome is KO
+    Then check outcome is OK
     And faultCode is PPT_SINTASSI_EXTRAXSD
     Examples:
       | elem                | attribute     | value                                     |
@@ -41,7 +41,7 @@ Feature:  syntax checks for verifyPaymentReq
   Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error on invalid body element value
     Given <elem> with <value> in verifyPaymentNoticeReq
     When psp sends verifyPaymentNoticeReq to nodo-dei-pagamenti
-    Then outcome is KO
+    Then check outcome is OK
     And faultCode is PPT_SINTASSI_EXTRAXSD
     Examples:
       | elem         | value                                |
