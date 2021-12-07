@@ -26,19 +26,19 @@ def step_impl(context):
     assert responses
 
 
-@given('valid verifyPaymentNoticeReq soap-request')
-def step_impl(context):
+@given('valid {verifyPaymentNoticeReq} soap-request')
+def step_impl(context, verifyPaymentNoticeReq):
     """
         get valid PSP verifyPaymentNoticeReq
     """
     payload = context.text.replace('#creditor_institution_code#',
                                    context.config.userdata.get("global_configuration").get("creditor_institution_code"))
-    setattr(context, "valid_verify_payment_notice_req", payload)
+    setattr(context, "soap_request", payload)
 
 
 @given('{elem} with {value} in verifyPaymentNoticeReq')
 def step_impl(context, elem, value):
-    my_document = parseString(context.valid_verify_payment_notice_req)
+    my_document = parseString(context.soap_request)
     if value == "None":
         element = my_document.getElementsByTagName(elem)[0]
         element.parentNode.removeChild(element)
@@ -48,15 +48,15 @@ def step_impl(context, elem, value):
     else:
         element = my_document.getElementsByTagName(elem)[0].childNodes[0]
         element.nodeValue = value
-    setattr(context, "valid_verify_payment_notice_req", my_document.toxml())
+    setattr(context, "soap_request", my_document.toxml())
 
 
 @given('{attribute} set {value} for {elem} in verifyPaymentNoticeReq')
 def step_impl(context, attribute, value, elem):
-    my_document = parseString(context.valid_verify_payment_notice_req)
+    my_document = parseString(context.soap_request)
     element = my_document.getElementsByTagName(elem)[0]
     element.setAttribute(attribute, value)
-    setattr(context, "valid_verify_payment_notice_req", my_document.toxml())
+    setattr(context, "soap_request", my_document.toxml())
 
 
 # Scenario : Check valid URL in WSDL namespace
@@ -64,7 +64,7 @@ def step_impl(context, attribute, value, elem):
 def step_impl(context):
     headers = {'Content-Type': 'application/xml'}  # set what your server accepts
     url_nodo = get_url_nodo(context)
-    nodo_response = requests.post(url_nodo, context.valid_verify_payment_notice_req, headers=headers)
+    nodo_response = requests.post(url_nodo, context.soap_request, headers=headers)
     assert (nodo_response.status_code == 200)
 
 
@@ -73,19 +73,34 @@ def step_impl(context):
 def step_impl(context, tag, value):
     headers = {'Content-Type': 'application/xml'}  # set what your server accepts
     url_nodo = get_url_nodo(context)
-    nodo_response = requests.post(url_nodo, context.valid_verify_payment_notice_req, headers=headers)
+    nodo_response = requests.post(url_nodo, context.soap_request, headers=headers)
     my_document = parseString(nodo_response.content)
     if len(my_document.getElementsByTagName('faultCode')) > 0:
         print(my_document.getElementsByTagName('faultCode')[0].firstChild.data)
+        print(my_document.getElementsByTagName('faultString')[0].firstChild.data)
+        print(my_document.getElementsByTagName('description')[0].firstChild.data)
     assert value == my_document.getElementsByTagName(tag)[0].firstChild.data
 
 
 @when("IO sends an activateIOPaymentReq to nodo-dei-pagamenti")
 def step_impl(context):
-    """
-    :type context: behave.runner.Context
-    """
-    raise NotImplementedError(u'STEP: When IO sends an activateIOPaymentReq to nodo-dei-pagamenti')
+    headers = {'Content-Type': 'application/xml'}  # set what your server accepts
+    url_nodo = get_url_nodo(context)
+    nodo_response = requests.post(url_nodo, context.soap_request, headers=headers)
+    setattr(context, "soap_response", nodo_response)
+    assert nodo_response.status_code == 200
+
+
+@then("token exists and check")
+def step_impl(context):
+    my_document = parseString(context.soap_response.content)
+    if len(my_document.getElementsByTagName('paymentToken')) > 0:
+        paymentToken = my_document.getElementsByTagName('paymentToken')[0].firstChild.data
+        setattr(context, "paymentToken", paymentToken)
+        assert 0 < len(paymentToken) < 36
+    else:
+        assert False
+
 
 
 @then('verify the HTTP {staus_code} response is {value}')
