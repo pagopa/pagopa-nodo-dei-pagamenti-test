@@ -68,7 +68,8 @@ def step_impl(context):
     assert (nodo_response.status_code == 200)
 
 
-@then('{tag} is {value}')
+# Scenario: Execute activateIOPayment request
+@then('check {tag} is {value}')
 def step_impl(context, tag, value):
     headers = {'Content-Type': 'application/xml'}  # set what your server accepts
     url_nodo = get_url_nodo(context)
@@ -77,3 +78,59 @@ def step_impl(context, tag, value):
     if len(my_document.getElementsByTagName('faultCode')) > 0:
         print(my_document.getElementsByTagName('faultCode')[0].firstChild.data)
     assert value == my_document.getElementsByTagName(tag)[0].firstChild.data
+
+
+@when("IO sends an activateIOPaymentReq to nodo-dei-pagamenti")
+def step_impl(context):
+    """
+    :type context: behave.runner.Context
+    """
+    raise NotImplementedError(u'STEP: When IO sends an activateIOPaymentReq to nodo-dei-pagamenti')
+
+
+@then('verify the HTTP {staus_code} response is {value}')
+def step_impl(context, tag, value):
+    pass
+
+# Scenario: Execute nodoChiediInformazioniPagamento request
+@given("the activate phase executed successfully")
+def step_impl(context):
+    """
+    :type context: behave.runner.Context
+    """
+    raise NotImplementedError(u'STEP: Given the activate phase executed successfully')
+
+
+@when("WISP/PM sends an informazioniPagamento to nodo-dei-pagamenti using the token of the activate phase")
+def step_impl(context):
+    """
+    :type context: behave.runner.Context
+    """
+    raise NotImplementedError(
+        u'STEP: When WISP/PM sends an informazioniPagamento to nodo-dei-pagamenti using the token of the activate phase')
+
+
+# Scenario: Execute nodoInoltraEsitoPagamentoCarta request
+@given("the payment phase executed successfully")
+def step_impl(context):
+    """
+    :type context: behave.runner.Context
+    """
+    raise NotImplementedError(u'STEP: Given the payment phase executed successfully')
+
+
+@when("WISP/PM sends an inoltroEsito/Carta to nodo-dei-pagamenti using the token and PSP/Canale data")
+def step_impl(context):
+    """
+    :type context: behave.runner.Context
+    """
+    raise NotImplementedError(
+        u'STEP: When WISP/PM sends an inoltroEsito/Carta to nodo-dei-pagamenti using the token and PSP/Canale data')
+
+
+@step("activeIOPaymentResp and pspNotifyPaymentReq are consistent")
+def step_impl(context):
+    """
+    :type context: behave.runner.Context
+    """
+    raise NotImplementedError(u'STEP: And activeIOPaymentResp and pspNotifyPaymentReq are consistent')
