@@ -13,7 +13,7 @@ def before_all(context):
     services = context.config.userdata.get("services")
 
     # apiconfig configuration
-    apiconfig_url = services.get("api-config").get("url") + services.get("api-config").get("service")
+    apiconfig_url = services.get("api-config").get("url") + services.get("api-config").get("rest_service")
     pagopa_apiconfig = apiconfig.ApiConfig(apiconfig_url)
     setattr(context, "apiconfig", pagopa_apiconfig)
 
@@ -21,13 +21,14 @@ def before_all(context):
 def before_feature(context, feature):
     services = context.config.userdata.get("services")
     # add heading
-    feature.background.steps[0].table = Table(headings=("name", "url", "healthcheck", "service"))
+    feature.background.steps[0].table = Table(headings=("name", "url", "healthcheck", "soap_service", "rest_service"))
     # add data in the table
     for system_name in services.keys():
         row = (system_name,
                services.get(system_name).get("url"),
                services.get(system_name).get("healthcheck"),
-               services.get(system_name).get("service"))
+               services.get(system_name).get("soap_service"),
+               services.get(system_name).get("rest_service"))
         feature.background.steps[0].table.add_row(row)
 
     for tag in feature.tags:

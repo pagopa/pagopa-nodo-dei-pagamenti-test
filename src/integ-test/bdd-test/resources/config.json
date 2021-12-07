@@ -4,17 +4,20 @@
     "api-config": {
       "url": "http://localhost:8080/apiconfig/api/v1",
       "healthcheck": "/info",
-      "service": ""
+      "soap_service": "",
+      "rest_service": ""
     },
     "nodo-dei-pagamenti": {
       "url": "http://localhost:8081",
       "healthcheck": "/monitor/health",
-      "service": "/webservices/input"
+      "soap_service": "/webservices/input",
+      "rest_service": ""
     },
     "mock-ec": {
       "url": "http://localhost:8089/servizi/PagamentiTelematiciRPT",
       "healthcheck": "/api/v1/info",
-      "service": ""
+      "soap_service": "",
+      "rest_service": ""
     }
   },
   "global_configuration": {
