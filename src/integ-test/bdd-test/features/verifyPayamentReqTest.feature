@@ -1,4 +1,4 @@
-@config-ec
+#@config-ec
 Feature:  syntax checks for verifyPaymentReq
 
   Background:
@@ -15,7 +15,7 @@ Feature:  syntax checks for verifyPaymentReq
                <password>pwdpwdpwd</password>
                <qrCode>
                   <fiscalCode>#creditor_institution_code#</fiscalCode>
-                  <noticeNumber>314094719472095710</noticeNumber>
+                  <noticeNumber>302094719472095710</noticeNumber>
                </qrCode>
             </nod:verifyPaymentNoticeReq>
          </soapenv:Body>

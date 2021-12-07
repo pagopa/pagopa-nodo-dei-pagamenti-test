@@ -23,7 +23,6 @@ def step_impl(context):
         url = row.get("url") + row.get("healthcheck")
         resp = requests.get(url)
         responses &= (resp.status_code == 200)
-
     assert responses
 
 
@@ -53,7 +52,7 @@ def step_impl(context, elem, value):
 
 
 @given('{attribute} set {value} for {elem} in verifyPaymentNoticeReq')
-def step_impl(context, elem, attribute, value):
+def step_impl(context, attribute, value, elem):
     my_document = parseString(context.valid_verify_payment_notice_req)
     element = my_document.getElementsByTagName(elem)[0]
     element.setAttribute(attribute, value)
@@ -75,5 +74,6 @@ def step_impl(context, tag, value):
     url_nodo = get_url_nodo(context)
     nodo_response = requests.post(url_nodo, context.valid_verify_payment_notice_req, headers=headers)
     my_document = parseString(nodo_response.content)
-    print(my_document.getElementsByTagName('faultCode')[0].firstChild.data)
+    if len(my_document.getElementsByTagName('faultCode')) > 0:
+        print(my_document.getElementsByTagName('faultCode')[0].firstChild.data)
     assert value == my_document.getElementsByTagName(tag)[0].firstChild.data
