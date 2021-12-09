@@ -1,7 +1,7 @@
 from xml.dom.minidom import parseString, parse
 import requests, json
 from behave import *
-import xmltodict
+
 
 def get_soap_url_nodo(context):
     if context.config.userdata.get("services").get("nodo-dei-pagamenti").get("soap_service") is not None:
@@ -14,7 +14,24 @@ def get_soap_url_nodo(context):
 def get_rest_url_nodo(context):
     if context.config.userdata.get("services").get("nodo-dei-pagamenti").get("rest_service") is not None:
         return context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url") \
-           + context.config.userdata.get("services").get("nodo-dei-pagamenti").get("rest_service")
+               + context.config.userdata.get("services").get("nodo-dei-pagamenti").get("rest_service")
+    else:
+        return ""
+
+
+def get_rest_mock_ec(context):
+    if context.config.userdata.get("services").get("mock-ec").get("rest_service") is not None:
+        return context.config.userdata.get("services").get("mock-ec").get("url") \
+               + context.config.userdata.get("services").get("mock-ec").get("rest_service")
+    else:
+        return ""
+
+
+def get_rest_mock_psp(context):
+    # TODO fix service
+    if context.config.userdata.get("services").get("mock-ec").get("rest_service") is not None:
+        return context.config.userdata.get("services").get("mock-ec").get("url") \
+               + context.config.userdata.get("services").get("mock-ec").get("rest_service")
     else:
         return ""
 
@@ -190,40 +207,27 @@ def step_impl(context):
 
 @then("activateIOPaymentResp and pspNotifyPaymentReq are consistent")
 def step_impl(context):
-    # TODO retrieve resource from mock
-    # url_nodo = get_rest_url_nodo()
-    # nodo_response = requests.get(f"{url_nodo}/inoltroEsito/carta", json=body, headers=headers)
+    soap_request = getattr(context, "soap_request")
+    my_document = parseString(soap_request)
+    notice_number = my_document.getElementsByTagName('noticeNumber')[0].firstChild.data
 
-    paGetPaymentResXML = open("/tmp/paGetPaymentRes.xml", 'r')
-    paGetPaymentRes = xmltodict.parse(paGetPaymentResXML.read())
-    pspNotifyPaymentReqJson = open("/tmp/pspNotifyPaymentReq.json", 'r')
-    pspNotifyPaymentReq = json.loads(pspNotifyPaymentReqJson.read())
+    paGetPaymentJson = requests.get(f"{get_rest_mock_ec(context)}/api/v1/history/{notice_number}/paGetPayment")
+    pspNotifyPaymentJson = requests.get(f"{get_rest_mock_ec(context)}/api/v1/history/{notice_number}/pspNotifyPayment")
 
-    paGetPaymentRes_transferList = paGetPaymentRes["soapenv:Envelope"]["soapenv:Body"]["paf:paGetPaymentRes"]["data"]["transferList"]["transfer"]
-    pspNotifyPaymentReq_transferList = pspNotifyPaymentReq.get("soapenv:envelope").get("soapenv:body")[0].get("pspfn:pspnotifypaymentreq")[0].get("transferlist")
+    paGetPayment = paGetPaymentJson.json()
+    pspNotifyPayment = pspNotifyPaymentJson.json()
 
     # verify transfer list are equal
-    verified = True
-    for paTransfer in paGetPaymentRes_transferList:
-        found = False
-        for pspTransfer in pspNotifyPaymentReq_transferList:
-            if paTransfer.get("idTransfer") == pspTransfer.get("transfer").get("idTransfer")[0] and \
-                    paTransfer.get("transferAmount") == pspTransfer.get("transfer").get("transferAmount")[0] and \
-                    paTransfer.get("fiscalCode") == pspTransfer.get("transfer").get("fiscalCode")[0] and \
-                    paTransfer.get("IBAN") == pspTransfer.get("transfer").get("IBAN")[0] and \
-                    paTransfer.get("remittanceInformation") == pspTransfer.get("transfer").get("remittanceInformation")[0] and \
-                    paTransfer.get("transferCategory") == pspTransfer.get("transfer").get("transferCategory")[0]:
-                found = True
-        if not found:
-            verified = False
-            break
+    paGetPaymentRes_transferList = paGetPayment.get("response").get("soapenv:Envelope").get("soapenv:Body")[0].get("paf:paGetPaymentRes")[0].get("data")[0].get("transferList")
+    pspNotifyPaymentReq_transferList = pspNotifyPayment.get("request").get("soapenv:envelope").get("soapenv:body")[0].get("pspfn:pspnotifypaymentreq")[0].get("transferlist")
 
-    assert verified
+    paGetPaymentRes_transferList_sorted = sorted(paGetPaymentRes_transferList, key=lambda transfer: int(transfer.get("transfer")[0].get("idTransfer")[0]))
+    pspNotifyPaymentReq_transferList_sorted = sorted(pspNotifyPaymentReq_transferList, key=lambda transfer: int(transfer.get("transfer")[0].get("idtransfer")[0]))
 
-
-
-
-
-
-
+    mixed_list = zip(paGetPaymentRes_transferList_sorted, pspNotifyPaymentReq_transferList_sorted)
+    for x in mixed_list:
+        assert x[0].get("transfer")[0].get("idTransfer")[0] == x[1].get("transfer")[0].get("idtransfer")[0]
+        assert x[0].get("transfer")[0].get("transferAmount")[0] == x[1].get("transfer")[0].get("transferamount")[0]
+        assert x[0].get("transfer")[0].get("fiscalCodePA")[0] == x[1].get("transfer")[0].get("fiscalcodepa")[0]
+        assert x[0].get("transfer")[0].get("IBAN")[0] == x[1].get("transfer")[0].get("iban")[0]
 
