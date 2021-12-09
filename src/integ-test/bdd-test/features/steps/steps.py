@@ -1,5 +1,5 @@
 from xml.dom.minidom import parseString, parse
-import requests, json
+import requests, random
 from behave import *
 
 
@@ -36,6 +36,13 @@ def get_rest_mock_psp(context):
         return ""
 
 
+def set_nodo_response(context, nodo_response):
+    test_configuration = context.config.userdata.get("test_configuration")
+    if test_configuration is None:
+        test_configuration = {}
+    test_configuration["soap_response"] = nodo_response
+    context.config.update_userdata({"test_configuration": test_configuration})
+
 # Background
 @given('systems up')
 def step_impl(context):
@@ -43,7 +50,7 @@ def step_impl(context):
         health check for 
             - nodo-dei-pagamenti ( application under test )
             - mock-ec ( used by nodo-dei-pagamenti to forwarding EC's requests )
-            - pagopa-api-config ( used in tests to set DB's nodo-dei-pagamenti correctly accoding to input test ))
+            - pagopa-api-config ( used in tests to set DB's nodo-dei-pagamenti correctly according to input test ))
     """
     responses = True
     for row in context.table:
@@ -61,7 +68,23 @@ def step_impl(context, verifyPaymentNoticeReq):
     """
     payload = context.text.replace('#creditor_institution_code#',
                                    context.config.userdata.get("global_configuration").get("creditor_institution_code"))
+
+    # idempotencyKey = context.config.userdata.get("global_configuration").get("idempotencyKey") \
+    #     if "idempotencyKey" in context.config.userdata.get("global_configuration") else "70000000001_" + str(random.randint(1000000000, 9999999999))
+    # payload = payload.replace('#idempotencyKey#', idempotencyKey)
+    #
+    # noticeNumber = context.config.userdata.get("global_configuration").get("noticeNumber") \
+    #     if "idempotencyKey" in context.config.userdata.get("global_configuration") else "30211" + str(random.randint(1000000000000, 9999999999999))
+    #
+    # payload = payload.replace('#noticeNumber#', noticeNumber)
+    # print(idempotencyKey, noticeNumber)
+
     setattr(context, "soap_request", payload)
+
+@given('random idempotencyKey and noticeNumber')
+def step_impl(context):
+    soap_request = getattr(context, "soap_request")
+    my_document = parseString(context.soap_request)
 
 
 @given('{elem} with {value} in verifyPaymentNoticeReq')
@@ -93,15 +116,14 @@ def step_impl(context):
     headers = {'Content-Type': 'application/xml'}  # set what your server accepts
     url_nodo = get_soap_url_nodo(context)
     nodo_response = requests.post(url_nodo, context.soap_request, headers=headers)
+    set_nodo_response(context, nodo_response)
     assert (nodo_response.status_code == 200)
 
 
 # Scenario: Execute activateIOPayment request
 @then('check {tag} is {value}')
 def step_impl(context, tag, value):
-    headers = {'Content-Type': 'application/xml'}  # set what your server accepts
-    url_nodo = get_soap_url_nodo(context)
-    nodo_response = requests.post(url_nodo, context.soap_request, headers=headers)
+    nodo_response = context.config.userdata.get("test_configuration").get("soap_response")
     my_document = parseString(nodo_response.content)
     if len(my_document.getElementsByTagName('faultCode')) > 0:
         print(my_document.getElementsByTagName('faultCode')[0].firstChild.data)
@@ -115,13 +137,14 @@ def step_impl(context):
     headers = {'Content-Type': 'application/xml'}  # set what your server accepts
     url_nodo = get_soap_url_nodo(context)
     nodo_response = requests.post(url_nodo, context.soap_request, headers=headers)
-    setattr(context, "soap_response", nodo_response)
+    set_nodo_response(context, nodo_response)
     assert nodo_response.status_code == 200
 
 
 @then("token exists and check")
 def step_impl(context):
-    my_document = parseString(context.soap_response.content)
+    nodo_response = context.config.userdata.get("test_configuration").get("soap_response")
+    my_document = parseString(nodo_response.content)
     if len(my_document.getElementsByTagName('paymentToken')) > 0:
         paymentToken = my_document.getElementsByTagName('paymentToken')[0].firstChild.data
         test_configuration = context.config.userdata.get("test_configuration")
@@ -168,7 +191,6 @@ def step_impl(context):
 
 @when("WISP/PM sends an inoltroEsito/Carta to nodo-dei-pagamenti using the token and PSP/Canale data")
 def step_impl(context):
-    print("")
     url_nodo = get_rest_url_nodo(context)
     paymentToken = context.config.userdata.get("test_configuration").get("paymentToken")
     headers = {'Content-Type': 'application/json'}
@@ -207,6 +229,7 @@ def step_impl(context):
 
 @then("activateIOPaymentResp and pspNotifyPaymentReq are consistent")
 def step_impl(context):
+    # retrieve info from soap request of background step
     soap_request = getattr(context, "soap_request")
     my_document = parseString(soap_request)
     notice_number = my_document.getElementsByTagName('noticeNumber')[0].firstChild.data
@@ -230,4 +253,77 @@ def step_impl(context):
         assert x[0].get("transfer")[0].get("transferAmount")[0] == x[1].get("transfer")[0].get("transferamount")[0]
         assert x[0].get("transfer")[0].get("fiscalCodePA")[0] == x[1].get("transfer")[0].get("fiscalcodepa")[0]
         assert x[0].get("transfer")[0].get("IBAN")[0] == x[1].get("transfer")[0].get("iban")[0]
+
+
+# Send receipt phase
+@when("PSP sends sendPaymentOutcomeReq to nodo-dei-pagamenti using the token")
+def step_impl(context):
+    # step executed as PSP
+    headers = {'Content-Type': 'application/xml'}  # set what your server accepts
+    url_nodo = get_soap_url_nodo(context)
+    paymentToken = context.config.userdata.get("test_configuration").get("paymentToken")
+
+    send_payment_outcome = """
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+        <soapenv:Header/>
+        <soapenv:Body>
+            <nod:sendPaymentOutcomeReq>
+                <idPSP>40000000001</idPSP>
+                <idBrokerPSP>40000000001</idBrokerPSP>
+                <idChannel>40000000001_06</idChannel>
+                <password>pwdpwdpwd</password>
+                <paymentToken>#paymentToken#</paymentToken>
+                <outcome>OK</outcome>
+                <details>
+                    <paymentMethod>creditCard</paymentMethod>
+                    <paymentChannel>app</paymentChannel>
+                    <fee>2.00</fee>
+                    <payer>
+                    <uniqueIdentifier>
+                        <entityUniqueIdentifierType>F</entityUniqueIdentifierType>
+                        <entityUniqueIdentifierValue>JHNDOE00A01F205N</entityUniqueIdentifierValue>
+                    </uniqueIdentifier>
+                    <fullName>John Doe</fullName>
+                    <streetName>street</streetName>
+                    <civicNumber>12</civicNumber>
+                    <postalCode>89020</postalCode>
+                    <city>city</city>
+                    <stateProvinceRegion>MI</stateProvinceRegion>
+                    <country>IT</country>
+                    <e-mail>john.doe@test.it</e-mail>
+                    </payer>
+                    <applicationDate>2021-10-01</applicationDate>
+                    <transferDate>2021-10-02</transferDate>
+              </details>
+            </nod:sendPaymentOutcomeReq>
+        </soapenv:Body>
+      </soapenv:Envelope>
+    """
+    send_payment_outcome = send_payment_outcome.replace("#paymentToken#", paymentToken)
+    nodo_response = requests.post(url_nodo, send_payment_outcome, headers=headers)
+    set_nodo_response(context, nodo_response)
+
+    test_configuration = context.config.userdata.get("test_configuration")
+    if test_configuration is None:
+        test_configuration = {}
+    test_configuration["receipt_phase"] = True
+
+    assert nodo_response.status_code == 200
+
+
+@given("the sendPaymentOutcomeReq executed successfully")
+def step_impl(context):
+    assert "receipt_phase" in context.config.userdata.get("test_configuration")
+
+
+@then("EC receives paSendRT request by nodo-dei-pagamenti")
+def step_impl(context):
+    # retrieve info from soap request of background step
+    soap_request = getattr(context, "soap_request")
+    my_document = parseString(soap_request)
+    notice_number = my_document.getElementsByTagName('noticeNumber')[0].firstChild.data
+    paSendRTJson = requests.get(f"{get_rest_mock_ec(context)}/api/v1/history/{notice_number}/paSendRT")
+    paSendRT = paSendRTJson.json()
+
+    assert len(paSendRT.get("request").keys())
 
