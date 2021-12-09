@@ -28,6 +28,7 @@ Feature:  syntax checks for verifyPaymentReq
     Then check outcome is OK
 
 
+  # attribute value check
   Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error on invalid wsdl namespace
     Given <attribute> set <value> for <elem> in verifyPaymentNoticeReq
     When psp sends verifyPaymentNoticeReq to nodo-dei-pagamenti
@@ -37,12 +38,12 @@ Feature:  syntax checks for verifyPaymentReq
       | elem                | attribute     | value                                     |
       | soapenv:Envelope    | xmlns:soapenv | http://schemas.xmlsoap.org/ciao/envelope/ |
 
-
+  # element value check
   Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error on invalid body element value
     Given <elem> with <value> in verifyPaymentNoticeReq
     When psp sends verifyPaymentNoticeReq to nodo-dei-pagamenti
     Then check outcome is KO
-    And faultCode is PPT_SINTASSI_EXTRAXSD
+    And check faultCode is PPT_SINTASSI_EXTRAXSD
     Examples:
       | elem         | value                                |
       | idPSP        | 123456789012345678901234567890123456 |
