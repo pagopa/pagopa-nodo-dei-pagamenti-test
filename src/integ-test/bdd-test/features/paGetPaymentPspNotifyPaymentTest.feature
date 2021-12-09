@@ -8,14 +8,14 @@ Feature: verify test flow paGetPayment and pspNotifyPayment
          <soapenv:Header/>
          <soapenv:Body>
             <nod:activateIOPaymentReq>
-               <idPSP>70000000001</idPSP>
-               <idBrokerPSP>70000000001</idBrokerPSP>
-               <idChannel>70000000001_01</idChannel>
+               <idPSP>AGID_01</idPSP>
+               <idBrokerPSP>97735020584</idBrokerPSP>
+               <idChannel>97735020584_03</idChannel>
                <password>pwdpwdpwd</password>
-               <idempotencyKey>70000000001_7632477483</idempotencyKey>
+               <idempotencyKey>70000000001_7632477013</idempotencyKey>
                <qrCode>
                   <fiscalCode>77777777777</fiscalCode>
-                  <noticeNumber>302114719472095752</noticeNumber>
+                  <noticeNumber>302114719472095013</noticeNumber>
                </qrCode>
                <amount>120.00</amount>
             </nod:activateIOPaymentReq>
