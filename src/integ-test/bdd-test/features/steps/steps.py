@@ -2,6 +2,7 @@ from xml.dom.minidom import parseString, parse
 import requests, random
 from behave import *
 
+from utils import requests_retry_session
 
 def get_soap_url_nodo(context):
     if context.config.userdata.get("services").get("nodo-dei-pagamenti").get("soap_service") is not None:
@@ -318,12 +319,15 @@ def step_impl(context):
 
 @then("EC receives paSendRT request by nodo-dei-pagamenti")
 def step_impl(context):
+    s = requests.Session()
     # retrieve info from soap request of background step
     soap_request = getattr(context, "soap_request")
     my_document = parseString(soap_request)
     notice_number = my_document.getElementsByTagName('noticeNumber')[0].firstChild.data
-    paSendRTJson = requests.get(f"{get_rest_mock_ec(context)}/api/v1/history/{notice_number}/paSendRT")
+    # paSendRTJson = requests.get(f"{get_rest_mock_ec(context)}/api/v1/history/{notice_number}/paSendRT")
+    paSendRTJson  = requests_retry_session(session=s).get(f"{get_rest_mock_ec(context)}/api/v1/history/{notice_number}/paSendRT")
     paSendRT = paSendRTJson.json()
 
+    print(paSendRT.get("request"))
     assert len(paSendRT.get("request").keys())
 
