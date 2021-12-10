@@ -3,13 +3,19 @@ The repo contains Behavior-Driven Development ([BDD](https://cucumber.io/docs/bd
 
 ## Prerequisites 
 - [python](https://www.python.org/) and [pip](https://pip.pypa.io/en/stable/installation/)
+- (cucumber.io behave](https://cucumber.io/docs/installation/python/)
   
 ## Run tests
 
-Open tearminal and typing the following commands : 
+>NOTE : require mock services EC and PSP up and nodo-dei-pagamenti application running 
+
+Open terminal and typing the following commands : 
+
 ```
 python -m venv nodo-de-pagamenti-env
 . nodo-de-pagamenti-env/bin/activate
 pip install -r requirements.txt
 behave src/integ-test/bdd-test/features/
 ```
+
+>NOTE: to obtain html report add `-f html -o behave-report.html` after `behave` command
