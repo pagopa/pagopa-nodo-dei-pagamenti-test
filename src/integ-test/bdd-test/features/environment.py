@@ -13,9 +13,10 @@ def before_all(context):
     services = context.config.userdata.get("services")
 
     # apiconfig configuration
-    apiconfig_url = services.get("api-config").get("url") + services.get("api-config").get("rest_service")
-    pagopa_apiconfig = apiconfig.ApiConfig(apiconfig_url)
-    setattr(context, "apiconfig", pagopa_apiconfig)
+    # DISABLE, see config.json too
+    # apiconfig_url = services.get("api-config").get("url") + services.get("api-config").get("rest_service")
+    # pagopa_apiconfig = apiconfig.ApiConfig(apiconfig_url)
+    # setattr(context, "apiconfig", pagopa_apiconfig)
 
 
 def before_feature(context, feature):
@@ -31,18 +32,20 @@ def before_feature(context, feature):
                services.get(system_name).get("rest_service"))
         feature.background.steps[0].table.add_row(row)
 
-    for tag in feature.tags:
-        if tag == 'config-ec':
-            config_ec(context)
+    # DISABLE see @config-ec too 
+    # for tag in feature.tags:
+    #     if tag == 'config-ec':
+    #         config_ec(context)
 
 
 def after_feature(context, feature):
     global_configuration = context.config.userdata.get("global_configuration")
 
-    for tag in feature.tags:
-        if tag == 'config-ec':
-            # reset apiconfig
-            context.apiconfig.delete_creditor_institution(global_configuration.get("creditor_institution_code"))
+    # DISABLE see @config-ec too 
+    # for tag in feature.tags:
+    #     if tag == 'config-ec':
+    #         # reset apiconfig
+    #         context.apiconfig.delete_creditor_institution(global_configuration.get("creditor_institution_code"))
 
 
 def config_ec(context):
