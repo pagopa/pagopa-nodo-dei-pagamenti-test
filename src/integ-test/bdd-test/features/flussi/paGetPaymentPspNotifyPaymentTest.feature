@@ -12,10 +12,10 @@ Feature: verify test flow paGetPayment and pspNotifyPayment
                <idBrokerPSP>97735020584</idBrokerPSP>
                <idChannel>97735020584_03</idChannel>
                <password>pwdpwdpwd</password>
-               <idempotencyKey>70000000001_7632400037</idempotencyKey>
+               <idempotencyKey>70000000001_7632400038</idempotencyKey>
                <qrCode>
                   <fiscalCode>77777777777</fiscalCode>
-                  <noticeNumber>302114719472000037</noticeNumber>
+                  <noticeNumber>302114719472000038</noticeNumber>
                </qrCode>
                <amount>120.00</amount>
             </nod:activateIOPaymentReq>
@@ -46,13 +46,13 @@ Feature: verify test flow paGetPayment and pspNotifyPayment
     Given the payment notify phase executed successfully
     Then activateIOPaymentResp and pspNotifyPaymentReq are consistent
 
-  # Send receipt phase
-  Scenario: Execute sendPaymentOutcome request
-    Given the payment notify phase executed successfully
-    When PSP sends sendPaymentOutcomeReq to nodo-dei-pagamenti using the token
-    Then check outcome is OK
+  # # Send receipt phase
+  # Scenario: Execute sendPaymentOutcome request
+  #   Given the payment notify phase executed successfully
+  #   When PSP sends sendPaymentOutcomeReq to nodo-dei-pagamenti using the token
+  #   Then check outcome is OK
 
-  Scenario: Execute paSentRT request
-    Given the sendPaymentOutcomeReq executed successfully
-    Then EC receives paSendRT request by nodo-dei-pagamenti
+  # Scenario: Execute paSentRT request
+  #   Given the sendPaymentOutcomeReq executed successfully
+  #   Then EC receives paSendRT request by nodo-dei-pagamenti
 

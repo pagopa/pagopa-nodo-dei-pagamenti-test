@@ -62,8 +62,8 @@ def step_impl(context):
     assert responses
 
 
-@given('valid {verifyPaymentNoticeReq} soap-request')
-def step_impl(context, verifyPaymentNoticeReq):
+@given('valid {type_soap_reques} soap-request')
+def step_impl(context, type_soap_reques):
     """
         get valid PSP verifyPaymentNoticeReq
     """
@@ -90,6 +90,8 @@ def step_impl(context):
 
 @given('{elem} with {value} in verifyPaymentNoticeReq')
 def step_impl(context, elem, value):
+    TYPE_ELEMENT = 1 # dom element
+    # TYPE_VALUE = 3 # dom value
     my_document = parseString(context.soap_request)
     if value == "None":
         element = my_document.getElementsByTagName(elem)[0]
@@ -97,6 +99,11 @@ def step_impl(context, elem, value):
     elif value == "Empty":
         element = my_document.getElementsByTagName(elem)[0].childNodes[0]
         element.nodeValue = ''
+        childs = my_document.getElementsByTagName(elem)[0].childNodes
+        for child in childs:
+            if (child.nodeType == TYPE_ELEMENT):
+                child.parentNode.removeChild(child)
+            
     else:
         element = my_document.getElementsByTagName(elem)[0].childNodes[0]
         element.nodeValue = value
@@ -112,13 +119,14 @@ def step_impl(context, attribute, value, elem):
 
 
 # Scenario : Check valid URL in WSDL namespace
-@when('psp sends verifyPaymentNoticeReq to nodo-dei-pagamenti')
-def step_impl(context):
-    headers = {'Content-Type': 'application/xml'}  # set what your server accepts
+@when('psp sends {soap_action} to nodo-dei-pagamenti')
+def step_impl(context, soap_action):
+    headers = {'Content-Type': 'application/xml', "SOAPAction": soap_action }  # set what your server accepts
     url_nodo = get_soap_url_nodo(context)
+    print("soap_request sent >>>", context.soap_request)
     nodo_response = requests.post(url_nodo, context.soap_request, headers=headers)
     set_nodo_response(context, nodo_response)
-    assert (nodo_response.status_code == 200)
+    assert (nodo_response.status_code == 200), f"status_code {nodo_response.status_code}"
 
 
 # Scenario: Execute activateIOPayment request
@@ -137,6 +145,7 @@ def step_impl(context, tag, value):
 def step_impl(context):
     headers = {'Content-Type': 'application/xml'}  # set what your server accepts
     url_nodo = get_soap_url_nodo(context)
+    print("soap_request sent >>>", context.soap_request)
     nodo_response = requests.post(url_nodo, context.soap_request, headers=headers)
     set_nodo_response(context, nodo_response)
     assert nodo_response.status_code == 200
