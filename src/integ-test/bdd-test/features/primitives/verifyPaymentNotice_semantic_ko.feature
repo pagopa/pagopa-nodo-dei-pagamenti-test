@@ -63,9 +63,9 @@ Feature:  semantic checks for verifyPaymentReq
     Then check outcome is KO
     And check faultCode is PPT_CANALE_DISABILITATO
 
-  # idChannel value check: idChannel with field MODELLO_PAGAMENTO = ATTIVATO_PRESSO_PSP (e.g. contains 'IMMEDIATO_MULTIBENEFICIARIO') [SEM_VPNR_07]
+  # idChannel value check: idChannel with value in NODO4_CFG.CANALI whose field MODELLO_PAGAMENTO in NODO4_CFG.CANALI_NODO table of nodo-dei-pagamenti database does not contain value 'ATTIVATO_PRESSO_PSP' (e.g. contains 'IMMEDIATO_MULTIBENEFICIARIO') [SEM_VPNR_07]
   Scenario: Check PPT_AUTORIZZAZIONE error on psp channel not enabled for payment model 3
-    Given idChannel with 40000000001_03 in verifyPaymentNoticeReq
+    Given idChannel with 70000000001_03_ONUS in verifyPaymentNoticeReq
     When psp sends verifyPaymentNoticeReq to nodo-dei-pagamenti
     Then check outcome is KO
     And check faultCode is PPT_AUTORIZZAZIONE
@@ -74,7 +74,6 @@ Feature:  semantic checks for verifyPaymentReq
   # idBrokerPSP-idPSP value check: idBrokerPSP not associated to idPSP [SEM_VPNR_12]
   Scenario: Check PPT_AUTORIZZAZIONE error on psp broker not associated to psp
     Given idBrokerPSP with 97735020584 in verifyPaymentNoticeReq
-#    And <value> not associated to idPSP in verifyPaymentNoticeReq
     When psp sends verifyPaymentNoticeReq to nodo-dei-pagamenti
     Then check outcome is KO
     And check faultCode is PPT_AUTORIZZAZIONE
@@ -113,7 +112,7 @@ Feature:  semantic checks for verifyPaymentReq
 #      | fiscalCode | 111111111111 | SEM_VPNR_10 |
 
 
-  # station value check: combination fiscalCode-noticeNumber identifies a station not present inside column ID_STAZIONE in NODO4_CFG.STAZIONI table of nodo-dei-pagamenti database
+  # station value check: combination fiscalCode-noticeNumber identifies a station not present inside column ID_STAZIONE in NODO4_CFG.STAZIONI table of nodo-dei-pagamenti database [SEM_VPNR_11]
   Scenario Outline: Check PPT_STAZIONE_INT_PA_SCONOSCIUTA error on non-existent station
     Given fiscalCode with 77777777777 in verifyPaymentNoticeReq
     And noticeNumber with <value> in verifyPaymentNoticeReq
