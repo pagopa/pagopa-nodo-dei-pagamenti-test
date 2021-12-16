@@ -138,7 +138,6 @@ Feature:  semantic checks for verifyPaymentReq
   Scenario: Check PPT_STAZIONE_INT_PA_IRRAGGIUNGIBILE error on unreachable station
     Given fiscalCode with 77777777777 in verifyPaymentNoticeReq
     And noticeNumber with 099456789012345678 in verifyPaymentNoticeReq
-    Given <elem_1> with <value_1> and <elem_2> with <value_2> in verifyPaymentNoticeReq
     When psp sends verifyPaymentNoticeReq to nodo-dei-pagamenti
     Then check outcome is KO
     And check faultCode is PPT_STAZIONE_INT_PA_IRRAGGIUNGIBILE
@@ -147,14 +146,6 @@ Feature:  semantic checks for verifyPaymentReq
   Scenario: Check PPT_INTERMEDIARIO_PA_DISABILITATO error on disabled pa broker
     Given fiscalCode with 77777777777 in verifyPaymentNoticeReq
     And noticeNumber with 088456789012345678 in verifyPaymentNoticeReq
-    Given <elem_1> with <value_1> and <elem_2> with <value_2> in verifyPaymentNoticeReq
     When psp sends verifyPaymentNoticeReq to nodo-dei-pagamenti
     Then check outcome is KO
     And check faultCode is PPT_INTERMEDIARIO_PA_DISABILITATO
-
-  # denylist value check: combination fiscalCode-idChannel-idPSP identifies a record in NODO4_CFG.DENYLIST table of nodo-dei-pagamenti database [SEM_VPNR_16]
-  Scenario: Check outcome OK if combination psp-channel-pa in denylist
-    Given fiscalCode with 77777777777 in verifyPaymentNoticeReq
-    And idChannel with 70000000002_01 in verifyPaymentNoticeReq
-    When psp sends verifyPaymentNoticeReq to nodo-dei-pagamenti
-    Then check outcome is OK
