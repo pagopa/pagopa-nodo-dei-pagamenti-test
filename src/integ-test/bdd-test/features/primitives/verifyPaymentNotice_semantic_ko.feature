@@ -71,6 +71,15 @@ Feature:  semantic checks for verifyPaymentReq
     And check faultCode is PPT_AUTORIZZAZIONE
     And check description is Il canale non è di tipo 'ATTIVATO_PRESSO_PSP'
 
+  # idBrokerPSP-idPSP value check: idBrokerPSP not associated to idPSP [SEM_VPNR_12]
+  Scenario: Check PPT_AUTORIZZAZIONE error on psp broker not associated to psp
+    Given idBrokerPSP with 97735020584 in verifyPaymentNoticeReq
+#    And <value> not associated to idPSP in verifyPaymentNoticeReq
+    When psp sends verifyPaymentNoticeReq to nodo-dei-pagamenti
+    Then check outcome is KO
+    And check faultCode is PPT_AUTORIZZAZIONE
+    And check description is Configurazione intermediario-canale non corretta
+
   # password value check: wrong password for an idChannel [SEM_VPNR_08]
   Scenario: Check PPT_AUTENTICAZIONE error on password not associated to psp channel
     Given idChannel with 70000000001_01 in verifyPaymentNoticeReq
@@ -79,10 +88,10 @@ Feature:  semantic checks for verifyPaymentReq
     Then check outcome is KO
     And check faultCode is PPT_AUTENTICAZIONE
 
-#
-#  # fiscalCode value check
+  # TODO review
+#  # fiscalCode value check: ID_DOMINIO not present in NODO4_CFG.PA table of nodo-dei-pagamenti db [SEM_VPNR_09]
 #  Scenario Outline: Check PPT_DOMINIO_SCONOSCIUTO error on non-existent pa
-#    Given <elem> with <value> in verifyPaymentNoticeReq
+#    Given fiscalCode with 10000000000 in verifyPaymentNoticeReq
 #    And <value> not present inside column ID_DOMINIO in NODO4_CFG.PA table of nodo-dei-pagamenti database
 #    When psp sends verifyPaymentNoticeReq to nodo-dei-pagamenti
 #    Then check outcome is KO
@@ -90,8 +99,8 @@ Feature:  semantic checks for verifyPaymentReq
 #    Examples:
 #      | elem       | value       | soapUI test |
 #      | fiscalCode | 10000000000 | SEM_VPNR_09 |
-#
-#
+
+  # TODO review
 #  # fiscalCode value check
 #  Scenario Outline: Check PPT_DOMINIO_DISABILITATO error on disabled pa
 #    Given <elem> with <value> in verifyPaymentNoticeReq
@@ -102,77 +111,50 @@ Feature:  semantic checks for verifyPaymentReq
 #    Examples:
 #      | elem       | value        | soapUI test |
 #      | fiscalCode | 111111111111 | SEM_VPNR_10 |
-#
-#
-#  # station value check
-#  Scenario Outline: Check PPT_STAZIONE_INT_PA_SCONOSCIUTA error on non-existent station
-#    Given <elem_1> with <value_1> and <elem_2> with <value_2> in verifyPaymentNoticeReq
-#    And combination <value_1>-<value_2> identifies a station not present inside column ID_STAZIONE in NODO4_CFG.STAZIONI table of nodo-dei-pagamenti database
-#    When psp sends verifyPaymentNoticeReq to nodo-dei-pagamenti
-#    Then check outcome is KO
-#    And check faultCode is PPT_STAZIONE_INT_PA_SCONOSCIUTA
-#    Examples:
-#      | elem_1     | value_1     | elem_2       | value_2            | soapUI test                                            |
-#      | fiscalCode | 77777777777 | noticeNumber | 511456789012345678 | SEM_VPNR_11 - auxDigit inesistente                     |
-#      | fiscalCode | 77777777777 | noticeNumber | 011456789012345678 | SEM_VPNR_11 - auxDigit 0 - progressivo inesistente     |
-#      | fiscalCode | 77777777777 | noticeNumber | 316456789012345678 | SEM_VPNR_11 - auxDigit 3 - segregationCode inesistente |
-#
-#
-#  # idBrokerPSP-idPSP value check
-#  Scenario Outline: Check PPT_AUTORIZZAZIONE error on psp broker not associated to psp
-#    Given <elem> with <value> in verifyPaymentNoticeReq
-#    And <value> not associated to idPSP in verifyPaymentNoticeReq
-#    When psp sends verifyPaymentNoticeReq to nodo-dei-pagamenti
-#    Then check outcome is KO
-#    And check faultCode is PPT_AUTORIZZAZIONE
-#    And check description is Configurazione intermediario-canale non corretta
-#    Examples:
-#      | elem        | value       | soapUI test |
-#      | idBrokerPSP | 97735020584 | SEM_VPNR_12 |
-#
-#
-#  # station value check
-#  Scenario Outline: Check PPT_STAZIONE_INT_PA_DISABILITATA error on disabled station
-#    Given <elem_1> with <value_1> and <elem_2> with <value_2> in verifyPaymentNoticeReq
-#    And combination <value_1>-<value_2> identifies a station corresponding to an ID_STAZIONE value with field ENABLED = N in NODO4_CFG.STAZIONI table of nodo-dei-pagamenti database
-#    When psp sends verifyPaymentNoticeReq to nodo-dei-pagamenti
-#    Then check outcome is KO
-#    And check faultCode is PPT_STAZIONE_INT_PA_DISABILITATA
-#    Examples:
-#      | elem_1     | value_1     | elem_2       | value_2            | soapUI test |
-#      | fiscalCode | 77777777777 | noticeNumber | 006456789012345478 | SEM_VPNR_13 |
-#
-#
-#  # station value check
-#  Scenario Outline: Check PPT_STAZIONE_INT_PA_IRRAGGIUNGIBILE error on unreachable station
-#    Given <elem_1> with <value_1> and <elem_2> with <value_2> in verifyPaymentNoticeReq
-#    And combination <value_1>-<value_2> identifies a station corresponding to an ID_STAZIONE value with field IP in NODO4_CFG.STAZIONI table of nodo-dei-pagamenti database not reachable (e.g. IP = 1.2.3.4)
-#    When psp sends verifyPaymentNoticeReq to nodo-dei-pagamenti
-#    Then check outcome is KO
-#    And check faultCode is PPT_STAZIONE_INT_PA_IRRAGGIUNGIBILE
-#    Examples:
-#      | elem_1     | value_1     | elem_2       | value_2            | soapUI test |
-#      | fiscalCode | 77777777777 | noticeNumber | 099456789012345678 | SEM_VPNR_14 |
-#
-#
-#  # pa broker value check
-#  Scenario Outline: Check PPT_INTERMEDIARIO_PA_DISABILITATO error on disabled pa broker
-#    Given <elem_1> with <value_1> and <elem_2> with <value_2> in verifyPaymentNoticeReq
-#    And combination <value_1>-<value_2> identifies a pa broker corresponding to an ID_INTERMEDIARIO_PA value with field ENABLED = N in NODO4_CFG.INTERMEDIARI_PA table of nodo-dei-pagamenti database
-#    When psp sends verifyPaymentNoticeReq to nodo-dei-pagamenti
-#    Then check outcome is KO
-#    And check faultCode is PPT_INTERMEDIARIO_PA_DISABILITATO
-#    Examples:
-#      | elem_1     | value_1     | elem_2       | value_2            | soapUI test |
-#      | fiscalCode | 77777777777 | noticeNumber | 088456789012345678 | SEM_VPNR_15 |
-#
-#
-#  # denylist value check
-#  Scenario Outline: Check outcome OK if combination psp-channel-pa in denylist
-#    Given <elem_1> with <value_1> and <elem_2> with <value_2> in verifyPaymentNoticeReq
-#    And combination <value_1>-<value_2>-idPSP in verifyPaymentNoticeReq identifies a record in NODO4_CFG.DENYLIST table of nodo-dei-pagamenti database
-#    When psp sends verifyPaymentNoticeReq to nodo-dei-pagamenti
-#    Then check outcome is OK
-#    Examples:
-#      | elem_1     | value_1     | elem_2    | value_2        | soapUI test |
-#      | fiscalCode | 77777777777 | idChannel | 70000000002_01 | SEM_VPNR_16 |
+
+
+  # station value check: combination fiscalCode-noticeNumber identifies a station not present inside column ID_STAZIONE in NODO4_CFG.STAZIONI table of nodo-dei-pagamenti database
+  Scenario Outline: Check PPT_STAZIONE_INT_PA_SCONOSCIUTA error on non-existent station
+    Given fiscalCode with 77777777777 in verifyPaymentNoticeReq
+    And noticeNumber with <value> in verifyPaymentNoticeReq
+    When psp sends verifyPaymentNoticeReq to nodo-dei-pagamenti
+    Then check outcome is KO
+    And check faultCode is PPT_STAZIONE_INT_PA_SCONOSCIUTA
+    Examples:
+      | value              | soapUI test                                            |
+      | 511456789012345678 | SEM_VPNR_11 - auxDigit inesistente                     |
+      | 011456789012345678 | SEM_VPNR_11 - auxDigit 0 - progressivo inesistente     |
+      | 316456789012345678 | SEM_VPNR_11 - auxDigit 3 - segregationCode inesistente |
+
+  # station value check: combination fiscalCode-noticeNumber identifies a station corresponding to an ID_STAZIONE value with field ENABLED = N in NODO4_CFG.STAZIONI table of nodo-dei-pagamenti database [SEM_VPNR_13]
+  Scenario: Check PPT_STAZIONE_INT_PA_DISABILITATA error on disabled station
+    Given fiscalCode with 77777777777 in verifyPaymentNoticeReq
+    And noticeNumber with 006456789012345478 in verifyPaymentNoticeReq
+    When psp sends verifyPaymentNoticeReq to nodo-dei-pagamenti
+    Then check outcome is KO
+    And check faultCode is PPT_STAZIONE_INT_PA_DISABILITATA
+
+  # station value check: combination fiscalCode-noticeNumber identifies a station corresponding to an ID_STAZIONE value with field IP in NODO4_CFG.STAZIONI table of nodo-dei-pagamenti database not reachable (e.g. IP = 1.2.3.4) [SEM_VPNR_14]
+  Scenario: Check PPT_STAZIONE_INT_PA_IRRAGGIUNGIBILE error on unreachable station
+    Given fiscalCode with 77777777777 in verifyPaymentNoticeReq
+    And noticeNumber with 099456789012345678 in verifyPaymentNoticeReq
+    Given <elem_1> with <value_1> and <elem_2> with <value_2> in verifyPaymentNoticeReq
+    When psp sends verifyPaymentNoticeReq to nodo-dei-pagamenti
+    Then check outcome is KO
+    And check faultCode is PPT_STAZIONE_INT_PA_IRRAGGIUNGIBILE
+
+  # pa broker value check: combination fiscalCode-noticeNumber identifies a pa broker corresponding to an ID_INTERMEDIARIO_PA value with field ENABLED = N in NODO4_CFG.INTERMEDIARI_PA table of nodo-dei-pagamenti database [SEM_VPNR_15]
+  Scenario: Check PPT_INTERMEDIARIO_PA_DISABILITATO error on disabled pa broker
+    Given fiscalCode with 77777777777 in verifyPaymentNoticeReq
+    And noticeNumber with 088456789012345678 in verifyPaymentNoticeReq
+    Given <elem_1> with <value_1> and <elem_2> with <value_2> in verifyPaymentNoticeReq
+    When psp sends verifyPaymentNoticeReq to nodo-dei-pagamenti
+    Then check outcome is KO
+    And check faultCode is PPT_INTERMEDIARIO_PA_DISABILITATO
+
+  # denylist value check: combination fiscalCode-idChannel-idPSP identifies a record in NODO4_CFG.DENYLIST table of nodo-dei-pagamenti database [SEM_VPNR_16]
+  Scenario: Check outcome OK if combination psp-channel-pa in denylist
+    Given fiscalCode with 77777777777 in verifyPaymentNoticeReq
+    And idChannel with 70000000002_01 in verifyPaymentNoticeReq
+    When psp sends verifyPaymentNoticeReq to nodo-dei-pagamenti
+    Then check outcome is OK

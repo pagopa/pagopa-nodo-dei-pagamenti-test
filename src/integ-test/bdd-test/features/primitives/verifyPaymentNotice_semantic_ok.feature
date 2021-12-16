@@ -1,4 +1,4 @@
-Feature:  semantic checks for verifyPaymentReq
+Feature: semantic checks for verifyPaymentReq
 
   Background:
     Given systems up
