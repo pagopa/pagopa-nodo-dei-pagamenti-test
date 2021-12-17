@@ -3,19 +3,21 @@ The repo contains Behavior-Driven Development ([BDD](https://cucumber.io/docs/bd
 
 ## Prerequisites 
 - [python](https://www.python.org/) and [pip](https://pip.pypa.io/en/stable/installation/)
-- (cucumber.io behave](https://cucumber.io/docs/installation/python/)
+- [behave](https://cucumber.io/docs/installation/python/)
   
 ## Run tests
 
->NOTE : require mock services EC and PSP up and nodo-dei-pagamenti application running 
+>NOTE : require [mock services EC and PSP](https://github.com/pagopa/pagopa-mock-ec) up and nodo-dei-pagamenti application running 
 
 Open terminal and typing the following commands : 
 
-```
+```py
 python -m venv nodo-de-pagamenti-env
 . nodo-de-pagamenti-env/bin/activate
 pip install -r requirements.txt
 behave src/integ-test/bdd-test/features/
 ```
 
->NOTE: to obtain html report add `-f html -o behave-report.html` after `behave` command
+>**NOTE**:\
+-to obtain html report add `-f html -o behave-report.html` after `behave` command \
+-Per default, behave captures stdout. This captured output is only shown if a failure occurs, if you want force it use [--no-capture](https://behave.readthedocs.io/en/stable/behave.html#cmdoption-no-capture) 
