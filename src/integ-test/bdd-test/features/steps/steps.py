@@ -61,15 +61,17 @@ def step_impl(context):
         responses &= (resp.status_code == 200)
     assert responses
 
-@given('PA {new_old_versione} version')
+@given('EC {new_old_versione} version')
 def step_impl(context, new_old_versione):
     pass
 
-@given('valid {type_soap_reques} soap-request')
-def step_impl(context, type_soap_reques):
+@given('valid {type_soap_request} soap-request')
+def step_impl(context, type_soap_request):
     """
-        get valid PSP verifyPaymentNoticeReq
-    """ 
+        get valid 
+    """     
+    if "override_soap_request" in context.scenario.tags:
+        setattr(context, "soap_request", context.step[0].text)
     assert True
 
 @given('random idempotencyKey and noticeNumber')
@@ -117,24 +119,6 @@ def step_impl(context, soap_action):
     nodo_response = requests.post(url_nodo, context.soap_request, headers=headers)
     set_nodo_response(context, nodo_response)
     assert (nodo_response.status_code == 200), f"status_code {nodo_response.status_code}"
-
-@when('psp sends {soap_action} to nodo-dei-pagamenti application')
-def step_impl(context, soap_action):
-    headers = {'Content-Type': 'application/xml', "SOAPAction": soap_action }  # set what your server accepts
-    url_nodo = get_soap_url_nodo(context)
-    
-    if soap_action == "verifyPaymentNotice":
-        soap_request = context.soap_request_verify_payment_notice
-    elif soap_action == "activatePaymentNotice":
-        soap_request = context.soap_request_activate_payment_notice
-    else:
-        soap_request = "NO ALLOWED"
-        
-    print("soap_request sent >>>", soap_request)
-    nodo_response = requests.post(url_nodo, soap_request, headers=headers)
-    set_nodo_response(context, nodo_response)
-    assert (nodo_response.status_code == 200), f"status_code {nodo_response.status_code}"
-
 
 # Scenario: Execute activateIOPayment request
 @then('check {tag} is {value}')
