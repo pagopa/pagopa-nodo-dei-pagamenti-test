@@ -47,12 +47,12 @@ Feature: verify test flow paGetPayment and pspNotifyPayment
     Then activateIOPaymentResp and pspNotifyPaymentReq are consistent
 
   # # Send receipt phase
-  # Scenario: Execute sendPaymentOutcome request
-  #   Given the payment notify phase executed successfully
-  #   When PSP sends sendPaymentOutcomeReq to nodo-dei-pagamenti using the token
-  #   Then check outcome is OK
+  Scenario: Execute sendPaymentOutcome request
+    Given the payment notify phase executed successfully
+    When PSP sends sendPaymentOutcomeReq to nodo-dei-pagamenti using the token
+    Then check outcome is OK
 
-  # Scenario: Execute paSentRT request
-  #   Given the sendPaymentOutcomeReq executed successfully
-  #   Then EC receives paSendRT request by nodo-dei-pagamenti
+  Scenario: Execute paSentRT request
+    Given the sendPaymentOutcomeReq executed successfully
+    Then EC receives paSendRT request by nodo-dei-pagamenti
 
