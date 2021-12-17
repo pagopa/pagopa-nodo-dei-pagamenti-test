@@ -2,7 +2,7 @@ Feature:  block checks for verifyPaymentReq - position status in PAID [Verify_bl
 
   Background:
     Given systems up
-    And valid verifyPaymentNoticeReq soap-request
+    And initial verifyPaymentNoticeReq soap-request
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
          <soapenv:Header/>
@@ -14,7 +14,7 @@ Feature:  block checks for verifyPaymentReq - position status in PAID [Verify_bl
                <password>pwdpwdpwd</password>
                <qrCode>
                   <fiscalCode>#creditor_institution_code#</fiscalCode>
-                  <noticeNumber>302114719472095711</noticeNumber>
+                  <noticeNumber>#notice_number#</noticeNumber>
                </qrCode>
             </nod:verifyPaymentNoticeReq>
          </soapenv:Body>
@@ -24,12 +24,11 @@ Feature:  block checks for verifyPaymentReq - position status in PAID [Verify_bl
 
   # Verify Phase 1
   Scenario: Execute verifyPaymentNotice request
-    When psp sends verifyPaymentNotice to nodo-dei-pagamenti application
+    When psp sends verifyPaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK
     
 
   # Activate Phase
-  @override_soap_request
   Scenario: Execute activatePaymentNotice request
     Given valid activatePaymentNoticeReq soap-request
       """
@@ -44,7 +43,7 @@ Feature:  block checks for verifyPaymentReq - position status in PAID [Verify_bl
                <idempotencyKey>70000000001_7632400001</idempotencyKey>
                <qrCode>
                   <fiscalCode>#creditor_institution_code#</fiscalCode>
-                  <noticeNumber>302114719472095711</noticeNumber>
+                  <noticeNumber>#notice_number#</noticeNumber>
                </qrCode>
                <amount>120.00</amount>
             </nod:activatePaymentNoticeReq>

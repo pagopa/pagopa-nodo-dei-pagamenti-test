@@ -67,7 +67,6 @@ def after_feature(context, feature):
     #         # reset apiconfig
     #         context.apiconfig.delete_creditor_institution(global_configuration.get("creditor_institution_code"))
 
-
 def config_ec(context):
     global_configuration = context.config.userdata.get("global_configuration")
 

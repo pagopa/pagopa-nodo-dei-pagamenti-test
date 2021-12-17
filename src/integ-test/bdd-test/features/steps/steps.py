@@ -44,6 +44,7 @@ def set_nodo_response(context, nodo_response):
     test_configuration["soap_response"] = nodo_response
     context.config.update_userdata({"test_configuration": test_configuration})
 
+
 # Background
 @given('systems up')
 def step_impl(context):
@@ -61,17 +62,36 @@ def step_impl(context):
         responses &= (resp.status_code == 200)
     assert responses
 
-@given('EC {new_old_versione} version')
-def step_impl(context, new_old_versione):
+
+@given('EC {new_old_version} version')
+def step_impl(context, new_old_version):
     pass
+
+
+@given('initial {type_soap_request} soap-request')
+def step_impl(context, type_soap_request):
+    assert True
+
 
 @given('valid {type_soap_request} soap-request')
 def step_impl(context, type_soap_request):
     """
         get valid 
     """     
-    if "override_soap_request" in context.scenario.tags:
-        setattr(context, "soap_request", context.step[0].text)
+    old_soap_request = getattr(context, "soap_request")
+    new_soap_request = context.scenario.steps[0].text
+
+    my_document = parseString(old_soap_request)
+    # idempotency_key = my_document.getElementsByTagName('idempotencyKey')[0].firstChild.data
+    fiscal_code = my_document.getElementsByTagName('fiscalCode')[0].firstChild.data
+    notice_number = my_document.getElementsByTagName('noticeNumber')[0].firstChild.data
+
+    if type_soap_request == "activatePaymentNoticeReq":
+        new_soap_request = new_soap_request.replace("#creditor_institution_code#", fiscal_code)
+        new_soap_request = new_soap_request.replace("#notice_number#", notice_number)
+        new_soap_request = new_soap_request.replace('#idempotency_key#', f"70000000001_{str(random.randint(1000000000, 9999999999))}")
+
+    setattr(context, "soap_request", new_soap_request)
     assert True
 
 @given('random idempotencyKey and noticeNumber')
