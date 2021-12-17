@@ -1,4 +1,5 @@
 import json
+import random
 
 from behave.model import Table
 
@@ -23,7 +24,7 @@ def before_feature(context, feature):
     services = context.config.userdata.get("services")
     # add heading
     feature.background.steps[0].table = Table(headings=("name", "url", "healthcheck", "soap_service", "rest_service"))
-    # add data in the table
+    # add data in the tables
     for system_name in services.keys():
         row = (system_name,
                services.get(system_name).get("url"),
@@ -31,6 +32,25 @@ def before_feature(context, feature):
                services.get(system_name).get("soap_service"),
                services.get(system_name).get("rest_service"))
         feature.background.steps[0].table.add_row(row)
+            
+    payload = feature.background.steps[1].text
+    payload = payload.replace('#creditor_institution_code#',
+                                context.config.userdata.get("global_configuration").get("creditor_institution_code"))
+    
+    idempotency_key = context.config.userdata.get("global_configuration").get("idempotencyKey")
+    if "idempotencyKey" in context.config.userdata.get("global_configuration"):
+        payload = payload.replace('#idempotency_key#', idempotency_key)    
+    else: 
+        payload = payload.replace('#idempotency_key#', f"70000000001_{str(random.randint(1000000000, 9999999999))}")    
+
+    notice_number = context.config.userdata.get("global_configuration").get("noticeNumber")
+    if "noticeNumber" in context.config.userdata.get("global_configuration"):
+        payload = payload.replace('#notice_number#', notice_number)    
+    else: 
+        payload = payload.replace('#notice_number#',f"30211{str(random.randint(1000000000000, 9999999999999))}")
+
+
+    setattr(context, "soap_request", payload)
 
     # DISABLE see @config-ec too 
     # for tag in feature.tags:
