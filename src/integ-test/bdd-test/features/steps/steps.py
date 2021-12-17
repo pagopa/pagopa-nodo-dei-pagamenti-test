@@ -90,6 +90,10 @@ def step_impl(context, type_soap_request):
         new_soap_request = new_soap_request.replace("#creditor_institution_code#", fiscal_code)
         new_soap_request = new_soap_request.replace("#notice_number#", notice_number)
         new_soap_request = new_soap_request.replace('#idempotency_key#', f"70000000001_{str(random.randint(1000000000, 9999999999))}")
+        
+    if type_soap_request == "sendPaymentOutcomeReq":
+        new_soap_request = new_soap_request.replace("#payment_token#",context.config.userdata.get("test_configuration").get("paymentToken"))
+
 
     setattr(context, "soap_request", new_soap_request)
     assert True

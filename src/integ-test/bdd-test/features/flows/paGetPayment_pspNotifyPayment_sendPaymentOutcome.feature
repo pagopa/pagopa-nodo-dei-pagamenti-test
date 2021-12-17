@@ -2,7 +2,7 @@ Feature: verify test flow paGetPayment and pspNotifyPayment
 
   Background:
     Given systems up
-    Given valid activateIOPaymentReq soap-request
+    Given initial activateIOPaymentReq soap-request
     """
     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd">
          <soapenv:Header/>
