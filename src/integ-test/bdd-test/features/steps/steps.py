@@ -1,6 +1,7 @@
 from xml.dom.minidom import parseString, parse
 import requests, random
 from behave import *
+import time
 
 from utils import requests_retry_session
 
@@ -118,8 +119,7 @@ def step_impl(context, elem, value):
         childs = my_document.getElementsByTagName(elem)[0].childNodes
         for child in childs:
             if (child.nodeType == TYPE_ELEMENT):
-                child.parentNode.removeChild(child)
-            
+                child.parentNode.removeChild(child) 
     else:
         element = my_document.getElementsByTagName(elem)[0].childNodes[0]
         element.nodeValue = value
@@ -139,10 +139,18 @@ def step_impl(context, attribute, value, elem):
 def step_impl(context, soap_action):
     headers = {'Content-Type': 'application/xml', "SOAPAction": soap_action }  # set what your server accepts
     url_nodo = get_soap_url_nodo(context)
-    print("soap_request sent >>>", context.soap_request)
+    print("nodo soap_request sent >>>", context.soap_request)
     nodo_response = requests.post(url_nodo, context.soap_request, headers=headers)
     set_nodo_response(context, nodo_response)
     assert (nodo_response.status_code == 200), f"status_code {nodo_response.status_code}"
+    
+# When job <JOB_NAME> triggered    
+@when('job {job_name} triggered after {seconds} seconds')
+def step_impl(context, job_name, seconds):
+    time.sleep(int(seconds))
+    url_nodo = get_rest_url_nodo(context)
+    nodo_response = requests.get(f"{url_nodo}/jobs/trigger/{job_name}")
+    assert nodo_response.status_code == 200
 
 # Scenario: Execute activateIOPayment request
 @then('check {tag} is {value}')
@@ -160,7 +168,7 @@ def step_impl(context, tag, value):
 def step_impl(context):
     headers = {'Content-Type': 'application/xml'}  # set what your server accepts
     url_nodo = get_soap_url_nodo(context)
-    print("soap_request sent >>>", context.soap_request)
+    print("nodo soap_request sent >>>", context.soap_request)
     nodo_response = requests.post(url_nodo, context.soap_request, headers=headers)
     set_nodo_response(context, nodo_response)
     assert nodo_response.status_code == 200
@@ -231,6 +239,7 @@ def step_impl(context):
         "codiceAutorizzativo": "666666",
         "esitoTransazioneCarta": "ok"
     }
+    print("nodo rest_request sent >>>", body)
     nodo_response = requests.post(f"{url_nodo}/inoltroEsito/carta", json=body, headers=headers)
     setattr(context, "rest_response", nodo_response)
     test_configuration = context.config.userdata.get("test_configuration")
@@ -325,6 +334,7 @@ def step_impl(context):
       </soapenv:Envelope>
     """
     send_payment_outcome = send_payment_outcome.replace("#paymentToken#", paymentToken)
+    print("nodo soap_request sent >>>", send_payment_outcome)    
     nodo_response = requests.post(url_nodo, send_payment_outcome, headers=headers)
     set_nodo_response(context, nodo_response)
 

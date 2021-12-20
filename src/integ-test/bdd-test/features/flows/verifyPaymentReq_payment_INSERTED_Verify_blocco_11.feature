@@ -56,10 +56,11 @@ Feature:  block checks for verifyPaymentReq - position status in INSERTED (mod3C
     And token exists and check
 	
   # Mod3Cancel Phase
-#   Scenario: Execute mod3Cancel poller
-#     # Given the Activate Phase executed successfully
-#     When expirationTime inserted in activatePaymentNoticeReq has passed and mod3Cancel poller has been triggered
-#     Then verify the HTTP status code response is 200
+  Scenario: Execute mod3Cancel poller
+    # Given the Activate Phase executed successfully
+    # When expirationTime inserted in activatePaymentNoticeReq has passed and mod3Cancel poller has been triggered
+    When job mod3Cancel triggered after 3 seconds
+    Then verify the HTTP status code response is 200
 
 	
   # Verify Phase 2

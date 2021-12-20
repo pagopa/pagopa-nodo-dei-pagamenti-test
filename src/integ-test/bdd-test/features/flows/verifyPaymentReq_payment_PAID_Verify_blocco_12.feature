@@ -56,10 +56,11 @@ Feature:  block checks for verifyPaymentReq - position status in PAID after retr
     And token exists and check
 
   # Mod3Cancel Phase
-#   Scenario: Execute mod3Cancel poller
-#     # Given the Activate Phase executed successfully
-#     When expirationTime inserted in activatePaymentNoticeReq has passed and mod3Cancel poller has been triggered
-#     Then verify the HTTP status code response is 200
+  Scenario: Execute mod3Cancel poller
+    # Given the Activate Phase executed successfully
+    # When expirationTime inserted in activatePaymentNoticeReq has passed and mod3Cancel poller has been triggered
+    When job mod3Cancel triggered after 3 seconds
+    Then verify the HTTP status code response is 200
 
 
   # Payment Outcome Phase
@@ -107,9 +108,12 @@ Feature:  block checks for verifyPaymentReq - position status in PAID after retr
     Then check outcome is KO
     And check faultCode is PPT_TOKEN_SCADUTO
 	
+  Scenario: Execute paSentRT request
+    Then EC receives paSendRT request by nodo-dei-pagamenti
+
   # Verify Phase 2
   Scenario: Execute verifyPaymentNotice request with the same request as Verify Phase 1, immediately after the Payment Outcome Phase
 	# Given the Payment Outcome Phase executed successfully
     When psp sends verifyPaymentNotice to nodo-dei-pagamenti
     Then check outcome is KO
-	And check faultCode is PPT_PAGAMENTO_DUPLICATO
+	 And check faultCode is PPT_PAGAMENTO_DUPLICATO
