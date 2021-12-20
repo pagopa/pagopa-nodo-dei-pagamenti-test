@@ -28,6 +28,7 @@ Feature: semantic checks for verifyPaymentReq
   # denylist value check: combination fiscalCode-idChannel-idPSP identifies a record in NODO4_CFG.DENYLIST table of nodo-dei-pagamenti database [SEM_VPNR_16]
   Scenario: Check outcome OK if combination psp-channel-pa in denylist
     Given fiscalCode with 77777777777 in verifyPaymentNoticeReq
+    And idBrokerPSP with 70000000002 in verifyPaymentNoticeReq
     And idChannel with 70000000002_01 in verifyPaymentNoticeReq
     When psp sends verifyPaymentNoticeReq to nodo-dei-pagamenti
     Then check outcome is OK
