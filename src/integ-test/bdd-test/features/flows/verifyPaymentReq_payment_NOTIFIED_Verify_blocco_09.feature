@@ -98,6 +98,9 @@ Feature:  block checks for verifyPaymentReq - position status in NOTIFIED [Verif
     When psp sends sendPaymentOutcomeReq to nodo-dei-pagamenti
     Then check outcome is OK
 
+  Scenario: Execute paSentRT request
+    Then EC receives paSendRT request by nodo-dei-pagamenti
+
   # Verify Phase 2
   Scenario: Execute verifyPaymentNotice request with the same request as Verify Phase 1, few seconds after the Payment Outcome Phase (e.g. 30s)
     When psp sends verifyPaymentNotice to nodo-dei-pagamenti
