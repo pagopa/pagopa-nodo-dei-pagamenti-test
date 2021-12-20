@@ -1,14 +1,17 @@
-from xml.dom.minidom import parseString, parse
-import requests, random
-from behave import *
+import random
 import time
+from xml.dom.minidom import parseString
+
+import requests
+from behave import *
 
 from utils import requests_retry_session
+
 
 def get_soap_url_nodo(context):
     if context.config.userdata.get("services").get("nodo-dei-pagamenti").get("soap_service") is not None:
         return context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url") \
-           + context.config.userdata.get("services").get("nodo-dei-pagamenti").get("soap_service")
+               + context.config.userdata.get("services").get("nodo-dei-pagamenti").get("soap_service")
     else:
         return ""
 
@@ -64,8 +67,8 @@ def step_impl(context):
     assert responses
 
 
-@given('EC {new_old_version} version')
-def step_impl(context, new_old_version):
+@given('EC {version:OldNew} version')
+def step_impl(context, version):
     pass
 
 
@@ -359,9 +362,29 @@ def step_impl(context):
     my_document = parseString(soap_request)
     notice_number = my_document.getElementsByTagName('noticeNumber')[0].firstChild.data
     # paSendRTJson = requests.get(f"{get_rest_mock_ec(context)}/api/v1/history/{notice_number}/paSendRT")
-    paSendRTJson  = requests_retry_session(session=s).get(f"{get_rest_mock_ec(context)}/api/v1/history/{notice_number}/paSendRT")
+    paSendRTJson = requests_retry_session(session=s).get(
+        f"{get_rest_mock_ec(context)}/api/v1/history/{notice_number}/paSendRT")
     paSendRT = paSendRTJson.json()
 
     print(paSendRT.get("request"))
     assert len(paSendRT.get("request").keys())
 
+
+@given("{mock:EcPsp} responds at {action} with:")
+def step_impl(context, mock, action):
+    """
+        configure mock response
+    """
+    # TODO configure mock
+    # action mock action
+    # mockResponse = context.scenario.steps[0].text
+    pass
+
+
+@given("{mock:EcPsp} wait for {sec} seconds at {action}")
+def step_impl(context, mock, sec, action):
+    """
+            configure mock response
+        """
+    # TODO configure mock to wait x seconds at action
+    pass
