@@ -2,7 +2,7 @@ Feature:  syntax checks OK for verifyPaymentReq
 
   Background:
     Given systems up
-    And valid verifyPaymentNoticeReq soap-request
+    And initial verifyPaymentNoticeReq soap-request
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
          <soapenv:Header/>
@@ -22,6 +22,5 @@ Feature:  syntax checks OK for verifyPaymentReq
       """
 
   Scenario: Check valid URL in WSDL namespace
-    # Given a valid WSDL
     When psp sends verifyPaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK

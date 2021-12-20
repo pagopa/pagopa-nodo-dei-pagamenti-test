@@ -1,6 +1,7 @@
 from xml.dom.minidom import parseString, parse
 import requests, random
 from behave import *
+import time
 
 from utils import requests_retry_session
 
@@ -44,6 +45,7 @@ def set_nodo_response(context, nodo_response):
     test_configuration["soap_response"] = nodo_response
     context.config.update_userdata({"test_configuration": test_configuration})
 
+
 # Background
 @given('systems up')
 def step_impl(context):
@@ -61,15 +63,40 @@ def step_impl(context):
         responses &= (resp.status_code == 200)
     assert responses
 
-@given('PA {new_old_versione} version')
-def step_impl(context, new_old_versione):
+
+@given('EC {new_old_version} version')
+def step_impl(context, new_old_version):
     pass
 
-@given('valid {type_soap_reques} soap-request')
-def step_impl(context, type_soap_reques):
+
+@given('initial {type_soap_request} soap-request')
+def step_impl(context, type_soap_request):
+    assert True
+
+
+@given('valid {type_soap_request} soap-request')
+def step_impl(context, type_soap_request):
     """
-        get valid PSP verifyPaymentNoticeReq
-    """ 
+        get valid 
+    """     
+    old_soap_request = getattr(context, "soap_request")
+    new_soap_request = context.scenario.steps[0].text
+
+    my_document = parseString(old_soap_request)
+    # idempotency_key = my_document.getElementsByTagName('idempotencyKey')[0].firstChild.data
+    fiscal_code = my_document.getElementsByTagName('fiscalCode')[0].firstChild.data
+    notice_number = my_document.getElementsByTagName('noticeNumber')[0].firstChild.data
+
+    if type_soap_request == "activatePaymentNoticeReq":
+        new_soap_request = new_soap_request.replace("#creditor_institution_code#", fiscal_code)
+        new_soap_request = new_soap_request.replace("#notice_number#", notice_number)
+        new_soap_request = new_soap_request.replace('#idempotency_key#', f"70000000001_{str(random.randint(1000000000, 9999999999))}")
+        
+    if type_soap_request == "sendPaymentOutcomeReq":
+        new_soap_request = new_soap_request.replace("#payment_token#",context.config.userdata.get("test_configuration").get("paymentToken"))
+
+
+    setattr(context, "soap_request", new_soap_request)
     assert True
 
 @given('random idempotencyKey and noticeNumber')
@@ -92,8 +119,7 @@ def step_impl(context, elem, value):
         childs = my_document.getElementsByTagName(elem)[0].childNodes
         for child in childs:
             if (child.nodeType == TYPE_ELEMENT):
-                child.parentNode.removeChild(child)
-            
+                child.parentNode.removeChild(child) 
     else:
         element = my_document.getElementsByTagName(elem)[0].childNodes[0]
         element.nodeValue = value
@@ -113,28 +139,18 @@ def step_impl(context, attribute, value, elem):
 def step_impl(context, soap_action):
     headers = {'Content-Type': 'application/xml', "SOAPAction": soap_action }  # set what your server accepts
     url_nodo = get_soap_url_nodo(context)
-    print("soap_request sent >>>", context.soap_request)
+    print("nodo soap_request sent >>>", context.soap_request)
     nodo_response = requests.post(url_nodo, context.soap_request, headers=headers)
     set_nodo_response(context, nodo_response)
     assert (nodo_response.status_code == 200), f"status_code {nodo_response.status_code}"
-
-@when('psp sends {soap_action} to nodo-dei-pagamenti application')
-def step_impl(context, soap_action):
-    headers = {'Content-Type': 'application/xml', "SOAPAction": soap_action }  # set what your server accepts
-    url_nodo = get_soap_url_nodo(context)
     
-    if soap_action == "verifyPaymentNotice":
-        soap_request = context.soap_request_verify_payment_notice
-    elif soap_action == "activatePaymentNotice":
-        soap_request = context.soap_request_activate_payment_notice
-    else:
-        soap_request = "NO ALLOWED"
-        
-    print("soap_request sent >>>", soap_request)
-    nodo_response = requests.post(url_nodo, soap_request, headers=headers)
-    set_nodo_response(context, nodo_response)
-    assert (nodo_response.status_code == 200), f"status_code {nodo_response.status_code}"
-
+# When job <JOB_NAME> triggered    
+@when('job {job_name} triggered after {seconds} seconds')
+def step_impl(context, job_name, seconds):
+    time.sleep(int(seconds))
+    url_nodo = get_rest_url_nodo(context)
+    nodo_response = requests.get(f"{url_nodo}/jobs/trigger/{job_name}")
+    assert nodo_response.status_code == 200
 
 # Scenario: Execute activateIOPayment request
 @then('check {tag} is {value}')
@@ -152,7 +168,7 @@ def step_impl(context, tag, value):
 def step_impl(context):
     headers = {'Content-Type': 'application/xml'}  # set what your server accepts
     url_nodo = get_soap_url_nodo(context)
-    print("soap_request sent >>>", context.soap_request)
+    print("nodo soap_request sent >>>", context.soap_request)
     nodo_response = requests.post(url_nodo, context.soap_request, headers=headers)
     set_nodo_response(context, nodo_response)
     assert nodo_response.status_code == 200
@@ -223,6 +239,7 @@ def step_impl(context):
         "codiceAutorizzativo": "666666",
         "esitoTransazioneCarta": "ok"
     }
+    print("nodo rest_request sent >>>", body)
     nodo_response = requests.post(f"{url_nodo}/inoltroEsito/carta", json=body, headers=headers)
     setattr(context, "rest_response", nodo_response)
     test_configuration = context.config.userdata.get("test_configuration")
@@ -317,6 +334,7 @@ def step_impl(context):
       </soapenv:Envelope>
     """
     send_payment_outcome = send_payment_outcome.replace("#paymentToken#", paymentToken)
+    print("nodo soap_request sent >>>", send_payment_outcome)    
     nodo_response = requests.post(url_nodo, send_payment_outcome, headers=headers)
     set_nodo_response(context, nodo_response)
 
