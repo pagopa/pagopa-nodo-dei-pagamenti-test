@@ -21,7 +21,8 @@
       </soapenv:Envelope>
       """
  
- Scenario Outline2: Check paVerifyPaymentRes response with missing optional fields
+ Scenario Outline: Check paVerifyPaymentRes response with missing optional fields
+
     Given <elem> with <value> in paVerifyPaymentNoticeRes
     And outcome OK
     When pa sends paVerifyPaymentNoticeRes to nodo-dei-pagamenti
