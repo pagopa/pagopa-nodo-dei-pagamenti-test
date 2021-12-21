@@ -30,28 +30,7 @@ Feature: syntax checks for paVerifyPaymentNoticeRes - KO
        <soapenv:Header/>
        <soapenv:Body>
           <paf:paVerifyPaymentNoticeRes>
-             <outcome>OK</outcome>
-             <paymentList>
-                <!--1 to 5 repetitions:-->
-                <paymentOptionDescription>
-                   <amount>10.00</amount>
-                   <options>EQ</options>
-                   <!--Optional:-->
-                   <dueDate>2021-12-31</dueDate>
-                   <!--Optional:-->
-                   <detailDescription>test</detailDescription>
-                   <!--Optional:-->
-                   <allCCP>1</allCCP>
-                </paymentOptionDescription>
-             </paymentList>
-             <!--Optional:-->
-             <paymentDescription>test</paymentDescription>
-             <!--Optional:-->
-             <fiscalCodePA>${pa}</fiscalCodePA>
-             <!--Optional:-->
-             <companyName>company</companyName>
-             <!--Optional:-->
-             <officeName>office</officeName>
+             <outcome>#outcome#</outcome>
           </paf:paVerifyPaymentNoticeRes>
        </soapenv:Body>
     </soapenv:Envelope>
@@ -107,7 +86,6 @@ Feature: syntax checks for paVerifyPaymentNoticeRes - KO
     </soapenv:Envelope>
     """
     And <elem> with <value> in paVerifyPaymentNoticeRes
-    And outcome with OK in paVerifyPaymentNoticeRes
     When PSP sends verifyPaymentNoticeReq to nodo-dei-pagamenti
     Then check outcome is KO
     And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE
