@@ -30,8 +30,7 @@
     Then check no error is raised
     Examples:
       | elem                      | value                 | soapUI test |
-      | soapenv:Header                    | None                  | SIN_PVPNR_01|
-
+      | soapenv:Header            | None                  | SIN_PVPNR_01|
       | dueDate                   | None                  | SIN_PVPNR_25|
       | detailDescription         | None                  | SIN_PVPNR_28|
       | allCCP                    | None                  | SIN_PVPNR_31|
