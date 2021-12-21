@@ -384,6 +384,7 @@ def step_impl(context):
     assert len(paSendRT.get("request").keys())
 
 
+
 @given("{mock} replies to {destination} with the following {action}")
 def step_impl(context, mock,destination, action):
     """

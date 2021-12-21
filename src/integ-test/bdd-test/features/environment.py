@@ -30,8 +30,8 @@ def before_feature(context, feature):
                services.get(system_name).get("soap_service"),
                services.get(system_name).get("rest_service"))
         feature.background.steps[0].table.add_row(row)
-
     payload = ([step.text for step in feature.background.steps if "initial" in step.name] or [""])[0]
+
     payload = payload.replace('#creditor_institution_code#',
                               context.config.userdata.get("global_configuration").get("creditor_institution_code"))
     
