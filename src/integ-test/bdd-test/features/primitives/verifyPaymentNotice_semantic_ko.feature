@@ -87,30 +87,19 @@ Feature:  semantic checks for verifyPaymentReq
     Then check outcome is KO
     And check faultCode is PPT_AUTENTICAZIONE
 
-  # TODO review
-#  # fiscalCode value check: ID_DOMINIO not present in NODO4_CFG.PA table of nodo-dei-pagamenti db [SEM_VPNR_09]
-#  Scenario Outline: Check PPT_DOMINIO_SCONOSCIUTO error on non-existent pa
-#    Given fiscalCode with 10000000000 in verifyPaymentNoticeReq
-#    And <value> not present inside column ID_DOMINIO in NODO4_CFG.PA table of nodo-dei-pagamenti database
-#    When psp sends verifyPaymentNoticeReq to nodo-dei-pagamenti
-#    Then check outcome is KO
-#    And check faultCode is PPT_DOMINIO_SCONOSCIUTO
-#    Examples:
-#      | elem       | value       | soapUI test |
-#      | fiscalCode | 10000000000 | SEM_VPNR_09 |
+  # fiscalCode value check: fiscalCode not present inside column ID_DOMINIO in NODO4_CFG.PA table of nodo-dei-pagamenti database [SEM_VPNR_09]
+  Scenario: Check PPT_DOMINIO_SCONOSCIUTO error on non-existent pa
+    Given fiscalCode with 10000000000 in verifyPaymentNoticeReq
+    When psp sends verifyPaymentNoticeReq to nodo-dei-pagamenti
+    Then check outcome is KO
+    And check faultCode is PPT_DOMINIO_SCONOSCIUTO
 
-  # TODO review
-#  # fiscalCode value check
-#  Scenario Outline: Check PPT_DOMINIO_DISABILITATO error on disabled pa
-#    Given <elem> with <value> in verifyPaymentNoticeReq
-#    And set field ENABLED = N in NODO4_CFG.PA table of nodo-dei-pagamenti database corresponding to ID_DOMINIO = <value>
-#    When psp sends verifyPaymentNoticeReq to nodo-dei-pagamenti
-#    Then check outcome is KO
-#    And check faultCode is PPT_DOMINIO_DISABILITATO
-#    Examples:
-#      | elem       | value        | soapUI test |
-#      | fiscalCode | 111111111111 | SEM_VPNR_10 |
-
+  # fiscalCode value check: fiscalCode with field ENABLED = N in NODO4_CFG.PA table of nodo-dei-pagamenti database corresponding to ID_DOMINIO [SEM_VPNR_10]
+  Scenario: Check PPT_DOMINIO_DISABILITATO error on disabled pa
+    Given fiscalCode with 11111122222 in verifyPaymentNoticeReq
+    When psp sends verifyPaymentNoticeReq to nodo-dei-pagamenti
+    Then check outcome is KO
+    And check faultCode is PPT_DOMINIO_DISABILITATO
 
   # station value check: combination fiscalCode-noticeNumber identifies a station not present inside column ID_STAZIONE in NODO4_CFG.STAZIONI table of nodo-dei-pagamenti database [SEM_VPNR_11]
   Scenario Outline: Check PPT_STAZIONE_INT_PA_SCONOSCIUTA error on non-existent station
