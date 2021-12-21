@@ -6,7 +6,7 @@ import requests
 from behave import *
 
 from utils import requests_retry_session
-
+import enum
 
 def get_soap_url_nodo(context):
     if context.config.userdata.get("services").get("nodo-dei-pagamenti").get("soap_service") is not None:
@@ -370,8 +370,8 @@ def step_impl(context):
     assert len(paSendRT.get("request").keys())
 
 
-@given("{mock:EcPsp} responds at {action} with:")
-def step_impl(context, mock, action):
+@given("{mock:EcPsp} responds to {destination} at {action} with:")
+def step_impl(context, mock,destination, action):
     """
         configure mock response
     """

@@ -1,4 +1,4 @@
-Feature:  process checks for VerifyPaymentNoticeReq - EC new
+Feature: process checks for VerifyPaymentNoticeReq - EC new
 
   Background:
     Given systems up
@@ -24,8 +24,7 @@ Feature:  process checks for VerifyPaymentNoticeReq - EC new
 
    # management of KO from PA - PRO_VPNR_06
   Scenario: Check PPT_ERRORE_EMESSO_DA_PAA error when paVerifyPaymentRes contains a KO
-    # TODO rivedere con francesco e pasquale
-    Given EC responds at paVerifyPaymentNoticeReq with:
+    Given EC responds to nodo-dei-pagamenti at paVerifyPaymentNotice with:
     """
      TODO insert xml with KO
     """
@@ -35,7 +34,7 @@ Feature:  process checks for VerifyPaymentNoticeReq - EC new
     
    # PA in timeout - PRO_VPNR_08
   Scenario: Check PPT_STAZIONE_INT_PA_TIMEOUT error when paVerifyPaymentRes is in timeout
-    Given EC wait for 30 seconds at paVerifyPaymentNoticeReq
+    Given EC wait for 30 seconds at paVerifyPaymentNotice
     When PSP sends verifyPaymentNoticeReq to nodo-dei-pagamenti
     Then check outcome is KO
     And check faultCode is PPT_STAZIONE_INT_PA_TIMEOUT
