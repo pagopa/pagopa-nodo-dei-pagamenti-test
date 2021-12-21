@@ -1,21 +1,22 @@
  Feature: syntax checks for verificaBollettinoReq - KO
  
- Background: Given systems up   
-    And valid verificaBollettino soap-request    
+ Background:
+    Given systems up
+    And initial verificaBollettinoReq soap-request
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-   <soapenv:Header/>
-   <soapenv:Body>
-      <nod:verificaBollettinoReq>
-         <idPSP>POSTE3</idPSP>
-         <idBrokerPSP>BANCOPOSTA</idBrokerPSP>
-         <idChannel>POSTE3</idChannel>
-         <password>pwdpwdpwd</password>
-         <ccPost>777777777777</ccPost>
-         <noticeNumber>#notice_number#</noticeNumber>
-      </nod:verificaBollettinoReq>
-   </soapenv:Body>
-</soapenv:Envelope>
+         <soapenv:Header/>
+         <soapenv:Body>
+            <nod:verificaBollettinoReq>
+               <idPSP>POSTE3</idPSP>
+               <idBrokerPSP>BANCOPOSTA</idBrokerPSP>
+               <idChannel>POSTE3</idChannel>
+               <password>pwdpwdpwd</password>
+               <ccPost>777777777777</ccPost>
+               <noticeNumber>#notice_number#</noticeNumber>
+            </nod:verificaBollettinoReq>
+         </soapenv:Body>
+      </soapenv:Envelope>
       """
       
  # attribute value check

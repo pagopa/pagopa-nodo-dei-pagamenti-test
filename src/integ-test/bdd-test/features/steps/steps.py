@@ -105,8 +105,8 @@ def step_impl(context):
     my_document = parseString(context.soap_request)
 
 
-@given('{elem} with {value} in verifyPaymentNoticeReq')
-def step_impl(context, elem, value):
+@given('{elem} with {value} in {action}')
+def step_impl(context, elem, value, action):
     TYPE_ELEMENT = 1 # dom element
     # TYPE_VALUE = 3 # dom value
     my_document = parseString(context.soap_request)
@@ -126,8 +126,8 @@ def step_impl(context, elem, value):
     setattr(context, "soap_request", my_document.toxml())
 
 
-@given('{attribute} set {value} for {elem} in verifyPaymentNoticeReq')
-def step_impl(context, attribute, value, elem):
+@given('{attribute} set {value} for {elem} in {action}')
+def step_impl(context, attribute, value, elem, action):
     my_document = parseString(context.soap_request)
     element = my_document.getElementsByTagName(elem)[0]
     element.setAttribute(attribute, value)
