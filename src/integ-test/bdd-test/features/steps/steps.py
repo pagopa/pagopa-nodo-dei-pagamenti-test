@@ -123,6 +123,18 @@ def step_impl(context, tag, value):
         print(my_document.getElementsByTagName('description')[0].firstChild.data)
     assert value == my_document.getElementsByTagName(tag)[0].firstChild.data
 
+@given('if {tag} is {data} set {elem} to {value} in {action}')
+def step_impl(context, tag, data, elem, value, action):
+    # TODO
+    soap_action = getattr(context, action)
+    my_document = parseString(soap_action)
+    if len(my_document.getElementsByTagName(tag)) > 0:
+        if my_document.getElementsByTagName(tag)[0].firstChild.data == data:
+            soap_action = utils.manipulate_soap_action(soap_action, elem, value)
+    setattr(context, action, soap_action)
+    primitive = utils.get_primitive(action)
+    response_status_code = utils.save_soap_action(utils.get_rest_mock_ec(context), primitive, soap_action)
+    assert response_status_code == 200
 
 # @then('check {mock} receives {action} properly')
 # def step_impl(context, mock, action):
