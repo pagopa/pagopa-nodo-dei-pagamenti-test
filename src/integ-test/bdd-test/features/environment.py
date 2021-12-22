@@ -48,7 +48,6 @@ def before_feature(context, feature):
     else:
         payload = payload.replace('#notice_number#',f"30211{str(random.randint(1000000000000, 9999999999999))}")
 
-
     setattr(context, "soap_request", payload)
 
     # DISABLE see @config-ec too 
