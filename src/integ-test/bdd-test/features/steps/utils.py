@@ -65,9 +65,9 @@ def set_nodo_response(context, nodo_response):
     context.config.update_userdata({"test_configuration": test_configuration})
 
 
-def save_soap_action(mock, primitive, soap_action):
+def save_soap_action(mock, primitive, soap_action, override=False):
     headers = {'Content-Type': 'application/xml'}  # set what your server accepts
-    response = requests.post(f"{mock}/api/v1/response/{primitive}", soap_action, headers=headers)
+    response = requests.post(f"{mock}/api/v1/response/{primitive}?override={str(override).lower()}", soap_action, headers=headers)
     return response.status_code
 
 
@@ -89,3 +89,13 @@ def manipulate_soap_action(soap_action, elem, value):
         element = my_document.getElementsByTagName(elem)[0].childNodes[0]
         element.nodeValue = value
     return my_document.toxml()
+
+
+def get_primitive(action):
+    action_to_primitive = {
+        "verifyPaymentNoticeReq": "verifyPaymentNotice",
+        "verifyPaymentNoticeRes": "verifyPaymentNotice",
+        "paVerifyPaymentNoticeReq": "paVerifyPaymentNotice",
+        "paVerifyPaymentNoticeRes": "paVerifyPaymentNotice"
+    }
+    return action_to_primitive.get(action)

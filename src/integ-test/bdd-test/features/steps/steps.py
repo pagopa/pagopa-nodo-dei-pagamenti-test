@@ -5,7 +5,6 @@ import utils as utils
 from xml.dom.minidom import parseString
 from behave import *
 
-
 # Background
 @given('systems up')
 def step_impl(context):
@@ -67,19 +66,14 @@ def step_impl(context):
 
 @given('{elem} with {value} in {action}')
 def step_impl(context, elem, value, action):
-    TYPE_ELEMENT = 1  # dom element
-    # TYPE_VALUE = 3  # dom value
-    my_document = parseString(context.soap_request)
-    if value == "None":
-        element = my_document.getElementsByTagName(elem)[0]
-        element.parentNode.removeChild(element)
-    elif value == "Empty":
-        element = my_document.getElementsByTagName(elem)[0].childNodes[0]
-        element.nodeValue = ''
-        childs = my_document.getElementsByTagName(elem)[0].childNodes
-        for child in childs:
-            if (child.nodeType == TYPE_ELEMENT):
-                child.parentNode.removeChild(child) 
+    if action == "verifyPaymentNoticeReq":
+        xml = utils.manipulate_soap_action(context.soap_request, elem, value)
+        setattr(context, "soap_request", xml)
+    elif action == "paVerifyPaymentNoticeRes":
+        pa_verify_payment_notice_res = getattr(context, "pa_verify_payment_notice_res")
+        pa_verify_payment_notice_res = utils.manipulate_soap_action(pa_verify_payment_notice_res, elem, value)
+        response_status_code = utils.save_soap_action(utils.get_rest_mock_ec(context), "paVerifyPaymentNotice", pa_verify_payment_notice_res)
+        assert response_status_code == 200
     else:
         assert False, "action not configured"
 
@@ -268,8 +262,7 @@ def step_impl(context):
     # step executed as PSP
     headers = {'Content-Type': 'application/xml'}  # set what your server accepts
     url_nodo = utils.get_soap_url_nodo(context)
-    paymentToken = context.config.userdata.get("test_configuration").get("paymentToken")
-
+    payment_token = context.config.userdata.get("test_configuration").get("paymentToken")
     send_payment_outcome = """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
         <soapenv:Header/>
@@ -306,7 +299,7 @@ def step_impl(context):
         </soapenv:Body>
       </soapenv:Envelope>
     """
-    send_payment_outcome = send_payment_outcome.replace("#paymentToken#", paymentToken)
+    send_payment_outcome = send_payment_outcome.replace("#paymentToken#", payment_token)
     print("nodo soap_request sent >>>", send_payment_outcome)    
     nodo_response = requests.post(url_nodo, send_payment_outcome, headers=headers)
     utils.set_nodo_response(context, nodo_response)
@@ -335,17 +328,17 @@ def step_impl(context):
     paSendRTJson = utils.requests_retry_session(session=s).get(
         f"{utils.get_rest_mock_ec(context)}/api/v1/history/{notice_number}/paSendRT")
     paSendRT = paSendRTJson.json()
-
     print(paSendRT.get("request"))
     assert len(paSendRT.get("request").keys())
 
 
 @given("{mock} replies to {destination} with the following {action}")
-def step_impl(context):
+def step_impl(context, mock, destination, action):
     pa_verify_payment_notice_res = context.text
     pa_verify_payment_notice_res = str(pa_verify_payment_notice_res).replace("#fiscalCodePA#", context.config.userdata.get("global_configuration").get("creditor_institution_code"))
     setattr(context, "pa_verify_payment_notice_res", pa_verify_payment_notice_res)
-    response_status_code = utils.save_soap_action(utils.get_rest_mock_ec(context), "paVerifyPaymentNotice", pa_verify_payment_notice_res)
+    primitive = utils.get_primitive(action)
+    response_status_code = utils.save_soap_action(utils.get_rest_mock_ec(context), primitive, pa_verify_payment_notice_res)
     assert response_status_code == 200
 
 
