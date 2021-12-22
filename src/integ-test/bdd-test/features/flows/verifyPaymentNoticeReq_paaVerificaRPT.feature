@@ -25,7 +25,7 @@ Feature:  process checks for VerifyPaymentNoticeReq - EC old
     # paaVerificaRPTReq trigger - PRO_VPNR_01
   Scenario: Check the trigger of paaVerificaRPTReq
     When PSP sends verifyPaymentNoticeReq to nodo-dei-pagamenti
-    Then check paaVerificaRPTReq is properly sent to PA
+    Then check paaVerificaRPTReq is properly sent to EC 
     
     # management of KO from EC - PRO_VPNR_05
   Scenario: Check PPT_ERRORE_EMESSO_DA_PAA error when paaVerificaRPTRes contains a KO
