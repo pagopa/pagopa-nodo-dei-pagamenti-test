@@ -86,7 +86,13 @@ def manipulate_soap_action(soap_action, elem, value):
             if child.nodeType == TYPE_ELEMENT:
                 child.parentNode.removeChild(child)
     elif str(value).startswith("Occurrences"):
-        print("")
+        occurrences = int(value.split(",")[1])
+        original_node = my_document.getElementsByTagName(elem)[0]
+        cloned_node = original_node.cloneNode(2)
+        for i in range(0, occurrences-1):
+            original_node.parentNode.insertBefore(cloned_node, original_node)
+            original_node = cloned_node
+            cloned_node = original_node.cloneNode(2)
     else:
         element = my_document.getElementsByTagName(elem)[0].childNodes[0]
         element.nodeValue = value
