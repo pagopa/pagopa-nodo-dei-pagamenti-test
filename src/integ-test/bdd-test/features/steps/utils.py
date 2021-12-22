@@ -83,7 +83,7 @@ def manipulate_soap_action(soap_action, elem, value):
         element.nodeValue = ''
         childs = my_document.getElementsByTagName(elem)[0].childNodes
         for child in childs:
-            if (child.nodeType == TYPE_ELEMENT):
+            if child.nodeType == TYPE_ELEMENT:
                 child.parentNode.removeChild(child)
     else:
         element = my_document.getElementsByTagName(elem)[0].childNodes[0]
