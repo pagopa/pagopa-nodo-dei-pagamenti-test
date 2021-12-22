@@ -82,7 +82,7 @@ Feature: syntax checks for paVerifyPaymentNoticeRes - KO
              <!--Optional:-->
              <paymentDescription>test</paymentDescription>
              <!--Optional:-->
-             <fiscalCodePA>${pa}</fiscalCodePA>
+             <fiscalCodePA>#fiscalCodePA#</fiscalCodePA>
              <!--Optional:-->
              <companyName>company</companyName>
              <!--Optional:-->
