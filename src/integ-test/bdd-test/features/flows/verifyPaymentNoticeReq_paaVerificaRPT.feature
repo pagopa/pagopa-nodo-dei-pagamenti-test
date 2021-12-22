@@ -29,7 +29,7 @@ Feature:  process checks for VerifyPaymentNoticeReq - EC old
     
     # management of KO from EC - PRO_VPNR_05
   Scenario: Check PPT_ERRORE_EMESSO_DA_PAA error when paaVerificaRPTRes contains a KO
-    Given EC responds to nodo-dei-pagamenti at paaVerificaRPTRes with:
+    Given EC replies to nodo-dei-pagamenti with the following paaVerificaRPTRes
     """
      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">
        <soapenv:Header/>
