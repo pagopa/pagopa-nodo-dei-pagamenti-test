@@ -1,14 +1,16 @@
-from xml.dom.minidom import parseString, parse
-import requests, random
-from behave import *
+import random
 import time
+from xml.dom.minidom import parseString
+
+import requests
+from behave import *
 
 from utils import requests_retry_session
 
 def get_soap_url_nodo(context):
     if context.config.userdata.get("services").get("nodo-dei-pagamenti").get("soap_service") is not None:
         return context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url") \
-           + context.config.userdata.get("services").get("nodo-dei-pagamenti").get("soap_service")
+               + context.config.userdata.get("services").get("nodo-dei-pagamenti").get("soap_service")
     else:
         return ""
 
@@ -64,8 +66,8 @@ def step_impl(context):
     assert responses
 
 
-@given('EC {new_old_version} version')
-def step_impl(context, new_old_version):
+@given('EC {version} version')
+def step_impl(context, version):
     pass
 
 
@@ -152,6 +154,7 @@ def step_impl(context, job_name, seconds):
     nodo_response = requests.get(f"{url_nodo}/jobs/trigger/{job_name}")
     assert nodo_response.status_code == 200
 
+
 # Scenario: Execute activateIOPayment request
 @then('check {tag} is {value}')
 def step_impl(context, tag, value):
@@ -162,6 +165,20 @@ def step_impl(context, tag, value):
         print(my_document.getElementsByTagName('faultString')[0].firstChild.data)
         print(my_document.getElementsByTagName('description')[0].firstChild.data)
     assert value == my_document.getElementsByTagName(tag)[0].firstChild.data
+
+
+# @then('check {mock} receives {action} properly')
+# def step_impl(context, mock, action):
+#     rest_mock = get_rest_mock_ec(context) if mock == "EC" else get_rest_mock_psp(context)
+#
+#     # retrieve info from soap request of background step
+#     soap_request = getattr(context, "soap_request")
+#     my_document = parseString(soap_request)
+#     notice_number = my_document.getElementsByTagName('noticeNumber')[0].firstChild.data
+#
+#     responseJson = requests.get(f"{rest_mock}/api/v1/history/{notice_number}/{action}")
+#     json = responseJson.json()
+#     assert "request" in json and len(json.get("request").keys()) > 0
 
 
 @when("IO sends an activateIOPaymentReq to nodo-dei-pagamenti")
@@ -359,9 +376,29 @@ def step_impl(context):
     my_document = parseString(soap_request)
     notice_number = my_document.getElementsByTagName('noticeNumber')[0].firstChild.data
     # paSendRTJson = requests.get(f"{get_rest_mock_ec(context)}/api/v1/history/{notice_number}/paSendRT")
-    paSendRTJson  = requests_retry_session(session=s).get(f"{get_rest_mock_ec(context)}/api/v1/history/{notice_number}/paSendRT")
+    paSendRTJson = requests_retry_session(session=s).get(
+        f"{get_rest_mock_ec(context)}/api/v1/history/{notice_number}/paSendRT")
     paSendRT = paSendRTJson.json()
 
     print(paSendRT.get("request"))
     assert len(paSendRT.get("request").keys())
 
+
+@given("{mock} replies to {destination} with the following {action}")
+def step_impl(context, mock,destination, action):
+    """
+        configure mock response
+    """
+    # TODO configure mock
+    # action mock action
+    # mockResponse = context.scenario.steps[0].text
+    pass
+
+
+@given("{mock} wait for {sec} seconds at {action}")
+def step_impl(context, mock, sec, action):
+    """
+            configure mock response
+        """
+    # TODO configure mock to wait x seconds at action
+    pass

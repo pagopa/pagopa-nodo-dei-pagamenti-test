@@ -3,8 +3,6 @@ import random
 
 from behave.model import Table
 
-import apiconfig
-
 
 def before_all(context):
     print('Global settings...')
@@ -32,10 +30,10 @@ def before_feature(context, feature):
                services.get(system_name).get("soap_service"),
                services.get(system_name).get("rest_service"))
         feature.background.steps[0].table.add_row(row)
-            
-    payload = feature.background.steps[1].text
+
+    payload = ([step.text for step in feature.background.steps if "initial" in step.name] or [""])[0]
     payload = payload.replace('#creditor_institution_code#',
-                                context.config.userdata.get("global_configuration").get("creditor_institution_code"))
+                              context.config.userdata.get("global_configuration").get("creditor_institution_code"))
     
     idempotency_key = context.config.userdata.get("global_configuration").get("idempotencyKey")
     if "idempotencyKey" in context.config.userdata.get("global_configuration"):
