@@ -31,18 +31,19 @@ Feature:  process checks for VerifyPaymentNoticeReq - EC old
   Scenario: Check PPT_ERRORE_EMESSO_DA_PAA error when paaVerificaRPTRes contains a KO
     Given EC responds to nodo-dei-pagamenti at paaVerificaRPTRes with:
     """
-     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
+     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">
        <soapenv:Header/>
        <soapenv:Body>
-          <paf:paVerifyPaymentNoticeRes>
-             <outcome>KO</outcome>
-             <fault>
-                <faultCode>PAA_SEMANTICA</faultCode>
-                <faultString>errore semantico PA</faultString>
-                <id>#creditor_institution_code#</id>
-                <description>errore semantico emesso dalla PA</description>
-             </fault>
-          </paf:paVerifyPaymentNoticeRes>
+          <ws:paaVerificaRPTRisposta>
+             <paaVerificaRPTRisposta>
+                <fault>
+                   <faultCode>PAA_SEMANTICA</faultCode>
+                   <faultString>Errore semantico</faultString>
+                   <id>#creditor_institution_code#</id>
+                </fault>
+                <esito>KO</esito>
+             </paaVerificaRPTRisposta>
+          </ws:paaVerificaRPTRisposta>
        </soapenv:Body>
     </soapenv:Envelope>
     """

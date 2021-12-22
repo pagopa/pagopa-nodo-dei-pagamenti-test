@@ -26,7 +26,19 @@ Feature: process checks for VerifyPaymentNoticeReq - EC new
   Scenario: Check PPT_ERRORE_EMESSO_DA_PAA error when paVerifyPaymentRes contains a KO
     Given EC responds to nodo-dei-pagamenti at paVerifyPaymentNotice with:
     """
-     TODO insert xml with KO
+     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
+           <soapenv:Header/>
+           <soapenv:Body>
+              <paf:paVerifyPaymentNoticeRes>
+                 <outcome>KO</outcome>
+                 <fault>
+                    <faultCode>PAA_SEMANTICA</faultCode>
+                    <faultString>Errore semantico</faultString>
+                    <id>1</id>
+                 </fault>
+              </paf:paVerifyPaymentNoticeRes>
+           </soapenv:Body>
+        </soapenv:Envelope>
     """
     When PSP sends verifyPaymentNoticeReq to nodo-dei-pagamenti
     Then check outcome is KO
