@@ -67,7 +67,7 @@ def set_nodo_response(context, nodo_response):
 
 def save_soap_action(mock, primitive, soap_action, override=False):
     headers = {'Content-Type': 'application/xml'}  # set what your server accepts
-    response = requests.post(f"{mock}/api/v1/response/{primitive}?override={str(override).lower()}", soap_action, headers=headers)
+    response = requests.post(f"{mock}/api/v1/response/{primitive}?override={override}", soap_action, headers=headers)
     return response.status_code
 
 

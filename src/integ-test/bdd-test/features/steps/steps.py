@@ -5,6 +5,7 @@ import utils as utils
 from xml.dom.minidom import parseString
 from behave import *
 
+
 # Background
 @given('systems up')
 def step_impl(context):
@@ -37,7 +38,7 @@ def step_impl(context, type_soap_request):
 def step_impl(context, type_soap_request):
     """
         get valid 
-    """     
+    """
     old_soap_request = getattr(context, "soap_request")
     new_soap_request = context.scenario.steps[0].text
 
@@ -49,14 +50,17 @@ def step_impl(context, type_soap_request):
     if type_soap_request == "activatePaymentNoticeReq":
         new_soap_request = new_soap_request.replace("#creditor_institution_code#", fiscal_code)
         new_soap_request = new_soap_request.replace("#notice_number#", notice_number)
-        new_soap_request = new_soap_request.replace('#idempotency_key#', f"70000000001_{str(random.randint(1000000000, 9999999999))}")
-        
-    if type_soap_request == "sendPaymentOutcomeReq":
-        new_soap_request = new_soap_request.replace("#payment_token#",context.config.userdata.get("test_configuration").get("paymentToken"))
+        new_soap_request = new_soap_request.replace('#idempotency_key#',
+                                                    f"70000000001_{str(random.randint(1000000000, 9999999999))}")
 
+    if type_soap_request == "sendPaymentOutcomeReq":
+        new_soap_request = new_soap_request.replace("#payment_token#",
+                                                    context.config.userdata.get("test_configuration").get(
+                                                        "paymentToken"))
 
     setattr(context, "soap_request", new_soap_request)
     assert True
+
 
 @given('random idempotencyKey and noticeNumber')
 def step_impl(context):
@@ -70,9 +74,10 @@ def step_impl(context, elem, value, action):
         xml = utils.manipulate_soap_action(context.soap_request, elem, value)
         setattr(context, "soap_request", xml)
     elif action == "paVerifyPaymentNoticeRes":
-        pa_verify_payment_notice_res = getattr(context, "pa_verify_payment_notice_res")
+        pa_verify_payment_notice_res = getattr(context, "paVerifyPaymentNoticeRes")
         pa_verify_payment_notice_res = utils.manipulate_soap_action(pa_verify_payment_notice_res, elem, value)
-        response_status_code = utils.save_soap_action(utils.get_rest_mock_ec(context), "paVerifyPaymentNotice", pa_verify_payment_notice_res)
+        response_status_code = utils.save_soap_action(utils.get_rest_mock_ec(context), "paVerifyPaymentNotice",
+                                                      pa_verify_payment_notice_res, override=True)
         assert response_status_code == 200
     else:
         assert False, "action not configured"
@@ -89,13 +94,15 @@ def step_impl(context, attribute, value, elem, action):
 # Scenario : Check valid URL in WSDL namespace
 @when('psp sends {soap_action} to nodo-dei-pagamenti')
 def step_impl(context, soap_action):
-    headers = {'Content-Type': 'application/xml', "SOAPAction": soap_action }  # set what your server accepts
+    headers = {'Content-Type': 'application/xml', "SOAPAction": soap_action}  # set what your server accepts
     url_nodo = utils.get_soap_url_nodo(context)
     print("nodo soap_request sent >>>", context.soap_request)
     nodo_response = requests.post(url_nodo, context.soap_request, headers=headers)
     utils.set_nodo_response(context, nodo_response)
+
     assert (nodo_response.status_code == 200), f"status_code {nodo_response.status_code}"
-    
+
+
 # When job <JOB_NAME> triggered    
 @when('job {job_name} triggered after {seconds} seconds')
 def step_impl(context, job_name, seconds):
@@ -236,17 +243,24 @@ def step_impl(context):
     notice_number = my_document.getElementsByTagName('noticeNumber')[0].firstChild.data
 
     paGetPaymentJson = requests.get(f"{utils.get_rest_mock_ec(context)}/api/v1/history/{notice_number}/paGetPayment")
-    pspNotifyPaymentJson = requests.get(f"{utils.get_rest_mock_ec(context)}/api/v1/history/{notice_number}/pspNotifyPayment")
+    pspNotifyPaymentJson = requests.get(
+        f"{utils.get_rest_mock_ec(context)}/api/v1/history/{notice_number}/pspNotifyPayment")
 
     paGetPayment = paGetPaymentJson.json()
     pspNotifyPayment = pspNotifyPaymentJson.json()
 
     # verify transfer list are equal
-    paGetPaymentRes_transferList = paGetPayment.get("response").get("soapenv:Envelope").get("soapenv:Body")[0].get("paf:paGetPaymentRes")[0].get("data")[0].get("transferList")
-    pspNotifyPaymentReq_transferList = pspNotifyPayment.get("request").get("soapenv:envelope").get("soapenv:body")[0].get("pspfn:pspnotifypaymentreq")[0].get("transferlist")
+    paGetPaymentRes_transferList = \
+    paGetPayment.get("response").get("soapenv:Envelope").get("soapenv:Body")[0].get("paf:paGetPaymentRes")[0].get(
+        "data")[0].get("transferList")
+    pspNotifyPaymentReq_transferList = \
+    pspNotifyPayment.get("request").get("soapenv:envelope").get("soapenv:body")[0].get("pspfn:pspnotifypaymentreq")[
+        0].get("transferlist")
 
-    paGetPaymentRes_transferList_sorted = sorted(paGetPaymentRes_transferList, key=lambda transfer: int(transfer.get("transfer")[0].get("idTransfer")[0]))
-    pspNotifyPaymentReq_transferList_sorted = sorted(pspNotifyPaymentReq_transferList, key=lambda transfer: int(transfer.get("transfer")[0].get("idtransfer")[0]))
+    paGetPaymentRes_transferList_sorted = sorted(paGetPaymentRes_transferList, key=lambda transfer: int(
+        transfer.get("transfer")[0].get("idTransfer")[0]))
+    pspNotifyPaymentReq_transferList_sorted = sorted(pspNotifyPaymentReq_transferList, key=lambda transfer: int(
+        transfer.get("transfer")[0].get("idtransfer")[0]))
 
     mixed_list = zip(paGetPaymentRes_transferList_sorted, pspNotifyPaymentReq_transferList_sorted)
     for x in mixed_list:
@@ -300,7 +314,7 @@ def step_impl(context):
       </soapenv:Envelope>
     """
     send_payment_outcome = send_payment_outcome.replace("#paymentToken#", payment_token)
-    print("nodo soap_request sent >>>", send_payment_outcome)    
+    print("nodo soap_request sent >>>", send_payment_outcome)
     nodo_response = requests.post(url_nodo, send_payment_outcome, headers=headers)
     utils.set_nodo_response(context, nodo_response)
 
@@ -335,10 +349,14 @@ def step_impl(context):
 @given("{mock} replies to {destination} with the following {action}")
 def step_impl(context, mock, destination, action):
     pa_verify_payment_notice_res = context.text
-    pa_verify_payment_notice_res = str(pa_verify_payment_notice_res).replace("#fiscalCodePA#", context.config.userdata.get("global_configuration").get("creditor_institution_code"))
-    setattr(context, "pa_verify_payment_notice_res", pa_verify_payment_notice_res)
+    pa_verify_payment_notice_res = str(pa_verify_payment_notice_res).replace("#fiscalCodePA#",
+                                                                             context.config.userdata.get(
+                                                                                 "global_configuration").get(
+                                                                                 "creditor_institution_code"))
+    setattr(context, "paVerifyPaymentNoticeRes", pa_verify_payment_notice_res)
     primitive = utils.get_primitive(action)
-    response_status_code = utils.save_soap_action(utils.get_rest_mock_ec(context), primitive, pa_verify_payment_notice_res)
+    response_status_code = utils.save_soap_action(utils.get_rest_mock_ec(context), primitive,
+                                                  pa_verify_payment_notice_res, override=True)
     assert response_status_code == 200
 
 
