@@ -5,6 +5,7 @@ import utils as utils
 from xml.dom.minidom import parseString
 from behave import *
 
+
 # Background
 @given('systems up')
 def step_impl(context):
@@ -98,6 +99,7 @@ def step_impl(context, soap_action):
     print("nodo soap_request sent >>>", context.soap_request)
     nodo_response = requests.post(url_nodo, context.soap_request, headers=headers)
     utils.set_nodo_response(context, nodo_response)
+
     assert (nodo_response.status_code == 200), f"status_code {nodo_response.status_code}"
 
 
