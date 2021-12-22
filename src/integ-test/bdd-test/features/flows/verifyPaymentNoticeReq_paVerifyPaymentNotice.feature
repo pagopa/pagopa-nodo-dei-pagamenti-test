@@ -24,7 +24,7 @@ Feature: process checks for VerifyPaymentNoticeReq - EC new
 
    # management of KO from PA - PRO_VPNR_06
   Scenario: Check PPT_ERRORE_EMESSO_DA_PAA error when paVerifyPaymentRes contains a KO
-    Given EC responds to nodo-dei-pagamenti at paVerifyPaymentNotice with:
+    Given EC replies to nodo-dei-pagamenti with the following paVerifyPaymentNotice
     """
      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
            <soapenv:Header/>
