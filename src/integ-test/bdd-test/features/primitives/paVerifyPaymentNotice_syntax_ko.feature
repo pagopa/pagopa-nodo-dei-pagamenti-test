@@ -23,26 +23,32 @@ Feature: syntax checks for paVerifyPaymentNoticeRes - KO
     And EC new version
 
   # element value check
-  Scenario Outline: Check PPT_STAZIONE_INT_PA_ERRORE_RESPONSE error on invalid body element value
-    Given EC responds to nodo-dei-pagamenti at paVerifyPaymentNoticeReq with
-    """
-    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
-       <soapenv:Header/>
-       <soapenv:Body>
-          <paf:paVerifyPaymentNoticeRes>
-             <outcome>#outcome#</outcome>
-          </paf:paVerifyPaymentNoticeRes>
-       </soapenv:Body>
-    </soapenv:Envelope>
-    """
-    And <elem> with <value> in paVerifyPaymentNoticeRes
-    And if outcome is KO set fault to None in paVerifyPaymentNoticeRes
-    When PSP sends verifyPaymentNoticeReq to nodo-dei-pagamenti
-    Then check outcome is KO
-    And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE
-    Examples:
-      | elem                         | value                                | soapUI test  |
-      | soapenv:Body                 | None                                 | SIN_PVPNR_02 |
+#  Scenario Outline: Check PPT_STAZIONE_INT_PA_ERRORE_RESPONSE error on invalid body element value
+#    Given EC replies to nodo-dei-pagamenti with the following paVerifyPaymentNoticeReq
+#    """
+#    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
+#       <soapenv:Header/>
+#       <soapenv:Body>
+#          <paf:paVerifyPaymentNoticeRes>
+#             <outcome>#outcome#</outcome>
+#             <fault>
+#                <faultCode>#faultCode#</faultCode>
+#                <faultString>#faultString#</faultString>
+#                <id>#id#</id>
+#                <description>#description#</description>
+#             </fault>
+#          </paf:paVerifyPaymentNoticeRes>
+#       </soapenv:Body>
+#    </soapenv:Envelope>
+#    """
+#    And <elem> with <value> in paVerifyPaymentNoticeRes
+#    And if outcome is KO set fault to None in paVerifyPaymentNoticeRes
+#    When PSP sends verifyPaymentNoticeReq to nodo-dei-pagamenti
+#    Then check outcome is KO
+#    And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE
+#    Examples:
+#      | elem                         | value                                | soapUI test  |
+#      | soapenv:Body                 | None                                 | SIN_PVPNR_02 |
 #      | soapenv:Body                 | Empty                                | SIN_PVPNR_03 |
 #      | paf:paVerifyPaymentNoticeRes | None                                 | SIN_PVPNR_04 |
 #      | paf:paVerifyPaymentNoticeRes | Empty                                | SIN_PVPNR_06 |
@@ -52,50 +58,50 @@ Feature: syntax checks for paVerifyPaymentNoticeRes - KO
 #      | outcome                      | KO                                   | SIN_PVPNR_10 |
 
 
-#  Scenario Outline: Check PPT_STAZIONE_INT_PA_ERRORE_RESPONSE error on invalid body element value
-#    Given EC responds to nodo-dei-pagamenti at paVerifyPaymentNoticeReq with
-#    """
-#    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
-#       <soapenv:Header/>
-#       <soapenv:Body>
-#          <paf:paVerifyPaymentNoticeRes>
-#             <outcome>OK</outcome>
-#             <paymentList>
-#                <!--1 to 5 repetitions:-->
-#                <paymentOptionDescription>
-#                   <amount>10.00</amount>
-#                   <options>EQ</options>
-#                   <!--Optional:-->
-#                   <dueDate>2021-12-31</dueDate>
-#                   <!--Optional:-->
-#                   <detailDescription>test</detailDescription>
-#                   <!--Optional:-->
-#                   <allCCP>1</allCCP>
-#                </paymentOptionDescription>
-#             </paymentList>
-#             <!--Optional:-->
-#             <paymentDescription>test</paymentDescription>
-#             <!--Optional:-->
-#             <fiscalCodePA>${pa}</fiscalCodePA>
-#             <!--Optional:-->
-#             <companyName>company</companyName>
-#             <!--Optional:-->
-#             <officeName>office</officeName>
-#          </paf:paVerifyPaymentNoticeRes>
-#       </soapenv:Body>
-#    </soapenv:Envelope>
-#    """
-#    And <elem> with <value> in paVerifyPaymentNoticeRes
-#    When PSP sends verifyPaymentNoticeReq to nodo-dei-pagamenti
-#    Then check outcome is KO
-#    And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE
-#    Examples:
-#      | elem                      | value                 | soapUI test |
+  Scenario Outline: Check PPT_STAZIONE_INT_PA_ERRORE_RESPONSE error on invalid body element value
+    Given EC replies to nodo-dei-pagamenti with the following paVerifyPaymentNoticeReq
+    """
+    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
+       <soapenv:Header/>
+       <soapenv:Body>
+          <paf:paVerifyPaymentNoticeRes>
+             <outcome>OK</outcome>
+             <paymentList>
+                <!--1 to 5 repetitions:-->
+                <paymentOptionDescription>
+                   <amount>10.00</amount>
+                   <options>EQ</options>
+                   <!--Optional:-->
+                   <dueDate>2021-12-31</dueDate>
+                   <!--Optional:-->
+                   <detailDescription>test</detailDescription>
+                   <!--Optional:-->
+                   <allCCP>1</allCCP>
+                </paymentOptionDescription>
+             </paymentList>
+             <!--Optional:-->
+             <paymentDescription>test</paymentDescription>
+             <!--Optional:-->
+             <fiscalCodePA>${pa}</fiscalCodePA>
+             <!--Optional:-->
+             <companyName>company</companyName>
+             <!--Optional:-->
+             <officeName>office</officeName>
+          </paf:paVerifyPaymentNoticeRes>
+       </soapenv:Body>
+    </soapenv:Envelope>
+    """
+    And <elem> with <value> in paVerifyPaymentNoticeRes
+    When PSP sends verifyPaymentNoticeReq to nodo-dei-pagamenti
+    Then check outcome is KO
+    And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE
+    Examples:
+      | elem                      | value                 | soapUI test |
 #      | paymentList               | None                  | SIN_PVPNR_11|
 #      | paymentList               | Empty                 | SIN_PVPNR_13|
 #      | paymentOptionDescription  | None                  | SIN_PVPNR_14|
 #      | paymentOptionDescription  | Empty                 | SIN_PVPNR_15|
-#      | paymentOptionDescription  | two occurrences       | SIN_PVPNR_16|
+      | paymentOptionDescription  | Occurrences,2         | SIN_PVPNR_16|
 #      | amount                    | None                  | SIN_PVPNR_17|
 #      | amount                    | Empty                 | SIN_PVPNR_18|
 #      | amount                    | 11,34                 | SIN_PVPNR_19|

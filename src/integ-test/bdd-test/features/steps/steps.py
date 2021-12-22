@@ -62,12 +62,6 @@ def step_impl(context, type_soap_request):
     assert True
 
 
-@given('random idempotencyKey and noticeNumber')
-def step_impl(context):
-    soap_request = getattr(context, "soap_request")
-    my_document = parseString(context.soap_request)
-
-
 @given('{elem} with {value} in {action}')
 def step_impl(context, elem, value, action):
     if action == "verifyPaymentNoticeReq":
@@ -125,15 +119,14 @@ def step_impl(context, tag, value):
 
 @given('if {tag} is {data} set {elem} to {value} in {action}')
 def step_impl(context, tag, data, elem, value, action):
-    # TODO
     soap_action = getattr(context, action)
     my_document = parseString(soap_action)
     if len(my_document.getElementsByTagName(tag)) > 0:
-        if my_document.getElementsByTagName(tag)[0].firstChild.data == data:
+        if my_document.getElementsByTagName(tag)[0].firstChild is not None and my_document.getElementsByTagName(tag)[0].firstChild.data == data:
             soap_action = utils.manipulate_soap_action(soap_action, elem, value)
     setattr(context, action, soap_action)
     primitive = utils.get_primitive(action)
-    response_status_code = utils.save_soap_action(utils.get_rest_mock_ec(context), primitive, soap_action)
+    response_status_code = utils.save_soap_action(utils.get_rest_mock_ec(context), primitive, soap_action, override=True)
     assert response_status_code == 200
 
 # @then('check {mock} receives {action} properly')

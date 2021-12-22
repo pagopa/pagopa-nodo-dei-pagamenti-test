@@ -85,6 +85,8 @@ def manipulate_soap_action(soap_action, elem, value):
         for child in childs:
             if child.nodeType == TYPE_ELEMENT:
                 child.parentNode.removeChild(child)
+    elif str(value).startswith("Occurrences"):
+        print("")
     else:
         element = my_document.getElementsByTagName(elem)[0].childNodes[0]
         element.nodeValue = value
