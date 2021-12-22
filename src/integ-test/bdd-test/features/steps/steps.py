@@ -6,6 +6,32 @@ from xml.dom.minidom import parseString
 from behave import *
 
 
+def save_soap_action(mock, primitive, soap_action):
+    headers = {'Content-Type': 'application/xml'}  # set what your server accepts
+    response = requests.post(f"{mock}/api/v1/response/{primitive}", soap_action, headers=headers)
+    return response.status_code
+
+
+def manipulate_soap_action(soap_action, elem, value):
+    TYPE_ELEMENT = 1 # dom element
+    # TYPE_VALUE = 3 # dom value
+    my_document = parseString(soap_action)
+    if value == "None":
+        element = my_document.getElementsByTagName(elem)[0]
+        element.parentNode.removeChild(element)
+    elif value == "Empty":
+        element = my_document.getElementsByTagName(elem)[0].childNodes[0]
+        element.nodeValue = ''
+        childs = my_document.getElementsByTagName(elem)[0].childNodes
+        for child in childs:
+            if (child.nodeType == TYPE_ELEMENT):
+                child.parentNode.removeChild(child)
+    else:
+        element = my_document.getElementsByTagName(elem)[0].childNodes[0]
+        element.nodeValue = value
+    return my_document.toxml()
+
+
 # Background
 @given('systems up')
 def step_impl(context):
