@@ -1,6 +1,6 @@
- Feature: syntax checks for paVerifyPaymentNoticeRes - OK
- 
- Background:
+Feature: syntax checks for paVerifyPaymentNoticeRes - OK
+
+  Background:
     Given systems up
     And valid verifyPaymentNoticeReq soap-request
       """
@@ -21,20 +21,47 @@
       </soapenv:Envelope>
       """
     And EC new version
- 
- Scenario Outline: Check paVerifyPaymentRes response with missing optional fields
 
-    Given <elem> with <value> in paVerifyPaymentNoticeRes
-    And outcome OK
-    When pa sends paVerifyPaymentNoticeRes to nodo-dei-pagamenti
-    Then check no error is raised
+  Scenario Outline: Check paVerifyPaymentRes response with missing optional fields
+    Given EC responds to nodo-dei-pagamenti at paVerifyPaymentNoticeReq with:
+    """
+      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
+         <soapenv:Header/>
+         <soapenv:Body>
+            <paf:paVerifyPaymentNoticeRes>
+               <outcome>OK</outcome>
+               <!--Optional:-->
+               <officeName>office</officeName>
+               <!--Optional:-->
+               <fiscalCodePA>fiscalCodePA</fiscalCodePA>
+               <paymentList>
+                  <!--1 to 5 repetitions:-->
+                  <paymentOptionDescription>
+                     <amount>10.00</amount>
+                     <options>EQ</options>
+                     <!--Optional:-->
+                     <dueDate>2021-12-31</dueDate>
+                     <!--Optional:-->
+                     <detailDescription>test</detailDescription>
+                     <!--Optional:-->
+                     <allCCP>1</allCCP>
+                  </paymentOptionDescription>
+               </paymentList>
+
+            </paf:paVerifyPaymentNoticeRes>
+         </soapenv:Body>
+      </soapenv:Envelope>
+    """
+    And <elem> with <value> in paVerifyPaymentNoticeRes
+    When PSP sends verifyPaymentNoticeReq to nodo-dei-pagamenti
+    Then check outcome is OK
     Examples:
-      | elem                      | value                 | soapUI test |
-      | soapenv:Header            | None                  | SIN_PVPNR_01|
-      | dueDate                   | None                  | SIN_PVPNR_25|
-      | detailDescription         | None                  | SIN_PVPNR_28|
-      | allCCP                    | None                  | SIN_PVPNR_31|
-      | paymentDescription        | None                  | SIN_PVPNR_34|
-      | fiscalCodePA              | None                  | SIN_PVPNR_37|
-      | companyName               | None                  | SIN_PVPNR_41|
-      | officeName                | None                  | SIN_PVPNR_44|
+      | elem               | value | soapUI test  |
+      | soapenv:Header     | None  | SIN_PVPNR_01 |
+      | dueDate            | None  | SIN_PVPNR_25 |
+      | detailDescription  | None  | SIN_PVPNR_28 |
+      | allCCP             | None  | SIN_PVPNR_31 |
+      | paymentDescription | None  | SIN_PVPNR_34 |
+      | fiscalCodePA       | None  | SIN_PVPNR_37 |
+      | companyName        | None  | SIN_PVPNR_41 |
+      | officeName         | None  | SIN_PVPNR_44 |
