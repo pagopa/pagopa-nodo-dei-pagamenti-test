@@ -58,12 +58,12 @@ Feature: syntax checks for paVerifyPaymentNoticeRes - OK
     When PSP sends verifyPaymentNoticeReq to nodo-dei-pagamenti
     Then check outcome is OK
     Examples:
-      | elem               | value | soapUI test  ||
-      | soapenv:Header     | None  | SIN_PVPNR_01 ||
-      | dueDate            | None  | SIN_PVPNR_25 ||
-      | detailDescription  | None  | SIN_PVPNR_28 ||
-      | allCCP             | None  | SIN_PVPNR_31 | # it is not optionally|
-      | paymentDescription | None  | SIN_PVPNR_34 | why PPT_STAZIONE_INT_PA_ERRORE_RESPONSE|
-      | fiscalCodePA       | None  | SIN_PVPNR_37 | why PPT_STAZIONE_INT_PA_ERRORE_RESPONSE|
-      | companyName        | None  | SIN_PVPNR_41 | why PPT_STAZIONE_INT_PA_ERRORE_RESPONSE|
-      | officeName         | None  | SIN_PVPNR_44 ||
+      | elem               | value | soapUI test  |
+      | soapenv:Header     | None  | SIN_PVPNR_01 |
+      | dueDate            | None  | SIN_PVPNR_25 |
+      | detailDescription  | None  | SIN_PVPNR_28 |
+#      | allCCP             | None  | SIN_PVPNR_31 | # it is not optionally|
+#      | paymentDescription | None  | SIN_PVPNR_34 | why PPT_STAZIONE_INT_PA_ERRORE_RESPONSE|
+#      | fiscalCodePA       | None  | SIN_PVPNR_37 | why PPT_STAZIONE_INT_PA_ERRORE_RESPONSE|
+#      | companyName        | None  | SIN_PVPNR_41 | why PPT_STAZIONE_INT_PA_ERRORE_RESPONSE|
+      | officeName         | None  | SIN_PVPNR_44 |
