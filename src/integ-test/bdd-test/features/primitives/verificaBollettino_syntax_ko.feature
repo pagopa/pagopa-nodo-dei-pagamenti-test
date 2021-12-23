@@ -34,7 +34,7 @@
     Given <elem> with <value> in verificaBollettinoReq
     When psp sends verificaBollettinoReq to nodo-dei-pagamenti
     Then check outcome is KO
-    And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE  
+    And check faultCode is PPT_SINTASSI_EXTRAXSD
     Examples:
       | elem                       | value                                 | soapUI test |
       | soapenv:Body               | None                                  | SIN_VB_03   |
