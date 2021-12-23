@@ -4,26 +4,26 @@ Feature: checks for EC new and nodoVerificaRPT
     Given systems up
     And initial nodoVerificaRPT soap-request
       """
-     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:bc="http://PuntoAccessoPSP.spcoop.gov.it/BarCode_GS1_128_Modified" xmlns:aim="http://PuntoAccessoPSP.spcoop.gov.it/Code_128_AIM_USS-128_tipo_C" xmlns:qrc="http://PuntoAccessoPSP.spcoop.gov.it/QrCode">
-        <soapenv:Header/>
-        <soapenv:Body>
-            <ws:nodoVerificaRPT>
-                <identificativoPSP>70000000001</identificativoPSP>
-                <identificativoIntermediarioPSP>70000000001</identificativoIntermediarioPSP>
-                <identificativoCanale>70000000001_01</identificativoCanale>
-                <password>pwdpwdpwd</password>
-                <codiceContestoPagamento>120671877019565</codiceContestoPagamento>
-                <codificaInfrastrutturaPSP>QR-CODE</codificaInfrastrutturaPSP>
-                <codiceIdRPT>
-                  <qrc:QrCode>
-                    <qrc:CF>#creditor_institution_code#</qrc:CF>
-                    <qrc:AuxDigit>3</qrc:AuxDigit>
-                    <qrc:CodIUV>11192051789512983</qrc:CodIUV>
-                  </qrc:QrCode>
-                </codiceIdRPT>
-            </ws:nodoVerificaRPT>
-        </soapenv:Body>
-    </soapenv:Envelope>
+       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:bc="http://PuntoAccessoPSP.spcoop.gov.it/BarCode_GS1_128_Modified" xmlns:aim="http://PuntoAccessoPSP.spcoop.gov.it/Code_128_AIM_USS-128_tipo_C" xmlns:qrc="http://PuntoAccessoPSP.spcoop.gov.it/QrCode">
+          <soapenv:Header/>
+          <soapenv:Body>
+              <ws:nodoVerificaRPT>
+                  <identificativoPSP>70000000001</identificativoPSP>
+                  <identificativoIntermediarioPSP>70000000001</identificativoIntermediarioPSP>
+                  <identificativoCanale>70000000001_01</identificativoCanale>
+                  <password>pwdpwdpwd</password>
+                  <codiceContestoPagamento>120671877019565</codiceContestoPagamento>
+                  <codificaInfrastrutturaPSP>QR-CODE</codificaInfrastrutturaPSP>
+                  <codiceIdRPT>
+                    <qrc:QrCode>
+                      <qrc:CF>#creditor_institution_code#</qrc:CF>
+                      <qrc:AuxDigit>3</qrc:AuxDigit>
+                      <qrc:CodIUV>11192051789512983</qrc:CodIUV>
+                    </qrc:QrCode>
+                  </codiceIdRPT>
+              </ws:nodoVerificaRPT>
+          </soapenv:Body>
+      </soapenv:Envelope>
       """
     And EC new version
 
