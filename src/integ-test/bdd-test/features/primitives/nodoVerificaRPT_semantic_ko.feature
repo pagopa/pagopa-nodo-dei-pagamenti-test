@@ -4,7 +4,7 @@ Feature: checks for EC new and nodoVerificaRPT
     Given systems up
     And initial nodoVerificaRPT soap-request
       """
-       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:bc="http://PuntoAccessoPSP.spcoop.gov.it/BarCode_GS1_128_Modified" xmlns:aim="http://PuntoAccessoPSP.spcoop.gov.it/Code_128_AIM_USS-128_tipo_C" xmlns:qrc="http://PuntoAccessoPSP.spcoop.gov.it/QrCode">
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:bc="http://PuntoAccessoPSP.spcoop.gov.it/BarCode_GS1_128_Modified" xmlns:aim="http://PuntoAccessoPSP.spcoop.gov.it/Code_128_AIM_USS-128_tipo_C" xmlns:qrc="http://PuntoAccessoPSP.spcoop.gov.it/QrCode">
           <soapenv:Header/>
           <soapenv:Body>
               <ws:nodoVerificaRPT>
@@ -23,12 +23,12 @@ Feature: checks for EC new and nodoVerificaRPT
                   </codiceIdRPT>
               </ws:nodoVerificaRPT>
           </soapenv:Body>
-      </soapenv:Envelope>
+        </soapenv:Envelope>
       """
     And EC new version
 
     # check PPT_MULTI_BENEFICIARIO error - PRO_VPNR_04
   Scenario: Check PPT_MULTI_BENEFICIARIO error
     When PSP sends nodoVerificaRPT to nodo-dei-pagamenti
-    Then check outcome is KO
+    Then check esito is KO
     And check faultCode is PPT_MULTI_BENEFICIARIO
