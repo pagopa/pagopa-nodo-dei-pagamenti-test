@@ -18,8 +18,8 @@ Feature:  syntax checks KO for activatePaymentNoticeReq
                       <fiscalCode>#creditor_institution_code#</fiscalCode>
                       <noticeNumber>#notice_number#</noticeNumber>
                   </qrCode>
-                  <amount>10.00</amount>
                   <expirationTime>120000</expirationTime>
+                  <amount>10.00</amount>
                   <dueDate>2021-12-31</dueDate>
                   <paymentNote>causale</paymentNote>
               </nod:activatePaymentNoticeReq>
