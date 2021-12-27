@@ -2,7 +2,7 @@ Feature:  syntax checks OK for activatePaymentNoticeReq
 
   Background:
     Given systems up
-    And initial activatePaymentNoticeReq soap-request
+    And initial xml for activatePaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
           xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -29,8 +29,8 @@ Feature:  syntax checks OK for activatePaymentNoticeReq
 
   Scenario: Check valid URL in WSDL namespace
     # Given a valid WSDL
-    When psp sends activatePaymentNoticeReq to nodo-dei-pagamenti
-    Then check outcome is OK
+    When psp sends soap activatePaymentNotice to nodo-dei-pagamenti
+    Then check outcome is OK of activatePaymentNotice response
 	
 
   # Scenario Outline: Check OK response on missing optional fields idempotencyKey - SIN_APNR_18

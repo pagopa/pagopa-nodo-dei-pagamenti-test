@@ -130,7 +130,7 @@ def step_impl(context, tag, value, action):
             print(my_document.getElementsByTagName('faultString')[0].firstChild.data)
             print(my_document.getElementsByTagName('description')[0].firstChild.data)
         data = my_document.getElementsByTagName(tag)[0].firstChild.data
-        print(f'check tag "{tag}" - expected: {value}, obteined: {data}')
+        print(f'check tag "{tag}" - expected: {value}, obtained: {data}')
         assert value == data
     else:
         node_response = getattr(context, action + "response")

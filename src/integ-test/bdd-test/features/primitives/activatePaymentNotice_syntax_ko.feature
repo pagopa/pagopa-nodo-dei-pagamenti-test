@@ -99,4 +99,3 @@ Feature:  syntax checks KO for activatePaymentNoticeReq
       | dueDate                      | 2021-03-06T15:25:32                                                                                                                                                                                                 | SIN_APNR_46   |
       | paymentNote                  | test di prova sulla lunghezza superiore a 140 caratteri per il parametro della primitiva activatePaymentNoticeReq paymentNote prova prova pro activatePaymentNoticeReq paymentNote prova prova pro activatePaymentN | SIN_APNR_49   |
 
-
