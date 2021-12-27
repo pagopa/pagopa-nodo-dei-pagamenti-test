@@ -35,6 +35,8 @@ def before_feature(context, feature):
 
     payload = payload.replace('#creditor_institution_code#',
                               context.config.userdata.get("global_configuration").get("creditor_institution_code"))
+    if "#codicePA#" in payload:
+        payload = payload.replace('#codicePA#', context.config.userdata.get("global_configuration").get("codicePA"))
     
     idempotency_key = context.config.userdata.get("global_configuration").get("idempotencyKey")
     if "idempotencyKey" in context.config.userdata.get("global_configuration"):
