@@ -1,4 +1,4 @@
-Feature:  semantic checks for verificaBollettinoReq
+Feature: semantic checks for verificaBollettinoReq
 
   Background:
     Given systems up
