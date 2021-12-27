@@ -374,3 +374,9 @@ def step_impl(context, mock, sec, action):
         """
     # TODO configure mock to wait x seconds at action
     pass
+
+
+@step("idChannel with USE_NEW_FAULT_CODE=Y")
+def step_impl(context):
+    # TODO verify with api-config
+    pass
