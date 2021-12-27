@@ -70,7 +70,9 @@ def step_impl(context, elem, value, action):
     elif action == "paVerifyPaymentNoticeRes":
         pa_verify_payment_notice_res = getattr(context, "paVerifyPaymentNoticeRes")
         pa_verify_payment_notice_res = utils.manipulate_soap_action(pa_verify_payment_notice_res, elem, value)
-        response_status_code = utils.save_soap_action(utils.get_rest_mock_ec(context), "paVerifyPaymentNotice",
+        setattr(context, action, pa_verify_payment_notice_res)
+        primitive = utils.get_primitive(action)
+        response_status_code = utils.save_soap_action(utils.get_rest_mock_ec(context), primitive,
                                                       pa_verify_payment_notice_res, override=True)
         assert response_status_code == 200
     else:
