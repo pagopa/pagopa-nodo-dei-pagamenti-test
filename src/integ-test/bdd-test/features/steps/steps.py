@@ -64,7 +64,7 @@ def step_impl(context, type_soap_request):
 
 @given('{elem} with {value} in {action}')
 def step_impl(context, elem, value, action):
-    if action == "verifyPaymentNoticeReq" or action == "activatePaymentNoticeReq" :
+    if action == "verifyPaymentNoticeReq" or action == "activatePaymentNoticeReq" or action == "verificaBollettinoReq":
         xml = utils.manipulate_soap_action(context.soap_request, elem, value)
         setattr(context, "soap_request", xml)
     elif action == "paVerifyPaymentNoticeRes":
