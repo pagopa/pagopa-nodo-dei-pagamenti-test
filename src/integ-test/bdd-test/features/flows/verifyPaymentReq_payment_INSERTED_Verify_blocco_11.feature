@@ -24,7 +24,7 @@ Feature:  block checks for verifyPaymentReq - position status in INSERTED (mod3C
 
   # Verify Phase 1
   Scenario: Execute verifyPaymentNotice request
-    When psp sends verifyPaymentNotice to nodo-dei-pagamenti
+    When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK
     
 
@@ -51,7 +51,7 @@ Feature:  block checks for verifyPaymentReq - position status in INSERTED (mod3C
          </soapenv:Body>
       </soapenv:Envelope>
       """    
-    When psp sends activatePaymentNotice to nodo-dei-pagamenti
+    When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK
     And token exists and check
 	
@@ -66,5 +66,5 @@ Feature:  block checks for verifyPaymentReq - position status in INSERTED (mod3C
   # Verify Phase 2
   Scenario: Execute verifyPaymentNotice request with the same request as Verify Phase 1
 	# Given the Mod3Cancel Phase executed successfully
-    When psp sends verifyPaymentNotice to nodo-dei-pagamenti
+    When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK

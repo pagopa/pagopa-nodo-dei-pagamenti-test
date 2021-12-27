@@ -2,7 +2,7 @@ Feature: syntax checks KO for verifyPaymentReq
 
   Background:
     Given systems up
-    And initial verifyPaymentNoticeReq soap-request
+    And initial XML for verifyPaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
          <soapenv:Header/>
@@ -23,20 +23,20 @@ Feature: syntax checks KO for verifyPaymentReq
 
   # attribute value check
   Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error on invalid wsdl namespace
-    Given <attribute> set <value> for <elem> in verifyPaymentNoticeReq
-    When psp sends verifyPaymentNotice to nodo-dei-pagamenti
-    Then check outcome is KO
-    And check faultCode is PPT_SINTASSI_EXTRAXSD
+    Given <attribute> set <value> for <elem> in verifyPaymentNotice
+    When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
+    Then check outcome is KO of verifyPaymentNotice response
+    And check faultCode is PPT_SINTASSI_EXTRAXSD of verifyPaymentNotice response
     Examples:
       | elem             | attribute     | value                                     | soapUI test |
       | soapenv:Envelope | xmlns:soapenv | http://schemas.xmlsoap.org/ciao/envelope/ | SIN_VPNR_01 |
 
   # element value check
   Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error on invalid body element value
-    Given <elem> with <value> in verifyPaymentNoticeReq
-    When psp sends verifyPaymentNotice to nodo-dei-pagamenti
-    Then check outcome is KO
-    And check faultCode is PPT_SINTASSI_EXTRAXSD
+    Given <elem> with <value> in verifyPaymentNotice
+    When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
+    Then check outcome is KO of verifyPaymentNotice response
+    And check faultCode is PPT_SINTASSI_EXTRAXSD of verifyPaymentNotice response
     Examples:
       | elem                       | value                                | soapUI test |
       | idPSP                      | 123456789012345678901234567890123456 | SIN_VPNR_07 |

@@ -2,7 +2,7 @@ Feature: syntax checks for paVerifyPaymentNoticeRes - KO
 
   Background:
     Given systems up   
-    And initial verifyPaymentNoticeReq soap-request
+    And initial XML for verifyPaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
          <soapenv:Header/>
@@ -24,7 +24,7 @@ Feature: syntax checks for paVerifyPaymentNoticeRes - KO
 
   # element value check
   Scenario Outline: Check PPT_STAZIONE_INT_PA_ERRORE_RESPONSE error on invalid body element value
-    Given EC replies to nodo-dei-pagamenti with the following paVerifyPaymentNoticeReq
+    Given EC replies to nodo-dei-pagamenti with the paVerifyPaymentNotice
     """
     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
        <soapenv:Header/>
@@ -41,11 +41,11 @@ Feature: syntax checks for paVerifyPaymentNoticeRes - KO
        </soapenv:Body>
     </soapenv:Envelope>
     """
-    And <elem> with <value> in paVerifyPaymentNoticeRes
-    And if outcome is KO set fault to None in paVerifyPaymentNoticeRes
-    When PSP sends verifyPaymentNoticeReq to nodo-dei-pagamenti
-    Then check outcome is KO
-    And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE
+    And <elem> with <value> in paVerifyPaymentNotice
+    And if outcome is KO set fault to None in paVerifyPaymentNotice
+    When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
+    Then check outcome is KO of verifyPaymentNotice response
+    And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of verifyPaymentNotice response
     Examples:
       | elem                         | value                                | soapUI test  |
       | soapenv:Body                 | None                                 | SIN_PVPNR_02 |
@@ -59,7 +59,7 @@ Feature: syntax checks for paVerifyPaymentNoticeRes - KO
 
 
   Scenario Outline: Check PPT_STAZIONE_INT_PA_ERRORE_RESPONSE error on invalid body element value
-    Given EC replies to nodo-dei-pagamenti with the following paVerifyPaymentNoticeReq
+    Given initial XML for paVerifyPaymentNotice
     """
     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
        <soapenv:Header/>
@@ -91,12 +91,13 @@ Feature: syntax checks for paVerifyPaymentNoticeRes - KO
        </soapenv:Body>
     </soapenv:Envelope>
     """
-    And <elem> with <value> in paVerifyPaymentNoticeRes
-    When PSP sends verifyPaymentNoticeReq to nodo-dei-pagamenti
-    Then check outcome is KO
-    And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE
+    And <tag> with <value> in paVerifyPaymentNotice
+    And EC replies to nodo-dei-pagamenti with the paVerifyPaymentNotice
+    When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
+    Then check outcome is KO of verifyPaymentNotice response
+    And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of verifyPaymentNotice response
     Examples:
-      | elem                      | value                 | soapUI test |
+      | tag                      | value                 | soapUI test |
       | paymentList               | None                  | SIN_PVPNR_11|
       | paymentList               | Empty                 | SIN_PVPNR_13|
       | paymentOptionDescription  | None                  | SIN_PVPNR_14|

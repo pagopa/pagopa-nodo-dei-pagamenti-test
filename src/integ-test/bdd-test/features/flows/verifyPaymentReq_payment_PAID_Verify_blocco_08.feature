@@ -24,7 +24,7 @@ Feature:  block checks for verifyPaymentReq - position status in PAID [Verify_bl
 
   # Verify Phase 1
   Scenario: Execute verifyPaymentNotice request
-    When psp sends verifyPaymentNotice to nodo-dei-pagamenti
+    When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK
     
 
@@ -50,7 +50,7 @@ Feature:  block checks for verifyPaymentReq - position status in PAID [Verify_bl
          </soapenv:Body>
       </soapenv:Envelope>
       """    
-    When psp sends activatePaymentNotice to nodo-dei-pagamenti
+    When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK
     And token exists and check
 
@@ -94,13 +94,13 @@ Feature:  block checks for verifyPaymentReq - position status in PAID [Verify_bl
          </soapenv:Body>
       </soapenv:Envelope>
       """
-   #  When psp sends sendPaymentOutcomeReq to nodo-dei-pagamenti using the token of the activate phase, and with request field <outcome> = OK
-    When psp sends sendPaymentOutcomeReq to nodo-dei-pagamenti
+   #  When psp sends SOAP sendPaymentOutcomeReq to nodo-dei-pagamenti using the token of the activate phase, and with request field <outcome> = OK
+    When psp sends SOAP sendPaymentOutcomeReq to nodo-dei-pagamenti
     Then check outcome is OK
 
 	
   # Verify Phase 2
   Scenario: Execute verifyPaymentNotice request with the same request as Verify Phase 1, immediately after the Payment Outcome Phase
-    When psp sends verifyPaymentNotice to nodo-dei-pagamenti
+    When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
     Then check outcome is KO
 	 And check faultCode is PPT_PAGAMENTO_DUPLICATO

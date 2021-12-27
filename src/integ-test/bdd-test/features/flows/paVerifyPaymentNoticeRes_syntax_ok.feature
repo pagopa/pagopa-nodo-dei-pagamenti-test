@@ -2,7 +2,7 @@ Feature: syntax checks for paVerifyPaymentNoticeRes - OK
 
   Background:
     Given systems up
-    And initial verifyPaymentNoticeReq soap-request
+    And initial XML for verifyPaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
          <soapenv:Header/>
@@ -23,7 +23,7 @@ Feature: syntax checks for paVerifyPaymentNoticeRes - OK
     And EC new version
 
   Scenario Outline: Check paVerifyPaymentRes response with missing optional fields
-    Given EC replies to nodo-dei-pagamenti with the following paVerifyPaymentNoticeReq
+    Given EC replies to nodo-dei-pagamenti with the paVerifyPaymentNotice
     """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
          <soapenv:Header/>
@@ -54,9 +54,9 @@ Feature: syntax checks for paVerifyPaymentNoticeRes - OK
          </soapenv:Body>
       </soapenv:Envelope>
     """
-    And <elem> with <value> in paVerifyPaymentNoticeRes
-    When PSP sends verifyPaymentNoticeReq to nodo-dei-pagamenti
-    Then check outcome is OK
+    And <elem> with <value> in paVerifyPaymentNotice
+    When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
+    Then check outcome is OK of verifyPaymentNotice response
     Examples:
       | elem               | value | soapUI test  | comment|
       | soapenv:Header     | None  | SIN_PVPNR_01 ||

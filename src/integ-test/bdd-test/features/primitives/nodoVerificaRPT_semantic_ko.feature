@@ -2,7 +2,7 @@ Feature: checks for EC new and nodoVerificaRPT
 
   Background:
     Given systems up
-    And initial nodoVerificaRPT soap-request
+    And initial XML for nodoVerificaRPT
       """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:bc="http://PuntoAccessoPSP.spcoop.gov.it/BarCode_GS1_128_Modified" xmlns:aim="http://PuntoAccessoPSP.spcoop.gov.it/Code_128_AIM_USS-128_tipo_C" xmlns:qrc="http://PuntoAccessoPSP.spcoop.gov.it/QrCode">
           <soapenv:Header/>
@@ -29,6 +29,6 @@ Feature: checks for EC new and nodoVerificaRPT
 
     # check PPT_MULTI_BENEFICIARIO error - PRO_VPNR_04
   Scenario: Check PPT_MULTI_BENEFICIARIO error
-    When PSP sends nodoVerificaRPT to nodo-dei-pagamenti
-    Then check esito is KO
-    And check faultCode is PPT_MULTI_BENEFICIARIO
+    When psp sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
+    Then check esito is KO of nodoVerificaRPT response
+    And check faultCode is PPT_MULTI_BENEFICIARIO of nodoVerificaRPT response
