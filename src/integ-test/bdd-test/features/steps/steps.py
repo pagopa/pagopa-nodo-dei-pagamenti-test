@@ -68,9 +68,11 @@ def step_impl(context, elem, value, action):
         xml = utils.manipulate_soap_action(context.soap_request, elem, value)
         setattr(context, "soap_request", xml)
     elif action == "paVerifyPaymentNoticeRes":
-        pa_verify_payment_notice_res = getattr(context, "paVerifyPaymentNoticeRes")
+        pa_verify_payment_notice_res = getattr(context, action)
         pa_verify_payment_notice_res = utils.manipulate_soap_action(pa_verify_payment_notice_res, elem, value)
-        response_status_code = utils.save_soap_action(utils.get_rest_mock_ec(context), "paVerifyPaymentNotice",
+        setattr(context, action, pa_verify_payment_notice_res)
+        primitive = utils.get_primitive(action)
+        response_status_code = utils.prepare_mock_requests(utils.get_rest_mock_ec(context), primitive,
                                                       pa_verify_payment_notice_res, override=True)
         assert response_status_code == 200
     else:
@@ -126,7 +128,7 @@ def step_impl(context, tag, data, elem, value, action):
             soap_action = utils.manipulate_soap_action(soap_action, elem, value)
     setattr(context, action, soap_action)
     primitive = utils.get_primitive(action)
-    response_status_code = utils.save_soap_action(utils.get_rest_mock_ec(context), primitive, soap_action, override=True)
+    response_status_code = utils.prepare_mock_requests(utils.get_rest_mock_ec(context), primitive, soap_action, override=True)
     assert response_status_code == 200
 
 # @then('check {mock} receives {action} properly')
@@ -360,7 +362,7 @@ def step_impl(context, mock, destination, action):
                                                                                  "creditor_institution_code"))
     setattr(context, "paVerifyPaymentNoticeRes", pa_verify_payment_notice_res)
     primitive = utils.get_primitive(action)
-    response_status_code = utils.save_soap_action(utils.get_rest_mock_ec(context), primitive,
+    response_status_code = utils.prepare_mock_requests(utils.get_rest_mock_ec(context), primitive,
                                                   pa_verify_payment_notice_res, override=True)
     assert response_status_code == 200
 
