@@ -25,7 +25,7 @@ Feature: semantic checks KO for activatePaymentNoticeReq
          </soapenv:Body>
       </soapenv:Envelope>
       """ 
-	  
+
   # idPSP value check: idPSP not in db [SEM_APNR_01]
   Scenario: Check PPT_PSP_SCONOSCIUTO error on non-existent psp
     Given idPSP with pspUnknown in activatePaymentNoticeReq
@@ -144,12 +144,12 @@ Feature: semantic checks KO for activatePaymentNoticeReq
     Then check outcome is KO
     And check faultCode is PPT_INTERMEDIARIO_PA_DISABILITATO
 
-  # TODO investigate
   # expirationTime > default_token_duration_validity_millis [SEM_APNR_25]
-#  Scenario: Check PPT_AUTORIZZAZIONE error if expirationTime > default_token_duration_validity_millis
-#    Given expirationTime with 10000 in activatePaymentNoticeReq
-#	 And default_token_duration_validity_millis with 7000 in NODO4_CFG.CONFIGURATION_KEYS
-#    When PSP sends activatePaymentNoticeReq to nodo-dei-pagamenti
-#    Then check outcome is KO
-#    And check faultCode is PPT_AUTORIZZAZIONE
-#	 And check description is expirationTime deve essere <= 7000
+  Scenario: Check PPT_AUTORIZZAZIONE error if expirationTime > default_token_duration_validity_millis
+    Given expirationTime with 10000 in activatePaymentNoticeReq
+#	 TODO And default_token_duration_validity_millis with 7000 in NODO4_CFG.CONFIGURATION_KEYS
+#    TODO And nodo-dei-pagamenti must reload configuration
+    When PSP sends activatePaymentNoticeReq to nodo-dei-pagamenti
+    Then check outcome is KO
+    And check faultCode is PPT_AUTORIZZAZIONE
+	 And check description is expirationTime deve essere <= 7000
