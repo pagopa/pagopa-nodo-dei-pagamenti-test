@@ -2,7 +2,7 @@ Feature:  block checks for verifyPaymentReq - position status in NOTIFIED [Verif
 
   Background:
     Given systems up
-    And initial verifyPaymentNoticeReq soap-request
+    And initial XML verifyPaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
          <soapenv:Header/>
@@ -24,13 +24,14 @@ Feature:  block checks for verifyPaymentReq - position status in NOTIFIED [Verif
 
   # Verify Phase 1
   Scenario: Execute verifyPaymentNotice request
-    When psp sends verifyPaymentNotice to nodo-dei-pagamenti
-    Then check outcome is OK
+    When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
+    Then check outcome is OK of verifyPaymentNotice response
     
 
   # Activate Phase
   Scenario: Execute activatePaymentNotice request
-    Given valid activatePaymentNoticeReq soap-request
+    Given the Execute verifyPaymentNotice request scenario executed successfully
+    And initial XML activatePaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
          <soapenv:Header/>
@@ -42,22 +43,24 @@ Feature:  block checks for verifyPaymentReq - position status in NOTIFIED [Verif
                <password>pwdpwdpwd</password>
                <idempotencyKey>#idempotency_key#</idempotencyKey>
                <qrCode>
-                  <fiscalCode>#creditor_institution_code#</fiscalCode>
-                  <noticeNumber>#notice_number#</noticeNumber>
+                  <fiscalCode>$verifyPaymentNotice.fiscalCode</fiscalCode>
+                  <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
                </qrCode>
                <amount>120.00</amount>
             </nod:activatePaymentNoticeReq>
          </soapenv:Body>
       </soapenv:Envelope>
-      """    
-    When psp sends activatePaymentNotice to nodo-dei-pagamenti
-    Then check outcome is OK
-    And token exists and check
+      """
+    When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+    Then check outcome is OK of activatePaymentNotice response
+    And paymentToken exists of activatePaymentNotice response
+    And paymentToken length is less than 36 of activatePaymentNotice response
 
 	
   # Payment Outcome Phase outcome OK
   Scenario: Execute sendPaymentOutcome request
-    Given valid sendPaymentOutcomeReq soap-request
+    Given the Execute activatePaymentNotice request scenario executed successfully
+    And initial XML sendPaymentOutcome
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
          <soapenv:Header/>
@@ -67,7 +70,7 @@ Feature:  block checks for verifyPaymentReq - position status in NOTIFIED [Verif
                <idBrokerPSP>70000000001</idBrokerPSP>
                <idChannel>70000000001_01</idChannel>
                <password>pwdpwdpwd</password>
-               <paymentToken>#payment_token#</paymentToken>
+               <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
                <outcome>OK</outcome>
                <details>
                   <paymentMethod>creditCard</paymentMethod>
@@ -94,15 +97,20 @@ Feature:  block checks for verifyPaymentReq - position status in NOTIFIED [Verif
          </soapenv:Body>
       </soapenv:Envelope>
       """
-   #  When psp sends sendPaymentOutcomeReq to nodo-dei-pagamenti using the token of the activate phase, and with request field <outcome> = OK
-    When psp sends sendPaymentOutcomeReq to nodo-dei-pagamenti
-    Then check outcome is OK
+   #  When psp sends SOAP sendPaymentOutcomeReq to nodo-dei-pagamenti using the token of the activate phase, and with request field <outcome> = OK
+    When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+    Then check outcome is OK of sendPaymentOutcome response
 
-  Scenario: Execute paSentRT request
-    Then EC receives paSendRT request by nodo-dei-pagamenti
+  Scenario: Execute paSendRT request
+    Given the Execute sendPaymentOutcome request scenario executed successfully
+    Then check EC receives paSendRT properly
+  """
+    $verifyPaymentNotice.noticeNumber
+  """
 
   # Verify Phase 2
   Scenario: Execute verifyPaymentNotice request with the same request as Verify Phase 1, few seconds after the Payment Outcome Phase (e.g. 30s)
-    When psp sends verifyPaymentNotice to nodo-dei-pagamenti
-    Then check outcome is KO
-	And check faultCode is PPT_PAGAMENTO_DUPLICATO
+    Given the Execute paSendRT request scenario executed successfully
+    When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
+    Then check outcome is KO of verifyPaymentNotice response
+    And check faultCode is PPT_PAGAMENTO_DUPLICATO of verifyPaymentNotice response

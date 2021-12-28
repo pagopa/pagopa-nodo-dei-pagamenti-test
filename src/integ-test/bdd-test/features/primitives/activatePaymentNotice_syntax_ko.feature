@@ -2,7 +2,8 @@ Feature:  syntax checks KO for activatePaymentNoticeReq
 
   Background:
     Given systems up
-    And initial activatePaymentNoticeReq soap-request
+    And initial XML activatePaymentNotice
+
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
           xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -29,10 +30,10 @@ Feature:  syntax checks KO for activatePaymentNoticeReq
 
   # attribute value check
   Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error on invalid wsdl namespace
-    Given <attribute> set <value> for <elem> in activatePaymentNoticeReq
-    When psp sends activatePaymentNoticeReq to nodo-dei-pagamenti
-    Then check outcome is KO
-    And check faultCode is PPT_SINTASSI_EXTRAXSD
+    Given <attribute> set <value> for <elem> in activatePaymentNotice
+    When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+    Then check outcome is KO of activatePaymentNotice response
+    And check faultCode is PPT_SINTASSI_EXTRAXSD of activatePaymentNotice response
     Examples:
       | elem             | attribute     | value                                     | soapUI test |
       | soapenv:Envelope | xmlns:soapenv | http://schemas.xmlsoap.org/ciao/envelope/ | SIN_APNR_01 |
@@ -40,10 +41,10 @@ Feature:  syntax checks KO for activatePaymentNoticeReq
 	  
   # element value check
   Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error on invalid body element value
-    Given <elem> with <value> in activatePaymentNoticeReq
-    When psp sends activatePaymentNoticeReq to nodo-dei-pagamenti
-    Then check outcome is KO
-    And check faultCode is PPT_SINTASSI_EXTRAXSD
+    Given <elem> with <value> in activatePaymentNotice
+    When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+    Then check outcome is KO of activatePaymentNotice response
+    And check faultCode is PPT_SINTASSI_EXTRAXSD of activatePaymentNotice response
     Examples:
       | elem                         | value                                                                                                                                                                                                               | soapUI test   |
       | idPSP                        | 123456789012345678901234567890123456                                                                                                                                                                                | SIN_APNR_07   |
@@ -97,5 +98,4 @@ Feature:  syntax checks KO for activatePaymentNoticeReq
       | dueDate                      | 12-12-21                                                                                                                                                                                                            | SIN_APNR_46   |
       | dueDate                      | 2021-03-06T15:25:32                                                                                                                                                                                                 | SIN_APNR_46   |
       | paymentNote                  | test di prova sulla lunghezza superiore a 140 caratteri per il parametro della primitiva activatePaymentNoticeReq paymentNote prova prova pro activatePaymentNoticeReq paymentNote prova prova pro activatePaymentN | SIN_APNR_49   |
-
 

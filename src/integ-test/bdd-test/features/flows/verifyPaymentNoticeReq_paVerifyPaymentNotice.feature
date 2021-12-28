@@ -2,7 +2,7 @@ Feature: process checks for VerifyPaymentNoticeReq - EC new
 
   Background:
     Given systems up
-    And initial verifyPaymentNoticeReq soap-request
+    And initial XML verifyPaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
          <soapenv:Header/>
@@ -24,7 +24,7 @@ Feature: process checks for VerifyPaymentNoticeReq - EC new
 
    # management of KO from PA - PRO_VPNR_06
   Scenario: Check PPT_ERRORE_EMESSO_DA_PAA error when paVerifyPaymentRes contains a KO
-    Given EC replies to nodo-dei-pagamenti with the following paVerifyPaymentNotice
+    Given EC replies to nodo-dei-pagamenti with the paVerifyPaymentNotice
     """
      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
            <soapenv:Header/>
@@ -40,13 +40,13 @@ Feature: process checks for VerifyPaymentNoticeReq - EC new
            </soapenv:Body>
         </soapenv:Envelope>
     """
-    When PSP sends verifyPaymentNoticeReq to nodo-dei-pagamenti
-    Then check outcome is KO
-    And check faultCode is PPT_ERRORE_EMESSO_DA_PAA
+    When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
+    Then check outcome is KO of verifyPaymentNotice response
+    And check faultCode is PPT_ERRORE_EMESSO_DA_PAA of verifyPaymentNotice response
     
    # PA in timeout - PRO_VPNR_08
   Scenario: Check PPT_STAZIONE_INT_PA_TIMEOUT error when paVerifyPaymentRes is in timeout
     Given EC wait for 30 seconds at paVerifyPaymentNotice
-    When PSP sends verifyPaymentNoticeReq to nodo-dei-pagamenti
-    Then check outcome is KO
-    And check faultCode is PPT_STAZIONE_INT_PA_TIMEOUT
+    When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
+    Then check outcome is KO of verifyPaymentNotice response
+    And check faultCode is PPT_STAZIONE_INT_PA_TIMEOUT of verifyPaymentNotice response

@@ -1,13 +1,15 @@
+import re
+from xml.dom.minidom import parseString
+
 import requests
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
-from xml.dom.minidom import parseString
 
 
 def requests_retry_session(
-    retries=3,
-    backoff_factor=0.3,
-    status_forcelist=(500, 502, 504),
+        retries=3,
+        backoff_factor=0.3,
+        status_forcelist=(500, 502, 504),
     session=None,
 ):
     session = session or requests.Session()
@@ -57,15 +59,7 @@ def get_rest_mock_psp(context):
         return ""
 
 
-def set_nodo_response(context, nodo_response):
-    test_configuration = context.config.userdata.get("test_configuration")
-    if test_configuration is None:
-        test_configuration = {}
-    test_configuration["soap_response"] = nodo_response
-    context.config.update_userdata({"test_configuration": test_configuration})
-
-
-def prepare_mock_requests(mock, primitive, soap_action, override=False):
+def save_soap_action(mock, primitive, soap_action, override=False):
     headers = {'Content-Type': 'application/xml'}  # set what your server accepts
     response = requests.post(f"{mock}/api/v1/response/{primitive}?override={override}", soap_action, headers=headers)
     return response.status_code
@@ -89,7 +83,7 @@ def manipulate_soap_action(soap_action, elem, value):
         occurrences = int(value.split(",")[1])
         original_node = my_document.getElementsByTagName(elem)[0]
         cloned_node = original_node.cloneNode(2)
-        for i in range(0, occurrences-1):
+        for i in range(0, occurrences - 1):
             original_node.parentNode.insertBefore(cloned_node, original_node)
             original_node = cloned_node
             cloned_node = original_node.cloneNode(2)
@@ -99,11 +93,29 @@ def manipulate_soap_action(soap_action, elem, value):
     return my_document.toxml()
 
 
-def get_primitive(action):
-    action_to_primitive = {
-        "verifyPaymentNoticeReq": "verifyPaymentNotice",
-        "verifyPaymentNoticeRes": "verifyPaymentNotice",
-        "paVerifyPaymentNoticeReq": "paVerifyPaymentNotice",
-        "paVerifyPaymentNoticeRes": "paVerifyPaymentNotice"
-    }
-    return action_to_primitive.get(action)
+def replace_local_variables(body, context):
+    pattern = re.compile('\\$\\w+\\.\\w+')
+    match = pattern.findall(body)
+    for field in match:
+        saved_elem = getattr(context, field.replace('$', '').split('.')[0])
+        value = saved_elem
+        if len(field.replace('$', '').split('.')) > 1:
+            tag = field.replace('$', '').split('.')[1]
+            if isinstance(saved_elem, str):
+                document = parseString(saved_elem)
+            else:
+                document = parseString(saved_elem.content)
+            value = document.getElementsByTagName(tag)[0].firstChild.data
+        body = body.replace(field, value)
+    return body
+
+
+def replace_global_variables(payload, context):
+    pattern = re.compile('#\\w+#')
+    match = pattern.findall(payload)
+    for elem in match:
+        print(elem)
+        payload = payload.replace(elem, context.config.userdata
+                                  .get("global_configuration")
+                                  .get(elem.replace("#", "")))
+    return payload

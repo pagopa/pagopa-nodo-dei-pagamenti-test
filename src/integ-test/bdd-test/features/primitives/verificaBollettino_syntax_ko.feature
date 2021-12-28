@@ -2,7 +2,7 @@
  
  Background:
     Given systems up
-    And initial verificaBollettinoReq soap-request
+    And initial XML verificaBollettino
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
          <soapenv:Header/>
@@ -21,20 +21,20 @@
       
  # attribute value check
  Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error on invalid wsdl namespace
-    Given <attribute> set <value> for <elem> in verificaBollettinoReq
-    When psp sends verificaBollettinoReq to nodo-dei-pagamenti
-    Then check outcome is KO
-    And check faultCode is PPT_SINTASSI_EXTRAXSD
+    Given <attribute> set <value> for <elem> in verificaBollettino
+    When psp sends SOAP verificaBollettino to nodo-dei-pagamenti
+    Then check outcome is KO of verificaBollettino response
+    And check faultCode is PPT_SINTASSI_EXTRAXSD of verificaBollettino response
     Examples:
       | elem             | attribute     | value                                     | soapUI test |
       | soapenv:Envelope | xmlns:soapenv | http://schemas.xmlsoap.org/ciao/envelope/ | SIN_VB_01   |
  
  # element value check
  Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error on invalid body element value
-    Given <elem> with <value> in verificaBollettinoReq
-    When psp sends verificaBollettinoReq to nodo-dei-pagamenti
-    Then check outcome is KO
-    And check faultCode is PPT_SINTASSI_EXTRAXSD
+    Given <elem> with <value> in verificaBollettino
+    When psp sends SOAP verificaBollettino to nodo-dei-pagamenti
+    Then check outcome is KO of verificaBollettino response
+    And check faultCode is PPT_SINTASSI_EXTRAXSD of verificaBollettino response
     Examples:
       | elem                       | value                                 | soapUI test |
       | soapenv:Body               | None                                  | SIN_VB_03   |

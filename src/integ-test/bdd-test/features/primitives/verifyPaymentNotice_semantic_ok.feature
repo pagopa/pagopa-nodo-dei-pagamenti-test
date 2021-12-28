@@ -2,7 +2,7 @@ Feature: semantic checks for verifyPaymentReq
 
   Background:
     Given systems up
-    And initial verifyPaymentNoticeReq soap-request
+    And initial XML verifyPaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
          <soapenv:Header/>
@@ -22,13 +22,13 @@ Feature: semantic checks for verifyPaymentReq
       """
 
   Scenario: Check valid URL in WSDL namespace
-    When psp sends verifyPaymentNotice to nodo-dei-pagamenti
-    Then check outcome is OK
+    When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
+    Then check outcome is OK of verifyPaymentNotice response
 
   # denylist value check: combination fiscalCode-idChannel-idPSP identifies a record in NODO4_CFG.DENYLIST table of nodo-dei-pagamenti database [SEM_VPNR_16]
   Scenario: Check outcome OK if combination psp-channel-pa in denylist
-    Given fiscalCode with 77777777777 in verifyPaymentNoticeReq
-    And idBrokerPSP with 70000000002 in verifyPaymentNoticeReq
-    And idChannel with 70000000002_01 in verifyPaymentNoticeReq
-    When psp sends verifyPaymentNoticeReq to nodo-dei-pagamenti
-    Then check outcome is OK
+    Given fiscalCode with 77777777777 in verifyPaymentNotice
+    And idBrokerPSP with 70000000002 in verifyPaymentNotice
+    And idChannel with 70000000002_01 in verifyPaymentNotice
+    When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
+    Then check outcome is OK of verifyPaymentNotice response

@@ -2,7 +2,7 @@ Feature: syntax checks for paVerifyPaymentNoticeRes - OK
 
   Background:
     Given systems up
-    And initial verifyPaymentNoticeReq soap-request
+    And initial XML verifyPaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
          <soapenv:Header/>
@@ -23,7 +23,7 @@ Feature: syntax checks for paVerifyPaymentNoticeRes - OK
     And EC new version
 
   Scenario Outline: Check paVerifyPaymentRes response with missing optional fields
-    Given EC replies to nodo-dei-pagamenti with the following paVerifyPaymentNoticeRes
+    Given EC replies to nodo-dei-pagamenti with the paVerifyPaymentNotice
     """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
          <soapenv:Header/>
@@ -54,12 +54,16 @@ Feature: syntax checks for paVerifyPaymentNoticeRes - OK
          </soapenv:Body>
       </soapenv:Envelope>
     """
-    And <elem> with <value> in paVerifyPaymentNoticeRes
-    When PSP sends verifyPaymentNoticeReq to nodo-dei-pagamenti
-    Then check outcome is OK
+    And <elem> with <value> in paVerifyPaymentNotice
+    When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
+    Then check outcome is OK of verifyPaymentNotice response
     Examples:
-      | elem               | value | soapUI test  |
-      | soapenv:Header     | None  | SIN_PVPNR_01 |
-      | dueDate            | None  | SIN_PVPNR_25 |
-      | detailDescription  | None  | SIN_PVPNR_28 |
-      | officeName         | None  | SIN_PVPNR_44 |
+      | elem               | value | soapUI test  | comment|
+      | soapenv:Header     | None  | SIN_PVPNR_01 ||
+      | dueDate            | None  | SIN_PVPNR_25 ||
+      | detailDescription  | None  | SIN_PVPNR_28 ||
+      | allCCP             | None  | SIN_PVPNR_31 | # it is not optionally -> PPT_STAZIONE_INT_PA_ERRORE_RESPONSE|
+      | paymentDescription | None  | SIN_PVPNR_34 | why PPT_STAZIONE_INT_PA_ERRORE_RESPONSE|
+      | fiscalCodePA       | None  | SIN_PVPNR_37 | why PPT_STAZIONE_INT_PA_ERRORE_RESPONSE|
+      | companyName        | None  | SIN_PVPNR_41 | why PPT_STAZIONE_INT_PA_ERRORE_RESPONSE|
+      | officeName         | None  | SIN_PVPNR_44 |                                        |

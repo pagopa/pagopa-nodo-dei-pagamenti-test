@@ -2,7 +2,7 @@ Feature:  block checks for verifyPaymentReq - position status in INSERTED (mod3C
 
   Background:
     Given systems up
-    And initial verifyPaymentNoticeReq soap-request
+    And initial XML verifyPaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
          <soapenv:Header/>
@@ -24,13 +24,13 @@ Feature:  block checks for verifyPaymentReq - position status in INSERTED (mod3C
 
   # Verify Phase 1
   Scenario: Execute verifyPaymentNotice request
-    When psp sends verifyPaymentNotice to nodo-dei-pagamenti
-    Then check outcome is OK
+    When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
+    Then check outcome is OK of verifyPaymentNotice response
     
 
   # Activate Phase with expirationTime set to 2000
   Scenario: Execute activatePaymentNotice request
-    Given valid activatePaymentNoticeReq soap-request
+    Given initial XML activatePaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
          <soapenv:Header/>
@@ -50,21 +50,24 @@ Feature:  block checks for verifyPaymentReq - position status in INSERTED (mod3C
             </nod:activatePaymentNoticeReq>
          </soapenv:Body>
       </soapenv:Envelope>
-      """    
-    When psp sends activatePaymentNotice to nodo-dei-pagamenti
-    Then check outcome is OK
-    And token exists and check
-	
+      """
+    When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+    Then check outcome is OK of activatePaymentNotice response
+    And paymentToken exists of activatePaymentNotice response
+    And paymentToken length is less than 36 of activatePaymentNotice response
+
   # Mod3Cancel Phase
   Scenario: Execute mod3Cancel poller
-    # Given the Activate Phase executed successfully
+    Given the Execute activatePaymentNotice request scenario executed successfully
     # When expirationTime inserted in activatePaymentNoticeReq has passed and mod3Cancel poller has been triggered
     When job mod3Cancel triggered after 3 seconds
-    Then verify the HTTP status code response is 200
+    Then verify the HTTP status code of mod3Cancel response is 200
 
 	
   # Verify Phase 2
   Scenario: Execute verifyPaymentNotice request with the same request as Verify Phase 1
 	# Given the Mod3Cancel Phase executed successfully
-    When psp sends verifyPaymentNotice to nodo-dei-pagamenti
-    Then check outcome is OK
+    Given the Execute mod3Cancel poller scenario executed successfully
+    When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
+    Then check outcome is OK of verifyPaymentNotice response
+

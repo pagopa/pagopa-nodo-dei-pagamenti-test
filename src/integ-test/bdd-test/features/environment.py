@@ -31,26 +31,24 @@ def before_feature(context, feature):
                services.get(system_name).get("rest_service"))
         feature.background.steps[0].table.add_row(row)
 
-    payload = ([step.text for step in feature.background.steps if "initial" in step.name] or [""])[0]
-
-    payload = payload.replace('#creditor_institution_code#',
-                              context.config.userdata.get("global_configuration").get("creditor_institution_code"))
-    if "#codicePA#" in payload:
-        payload = payload.replace('#codicePA#', context.config.userdata.get("global_configuration").get("codicePA"))
-    
-    idempotency_key = context.config.userdata.get("global_configuration").get("idempotencyKey")
-    if "idempotencyKey" in context.config.userdata.get("global_configuration"):
-        payload = payload.replace('#idempotency_key#', idempotency_key)
-    else:
-        payload = payload.replace('#idempotency_key#', f"70000000001_{str(random.randint(1000000000, 9999999999))}")
-
-    notice_number = context.config.userdata.get("global_configuration").get("noticeNumber")
-    if "noticeNumber" in context.config.userdata.get("global_configuration"):
-        payload = payload.replace('#notice_number#', notice_number)
-    else:
-        payload = payload.replace('#notice_number#',f"30211{str(random.randint(1000000000000, 9999999999999))}")
-
-    setattr(context, "soap_request", payload)
+    # payload = ([step.text for step in feature.background.steps if "initial" in step.name] or [""])[0]
+    #
+    # payload = payload.replace('#creditor_institution_code#',
+    #                           context.config.userdata.get("global_configuration").get("creditor_institution_code"))
+    #
+    # idempotency_key = context.config.userdata.get("global_configuration").get("idempotencyKey")
+    # if "idempotencyKey" in context.config.userdata.get("global_configuration"):
+    #     payload = payload.replace('#idempotency_key#', idempotency_key)
+    # else:
+    #     payload = payload.replace('#idempotency_key#', f"70000000001_{str(random.randint(1000000000, 9999999999))}")
+    #
+    # notice_number = context.config.userdata.get("global_configuration").get("noticeNumber")
+    # if "noticeNumber" in context.config.userdata.get("global_configuration"):
+    #     payload = payload.replace('#notice_number#', notice_number)
+    # else:
+    #     payload = payload.replace('#notice_number#',f"30211{str(random.randint(1000000000000, 9999999999999))}")
+    #
+    # setattr(context, "soap_request", payload)
 
     # DISABLE see @config-ec too 
     # for tag in feature.tags:
