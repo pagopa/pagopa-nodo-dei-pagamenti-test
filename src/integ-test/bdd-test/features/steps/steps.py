@@ -39,8 +39,13 @@ def step_impl(context, version):
 def step_impl(context, primitive):
     payload = context.text or ""
     payload = utils.replace_local_variables(payload, context)
+    if len(payload) > 0:
+        my_document = parseString(payload)
+        idPSP = "70000000001"
+        if len(my_document.getElementsByTagName('idPSP')) > 0:
+            idPSP = my_document.getElementsByTagName('idPSP')[0].firstChild.data
+        payload = payload.replace('#idempotency_key#', f"{idPSP}_{str(random.randint(1000000000, 9999999999))}")
 
-    payload = payload.replace('#idempotency_key#', f"70000000001_{str(random.randint(1000000000, 9999999999))}")
     payload = payload.replace('#notice_number#', f"30211{str(random.randint(1000000000000, 9999999999999))}")
 
     payload = utils.replace_global_variables(payload, context)
@@ -92,9 +97,10 @@ def step_impl(context, tag, value, primitive):
     if 'xml' in soap_response.headers['content-type']:
         my_document = parseString(soap_response.content)
         if len(my_document.getElementsByTagName('faultCode')) > 0:
-            print(my_document.getElementsByTagName('faultCode')[0].firstChild.data)
-            print(my_document.getElementsByTagName('faultString')[0].firstChild.data)
-            print(my_document.getElementsByTagName('description')[0].firstChild.data)
+            print("fault code: ", my_document.getElementsByTagName('faultCode')[0].firstChild.data)
+            print("fault string: ", my_document.getElementsByTagName('faultString')[0].firstChild.data)
+            if my_document.getElementsByTagName('description'):
+                print("description: ", my_document.getElementsByTagName('description')[0].firstChild.data)
         data = my_document.getElementsByTagName(tag)[0].firstChild.data
         print(f'check tag "{tag}" - expected: {value}, obtained: {data}')
         assert value == data
@@ -213,3 +219,10 @@ def step_impl(context):
 def step_impl(context):
     # TODO verify with api-config
     pass
+
+
+@step("random idempotencyKey having {value} as idPSP in {primitive}")
+def step_impl(context, value, primitive):
+    xml = utils.manipulate_soap_action(getattr(context, primitive), "idempotencyKey", f"{value}_{str(random.randint(1000000000, 9999999999))}")
+    setattr(context, primitive, xml)
+
