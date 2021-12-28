@@ -2,7 +2,7 @@ Feature:  block checks for verifyPaymentReq - position status in PAID [Verify_bl
 
   Background:
     Given systems up
-	 And EC new version
+    And EC new version
 
   # Verify Phase 1
   Scenario: Execute verifyPaymentNotice request
@@ -105,5 +105,29 @@ Feature:  block checks for verifyPaymentReq - position status in PAID [Verify_bl
   Scenario: Execute verifyPaymentNotice request with the same request as Verify Phase 1, immediately after the Payment Outcome Phase
     Given the Execute sendPaymentOutcome request scenario executed successfully
     When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
-    Then check outcome is KO of sendPaymentOutcome response
-    And check faultCode is PPT_PAGAMENTO_DUPLICATO of sendPaymentOutcome response
+    Then check outcome is KO of verifyPaymentNotice response
+    And check faultCode is PPT_PAGAMENTO_DUPLICATO of verifyPaymentNotice response
+
+
+  Scenario: Execute verifyPaymentNotice request with the same request as Verify Phase 1, few seconds after the Payment Outcome Phase (e.g. 30s)
+    # TODO add status code to return by the mock
+    Given EC replies to nodo-dei-pagamenti with the paSendRT
+  """
+    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
+      <soapenv:Header />
+      <soapenv:Body>
+        <paf:paSendRTRes>
+          <outcome>KO</outcome>
+          <fault>
+            <faultCode>PAA_ERRORE_CIAO</faultCode>
+            <faultString>Errore semantico</faultString>
+            <id>1</id>
+          </fault>
+        </paf:paSendRTRes>
+      </soapenv:Body>
+    </soapenv:Envelope>
+  """
+    And the Execute sendPaymentOutcome request scenario executed successfully
+    When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
+    Then check outcome is KO of verifyPaymentNotice response
+    And check faultCode is PPT_PAGAMENTO_DUPLICATO of verifyPaymentNotice response

@@ -112,3 +112,6 @@ tmp_
 __pycache__
 behave-report*
 **/resources/config.json.*
+
+*.iml
+.idea/

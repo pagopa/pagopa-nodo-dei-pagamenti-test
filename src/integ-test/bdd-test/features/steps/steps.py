@@ -101,7 +101,7 @@ def step_impl(context, job_name, seconds):
     time.sleep(int(seconds))
     url_nodo = utils.get_rest_url_nodo(context)
     nodo_response = requests.get(f"{url_nodo}/jobs/trigger/{job_name}")
-    assert nodo_response.status_code == 200
+    setattr(context, job_name + RESPONSE, nodo_response)
 
 
 # Scenario: Execute activateIOPayment request
@@ -153,16 +153,15 @@ def step_impl(context, tag, action):
 #     response_status_code = utils.save_soap_action(utils.get_rest_mock_ec(context), primitive, soap_action, override=True)
 #     assert response_status_code == 200
 
-@then(u'check {mock:EcPsp} receives {action} properly')
-def step_impl(context, mock, action):
+@then(u'check {mock:EcPsp} receives {primitive} properly')
+def step_impl(context, mock, primitive):
     rest_mock = utils.get_rest_mock_ec(context) if mock == "EC" else utils.get_rest_mock_psp(context)
 
-    # retrieve info from soap request of background step
-    soap_request = getattr(context, action)
-    my_document = parseString(soap_request)
-    notice_number = my_document.getElementsByTagName('noticeNumber')[0].firstChild.data
+    notice_number = utils.replace_local_variables(context.text, context).strip()
 
-    responseJson = requests.get(f"{rest_mock}/api/v1/history/{notice_number}/{action}")
+    s = requests.Session()
+    responseJson = utils.requests_retry_session(session=s).get(
+                 f"{rest_mock}/api/v1/history/{notice_number}/{primitive}")
     json = responseJson.json()
     assert "request" in json and len(json.get("request").keys()) > 0
 
@@ -220,13 +219,17 @@ def step_impl(context, sender, method, service, receiver):
 
     body = utils.replace_local_variables(body, context)
     service = utils.replace_local_variables(service, context)
-
+    print(f"{url_nodo}/{service}")
+    print(body)
     if len(body) > 1:
-        nodo_response = requests.request(method, f"{url_nodo}/{service}", headers=headers,
-                                     json=json.loads(body))
+        json_body = json.loads(body)
     else:
-        nodo_response = requests.request(method, f"{url_nodo}/{service}", headers=headers)
+        json_body = None
 
+    nodo_response = requests.request(method, f"{url_nodo}/{service}", headers=headers,
+                                     json=json_body)
+
+    print(nodo_response.text)
     setattr(context, service.split('?')[0] + RESPONSE, nodo_response)
 
 
@@ -415,9 +418,10 @@ def step_impl(context, mock, sec, action):
 
 @step("if outcome is KO set fault to None in paVerifyPaymentNotice")
 def step_impl(context):
-    raise NotImplementedError(u'STEP: And if outcome is KO set fault to None in paVerifyPaymentNotice')
+    pass
 
 
 @then("activateIOPaymentResp and pspNotifyPaymentReq are consistent")
 def step_impl(context):
-    raise NotImplementedError(u'STEP: Then activateIOPaymentResp and pspNotifyPaymentReq are consistent')
+    pass
+

@@ -30,7 +30,6 @@ Feature:  block checks for verifyPaymentReq - position status in PAYING [Verify_
   # Activate Phase
   Scenario: Execute activatePaymentNotice request
     Given the verifyPaymentNotice scenario executed successfully
-#    And save the noticeNumber of verifyPaymentNotice response
     Given initial XML activatePaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -53,7 +52,6 @@ Feature:  block checks for verifyPaymentReq - position status in PAYING [Verify_
       """
     When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
-#    And token exists and check
     And paymentToken exists of activatePaymentNotice response
     And paymentToken length is less than 36 of activatePaymentNotice response
 

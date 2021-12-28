@@ -2,6 +2,9 @@ Feature: verify test flow paGetPayment, pspNotifyPayment and sendPaymentOutcome
 
   Background:
     Given systems up
+
+  # Activate Phase
+  Scenario: Execute activateIOPayment request
     Given initial XML activateIOPayment
     """
     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd">
@@ -22,12 +25,8 @@ Feature: verify test flow paGetPayment, pspNotifyPayment and sendPaymentOutcome
          </soapenv:Body>
       </soapenv:Envelope>
     """
-
-  # Activate Phase
-  Scenario: Execute activateIOPayment request
     When IO sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is OK of activateIOPayment response
-#    And token exists and check
     And paymentToken exists of activateIOPayment response
     And paymentToken length is less than 36 of activateIOPayment response
 
@@ -39,8 +38,8 @@ Feature: verify test flow paGetPayment, pspNotifyPayment and sendPaymentOutcome
 
   # Send payment to PSP Phase
   Scenario: Execute nodoInoltraEsitoPagamentoCarta request
-    Given the nodoChiediInformazioniPagamento scenario executed successfully
-    When WISP/PM sends REST GET inoltroEsito/carta to nodo-dei-pagamenti
+    Given the Execute nodoChiediInformazioniPagamento request scenario executed successfully
+    When WISP/PM sends REST POST inoltroEsito/carta to nodo-dei-pagamenti
     """
     {
          "idPagamento": "$activateIOPaymentResponse.paymentToken",
@@ -60,16 +59,56 @@ Feature: verify test flow paGetPayment, pspNotifyPayment and sendPaymentOutcome
 
   # Verify PA response is coherent with PSP Request
   Scenario: Verify consistency between activateIOPaymentRes and pspNotifyPaymentReq
-    Given the nodoChiediInformazioniPagamento scenario executed successfully
+    Given the Execute nodoInoltraEsitoPagamentoCarta request scenario executed successfully
     Then activateIOPaymentResp and pspNotifyPaymentReq are consistent
 
   # Send receipt phase
   Scenario: Execute sendPaymentOutcome request
-    Given the nodoChiediInformazioniPagamento scenario executed successfully
-    When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti using the token
+    Given the Verify consistency between activateIOPaymentRes and pspNotifyPaymentReq scenario executed successfully
+    Given initial XML sendPaymentOutcome
+    """
+     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+        <soapenv:Header/>
+        <soapenv:Body>
+            <nod:sendPaymentOutcomeReq>
+                <idPSP>40000000001</idPSP>
+                <idBrokerPSP>40000000001</idBrokerPSP>
+                <idChannel>40000000001_06</idChannel>
+                <password>pwdpwdpwd</password>
+                <paymentToken>$activateIOPaymentResponse.paymentToken</paymentToken>
+                <outcome>OK</outcome>
+                <details>
+                    <paymentMethod>creditCard</paymentMethod>
+                    <paymentChannel>app</paymentChannel>
+                    <fee>2.00</fee>
+                    <payer>
+                    <uniqueIdentifier>
+                        <entityUniqueIdentifierType>F</entityUniqueIdentifierType>
+                        <entityUniqueIdentifierValue>JHNDOE00A01F205N</entityUniqueIdentifierValue>
+                    </uniqueIdentifier>
+                    <fullName>John Doe</fullName>
+                    <streetName>street</streetName>
+                    <civicNumber>12</civicNumber>
+                    <postalCode>89020</postalCode>
+                    <city>city</city>
+                    <stateProvinceRegion>MI</stateProvinceRegion>
+                    <country>IT</country>
+                    <e-mail>john.doe@test.it</e-mail>
+                    </payer>
+                    <applicationDate>2021-10-01</applicationDate>
+                    <transferDate>2021-10-02</transferDate>
+              </details>
+            </nod:sendPaymentOutcomeReq>
+        </soapenv:Body>
+      </soapenv:Envelope>
+    """
+    When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
 
-  Scenario: Execute paSentRT request
+  Scenario: Execute paSendRT request
     Given the Execute sendPaymentOutcome request scenario executed successfully
     Then check EC receives paSendRT properly
+    """
+    $activateIOPayment.noticeNumber
+    """
 
