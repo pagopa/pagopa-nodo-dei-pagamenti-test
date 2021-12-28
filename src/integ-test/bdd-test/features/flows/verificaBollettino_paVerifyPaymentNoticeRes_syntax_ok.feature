@@ -1,8 +1,7 @@
  Feature: syntax checks for paVerifyPaymentNoticeRes - OK
  
- Background: Given systems up   
-    And PA new version
-    When psp sends a valid verificaBollettino soap-request    
+ Background: Given systems up       
+    And initial verificaBollettino soap-request
        """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
            <soapenv:Header/>
@@ -18,6 +17,7 @@
            </soapenv:Body>
       </soapenv:Envelope>
       """
+      And EC new version
  
  Scenario Outline: Check paVerifyPayment response with missing optional fields
     Given EC replies to nodo-dei-pagamenti with the following paVerifyPaymentNoticeRes
