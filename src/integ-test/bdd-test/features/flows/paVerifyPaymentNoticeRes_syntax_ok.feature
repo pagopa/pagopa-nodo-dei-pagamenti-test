@@ -23,7 +23,7 @@ Feature: syntax checks for paVerifyPaymentNoticeRes - OK
     And EC new version
 
   Scenario Outline: Check paVerifyPaymentRes response with missing optional fields
-    Given EC replies to nodo-dei-pagamenti with the following paVerifyPaymentNoticeReq
+    Given EC replies to nodo-dei-pagamenti with the following paVerifyPaymentNoticeRes
     """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
          <soapenv:Header/>
