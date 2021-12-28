@@ -47,6 +47,7 @@ def step_impl(context, name):
 
     setattr(context, name, payload)
 
+
 @given('{elem} with {value} in {action}')
 def step_impl(context, elem, value, action):
     xml = utils.manipulate_soap_action(getattr(context, action), elem, value)
@@ -128,7 +129,7 @@ def step_impl(context, mock, primitive):
 
     s = requests.Session()
     responseJson = utils.requests_retry_session(session=s).get(
-                 f"{rest_mock}/api/v1/history/{notice_number}/{primitive}")
+        f"{rest_mock}/api/v1/history/{notice_number}/{primitive}")
     json = responseJson.json()
     assert "request" in json and len(json.get("request").keys()) > 0
 
@@ -140,8 +141,6 @@ def step_impl(context, name):
         [step.keyword + " " + step.name + "\n\"\"\"\n" + (step.text or '') + "\n\"\"\"\n" for step in phase.steps])
     print(text_step)
     context.execute_steps(text_step)
-
-
 
 
 @when(u'{sender} sends rest {method:Method} {service} to {receiver}')
@@ -200,18 +199,17 @@ def step_impl(context, mock, sec, action):
     pass
 
 
-@step("if outcome is KO set fault to None in paVerifyPaymentNotice")
+@step('if outcome is KO set fault to None in paVerifyPaymentNotice')
 def step_impl(context):
     pass
 
 
-@then("activateIOPaymentResp and pspNotifyPaymentReq are consistent")
+@then('activateIOPaymentResp and pspNotifyPaymentReq are consistent')
 def step_impl(context):
     pass
 
 
-
-@step("idChannel with USE_NEW_FAULT_CODE=Y")
+@step('idChannel with USE_NEW_FAULT_CODE=Y')
 def step_impl(context):
     # TODO verify with api-config
     pass
