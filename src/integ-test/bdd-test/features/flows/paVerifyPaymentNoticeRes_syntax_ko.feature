@@ -24,7 +24,7 @@ Feature: syntax checks for paVerifyPaymentNoticeRes - KO
 
   # element value check
   Scenario Outline: Check PPT_STAZIONE_INT_PA_ERRORE_RESPONSE error on invalid body element value
-    Given EC replies to nodo-dei-pagamenti with the following paVerifyPaymentNoticeReq
+    Given EC replies to nodo-dei-pagamenti with the following paVerifyPaymentNoticeRes
     """
     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
        <soapenv:Header/>
@@ -59,7 +59,7 @@ Feature: syntax checks for paVerifyPaymentNoticeRes - KO
 
 
   Scenario Outline: Check PPT_STAZIONE_INT_PA_ERRORE_RESPONSE error on invalid body element value
-    Given EC replies to nodo-dei-pagamenti with the following paVerifyPaymentNoticeReq
+    Given EC replies to nodo-dei-pagamenti with the following paVerifyPaymentNoticeRes
     """
     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
        <soapenv:Header/>
