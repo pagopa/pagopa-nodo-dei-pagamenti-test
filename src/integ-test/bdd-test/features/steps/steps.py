@@ -35,8 +35,8 @@ def step_impl(context, version):
     pass
 
 
-@given('initial XML {name}')
-def step_impl(context, name):
+@given('initial XML {primitive}')
+def step_impl(context, primitive):
     payload = context.text or ""
     payload = utils.replace_local_variables(payload, context)
 
@@ -45,7 +45,7 @@ def step_impl(context, name):
 
     payload = utils.replace_global_variables(payload, context)
 
-    setattr(context, name, payload)
+    setattr(context, primitive, payload)
 
 
 @given('{elem} with {value} in {action}')
@@ -54,24 +54,24 @@ def step_impl(context, elem, value, action):
     setattr(context, action, xml)
 
 
-@given('{attribute} set {value} for {elem} in {action}')
-def step_impl(context, attribute, value, elem, action):
-    my_document = parseString(getattr(context, action))
+@given('{attribute} set {value} for {elem} in {primitive}')
+def step_impl(context, attribute, value, elem, primitive):
+    my_document = parseString(getattr(context, primitive))
     element = my_document.getElementsByTagName(elem)[0]
     element.setAttribute(attribute, value)
-    setattr(context, action, my_document.toxml())
+    setattr(context, primitive, my_document.toxml())
 
 
 # Scenario : Check valid URL in WSDL namespace
-@when('{sender} sends soap {soap_action} to {receiver}')
-def step_impl(context, sender, soap_action, receiver):
-    headers = {'Content-Type': 'application/xml', "SOAPAction": soap_action}  # set what your server accepts
+@when('{sender} sends soap {soap_primitive} to {receiver}')
+def step_impl(context, sender, soap_primitive, receiver):
+    headers = {'Content-Type': 'application/xml', "SOAPAction": soap_primitive}  # set what your server accepts
     # TODO get url according to receiver
     url_nodo = utils.get_soap_url_nodo(context)
-    print("nodo soap_request sent >>>", getattr(context, soap_action))
+    print("nodo soap_request sent >>>", getattr(context, soap_primitive))
 
-    soap_response = requests.post(url_nodo, getattr(context, soap_action), headers=headers)
-    setattr(context, soap_action + RESPONSE, soap_response)
+    soap_response = requests.post(url_nodo, getattr(context, soap_primitive), headers=headers)
+    setattr(context, soap_primitive + RESPONSE, soap_response)
 
     assert (soap_response.status_code == 200), f"status_code {soap_response.status_code}"
 
@@ -86,9 +86,9 @@ def step_impl(context, job_name, seconds):
 
 
 # Scenario: Execute activateIOPayment request
-@then('check {tag} is {value} of {action} response')
-def step_impl(context, tag, value, action):
-    soap_response = getattr(context, action + RESPONSE)
+@then('check {tag} is {value} of {primitive} response')
+def step_impl(context, tag, value, primitive):
+    soap_response = getattr(context, primitive + RESPONSE)
     if 'xml' in soap_response.headers['content-type']:
         my_document = parseString(soap_response.content)
         if len(my_document.getElementsByTagName('faultCode')) > 0:
@@ -99,23 +99,23 @@ def step_impl(context, tag, value, action):
         print(f'check tag "{tag}" - expected: {value}, obtained: {data}')
         assert value == data
     else:
-        node_response = getattr(context, action + RESPONSE)
+        node_response = getattr(context, primitive + RESPONSE)
         json_response = node_response.json()
         assert json_response.get(tag) == value
 
 
 # TODO greater/equals than ...
-@then('{tag} length is less than {value} of {action} response')
-def step_impl(context, tag, value, action):
-    soap_response = getattr(context, action + RESPONSE)
+@then('{tag} length is less than {value} of {primitive} response')
+def step_impl(context, tag, value, primitive):
+    soap_response = getattr(context, primitive + RESPONSE)
     my_document = parseString(soap_response.content)
     payment_token = my_document.getElementsByTagName(tag)[0].firstChild.data
     assert len(payment_token) < int(value)
 
 
-@then('{tag} exists of {action} response')
-def step_impl(context, tag, action):
-    soap_response = getattr(context, action + RESPONSE)
+@then('{tag} exists of {primitive} response')
+def step_impl(context, tag, primitive):
+    soap_response = getattr(context, primitive + RESPONSE)
     my_document = parseString(soap_response.content)
     payment_token = my_document.getElementsByTagName(tag)[0].firstChild.data
     assert payment_token is not None
@@ -173,19 +173,19 @@ def step_impl(context, action, value):
     assert int(value) == getattr(context, action + RESPONSE).status_code
 
 
-@given('{mock} replies to {destination} with the {action}')
-def step_impl(context, mock, destination, action):
+@given('{mock} replies to {destination} with the {primitive}')
+def step_impl(context, mock, destination, primitive):
     if context.text:
         pa_verify_payment_notice_res = context.text
     else:
-        pa_verify_payment_notice_res = getattr(context, action)
+        pa_verify_payment_notice_res = getattr(context, primitive)
     pa_verify_payment_notice_res = str(pa_verify_payment_notice_res).replace("#fiscalCodePA#",
                                                                              context.config.userdata.get(
                                                                                  "global_configuration").get(
                                                                                  "creditor_institution_code"))
-    setattr(context, action, pa_verify_payment_notice_res)
+    setattr(context, primitive, pa_verify_payment_notice_res)
 
-    response_status_code = utils.save_soap_action(utils.get_rest_mock_ec(context), action,
+    response_status_code = utils.save_soap_action(utils.get_rest_mock_ec(context), primitive,
                                                   pa_verify_payment_notice_res, override=True)
     assert response_status_code == 200
 
