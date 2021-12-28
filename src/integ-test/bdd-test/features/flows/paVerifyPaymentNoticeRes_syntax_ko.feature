@@ -24,7 +24,7 @@ Feature: syntax checks for paVerifyPaymentNoticeRes - KO
 
   # element value check
   Scenario Outline: Check PPT_STAZIONE_INT_PA_ERRORE_RESPONSE error on invalid body element value
-    Given EC replies to nodo-dei-pagamenti with the following paVerifyPaymentNoticeReq
+    Given EC replies to nodo-dei-pagamenti with the following paVerifyPaymentNoticeRes
     """
     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
        <soapenv:Header/>
@@ -59,7 +59,7 @@ Feature: syntax checks for paVerifyPaymentNoticeRes - KO
 
 
   Scenario Outline: Check PPT_STAZIONE_INT_PA_ERRORE_RESPONSE error on invalid body element value
-    Given EC replies to nodo-dei-pagamenti with the following paVerifyPaymentNoticeReq
+    Given EC replies to nodo-dei-pagamenti with the following paVerifyPaymentNoticeRes
     """
     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
        <soapenv:Header/>
@@ -127,4 +127,8 @@ Feature: syntax checks for paVerifyPaymentNoticeRes - KO
       | companyName               | test di prova per una lunghezza superiore a 141 caratteri alfanumerici, per verificare che il nodo risponda PPT_STAZIONE_INT_PA_ERRORE_RESPONSE      | SIN_PVPNR_43|
       | officeName                | Empty                 | SIN_PVPNR_45|
       | officeName                | test di prova per una lunghezza superiore a 141 caratteri alfanumerici, per verificare che il nodo risponda PPT_STAZIONE_INT_PA_ERRORE_RESPONSE      | SIN_PVPNR_46|
+      | allCCP                    | None                  | SIN_PVPNR_31 |
+      | paymentDescription        | None                  | SIN_PVPNR_34 |
+      | fiscalCodePA              | None                  | SIN_PVPNR_37 |
+      | companyName               | None                  | SIN_PVPNR_41 |
 
