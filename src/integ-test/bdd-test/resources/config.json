@@ -16,6 +16,7 @@
   },
   "global_configuration": {
     "creditor_institution_code": "77777777777",
+    "codicePA": "777777777777",
     "fiscalCodePA": "12344323"
   }
 }

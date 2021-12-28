@@ -128,4 +128,8 @@ Feature: syntax checks for paVerifyPaymentNoticeRes - KO
       | companyName               | test di prova per una lunghezza superiore a 141 caratteri alfanumerici, per verificare che il nodo risponda PPT_STAZIONE_INT_PA_ERRORE_RESPONSE      | SIN_PVPNR_43|
       | officeName                | Empty                 | SIN_PVPNR_45|
       | officeName                | test di prova per una lunghezza superiore a 141 caratteri alfanumerici, per verificare che il nodo risponda PPT_STAZIONE_INT_PA_ERRORE_RESPONSE      | SIN_PVPNR_46|
+      | allCCP                    | None                  | SIN_PVPNR_31 |
+      | paymentDescription        | None                  | SIN_PVPNR_34 |
+      | fiscalCodePA              | None                  | SIN_PVPNR_37 |
+      | companyName               | None                  | SIN_PVPNR_41 |
 

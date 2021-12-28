@@ -425,3 +425,9 @@ def step_impl(context):
 def step_impl(context):
     pass
 
+
+
+@step("idChannel with USE_NEW_FAULT_CODE=Y")
+def step_impl(context):
+    # TODO verify with api-config
+    pass
