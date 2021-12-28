@@ -1,4 +1,4 @@
-Feature: semantic checks OK for activatePaymentNoticeReq
+Feature: semantic checks OK for activatePaymentNotice
 
   Background:
     Given systems up
