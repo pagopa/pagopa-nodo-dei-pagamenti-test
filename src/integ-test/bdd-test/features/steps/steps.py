@@ -1,6 +1,6 @@
 import json
 import random
-import re
+import time
 from xml.dom.minidom import parseString
 
 import requests
@@ -8,8 +8,11 @@ from behave import *
 
 import utils as utils
 
+RESPONSE = "Response"
 
-# Background
+REQUEST = "Request"
+
+
 @given('systems up')
 def step_impl(context):
     """
@@ -27,61 +30,41 @@ def step_impl(context):
     assert responses
 
 
-@given('EC {version} version')
+@given(u'EC {version:OldNew} version')
 def step_impl(context, version):
     pass
 
 
-@given('initial XML for {action}')
-def step_impl(context, action):
+@given('initial XML {name}')
+def step_impl(context, name):
     payload = context.text or ""
-    pattern = re.compile('\\$\\w+')
-    match = pattern.findall(payload)
-    for elem in match:
-        payload = payload.replace(elem, getattr(context, elem.replace('$', '')))
+    payload = utils.replace_local_variables(payload, context)
 
     payload = payload.replace('#idempotency_key#', f"70000000001_{str(random.randint(1000000000, 9999999999))}")
     payload = payload.replace('#notice_number#', f"30211{str(random.randint(1000000000000, 9999999999999))}")
 
-    pattern = re.compile('#\\w+#')
-    match = pattern.findall(payload)
-    for elem in match:
-        payload = payload.replace(elem, context.config.userdata
-                                  .get("global_configuration")
-                                  .get(elem.replace('#', '')))
+    payload = utils.replace_global_variables(payload, context)
 
-    # idempotency_key = context.config.userdata.get("global_configuration").get("idempotencyKey")
-    # if "idempotencyKey" in context.config.userdata.get("global_configuration"):
-    #     payload = payload.replace('#idempotency_key#', idempotency_key)
-    # else:
-    #     payload = payload.replace('#idempotency_key#', f"70000000001_{str(random.randint(1000000000, 9999999999))}")
-    #
-    # notice_number = context.config.userdata.get("global_configuration").get("noticeNumber")
-    # if "noticeNumber" in context.config.userdata.get("global_configuration"):
-    #     payload = payload.replace('#notice_number#', notice_number)
-    # else:
-    #     payload = payload.replace('#notice_number#', f"30211{str(random.randint(1000000000000, 9999999999999))}")
-
-    setattr(context, action, payload)
+    setattr(context, name, payload)
 
 
-@given('initial JSON for {service}')
-def step_impl(context, service):
-    body = context.text or ""
-    pattern = re.compile('\\$\\w+')
-    match = pattern.findall(body)
-    for elem in match:
-        body = body.replace(elem, getattr(context, elem.replace('$', '')))
-    setattr(context, service, {'body': body, 'params': {}})
+# @given('initial JSON for {service}')
+# def step_impl(context, service):
+#     body = context.text or ""
+#     pattern = re.compile('\\$\\w+')
+#     match = pattern.findall(body)
+#     for elem in match:
+#         body = body.replace(elem, getattr(context, elem.replace('$', '')))
+#     setattr(context, service, {'body': body, 'params': {}})
 
 
-@given('rest-request {service} with param {param} equals to {value}')
-def step_impl(context, service, param, value):
-    rest_request = getattr(context, service) or {'params': {}}
-    if '$' in value:
-        value = getattr(context, value.replace('$', ''))
-    rest_request['params'][param] = value
-    setattr(context, service, rest_request)
+# @given('rest-request {service} with param {param} equals to {value}')
+# def step_impl(context, service, param, value):
+#     rest_request = getattr(context, service) or {'params': {}}
+#     if '$' in value:
+#         value = getattr(context, value.replace('$', ''))
+#     rest_request['params'][param] = value
+#     setattr(context, service, rest_request)
 
 
 @given('{elem} with {value} in {action}')
@@ -97,6 +80,7 @@ def step_impl(context, attribute, value, elem, action):
     element.setAttribute(attribute, value)
     setattr(context, action, my_document.toxml())
 
+
 # Scenario : Check valid URL in WSDL namespace
 @when('{sender} sends soap {soap_action} to {receiver}')
 def step_impl(context, sender, soap_action, receiver):
@@ -106,23 +90,24 @@ def step_impl(context, sender, soap_action, receiver):
     print("nodo soap_request sent >>>", getattr(context, soap_action))
 
     soap_response = requests.post(url_nodo, getattr(context, soap_action), headers=headers)
-    setattr(context, soap_action + "response", soap_response)
+    setattr(context, soap_action + RESPONSE, soap_response)
 
     assert (soap_response.status_code == 200), f"status_code {soap_response.status_code}"
 
 
 # When job <JOB_NAME> triggered
-# @when('job {job_name} triggered after {seconds} seconds')
-# def step_impl(context, job_name, seconds):
-#     time.sleep(int(seconds))
-#     url_nodo = utils.get_rest_url_nodo(context)
-#     nodo_response = requests.get(f"{url_nodo}/jobs/trigger/{job_name}")
-#     assert nodo_response.status_code == 200
+@when('job {job_name} triggered after {seconds} seconds')
+def step_impl(context, job_name, seconds):
+    time.sleep(int(seconds))
+    url_nodo = utils.get_rest_url_nodo(context)
+    nodo_response = requests.get(f"{url_nodo}/jobs/trigger/{job_name}")
+    assert nodo_response.status_code == 200
+
 
 # Scenario: Execute activateIOPayment request
 @then('check {tag} is {value} of {action} response')
 def step_impl(context, tag, value, action):
-    soap_response = getattr(context, action + "response")
+    soap_response = getattr(context, action + RESPONSE)
     if 'xml' in soap_response.headers['content-type']:
         my_document = parseString(soap_response.content)
         if len(my_document.getElementsByTagName('faultCode')) > 0:
@@ -133,7 +118,7 @@ def step_impl(context, tag, value, action):
         print(f'check tag "{tag}" - expected: {value}, obtained: {data}')
         assert value == data
     else:
-        node_response = getattr(context, action + "response")
+        node_response = getattr(context, action + RESPONSE)
         json_response = node_response.json()
         assert json_response.get(tag) == value
 
@@ -141,7 +126,7 @@ def step_impl(context, tag, value, action):
 # TODO greater/equals than ...
 @then('{tag} length is less than {value} of {action} response')
 def step_impl(context, tag, value, action):
-    soap_response = getattr(context, action + "response")
+    soap_response = getattr(context, action + RESPONSE)
     my_document = parseString(soap_response.content)
     payment_token = my_document.getElementsByTagName(tag)[0].firstChild.data
     assert len(payment_token) < int(value)
@@ -149,7 +134,7 @@ def step_impl(context, tag, value, action):
 
 @then('{tag} exists of {action} response')
 def step_impl(context, tag, action):
-    soap_response = getattr(context, action + "response")
+    soap_response = getattr(context, action + RESPONSE)
     my_document = parseString(soap_response.content)
     payment_token = my_document.getElementsByTagName(tag)[0].firstChild.data
     assert payment_token is not None
@@ -168,18 +153,19 @@ def step_impl(context, tag, action):
 #     response_status_code = utils.save_soap_action(utils.get_rest_mock_ec(context), primitive, soap_action, override=True)
 #     assert response_status_code == 200
 
-# @then('check {mock} receives {action} properly')
-# def step_impl(context, mock, action):
-#     rest_mock = utils.get_rest_mock_ec(context) if mock == "EC" else get_rest_mock_psp(context)
-#
-#     # retrieve info from soap request of background step
-#     soap_request = getattr(context, "soap_request")
-#     my_document = parseString(soap_request)
-#     notice_number = my_document.getElementsByTagName('noticeNumber')[0].firstChild.data
-#
-#     responseJson = requests.get(f"{rest_mock}/api/v1/history/{notice_number}/{action}")
-#     json = responseJson.json()
-#     assert "request" in json and len(json.get("request").keys()) > 0
+@then(u'check {mock:EcPsp} receives {action} properly')
+def step_impl(context, mock, action):
+    rest_mock = utils.get_rest_mock_ec(context) if mock == "EC" else utils.get_rest_mock_psp(context)
+
+    # retrieve info from soap request of background step
+    soap_request = getattr(context, action)
+    my_document = parseString(soap_request)
+    notice_number = my_document.getElementsByTagName('noticeNumber')[0].firstChild.data
+
+    responseJson = requests.get(f"{rest_mock}/api/v1/history/{notice_number}/{action}")
+    json = responseJson.json()
+    assert "request" in json and len(json.get("request").keys()) > 0
+
 
 # @when("IO sends an activateIOPaymentReq to nodo-dei-pagamenti")
 # def step_impl(context):
@@ -207,7 +193,7 @@ def step_impl(context, tag, action):
 #     else:
 #         assert False
 
-@given("the {name} scenario executed successfully")
+@given('the {name} scenario executed successfully')
 def step_impl(context, name):
     phase = ([phase for phase in context.feature.scenarios if name in phase.name] or [None])[0]
     text_step = ''.join(
@@ -216,31 +202,38 @@ def step_impl(context, name):
     context.execute_steps(text_step)
 
 
-@given("save the {tag} of {response} response")
-def step_impl(context, tag, response):
-    soap_response = getattr(context, response + "response")
-    my_document = parseString(soap_response.content)
-    element = my_document.getElementsByTagName(tag)[0].firstChild.data
-    setattr(context, tag, element)
+# @given('save the {tag} of {response} response')
+# def step_impl(context, tag, response):
+#     soap_response = getattr(context, response + RESPONSE)
+#     my_document = parseString(soap_response.content)
+#     element = my_document.getElementsByTagName(tag)[0].firstChild.data
+#     setattr(context, tag, element)
 
 
-@when("{sender} sends rest {service} to {receiver}")
-def step_impl(context, sender, service, receiver):
+@when(u'{sender} sends rest {method:Method} {service} to {receiver}')
+def step_impl(context, sender, method, service, receiver):
+    # TODO get url according to receiver
     url_nodo = utils.get_rest_url_nodo(context)
-    rest_request = getattr(context, service)
 
     headers = {'Content-Type': 'application/json'}
-    if rest_request['body']:
-        nodo_response = requests.post(f"{url_nodo}/{service}", params=rest_request['params'], headers=headers,
-                                      json=json.loads(rest_request['body']))
+    body = context.text or ""
+
+    body = utils.replace_local_variables(body, context)
+    service = utils.replace_local_variables(service, context)
+
+    if len(body) > 1:
+        nodo_response = requests.request(method, f"{url_nodo}/{service}", headers=headers,
+                                     json=json.loads(body))
     else:
-        nodo_response = requests.get(f"{url_nodo}/{service}", params=rest_request['params'], headers=headers)
-    setattr(context, service + "response", nodo_response)
+        nodo_response = requests.request(method, f"{url_nodo}/{service}", headers=headers)
+
+    setattr(context, service.split('?')[0] + RESPONSE, nodo_response)
 
 
-@then('verify the HTTP response status code of {action} response is {value}')
+@then('verify the HTTP status code of {action} response is {value}')
 def step_impl(context, action, value):
-    assert int(value) == getattr(context, action + "response").status_code
+    print(f'HTTP status expected: {value} - obtained:{getattr(context, action + RESPONSE).status_code}')
+    assert int(value) == getattr(context, action + RESPONSE).status_code
 
 
 # Scenario: Execute nodoInoltraEsitoPagamentoCarta request
@@ -394,7 +387,7 @@ def step_impl(context, action, value):
 #     print(paSendRT.get("request"))
 #     assert len(paSendRT.get("request").keys())
 
-@given("{mock} replies to {destination} with the {action}")
+@given('{mock} replies to {destination} with the {action}')
 def step_impl(context, mock, destination, action):
     if context.text:
         pa_verify_payment_notice_res = context.text
@@ -411,10 +404,20 @@ def step_impl(context, mock, destination, action):
     assert response_status_code == 200
 
 
-@given("{mock} wait for {sec} seconds at {action}")
+@given('{mock} wait for {sec} seconds at {action}')
 def step_impl(context, mock, sec, action):
     """
             configure mock response
         """
     # TODO configure mock to wait x seconds at action
     pass
+
+
+@step("if outcome is KO set fault to None in paVerifyPaymentNotice")
+def step_impl(context):
+    raise NotImplementedError(u'STEP: And if outcome is KO set fault to None in paVerifyPaymentNotice')
+
+
+@then("activateIOPaymentResp and pspNotifyPaymentReq are consistent")
+def step_impl(context):
+    raise NotImplementedError(u'STEP: Then activateIOPaymentResp and pspNotifyPaymentReq are consistent')

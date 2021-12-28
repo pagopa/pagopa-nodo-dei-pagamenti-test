@@ -2,7 +2,7 @@
  
  Background:
     Given systems up
-    And initial XML for verificaBollettino
+    And initial XML verificaBollettino
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
          <soapenv:Header/>

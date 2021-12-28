@@ -2,7 +2,7 @@ Feature: syntax checks for paVerifyPaymentNoticeRes - KO
 
   Background:
     Given systems up   
-    And initial XML for verifyPaymentNotice
+    And initial XML verifyPaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
          <soapenv:Header/>
@@ -59,7 +59,7 @@ Feature: syntax checks for paVerifyPaymentNoticeRes - KO
 
 
   Scenario Outline: Check PPT_STAZIONE_INT_PA_ERRORE_RESPONSE error on invalid body element value
-    Given initial XML for paVerifyPaymentNotice
+    Given initial XML paVerifyPaymentNotice
     """
     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
        <soapenv:Header/>

@@ -2,7 +2,7 @@ Feature:  syntax checks KO for activatePaymentNoticeReq
 
   Background:
     Given systems up
-    And initial XML for activatePaymentNotice
+    And initial XML activatePaymentNotice
 
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"

@@ -2,7 +2,7 @@ Feature:  block checks for verifyPaymentReq - position status in INSERTED (payme
 
   Background:
     Given systems up
-    And initial XML for verifyPaymentNotice
+    And initial XML verifyPaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
          <soapenv:Header/>
@@ -30,7 +30,7 @@ Feature:  block checks for verifyPaymentReq - position status in INSERTED (payme
 
   # Activate Phase
   Scenario: Execute activatePaymentNotice request
-    Given initial XML for activatePaymentNotice
+    Given initial XML activatePaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
          <soapenv:Header/>
@@ -58,8 +58,7 @@ Feature:  block checks for verifyPaymentReq - position status in INSERTED (payme
   # Payment Outcome Phase outcome KO
   Scenario: Execute sendPaymentOutcome request
     Given the activatePaymentNotice scenario executed successfully
-    And save the paymentToken of activatePaymentNotice response
-    Given initial sendPaymentOutcome soap-request
+    Given initial XML sendPaymentOutcome
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
          <soapenv:Header/>
@@ -69,7 +68,7 @@ Feature:  block checks for verifyPaymentReq - position status in INSERTED (payme
                <idBrokerPSP>70000000001</idBrokerPSP>
                <idChannel>70000000001_01</idChannel>
                <password>pwdpwdpwd</password>
-               <paymentToken>$paymentToken</paymentToken>
+               <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
                <outcome>KO</outcome>
                <details>
                   <paymentMethod>creditCard</paymentMethod>

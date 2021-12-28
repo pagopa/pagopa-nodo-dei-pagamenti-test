@@ -2,7 +2,7 @@ Feature: semantic checks for verifyPaymentReq
 
   Background:
     Given systems up
-    And initial XML for verifyPaymentNotice
+    And initial XML verifyPaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
          <soapenv:Header/>
