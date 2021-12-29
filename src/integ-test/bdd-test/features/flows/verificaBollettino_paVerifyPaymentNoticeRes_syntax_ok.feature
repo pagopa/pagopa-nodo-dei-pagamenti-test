@@ -1,10 +1,11 @@
- Feature: syntax checks for paVerifyPaymentNoticeRes - OK
- 
- Background: Given systems up       
-    And initial verificaBollettino soap-request
+Feature: syntax checks for paVerifyPaymentNoticeRes - OK
+
+  Background:
+    Given systems up
+    And initial XML verificaBollettino
        """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-           <soapenv:Header/>
+         <soapenv:Header/>
            <soapenv:Body>
               <nod:verificaBollettinoReq>
                  <idPSP>POSTE3</idPSP>
@@ -17,10 +18,11 @@
            </soapenv:Body>
       </soapenv:Envelope>
       """
-      And EC new version
- 
- Scenario Outline: Check paVerifyPayment response with missing optional fields
-    Given EC replies to nodo-dei-pagamenti with the following paVerifyPaymentNoticeRes
+    And EC new version
+
+
+  Scenario Outline: Check paVerifyPayment response with missing optional fields
+    Given EC replies to nodo-dei-pagamenti with the paVerifyPaymentNotice
     """
     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
        <soapenv:Header/>
@@ -56,8 +58,8 @@
     When PSP sends verificaBollettinoReq to nodo-dei-pagamenti
     Then check outcome is OK
     Examples:
-      | elem                      | value                 | soapUI test |
-      | soapenv:header            | None                  | SIN_VBR_01  |
-      | dueDate                   | None                  | SIN_VBR_25  |
-      | detailDescription         | None                  | SIN_VBR_28  |
-      | officeName                | None                  | SIN_VBR_44  |
+      | elem              | value | soapUI test |
+      | soapenv:header    | None  | SIN_VBR_01  |
+      | dueDate           | None  | SIN_VBR_25  |
+      | detailDescription | None  | SIN_VBR_28  |
+      | officeName        | None  | SIN_VBR_44  |
