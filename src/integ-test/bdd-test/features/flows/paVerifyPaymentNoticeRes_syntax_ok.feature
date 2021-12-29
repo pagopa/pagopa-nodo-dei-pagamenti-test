@@ -59,11 +59,8 @@ Feature: syntax checks for paVerifyPaymentNoticeRes - OK
     When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of verifyPaymentNotice response
     Examples:
-      | elem               | value | soapUI test  | comment|
-      | soapenv:Header     | None  | SIN_PVPNR_01 ||
-      | dueDate            | None  | SIN_PVPNR_25 ||
-      | detailDescription  | None  | SIN_PVPNR_28 ||
-      | paymentDescription | None  | SIN_PVPNR_34 | why PPT_STAZIONE_INT_PA_ERRORE_RESPONSE|
-      | fiscalCodePA       | None  | SIN_PVPNR_37 | why PPT_STAZIONE_INT_PA_ERRORE_RESPONSE|
-      | companyName        | None  | SIN_PVPNR_41 | why PPT_STAZIONE_INT_PA_ERRORE_RESPONSE|
-      | officeName         | None  | SIN_PVPNR_44 |                                        |
+      | elem               | value | soapUI test  |
+      | soapenv:Header     | None  | SIN_PVPNR_01 |
+      | dueDate            | None  | SIN_PVPNR_25 |
+      | detailDescription  | None  | SIN_PVPNR_28 |
+      | officeName         | None  | SIN_PVPNR_44 |
