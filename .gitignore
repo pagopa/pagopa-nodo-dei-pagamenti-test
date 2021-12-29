@@ -110,7 +110,6 @@ launch.json
 nodo-de-pagamenti-env
 tmp_
 __pycache__
-behave-report*
 **/resources/config.json.*
 
 *.iml
