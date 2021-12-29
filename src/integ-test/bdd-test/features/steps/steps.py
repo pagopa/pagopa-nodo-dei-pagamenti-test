@@ -203,14 +203,14 @@ def step_impl(context, mock, sec, action):
     pass
 
 
-@given('if {tag} is {data} set {elem} to {value} in {action}')
-def step_impl(context, tag, data, elem, value, action):
-    soap_action = getattr(context, action)
-    my_document = parseString(soap_action)
-    if len(my_document.getElementsByTagName(tag)) > 0:
-        if my_document.getElementsByTagName(tag)[0].firstChild is not None and my_document.getElementsByTagName(tag)[0].firstChild.data == data:
-            soap_action = utils.manipulate_soap_action(soap_action, elem, value)
-            setattr(context, action, soap_action)
+@step('if {field} is {field_value} set {elem} to {value} in {primitive}')
+def step_impl(context, field, field_value, elem, value, primitive):
+    xml = getattr(context, primitive)
+    my_document = parseString(xml)
+    field_data = my_document.getElementsByTagName(field)
+    if len(field_data) > 0 and len(field_data[0].childNodes) > 0 and field_data[0].firstChild.data == field_value:
+        xml = utils.manipulate_soap_action(xml, elem, value)
+        setattr(context, primitive, xml)
 
 
 @then('activateIOPayment response and pspNotifyPayment request are consistent')
