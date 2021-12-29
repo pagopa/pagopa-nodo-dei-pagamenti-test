@@ -1,4 +1,4 @@
-Feature: syntax checks for paVerifyPaymentNoticeRes - KO
+Feature: syntax checks for paVerifyPaymentNotice - KO
 
   Background:
     Given systems up
@@ -40,11 +40,11 @@ Feature: syntax checks for paVerifyPaymentNoticeRes - KO
     </soapenv:Envelope>
     """
     And <elem> with <value> in paVerifyPaymentNotice
-    Given EC replies to nodo-dei-pagamenti with the following paVerifyPaymentNotice
-    And if outcome is KO set fault to None in paVerifyPaymentNoticeRes
-    When PSP sends verificaBollettinoReq to nodo-dei-pagamenti
-    Then check outcome is KO
-    And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE
+    And if outcome is KO set fault to None in paVerifyPaymentNotice
+    Given EC replies to nodo-dei-pagamenti with the paVerifyPaymentNotice
+    When PSP sends SOAP verificaBollettino to nodo-dei-pagamenti
+    Then check outcome is KO of verificaBollettino response
+    And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of verificaBollettino response
     Examples:
       | elem                         | value | soapUI test |
       | soapenv:Body                 | None  | SIN_VBR_02  |
@@ -58,7 +58,7 @@ Feature: syntax checks for paVerifyPaymentNoticeRes - KO
 
 
   Scenario Outline: Check PPT_STAZIONE_INT_PA_ERRORE_RESPONSE error on invalid body element value
-    Given EC replies to nodo-dei-pagamenti with the following paVerifyPaymentNoticeRes
+    Given initial XML paVerifyPaymentNotice
     """
     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
        <soapenv:Header/>
@@ -90,10 +90,11 @@ Feature: syntax checks for paVerifyPaymentNoticeRes - KO
        </soapenv:Body>
     </soapenv:Envelope>
     """
-    And <elem> with <value> in paVerifyPaymentNoticeRes
-    When PSP sends verificaBollettinoReq to nodo-dei-pagamenti
-    Then check outcome is KO
-    And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE
+    And <elem> with <value> in paVerifyPaymentNotice
+    And EC replies to nodo-dei-pagamenti with the paVerifyPaymentNotice
+    When PSP sends SOAP verificaBollettino to nodo-dei-pagamenti
+    Then check outcome is KO of verificaBollettino response
+    And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of verificaBollettino response
     Examples:
       | elem                     | value                                                                                                                                           | soapUI test |
       | paymentList              | None                                                                                                                                            | SIN_VBR_11  |
