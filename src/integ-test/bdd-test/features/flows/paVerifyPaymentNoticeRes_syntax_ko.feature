@@ -42,6 +42,7 @@ Feature: syntax checks for paVerifyPaymentNoticeRes - KO
     </soapenv:Envelope>
     """
     And <elem> with <value> in paVerifyPaymentNotice
+    And EC replies to nodo-dei-pagamenti with the paVerifyPaymentNotice
     And if outcome is KO set fault to None in paVerifyPaymentNotice
     And EC replies to nodo-dei-pagamenti with the paVerifyPaymentNotice
     When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
@@ -118,10 +119,13 @@ Feature: syntax checks for paVerifyPaymentNoticeRes - KO
       | dueDate                   | 12-08-2022T12:00:678  | SIN_PVPNR_27|
       | detailDescription         | Empty                 | SIN_PVPNR_29|
       | detailDescription         | test di prova per una lunghezza superiore a 141 caratteri alfanumerici, per verificare che il nodo risponda PPT_STAZIONE_INT_PA_ERRORE_RESPONSE      | SIN_PVPNR_30|
+      | allCCP                    | None                  | SIN_PVPNR_31 |
       | allCCP                    | Empty                 | SIN_PVPNR_32|
       | allCCP                    | 3                     | SIN_PVPNR_33|
+      | paymentDescription        | None                  | SIN_PVPNR_34|
       | paymentDescription        | Empty                 | SIN_PVPNR_35|
       | paymentDescription        | test di prova per una lunghezza superiore a 141 caratteri alfanumerici, per verificare che il nodo risponda PPT_STAZIONE_INT_PA_ERRORE_RESPONSE      | SIN_PVPNR_36|
+      | fiscalCodePA              | None                  | SIN_PVPNR_37|
       | fiscalCodePA              | Empty                 | SIN_PVPNR_38|
       | fiscalCodePA              | 123456789012          | SIN_PVPNR_39|
       | fiscalCodePA              | 12345jh%lk9           | SIN_PVPNR_40|
