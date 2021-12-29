@@ -1,0 +1,1 @@
+behave -f html -o docs/behave-report.html src/integ-test/bdd-test/features/
