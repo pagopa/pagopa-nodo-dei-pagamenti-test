@@ -42,6 +42,7 @@ Feature: syntax checks for paVerifyPaymentNoticeRes - KO
     </soapenv:Envelope>
     """
     And <elem> with <value> in paVerifyPaymentNotice
+    And EC replies to nodo-dei-pagamenti with the paVerifyPaymentNotice
     And if outcome is KO set fault to None in paVerifyPaymentNotice
     And EC replies to nodo-dei-pagamenti with the paVerifyPaymentNotice
     When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
