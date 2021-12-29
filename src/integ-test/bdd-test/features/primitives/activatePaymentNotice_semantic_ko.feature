@@ -110,16 +110,20 @@ Feature: semantic checks KO for activatePaymentNoticeReq
   # station value check: combination fiscalCode-noticeNumber identifies a station not present inside column ID_STAZIONE in NODO4_CFG.STAZIONI table of nodo-dei-pagamenti database [SEM_APNR_12]
   Scenario Outline: Check PPT_STAZIONE_INT_PA_SCONOSCIUTA error on non-existent station
     Given fiscalCode with 77777777777 in activatePaymentNotice
-    And idempotencyKey with <iKey> in activatePaymentNotice
+    # And idempotencyKey with <iKey> in activatePaymentNotice
     And noticeNumber with <value> in activatePaymentNotice
     When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is KO of activatePaymentNotice response
     And check faultCode is PPT_STAZIONE_INT_PA_SCONOSCIUTA of activatePaymentNotice response
     Examples:
-      | iKey                   | value              | soapUI test        |
-      | 70000000001_5114567890 | 511456789012345678 | SEM_APNR_12 - aux5 |
-      | 70000000001_0114567890 | 011456789012345678 | SEM_APNR_12 - aux0 |
-      | 70000000001_3004567890 | 300456789012345678 | SEM_APNR_12 - aux3 |
+      # | iKey                   | value              | soapUI test        |
+      # | 70000000001_5114567890 | 511456789012345678 | SEM_APNR_12 - aux5 |
+      # | 70000000001_0114567890 | 011456789012345678 | SEM_APNR_12 - aux0 |
+      # | 70000000001_3004567890 | 300456789012345678 | SEM_APNR_12 - aux3 |
+      | value              | soapUI test        |
+      | 511456789012345678 | SEM_APNR_12 - aux5 |
+      | 011456789012345678 | SEM_APNR_12 - aux0 |
+      | 300456789012345678 | SEM_APNR_12 - aux3 |
 
   # station value check: combination fiscalCode-noticeNumber identifies a station corresponding to an ID_STAZIONE value with field ENABLED = N in NODO4_CFG.STAZIONI table of nodo-dei-pagamenti database [SEM_APNR_13]
   Scenario: Check PPT_STAZIONE_INT_PA_DISABILITATA error on disabled station
@@ -149,7 +153,7 @@ Feature: semantic checks KO for activatePaymentNoticeReq
   Scenario: Check PPT_AUTORIZZAZIONE error if expirationTime > default_token_duration_validity_millis
     Given expirationTime with 10000 in activatePaymentNotice
     #	 TODO And default_token_duration_validity_millis with 7000 in NODO4_CFG.CONFIGURATION_KEYS
-    #    TODO And nodo-dei-pagamenti must reload configuration
+    #  TODO And nodo-dei-pagamenti must reload configuration
     When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is KO of activatePaymentNotice response
     And check faultCode is PPT_AUTORIZZAZIONE of activatePaymentNotice response
