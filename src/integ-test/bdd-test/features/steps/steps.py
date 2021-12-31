@@ -200,12 +200,17 @@ def step_impl(context, mock, destination, primitive):
 @given('{mock} wait for {sec} seconds at {action}')
 def step_impl(context, mock, sec, action):
     # TODO configure mock to wait x seconds at action
-    raise NotImplementedError(u'{mock} wait for {sec} seconds at {action}')
+    pass
 
 
-@step('if outcome is KO set fault to None in paVerifyPaymentNotice')
-def step_impl(context):
-    raise NotImplementedError(u'if outcome is KO set fault to None in paVerifyPaymentNotice')
+@given('if {tag} is {data} set {elem} to {value} in {action}')
+def step_impl(context, tag, data, elem, value, action):
+    soap_action = getattr(context, action)
+    my_document = parseString(soap_action)
+    if len(my_document.getElementsByTagName(tag)) > 0:
+        if my_document.getElementsByTagName(tag)[0].firstChild is not None and my_document.getElementsByTagName(tag)[0].firstChild.data == data:
+            soap_action = utils.manipulate_soap_action(soap_action, elem, value)
+            setattr(context, action, soap_action)
 
 
 @then('activateIOPayment response and pspNotifyPayment request are consistent')
