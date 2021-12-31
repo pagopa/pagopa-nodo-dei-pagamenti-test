@@ -260,3 +260,15 @@ def step_impl(context, value, primitive):
     setattr(context, primitive, xml)
 
 
+@given("the current timestamp")
+def step_impl(context):
+    setattr(context, "timestamp", time.time())
+
+
+@step("idempotencyKey is not expired yet")
+def step_impl(context):
+    before = getattr(context, "timestamp")
+
+    # my_document = parseString(payload)
+    # idPSP = my_document.getElementsByTagName('idPSP')[0].firstChild.data
+
