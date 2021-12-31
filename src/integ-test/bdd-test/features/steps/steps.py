@@ -208,9 +208,39 @@ def step_impl(context):
     raise NotImplementedError(u'if outcome is KO set fault to None in paVerifyPaymentNotice')
 
 
-@then('activateIOPaymentResp and pspNotifyPaymentReq are consistent')
+@then('activateIOPayment response and pspNotifyPayment request are consistent')
 def step_impl(context):
-    raise NotImplementedError(u'activateIOPaymentResp and pspNotifyPaymentReq are consistent')
+    # retrieve info from soap request of background step
+    soap_request = getattr(context, "activateIOPayment")
+    my_document = parseString(soap_request)
+    notice_number = my_document.getElementsByTagName('noticeNumber')[0].firstChild.data
+
+    paGetPaymentJson = requests.get(f"{utils.get_rest_mock_ec(context)}/api/v1/history/{notice_number}/paGetPayment")
+    pspNotifyPaymentJson = requests.get(
+        f"{utils.get_rest_mock_ec(context)}/api/v1/history/{notice_number}/pspNotifyPayment")
+
+    paGetPayment = paGetPaymentJson.json()
+    pspNotifyPayment = pspNotifyPaymentJson.json()
+
+    # verify transfer list are equal
+    paGetPaymentRes_transferList = \
+        paGetPayment.get("response").get("soapenv:Envelope").get("soapenv:Body")[0].get("paf:paGetPaymentRes")[0].get(
+            "data")[0].get("transferList")
+    pspNotifyPaymentReq_transferList = \
+        pspNotifyPayment.get("request").get("soapenv:envelope").get("soapenv:body")[0].get("pspfn:pspnotifypaymentreq")[
+            0].get("transferlist")
+
+    paGetPaymentRes_transferList_sorted = sorted(paGetPaymentRes_transferList, key=lambda transfer: int(
+        transfer.get("transfer")[0].get("idTransfer")[0]))
+    pspNotifyPaymentReq_transferList_sorted = sorted(pspNotifyPaymentReq_transferList, key=lambda transfer: int(
+        transfer.get("transfer")[0].get("idtransfer")[0]))
+
+    mixed_list = zip(paGetPaymentRes_transferList_sorted, pspNotifyPaymentReq_transferList_sorted)
+    for x in mixed_list:
+        assert x[0].get("transfer")[0].get("idTransfer")[0] == x[1].get("transfer")[0].get("idtransfer")[0]
+        assert x[0].get("transfer")[0].get("transferAmount")[0] == x[1].get("transfer")[0].get("transferamount")[0]
+        assert x[0].get("transfer")[0].get("fiscalCodePA")[0] == x[1].get("transfer")[0].get("fiscalcodepa")[0]
+        assert x[0].get("transfer")[0].get("IBAN")[0] == x[1].get("transfer")[0].get("iban")[0]
 
 
 @step('idChannel with USE_NEW_FAULT_CODE=Y')
