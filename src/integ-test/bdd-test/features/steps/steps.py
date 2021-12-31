@@ -32,6 +32,7 @@ def step_impl(context):
 
 @given(u'EC {version:OldNew} version')
 def step_impl(context, version):
+    # TODO implement with api-config
     pass
 
 
@@ -198,21 +199,18 @@ def step_impl(context, mock, destination, primitive):
 
 @given('{mock} wait for {sec} seconds at {action}')
 def step_impl(context, mock, sec, action):
-    """
-            configure mock response
-        """
     # TODO configure mock to wait x seconds at action
-    pass
+    raise NotImplementedError(u'{mock} wait for {sec} seconds at {action}')
 
 
 @step('if outcome is KO set fault to None in paVerifyPaymentNotice')
 def step_impl(context):
-    pass
+    raise NotImplementedError(u'if outcome is KO set fault to None in paVerifyPaymentNotice')
 
 
 @then('activateIOPaymentResp and pspNotifyPaymentReq are consistent')
 def step_impl(context):
-    pass
+    raise NotImplementedError(u'activateIOPaymentResp and pspNotifyPaymentReq are consistent')
 
 
 @step('idChannel with USE_NEW_FAULT_CODE=Y')
@@ -225,4 +223,5 @@ def step_impl(context):
 def step_impl(context, value, primitive):
     xml = utils.manipulate_soap_action(getattr(context, primitive), "idempotencyKey", f"{value}_{str(random.randint(1000000000, 9999999999))}")
     setattr(context, primitive, xml)
+
 
