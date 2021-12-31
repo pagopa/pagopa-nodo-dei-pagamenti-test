@@ -44,5 +44,5 @@ Feature:  syntax checks OK for activatePaymentNoticeReq
       | amount         | None  | SIN_APNR_39 |
       | dueDate        | None  | SIN_APNR_44 |
       | paymentNote    | None  | SIN_APNR_47 |
-# TODO: amount test fail: fix it
+      # TODO: amount test fail: fix it
 

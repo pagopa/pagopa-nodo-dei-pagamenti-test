@@ -41,7 +41,7 @@ Feature: semantic checks OK for activatePaymentNotice
 
   # idPsp in idempotencyKey (idempotencyKey: <idPSp>+"_"+<RANDOM STRING>) not in db  [SEM_APNR_17]
   Scenario: Check outcome OK on non-existent psp in idempotencyKey
-    Given idempotencyKey with 00088877799_UNKNOWN890 in activatePaymentNotice
+    Given random idempotencyKey having 00088877799 as idPSP in activatePaymentNotice
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
 
