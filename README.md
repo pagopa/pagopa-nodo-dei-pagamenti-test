@@ -2,9 +2,11 @@
 
 - [pagopa-nodo-dei-pagamenti-test](#pagopa-nodo-dei-pagamenti-test)
   - [Prerequisites](#prerequisites)
+  - [Documentation](#documentation)
   - [Run tests 🧪](#run-tests-)
     - [BDD test 🥒](#bdd-test-)
     - [API test ✅](#api-test-)
+  - [Reports 🧾](#reports-)
 
 
 The repo contains : 
@@ -18,6 +20,10 @@ The repo contains :
 - [newman-run](https://www.npmjs.com/package/newman-run)
   
 >NOTE : BDD tests require [mock services EC and PSP](https://github.com/pagopa/pagopa-mock-ec) up
+
+## Documentation
+
+See [here](src/integ-test/bdd-test/README.md) how to write feature.
 
 ## Run tests 🧪
 
@@ -79,4 +85,6 @@ if all right you'll see something like that
 └──────────────────────────────────────────────────────────────────┘
 ```
 
+## Reports 🧾
 
+Behave Test Report available [here](https://pagopa.github.io/pagopa-nodo-dei-pagamenti-test/)
