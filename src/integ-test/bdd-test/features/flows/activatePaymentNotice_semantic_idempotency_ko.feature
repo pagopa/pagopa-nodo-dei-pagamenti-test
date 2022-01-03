@@ -12,6 +12,7 @@ Feature:  semantic check for activatePaymentNoticeReq regarding idempotency - no
              <idBrokerPSP>70000000001</idBrokerPSP>
              <idChannel>70000000001_01</idChannel>
              <password>pwdpwdpwd</password>
+             <idempotencyKey>#idempotency_key#</idempotencyKey>
              <qrCode>
                 <fiscalCode>#creditor_institution_code#</fiscalCode>
                 <noticeNumber>#notice_number#</noticeNumber>
@@ -31,9 +32,30 @@ Feature:  semantic check for activatePaymentNoticeReq regarding idempotency - no
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
     
-  # Activate Phase 2 
+  # Activate Phase 2 - PPT_PAGAMENTO_IN_CORSO
   Scenario: Execute activatePaymentNotice request with same request as Activate Phase 1
     Given the Execute activatePaymentNotice request scenario executed successfully
+    And idempotencyKey with None in activatePaymentNotice
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is KO of activatePaymentNotice response
 	And check faultCode is PPT_PAGAMENTO_IN_CORSO of activatePaymentNotice response
+
+  # Activate Phase 2 - PPT_ERRORE_IDEMPOTENZA
+  Scenario Outline: Execute activatePaymentNotice request different from Activate Phase 1 with same idempotencyKey, before idempotencyKey expires
+    Given the current timestamp
+    And the Execute activatePaymentNotice request scenario executed successfully
+    And <elem> with <value> in activatePaymentNotice
+    And idempotencyKey in activatePaymentNotice is not expired yet
+    When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+    Then check outcome is KO of activatePaymentNotice response
+    And check faultCode is PPT_ERRORE_IDEMPOTENZA of activatePaymentNotice response
+    Examples:
+      | elem                 | value                    | soapUI test          |
+      | noticeNumber         | 311456789012345678       | noticeNumber diverso |
+      | fiscalCode           | 40000000001              | fiscalCodePA diverso |
+      | amount               | 12.00                    | amount diverso       |
+      | dueDate              | 2021-10-31               | dueDate diversa      |
+      | paymentNote          | altraCausale             | paymentNote diverso  |
+      | noticeNumber         | None                     | dueDateAssente       |
+      | noticeNumber         | None                     | expirationTimeAssente|
+      | noticeNumber         | None                     | paymentNoteAssente   |
