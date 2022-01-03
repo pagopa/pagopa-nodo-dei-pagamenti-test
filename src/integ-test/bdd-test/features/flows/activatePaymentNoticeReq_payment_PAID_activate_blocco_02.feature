@@ -76,10 +76,26 @@ Feature:  block check for activatePaymentNoticeReq - position status in PAID [Ac
     When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
 	
-  # Activate Phase 2
+
    Scenario: Execute activatePaymentNotice request with same request as Activate Phase 1 except for idempotencyKey, immediately after the Payment Outcome Phase
-      # Given same activatePaymentNotice soap-request as Activate Phase 1 except for idempotencyKey
-      Given the Execute sendPaymentOutcome request scenario executed successfully
+      Given EC replies to nodo-dei-pagamenti with the paSendRT
+         """
+         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+            xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
+            <soapenv:Header />
+            <soapenv:Body>
+               <paf:paSendRTRes>
+                     <outcome>KO</outcome>
+                     <fault>
+                        <faultCode>PAA_ERRORE_MOCK</faultCode>
+                        <faultString>Errore semantico</faultString>
+                        <id>1</id>
+                     </fault>
+               </paf:paSendRTRes>
+            </soapenv:Body>
+         </soapenv:Envelope>
+         """
+      And the Execute sendPaymentOutcome request scenario executed successfully
       When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
       Then check outcome is KO of activatePaymentNotice response
       And check faultCode is PPT_PAGAMENTO_DUPLICATO of activatePaymentNotice response
