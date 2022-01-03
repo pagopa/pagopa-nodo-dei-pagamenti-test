@@ -260,15 +260,50 @@ def step_impl(context, value, primitive):
     setattr(context, primitive, xml)
 
 
+@given("nodo-dei-pagamenti is configured to use idempotency parameter")
+def step_impl(context):
+    # TODO verify with api-config
+    # verify parameter useIdempotency set to true in NODO4_CFG.CONFIGURATION_KEYS
+    pass
+
+
 @given("the current timestamp")
 def step_impl(context):
-    setattr(context, "timestamp", time.time())
+    setattr(context, "timestamp", time.time()*1000)
 
 
-@step("idempotencyKey is not expired yet")
-def step_impl(context):
+@given("call the {elem} of {primitive} response as {name}")
+def step_impl(context, elem, primitive, name):
+    payload = getattr(context, primitive + RESPONSE)
+    my_document = parseString(payload.content)
+    if len(my_document.getElementsByTagName(elem)) > 0:
+        elem_value = my_document.getElementsByTagName(elem)[0].firstChild.data
+        setattr(context, name, elem_value)
+    else:
+        assert False
+
+
+@given("idempotencyKey in {primitive} is not expired yet")
+def step_impl(context, primitive):
     before = getattr(context, "timestamp")
 
-    # my_document = parseString(payload)
-    # idPSP = my_document.getElementsByTagName('idPSP')[0].firstChild.data
+    payload = getattr(context, primitive)
+    my_document = parseString(payload)
+    expiration_time = my_document.getElementsByTagName('expirationTime')[0].firstChild.data
+
+    if int(time.time()*1000 - before) >= int(expiration_time):
+        assert False
+
+
+@then("verify the {elem} of the {primitive} response is equals to {name}")
+def step_impl(context, elem, primitive, name):
+    payload = getattr(context, primitive + RESPONSE)
+    my_document = parseString(payload.content)
+    if len(my_document.getElementsByTagName(elem)) > 0:
+        elem_value = my_document.getElementsByTagName(elem)[0].firstChild.data
+        target = getattr(context, name)
+        print(f'check tag "{elem}" - expected: {target}, obtained: {elem_value}')
+        assert elem_value == target
+    else:
+        assert False
 

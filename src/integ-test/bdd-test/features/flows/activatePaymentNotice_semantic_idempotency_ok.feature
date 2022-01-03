@@ -25,7 +25,7 @@ Feature:  semantic check for activatePaymentNoticeReq regarding idempotency - sa
       </soapenv:Body>
     </soapenv:Envelope>
     """
-#    And nodo-dei-pagamenti has parameter useIdempotency set to true in NODO4_CFG.CONFIGURATION_KEYS
+    And nodo-dei-pagamenti is configured to use idempotency parameter
 
   # Activate Phase 1
   Scenario: Execute activatePaymentNotice request
@@ -36,7 +36,8 @@ Feature:  semantic check for activatePaymentNoticeReq regarding idempotency - sa
   Scenario: Execute activatePaymentNotice request with same request as Activate Phase 1 before idempotencyKey expires
     Given the current timestamp
     And the Execute activatePaymentNotice request scenario executed successfully
-    And idempotencyKey is not expired yet
+    And call the paymentToken of activatePaymentNotice response as target
+    And idempotencyKey in activatePaymentNotice is not expired yet
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
-	And verify the paymentToken of last activatePaymentNotice response is equal to the paymementToken of the first activatePaymentNotice response
+	And verify the paymentToken of the activatePaymentNotice response is equals to target
