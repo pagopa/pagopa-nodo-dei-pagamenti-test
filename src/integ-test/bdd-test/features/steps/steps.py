@@ -260,8 +260,14 @@ def step_impl(context, value, primitive):
     setattr(context, primitive, xml)
 
 
-@given("nodo-dei-pagamenti is configured to use idempotency parameter")
-def step_impl(context):
+@step("random noticeNumber in {primitive}")
+def step_impl(context, primitive):
+    xml = utils.manipulate_soap_action(getattr(context, primitive), "noticeNumber", f"30211{str(random.randint(1000000000000, 9999999999999))}")
+    setattr(context, primitive, xml)
+
+
+@given("nodo-dei-pagamenti has config parameter {param} set to {value}")
+def step_impl(context, param, value):
     # TODO verify with api-config
     # verify parameter useIdempotency set to true in NODO4_CFG.CONFIGURATION_KEYS
     pass
