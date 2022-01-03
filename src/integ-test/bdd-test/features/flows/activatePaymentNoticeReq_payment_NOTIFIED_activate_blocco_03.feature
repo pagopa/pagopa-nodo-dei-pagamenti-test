@@ -74,7 +74,7 @@ Feature:  block check for activatePaymentNoticeReq - position status in PAID [Ac
       """
    #  When psp sends sendPaymentOutcomeReq to nodo-dei-pagamenti using the token of the activate phase, and with request field <outcome> = OK
     When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-    Then check outcome is OK of activatePaymentNotice response
+    Then check outcome is OK of sendPaymentOutcome response
 
   Scenario: Execute paSendRT request
     Given the Execute sendPaymentOutcome request scenario executed successfully

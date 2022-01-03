@@ -1,1 +1,1 @@
-behave -f html -o docs/behave-report.html src/integ-test/bdd-test/features/
+behave -f html -o docs/index.html src/integ-test/bdd-test/features/
