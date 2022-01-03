@@ -15,7 +15,7 @@ Feature: verify test flow paGetPayment, pspNotifyPayment and sendPaymentOutcome
                <idBrokerPSP>97735020584</idBrokerPSP>
                <idChannel>97735020584_03</idChannel>
                <password>pwdpwdpwd</password>
-               <!-- <idempotencyKey>#idempotency_key#</idempotencyKey> -->
+               <idempotencyKey>#idempotency_key#</idempotencyKey>
                <qrCode>
                   <fiscalCode>#creditor_institution_code#</fiscalCode>
                   <noticeNumber>#notice_number#</noticeNumber>

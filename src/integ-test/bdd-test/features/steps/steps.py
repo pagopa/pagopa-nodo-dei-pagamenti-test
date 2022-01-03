@@ -42,10 +42,10 @@ def step_impl(context, primitive):
     payload = utils.replace_local_variables(payload, context)
     if len(payload) > 0:
         my_document = parseString(payload)
-        idPSP = "70000000001"
-        if len(my_document.getElementsByTagName('idPSP')) > 0:
-            idPSP = my_document.getElementsByTagName('idPSP')[0].firstChild.data
-        payload = payload.replace('#idempotency_key#', f"{idPSP}_{str(random.randint(1000000000, 9999999999))}")
+        idBrokerPSP = "70000000001"
+        if len(my_document.getElementsByTagName('idBrokerPSP')) > 0:
+            idBrokerPSP = my_document.getElementsByTagName('idBrokerPSP')[0].firstChild.data
+        payload = payload.replace('#idempotency_key#', f"{idBrokerPSP}_{str(random.randint(1000000000, 9999999999))}")
 
     payload = payload.replace('#notice_number#', f"30211{str(random.randint(1000000000000, 9999999999999))}")
 
