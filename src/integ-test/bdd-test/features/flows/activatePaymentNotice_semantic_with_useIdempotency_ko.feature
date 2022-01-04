@@ -90,3 +90,11 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - not
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is KO of activatePaymentNotice response
     And check faultCode is PPT_PAGAMENTO_IN_CORSO of activatePaymentNotice response
+
+  # Activate Phase 2 - PPT_PAGAMENTO_IN_CORSO
+  Scenario: Execute agin activatePaymentNotice request except for missing idempotencyKey
+    Given the Execute activatePaymentNotice request scenario executed successfully
+    And idempotencyKey with None in activatePaymentNotice
+    When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+    Then check outcome is KO of activatePaymentNotice response
+    And check faultCode is PPT_PAGAMENTO_IN_CORSO of activatePaymentNotice response
