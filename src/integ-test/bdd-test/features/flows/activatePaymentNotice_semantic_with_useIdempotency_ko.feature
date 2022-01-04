@@ -1,4 +1,4 @@
-Feature:  semantic check for activatePaymentNoticeReq regarding idempotency - not use idempotency [SEM_APNR_19.1]
+Feature: semantic check for activatePaymentNoticeReq regarding idempotency - not use idempotency [SEM_APNR_19.1]
 
   Background:
     Given systems up
@@ -33,7 +33,7 @@ Feature:  semantic check for activatePaymentNoticeReq regarding idempotency - no
     Then check outcome is OK of activatePaymentNotice response
     
   # Activate Phase 2 - PPT_PAGAMENTO_IN_CORSO
-  Scenario: Execute activatePaymentNotice request with same request as Activate Phase 1
+  Scenario: Execute again the same activatePaymentNotice request
     Given the Execute activatePaymentNotice request scenario executed successfully
     And idempotencyKey with None in activatePaymentNotice
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
@@ -41,7 +41,7 @@ Feature:  semantic check for activatePaymentNoticeReq regarding idempotency - no
 	And check faultCode is PPT_PAGAMENTO_IN_CORSO of activatePaymentNotice response
 
   # Activate Phase 2 - PPT_ERRORE_IDEMPOTENZA
-  Scenario Outline: Execute activatePaymentNotice request different from Activate Phase 1 with same idempotencyKey, before idempotencyKey expires
+  Scenario Outline: Execute again the activatePaymentNotice request with same idempotencyKey before it expires
     Given the current timestamp
     And the Execute activatePaymentNotice request scenario executed successfully
     And <elem> with <value> in activatePaymentNotice
@@ -59,3 +59,12 @@ Feature:  semantic check for activatePaymentNoticeReq regarding idempotency - no
       | noticeNumber         | None                     | dueDateAssente       |
       | noticeNumber         | None                     | expirationTimeAssente|
       | noticeNumber         | None                     | paymentNoteAssente   |
+
+  # Activate Phase 2 - PPT_PAGAMENTO_IN_CORSO
+  Scenario: Execute again activatePaymentNotice request right after expirationTime has passed (before the execution of mod3Cancel poller)
+    Given nodo-dei-pagamenti has config parameter default_idempotency_key_validity_minutes set to 10
+    And nodo-dei-pagamenti has config parameter default_token_duration_validity_millis set to 1800000
+    And the Execute activatePaymentNotice request scenario executed successfully
+    When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+    Then check outcome is KO of activatePaymentNotice response
+    And check faultCode is PPT_PAGAMENTO_IN_CORSO of activatePaymentNotice response
