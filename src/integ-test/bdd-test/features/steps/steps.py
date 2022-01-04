@@ -260,3 +260,59 @@ def step_impl(context, value, primitive):
     setattr(context, primitive, xml)
 
 
+@step("random noticeNumber in {primitive}")
+def step_impl(context, primitive):
+    xml = utils.manipulate_soap_action(getattr(context, primitive), "noticeNumber", f"30211{str(random.randint(1000000000000, 9999999999999))}")
+    setattr(context, primitive, xml)
+
+
+@given("nodo-dei-pagamenti has config parameter {param} set to {value}")
+def step_impl(context, param, value):
+    # TODO verify with api-config
+    # verify parameter useIdempotency set to true in NODO4_CFG.CONFIGURATION_KEYS
+    pass
+
+
+@given("call the {elem} of {primitive} response as {name}")
+def step_impl(context, elem, primitive, name):
+    payload = getattr(context, primitive + RESPONSE)
+    my_document = parseString(payload.content)
+    if len(my_document.getElementsByTagName(elem)) > 0:
+        elem_value = my_document.getElementsByTagName(elem)[0].firstChild.data
+        setattr(context, name, elem_value)
+    else:
+        assert False
+
+
+@then("verify the {elem} of the {primitive} response is equals to {name}")
+def step_impl(context, elem, primitive, name):
+    payload = getattr(context, primitive + RESPONSE)
+    my_document = parseString(payload.content)
+    if len(my_document.getElementsByTagName(elem)) > 0:
+        elem_value = my_document.getElementsByTagName(elem)[0].firstChild.data
+        target = getattr(context, name)
+        print(f'check tag "{elem}" - expected: {target}, obtained: {elem_value}')
+        assert elem_value == target
+    else:
+        assert False
+
+
+@given("PSP waits {elem} of {primitive} expires")
+def step_impl(context, elem, primitive):
+    payload = getattr(context, primitive)
+    my_document = parseString(payload)
+    if len(my_document.getElementsByTagName(elem)) > 0:
+        elem_value = my_document.getElementsByTagName(elem)[0].firstChild.data
+        wait_time = int(elem_value) / 1000
+        print(f"wait for: {wait_time} seconds")
+        time.sleep(wait_time)
+    else:
+        assert False
+
+
+@given("PSP waits {number} minutes for expiration")
+def step_impl(context, number):
+    seconds = int(number) * 60
+    print(f"wait for: {seconds} seconds")
+    time.sleep(seconds)
+
