@@ -82,3 +82,11 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - not
     Examples:
       | minutes |
       | 10      |
+
+  # Activate Phase 2 - PPT_PAGAMENTO_IN_CORSO
+  Scenario: Execute again activatePaymentNotice request changing only idempotencyKey
+    Given the Execute activatePaymentNotice request scenario executed successfully
+    And random idempotencyKey having 70000000001 as idPSP in activatePaymentNotice
+    When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+    Then check outcome is KO of activatePaymentNotice response
+    And check faultCode is PPT_PAGAMENTO_IN_CORSO of activatePaymentNotice response
