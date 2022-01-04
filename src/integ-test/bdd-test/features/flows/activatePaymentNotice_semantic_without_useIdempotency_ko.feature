@@ -32,8 +32,8 @@ Feature:  semantic check for activatePaymentNoticeReq regarding idempotency - no
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
 
-  # Activate Phase 2.1
-  Scenario Outline: Execute activatePaymentNotice request different from Activate Phase 1 with same idempotencyKey
+  # Activate Phase 2 - PPT_PAGAMENTO_IN_CORSO
+  Scenario Outline: Execute again activatePaymentNotice request with same idempotencyKey
     Given the Execute activatePaymentNotice request scenario executed successfully
 	And <elem> with <value> in activatePaymentNotice
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
@@ -47,3 +47,13 @@ Feature:  semantic check for activatePaymentNoticeReq regarding idempotency - no
       | dueDate              | None                     | dueDateAssente       |
       | expirationTime       | None                     | expirationTimeAssente|
 	  | paymentNote          | None                     | paymentNoteAssente   |
+
+  # Activate Phase 2 - PPT_PAGAMENTO_IN_CORSO
+  Scenario: Execute again activatePaymentNotice request right after expirationTime has passed (before the execution of mod3Cancel poller)
+    Given nodo-dei-pagamenti has config parameter default_idempotency_key_validity_minutes set to 10
+    And nodo-dei-pagamenti has config parameter default_token_duration_validity_millis set to 1800000
+    And PSP waits expirationTime of activatePaymentNotice expires
+    And the Execute activatePaymentNotice request scenario executed successfully
+    When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+    Then check outcome is KO of activatePaymentNotice response
+    And check faultCode is PPT_PAGAMENTO_IN_CORSO of activatePaymentNotice response
