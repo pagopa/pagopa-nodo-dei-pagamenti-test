@@ -313,3 +313,15 @@ def step_impl(context, elem, primitive, name):
     else:
         assert False
 
+
+@given("PSP waits {elem} of {primitive} expires")
+def step_impl(context, elem, primitive):
+    payload = getattr(context, primitive)
+    my_document = parseString(payload)
+    if len(my_document.getElementsByTagName(elem)) > 0:
+        elem_value = my_document.getElementsByTagName(elem)[0].firstChild.data
+        wait_time = int(elem_value) / 1000
+        print(f"wait for: {wait_time} seconds")
+        time.sleep(wait_time)
+    else:
+        assert False
