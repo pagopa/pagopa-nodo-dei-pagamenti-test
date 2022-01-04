@@ -1,4 +1,4 @@
-Feature:  semantic check for activatePaymentNoticeReq regarding idempotency - not PPT_ERRORE_IDEMPOTENZA [SEM_APNR_20.1]
+Feature: semantic check for activatePaymentNoticeReq regarding idempotency - not useIdempotency
 
   Background:
     Given systems up
@@ -32,14 +32,14 @@ Feature:  semantic check for activatePaymentNoticeReq regarding idempotency - no
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
 
-   # Activate Phase 2
-  Scenario: Execute activatePaymentNotice request different from Activate Phase 1 with same idempotencyKey
+  # Activate Phase 2 [SEM_APNR_19.1]
+  Scenario: Execute again activatePaymentNotice request with same idempotencyKey
     Given the Execute activatePaymentNotice request scenario executed successfully
     And random noticeNumber in activatePaymentNotice
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
     
-  # Activate Phase 2
+  # Activate Phase 2 [SEM_APNR_20.1]
   # TODO modify with api-config
   # PA_STAZIONE_PA with OBJ_ID = 5266 to set:
   #   - aux_digit: 3
@@ -51,7 +51,7 @@ Feature:  semantic check for activatePaymentNoticeReq regarding idempotency - no
   #   - version: 2
   #   - servizio_nmp: Y
   #   -
-  Scenario: Execute activatePaymentNotice request different from Activate Phase 1 with same idempotencyKey
+  Scenario: Execute again activatePaymentNotice request with different fiscalCode
     Given the Execute activatePaymentNotice request scenario executed successfully
 	And fiscalCode with 44444444444 in activatePaymentNotice
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti

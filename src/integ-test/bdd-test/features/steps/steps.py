@@ -273,11 +273,6 @@ def step_impl(context, param, value):
     pass
 
 
-@given("the current timestamp")
-def step_impl(context):
-    setattr(context, "timestamp", time.time()*1000)
-
-
 @given("call the {elem} of {primitive} response as {name}")
 def step_impl(context, elem, primitive, name):
     payload = getattr(context, primitive + RESPONSE)
@@ -286,18 +281,6 @@ def step_impl(context, elem, primitive, name):
         elem_value = my_document.getElementsByTagName(elem)[0].firstChild.data
         setattr(context, name, elem_value)
     else:
-        assert False
-
-
-@given("idempotencyKey in {primitive} is not expired yet")
-def step_impl(context, primitive):
-    before = getattr(context, "timestamp")
-
-    payload = getattr(context, primitive)
-    my_document = parseString(payload)
-    expiration_time = my_document.getElementsByTagName('expirationTime')[0].firstChild.data
-
-    if int(time.time()*1000 - before) >= int(expiration_time):
         assert False
 
 

@@ -1,4 +1,4 @@
-Feature:  semantic check for activatePaymentNoticeReq regarding idempotency - same idempotency OK [SEM_APNR_19]
+Feature: semantic check for activatePaymentNoticeReq regarding idempotency - use idempotency
 
   Background:
     Given systems up
@@ -32,12 +32,10 @@ Feature:  semantic check for activatePaymentNoticeReq regarding idempotency - sa
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
     
-  # Activate Phase 2 
-  Scenario: Execute activatePaymentNotice request with same request as Activate Phase 1 before idempotencyKey expires
-    Given the current timestamp
-    And the Execute activatePaymentNotice request scenario executed successfully
+  # Activate Phase 2 [SEM_APNR_19]
+  Scenario: Execute again activatePaymentNotice request before idempotencyKey expires
+    Given the Execute activatePaymentNotice request scenario executed successfully
     And call the paymentToken of activatePaymentNotice response as target
-    And idempotencyKey in activatePaymentNotice is not expired yet
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
 	And verify the paymentToken of the activatePaymentNotice response is equals to target

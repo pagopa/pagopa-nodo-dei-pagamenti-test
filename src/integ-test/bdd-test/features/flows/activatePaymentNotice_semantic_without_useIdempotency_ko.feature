@@ -1,4 +1,4 @@
-Feature:  semantic check for activatePaymentNoticeReq regarding idempotency - not PPT_ERRORE_IDEMPOTENZA [SEM_APNR_20.1]
+Feature: semantic check for activatePaymentNoticeReq regarding idempotency - not useIdempotency
 
   Background:
     Given systems up
@@ -32,7 +32,14 @@ Feature:  semantic check for activatePaymentNoticeReq regarding idempotency - no
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
 
-  # Activate Phase 2 - PPT_PAGAMENTO_IN_CORSO
+  # Activate Phase 2 - PPT_PAGAMENTO_IN_CORSO [SEM_APNR_19.1]
+  Scenario: Execute again the same activatePaymentNotice request
+    Given the Execute activatePaymentNotice request scenario executed successfully
+    When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+    Then check outcome is KO of activatePaymentNotice response
+    And check faultCode is PPT_PAGAMENTO_IN_CORSO of activatePaymentNotice response
+
+  # Activate Phase 2 - PPT_PAGAMENTO_IN_CORSO [SEM_APNR_20.1]
   Scenario Outline: Execute again activatePaymentNotice request with same idempotencyKey
     Given the Execute activatePaymentNotice request scenario executed successfully
 	And <elem> with <value> in activatePaymentNotice
@@ -40,25 +47,25 @@ Feature:  semantic check for activatePaymentNoticeReq regarding idempotency - no
     Then check outcome is KO of activatePaymentNotice response
 	And check faultCode is PPT_PAGAMENTO_IN_CORSO of activatePaymentNotice response
     Examples:
-      | elem                 | value                    | soapUI test          |
-	  | amount               | 12.00                    | amount diverso       |
-	  | dueDate              | 2021-10-31               | dueDate diversa      |
-	  | paymentNote          | altraCausale             | paymentNote diverso  |
-      | dueDate              | None                     | dueDateAssente       |
-      | expirationTime       | None                     | expirationTimeAssente|
-	  | paymentNote          | None                     | paymentNoteAssente   |
+      | elem                 | value                    | soapUI test           |
+	  | amount               | 12.00                    | amount diverso        |
+	  | dueDate              | 2021-10-31               | dueDate diversa       |
+	  | paymentNote          | altraCausale             | paymentNote diverso   |
+      | dueDate              | None                     | dueDate assente       |
+      | expirationTime       | None                     | expirationTime assente|
+	  | paymentNote          | None                     | paymentNote assente   |
 
-  # Activate Phase 2 - PPT_PAGAMENTO_IN_CORSO
+  # Activate Phase 2 - PPT_PAGAMENTO_IN_CORSO [SEM_APNR_21.2]
   Scenario: Execute again activatePaymentNotice request right after expirationTime has passed (before the execution of mod3Cancel poller)
     Given nodo-dei-pagamenti has config parameter default_idempotency_key_validity_minutes set to 10
     And nodo-dei-pagamenti has config parameter default_token_duration_validity_millis set to 1800000
-    And PSP waits expirationTime of activatePaymentNotice expires
     And the Execute activatePaymentNotice request scenario executed successfully
+    And PSP waits expirationTime of activatePaymentNotice expires
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is KO of activatePaymentNotice response
     And check faultCode is PPT_PAGAMENTO_IN_CORSO of activatePaymentNotice response
 
-  # Activate Phase 2 - PPT_PAGAMENTO_IN_CORSO
+  # Activate Phase 2 - PPT_PAGAMENTO_IN_CORSO [SEM_APNR_22.1]
   Scenario Outline: Execute again activatePaymentNotice request right after default_idempotency_key_validity_minutes has passed
     Given nodo-dei-pagamenti has config parameter default_idempotency_key_validity_minutes set to <minutes>
     And nodo-dei-pagamenti has config parameter default_token_duration_validity_millis set to 1800000
@@ -69,4 +76,4 @@ Feature:  semantic check for activatePaymentNoticeReq regarding idempotency - no
     And check faultCode is PPT_PAGAMENTO_IN_CORSO of activatePaymentNotice response
     Examples:
       | minutes |
-      | 10       |
+      | 10      |
