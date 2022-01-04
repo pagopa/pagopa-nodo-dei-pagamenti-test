@@ -2,45 +2,46 @@ Feature:  block check for activatePaymentNoticeReq - position status in PAID aft
 
   Background:
     Given systems up
-    And initial activatePaymentNoticeReq soap-request
+    And EC new version
+
+  Scenario: Execute activatePaymentNotice request
+    Given initial XML activatePaymentNotice
       """
-      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-         <soapenv:Header/>
-         <soapenv:Body>
-            <nod:activatePaymentNoticeReq>
-               <idPSP>70000000001</idPSP>
-               <idBrokerPSP>70000000001</idBrokerPSP>
-               <idChannel>70000000001_01</idChannel>
-               <password>pwdpwdpwd</password>
-               <idempotencyKey>#idempotency_key#</idempotencyKey>
-               <qrCode>
-                  <fiscalCode>#creditor_institution_code#</fiscalCode>
-                  <noticeNumber>#notice_number#</noticeNumber>
-               </qrCode>
-               <amount>10.00</amount>
-			   <expirationTime>2000</expirationTime>
-			   <dueDate>2021-12-31</dueDate>
-			   <paymentNote>causale</paymentNote>
-            </nod:activatePaymentNoticeReq>
-         </soapenv:Body>
+      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+          xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+          <soapenv:Header/>
+          <soapenv:Body>
+              <nod:activatePaymentNoticeReq>
+                  <idPSP>70000000001</idPSP>
+                  <idBrokerPSP>70000000001</idBrokerPSP>
+                  <idChannel>70000000001_01</idChannel>
+                  <password>pwdpwdpwd</password>
+                  <idempotencyKey>#idempotency_key#</idempotencyKey>
+                  <qrCode>
+                      <fiscalCode>#creditor_institution_code#</fiscalCode>
+                      <noticeNumber>#notice_number#</noticeNumber>
+                  </qrCode>
+                  <expirationTime>2000</expirationTime>
+                  <amount>10.00</amount>
+                  <dueDate>2021-12-31</dueDate>
+                  <paymentNote>causale</paymentNote>
+              </nod:activatePaymentNoticeReq>
+          </soapenv:Body>
       </soapenv:Envelope>
       """ 
-	And PA new version
-
-  # Activate Phase 1  with expirationTime set to 2000
-  Scenario: Execute activatePaymentNotice request
-    When psp sends activatePaymentNoticeReq to nodo-dei-pagamenti
-    Then check outcome is OK
+    When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+    Then check outcome is OK of activatePaymentNotice response
 
   # Mod3Cancel Phase
   Scenario: Execute mod3Cancel poller
+    Given the Execute activatePaymentNotice request scenario executed successfully 
     When job mod3Cancel triggered after 3 seconds
-    Then verify the HTTP status code response is 200
+    Then verify the HTTP status code of mod3Cancel response is 200
 
   # Payment Outcome Phase
   Scenario: Execute sendPaymentOutcome request
-    # Given the Mod3Cancel Phase executed successfully
-    Given valid sendPaymentOutcomeReq soap-request
+    Given the Execute mod3Cancel poller scenario executed successfully
+    And initial XML sendPaymentOutcome
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
          <soapenv:Header/>
@@ -50,7 +51,7 @@ Feature:  block check for activatePaymentNoticeReq - position status in PAID aft
                <idBrokerPSP>70000000001</idBrokerPSP>
                <idChannel>70000000001_01</idChannel>
                <password>pwdpwdpwd</password>
-               <paymentToken>#payment_token#</paymentToken>
+               <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
                <outcome>OK</outcome>
                <details>
                   <paymentMethod>creditCard</paymentMethod>
@@ -78,13 +79,14 @@ Feature:  block check for activatePaymentNoticeReq - position status in PAID aft
       </soapenv:Envelope>
       """
    #  When psp sends sendPaymentOutcomeReq to nodo-dei-pagamenti using the token of the activate phase, and with request field <outcome> = OK
-    When psp sends sendPaymentOutcomeReq to nodo-dei-pagamenti
-    Then check outcome is KO
-    And check faultCode is PPT_TOKEN_SCADUTO
-	
+    When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+    Then check outcome is KO of sendPaymentOutcome response
+    And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcome response
+
   # Activate Phase 2
-  Scenario: Execute activatePaymentNotice request with same request as Activate Phase 1 except for idempotencyKey
-    Given same activatePaymentNotice soap-request as Activate Phase 1 except for idempotencyKey, immediately after the Payment Outcome Phase
-    When psp sends activatePaymentNoticeReq to nodo-dei-pagamenti
-    Then check outcome is KO
-	And check faultCode is PPT_PAGAMENTO_DUPLICATO
+   Scenario: Execute activatePaymentNotice request with same request as Activate Phase 1 except for idempotencyKey, immediately after the Payment Outcome Phase
+      # Given same activatePaymentNotice soap-request as Activate Phase 1 except for idempotencyKey
+      Given the Execute sendPaymentOutcome request scenario executed successfully
+      When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+      Then check outcome is KO of activatePaymentNotice response
+      And check faultCode is PPT_PAGAMENTO_DUPLICATO of activatePaymentNotice response
