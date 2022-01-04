@@ -325,3 +325,11 @@ def step_impl(context, elem, primitive):
         time.sleep(wait_time)
     else:
         assert False
+
+
+@given("PSP waits {number} minutes for expiration")
+def step_impl(context, number):
+    seconds = int(number) * 60
+    print(f"wait for: {seconds} seconds")
+    time.sleep(seconds)
+
