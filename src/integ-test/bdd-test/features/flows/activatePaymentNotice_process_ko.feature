@@ -1,4 +1,4 @@
-Feature: process check for activatePaymentNotice - KO [PRO_APNR_06]
+Feature: process check for activatePaymentNotice - KO
 
   Background:
     Given systems up
@@ -27,7 +27,7 @@ Feature: process check for activatePaymentNotice - KO [PRO_APNR_06]
     """
     And EC new version
 
-  # KO from PA
+  # KO from PA [PRO_APNR_06]
   Scenario: Check PPT_ERRORE_EMESSO_DA_PAA error when paGetPaymentRes contains KO outcome
     Given EC replies to nodo-dei-pagamenti with the paGetPayment
     """
@@ -49,3 +49,10 @@ Feature: process check for activatePaymentNotice - KO [PRO_APNR_06]
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is KO of activatePaymentNotice response
     And check faultCode is PPT_ERRORE_EMESSO_DA_PAA of activatePaymentNotice response
+
+  # Timeout from PA [PRO_APNR_08]
+  Scenario: Check PPT_STAZIONE_INT_PA_TIMEOUT error when paGetPaymentRes is in timeout
+    Given EC wait for 30 seconds at paGetPayment
+    When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+    Then check outcome is KO of activatePaymentNotice response
+    And check faultCode is PPT_STAZIONE_INT_PA_TIMEOUT of activatePaymentNotice response
