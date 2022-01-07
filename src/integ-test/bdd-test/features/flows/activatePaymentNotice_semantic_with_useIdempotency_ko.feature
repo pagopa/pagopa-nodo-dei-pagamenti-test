@@ -31,7 +31,7 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - use
   Scenario: Execute activatePaymentNotice request
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
-    
+
   # Activate Phase 2 - PPT_PAGAMENTO_IN_CORSO [SEM_APNR_19.1]
   Scenario: Execute again the same activatePaymentNotice request without idempotencyKey
     Given the Execute activatePaymentNotice request scenario executed successfully
@@ -103,3 +103,17 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - use
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is KO of activatePaymentNotice response
     And check faultCode is PPT_PAGAMENTO_IN_CORSO of activatePaymentNotice response
+
+  # Activate Phase 1 - syntax error: no value of idPSP
+  Scenario: Execute activatePaymentNotice request with an empty idPSP
+    Given idPSP with Empty in activatePaymentNotice
+    When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+    Then check outcome is KO of activatePaymentNotice response
+    And check faultCode is PPT_SINTASSI_EXTRAXSD of activatePaymentNotice response
+
+  # Activate Phase 2 - after a syntax error regarding no value of idPSP
+  Scenario: Execute formally correct activatePaymentNotice request with same idempotencyKey before idempotencyKey expires
+    Given the Execute activatePaymentNotice request with an empty idPSP scenario executed successfully
+    And idPSP with 70000000001 in activatePaymentNotice
+    When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+    Then check outcome is OK of activatePaymentNotice response
