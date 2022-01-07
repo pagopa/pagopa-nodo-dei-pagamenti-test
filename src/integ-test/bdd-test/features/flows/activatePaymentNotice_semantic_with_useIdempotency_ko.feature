@@ -177,5 +177,18 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - use
     And amount with 8.00 in activatePaymentNotice
     And PSP waits 3 minutes for expiration
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+
+  # IdempotencyCacheClean Phase [IDMP_ACT_23]
+  Scenario: Execute idempotencyCacheClean poller
+    Given nodo-dei-pagamenti has config parameter scheduler.jobName_idempotencyCacheClean.enabled set to true
+    And the Execute activatePaymentNotice request scenario executed successfully
+    When job idempotencyCacheClean triggered after 3 seconds
+    Then verify the HTTP status code of idempotencyCacheClean response is 200
+
+  # Activate Phase 2 - different amount [IDMP_ACT_23]
+  Scenario: Execute activatePaymentNotice request with different amount
+    Given the Execute idempotencyCacheClean poller scenario executed successfully
+    And amount with 8.00 in activatePaymentNotice
+    When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is KO of activatePaymentNotice response
     And check faultCode is PPT_PAGAMENTO_IN_CORSO of activatePaymentNotice response
