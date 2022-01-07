@@ -165,3 +165,16 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - use
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is KO of activatePaymentNotice response
     And check faultCode is PPT_PAGAMENTO_IN_CORSO of activatePaymentNotice response
+
+  # Mod3Cancel Phase - [IDMP_ACT_20]
+  Scenario: Execute mod3Cancel poller
+    Given the Execute activatePaymentNotice request scenario executed successfully
+    When job mod3Cancel triggered after 3 seconds
+    Then verify the HTTP status code of mod3Cancel response is 200
+
+  # Activate Phase 2 - different amount - [IDMP_ACT_20]
+  Scenario: Execute activatePaymentNotice request with different amount
+    Given the Execute mod3Cancel poller scenario executed successfully
+    And amount with 8.00 in activatePaymentNotice
+    When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+    Then check outcome is OK of activatePaymentNotice response
