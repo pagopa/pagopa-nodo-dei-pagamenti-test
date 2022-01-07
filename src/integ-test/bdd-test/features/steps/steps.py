@@ -270,6 +270,7 @@ def step_impl(context, primitive):
 def step_impl(context, param, value):
     # TODO verify with api-config
     # verify parameter useIdempotency set to true in NODO4_CFG.CONFIGURATION_KEYS
+    # at the end of scenario set to default
     pass
 
 
