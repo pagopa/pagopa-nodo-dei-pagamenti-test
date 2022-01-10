@@ -169,15 +169,6 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - use
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
 
-  # Activate Phase 2 - different amount - Not idempotency cache clean [IDMP_ACT_24]
-  Scenario: Execute activatePaymentNotice request with different amount, after waiting 130 seconds
-    Given nodo-dei-pagamenti has config parameter scheduler.jobName_idempotencyCacheClean.enabled set to false
-    And nodo-dei-pagamenti has config parameter default_idempotency_key_validity_minutes set to 1
-    And the Execute activatePaymentNotice request scenario executed successfully
-    And amount with 8.00 in activatePaymentNotice
-    And PSP waits 3 minutes for expiration
-    When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
-
   # IdempotencyCacheClean Phase [IDMP_ACT_23]
   Scenario: Execute idempotencyCacheClean poller
     Given nodo-dei-pagamenti has config parameter scheduler.jobName_idempotencyCacheClean.enabled set to true
@@ -193,3 +184,12 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - use
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is KO of activatePaymentNotice response
     And check faultCode is PPT_PAGAMENTO_IN_CORSO of activatePaymentNotice response
+
+  # Activate Phase 2 - different amount - Not idempotency cache clean [IDMP_ACT_24]
+  Scenario: Execute activatePaymentNotice request with different amount, after waiting 130 seconds
+    Given nodo-dei-pagamenti has config parameter scheduler.jobName_idempotencyCacheClean.enabled set to false
+    And nodo-dei-pagamenti has config parameter default_idempotency_key_validity_minutes set to 1
+    And the Execute activatePaymentNotice request scenario executed successfully
+    And amount with 8.00 in activatePaymentNotice
+    And PSP waits 3 minutes for expiration
+    When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
