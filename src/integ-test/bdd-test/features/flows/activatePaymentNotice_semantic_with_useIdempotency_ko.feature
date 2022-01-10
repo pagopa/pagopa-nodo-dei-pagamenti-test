@@ -168,7 +168,8 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - use
 
   # Mod3Cancel Phase - [IDMP_ACT_20]
   Scenario: Execute mod3Cancel poller
-    Given the Execute activatePaymentNotice request scenario executed successfully
+    Given expirationTime with 2000 in activatePaymentNotice
+    And the Execute activatePaymentNotice request scenario executed successfully
     When job mod3Cancel triggered after 3 seconds
     Then verify the HTTP status code of mod3Cancel response is 200
 
