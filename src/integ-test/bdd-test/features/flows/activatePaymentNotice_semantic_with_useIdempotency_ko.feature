@@ -112,12 +112,17 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - use
     And check faultCode is PPT_SINTASSI_EXTRAXSD of activatePaymentNotice response
 
   # Activate Phase 2 - after a syntax error regarding no value of idPSP [IDMP_ACT_15.1]
+<<<<<<< HEAD
   Scenario: Execute formally correct activatePaymentNotice request with same idempotencyKey before it expires
+=======
+  Scenario: Execute formally correct activatePaymentNotice request with same idempotencyKey before idempotencyKey expires
+>>>>>>> 9f4913c (feature fix)
     Given the Execute activatePaymentNotice request with an empty idPSP scenario executed successfully
     And idPSP with 70000000001 in activatePaymentNotice
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
 
+<<<<<<< HEAD
   # Activate Phase 1 - semantic error: wrong password [IDMP_ACT_15.2]
   Scenario: Execute activatePaymentNotice request with wrong password
     Given password with wrongPassword in activatePaymentNotice
@@ -133,6 +138,8 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - use
     Then check outcome is KO of activatePaymentNotice response
     And check faultCode is PPT_ERRORE_IDEMPOTENZA of activatePaymentNotice response
 
+=======
+>>>>>>> 9f4913c (feature fix)
   # Activate Phase 2 - different PSP in second activate [IDMP_ACT_16.1]
   Scenario: Execute activatePaymentNotice request with different idPSP-idBrokerPSP-idChannel before idempotencyKey expires
     Given the Execute activatePaymentNotice request scenario executed successfully
@@ -155,17 +162,6 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - use
       | minutes |
       | 10      |
 
-  # Activate Phase 2 - different amount - Not idempotency cache clean [IDMP_ACT_24]
-  Scenario: Execute activatePaymentNotice request with different amount, after waiting 130 seconds
-    Given nodo-dei-pagamenti has config parameter scheduler.jobName_idempotencyCacheClean.enabled set to false
-    And nodo-dei-pagamenti has config parameter default_idempotency_key_validity_minutes set to 1
-    And the Execute activatePaymentNotice request scenario executed successfully
-    And amount with 8.00 in activatePaymentNotice
-    And PSP waits 3 minutes for expiration
-    When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
-    Then check outcome is KO of activatePaymentNotice response
-    And check faultCode is PPT_PAGAMENTO_IN_CORSO of activatePaymentNotice response
-
   # Mod3Cancel Phase - [IDMP_ACT_20]
   Scenario: Execute mod3Cancel poller
     Given expirationTime with 2000 in activatePaymentNotice
@@ -179,3 +175,14 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - use
     And amount with 8.00 in activatePaymentNotice
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
+
+  # Activate Phase 2 - different amount - Not idempotency cache clean [IDMP_ACT_24]
+  Scenario: Execute activatePaymentNotice request with different amount, after waiting 130 seconds
+    Given nodo-dei-pagamenti has config parameter scheduler.jobName_idempotencyCacheClean.enabled set to false
+    And nodo-dei-pagamenti has config parameter default_idempotency_key_validity_minutes set to 1
+    And the Execute activatePaymentNotice request scenario executed successfully
+    And amount with 8.00 in activatePaymentNotice
+    And PSP waits 3 minutes for expiration
+    When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+    Then check outcome is KO of activatePaymentNotice response
+    And check faultCode is PPT_PAGAMENTO_IN_CORSO of activatePaymentNotice response
