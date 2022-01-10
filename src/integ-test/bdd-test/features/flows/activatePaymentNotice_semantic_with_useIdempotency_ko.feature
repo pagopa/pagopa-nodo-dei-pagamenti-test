@@ -181,6 +181,7 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - use
   # IdempotencyCacheClean Phase [IDMP_ACT_23]
   Scenario: Execute idempotencyCacheClean poller
     Given nodo-dei-pagamenti has config parameter scheduler.jobName_idempotencyCacheClean.enabled set to true
+    And expirationTime with 2000 in activatePaymentNotice
     And the Execute activatePaymentNotice request scenario executed successfully
     When job idempotencyCacheClean triggered after 3 seconds
     Then verify the HTTP status code of idempotencyCacheClean response is 200
