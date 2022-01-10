@@ -119,7 +119,7 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - use
     Then check outcome is OK of activatePaymentNotice response
 
   # Activate Phase 1 - semantic error: wrong password [IDMP_ACT_15.2]
-  Scenario: Execute activatePaymentNotice request
+  Scenario: Execute activatePaymentNotice request with wrong password
     Given password with wrongPassword in activatePaymentNotice
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is KO of activatePaymentNotice response
@@ -127,10 +127,11 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - use
 
   # Activate Phase 2 - after a semantic error regarding wrong password [IDMP_ACT_15.2]
   Scenario: Execute formally correct activatePaymentNotice request with same idempotencyKey before it expires
-    Given the Execute activatePaymentNotice request scenario executed successfully
+    Given the Execute activatePaymentNotice request with wrong password scenario executed successfully
     And password with pwdpwdpwd in activatePaymentNotice
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
-    Then check outcome is OK of activatePaymentNotice response
+    Then check outcome is KO of activatePaymentNotice response
+    And check faultCode is PPT_ERRORE_IDEMPOTENZA of activatePaymentNotice response
 
   # Activate Phase 2 - different PSP in second activate [IDMP_ACT_16.1]
   Scenario: Execute activatePaymentNotice request with different idPSP-idBrokerPSP-idChannel before idempotencyKey expires
