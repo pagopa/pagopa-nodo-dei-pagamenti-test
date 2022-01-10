@@ -155,6 +155,20 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - use
       | minutes |
       | 10      |
 
+  # Mod3Cancel Phase - [IDMP_ACT_20]
+  Scenario: Execute mod3Cancel poller
+    Given expirationTime with 2000 in activatePaymentNotice
+    And the Execute activatePaymentNotice request scenario executed successfully
+    When job mod3Cancel triggered after 3 seconds
+    Then verify the HTTP status code of mod3Cancel response is 200
+
+  # Activate Phase 2 - different amount - [IDMP_ACT_20]
+  Scenario: Execute activatePaymentNotice request with different amount
+    Given the Execute mod3Cancel poller scenario executed successfully
+    And amount with 8.00 in activatePaymentNotice
+    When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+    Then check outcome is OK of activatePaymentNotice response
+
   # Activate Phase 2 - different amount - Not idempotency cache clean [IDMP_ACT_24]
   Scenario: Execute activatePaymentNotice request with different amount, after waiting 130 seconds
     Given nodo-dei-pagamenti has config parameter scheduler.jobName_idempotencyCacheClean.enabled set to false
