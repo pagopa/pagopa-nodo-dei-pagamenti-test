@@ -88,8 +88,12 @@ def manipulate_soap_action(soap_action, elem, value):
             original_node = cloned_node
             cloned_node = original_node.cloneNode(2)
     else:
-        element = my_document.getElementsByTagName(elem)[0].childNodes[0]
-        element.nodeValue = value
+        if len(my_document.getElementsByTagName(elem)[0].childNodes) > 0:
+            element = my_document.getElementsByTagName(elem)[0].childNodes[0]
+            element.nodeValue = value
+        else:
+            element = my_document.createTextNode(value)
+            my_document.getElementsByTagName(elem)[0].appendChild(element)
     return my_document.toxml()
 
 

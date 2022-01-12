@@ -111,6 +111,16 @@ def step_impl(context, tag, value, primitive):
         assert json_response.get(tag) == value
 
 
+@then('check {tag} field exists in {primitive} response')
+def step_impl(context, tag, primitive):
+    soap_response = getattr(context, primitive + RESPONSE)
+    if 'xml' in soap_response.headers['content-type']:
+        my_document = parseString(soap_response.content)
+        assert len(my_document.getElementsByTagName(tag)) > 0
+    else:
+        assert False
+
+
 # TODO greater/equals than ...
 @then('{tag} length is less than {value} of {primitive} response')
 def step_impl(context, tag, value, primitive):
@@ -270,6 +280,7 @@ def step_impl(context, primitive):
 def step_impl(context, param, value):
     # TODO verify with api-config
     # verify parameter useIdempotency set to true in NODO4_CFG.CONFIGURATION_KEYS
+    # at the end of scenario set to default
     pass
 
 
