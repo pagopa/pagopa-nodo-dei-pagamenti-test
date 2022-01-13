@@ -23,9 +23,11 @@ def step_impl(context):
     """
     responses = True
     for row in context.table:
-        print(f"calling: {row.get('name')}")
+        print(f"calling: {row.get('name')} -> {row.get('url')}")
         url = row.get("url") + row.get("healthcheck")
+        print(f"calling -> {url}")
         resp = requests.get(url)
+        print(f"response: {resp.status_code}")
         responses &= (resp.status_code == 200)
     assert responses
 
@@ -69,7 +71,7 @@ def step_impl(context, attribute, value, elem, primitive):
 
 
 # Scenario : Check valid URL in WSDL namespace
-@when('{sender} sends soap {soap_primitive} to {receiver}')
+@step('{sender} sends soap {soap_primitive} to {receiver}')
 def step_impl(context, sender, soap_primitive, receiver):
     headers = {'Content-Type': 'application/xml', "SOAPAction": soap_primitive}  # set what your server accepts
     # TODO get url according to receiver
