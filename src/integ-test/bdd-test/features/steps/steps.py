@@ -23,9 +23,11 @@ def step_impl(context):
     """
     responses = True
     for row in context.table:
-        print(f"calling: {row.get('name')}")
+        print(f"calling: {row.get('name')} -> {row.get('url')}")
         url = row.get("url") + row.get("healthcheck")
+        print(f"calling -> {url}")
         resp = requests.get(url)
+        print(f"response: {resp.status_code}")
         responses &= (resp.status_code == 200)
     assert responses
 
