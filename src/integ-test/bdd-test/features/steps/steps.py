@@ -69,7 +69,7 @@ def step_impl(context, attribute, value, elem, primitive):
 
 
 # Scenario : Check valid URL in WSDL namespace
-@when('{sender} sends soap {soap_primitive} to {receiver}')
+@step('{sender} sends soap {soap_primitive} to {receiver}')
 def step_impl(context, sender, soap_primitive, receiver):
     headers = {'Content-Type': 'application/xml', "SOAPAction": soap_primitive}  # set what your server accepts
     # TODO get url according to receiver
