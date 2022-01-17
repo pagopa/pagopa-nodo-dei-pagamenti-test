@@ -49,7 +49,13 @@ def step_impl(context, primitive):
             idBrokerPSP = my_document.getElementsByTagName('idBrokerPSP')[0].firstChild.data
         payload = payload.replace('#idempotency_key#', f"{idBrokerPSP}_{str(random.randint(1000000000, 9999999999))}")
 
-    payload = payload.replace('#notice_number#', f"30211{str(random.randint(1000000000000, 9999999999999))}")
+    if '#notice_number#' in payload:
+        notice_number = f"30211{str(random.randint(1000000000000, 9999999999999))}"
+        payload = payload.replace('#notice_number#', notice_number)
+        setattr(context, "iuv", notice_number[1:])
+
+    if '$iuv' in payload:
+        payload = payload.replace('$iuv', getattr(context, 'iuv'))
 
     payload = utils.replace_global_variables(payload, context)
 
@@ -203,7 +209,7 @@ def step_impl(context, mock, destination, primitive):
                                                                                  "global_configuration").get(
                                                                                  "creditor_institution_code"))
     setattr(context, primitive, pa_verify_payment_notice_res)
-
+    print(pa_verify_payment_notice_res)
     response_status_code = utils.save_soap_action(utils.get_rest_mock_ec(context), primitive,
                                                   pa_verify_payment_notice_res, override=True)
     assert response_status_code == 200
