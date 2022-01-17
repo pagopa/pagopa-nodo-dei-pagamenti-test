@@ -37,7 +37,7 @@ Feature: syntax checks for paGetPaymentRes - OK
 				<paf:paGetPaymentRes>
 					<outcome>OK</outcome>
 					<data>
-						<creditorReferenceId>#iuv#</creditorReferenceId>
+						<creditorReferenceId>$iuv</creditorReferenceId>
 						<paymentAmount>10.00</paymentAmount>
 						<dueDate>2021-12-31</dueDate>
 						<!--Optional:-->
@@ -113,4 +113,4 @@ Feature: syntax checks for paGetPaymentRes - OK
 		  | stateProvinceRegion   | None  | SIN_PGPR_71  |
 		  | country               | None  | SIN_PGPR_74  |
 		  | e-mail                | None  | SIN_PGPR_78  |
-		  | metaData              | None  | SIN_PGPR_115 |
+		  | metadata              | None  | SIN_PGPR_115 |
