@@ -58,6 +58,7 @@ Feature:  semantic checks for sendPaymentOutcomeReq - KO
     Then check outcome is KO of sendPaymentOutcome response
     And check faultCode is PPT_PSP_SCONOSCIUTO of sendPaymentOutcome response
 
+
 #  # idPSP value check: idPSP with field ENABLED = N [SEM_SPO_02]
 #  Scenario: Check PPT_PSP_DISABILITATO error on disabled psp
 #    Given idPSP with NOT_ENABLED in sendPaymentOutcome
