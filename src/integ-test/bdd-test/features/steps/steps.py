@@ -41,6 +41,7 @@ def step_impl(context, primitive):
     payload = context.text or ""
     payload = utils.replace_local_variables(payload, context)
     if len(payload) > 0:
+        print(payload)
         my_document = parseString(payload)
         idBrokerPSP = "70000000001"
         if len(my_document.getElementsByTagName('idBrokerPSP')) > 0:
