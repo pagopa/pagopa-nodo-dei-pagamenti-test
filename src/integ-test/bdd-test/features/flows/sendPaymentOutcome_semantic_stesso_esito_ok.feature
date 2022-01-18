@@ -80,7 +80,6 @@ Feature:  semantic checks for sendPaymentOutcomeReq - stesso esito - ok #[SEM_SP
            </soapenv:Body>
         </soapenv:Envelope>
       """
-      And outcome KO in request
       When psp sends SOAP sendPaymentOutcomeReq to nodo-dei-pagamenti
       Then check outcome is OK of sendPaymentOutcome response
       
