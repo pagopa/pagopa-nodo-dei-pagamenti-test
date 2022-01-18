@@ -108,14 +108,6 @@ Feature:  semantic checks for sendPaymentOutcomeReq - KO
     Then check outcome is KO
     And check faultCode is PPT_TOKEN_SCONOSCIUTO
     
-    # paymentToken value check: token+idPsp not present in POSITION_ACTIVATE table of nodo-dei-pagamenti db [SEM_SPO_10]
-   Scenario: Check PPT_TOKEN_SCONOSCIUTO error on non-existent couple token+idPsp
-    Given idPsp with 70000000001 in sendPaymentOutcomeReq 
-    And paymentToken 5ac599c3d8e148dca128a58e748323c9 in sendPaymentOutcomeReq #token present in POSITION_ACTIVATE table but associated to another idPsp
-    When psp sends sendPaymentOutcomeReq to nodo-dei-pagamenti
-    Then check outcome is KO
-    And check faultCode is PPT_TOKEN_SCONOSCIUTO  
- 
     # idBrokerPSP-idPSP value check: idBrokerPSP not associated to idPSP [SEM_SPO_11]
    Scenario: Check PPT_AUTORIZZAZIONE error on psp broker not associated to psp
     Given idBrokerPSP with 91000000001 in sendPaymentOutcomeReq
