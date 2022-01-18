@@ -1,23 +1,15 @@
 FROM ubuntu:latest
 
-ARG report
-
-ENV report=$report
-
-#CMD mkdir docs && cd docs && touch test.txt
-
 ## python and relevant tools
 RUN apt-get update && apt-get install -y \
     curl \
     build-essential \
     python3 \
     python3-pip \
-    git \
-    nano
+    git
 
 ## clone the test repository
-## TODO remove automation branch
-RUN git clone --branch automation https://github.com/pagopa/pagopa-nodo-dei-pagamenti-test.git
+RUN git clone https://github.com/pagopa/pagopa-nodo-dei-pagamenti-test.git
 
 ## move to the test main folder
 WORKDIR pagopa-nodo-dei-pagamenti-test
