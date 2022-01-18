@@ -1,0 +1,88 @@
+parameters:
+  - name: ENV
+    displayName: Target Environment
+    type: string
+    default: dev
+    values:
+      - dev
+      - uat
+
+  # the branch, tag or commit to checkout
+  - name: 'gitReference'
+    type: string
+    default: 'none'
+
+  # whether code must be checked-out with persisted credentials
+  - name: 'persistCredentials'
+    type: string
+    default: false
+
+  # optional sub path where the project to be initialized is located. To be used on repository with multiple projects.
+  - name: 'projectDir'
+    type: string
+    default: '.' # current folder is default
+
+variables:
+  BLOB_CONTAINER: "$web"
+
+  ${{ if eq(parameters['ENV'], 'dev') }}:
+    AZURE_SUBSCRIPTION: $(DEV_AZURE_SUBSCRIPTION_STORAGE_ACCOUNT)
+    STORAGE_ACCOUNT_NAME: $(DEV_STORAGE_ACCOUNT_NAME)
+    TIMEOUT: $(DEV_TEST_EXECUTION_MAX_MINUTES)
+    SAS_TOKEN: $(DEV_SAS_TOKEN)
+
+  ${{ if eq(parameters['ENV'], 'uat') }}:
+    AZURE_SUBSCRIPTION: $(UAT_AZURE_SUBSCRIPTION_STORAGE_ACCOUNT)
+    STORAGE_ACCOUNT_NAME: $(UAT_STORAGE_ACCOUNT_NAME)
+    TIMEOUT: $(UAT_TEST_EXECUTION_MAX_MINUTES)
+    SAS_TOKEN: $(UAT_SAS_TOKEN)
+
+# Automatically triggered on PR
+# https://docs.microsoft.com/en-us/azure/devops/pipelines/yaml-schema?view=azure-devops&tabs=schema%2Cparameter-schema#pr-trigger
+trigger:
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - pagopa-nodo-dei-pagamenti-test
+
+# Execute agents (jobs) on latest Ubuntu version.
+# To change OS for a specific, override "pool" attribute inside the job definition
+pool:
+  vmImage: 'ubuntu-latest'
+
+resources:
+  repositories:
+    - repository: pagopaCommons
+      type: github
+      name: pagopa/azure-pipeline-templates
+      ref: refs/tags/v15
+      endpoint: 'io-azure-devops-github-ro'
+
+stages:
+  - stage: Env configuration
+    dependsOn: []
+    steps:
+      - bash: |
+          azcopy copy 'https://$(STORAGE_ACCOUNT_NAME).file.core.windows.net/$(BLOB_CONTAINER)/config.json?$(SAS_TOKEN)' '$(Pipeline.Workspace)/src/integ-test/bdd-test/resources/config.json'
+        displayName: 'Retrieve config.json'
+
+      - bash: |
+          docker build --rm --network=host -t nodo-test .
+        displayName: 'Docker build'
+
+      # timeout to prevent test deadlock
+      - bash: |
+          mkdir report
+          timeout ${TIMEOUT}m docker run --rm -it --network=host -v $(Pipeline.Workspace)/report:/pagopa-nodo-dei-pagamenti-test/report -t nodo-test /bin/bash
+        displayName: 'Docker run'
+
+      - task: AzureFileCopy@3
+        displayName: 'Deploy to container blob'
+        inputs:
+          sourcePath: '$(Pipeline.Workspace)/report'
+          azureSubscription: '$(AZURE_SUBSCRIPTION)'
+          destination: 'azureBlob'
+          storage: '$(STORAGE_ACCOUNT_NAME)'
+          containerName: '$(BLOB_CONTAINER)'
