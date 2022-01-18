@@ -44,7 +44,7 @@ Feature:  semantic checks for sendPaymentOutcomeReq - stesso esito - ok #[SEM_SP
                  <idChannel>70000000001_01</idChannel>
                  <password>pwdpwdpwd</password>
                  <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
-                 <outcome>KO</outcome>
+                 <outcome>OK</outcome>
                  <!--Optional:-->
                  <details>
                     <paymentMethod>creditCard</paymentMethod>
