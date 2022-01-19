@@ -65,7 +65,7 @@ stages:
     dependsOn: []
     steps:
       - bash: |
-          azcopy copy 'https://$(STORAGE_ACCOUNT_NAME).file.core.windows.net/$(BLOB_CONTAINER)/config.json?$(SAS_TOKEN)' '$(Pipeline.Workspace)/src/integ-test/bdd-test/resources/config.json'
+          azcopy copy 'https://$(STORAGE_ACCOUNT_NAME).file.core.windows.net/$(BLOB_CONTAINER)/config.json' '$(Pipeline.Workspace)/src/integ-test/bdd-test/resources/config.json'
         displayName: 'Retrieve config.json'
 
       - bash: |
