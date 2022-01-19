@@ -60,29 +60,27 @@ resources:
       ref: refs/tags/v15
       endpoint: 'io-azure-devops-github-ro'
 
-stages:
-  - stage: Env configuration
-    dependsOn: []
-    steps:
-      - bash: |
-          azcopy copy 'https://$(STORAGE_ACCOUNT_NAME).file.core.windows.net/$(BLOB_CONTAINER)/config.json' '$(Pipeline.Workspace)/src/integ-test/bdd-test/resources/config.json'
-        displayName: 'Retrieve config.json'
 
-      - bash: |
-          docker build --rm --network=host -t nodo-test .
-        displayName: 'Docker build'
+steps:
+  - bash: |
+      azcopy copy 'https://$(STORAGE_ACCOUNT_NAME).file.core.windows.net/$(BLOB_CONTAINER)/config.json' '$(Pipeline.Workspace)/src/integ-test/bdd-test/resources/config.json'
+    displayName: 'Retrieve config.json'
 
-      # timeout to prevent test deadlock
-      - bash: |
-          mkdir report
-          timeout ${TIMEOUT}m docker run --rm -it --network=host -v $(Pipeline.Workspace)/report:/pagopa-nodo-dei-pagamenti-test/report -t nodo-test /bin/bash
-        displayName: 'Docker run'
+  - bash: |
+      docker build --rm --network=host -t nodo-test .
+    displayName: 'Docker build'
 
-      - task: AzureFileCopy@3
-        displayName: 'Deploy to container blob'
-        inputs:
-          sourcePath: '$(Pipeline.Workspace)/report'
-          azureSubscription: '$(AZURE_SUBSCRIPTION)'
-          destination: 'azureBlob'
-          storage: '$(STORAGE_ACCOUNT_NAME)'
-          containerName: '$(BLOB_CONTAINER)'
+  # timeout to prevent test deadlock
+  - bash: |
+      mkdir report
+      timeout ${TIMEOUT}m docker run --rm -it --network=host -v $(Pipeline.Workspace)/report:/pagopa-nodo-dei-pagamenti-test/report -t nodo-test /bin/bash
+    displayName: 'Docker run'
+
+  - task: AzureFileCopy@3
+    displayName: 'Deploy to container blob'
+    inputs:
+      sourcePath: '$(Pipeline.Workspace)/report'
+      azureSubscription: '$(AZURE_SUBSCRIPTION)'
+      destination: 'azureBlob'
+      storage: '$(STORAGE_ACCOUNT_NAME)'
+      containerName: '$(BLOB_CONTAINER)'
