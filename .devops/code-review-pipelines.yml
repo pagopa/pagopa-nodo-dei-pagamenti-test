@@ -7,21 +7,6 @@ parameters:
       - dev
       - uat
 
-  # the branch, tag or commit to checkout
-  - name: 'gitReference'
-    type: string
-    default: 'none'
-
-  # whether code must be checked-out with persisted credentials
-  - name: 'persistCredentials'
-    type: string
-    default: false
-
-  # optional sub path where the project to be initialized is located. To be used on repository with multiple projects.
-  - name: 'projectDir'
-    type: string
-    default: '.' # current folder is default
-
 variables:
   BLOB_CONTAINER: "$web"
 
@@ -29,13 +14,11 @@ variables:
     AZURE_SUBSCRIPTION: $(DEV_AZURE_SUBSCRIPTION_STORAGE_ACCOUNT)
     STORAGE_ACCOUNT_NAME: $(DEV_STORAGE_ACCOUNT_NAME)
     TIMEOUT: $(DEV_TEST_EXECUTION_MAX_MINUTES)
-    SAS_TOKEN: $(DEV_SAS_TOKEN)
 
   ${{ if eq(parameters['ENV'], 'uat') }}:
     AZURE_SUBSCRIPTION: $(UAT_AZURE_SUBSCRIPTION_STORAGE_ACCOUNT)
     STORAGE_ACCOUNT_NAME: $(UAT_STORAGE_ACCOUNT_NAME)
     TIMEOUT: $(UAT_TEST_EXECUTION_MAX_MINUTES)
-    SAS_TOKEN: $(UAT_SAS_TOKEN)
 
 # Automatically triggered on PR
 # https://docs.microsoft.com/en-us/azure/devops/pipelines/yaml-schema?view=azure-devops&tabs=schema%2Cparameter-schema#pr-trigger
@@ -68,16 +51,16 @@ steps:
 
   - bash: |
       docker build --rm --network=host -t nodo-test .
-    displayName: 'Docker build'
+    displayName: 'Build env'
 
   # timeout to prevent test deadlock
   - bash: |
       mkdir report
       timeout ${TIMEOUT}m docker run --rm -it --network=host -v $(Pipeline.Workspace)/report:/pagopa-nodo-dei-pagamenti-test/report -t nodo-test /bin/bash
-    displayName: 'Docker run'
+    displayName: 'Test execution'
 
   - task: AzureFileCopy@3
-    displayName: 'Deploy to container blob'
+    displayName: 'Publish report'
     inputs:
       sourcePath: '$(Pipeline.Workspace)/report'
       azureSubscription: '$(AZURE_SUBSCRIPTION)'
