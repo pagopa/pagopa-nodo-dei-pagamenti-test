@@ -145,10 +145,16 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
       | minutes |
       | 1       |
 
-  # Send payment outcome Phase 2 - no idempotencyKey [IDMP_SPO_26]
-  Scenario: Execute again the same sendPaymentOutcome request without idempotencyKey
-    Given the Execute sendPaymentOutcome request scenario executed successfully
+  # Send payment outcome Phase 1 - no idempotencyKey [IDMP_SPO_26]
+  Scenario: Execute sendPaymentOutcome request without idempotencyKey
+    Given the Execute activatePaymentNotice request scenario executed successfully
     And idempotencyKey with None in sendPaymentOutcome
+    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+    Then check outcome is OK of sendPaymentOutcome response
+	  
+  # Send payment outcome Phase 2 [IDMP_SPO_26]
+  Scenario: Execute again the same sendPaymentOutcome request
+    Given the Execute sendPaymentOutcome request without idempotencyKey scenario executed successfully
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is KO of sendPaymentOutcome response
     And check faultCode is PPT_ESITO_GIA_ACQUISITO of sendPaymentOutcome response
