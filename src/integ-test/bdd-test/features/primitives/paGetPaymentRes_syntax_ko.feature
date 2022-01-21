@@ -31,65 +31,16 @@ Background:
     Given initial XML paGetPayment
     """
     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
-       <soapenv:Header />
+       <soapenv:Header/>
        <soapenv:Body>
           <paf:paGetPaymentRes>
-             <outcome>OK</outcome>
-             <data>
-                <creditorReferenceId>$iuv</creditorReferenceId>
-                <paymentAmount>10.00</paymentAmount>
-                <dueDate>2021-12-31</dueDate>
-                <!--Optional:-->
-                <retentionDate>2021-12-31T12:12:12</retentionDate>
-                <!--Optional:-->
-                <lastPayment>1</lastPayment>
-                <description>description</description>
-                <!--Optional:-->
-                <companyName>company</companyName>
-                <!--Optional:-->
-                <officeName>office</officeName>
-                <debtor>
-                   <uniqueIdentifier>
-                      <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-                      <entityUniqueIdentifierValue>77777777777</entityUniqueIdentifierValue>
-                   </uniqueIdentifier>
-                   <fullName>paGetPaymentName</fullName>
-                   <!--Optional:-->
-                   <streetName>paGetPaymentStreet</streetName>
-                   <!--Optional:-->
-                   <civicNumber>paGetPayment99</civicNumber>
-                   <!--Optional:-->
-                   <postalCode>20155</postalCode>
-                   <!--Optional:-->
-                   <city>paGetPaymentCity</city>
-                   <!--Optional:-->
-                   <stateProvinceRegion>paGetPaymentState</stateProvinceRegion>
-                   <!--Optional:-->
-                   <country>IT</country>
-                   <!--Optional:-->
-                   <e-mail>paGetPayment@test.it</e-mail>
-                </debtor>
-                <!--Optional:-->
-                <transferList>
-                   <!--1 to 5 repetitions:-->
-                   <transfer>
-                      <idTransfer>1</idTransfer>
-                      <transferAmount>10.00</transferAmount>
-                      <fiscalCodePA>77777777777</fiscalCodePA>
-                      <IBAN>IT45R0760103200000000001016</IBAN>
-                      <remittanceInformation>testPaGetPayment</remittanceInformation>
-                      <transferCategory>paGetPaymentTest</transferCategory>
-                   </transfer>
-                </transferList>
-                <!--Optional:-->
-                <metadata>
-                   <!--1 to 10 repetitions:-->
-                   <mapEntry>
-                      <key>1</key>
-                      <value>22</value>
-                   </mapEntry>
-                </metadata>
-             </data>
+             <outcome>#outcome#</outcome>
+             <fault>
+                <faultCode>#faultCode#</faultCode>
+                <faultString>#faultString#</faultString>
+                <id>#id#</id>
+                <description>#description#</description>
+             </fault>
           </paf:paGetPaymentRes>
        </soapenv:Body>
     </soapenv:Envelope>
@@ -212,9 +163,6 @@ Background:
       | description                 | None                                                                                                                                                                                                                                                              | SIN_PGPR_32   |
       | description                 | Empty                                                                                                                                                                                                                                                             | SIN_PGPR_33   |
       | description                 | test di prova per una lunghezza superiore a 140 caratteri alfanumerici, per verificare che il nodo risponda PPT_STAZIONE_INT_PA_ERRORE_RESPONSE                                                                                                                   | SIN_PGPR_34   |
-      | paymentCategory             | None                                                                                                                                                                                                                                                              | SIN_PGPR_35   |
-      | paymentCategory             | Empty                                                                                                                                                                                                                                                             | SIN_PGPR_36   |
-      | paymentCategory             | test di prova per una lunghezza superiore a 140 caratteri alfanumerici, per verificare che il nodo risponda PPT_STAZIONE_INT_PA_ERRORE_RESPONSE                                                                                                                   | SIN_PGPR_37   |
       | companyName                 | Empty                                                                                                                                                                                                                                                             | SIN_PGPR_39   |
       | companyName                 | test di prova per una lunghezza superiore a 140 caratteri alfanumerici, per verificare che il nodo risponda PPT_STAZIONE_INT_PA_ERRORE_RESPONSE                                                                                                                   | SIN_PGPR_40   |
       | officeName                  | Empty                                                                                                                                                                                                                                                             | SIN_PGPR_42   |
@@ -231,7 +179,7 @@ Background:
       | entityUniqueIdentifierValue | lunghezza >16char                                                                                                                                                                                                                                                 | SIN_PGPR_55   |
       | fullName                    | None                                                                                                                                                                                                                                                              | SIN_PGPR_56   |
       | fullName                    | Empty                                                                                                                                                                                                                                                             | SIN_PGPR_57   |
-      | fullName                    | lunghezza >16char                                                                                                                                                                                                                                                 | SIN_PGPR_58   |
+      | fullName                    | test di prova per una lunghezza superiore a 70 caratteri alfanumerici ,                                                                                                                                                                                           | SIN_PGPR_58   |
       | streetName                  | Empty                                                                                                                                                                                                                                                             | SIN_PGPR_59   |
       | streetName                  | test di prova per una lunghezza superiore a 70 caratteri alfanumerici ,                                                                                                                                                                                           | SIN_PGPR_61   |
       | civicNumber                 | Empty                                                                                                                                                                                                                                                             | SIN_PGPR_63   |
