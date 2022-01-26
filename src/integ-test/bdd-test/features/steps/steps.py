@@ -209,6 +209,9 @@ def step_impl(context, mock, destination, primitive):
                                                                              context.config.userdata.get(
                                                                                  "global_configuration").get(
                                                                                  "creditor_institution_code"))
+    if '$iuv' in pa_verify_payment_notice_res:
+        pa_verify_payment_notice_res = pa_verify_payment_notice_res.replace('$iuv', getattr(context, 'iuv'))
+
     setattr(context, primitive, pa_verify_payment_notice_res)
     print(pa_verify_payment_notice_res)
     response_status_code = utils.save_soap_action(utils.get_rest_mock_ec(context), primitive,

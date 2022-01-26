@@ -37,7 +37,7 @@ Feature:  semantic checks for paGetPaymentRes - OK
 			  <paf:paGetPaymentRes>
 				 <outcome>OK</outcome>
 				 <data>
-					<creditorReferenceId>#iuv#</creditorReferenceId>
+					<creditorReferenceId>$iuv</creditorReferenceId>
 					<paymentAmount>10.00</paymentAmount>
 					<dueDate>2021-12-31</dueDate>
 					<!--Optional:-->
@@ -95,10 +95,11 @@ Feature:  semantic checks for paGetPaymentRes - OK
 		  </soapenv:Body>
 	</soapenv:Envelope>
     """
-    And <elem> and <elem1> with <value> in paGetPayment
-	When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
-    Then check outcome is OK of activatePaymentNotice response
-	    Examples:
-      | elem             | elem1              | value           | soapUI test  |
-      | paymentAmount    | transferAmount     | 8.00            | SEM_PGPR_01  |
-      | fiscalCodePA     | /                  | 44444444444     | SEM_PGPR_02  |	  
+	  And <elem> with <tagvalue> in paGetPayment
+	  And <elem1> with <tagvalue> in paGetPayment
+	  When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+	  Then check outcome is OK of activatePaymentNotice response
+	  Examples:
+		  | elem          | elem1          | tagvalue    | soapUI test |
+		  | paymentAmount | transferAmount | 8.00        | SEM_PGPR_01 |
+		  | fiscalCodePA  | /              | 44444444444 | SEM_PGPR_02 |
