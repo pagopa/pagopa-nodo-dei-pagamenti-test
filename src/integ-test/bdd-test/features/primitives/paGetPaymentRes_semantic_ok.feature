@@ -102,4 +102,4 @@ Feature:  semantic checks for paGetPaymentRes - OK
 	  Examples:
 		  | elem          | elem1          | tagvalue    | soapUI test |
 		  | paymentAmount | transferAmount | 8.00        | SEM_PGPR_01 |
-		  | fiscalCodePA  | /              | 44444444444 | SEM_PGPR_02 |
+		  | fiscalCodePA  | -              | 44444444444 | SEM_PGPR_02 |
