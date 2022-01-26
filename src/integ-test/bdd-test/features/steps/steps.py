@@ -64,8 +64,10 @@ def step_impl(context, primitive):
 
 @given('{elem} with {value} in {action}')
 def step_impl(context, elem, value, action):
-    xml = utils.manipulate_soap_action(getattr(context, action), elem, value)
-    setattr(context, action, xml)
+    # use - to skip
+    if elem is not '-':
+        xml = utils.manipulate_soap_action(getattr(context, action), elem, value)
+        setattr(context, action, xml)
 
 
 @given('{attribute} set {value} for {elem} in {primitive}')
