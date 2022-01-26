@@ -79,7 +79,8 @@ def step_impl(context, attribute, value, elem, primitive):
 # Scenario : Check valid URL in WSDL namespace
 @step('{sender} sends soap {soap_primitive} to {receiver}')
 def step_impl(context, sender, soap_primitive, receiver):
-    headers = {'Content-Type': 'application/xml', "SOAPAction": soap_primitive}  # set what your server accepts
+    primitive = soap_primitive.split("_")[0]
+    headers = {'Content-Type': 'application/xml', "SOAPAction": primitive}  # set what your server accepts
     # TODO get url according to receiver
     url_nodo = utils.get_soap_url_nodo(context)
     print("nodo soap_request sent >>>", getattr(context, soap_primitive))
@@ -334,4 +335,3 @@ def step_impl(context, number):
     seconds = int(number) * 60
     print(f"wait for: {seconds} seconds")
     time.sleep(seconds)
-
