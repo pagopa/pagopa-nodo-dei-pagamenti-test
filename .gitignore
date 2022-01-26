@@ -114,3 +114,4 @@ __pycache__
 
 *.iml
 .idea/
+**/config.json
