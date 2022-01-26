@@ -45,7 +45,7 @@ Feature: semantic checks for sendPaymentOutcomeReq regarding idempotency - use i
                 <idBrokerPSP>70000000001</idBrokerPSP>
                 <idChannel>70000000001_01</idChannel>
                 <password>pwdpwdpwd</password>
-                <idempotencyKey>#idempotency_key_2#</idempotencyKey>
+                <idempotencyKey>#idempotency_key#</idempotencyKey>
                 <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
                 <outcome>OK</outcome>
                 <details>
