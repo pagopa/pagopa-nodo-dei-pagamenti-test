@@ -38,7 +38,7 @@ Feature:  semantic checks for paGetPaymentRes - KO
 			  <paf:paGetPaymentRes>
 				 <outcome>OK</outcome>
 				 <data>
-					<creditorReferenceId>#iuv#</creditorReferenceId>
+					<creditorReferenceId>$iuv</creditorReferenceId>
 					<paymentAmount>10.00</paymentAmount>
 					<dueDate>2021-12-31</dueDate>
 					<!--Optional:-->
@@ -96,12 +96,12 @@ Feature:  semantic checks for paGetPaymentRes - KO
 		  </soapenv:Body>
 	</soapenv:Envelope>
     """
-    And <elem> with <value> in paGetPayment
+    And <elem> with <tagvalue> in paGetPayment
 	When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is KO of activatePaymentNotice response
     And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of activatePaymentNotice response
 	    Examples:
-      | elem                  | value                           | soapUI test  |
+      | elem                  | tagvalue                           | soapUI test  |
       | fiscalCodePA          | 10000000000                     | SEM_PGPR_03  |
       | fiscalCodePA          | 11111122222                     | SEM_PGPR_04  |
       | IBAN                  | IT45R0760103200000000001015     | SEM_PGPR_05  |
