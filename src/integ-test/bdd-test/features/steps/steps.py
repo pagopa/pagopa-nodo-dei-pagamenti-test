@@ -317,7 +317,7 @@ def step_impl(context, param, value):
     pass
 
 
-@given("call the {elem} of {primitive} response as {name}")
+@Step("call the {elem} of {primitive} response as {name}")
 def step_impl(context, elem, primitive, name):
     payload = getattr(context, primitive + RESPONSE)
     my_document = parseString(payload.content)
@@ -337,6 +337,19 @@ def step_impl(context, elem, primitive, name):
         target = getattr(context, name)
         print(f'check tag "{elem}" - expected: {target}, obtained: {elem_value}')
         assert elem_value == target
+    else:
+        assert False
+
+
+@then("verify the {elem} of the {primitive} response is not equals to {name}")
+def step_impl(context, elem, primitive, name):
+    payload = getattr(context, primitive + RESPONSE)
+    my_document = parseString(payload.content)
+    if len(my_document.getElementsByTagName(elem)) > 0:
+        elem_value = my_document.getElementsByTagName(elem)[0].firstChild.data
+        target = getattr(context, name)
+        print(f'check tag "{elem}" - expected: {target}, obtained: {elem_value}')
+        assert elem_value != target
     else:
         assert False
 
