@@ -1,4 +1,4 @@
-Feature: semantic checks for pspNotifyPaymentReq - CreditCard [T_02]
+Feature: semantic checks for pspNotifyPaymentReq - Paypal [T_02]
 
   Background:
     Given systems up
