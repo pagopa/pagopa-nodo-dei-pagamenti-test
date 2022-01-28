@@ -108,9 +108,12 @@ def replace_local_variables(body, context):
         if len(field.replace('$', '').split('.')) > 1:
             tag = field.replace('$', '').split('.')[1]
             if isinstance(saved_elem, str):
+                print(saved_elem)
                 document = parseString(saved_elem)
             else:
+                print(saved_elem.content)
                 document = parseString(saved_elem.content)
+            print(tag)
             value = document.getElementsByTagName(tag)[0].firstChild.data
         body = body.replace(field, value)
     return body
