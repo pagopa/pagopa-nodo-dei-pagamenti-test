@@ -8,7 +8,6 @@ parameters:
       - uat
 
 variables:
-  BLOB_CONTAINER: "$web"
 
   ${{ if eq(parameters['ENV'], 'dev') }}:
     AZURE_SUBSCRIPTION: $(DEV_AZURE_SUBSCRIPTION_STORAGE_ACCOUNT)
@@ -45,25 +44,63 @@ resources:
 
 
 steps:
-  - bash: |
-      azcopy copy 'https://$(STORAGE_ACCOUNT_NAME).file.core.windows.net/$(BLOB_CONTAINER)/config.json' '$(Pipeline.Workspace)/src/integ-test/bdd-test/resources/config.json'
+  - task: AzureCLI@1
     displayName: 'Retrieve config.json'
+    inputs:
+      azureSubscription: '$(AZURE_SUBSCRIPTION)'
+      scriptLocation: inlineScript
+      inlineScript: |
+        echo "BLOB_CONTAINER $(BLOB_CONTAINER)"
+        echo "STORAGE_ACCOUNT_NAME $(STORAGE_ACCOUNT_NAME)"
 
-  - bash: |
-      docker build --rm --network=host -t nodo-test .
-    displayName: 'Build env'
+        az storage blob download \
+          --account-name $(STORAGE_ACCOUNT_NAME) \
+          --container-name '$web' \
+          --name "config.json" \
+          --file "$(Build.SourcesDirectory)/src/integ-test/bdd-test/resources/config.json" \
+          --auth-mode key
+        
+        echo "Config read ..."   
+        cat "$(Build.SourcesDirectory)/src/integ-test/bdd-test/resources/config.json"
 
-  # timeout to prevent test deadlock
-  - bash: |
-      mkdir report
-      timeout ${TIMEOUT}m docker run --rm -it --network=host -v $(Pipeline.Workspace)/report:/pagopa-nodo-dei-pagamenti-test/report -t nodo-test /bin/bash
-    displayName: 'Test execution'
+  # - bash: |
+  #     docker build --rm --network=host -t nodo-test .
+  #   displayName: 'Build env'
 
-  - task: AzureFileCopy@3
+  # # timeout to prevent test deadlock
+  # - bash: |
+  #     timeout ${TIMEOUT}m docker run --rm --network=host -v $(Build.SourcesDirectory):/pagopa-nodo-dei-pagamenti-test -t nodo-test
+  #   displayName: 'Test execution'
+
+  - script: |
+      apt-get update && apt-get install -y \
+      curl \
+      build-essential \
+      python3 \
+      python3-pip
+
+      python3 -m pip install -r "$(Build.SourcesDirectory)/requirements.txt"
+    displayName: 'setup dependency'
+
+  - script: |
+      mkdir -p '$(Build.SourcesDirectory)/report_results'
+      behave -f html -o '$(Build.SourcesDirectory)/report_results/index.html' '$(Build.SourcesDirectory)/src/integ-test/bdd-test/features/'
+    displayName: 'Run api test'
+    continueOnError: true 
+
+  - task: AzureCLI@1
     displayName: 'Publish report'
     inputs:
-      sourcePath: '$(Pipeline.Workspace)/report'
       azureSubscription: '$(AZURE_SUBSCRIPTION)'
-      destination: 'azureBlob'
-      storage: '$(STORAGE_ACCOUNT_NAME)'
-      containerName: '$(BLOB_CONTAINER)'
+      scriptLocation: inlineScript
+      inlineScript: |
+        az config set extension.use_dynamic_install=yes_without_prompt
+        
+        az storage blob directory upload \
+        -c '$web' \
+        --account-name $(STORAGE_ACCOUNT_NAME) \
+        -s '$(Build.SourcesDirectory)/report_results/*' \
+        -d . --recursive \
+        --auth-mode key
+
+
