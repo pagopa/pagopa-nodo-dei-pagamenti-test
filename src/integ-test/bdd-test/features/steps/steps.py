@@ -8,10 +8,12 @@ from behave import *
 
 import utils as utils
 
+# Constants
 RESPONSE = "Response"
-
 REQUEST = "Request"
 
+
+# Steps definitions
 
 @given('systems up')
 def step_impl(context):
@@ -66,6 +68,8 @@ def step_impl(context, primitive):
 def step_impl(context, elem, value, action):
     # use - to skip
     if elem is not '-':
+        value = utils.replace_local_variables(value, context);
+        value = utils.replace_global_variables(value, context);
         xml = utils.manipulate_soap_action(getattr(context, action), elem, value)
         setattr(context, action, xml)
 
@@ -114,6 +118,8 @@ def step_impl(context, tag, value, primitive):
             if my_document.getElementsByTagName('description'):
                 print("description: ", my_document.getElementsByTagName('description')[0].firstChild.data)
         data = my_document.getElementsByTagName(tag)[0].firstChild.data
+        value = utils.replace_local_variables(value, context)
+        value = utils.replace_global_variables(value, context)
         print(f'check tag "{tag}" - expected: {value}, obtained: {data}')
         assert value == data
     else:
@@ -372,3 +378,16 @@ def step_impl(context, number):
     seconds = int(number) * 60
     print(f"wait for: {seconds} seconds")
     time.sleep(seconds)
+
+
+@given("PSP waits {number} seconds for expiration")
+def step_impl(context, number):
+    seconds = int(number)
+    print(f"wait for: {seconds} seconds")
+    time.sleep(seconds)
+
+
+@step("idempotencyKey valid for {seconds} seconds")
+def step_impl(context, seconds):
+    #     And field VALID_TO set to current time + <seconds> seconds in NODO_ONLINE.IDEMPOTENCY_CACHE table for sendPaymentOutcome record
+    pass;
