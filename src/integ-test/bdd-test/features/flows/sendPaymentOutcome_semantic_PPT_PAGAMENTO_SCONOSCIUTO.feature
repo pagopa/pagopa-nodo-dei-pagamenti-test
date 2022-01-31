@@ -1,8 +1,8 @@
-Feature:  semantic checks for sendPaymentOutcomeReq - PPT_PAGAMENTO_SCONOSCIUTO #[SEM_SPO_27]
+Feature: semantic checks for sendPaymentOutcomeReq - PPT_PAGAMENTO_SCONOSCIUTO [SEM_SPO_27]
 
   Background:
-    Given systems up 
-    And intial XML sendPaymentOutcome soap-request
+    Given systems up
+    And initial XML sendPaymentOutcome
     """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
            <soapenv:Header/>
@@ -52,13 +52,13 @@ Feature:  semantic checks for sendPaymentOutcomeReq - PPT_PAGAMENTO_SCONOSCIUTO 
     And EC new version  
     
     
-    # DB insert phase
-    Scenario: Execute a DB insert 
-    #INSERT INTO NODO_ONLINE.POSITION_ACTIVATE (PA_FISCAL_CODE, NOTICE_ID, CREDITOR_REFERENCE_ID, PSP_ID, IDEMPOTENCY_KEY, PAYMENT_TOKEN, AMOUNT, INSERTED_TIMESTAMP) VALUES ('77777777777', '311011591891198800', '011591891198800', '70000000001', '70000000001_125703rybY', '831c6575705546beb93cffbe3b212310', '10', sysdate)
+  # DB insert phase
+  Scenario: Execute a DB insert
+    When api-config executes the insert INSERT INTO NODO_ONLINE.POSITION_ACTIVATE (PA_FISCAL_CODE, NOTICE_ID, CREDITOR_REFERENCE_ID, PSP_ID, IDEMPOTENCY_KEY, PAYMENT_TOKEN, AMOUNT, INSERTED_TIMESTAMP) VALUES ('77777777777', '311011591891198800', '011591891198800', '70000000001', '70000000001_125703rybY', '831c6575705546beb93cffbe3b212310', '10', sysdate)
       
-    # sendPaymentOutcomeReq phase 
-    Scenario: Execute a sendPaymentOutcome request
-    Given DB insert scenario executed successfully
+    # sendPaymentOutcomeReq phase
+  Scenario: Execute a sendPaymentOutcome request
+    Given the Execute a DB insert scenario executed successfully
     Given initial XML sendPaymentOutcomeReq
     And paymentToken with value entered through insert query
     When psp sends SOAP sendPaymentOutcomeReq to nodo-dei-pagamenti
@@ -66,5 +66,5 @@ Feature:  semantic checks for sendPaymentOutcomeReq - PPT_PAGAMENTO_SCONOSCIUTO 
     And check faultCode is PPT_PAGAMENTO_SCONOSCIUTO
     
     ## DB delete phase
-    Scenario: Execute a DB delete
+  Scenario: Execute a DB delete
     #DELETE FROM NODO_ONLINE.POSITION_ACTIVATE WHERE PAYMENT_TOKEN = '831c6575705546beb93cffbe3b212310' AND NOTICE_ID = '311011591891198800'

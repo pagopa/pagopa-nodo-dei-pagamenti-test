@@ -390,4 +390,8 @@ def step_impl(context, number):
 @step("idempotencyKey valid for {seconds} seconds")
 def step_impl(context, seconds):
     #     And field VALID_TO set to current time + <seconds> seconds in NODO_ONLINE.IDEMPOTENCY_CACHE table for sendPaymentOutcome record
-    pass;
+    pass
+
+@step("api-config executes the insert {sql_code}")
+def step_impl(context, sql):
+    pass
