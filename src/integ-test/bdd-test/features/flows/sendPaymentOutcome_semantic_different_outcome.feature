@@ -87,6 +87,7 @@ Feature: semantic checks for sendPaymentOutcomeReq - different outcome [SEM_SPO_
   # sendPaymentOutcomeReq phase 2
   Scenario: Execute a new sendPaymentOutcome request
     Given the Execute a sendPaymentOutcome request scenario executed successfully
+    And outcome with KO in sendPaymentOutcome
     And paymentMethod with cash in sendPaymentOutcome
     And paymentChannel with onLine in sendPaymentOutcome
     And fee with 3.00 in sendPaymentOutcome
