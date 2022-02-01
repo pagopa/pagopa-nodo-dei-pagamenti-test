@@ -68,6 +68,8 @@ def save_soap_action(mock, primitive, soap_action, override=False):
 def manipulate_soap_action(soap_action, elem, value):
     TYPE_ELEMENT = 1 # dom element
     # TYPE_VALUE = 3 # dom value
+    print(soap_action)
+    print(elem)
     my_document = parseString(soap_action)
     if value == "None":
         element = my_document.getElementsByTagName(elem)[0]
@@ -106,9 +108,12 @@ def replace_local_variables(body, context):
         if len(field.replace('$', '').split('.')) > 1:
             tag = field.replace('$', '').split('.')[1]
             if isinstance(saved_elem, str):
+                print(saved_elem)
                 document = parseString(saved_elem)
             else:
+                print(saved_elem.content)
                 document = parseString(saved_elem.content)
+            print(tag)
             value = document.getElementsByTagName(tag)[0].firstChild.data
         body = body.replace(field, value)
     return body

@@ -8,10 +8,12 @@ from behave import *
 
 import utils as utils
 
+# Constants
 RESPONSE = "Response"
-
 REQUEST = "Request"
 
+
+# Steps definitions
 
 @given('systems up')
 def step_impl(context):
@@ -64,8 +66,12 @@ def step_impl(context, primitive):
 
 @given('{elem} with {value} in {action}')
 def step_impl(context, elem, value, action):
-    xml = utils.manipulate_soap_action(getattr(context, action), elem, value)
-    setattr(context, action, xml)
+    # use - to skip
+    if elem != "-":
+        value = utils.replace_local_variables(value, context)
+        value = utils.replace_global_variables(value, context)
+        xml = utils.manipulate_soap_action(getattr(context, action), elem, value)
+        setattr(context, action, xml)
 
 
 @given('{attribute} set {value} for {elem} in {primitive}')
@@ -79,7 +85,8 @@ def step_impl(context, attribute, value, elem, primitive):
 # Scenario : Check valid URL in WSDL namespace
 @step('{sender} sends soap {soap_primitive} to {receiver}')
 def step_impl(context, sender, soap_primitive, receiver):
-    headers = {'Content-Type': 'application/xml', "SOAPAction": soap_primitive}  # set what your server accepts
+    primitive = soap_primitive.split("_")[0]
+    headers = {'Content-Type': 'application/xml', "SOAPAction": primitive}  # set what your server accepts
     # TODO get url according to receiver
     url_nodo = utils.get_soap_url_nodo(context)
     print("nodo soap_request sent >>>", getattr(context, soap_primitive))
@@ -111,12 +118,33 @@ def step_impl(context, tag, value, primitive):
             if my_document.getElementsByTagName('description'):
                 print("description: ", my_document.getElementsByTagName('description')[0].firstChild.data)
         data = my_document.getElementsByTagName(tag)[0].firstChild.data
+        value = utils.replace_local_variables(value, context)
+        value = utils.replace_global_variables(value, context)
         print(f'check tag "{tag}" - expected: {value}, obtained: {data}')
         assert value == data
     else:
         node_response = getattr(context, primitive + RESPONSE)
         json_response = node_response.json()
         assert json_response.get(tag) == value
+
+
+@then('check {tag} contains {value} of {primitive} response')
+def step_impl(context, tag, value, primitive):
+    soap_response = getattr(context, primitive + RESPONSE)
+    if 'xml' in soap_response.headers['content-type']:
+        my_document = parseString(soap_response.content)
+        if len(my_document.getElementsByTagName('faultCode')) > 0:
+            print("fault code: ", my_document.getElementsByTagName('faultCode')[0].firstChild.data)
+            print("fault string: ", my_document.getElementsByTagName('faultString')[0].firstChild.data)
+            if my_document.getElementsByTagName('description'):
+                print("description: ", my_document.getElementsByTagName('description')[0].firstChild.data)
+        data = my_document.getElementsByTagName(tag)[0].firstChild.data
+        print(f'check tag "{tag}" - expected: {value}, obtained: {data}')
+        assert value in data
+    else:
+        node_response = getattr(context, primitive + RESPONSE)
+        json_response = node_response.json()
+        assert value in json_response.get(tag)
 
 
 @then('check {tag} field exists in {primitive} response')
@@ -208,6 +236,9 @@ def step_impl(context, mock, destination, primitive):
                                                                              context.config.userdata.get(
                                                                                  "global_configuration").get(
                                                                                  "creditor_institution_code"))
+    if '$iuv' in pa_verify_payment_notice_res:
+        pa_verify_payment_notice_res = pa_verify_payment_notice_res.replace('$iuv', getattr(context, 'iuv'))
+
     setattr(context, primitive, pa_verify_payment_notice_res)
     print(pa_verify_payment_notice_res)
     response_status_code = utils.save_soap_action(utils.get_rest_mock_ec(context), primitive,
@@ -292,7 +323,7 @@ def step_impl(context, param, value):
     pass
 
 
-@given("call the {elem} of {primitive} response as {name}")
+@Step("call the {elem} of {primitive} response as {name}")
 def step_impl(context, elem, primitive, name):
     payload = getattr(context, primitive + RESPONSE)
     my_document = parseString(payload.content)
@@ -316,6 +347,19 @@ def step_impl(context, elem, primitive, name):
         assert False
 
 
+@then("verify the {elem} of the {primitive} response is not equals to {name}")
+def step_impl(context, elem, primitive, name):
+    payload = getattr(context, primitive + RESPONSE)
+    my_document = parseString(payload.content)
+    if len(my_document.getElementsByTagName(elem)) > 0:
+        elem_value = my_document.getElementsByTagName(elem)[0].firstChild.data
+        target = getattr(context, name)
+        print(f'check tag "{elem}" - expected: {target}, obtained: {elem_value}')
+        assert elem_value != target
+    else:
+        assert False
+
+
 @given("PSP waits {elem} of {primitive} expires")
 def step_impl(context, elem, primitive):
     payload = getattr(context, primitive)
@@ -335,3 +379,15 @@ def step_impl(context, number):
     print(f"wait for: {seconds} seconds")
     time.sleep(seconds)
 
+
+@given("PSP waits {number} seconds for expiration")
+def step_impl(context, number):
+    seconds = int(number)
+    print(f"wait for: {seconds} seconds")
+    time.sleep(seconds)
+
+
+@step("idempotencyKey valid for {seconds} seconds")
+def step_impl(context, seconds):
+    #     And field VALID_TO set to current time + <seconds> seconds in NODO_ONLINE.IDEMPOTENCY_CACHE table for sendPaymentOutcome record
+    pass;
