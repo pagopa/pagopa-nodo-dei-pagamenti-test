@@ -1,39 +1,39 @@
-Feature:  semantic checks for sendPaymentOutcomeReq - PPT_TOKEN_SCONOSCIUTO #[SEM_SPO_10]
+Feature: semantic checks for sendPaymentOutcomeReq - PPT_TOKEN_SCONOSCIUTO [SEM_SPO_10]
 
   Background:
     Given systems up 
     And EC new version    
 
-    # activatePaymentNoticeReq phase
-    Scenario: Execute activatePaymentNotice request
-    Given initial XML activatePaymentNotice soap-request
-      """      
-        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-           <soapenv:Header/>
-           <soapenv:Body>
-              <nod:activatePaymentNoticeReq>
-                 <idPSP>40000000001</idPSP>
-                 <idBrokerPSP>40000000001</idBrokerPSP>
-                 <idChannel>40000000001_01</idChannel>
-                 <password>pwdpwdpwd</password>
-                 <idempotencyKey>#idempotency_key#</idempotencyKey>
-                 <qrCode>
-                    <fiscalCode>#creditor_institution_code#</fiscalCode>
-                    <noticeNumber>#notice_number#</noticeNumber>
-                 </qrCode>
-                 <expirationTime>60000</expirationTime>
-                 <amount>10.00</amount>
-              </nod:activatePaymentNoticeReq>
-           </soapenv:Body>
-        </soapenv:Envelope>
-      """
-	
-    When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+  # activatePaymentNoticeReq phase
+  Scenario: Execute activatePaymentNotice request
+    Given initial XML activatePaymentNotice
+    """
+    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+      <soapenv:Header/>
+      <soapenv:Body>
+        <nod:activatePaymentNoticeReq>
+          <idPSP>40000000001</idPSP>
+          <idBrokerPSP>40000000001</idBrokerPSP>
+          <idChannel>40000000001_01</idChannel>
+          <password>pwdpwdpwd</password>
+          <idempotencyKey>#idempotency_key#</idempotencyKey>
+          <qrCode>
+            <fiscalCode>#creditor_institution_code#</fiscalCode>
+            <noticeNumber>#notice_number#</noticeNumber>
+          </qrCode>
+          <expirationTime>60000</expirationTime>
+          <amount>10.00</amount>
+        </nod:activatePaymentNoticeReq>
+      </soapenv:Body>
+    </soapenv:Envelope>
+    """
+    When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
     
-    # sendPaymentOutcomeReq phase
-    Scenario: Execute a sendPaymentOutcome request
-    Given initial XML sendPaymentOutcome soap-request
+  # sendPaymentOutcomeReq phase
+  Scenario: Execute a sendPaymentOutcome request
+    Given the Execute activatePaymentNotice request scenario executed successfully
+    And initial XML sendPaymentOutcome
      """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
            <soapenv:Header/>
@@ -80,6 +80,6 @@ Feature:  semantic checks for sendPaymentOutcomeReq - PPT_TOKEN_SCONOSCIUTO #[SE
            </soapenv:Body>
         </soapenv:Envelope>
       """
-      When psp sends SOAP sendPaymentOutcomeReq to nodo-dei-pagamenti
+      When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
       Then check outcome is KO of sendPaymentOutcome response
-      And check faultCode is PPT_TOKEN_SCONOSCIUTO
+      And check faultCode is PPT_TOKEN_SCONOSCIUTO of sendPaymentOutcome response
