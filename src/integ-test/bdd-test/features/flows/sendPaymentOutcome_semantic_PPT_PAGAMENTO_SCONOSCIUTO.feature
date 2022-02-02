@@ -54,7 +54,6 @@ Feature: semantic checks for sendPaymentOutcomeReq - PPT_PAGAMENTO_SCONOSCIUTO [
       
   # sendPaymentOutcomeReq phase
   Scenario: Execute a sendPaymentOutcome request
-    Given initial XML sendPaymentOutcome
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is KO of sendPaymentOutcome response
     And check faultCode is PPT_PAGAMENTO_SCONOSCIUTO of sendPaymentOutcome response
