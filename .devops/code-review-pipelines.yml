@@ -85,10 +85,11 @@ steps:
   - script: |
       mkdir -p '$(Build.SourcesDirectory)/report_results'
       behave -f html -o '$(Build.SourcesDirectory)/report_results/index.html' '$(Build.SourcesDirectory)/src/integ-test/bdd-test/features/'
-      title="<h1>Behave Test Report</h1>"
-      replace_title="<h1>Behave Test Report - $(date)</h1>"
-      awk -v ft=$title -v rt=$replace_title '{gsub(ft,rt); print;}' '$(Build.SourcesDirectory)/report_results/index.html' > '$(Build.SourcesDirectory)/report_results/index.html.tmp'
-      mv '$(Build.SourcesDirectory)/report_results/index.html.tmp' '$(Build.SourcesDirectory)/report_results/index.html'
+      title="Behave Test Report"
+      replace_title="Behave Test Report - $(date)"
+      cd $(Build.SourcesDirectory)/report_results
+      sed -i "s|$title|$replace_title|g" index.html
+      cat index.html | grep "<h1>Behave Test Report"
     displayName: 'Run api test'
     continueOnError: true 
 
