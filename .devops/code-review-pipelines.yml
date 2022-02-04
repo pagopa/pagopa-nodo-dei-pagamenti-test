@@ -87,8 +87,11 @@ steps:
       behave -f html -o '$(Build.SourcesDirectory)/report_results/index.html' '$(Build.SourcesDirectory)/src/integ-test/bdd-test/features/'
       title="<h1>Behave Test Report</h1>"
       replace_title="<h1>Behave Test Report - $(date)</h1>"
-      awk -v ft=$title -v rt=$replace_title '{gsub(ft,rt); print;}' '$(Build.SourcesDirectory)/report_results/index.html' > '$(Build.SourcesDirectory)/report_results/index.html.tmp'
-      mv '$(Build.SourcesDirectory)/report_results/index.html.tmp' '$(Build.SourcesDirectory)/report_results/index.html'
+      echo $title
+      echo $replace_title
+      awk -v ft=$title -v rt=$replace_title '{gsub(ft,rt); print;}' $(Build.SourcesDirectory)/report_results/index.html > $(Build.SourcesDirectory)/report_results/index.html.tmp
+      ls $(Build.SourcesDirectory)/report_results
+      mv $(Build.SourcesDirectory)/report_results/index.html.tmp $(Build.SourcesDirectory)/report_results/index.html
     displayName: 'Run api test'
     continueOnError: true 
 
