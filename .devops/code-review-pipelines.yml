@@ -89,10 +89,12 @@ steps:
       replace_title="<h1>Behave Test Report - $(date)</h1>"
       echo $title
       echo $replace_title
-      echo $(Build.SourcesDirectory)/report_results/index.html | awk -v ft=$title -v rt=$replace_title '{sub(ft,rt); print;}' > $(Build.SourcesDirectory)/report_results/index.html.tmp
-      cat $(Build.SourcesDirectory)/report_results/index.html.tmp | grep "<h1>Behave Test Report"
-      ls $(Build.SourcesDirectory)/report_results
-      mv $(Build.SourcesDirectory)/report_results/index.html.tmp $(Build.SourcesDirectory)/report_results/index.html
+      echo $(Build.SourcesDirectory)/report_results/index.html
+      cd $(Build.SourcesDirectory)/report_results
+      awk -v ft=$title -v rt=$replace_title '{gsub(ft,rt)}1' index.html > index.html.tmp
+      cat index.html.tmp | grep "<h1>Behave Test Report"
+      #ls $(Build.SourcesDirectory)/report_results
+      #mv $(Build.SourcesDirectory)/report_results/index.html.tmp $(Build.SourcesDirectory)/report_results/index.html
     displayName: 'Run api test'
     continueOnError: true 
 
