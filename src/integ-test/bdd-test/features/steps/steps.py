@@ -67,9 +67,9 @@ def step_impl(context, primitive):
 @given('{elem} with {value} in {action}')
 def step_impl(context, elem, value, action):
     # use - to skip
-    if elem is not '-':
-        value = utils.replace_local_variables(value, context);
-        value = utils.replace_global_variables(value, context);
+    if elem != "-":
+        value = utils.replace_local_variables(value, context)
+        value = utils.replace_global_variables(value, context)
         xml = utils.manipulate_soap_action(getattr(context, action), elem, value)
         setattr(context, action, xml)
 
@@ -390,4 +390,9 @@ def step_impl(context, number):
 @step("idempotencyKey valid for {seconds} seconds")
 def step_impl(context, seconds):
     #     And field VALID_TO set to current time + <seconds> seconds in NODO_ONLINE.IDEMPOTENCY_CACHE table for sendPaymentOutcome record
-    pass;
+    pass
+
+@step("api-config executes the sql {sql_code}")
+def step_impl(context, sql_code):
+    # TODO
+    pass
