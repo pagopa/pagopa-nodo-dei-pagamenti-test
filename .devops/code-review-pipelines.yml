@@ -93,9 +93,7 @@ steps:
       echo "READ FILE"
       cat index.html
       echo "END FILE"
-      cat index.html | awk -v ft=$title -v rt=$replace_title '{gsub(ft,rt)}1'
-      echo "END FILE ----"
-      cat index.html | awk -v ft=$title -v rt=$replace_title '{gsub(ft,rt)}1' > index.html.tmp
+      cat index.html | awk -i inplace -v ft=$title -v rt=$replace_title '{gsub(ft,rt)}1' > index.html.tmp
       cat index.html.tmp | grep "<h1>Behave Test Report"
       #ls $(Build.SourcesDirectory)/report_results
       #mv $(Build.SourcesDirectory)/report_results/index.html.tmp $(Build.SourcesDirectory)/report_results/index.html
