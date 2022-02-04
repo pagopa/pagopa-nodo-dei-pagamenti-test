@@ -87,8 +87,7 @@ def step_impl(context, attribute, value, elem, primitive):
 def step_impl(context, sender, soap_primitive, receiver):
     primitive = soap_primitive.split("_")[0]
     headers = {'Content-Type': 'application/xml', "SOAPAction": primitive}  # set what your server accepts
-    # TODO get url according to receiver
-    url_nodo = utils.get_soap_url_nodo(context)
+    url_nodo = utils.get_soap_url_nodo(context, primitive)
     print("nodo soap_request sent >>>", getattr(context, soap_primitive))
 
     soap_response = requests.post(url_nodo, getattr(context, soap_primitive), headers=headers)

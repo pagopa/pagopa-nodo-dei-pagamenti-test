@@ -25,10 +25,10 @@ def before_feature(context, feature):
     # add data in the tables
     for system_name in services.keys():
         row = (system_name,
-               services.get(system_name).get("url"),
-               services.get(system_name).get("healthcheck"),
-               services.get(system_name).get("soap_service"),
-               services.get(system_name).get("rest_service"))
+               services.get(system_name).get("url", ""),
+               services.get(system_name).get("healthcheck", ""),
+               services.get(system_name).get("soap_service", ""),
+               services.get(system_name).get("rest_service", ""))
         feature.background.steps[0].table.add_row(row)
 
     # payload = ([step.text for step in feature.background.steps if "initial" in step.name] or [""])[0]
