@@ -142,3 +142,9 @@ def replace_global_variables(payload, context):
         if replaced_sharp in context.config.userdata.get("global_configuration"):
             payload = payload.replace(elem, context.config.userdata.get("global_configuration").get(replaced_sharp))
     return payload
+
+
+def get_history(rest_mock, notice_number, primitive):
+    s = requests.Session()
+    response = requests_retry_session(session=s).get(f"{rest_mock}/history/{notice_number}/{primitive}")
+    return response.json(), response.status_code

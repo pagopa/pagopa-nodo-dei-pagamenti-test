@@ -1,6 +1,8 @@
 import json
 import random
 import time
+
+from requests.exceptions import RetryError
 from xml.dom.minidom import parseString
 
 import requests
@@ -185,6 +187,55 @@ def step_impl(context, mock, primitive):
         f"{rest_mock}/history/{notice_number}/{primitive}")
     json = responseJson.json()
     assert "request" in json and len(json.get("request").keys()) > 0
+
+
+@then(u'check {mock:EcPsp} receives {primitive} {status:ProperlyNotProperly} with noticeNumber {notice_number}')
+def step_impl(context, mock, primitive, status, notice_number):
+    rest_mock = utils.get_rest_mock_ec(context) if mock == "EC" else utils.get_rest_mock_psp(context)
+    if "$" in notice_number:
+        notice_number = utils.replace_local_variables(notice_number, context)
+
+    if status == "properly":
+        json, status_code = utils.get_history(rest_mock, notice_number, primitive)
+        setattr(context, primitive, json)
+        assert "request" in json and len(json.get("request").keys()) > 0
+    else:
+        try:
+            json, status_code = utils.get_history(rest_mock, notice_number, primitive)
+            assert status_code != 200
+        except RetryError:
+            assert True
+
+
+@then(u'check {mock:EcPsp} receives {primitive} properly having in the receipt {value} as {elem}')
+def step_impl(context, mock, primitive, value, elem):
+    json = getattr(context, primitive)
+    if "$" in value:
+        value = utils.replace_local_variables(value, context)
+    body = json.get("request").get("soapenv:envelope").get("soapenv:body")[0]
+    primitive_name = list(body.keys())[0]
+    assert body.get(primitive_name)[0].get("receipt")[0].get(elem)[0] == value
+
+
+@then(u'check {mock:EcPsp} receives {primitive} properly having in the transfer with idTransfer {idTransfer} the same {elem} of {other_primitive}')
+def step_impl(context, mock, primitive, idTransfer, elem, other_primitive):
+    _assert = False
+    soap_action = getattr(context, other_primitive)
+    my_document = parseString(soap_action)
+    map = {}
+    for transfer in my_document.getElementsByTagName("transfer"):
+        if transfer.getElementsByTagName("idTransfer")[0].firstChild.nodeValue == idTransfer:
+            map[idTransfer] = transfer.getElementsByTagName(elem)[0].firstChild.nodeValue
+
+    json = getattr(context, primitive)
+    body = json.get("request").get("soapenv:envelope").get("soapenv:body")[0]
+    primitive_name = list(body.keys())[0]
+
+    for transfer in body.get(primitive_name)[0].get("receipt")[0].get("transferlist")[0].get("transfer"):
+        if transfer.get("idtransfer")[0] == str(idTransfer):
+            _assert = transfer.get(str(elem).lower())[0] == map[idTransfer]
+            break
+    assert _assert
 
 
 @given('the {name} scenario executed successfully')
