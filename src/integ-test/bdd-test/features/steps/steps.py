@@ -125,6 +125,7 @@ def step_impl(context, tag, value, primitive):
     else:
         node_response = getattr(context, primitive + RESPONSE)
         json_response = node_response.json()
+        print(f'check tag "{tag}" - expected: {value}, obtained: {json_response.get(tag)}')
         assert json_response.get(tag) == value
 
 
@@ -182,7 +183,7 @@ def step_impl(context, mock, primitive):
 
     s = requests.Session()
     responseJson = utils.requests_retry_session(session=s).get(
-        f"{rest_mock}/api/v1/history/{notice_number}/{primitive}")
+        f"{rest_mock}/history/{notice_number}/{primitive}")
     json = responseJson.json()
     assert "request" in json and len(json.get("request").keys()) > 0
 
@@ -269,9 +270,9 @@ def step_impl(context):
     my_document = parseString(soap_request)
     notice_number = my_document.getElementsByTagName('noticeNumber')[0].firstChild.data
 
-    paGetPaymentJson = requests.get(f"{utils.get_rest_mock_ec(context)}/api/v1/history/{notice_number}/paGetPayment")
+    paGetPaymentJson = requests.get(f"{utils.get_rest_mock_ec(context)}/history/{notice_number}/paGetPayment")
     pspNotifyPaymentJson = requests.get(
-        f"{utils.get_rest_mock_ec(context)}/api/v1/history/{notice_number}/pspNotifyPayment")
+        f"{utils.get_rest_mock_ec(context)}/history/{notice_number}/pspNotifyPayment")
 
     paGetPayment = paGetPaymentJson.json()
     pspNotifyPayment = pspNotifyPaymentJson.json()

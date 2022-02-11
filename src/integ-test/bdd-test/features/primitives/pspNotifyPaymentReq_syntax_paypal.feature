@@ -60,62 +60,25 @@ Feature: syntax checks for pspNotifyPaymentReq - payPal [T_01]
   # nodoChiediInformazioniPagamento phase
   Scenario: 2. Execute nodoChiediInformazioniPagamento request
     Given the 1. Execute activateIOPaymentReq request scenario executed successfully
-    When WISP sends rest GET ​/informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
-    Then verify the HTTP status code of ​/informazioniPagamento response is 200
+    When WISP sends rest GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
+    Then verify the HTTP status code of informazioniPagamento response is 200
         
         
   # nodoInoltraEsitoPagamentoPaypal phase
   Scenario: 3. Execute nodoInoltraEsitoPagamentoPaypal request
     Given the 2. Execute nodoChiediInformazioniPagamento request scenario executed successfully
-#   TODO: And identificativoCanale with SERVIZIO_NMP
     When WISP sends rest POST inoltroEsito/paypal to nodo-dei-pagamenti
     """
     {"idTransazione": "responseOK",
-    "idTransazionePsp":"#id_transazione_psp#",
+    "idTransazionePsp":"$activateIOPayment.idempotencyKey",
     "idPagamento": "$activateIOPaymentResponse.paymentToken",
-    "identificativoIntermediario": "70000000001",
-    "identificativoPsp": "70000000001",
-    "identificativoCanale": "70000000001_03",
+    "identificativoIntermediario": "40000000001",
+    "identificativoPsp": "40000000001",
+    "identificativoCanale": "40000000001_06",
     "importoTotalePagato": 10.00,
     "timestampOperazione": "2012-04-23T18:25:43Z"}
     """
+#    And identificativoCanale with SERVIZIO_NMP
     Then verify the HTTP status code of inoltroEsito/paypal response is 200
     And check esito is OK of inoltroEsito/paypal response
     Then activateIOPayment response and pspNotifyPayment request are consistent
-#  TODO
-#    And check pspNotifyPaymentReq contains all required fields
-#    """
-#    <soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:pspfn="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
-#       <soapenv:Body>
-#          <pspfn:pspNotifyPaymentReq>
-#             <idPSP>70000000001</idPSP>
-#             <idBrokerPSP>70000000001</idBrokerPSP>
-#             <idChannel>70000000001_03</idChannel>
-#             <paymentToken>$activateIOPaymentResponse.paymentToken</paymentToken>
-#             <paymentDescription>test</paymentDescription>
-#             <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
-#             <companyName>company</companyName>
-#             <creditorReferenceId>#iuv#</creditorReferenceId>
-#             <debtAmount>10.00</debtAmount>
-#             <transferList>
-#                <transfer>
-#                   <idTransfer>1</idTransfer>
-#                   <transferAmount>10.00</transferAmount>
-#                   <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
-#                   <IBAN>IT45R0760103200000000001016</IBAN>
-#                   <remittanceInformation>testPaGetPayment</remittanceInformation>
-#                </transfer>
-#             </transferList>
-#             <paypalPayment>
-#                <transactionId>responseOK</transactionId>
-#                <pspTransactionId>114739uafX</pspTransactionId>
-#                <totalAmount>10.00</totalAmount>
-#                <fee>0.00</fee>
-#                <timestampOperation>2012-04-23T18:25:43</timestampOperation>
-#             </paypalPayment>
-#          </pspfn:pspNotifyPaymentReq>
-#       </soapenv:Body>
-#    </soapenv:Envelope>
-#    """
-#    And check nodoInoltraEsitoPagamentoPaypal response contains {"esito": "OK"}
- 
