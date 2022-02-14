@@ -105,12 +105,33 @@ def manipulate_soap_action(soap_action, elem, value):
             original_node = cloned_node
             cloned_node = original_node.cloneNode(2)
     else:
-        if len(my_document.getElementsByTagName(elem)[0].childNodes) > 0:
-            element = my_document.getElementsByTagName(elem)[0].childNodes[0]
-            element.nodeValue = value
-        else:
+        node = my_document.getElementsByTagName(elem)[0] if my_document.getElementsByTagName(elem) else None
+
+        if node is None:
+            # create
             element = my_document.createTextNode(value)
             my_document.getElementsByTagName(elem)[0].appendChild(element)
+        elif len(node.childNodes) > 1:
+            # object
+            object = parseString(value)
+            node.parentNode.replaceChild(object.childNodes[0], node)
+        else:
+            # leaf -> single value
+            # element = my_document.getElementsByTagName(elem)[0].childNodes[0]
+            # element.nodeValue = value
+            # node.nodeValue = value
+            while node.hasChildNodes():
+                node.removeChild(node.firstChild)
+            element = my_document.createTextNode(value)
+            node.appendChild(element)
+
+        # if my_document.getElementsByTagName(elem) and len(my_document.getElementsByTagName(elem)[0].childNodes) > 0:
+        #     element = my_document.getElementsByTagName(elem)[0].childNodes[0]
+        #     element.nodeValue = value
+        # else:
+        #     element = my_document.createTextNode(value)
+        #     my_document.getElementsByTagName(elem)[0].appendChild(element)
+
     return my_document.toxml()
 
 
