@@ -85,29 +85,3 @@ Feature: semantic checks for pspNotifyPaymentReq - CreditCard [T_02]
     Then verify the HTTP status code of inoltroEsito/carta response is 200
     And check esito is OK of inoltroEsito/carta response
     Then activateIOPayment response and pspNotifyPayment request are consistent
-    And check that pspNotifyPaymentReq <element> is correctly filled with <value>
-
-      | element               | value                                                                                               |
-      | idPSP                 | $nodoInoltraEsitoPagamentoCarteRequest.identificativoPsp                                            |
-      | idBrokerPSP           | $nodoInoltraEsitoPagamentoCarteRequest.identificativoIntermediario                                  |
-      | idChannel             | $nodoInoltraEsitoPagamentoCarteRequest.identificativoCanale                                         |
-      | paymentToken          | $activateIOPaymentResponse.paymentToken                                                             |
-      | paymentDescription    | $paGetPaymentResponse.data.description                                                              |
-      | fiscalCodePA          | $activateIOPaymentRequest.qrCode.fiscalCode                                                         |
-      | companyName           | $paGetPaymentResponse.data.companyName                                                              |
-        | creditorReferenceId       | $paGetPaymentResponse.data.creditorReferenceId                                                         |
-        | debtAmount                | $paGetPaymentResponse.data.paymentAmount                                                               |
-        | idTransfer                | $paGetPaymentResponse.data.transferList.transfer{n}.idTransfer                                         |
-        | transferAmount            | $paGetPaymentResponse.data.transferList.transfer{n}.transferAmount                                     |
-        | fiscalCodePA              | $paGetPaymentResponse.data.transferList.transfer{n}.fiscalCodePA                                       |
-        | IBAN                      | $paGetPaymentResponse.data.transferList.transfer{n}.IBAN                                               |
-        | remittanceInformation     | $paGetPaymentResponse.data.transferList.transfer{n}.remittanceInformation                              |
-        | rrn                       | $nodoInoltraEsitoPagamentoCarteRequest.RRN                                                             |
-        | outcomePaymentGateway     | $nodoInoltraEsitoPagamentoCarteRequest.esitoTransazioneCarta                                           |
-        | totalAmount               | $nodoInoltraEsitoPagamentoCarteRequest.importoTotalePagato                                             |
-        | fee                       | $nodoInoltraEsitoPagamentoCarteRequest.importoTotalePagato-$paGetPaymentResponse.data.paymentAmount    |
-        | timestampOperation        | $nodoInoltraEsitoPagamentoCarteRequest.timestampOperazione                                             |
-        | authorizationCode         | $nodoInoltraEsitoPagamentoCarteRequest.codiceAutorizzativo                                             |
-        
-        And check nodoInoltraEsitoPagamentoCarte response contains {"esito": "OK"}
- 
