@@ -238,7 +238,7 @@ def step_impl(context, mock, primitive, idTransfer, elem, other_primitive):
     assert _assert
 
 
-@given('the {name} scenario executed successfully')
+@step('the {name} scenario executed successfully')
 def step_impl(context, name):
     phase = ([phase for phase in context.feature.scenarios if name in phase.name] or [None])[0]
     text_step = ''.join(
@@ -475,15 +475,15 @@ def step_impl(context, elem, primitive):
         assert False
 
 
-@given("PSP waits {number} minutes for expiration")
-def step_impl(context, number):
+@step("{mock:EcPsp} waits {number} minutes for expiration")
+def step_impl(context, mock, number):
     seconds = int(number) * 60
     print(f"wait for: {seconds} seconds")
     time.sleep(seconds)
 
 
-@given("PSP waits {number} seconds for expiration")
-def step_impl(context, number):
+@step("{mock:EcPsp} waits {number} seconds for expiration")
+def step_impl(context, mock, number):
     seconds = int(number)
     print(f"wait for: {seconds} seconds")
     time.sleep(seconds)
