@@ -81,4 +81,3 @@ Feature: syntax checks for pspNotifyPaymentReq - payPal [T_01]
 #    And identificativoCanale with SERVIZIO_NMP
     Then verify the HTTP status code of inoltroEsito/paypal response is 200
     And check esito is OK of inoltroEsito/paypal response
-    Then activateIOPayment response and pspNotifyPayment request are consistent
