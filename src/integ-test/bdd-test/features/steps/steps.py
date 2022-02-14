@@ -217,6 +217,7 @@ def step_impl(context, sender, method, service, receiver):
                                      json=json_body)
 
     print(nodo_response.text)
+    setattr(context, service.split('?')[0], json_body)
     setattr(context, service.split('?')[0] + RESPONSE, nodo_response)
 
 
@@ -269,6 +270,11 @@ def step_impl(context):
     my_document = parseString(soap_request)
     notice_number = my_document.getElementsByTagName('noticeNumber')[0].firstChild.data
 
+    inoltroEsito = getattr(context, "inoltroEsito/carta")
+
+    activateIOPaymentResponse = getattr(context, "activateIOPayment" + RESPONSE)
+    activateIOPaymentResponseXml = parseString(activateIOPaymentResponse.content)
+
     paGetPaymentJson = requests.get(f"{utils.get_rest_mock_ec(context)}/history/{notice_number}/paGetPayment")
     pspNotifyPaymentJson = requests.get(
         f"{utils.get_rest_mock_ec(context)}/history/{notice_number}/pspNotifyPayment")
@@ -296,6 +302,50 @@ def step_impl(context):
         assert x[0].get("transfer")[0].get("fiscalCodePA")[0] == x[1].get("transfer")[0].get("fiscalcodepa")[0]
         assert x[0].get("transfer")[0].get("IBAN")[0] == x[1].get("transfer")[0].get("iban")[0]
 
+    pspNotifyPaymentBody = \
+        pspNotifyPayment.get("request").get("soapenv:envelope").get("soapenv:body")[0].get("pspfn:pspnotifypaymentreq")[
+            0]
+
+    data = \
+        paGetPayment.get("response").get("soapenv:Envelope").get("soapenv:Body")[0].get("paf:paGetPaymentRes")[0].get(
+            "data")[0]
+    assert pspNotifyPaymentBody.get("idpsp")[0] == inoltroEsito["identificativoPsp"]
+    assert pspNotifyPaymentBody.get("idbrokerpsp")[0] == inoltroEsito["identificativoIntermediario"]
+    assert pspNotifyPaymentBody.get("idchannel")[0] == inoltroEsito["identificativoCanale"]
+    assert float(pspNotifyPaymentBody.get("creditcardpayment")[0].get("fee")[0]) == float(
+        inoltroEsito["importoTotalePagato"]) - float(data["paymentAmount"][0])
+    assert pspNotifyPaymentBody.get("creditcardpayment")[0].get("rrn")[0] == str(inoltroEsito["RRN"])
+    assert pspNotifyPaymentBody.get("creditcardpayment")[0].get("outcomepaymentgateway")[0] == str(
+        inoltroEsito["esitoTransazioneCarta"])
+    assert pspNotifyPaymentBody.get("creditcardpayment")[0].get("totalamount")[0] == str(
+        inoltroEsito["importoTotalePagato"])
+    assert pspNotifyPaymentBody.get("creditcardpayment")[0].get("timestampoperation")[0] in str(
+        inoltroEsito["timestampOperazione"])
+    assert pspNotifyPaymentBody.get("creditcardpayment")[0].get("authorizationcode")[0] == str(
+        inoltroEsito["codiceAutorizzativo"])
+
+    assert pspNotifyPaymentBody.get("paymentdescription")[0] == \
+           paGetPayment.get("response").get("soapenv:Envelope").get("soapenv:Body")[0].get("paf:paGetPaymentRes")[
+               0].get(
+               "data")[0].get("description")[0]
+    assert pspNotifyPaymentBody.get("companyname")[0] == \
+           paGetPayment.get("response").get("soapenv:Envelope").get("soapenv:Body")[0].get("paf:paGetPaymentRes")[
+               0].get(
+               "data")[0].get("companyName")[0]
+
+    assert pspNotifyPaymentBody.get("paymenttoken")[0] == \
+           activateIOPaymentResponseXml.getElementsByTagName("paymentToken")[0].firstChild.data
+    assert pspNotifyPaymentBody.get("fiscalcodepa")[0] == my_document.getElementsByTagName('fiscalCode')[
+        0].firstChild.data
+    assert pspNotifyPaymentBody.get("debtamount")[0] == \
+           paGetPayment.get("response").get("soapenv:Envelope").get("soapenv:Body")[0].get("paf:paGetPaymentRes")[
+               0].get(
+               "data")[0].get("paymentAmount")[0]
+    assert pspNotifyPaymentBody.get("creditorreferenceid")[0] == \
+           paGetPayment.get("response").get("soapenv:Envelope").get("soapenv:Body")[0].get("paf:paGetPaymentRes")[
+               0].get(
+               "data")[0].get("creditorReferenceId")[0]
+
 
 @step('idChannel with USE_NEW_FAULT_CODE=Y')
 def step_impl(context):
@@ -305,7 +355,8 @@ def step_impl(context):
 
 @step("random idempotencyKey having {value} as idPSP in {primitive}")
 def step_impl(context, value, primitive):
-    xml = utils.manipulate_soap_action(getattr(context, primitive), "idempotencyKey", f"{value}_{str(random.randint(1000000000, 9999999999))}")
+    xml = utils.manipulate_soap_action(getattr(context, primitive), "idempotencyKey",
+                                       f"{value}_{str(random.randint(1000000000, 9999999999))}")
     setattr(context, primitive, xml)
 
 
