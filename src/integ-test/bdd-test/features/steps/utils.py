@@ -105,12 +105,23 @@ def manipulate_soap_action(soap_action, elem, value):
             original_node = cloned_node
             cloned_node = original_node.cloneNode(2)
     else:
-        if len(my_document.getElementsByTagName(elem)[0].childNodes) > 0:
-            element = my_document.getElementsByTagName(elem)[0].childNodes[0]
-            element.nodeValue = value
-        else:
+        node = my_document.getElementsByTagName(elem)[0] if my_document.getElementsByTagName(elem) else None
+
+        if node is None:
+            # create
             element = my_document.createTextNode(value)
             my_document.getElementsByTagName(elem)[0].appendChild(element)
+        elif len(node.childNodes) > 1:
+            # replace object
+            object = parseString(value)
+            node.parentNode.replaceChild(object.childNodes[0], node)
+        else:
+            # leaf -> single value
+            while node.hasChildNodes():
+                node.removeChild(node.firstChild)
+            element = my_document.createTextNode(value)
+            node.appendChild(element)
+
     return my_document.toxml()
 
 
@@ -142,3 +153,9 @@ def replace_global_variables(payload, context):
         if replaced_sharp in context.config.userdata.get("global_configuration"):
             payload = payload.replace(elem, context.config.userdata.get("global_configuration").get(replaced_sharp))
     return payload
+
+
+def get_history(rest_mock, notice_number, primitive):
+    s = requests.Session()
+    response = requests_retry_session(session=s).get(f"{rest_mock}/history/{notice_number}/{primitive}")
+    return response.json(), response.status_code

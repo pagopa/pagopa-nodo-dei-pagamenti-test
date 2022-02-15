@@ -1,6 +1,8 @@
 import json
 import random
 import time
+
+from requests.exceptions import RetryError
 from xml.dom.minidom import parseString
 
 import requests
@@ -14,7 +16,6 @@ REQUEST = "Request"
 
 
 # Steps definitions
-
 @given('systems up')
 def step_impl(context):
     """
@@ -82,7 +83,6 @@ def step_impl(context, attribute, value, elem, primitive):
     setattr(context, primitive, my_document.toxml())
 
 
-# Scenario : Check valid URL in WSDL namespace
 @step('{sender} sends soap {soap_primitive} to {receiver}')
 def step_impl(context, sender, soap_primitive, receiver):
     primitive = soap_primitive.split("_")[0]
@@ -96,7 +96,6 @@ def step_impl(context, sender, soap_primitive, receiver):
     assert (soap_response.status_code == 200), f"status_code {soap_response.status_code}"
 
 
-# When job <JOB_NAME> triggered
 @when('job {job_name} triggered after {seconds} seconds')
 def step_impl(context, job_name, seconds):
     time.sleep(int(seconds))
@@ -105,7 +104,6 @@ def step_impl(context, job_name, seconds):
     setattr(context, job_name + RESPONSE, nodo_response)
 
 
-# Scenario: Execute activateIOPayment request
 @then('check {tag} is {value} of {primitive} response')
 def step_impl(context, tag, value, primitive):
     soap_response = getattr(context, primitive + RESPONSE)
@@ -157,7 +155,7 @@ def step_impl(context, tag, primitive):
         assert False
 
 
-# TODO greater/equals than ...
+# TODO improve with greater/equals than options
 @then('{tag} length is less than {value} of {primitive} response')
 def step_impl(context, tag, value, primitive):
     soap_response = getattr(context, primitive + RESPONSE)
@@ -187,7 +185,57 @@ def step_impl(context, mock, primitive):
     assert "request" in json and len(json.get("request").keys()) > 0
 
 
-@given('the {name} scenario executed successfully')
+@then(u'check {mock:EcPsp} receives {primitive} {status:ProperlyNotProperly} with noticeNumber {notice_number}')
+def step_impl(context, mock, primitive, status, notice_number):
+    rest_mock = utils.get_rest_mock_ec(context) if mock == "EC" else utils.get_rest_mock_psp(context)
+    if "$" in notice_number:
+        notice_number = utils.replace_local_variables(notice_number, context)
+
+    if status == "properly":
+        json, status_code = utils.get_history(rest_mock, notice_number, primitive)
+        setattr(context, primitive, json)
+        assert "request" in json and len(json.get("request").keys()) > 0
+    else:
+        try:
+            json, status_code = utils.get_history(rest_mock, notice_number, primitive)
+            assert status_code != 200
+        except RetryError:
+            assert True
+
+
+@then(u'check {mock:EcPsp} receives {primitive} properly having in the receipt {value} as {elem}')
+def step_impl(context, mock, primitive, value, elem):
+    json = getattr(context, primitive)
+    if "$" in value:
+        value = utils.replace_local_variables(value, context)
+    body = json.get("request").get("soapenv:envelope").get("soapenv:body")[0]
+    primitive_name = list(body.keys())[0]
+    assert body.get(primitive_name)[0].get("receipt")[0].get(elem)[0] == value
+
+
+@then(
+    u'check {mock:EcPsp} receives {primitive} properly having in the transfer with idTransfer {idTransfer} the same {elem} of {other_primitive}')
+def step_impl(context, mock, primitive, idTransfer, elem, other_primitive):
+    _assert = False
+    soap_action = getattr(context, other_primitive)
+    my_document = parseString(soap_action)
+    map = {}
+    for transfer in my_document.getElementsByTagName("transfer"):
+        if transfer.getElementsByTagName("idTransfer")[0].firstChild.nodeValue == idTransfer:
+            map[idTransfer] = transfer.getElementsByTagName(elem)[0].firstChild.nodeValue
+
+    json = getattr(context, primitive)
+    body = json.get("request").get("soapenv:envelope").get("soapenv:body")[0]
+    primitive_name = list(body.keys())[0]
+
+    for transfer in body.get(primitive_name)[0].get("receipt")[0].get("transferlist")[0].get("transfer"):
+        if transfer.get("idtransfer")[0] == str(idTransfer):
+            _assert = transfer.get(str(elem).lower())[0] == map[idTransfer]
+            break
+    assert _assert
+
+
+@step('the {name} scenario executed successfully')
 def step_impl(context, name):
     phase = ([phase for phase in context.feature.scenarios if name in phase.name] or [None])[0]
     text_step = ''.join(
@@ -362,7 +410,8 @@ def step_impl(context, value, primitive):
 
 @step("random noticeNumber in {primitive}")
 def step_impl(context, primitive):
-    xml = utils.manipulate_soap_action(getattr(context, primitive), "noticeNumber", f"30211{str(random.randint(1000000000000, 9999999999999))}")
+    xml = utils.manipulate_soap_action(getattr(context, primitive), "noticeNumber",
+                                       f"30211{str(random.randint(1000000000000, 9999999999999))}")
     setattr(context, primitive, xml)
 
 
@@ -424,15 +473,15 @@ def step_impl(context, elem, primitive):
         assert False
 
 
-@given("PSP waits {number} minutes for expiration")
-def step_impl(context, number):
+@step("{mock:EcPsp} waits {number} minutes for expiration")
+def step_impl(context, mock, number):
     seconds = int(number) * 60
     print(f"wait for: {seconds} seconds")
     time.sleep(seconds)
 
 
-@given("PSP waits {number} seconds for expiration")
-def step_impl(context, number):
+@step("{mock:EcPsp} waits {number} seconds for expiration")
+def step_impl(context, mock, number):
     seconds = int(number)
     print(f"wait for: {seconds} seconds")
     time.sleep(seconds)
@@ -440,8 +489,11 @@ def step_impl(context, number):
 
 @step("idempotencyKey valid for {seconds} seconds")
 def step_impl(context, seconds):
-    #     And field VALID_TO set to current time + <seconds> seconds in NODO_ONLINE.IDEMPOTENCY_CACHE table for sendPaymentOutcome record
+    # TODO with apiconfig:
+    #  And field VALID_TO set to current time + <seconds> seconds in NODO_ONLINE.IDEMPOTENCY_CACHE table for
+    #  sendPaymentOutcome record
     pass
+
 
 @step("api-config executes the sql {sql_code}")
 def step_impl(context, sql_code):
