@@ -347,6 +347,83 @@ def step_impl(context):
                "data")[0].get("creditorReferenceId")[0]
 
 
+@then('activateIOPayment response and pspNotifyPayment request are consistent with paypal')
+def step_impl(context):
+    # retrieve info from soap request of background step
+    soap_request = getattr(context, "activateIOPayment")
+    my_document = parseString(soap_request)
+    notice_number = my_document.getElementsByTagName('noticeNumber')[0].firstChild.data
+
+    inoltroEsito = getattr(context, "inoltroEsito/paypal")
+
+    activateIOPaymentResponse = getattr(context, "activateIOPayment" + RESPONSE)
+    activateIOPaymentResponseXml = parseString(activateIOPaymentResponse.content)
+
+    paGetPaymentJson = requests.get(f"{utils.get_rest_mock_ec(context)}/history/{notice_number}/paGetPayment")
+    pspNotifyPaymentJson = requests.get(
+        f"{utils.get_rest_mock_ec(context)}/history/{notice_number}/pspNotifyPayment")
+
+    paGetPayment = paGetPaymentJson.json()
+    pspNotifyPayment = pspNotifyPaymentJson.json()
+
+    # verify transfer list are equal
+    paGetPaymentRes_transferList = \
+        paGetPayment.get("response").get("soapenv:Envelope").get("soapenv:Body")[0].get("paf:paGetPaymentRes")[0].get(
+            "data")[0].get("transferList")
+    pspNotifyPaymentReq_transferList = \
+        pspNotifyPayment.get("request").get("soapenv:envelope").get("soapenv:body")[0].get("pspfn:pspnotifypaymentreq")[
+            0].get("transferlist")
+
+    paGetPaymentRes_transferList_sorted = sorted(paGetPaymentRes_transferList, key=lambda transfer: int(
+        transfer.get("transfer")[0].get("idTransfer")[0]))
+    pspNotifyPaymentReq_transferList_sorted = sorted(pspNotifyPaymentReq_transferList, key=lambda transfer: int(
+        transfer.get("transfer")[0].get("idtransfer")[0]))
+
+    mixed_list = zip(paGetPaymentRes_transferList_sorted, pspNotifyPaymentReq_transferList_sorted)
+    for x in mixed_list:
+        assert x[0].get("transfer")[0].get("idTransfer")[0] == x[1].get("transfer")[0].get("idtransfer")[0]
+        assert x[0].get("transfer")[0].get("transferAmount")[0] == x[1].get("transfer")[0].get("transferamount")[0]
+        assert x[0].get("transfer")[0].get("fiscalCodePA")[0] == x[1].get("transfer")[0].get("fiscalcodepa")[0]
+        assert x[0].get("transfer")[0].get("IBAN")[0] == x[1].get("transfer")[0].get("iban")[0]
+
+    pspNotifyPaymentBody = \
+        pspNotifyPayment.get("request").get("soapenv:envelope").get("soapenv:body")[0].get("pspfn:pspnotifypaymentreq")[
+            0]
+
+    data = \
+        paGetPayment.get("response").get("soapenv:Envelope").get("soapenv:Body")[0].get("paf:paGetPaymentRes")[0].get(
+            "data")[0]
+    assert pspNotifyPaymentBody.get("idpsp")[0] == inoltroEsito["identificativoPsp"]
+    assert pspNotifyPaymentBody.get("idbrokerpsp")[0] == inoltroEsito["identificativoIntermediario"]
+    assert pspNotifyPaymentBody.get("idchannel")[0] == inoltroEsito["identificativoCanale"]
+    assert pspNotifyPaymentBody.get("paymenttoken")[0] == \
+           activateIOPaymentResponseXml.getElementsByTagName("paymentToken")[0].firstChild.data
+    assert pspNotifyPaymentBody.get("paymentdescription")[0] == \
+           paGetPayment.get("response").get("soapenv:Envelope").get("soapenv:Body")[0].get("paf:paGetPaymentRes")[
+               0].get(
+               "data")[0].get("description")[0]
+    assert pspNotifyPaymentBody.get("fiscalcodepa")[0] == my_document.getElementsByTagName('fiscalCode')[
+        0].firstChild.data
+    assert pspNotifyPaymentBody.get("companyname")[0] == \
+           paGetPayment.get("response").get("soapenv:Envelope").get("soapenv:Body")[0].get("paf:paGetPaymentRes")[
+               0].get(
+               "data")[0].get("companyName")[0]
+    assert pspNotifyPaymentBody.get("creditorreferenceid")[0] == \
+           paGetPayment.get("response").get("soapenv:Envelope").get("soapenv:Body")[0].get("paf:paGetPaymentRes")[
+               0].get(
+               "data")[0].get("creditorReferenceId")[0]
+    assert pspNotifyPaymentBody.get("debtamount")[0] == \
+           paGetPayment.get("response").get("soapenv:Envelope").get("soapenv:Body")[0].get("paf:paGetPaymentRes")[
+               0].get(
+               "data")[0].get("paymentAmount")[0]
+    assert pspNotifyPaymentBody.get("paypalpayment")[0].get("transactionid")[0] == inoltroEsito["idTransazione"]
+    assert pspNotifyPaymentBody.get("paypalpayment")[0].get("psptransactionid")[0] == inoltroEsito["idTransazionePsp"]
+    assert float(pspNotifyPaymentBody.get("paypalpayment")[0].get("fee")[0]) == float(
+        inoltroEsito["importoTotalePagato"]) - float(data["paymentAmount"][0])
+    assert pspNotifyPaymentBody.get("paypalpayment")[0].get("timestampoperation")[0] in str(
+        inoltroEsito["timestampOperazione"])
+
+
 @step('idChannel with USE_NEW_FAULT_CODE=Y')
 def step_impl(context):
     # TODO verify with api-config
