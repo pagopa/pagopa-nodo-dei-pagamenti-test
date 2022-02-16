@@ -91,7 +91,7 @@ Feature: process checks for pspNotifyPayment
 
 
   # nodoInoltraEsitoPagamentoCarte phase - outcome KO [PRO_PNP_03]
-  Scenario: Check nodoInoltraEsitoPagamentoCarte response contains {"error": "Operazione in timeout"} when pspNotifyPaymentResponse is in timeout
+  Scenario: Check nodoInoltraEsitoPagamentoCarte response contains { "esito": "KO", "errorCode": "RIFPSP", "descrizione": "Risposta negativa del Canale" } when pspNotifyPaymentResponse is KO
     Given the Execute nodoChiediInformazioniPagamento request scenario executed successfully
     And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
     """
@@ -119,6 +119,7 @@ Feature: process checks for pspNotifyPayment
       "RRN":10026669,
       "tipoVersamento":"CP",
       "identificativoIntermediario":"70000000001",
+      "identificativoPsp":"70000000001",
       "identificativoCanale":"70000000001_03",
       "importoTotalePagato":10.00,
       "timestampOperazione":"2021-07-09T17:06:03.100+01:00",
