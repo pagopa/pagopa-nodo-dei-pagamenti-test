@@ -118,9 +118,9 @@ Feature: process checks for pspNotifyPayment
       "idPagamento":"$activateIOPaymentResponse.paymentToken",
       "RRN":10026669,
       "tipoVersamento":"CP",
-      "identificativoIntermediario":"70000000001",
-      "identificativoPsp":"70000000001",
-      "identificativoCanale":"70000000001_03",
+      "identificativoIntermediario":"40000000001",
+      "identificativoPsp":"40000000001",
+      "identificativoCanale":"40000000001_06",
       "importoTotalePagato":10.00,
       "timestampOperazione":"2021-07-09T17:06:03.100+01:00",
       "codiceAutorizzativo":"123456",
@@ -131,8 +131,3 @@ Feature: process checks for pspNotifyPayment
     Then check esito is KO of inoltroEsito/carta response
     And check errorCode is RIFPSP of inoltroEsito/carta response
     And check descrizione is Risposta negativa del Canale of inoltroEsito/carta response
-#    Then check nodoInoltraEsitoPagamentoCarte response contains:
-#  {"esito" : "KO",
-#  "errorCode" :  "RIFPSP",
-#  “descrizione”: "Risposta negativa del Canale"}
-
