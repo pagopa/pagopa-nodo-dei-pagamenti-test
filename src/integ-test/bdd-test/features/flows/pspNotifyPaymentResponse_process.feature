@@ -131,3 +131,39 @@ Feature: process checks for pspNotifyPayment
     Then check esito is KO of inoltroEsito/carta response
     And check errorCode is RIFPSP of inoltroEsito/carta response
     And check descrizione is Risposta negativa del Canale of inoltroEsito/carta response
+
+
+  # nodoInoltraEsitoPagamentoCarte phase - Timeout [PRO_PNP_02]
+  Scenario: Check nodoInoltraEsitoPagamentoCarte response contains {"error": "Operazione in timeout"} when pspNotifyPaymentResponse is in timeout
+    Given the Execute nodoChiediInformazioniPagamento request scenario executed successfully
+    And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
+    """
+    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:psp="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
+      <soapenv:Header/>
+      <soapenv:Body>
+        <psp:pspNotifyPaymentRes>
+          <outcome>OK</outcome>
+          <!--Optional:-->
+          <wait>20</wait>
+        </psp:pspNotifyPaymentRes>
+      </soapenv:Body>
+    </soapenv:Envelope>
+    """
+    When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
+    """
+    {
+      "idPagamento":"$activateIOPaymentResponse.paymentToken",
+      "RRN":10026669,
+      "tipoVersamento":"CP",
+      "identificativoIntermediario":"40000000001",
+      "identificativoPsp":"40000000001",
+      "identificativoCanale":"40000000001_06",
+      "importoTotalePagato":10.00,
+      "timestampOperazione":"2021-07-09T17:06:03.100+01:00",
+      "codiceAutorizzativo":"123456",
+      "esitoTransazioneCarta":"00"
+    }
+    """
+    Then verify the HTTP status code of inoltroEsito/carta response is 408
+    And check error is Operazione in timeout of inoltroEsito/carta response
+
