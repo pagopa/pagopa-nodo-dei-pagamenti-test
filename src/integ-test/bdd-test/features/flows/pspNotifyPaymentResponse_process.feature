@@ -1,4 +1,4 @@
-Feature: process checks for pspNotifyPayment - psp Irraggiungibile [PRO_PNP_05]
+Feature: process checks for pspNotifyPayment
 
   Background:
     Given systems up
@@ -66,8 +66,8 @@ Feature: process checks for pspNotifyPayment - psp Irraggiungibile [PRO_PNP_05]
     Then verify the HTTP status code of informazioniPagamento response is 200
         
         
-  # nodoInoltraEsitoPagamentoCarte phase
-  Scenario: Check nodoInoltraEsitoPagamentoCarte response contains {"esito" : "KO","errorCode" :  "RIFPSP", “descrizione”: "Risposta negativa del Canale"} when psp is unreachable
+  # nodoInoltraEsitoPagamentoCarte phase - psp Irraggiungibile [PRO_PNP_05]
+  Scenario: Check nodoInoltraEsitoPagamentoCarte response contains {"esito" : "KO","errorCode" :  "CONPSP", “descrizione”: "Risposta negativa del Canale"} when psp is unreachable
     Given the Execute nodoChiediInformazioniPagamento request scenario executed successfully
     When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
     """
@@ -84,8 +84,50 @@ Feature: process checks for pspNotifyPayment - psp Irraggiungibile [PRO_PNP_05]
       "esitoTransazioneCarta":"00"
     }
     """
-#    And identificativoCanale with SERVIZIO_NMP
     Then verify the HTTP status code of inoltroEsito/carta response is 200
     Then check esito is KO of inoltroEsito/carta response
     And check errorCode is CONPSP of inoltroEsito/carta response
+    And check descrizione is Risposta negativa del Canale of inoltroEsito/carta response
+
+
+  # nodoInoltraEsitoPagamentoCarte phase - outcome KO [PRO_PNP_03]
+  Scenario: Check nodoInoltraEsitoPagamentoCarte response contains { "esito": "KO", "errorCode": "RIFPSP", "descrizione": "Risposta negativa del Canale" } when pspNotifyPaymentResponse is KO
+    Given the Execute nodoChiediInformazioniPagamento request scenario executed successfully
+    And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
+    """
+    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:psp="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
+      <soapenv:Header/>
+      <soapenv:Body>
+        <psp:pspNotifyPaymentRes>
+          <outcome>KO</outcome>
+          <!--Optional:-->
+          <fault>
+            <faultCode>CANALE_SEMANTICA</faultCode>
+            <faultString>Errore semantico dal psp</faultString>
+            <id>1</id>
+            <!--Optional:-->
+            <description>Errore dal psp</description>
+          </fault>
+        </psp:pspNotifyPaymentRes>
+      </soapenv:Body>
+    </soapenv:Envelope>
+    """
+    When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
+    """
+    {
+      "idPagamento":"$activateIOPaymentResponse.paymentToken",
+      "RRN":10026669,
+      "tipoVersamento":"CP",
+      "identificativoIntermediario":"40000000001",
+      "identificativoPsp":"40000000001",
+      "identificativoCanale":"40000000001_06",
+      "importoTotalePagato":10.00,
+      "timestampOperazione":"2021-07-09T17:06:03.100+01:00",
+      "codiceAutorizzativo":"123456",
+      "esitoTransazioneCarta":"00"
+    }
+    """
+    Then verify the HTTP status code of inoltroEsito/carta response is 200
+    Then check esito is KO of inoltroEsito/carta response
+    And check errorCode is RIFPSP of inoltroEsito/carta response
     And check descrizione is Risposta negativa del Canale of inoltroEsito/carta response
