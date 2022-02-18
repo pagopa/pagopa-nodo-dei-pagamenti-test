@@ -112,37 +112,3 @@ Feature: syntax checks for pspNotifyPaymentResponse - KO
       | outcome                 | Empty | T_11        |
       | outcome                 | PP    | T_12        |
       | outcome                 | KO    | T_13        |
-
-
-  # nodoInoltraEsitoPagamentoCarte phase
-#  Scenario: Execute nodoInoltraEsitoPagamentoCarte request
-#
-#            And psp responds to nodo-dei-pagamenti at pspNotifyPaymentReq with:
-#            """
-#            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:psp="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
-#                <soapenv:Header/>
-#                <soapenv:Body>
-#                    <psp:pspNotifyPaymentRes>
-#                        <outcome>#outcome#</outcome>
-#                         <fault>
-#                            <faultCode>#faultCode#</faultCode>
-#                            <faultString>#faultString#</faultString>
-#                            <id>#id#</id>
-#                            <description>#description#</description>
-#                         </fault>
-#                </soapenv:Body>
-#            </soapenv:Envelope>
-#            """
-#            And <elem> with <value> in pspNotifyPaymentResponse
-#            And if outcome is KO set fault to None
-#        Then check nodoInoltraEsitoPagamentoCarte response contains {"error": "Operazione in timeout"}
-#
-#            | element		   			   | value								| soapUI test |
-#            | soapenv:Body                 | None                               | T_06        |
-#            | soapenv:Body                 | Empty                              | T_05        |
-#            | psp:pspNotifyPaymentRes      | Empty                              | T_09        |
-#            | outcome                      | None                               | T_10        |
-#            | outcome                      | Empty                              | T_11        |
-#            | outcome                      | PP                                 | T_12        |
-#            | outcome                      | KO                                 | T_13        |
- 
