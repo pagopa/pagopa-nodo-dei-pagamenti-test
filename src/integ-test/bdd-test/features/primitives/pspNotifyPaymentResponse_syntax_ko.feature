@@ -2,7 +2,7 @@ Feature: syntax checks for pspNotifyPaymentResponse - KO
 
   Background:
     Given systems up
-    And initial XML activateIOPayment soap-request
+    And initial XML activateIOPayment
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd">
             <soapenv:Header/>
@@ -52,65 +52,97 @@ Feature: syntax checks for pspNotifyPaymentResponse - KO
         </soapenv:Envelope>
       """
     And EC new version
-    
-    When IO sends SOAP activateIOPaymentReq to nodo-dei-pagamenti
+
+  Scenario: Execute activateIOPaymentReq request
+    When IO sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is OK of activateIOPayment response
 
   # nodoChiediInformazioniPagamento phase
-        Scenario: Execute nodoChiediInformazioniPagamento request
-        Given activateIOPayment request successfully executed 
-        And initial nodoChiediInformazioniPagamento request
+  Scenario: Execute nodoChiediInformazioniPagamento request
+    Given the Execute activateIOPaymentReq request scenario executed successfully
+    When WISP sends rest GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
+    Then verify the HTTP status code of informazioniPagamento response is 200
+
+
+    # nodoInoltraEsitoPagamentoCarte phase
+  Scenario Outline: Execute nodoInoltraEsitoPagamentoCarte request
+    Given the Execute nodoChiediInformazioniPagamento request scenario executed successfully
+    And initial XML pspNotifyPayment
+    """
+    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:psp="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
+      <soapenv:Header/>
+      <soapenv:Body>
+        <psp:pspNotifyPaymentRes>
+        <outcome>#outcome#</outcome>
+        <fault>
+          <faultCode>#faultCode#</faultCode>
+          <faultString>#faultString#</faultString>
+          <id>#id#</id>
+          <description>#description#</description>
+        </fault>
+        </psp:pspNotifyPaymentRes>
+      </soapenv:Body>
+    </soapenv:Envelope>
+    """
+    And <elem> with <value> in pspNotifyPayment
+    And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
+    When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
         """
-        GET ​/informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken
-        """
-        When WISP sends nodoChiediInformazioniPagamentoReq to nodo-dei-pagamenti
-        Then check the HTTP status code of nodoChiediInformazioniPagamento response is 200
-        
-        
-  # nodoInoltraEsitoPagamentoCarte phase
-        Scenario: Execute nodoInoltraEsitoPagamentoCarte request
-        Given nodoChiediInformazioniPagamento request successfully executed 
-        And initial nodoInoltraEsitoPagamentoCarte request
-        """
-        {"idPagamento":"$activateIOPaymentResponse.paymentToken",
+        {
         "RRN":10026669,
-        "identificativoPsp":"70000000001",
         "tipoVersamento":"CP",
-        "identificativoIntermediario":"70000000001",
-        "identificativoCanale":"70000000001_03",
+        "idPagamento":"$activateIOPaymentResponse.paymentToken",
+        "identificativoIntermediario":"40000000001",
+        "identificativoPsp":"40000000001",
+        "identificativoCanale":"40000000001_06",
         "importoTotalePagato":10.00,
         "timestampOperazione":"2021-07-09T17:06:03.100+01:00",
-        "codiceAutorizzativo":"123456",
+        "codiceAutorizzativo":"resOK",
         "esitoTransazioneCarta":"00"}
         """
-        And identificativoCanale with SERVIZIO_NMP
-        When WISP sends nodoInoltraEsitoPagamentoCarteReq to nodo-dei-pagamenti
-            And psp responds to nodo-dei-pagamenti at pspNotifyPaymentReq with:
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:psp="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
-                <soapenv:Header/>
-                <soapenv:Body>
-                    <psp:pspNotifyPaymentRes>
-                        <outcome>#outcome#</outcome>
-                         <fault>
-                            <faultCode>#faultCode#</faultCode>
-                            <faultString>#faultString#</faultString>
-                            <id>#id#</id>
-                            <description>#description#</description>
-                         </fault>
-                </soapenv:Body>
-            </soapenv:Envelope>
-            """
-            And <elem> with <value> in pspNotifyPaymentResponse
-            And if outcome is KO set fault to None
-        Then check nodoInoltraEsitoPagamentoCarte response contains {"error": "Operazione in timeout"}
-		
-            | element		   			   | value								| soapUI test |
-            | soapenv:Body                 | None                               | T_06        |
-            | soapenv:Body                 | Empty                              | T_05        |
-            | psp:pspNotifyPaymentRes      | Empty                              | T_09        |
-            | outcome                      | None                               | T_10        |
-            | outcome                      | Empty                              | T_11        |
-            | outcome                      | PP                                 | T_12        |
-            | outcome                      | KO                                 | T_13        |
+ #       And identificativoCanale with SERVIZIO_NMP
+    Then verify the HTTP status code of inoltroEsito/carta response is 200
+    And check esito is KO of inoltroEsito/carta response
+    Examples:
+      | elem                 | value | soapUI test |
+      | soapenv:Body            | None  | T_06        |
+      | soapenv:Body            | Empty | T_05        |
+      | psp:pspNotifyPaymentRes | Empty | T_09        |
+      | outcome                 | None  | T_10        |
+      | outcome                 | Empty | T_11        |
+      | outcome                 | PP    | T_12        |
+      | outcome                 | KO    | T_13        |
+
+
+  # nodoInoltraEsitoPagamentoCarte phase
+#  Scenario: Execute nodoInoltraEsitoPagamentoCarte request
+#
+#            And psp responds to nodo-dei-pagamenti at pspNotifyPaymentReq with:
+#            """
+#            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:psp="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
+#                <soapenv:Header/>
+#                <soapenv:Body>
+#                    <psp:pspNotifyPaymentRes>
+#                        <outcome>#outcome#</outcome>
+#                         <fault>
+#                            <faultCode>#faultCode#</faultCode>
+#                            <faultString>#faultString#</faultString>
+#                            <id>#id#</id>
+#                            <description>#description#</description>
+#                         </fault>
+#                </soapenv:Body>
+#            </soapenv:Envelope>
+#            """
+#            And <elem> with <value> in pspNotifyPaymentResponse
+#            And if outcome is KO set fault to None
+#        Then check nodoInoltraEsitoPagamentoCarte response contains {"error": "Operazione in timeout"}
+#
+#            | element		   			   | value								| soapUI test |
+#            | soapenv:Body                 | None                               | T_06        |
+#            | soapenv:Body                 | Empty                              | T_05        |
+#            | psp:pspNotifyPaymentRes      | Empty                              | T_09        |
+#            | outcome                      | None                               | T_10        |
+#            | outcome                      | Empty                              | T_11        |
+#            | outcome                      | PP                                 | T_12        |
+#            | outcome                      | KO                                 | T_13        |
  
