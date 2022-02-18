@@ -282,8 +282,8 @@ Feature: process tests for paSendRT
     Then check outcome is OK of sendPaymentOutcome response
     And check EC receives paSendRT properly with noticeNumber $activatePaymentNotice.noticeNumber
     And check EC receives paSendRT properly having in the receipt $activatePaymentNotice.fiscalCode as fiscalcode
-    And check EC receives paSendRT properly having in the transfer with idTransfer 1 the same fiscalCodePA of paGetPayment
-    And check EC receives paSendRT properly having in the transfer with idTransfer 2 the same fiscalCodePA of paGetPayment
+    And check EC receives paSendRT properly having in the transfer with idTransfer 1 the same fiscalCodePA of paGetPayment
+    And check EC receives paSendRT properly having in the transfer with idTransfer 2 the same fiscalCodePA of paGetPayment
 
   # Send Payment Outcome phase [PSRT_15]
   Scenario: Execute sendPaymentOutcome request with 3 transfers and broadcast true for secondary EC and outcome KO
@@ -335,8 +335,8 @@ Feature: process tests for paSendRT
     Then check outcome is OK of sendPaymentOutcome response
     And check EC receives paSendRT properly with noticeNumber $activatePaymentNotice.noticeNumber
     And check EC receives paSendRT properly having in the receipt $activatePaymentNotice.fiscalCode as fiscalcode
-    And check EC receives paSendRT properly having in the transfer with idTransfer 1 the same fiscalCodePA of paGetPayment
-    And check EC receives paSendRT properly having in the transfer with idTransfer 2 the same fiscalCodePA of paGetPayment
+    And check EC receives paSendRT properly having in the transfer with idTransfer 1 the same fiscalCodePA of paGetPayment
+    And check EC receives paSendRT properly having in the transfer with idTransfer 2 the same fiscalCodePA of paGetPayment
 
   # Activate phase - 3 transfers in paGetPayment transferList (1 for primary EC and 2 for same secondary EC) and broadcast true for 1 station of secondary EC [PSRT_08]
   Scenario: Execute activatePaymentNotice request with 3 transfers, 1 for primary EC and 2 for same secondary EC, and broadcast true for 1 station of secondary EC
@@ -358,7 +358,7 @@ Feature: process tests for paSendRT
     Then check outcome is OK of sendPaymentOutcome response
     And check EC receives paSendRT properly with noticeNumber $activatePaymentNotice.noticeNumber
     And check EC receives paSendRT properly having in the receipt $activatePaymentNotice.fiscalCode as fiscalcode
-    And check EC receives paSendRT properly having in the transfer with idTransfer 2 the same fiscalCodePA of paGetPayment
+    And check EC receives paSendRT properly having in the transfer with idTransfer 2 the same fiscalCodePA of paGetPayment
 
   # Activate phase - 3 transfers in paGetPayment transferList (1 for primary EC and 2 for same secondary EC) and broadcast true for 2 stations of secondary EC [PSRT_09]
   Scenario: Execute activatePaymentNotice request with 3 transfers, 1 for primary EC and 2 for same secondary EC, and broadcast true for 2 stations of secondary EC
@@ -380,8 +380,8 @@ Feature: process tests for paSendRT
     Then check outcome is OK of sendPaymentOutcome response
     And check EC receives paSendRT properly with noticeNumber $activatePaymentNotice.noticeNumber
     And check EC receives paSendRT properly having in the receipt $activatePaymentNotice.fiscalCode as fiscalcode
-    And check EC receives paSendRT properly having in the transfer with idTransfer 2 the same fiscalCodePA of paGetPayment
-    And check EC receives paSendRT properly having in the transfer with idTransfer 3 the same fiscalCodePA of paGetPayment
+    And check EC receives paSendRT properly having in the transfer with idTransfer 2 the same fiscalCodePA of paGetPayment
+    And check EC receives paSendRT properly having in the transfer with idTransfer 3 the same fiscalCodePA of paGetPayment
 
   # Activate phase - 3 transfers in paGetPayment transferList (2 for primary EC and 1 for secondary EC) and broadcast true for 1 station of secondary EC [PSRT_10]
   Scenario: Execute activatePaymentNotice request with 3 transfers, 2 for primary EC and 1 for secondary EC, and broadcast true for 1 station of secondary EC
@@ -403,7 +403,7 @@ Feature: process tests for paSendRT
     Then check outcome is OK of sendPaymentOutcome response
     And check EC receives paSendRT properly with noticeNumber $activatePaymentNotice.noticeNumber
     And check EC receives paSendRT properly having in the receipt $activatePaymentNotice.fiscalCode as fiscalcode
-    And check EC receives paSendRT properly having in the transfer with idTransfer 2 the same fiscalCodePA of paGetPayment
+    And check EC receives paSendRT properly having in the transfer with idTransfer 2 the same fiscalCodePA of paGetPayment
 
   # Activate phase - 1 transfer in paGetPayment transferList for secondary EC and broadcast false for all stations of secondary EC [PSRT_11]
   Scenario: Execute activatePaymentNotice request with 1 transfer for secondary EC and broadcast false for all stations of secondary EC

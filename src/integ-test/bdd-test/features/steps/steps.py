@@ -1,12 +1,11 @@
 import json
 import random
 import time
-
-from requests.exceptions import RetryError
 from xml.dom.minidom import parseString
 
 import requests
 from behave import *
+from requests.exceptions import RetryError
 
 import utils as utils
 
@@ -214,7 +213,7 @@ def step_impl(context, mock, primitive, value, elem):
 
 
 @then(
-    u'check {mock:EcPsp} receives {primitive} properly having in the transfer with idTransfer {idTransfer} the same {elem} of {other_primitive}')
+    u'check {mock:EcPsp} receives {primitive} properly having in the transfer with idTransfer {idTransfer} the same {elem} of {other_primitive}')
 def step_impl(context, mock, primitive, idTransfer, elem, other_primitive):
     _assert = False
     soap_action = getattr(context, other_primitive)
