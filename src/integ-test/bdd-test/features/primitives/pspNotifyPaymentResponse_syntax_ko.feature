@@ -92,17 +92,16 @@ Feature: syntax checks for pspNotifyPaymentResponse - KO
         "RRN":10026669,
         "tipoVersamento":"CP",
         "idPagamento":"$activateIOPaymentResponse.paymentToken",
-        "identificativoIntermediario":"70000000001",
-        "identificativoPsp":"70000000001",
-        "identificativoCanale":"70000000001_03",
+        "identificativoIntermediario":"40000000001",
+        "identificativoPsp":"40000000001",
+        "identificativoCanale":"40000000001_06",
         "importoTotalePagato":10.00,
         "timestampOperazione":"2021-07-09T17:06:03.100+01:00",
         "codiceAutorizzativo":"resOK",
         "esitoTransazioneCarta":"00"}
         """
  #       And identificativoCanale with SERVIZIO_NMP
-    Then verify the HTTP status code of inoltroEsito/carta response is 200
-    And check esito is KO of inoltroEsito/carta response
+    Then verify the HTTP status code of inoltroEsito/carta response is 408
     Examples:
       | elem                 | value | soapUI test |
       | soapenv:Body            | None  | T_06        |
