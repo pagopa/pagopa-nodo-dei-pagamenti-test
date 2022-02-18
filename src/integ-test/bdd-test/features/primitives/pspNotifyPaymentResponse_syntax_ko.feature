@@ -85,6 +85,7 @@ Feature: syntax checks for pspNotifyPaymentResponse - KO
     </soapenv:Envelope>
     """
     And <elem> with <value> in pspNotifyPayment
+    And if outcome is KO set fault to None in pspNotifyPayment
     And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
     When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
         """
