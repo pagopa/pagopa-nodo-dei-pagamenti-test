@@ -58,17 +58,17 @@ Examples:
       | fee                            | None                                  | SIN_CP_27   |
       | fee                            | 12.321                                | SIN_CP_30   |
       | fee                            | 1234567890.12                         | SIN_CP_31   |
-	  | timestampOperation             | None								   | SIN_CP_32   |
-	  | timestampOperation			   | Empty 								   | SIN_CP_33   |
-	  | timestampOperation			   | 2012-04-23							   | SIN_CP_34   |
-	  | timestampOperation			   | 2012-04-23T18:25:43				   | SIN_CP_34   |
-	  | timestampOperation			   | 2012-04-23T18:25    				   | SIN_CP_34   |
-	  | transactionId                  | None 								   | SIN_CP_37   |
-	  | transactionId                  | abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fgh | SIN_CP_39   |
-      | outcomePaymentGateway          | None 								   | SIN_CP_40   |
-	  | outcomePaymentGateway          | abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fgh | SIN_CP_42   |
-	  | authorizationCode			   | None 								   | SIN_CP_43   |
-	  | authorizationCode			   | abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fgh | SIN_CP_45   | 
+      | timestampOperation             | None				       | SIN_CP_32   |
+      | timestampOperation	       | Empty 			               | SIN_CP_33   |
+      | timestampOperation	       | 2012-04-23                            | SIN_CP_34   |
+      | timestampOperation	       | 2012-04-23T18:25:43	               | SIN_CP_34   |
+      | timestampOperation	       | 2012-04-23T18:25    		       | SIN_CP_34   |
+      | transactionId                  | None 				       | SIN_CP_37   |
+      | transactionId                  | abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fgh | SIN_CP_39   |
+      | outcomePaymentGateway          | None 		                       | SIN_CP_40   |
+      | outcomePaymentGateway          | abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fgh | SIN_CP_42   |
+      | authorizationCode	       | None 				       | SIN_CP_43   |
+      | authorizationCode	       | abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fgh | SIN_CP_45   | 
       
       
      
