@@ -29,4 +29,3 @@ Feature: syntax checks OK for verifyPaymentReq
   Scenario: Check header and body ok
     When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of verifyPaymentNotice response
-
