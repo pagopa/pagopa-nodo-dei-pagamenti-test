@@ -91,11 +91,20 @@ def manipulate_soap_action(soap_action, elem, value):
         element.parentNode.removeChild(element)
     elif value == "Empty":
         element = my_document.getElementsByTagName(elem)[0].childNodes[0]
+        print(element.toxml())
         element.nodeValue = ''
         childs = my_document.getElementsByTagName(elem)[0].childNodes
         for child in childs:
             if child.nodeType == TYPE_ELEMENT:
                 child.parentNode.removeChild(child)
+    elif value == 'SaveTheChildren':
+        element = my_document.getElementsByTagName(elem)[0]
+        parent = element.parentNode
+        children = element.childNodes
+        parent.removeChild(element)
+        for child in list(children):
+            if child.nodeType == 1:
+                parent.appendChild(child) 
     elif str(value).startswith("Occurrences"):
         occurrences = int(value.split(",")[1])
         original_node = my_document.getElementsByTagName(elem)[0]
