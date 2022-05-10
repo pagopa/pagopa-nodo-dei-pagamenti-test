@@ -85,25 +85,25 @@ Feature: syntax checks for sendPaymentOutcome - OK
     Then check outcome is OK of sendPaymentOutcome response
 
     Examples:
-      | elem                | value       | soapUI test |
-      | paymentMethod       | cash        | SIN_SPO_25  |
-      | paymentMethod       | creditCard  | SIN_SPO_25  |
-      | paymentMethod       | bancomat    | SIN_SPO_25  |
-      | paymentMethod       | other       | SIN_SPO_25  |
-      | paymentChannel      | None        | SIN_SPO_26  |
-      | paymentChannel      | frontOffice | SIN_SPO_28  |
-      | paymentChannel      | atm         | SIN_SPO_28  |
-      | paymentChannel      | onLine      | SIN_SPO_28  |
-      | paymentChannel      | other       | SIN_SPO_28  |
-      | payer               | None        | SIN_SPO_35  |
-      | streetName          | None        | SIN_SPO_51  |
-      | civicNumber         | None        | SIN_SPO_54  |
-      | postalCode          | None        | SIN_SPO_57  |
-      | city                | None        | SIN_SPO_60  |
-      | stateProvinceRegion | None        | SIN_SPO_63  |
-      | country             | None        | SIN_SPO_66  |
-      | e-mail              | None        | SIN_SPO_70  |
-      | idempotencyKey      | None        | SIN_SPO_80  |
-      
-      
+      | elem                | value           | soapUI test |
+      | paymentMethod       | cash            | SIN_SPO_25  |
+      | paymentMethod       | creditCard      | SIN_SPO_25  |
+      | paymentMethod       | bancomat        | SIN_SPO_25  |
+      | paymentMethod       | other           | SIN_SPO_25  |
+      | paymentChannel      | None            | SIN_SPO_26  |
+      | paymentChannel      | frontOffice     | SIN_SPO_28  |
+      | paymentChannel      | atm             | SIN_SPO_28  |
+      | paymentChannel      | onLine          | SIN_SPO_28  |
+      | paymentChannel      | other           | SIN_SPO_28  |
+      | payer               | None            | SIN_SPO_35  |
+      | streetName          | None            | SIN_SPO_51  |
+      | civicNumber         | None            | SIN_SPO_54  |
+      | postalCode          | None            | SIN_SPO_57  |
+      | city                | None            | SIN_SPO_60  |
+      | stateProvinceRegion | None            | SIN_SPO_63  |
+      | country             | None            | SIN_SPO_66  |
+      | e-mail              | None            | SIN_SPO_70  |
+      | idempotencyKey      | None            | SIN_SPO_80  |
+      | details             | None            | SIN_SPO_00  |
+
       

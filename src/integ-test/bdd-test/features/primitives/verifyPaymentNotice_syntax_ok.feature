@@ -24,3 +24,9 @@ Feature: syntax checks OK for verifyPaymentReq
   Scenario: Check valid URL in WSDL namespace
     When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of verifyPaymentNotice response
+
+  # check header body CONTROLLARE
+  Scenario: Check header and body ok
+    When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
+    Then check outcome is OK of verifyPaymentNotice response
+
