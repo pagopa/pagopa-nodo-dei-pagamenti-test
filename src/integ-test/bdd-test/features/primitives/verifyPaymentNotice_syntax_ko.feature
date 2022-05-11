@@ -65,7 +65,7 @@ Feature: syntax checks KO for verifyPaymentReq
       | noticeNumber               | 12345678901234567A                   | SIN_VPNR_29 |
       | noticeNumber               | 12345678901234567!                   | SIN_VPNR_29 |
       | soapenv:Body               | None                                 | SIN_VPNR_02 |
-      | soapenv:Body               | Empty                                | SIN_VPNR_02 |
+      | soapenv:Body               | Empty                                | SIN_VPNR_03 |
       | nod:verifyPaymentNoticeReq | Empty                                | SIN_VPNR_04 |
       | qrCode                     | Empty                                | SIN_VPNR_20 |
 
