@@ -98,3 +98,4 @@ Feature: semantic checks for sendPaymentOutcomeReq - different outcome [SEM_SPO_
     Then check outcome is KO of sendPaymentOutcome response
     And check faultCode is PPT_ESITO_GIA_ACQUISITO of sendPaymentOutcome response
     And check description contains Esito discorde of sendPaymentOutcome response
+

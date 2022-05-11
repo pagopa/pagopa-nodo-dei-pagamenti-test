@@ -97,7 +97,7 @@ def manipulate_soap_action(soap_action, elem, value):
         for child in childs:
             if child.nodeType == TYPE_ELEMENT:
                 child.parentNode.removeChild(child)
-    elif value == 'SaveTheChildren':
+    elif value == 'RemoveParent':
         element = my_document.getElementsByTagName(elem)[0]
         parent = element.parentNode
         children = element.childNodes

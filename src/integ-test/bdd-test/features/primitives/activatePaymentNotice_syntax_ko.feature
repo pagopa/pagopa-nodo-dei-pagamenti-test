@@ -74,6 +74,7 @@ Feature:  syntax checks KO for activatePaymentNoticeReq
       | idempotencyKey               | 700000hj123_1244565767                                                                                                                                                                                              | SIN_APNR_22.1 |
       | qrCode                       | None                                                                                                                                                                                                                | SIN_APNR_23   |
       | qrCode                       | Empty                                                                                                                                                                                                               | SIN_APNR_25   |
+      | qrCode                       | RemoveParent                                                                                                                                                                                                        | SIN_APNR_24   |
       | fiscalCode                   | None                                                                                                                                                                                                                | SIN_APNR_26   |
       | fiscalCode                   | Empty                                                                                                                                                                                                               | SIN_APNR_27   |
       | fiscalCode                   | 1234567890                                                                                                                                                                                                          | SIN_APNR_28   |
@@ -102,3 +103,16 @@ Feature:  syntax checks KO for activatePaymentNoticeReq
       | dueDate                      | 2021-03-06T15:25:32                                                                                                                                                                                                 | SIN_APNR_46   |
       | paymentNote                  | Empty                                                                                                                                                                                                               | SIN_APNR_48   |
       | paymentNote                  | test di prova sulla lunghezza superiore a 140 caratteri per il parametro della primitiva activatePaymentNoticeReq paymentNote prova prova pro activatePaymentNoticeReq paymentNote prova prova pro activatePaymentN | SIN_APNR_49   |
+
+  Scenario Outline: Check incorrectness of header and body
+    Given soapenv:Header with <header_value> in activatePaymentNotice
+    And soapenv:Body with <body_value> in activatePaymentNotice
+    When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+    Then check outcome is KO of activePaymentNotice response
+    And check faultCode is <error> of activatePaymentNotice response
+    Examples:
+      | header_value | body_value | error                 | soapUI test |
+      | errata       | corretto   | PPT_SOAPACTION_ERRATA | SIN_APNR_51 |
+      | corretta     | errata     | PPT_SINTASSI_EXTRAXSD | SIN_APNR_52 |
+      | errata       | errata     | PPT_SOAPACTION_ERRATA | SIN_APNR_53 |
+      | None         | errata     | PPT_SOAPACTION_ERRATA | SIN_APNR_55 |
