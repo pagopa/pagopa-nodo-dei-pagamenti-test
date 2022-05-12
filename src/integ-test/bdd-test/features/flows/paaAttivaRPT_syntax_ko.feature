@@ -89,6 +89,16 @@ Feature: check syntax KO for paaAttivaRPT
             | identificativoUnivocoBeneficiario | None                                                                    | SIN_PARPTR_28 |
             | identificativoUnivocoBeneficiario | RemoveParent                                                            | SIN_PARPTR_29 |
             | identificativoUnivocoBeneficiario | Empty                                                                   | SIN_PARPTR_30 |
+            | tipoIdentificativoUnivoco         | None                                                                    | SIN_PARPTR_31 |
+            | tipoIdentificativoUnivoco         | Empty                                                                   | SIN_PARPTR_32 |
+            | tipoIdentificativoUnivoco         | F                                                                       | SIN_PARPTR_33 |
+            | tipoIdentificativoUnivoco         | GG                                                                      | SIN_PARPTR_34 |
+            | codiceIdentificativoUnivoco       | None                                                                    | SIN_PARPTR_35 |
+            | codiceIdentificativoUnivoco       | Empty                                                                   | SIN_PARPTR_36 |
+            | codiceIdentificativoUnivoco       | cuOgco5MdQNeL4OwY                                                       | SIN_PARPTR_37 |
+            | denominazioneBeneficiario         | None                                                                    | SIN_PARPTR_38 |
+            | denominazioneBeneficiario         | Empty                                                                   | SIN_PARPTR_39 |
+            | denominazioneBeneficiario         | lM0Gm66IEpiwsuLFPC0MWYX1WP2UbKF5lkLIF2N5fNrznVcf1WNnfZexSwDOWamXqrN1Ezi | SIN_PARPTR_40 |
             | codiceUnitOperBeneficiario        | Empty                                                                   | SIN_PARPTR_42 |
             | codiceUnitOperBeneficiario        | OhCLdNnMWyuZOFxLHPJvnBQdPSRBOuUzeaPZ                                    | SIN_PARPTR_43 |
             | denomUnitOperBeneficiario         | Empty                                                                   | SIN_PARPTR_45 |
@@ -96,3 +106,17 @@ Feature: check syntax KO for paaAttivaRPT
             | indirizzoBeneficiario             | Empty                                                                   | SIN_PARPTR_48 |
             | indirizzoBeneficiario             | YHBRElAVeOXtUdkTzMEbXZDQGuUxaVATbLRRrahkOhTvWDaHfrmyFuWwfuIrmAHkdxWepJf | SIN_PARPTR_49 |
             | civicoBeneficiario                | None                                                                    | SIN_PARPTR_50 |
+            | provinciaBeneficiario             | 12AS57rjifijoi245685asdas1568wa4846                                     | SIN_PARPTR_61 |
+            | nazioneBeneficiario               | Empty                                                                   | SIN_PARPTR_63 |
+            | nazioneBeneficiario               | 1A                                                                      | SIN_PARPTR_64 |
+            | nazioneBeneficiario               | 1                                                                       | SIN_PARPTR_64 |
+            | nazioneBeneficiario               | E                                                                       | SIN_PARPTR_64 |
+            | credenzialiPagatore               | Empty                                                                   | SIN_PARPTR_66 |
+            | credenzialiPagatore               | 12AS57rjifijoi245685asdas1568wa4846                                     | SIN_PARPTR_67 |
+            | causaleVersamento                 | None                                                                    | SIN_PARPTR_68 |
+            | causaleVersamento                 | Empty                                                                   | SIN_PARPTR_69 |
+            | causaleVersamento                 | CXYFD9jxEWpaefYPBMGaWHbDBIeU01JMraSQJ7VKHnfWT75DaLXvAPEcV7TDFfThv4u56iGvFT86Ui0ma9EVs1kRk5ETNjGc281weayrfiiHauaJfSNTDxqMONb7tN3PkkgBcn1gJxr6Y                | SIN_PARPTR_70 |
+
+
+
+

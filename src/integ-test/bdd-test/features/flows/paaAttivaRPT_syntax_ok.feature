@@ -64,3 +64,5 @@ Feature: check syntax KO for paaAttivaRPT
             | codiceUnitOperBeneficiario | None      | SIN_PARPTR_41 |
             | denomUnitOperBeneficiario  | None      | SIN_PARPTR_44 |
             | indirizzoBeneficiario      | None      | SIN_PARPTR_47 |
+            | nazioneBeneficiario        | None      | SIN_PARPTR_62 |
+            | credenzialiPagatore        | None      | SIN_PARPTR_65 |
