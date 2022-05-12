@@ -66,3 +66,4 @@ Feature: check syntax KO for paaAttivaRPT
             | indirizzoBeneficiario      | None      | SIN_PARPTR_47 |
             | nazioneBeneficiario        | None      | SIN_PARPTR_62 |
             | credenzialiPagatore        | None      | SIN_PARPTR_65 |
+
