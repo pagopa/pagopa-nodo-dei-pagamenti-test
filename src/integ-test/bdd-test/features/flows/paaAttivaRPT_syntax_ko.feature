@@ -3,7 +3,7 @@ Feature: check syntax KO for paaAttivaRPT
     Background:
         Given systems up
         Given initial XML activatePaymentNotice
-            """
+             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
             xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
                 <soapenv:Header/>
@@ -30,7 +30,7 @@ Feature: check syntax KO for paaAttivaRPT
     Scenario Outline:
         Given initial XML paaAttivaRPT
             # MODIFICARE IL TIPO DI RISPOSTA (https://pagopa.atlassian.net/wiki/spaces/PAG/pages/493617751/Analisi+paaAttivaRPT)
-             """
+            """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
             xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
                 <soapenv:Header/>
@@ -68,6 +68,17 @@ Feature: check syntax KO for paaAttivaRPT
             | esito                             | None                                                                    | SIN_PARPTR_07 |
             | esito                             | Empty                                                                   | SIN_PARPTR_08 |
             | esito                             | prova                                                                   | SIN_PARPTR_09 |
+            | datiPagamentoPA                   | None                                                                    | SIN_PARPTR_11 |
+            | datiPagamentoPA                   | RemoveParent                                                            | SIN_PARPTR_12 |
+            | datiPagamentoPA                   | Empty                                                                   | SIN_PARPTR_13 |
+            | importoSingoloVersamento          | None                                                                    | SIN_PARPTR_14 |
+            | importoSingoloVersamento          | Empty                                                                   | SIN_PARPTR_15 |
+            | importoSingoloVersamento          | 105,1234                                                                | SIN_PARPTR_16 |
+            | importoSingoloVersamento          | 105.2                                                                   | SIN_PARPTR_17 |
+            | importoSingoloVersamento          | 105.256                                                                 | SIN_PARPTR_17 |
+            | importoSingoloVersamento          | 12ad45rtyu78hj56                                                        | SIN_PARPTR_18 |
+            | ibanAccredito                     | None                                                                    | SIN_PARPTR_19 |
+            | ibanAccredito                     | Empty                                                                   | SIN_PARPTR_20 |
             | ibanAccredito                     | LzMdYpAMYOmncJuwfSlsuAEykZeutSzYUMn                                     | SIN_PARPTR_21 |
             | bicAccredito                      | Empty                                                                   | SIN_PARPTR_23 |
             | bicAccredito                      | oZGFzQB                                                                 | SIN_PARPTR_24 |
@@ -85,13 +96,3 @@ Feature: check syntax KO for paaAttivaRPT
             | indirizzoBeneficiario             | Empty                                                                   | SIN_PARPTR_48 |
             | indirizzoBeneficiario             | YHBRElAVeOXtUdkTzMEbXZDQGuUxaVATbLRRrahkOhTvWDaHfrmyFuWwfuIrmAHkdxWepJf | SIN_PARPTR_49 |
             | civicoBeneficiario                | None                                                                    | SIN_PARPTR_50 |
-
-
-
-
-
-
-
-
-
-
