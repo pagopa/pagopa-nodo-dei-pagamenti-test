@@ -30,7 +30,7 @@ Feature: check syntax KO for paaAttivaRPT
     Scenario Outline:
         Given initial XML paaAttivaRPT
             # MODIFICARE IL TIPO DI RISPOSTA (https://pagopa.atlassian.net/wiki/spaces/PAG/pages/493617751/Analisi+paaAttivaRPT)
-             """
+            """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
             xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
                 <soapenv:Header/>
@@ -64,6 +64,9 @@ Feature: check syntax KO for paaAttivaRPT
             | codiceUnitOperBeneficiario | None      | SIN_PARPTR_41 |
             | denomUnitOperBeneficiario  | None      | SIN_PARPTR_44 |
             | indirizzoBeneficiario      | None      | SIN_PARPTR_47 |
+            | civicoBeneficiario         | None      | SIN_PARPTR_50 |
+            | capBeneficiario            | None      | SIN_PARPTR_53 |
+            | localitaBeneficiario       | None      | SIN_PARPTR_56 |
+            | provinciaBeneficiario      | None      | SIN_PARPTR_59 |
             | nazioneBeneficiario        | None      | SIN_PARPTR_62 |
             | credenzialiPagatore        | None      | SIN_PARPTR_65 |
-
