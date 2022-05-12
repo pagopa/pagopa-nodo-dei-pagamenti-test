@@ -59,6 +59,19 @@ Feature: check syntax KO for paaAttivaRPT
       Then check outcome is KO of activatePaymentNotice response
       And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of activatePaymentNotice response
       Examples:
+      |          tag                 |  tag_value                |    soapUI test       |
+      | datiPagamentoPA              | None                      |   SIN_PARPTR_11      |
+      | datiPagamentoPA              | RemoveParent              |   SIN_PARPTR_12      |
+      | datiPagamentoPA              | Empty                     |   SIN_PARPTR_13      |
+      | importoSingoloVersamento     | None                      |   SIN_PARPTR_14      |
+      | importoSingoloVersamento     | Empty                     |   SIN_PARPTR_15      |
+      | importoSingoloVersamento     | 105,1234                  |   SIN_PARPTR_16      |
+      | importoSingoloVersamento     | 105.2                     |   SIN_PARPTR_17      |
+      | importoSingoloVersamento     | 105.256                   |   SIN_PARPTR_17      |
+      | importoSingoloVersamento     | 12ad45rtyu78hj56          |   SIN_PARPTR_18      |
+      | ibanAccredito                | None                      |   SIN_PARPTR_19      |
+      | ibanAccredito                | Empty                     |   SIN_PARPTR_20      |
+
       
 
       
