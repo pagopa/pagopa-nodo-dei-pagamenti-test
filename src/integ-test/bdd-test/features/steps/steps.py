@@ -575,7 +575,3 @@ def step_impl(context, seconds):
 def step_impl(context, sql_code):
     # TODO
     pass
-
-@step('{column} in {table} contains {value}')
-def step_impl(context, column, table, value):
-    pass
