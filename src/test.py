@@ -1,4 +1,5 @@
 import random
+import re
 
 
 def generate_string(n: int):
@@ -6,4 +7,8 @@ def generate_string(n: int):
     new = ''.join([s[random.randint(0, len(s) - 1)] for i in range(n)])
     return new
 
-print(generate_string(36))
+def generate_number(n:int):
+    return random.randint(10 ** (n-1), 10 ** n)
+
+print(generate_string(257))
+print(generate_number(13))
