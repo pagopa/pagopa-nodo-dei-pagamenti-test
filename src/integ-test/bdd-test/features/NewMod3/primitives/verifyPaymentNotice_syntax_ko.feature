@@ -80,3 +80,16 @@ Feature: syntax checks KO for verifyPaymentReq
       | elem                         | value        | soapUI test  |
       | nod:paVerifyPaymentNoticeReq | None         | SIN_PVPNR_05 |
       | nod:paVerifyPaymentNoticeReq | RemoveParent | SIN_PVPNR_12 |
+
+  Scenario Outline: Check correctness of header and body
+    Given soapenv:Header with <header_value> in verifyPaymentNotice
+    And soapenv:Body with <body_value> in verifyPaymentNotice
+    When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
+    Then check outcome is KO of verifyPaymentNotice response
+    And check faultCode is <error> of verifyPaymentNotice response
+    Examples:
+      | header_value | body_value | error                 | soapUI test |
+      | errata       | corretto   | PPT_SOAPACTION_ERRATA | SIN_VPNR_31 |
+      | corretta     | errata     | PPT_SINTASSI_EXTRAXSD | SIN_VPNR_32 |
+      | errata       | errata     | PPT_SOAPACTION_ERRATA | SIN_VPNR_33 |
+      | None         | errata     | PPT_SOAPACTION_ERRATA | SIN_VPNR_35 |
