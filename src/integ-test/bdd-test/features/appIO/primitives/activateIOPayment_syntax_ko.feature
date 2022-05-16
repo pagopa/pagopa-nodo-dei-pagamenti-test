@@ -13,7 +13,7 @@ Feature: Syntax checks for activateIOPaymentReq - KO
                         <idChannel>97735020584_03</idChannel>
                         <password>pwdpwdpwd</password>
                         <!--Optional:-->
-                        <idempotencyKey>40000000001_145744awJH</idempotencyKey>
+                        <idempotencyKey>40000000001_165652KEtr</idempotencyKey>
                         <qrCode>
                             <fiscalCode>44444444444</fiscalCode>
                             <noticeNumber>311018191166111600</noticeNumber>
@@ -153,6 +153,6 @@ Feature: Syntax checks for activateIOPaymentReq - KO
             | country                     | Empty                                                                                                                                                                                                                                                             | SIN_AIOPR_83 |
             | country                     | abc                                                                                                                                                                                                                                                               | SIN_AIOPR_84 |
             | country                     | it                                                                                                                                                                                                                                                                | SIN_AIOPR_85 |
-            | email                       | Empty                                                                                                                                                                                                                                                             | SIN_AIOPR_87 |
-            | email                       | CJMwIAbjHVshaJhFZozOrGOOCqpJoUDxuHog                                                                                                                                                                                                                              | SIN_AIOPR_88 |
-            | email                       | mBpgcdfPdDHOifLVlMinLWAypHOCNkRbZacRjwGCREKlmcJyPxsOnlWAcbAumNFAxPBACyettBmpZgKriIvZwtKtpqxQsyjOaOCawysMdZqpIHaQszyFrerGAKiVSpqXUXBfvpzGKSiTeiHJjhOxryquOwsVBCtlOTEasGZVZvgxmjPVBzZeUHGRhdeWKVmuwRSOQKfjGvGLnYIbgvWBlxEZuIVvNoLECwZukosmoLulzvorCTgXvSBtMreMVYvEm | SIN_AIOPR_89 |
+            | e-mail                      | Empty                                                                                                                                                                                                                                                             | SIN_AIOPR_87 |
+            | e-mail                      | CJMwIAbjHVshaJhFZozOrGOOCqpJoUDxuHog                                                                                                                                                                                                                              | SIN_AIOPR_88 |
+            | e-mail                      | mBpgcdfPdDHOifLVlMinLWAypHOCNkRbZacRjwGCREKlmcJyPxsOnlWAcbAumNFAxPBACyettBmpZgKriIvZwtKtpqxQsyjOaOCawysMdZqpIHaQszyFrerGAKiVSpqXUXBfvpzGKSiTeiHJjhOxryquOwsVBCtlOTEasGZVZvgxmjPVBzZeUHGRhdeWKVmuwRSOQKfjGvGLnYIbgvWBlxEZuIVvNoLECwZukosmoLulzvorCTgXvSBtMreMVYvEm | SIN_AIOPR_89 |
