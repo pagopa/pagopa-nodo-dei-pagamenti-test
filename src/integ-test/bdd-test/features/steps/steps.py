@@ -573,5 +573,11 @@ def step_impl(context, seconds):
 
 @step("api-config executes the sql {sql_code}")
 def step_impl(context, sql_code):
-    # TODO
+    # TO DO
+    pass
+
+
+@step("api-config executes the sql {sql_code} and check {status}")
+def step_impl(context, sql_code, status):
+    # TO DO
     pass
