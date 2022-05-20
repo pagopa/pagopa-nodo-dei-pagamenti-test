@@ -103,7 +103,7 @@ def manipulate_soap_action(soap_action, elem, value):
         children = element.childNodes
         parent.removeChild(element)
         for child in list(children):
-            if child.nodeType == 1:
+            if child.nodeType == TYPE_ELEMENT:
                 parent.appendChild(child) 
     elif str(value).startswith("Occurrences"):
         occurrences = int(value.split(",")[1])
