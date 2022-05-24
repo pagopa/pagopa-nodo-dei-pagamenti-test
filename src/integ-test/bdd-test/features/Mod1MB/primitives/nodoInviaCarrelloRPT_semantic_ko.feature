@@ -32,59 +32,12 @@ Feature:  semantic checks for nodoInviaCarrelloRPT
   # idCarrello value check: idCarrello not in db [SEM_Mb_01]
   Scenario Outline: Check PPT_MULTIBENEFICIARIO error on non-existent psp
     Given idCarrello with <value> in nodoInviaCarrelloRPT
-    and multiBeneficiario with 1
     When psp sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
     Then check outcome is KO of nodoInviaCarrelloRPT response
     And check faultCode is PPT_MULTIBENEFICIARIO of nodoInviaCarrelloRPT response
     Examples:
-      | value                                            | soapUI test   |
-      | [azAZ09]{11}[azAZ09]{18}[09]{5}                  | SEM_Mb_01     |
-      | idDominio sbagliatoRPT2                          | SEM_Mb_01     |
-      | idDominio sbagliato nessuna RPT                  | SEM_Mb_01     |
-      | lunghezza inferiore                              | SEM_Mb_01     |
-      | ordine invertito                                 | SEM_Mb_01     |
-
-
-      # idDominio value check: idDominio not in db [SEM_MB_02]
-      Scenario: Check PPT_DOMINIO_SCONOSCIUTO error on non-existent idDominio
-      Given idDominio in idCarrello column  with 77777777777 same as idDominioUnKnown in RPT1 in nodoInviaCarrelloRPT
-      and multiBeneficiario with 1
-      When psp sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
-      Then check outcome is KO of nodoInviaCarrelloRPT response
-      and check faultCode is PPT_DOMINIO_SCONOSCIUTO of nodoInviaCarrelloRPT response
-
-
-        # idDominio value check: idDominio not in db [SEM_MB_03]
-      Scenario: Check PPT_DOMINIO_SCONOSCIUTO error on non-existent idDominio
-      Given idDominioUnKnown in idCarrello column  with 77777777777 different from idDominio in RPT1 in nodoInviaCarrelloRPT
-      and multiBeneficiario with 1
-      When psp sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
-      Then check outcome is KO of nodoInviaCarrelloRPT response
-      and check faultCode is PPT_DOMINIO_SCONOSCIUTO of nodoInviaCarrelloRPT response
-
-        # idDominio value check: idDominio not in db [SEM_MB_04]
-      Scenario: Check PPT_DOMINIO_SCONOSCIUTO error on non-existent idDominio
-      Given idDominio in idCarrello column  with 77777777777 different from idDominioUnKnown in RPT1 in nodoInviaCarrelloRPT
-      and multiBeneficiario with 1
-      When psp sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
-      Then check outcome is KO of nodoInviaCarrelloRPT response
-      and check faultCode is PPT_DOMINIO_SCONOSCIUTO of nodoInviaCarrelloRPT response
-
-        # idDominio value check: idDominio not in db [SEM_MB_05]
-      Scenario: Check PPT_DOMINIO_SCONOSCIUTO error on non-existent idDominio
-      Given idDominio in idCarrello column  with 77777777777 different from idDominio in RPT1 in nodoInviaCarrelloRPT
-      and multiBeneficiario with 1
-      When psp sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
-      Then check outcome is KO of nodoInviaCarrelloRPT response
-      and check faultCode is PPT_MULTI_BENEFICIARIO of nodoInviaCarrelloRPT response
-
-           # idDominio value check: idDominio not in db [SEM_MB_08]
-      Scenario: Check PPT_DOMINIO_DISABILITATO error on non-existent idDominio
-      Given idDominio in idCarrello column  with 77777777777 same as idDominio in RPT1 in nodoInviaCarrelloRPT
-      and multiBeneficiario with 1
-      When psp sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
-      Then check outcome is KO of nodoInviaCarrelloRPT response
-      and check faultCode is PPT_DOMINIO_DISABILITATO of nodoInviaCarrelloRPT response
+      | value                                            | soapUI test  |
+      | [azAZ09]{11}[azAZ09]{18}[09]{5}                  | SEM_Mb_1     |
 
 
 

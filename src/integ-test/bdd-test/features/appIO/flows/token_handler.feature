@@ -98,5 +98,7 @@ Feature: Token handler
 
     # [GT_02]
     Scenario: GT_02
-    
+    Given the activateIOPayment phase request scenario executed successfully
+    And check if is present a value in TOKEN_VALID_FROM column in POSITION_ACTIVATE table
+    When IO sends rest GET 
 
