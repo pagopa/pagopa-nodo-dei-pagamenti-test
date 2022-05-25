@@ -61,6 +61,10 @@ def step_impl(context, primitive):
 
     payload = utils.replace_global_variables(payload, context)
 
+    print("###############################################")
+    print(payload)
+    print('####################################################')
+
     setattr(context, primitive, payload)
 
 

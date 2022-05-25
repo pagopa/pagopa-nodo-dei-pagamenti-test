@@ -5,28 +5,28 @@ Feature: semantic checks OK for activatePaymentNotice
     And initial XML activatePaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-      <soapenv:Header/>
-      <soapenv:Body>
-      <nod:activatePaymentNoticeReq>
-      <idPSP>40000000001</idPSP>
-      <idBrokerPSP>40000000002</idBrokerPSP>
-      <idChannel>40000000002_01</idChannel>
-      <password>pwdpwdpwd</password>
-      <idempotencyKey>40000000001_123110xHFI</idempotencyKey>
-      <qrCode>
-      <fiscalCode>44444444444</fiscalCode>
-      <noticeNumber>311019991707155000</noticeNumber>
-      </qrCode>
-      <!--Optional:-->
-      <expirationTime>12345</expirationTime>
-      <!--Optional:-->
-      <amount>10.00</amount>
-      <!--Optional:-->
-      <dueDate>2021-12-12</dueDate>
-      <!--Optional:-->
-      <paymentNote>responseFull</paymentNote>
-      </nod:activatePaymentNoticeReq>
-      </soapenv:Body>
+        <soapenv:Header/>
+        <soapenv:Body>
+          <nod:activatePaymentNoticeReq>
+            <idPSP>40000000001</idPSP>
+            <idBrokerPSP>40000000002</idBrokerPSP>
+            <idChannel>40000000002_01</idChannel>
+            <password>pwdpwdpwd</password>
+            <idempotencyKey>#idempotency_key#</idempotencyKey>
+            <qrCode>
+              <fiscalCode>44444444444</fiscalCode>
+              <noticeNumber>#notice_number#</noticeNumber>
+            </qrCode>
+            <!--Optional:-->
+            <expirationTime>12345</expirationTime>
+            <!--Optional:-->
+            <amount>10.00</amount>
+            <!--Optional:-->
+            <dueDate>2021-12-12</dueDate>
+            <!--Optional:-->
+            <paymentNote>responseFull</paymentNote>
+          </nod:activatePaymentNoticeReq>
+        </soapenv:Body>
       </soapenv:Envelope>
       """
 
