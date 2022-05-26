@@ -8,9 +8,9 @@ Feature: Syntax checks for activateIOPaymentReq - KO
                 <soapenv:Header/>
                 <soapenv:Body>
                     <nod:activateIOPaymentReq>
-                        <idPSP>AGID_01</idPSP>
-                        <idBrokerPSP>97735020584</idBrokerPSP>
-                        <idChannel>97735020584_03</idChannel>
+                        <idPSP>70000000001</idPSP>
+                        <idBrokerPSP>70000000001</idBrokerPSP>
+                        <idChannel>70000000001_01</idChannel>
                         <password>pwdpwdpwd</password>
                         <!--Optional:-->
                         <idempotencyKey>#idempotency_key#</idempotencyKey>

@@ -8,15 +8,15 @@ Feature: Syntax checks for activateIOPaymentReq - OK
                 <soapenv:Header/>
                 <soapenv:Body>
                     <nod:activateIOPaymentReq>
-                        <idPSP>AGID_01</idPSP>
-                        <idBrokerPSP>#id_broker#</idBrokerPSP>
-                        <idChannel>97735020584_03</idChannel>
+                        <idPSP>70000000001</idPSP>
+                        <idBrokerPSP>70000000001</idBrokerPSP>
+                        <idChannel>70000000001_01</idChannel>
                         <password>pwdpwdpwd</password>
                         <!--Optional:-->
                         <idempotencyKey>#idempotency_key#</idempotencyKey>
                         <qrCode>
-                        <fiscalCode>#creditor_institution_code#</fiscalCode>
-                        <noticeNumber>#notice_number#</noticeNumber>
+                            <fiscalCode>#creditor_institution_code#</fiscalCode>
+                            <noticeNumber>#notice_number#</noticeNumber>
                         </qrCode>
                         <!--Optional:-->
                         <expirationTime>12345</expirationTime>
