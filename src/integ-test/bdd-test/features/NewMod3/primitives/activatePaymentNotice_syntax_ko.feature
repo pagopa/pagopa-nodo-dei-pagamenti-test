@@ -1,4 +1,4 @@
-Feature:  syntax checks KO for activatePaymentNoticeReq
+Feature:  Syntax checks KO for activatePaymentNoticeReq
 
   Background:
     Given systems up

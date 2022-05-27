@@ -28,7 +28,7 @@ Feature:  semantic checks for paGetPaymentRes - OK
     And EC new version
 
   Scenario Outline: Check outcome OK on amount or fiscalCodePA of paGetPaymentRes different from paGetPaymentReq
-    Given EC replies to nodo-dei-pagamenti with the paGetPayment
+    Given EC replies to nodo-dei-pagamenti dio the response paGetPaymentRes
 	"""
     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
 		xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">

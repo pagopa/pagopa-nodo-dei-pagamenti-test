@@ -48,7 +48,6 @@ def get_soap_url_nodo(context, primitive=-1):
         return context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url") \
                + base_path + primitive_mapping.get(primitive)
 
-
 def get_rest_url_nodo(context):
     if context.config.userdata.get("services").get("nodo-dei-pagamenti").get("rest_service") is not None:
         return context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url") \
@@ -56,6 +55,12 @@ def get_rest_url_nodo(context):
     else:
         return ""
 
+def get_soap_mock_ec(context):
+    if context.config.userdata.get('services').get('mock-ec').get('soap_service') is not None:
+        return context.config.userdata.get('services').get('mock-ec').get('url') \
+            + context.config.userdata.get('services').get('mock-ec').get('soap_service')
+    else:
+        return ""
 
 def get_rest_mock_ec(context):
     if context.config.userdata.get("services").get("mock-ec").get("rest_service") is not None:
@@ -83,15 +88,12 @@ def save_soap_action(mock, primitive, soap_action, override=False):
 def manipulate_soap_action(soap_action, elem, value):
     TYPE_ELEMENT = 1 # dom element
     # TYPE_VALUE = 3 # dom value
-    print(soap_action)
-    print(elem)
     my_document = parseString(soap_action)
     if value == "None":
         element = my_document.getElementsByTagName(elem)[0]
         element.parentNode.removeChild(element)
     elif value == "Empty":
         element = my_document.getElementsByTagName(elem)[0].childNodes[0]
-        print(element.toxml())
         element.nodeValue = ''
         childs = my_document.getElementsByTagName(elem)[0].childNodes
         for child in childs:
@@ -143,12 +145,9 @@ def replace_local_variables(body, context):
         if len(field.replace('$', '').split('.')) > 1:
             tag = field.replace('$', '').split('.')[1]
             if isinstance(saved_elem, str):
-                print(saved_elem)
                 document = parseString(saved_elem)
             else:
-                print(saved_elem.content)
                 document = parseString(saved_elem.content)
-            print(tag)
             value = document.getElementsByTagName(tag)[0].firstChild.data
         body = body.replace(field, value)
     return body

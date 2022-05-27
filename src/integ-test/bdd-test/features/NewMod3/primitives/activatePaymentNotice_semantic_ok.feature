@@ -1,4 +1,4 @@
-Feature: semantic checks OK for activatePaymentNotice
+Feature: Semantic checks OK for activatePaymentNotice
 
   Background:
     Given systems up
@@ -8,13 +8,13 @@ Feature: semantic checks OK for activatePaymentNotice
         <soapenv:Header/>
         <soapenv:Body>
           <nod:activatePaymentNoticeReq>
-            <idPSP>40000000001</idPSP>
-            <idBrokerPSP>40000000002</idBrokerPSP>
-            <idChannel>40000000002_01</idChannel>
+            <idPSP>70000000001</idPSP>
+            <idBrokerPSP>70000000001</idBrokerPSP>
+            <idChannel>70000000001_01</idChannel>
             <password>pwdpwdpwd</password>
             <idempotencyKey>#idempotency_key#</idempotencyKey>
             <qrCode>
-              <fiscalCode>44444444444</fiscalCode>
+              <fiscalCode>#creditor_institution_code#</fiscalCode>
               <noticeNumber>#notice_number#</noticeNumber>
             </qrCode>
             <!--Optional:-->

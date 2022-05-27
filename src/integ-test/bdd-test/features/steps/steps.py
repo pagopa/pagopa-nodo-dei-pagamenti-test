@@ -61,10 +61,6 @@ def step_impl(context, primitive):
 
     payload = utils.replace_global_variables(payload, context)
 
-    print("###############################################")
-    print(payload)
-    print('####################################################')
-
     setattr(context, primitive, payload)
 
 
@@ -75,7 +71,6 @@ def step_impl(context, elem, value, action):
         value = utils.replace_local_variables(value, context)
         value = utils.replace_global_variables(value, context)
         xml = utils.manipulate_soap_action(getattr(context, action), elem, value)
-        print(xml)
         setattr(context, action, xml)
 
 
@@ -111,7 +106,6 @@ def step_impl(context, job_name, seconds):
 @then('check {tag} is {value} of {primitive} response')
 def step_impl(context, tag, value, primitive):
     soap_response = getattr(context, primitive + RESPONSE)
-    print(soap_response.content)
     if 'xml' in soap_response.headers['content-type']:
         my_document = parseString(soap_response.content)
         if len(my_document.getElementsByTagName('faultCode')) > 0:
@@ -245,7 +239,6 @@ def step_impl(context, name):
     phase = ([phase for phase in context.feature.scenarios if name in phase.name] or [None])[0]
     text_step = ''.join(
         [step.keyword + " " + step.name + "\n\"\"\"\n" + (step.text or '') + "\n\"\"\"\n" for step in phase.steps])
-    print(text_step)
     context.execute_steps(text_step)
 
 
@@ -260,7 +253,6 @@ def step_impl(context, sender, method, service, receiver):
     body = utils.replace_local_variables(body, context)
     service = utils.replace_local_variables(service, context)
     print(f"{url_nodo}/{service}")
-    print(body)
     if len(body) > 1:
         json_body = json.loads(body)
     else:
@@ -269,7 +261,6 @@ def step_impl(context, sender, method, service, receiver):
     nodo_response = requests.request(method, f"{url_nodo}/{service}", headers=headers,
                                      json=json_body)
 
-    print(nodo_response.text)
     setattr(context, service.split('?')[0], json_body)
     setattr(context, service.split('?')[0] + RESPONSE, nodo_response)
 
@@ -278,7 +269,6 @@ def step_impl(context, sender, method, service, receiver):
 def step_impl(context, action, value):
     print(f'HTTP status expected: {value} - obtained:{getattr(context, action + RESPONSE).status_code}')
     assert int(value) == getattr(context, action + RESPONSE).status_code
-
 
 @given('{mock} replies to {destination} with the {primitive}')
 def step_impl(context, mock, destination, primitive):
@@ -294,11 +284,9 @@ def step_impl(context, mock, destination, primitive):
         pa_verify_payment_notice_res = pa_verify_payment_notice_res.replace('$iuv', getattr(context, 'iuv'))
 
     setattr(context, primitive, pa_verify_payment_notice_res)
-    print(pa_verify_payment_notice_res)
-    response_status_code = utils.save_soap_action(utils.get_rest_mock_ec(context), primitive,
+    response_status_code = utils.save_soap_action(utils.get_soap_mock_ec(context), primitive,
                                                   pa_verify_payment_notice_res, override=True)
     assert response_status_code == 200
-
 
 @given('{mock} wait for {sec} seconds at {action}')
 def step_impl(context, mock, sec, action):

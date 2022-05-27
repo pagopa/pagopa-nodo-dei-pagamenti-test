@@ -70,17 +70,6 @@ Feature: syntax checks KO for verifyPaymentReq
       | noticeNumber               | 12345678901234567A                   | SIN_VPNR_29 |
       | noticeNumber               | 12345678901234567!                   | SIN_VPNR_29 |
 
-  # element value check
-  Scenario Outline: Check PPT_STAZIONE_INT_PA_ERRORE_RESPONSE error on invalid body element value
-    Given <elem> with <value> in verifyPaymentNotice
-    When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
-    Then check outcome is KO of verifyPaymentNotice response
-    And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of verifyPaymentNotice response
-    Examples:
-      | elem                         | value        | soapUI test  |
-      | nod:paVerifyPaymentNoticeReq | None         | SIN_PVPNR_05 |
-      | nod:paVerifyPaymentNoticeReq | RemoveParent | SIN_PVPNR_12 |
-
   Scenario Outline: Check correctness of header and body
     Given soapenv:Header with <header_value> in verifyPaymentNotice
     And soapenv:Body with <body_value> in verifyPaymentNotice
