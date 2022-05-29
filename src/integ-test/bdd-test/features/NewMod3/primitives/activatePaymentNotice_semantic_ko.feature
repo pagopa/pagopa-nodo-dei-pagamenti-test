@@ -1,4 +1,4 @@
-Feature: semantic checks KO for activatePaymentNoticeReq
+Feature: Semantic checks KO for activatePaymentNoticeReq
 
   Background:
     Given systems up
@@ -128,7 +128,7 @@ Feature: semantic checks KO for activatePaymentNoticeReq
   # station value check: combination fiscalCode-noticeNumber identifies a station corresponding to an ID_STAZIONE value with field ENABLED = N in NODO4_CFG.STAZIONI table of nodo-dei-pagamenti database [SEM_APNR_13]
   Scenario: Check PPT_STAZIONE_INT_PA_DISABILITATA error on disabled station
     Given fiscalCode with 77777777777 in activatePaymentNotice
-    And noticeNumber with 006456789012345478 in activatePaymentNotice
+    And noticeNumber with 314456789012345478 in activatePaymentNotice
     When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is KO of activatePaymentNotice response
     And check faultCode is PPT_STAZIONE_INT_PA_DISABILITATA of activatePaymentNotice response

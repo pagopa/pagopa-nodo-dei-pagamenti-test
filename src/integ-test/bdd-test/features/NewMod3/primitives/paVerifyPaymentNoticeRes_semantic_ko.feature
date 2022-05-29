@@ -1,4 +1,4 @@
-Feature:  semantic checks for paVerifyPaymentNoticeRes
+Feature: Semantic checks for paVerifyPaymentNoticeRes
 
   Background:
     Given systems up

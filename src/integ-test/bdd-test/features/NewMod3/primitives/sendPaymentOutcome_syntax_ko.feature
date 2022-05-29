@@ -1,4 +1,4 @@
-Feature: syntax checks for sendPaymentOutcome - KO
+Feature: Syntax checks for sendPaymentOutcome - KO
 
   Background:
     Given systems up

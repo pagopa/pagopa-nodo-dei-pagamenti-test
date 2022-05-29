@@ -42,8 +42,8 @@ Feature: semantic checks for verificaBollettinoReq
   Scenario Outline: Execute verificaBollettino request
     Given <elem> with <value> in verificaBollettino
     When psp sends soap verificaBollettino to nodo-dei-pagamenti
-    Then check outcome is KO in verificaBollettino response
-    And faultCode is PPT_SINTASSI_EXTRAXSD in verificaBollettino response
+    Then check outcome is KO of verificaBollettino response
+    And check faultCode is PPT_SINTASSI_EXTRAXSD of verificaBollettino response
     Examples:
       | elem  | value | soapUI test |
       | idPSP | None  | SEM_VB_13   |
@@ -53,7 +53,7 @@ Feature: semantic checks for verificaBollettinoReq
     Given the Execute verificaBollettino request scenario executed successfully
     And <elem> with <value> in verificaBollettino
     When psp sends soap verificaBollettino to nodo-dei-pagamenti
-    Then check outcome is OK in verificaBollettino response
+    Then check outcome is OK of verificaBollettino response
     Examples:
       | elem  | value  | soapUI test |
       | idPSP | POSTE3 | SEM_VB_13   |

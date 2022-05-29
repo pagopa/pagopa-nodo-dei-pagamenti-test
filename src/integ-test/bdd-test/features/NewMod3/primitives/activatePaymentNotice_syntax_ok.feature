@@ -1,4 +1,4 @@
-Feature:  Syntax checks OK for activatePaymentNoticeReq
+Feature: Syntax checks OK for activatePaymentNoticeReq
 
   Background:
     Given systems up
@@ -27,7 +27,6 @@ Feature:  Syntax checks OK for activatePaymentNoticeReq
       </soapenv:Envelope>
       """
 
-  @prova
   Scenario: Check valid URL in WSDL namespace
     When psp sends soap activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response

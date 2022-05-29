@@ -1,4 +1,4 @@
-Feature: syntax checks for paGetPaymentRes - OK
+Feature: Syntax checks for paGetPaymentRes - OK
 
 	Background:
 		Given systems up

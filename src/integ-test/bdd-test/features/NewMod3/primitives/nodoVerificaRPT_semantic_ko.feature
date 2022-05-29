@@ -1,4 +1,4 @@
-Feature: checks for EC new and nodoVerificaRPT
+Feature: Checks for EC new and nodoVerificaRPT
 
   Background:
     Given systems up
@@ -18,7 +18,7 @@ Feature: checks for EC new and nodoVerificaRPT
                     <qrc:QrCode>
                       <qrc:CF>#creditor_institution_code#</qrc:CF>
                       <qrc:AuxDigit>3</qrc:AuxDigit>
-                      <qrc:CodIUV>11192051789512983</qrc:CodIUV>
+                      <qrc:CodIUV>02192051789512983</qrc:CodIUV>
                     </qrc:QrCode>
                   </codiceIdRPT>
               </ws:nodoVerificaRPT>

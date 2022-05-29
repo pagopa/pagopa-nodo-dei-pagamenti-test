@@ -1,4 +1,4 @@
-Feature:  semantic checks for sendPaymentOutcome - KO
+Feature: Semantic checks for sendPaymentOutcome - KO
 
   Background:
     Given systems up    

@@ -5,50 +5,50 @@ Feature: Semantic checks for activateIOPaymentReq - KO
     And initial XML activateIOPaymentReq
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd">
-      <soapenv:Header/>
-      <soapenv:Body>
-      <nod:activateIOPaymentReq>
-      <idPSP>70000000001</idPSP>
-      <idBrokerPSP>70000000001</idBrokerPSP>
-      <idChannel>70000000001_01</idChannel>
-      <password>pwdpwdpwd</password>
-      <!--Optional:-->
-      <idempotencyKey>#idempotency_key#</idempotencyKey>
-      <qrCode>
-      <fiscalCode>#creditor_institution_code#</fiscalCode>
-      <noticeNumber>#notice_number#</noticeNumber>
-      </qrCode>
-      <!--Optional:-->
-      <expirationTime>12345</expirationTime>
-      <amount>10.00</amount>
-      <!--Optional:-->
-      <dueDate>2021-12-12</dueDate>
-      <!--Optional:-->
-      <paymentNote>test</paymentNote>
-      <!--Optional:-->
-      <payer>
-      <uniqueIdentifier>
-      <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-      <entityUniqueIdentifierValue>44444444444</entityUniqueIdentifierValue>
-      </uniqueIdentifier>
-      <fullName>name</fullName>
-      <!--Optional:-->
-      <streetName>street</streetName>
-      <!--Optional:-->
-      <civicNumber>civic</civicNumber>
-      <!--Optional:-->
-      <postalCode>code</postalCode>
-      <!--Optional:-->
-      <city>city</city>
-      <!--Optional:-->
-      <stateProvinceRegion>state</stateProvinceRegion>
-      <!--Optional:-->
-      <country>IT</country>
-      <!--Optional:-->
-      <e-mail>test.prova@gmail.com</e-mail>
-      </payer>
-      </nod:activateIOPaymentReq>
-      </soapenv:Body>
+        <soapenv:Header/>
+        <soapenv:Body>
+          <nod:activateIOPaymentReq>
+            <idPSP>70000000001</idPSP>
+            <idBrokerPSP>70000000001</idBrokerPSP>
+            <idChannel>70000000001_01</idChannel>
+            <password>pwdpwdpwd</password>
+            <!--Optional:-->
+            <idempotencyKey>#idempotency_key#</idempotencyKey>
+            <qrCode>
+              <fiscalCode>#creditor_institution_code#</fiscalCode>
+              <noticeNumber>#notice_number#</noticeNumber>
+            </qrCode>
+            <!--Optional:-->
+            <expirationTime>12345</expirationTime>
+            <amount>10.00</amount>
+            <!--Optional:-->
+            <dueDate>2021-12-12</dueDate>
+            <!--Optional:-->
+            <paymentNote>test</paymentNote>
+            <!--Optional:-->
+            <payer>
+              <uniqueIdentifier>
+                <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
+                <entityUniqueIdentifierValue>44444444444</entityUniqueIdentifierValue>
+              </uniqueIdentifier>
+              <fullName>name</fullName>
+              <!--Optional:-->
+              <streetName>street</streetName>
+              <!--Optional:-->
+              <civicNumber>civic</civicNumber>
+              <!--Optional:-->
+              <postalCode>code</postalCode>
+              <!--Optional:-->
+              <city>city</city>
+              <!--Optional:-->
+              <stateProvinceRegion>state</stateProvinceRegion>
+              <!--Optional:-->
+              <country>IT</country>
+              <!--Optional:-->
+              <e-mail>test.prova@gmail.com</e-mail>
+            </payer>
+          </nod:activateIOPaymentReq>
+        </soapenv:Body>
       </soapenv:Envelope>
       """
 
@@ -109,7 +109,6 @@ Feature: Semantic checks for activateIOPaymentReq - KO
 
   # password value check: wrong password for an idChannel [SEM_AIPR_08]
   Scenario: Check PPT_AUTENTICAZIONE error on password not associated to psp channel
-    Given idChannel with 70000000001_01 in activateIOPaymentReq
     Given password with wrongPassword in activateIOPaymentReq
     When psp sends SOAP activateIOPaymentReq to nodo-dei-pagamenti
     Then check outcome is KO of activateIOPaymentReq response
@@ -141,8 +140,7 @@ Feature: Semantic checks for activateIOPaymentReq - KO
 
   # station value check: combination fiscalCode-noticeNumber identifies a station not present inside column ID_STAZIONE in NODO4_CFG.STAZIONI table of nodo-dei-pagamenti database [SEM_AIPR_12]
   Scenario Outline: Check PPT_STAZIONE_INT_PA_SCONOSCIUTA error on non-existent station
-    Given fiscalCode with 77777777777 in activateIOPaymentReq
-    And noticeNumber with <value> in activateIOPaymentReq
+    Given noticeNumber with <value> in activateIOPaymentReq
     When psp sends SOAP activateIOPaymentReq to nodo-dei-pagamenti
     Then check outcome is KO of activateIOPaymentReq response
     And check faultCode is PPT_STAZIONE_INT_PA_SCONOSCIUTA of activateIOPaymentReq response
@@ -168,8 +166,7 @@ Feature: Semantic checks for activateIOPaymentReq - KO
 
   # station value check: combination fiscalCode-noticeNumber identifies a station corresponding to an ID_STAZIONE value with field IP in NODO4_CFG.STAZIONI table of nodo-dei-pagamenti database not reachable (e.g. IP = 1.2.3.4) [SEM_AIRP_14]
   Scenario: Check PPT_STAZIONE_INT_PA_IRRAGGIUNGIBILE error on unreachable station
-    Given fiscalCode with 77777777777 in activateIOPaymentReq
-    And noticeNumber with 099456789012345678 in activateIOPaymentReq
+    Given noticeNumber with 099456789012345678 in activateIOPaymentReq
     When psp sends SOAP activateIOPaymentReq to nodo-dei-pagamenti
     Then check outcome is KO of activateIOPaymentReq response
     And check faultCode is PPT_STAZIONE_INT_PA_IRRAGGIUNGIBILE of activateIOPaymentReq response
@@ -177,8 +174,7 @@ Feature: Semantic checks for activateIOPaymentReq - KO
 
   # station value check: combination fiscalCode-noticeNumber identifies a old version station [SEM_AIRP_15]
   Scenario: Check PPT_MULTIBENEFICIARIO error on old version station
-    Given fiscalCode with 77777777777 in activateIOPaymentReq
-    And noticeNumber with 323456789012345678 in activateIOPaymentReq
+    Given noticeNumber with 323456789012345678 in activateIOPaymentReq
     When psp sends SOAP activateIOPaymentReq to nodo-dei-pagamenti
     Then check outcome is KO of activateIOPaymentReq response
     And check faultCode is PPT_MULTI_BENEFICIARIO of activateIOPaymentReq response
@@ -186,8 +182,7 @@ Feature: Semantic checks for activateIOPaymentReq - KO
 
   # pa broker value check: combination fiscalCode-noticeNumber identifies a pa broker corresponding to an ID_INTERMEDIARIO_PA value with field ENABLED = N in NODO4_CFG.INTERMEDIARI_PA table of nodo-dei-pagamenti database [SEM_AIRP_16]
   Scenario: Check PPT_INTERMEDIARIO_PA_DISABILITATO error on disabled pa broker
-    Given fiscalCode with 77777777777 in activateIOPaymentReq
-    And noticeNumber with 088456789012345678 in activateIOPaymentReq
+    Given noticeNumber with 088456789012345678 in activateIOPaymentReq
     When psp sends SOAP activateIOPaymentReq to nodo-dei-pagamenti
     Then check outcome is KO of activateIOPaymentReq response
     And check faultCode is PPT_INTERMEDIARIO_PA_DISABILITATO of activateIOPaymentReq response
