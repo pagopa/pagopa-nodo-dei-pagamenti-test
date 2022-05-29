@@ -173,6 +173,10 @@ Feature: process tests for paSendRT
     </soapenv:Envelope>
     """
     
+ 
+
+
+
   # Activate phase [PSRT_04]
   Scenario: Execute activatePaymentNotice request with lastPayment to 1
     Given the Execute verifyPaymentNotice request scenario executed successfully
@@ -507,3 +511,114 @@ Feature: process tests for paSendRT
 #    And nodo-dei-pagamenti waits 60 seconds for expiration
 #    And check EC receives paSendRT not properly with noticeNumber $activatePaymentNotice.noticeNumber
 #    # TODO check EC does not receive again th paSendRT after 60 seconds
+
+
+
+
+   # Activate phase - 2 transfers in paGetPayment transferList and broadcast true for 2 stations of secondary EC [PSRT_24]
+  Scenario: Execute activatePaymentNotice request with 2 transfers and broadcast true for 2 stations of secondary EC
+    Given the Execute verifyPaymentNotice request scenario executed successfully
+    And the Define activatePaymentNotice scenario executed successfully
+    And the Define paGetPayment scenario executed successfully
+    And transferList with <transferList><transfer><idTransfer>1</idTransfer><transferAmount>3.00</transferAmount><fiscalCodePA>77777777777</fiscalCodePA><IBAN>IT45R0760103200000000001016</IBAN><remittanceInformation>testPaGetPayment</remittanceInformation><transferCategory>paGetPaymentTest</transferCategory></transfer><transfer><idTransfer>2</idTransfer><transferAmount>3.00</transferAmount><fiscalCodePA>90000000001</fiscalCodePA><IBAN>IT45R0760103200000000001016</IBAN><remittanceInformation>test</remittanceInformation><transferCategory>test</transferCategory></transfer></transferList> in paGetPayment
+    And paymentAmount with 6.00 in paGetPayment
+    And EC replies to nodo-dei-pagamenti with the paGetPayment
+    # TODO apiconfig: And broadcast with true in NODO4_CFG.PA_STAZIONE_PA for OBJ_ID with 11993 and 1201
+	When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+    Then check outcome is OK of activatePaymentNotice response
+
+  # Send Payment Outcome phase [PSRT_24]
+  Scenario: Execute sendPaymentOutcome request with 2 transfers and broadcast true for 2 stations of secondary EC
+    Given the Execute activatePaymentNotice request with 2 transfers and broadcast true for 2 stations of secondary EC scenario executed successfully
+    And EC wait for 15 seconds at paSendRT response
+    And paymentToken with $activatePaymentNoticeResponse.paymentToken in sendPaymentOutcome
+    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+    Then check outcome is OK of sendPaymentOutcome response
+    And check EC receives paSendRT properly with noticeNumber $activatePaymentNotice.noticeNumber
+    And check EC receives paSendRT properly having in the receipt $activatePaymentNotice.fiscalCode as fiscalcode
+    And check EC receives paSendRT properly having in the transfer with idTransfer 1 the same fiscalCodePA of paGetPayment
+    And check EC receives paSendRT properly having in the transfer with idTransfer 2 the same fiscalCodePA of paGetPayment
+
+
+
+
+
+      # Send Payment Outcome phase [PSRT_21]
+  Scenario: Execute sendPaymentOutcome request with 1 transfer and broadcast true for 1 station of primary EC and outcome KO
+    Given the Execute activatePaymentNotice request with 1 transfer and broadcast true for 1 station of primary EC scenario executed successfully
+    And the Define sendPaymentOutcome scenario executed successfully
+    And paymentToken with $activatePaymentNoticeResponse.paymentToken in sendPaymentOutcome
+    And outcome with KO in sendPaymentOutcome
+    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+    Then check outcome is OK of sendPaymentOutcome response
+    And check EC receives paSendRT not properly with noticeNumber $activatePaymentNotice.noticeNumber
+
+
+      # Activate phase [PSRT_21]
+  Scenario: Execute activatePaymentNotice request with lastPayment to 1
+    Given the Execute verifyPaymentNotice request scenario executed successfully
+    And the Define paGetPayment scenario executed successfully
+    And lastPayment with 1 in paGetPayment
+    And EC replies to nodo-dei-pagamenti with the paGetPayment
+    And the Define activatePaymentNotice scenario executed successfully
+    When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+    Then check outcome is OK of activatePaymentNotice response
+
+
+     # Send Payment Outcome phase [PSRT_22]
+  Scenario: Execute sendPaymentOutcome request with 3 transfers and broadcast true for secondary EC and outcome KO
+    Given the Execute activatePaymentNotice request with 3 transfers and broadcast false for secondary EC scenario executed successfully
+    And the Define sendPaymentOutcome scenario executed successfully
+    And paymentToken with $activatePaymentNoticeResponse.paymentToken in sendPaymentOutcome
+    And outcome with KO in sendPaymentOutcome
+    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+    Then check outcome is OK of sendPaymentOutcome response
+    And check EC receives paSendRT not properly with noticeNumber $activatePaymentNotice.noticeNumber
+
+
+
+      # Activate phase - 3 transfers in paGetPayment transferList (2 for primary EC and 1 for secondary EC) and broadcast true for 2 station of secondary EC [PSRT_25]
+  Scenario: Execute activatePaymentNotice request with 3 transfers, 2 for primary EC and 1 for secondary EC, and broadcast true for 2 station of secondary EC
+    Given the Execute verifyPaymentNotice request scenario executed successfully
+    And the Define activatePaymentNotice scenario executed successfully
+    And lastPayment with 0 in paGetPayment
+    And transferList with <transferList><transfer><idTransfer>1</idTransfer><transferAmount>2.00</transferAmount><fiscalCodePA>77777777777</fiscalCodePA><IBAN>IT45R0760103200000000001016</IBAN><remittanceInformation>testPaGetPayment</remittanceInformation><transferCategory>paGetPaymentTest</transferCategory></transfer><transfer><idTransfer>2</idTransfer><transferAmount>3.00</transferAmount><fiscalCodePA>44444444444</fiscalCodePA><IBAN>IT45R0760103200000000001016</IBAN><remittanceInformation>test</remittanceInformation><transferCategory>test</transferCategory></transfer><transfer><idTransfer>3</idTransfer><transferAmount>5.00</transferAmount><fiscalCodePA>90000000001</fiscalCodePA><IBAN>IT45R0760103200000000001016</IBAN><remittanceInformation>test</remittanceInformation><transferCategory>test</transferCategory></transfer></transferList> in paGetPayment
+    And EC replies to nodo-dei-pagamenti with the paGetPayment
+    # TODO And broadcast with true in NODO4_CFG.PA_STAZIONE_PA for OBJ_ID with 1201
+	When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+    Then check outcome is OK of activatePaymentNotice response
+
+  # Send Payment Outcome phase [PSRT_25]
+  Scenario: Execute sendPaymentOutcome request with 3 transfers, 2 for primary EC and 1 for secondary EC, and broadcast true for 2 station of secondary EC
+    Given the Execute activatePaymentNotice request with 3 transfers, 2 for primary EC and 1 for secondary EC, and broadcast true for 2 station of secondary EC scenario executed successfully
+    And lastPayment with 0 in paGetPayment
+    And paymentToken with $activatePaymentNoticeResponse.paymentToken in sendPaymentOutcome
+    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+    Then check outcome is OK of sendPaymentOutcome response
+    And check EC receives paSendRT properly with noticeNumber $activatePaymentNotice.noticeNumber
+    And check EC receives paSendRT properly having in the receipt $activatePaymentNotice.fiscalCode as fiscalcode
+    And check EC receives paSendRT properly having in the transfer with idTransfer 1 the same fiscalCodePA of paGetPayment
+
+
+
+ # Activate phase - 3 transfers in paGetPayment transferList (2 for primary EC and 1 for secondary EC) and broadcast true for 1 station of secondary EC [PSRT_26]
+  Scenario: Execute activatePaymentNotice request with 3 transfers, 2 for primary EC and 1 for secondary EC, and broadcast true for 1 station of secondary EC
+    Given the Execute verifyPaymentNotice request scenario executed successfully
+    And the Define activatePaymentNotice scenario executed successfully
+    And the Define paGetPayment scenario executed successfully
+    And transferList with <transferList><transfer><idTransfer>1</idTransfer><transferAmount>2.00</transferAmount><fiscalCodePA>77777777777</fiscalCodePA><IBAN>IT45R0760103200000000001016</IBAN><remittanceInformation>testPaGetPayment</remittanceInformation><transferCategory>paGetPaymentTest</transferCategory></transfer><transfer><idTransfer>2</idTransfer><transferAmount>3.00</transferAmount><fiscalCodePA>44444444444</fiscalCodePA><IBAN>IT45R0760103200000000001016</IBAN><remittanceInformation>test</remittanceInformation><transferCategory>test</transferCategory></transfer><transfer><idTransfer>3</idTransfer><transferAmount>5.00</transferAmount><fiscalCodePA>90000000001</fiscalCodePA><IBAN>IT45R0760103200000000001016</IBAN><remittanceInformation>test</remittanceInformation><transferCategory>test</transferCategory></transfer></transferList> in paGetPayment
+    And EC replies to nodo-dei-pagamenti with the paGetPayment
+    # TODO And broadcast with true in NODO4_CFG.PA_STAZIONE_PA for OBJ_ID with 1201
+	When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+    Then check outcome is OK of activatePaymentNotice response
+
+  # Send Payment Outcome phase [PSRT_26]
+  Scenario: Execute sendPaymentOutcome request with 3 transfers, 2 for primary EC and 1 for secondary EC, and broadcast true for 1 station of secondary EC
+    Given the Execute activatePaymentNotice request with 3 transfers, 2 for primary EC and 1 for secondary EC, and broadcast true for 1 station of secondary EC scenario executed successfully
+    And the Define sendPaymentOutcome scenario executed successfully
+    And paymentToken with $activatePaymentNoticeResponse.paymentToken in sendPaymentOutcome
+    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+    Then check outcome is OK of sendPaymentOutcome response
+    And check EC receives paSendRT properly with noticeNumber $activatePaymentNotice.noticeNumber
+    And check EC receives paSendRT properly having in the receipt $activatePaymentNotice.fiscalCode as fiscalcode
+    And check EC receives paSendRT properly having in the transfer with idTransfer 2 the same fiscalCodePA of paGetPayment
