@@ -28,33 +28,36 @@ Feature: check syntax KO for paaAttivaRPT
         Given EC old version
 
     Scenario Outline:
-        Given initial XML paaAttivaRPT
-            # MODIFICARE IL TIPO DI RISPOSTA (https://pagopa.atlassian.net/wiki/spaces/PAG/pages/493617751/Analisi+paaAttivaRPT)
+        Given initial XML paaAttivaRPTRisposta
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
             xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
                 <soapenv:Header/>
                 <soapenv:Body>
-                    <nod:activatePaymentNoticeReq>
-                        <idPSP>70000000001</idPSP>
-                        <idBrokerPSP>70000000001</idBrokerPSP>
-                        <idChannel>70000000001_01</idChannel>
-                        <password>pwdpwdpwd</password>
-                        <idempotencyKey>#idempotency_key#</idempotencyKey>
-                        <qrCode>
-                            <fiscalCode>#creditor_institution_code#</fiscalCode>
-                            <noticeNumber>#notice_number#</noticeNumber>
-                        </qrCode>
-                        <amount>10.00</amount>
-                        <dueDate>2021-12-31</dueDate>
-                        <paymentNote>causale</paymentNote>
-                    </nod:activatePaymentNoticeReq>
+                    <nod:paaAttivaRPTRisposta>
+                        <esito>OK</esito>
+                        <datiPagamento>
+                            <importoSingoloVersamento>importo_singolo_versamento</importoSingoloVersamento>
+                            <ibanAccredito>iban_accredito</ibanAccredito>
+                            <bicAccredito>bic_accredito</bicAccredito>
+                            <enteBeneficiario>ente_beneficiario</enteBeneficiario>
+                            <credenzialiPagatore>credenziali_pagatore</credenzialiPagatore>
+                            <causaleVersamento>causale_versamento</causaleVersamento>
+                            <spezzoniCausaleVersamento>
+                                <spezzoneCausaleVersamento>spezzone_causale_versamento</spezzoneCausaleVersamento>
+                                <spezzoneStrutturaCausaleVersamento>
+                                    <causaleSpezzone>causale_spezzone</causaleSpezzone>
+                                    <importoSpezzone>importo_spezzone</importoSpezzone>
+                                </spezzoneStrutturaCausaleVersamento>
+                            </spezzoniCausaleVersamento>
+                        </datiPagamento>
+                    </nod:paaAttivaRPTRisposta>
                 </soapenv:Body>
             </soapenv:Envelope>
             """
-        And <tag> with <tag_value> paaAttivaRPT
-        And if outcome is KO set fault to None in paaAttivaRPT
-        And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
+        And <tag> with <tag_value> in paaAttivaRPTRisposta
+        And if outcome is KO set fault to None in paaAttivaRPTRisposta
+        And EC replies to nodo-dei-pagamenti with the paaAttivaRPTRisposta
         When psp sends soap activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNotice response
         And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of activatePaymentNotice response

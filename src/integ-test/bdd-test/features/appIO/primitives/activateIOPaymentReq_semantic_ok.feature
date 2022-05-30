@@ -59,4 +59,4 @@ Feature: Semantic checks for activateIOPaymentReq - OK
         Examples:
             | tag            | tag_value              | soapUI test |
             | idempotencyKey | 12345678901_1244gtg684 | SEM_AIPR_17 |
-            | idBrokerPSP | 80000000001 | SEM_AIPR_18 |
+            | idempotencyKey | 80000000001_1244gtg684 | SEM_AIPR_18 |

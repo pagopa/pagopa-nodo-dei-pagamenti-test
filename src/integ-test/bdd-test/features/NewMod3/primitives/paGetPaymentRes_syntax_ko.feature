@@ -5,23 +5,23 @@ Feature: Syntax checks for paGetPaymentRes - KO
       And initial XML activatePaymentNotice
          """
          <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-            <soapenv:Header />
-            <soapenv:Body>
-               <nod:activatePaymentNoticeReq>
-                  <idPSP>70000000001</idPSP>
-                  <idBrokerPSP>70000000001</idBrokerPSP>
-                  <idChannel>70000000001_01</idChannel>
-                  <password>pwdpwdpwd</password>
-                  <idempotencyKey>#idempotency_key#</idempotencyKey>
-                  <qrCode>
-                     <fiscalCode>#creditor_institution_code#</fiscalCode>
-                     <noticeNumber>#notice_number#</noticeNumber>
-                  </qrCode>
-                  <amount>10.00</amount>
-                  <dueDate>2021-12-31</dueDate>
-                  <paymentNote>causale</paymentNote>
-               </nod:activatePaymentNoticeReq>
-            </soapenv:Body>
+         <soapenv:Header />
+         <soapenv:Body>
+         <nod:activatePaymentNoticeReq>
+         <idPSP>70000000001</idPSP>
+         <idBrokerPSP>70000000001</idBrokerPSP>
+         <idChannel>70000000001_01</idChannel>
+         <password>pwdpwdpwd</password>
+         <idempotencyKey>#idempotency_key#</idempotencyKey>
+         <qrCode>
+         <fiscalCode>#creditor_institution_code#</fiscalCode>
+         <noticeNumber>#notice_number#</noticeNumber>
+         </qrCode>
+         <amount>10.00</amount>
+         <dueDate>2021-12-31</dueDate>
+         <paymentNote>causale</paymentNote>
+         </nod:activatePaymentNoticeReq>
+         </soapenv:Body>
          </soapenv:Envelope>
          """
       And EC new version
@@ -31,18 +31,18 @@ Feature: Syntax checks for paGetPaymentRes - KO
       Given initial XML paGetPayment
          """
          <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
-            <soapenv:Header/>
-            <soapenv:Body>
-               <paf:paGetPaymentRes>
-                  <outcome>#outcome#</outcome>
-                  <fault>
-                     <faultCode>#faultCode#</faultCode>
-                     <faultString>#faultString#</faultString>
-                     <id>#id#</id>
-                     <description>#description#</description>
-                  </fault>
-               </paf:paGetPaymentRes>
-            </soapenv:Body>
+         <soapenv:Header/>
+         <soapenv:Body>
+         <paf:paGetPaymentRes>
+         <outcome>#outcome#</outcome>
+         <fault>
+         <faultCode>#faultCode#</faultCode>
+         <faultString>#faultString#</faultString>
+         <id>#id#</id>
+         <description>#description#</description>
+         </fault>
+         </paf:paGetPaymentRes>
+         </soapenv:Body>
          </soapenv:Envelope>
          """
       And <elem> with <tagvalue> in paGetPayment
@@ -52,82 +52,83 @@ Feature: Syntax checks for paGetPaymentRes - KO
       Then check outcome is KO of activatePaymentNotice response
       And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of activatePaymentNotice response
       Examples:
-         | elem                | tagvalue | soapUI test |
-         | soapenv:Body        | Empty    | SIN_PGPR_02 |
-         | soapenv:Body        | None     | SIN_PGPR_03 |
-         | paf:paGetPaymentRes | None     | SIN_PGPR_05 |
-         | paf:paGetPaymentRes | Empty    | SIN_PGPR_06 |
-         | outcome             | None     | SIN_PGPR_07 |
-         | outcome             | Empty    | SIN_PGPR_08 |
-         | outcome             | PP       | SIN_PGPR_09 |
-         | outcome             | KO       | SIN_PGPR_10 |
+         | elem                | tagvalue     | soapUI test |
+         | soapenv:Body        | Empty        | SIN_PGPR_02 |
+         | soapenv:Body        | None         | SIN_PGPR_03 |
+         | soapenv:Body        | RemoveParent | SIN_PGPR_04 |
+         | paf:paGetPaymentRes | None         | SIN_PGPR_05 |
+         | paf:paGetPaymentRes | Empty        | SIN_PGPR_06 |
+         | outcome             | None         | SIN_PGPR_07 |
+         | outcome             | Empty        | SIN_PGPR_08 |
+         | outcome             | PP           | SIN_PGPR_09 |
+         | outcome             | KO           | SIN_PGPR_10 |
 
 
    Scenario Outline: Check PPT_STAZIONE_INT_PA_ERRORE_RESPONSE error on invalid body element value
       Given initial XML paGetPayment
          """
          <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
-            <soapenv:Header />
-            <soapenv:Body>
-               <paf:paGetPaymentRes>
-                  <outcome>OK</outcome>
-                  <data>
-                     <creditorReferenceId>$iuv</creditorReferenceId>
-                     <paymentAmount>10.00</paymentAmount>
-                     <dueDate>2021-12-31</dueDate>
-                     <!--Optional:-->
-                     <retentionDate>2021-12-31T12:12:12</retentionDate>
-                     <!--Optional:-->
-                     <lastPayment>1</lastPayment>
-                     <description>description</description>
-                     <!--Optional:-->
-                     <companyName>company</companyName>
-                     <!--Optional:-->
-                     <officeName>office</officeName>
-                     <debtor>
-                        <uniqueIdentifier>
-                           <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-                           <entityUniqueIdentifierValue>77777777777</entityUniqueIdentifierValue>
-                        </uniqueIdentifier>
-                        <fullName>paGetPaymentName</fullName>
-                        <!--Optional:-->
-                        <streetName>paGetPaymentStreet</streetName>
-                        <!--Optional:-->
-                        <civicNumber>paGetPayment99</civicNumber>
-                        <!--Optional:-->
-                        <postalCode>20155</postalCode>
-                        <!--Optional:-->
-                        <city>paGetPaymentCity</city>
-                        <!--Optional:-->
-                        <stateProvinceRegion>paGetPaymentState</stateProvinceRegion>
-                        <!--Optional:-->
-                        <country>IT</country>
-                        <!--Optional:-->
-                        <e-mail>paGetPayment@test.it</e-mail>
-                     </debtor>
-                     <!--Optional:-->
-                     <transferList>
-                        <!--1 to 5 repetitions:-->
-                        <transfer>
-                           <idTransfer>1</idTransfer>
-                           <transferAmount>10.00</transferAmount>
-                           <fiscalCodePA>77777777777</fiscalCodePA>
-                           <IBAN>IT45R0760103200000000001016</IBAN>
-                           <remittanceInformation>testPaGetPayment</remittanceInformation>
-                           <transferCategory>paGetPaymentTest</transferCategory>
-                        </transfer>
-                     </transferList>
-                     <!--Optional:-->
-                     <metadata>
-                        <!--1 to 10 repetitions:-->
-                        <mapEntry>
-                           <key>1</key>
-                           <value>22</value>
-                        </mapEntry>
-                     </metadata>
-                  </data>
-               </paf:paGetPaymentRes>
-            </soapenv:Body>
+         <soapenv:Header />
+         <soapenv:Body>
+         <paf:paGetPaymentRes>
+         <outcome>OK</outcome>
+         <data>
+         <creditorReferenceId>$iuv</creditorReferenceId>
+         <paymentAmount>10.00</paymentAmount>
+         <dueDate>2021-12-31</dueDate>
+         <!--Optional:-->
+         <retentionDate>2021-12-31T12:12:12</retentionDate>
+         <!--Optional:-->
+         <lastPayment>1</lastPayment>
+         <description>description</description>
+         <!--Optional:-->
+         <companyName>company</companyName>
+         <!--Optional:-->
+         <officeName>office</officeName>
+         <debtor>
+         <uniqueIdentifier>
+         <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
+         <entityUniqueIdentifierValue>77777777777</entityUniqueIdentifierValue>
+         </uniqueIdentifier>
+         <fullName>paGetPaymentName</fullName>
+         <!--Optional:-->
+         <streetName>paGetPaymentStreet</streetName>
+         <!--Optional:-->
+         <civicNumber>paGetPayment99</civicNumber>
+         <!--Optional:-->
+         <postalCode>20155</postalCode>
+         <!--Optional:-->
+         <city>paGetPaymentCity</city>
+         <!--Optional:-->
+         <stateProvinceRegion>paGetPaymentState</stateProvinceRegion>
+         <!--Optional:-->
+         <country>IT</country>
+         <!--Optional:-->
+         <e-mail>paGetPayment@test.it</e-mail>
+         </debtor>
+         <!--Optional:-->
+         <transferList>
+         <!--1 to 5 repetitions:-->
+         <transfer>
+         <idTransfer>1</idTransfer>
+         <transferAmount>10.00</transferAmount>
+         <fiscalCodePA>77777777777</fiscalCodePA>
+         <IBAN>IT45R0760103200000000001016</IBAN>
+         <remittanceInformation>testPaGetPayment</remittanceInformation>
+         <transferCategory>paGetPaymentTest</transferCategory>
+         </transfer>
+         </transferList>
+         <!--Optional:-->
+         <metadata>
+         <!--1 to 10 repetitions:-->
+         <mapEntry>
+         <key>1</key>
+         <value>22</value>
+         </mapEntry>
+         </metadata>
+         </data>
+         </paf:paGetPaymentRes>
+         </soapenv:Body>
          </soapenv:Envelope>
          """
       And <tag> with <tagvalue> in paGetPayment
@@ -138,6 +139,7 @@ Feature: Syntax checks for paGetPaymentRes - KO
       Examples:
          | tag                         | tagvalue                                                                                                                                                                                                                                                          | soapUI test   |
          | data                        | None                                                                                                                                                                                                                                                              | SIN_PGPR_11   |
+         | data                        | RemoveParent                                                                                                                                                                                                                                                      | SIN_PGPR_12   |
          | data                        | Empty                                                                                                                                                                                                                                                             | SIN_PGPR_13   |
          | creditorReferenceId         | None                                                                                                                                                                                                                                                              | SIN_PGPR_14   |
          | creditorReferenceId         | Empty                                                                                                                                                                                                                                                             | SIN_PGPR_15   |
@@ -172,8 +174,10 @@ Feature: Syntax checks for paGetPaymentRes - KO
          | officeName                  | test di prova per una lunghezza superiore a 140 caratteri alfanumerici, per verificare che il nodo risponda PPT_STAZIONE_INT_PA_ERRORE_RESPONSE                                                                                                                   | SIN_PGPR_43   |
          | debtor                      | Empty                                                                                                                                                                                                                                                             | SIN_PGPR_44   |
          | debtor                      | None                                                                                                                                                                                                                                                              | SIN_PGPR_45   |
+         | debtor                      | RemoveParent                                                                                                                                                                                                                                                      | SIN_PGPR_46   |
          | uniqueIdentifier            | Empty                                                                                                                                                                                                                                                             | SIN_PGPR_47   |
          | uniqueIdentifier            | None                                                                                                                                                                                                                                                              | SIN_PGPR_48   |
+         | uniqueIdentifier            | RemoveParent                                                                                                                                                                                                                                                      | SIN_PGPR_49   |
          | entityUniqueIdentifierType  | None                                                                                                                                                                                                                                                              | SIN_PGPR_50   |
          | entityUniqueIdentifierType  | Empty                                                                                                                                                                                                                                                             | SIN_PGPR_51   |
          | entityUniqueIdentifierType  | H                                                                                                                                                                                                                                                                 | SIN_PGPR_52   |
@@ -201,6 +205,7 @@ Feature: Syntax checks for paGetPaymentRes - KO
          | e-mail                      | provaprovaprovaprovaprovaprovaprovaprovaprovaprovaprovaprovaprovaprovaprovaprovaprovaprovaprovaprovaprovaprovaprovaprovaprovaprovaprovaprovaprovaprovaprovaprovaprovaprovaprovaprovaprovaprovaprovaprovaprovaprovaprovaprovaprovaprovaprovaprovaprovapr@gmail.com | SIN_PGPR_81   |
          | transferList                | Empty                                                                                                                                                                                                                                                             | SIN_PGPR_82   |
          | transferList                | None                                                                                                                                                                                                                                                              | SIN_PGPR_83   |
+         | transferList                | RemoveParent                                                                                                                                                                                                                                                      | SIN_PGPR_84   |
          | transfer                    | Empty                                                                                                                                                                                                                                                             | SIN_PGPR_85   |
          | transfer                    | None                                                                                                                                                                                                                                                              | SIN_PGPR_86   |
          | transfer                    | Occurrences,6                                                                                                                                                                                                                                                     | SIN_PGPR_87   |
@@ -232,6 +237,7 @@ Feature: Syntax checks for paGetPaymentRes - KO
          | transferCategory            | Empty                                                                                                                                                                                                                                                             | SIN_PGPR_112  |
          | transferCategory            | test di prova per una lunghezza superiore a 140 caratteri alfanumerici, per verificare che il nodo risponda PPT_STAZIONE_INT_PA_ERRORE_RESPONSE                                                                                                                   | SIN_PGPR_113  |
          | metadata                    | Empty                                                                                                                                                                                                                                                             | SIN_PGPR_114  |
+         | metadata                    | RemoveParent                                                                                                                                                                                                                                                      | SIN_PGPR_116  |
          | mapEntry                    | Empty                                                                                                                                                                                                                                                             | SIN_PGPR_117  |
          | mapEntry                    | None                                                                                                                                                                                                                                                              | SIN_PGPR_118  |
          | mapEntry                    | Occurrences,11                                                                                                                                                                                                                                                    | SIN_PGPR_119  |

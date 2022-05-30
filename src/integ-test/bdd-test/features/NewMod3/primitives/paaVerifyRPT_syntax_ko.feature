@@ -46,7 +46,7 @@ Feature: check syntax KO for paaVerificaRPTRes
                 </soapenv:Body>
             </soapenv:Envelope>
             """
-        And <tag> with <tag_value> paaVerificaRPTRes
+        And <tag> with <tag_value> in paaVerificaRPTRes
         And if esito is KO set fault to None in paaVerificaRPTRes
         And EC replies to nodo-dei-pagamenti with the paaVerificaRPTRes
         When psp sends soap verifyPaymentNotice to nodo-dei-pagamenti

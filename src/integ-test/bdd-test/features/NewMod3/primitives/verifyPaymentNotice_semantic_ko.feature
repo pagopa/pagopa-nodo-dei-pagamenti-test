@@ -1,4 +1,4 @@
-Feature:  semantic checks for verifyPaymentReq
+Feature: Semantic checks for verifyPaymentReq - KO
 
   Background:
     Given systems up
@@ -117,7 +117,7 @@ Feature:  semantic checks for verifyPaymentReq
   # station value check: combination fiscalCode-noticeNumber identifies a station corresponding to an ID_STAZIONE value with field ENABLED = N in NODO4_CFG.STAZIONI table of nodo-dei-pagamenti database [SEM_VPNR_13]
   Scenario: Check PPT_STAZIONE_INT_PA_DISABILITATA error on disabled station
     Given fiscalCode with 77777777777 in verifyPaymentNotice
-    And noticeNumber with 006456789012345478 in verifyPaymentNotice
+    And noticeNumber with 314456789012345478 in verifyPaymentNotice
     When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
     Then check outcome is KO of verifyPaymentNotice response
     And check faultCode is PPT_STAZIONE_INT_PA_DISABILITATA of verifyPaymentNotice response

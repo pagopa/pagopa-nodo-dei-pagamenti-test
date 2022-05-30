@@ -63,7 +63,6 @@ def step_impl(context, primitive):
 
     setattr(context, primitive, payload)
 
-
 @given('{elem} with {value} in {action}')
 def step_impl(context, elem, value, action):
     # use - to skip
@@ -71,9 +70,6 @@ def step_impl(context, elem, value, action):
         value = utils.replace_local_variables(value, context)
         value = utils.replace_global_variables(value, context)
         xml = utils.manipulate_soap_action(getattr(context, action), elem, value)
-        print('######################################')
-        print(xml)
-        print('######################################')
         setattr(context, action, xml)
 
 
@@ -109,9 +105,6 @@ def step_impl(context, job_name, seconds):
 @then('check {tag} is {value} of {primitive} response')
 def step_impl(context, tag, value, primitive):
     soap_response = getattr(context, primitive + RESPONSE)
-    print('#########################################')
-    print(soap_response.content)
-    print('#########################################')
     if 'xml' in soap_response.headers['content-type']:
         my_document = parseString(soap_response.content)
         if len(my_document.getElementsByTagName('faultCode')) > 0:

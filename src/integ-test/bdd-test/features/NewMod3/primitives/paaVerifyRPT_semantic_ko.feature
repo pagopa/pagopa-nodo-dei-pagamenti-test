@@ -28,7 +28,7 @@ Feature: check semantic paaVerifyRPT - KO
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
                 <soapenv:Header/>
                 <soapenv:Body>
-                    <nod:activatePaymentNoticeReq>
+                    <nod:paaVerificaRPTRisposta>
                         <idPSP>70000000001</idPSP>
                         <idBrokerPSP>70000000001</idBrokerPSP>
                         <idChannel>70000000001_01</idChannel>
@@ -41,11 +41,11 @@ Feature: check semantic paaVerifyRPT - KO
                         <amount>10.00</amount>
                         <dueDate>2021-12-31</dueDate>
                         <paymentNote>causale</paymentNote>
-                    </nod:activatePaymentNoticeReq>
+                    </nod:paaVerificaRPTRisposta>
                 </soapenv:Body>
             </soapenv:Envelope>
             """
-        And <tag> with <tag_value> paaVerificaRPTRes
+        And <tag> with <tag_value> in paaVerificaRPTRes
         And EC replies to nodo-dei-pagamenti with the paaVerificaRPTRes
         When psp sends soap verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is KO of verifyPaymentNotice response
