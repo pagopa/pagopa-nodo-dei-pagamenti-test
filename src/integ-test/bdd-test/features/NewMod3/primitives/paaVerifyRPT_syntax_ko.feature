@@ -23,10 +23,10 @@ Feature: check syntax KO for paaVerificaRPTRes
         Given EC old version
 
     Scenario Outline:
-        Given initial XML paaVerificaRPTRes
+        Given initial XML paaVerificaRPTRisposta
             # MODIFICARE IL TIPO DI RISPOSTA (https://pagopa.atlassian.net/wiki/spaces/PAG/pages/493585266/Analisi+paaVerificaRPT)
             """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
                 <soapenv:Header/>
                 <soapenv:Body>
                     <nod:activatePaymentNoticeReq>
@@ -46,12 +46,12 @@ Feature: check syntax KO for paaVerificaRPTRes
                 </soapenv:Body>
             </soapenv:Envelope>
             """
-        And <tag> with <tag_value> in paaVerificaRPTRes
-        And if esito is KO set fault to None in paaVerificaRPTRes
-        And EC replies to nodo-dei-pagamenti with the paaVerificaRPTRes
+        And <tag> with <tag_value> in paaVerificaRPTRisposta
+        And if esito is KO set fault to None in paaVerificaRPTRisposta
+        And EC replies to nodo-dei-pagamenti with the paaVerificaRPTRisposta
         When psp sends soap verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is KO of verifyPaymentNotice response
-        And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONS of verifyPaymentNotice response
+        And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of verifyPaymentNotice response
         Examples:
             | tag                               | tag_value                                                                                                                                     | soapUI test   |
             | soapenv:Body                      | None                                                                                                                                          | SIN_PVRPTR_02 |

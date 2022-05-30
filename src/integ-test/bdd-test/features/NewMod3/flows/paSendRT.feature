@@ -196,7 +196,7 @@ Feature: process tests for paSendRT
     And check EC receives paSendRT properly with noticeNumber $activatePaymentNotice.noticeNumber
     And check EC receives paSendRT properly having in the receipt $activatePaymentNotice.fiscalCode as fiscalcode
 
-  # Activate phase [PSRT_04]
+  # Activate phase [PSRT_03]
   Scenario: Execute activatePaymentNotice request with lastPayment to 0
     Given the Execute verifyPaymentNotice request scenario executed successfully
     And the Define paGetPayment scenario executed successfully
@@ -591,6 +591,7 @@ Feature: process tests for paSendRT
   # Send Payment Outcome phase [PSRT_25]
   Scenario: Execute sendPaymentOutcome request with 3 transfers, 2 for primary EC and 1 for secondary EC, and broadcast true for 2 station of secondary EC
     Given the Execute activatePaymentNotice request with 3 transfers, 2 for primary EC and 1 for secondary EC, and broadcast true for 2 station of secondary EC scenario executed successfully
+    And EC wait for 15 seconds at paSendRT response
     And lastPayment with 0 in paGetPayment
     And paymentToken with $activatePaymentNoticeResponse.paymentToken in sendPaymentOutcome
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -615,6 +616,7 @@ Feature: process tests for paSendRT
   # Send Payment Outcome phase [PSRT_26]
   Scenario: Execute sendPaymentOutcome request with 3 transfers, 2 for primary EC and 1 for secondary EC, and broadcast true for 1 station of secondary EC
     Given the Execute activatePaymentNotice request with 3 transfers, 2 for primary EC and 1 for secondary EC, and broadcast true for 1 station of secondary EC scenario executed successfully
+    And EC wait for 15 seconds at paSendRT response
     And the Define sendPaymentOutcome scenario executed successfully
     And paymentToken with $activatePaymentNoticeResponse.paymentToken in sendPaymentOutcome
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -622,3 +624,55 @@ Feature: process tests for paSendRT
     And check EC receives paSendRT properly with noticeNumber $activatePaymentNotice.noticeNumber
     And check EC receives paSendRT properly having in the receipt $activatePaymentNotice.fiscalCode as fiscalcode
     And check EC receives paSendRT properly having in the transfer with idTransfer 2 the same fiscalCodePA of paGetPayment
+
+
+          # Send Payment Outcome phase [PSRT_23]
+  Scenario: Execute sendPaymentOutcome request with 3 transfer and broadcast true for stations of secondary EC and outcome KO
+    Given the Execute activatePaymentNotice request with 3 transfer and broadcast true station of secondary EC scenario executed successfully
+    And EC wait for 15 seconds at paSendRT response
+    And the Define sendPaymentOutcome scenario executed successfully
+    And paymentToken with $activatePaymentNoticeResponse.paymentToken in sendPaymentOutcome
+    And outcome with OK in sendPaymentOutcome
+    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+    Then check outcome is OK of sendPaymentOutcome response
+    And check EC receives paSendRT not properly with noticeNumber $activatePaymentNotice.noticeNumber
+
+
+      # Activate phase [PSRT_23]
+  Scenario: Execute activatePaymentNotice request with lastPayment to 1
+    Given the Execute verifyPaymentNotice request scenario executed successfully
+    And the Define paGetPayment scenario executed successfully
+    And EC replies to nodo-dei-pagamenti with the paGetPayment
+    And the Define activatePaymentNotice scenario executed successfully
+    When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+    Then check outcome is OK of activatePaymentNotice response
+
+
+    # Send Payment Outcome phase [PSRT_27]
+  Scenario: Execute sendPaymentOutcome request with 1 transfer and 1 broadcast false for stations of secondary EC and outcome KO
+    Given the Execute activatePaymentNotice request with 1 transfer and 1 broadcast false station of secondary EC scenario executed successfully
+    And EC wait for 15 seconds at paSendRT response
+    And the Define sendPaymentOutcome scenario executed successfully
+    And paymentToken with $activatePaymentNoticeResponse.paymentToken in sendPaymentOutcome
+    And outcome with OK in sendPaymentOutcome
+    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+    Then check outcome is OK of sendPaymentOutcome response
+    And check EC receives paSendRT not properly with noticeNumber $activatePaymentNotice.noticeNumber
+
+
+      # Activate phase [PSRT_27]
+  Scenario: Execute activatePaymentNotice request with lastPayment to 1
+    Given the Execute verifyPaymentNotice request scenario executed successfully
+    And the Define paGetPayment scenario executed successfully
+    And EC replies to nodo-dei-pagamenti with the paGetPayment
+    And the Define activatePaymentNotice scenario executed successfully
+    When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+    Then check outcome is OK of activatePaymentNotice response
+
+
+  # Mod3Cancel Phase - [PSRT_29]
+  Scenario: Execute mod3Cancel poller with 3 transfers with expiration time
+    Given the Execute activatePaymentNotice request with 3 transfers with expiration time scenario executed successfully
+    When job mod3Cancel triggered after 3 seconds
+    Then verify the HTTP status code of mod3Cancel response is 200
+    And check EC receives paSendRT not properly with noticeNumber $activatePaymentNotice.noticeNumber

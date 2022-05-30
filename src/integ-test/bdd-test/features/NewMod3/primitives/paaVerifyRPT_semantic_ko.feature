@@ -22,10 +22,10 @@ Feature: check semantic paaVerifyRPT - KO
             """
 
     Scenario Outline:
-        Given initial XML paaVerificaRPTRes
+        Given initial XML paaVerifyRPTRes
             # MODIFICARE IL TIPO DI RISPOSTA (https://pagopa.atlassian.net/wiki/spaces/PAG/pages/493585266/Analisi+paaVerificaRPT)
             """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
                 <soapenv:Header/>
                 <soapenv:Body>
                     <nod:paaVerificaRPTRisposta>
@@ -45,8 +45,8 @@ Feature: check semantic paaVerifyRPT - KO
                 </soapenv:Body>
             </soapenv:Envelope>
             """
-        And <tag> with <tag_value> in paaVerificaRPTRes
-        And EC replies to nodo-dei-pagamenti with the paaVerificaRPTRes
+        And <tag> with <tag_value> in paaVerifyRPTRes
+        And EC replies to nodo-dei-pagamenti with the paaVerifyRPTRes
         When psp sends soap verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is KO of verifyPaymentNotice response
         And check faultCode is PPT_IBAN_NON_CENSITO of verifyPaymentNotice response
