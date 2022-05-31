@@ -52,7 +52,7 @@ Feature: Semantic checks for activateIOPaymentReq - OK
             </soapenv:Envelope>
             """
 
-    Scenario Outline: Scenario Outline name
+    Scenario Outline: Check Unknown/Disabled PSP in idempotencyKey
         Given <tag> with <tag_value> in activateIOPayment
         When psp sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response

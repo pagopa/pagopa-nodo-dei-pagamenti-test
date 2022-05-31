@@ -1,5 +1,6 @@
 import json
 import random
+from sre_constants import ASSERT
 import time
 from xml.dom.minidom import parseString
 
@@ -89,6 +90,7 @@ def step_impl(context, sender, soap_primitive, receiver):
     print("nodo soap_request sent >>>", getattr(context, soap_primitive))
 
     soap_response = requests.post(url_nodo, getattr(context, soap_primitive), headers=headers)
+    print(soap_response.content)
     setattr(context, soap_primitive + RESPONSE, soap_response)
 
     assert (soap_response.status_code == 200), f"status_code {soap_response.status_code}"
@@ -387,6 +389,21 @@ def step_impl(context):
            paGetPayment.get("response").get("soapenv:Envelope").get("soapenv:Body")[0].get("paf:paGetPaymentRes")[
                0].get(
                "data")[0].get("creditorReferenceId")[0]
+
+@step('save {primitive} response in {new_primitive}')
+def step_impl(context, primitive, new_primitive):
+    soap_response = getattr(context, primitive + RESPONSE)
+    setattr(context, new_primitive + RESPONSE, soap_response)
+
+
+@then('{response} response is equal to {response_1} response')
+def step_impl(context, response, response_1):
+    soap_response = getattr(context, response + RESPONSE).content.decode('utf-8')
+    soap_response_1 = getattr(context, response_1 + RESPONSE).content.decode('utf-8')
+    print("##############################")
+    print(soap_response, soap_response_1)
+    print("###############################")
+    assert soap_response == soap_response_1
 
 
 @then('activateIOPayment response and pspNotifyPayment request are consistent with paypal')
