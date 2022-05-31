@@ -2,7 +2,8 @@ Feature: check semantic paaVerifyRPT - KO
 
     Background:
         Given systems up
-        Given initial XML verifyPaymentNotice
+        And EC old version
+        And initial XML verifyPaymentNotice
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
                 <soapenv:Header/>
@@ -22,31 +23,34 @@ Feature: check semantic paaVerifyRPT - KO
             """
 
     Scenario Outline:
-        Given initial XML paaVerifyRPTRes
-            # MODIFICARE IL TIPO DI RISPOSTA (https://pagopa.atlassian.net/wiki/spaces/PAG/pages/493585266/Analisi+paaVerificaRPT)
+        Given initial XML paVerifyPaymentNotice
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
                 <soapenv:Header/>
                 <soapenv:Body>
                     <nod:paaVerificaRPTRisposta>
-                        <idPSP>70000000001</idPSP>
-                        <idBrokerPSP>70000000001</idBrokerPSP>
-                        <idChannel>70000000001_01</idChannel>
-                        <password>pwdpwdpwd</password>
-                        <idempotencyKey>#idempotency_key#</idempotencyKey>
-                        <qrCode>
-                            <fiscalCode>#creditor_institution_code#</fiscalCode>
-                            <noticeNumber>#notice_number#</noticeNumber>
-                        </qrCode>
-                        <amount>10.00</amount>
-                        <dueDate>2021-12-31</dueDate>
-                        <paymentNote>causale</paymentNote>
+                        <esito>OK</esito>
+                        <datiPagamentoPA>dati_pagamento_PA</datiPagamentoPA>
+                        <importoSingoloVersamento>
+                            <ibanAccredito>iban_accredito</ibanAccredito>
+                            <bicAccredito>bic_accredito</bicAccredito>
+                            <enteBeneficiario>ente_beneficiario</enteBeneficiario>
+                            <credenzialiPagatore>credenziali_pagatore</credenzialiPagatore>
+                            <causaleVersamento>causale_versamento</causaleVersamento>
+                            <spezzoniCausaleVersamento>
+                                <spezzoneCausaleVersamento>spezzone_causale_versamento</spezzoneCausaleVersamento>
+                                <spezzoneStrutturaCausaleVersamento>
+                                    <causaleSpezzone>causale_spezzone</causaleSpezzone>
+                                    <importoSpezzone>importo_spezzone</importoSpezzone>
+                                </spezzoneStrutturaCausaleVersamento>
+                            </spezzoniCausaleVersamento>
+                        </importoSingoloVersamento>
                     </nod:paaVerificaRPTRisposta>
                 </soapenv:Body>
             </soapenv:Envelope>
             """
-        And <tag> with <tag_value> in paaVerifyRPTRes
-        And EC replies to nodo-dei-pagamenti with the paaVerifyRPTRes
+        And <tag> with <tag_value> in paVerifyPaymentNotice
+        And EC replies to nodo-dei-pagamenti with the paVerifyPaymentNotice
         When psp sends soap verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is KO of verifyPaymentNotice response
         And check faultCode is PPT_IBAN_NON_CENSITO of verifyPaymentNotice response
