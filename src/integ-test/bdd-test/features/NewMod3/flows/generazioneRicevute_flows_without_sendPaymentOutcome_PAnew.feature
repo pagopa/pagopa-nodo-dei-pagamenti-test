@@ -149,7 +149,7 @@ Feature: process tests for generazioneRicevute
     Then verify the HTTP status code of mod3Cancel response is 200
     And EC replies to nodo-dei-pagamenti with the paGetPaymentRes
     #To Do implementare tutti gli altri test in funzione delle decisioni di pagopa
-    Then api-config executes the sql {sql_code} and check POSITION_RECEIPT
+    And api-config executes the sql {sql_code} and check POSITION_RECEIPT
     And api-config executes the sql {sql_code} and check POSITION_RECEIPT_TRANSFER 
     And api-config executes the sql {sql_code} and check POSITION_RECEIPT_RECIPIENT_STATUS
     And api-config executes the sql {sql_code} and check POSITION_RECEIPT_XML
