@@ -1,0 +1,1 @@
+behave -f html -o reports.html src/integ-test/bdd-test/features/NewMod3/primitives/paGetPaymentRes_syntax_ok.feature
