@@ -2,41 +2,39 @@ Feature: process tests for generazioneRicevute
 
   Background:
     Given systems up
-    And initial XML verifyPaymentNotice
+    And initial XML nodoInviaCarrelloRPT
       """
-      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-         <soapenv:Header/>
-         <soapenv:Body>
-            <nod:verifyPaymentNoticeReq>
-               <idPSP>70000000001</idPSP>
-               <idBrokerPSP>70000000001</idBrokerPSP>
-               <idChannel>70000000001_01</idChannel>
-               <password>pwdpwdpwd</password>
-               <qrCode>
-                  <fiscalCode>#creditor_institution_code#</fiscalCode>
-                  <noticeNumber>#notice_number#</noticeNumber>
-               </qrCode>
-            </nod:verifyPaymentNoticeReq>
-         </soapenv:Body>
-      </soapenv:Envelope>
+      <xsd:complexType name="nodoInviaCarrelloRPT">
+        <xsd:sequence>
+          <xsd:element name="password" type="ppt:stPassword" />
+          <xsd:element name="identificativoPSP" type="ppt:stText35" />
+          <xsd:element name="identificativoIntermediarioPSP" type="ppt:stText35" />
+          <xsd:element name="identificativoCanale" type="ppt:stText35" />
+          <xsd:element name="listaRPT" type="ppt:tipoListaRPT" />
+          <xsd:element name="requireLightPayment" type="ppt:stZeroUno" minOccurs="0" />
+          <xsd:element name="codiceConvenzione" type="ppt:stConvenzione" minOccurs="0" />
+          <xsd:element name="multiBeneficiario" type="xsd:1" minOccurs="0" />
+        </xsd:sequence>
+      </xsd:complexType>"
+}
       """
     And EC new version
 
   # Verify phase
-  Scenario: Execute verifyPaymentNotice request
-    When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
-    Then check outcome is OK of verifyPaymentNotice response
+  Scenario: Execute nodoInviaCarrelloRPT request
+    When PSP sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
+    Then check outcome is OK of nodoInviaCarrelloRPT response
 
 
-  # Activate Phase
-  Scenario: Execute activatePaymentNotice request
-    Given the Execute verifyPaymentNotice request scenario executed successfully
-    And initial XML activatePaymentNotice
+  # Payment/PSP choice phase
+  Scenario: Execute nodoChiediInformazioniPagamento request
+    Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
+    And initial XML nodoChiediInformazioniPagamento
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
           <soapenv:Header/>
           <soapenv:Body>
-              <nod:activatePaymentNoticeReq>
+              <nod:nodoChiediInformazioniPagamenti>
                   <idPSP>70000000001</idPSP>
                   <idBrokerPSP>70000000001</idBrokerPSP>
                   <idChannel>70000000001_01</idChannel>
@@ -54,43 +52,13 @@ Feature: process tests for generazioneRicevute
           </soapenv:Body>
       </soapenv:Envelope>
       """
-
-  Scenario: define paaAttivaRPTRes
-    Given initial XML paaAttivaRPTRisposta
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-            xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-                <soapenv:Header/>
-                <soapenv:Body>
-                    <nod:paaAttivaRPTRisposta>
-                        <esito>OK</esito>
-                        <datiPagamento>
-                            <importoSingoloVersamento>importo_singolo_versamento</importoSingoloVersamento>
-                            <ibanAccredito>iban_accredito</ibanAccredito>
-                            <bicAccredito>bic_accredito</bicAccredito>
-                            <enteBeneficiario>ente_beneficiario</enteBeneficiario>
-                            <credenzialiPagatore>credenziali_pagatore</credenzialiPagatore>
-                            <causaleVersamento>causale_versamento</causaleVersamento>
-                            <spezzoniCausaleVersamento>
-                                <spezzoneCausaleVersamento>spezzone_causale_versamento</spezzoneCausaleVersamento>
-                                <spezzoneStrutturaCausaleVersamento>
-                                    <causaleSpezzone>causale_spezzone</causaleSpezzone>
-                                    <importoSpezzone>importo_spezzone</importoSpezzone>
-                                </spezzoneStrutturaCausaleVersamento>
-                            </spezzoniCausaleVersamento>
-                        </datiPagamento>
-                    </nod:paaAttivaRPTRisposta>
-                </soapenv:Body>
-            </soapenv:Envelope>
-            """
-  # Activate phase
-  Scenario: Execute activatePaymentNotice request
     When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
+    # And db check 1 rt_activision
 
 
-  Scenario: Execute nodoInviaRPT request
-   Given And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
+    Scenario: Execute nodoInviaRPT request
+   Given the Execute activatePaymentNotice request scenario executed successfully
    And initial XML nodoInviaRPT
       """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -117,14 +85,12 @@ Feature: process tests for generazioneRicevute
     """
   #  When psp sends SOAP nodoInviaRPT to nodo-dei-pagamenti using the token of the activate phase
     When psp sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-    #Then db check rt_activation 1
-    And check outcome is OK of nodoInviaRPT response
-     
+    Then check outcome is OK of nodoInviaRPT response
 
-# Payment Outcome Phase outcome KO
-  Scenario: Execute sendPaymentOutcome request
+# Verify presence of lock Phase 
+  Scenario: Execute nodoNotificaAnnullamento request
     Given the nodoInviaRPT request scenario executed successfully
-    And initial XML sendPaymentOutcome
+    And initial XML nodoNotificaAnnullamento
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
          <soapenv:Header/>
@@ -135,7 +101,7 @@ Feature: process tests for generazioneRicevute
                <idChannel>70000000001_01</idChannel>
                <password>pwdpwdpwd</password>
                <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
-               <outcome>KO</outcome>
+               <outcome>OK</outcome>
                <details>
                   <paymentMethod>creditCard</paymentMethod>
                   <paymentChannel>app</paymentChannel>
@@ -162,36 +128,42 @@ Feature: process tests for generazioneRicevute
       </soapenv:Envelope>
       """
    
-	
 
-  # test execution
-   Scenario: Execution test DB_GR_22
+
+     # test execution part1
+   Scenario Outline: Execution test [annulli_01]
     Given the nodoInviaRPT request scenario executed successfully
-    When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-    Then check outcome is KO of sendPaymentOutcome response
-    #And db check 2 
-    #La tabella RT è opportunamente popolata
-    And api-config executes the sql {sql_code} and check RT 
-    #La tabella RT_VERSAMENTI è opportunamente popolata
-    And api-config executes the sql {sql_code} and check RT_VERSAMENTI
-    #La tabella POSITION_RECEIPT non è popolata 
-    And api-config executes the sql {sql_code} and check POSITION_RECEIPT
-    #La tabella RT_XML è opportunamente popolata
-    And api-config executes the sql {sql_code} and check RT_XML
-    #La tabella POSITION_RECEIPT_TRANSFER non è popolata
-    And api-config executes the sql {sql_code} and check POSITION_RECEIPT_TRANSFER
-    #La tabella POSITION_RECEIPT_XML non è popolata
-    And api-config executes the sql {sql_code} and check POSITION_RECEIPT_XML
-    #La tabella RPT_ACTIVATIONS è popolata in fase di activate e ripulita all'arrivo della nodoInviaRPT.
-    And api-config executes the sql {sql_code} and check RPT_ACTIVATIONS
-    
-    
+    When psp sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+    Then check outcome is KO of nodoInviaRPT response
+    #And db check 
+    #La tabella <nameX> è opportunamente popolata con i <record>
+    Examples:
+    | <nameX>                   | <record>                    |     test_SOAPUI |
+    | STATI_RPT                 | RPT_RICEVUTA_NODO           |     annulli_01  |
+    | STATI_RPT                 | RPT_ACCETTATA_NODO          |     annulli_01  |
+    | STATI_RPT                 | RPT_PARCHEGGIATA_NODO       |     annulli_01  |   
+    | STATI_RPT                 | RPT_ANNULLATA_WISP          |     annulli_01  | 
+    | STATI_CARRELLO            | CART_RICEVUTO_NODO          |     annulli_01  |
+    | STATI_CARRELLO            | CART_ACCETTATO_NODO         |     annulli_01  |
+    | STATI_CARRELLO            | CART_PARCHEGGIATO_NODO      |     annulli_01  |
+    | STATI_CARRELLO            | CART_ANNULLATO_WISP         |     annulli_01  |
+    |POSITION_PAYMENT_STATUS    | PAYING                      |     annulli_01  |
+    |POSITION_PAYMENT_STATUS    | CANCELLED                   |     annulli_01  |
+    |POSITION_STATUS            | PAYING                      |     annulli_01  |
+    |POSITION_STATUS            | INSERTED                    |     annulli_01  |
 
 
-
-
-
-
-
-
-
+        # test execution part2
+   Scenario Outline: Execution test [annulli_01]
+    Given the nodoInviaRPT request scenario executed successfully
+    When psp sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+    Then check outcome is KO of nodoInviaRPT response
+    #And db check 
+    #La tabella <nameY> è opportunamente popolata con gli <status>
+    Examples:
+    | <nameY>                           | <status>                     |     test_SOAPUI |
+    | STATI_RPT_SNAPSHOT                | RPT_ANNULLATA_WISP           |     annulli_01  |
+    | STATI_CARRELLO_SNAPSHOT           | CART_ANNULLATO_WISP          |     annulli_01  |
+    | POSITION_PAYMENT_STATUS           | CANCELLED                    |     annulli_01  |
+    | POSITION_PAYMENT_STATUS_SNAPSHOT  | INSERTED                     |     annulli_01  |
+   

@@ -3,7 +3,7 @@
 <html>
   <head>
     <title>Behave Test Report</title>
-    <meta content="text/html;charset=utf-8" http-equiv="Content-Type"/>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
     <style type="text/css">
       <!--
 body{font-size:0;color:#fff;margin:0;
@@ -109,29 +109,29 @@ function Collapsible_expandAllFailed()
   </head>
   <body>
     <div class="behave">
-      <div class="failed" id="behave-header">
+      <div id="behave-header">
         <div id="label">
           <h1>Behave Test Report</h1>
         </div>
         <div id="summary">
           <p id="totals">
-            <p id="feature_totals">Features: failed: 1</p>
-            <p id="scenario_totals">Scenarios: failed: 8</p>
-            <p id="step_totals">Steps: failed: 7, undefined: 7, skipped: 16, untested: 5</p>
+            <p id="feature_totals">Features: passed: 1</p>
+            <p id="scenario_totals">Scenarios: passed: 2</p>
+            <p id="step_totals">Steps: passed: 2, untested: 3</p>
           </p>
-          <p id="duration">Finished in 0.6 seconds</p>
+          <p id="duration">Finished in 46.1 seconds</p>
           <div id="expand-collapse">
-            <a href="#" id="expander" onclick="Collapsible_expandAll('scenario_steps')">Expand All</a>
+            <a id="expander" href="#" onclick="Collapsible_expandAll('scenario_steps')">Expand All</a>
             <span> | </span>
-            <a href="#" id="collapser" onclick="Collapsible_collapseAll('scenario_steps')">Collapse All</a>
+            <a id="collapser" href="#" onclick="Collapsible_collapseAll('scenario_steps')">Collapse All</a>
             <span> | </span>
-            <a href="#" id="failed_expander" onclick="Collapsible_expandAllFailed()">Expand All Failed</a>
+            <a id="failed_expander" href="#" onclick="Collapsible_expandAllFailed()">Expand All Failed</a>
           </div>
         </div>
       </div>
       <div class="feature">
         <h2>
-          <span class="val">Feature: process tests for nodoInviaCarrelloRPT</span>
+          <span class="val">Feature: Syntax checks for activateIOPaymentReq - OK</span>
         </h2>
         <span/>
       </div>
@@ -143,16 +143,16 @@ function Collapsible_expandAllFailed()
         <span/>
       </div>
       <div class="scenario">
-        <span class="scenario_file">src/integ-test/bdd-test/features/Mod1MB/primitives/nodoInviaCarrelloMultibeneficiario_processo.feature:32</span>
-        <h3 class="failed" onclick="Collapsible_toggle('scenario_0')">
-          <span class="val">Scenario: Execute nodoInviaCarrelloRPT request with multiBeneficiario to True</span>
+        <span class="scenario_file">src/integ-test/bdd-test/features/appIO/primitives/activateIOPayment_syntax_ok.feature:55</span>
+        <h3 onclick="Collapsible_toggle('scenario_0')">
+          <span class="val">Scenario: Check PPT_SINTASSI_EXTRAXSD error on invalid wsdl namespace</span>
         </h3>
         <ol class="scenario_steps" id="scenario_0">
           <li class="step passed">
             <div class="step_name">
               <span class="keyword">Given </span>
               <span class="step val">systems up</span>
-              <small class="step_duration">(0.068s)</small>
+              <small class="step_duration">(0.504s)</small>
             </div>
             <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:19</span>
@@ -169,8 +169,8 @@ function Collapsible_expandAllFailed()
               <tr>
                 <td>nodo-dei-pagamenti</td>
                 <td>http://localhost:9080/</td>
-                <td>nodo-dev-health/ready</td>
-                <td>nodo-dev/webservices/input</td>
+                <td>/nodo-dev-health/ready</td>
+                <td>/nodo-dev/webservices/input</td>
                 <td/>
               </tr>
               <tr>
@@ -187,89 +187,117 @@ function Collapsible_expandAllFailed()
               <span class="keyword">And </span>
               <span class="step val">
                 <span>initial XML </span>
-                <b>verifyPaymentNotice</b>
+                <b>activateIOPayment</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.009s)</small>
+              <small class="step_duration">(0.015s)</small>
             </div>
             <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:44</span>
             </div>
             <span class="embed"/>
             <div class="message">
-              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:ppt=&quot;http://ws.pagamenti.telematici.gov/ppthead&quot; xmlns:ws=&quot;http://ws.pagamenti.telematici.gov/&quot;&gt;
-&lt;soapenv:Header&gt;
-&lt;ppt:intestazioneCarrelloPPT&gt;
-&lt;identificativoIntermediarioPA&gt;${intermediarioPA}&lt;/identificativoIntermediarioPA&gt;
-&lt;identificativoStazioneIntermediarioPA&gt;${stazione}&lt;/identificativoStazioneIntermediarioPA&gt;
-&lt;identificativoCarrello&gt;${#TestCase#idCarrello}&lt;/identificativoCarrello&gt;
-&lt;/ppt:intestazioneCarrelloPPT&gt;
-&lt;/soapenv:Header&gt;
-&lt;soapenv:Body&gt;
-&lt;ws:nodoInviaCarrelloRPT&gt;
-&lt;password&gt;${password}&lt;/password&gt;
-&lt;identificativoPSP&gt;${pspAgid}&lt;/identificativoPSP&gt;
-&lt;identificativoIntermediarioPSP&gt;${intermediarioPSPAgid}&lt;/identificativoIntermediarioPSP&gt;
-&lt;identificativoCanale&gt;${canaleAgid}&lt;/identificativoCanale&gt;
-&lt;listaRPT&gt;
-${#TestCase#elementiListaRPT}
-&lt;/listaRPT&gt;
-&lt;requireLightPayment&gt;01&lt;/requireLightPayment&gt;
-&lt;multiBeneficiario&gt;1&lt;/multiBeneficiario&gt;
-&lt;/ws:nodoInviaCarrelloRPT&gt;
-&lt;/soapenv:Body&gt;
+              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd&quot;&gt;
+    &lt;soapenv:Header/&gt;
+    &lt;soapenv:Body&gt;
+        &lt;nod:activateIOPaymentReq&gt;
+            &lt;idPSP&gt;70000000001&lt;/idPSP&gt;
+            &lt;idBrokerPSP&gt;70000000001&lt;/idBrokerPSP&gt;
+            &lt;idChannel&gt;70000000001_01&lt;/idChannel&gt;
+            &lt;password&gt;pwdpwdpwd&lt;/password&gt;
+            &lt;!--Optional:--&gt;
+            &lt;idempotencyKey&gt;#idempotency_key#&lt;/idempotencyKey&gt;
+            &lt;qrCode&gt;
+                &lt;fiscalCode&gt;#creditor_institution_code#&lt;/fiscalCode&gt;
+                &lt;noticeNumber&gt;#notice_number#&lt;/noticeNumber&gt;
+            &lt;/qrCode&gt;
+            &lt;!--Optional:--&gt;
+            &lt;expirationTime&gt;12345&lt;/expirationTime&gt;
+            &lt;amount&gt;10.00&lt;/amount&gt;
+            &lt;!--Optional:--&gt;
+            &lt;dueDate&gt;2021-12-12&lt;/dueDate&gt;
+            &lt;!--Optional:--&gt;
+            &lt;paymentNote&gt;test&lt;/paymentNote&gt;
+            &lt;!--Optional:--&gt;
+            &lt;payer&gt;
+                &lt;uniqueIdentifier&gt;
+                    &lt;entityUniqueIdentifierType&gt;G&lt;/entityUniqueIdentifierType&gt;
+                    &lt;entityUniqueIdentifierValue&gt;44444444444&lt;/entityUniqueIdentifierValue&gt;
+                &lt;/uniqueIdentifier&gt;
+                &lt;fullName&gt;name&lt;/fullName&gt;
+                &lt;!--Optional:--&gt;
+                &lt;streetName&gt;street&lt;/streetName&gt;
+                &lt;!--Optional:--&gt;
+                &lt;civicNumber&gt;civic&lt;/civicNumber&gt;
+                &lt;!--Optional:--&gt;
+                &lt;postalCode&gt;code&lt;/postalCode&gt;
+                &lt;!--Optional:--&gt;
+                &lt;city&gt;city&lt;/city&gt;
+                &lt;!--Optional:--&gt;
+                &lt;stateProvinceRegion&gt;state&lt;/stateProvinceRegion&gt;
+                &lt;!--Optional:--&gt;
+                &lt;country&gt;IT&lt;/country&gt;
+                &lt;!--Optional:--&gt;
+                &lt;e-mail&gt;test.prova@gmail.com&lt;/e-mail&gt;
+            &lt;/payer&gt;
+        &lt;/nod:activateIOPaymentReq&gt;
+    &lt;/soapenv:Body&gt;
 &lt;/soapenv:Envelope&gt;
 </pre>
             </div>
           </li>
-          <li class="step failed">
+          <li class="step passed">
             <div class="step_name">
-              <span class="keyword">Given </span>
+              <span class="keyword">When </span>
               <span class="step val">
-                <span>the </span>
-                <b>Execute nodoInviaCarrelloRPT request with 5 deposits for both first and second RPT EC</b>
-                <span> scenario executed successfully</span>
+                <span/>
+                <b>psp</b>
+                <span> sends SOAP </span>
+                <b>activateIOPayment</b>
+                <span> to </span>
+                <b>nodo-dei-pagamenti</b>
+                <span/>
               </span>
-              <small class="step_duration">(0.002s)</small>
+              <small class="step_duration">(11.667s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:238</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:85</span>
             </div>
-            <span class="embed">
-              <a onclick="Collapsible_toggle('embed_1')">Error Message</a>
-              <pre id="embed_1" style="display: none">Traceback (most recent call last):
-  File &quot;c:\users\nicolo.isaia\desktop\python_dependencies_trash\venv\lib\site-packages\behave\model.py&quot;, line 1329, in run
-    match.run(runner.context)
-  File &quot;c:\users\nicolo.isaia\desktop\python_dependencies_trash\venv\lib\site-packages\behave\matchers.py&quot;, line 98, in run
-    self.func(context, *args, **kwargs)
-  File &quot;src\integ-test\bdd-test\features\steps\steps.py&quot;, line 242, in step_impl
-    [step.keyword + &quot; &quot; + step.name + &quot;\n\&quot;\&quot;\&quot;\n&quot; + (step.text or '') + &quot;\n\&quot;\&quot;\&quot;\n&quot; for step in phase.steps])
-AttributeError: 'NoneType' object has no attribute 'steps'
-
-Captured stdout:
-calling: nodo-dei-pagamenti -&gt; http://localhost:9080/
-calling -&gt; http://localhost:9080/nodo-dev-health/ready
-response: 200
-calling: mock-ec -&gt; http://localhost:8089/
-calling -&gt; http://localhost:8089/servizi/PagamentiTelematiciRPT/info
-response: 200</pre>
-                  
-            </span>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">Then </span>
+              <span class="step val">
+                <span>check </span>
+                <b>outcome</b>
+                <span> is </span>
+                <b>OK</b>
+                <span> of </span>
+                <b>activateIOPayment</b>
+                <span> response</span>
+              </span>
+              <small class="step_duration">(0.008s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:107</span>
+            </div>
+            <span class="embed"/>
           </li>
         </ol>
         <span/>
       </div>
       <div class="scenario">
-        <span class="scenario_file">src/integ-test/bdd-test/features/Mod1MB/primitives/nodoInviaCarrelloMultibeneficiario_processo.feature:48</span>
-        <h3 class="failed" onclick="Collapsible_toggle('scenario_1')">
-          <span class="val">Scenario Outline: Execute nodoInviaCarrelloRPT request with multiBeneficiario to True -- @1.1 </span>
+        <span class="scenario_file">src/integ-test/bdd-test/features/appIO/primitives/activateIOPayment_syntax_ok.feature:65</span>
+        <h3 onclick="Collapsible_toggle('scenario_1')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_EXTRASXSD error on invalid body element value -- @1.1 </span>
         </h3>
         <ol class="scenario_steps" id="scenario_1">
           <li class="step passed">
             <div class="step_name">
               <span class="keyword">Given </span>
               <span class="step val">systems up</span>
-              <small class="step_duration">(0.060s)</small>
+              <small class="step_duration">(0.292s)</small>
             </div>
             <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:19</span>
@@ -286,8 +314,8 @@ response: 200</pre>
               <tr>
                 <td>nodo-dei-pagamenti</td>
                 <td>http://localhost:9080/</td>
-                <td>nodo-dev-health/ready</td>
-                <td>nodo-dev/webservices/input</td>
+                <td>/nodo-dev-health/ready</td>
+                <td>/nodo-dev/webservices/input</td>
                 <td/>
               </tr>
               <tr>
@@ -304,95 +332,136 @@ response: 200</pre>
               <span class="keyword">And </span>
               <span class="step val">
                 <span>initial XML </span>
-                <b>verifyPaymentNotice</b>
+                <b>activateIOPayment</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.002s)</small>
+              <small class="step_duration">(0.004s)</small>
             </div>
             <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:44</span>
             </div>
             <span class="embed"/>
             <div class="message">
-              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:ppt=&quot;http://ws.pagamenti.telematici.gov/ppthead&quot; xmlns:ws=&quot;http://ws.pagamenti.telematici.gov/&quot;&gt;
-&lt;soapenv:Header&gt;
-&lt;ppt:intestazioneCarrelloPPT&gt;
-&lt;identificativoIntermediarioPA&gt;${intermediarioPA}&lt;/identificativoIntermediarioPA&gt;
-&lt;identificativoStazioneIntermediarioPA&gt;${stazione}&lt;/identificativoStazioneIntermediarioPA&gt;
-&lt;identificativoCarrello&gt;${#TestCase#idCarrello}&lt;/identificativoCarrello&gt;
-&lt;/ppt:intestazioneCarrelloPPT&gt;
-&lt;/soapenv:Header&gt;
-&lt;soapenv:Body&gt;
-&lt;ws:nodoInviaCarrelloRPT&gt;
-&lt;password&gt;${password}&lt;/password&gt;
-&lt;identificativoPSP&gt;${pspAgid}&lt;/identificativoPSP&gt;
-&lt;identificativoIntermediarioPSP&gt;${intermediarioPSPAgid}&lt;/identificativoIntermediarioPSP&gt;
-&lt;identificativoCanale&gt;${canaleAgid}&lt;/identificativoCanale&gt;
-&lt;listaRPT&gt;
-${#TestCase#elementiListaRPT}
-&lt;/listaRPT&gt;
-&lt;requireLightPayment&gt;01&lt;/requireLightPayment&gt;
-&lt;multiBeneficiario&gt;1&lt;/multiBeneficiario&gt;
-&lt;/ws:nodoInviaCarrelloRPT&gt;
-&lt;/soapenv:Body&gt;
+              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd&quot;&gt;
+    &lt;soapenv:Header/&gt;
+    &lt;soapenv:Body&gt;
+        &lt;nod:activateIOPaymentReq&gt;
+            &lt;idPSP&gt;70000000001&lt;/idPSP&gt;
+            &lt;idBrokerPSP&gt;70000000001&lt;/idBrokerPSP&gt;
+            &lt;idChannel&gt;70000000001_01&lt;/idChannel&gt;
+            &lt;password&gt;pwdpwdpwd&lt;/password&gt;
+            &lt;!--Optional:--&gt;
+            &lt;idempotencyKey&gt;#idempotency_key#&lt;/idempotencyKey&gt;
+            &lt;qrCode&gt;
+                &lt;fiscalCode&gt;#creditor_institution_code#&lt;/fiscalCode&gt;
+                &lt;noticeNumber&gt;#notice_number#&lt;/noticeNumber&gt;
+            &lt;/qrCode&gt;
+            &lt;!--Optional:--&gt;
+            &lt;expirationTime&gt;12345&lt;/expirationTime&gt;
+            &lt;amount&gt;10.00&lt;/amount&gt;
+            &lt;!--Optional:--&gt;
+            &lt;dueDate&gt;2021-12-12&lt;/dueDate&gt;
+            &lt;!--Optional:--&gt;
+            &lt;paymentNote&gt;test&lt;/paymentNote&gt;
+            &lt;!--Optional:--&gt;
+            &lt;payer&gt;
+                &lt;uniqueIdentifier&gt;
+                    &lt;entityUniqueIdentifierType&gt;G&lt;/entityUniqueIdentifierType&gt;
+                    &lt;entityUniqueIdentifierValue&gt;44444444444&lt;/entityUniqueIdentifierValue&gt;
+                &lt;/uniqueIdentifier&gt;
+                &lt;fullName&gt;name&lt;/fullName&gt;
+                &lt;!--Optional:--&gt;
+                &lt;streetName&gt;street&lt;/streetName&gt;
+                &lt;!--Optional:--&gt;
+                &lt;civicNumber&gt;civic&lt;/civicNumber&gt;
+                &lt;!--Optional:--&gt;
+                &lt;postalCode&gt;code&lt;/postalCode&gt;
+                &lt;!--Optional:--&gt;
+                &lt;city&gt;city&lt;/city&gt;
+                &lt;!--Optional:--&gt;
+                &lt;stateProvinceRegion&gt;state&lt;/stateProvinceRegion&gt;
+                &lt;!--Optional:--&gt;
+                &lt;country&gt;IT&lt;/country&gt;
+                &lt;!--Optional:--&gt;
+                &lt;e-mail&gt;test.prova@gmail.com&lt;/e-mail&gt;
+            &lt;/payer&gt;
+        &lt;/nod:activateIOPaymentReq&gt;
+    &lt;/soapenv:Body&gt;
 &lt;/soapenv:Envelope&gt;
 </pre>
             </div>
           </li>
-          <li class="step failed">
+          <li class="step passed">
             <div class="step_name">
               <span class="keyword">Given </span>
               <span class="step val">
                 <span/>
-                <b>RPT</b>
+                <b>idempotencyKey</b>
                 <span> with </span>
-                <b>1</b>
+                <b>None</b>
                 <span> in </span>
-                <b>nodoInviaCarrelloRPT</b>
+                <b>activateIOPayment</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.002s)</small>
+              <small class="step_duration">(0.003s)</small>
             </div>
             <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:67</span>
             </div>
-            <span class="embed">
-              <a onclick="Collapsible_toggle('embed_2')">Error Message</a>
-              <pre id="embed_2" style="display: none">Traceback (most recent call last):
-  File &quot;c:\users\nicolo.isaia\desktop\python_dependencies_trash\venv\lib\site-packages\behave\model.py&quot;, line 1329, in run
-    match.run(runner.context)
-  File &quot;c:\users\nicolo.isaia\desktop\python_dependencies_trash\venv\lib\site-packages\behave\matchers.py&quot;, line 98, in run
-    self.func(context, *args, **kwargs)
-  File &quot;src\integ-test\bdd-test\features\steps\steps.py&quot;, line 73, in step_impl
-    xml = utils.manipulate_soap_action(getattr(context, action), elem, value)
-  File &quot;c:\users\nicolo.isaia\desktop\python_dependencies_trash\venv\lib\site-packages\behave\runner.py&quot;, line 321, in __getattr__
-    raise AttributeError(msg)
-AttributeError: 'Context' object has no attribute 'nodoInviaCarrelloRPT'
-
-Captured stdout:
-calling: nodo-dei-pagamenti -&gt; http://localhost:9080/
-calling -&gt; http://localhost:9080/nodo-dev-health/ready
-response: 200
-calling: mock-ec -&gt; http://localhost:8089/
-calling -&gt; http://localhost:8089/servizi/PagamentiTelematiciRPT/info
-response: 200</pre>
-                  
-            </span>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">When </span>
+              <span class="step val">
+                <span/>
+                <b>psp</b>
+                <span> sends SOAP </span>
+                <b>activateIOPayment</b>
+                <span> to </span>
+                <b>nodo-dei-pagamenti</b>
+                <span/>
+              </span>
+              <small class="step_duration">(2.247s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:85</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">Then </span>
+              <span class="step val">
+                <span>check </span>
+                <b>outcome</b>
+                <span> is </span>
+                <b>OK</b>
+                <span> of </span>
+                <b>activateIOPayment</b>
+                <span> response</span>
+              </span>
+              <small class="step_duration">(0.002s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:107</span>
+            </div>
+            <span class="embed"/>
           </li>
         </ol>
         <span/>
       </div>
       <div class="scenario">
-        <span class="scenario_file">src/integ-test/bdd-test/features/Mod1MB/primitives/nodoInviaCarrelloMultibeneficiario_processo.feature:49</span>
-        <h3 class="failed" onclick="Collapsible_toggle('scenario_2')">
-          <span class="val">Scenario Outline: Execute nodoInviaCarrelloRPT request with multiBeneficiario to True -- @1.2 </span>
+        <span class="scenario_file">src/integ-test/bdd-test/features/appIO/primitives/activateIOPayment_syntax_ok.feature:66</span>
+        <h3 onclick="Collapsible_toggle('scenario_2')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_EXTRASXSD error on invalid body element value -- @1.2 </span>
         </h3>
         <ol class="scenario_steps" id="scenario_2">
           <li class="step passed">
             <div class="step_name">
               <span class="keyword">Given </span>
               <span class="step val">systems up</span>
-              <small class="step_duration">(0.053s)</small>
+              <small class="step_duration">(0.401s)</small>
             </div>
             <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:19</span>
@@ -409,8 +478,8 @@ response: 200</pre>
               <tr>
                 <td>nodo-dei-pagamenti</td>
                 <td>http://localhost:9080/</td>
-                <td>nodo-dev-health/ready</td>
-                <td>nodo-dev/webservices/input</td>
+                <td>/nodo-dev-health/ready</td>
+                <td>/nodo-dev/webservices/input</td>
                 <td/>
               </tr>
               <tr>
@@ -427,51 +496,75 @@ response: 200</pre>
               <span class="keyword">And </span>
               <span class="step val">
                 <span>initial XML </span>
-                <b>verifyPaymentNotice</b>
+                <b>activateIOPayment</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.003s)</small>
+              <small class="step_duration">(0.004s)</small>
             </div>
             <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:44</span>
             </div>
             <span class="embed"/>
             <div class="message">
-              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:ppt=&quot;http://ws.pagamenti.telematici.gov/ppthead&quot; xmlns:ws=&quot;http://ws.pagamenti.telematici.gov/&quot;&gt;
-&lt;soapenv:Header&gt;
-&lt;ppt:intestazioneCarrelloPPT&gt;
-&lt;identificativoIntermediarioPA&gt;${intermediarioPA}&lt;/identificativoIntermediarioPA&gt;
-&lt;identificativoStazioneIntermediarioPA&gt;${stazione}&lt;/identificativoStazioneIntermediarioPA&gt;
-&lt;identificativoCarrello&gt;${#TestCase#idCarrello}&lt;/identificativoCarrello&gt;
-&lt;/ppt:intestazioneCarrelloPPT&gt;
-&lt;/soapenv:Header&gt;
-&lt;soapenv:Body&gt;
-&lt;ws:nodoInviaCarrelloRPT&gt;
-&lt;password&gt;${password}&lt;/password&gt;
-&lt;identificativoPSP&gt;${pspAgid}&lt;/identificativoPSP&gt;
-&lt;identificativoIntermediarioPSP&gt;${intermediarioPSPAgid}&lt;/identificativoIntermediarioPSP&gt;
-&lt;identificativoCanale&gt;${canaleAgid}&lt;/identificativoCanale&gt;
-&lt;listaRPT&gt;
-${#TestCase#elementiListaRPT}
-&lt;/listaRPT&gt;
-&lt;requireLightPayment&gt;01&lt;/requireLightPayment&gt;
-&lt;multiBeneficiario&gt;1&lt;/multiBeneficiario&gt;
-&lt;/ws:nodoInviaCarrelloRPT&gt;
-&lt;/soapenv:Body&gt;
+              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd&quot;&gt;
+    &lt;soapenv:Header/&gt;
+    &lt;soapenv:Body&gt;
+        &lt;nod:activateIOPaymentReq&gt;
+            &lt;idPSP&gt;70000000001&lt;/idPSP&gt;
+            &lt;idBrokerPSP&gt;70000000001&lt;/idBrokerPSP&gt;
+            &lt;idChannel&gt;70000000001_01&lt;/idChannel&gt;
+            &lt;password&gt;pwdpwdpwd&lt;/password&gt;
+            &lt;!--Optional:--&gt;
+            &lt;idempotencyKey&gt;#idempotency_key#&lt;/idempotencyKey&gt;
+            &lt;qrCode&gt;
+                &lt;fiscalCode&gt;#creditor_institution_code#&lt;/fiscalCode&gt;
+                &lt;noticeNumber&gt;#notice_number#&lt;/noticeNumber&gt;
+            &lt;/qrCode&gt;
+            &lt;!--Optional:--&gt;
+            &lt;expirationTime&gt;12345&lt;/expirationTime&gt;
+            &lt;amount&gt;10.00&lt;/amount&gt;
+            &lt;!--Optional:--&gt;
+            &lt;dueDate&gt;2021-12-12&lt;/dueDate&gt;
+            &lt;!--Optional:--&gt;
+            &lt;paymentNote&gt;test&lt;/paymentNote&gt;
+            &lt;!--Optional:--&gt;
+            &lt;payer&gt;
+                &lt;uniqueIdentifier&gt;
+                    &lt;entityUniqueIdentifierType&gt;G&lt;/entityUniqueIdentifierType&gt;
+                    &lt;entityUniqueIdentifierValue&gt;44444444444&lt;/entityUniqueIdentifierValue&gt;
+                &lt;/uniqueIdentifier&gt;
+                &lt;fullName&gt;name&lt;/fullName&gt;
+                &lt;!--Optional:--&gt;
+                &lt;streetName&gt;street&lt;/streetName&gt;
+                &lt;!--Optional:--&gt;
+                &lt;civicNumber&gt;civic&lt;/civicNumber&gt;
+                &lt;!--Optional:--&gt;
+                &lt;postalCode&gt;code&lt;/postalCode&gt;
+                &lt;!--Optional:--&gt;
+                &lt;city&gt;city&lt;/city&gt;
+                &lt;!--Optional:--&gt;
+                &lt;stateProvinceRegion&gt;state&lt;/stateProvinceRegion&gt;
+                &lt;!--Optional:--&gt;
+                &lt;country&gt;IT&lt;/country&gt;
+                &lt;!--Optional:--&gt;
+                &lt;e-mail&gt;test.prova@gmail.com&lt;/e-mail&gt;
+            &lt;/payer&gt;
+        &lt;/nod:activateIOPaymentReq&gt;
+    &lt;/soapenv:Body&gt;
 &lt;/soapenv:Envelope&gt;
 </pre>
             </div>
           </li>
-          <li class="step failed">
+          <li class="step passed">
             <div class="step_name">
               <span class="keyword">Given </span>
               <span class="step val">
                 <span/>
-                <b>RPT</b>
+                <b>expirationTime</b>
                 <span> with </span>
-                <b>3</b>
+                <b>None</b>
                 <span> in </span>
-                <b>nodoInviaCarrelloRPT</b>
+                <b>activateIOPayment</b>
                 <span/>
               </span>
               <small class="step_duration">(0.002s)</small>
@@ -479,43 +572,60 @@ ${#TestCase#elementiListaRPT}
             <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:67</span>
             </div>
-            <span class="embed">
-              <a onclick="Collapsible_toggle('embed_3')">Error Message</a>
-              <pre id="embed_3" style="display: none">Traceback (most recent call last):
-  File &quot;c:\users\nicolo.isaia\desktop\python_dependencies_trash\venv\lib\site-packages\behave\model.py&quot;, line 1329, in run
-    match.run(runner.context)
-  File &quot;c:\users\nicolo.isaia\desktop\python_dependencies_trash\venv\lib\site-packages\behave\matchers.py&quot;, line 98, in run
-    self.func(context, *args, **kwargs)
-  File &quot;src\integ-test\bdd-test\features\steps\steps.py&quot;, line 73, in step_impl
-    xml = utils.manipulate_soap_action(getattr(context, action), elem, value)
-  File &quot;c:\users\nicolo.isaia\desktop\python_dependencies_trash\venv\lib\site-packages\behave\runner.py&quot;, line 321, in __getattr__
-    raise AttributeError(msg)
-AttributeError: 'Context' object has no attribute 'nodoInviaCarrelloRPT'
-
-Captured stdout:
-calling: nodo-dei-pagamenti -&gt; http://localhost:9080/
-calling -&gt; http://localhost:9080/nodo-dev-health/ready
-response: 200
-calling: mock-ec -&gt; http://localhost:8089/
-calling -&gt; http://localhost:8089/servizi/PagamentiTelematiciRPT/info
-response: 200</pre>
-                  
-            </span>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">When </span>
+              <span class="step val">
+                <span/>
+                <b>psp</b>
+                <span> sends SOAP </span>
+                <b>activateIOPayment</b>
+                <span> to </span>
+                <b>nodo-dei-pagamenti</b>
+                <span/>
+              </span>
+              <small class="step_duration">(2.221s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:85</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">Then </span>
+              <span class="step val">
+                <span>check </span>
+                <b>outcome</b>
+                <span> is </span>
+                <b>OK</b>
+                <span> of </span>
+                <b>activateIOPayment</b>
+                <span> response</span>
+              </span>
+              <small class="step_duration">(0.002s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:107</span>
+            </div>
+            <span class="embed"/>
           </li>
         </ol>
         <span/>
       </div>
       <div class="scenario">
-        <span class="scenario_file">src/integ-test/bdd-test/features/Mod1MB/primitives/nodoInviaCarrelloMultibeneficiario_processo.feature:53</span>
-        <h3 class="failed" onclick="Collapsible_toggle('scenario_3')">
-          <span class="val">Scenario: Execute nodoInviaCarrelloRPT request with multiBeneficiario to True</span>
+        <span class="scenario_file">src/integ-test/bdd-test/features/appIO/primitives/activateIOPayment_syntax_ok.feature:67</span>
+        <h3 onclick="Collapsible_toggle('scenario_3')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_EXTRASXSD error on invalid body element value -- @1.3 </span>
         </h3>
         <ol class="scenario_steps" id="scenario_3">
           <li class="step passed">
             <div class="step_name">
               <span class="keyword">Given </span>
               <span class="step val">systems up</span>
-              <small class="step_duration">(0.055s)</small>
+              <small class="step_duration">(0.130s)</small>
             </div>
             <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:19</span>
@@ -532,8 +642,8 @@ response: 200</pre>
               <tr>
                 <td>nodo-dei-pagamenti</td>
                 <td>http://localhost:9080/</td>
-                <td>nodo-dev-health/ready</td>
-                <td>nodo-dev/webservices/input</td>
+                <td>/nodo-dev-health/ready</td>
+                <td>/nodo-dev/webservices/input</td>
                 <td/>
               </tr>
               <tr>
@@ -550,88 +660,299 @@ response: 200</pre>
               <span class="keyword">And </span>
               <span class="step val">
                 <span>initial XML </span>
-                <b>verifyPaymentNotice</b>
+                <b>activateIOPayment</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.002s)</small>
+              <small class="step_duration">(0.005s)</small>
             </div>
             <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:44</span>
             </div>
             <span class="embed"/>
             <div class="message">
-              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:ppt=&quot;http://ws.pagamenti.telematici.gov/ppthead&quot; xmlns:ws=&quot;http://ws.pagamenti.telematici.gov/&quot;&gt;
-&lt;soapenv:Header&gt;
-&lt;ppt:intestazioneCarrelloPPT&gt;
-&lt;identificativoIntermediarioPA&gt;${intermediarioPA}&lt;/identificativoIntermediarioPA&gt;
-&lt;identificativoStazioneIntermediarioPA&gt;${stazione}&lt;/identificativoStazioneIntermediarioPA&gt;
-&lt;identificativoCarrello&gt;${#TestCase#idCarrello}&lt;/identificativoCarrello&gt;
-&lt;/ppt:intestazioneCarrelloPPT&gt;
-&lt;/soapenv:Header&gt;
-&lt;soapenv:Body&gt;
-&lt;ws:nodoInviaCarrelloRPT&gt;
-&lt;password&gt;${password}&lt;/password&gt;
-&lt;identificativoPSP&gt;${pspAgid}&lt;/identificativoPSP&gt;
-&lt;identificativoIntermediarioPSP&gt;${intermediarioPSPAgid}&lt;/identificativoIntermediarioPSP&gt;
-&lt;identificativoCanale&gt;${canaleAgid}&lt;/identificativoCanale&gt;
-&lt;listaRPT&gt;
-${#TestCase#elementiListaRPT}
-&lt;/listaRPT&gt;
-&lt;requireLightPayment&gt;01&lt;/requireLightPayment&gt;
-&lt;multiBeneficiario&gt;1&lt;/multiBeneficiario&gt;
-&lt;/ws:nodoInviaCarrelloRPT&gt;
-&lt;/soapenv:Body&gt;
+              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd&quot;&gt;
+    &lt;soapenv:Header/&gt;
+    &lt;soapenv:Body&gt;
+        &lt;nod:activateIOPaymentReq&gt;
+            &lt;idPSP&gt;70000000001&lt;/idPSP&gt;
+            &lt;idBrokerPSP&gt;70000000001&lt;/idBrokerPSP&gt;
+            &lt;idChannel&gt;70000000001_01&lt;/idChannel&gt;
+            &lt;password&gt;pwdpwdpwd&lt;/password&gt;
+            &lt;!--Optional:--&gt;
+            &lt;idempotencyKey&gt;#idempotency_key#&lt;/idempotencyKey&gt;
+            &lt;qrCode&gt;
+                &lt;fiscalCode&gt;#creditor_institution_code#&lt;/fiscalCode&gt;
+                &lt;noticeNumber&gt;#notice_number#&lt;/noticeNumber&gt;
+            &lt;/qrCode&gt;
+            &lt;!--Optional:--&gt;
+            &lt;expirationTime&gt;12345&lt;/expirationTime&gt;
+            &lt;amount&gt;10.00&lt;/amount&gt;
+            &lt;!--Optional:--&gt;
+            &lt;dueDate&gt;2021-12-12&lt;/dueDate&gt;
+            &lt;!--Optional:--&gt;
+            &lt;paymentNote&gt;test&lt;/paymentNote&gt;
+            &lt;!--Optional:--&gt;
+            &lt;payer&gt;
+                &lt;uniqueIdentifier&gt;
+                    &lt;entityUniqueIdentifierType&gt;G&lt;/entityUniqueIdentifierType&gt;
+                    &lt;entityUniqueIdentifierValue&gt;44444444444&lt;/entityUniqueIdentifierValue&gt;
+                &lt;/uniqueIdentifier&gt;
+                &lt;fullName&gt;name&lt;/fullName&gt;
+                &lt;!--Optional:--&gt;
+                &lt;streetName&gt;street&lt;/streetName&gt;
+                &lt;!--Optional:--&gt;
+                &lt;civicNumber&gt;civic&lt;/civicNumber&gt;
+                &lt;!--Optional:--&gt;
+                &lt;postalCode&gt;code&lt;/postalCode&gt;
+                &lt;!--Optional:--&gt;
+                &lt;city&gt;city&lt;/city&gt;
+                &lt;!--Optional:--&gt;
+                &lt;stateProvinceRegion&gt;state&lt;/stateProvinceRegion&gt;
+                &lt;!--Optional:--&gt;
+                &lt;country&gt;IT&lt;/country&gt;
+                &lt;!--Optional:--&gt;
+                &lt;e-mail&gt;test.prova@gmail.com&lt;/e-mail&gt;
+            &lt;/payer&gt;
+        &lt;/nod:activateIOPaymentReq&gt;
+    &lt;/soapenv:Body&gt;
 &lt;/soapenv:Envelope&gt;
 </pre>
             </div>
           </li>
-          <li class="step failed">
+          <li class="step passed">
             <div class="step_name">
               <span class="keyword">Given </span>
               <span class="step val">
-                <span>the </span>
-                <b>Execute nodoInviaCarrelloRPT request with 2 deposits for second RPT EC</b>
-                <span> scenario executed successfully</span>
+                <span/>
+                <b>dueDate</b>
+                <span> with </span>
+                <b>None</b>
+                <span> in </span>
+                <b>activateIOPayment</b>
+                <span/>
               </span>
-              <small class="step_duration">(0.002s)</small>
+              <small class="step_duration">(0.003s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:238</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:67</span>
             </div>
-            <span class="embed">
-              <a onclick="Collapsible_toggle('embed_4')">Error Message</a>
-              <pre id="embed_4" style="display: none">Traceback (most recent call last):
-  File &quot;c:\users\nicolo.isaia\desktop\python_dependencies_trash\venv\lib\site-packages\behave\model.py&quot;, line 1329, in run
-    match.run(runner.context)
-  File &quot;c:\users\nicolo.isaia\desktop\python_dependencies_trash\venv\lib\site-packages\behave\matchers.py&quot;, line 98, in run
-    self.func(context, *args, **kwargs)
-  File &quot;src\integ-test\bdd-test\features\steps\steps.py&quot;, line 242, in step_impl
-    [step.keyword + &quot; &quot; + step.name + &quot;\n\&quot;\&quot;\&quot;\n&quot; + (step.text or '') + &quot;\n\&quot;\&quot;\&quot;\n&quot; for step in phase.steps])
-AttributeError: 'NoneType' object has no attribute 'steps'
-
-Captured stdout:
-calling: nodo-dei-pagamenti -&gt; http://localhost:9080/
-calling -&gt; http://localhost:9080/nodo-dev-health/ready
-response: 200
-calling: mock-ec -&gt; http://localhost:8089/
-calling -&gt; http://localhost:8089/servizi/PagamentiTelematiciRPT/info
-response: 200</pre>
-                  
-            </span>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">When </span>
+              <span class="step val">
+                <span/>
+                <b>psp</b>
+                <span> sends SOAP </span>
+                <b>activateIOPayment</b>
+                <span> to </span>
+                <b>nodo-dei-pagamenti</b>
+                <span/>
+              </span>
+              <small class="step_duration">(1.973s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:85</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">Then </span>
+              <span class="step val">
+                <span>check </span>
+                <b>outcome</b>
+                <span> is </span>
+                <b>OK</b>
+                <span> of </span>
+                <b>activateIOPayment</b>
+                <span> response</span>
+              </span>
+              <small class="step_duration">(0.001s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:107</span>
+            </div>
+            <span class="embed"/>
           </li>
         </ol>
         <span/>
       </div>
       <div class="scenario">
-        <span class="scenario_file">src/integ-test/bdd-test/features/Mod1MB/primitives/nodoInviaCarrelloMultibeneficiario_processo.feature:62</span>
-        <h3 class="failed" onclick="Collapsible_toggle('scenario_4')">
-          <span class="val">Scenario: Execute nodoInviaCarrelloRPT request with multiBeneficiario to True</span>
+        <span class="scenario_file">src/integ-test/bdd-test/features/appIO/primitives/activateIOPayment_syntax_ok.feature:68</span>
+        <h3 onclick="Collapsible_toggle('scenario_4')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_EXTRASXSD error on invalid body element value -- @1.4 </span>
         </h3>
         <ol class="scenario_steps" id="scenario_4">
           <li class="step passed">
             <div class="step_name">
               <span class="keyword">Given </span>
               <span class="step val">systems up</span>
+              <small class="step_duration">(0.116s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:19</span>
+            </div>
+            <span class="embed"/>
+            <table>
+              <tr>
+                <th>name</th>
+                <th>url</th>
+                <th>healthcheck</th>
+                <th>soap_service</th>
+                <th>rest_service</th>
+              </tr>
+              <tr>
+                <td>nodo-dei-pagamenti</td>
+                <td>http://localhost:9080/</td>
+                <td>/nodo-dev-health/ready</td>
+                <td>/nodo-dev/webservices/input</td>
+                <td/>
+              </tr>
+              <tr>
+                <td>mock-ec</td>
+                <td>http://localhost:8089/</td>
+                <td>servizi/PagamentiTelematiciRPT/info</td>
+                <td>servizi/PagamentiTelematiciRPT</td>
+                <td/>
+              </tr>
+            </table>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>initial XML </span>
+                <b>activateIOPayment</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.004s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:44</span>
+            </div>
+            <span class="embed"/>
+            <div class="message">
+              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd&quot;&gt;
+    &lt;soapenv:Header/&gt;
+    &lt;soapenv:Body&gt;
+        &lt;nod:activateIOPaymentReq&gt;
+            &lt;idPSP&gt;70000000001&lt;/idPSP&gt;
+            &lt;idBrokerPSP&gt;70000000001&lt;/idBrokerPSP&gt;
+            &lt;idChannel&gt;70000000001_01&lt;/idChannel&gt;
+            &lt;password&gt;pwdpwdpwd&lt;/password&gt;
+            &lt;!--Optional:--&gt;
+            &lt;idempotencyKey&gt;#idempotency_key#&lt;/idempotencyKey&gt;
+            &lt;qrCode&gt;
+                &lt;fiscalCode&gt;#creditor_institution_code#&lt;/fiscalCode&gt;
+                &lt;noticeNumber&gt;#notice_number#&lt;/noticeNumber&gt;
+            &lt;/qrCode&gt;
+            &lt;!--Optional:--&gt;
+            &lt;expirationTime&gt;12345&lt;/expirationTime&gt;
+            &lt;amount&gt;10.00&lt;/amount&gt;
+            &lt;!--Optional:--&gt;
+            &lt;dueDate&gt;2021-12-12&lt;/dueDate&gt;
+            &lt;!--Optional:--&gt;
+            &lt;paymentNote&gt;test&lt;/paymentNote&gt;
+            &lt;!--Optional:--&gt;
+            &lt;payer&gt;
+                &lt;uniqueIdentifier&gt;
+                    &lt;entityUniqueIdentifierType&gt;G&lt;/entityUniqueIdentifierType&gt;
+                    &lt;entityUniqueIdentifierValue&gt;44444444444&lt;/entityUniqueIdentifierValue&gt;
+                &lt;/uniqueIdentifier&gt;
+                &lt;fullName&gt;name&lt;/fullName&gt;
+                &lt;!--Optional:--&gt;
+                &lt;streetName&gt;street&lt;/streetName&gt;
+                &lt;!--Optional:--&gt;
+                &lt;civicNumber&gt;civic&lt;/civicNumber&gt;
+                &lt;!--Optional:--&gt;
+                &lt;postalCode&gt;code&lt;/postalCode&gt;
+                &lt;!--Optional:--&gt;
+                &lt;city&gt;city&lt;/city&gt;
+                &lt;!--Optional:--&gt;
+                &lt;stateProvinceRegion&gt;state&lt;/stateProvinceRegion&gt;
+                &lt;!--Optional:--&gt;
+                &lt;country&gt;IT&lt;/country&gt;
+                &lt;!--Optional:--&gt;
+                &lt;e-mail&gt;test.prova@gmail.com&lt;/e-mail&gt;
+            &lt;/payer&gt;
+        &lt;/nod:activateIOPaymentReq&gt;
+    &lt;/soapenv:Body&gt;
+&lt;/soapenv:Envelope&gt;
+</pre>
+            </div>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">Given </span>
+              <span class="step val">
+                <span/>
+                <b>paymentNote</b>
+                <span> with </span>
+                <b>None</b>
+                <span> in </span>
+                <b>activateIOPayment</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.003s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:67</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">When </span>
+              <span class="step val">
+                <span/>
+                <b>psp</b>
+                <span> sends SOAP </span>
+                <b>activateIOPayment</b>
+                <span> to </span>
+                <b>nodo-dei-pagamenti</b>
+                <span/>
+              </span>
+              <small class="step_duration">(1.790s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:85</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">Then </span>
+              <span class="step val">
+                <span>check </span>
+                <b>outcome</b>
+                <span> is </span>
+                <b>OK</b>
+                <span> of </span>
+                <b>activateIOPayment</b>
+                <span> response</span>
+              </span>
+              <small class="step_duration">(0.002s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:107</span>
+            </div>
+            <span class="embed"/>
+          </li>
+        </ol>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/appIO/primitives/activateIOPayment_syntax_ok.feature:69</span>
+        <h3 onclick="Collapsible_toggle('scenario_5')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_EXTRASXSD error on invalid body element value -- @1.5 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_5">
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">Given </span>
+              <span class="step val">systems up</span>
               <small class="step_duration">(0.055s)</small>
             </div>
             <div class="step_file">
@@ -649,8 +970,8 @@ response: 200</pre>
               <tr>
                 <td>nodo-dei-pagamenti</td>
                 <td>http://localhost:9080/</td>
-                <td>nodo-dev-health/ready</td>
-                <td>nodo-dev/webservices/input</td>
+                <td>/nodo-dev-health/ready</td>
+                <td>/nodo-dev/webservices/input</td>
                 <td/>
               </tr>
               <tr>
@@ -667,7 +988,7 @@ response: 200</pre>
               <span class="keyword">And </span>
               <span class="step val">
                 <span>initial XML </span>
-                <b>verifyPaymentNotice</b>
+                <b>activateIOPayment</b>
                 <span/>
               </span>
               <small class="step_duration">(0.004s)</small>
@@ -677,196 +998,126 @@ response: 200</pre>
             </div>
             <span class="embed"/>
             <div class="message">
-              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:ppt=&quot;http://ws.pagamenti.telematici.gov/ppthead&quot; xmlns:ws=&quot;http://ws.pagamenti.telematici.gov/&quot;&gt;
-&lt;soapenv:Header&gt;
-&lt;ppt:intestazioneCarrelloPPT&gt;
-&lt;identificativoIntermediarioPA&gt;${intermediarioPA}&lt;/identificativoIntermediarioPA&gt;
-&lt;identificativoStazioneIntermediarioPA&gt;${stazione}&lt;/identificativoStazioneIntermediarioPA&gt;
-&lt;identificativoCarrello&gt;${#TestCase#idCarrello}&lt;/identificativoCarrello&gt;
-&lt;/ppt:intestazioneCarrelloPPT&gt;
-&lt;/soapenv:Header&gt;
-&lt;soapenv:Body&gt;
-&lt;ws:nodoInviaCarrelloRPT&gt;
-&lt;password&gt;${password}&lt;/password&gt;
-&lt;identificativoPSP&gt;${pspAgid}&lt;/identificativoPSP&gt;
-&lt;identificativoIntermediarioPSP&gt;${intermediarioPSPAgid}&lt;/identificativoIntermediarioPSP&gt;
-&lt;identificativoCanale&gt;${canaleAgid}&lt;/identificativoCanale&gt;
-&lt;listaRPT&gt;
-${#TestCase#elementiListaRPT}
-&lt;/listaRPT&gt;
-&lt;requireLightPayment&gt;01&lt;/requireLightPayment&gt;
-&lt;multiBeneficiario&gt;1&lt;/multiBeneficiario&gt;
-&lt;/ws:nodoInviaCarrelloRPT&gt;
-&lt;/soapenv:Body&gt;
+              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd&quot;&gt;
+    &lt;soapenv:Header/&gt;
+    &lt;soapenv:Body&gt;
+        &lt;nod:activateIOPaymentReq&gt;
+            &lt;idPSP&gt;70000000001&lt;/idPSP&gt;
+            &lt;idBrokerPSP&gt;70000000001&lt;/idBrokerPSP&gt;
+            &lt;idChannel&gt;70000000001_01&lt;/idChannel&gt;
+            &lt;password&gt;pwdpwdpwd&lt;/password&gt;
+            &lt;!--Optional:--&gt;
+            &lt;idempotencyKey&gt;#idempotency_key#&lt;/idempotencyKey&gt;
+            &lt;qrCode&gt;
+                &lt;fiscalCode&gt;#creditor_institution_code#&lt;/fiscalCode&gt;
+                &lt;noticeNumber&gt;#notice_number#&lt;/noticeNumber&gt;
+            &lt;/qrCode&gt;
+            &lt;!--Optional:--&gt;
+            &lt;expirationTime&gt;12345&lt;/expirationTime&gt;
+            &lt;amount&gt;10.00&lt;/amount&gt;
+            &lt;!--Optional:--&gt;
+            &lt;dueDate&gt;2021-12-12&lt;/dueDate&gt;
+            &lt;!--Optional:--&gt;
+            &lt;paymentNote&gt;test&lt;/paymentNote&gt;
+            &lt;!--Optional:--&gt;
+            &lt;payer&gt;
+                &lt;uniqueIdentifier&gt;
+                    &lt;entityUniqueIdentifierType&gt;G&lt;/entityUniqueIdentifierType&gt;
+                    &lt;entityUniqueIdentifierValue&gt;44444444444&lt;/entityUniqueIdentifierValue&gt;
+                &lt;/uniqueIdentifier&gt;
+                &lt;fullName&gt;name&lt;/fullName&gt;
+                &lt;!--Optional:--&gt;
+                &lt;streetName&gt;street&lt;/streetName&gt;
+                &lt;!--Optional:--&gt;
+                &lt;civicNumber&gt;civic&lt;/civicNumber&gt;
+                &lt;!--Optional:--&gt;
+                &lt;postalCode&gt;code&lt;/postalCode&gt;
+                &lt;!--Optional:--&gt;
+                &lt;city&gt;city&lt;/city&gt;
+                &lt;!--Optional:--&gt;
+                &lt;stateProvinceRegion&gt;state&lt;/stateProvinceRegion&gt;
+                &lt;!--Optional:--&gt;
+                &lt;country&gt;IT&lt;/country&gt;
+                &lt;!--Optional:--&gt;
+                &lt;e-mail&gt;test.prova@gmail.com&lt;/e-mail&gt;
+            &lt;/payer&gt;
+        &lt;/nod:activateIOPaymentReq&gt;
+    &lt;/soapenv:Body&gt;
 &lt;/soapenv:Envelope&gt;
 </pre>
             </div>
           </li>
-          <li class="step failed">
-            <div class="step_name">
-              <span class="keyword">Given </span>
-              <span class="step val">
-                <span>the </span>
-                <b>Execute nodoInviaCarrelloRPT request with 4 deposits for first RPT and 1 for second RPT EC</b>
-                <span> scenario executed successfully</span>
-              </span>
-              <small class="step_duration">(0.002s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:238</span>
-            </div>
-            <span class="embed">
-              <a onclick="Collapsible_toggle('embed_5')">Error Message</a>
-              <pre id="embed_5" style="display: none">Traceback (most recent call last):
-  File &quot;c:\users\nicolo.isaia\desktop\python_dependencies_trash\venv\lib\site-packages\behave\model.py&quot;, line 1329, in run
-    match.run(runner.context)
-  File &quot;c:\users\nicolo.isaia\desktop\python_dependencies_trash\venv\lib\site-packages\behave\matchers.py&quot;, line 98, in run
-    self.func(context, *args, **kwargs)
-  File &quot;src\integ-test\bdd-test\features\steps\steps.py&quot;, line 242, in step_impl
-    [step.keyword + &quot; &quot; + step.name + &quot;\n\&quot;\&quot;\&quot;\n&quot; + (step.text or '') + &quot;\n\&quot;\&quot;\&quot;\n&quot; for step in phase.steps])
-AttributeError: 'NoneType' object has no attribute 'steps'
-
-Captured stdout:
-calling: nodo-dei-pagamenti -&gt; http://localhost:9080/
-calling -&gt; http://localhost:9080/nodo-dev-health/ready
-response: 200
-calling: mock-ec -&gt; http://localhost:8089/
-calling -&gt; http://localhost:8089/servizi/PagamentiTelematiciRPT/info
-response: 200</pre>
-                  
-            </span>
-          </li>
-        </ol>
-        <span/>
-      </div>
-      <div class="scenario">
-        <span class="scenario_file">src/integ-test/bdd-test/features/Mod1MB/primitives/nodoInviaCarrelloMultibeneficiario_processo.feature:69</span>
-        <h3 class="failed" onclick="Collapsible_toggle('scenario_5')">
-          <span class="val">Scenario: Execute nodoInviaCarrelloRPT request with multiBeneficiario to True</span>
-        </h3>
-        <ol class="scenario_steps" id="scenario_5">
           <li class="step passed">
             <div class="step_name">
               <span class="keyword">Given </span>
-              <span class="step val">systems up</span>
-              <small class="step_duration">(0.063s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:19</span>
-            </div>
-            <span class="embed"/>
-            <table>
-              <tr>
-                <th>name</th>
-                <th>url</th>
-                <th>healthcheck</th>
-                <th>soap_service</th>
-                <th>rest_service</th>
-              </tr>
-              <tr>
-                <td>nodo-dei-pagamenti</td>
-                <td>http://localhost:9080/</td>
-                <td>nodo-dev-health/ready</td>
-                <td>nodo-dev/webservices/input</td>
-                <td/>
-              </tr>
-              <tr>
-                <td>mock-ec</td>
-                <td>http://localhost:8089/</td>
-                <td>servizi/PagamentiTelematiciRPT/info</td>
-                <td>servizi/PagamentiTelematiciRPT</td>
-                <td/>
-              </tr>
-            </table>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
               <span class="step val">
-                <span>initial XML </span>
-                <b>verifyPaymentNotice</b>
+                <span/>
+                <b>payer</b>
+                <span> with </span>
+                <b>None</b>
+                <span> in </span>
+                <b>activateIOPayment</b>
                 <span/>
               </span>
               <small class="step_duration">(0.003s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:44</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:67</span>
             </div>
             <span class="embed"/>
-            <div class="message">
-              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:ppt=&quot;http://ws.pagamenti.telematici.gov/ppthead&quot; xmlns:ws=&quot;http://ws.pagamenti.telematici.gov/&quot;&gt;
-&lt;soapenv:Header&gt;
-&lt;ppt:intestazioneCarrelloPPT&gt;
-&lt;identificativoIntermediarioPA&gt;${intermediarioPA}&lt;/identificativoIntermediarioPA&gt;
-&lt;identificativoStazioneIntermediarioPA&gt;${stazione}&lt;/identificativoStazioneIntermediarioPA&gt;
-&lt;identificativoCarrello&gt;${#TestCase#idCarrello}&lt;/identificativoCarrello&gt;
-&lt;/ppt:intestazioneCarrelloPPT&gt;
-&lt;/soapenv:Header&gt;
-&lt;soapenv:Body&gt;
-&lt;ws:nodoInviaCarrelloRPT&gt;
-&lt;password&gt;${password}&lt;/password&gt;
-&lt;identificativoPSP&gt;${pspAgid}&lt;/identificativoPSP&gt;
-&lt;identificativoIntermediarioPSP&gt;${intermediarioPSPAgid}&lt;/identificativoIntermediarioPSP&gt;
-&lt;identificativoCanale&gt;${canaleAgid}&lt;/identificativoCanale&gt;
-&lt;listaRPT&gt;
-${#TestCase#elementiListaRPT}
-&lt;/listaRPT&gt;
-&lt;requireLightPayment&gt;01&lt;/requireLightPayment&gt;
-&lt;multiBeneficiario&gt;1&lt;/multiBeneficiario&gt;
-&lt;/ws:nodoInviaCarrelloRPT&gt;
-&lt;/soapenv:Body&gt;
-&lt;/soapenv:Envelope&gt;
-</pre>
-            </div>
           </li>
-          <li class="step failed">
+          <li class="step passed">
             <div class="step_name">
-              <span class="keyword">Given </span>
+              <span class="keyword">When </span>
               <span class="step val">
-                <span>the </span>
-                <b>Execute nodoInviaCarrelloRPT request with 5 deposits for first RPT and 1 for second RPT EC</b>
-                <span> scenario executed successfully</span>
+                <span/>
+                <b>psp</b>
+                <span> sends SOAP </span>
+                <b>activateIOPayment</b>
+                <span> to </span>
+                <b>nodo-dei-pagamenti</b>
+                <span/>
+              </span>
+              <small class="step_duration">(1.402s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:85</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">Then </span>
+              <span class="step val">
+                <span>check </span>
+                <b>outcome</b>
+                <span> is </span>
+                <b>OK</b>
+                <span> of </span>
+                <b>activateIOPayment</b>
+                <span> response</span>
               </span>
               <small class="step_duration">(0.001s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:238</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:107</span>
             </div>
-            <span class="embed">
-              <a onclick="Collapsible_toggle('embed_6')">Error Message</a>
-              <pre id="embed_6" style="display: none">Traceback (most recent call last):
-  File &quot;c:\users\nicolo.isaia\desktop\python_dependencies_trash\venv\lib\site-packages\behave\model.py&quot;, line 1329, in run
-    match.run(runner.context)
-  File &quot;c:\users\nicolo.isaia\desktop\python_dependencies_trash\venv\lib\site-packages\behave\matchers.py&quot;, line 98, in run
-    self.func(context, *args, **kwargs)
-  File &quot;src\integ-test\bdd-test\features\steps\steps.py&quot;, line 242, in step_impl
-    [step.keyword + &quot; &quot; + step.name + &quot;\n\&quot;\&quot;\&quot;\n&quot; + (step.text or '') + &quot;\n\&quot;\&quot;\&quot;\n&quot; for step in phase.steps])
-AttributeError: 'NoneType' object has no attribute 'steps'
-
-Captured stdout:
-calling: nodo-dei-pagamenti -&gt; http://localhost:9080/
-calling -&gt; http://localhost:9080/nodo-dev-health/ready
-response: 200
-calling: mock-ec -&gt; http://localhost:8089/
-calling -&gt; http://localhost:8089/servizi/PagamentiTelematiciRPT/info
-response: 200</pre>
-                  
-            </span>
+            <span class="embed"/>
           </li>
         </ol>
         <span/>
       </div>
       <div class="scenario">
-        <span class="scenario_file">src/integ-test/bdd-test/features/Mod1MB/primitives/nodoInviaCarrelloMultibeneficiario_processo.feature:78</span>
-        <h3 class="failed" onclick="Collapsible_toggle('scenario_6')">
-          <span class="val">Scenario: Execute nodoInviaCarrelloRPT request with Pa in RPT1</span>
+        <span class="scenario_file">src/integ-test/bdd-test/features/appIO/primitives/activateIOPayment_syntax_ok.feature:70</span>
+        <h3 onclick="Collapsible_toggle('scenario_6')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_EXTRASXSD error on invalid body element value -- @1.6 </span>
         </h3>
         <ol class="scenario_steps" id="scenario_6">
           <li class="step passed">
             <div class="step_name">
               <span class="keyword">Given </span>
               <span class="step val">systems up</span>
-              <small class="step_duration">(0.054s)</small>
+              <small class="step_duration">(0.087s)</small>
             </div>
             <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:19</span>
@@ -883,8 +1134,8 @@ response: 200</pre>
               <tr>
                 <td>nodo-dei-pagamenti</td>
                 <td>http://localhost:9080/</td>
-                <td>nodo-dev-health/ready</td>
-                <td>nodo-dev/webservices/input</td>
+                <td>/nodo-dev-health/ready</td>
+                <td>/nodo-dev/webservices/input</td>
                 <td/>
               </tr>
               <tr>
@@ -901,7 +1152,7 @@ response: 200</pre>
               <span class="keyword">And </span>
               <span class="step val">
                 <span>initial XML </span>
-                <b>verifyPaymentNotice</b>
+                <b>activateIOPayment</b>
                 <span/>
               </span>
               <small class="step_duration">(0.003s)</small>
@@ -911,85 +1162,126 @@ response: 200</pre>
             </div>
             <span class="embed"/>
             <div class="message">
-              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:ppt=&quot;http://ws.pagamenti.telematici.gov/ppthead&quot; xmlns:ws=&quot;http://ws.pagamenti.telematici.gov/&quot;&gt;
-&lt;soapenv:Header&gt;
-&lt;ppt:intestazioneCarrelloPPT&gt;
-&lt;identificativoIntermediarioPA&gt;${intermediarioPA}&lt;/identificativoIntermediarioPA&gt;
-&lt;identificativoStazioneIntermediarioPA&gt;${stazione}&lt;/identificativoStazioneIntermediarioPA&gt;
-&lt;identificativoCarrello&gt;${#TestCase#idCarrello}&lt;/identificativoCarrello&gt;
-&lt;/ppt:intestazioneCarrelloPPT&gt;
-&lt;/soapenv:Header&gt;
-&lt;soapenv:Body&gt;
-&lt;ws:nodoInviaCarrelloRPT&gt;
-&lt;password&gt;${password}&lt;/password&gt;
-&lt;identificativoPSP&gt;${pspAgid}&lt;/identificativoPSP&gt;
-&lt;identificativoIntermediarioPSP&gt;${intermediarioPSPAgid}&lt;/identificativoIntermediarioPSP&gt;
-&lt;identificativoCanale&gt;${canaleAgid}&lt;/identificativoCanale&gt;
-&lt;listaRPT&gt;
-${#TestCase#elementiListaRPT}
-&lt;/listaRPT&gt;
-&lt;requireLightPayment&gt;01&lt;/requireLightPayment&gt;
-&lt;multiBeneficiario&gt;1&lt;/multiBeneficiario&gt;
-&lt;/ws:nodoInviaCarrelloRPT&gt;
-&lt;/soapenv:Body&gt;
+              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd&quot;&gt;
+    &lt;soapenv:Header/&gt;
+    &lt;soapenv:Body&gt;
+        &lt;nod:activateIOPaymentReq&gt;
+            &lt;idPSP&gt;70000000001&lt;/idPSP&gt;
+            &lt;idBrokerPSP&gt;70000000001&lt;/idBrokerPSP&gt;
+            &lt;idChannel&gt;70000000001_01&lt;/idChannel&gt;
+            &lt;password&gt;pwdpwdpwd&lt;/password&gt;
+            &lt;!--Optional:--&gt;
+            &lt;idempotencyKey&gt;#idempotency_key#&lt;/idempotencyKey&gt;
+            &lt;qrCode&gt;
+                &lt;fiscalCode&gt;#creditor_institution_code#&lt;/fiscalCode&gt;
+                &lt;noticeNumber&gt;#notice_number#&lt;/noticeNumber&gt;
+            &lt;/qrCode&gt;
+            &lt;!--Optional:--&gt;
+            &lt;expirationTime&gt;12345&lt;/expirationTime&gt;
+            &lt;amount&gt;10.00&lt;/amount&gt;
+            &lt;!--Optional:--&gt;
+            &lt;dueDate&gt;2021-12-12&lt;/dueDate&gt;
+            &lt;!--Optional:--&gt;
+            &lt;paymentNote&gt;test&lt;/paymentNote&gt;
+            &lt;!--Optional:--&gt;
+            &lt;payer&gt;
+                &lt;uniqueIdentifier&gt;
+                    &lt;entityUniqueIdentifierType&gt;G&lt;/entityUniqueIdentifierType&gt;
+                    &lt;entityUniqueIdentifierValue&gt;44444444444&lt;/entityUniqueIdentifierValue&gt;
+                &lt;/uniqueIdentifier&gt;
+                &lt;fullName&gt;name&lt;/fullName&gt;
+                &lt;!--Optional:--&gt;
+                &lt;streetName&gt;street&lt;/streetName&gt;
+                &lt;!--Optional:--&gt;
+                &lt;civicNumber&gt;civic&lt;/civicNumber&gt;
+                &lt;!--Optional:--&gt;
+                &lt;postalCode&gt;code&lt;/postalCode&gt;
+                &lt;!--Optional:--&gt;
+                &lt;city&gt;city&lt;/city&gt;
+                &lt;!--Optional:--&gt;
+                &lt;stateProvinceRegion&gt;state&lt;/stateProvinceRegion&gt;
+                &lt;!--Optional:--&gt;
+                &lt;country&gt;IT&lt;/country&gt;
+                &lt;!--Optional:--&gt;
+                &lt;e-mail&gt;test.prova@gmail.com&lt;/e-mail&gt;
+            &lt;/payer&gt;
+        &lt;/nod:activateIOPaymentReq&gt;
+    &lt;/soapenv:Body&gt;
 &lt;/soapenv:Envelope&gt;
 </pre>
             </div>
           </li>
-          <li class="step failed">
+          <li class="step passed">
             <div class="step_name">
               <span class="keyword">Given </span>
               <span class="step val">
                 <span/>
-                <b>the Execute nodoInviaCarrelloRPT request</b>
+                <b>streetName</b>
                 <span> with </span>
-                <b>Pa</b>
+                <b>None</b>
                 <span> in </span>
-                <b>RPT1 EC scenario executed successfully</b>
+                <b>activateIOPayment</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.001s)</small>
+              <small class="step_duration">(0.003s)</small>
             </div>
             <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:67</span>
             </div>
-            <span class="embed">
-              <a onclick="Collapsible_toggle('embed_7')">Error Message</a>
-              <pre id="embed_7" style="display: none">Traceback (most recent call last):
-  File &quot;c:\users\nicolo.isaia\desktop\python_dependencies_trash\venv\lib\site-packages\behave\model.py&quot;, line 1329, in run
-    match.run(runner.context)
-  File &quot;c:\users\nicolo.isaia\desktop\python_dependencies_trash\venv\lib\site-packages\behave\matchers.py&quot;, line 98, in run
-    self.func(context, *args, **kwargs)
-  File &quot;src\integ-test\bdd-test\features\steps\steps.py&quot;, line 73, in step_impl
-    xml = utils.manipulate_soap_action(getattr(context, action), elem, value)
-  File &quot;c:\users\nicolo.isaia\desktop\python_dependencies_trash\venv\lib\site-packages\behave\runner.py&quot;, line 321, in __getattr__
-    raise AttributeError(msg)
-AttributeError: 'Context' object has no attribute 'RPT1 EC scenario executed successfully'
-
-Captured stdout:
-calling: nodo-dei-pagamenti -&gt; http://localhost:9080/
-calling -&gt; http://localhost:9080/nodo-dev-health/ready
-response: 200
-calling: mock-ec -&gt; http://localhost:8089/
-calling -&gt; http://localhost:8089/servizi/PagamentiTelematiciRPT/info
-response: 200</pre>
-                  
-            </span>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">When </span>
+              <span class="step val">
+                <span/>
+                <b>psp</b>
+                <span> sends SOAP </span>
+                <b>activateIOPayment</b>
+                <span> to </span>
+                <b>nodo-dei-pagamenti</b>
+                <span/>
+              </span>
+              <small class="step_duration">(2.469s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:85</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">Then </span>
+              <span class="step val">
+                <span>check </span>
+                <b>outcome</b>
+                <span> is </span>
+                <b>OK</b>
+                <span> of </span>
+                <b>activateIOPayment</b>
+                <span> response</span>
+              </span>
+              <small class="step_duration">(0.002s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:107</span>
+            </div>
+            <span class="embed"/>
           </li>
         </ol>
         <span/>
       </div>
       <div class="scenario">
-        <span class="scenario_file">src/integ-test/bdd-test/features/Mod1MB/primitives/nodoInviaCarrelloMultibeneficiario_processo.feature:87</span>
-        <h3 class="failed" onclick="Collapsible_toggle('scenario_7')">
-          <span class="val">Scenario: Execute nodoInviaCarrelloRPT request with identificativoStazioneIntermediarioPA in RPT1 and RPT2</span>
+        <span class="scenario_file">src/integ-test/bdd-test/features/appIO/primitives/activateIOPayment_syntax_ok.feature:71</span>
+        <h3 onclick="Collapsible_toggle('scenario_7')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_EXTRASXSD error on invalid body element value -- @1.7 </span>
         </h3>
         <ol class="scenario_steps" id="scenario_7">
           <li class="step passed">
             <div class="step_name">
               <span class="keyword">Given </span>
               <span class="step val">systems up</span>
-              <small class="step_duration">(0.056s)</small>
+              <small class="step_duration">(0.070s)</small>
             </div>
             <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:19</span>
@@ -1006,8 +1298,8 @@ response: 200</pre>
               <tr>
                 <td>nodo-dei-pagamenti</td>
                 <td>http://localhost:9080/</td>
-                <td>nodo-dev-health/ready</td>
-                <td>nodo-dev/webservices/input</td>
+                <td>/nodo-dev-health/ready</td>
+                <td>/nodo-dev/webservices/input</td>
                 <td/>
               </tr>
               <tr>
@@ -1024,51 +1316,403 @@ response: 200</pre>
               <span class="keyword">And </span>
               <span class="step val">
                 <span>initial XML </span>
-                <b>verifyPaymentNotice</b>
+                <b>activateIOPayment</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.003s)</small>
+              <small class="step_duration">(0.005s)</small>
             </div>
             <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:44</span>
             </div>
             <span class="embed"/>
             <div class="message">
-              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:ppt=&quot;http://ws.pagamenti.telematici.gov/ppthead&quot; xmlns:ws=&quot;http://ws.pagamenti.telematici.gov/&quot;&gt;
-&lt;soapenv:Header&gt;
-&lt;ppt:intestazioneCarrelloPPT&gt;
-&lt;identificativoIntermediarioPA&gt;${intermediarioPA}&lt;/identificativoIntermediarioPA&gt;
-&lt;identificativoStazioneIntermediarioPA&gt;${stazione}&lt;/identificativoStazioneIntermediarioPA&gt;
-&lt;identificativoCarrello&gt;${#TestCase#idCarrello}&lt;/identificativoCarrello&gt;
-&lt;/ppt:intestazioneCarrelloPPT&gt;
-&lt;/soapenv:Header&gt;
-&lt;soapenv:Body&gt;
-&lt;ws:nodoInviaCarrelloRPT&gt;
-&lt;password&gt;${password}&lt;/password&gt;
-&lt;identificativoPSP&gt;${pspAgid}&lt;/identificativoPSP&gt;
-&lt;identificativoIntermediarioPSP&gt;${intermediarioPSPAgid}&lt;/identificativoIntermediarioPSP&gt;
-&lt;identificativoCanale&gt;${canaleAgid}&lt;/identificativoCanale&gt;
-&lt;listaRPT&gt;
-${#TestCase#elementiListaRPT}
-&lt;/listaRPT&gt;
-&lt;requireLightPayment&gt;01&lt;/requireLightPayment&gt;
-&lt;multiBeneficiario&gt;1&lt;/multiBeneficiario&gt;
-&lt;/ws:nodoInviaCarrelloRPT&gt;
-&lt;/soapenv:Body&gt;
+              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd&quot;&gt;
+    &lt;soapenv:Header/&gt;
+    &lt;soapenv:Body&gt;
+        &lt;nod:activateIOPaymentReq&gt;
+            &lt;idPSP&gt;70000000001&lt;/idPSP&gt;
+            &lt;idBrokerPSP&gt;70000000001&lt;/idBrokerPSP&gt;
+            &lt;idChannel&gt;70000000001_01&lt;/idChannel&gt;
+            &lt;password&gt;pwdpwdpwd&lt;/password&gt;
+            &lt;!--Optional:--&gt;
+            &lt;idempotencyKey&gt;#idempotency_key#&lt;/idempotencyKey&gt;
+            &lt;qrCode&gt;
+                &lt;fiscalCode&gt;#creditor_institution_code#&lt;/fiscalCode&gt;
+                &lt;noticeNumber&gt;#notice_number#&lt;/noticeNumber&gt;
+            &lt;/qrCode&gt;
+            &lt;!--Optional:--&gt;
+            &lt;expirationTime&gt;12345&lt;/expirationTime&gt;
+            &lt;amount&gt;10.00&lt;/amount&gt;
+            &lt;!--Optional:--&gt;
+            &lt;dueDate&gt;2021-12-12&lt;/dueDate&gt;
+            &lt;!--Optional:--&gt;
+            &lt;paymentNote&gt;test&lt;/paymentNote&gt;
+            &lt;!--Optional:--&gt;
+            &lt;payer&gt;
+                &lt;uniqueIdentifier&gt;
+                    &lt;entityUniqueIdentifierType&gt;G&lt;/entityUniqueIdentifierType&gt;
+                    &lt;entityUniqueIdentifierValue&gt;44444444444&lt;/entityUniqueIdentifierValue&gt;
+                &lt;/uniqueIdentifier&gt;
+                &lt;fullName&gt;name&lt;/fullName&gt;
+                &lt;!--Optional:--&gt;
+                &lt;streetName&gt;street&lt;/streetName&gt;
+                &lt;!--Optional:--&gt;
+                &lt;civicNumber&gt;civic&lt;/civicNumber&gt;
+                &lt;!--Optional:--&gt;
+                &lt;postalCode&gt;code&lt;/postalCode&gt;
+                &lt;!--Optional:--&gt;
+                &lt;city&gt;city&lt;/city&gt;
+                &lt;!--Optional:--&gt;
+                &lt;stateProvinceRegion&gt;state&lt;/stateProvinceRegion&gt;
+                &lt;!--Optional:--&gt;
+                &lt;country&gt;IT&lt;/country&gt;
+                &lt;!--Optional:--&gt;
+                &lt;e-mail&gt;test.prova@gmail.com&lt;/e-mail&gt;
+            &lt;/payer&gt;
+        &lt;/nod:activateIOPaymentReq&gt;
+    &lt;/soapenv:Body&gt;
 &lt;/soapenv:Envelope&gt;
 </pre>
             </div>
           </li>
-          <li class="step failed">
+          <li class="step passed">
             <div class="step_name">
               <span class="keyword">Given </span>
               <span class="step val">
                 <span/>
-                <b>the Execute nodoInviaCarrelloRPT request</b>
+                <b>civicNumber</b>
                 <span> with </span>
-                <b>identificativoStazioneIntermediarioPA</b>
+                <b>None</b>
                 <span> in </span>
-                <b>RPT1 and RPT2 EC scenario executed successfully</b>
+                <b>activateIOPayment</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.003s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:67</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">When </span>
+              <span class="step val">
+                <span/>
+                <b>psp</b>
+                <span> sends SOAP </span>
+                <b>activateIOPayment</b>
+                <span> to </span>
+                <b>nodo-dei-pagamenti</b>
+                <span/>
+              </span>
+              <small class="step_duration">(3.775s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:85</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">Then </span>
+              <span class="step val">
+                <span>check </span>
+                <b>outcome</b>
+                <span> is </span>
+                <b>OK</b>
+                <span> of </span>
+                <b>activateIOPayment</b>
+                <span> response</span>
+              </span>
+              <small class="step_duration">(0.002s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:107</span>
+            </div>
+            <span class="embed"/>
+          </li>
+        </ol>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/appIO/primitives/activateIOPayment_syntax_ok.feature:72</span>
+        <h3 onclick="Collapsible_toggle('scenario_8')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_EXTRASXSD error on invalid body element value -- @1.8 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_8">
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">Given </span>
+              <span class="step val">systems up</span>
+              <small class="step_duration">(0.101s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:19</span>
+            </div>
+            <span class="embed"/>
+            <table>
+              <tr>
+                <th>name</th>
+                <th>url</th>
+                <th>healthcheck</th>
+                <th>soap_service</th>
+                <th>rest_service</th>
+              </tr>
+              <tr>
+                <td>nodo-dei-pagamenti</td>
+                <td>http://localhost:9080/</td>
+                <td>/nodo-dev-health/ready</td>
+                <td>/nodo-dev/webservices/input</td>
+                <td/>
+              </tr>
+              <tr>
+                <td>mock-ec</td>
+                <td>http://localhost:8089/</td>
+                <td>servizi/PagamentiTelematiciRPT/info</td>
+                <td>servizi/PagamentiTelematiciRPT</td>
+                <td/>
+              </tr>
+            </table>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>initial XML </span>
+                <b>activateIOPayment</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.004s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:44</span>
+            </div>
+            <span class="embed"/>
+            <div class="message">
+              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd&quot;&gt;
+    &lt;soapenv:Header/&gt;
+    &lt;soapenv:Body&gt;
+        &lt;nod:activateIOPaymentReq&gt;
+            &lt;idPSP&gt;70000000001&lt;/idPSP&gt;
+            &lt;idBrokerPSP&gt;70000000001&lt;/idBrokerPSP&gt;
+            &lt;idChannel&gt;70000000001_01&lt;/idChannel&gt;
+            &lt;password&gt;pwdpwdpwd&lt;/password&gt;
+            &lt;!--Optional:--&gt;
+            &lt;idempotencyKey&gt;#idempotency_key#&lt;/idempotencyKey&gt;
+            &lt;qrCode&gt;
+                &lt;fiscalCode&gt;#creditor_institution_code#&lt;/fiscalCode&gt;
+                &lt;noticeNumber&gt;#notice_number#&lt;/noticeNumber&gt;
+            &lt;/qrCode&gt;
+            &lt;!--Optional:--&gt;
+            &lt;expirationTime&gt;12345&lt;/expirationTime&gt;
+            &lt;amount&gt;10.00&lt;/amount&gt;
+            &lt;!--Optional:--&gt;
+            &lt;dueDate&gt;2021-12-12&lt;/dueDate&gt;
+            &lt;!--Optional:--&gt;
+            &lt;paymentNote&gt;test&lt;/paymentNote&gt;
+            &lt;!--Optional:--&gt;
+            &lt;payer&gt;
+                &lt;uniqueIdentifier&gt;
+                    &lt;entityUniqueIdentifierType&gt;G&lt;/entityUniqueIdentifierType&gt;
+                    &lt;entityUniqueIdentifierValue&gt;44444444444&lt;/entityUniqueIdentifierValue&gt;
+                &lt;/uniqueIdentifier&gt;
+                &lt;fullName&gt;name&lt;/fullName&gt;
+                &lt;!--Optional:--&gt;
+                &lt;streetName&gt;street&lt;/streetName&gt;
+                &lt;!--Optional:--&gt;
+                &lt;civicNumber&gt;civic&lt;/civicNumber&gt;
+                &lt;!--Optional:--&gt;
+                &lt;postalCode&gt;code&lt;/postalCode&gt;
+                &lt;!--Optional:--&gt;
+                &lt;city&gt;city&lt;/city&gt;
+                &lt;!--Optional:--&gt;
+                &lt;stateProvinceRegion&gt;state&lt;/stateProvinceRegion&gt;
+                &lt;!--Optional:--&gt;
+                &lt;country&gt;IT&lt;/country&gt;
+                &lt;!--Optional:--&gt;
+                &lt;e-mail&gt;test.prova@gmail.com&lt;/e-mail&gt;
+            &lt;/payer&gt;
+        &lt;/nod:activateIOPaymentReq&gt;
+    &lt;/soapenv:Body&gt;
+&lt;/soapenv:Envelope&gt;
+</pre>
+            </div>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">Given </span>
+              <span class="step val">
+                <span/>
+                <b>postalCode</b>
+                <span> with </span>
+                <b>None</b>
+                <span> in </span>
+                <b>activateIOPayment</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.003s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:67</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">When </span>
+              <span class="step val">
+                <span/>
+                <b>psp</b>
+                <span> sends SOAP </span>
+                <b>activateIOPayment</b>
+                <span> to </span>
+                <b>nodo-dei-pagamenti</b>
+                <span/>
+              </span>
+              <small class="step_duration">(5.277s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:85</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">Then </span>
+              <span class="step val">
+                <span>check </span>
+                <b>outcome</b>
+                <span> is </span>
+                <b>OK</b>
+                <span> of </span>
+                <b>activateIOPayment</b>
+                <span> response</span>
+              </span>
+              <small class="step_duration">(0.002s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:107</span>
+            </div>
+            <span class="embed"/>
+          </li>
+        </ol>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/appIO/primitives/activateIOPayment_syntax_ok.feature:73</span>
+        <h3 onclick="Collapsible_toggle('scenario_9')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_EXTRASXSD error on invalid body element value -- @1.9 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_9">
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">Given </span>
+              <span class="step val">systems up</span>
+              <small class="step_duration">(0.071s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:19</span>
+            </div>
+            <span class="embed"/>
+            <table>
+              <tr>
+                <th>name</th>
+                <th>url</th>
+                <th>healthcheck</th>
+                <th>soap_service</th>
+                <th>rest_service</th>
+              </tr>
+              <tr>
+                <td>nodo-dei-pagamenti</td>
+                <td>http://localhost:9080/</td>
+                <td>/nodo-dev-health/ready</td>
+                <td>/nodo-dev/webservices/input</td>
+                <td/>
+              </tr>
+              <tr>
+                <td>mock-ec</td>
+                <td>http://localhost:8089/</td>
+                <td>servizi/PagamentiTelematiciRPT/info</td>
+                <td>servizi/PagamentiTelematiciRPT</td>
+                <td/>
+              </tr>
+            </table>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>initial XML </span>
+                <b>activateIOPayment</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.004s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:44</span>
+            </div>
+            <span class="embed"/>
+            <div class="message">
+              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd&quot;&gt;
+    &lt;soapenv:Header/&gt;
+    &lt;soapenv:Body&gt;
+        &lt;nod:activateIOPaymentReq&gt;
+            &lt;idPSP&gt;70000000001&lt;/idPSP&gt;
+            &lt;idBrokerPSP&gt;70000000001&lt;/idBrokerPSP&gt;
+            &lt;idChannel&gt;70000000001_01&lt;/idChannel&gt;
+            &lt;password&gt;pwdpwdpwd&lt;/password&gt;
+            &lt;!--Optional:--&gt;
+            &lt;idempotencyKey&gt;#idempotency_key#&lt;/idempotencyKey&gt;
+            &lt;qrCode&gt;
+                &lt;fiscalCode&gt;#creditor_institution_code#&lt;/fiscalCode&gt;
+                &lt;noticeNumber&gt;#notice_number#&lt;/noticeNumber&gt;
+            &lt;/qrCode&gt;
+            &lt;!--Optional:--&gt;
+            &lt;expirationTime&gt;12345&lt;/expirationTime&gt;
+            &lt;amount&gt;10.00&lt;/amount&gt;
+            &lt;!--Optional:--&gt;
+            &lt;dueDate&gt;2021-12-12&lt;/dueDate&gt;
+            &lt;!--Optional:--&gt;
+            &lt;paymentNote&gt;test&lt;/paymentNote&gt;
+            &lt;!--Optional:--&gt;
+            &lt;payer&gt;
+                &lt;uniqueIdentifier&gt;
+                    &lt;entityUniqueIdentifierType&gt;G&lt;/entityUniqueIdentifierType&gt;
+                    &lt;entityUniqueIdentifierValue&gt;44444444444&lt;/entityUniqueIdentifierValue&gt;
+                &lt;/uniqueIdentifier&gt;
+                &lt;fullName&gt;name&lt;/fullName&gt;
+                &lt;!--Optional:--&gt;
+                &lt;streetName&gt;street&lt;/streetName&gt;
+                &lt;!--Optional:--&gt;
+                &lt;civicNumber&gt;civic&lt;/civicNumber&gt;
+                &lt;!--Optional:--&gt;
+                &lt;postalCode&gt;code&lt;/postalCode&gt;
+                &lt;!--Optional:--&gt;
+                &lt;city&gt;city&lt;/city&gt;
+                &lt;!--Optional:--&gt;
+                &lt;stateProvinceRegion&gt;state&lt;/stateProvinceRegion&gt;
+                &lt;!--Optional:--&gt;
+                &lt;country&gt;IT&lt;/country&gt;
+                &lt;!--Optional:--&gt;
+                &lt;e-mail&gt;test.prova@gmail.com&lt;/e-mail&gt;
+            &lt;/payer&gt;
+        &lt;/nod:activateIOPaymentReq&gt;
+    &lt;/soapenv:Body&gt;
+&lt;/soapenv:Envelope&gt;
+</pre>
+            </div>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">Given </span>
+              <span class="step val">
+                <span/>
+                <b>city</b>
+                <span> with </span>
+                <b>None</b>
+                <span> in </span>
+                <b>activateIOPayment</b>
                 <span/>
               </span>
               <small class="step_duration">(0.002s)</small>
@@ -1076,43 +1720,60 @@ ${#TestCase#elementiListaRPT}
             <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:67</span>
             </div>
-            <span class="embed">
-              <a onclick="Collapsible_toggle('embed_8')">Error Message</a>
-              <pre id="embed_8" style="display: none">Traceback (most recent call last):
-  File &quot;c:\users\nicolo.isaia\desktop\python_dependencies_trash\venv\lib\site-packages\behave\model.py&quot;, line 1329, in run
-    match.run(runner.context)
-  File &quot;c:\users\nicolo.isaia\desktop\python_dependencies_trash\venv\lib\site-packages\behave\matchers.py&quot;, line 98, in run
-    self.func(context, *args, **kwargs)
-  File &quot;src\integ-test\bdd-test\features\steps\steps.py&quot;, line 73, in step_impl
-    xml = utils.manipulate_soap_action(getattr(context, action), elem, value)
-  File &quot;c:\users\nicolo.isaia\desktop\python_dependencies_trash\venv\lib\site-packages\behave\runner.py&quot;, line 321, in __getattr__
-    raise AttributeError(msg)
-AttributeError: 'Context' object has no attribute 'RPT1 and RPT2 EC scenario executed successfully'
-
-Captured stdout:
-calling: nodo-dei-pagamenti -&gt; http://localhost:9080/
-calling -&gt; http://localhost:9080/nodo-dev-health/ready
-response: 200
-calling: mock-ec -&gt; http://localhost:8089/
-calling -&gt; http://localhost:8089/servizi/PagamentiTelematiciRPT/info
-response: 200</pre>
-                  
-            </span>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">When </span>
+              <span class="step val">
+                <span/>
+                <b>psp</b>
+                <span> sends SOAP </span>
+                <b>activateIOPayment</b>
+                <span> to </span>
+                <b>nodo-dei-pagamenti</b>
+                <span/>
+              </span>
+              <small class="step_duration">(3.628s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:85</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">Then </span>
+              <span class="step val">
+                <span>check </span>
+                <b>outcome</b>
+                <span> is </span>
+                <b>OK</b>
+                <span> of </span>
+                <b>activateIOPayment</b>
+                <span> response</span>
+              </span>
+              <small class="step_duration">(0.002s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:107</span>
+            </div>
+            <span class="embed"/>
           </li>
         </ol>
         <span/>
       </div>
       <div class="scenario">
-        <span class="scenario_file">src/integ-test/bdd-test/features/Mod1MB/primitives/nodoInviaCarrelloMultibeneficiario_processo.feature:96</span>
-        <h3 class="failed" onclick="Collapsible_toggle('scenario_8')">
-          <span class="val">Scenario: Execute nodoInviaCarrelloRPT request with Pa in RPT2</span>
+        <span class="scenario_file">src/integ-test/bdd-test/features/appIO/primitives/activateIOPayment_syntax_ok.feature:74</span>
+        <h3 onclick="Collapsible_toggle('scenario_10')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_EXTRASXSD error on invalid body element value -- @1.10 </span>
         </h3>
-        <ol class="scenario_steps" id="scenario_8">
+        <ol class="scenario_steps" id="scenario_10">
           <li class="step passed">
             <div class="step_name">
               <span class="keyword">Given </span>
               <span class="step val">systems up</span>
-              <small class="step_duration">(0.057s)</small>
+              <small class="step_duration">(0.214s)</small>
             </div>
             <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:19</span>
@@ -1129,8 +1790,8 @@ response: 200</pre>
               <tr>
                 <td>nodo-dei-pagamenti</td>
                 <td>http://localhost:9080/</td>
-                <td>nodo-dev-health/ready</td>
-                <td>nodo-dev/webservices/input</td>
+                <td>/nodo-dev-health/ready</td>
+                <td>/nodo-dev/webservices/input</td>
                 <td/>
               </tr>
               <tr>
@@ -1147,80 +1808,449 @@ response: 200</pre>
               <span class="keyword">And </span>
               <span class="step val">
                 <span>initial XML </span>
-                <b>verifyPaymentNotice</b>
+                <b>activateIOPayment</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.006s)</small>
+              <small class="step_duration">(0.003s)</small>
             </div>
             <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:44</span>
             </div>
             <span class="embed"/>
             <div class="message">
-              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:ppt=&quot;http://ws.pagamenti.telematici.gov/ppthead&quot; xmlns:ws=&quot;http://ws.pagamenti.telematici.gov/&quot;&gt;
-&lt;soapenv:Header&gt;
-&lt;ppt:intestazioneCarrelloPPT&gt;
-&lt;identificativoIntermediarioPA&gt;${intermediarioPA}&lt;/identificativoIntermediarioPA&gt;
-&lt;identificativoStazioneIntermediarioPA&gt;${stazione}&lt;/identificativoStazioneIntermediarioPA&gt;
-&lt;identificativoCarrello&gt;${#TestCase#idCarrello}&lt;/identificativoCarrello&gt;
-&lt;/ppt:intestazioneCarrelloPPT&gt;
-&lt;/soapenv:Header&gt;
-&lt;soapenv:Body&gt;
-&lt;ws:nodoInviaCarrelloRPT&gt;
-&lt;password&gt;${password}&lt;/password&gt;
-&lt;identificativoPSP&gt;${pspAgid}&lt;/identificativoPSP&gt;
-&lt;identificativoIntermediarioPSP&gt;${intermediarioPSPAgid}&lt;/identificativoIntermediarioPSP&gt;
-&lt;identificativoCanale&gt;${canaleAgid}&lt;/identificativoCanale&gt;
-&lt;listaRPT&gt;
-${#TestCase#elementiListaRPT}
-&lt;/listaRPT&gt;
-&lt;requireLightPayment&gt;01&lt;/requireLightPayment&gt;
-&lt;multiBeneficiario&gt;1&lt;/multiBeneficiario&gt;
-&lt;/ws:nodoInviaCarrelloRPT&gt;
-&lt;/soapenv:Body&gt;
+              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd&quot;&gt;
+    &lt;soapenv:Header/&gt;
+    &lt;soapenv:Body&gt;
+        &lt;nod:activateIOPaymentReq&gt;
+            &lt;idPSP&gt;70000000001&lt;/idPSP&gt;
+            &lt;idBrokerPSP&gt;70000000001&lt;/idBrokerPSP&gt;
+            &lt;idChannel&gt;70000000001_01&lt;/idChannel&gt;
+            &lt;password&gt;pwdpwdpwd&lt;/password&gt;
+            &lt;!--Optional:--&gt;
+            &lt;idempotencyKey&gt;#idempotency_key#&lt;/idempotencyKey&gt;
+            &lt;qrCode&gt;
+                &lt;fiscalCode&gt;#creditor_institution_code#&lt;/fiscalCode&gt;
+                &lt;noticeNumber&gt;#notice_number#&lt;/noticeNumber&gt;
+            &lt;/qrCode&gt;
+            &lt;!--Optional:--&gt;
+            &lt;expirationTime&gt;12345&lt;/expirationTime&gt;
+            &lt;amount&gt;10.00&lt;/amount&gt;
+            &lt;!--Optional:--&gt;
+            &lt;dueDate&gt;2021-12-12&lt;/dueDate&gt;
+            &lt;!--Optional:--&gt;
+            &lt;paymentNote&gt;test&lt;/paymentNote&gt;
+            &lt;!--Optional:--&gt;
+            &lt;payer&gt;
+                &lt;uniqueIdentifier&gt;
+                    &lt;entityUniqueIdentifierType&gt;G&lt;/entityUniqueIdentifierType&gt;
+                    &lt;entityUniqueIdentifierValue&gt;44444444444&lt;/entityUniqueIdentifierValue&gt;
+                &lt;/uniqueIdentifier&gt;
+                &lt;fullName&gt;name&lt;/fullName&gt;
+                &lt;!--Optional:--&gt;
+                &lt;streetName&gt;street&lt;/streetName&gt;
+                &lt;!--Optional:--&gt;
+                &lt;civicNumber&gt;civic&lt;/civicNumber&gt;
+                &lt;!--Optional:--&gt;
+                &lt;postalCode&gt;code&lt;/postalCode&gt;
+                &lt;!--Optional:--&gt;
+                &lt;city&gt;city&lt;/city&gt;
+                &lt;!--Optional:--&gt;
+                &lt;stateProvinceRegion&gt;state&lt;/stateProvinceRegion&gt;
+                &lt;!--Optional:--&gt;
+                &lt;country&gt;IT&lt;/country&gt;
+                &lt;!--Optional:--&gt;
+                &lt;e-mail&gt;test.prova@gmail.com&lt;/e-mail&gt;
+            &lt;/payer&gt;
+        &lt;/nod:activateIOPaymentReq&gt;
+    &lt;/soapenv:Body&gt;
 &lt;/soapenv:Envelope&gt;
 </pre>
             </div>
           </li>
-          <li class="step failed">
+          <li class="step passed">
             <div class="step_name">
               <span class="keyword">Given </span>
               <span class="step val">
                 <span/>
-                <b>the Execute nodoInviaCarrelloRPT request</b>
+                <b>stateProvinceRegion</b>
                 <span> with </span>
-                <b>Pa</b>
+                <b>None</b>
                 <span> in </span>
-                <b>RPT2 EC scenario executed successfully</b>
+                <b>activateIOPayment</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.002s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:67</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">When </span>
+              <span class="step val">
+                <span/>
+                <b>psp</b>
+                <span> sends SOAP </span>
+                <b>activateIOPayment</b>
+                <span> to </span>
+                <b>nodo-dei-pagamenti</b>
+                <span/>
+              </span>
+              <small class="step_duration">(2.779s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:85</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">Then </span>
+              <span class="step val">
+                <span>check </span>
+                <b>outcome</b>
+                <span> is </span>
+                <b>OK</b>
+                <span> of </span>
+                <b>activateIOPayment</b>
+                <span> response</span>
+              </span>
+              <small class="step_duration">(0.003s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:107</span>
+            </div>
+            <span class="embed"/>
+          </li>
+        </ol>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/appIO/primitives/activateIOPayment_syntax_ok.feature:75</span>
+        <h3 onclick="Collapsible_toggle('scenario_11')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_EXTRASXSD error on invalid body element value -- @1.11 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_11">
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">Given </span>
+              <span class="step val">systems up</span>
+              <small class="step_duration">(0.196s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:19</span>
+            </div>
+            <span class="embed"/>
+            <table>
+              <tr>
+                <th>name</th>
+                <th>url</th>
+                <th>healthcheck</th>
+                <th>soap_service</th>
+                <th>rest_service</th>
+              </tr>
+              <tr>
+                <td>nodo-dei-pagamenti</td>
+                <td>http://localhost:9080/</td>
+                <td>/nodo-dev-health/ready</td>
+                <td>/nodo-dev/webservices/input</td>
+                <td/>
+              </tr>
+              <tr>
+                <td>mock-ec</td>
+                <td>http://localhost:8089/</td>
+                <td>servizi/PagamentiTelematiciRPT/info</td>
+                <td>servizi/PagamentiTelematiciRPT</td>
+                <td/>
+              </tr>
+            </table>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>initial XML </span>
+                <b>activateIOPayment</b>
                 <span/>
               </span>
               <small class="step_duration">(0.004s)</small>
             </div>
             <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:44</span>
+            </div>
+            <span class="embed"/>
+            <div class="message">
+              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd&quot;&gt;
+    &lt;soapenv:Header/&gt;
+    &lt;soapenv:Body&gt;
+        &lt;nod:activateIOPaymentReq&gt;
+            &lt;idPSP&gt;70000000001&lt;/idPSP&gt;
+            &lt;idBrokerPSP&gt;70000000001&lt;/idBrokerPSP&gt;
+            &lt;idChannel&gt;70000000001_01&lt;/idChannel&gt;
+            &lt;password&gt;pwdpwdpwd&lt;/password&gt;
+            &lt;!--Optional:--&gt;
+            &lt;idempotencyKey&gt;#idempotency_key#&lt;/idempotencyKey&gt;
+            &lt;qrCode&gt;
+                &lt;fiscalCode&gt;#creditor_institution_code#&lt;/fiscalCode&gt;
+                &lt;noticeNumber&gt;#notice_number#&lt;/noticeNumber&gt;
+            &lt;/qrCode&gt;
+            &lt;!--Optional:--&gt;
+            &lt;expirationTime&gt;12345&lt;/expirationTime&gt;
+            &lt;amount&gt;10.00&lt;/amount&gt;
+            &lt;!--Optional:--&gt;
+            &lt;dueDate&gt;2021-12-12&lt;/dueDate&gt;
+            &lt;!--Optional:--&gt;
+            &lt;paymentNote&gt;test&lt;/paymentNote&gt;
+            &lt;!--Optional:--&gt;
+            &lt;payer&gt;
+                &lt;uniqueIdentifier&gt;
+                    &lt;entityUniqueIdentifierType&gt;G&lt;/entityUniqueIdentifierType&gt;
+                    &lt;entityUniqueIdentifierValue&gt;44444444444&lt;/entityUniqueIdentifierValue&gt;
+                &lt;/uniqueIdentifier&gt;
+                &lt;fullName&gt;name&lt;/fullName&gt;
+                &lt;!--Optional:--&gt;
+                &lt;streetName&gt;street&lt;/streetName&gt;
+                &lt;!--Optional:--&gt;
+                &lt;civicNumber&gt;civic&lt;/civicNumber&gt;
+                &lt;!--Optional:--&gt;
+                &lt;postalCode&gt;code&lt;/postalCode&gt;
+                &lt;!--Optional:--&gt;
+                &lt;city&gt;city&lt;/city&gt;
+                &lt;!--Optional:--&gt;
+                &lt;stateProvinceRegion&gt;state&lt;/stateProvinceRegion&gt;
+                &lt;!--Optional:--&gt;
+                &lt;country&gt;IT&lt;/country&gt;
+                &lt;!--Optional:--&gt;
+                &lt;e-mail&gt;test.prova@gmail.com&lt;/e-mail&gt;
+            &lt;/payer&gt;
+        &lt;/nod:activateIOPaymentReq&gt;
+    &lt;/soapenv:Body&gt;
+&lt;/soapenv:Envelope&gt;
+</pre>
+            </div>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">Given </span>
+              <span class="step val">
+                <span/>
+                <b>country</b>
+                <span> with </span>
+                <b>None</b>
+                <span> in </span>
+                <b>activateIOPayment</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.003s)</small>
+            </div>
+            <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:67</span>
             </div>
-            <span class="embed">
-              <a onclick="Collapsible_toggle('embed_9')">Error Message</a>
-              <pre id="embed_9" style="display: none">Traceback (most recent call last):
-  File &quot;c:\users\nicolo.isaia\desktop\python_dependencies_trash\venv\lib\site-packages\behave\model.py&quot;, line 1329, in run
-    match.run(runner.context)
-  File &quot;c:\users\nicolo.isaia\desktop\python_dependencies_trash\venv\lib\site-packages\behave\matchers.py&quot;, line 98, in run
-    self.func(context, *args, **kwargs)
-  File &quot;src\integ-test\bdd-test\features\steps\steps.py&quot;, line 73, in step_impl
-    xml = utils.manipulate_soap_action(getattr(context, action), elem, value)
-  File &quot;c:\users\nicolo.isaia\desktop\python_dependencies_trash\venv\lib\site-packages\behave\runner.py&quot;, line 321, in __getattr__
-    raise AttributeError(msg)
-AttributeError: 'Context' object has no attribute 'RPT2 EC scenario executed successfully'
-
-Captured stdout:
-calling: nodo-dei-pagamenti -&gt; http://localhost:9080/
-calling -&gt; http://localhost:9080/nodo-dev-health/ready
-response: 200
-calling: mock-ec -&gt; http://localhost:8089/
-calling -&gt; http://localhost:8089/servizi/PagamentiTelematiciRPT/info
-response: 200</pre>
-                  
-            </span>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">When </span>
+              <span class="step val">
+                <span/>
+                <b>psp</b>
+                <span> sends SOAP </span>
+                <b>activateIOPayment</b>
+                <span> to </span>
+                <b>nodo-dei-pagamenti</b>
+                <span/>
+              </span>
+              <small class="step_duration">(2.299s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:85</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">Then </span>
+              <span class="step val">
+                <span>check </span>
+                <b>outcome</b>
+                <span> is </span>
+                <b>OK</b>
+                <span> of </span>
+                <b>activateIOPayment</b>
+                <span> response</span>
+              </span>
+              <small class="step_duration">(0.002s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:107</span>
+            </div>
+            <span class="embed"/>
+          </li>
+        </ol>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/appIO/primitives/activateIOPayment_syntax_ok.feature:76</span>
+        <h3 onclick="Collapsible_toggle('scenario_12')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_EXTRASXSD error on invalid body element value -- @1.12 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_12">
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">Given </span>
+              <span class="step val">systems up</span>
+              <small class="step_duration">(0.163s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:19</span>
+            </div>
+            <span class="embed"/>
+            <table>
+              <tr>
+                <th>name</th>
+                <th>url</th>
+                <th>healthcheck</th>
+                <th>soap_service</th>
+                <th>rest_service</th>
+              </tr>
+              <tr>
+                <td>nodo-dei-pagamenti</td>
+                <td>http://localhost:9080/</td>
+                <td>/nodo-dev-health/ready</td>
+                <td>/nodo-dev/webservices/input</td>
+                <td/>
+              </tr>
+              <tr>
+                <td>mock-ec</td>
+                <td>http://localhost:8089/</td>
+                <td>servizi/PagamentiTelematiciRPT/info</td>
+                <td>servizi/PagamentiTelematiciRPT</td>
+                <td/>
+              </tr>
+            </table>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>initial XML </span>
+                <b>activateIOPayment</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.004s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:44</span>
+            </div>
+            <span class="embed"/>
+            <div class="message">
+              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd&quot;&gt;
+    &lt;soapenv:Header/&gt;
+    &lt;soapenv:Body&gt;
+        &lt;nod:activateIOPaymentReq&gt;
+            &lt;idPSP&gt;70000000001&lt;/idPSP&gt;
+            &lt;idBrokerPSP&gt;70000000001&lt;/idBrokerPSP&gt;
+            &lt;idChannel&gt;70000000001_01&lt;/idChannel&gt;
+            &lt;password&gt;pwdpwdpwd&lt;/password&gt;
+            &lt;!--Optional:--&gt;
+            &lt;idempotencyKey&gt;#idempotency_key#&lt;/idempotencyKey&gt;
+            &lt;qrCode&gt;
+                &lt;fiscalCode&gt;#creditor_institution_code#&lt;/fiscalCode&gt;
+                &lt;noticeNumber&gt;#notice_number#&lt;/noticeNumber&gt;
+            &lt;/qrCode&gt;
+            &lt;!--Optional:--&gt;
+            &lt;expirationTime&gt;12345&lt;/expirationTime&gt;
+            &lt;amount&gt;10.00&lt;/amount&gt;
+            &lt;!--Optional:--&gt;
+            &lt;dueDate&gt;2021-12-12&lt;/dueDate&gt;
+            &lt;!--Optional:--&gt;
+            &lt;paymentNote&gt;test&lt;/paymentNote&gt;
+            &lt;!--Optional:--&gt;
+            &lt;payer&gt;
+                &lt;uniqueIdentifier&gt;
+                    &lt;entityUniqueIdentifierType&gt;G&lt;/entityUniqueIdentifierType&gt;
+                    &lt;entityUniqueIdentifierValue&gt;44444444444&lt;/entityUniqueIdentifierValue&gt;
+                &lt;/uniqueIdentifier&gt;
+                &lt;fullName&gt;name&lt;/fullName&gt;
+                &lt;!--Optional:--&gt;
+                &lt;streetName&gt;street&lt;/streetName&gt;
+                &lt;!--Optional:--&gt;
+                &lt;civicNumber&gt;civic&lt;/civicNumber&gt;
+                &lt;!--Optional:--&gt;
+                &lt;postalCode&gt;code&lt;/postalCode&gt;
+                &lt;!--Optional:--&gt;
+                &lt;city&gt;city&lt;/city&gt;
+                &lt;!--Optional:--&gt;
+                &lt;stateProvinceRegion&gt;state&lt;/stateProvinceRegion&gt;
+                &lt;!--Optional:--&gt;
+                &lt;country&gt;IT&lt;/country&gt;
+                &lt;!--Optional:--&gt;
+                &lt;e-mail&gt;test.prova@gmail.com&lt;/e-mail&gt;
+            &lt;/payer&gt;
+        &lt;/nod:activateIOPaymentReq&gt;
+    &lt;/soapenv:Body&gt;
+&lt;/soapenv:Envelope&gt;
+</pre>
+            </div>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">Given </span>
+              <span class="step val">
+                <span/>
+                <b>e-mail</b>
+                <span> with </span>
+                <b>None</b>
+                <span> in </span>
+                <b>activateIOPayment</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.002s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:67</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">When </span>
+              <span class="step val">
+                <span/>
+                <b>psp</b>
+                <span> sends SOAP </span>
+                <b>activateIOPayment</b>
+                <span> to </span>
+                <b>nodo-dei-pagamenti</b>
+                <span/>
+              </span>
+              <small class="step_duration">(2.022s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:85</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">Then </span>
+              <span class="step val">
+                <span>check </span>
+                <b>outcome</b>
+                <span> is </span>
+                <b>OK</b>
+                <span> of </span>
+                <b>activateIOPayment</b>
+                <span> response</span>
+              </span>
+              <small class="step_duration">(0.001s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:107</span>
+            </div>
+            <span class="embed"/>
           </li>
         </ol>
         <span/>

@@ -52,9 +52,6 @@ Feature: process tests for generazioneRicevute
           </soapenv:Body>
       </soapenv:Envelope>
       """
-    When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
-    Then check outcome is OK of activatePaymentNotice response
-
 
 # Define primitive paGetPayment
   Scenario: Define paGetPayment
@@ -125,6 +122,11 @@ Feature: process tests for generazioneRicevute
       </soapenv:Body>
     </soapenv:Envelope>
     """
+
+    # Activate phase
+  Scenario: Execute activatePaymentNotice request
+    When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+    Then check outcome is OK of activatePaymentNotice response
 
 
    # Payment Outcome Phase outcome OK

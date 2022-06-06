@@ -1,7 +1,5 @@
 Feature: process tests for generazioneRicevute 
 
-Feature: process tests for generazioneRicevute 
-
   Background:
     Given systems up
     And initial XML verifyPaymentNotice
@@ -56,11 +54,8 @@ Feature: process tests for generazioneRicevute
           </soapenv:Body>
       </soapenv:Envelope>
       """
-    
-
 
   Scenario: define paaAttivaRPTRes
-    Given the Execute activatePaymentNotice request scenario executed successfully
     Given initial XML paaAttivaRPTRisposta
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
@@ -89,12 +84,11 @@ Feature: process tests for generazioneRicevute
             </soapenv:Envelope>
             """
 
-
-  # Activate phase
+    # Activate phase
   Scenario: Execute activatePaymentNotice request
     When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
-    # And db check 1 rt_activision
+    
 
 
   Scenario: Execute nodoInviaRPT request
@@ -123,34 +117,77 @@ Feature: process tests for generazioneRicevute
         </soapenv:Body>
       </soapenv:Envelope>
     """
-  #  When psp sends SOAP nodoInviaRPT to nodo-dei-pagamenti using the token of the activate phase
     When psp sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-    Then check outcome is OK of nodoInviaRPT response
+    And job mod3Cancel triggered after 4 seconds
+    And job paInviaRt triggered after 1 seconds
+    #Then db check rt_activation 0
+    And check outcome is OK of nodoInviaRPT response
+    And verify the HTTP status code of mod3Cancel response is 200
+    And verify the HTTP status code of paInviaRt response is 200
+
+  Scenario: status RT_RIFIUTATA_PA scenario
+    Given the nodoInviaRPT request scenario executed successfully
+    #Then db check RT_RIFIUTATA_PA
+
+
+     
+
+
+
+# Payment Outcome Phase outcome KO
+  Scenario: Execute sendPaymentOutcome request
+    Given the status RT_RIFIUTATA_PA scenario executed successfully
+    And initial XML sendPaymentOutcome
+      """
+      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+         <soapenv:Header/>
+         <soapenv:Body>
+            <nod:sendPaymentOutcomeReq>
+               <idPSP>70000000001</idPSP>
+               <idBrokerPSP>70000000001</idBrokerPSP>
+               <idChannel>70000000001_01</idChannel>
+               <password>pwdpwdpwd</password>
+               <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
+               <outcome>KO</outcome>
+               <details>
+                  <paymentMethod>creditCard</paymentMethod>
+                  <paymentChannel>app</paymentChannel>
+                  <fee>2.00</fee>
+                  <payer>
+                     <uniqueIdentifier>
+                        <entityUniqueIdentifierType>F</entityUniqueIdentifierType>
+                        <entityUniqueIdentifierValue>JHNDOE00A01F205N</entityUniqueIdentifierValue>
+                     </uniqueIdentifier>
+                     <fullName>John Doe</fullName>
+                     <streetName>street</streetName>
+                     <civicNumber>12</civicNumber>
+                     <postalCode>89020</postalCode>
+                     <city>city</city>
+                     <stateProvinceRegion>MI</stateProvinceRegion>
+                     <country>IT</country>
+                     <e-mail>john.doe@test.it</e-mail>
+                  </payer>
+                  <applicationDate>2021-10-01</applicationDate>
+                  <transferDate>2021-10-02</transferDate>
+               </details>
+            </nod:sendPaymentOutcomeReq>
+         </soapenv:Body>
+      </soapenv:Envelope>
+      """
+    When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+    Then check outcome is KO of sendPaymentOutcome response
+    
+   
+	
 
   # test execution
-   Scenario: Execution test DB_GR_23
-    Given the nodoInviaRPT request scenario executed successfully
-    When job mod3Cancel triggered after 3 seconds
-    Then verify the HTTP status code of mod3Cancel response is 200
-    #La tabella RT è opportunamente popolata
-    And api-config executes the sql {sql_code} and check RT
-    #La tabella RT_VERSAMENTI è opportunamente popolata
-    And api-config executes the sql {sql_code} and check RT_VERSAMENTI
-    #La tabella POSITION_RECEIPT non è popolata
-    And api-config executes the sql {sql_code} and check POSITION_RECEIPT
-    #La tabella RT_XML è opportunamente popolata
-    And api-config executes the sql {sql_code} and check RT_XML
-    #La tabella POSITION_RECEIPT_TRANSFER non è popolata
-    And api-config executes the sql {sql_code} and check POSITION_RECEIPT_TRANSFER
-    #La tabella POSITION_RECEIPT_XML non è popolata
-    And api-config executes the sql {sql_code} and check POSITION_RECEIPT_XML
-
-
-
-
-
-
-
+   Scenario: Execution test DB_GR_22
+    Given the Execute sendPaymentOutcome request scenario executed successfully
+    #Then db check 2
+    And check faultCode is  PPT_TOKEN_SCADUTO of sendPaymentOutcome response 
+    #And db check rety
+    
+    
 
 
 
