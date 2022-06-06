@@ -264,6 +264,7 @@ def step_impl(context, sender, method, service, receiver):
 
     setattr(context, service.split('?')[0], json_body)
     setattr(context, service.split('?')[0] + RESPONSE, nodo_response)
+    print(service.split('?')[0] + RESPONSE)
 
 
 @then('verify the HTTP status code of {action} response is {value}')
@@ -400,9 +401,7 @@ def step_impl(context, primitive, new_primitive):
 def step_impl(context, response, response_1):
     soap_response = getattr(context, response + RESPONSE).content.decode('utf-8')
     soap_response_1 = getattr(context, response_1 + RESPONSE).content.decode('utf-8')
-    print("##############################")
-    print(soap_response, soap_response_1)
-    print("###############################")
+    
     assert soap_response == soap_response_1
 
 

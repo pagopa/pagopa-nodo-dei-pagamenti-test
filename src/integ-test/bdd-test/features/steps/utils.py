@@ -152,6 +152,9 @@ def replace_local_variables(body, context):
                 document = parseString(saved_elem.content)
             value = document.getElementsByTagName(tag)[0].firstChild.data
         body = body.replace(field, value)
+        print("##############################")
+        print(body)
+        print("###############################")
     return body
 
 

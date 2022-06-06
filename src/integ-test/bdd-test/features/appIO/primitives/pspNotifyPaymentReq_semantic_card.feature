@@ -8,9 +8,9 @@ Feature: semantic checks for pspNotifyPaymentReq - CreditCard [T_02]
             <soapenv:Header/>
             <soapenv:Body>
                 <nod:activateIOPaymentReq>
-                     <idPSP>70000000001</idPSP>
-                     <idBrokerPSP>70000000001</idBrokerPSP>
-                     <idChannel>70000000001_01</idChannel>
+                     <idPSP>AGID_01</idPSP>
+                     <idBrokerPSP>97735020584</idBrokerPSP>
+                     <idChannel>97735020584_03</idChannel>
                      <password>pwdpwdpwd</password>
                      <!--Optional:-->
                      <idempotencyKey>#idempotency_key#</idempotencyKey>
@@ -73,13 +73,14 @@ Feature: semantic checks for pspNotifyPaymentReq - CreditCard [T_02]
         "RRN":10026669,
         "tipoVersamento":"CP",
         "idPagamento":"$activateIOPaymentResponse.paymentToken",
-        "identificativoIntermediario":"40000000001",
-        "identificativoPsp":"40000000001",
-        "identificativoCanale":"40000000001_06",
-        "importoTotalePagato":10.00,
+        "identificativoIntermediario":"70000000001",
+        "identificativoPsp":"70000000001",
+        "identificativoCanale":"70000000001_03",
+        "importoTotalePagato":70.00,
         "timestampOperazione":"2021-07-09T17:06:03.100+01:00",
         "codiceAutorizzativo":"resOK",
-        "esitoTransazioneCarta":"00"}
+        "esitoTransazioneCarta":"00"
+        }
         """
  #       And identificativoCanale with SERVIZIO_NMP
     Then verify the HTTP status code of inoltroEsito/carta response is 200

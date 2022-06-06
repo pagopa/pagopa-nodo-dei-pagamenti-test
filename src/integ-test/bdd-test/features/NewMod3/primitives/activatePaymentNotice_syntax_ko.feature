@@ -103,16 +103,3 @@ Feature: Syntax checks KO for activatePaymentNoticeReq
       | dueDate                      | 2021-03-06T15:25:32                                                                                                                                                                                                 | SIN_APNR_46   |
       | paymentNote                  | Empty                                                                                                                                                                                                               | SIN_APNR_48   |
       | paymentNote                  | test di prova sulla lunghezza superiore a 140 caratteri per il parametro della primitiva activatePaymentNoticeReq paymentNote prova prova pro activatePaymentNoticeReq paymentNote prova prova pro activatePaymentN | SIN_APNR_49   |
-
-  Scenario Outline: Check incorrectness of header and body
-    Given soapenv:Header with <header_value> in activatePaymentNotice
-    And soapenv:Body with <body_value> in activatePaymentNotice
-    When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
-    Then check outcome is KO of activePaymentNotice response
-    And check faultCode is <error> of activatePaymentNotice response
-    Examples:
-      | header_value | body_value | error                 | soapUI test |
-      | errata       | corretto   | PPT_SOAPACTION_ERRATA | SIN_APNR_51 |
-      | corretta     | errata     | PPT_SINTASSI_EXTRAXSD | SIN_APNR_52 |
-      | errata       | errata     | PPT_SOAPACTION_ERRATA | SIN_APNR_53 |
-      | None         | errata     | PPT_SOAPACTION_ERRATA | SIN_APNR_55 |

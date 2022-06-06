@@ -44,14 +44,3 @@ Feature: Syntax checks OK for activatePaymentNoticeReq
       | paymentNote    | None  | SIN_APNR_47 |
       # TODO: amount test fail: fix it
 
-  Scenario Outline: Check correctness of header and body
-    Given soapenv:Header with <header_value> in activatePaymentNotice
-    And soapenv:Body with <body_value> in activatePaymentNotice
-    When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
-    Then check outcome is KO of activePaymentNotice response
-    And check faultCode is <error> of activatePaymentNotice response
-    Examples:
-      | header_value | body_value | error                 | soapUI test |
-      | corretto     | corretto   | PPT_SOAPACTION_ERRATA | SIN_APNR_50 |
-      | None         | corretto   | PPT_SOAPACTION_ERRATA | SIN_APNR_54 |
-

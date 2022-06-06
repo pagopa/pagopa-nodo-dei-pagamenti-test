@@ -67,14 +67,30 @@ Feature: syntax checks for pspNotifyPaymentResponse - OK
   # nodoInoltraEsitoPagamentoCarte phase
   Scenario Outline: Execute nodoInoltraEsitoPagamentoCarte request
     Given the Execute nodoChiediInformazioniPagamento request scenario executed successfully
-
+    And initial XML pspNotifyPayment
+      """
+      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:psp="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
+      <soapenv:Header/>
+      <soapenv:Body>
+      <psp:pspNotifyPaymentRes>
+      <outcome>#outcome#</outcome>
+      <fault>
+      <faultCode>#faultCode#</faultCode>
+      <faultString>#faultString#</faultString>
+      <id>#id#</id>
+      <description>#description#</description>
+      </fault>
+      </psp:pspNotifyPaymentRes>
+      </soapenv:Body>
+      </soapenv:Envelope>
+      """
     And <elem> with <value> in pspNotifyPayment
     And if outcome is KO set fault to None in pspNotifyPayment
     And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
     When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
-	Then check outcome is OK of nodoChiediInformazioniPagamento response
-	Examples:
-		  | elem                  | value    | soapUI test  |
-		  | soapenv:Header        | None     | T_04         |    
-     
-		
+    Then check outcome is OK of nodoChiediInformazioniPagamento response
+    Examples:
+      | elem           | value | soapUI test |
+      | soapenv:Header | None  | T_04        |
+
+
