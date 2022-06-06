@@ -56,49 +56,12 @@ Feature: process tests for generazioneRicevute
           </soapenv:Body>
       </soapenv:Envelope>
       """
-    
-
-
-  Scenario: define paaAttivaRPTRes
-    Given the Execute activatePaymentNotice request scenario executed successfully
-    Given initial XML paaAttivaRPTRisposta
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-            xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-                <soapenv:Header/>
-                <soapenv:Body>
-                    <nod:paaAttivaRPTRisposta>
-                        <esito>OK</esito>
-                        <datiPagamento>
-                            <importoSingoloVersamento>importo_singolo_versamento</importoSingoloVersamento>
-                            <ibanAccredito>iban_accredito</ibanAccredito>
-                            <bicAccredito>bic_accredito</bicAccredito>
-                            <enteBeneficiario>ente_beneficiario</enteBeneficiario>
-                            <credenzialiPagatore>credenziali_pagatore</credenzialiPagatore>
-                            <causaleVersamento>causale_versamento</causaleVersamento>
-                            <spezzoniCausaleVersamento>
-                                <spezzoneCausaleVersamento>spezzone_causale_versamento</spezzoneCausaleVersamento>
-                                <spezzoneStrutturaCausaleVersamento>
-                                    <causaleSpezzone>causale_spezzone</causaleSpezzone>
-                                    <importoSpezzone>importo_spezzone</importoSpezzone>
-                                </spezzoneStrutturaCausaleVersamento>
-                            </spezzoniCausaleVersamento>
-                        </datiPagamento>
-                    </nod:paaAttivaRPTRisposta>
-                </soapenv:Body>
-            </soapenv:Envelope>
-            """
-
-
-  # Activate phase
-  Scenario: Execute activatePaymentNotice request
     When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
-    # And db check 1 rt_activision
 
 
-  Scenario: Execute nodoInviaRPT request
-   Given And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
+    Scenario: Execute nodoInviaRPT request
+   Given the Execute activatePaymentNotice request scenario executed successfully
    And initial XML nodoInviaRPT
       """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">

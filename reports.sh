@@ -1,1 +1,0 @@
-behave -f html -o reports.html src/integ-test/bdd-test/features/appIO/primitives/activateIOPayment_syntax_ok.feature
