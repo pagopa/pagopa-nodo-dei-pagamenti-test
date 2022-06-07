@@ -23,7 +23,7 @@ Feature: check syntax KO for paaVerificaRPTRes
       """
 
     Scenario Outline: Check PPT_STAZIONE_INT_PA_ERRORE_RESPONSE error on invalid body element value
-        Given initial XML paVerifyPaymentNotice
+        Given initial XML paaVerificaRPTRisposta
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
                 <soapenv:Header/>
@@ -50,9 +50,9 @@ Feature: check syntax KO for paaVerificaRPTRes
             </soapenv:Envelope>
             """
             
-        And <tag> with <tag_value> in paVerifyPaymentNotice
-        And if esito is KO set fault to None in paVerifyPaymentNotice
-        And EC replies to nodo-dei-pagamenti with the paVerifyPaymentNotice
+        And <tag> with <tag_value> in paaVerificaRPTRisposta
+        And if esito is KO set fault to None in paaVerificaRPTRisposta
+        And EC replies to nodo-dei-pagamenti with the paaVerificaRPTRisposta
         When psp sends soap verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is KO of verifyPaymentNotice response
         And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of verifyPaymentNotice response

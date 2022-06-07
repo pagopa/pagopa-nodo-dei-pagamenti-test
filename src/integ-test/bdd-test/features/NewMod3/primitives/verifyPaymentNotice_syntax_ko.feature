@@ -1,4 +1,4 @@
-Feature: syntax checks KO for verifyPaymentReq
+Feature: Syntax checks KO for verifyPaymentReq
 
   Background:
     Given systems up
@@ -69,16 +69,3 @@ Feature: syntax checks KO for verifyPaymentReq
       | noticeNumber               | 1234567890123456789                  | SIN_VPNR_28 |
       | noticeNumber               | 12345678901234567A                   | SIN_VPNR_29 |
       | noticeNumber               | 12345678901234567!                   | SIN_VPNR_29 |
-
-  Scenario Outline: Check correctness of header and body
-    Given soapenv:Header with <header_value> in verifyPaymentNotice
-    And soapenv:Body with <body_value> in verifyPaymentNotice
-    When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
-    Then check outcome is KO of verifyPaymentNotice response
-    And check faultCode is <error> of verifyPaymentNotice response
-    Examples:
-      | header_value | body_value | error                 | soapUI test |
-      | errata       | corretto   | PPT_SOAPACTION_ERRATA | SIN_VPNR_31 |
-      | corretta     | errata     | PPT_SINTASSI_EXTRAXSD | SIN_VPNR_32 |
-      | errata       | errata     | PPT_SOAPACTION_ERRATA | SIN_VPNR_33 |
-      | None         | errata     | PPT_SOAPACTION_ERRATA | SIN_VPNR_35 |
