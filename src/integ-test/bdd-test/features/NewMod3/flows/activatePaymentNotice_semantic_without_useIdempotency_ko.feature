@@ -17,7 +17,7 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - not
                   <fiscalCode>#creditor_institution_code#</fiscalCode>
                   <noticeNumber>#notice_number#</noticeNumber>
                </qrCode>
-			   <expirationTime>120000</expirationTime>
+			          <expirationTime>120000</expirationTime>
                <amount>10.00</amount>
 			   <dueDate>2021-12-31</dueDate>
 			   <paymentNote>causale</paymentNote>
@@ -86,4 +86,4 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - not
     And check faultCode is PPT_PAGAMENTO_IN_CORSO of activatePaymentNotice response
     Examples:
       | minutes |
-      | 10      |
+      | 3       |

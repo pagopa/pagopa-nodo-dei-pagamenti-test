@@ -1,6 +1,8 @@
 import json
 import random
 
+from debugpy import connect
+import steps.db_operation as db
 from behave.model import Table
 import os
 
@@ -11,13 +13,7 @@ def before_all(context):
     more_userdata = json.load(open(os.path.join(context.config.base_dir + "/../resources/config.json")))
     context.config.update_userdata(more_userdata)
     services = context.config.userdata.get("services")
-
-    # apiconfig configuration
-    # DISABLE, see config.json too
-    # apiconfig_url = services.get("api-config").get("url") + services.get("api-config").get("rest_service")
-    # pagopa_apiconfig = apiconfig.ApiConfig(apiconfig_url)
-    # setattr(context, "apiconfig", pagopa_apiconfig)
-
+    db_config = context.config.userdata.get("db_configuration")
 
 def before_feature(context, feature):
     services = context.config.userdata.get("services")

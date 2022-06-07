@@ -1,4 +1,4 @@
-import re
+import re, json, os
 from xml.dom.minidom import parseString
 
 import requests
@@ -152,9 +152,6 @@ def replace_local_variables(body, context):
                 document = parseString(saved_elem.content)
             value = document.getElementsByTagName(tag)[0].firstChild.data
         body = body.replace(field, value)
-        print("##############################")
-        print(body)
-        print("###############################")
     return body
 
 
@@ -172,3 +169,13 @@ def get_history(rest_mock, notice_number, primitive):
     s = requests.Session()
     response = requests_retry_session(session=s).get(f"{rest_mock}/history/{notice_number}/{primitive}")
     return response.json(), response.status_code
+
+
+def query_json(context, name_query):
+    query = json.load(open(os.path.join(context.config.base_dir + "/../resources/query_AutomationTest.json")))
+    selected_query = query.get('query').get(name_query)
+    
+    if '$' in selected_query:
+        selected_query = replace_local_variables(selected_query, context)
+        
+    return selected_query

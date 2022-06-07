@@ -2,7 +2,7 @@ Feature: process tests for nodoInviaCarrelloRPT
 
    Background:
       Given systems up
-      And initial XML verifyPaymentNotice
+      And initial XML nodoInviaCarrelloRPT
          """
          <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
          <soapenv:Header>
@@ -141,7 +141,7 @@ Feature: process tests for nodoInviaCarrelloRPT
    Scenario: verify the CCP_RPT of the nodoInviaCarrelloRPT response is not equals to idCarrello
       Given the Execute nodoInviaCarrelloRPT request with CCP_RPT2 is not equals to idCarrello EC scenario executed successfully
       And CCP_RPT1 is equals to idCarrello
-      And multiBeneficiario with True
+      And u'multiBeneficiario with True
       When PSP sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
       Then check outcome is KO of nodoInviaCarrelloRPT response
       And check faultCode is PPT_MULTIBENEFICIARIO of nodoInviaCarrelloRPT response
@@ -177,21 +177,37 @@ Feature: process tests for nodoInviaCarrelloRPT
 
 
 
-   #da finire
-  # IBAN- IBAN value check: IBAN in <value> associated to idDominio in <tag_value> [nodoInviaCarrelloMb_16]
-  Scenario Otline: Check PPT_MULTIBENEFICIARIO error on IBAN  associated to idDominio in RPT1
+   
+  # IBAN- IBAN value check: IBAN in <elem> associated to idDominio in <tag_value> [nodoInviaCarrelloMb_16]
+  Scenario Outline: Check PPT_MULTIBENEFICIARIO error on Iban  #associated to idDominio in RPT1
     Given IBAN set <elem> with <value> in nodoInviaCarrello
     And multiBeneficiario with True
     When PSP sends SOAP nodoInviaCarrello to nodo-dei-pagamenti
     Then check outcome is KO of verificaBollettino response
     And check faultCode is PPT_MULTIBENEFICIARIO of verificaBollettino response
     Examples:
-      | elem                        | value            | soapUI test  |
-      | soapenv:Body                | None             |              |
+      | elem                        | tag_value            | soapUI test                        |
+      | soapenv:Body                | None                 |  nodoInviaCarrelloMb_16            |
 
 
 
 
+
+  # Notice_Id value check: Notice_Id value associates old version station [nodoInviaCarrelloMb_17]
+  Scenario: Check PPT_MULTIBENEFICIARIO error on Notice_Id with old version station 
+    Given multiBeneficiario with True
+    When PSP sends SOAP nodoInviaCarrello to nodo-dei-pagamenti
+    Then check outcome is KO of verificaBollettino response
+    And check faultCode is PPT_MULTIBENEFICIARIO of verificaBollettino response
+
+
+   
+  # Notice_Id value check: Notice_Id value associates old version station [nodoInviaCarrelloMb_18]
+  Scenario: Check PPT_MULTIBENEFICIARIO error on Notice_Id with old version station 
+    Given multiBeneficiario with True
+    When PSP sends SOAP nodoInviaCarrello to nodo-dei-pagamenti
+    Then check outcome is KO of verificaBollettino response
+    And check faultCode is PPT_MULTIBENEFICIARIO of verificaBollettino response
 
 
 

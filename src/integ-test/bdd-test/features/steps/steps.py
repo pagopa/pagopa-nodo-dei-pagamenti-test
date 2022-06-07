@@ -9,6 +9,8 @@ from behave import *
 from requests.exceptions import RetryError
 
 import utils as utils
+import db_operation as db
+
 
 # Constants
 RESPONSE = "Response"
@@ -504,10 +506,20 @@ def step_impl(context, primitive):
 
 @given("nodo-dei-pagamenti has config parameter {param} set to {value}")
 def step_impl(context, param, value):
-    # TODO verify with api-config
-    # verify parameter useIdempotency set to true in NODO4_CFG.CONFIGURATION_KEYS
-    # at the end of scenario set to default
-    pass
+    db_config = context.config.userdata.get("db_configuration")
+    db_selected = db_config.get('nodo_cfg')
+
+    name_query = 'query_config'
+    
+    selected_query = utils.query_json(context,name_query)
+    selected_query = selected_query.replace('?1', value).replace('?2', param)
+
+    conn = db.getConnection(db_selected.get('host'), db_selected.get('database'),db_selected.get('user'),db_selected.get('password'),db_selected.get('port'))
+
+    exec_query = db.executeQuery(conn, selected_query)
+    if exec_query is not None:
+        print(f'executed query: {exec_query}')
+
 
 
 @Step("call the {elem} of {primitive} response as {name}")
@@ -582,14 +594,14 @@ def step_impl(context, seconds):
     pass
 
 
-@step("api-config executes the sql {sql_code}")
-def step_impl(context, sql_code):
-    # TO DO
-    pass
+@step("execute the sql {sql_code} on db {db_name}")
+def step_impl(context, sql_code, db_name):
+    db_config = context.config.userdata.get("db_configuration")
+    db_selected = db_config.get(db_name)
+    
+    selected_query = utils.query_json(context, sql_code)
+    
+    conn = db.getConnection(db_selected.get('host'), db_selected.get('database'),db_selected.get('user'),db_selected.get('password'),db_selected.get('port'))
 
-"""
-@step("api-config executes the sql {sql_code} and check {status}")
-def step_impl(context, sql_code, status):
-    # TO DO
-    pass
-"""
+    exec_query = db.executeQuery(conn, selected_query)
+    print(f'executed query: {exec_query}')
