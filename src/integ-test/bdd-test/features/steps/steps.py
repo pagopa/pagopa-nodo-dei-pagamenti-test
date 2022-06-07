@@ -289,6 +289,7 @@ def step_impl(context, mock, destination, primitive):
         pa_verify_payment_notice_res = pa_verify_payment_notice_res.replace('$iuv', getattr(context, 'iuv'))
 
     setattr(context, primitive, pa_verify_payment_notice_res)
+    print(pa_verify_payment_notice_res)
     response_status_code = utils.save_soap_action(utils.get_soap_mock_ec(context), primitive,
                                                   pa_verify_payment_notice_res, override=True)
 
