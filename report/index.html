@@ -116,10 +116,10 @@ function Collapsible_expandAllFailed()
         <div id="summary">
           <p id="totals">
             <p id="feature_totals">Features: passed: 1</p>
-            <p id="scenario_totals">Scenarios: passed: 1</p>
-            <p id="step_totals">Steps: passed: 4</p>
+            <p id="scenario_totals">Scenarios: passed: 7</p>
+            <p id="step_totals">Steps: passed: 24</p>
           </p>
-          <p id="duration">Finished in 1.0 seconds</p>
+          <p id="duration">Finished in 7.3 seconds</p>
           <div id="expand-collapse">
             <a id="expander" href="#" onclick="Collapsible_expandAll('scenario_steps')">Expand All</a>
             <span> | </span>
@@ -145,14 +145,14 @@ function Collapsible_expandAllFailed()
       <div class="scenario">
         <span class="scenario_file">src/integ-test/bdd-test/features/appIO/primitives/activateIOPayment_DB_AIPR_01.feature:55</span>
         <h3 onclick="Collapsible_toggle('scenario_0')">
-          <span class="val">Scenario: check db</span>
+          <span class="val">Scenario: Execute activateIOPaymentReq request</span>
         </h3>
         <ol class="scenario_steps" id="scenario_0">
           <li class="step passed">
             <div class="step_name">
               <span class="keyword">Given </span>
               <span class="step val">systems up</span>
-              <small class="step_duration">(0.057s)</small>
+              <small class="step_duration">(0.069s)</small>
             </div>
             <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:21</span>
@@ -190,7 +190,7 @@ function Collapsible_expandAllFailed()
                 <b>activateIOPayment</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.007s)</small>
+              <small class="step_duration">(0.015s)</small>
             </div>
             <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:46</span>
@@ -258,7 +258,7 @@ function Collapsible_expandAllFailed()
                 <b>nodo-dei-pagamenti</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.707s)</small>
+              <small class="step_duration">(0.751s)</small>
             </div>
             <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:87</span>
@@ -284,6 +284,128 @@ function Collapsible_expandAllFailed()
             </div>
             <span class="embed"/>
           </li>
+        </ol>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/appIO/primitives/activateIOPayment_DB_AIPR_01.feature:59</span>
+        <h3 onclick="Collapsible_toggle('scenario_1')">
+          <span class="val">Scenario: check db DB_AIPR_01</span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_1">
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">Given </span>
+              <span class="step val">systems up</span>
+              <small class="step_duration">(0.055s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:21</span>
+            </div>
+            <span class="embed"/>
+            <table>
+              <tr>
+                <th>name</th>
+                <th>url</th>
+                <th>healthcheck</th>
+                <th>soap_service</th>
+                <th>rest_service</th>
+              </tr>
+              <tr>
+                <td>nodo-dei-pagamenti</td>
+                <td>http://localhost:9080/</td>
+                <td>/nodo-dev-health/ready</td>
+                <td>/nodo-dev/webservices/input</td>
+                <td/>
+              </tr>
+              <tr>
+                <td>mock-ec</td>
+                <td>http://localhost:8089/</td>
+                <td>servizi/PagamentiTelematiciRPT/info</td>
+                <td>servizi/PagamentiTelematiciRPT</td>
+                <td/>
+              </tr>
+            </table>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>initial XML </span>
+                <b>activateIOPayment</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.004s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:46</span>
+            </div>
+            <span class="embed"/>
+            <div class="message">
+              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd&quot;&gt;
+    &lt;soapenv:Header/&gt;
+    &lt;soapenv:Body&gt;
+        &lt;nod:activateIOPaymentReq&gt;
+            &lt;idPSP&gt;70000000001&lt;/idPSP&gt;
+            &lt;idBrokerPSP&gt;70000000001&lt;/idBrokerPSP&gt;
+            &lt;idChannel&gt;70000000001_01&lt;/idChannel&gt;
+            &lt;password&gt;pwdpwdpwd&lt;/password&gt;
+            &lt;!--Optional:--&gt;
+            &lt;idempotencyKey&gt;#idempotency_key#&lt;/idempotencyKey&gt;
+            &lt;qrCode&gt;
+                &lt;fiscalCode&gt;#creditor_institution_code#&lt;/fiscalCode&gt;
+                &lt;noticeNumber&gt;#notice_number#&lt;/noticeNumber&gt;
+            &lt;/qrCode&gt;
+            &lt;!--Optional:--&gt;
+            &lt;expirationTime&gt;12345&lt;/expirationTime&gt;
+            &lt;amount&gt;70.00&lt;/amount&gt;
+            &lt;!--Optional:--&gt;
+            &lt;dueDate&gt;2021-12-12&lt;/dueDate&gt;
+            &lt;!--Optional:--&gt;
+            &lt;paymentNote&gt;test&lt;/paymentNote&gt;
+            &lt;!--Optional:--&gt;
+            &lt;payer&gt;
+                &lt;uniqueIdentifier&gt;
+                    &lt;entityUniqueIdentifierType&gt;G&lt;/entityUniqueIdentifierType&gt;
+                    &lt;entityUniqueIdentifierValue&gt;44444444444&lt;/entityUniqueIdentifierValue&gt;
+                &lt;/uniqueIdentifier&gt;
+                &lt;fullName&gt;name&lt;/fullName&gt;
+                &lt;!--Optional:--&gt;
+                &lt;streetName&gt;street&lt;/streetName&gt;
+                &lt;!--Optional:--&gt;
+                &lt;civicNumber&gt;civic&lt;/civicNumber&gt;
+                &lt;!--Optional:--&gt;
+                &lt;postalCode&gt;code&lt;/postalCode&gt;
+                &lt;!--Optional:--&gt;
+                &lt;city&gt;city&lt;/city&gt;
+                &lt;!--Optional:--&gt;
+                &lt;stateProvinceRegion&gt;state&lt;/stateProvinceRegion&gt;
+                &lt;!--Optional:--&gt;
+                &lt;country&gt;IT&lt;/country&gt;
+                &lt;!--Optional:--&gt;
+                &lt;e-mail&gt;test.prova@gmail.com&lt;/e-mail&gt;
+            &lt;/payer&gt;
+        &lt;/nod:activateIOPaymentReq&gt;
+    &lt;/soapenv:Body&gt;
+&lt;/soapenv:Envelope&gt;
+</pre>
+            </div>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">Given </span>
+              <span class="step val">
+                <span>the </span>
+                <b>Execute activateIOPaymentReq request</b>
+                <span> scenario executed successfully</span>
+              </span>
+              <small class="step_duration">(0.871s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:240</span>
+            </div>
+            <span class="embed"/>
+          </li>
           <li class="step passed">
             <div class="step_name">
               <span class="keyword">And </span>
@@ -296,7 +418,397 @@ function Collapsible_expandAllFailed()
                 <b>AppIO</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.263s)</small>
+              <small class="step_duration">(0.389s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:599</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">Then </span>
+              <span class="step val">
+                <span>checks the </span>
+                <b>POSITION_ACTIVATE</b>
+                <span> table is properly populated according to the query </span>
+                <b>DB_AIPR_01_AppIO</b>
+                <span> and primitive</span>
+              </span>
+              <small class="step_duration">(0.001s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:613</span>
+            </div>
+            <span class="embed"/>
+          </li>
+        </ol>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/appIO/primitives/activateIOPayment_DB_AIPR_01.feature:64</span>
+        <h3 onclick="Collapsible_toggle('scenario_2')">
+          <span class="val">Scenario: check db DB_AIPR_02</span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_2">
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">Given </span>
+              <span class="step val">systems up</span>
+              <small class="step_duration">(0.055s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:21</span>
+            </div>
+            <span class="embed"/>
+            <table>
+              <tr>
+                <th>name</th>
+                <th>url</th>
+                <th>healthcheck</th>
+                <th>soap_service</th>
+                <th>rest_service</th>
+              </tr>
+              <tr>
+                <td>nodo-dei-pagamenti</td>
+                <td>http://localhost:9080/</td>
+                <td>/nodo-dev-health/ready</td>
+                <td>/nodo-dev/webservices/input</td>
+                <td/>
+              </tr>
+              <tr>
+                <td>mock-ec</td>
+                <td>http://localhost:8089/</td>
+                <td>servizi/PagamentiTelematiciRPT/info</td>
+                <td>servizi/PagamentiTelematiciRPT</td>
+                <td/>
+              </tr>
+            </table>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>initial XML </span>
+                <b>activateIOPayment</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.001s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:46</span>
+            </div>
+            <span class="embed"/>
+            <div class="message">
+              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd&quot;&gt;
+    &lt;soapenv:Header/&gt;
+    &lt;soapenv:Body&gt;
+        &lt;nod:activateIOPaymentReq&gt;
+            &lt;idPSP&gt;70000000001&lt;/idPSP&gt;
+            &lt;idBrokerPSP&gt;70000000001&lt;/idBrokerPSP&gt;
+            &lt;idChannel&gt;70000000001_01&lt;/idChannel&gt;
+            &lt;password&gt;pwdpwdpwd&lt;/password&gt;
+            &lt;!--Optional:--&gt;
+            &lt;idempotencyKey&gt;#idempotency_key#&lt;/idempotencyKey&gt;
+            &lt;qrCode&gt;
+                &lt;fiscalCode&gt;#creditor_institution_code#&lt;/fiscalCode&gt;
+                &lt;noticeNumber&gt;#notice_number#&lt;/noticeNumber&gt;
+            &lt;/qrCode&gt;
+            &lt;!--Optional:--&gt;
+            &lt;expirationTime&gt;12345&lt;/expirationTime&gt;
+            &lt;amount&gt;70.00&lt;/amount&gt;
+            &lt;!--Optional:--&gt;
+            &lt;dueDate&gt;2021-12-12&lt;/dueDate&gt;
+            &lt;!--Optional:--&gt;
+            &lt;paymentNote&gt;test&lt;/paymentNote&gt;
+            &lt;!--Optional:--&gt;
+            &lt;payer&gt;
+                &lt;uniqueIdentifier&gt;
+                    &lt;entityUniqueIdentifierType&gt;G&lt;/entityUniqueIdentifierType&gt;
+                    &lt;entityUniqueIdentifierValue&gt;44444444444&lt;/entityUniqueIdentifierValue&gt;
+                &lt;/uniqueIdentifier&gt;
+                &lt;fullName&gt;name&lt;/fullName&gt;
+                &lt;!--Optional:--&gt;
+                &lt;streetName&gt;street&lt;/streetName&gt;
+                &lt;!--Optional:--&gt;
+                &lt;civicNumber&gt;civic&lt;/civicNumber&gt;
+                &lt;!--Optional:--&gt;
+                &lt;postalCode&gt;code&lt;/postalCode&gt;
+                &lt;!--Optional:--&gt;
+                &lt;city&gt;city&lt;/city&gt;
+                &lt;!--Optional:--&gt;
+                &lt;stateProvinceRegion&gt;state&lt;/stateProvinceRegion&gt;
+                &lt;!--Optional:--&gt;
+                &lt;country&gt;IT&lt;/country&gt;
+                &lt;!--Optional:--&gt;
+                &lt;e-mail&gt;test.prova@gmail.com&lt;/e-mail&gt;
+            &lt;/payer&gt;
+        &lt;/nod:activateIOPaymentReq&gt;
+    &lt;/soapenv:Body&gt;
+&lt;/soapenv:Envelope&gt;
+</pre>
+            </div>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">Given </span>
+              <span class="step val">
+                <span>the </span>
+                <b>Execute activateIOPaymentReq request</b>
+                <span> scenario executed successfully</span>
+              </span>
+              <small class="step_duration">(0.809s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:240</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>execute the sql </span>
+                <b>DB_AIPR_02_AppIO</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>AppIO</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.154s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:599</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">Then </span>
+              <span class="step val">
+                <span>checks the </span>
+                <b>POSITION_SERVICE</b>
+                <span> table is properly populated according to the query </span>
+                <b>DB_AIPR_02_AppIO</b>
+                <span> and primitive</span>
+              </span>
+              <small class="step_duration">(0.001s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:613</span>
+            </div>
+            <span class="embed"/>
+          </li>
+        </ol>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/appIO/primitives/activateIOPayment_DB_AIPR_01.feature:69</span>
+        <h3 onclick="Collapsible_toggle('scenario_3')">
+          <span class="val">Scenario: check db DB_AIPR_03</span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_3">
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">Given </span>
+              <span class="step val">systems up</span>
+              <small class="step_duration">(0.055s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:21</span>
+            </div>
+            <span class="embed"/>
+            <table>
+              <tr>
+                <th>name</th>
+                <th>url</th>
+                <th>healthcheck</th>
+                <th>soap_service</th>
+                <th>rest_service</th>
+              </tr>
+              <tr>
+                <td>nodo-dei-pagamenti</td>
+                <td>http://localhost:9080/</td>
+                <td>/nodo-dev-health/ready</td>
+                <td>/nodo-dev/webservices/input</td>
+                <td/>
+              </tr>
+              <tr>
+                <td>mock-ec</td>
+                <td>http://localhost:8089/</td>
+                <td>servizi/PagamentiTelematiciRPT/info</td>
+                <td>servizi/PagamentiTelematiciRPT</td>
+                <td/>
+              </tr>
+            </table>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>initial XML </span>
+                <b>activateIOPayment</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.002s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:46</span>
+            </div>
+            <span class="embed"/>
+            <div class="message">
+              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd&quot;&gt;
+    &lt;soapenv:Header/&gt;
+    &lt;soapenv:Body&gt;
+        &lt;nod:activateIOPaymentReq&gt;
+            &lt;idPSP&gt;70000000001&lt;/idPSP&gt;
+            &lt;idBrokerPSP&gt;70000000001&lt;/idBrokerPSP&gt;
+            &lt;idChannel&gt;70000000001_01&lt;/idChannel&gt;
+            &lt;password&gt;pwdpwdpwd&lt;/password&gt;
+            &lt;!--Optional:--&gt;
+            &lt;idempotencyKey&gt;#idempotency_key#&lt;/idempotencyKey&gt;
+            &lt;qrCode&gt;
+                &lt;fiscalCode&gt;#creditor_institution_code#&lt;/fiscalCode&gt;
+                &lt;noticeNumber&gt;#notice_number#&lt;/noticeNumber&gt;
+            &lt;/qrCode&gt;
+            &lt;!--Optional:--&gt;
+            &lt;expirationTime&gt;12345&lt;/expirationTime&gt;
+            &lt;amount&gt;70.00&lt;/amount&gt;
+            &lt;!--Optional:--&gt;
+            &lt;dueDate&gt;2021-12-12&lt;/dueDate&gt;
+            &lt;!--Optional:--&gt;
+            &lt;paymentNote&gt;test&lt;/paymentNote&gt;
+            &lt;!--Optional:--&gt;
+            &lt;payer&gt;
+                &lt;uniqueIdentifier&gt;
+                    &lt;entityUniqueIdentifierType&gt;G&lt;/entityUniqueIdentifierType&gt;
+                    &lt;entityUniqueIdentifierValue&gt;44444444444&lt;/entityUniqueIdentifierValue&gt;
+                &lt;/uniqueIdentifier&gt;
+                &lt;fullName&gt;name&lt;/fullName&gt;
+                &lt;!--Optional:--&gt;
+                &lt;streetName&gt;street&lt;/streetName&gt;
+                &lt;!--Optional:--&gt;
+                &lt;civicNumber&gt;civic&lt;/civicNumber&gt;
+                &lt;!--Optional:--&gt;
+                &lt;postalCode&gt;code&lt;/postalCode&gt;
+                &lt;!--Optional:--&gt;
+                &lt;city&gt;city&lt;/city&gt;
+                &lt;!--Optional:--&gt;
+                &lt;stateProvinceRegion&gt;state&lt;/stateProvinceRegion&gt;
+                &lt;!--Optional:--&gt;
+                &lt;country&gt;IT&lt;/country&gt;
+                &lt;!--Optional:--&gt;
+                &lt;e-mail&gt;test.prova@gmail.com&lt;/e-mail&gt;
+            &lt;/payer&gt;
+        &lt;/nod:activateIOPaymentReq&gt;
+    &lt;/soapenv:Body&gt;
+&lt;/soapenv:Envelope&gt;
+</pre>
+            </div>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">Given </span>
+              <span class="step val">
+                <span>the </span>
+                <b>Execute activateIOPaymentReq request</b>
+                <span> scenario executed successfully</span>
+              </span>
+              <small class="step_duration">(0.672s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:240</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>random idempotencyKey having </span>
+                <b>70000000001</b>
+                <span> as idPSP in </span>
+                <b>activateIOPayment</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.003s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:494</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span/>
+                <b>noticeNumber</b>
+                <span> with </span>
+                <b>$activateIOPayment.noticeNumber</b>
+                <span> in </span>
+                <b>activateIOPayment</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.003s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:69</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">When </span>
+              <span class="step val">
+                <span/>
+                <b>psp</b>
+                <span> sends SOAP </span>
+                <b>activateIOPayment</b>
+                <span> to </span>
+                <b>nodo-dei-pagamenti</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.067s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:87</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">Then </span>
+              <span class="step val">
+                <span>check </span>
+                <b>outcome</b>
+                <span> is </span>
+                <b>KO</b>
+                <span> of </span>
+                <b>activateIOPayment</b>
+                <span> response</span>
+              </span>
+              <small class="step_duration">(0.002s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:109</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>execute the sql </span>
+                <b>DB_AIPR_03_AppIO</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>AppIO</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.137s)</small>
             </div>
             <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:599</span>
@@ -307,9 +819,485 @@ function Collapsible_expandAllFailed()
             <div class="step_name">
               <span class="keyword">And </span>
               <span class="step val">
-                <span>prova assert </span>
-                <b>DB_AIPR_01_AppIO</b>
+                <span>checks the </span>
+                <b>POSITION_SERVICE</b>
+                <span> table is properly populated according to the query </span>
+                <b>DB_AIPR_03_AppIO</b>
+                <span> and primitive</span>
+              </span>
+              <small class="step_duration">(0.001s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:613</span>
+            </div>
+            <span class="embed"/>
+          </li>
+        </ol>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/appIO/primitives/activateIOPayment_DB_AIPR_01.feature:78</span>
+        <h3 onclick="Collapsible_toggle('scenario_4')">
+          <span class="val">Scenario: check db DB_AIPR_04</span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_4">
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">Given </span>
+              <span class="step val">systems up</span>
+              <small class="step_duration">(0.060s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:21</span>
+            </div>
+            <span class="embed"/>
+            <table>
+              <tr>
+                <th>name</th>
+                <th>url</th>
+                <th>healthcheck</th>
+                <th>soap_service</th>
+                <th>rest_service</th>
+              </tr>
+              <tr>
+                <td>nodo-dei-pagamenti</td>
+                <td>http://localhost:9080/</td>
+                <td>/nodo-dev-health/ready</td>
+                <td>/nodo-dev/webservices/input</td>
+                <td/>
+              </tr>
+              <tr>
+                <td>mock-ec</td>
+                <td>http://localhost:8089/</td>
+                <td>servizi/PagamentiTelematiciRPT/info</td>
+                <td>servizi/PagamentiTelematiciRPT</td>
+                <td/>
+              </tr>
+            </table>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>initial XML </span>
+                <b>activateIOPayment</b>
                 <span/>
+              </span>
+              <small class="step_duration">(0.004s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:46</span>
+            </div>
+            <span class="embed"/>
+            <div class="message">
+              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd&quot;&gt;
+    &lt;soapenv:Header/&gt;
+    &lt;soapenv:Body&gt;
+        &lt;nod:activateIOPaymentReq&gt;
+            &lt;idPSP&gt;70000000001&lt;/idPSP&gt;
+            &lt;idBrokerPSP&gt;70000000001&lt;/idBrokerPSP&gt;
+            &lt;idChannel&gt;70000000001_01&lt;/idChannel&gt;
+            &lt;password&gt;pwdpwdpwd&lt;/password&gt;
+            &lt;!--Optional:--&gt;
+            &lt;idempotencyKey&gt;#idempotency_key#&lt;/idempotencyKey&gt;
+            &lt;qrCode&gt;
+                &lt;fiscalCode&gt;#creditor_institution_code#&lt;/fiscalCode&gt;
+                &lt;noticeNumber&gt;#notice_number#&lt;/noticeNumber&gt;
+            &lt;/qrCode&gt;
+            &lt;!--Optional:--&gt;
+            &lt;expirationTime&gt;12345&lt;/expirationTime&gt;
+            &lt;amount&gt;70.00&lt;/amount&gt;
+            &lt;!--Optional:--&gt;
+            &lt;dueDate&gt;2021-12-12&lt;/dueDate&gt;
+            &lt;!--Optional:--&gt;
+            &lt;paymentNote&gt;test&lt;/paymentNote&gt;
+            &lt;!--Optional:--&gt;
+            &lt;payer&gt;
+                &lt;uniqueIdentifier&gt;
+                    &lt;entityUniqueIdentifierType&gt;G&lt;/entityUniqueIdentifierType&gt;
+                    &lt;entityUniqueIdentifierValue&gt;44444444444&lt;/entityUniqueIdentifierValue&gt;
+                &lt;/uniqueIdentifier&gt;
+                &lt;fullName&gt;name&lt;/fullName&gt;
+                &lt;!--Optional:--&gt;
+                &lt;streetName&gt;street&lt;/streetName&gt;
+                &lt;!--Optional:--&gt;
+                &lt;civicNumber&gt;civic&lt;/civicNumber&gt;
+                &lt;!--Optional:--&gt;
+                &lt;postalCode&gt;code&lt;/postalCode&gt;
+                &lt;!--Optional:--&gt;
+                &lt;city&gt;city&lt;/city&gt;
+                &lt;!--Optional:--&gt;
+                &lt;stateProvinceRegion&gt;state&lt;/stateProvinceRegion&gt;
+                &lt;!--Optional:--&gt;
+                &lt;country&gt;IT&lt;/country&gt;
+                &lt;!--Optional:--&gt;
+                &lt;e-mail&gt;test.prova@gmail.com&lt;/e-mail&gt;
+            &lt;/payer&gt;
+        &lt;/nod:activateIOPaymentReq&gt;
+    &lt;/soapenv:Body&gt;
+&lt;/soapenv:Envelope&gt;
+</pre>
+            </div>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">Given </span>
+              <span class="step val">
+                <span>the </span>
+                <b>Execute activateIOPaymentReq request</b>
+                <span> scenario executed successfully</span>
+              </span>
+              <small class="step_duration">(0.897s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:240</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>execute the sql </span>
+                <b>DB_AIPR_04_AppIO</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>AppIO</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.128s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:599</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">Then </span>
+              <span class="step val">
+                <span>checks the </span>
+                <b>POSITION_PAYMENT_PLAN</b>
+                <span> table is properly populated according to the query </span>
+                <b>DB_AIPR_04_AppIO</b>
+                <span> and primitive</span>
+              </span>
+              <small class="step_duration">(0.001s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:613</span>
+            </div>
+            <span class="embed"/>
+          </li>
+        </ol>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/appIO/primitives/activateIOPayment_DB_AIPR_01.feature:83</span>
+        <h3 onclick="Collapsible_toggle('scenario_5')">
+          <span class="val">Scenario: check db DB_AIPR_05</span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_5">
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">Given </span>
+              <span class="step val">systems up</span>
+              <small class="step_duration">(0.052s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:21</span>
+            </div>
+            <span class="embed"/>
+            <table>
+              <tr>
+                <th>name</th>
+                <th>url</th>
+                <th>healthcheck</th>
+                <th>soap_service</th>
+                <th>rest_service</th>
+              </tr>
+              <tr>
+                <td>nodo-dei-pagamenti</td>
+                <td>http://localhost:9080/</td>
+                <td>/nodo-dev-health/ready</td>
+                <td>/nodo-dev/webservices/input</td>
+                <td/>
+              </tr>
+              <tr>
+                <td>mock-ec</td>
+                <td>http://localhost:8089/</td>
+                <td>servizi/PagamentiTelematiciRPT/info</td>
+                <td>servizi/PagamentiTelematiciRPT</td>
+                <td/>
+              </tr>
+            </table>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>initial XML </span>
+                <b>activateIOPayment</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.004s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:46</span>
+            </div>
+            <span class="embed"/>
+            <div class="message">
+              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd&quot;&gt;
+    &lt;soapenv:Header/&gt;
+    &lt;soapenv:Body&gt;
+        &lt;nod:activateIOPaymentReq&gt;
+            &lt;idPSP&gt;70000000001&lt;/idPSP&gt;
+            &lt;idBrokerPSP&gt;70000000001&lt;/idBrokerPSP&gt;
+            &lt;idChannel&gt;70000000001_01&lt;/idChannel&gt;
+            &lt;password&gt;pwdpwdpwd&lt;/password&gt;
+            &lt;!--Optional:--&gt;
+            &lt;idempotencyKey&gt;#idempotency_key#&lt;/idempotencyKey&gt;
+            &lt;qrCode&gt;
+                &lt;fiscalCode&gt;#creditor_institution_code#&lt;/fiscalCode&gt;
+                &lt;noticeNumber&gt;#notice_number#&lt;/noticeNumber&gt;
+            &lt;/qrCode&gt;
+            &lt;!--Optional:--&gt;
+            &lt;expirationTime&gt;12345&lt;/expirationTime&gt;
+            &lt;amount&gt;70.00&lt;/amount&gt;
+            &lt;!--Optional:--&gt;
+            &lt;dueDate&gt;2021-12-12&lt;/dueDate&gt;
+            &lt;!--Optional:--&gt;
+            &lt;paymentNote&gt;test&lt;/paymentNote&gt;
+            &lt;!--Optional:--&gt;
+            &lt;payer&gt;
+                &lt;uniqueIdentifier&gt;
+                    &lt;entityUniqueIdentifierType&gt;G&lt;/entityUniqueIdentifierType&gt;
+                    &lt;entityUniqueIdentifierValue&gt;44444444444&lt;/entityUniqueIdentifierValue&gt;
+                &lt;/uniqueIdentifier&gt;
+                &lt;fullName&gt;name&lt;/fullName&gt;
+                &lt;!--Optional:--&gt;
+                &lt;streetName&gt;street&lt;/streetName&gt;
+                &lt;!--Optional:--&gt;
+                &lt;civicNumber&gt;civic&lt;/civicNumber&gt;
+                &lt;!--Optional:--&gt;
+                &lt;postalCode&gt;code&lt;/postalCode&gt;
+                &lt;!--Optional:--&gt;
+                &lt;city&gt;city&lt;/city&gt;
+                &lt;!--Optional:--&gt;
+                &lt;stateProvinceRegion&gt;state&lt;/stateProvinceRegion&gt;
+                &lt;!--Optional:--&gt;
+                &lt;country&gt;IT&lt;/country&gt;
+                &lt;!--Optional:--&gt;
+                &lt;e-mail&gt;test.prova@gmail.com&lt;/e-mail&gt;
+            &lt;/payer&gt;
+        &lt;/nod:activateIOPaymentReq&gt;
+    &lt;/soapenv:Body&gt;
+&lt;/soapenv:Envelope&gt;
+</pre>
+            </div>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">Given </span>
+              <span class="step val">
+                <span>the </span>
+                <b>Execute activateIOPaymentReq request</b>
+                <span> scenario executed successfully</span>
+              </span>
+              <small class="step_duration">(0.886s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:240</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>execute the sql </span>
+                <b>DB_AIPR_05_AppIO</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>AppIO</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.141s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:599</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">Then </span>
+              <span class="step val">
+                <span>checks the </span>
+                <b>POSITION_PAYMENT_PLAN</b>
+                <span> table is properly populated according to the query </span>
+                <b>DB_AIPR_05_AppIO</b>
+                <span> and primitive</span>
+              </span>
+              <small class="step_duration">(0.001s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:613</span>
+            </div>
+            <span class="embed"/>
+          </li>
+        </ol>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/appIO/primitives/activateIOPayment_DB_AIPR_01.feature:88</span>
+        <h3 onclick="Collapsible_toggle('scenario_6')">
+          <span class="val">Scenario: check db DB_AIPR_06</span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_6">
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">Given </span>
+              <span class="step val">systems up</span>
+              <small class="step_duration">(0.070s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:21</span>
+            </div>
+            <span class="embed"/>
+            <table>
+              <tr>
+                <th>name</th>
+                <th>url</th>
+                <th>healthcheck</th>
+                <th>soap_service</th>
+                <th>rest_service</th>
+              </tr>
+              <tr>
+                <td>nodo-dei-pagamenti</td>
+                <td>http://localhost:9080/</td>
+                <td>/nodo-dev-health/ready</td>
+                <td>/nodo-dev/webservices/input</td>
+                <td/>
+              </tr>
+              <tr>
+                <td>mock-ec</td>
+                <td>http://localhost:8089/</td>
+                <td>servizi/PagamentiTelematiciRPT/info</td>
+                <td>servizi/PagamentiTelematiciRPT</td>
+                <td/>
+              </tr>
+            </table>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>initial XML </span>
+                <b>activateIOPayment</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.003s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:46</span>
+            </div>
+            <span class="embed"/>
+            <div class="message">
+              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd&quot;&gt;
+    &lt;soapenv:Header/&gt;
+    &lt;soapenv:Body&gt;
+        &lt;nod:activateIOPaymentReq&gt;
+            &lt;idPSP&gt;70000000001&lt;/idPSP&gt;
+            &lt;idBrokerPSP&gt;70000000001&lt;/idBrokerPSP&gt;
+            &lt;idChannel&gt;70000000001_01&lt;/idChannel&gt;
+            &lt;password&gt;pwdpwdpwd&lt;/password&gt;
+            &lt;!--Optional:--&gt;
+            &lt;idempotencyKey&gt;#idempotency_key#&lt;/idempotencyKey&gt;
+            &lt;qrCode&gt;
+                &lt;fiscalCode&gt;#creditor_institution_code#&lt;/fiscalCode&gt;
+                &lt;noticeNumber&gt;#notice_number#&lt;/noticeNumber&gt;
+            &lt;/qrCode&gt;
+            &lt;!--Optional:--&gt;
+            &lt;expirationTime&gt;12345&lt;/expirationTime&gt;
+            &lt;amount&gt;70.00&lt;/amount&gt;
+            &lt;!--Optional:--&gt;
+            &lt;dueDate&gt;2021-12-12&lt;/dueDate&gt;
+            &lt;!--Optional:--&gt;
+            &lt;paymentNote&gt;test&lt;/paymentNote&gt;
+            &lt;!--Optional:--&gt;
+            &lt;payer&gt;
+                &lt;uniqueIdentifier&gt;
+                    &lt;entityUniqueIdentifierType&gt;G&lt;/entityUniqueIdentifierType&gt;
+                    &lt;entityUniqueIdentifierValue&gt;44444444444&lt;/entityUniqueIdentifierValue&gt;
+                &lt;/uniqueIdentifier&gt;
+                &lt;fullName&gt;name&lt;/fullName&gt;
+                &lt;!--Optional:--&gt;
+                &lt;streetName&gt;street&lt;/streetName&gt;
+                &lt;!--Optional:--&gt;
+                &lt;civicNumber&gt;civic&lt;/civicNumber&gt;
+                &lt;!--Optional:--&gt;
+                &lt;postalCode&gt;code&lt;/postalCode&gt;
+                &lt;!--Optional:--&gt;
+                &lt;city&gt;city&lt;/city&gt;
+                &lt;!--Optional:--&gt;
+                &lt;stateProvinceRegion&gt;state&lt;/stateProvinceRegion&gt;
+                &lt;!--Optional:--&gt;
+                &lt;country&gt;IT&lt;/country&gt;
+                &lt;!--Optional:--&gt;
+                &lt;e-mail&gt;test.prova@gmail.com&lt;/e-mail&gt;
+            &lt;/payer&gt;
+        &lt;/nod:activateIOPaymentReq&gt;
+    &lt;/soapenv:Body&gt;
+&lt;/soapenv:Envelope&gt;
+</pre>
+            </div>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">Given </span>
+              <span class="step val">
+                <span>the </span>
+                <b>Execute activateIOPaymentReq request</b>
+                <span> scenario executed successfully</span>
+              </span>
+              <small class="step_duration">(0.794s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:240</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>execute the sql </span>
+                <b>DB_AIPR_06_AppIO</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>AppIO</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.149s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:599</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">Then </span>
+              <span class="step val">
+                <span>checks the </span>
+                <b>POSITION_SUBJECT</b>
+                <span> table is properly populated according to the query </span>
+                <b>DB_AIPR_06_AppIO</b>
+                <span> and primitive</span>
               </span>
               <small class="step_duration">(0.001s)</small>
             </div>

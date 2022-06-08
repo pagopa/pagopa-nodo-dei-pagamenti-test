@@ -7,7 +7,12 @@
     "NewMod3" : {  
     },
     "AppIO":{
-        "DB_AIPR_01_AppIO" : "SELECT * from POSITION_ACTIVATE WHERE CREDITOR_REFERENCE_ID  = '$activateIOPaymentResponse.creditorReferenceId' AND PA_FISCAL_CODE = '$activateIOPaymentResponse.fiscalCodePA' AND PAYMENT_TOKEN = '$activateIOPaymentResponse.paymentToken'"
+        "DB_AIPR_01_AppIO" : "SELECT * from POSITION_ACTIVATE WHERE CREDITOR_REFERENCE_ID  = '$activateIOPaymentResponse.creditorReferenceId' AND PA_FISCAL_CODE = '$activateIOPaymentResponse.fiscalCodePA' AND PAYMENT_TOKEN = '$activateIOPaymentResponse.paymentToken'",
+        "DB_AIPR_02_AppIO" : "SELECT * from POSITION_SERVICE WHERE COMPANY_NAME  = '$activateIOPaymentResponse.companyName' AND PA_FISCAL_CODE = '$activateIOPaymentResponse.fiscalCodePA' AND NOTICE_ID = '$activateIOPayment.noticeNumber'",
+        "DB_AIPR_03_AppIO" : "SELECT * from POSITION_SERVICE WHERE NOTICE_ID = '$activateIOPayment.noticeNumber'",
+        "DB_AIPR_04_AppIO" : "SELECT * from POSITION_PAYMENT_PLAN WHERE PA_FISCAL_CODE = '$activateIOPaymentResponse.fiscalCodePA' AND NOTICE_ID = '$activateIOPayment.noticeNumber' AND CREDITOR_REFERENCE_ID  = '$activateIOPaymentResponse.creditorReferenceId' AND AMOUNT = '$activateIOPaymentResponse.totalAmount'",
+        "DB_AIPR_05_AppIO" : "SELECT * from POSITION_TRANSFER WHERE PA_FISCAL_CODE = '$activateIOPaymentResponse.fiscalCodePA' AND NOTICE_ID = '$activateIOPayment.noticeNumber' AND CREDITOR_REFERENCE_ID  = '$activateIOPaymentResponse.creditorReferenceId' AND AMOUNT = '$activateIOPaymentResponse.totalAmount'",
+        "DB_AIPR_06_AppIO" : "SELECT x.* FROM  POSITION_SERVICE y LEFT JOIN POSITION_SUBJECT x ON y.DEBTOR_ID = x.ID WHERE y.PA_FISCAL_CODE = '$activateIOPaymentResponse.fiscalCodePA' AND y.NOTICE_ID = '$activateIOPayment.noticeNumber'"
     }
 
 }

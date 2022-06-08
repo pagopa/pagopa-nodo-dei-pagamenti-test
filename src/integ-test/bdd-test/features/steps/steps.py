@@ -610,56 +610,8 @@ def step_impl(context, sql_code, db_name, name_macro):
     print(f'executed query: {exec_query}')
 
 
-@then("prova assert {sql_code}")
-def step_impl(context, sql_code):
+@then("checks the {table} table is properly populated according to the query {sql_code} and primitive")
+def step_impl(context, sql_code, table):
     query_result = getattr(context, sql_code)
     
-    #mapping query_result
-    id = query_result[0][0]
-    pa_fiscal_code = query_result[0][1]
-    notice_id = query_result[0][2]
-    creditor_reference_id = query_result[0][3]
-    psp_id = query_result[0][4]
-    idempotency_key=query_result[0][5]
-    payment_token = query_result[0][6]
-    token_valid_from = query_result[0][7]
-    token_valid_to = query_result[0][8]
-    due_date = query_result[0][9]
-    amount = query_result[0][10]
-    column1 = query_result[0][11]
-    inserted_timestamp = query_result[0][12]
-    updated_timestamp = query_result[0][13]
-    inserted_by = query_result[0][14]
-    updated_by = query_result[0][15]
-
-    #expected
-    soap_response = getattr(context, 'activateIOPayment' + RESPONSE).content.decode('UTF-8')
-    soap_request = getattr(context, 'activateIOPayment')
-    my_document_request = parseString(soap_request)
-    my_document_response = parseString(soap_response)
-
-    fiscal_code = my_document_response.getElementsByTagName('fiscalCodePA')[0].firstChild.data
-    noticeId = my_document_request.getElementsByTagName('noticeNumber')[0].firstChild.data
-    creditorReferenceId =  my_document_response.getElementsByTagName('creditorReferenceId')[0].firstChild.data
-    psp = my_document_request.getElementsByTagName('idPSP')[0].firstChild.data
-    idempotencyKey = my_document_request.getElementsByTagName('idempotencyKey')[0].firstChild.data
-    paymentToken = my_document_response.getElementsByTagName('paymentToken')[0].firstChild.data
-    amount_expected = my_document_response.getElementsByTagName('totalAmount')[0].firstChild.data
- 
-    #assert
-    assert id != None
-    assert pa_fiscal_code == fiscal_code
-    assert creditor_reference_id == creditorReferenceId
-    assert psp_id == psp
-    assert notice_id == noticeId
-    assert idempotency_key == idempotencyKey
-    assert payment_token == paymentToken
-    assert format(amount,'.2f') == amount_expected
-    assert token_valid_from != None
-    assert token_valid_to != None
-    assert due_date != None
-    assert column1 != None
-    assert inserted_timestamp != None
-    assert updated_timestamp != None
-    assert inserted_by != None
-    assert updated_by != None
+    assert len(query_result) == 1

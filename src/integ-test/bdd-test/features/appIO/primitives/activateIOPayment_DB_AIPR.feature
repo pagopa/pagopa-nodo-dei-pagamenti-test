@@ -52,8 +52,40 @@ Feature: Syntax checks for activateIOPaymentReq - KO
             </soapenv:Envelope>
             """
 
-    Scenario: check db
+    Scenario: Execute activateIOPaymentReq request
         When psp sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
+
+    Scenario: check db DB_AIPR_01
+        Given the Execute activateIOPaymentReq request scenario executed successfully
         And execute the sql DB_AIPR_01_AppIO on db nodo_online under macro AppIO
-        And prova assert DB_AIPR_01_AppIO
+        Then checks the POSITION_ACTIVATE table is properly populated according to the query DB_AIPR_01_AppIO and primitive
+    
+    Scenario: check db DB_AIPR_02
+        Given the Execute activateIOPaymentReq request scenario executed successfully
+        And execute the sql DB_AIPR_02_AppIO on db nodo_online under macro AppIO
+        Then checks the POSITION_SERVICE table is properly populated according to the query DB_AIPR_02_AppIO and primitive
+    
+    Scenario: check db DB_AIPR_03
+        Given the Execute activateIOPaymentReq request scenario executed successfully
+        And random idempotencyKey having 70000000001 as idPSP in activateIOPayment
+        And noticeNumber with $activateIOPayment.noticeNumber in activateIOPayment
+        When psp sends SOAP activateIOPayment to nodo-dei-pagamenti
+        Then check outcome is KO of activateIOPayment response
+        And execute the sql DB_AIPR_03_AppIO on db nodo_online under macro AppIO
+        And checks the POSITION_SERVICE table is properly populated according to the query DB_AIPR_03_AppIO and primitive
+
+    Scenario: check db DB_AIPR_04
+        Given the Execute activateIOPaymentReq request scenario executed successfully
+        And execute the sql DB_AIPR_04_AppIO on db nodo_online under macro AppIO
+        Then checks the POSITION_PAYMENT_PLAN table is properly populated according to the query DB_AIPR_04_AppIO and primitive
+
+    Scenario: check db DB_AIPR_05
+        Given the Execute activateIOPaymentReq request scenario executed successfully
+        And execute the sql DB_AIPR_05_AppIO on db nodo_online under macro AppIO
+        Then checks the POSITION_PAYMENT_PLAN table is properly populated according to the query DB_AIPR_05_AppIO and primitive
+
+    Scenario: check db DB_AIPR_06
+        Given the Execute activateIOPaymentReq request scenario executed successfully
+        And execute the sql DB_AIPR_06_AppIO on db nodo_online under macro AppIO
+        Then checks the POSITION_SUBJECT table is properly populated according to the query DB_AIPR_06_AppIO and primitive
