@@ -20,7 +20,7 @@ Feature: Syntax checks for activateIOPaymentReq - KO
                         </qrCode>
                         <!--Optional:-->
                         <expirationTime>12345</expirationTime>
-                        <amount>10.00</amount>
+                        <amount>70.00</amount>
                         <!--Optional:-->
                         <dueDate>2021-12-12</dueDate>
                         <!--Optional:-->
@@ -55,4 +55,5 @@ Feature: Syntax checks for activateIOPaymentReq - KO
     Scenario: check db
         When psp sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
-        And execute the sql query1_AppIO on db nodo_online
+        And execute the sql DB_AIPR_01_AppIO on db nodo_online under macro AppIO
+        And prova assert DB_AIPR_01_AppIO
