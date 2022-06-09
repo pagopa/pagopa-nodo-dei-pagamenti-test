@@ -13,7 +13,7 @@ steps:
   displayName: 'Install requirements'
 - script: |
     pwd
-    behave --junit-directory=report --junit ./src/integ-test/bdd-test/features/appIO/primitives/
+    behave --junit-directory=report --junit ./src/integ-test/bdd-test/features/*/*/*syntax*.feature
     cd report && ls -l
   displayName: 'Run tests'
 - task: PublishTestResults@2
