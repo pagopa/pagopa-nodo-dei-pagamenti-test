@@ -183,38 +183,6 @@ Feature: process tests for generazioneRicevute
     Then api-config executes the sql {sql_code} and check POSITION_RECEIPT 
     #POSITION_RECEIPT è oppotunamente popolata 
 
-   Scenario: Execution test DB_GR_04/10
-    Given the Execute sendPaymentOutcome request scenario executed successfully
-    And the Define paGetPayment scenario executed successfully
-    # And broadcast == false da settare con api config
-    And transferList with <transferList><transfer><idTransfer>1</idTransfer><transferAmount>3.00</transferAmount><fiscalCodePA>44444444444</fiscalCodePA><IBAN>IT45R0760103200000000001016</IBAN><remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation></transfer><transfer><idTransfer>2</idTransfer><transferAmount>3.00</transferAmount><fiscalCodePA>90000000001</fiscalCodePA><IBAN>IT45R0760103200000000001016</IBAN><remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation></transfer><transfer><idTransfer>3</idTransfer><transferAmount>4.00</transferAmount><fiscalCodePA>90000000002</fiscalCodePA><IBAN>IT45R0760103200000000001016</IBAN><remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation></transfer> in paGetPayment
-    When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-    And EC replies to nodo-dei-pagamenti with the paGetPaymentRes
-    #To Do implementare tutti gli altri test in funzione delle decisioni di pagopa
-    Then check outcome is OK of sendPaymentOutcome response
-    And api-config executes the sql {sql_code} and check POSITION_RECEIPT_TRANSFER 
-    # POSITION_RECEIPT_TRANSFER è opportunamente popolata
-    # La tabella POSITION_RECEIPT_RECIPIENT è opportunamente popolata e contiene solo il record relativo alla PA intestataria (nessun record per le PA secondarie)
-    # La tabella POSITION_RECEIPT_RECIPIENT_STATUS è opportunamente popolata e contiene solo il record relativo alla PA intestataria (nessun record per le PA secondarie)
-    # La tabella POSITION_RECEIPT_XML è opportunamente popolata e contiene solo il record relativo alla PA intestataria (nessun record per le PA secondarie)
-    # L'XML_CONTENT è corretto
-
-  
-   Scenario: Execution test DB_GR_13
-    Given the Execute sendPaymentOutcome request scenario executed successfully
-    And the Define paGetPayment scenario executed successfully
-    # And broadcast == false da settare con api config
-    And transferList with <transferList><transfer><idTransfer>1</idTransfer><transferAmount>3.00</transferAmount><fiscalCodePA>44444444444</fiscalCodePA><IBAN>IT45R0760103200000000001016</IBAN><remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation></transfer><transfer><idTransfer>2</idTransfer><transferAmount>3.00</transferAmount><fiscalCodePA>90000000001</fiscalCodePA><IBAN>IT45R0760103200000000001016</IBAN><remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation></transfer><transfer><idTransfer>3</idTransfer><transferAmount>4.00</transferAmount><fiscalCodePA>90000000002</fiscalCodePA><IBAN>IT45R0760103200000000001016</IBAN><remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation></transfer> in paGetPayment
-    When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-    And EC replies to nodo-dei-pagamenti with the paGetPaymentRes
-    Then check outcome is OK of sendPaymentOutcome response
-    #To Do implementare tutti gli altri test in funzione delle decisioni di pagopa
-    And api-config executes the sql {sql_code} and check POSITION_RECEIPT_RECIPIENT 
-    # POSITION_RECEIPT_RECIPIENT è opportunamente popolata e contiene 3 record
-    # La tabella POSITION_RECEIPT_RECIPIENT_STATUS è opportunamente popolata e contiene 3 record 
-    # La tabella POSITION_RECEIPT_XML è opportunamente popolata e contiene 3 record 
-    # L'XML_CONTENT è corretto NB. idPA, idBrokerPA e idStation fanno riferimento ai diversi destinatari
-
 
 
 

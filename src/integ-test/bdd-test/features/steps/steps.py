@@ -58,6 +58,11 @@ def step_impl(context, primitive):
         notice_number = f"30211{str(random.randint(1000000000000, 9999999999999))}"
         payload = payload.replace('#notice_number#', notice_number)
         setattr(context, "iuv", notice_number[1:])
+    
+    if '#notice_number_old#' in payload:
+        notice_number = f"31211{str(random.randint(1000000000000, 9999999999999))}"
+        payload = payload.replace('#notice_number_old#', notice_number)
+        setattr(context, "iuv", notice_number[1:])
 
     if '$iuv' in payload:
         payload = payload.replace('$iuv', getattr(context, 'iuv'))
@@ -65,6 +70,13 @@ def step_impl(context, primitive):
     payload = utils.replace_global_variables(payload, context)
 
     setattr(context, primitive, payload)
+    
+@given('{RPT} generation')
+def step_impl(context, RPT):
+    setattr(context,'RPT',RPT)
+    rpt = getattr(context, 'RPT')
+    print(rpt)
+
 
 @given('{elem} with {value} in {action}')
 def step_impl(context, elem, value, action):

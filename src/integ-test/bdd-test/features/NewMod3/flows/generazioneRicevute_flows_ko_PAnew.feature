@@ -187,36 +187,6 @@ Feature: process tests for generazioneRicevute
     And api-config executes the sql {sql_code} and check POSITION_RECEIPT_XML
     # non è popolata 
 
-   Scenario: Execution test DB_GR_05/11
-    Given the Execute sendPaymentOutcome request scenario executed successfully
-    And the Define paGetPayment scenario executed successfully
-    # And broadcast == false da settare con api config
-    And transferList with <transferList><transfer><idTransfer>1</idTransfer><transferAmount>3.00</transferAmount><fiscalCodePA>44444444444</fiscalCodePA><IBAN>IT45R0760103200000000001016</IBAN><remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation></transfer><transfer><idTransfer>2</idTransfer><transferAmount>3.00</transferAmount><fiscalCodePA>90000000001</fiscalCodePA><IBAN>IT45R0760103200000000001016</IBAN><remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation></transfer><transfer><idTransfer>3</idTransfer><transferAmount>4.00</transferAmount><fiscalCodePA>90000000002</fiscalCodePA><IBAN>IT45R0760103200000000001016</IBAN><remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation></transfer> in paGetPayment
-    When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-    And EC replies to nodo-dei-pagamenti with the paGetPaymentRes
-    Then check outcome is KO of sendPaymentOutcome response
-    #To Do implementare tutti gli altri test in funzione delle decisioni di pagopa
-    And api-config executes the sql {sql_code} and check POSITION_RECEIPT
-    And api-config executes the sql {sql_code} and check POSITION_RECEIPT_TRANSFER 
-    And api-config executes the sql {sql_code} and check POSITION_RECEIPT_RECIPIENT_STATUS
-    And api-config executes the sql {sql_code} and check POSITION_RECEIPT_XML
-    # non è popolata 
-
-
-   Scenario: Execution test DB_GR_14
-    Given the Execute sendPaymentOutcome request scenario executed successfully
-    And the Define paGetPayment scenario executed successfully
-    # And broadcast == true da settare con api config
-    And transferList with <transferList><transfer><idTransfer>1</idTransfer><transferAmount>3.00</transferAmount><fiscalCodePA>44444444444</fiscalCodePA><IBAN>IT45R0760103200000000001016</IBAN><remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation></transfer><transfer><idTransfer>2</idTransfer><transferAmount>3.00</transferAmount><fiscalCodePA>90000000001</fiscalCodePA><IBAN>IT45R0760103200000000001016</IBAN><remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation></transfer><transfer><idTransfer>3</idTransfer><transferAmount>4.00</transferAmount><fiscalCodePA>90000000002</fiscalCodePA><IBAN>IT45R0760103200000000001016</IBAN><remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation></transfer> in paGetPayment
-    When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-    And EC replies to nodo-dei-pagamenti with the paGetPaymentRes
-    #To Do implementare tutti gli altri test in funzione delle decisioni di pagopa
-    Then check outcome is KO of sendPaymentOutcome response
-    And api-config executes the sql {sql_code} and check POSITION_RECEIPT
-    And api-config executes the sql {sql_code} and check POSITION_RECEIPT_RECIPIENT_STATUS
-    And api-config executes the sql {sql_code} and check POSITION_RECEIPT_XML
-    # non è popolata 
-
    Scenario: Execution test DB_GR_25
     Given the Execute sendPaymentOutcome request scenario executed successfully
     And transferList with <transferList><transfer><idTransfer>1</idTransfer><transferAmount>3.00</transferAmount><fiscalCodePA>44444444444</fiscalCodePA><IBAN>IT45R0760103200000000001016</IBAN><remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation></transfer><transfer><idTransfer>2</idTransfer><transferAmount>3.00</transferAmount><fiscalCodePA>90000000001</fiscalCodePA><IBAN>IT45R0760103200000000001016</IBAN><remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation></transfer><transfer><idTransfer>3</idTransfer><transferAmount>4.00</transferAmount><fiscalCodePA>90000000002</fiscalCodePA><IBAN>IT45R0760103200000000001016</IBAN><remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation></transfer> in paGetPayment
