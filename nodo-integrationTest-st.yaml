@@ -12,10 +12,10 @@ steps:
   displayName: 'Install requirements'
 - script: |
     pwd
-    behave --junit-directory=report --junit -o report/index.html ./src/integ-test/bdd-test/features/appIO/primitives/
+    behave --junit-directory=report --junit ./src/integ-test/bdd-test/features/appIO/primitives/
     cd report && ls -l
   displayName: 'Run tests'
 - task: PublishTestResults@2
   condition: succeededOrFailed()
   inputs:
-    testResultsFiles: './report/TESTS-NewMod3.primitives.activatePaymentNotice_syntax_ko.xml'
+    testResultsFiles: '**/report/*.xml'
