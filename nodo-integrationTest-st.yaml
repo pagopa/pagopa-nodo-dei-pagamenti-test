@@ -36,4 +36,4 @@ steps:
   condition: succeededOrFailed()
   inputs:
     testResultsFiles: '**/report/*.xml'
-    testRunTitle: '$(agent.OS)'
+    testRunTitle: '$(**/report/*.xml)'
