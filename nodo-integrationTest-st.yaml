@@ -36,4 +36,4 @@ steps:
   condition: succeededOrFailed()
   inputs:
     testResultsFiles: 'junit **/report/*.xml'
-    testRunTitle: 'Publish test results for Python $(python.version)'
+    testRunTitle: '**/report/*.xml'
