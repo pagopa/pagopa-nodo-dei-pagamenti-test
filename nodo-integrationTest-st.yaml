@@ -20,4 +20,4 @@ steps:
   inputs:
     testResultsFiles: '**/report/*.xml'
     mergeTestResults: true
-    testRunTitle: '$(BuildConfiguration)'
+    testRunTitle: 'Integration test nodo-dei-pagamenti $(Get-Date -Format yyyyMMddhhmmss)'
