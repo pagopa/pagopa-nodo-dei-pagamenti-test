@@ -1,0 +1,19 @@
+trigger:
+- masterpool:
+vmImage: 'ubuntu-latest'steps:
+- task: UsePythonVersion@0
+inputs:
+versionSpec: '3.6'- script: python -m pip install --upgrade pip
+displayName: 'Install dependencies'- script: python3 -m pip install -r requirements.txt
+displayName: 'Install requirements'- script: |
+#pip install pytest-django
+#cd ./src/integ-test/bdd-test/features/
+#behave -f html -o report/index.html src/integ-test/bdd-test/features/
+behave --junit-directory=./src/integ-test/bdd-test/features/report --junit -o ./src/integ-test/bdd-test/features/index.html ./src/integ-test/bdd-test/features/
+displayName: 'Run tests'
+- task: PublishTestResults@2
+condition: succeededOrFailed()
+inputs:
+testResultsFiles: './src/integ-test/bdd-test/features/report/test-*.xml'
+testRunTitle: 'Publish test results for Python $(python.version)'
+
