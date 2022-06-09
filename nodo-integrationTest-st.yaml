@@ -4,7 +4,7 @@ pool:
   vmImage: 'ubuntu-latest'
   
 variables:
-  mydate: $(Get-Date -Format yyyyMMddhhmmss)
+  mydate: date
 
 steps:
 - task: UsePythonVersion@0
