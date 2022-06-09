@@ -114,6 +114,6 @@ __pycache__
 
 *.iml
 .idea/
-/config.json
+#/config.json
 
 /instantclient_21_3
