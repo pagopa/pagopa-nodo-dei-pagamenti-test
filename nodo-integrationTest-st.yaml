@@ -35,5 +35,5 @@ steps:
 - task: PublishTestResults@2
   condition: succeededOrFailed()
   inputs:
-    testResultsFiles: 'junit **/report/*.xml'
+    testResultsFiles: '**/report/*.xml'
     testRunTitle: '**/report/*.xml'
