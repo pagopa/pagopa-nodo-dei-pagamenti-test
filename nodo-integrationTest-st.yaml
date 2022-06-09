@@ -27,14 +27,12 @@ steps:
 
 - script: |
 
-    pwd
-    behave --junit-directory=report --junit ./src/integ-test/bdd-test/features/appIO/primitives/
+    behave -f html -o reports.html ./src/integ-test/bdd-test/features/appIO/primitives/
     cd report && ls -l
   displayName: 'Run tests'
 
 - task: PublishTestResults@2
   condition: succeededOrFailed()
   inputs:
-    testResultsFormat: JUnit
-    testResultsFiles: '**/report/*.xml'
+    testResultsFiles: 'reports.html'
     testRunTitle: '$(System.DefinitionName)_$(Build.BuildNumber)'
