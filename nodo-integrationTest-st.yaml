@@ -3,7 +3,7 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
-name: $(Date:dd.MM.yyyy)_$(Hour):$(Minutes):$(Seconds)_$(Rev:.rr)
+name: '$(Date:dd.MM.yyyy)_$(Hour):$(Minutes):$(Seconds)_$(Rev:.rr)'
 
 steps:
 - task: UsePythonVersion@0
