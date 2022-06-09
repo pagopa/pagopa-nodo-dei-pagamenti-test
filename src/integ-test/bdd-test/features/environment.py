@@ -1,7 +1,6 @@
 import json
 import random
 
-from debugpy import connect
 import steps.db_operation as db
 from behave.model import Table
 import os
