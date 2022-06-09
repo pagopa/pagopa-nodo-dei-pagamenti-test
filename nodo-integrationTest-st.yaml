@@ -4,7 +4,7 @@ pool:
   vmImage: 'ubuntu-latest'
   
 variables:
-  ARTIFACTID: $(date '+%s-%d-%m-%YT%H:%M:%S.%3NZ')
+  ARTIFACTID: '$(Date:ddMMyyyy)_$(Hour):$(Minutes):$(Seconds)'
 
 
 
