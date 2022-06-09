@@ -35,5 +35,5 @@ steps:
 - task: PublishTestResults@2
   condition: succeededOrFailed()
   inputs:
-    testResultsFiles: './report/TESTS-activatePaymentNotice_syntax_ko.xml'
+    testResultsFiles: './report/TESTS-NewMod3.primitives.activatePaymentNotice_syntax_ko.xml.xml'
     testRunTitle: 'Publish test results for Python $(python.version)'
