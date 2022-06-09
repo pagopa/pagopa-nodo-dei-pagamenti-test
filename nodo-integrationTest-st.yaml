@@ -26,12 +26,11 @@ steps:
 
 
 - script: |
-
-    behave -f html -o reports.html ./src/integ-test/bdd-test/features/appIO/primitives/
+    behave --junit-directory=report --junit ./src/integ-test/bdd-test/features/appIO/primitives/
   displayName: 'Run tests'
 
-- task: PublishTestResults@2
+- task: PublishCodeCoverageResults@1
   condition: succeededOrFailed()
   inputs:
-    testResultsFiles: 'reports.html'
-    testRunTitle: '$(System.DefinitionName)_$(Build.BuildNumber)'
+    codeCoverageTool: Cobertura
+    summaryFileLocation: '**/report/*.xml'
