@@ -4,7 +4,9 @@ pool:
   vmImage: 'ubuntu-latest'
   
 variables:
-  mydate: date
+  ARTIFACTID: $(date '+%s-%d-%m-%YT%H:%M:%S.%3NZ')
+
+
 
 steps:
 - task: UsePythonVersion@0
@@ -24,4 +26,4 @@ steps:
   inputs:
     testResultsFiles: '**/report/*.xml'
     mergeTestResults: true
-    testRunTitle: 'Integration test nodo-dei-pagamenti $(mydate)'
+    testRunTitle: 'Integration test nodo-dei-pagamenti ${mydate}'
