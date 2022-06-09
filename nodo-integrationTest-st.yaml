@@ -28,7 +28,7 @@ steps:
 - script: |
 
     pwd
-    ls -latr
+    ls report/*
     behave --junit-directory=report --junit -o report/index.html ./src/integ-test/bdd-test/features/NewMod3/primitives/activatePaymentNotice_syntax_ko.feature
   displayName: 'Run tests'
 
