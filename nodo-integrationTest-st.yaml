@@ -27,7 +27,8 @@ steps:
 
 - script: |
 
-    behave --junit-directory=./src/integ-test/bdd-test/features/report --junit -o ./src/integ-test/bdd-test/features/index.html ./src/integ-test/bdd-test/features/
+    pwd
+    behave --junit-directory=report --junit -o report/index.html ./src/integ-test/bdd-test/features/NewMod3/primitives/activatePaymentNotice_semantic_ko.feature
   displayName: 'Run tests'
 
 - task: PublishTestResults@2
