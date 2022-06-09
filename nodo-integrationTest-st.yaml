@@ -1,36 +1,21 @@
 trigger:
 - master
-
-
-
 pool:
   vmImage: 'ubuntu-latest'
-
-
-
 steps:
 - task: UsePythonVersion@0
   inputs:
     versionSpec: '3.6'
-
-
-
 - script: python -m pip install --upgrade pip
   displayName: 'Install dependencies'
-
-
-
 - script: python3 -m pip install -r requirements.txt
   displayName: 'Install requirements'
-
-
-
 - script: |
-    behave --junit-directory=report --junit ./src/integ-test/bdd-test/features/appIO/primitives/
+    pwd
+    behave --junit-directory=report --junit -o report/index.html ./src/integ-test/bdd-test/features/appIO/primitives/
+    cd report && ls -l
   displayName: 'Run tests'
-
-- task: PublishCodeCoverageResults@1
+- task: PublishTestResults@2
   condition: succeededOrFailed()
   inputs:
-    codeCoverageTool: Cobertura
-    summaryFileLocation: '**/report/*.xml'
+    testResultsFiles: './report/TESTS*.xml'
