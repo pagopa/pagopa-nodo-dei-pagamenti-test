@@ -26,4 +26,4 @@ steps:
   inputs:
     testResultsFiles: '**/report/*.xml'
     mergeTestResults: true
-    testRunTitle: 'Integration test nodo-dei-pagamenti ${{ARTIFACTID}}'
+    testRunTitle: 'Integration test nodo-dei-pagamenti $(ARTIFACTID)'
