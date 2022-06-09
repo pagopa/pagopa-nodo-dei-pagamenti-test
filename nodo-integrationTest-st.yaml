@@ -12,7 +12,7 @@ steps:
   displayName: 'Install requirements'
 - script: |
     pwd
-    behave --junit-directory=report --junit -o report/index.html ./src/integ-test/bdd-test/features/NewMod3/primitives/activatePaymentNotice_syntax_ko.feature
+    behave --junit-directory=report --junit -o report/index.html ./src/integ-test/bdd-test/features/appIO/primitives/
     cd report && ls -l
   displayName: 'Run tests'
 - task: PublishTestResults@2
