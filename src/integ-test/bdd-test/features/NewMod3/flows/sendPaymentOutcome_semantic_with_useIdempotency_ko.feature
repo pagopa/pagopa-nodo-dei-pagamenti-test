@@ -107,10 +107,26 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
     And PSP waits <seconds> seconds for expiration
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is KO of sendPaymentOutcome response
+    And check faultCode is PPT_PAGAMENTO_IN_CORSO of sendPaymentOutcome response
+    Examples:
+      | seconds |
+      | 60      |
+
+
+  # Send payment outcome Phase 2 [IDMP_SPO_21]
+  Scenario Outline: 5.1. Execute sendPaymentOutcome request after idempotencyKey has expired
+    Given nodo-dei-pagamenti has config parameter scheduler.jobName_idempotencyCacheClean.enabled set to false
+    And the 2. Execute sendPaymentOutcome request scenario executed successfully
+    And idempotencyKey valid for <seconds> seconds
+    And PSP waits <seconds> seconds for expiration
+    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+    Then check outcome is KO of sendPaymentOutcome response
     And check faultCode is PPT_ESITO_GIA_ACQUISITO of sendPaymentOutcome response
     Examples:
       | seconds |
       | 60      |
+
+
 
   # IdempotencyCacheClean Phase [IDMP_SPO_23]
   Scenario: 6. Execute idempotencyCacheClean poller
