@@ -19,3 +19,5 @@ steps:
   condition: succeededOrFailed()
   inputs:
     testResultsFiles: '**/report/*.xml'
+    mergeTestResults: true
+    testRunTitle: '${{ parameters.TestRunTitle }}'
