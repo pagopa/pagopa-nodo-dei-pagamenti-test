@@ -2,11 +2,6 @@ trigger:
 - master
 pool:
   vmImage: 'ubuntu-latest'
-  
-variables:
-  ARTIFACTID: $(Date:ddMMyyyy)_$(Hour):$(Minutes):$(Seconds)
-
-
 
 steps:
 - task: UsePythonVersion@0
@@ -26,4 +21,4 @@ steps:
   inputs:
     testResultsFiles: '**/report/*.xml'
     mergeTestResults: true
-    testRunTitle: 'Integration test nodo-dei-pagamenti $(ARTIFACTID)'
+    testRunTitle: Integration test nodo-dei-pagamenti $(Date:yyyyMMdd)_$(Hour):$(Minutes):$(Seconds)
