@@ -29,11 +29,11 @@ steps:
 
     pwd
     ls -latr
-    behave --junit-directory=report --junit -o report/index.html ./src/integ-test/bdd-test/features/NewMod3/primitives/activatePaymentNotice_syntax_ko.feature --capture
+    behave --junit-directory=report --junit -o report/index.html ./src/integ-test/bdd-test/features/NewMod3/primitives/activatePaymentNotice_syntax_ko.feature
   displayName: 'Run tests'
 
 - task: PublishTestResults@2
   condition: succeededOrFailed()
   inputs:
-    testResultsFiles: './src/integ-test/bdd-test/features/report/test-*.xml'
+    testResultsFiles: './report/test-*.xml'
     testRunTitle: 'Publish test results for Python $(python.version)'
