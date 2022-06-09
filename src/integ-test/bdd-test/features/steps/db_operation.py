@@ -1,9 +1,10 @@
-import cx_Oracle, traceback
+import cx_Oracle, traceback, os
 
 def getConnection(host:str, database:str, user:str, password:str, port:str):
     print(f'Connecting to the OracleDB... {user}')
 
     try:
+        
         dsn = cx_Oracle.makedsn(host, port, service_name= database)
         conn = cx_Oracle.connect(user=user, password=password, dsn=dsn)
 

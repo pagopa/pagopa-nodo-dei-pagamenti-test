@@ -6,12 +6,6 @@
       "healthcheck": "",
       "soap_service": "",
       "rest_service": ""
-    },
-    "mock-ec": {
-      "url": "",
-      "healthcheck": "",
-      "soap_service": "",
-      "rest_service": ""
     }
   },
   "global_configuration": {

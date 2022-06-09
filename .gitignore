@@ -114,3 +114,5 @@ __pycache__
 
 *.iml
 .idea/
+
+/instantclient_21_3

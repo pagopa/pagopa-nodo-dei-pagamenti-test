@@ -188,3 +188,54 @@ Feature: Semantic checks for activateIOPaymentReq - KO
     And check faultCode is PPT_INTERMEDIARIO_PA_DISABILITATO of activateIOPaymentReq response
 
 
+  Scenario: Check PPT_ERRORE_IDEMPOTENZA error on validity idempotencyKey (Phase 1)
+    When PSP sends SOAP activateIOPaymentReq to nodo-dei-pagamenti
+    Then check outcome is OK of activateIOPaymentReq response
+
+  Scenario Outline: Check PPT_ERRORE_IDEMPOTENZA error on validity idempotencyKey (Phase 2)
+    Given the Check PPT_ERRORE_IDEMPOTENZA error on validity idempotencyKey (Phase 1) scenario executed successfully
+    And idempotencyKey with 70000000001_1328570293 in activateIOPaymentReq
+    And <tag> with <tag_value> in activateIOPaymentReq
+    When PSP sends SOAP activateIOPaymentReq to nodo-dei-pagamenti
+    Then check outcome is KO of activateIOPaymentReq response
+    And check faultCode is PPT_ERRORE_IDEMPOTENZA of activateIOPaymentReq response
+    Examples:
+      | tag                         | tag_value             | soapUI test |
+      | fiscalCode                  | 12345678901           | SEM_AIPR_21 |
+      | amount                      | 12.00                 | SEM_AIPR_21 |
+      | dueDate                     | 2021-12-31            | SEM_AIPR_21 |
+      | dueDate                     | Empty                 | SEM_AIPR_21 |
+      | dueDate                     | None                  | SEM_AIPR_21 |
+      | paymentNote                 | test_1                | SEM_AIPR_21 |
+      | paymentNote                 | Empty                 | SEM_AIPR_21 |
+      | paymentNote                 | None                  | SEM_AIPR_21 |
+      | expirationTime              | 123456                | SEM_AIPR_21 |
+      | expirationTime              | Empty                 | SEM_AIPR_21 |
+      | expirationTime              | None                  | SEM_AIPR_21 |
+      | payer                       | None                  | SEM_AIPR_21 |
+      | entityUniqueIdentifierType  | F                     | SEM_AIPR_21 |
+      | entityUniqueIdentifierValue | 55555555555           | SEM_AIPR_21 |
+      | fullName                    | name_1                | SEM_AIPR_21 |
+      | streetName                  | streetName            | SEM_AIPR_21 |
+      | streetName                  | Empty                 | SEM_AIPR_21 |
+      | streetName                  | None                  | SEM_AIPR_21 |
+      | civicNumber                 | civicNumber           | SEM_AIPR_21 |
+      | civicNumber                 | Empty                 | SEM_AIPR_21 |
+      | civicNumber                 | None                  | SEM_AIPR_21 |
+      | postalCode                  | postalCode            | SEM_AIPR_21 |
+      | postalCode                  | Empty                 | SEM_AIPR_21 |
+      | postalCode                  | None                  | SEM_AIPR_21 |
+      | city                        | new_city              | SEM_AIPR_21 |
+      | city                        | Empty                 | SEM_AIPR_21 |
+      | city                        | None                  | SEM_AIPR_21 |
+      | stateProvinceRegion         | stateProvinceRegion   | SEM_AIPR_21 |
+      | stateProvinceRegion         | Empty                 | SEM_AIPR_21 |
+      | stateProvinceRegion         | None                  | SEM_AIPR_21 |
+      | country                     | FR                    | SEM_AIPR_21 |
+      | country                     | Empty                 | SEM_AIPR_21 |
+      | country                     | None                  | SEM_AIPR_21 |
+      | e-mail                      | test1@prova.gmail.com | SEM_AIPR_21 |
+      | e-mail                      | Empty                 | SEM_AIPR_21 |
+      | e-mail                      | None                  | SEM_AIPR_21 |
+
+
