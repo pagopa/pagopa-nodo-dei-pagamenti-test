@@ -2,6 +2,10 @@ trigger:
 - master
 pool:
   vmImage: 'ubuntu-latest'
+  
+variables:
+  mydate: $(Get-Date -Format yyyyMMddhhmmss)
+
 steps:
 - task: UsePythonVersion@0
   inputs:
@@ -20,4 +24,4 @@ steps:
   inputs:
     testResultsFiles: '**/report/*.xml'
     mergeTestResults: true
-    testRunTitle: 'Integration test nodo-dei-pagamenti $(Get-Date -Format yyyyMMddhhmmss)'
+    testRunTitle: 'Integration test nodo-dei-pagamenti $(mydate)'
