@@ -12,7 +12,7 @@ steps:
 - script: python3 -m pip install -r requirements.txt
   displayName: 'Install requirements'
 - script: |
-    behave --junit-directory=report --junit ./src/integ-test/bdd-test/features/NewMod3/primitives/{verifyPaymentNotice,activatePaymentNotice,sendPaymentOutcome}_syntax_ko.feature
+    behave --junit-directory=report --junit ./src/integ-test/bdd-test/features/NewMod3/primitives/{verifyPaymentNotice,activatePaymentNotice,sendPaymentOutcome}_syntax_ko.feature ./src/integ-test/bdd-test/features/appIO/primitives/activateIOPayment_syntax_ko.feature
     cd report && ls -l
   displayName: 'Run tests'
 - task: PublishTestResults@2
