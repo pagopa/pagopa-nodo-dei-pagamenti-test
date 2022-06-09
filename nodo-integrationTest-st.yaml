@@ -12,8 +12,11 @@ steps:
 - script: python3 -m pip install -r requirements.txt
   displayName: 'Install requirements'
 - script: |
-    pwd
-    behave --junit-directory=report --junit ./src/integ-test/bdd-test/features/NewMod3/primitives/*syntax*.feature ./src/integ-test/bdd-test/features/appIO/primitives/*syntax*.feature
+    mkdir ./src/integ-test/bdd-test/features/tmp
+    cp ./src/integ-test/bdd-test/features/NewMod3/activatePaymentNotice_syntax_ko.feature ./src/integ-test/bdd-test/features/tmp
+    cp ./src/integ-test/bdd-test/features/NewMod3/verifyPaymentNotice_syntax_ko.feature ./src/integ-test/bdd-test/features/tmp
+    cp ./src/integ-test/bdd-test/features/NewMod3/sendPaymentOutcome_syntax_ko.feature ./src/integ-test/bdd-test/features/tmp
+    behave --junit-directory=report --junit ./src/integ-test/bdd-test/features/tmp
     cd report && ls -l
   displayName: 'Run tests'
 - task: PublishTestResults@2
