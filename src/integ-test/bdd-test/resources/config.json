@@ -8,9 +8,9 @@
       "rest_service": ""
     },
     "mock-ec": {
-      "url": "http://localhost:8089/",
-      "healthcheck": "servizi/PagamentiTelematiciRPT/info",
-      "soap_service": "servizi/PagamentiTelematiciRPT",
+      "url": "",
+      "healthcheck": "",
+      "soap_service": "",
       "rest_service": ""
     }
   },
