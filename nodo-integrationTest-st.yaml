@@ -3,7 +3,7 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
-name: '$(Date:yyyy-MM-dd)$(Rev:_rr)'
+name: '$(Date:yyyy-MM-dd)$(Rev:.rr)'
 
 steps:
 - task: UsePythonVersion@0
