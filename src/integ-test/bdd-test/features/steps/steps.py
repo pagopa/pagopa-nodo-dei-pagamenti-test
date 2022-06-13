@@ -622,8 +622,13 @@ def step_impl(context, sql_code, db_name, name_macro):
     print(f'executed query: {exec_query}')
 
 
-@then("checks the {table} table is properly populated according to the query {sql_code} and primitive")
-def step_impl(context, sql_code, table):
-    query_result = getattr(context, sql_code)
-    
-    assert len(query_result) == 1
+@then("checks the value {value} of the record at position {position:d} of the query {query_name}")
+def step_impl(context, value, position, query_name):
+    query_result = getattr(context, query_name)
+    print(query_result)
+    query_element = query_result[0][position]
+    print(query_element)
+    print(value)
+    print(type(query_element))
+    print(type(value))
+    assert value == query_element
