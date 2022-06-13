@@ -3,6 +3,7 @@ import random
 from sre_constants import ASSERT
 import time
 from xml.dom.minidom import parseString
+from pyrsistent import v
 
 import requests
 from behave import *
@@ -622,13 +623,11 @@ def step_impl(context, sql_code, db_name, name_macro):
     print(f'executed query: {exec_query}')
 
 
-@then("checks the value {value} of the record at position {position:d} of the query {query_name}")
-def step_impl(context, value, position, query_name):
+@then("checks the value {value} of the record at column {column} of the query {query_name}")
+def step_impl(context, value, column, query_name):
     query_result = getattr(context, query_name)
-    print(query_result)
-    query_element = query_result[0][position]
-    print(query_element)
-    print(value)
-    print(type(query_element))
-    print(type(value))
-    assert value == query_element
+
+    split_value = [status.strip() for status in value.split(',')]
+    
+    for i, elem in enumerate(split_value):
+        assert split_value[i] == query_result[i][0]

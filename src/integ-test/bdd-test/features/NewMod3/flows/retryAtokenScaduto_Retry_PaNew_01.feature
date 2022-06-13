@@ -104,10 +104,16 @@ Feature: process tests for retry a token scaduto
       """
     When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
+    
     #db check
-    And execute the sql Retry_PaNew_01_NM3_payment_status on db nodo_online under macro NewMod3
+    Scenario Outline: DB check
+    Given the Execute sendPaymentOutcome request scenario executed successfully
+    Then execute the sql Retry_PaNew_01_NM3_payment_status on db nodo_online under macro NewMod3
     And execute the sql Retry_PaNew_01_NM3_payment_status_snapshot on db nodo_online under macro NewMod3
-    And checks the value PAYING of the record at position 3 of the query Retry_PaNew_01_NM3_payment_status
+    And checks the value <listOfvalue> of the record at column STATUS of the query Retry_PaNew_01_NM3_payment_status
+    Examples:
+    |listOfvalue                    |
+    |PAYING, PAID, NOTICE_GENERATED |
    
 
 
