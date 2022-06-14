@@ -71,8 +71,9 @@ class WebApp:
 
 
     def chiudiBrowser(self):
-        self.driver.close()
-
+        #self.driver.close()
+        pass
+    
     def selezionolingua(self,lingua):
 
         self.driver.wait_until(By.XPATH, 'html/body/div[5]/div/button').click()
