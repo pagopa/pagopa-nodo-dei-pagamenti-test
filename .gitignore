@@ -117,3 +117,5 @@ __pycache__
 /config.json
 
 /instantclient_21_3
+
+/venv

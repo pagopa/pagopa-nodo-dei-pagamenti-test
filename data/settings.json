@@ -1,0 +1,30 @@
+{
+  "mockPayment": {
+    "url": "https://portal.test.pagopa.gov.it/pmmockserviceapiauth/nodo/sit/send/rpt",
+    "headers": {
+      "Ocp-Apim-Subscription-Key": "99fcdd11168b41858ca497d2dcbd6e18",
+      "Num-Payments": "1",
+      "content-type": "application/json"
+    },
+    "body": {
+      "identificativoIntermediarioPA": "90000000001",
+      "identificativoStazioneIntermediarioPA": "90000000001_01",
+      "identificativoDominio": "90000000001",
+      "importoTotaleDaVersare": "8.14",
+      "responseEnum": "OK"
+    }
+  },
+  "holder": {
+    "pan": "5255000010002856",
+    "expDate": "1230",
+    "cvc": "123",
+    "name": "Test Guy",
+    "mail": "matteo@aaaaaa.com"
+  },
+  "browser": {
+    "type": "chrome",
+    "options": [
+      "no-sandbox", "--disable-gpu", "--disable-dev-shm-usage", "start-fullscreen"
+    ]
+  }
+}
