@@ -15,7 +15,7 @@ steps:
 - script: python3 -m pip install -r requirements.txt
   displayName: 'Install requirements'
 - script: |
-    behave --junit-directory=report --junit ./features/feature.feature
+    behave --junit-directory=report --junit ./features
   displayName: 'Run tests'
 - task: PublishTestResults@2
   condition: succeededOrFailed()
