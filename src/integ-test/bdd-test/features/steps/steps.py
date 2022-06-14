@@ -609,25 +609,20 @@ def step_impl(context, seconds):
     pass
 
 
-@step("execute the sql {sql_code} on db {db_name} under macro {name_macro}")
-def step_impl(context, sql_code, db_name, name_macro):
+@then("checks the value {value} of the record at column {column} of {table_name} of the query {query_name} on db {db_name} under macro {name_macro}")
+def step_impl(context, value, column, query_name, table_name, db_name,name_macro):
     db_config = context.config.userdata.get("db_configuration")
     db_selected = db_config.get(db_name)
-    
-    selected_query = utils.query_json(context, sql_code, name_macro)
-    
+
     conn = db.getConnection(db_selected.get('host'), db_selected.get('database'),db_selected.get('user'),db_selected.get('password'),db_selected.get('port'))
 
+    selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
+   
     exec_query = db.executeQuery(conn, selected_query)
-    setattr(context, sql_code, exec_query)
-    print(f'executed query: {exec_query}')
-
-
-@then("checks the value {value} of the record at column {column} of the query {query_name}")
-def step_impl(context, value, column, query_name):
-    query_result = getattr(context, query_name)
-
-    split_value = [status.strip() for status in value.split(',')]
+    print(exec_query)
+    query_result = [t[0] for t in exec_query]
     
-    for i, elem in enumerate(split_value):
-        assert split_value[i] == query_result[i][0]
+    split_value = [status.strip() for status in value.split(',')]
+
+    for elem in split_value:
+        assert elem in query_result
