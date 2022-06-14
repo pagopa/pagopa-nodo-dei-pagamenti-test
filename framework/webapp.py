@@ -17,6 +17,7 @@ class WebApp:
         return cls.instance
     def __init__(self):
         #self.driver = Driver()
+        pass
     def genera_pagamento(self):
         r = requests.patch(url=self.payment_['url'], headers=self.payment_['headers'],
                            data=json.dumps(self.payment_['body']))
