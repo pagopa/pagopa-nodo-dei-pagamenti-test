@@ -24,7 +24,7 @@
   "browser": {
     "type": "chrome",
     "options": [
-      "no-sandbox", "--disable-gpu", "--disable-dev-shm-usage", "start-fullscreen"
+      "no-sandbox", "--disable-gpu", "--disable-dev-shm-usage", "start-fullscreen", "--headless"
     ]
   }
 }
