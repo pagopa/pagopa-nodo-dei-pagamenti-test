@@ -117,4 +117,4 @@ __pycache__
 /config.json
 
 /instantclient_21_3
-**/steps/environment.py
+**/environment.py
