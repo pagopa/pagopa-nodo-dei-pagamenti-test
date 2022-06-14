@@ -160,16 +160,8 @@ Scenario: Check sendPaymentOutcome response on malformed pspNotifyPayment respon
     And outcome with KO in sendPaymentOutcome
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
-    And check STATUS column of POSITION_PAYMENT_STATUS table contains PAYING value in nodo_online db
-    And check STATUS column of POSITION_PAYMENT_STATUS table contains PAYMENT_SENT value in nodo_online db
-    And check STATUS column of POSITION_PAYMENT_STATUS table contains PAYMENT_UNKNOWN value in nodo_online db
-    And check STATUS column of POSITION_PAYMENT_STATUS table contains PAID value in nodo_online db
-    And check STATUS column of POSITION_PAYMENT_STATUS table contains NOTICE_GENERATED value in nodo_online db
-    And check STATUS column of POSITION_PAYMENT_STATUS table contains NOTICE_SENT value in nodo_online db
-    And check STATUS column of POSITION_PAYMENT_STATUS table contains NOTIFIED value in nodo_online db
-    And check STATUS column of POSITION_PAYMENT_STATUS_SNAPSHOT table contains NOTIFIED value in nodo_online db
-    And check STATUS column of POSITION_STATUS table contains PAYING value in nodo_online db
-    And check STATUS column of POSITION_STATUS table contains PAID value in nodo_online db
-    And check STATUS column of POSITION_STATUS table contains NOTIFIED value in nodo_online db
-    And check STATUS column of POSITION_STATUS_SNAPSHOT contains NOTIFIED value in nodo_online db
-    And check the POSITION_PAYMENT table is properly populated according to the query sql_code and primitive
+    And checks the value PAYING, PAYMENT_SENT, PAYMENT_UNKNOWN, PAID, NOTICE_GENERATED, NOTICE_SENT, NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
+    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
+    And checks the value PAYING, PAID, NOTIFIED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
+    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
+    # And check the POSITION_PAYMENT table is properly populated according to the query sql_code and primitive

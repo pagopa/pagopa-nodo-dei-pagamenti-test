@@ -138,8 +138,9 @@ Scenario: Check sendPaymentOutcome response before nodoInoltroEsitoCarta primiti
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
     And check faultCode is PPT_TOKEN_SCONOSCIUTO of sendPaymentOutcome response
-    And check STATUS column of POSITION_PAYMENT_STATUS table contains PAYING value in nodo_online db
-    And check STATUS column of POSITION_PAYMENT_STATUS_SNAPSHOT table contains PAYING value in nodo_online db
-    And check STATUS column of POSITION_STATUS_SNAPSHOT table contains PAYING value in nodo_online db
-    And check the IDEMPOTENCY_CACHE table is properly populated according to the query sql_code and primitive
-    And check the POSITION_PAYMENT table is properly populated according to the query sql_code and primitive
+    And checks the value PAYING of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
+    And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
+    And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
+    And checks the value PAYING of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
+    #And check the IDEMPOTENCY_CACHE table is properly populated according to the query sql_code and primitive
+    #And check the POSITION_PAYMENT table is properly populated according to the query sql_code and primitive

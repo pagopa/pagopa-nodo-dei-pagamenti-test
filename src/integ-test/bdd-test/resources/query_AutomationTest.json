@@ -13,7 +13,8 @@
         "DB_AIPR_03_AppIO" : "SELECT * from POSITION_SERVICE WHERE NOTICE_ID = '$activateIOPayment.noticeNumber'",
         "DB_AIPR_04_AppIO" : "SELECT * from POSITION_PAYMENT_PLAN WHERE PA_FISCAL_CODE = '$activateIOPaymentResponse.fiscalCodePA' AND NOTICE_ID = '$activateIOPayment.noticeNumber' AND CREDITOR_REFERENCE_ID  = '$activateIOPaymentResponse.creditorReferenceId' AND AMOUNT = '$activateIOPaymentResponse.totalAmount'",
         "DB_AIPR_05_AppIO" : "SELECT * from POSITION_TRANSFER WHERE PA_FISCAL_CODE = '$activateIOPaymentResponse.fiscalCodePA' AND NOTICE_ID = '$activateIOPayment.noticeNumber' AND CREDITOR_REFERENCE_ID  = '$activateIOPaymentResponse.creditorReferenceId' AND AMOUNT = '$activateIOPaymentResponse.totalAmount'",
-        "DB_AIPR_06_AppIO" : "SELECT x.* FROM  POSITION_SERVICE y LEFT JOIN POSITION_SUBJECT x ON y.DEBTOR_ID = x.ID WHERE y.PA_FISCAL_CODE = '$activateIOPaymentResponse.fiscalCodePA' AND y.NOTICE_ID = '$activateIOPayment.noticeNumber'"
+        "DB_AIPR_06_AppIO" : "SELECT x.* FROM  POSITION_SERVICE y LEFT JOIN POSITION_SUBJECT x ON y.DEBTOR_ID = x.ID WHERE y.PA_FISCAL_CODE = '$activateIOPaymentResponse.fiscalCodePA' AND y.NOTICE_ID = '$activateIOPayment.noticeNumber'",
+        "payment_status":"SELECT s.columns FROM table_name s WHERE s.NOTICE_ID ='$activateIOPayment.noticeNumber' AND s.PA_FISCAL_CODE = '$activateIOPayment.fiscalCode'"
     }
 
 }

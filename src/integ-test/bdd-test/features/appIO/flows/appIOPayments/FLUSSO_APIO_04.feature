@@ -159,11 +159,9 @@ Scenario: Check sendPaymentOutcome response on pspNotifyPayment KO response
     # CORRETTO? COERENTE CON L'EXCEL
     Then check outcome is OK of sendPaymentOutcome response
     And check faultCode is PPT_SEMANTICA of sendPaymentOutcome response
-    And check STATUS column of POSITION_PAYMENT_STATUS table contains PAYING value in nodo_online db
-    And check STATUS column of POSITION_PAYMENT_STATUS table contains PAYMENT_SENT value in nodo_online db
-    And check STATUS column of POSITION_PAYMENT_STATUS table contains PAYMENT_REFUSED value in nodo_online db
-    And check STATUS column of POSITION_PAYMENT_STATUS_SNAPSHOT table contains PAYMENT_REFUSED value in nodo_online db
-    And check STATUS column of POSITION_STATUS table contains PAYING value in nodo_online db
-    And check STATUS column of POSITION_STATUS_SNAPSHOT table contains PAYING value in nodo_online db
-    And check the POSITION_PAYMENT table is properly populated according to the query sql_code and primitive
-    And check the POSITION_RECEIPT table is properly populated according to the query sql_code and primitive
+    And checks the value PAYING, PAYMENT_SENT, PAYMENT_REFUSED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
+    And checks the value PAYMENT_REFUSED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
+    And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
+    And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
+    #And check the POSITION_PAYMENT table is properly populated according to the query sql_code and primitive
+    #And check the POSITION_RECEIPT table is properly populated according to the query sql_code and primitive

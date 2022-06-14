@@ -3,9 +3,9 @@
   "services": {
     "nodo-dei-pagamenti": {
       "url": "http://localhost:9080/",
-      "healthcheck": "/nodo-dev-health/ready",
-      "soap_service": "/nodo-dev/webservices/input",
-      "rest_service": ""
+      "healthcheck": "nodo-dev-health/ready",
+      "soap_service": "nodo-dev/webservices/input",
+      "rest_service": "nodo-dev"
     },
     "mock-ec": {
       "url": "http://localhost:8089/",
