@@ -48,40 +48,31 @@ Feature: process tests for annulli_02.1
     """
   ##primitive missing
     """
-    
 
-         # test execution part1
-   Scenario: Execution test [annulli_02.1]
-    Given the nodoNotificaAnnullamento request scenario executed successfully
-    When psp sends SOAP nodoNotificaAnnullamento to nodo-dei-pagamenti
-    And execute the sql ANN_DB_02.1_1_Mb on db nodo_online under macro Mod1Mb
-    And execute the sql ANN_DB_02.1_2_Mb on db nodo_online under macro Mod1Mb
-    And checks the value RPT_RICEVUTA_NODO at position of the query  ANN_DB_02.1_1_Mb
-    And checks the value RPT_ACCETTATA_NODO in nodo_online db of the query  ANN_DB_02.1_1_Mb
-    And checks the value RPT_PARCHEGGIATA_NODO in nodo_online db of the query  ANN_DB_02.1_1_Mb
-    And checks the value RPT_ANNULLATA_WISP in nodo_online db of the query  ANN_DB_02.1_1_Mb
-    And checks the value RPT_ANNULLATA_WISP in nodo_online db of the query  ANN_DB_02.1_2_Mb
+    #db check 1
+    Scenario: DB check
+    Given the Execute nodoNotificaAnnullamento request scenario executed successfully
+    Then checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_ANNULLATA_WISP of the record at column STATO of STATI_RPT retrived by the query DB_Annulli_02.1_stati_rpt on db nodo_online under macro Mod1Mb
+    Then checks the value  RPT_ANNULLATA_WISP of the record at column STATO of STATI_RPT_SNAPSHOT retrived by the query DB_Annulli_02.1_stati_rpt_snapshot on db nodo_online under macro Mod1Mb
 
-          # test execution part2
+
+   # test execution part2
    Scenario: Execution test [annulli_02.1]
    Given the nodoNotificaAnnullamento request scenario executed successfully
-   When psp sends SOAP nodoNotificaAnnullamento to nodo-dei-pagamenti
-   And execute the sql ANN_DB_02.1_3_Mb on db nodo_online under macro Mod1Mb
-   And execute the sql ANN_DB_02.1_4_Mb on db nodo_online under macro Mod1Mb
-   And checks the value CART_RICEVUTO_NODO in nodo_online db ANN_DB_02.1_3_Mb
-   And checks the value CART_ACCETTATO_NODO in nodo_online db ANN_DB_02.1_3_Mb
-   And checks the value CART_PARCHEGGIATO_NODO in nodo_online db ANN_DB_02.1_3_Mb
-   And checks the value CART_ANNULLATA_WISP in nodo_online db ANN_DB_02.1_3_Mb
-   And checks the value CART_ANNULLATO_WISP in nodo_online db ANN_DB_02.1_4_Mb
+    Then checks the value CART_RICEVUTO_NODO,CART_ACCETTATO_NODO,CART_PARCHEGGIATO_NODO,CART_ANNULLATO_WISP of the record at column STATO of STATI_CARRELLO retrived by the query DB_Annulli_02.1_stati_carrello on db nodo_online under macro Mod1Mb
+    Then checks the value  CART_ANNULLATO_WISP of the record at column STATO of STATI_CARRELLO_SNAPSHOT retrived by the query DB_Annulli_02.1_stati_carrello_snapshot on db nodo_online under macro Mod1Mb
+
+
+      #controllo che le tabelle non siano popolate
 
       # test execution part3
       Scenario: Execution test [annulli_02.1]
       Given the nodoNotificaAnnullamento request scenario executed successfully
       When psp sends SOAP nodoNotificaAnnullamento to nodo-dei-pagamenti
-      And execute the sql ANN_DB_02.1_5_Mb on db nodo_online under macro Mod1Mb
-      And execute the sql ANN_DB_02.1_6_Mb on db nodo_online under macro Mod1Mb
-      Then checks the POSITION_PAYMENT_STATUS table is not populated according to the query ANN_DB_02.1_5_Mb and primitive
-      Then checks the POSITION_PAYMENT_STATUS_SNAPSHOT table is not populated according to the query ANN_DB_02.1_6_Mb and primitive
+      And execute the sqlDB_Annulli_02.1_position_payment_status on db nodo_online under macro Mod1Mb
+      And execute the sql DB_Annulli_02.1_position_payment_status_snapshot on db nodo_online under macro Mod1Mb
+      Then checks the POSITION_PAYMENT_STATUS table is not populated according to the query DB_Annulli_02.1_position_payment_status and primitive
+      Then checks the POSITION_PAYMENT_STATUS_SNAPSHOT table is not populated according to the query DB_Annulli_02.1_position_payment_status_snapshot and primitive
 
 
       
@@ -89,10 +80,10 @@ Feature: process tests for annulli_02.1
       Scenario: Execution test [annulli_02.1]
       Given the nodoNotificaAnnullamento request scenario executed successfully
       When psp sends SOAP nodoNotificaAnnullamento to nodo-dei-pagamenti
-      And execute the sql ANN_DB_02.1_7_Mb on db nodo_online under macro Mod1Mb
-      And execute the sql ANN_DB_02.1_8_Mb on db nodo_online under macro Mod1Mb
-      Then checks the POSITION_STATUS table is not populated according to the query ANN_DB_02.1_7_Mb and primitive
-      Then checks the POSITION_STATUS_SNAPSHOT table is not populated according to the query ANN_DB_02.1_8_Mb and primitive
+      And execute the sql DB_Annulli_02.1_position_statu on db nodo_online under macro Mod1Mb
+      And execute the sql DB_Annulli_02.1_position_status_snapshot on db nodo_online under macro Mod1Mb
+      Then checks the POSITION_STATUS table is not populated according to the query DB_Annulli_02.1_position_status and primitive
+      Then checks the POSITION_STATUS_SNAPSHOT table is not populated according to the query DB_Annulli_02.1_position_status_snapshot and primitive
 
 
 
