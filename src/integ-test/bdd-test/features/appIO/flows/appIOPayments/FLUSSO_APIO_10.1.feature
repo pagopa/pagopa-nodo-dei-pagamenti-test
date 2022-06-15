@@ -1,4 +1,4 @@
-Feature: FLUSSO_APIO_01
+Feature: FLUSSO_APIO_10.1
 
 Background:
  Given systems up
@@ -102,11 +102,12 @@ Scenario: Execute nodoInoltroEsitoCarta (Phase 4)
         "esitoTransazioneCarta":"00"
         }
     """
-    Then verify the HTTP status code of inoltroEsito/carta response is 200
+    Then verify the HTTP status code of inoltroEsito/carta response is 408
     And check esito is OK of inoltroEsito/carta response
 
-Scenario: Check sendPaymentOutcome response after nodoInoltroEsitoCarta primitive and the correctness of column values
+Scenario: (Phase 5)
     Given the Execute nodoInoltroEsitoCarta (Phase 4) scenario executed successfully
+    And check STATUS column of POSITION_PAYMENT_STATUS table contains NOTIFIED value in nodo_online db
     And initial XML sendPaymentOutcome
     """
     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -157,9 +158,10 @@ Scenario: Check sendPaymentOutcome response after nodoInoltroEsitoCarta primitiv
     """
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
-    And checks the value PAYING, PAYMENT_SENT, PAYMENT_ACCEPTED, PAID, NOTICE_GENERATED, NOTICE_SENT, NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
-    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
-    And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
-    #And check the POSITION_PAYMENT table is properly populated according to the query sql_code and primitive
-    #And check the POSITION_RECEIPT_RECIPIENT table is properly populated according to the query sql_code and primitive
-    #And check the POSITION_RECEIPT_XML table is properly populated according to the query sql_code and primitive
+
+Scenario:
+    Given the (Phase 5) scenario executed successfully
+    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrvied by the query payment_status on db nodo_online under macro AppIO
+    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+    Then check outcome is KO of sendPaymentOutcome response
+    And check faultCode is PPT_ESITO_GIA_ACQUISITO of sendPaymentOutcome response

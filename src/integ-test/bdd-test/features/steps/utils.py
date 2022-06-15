@@ -1,5 +1,6 @@
 import re, json, os
 from xml.dom.minidom import parseString
+from numpy import char
 
 import requests
 from requests.adapters import HTTPAdapter
@@ -187,3 +188,19 @@ def query_json(context, name_query, name_macro):
         selected_query = replace_local_variables(selected_query, context)
         
     return selected_query
+
+
+def type_numb(value):
+    x = re.findall("^\d+(?:[.,]\d+)?$", value)
+
+    if len(x) != 0:
+        if '.' in value:
+            split_value = value.split('.')
+            if int(split_value[1])>0:
+                return float(value)
+            else:
+                return int(split_value[0])
+        else:
+            return int(value)
+    else:
+        return value

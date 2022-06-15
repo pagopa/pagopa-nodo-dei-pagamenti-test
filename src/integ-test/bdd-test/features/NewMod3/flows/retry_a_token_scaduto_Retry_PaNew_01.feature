@@ -64,7 +64,7 @@ Feature: process tests for retry a token scaduto
     
 # Payment Outcome Phase outcome OK 
   Scenario: Execute sendPaymentOutcome request
-    Given the Execute activatePaymentNotice request scenario executed successfully
+    Given the Execute sleep phase1 scenario executed successfully
     And initial XML sendPaymentOutcome
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -122,7 +122,7 @@ Feature: process tests for retry a token scaduto
     And checks the value $sendPaymentOutcome.transferDate of the record at column TO_CHAR(transfer_date, 'YYYY-MM-DD') as tdate of the table POSITION_STATUS_SNAPSHOT retrived by the query position_payment on db nodo_online under macro NewMod3
     And checks the value $sendPaymentOutcome.applicationDate of the record at column TO_CHAR(application_date, 'YYYY-MM-DD') as adate of the table POSITION_STATUS_SNAPSHOT retrived by the query position_payment on db nodo_online under macro NewMod3
     #test5
-    And the value id, is different from null, of the record at column ID of the table POSITION_SUBJECT retrivied by the query position_subject on db nodo_online under macro NewMod3
+    And checks the value NotNone of the record at column ID of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro NewMod3
     And checks the value PAYER of the record at column SUBJECT_TYPE of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro NewMod3
     And checks the value $sendPaymentOutcome.entityUniqueIdentifierType of the record at column ENTITY_UNIQUE_IDENTIFIER_TYPE of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro NewMod3
     And checks the value $sendPaymentOutcome.entityUniqueIdentifierValue of the record at column ENTITY_UNIQUE_IDENTIFIER_VALUE of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro NewMod3
@@ -135,8 +135,8 @@ Feature: process tests for retry a token scaduto
     And checks the value $sendPaymentOutcome.country of the record at column COUNTRY of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro NewMod3
     #$sendPaymentOutcome.e-mail
     And checks the value john.doe@test.it of the record at column EMAIL of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro NewMod3
-    And the value inserted_timestamp, is different from null, of the record at column INSERTED_TIMESTAMP of the table POSITION_SUBJECT retrivied by the query position_subject on db nodo_online under macro NewMod3
-    And the value updated_timestamp, is different from null, of the record at column UPDATED_TIMESTAMP of the table POSITION_SUBJECT retrivied by the query position_subject on db nodo_online under macro NewMod3
+    And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro NewMod3
+    And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro NewMod3
     #verifica un solo risultato
     And verify one record for the table POSITION_SUBJECT retrivied by the query position_subject on db nodo_online under macro NewMod3
 
