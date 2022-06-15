@@ -51,7 +51,7 @@ class WebApp:
         self.driver.wait_until(By.ID, "success_message")
         self.driver.find_element(By.XPATH,
                                  '//*[@action="/wallet/logout"]//button').click()
-        self.driver.close()
+        #self.driver.close()
 
 ######################################
 
