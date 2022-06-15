@@ -614,12 +614,12 @@ def step_impl(context, seconds):
     pass
 
 
-@then("checks the value {value} of the record at column {column} of the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
-def step_impl(context, value, column, query_name, table_name, db_name,name_macro):
+@then(u"checks the value {value} of the record at column {column} of the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
+def step_impl(context, value, column, query_name, table_name, db_name, name_macro):
     db_config = context.config.userdata.get("db_configuration")
     db_selected = db_config.get(db_name)
 
-    conn = db.getConnection(db_selected.get('host'), db_selected.get('database'),db_selected.get('user'),db_selected.get('password'),db_selected.get('port'))
+    conn = db.getConnection(db_selected.get('host'), db_selected.get('database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
 
     selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
    
@@ -641,7 +641,7 @@ def step_impl(context, value, column, query_name, table_name, db_name,name_macro
         assert elem in query_result
 
 #assert != null
-@then("the value {value}, is different from null, of the record at column {column} of the table {table_name} retrivied by the query {query_name} on db {db_name} under macro {name_macro}")
+@then(u"the value {value}, is different from null, of the record at column {column} of the table {table_name} retrivied by the query {query_name} on db {db_name} under macro {name_macro}")
 def step_impl(context, value, column, query_name, table_name, db_name,name_macro):
     db_config = context.config.userdata.get("db_configuration")
     db_selected = db_config.get(db_name)
@@ -663,7 +663,7 @@ def step_impl(context, value, column, query_name, table_name, db_name,name_macro
     for  elem in query_result:
         assert elem != None 
 
-@then("verify one record for the table {table_name} retrivied by the query {query_name} on db {db_name} under macro {name_macro}")
+@then(u"verify one record for the table {table_name} retrivied by the query {query_name} on db {db_name} under macro {name_macro}")
 def step_impl(context, query_name, table_name, db_name,name_macro):
     db_config = context.config.userdata.get("db_configuration")
     db_selected = db_config.get(db_name)

@@ -108,39 +108,37 @@ Feature: process tests for retry a token scaduto
     #sleep phase2
     And wait 5 second for expiration
     #Test2
-    And checks the value PAYING,NOTICE_GENERATED,PAID of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrivied by the query payment_status on db nodo_online under macro NewMod3
-    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrivied by the query payment_status on db nodo_online under macro NewMod3
-    #test3
-    And checks the value PAYING,PAID of the record at column STATUS of the table POSITION_STATUS retrivied by the query payment_status on db nodo_online under macro NewMod3
-    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrivied by the query payment_status on db nodo_online under macro NewMod3
+    And checks the value PAYING,NOTICE_GENERATED,PAID of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
+    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro NewMod3
+     #test3
+    And checks the value PAYING,PAID of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
+    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro NewMod3
     #test4
     #$sendPaymentOutcome.fee
-    And checks the value 2 of the record at column fee of the table POSITION_PAYMENT retrivied by the query position_payment on db nodo_online under macro NewMod3
-    And checks the value $sendPaymentOutcome.outcome of the record at column outcome of the table POSITION_PAYMENT retrivied by the query position_payment on db nodo_online under macro NewMod3
-    And checks the value $sendPaymentOutcome.paymentMethod of the record at column payment_method of the table POSITION_PAYMENT retrivied by the query position_payment on db nodo_online under macro NewMod3
-    And checks the value $sendPaymentOutcome.paymentChannel of the record at column payment_channel of the table POSITION_PAYMENT retrivied by the query position_payment on db nodo_online under macro NewMod3
-    And checks the value $sendPaymentOutcome.transferDate of the record at column TO_CHAR(transfer_date, 'YYYY-MM-DD') as tdate of the table POSITION_PAYMENT retrivied by the query position_payment on db nodo_online under macro NewMod3
-    And checks the value $sendPaymentOutcome.applicationDate of the record at column TO_CHAR(application_date, 'YYYY-MM-DD') as adate of the table POSITION_PAYMENT retrivied by the query position_payment on db nodo_online under macro NewMod3
+    And checks the value 2 of the record at column fee of the table POSITION_PAYMENT retrived by the query position_payment on db nodo_online under macro NewMod3
+    And checks the value $sendPaymentOutcome.outcome of the record at column outcome of the table POSITION_STATUS_SNAPSHOT retrived by the query position_payment on db nodo_online under macro NewMod3
+    And checks the value $sendPaymentOutcome.paymentMethod of the record at column payment_method of the table POSITION_STATUS_SNAPSHOT retrived by the query position_payment on db nodo_online under macro NewMod3
+    And checks the value $sendPaymentOutcome.paymentChannel of the record at column payment_channel of the table POSITION_STATUS_SNAPSHOT retrived by the query position_payment on db nodo_online under macro NewMod3
+    And checks the value $sendPaymentOutcome.transferDate of the record at column TO_CHAR(transfer_date, 'YYYY-MM-DD') as tdate of the table POSITION_STATUS_SNAPSHOT retrived by the query position_payment on db nodo_online under macro NewMod3
+    And checks the value $sendPaymentOutcome.applicationDate of the record at column TO_CHAR(application_date, 'YYYY-MM-DD') as adate of the table POSITION_STATUS_SNAPSHOT retrived by the query position_payment on db nodo_online under macro NewMod3
     #test5
     And the value id, is different from null, of the record at column ID of the table POSITION_SUBJECT retrivied by the query position_subject on db nodo_online under macro NewMod3
-    And checks the value PAYER of the record at column SUBJECT_TYPE of the table POSITION_SUBJECT retrivied by the query position_subject on db nodo_online under macro NewMod3
-    And checks the value $sendPaymentOutcome.entityUniqueIdentifierType of the record at column ENTITY_UNIQUE_IDENTIFIER_TYPE of the table POSITION_SUBJECT retrivied by the query position_subject on db nodo_online under macro NewMod3
-    And checks the value $sendPaymentOutcome.entityUniqueIdentifierValue of the record at column ENTITY_UNIQUE_IDENTIFIER_VALUE of the table POSITION_SUBJECT retrivied by the query position_subject on db nodo_online under macro NewMod3
-    And checks the value $sendPaymentOutcome.fullName of the record at column FULL_NAME of the table POSITION_SUBJECT retrivied by the query position_subject on db nodo_online under macro NewMod3
-    And checks the value $sendPaymentOutcome.streetName of the record at column STREET_NAME of the table POSITION_SUBJECT retrivied by the query position_subject on db nodo_online under macro NewMod3
-    And checks the value $sendPaymentOutcome.civicNumber of the record at column CIVIC_NUMBER of the table POSITION_SUBJECT retrivied by the query position_subject on db nodo_online under macro NewMod3
-    And checks the value $sendPaymentOutcome.postalCode of the record at column POSTAL_CODE of the table POSITION_SUBJECT retrivied by the query position_subject on db nodo_online under macro NewMod3
-    And checks the value $sendPaymentOutcome.city of the record at column CITY of the table POSITION_SUBJECT retrivied by the query position_subject on db nodo_online under macro NewMod3
-    And checks the value $sendPaymentOutcome.stateProvinceRegion of the record at column STATE_PROVINCE_REGION of the table POSITION_SUBJECT retrivied by the query position_subject on db nodo_online under macro NewMod3
-    And checks the value $sendPaymentOutcome.country of the record at column COUNTRY of the table POSITION_SUBJECT retrivied by the query position_subject on db nodo_online under macro NewMod3
+    And checks the value PAYER of the record at column SUBJECT_TYPE of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro NewMod3
+    And checks the value $sendPaymentOutcome.entityUniqueIdentifierType of the record at column ENTITY_UNIQUE_IDENTIFIER_TYPE of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro NewMod3
+    And checks the value $sendPaymentOutcome.entityUniqueIdentifierValue of the record at column ENTITY_UNIQUE_IDENTIFIER_VALUE of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro NewMod3
+    And checks the value $sendPaymentOutcome.fullName of the record at column FULL_NAME of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro NewMod3
+    And checks the value $sendPaymentOutcome.streetName of the record at column STREET_NAME of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro NewMod3
+    And checks the value $sendPaymentOutcome.civicNumber of the record at column CIVIC_NUMBER of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro NewMod3
+    And checks the value $sendPaymentOutcome.postalCode of the record at column POSTAL_CODE of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro NewMod3
+    And checks the value $sendPaymentOutcome.city of the record at column CITY of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro NewMod3
+    And checks the value $sendPaymentOutcome.stateProvinceRegion of the record at column STATE_PROVINCE_REGION of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro NewMod3
+    And checks the value $sendPaymentOutcome.country of the record at column COUNTRY of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro NewMod3
     #$sendPaymentOutcome.e-mail
-    And checks the value john.doe@test.it of the record at column EMAIL of the table POSITION_SUBJECT retrivied by the query position_subject on db nodo_online under macro NewMod3
+    And checks the value john.doe@test.it of the record at column EMAIL of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro NewMod3
     And the value inserted_timestamp, is different from null, of the record at column INSERTED_TIMESTAMP of the table POSITION_SUBJECT retrivied by the query position_subject on db nodo_online under macro NewMod3
     And the value updated_timestamp, is different from null, of the record at column UPDATED_TIMESTAMP of the table POSITION_SUBJECT retrivied by the query position_subject on db nodo_online under macro NewMod3
-    # recuperarlo dal secondo risultato della query
+    #verifica un solo risultato
     And verify one record for the table POSITION_SUBJECT retrivied by the query position_subject on db nodo_online under macro NewMod3
-
-
 
 
 
