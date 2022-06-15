@@ -5,7 +5,9 @@
         "query_config" : "UPDATE NODO4_CFG.CONFIGURATION_KEYS s SET s.CONFIG_VALUE = '?1' WHERE s.CONFIG_KEY = '?2'"
     },
     "NewMod3" : { 
-        "payment_status":"SELECT s.columns FROM table_name s WHERE s.NOTICE_ID ='$activatePaymentNotice.noticeNumber' AND s.PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode'"
+        "payment_status":"SELECT s.columns FROM table_name s WHERE s.NOTICE_ID ='$activatePaymentNotice.noticeNumber' AND s.PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode'",
+        "position_payment": "SELECT columns FROM POSITION_PAYMENT WHERE PAYMENT_TOKEN ='$activatePaymentNoticeResponse.paymentToken'",
+        "position_subject":"SELECT s.columns FROM POSITION_SUBJECT s JOIN POSITION_PAYMENT p ON s.ID = p.PAYER_ID WHERE p.PAYMENT_TOKEN ='$activatePaymentNoticeResponse.paymentToken'"
     },
     "AppIO":{
         "DB_AIPR_01_AppIO" : "SELECT * from POSITION_ACTIVATE WHERE CREDITOR_REFERENCE_ID  = '$activateIOPaymentResponse.creditorReferenceId' AND PA_FISCAL_CODE = '$activateIOPaymentResponse.fiscalCodePA' AND PAYMENT_TOKEN = '$activateIOPaymentResponse.paymentToken'",

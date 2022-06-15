@@ -112,7 +112,7 @@ def step_impl(context, sender, soap_primitive, receiver):
 
 @when('job {job_name} triggered after {seconds} seconds')
 def step_impl(context, job_name, seconds):
-    time.sleep(int(seconds))
+    time.sleep(int(seconds)+200)
     url_nodo = utils.get_rest_url_nodo(context)
     nodo_response = requests.get(f"{url_nodo}/jobs/trigger/{job_name}")
     setattr(context, job_name + RESPONSE, nodo_response)
@@ -592,6 +592,12 @@ def step_impl(context, mock, number):
     print(f"wait for: {seconds} seconds")
     time.sleep(seconds)
 
+@step("wait {number} second for expiration")
+def step_impl(context, number):
+    seconds = int(number) 
+    print(f"wait for: {seconds} seconds")
+    time.sleep(seconds)
+
 
 @step("{mock:EcPsp} waits {number} seconds for expiration")
 def step_impl(context, mock, number):
@@ -608,7 +614,34 @@ def step_impl(context, seconds):
     pass
 
 
-@then("checks the value {value} of the record at column {column} of the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
+@then(u"checks the value {value} of the record at column {column} of the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
+def step_impl(context, value, column, query_name, table_name, db_name, name_macro):
+    db_config = context.config.userdata.get("db_configuration")
+    db_selected = db_config.get(db_name)
+
+    conn = db.getConnection(db_selected.get('host'), db_selected.get('database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+
+    selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
+   
+    exec_query = db.executeQuery(conn, selected_query)
+    
+    query_result = [t[0] for t in exec_query]
+    print('query_result: ', query_result)
+
+    value = utils.replace_local_variables(value, context)
+
+    split_value = [status.strip() for status in value.split(',')]
+    
+    if type(query_result[0]) is int:
+        split_value[0] = int(split_value[0])    
+        
+    print("value: ", split_value)
+
+    for elem in split_value:
+        assert elem in query_result
+
+#assert != null
+@then(u"the value {value}, is different from null, of the record at column {column} of the table {table_name} retrivied by the query {query_name} on db {db_name} under macro {name_macro}")
 def step_impl(context, value, column, query_name, table_name, db_name,name_macro):
     db_config = context.config.userdata.get("db_configuration")
     db_selected = db_config.get(db_name)
@@ -618,9 +651,28 @@ def step_impl(context, value, column, query_name, table_name, db_name,name_macro
     selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
    
     exec_query = db.executeQuery(conn, selected_query)
-    query_result = [t[0] for t in exec_query]
     
-    split_value = [status.strip() for status in value.split(',')]
+    query_result = [t[0] for t in exec_query]
+    print('query_result: ', query_result)
 
-    for elem in split_value:
-        assert elem in query_result
+    value = utils.replace_local_variables(value, context)
+
+    split_value = [status.strip() for status in value.split(',')]    
+    print("value: ", split_value)
+
+    for  elem in query_result:
+        assert elem != None 
+
+@then(u"verify one record for the table {table_name} retrivied by the query {query_name} on db {db_name} under macro {name_macro}")
+def step_impl(context, query_name, table_name, db_name,name_macro):
+    db_config = context.config.userdata.get("db_configuration")
+    db_selected = db_config.get(db_name)
+    column = "*"
+    conn = db.getConnection(db_selected.get('host'), db_selected.get('database'),db_selected.get('user'),db_selected.get('password'),db_selected.get('port'))
+
+    selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
+   
+    exec_query = db.executeQuery(conn, selected_query)
+
+    assert len(exec_query) == 1
+
