@@ -75,10 +75,11 @@ class WebApp:
         pass
     
     def selezionolingua(self,lingua):
-
-        self.driver.wait_until(By.XPATH, 'html/body/div[5]/div/button').click()
-        self.driver.wait_until(By.XPATH,'html/body/div[5]/div/ul/li/a[@href="#'+lingua+'"]').click()
-        sleep(1)
+        try:
+            self.driver.wait_until(By.XPATH, 'html/body/div[5]/div/button').click()
+            self.driver.wait_until(By.XPATH,'html/body/div[5]/div/ul/li/a[@href="#'+lingua+'"]').click()
+        except:
+            assert False
 
     def controllotesto(self,lingua):
         pass
