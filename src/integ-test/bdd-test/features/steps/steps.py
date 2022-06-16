@@ -615,8 +615,8 @@ def step_impl(context, seconds):
     pass
 
 
-@then(u"checks the value {value} of the record at column {column} of the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
-def step_impl(context, value, column, query_name, table_name, db_name, name_macro):
+@then(u"checks the value {value} in primitive {primitives} with the tag name {name_tag} of the record at column {column} of the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
+def step_impl(context, value, column, query_name, table_name, db_name, name_macro, primitives, name_tag):
     db_config = context.config.userdata.get("db_configuration")
     db_selected = db_config.get(db_name)
 
@@ -638,13 +638,10 @@ def step_impl(context, value, column, query_name, table_name, db_name, name_macr
     else:
         value = utils.replace_local_variables(value, context)
         split_value = [status.strip() for status in value.split(',')]
-        """
-        for i, elem in enumerate(split_value):
-            new_elem = utils.type_numb(elem)
-            split_value[i] = new_elem
-        """
-        if type(query_result[0]) == int:
-            split_value[0] = int(split_value[0])
+        if primitives != "notPrimitives":
+            for i, elem in enumerate(split_value):
+                new_elem = utils.find_tag(context, primitives, name_tag, elem)
+                split_value[i] = new_elem
 
         print("value: ", split_value)
         for elem in split_value:

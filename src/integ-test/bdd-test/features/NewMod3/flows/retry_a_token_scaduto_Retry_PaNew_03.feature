@@ -108,14 +108,18 @@ Feature: process tests for retry a token scaduto
     #sleep phase2
     And wait 5 second for expiration
     #Test2
+     And checks the value PAYING,FAILED in primitive notPrimitives with the tag name None of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
+    """
     And checks the value PAYING,FAILED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
     And checks the value FAILED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro NewMod3
     #test3
     And checks the value PAYING,INSERTED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
     And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro NewMod3
     #test4
+    """
     #$sendPaymentOutcome.fee
-    And checks the value 2 of the record at column fee of the table POSITION_PAYMENT retrived by the query position_payment on db nodo_online under macro NewMod3
+    And checks the value $sendPaymentOutcome.fee in primitive sendPaymentOutcome with the tag name fee of the record at column fee of the table POSITION_PAYMENT retrived by the query position_payment on db nodo_online under macro NewMod3
+    """
     And checks the value $sendPaymentOutcome.outcome of the record at column outcome of the table POSITION_STATUS_SNAPSHOT retrived by the query position_payment on db nodo_online under macro NewMod3
     And checks the value $sendPaymentOutcome.paymentMethod of the record at column payment_method of the table POSITION_STATUS_SNAPSHOT retrived by the query position_payment on db nodo_online under macro NewMod3
     And checks the value $sendPaymentOutcome.paymentChannel of the record at column payment_channel of the table POSITION_STATUS_SNAPSHOT retrived by the query position_payment on db nodo_online under macro NewMod3
@@ -139,6 +143,4 @@ Feature: process tests for retry a token scaduto
     And checks the value NotNone of the record at column ID of the table UPDATED_TIMESTAMP retrived by the query position_subject on db nodo_online under macro NewMod3
     #verifica un solo risultato
     And verify one record for the table POSITION_SUBJECT retrivied by the query position_subject on db nodo_online under macro NewMod3
-    
-
-
+    """

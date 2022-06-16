@@ -191,16 +191,37 @@ def query_json(context, name_query, name_macro):
 
 
 def type_numb(value):
+    print("type_numb")
     x = re.findall("^\d+(?:[.,]\d+)?$", value)
 
     if len(x) != 0:
         if '.' in value:
             split_value = value.split('.')
             if int(split_value[1])>0:
+                print("float: ", value)
                 return float(value)
             else:
+                print("int: ", split_value[0])
                 return int(split_value[0])
         else:
+            print("int2: ", value)
             return int(value)
     else:
+        print("char: ", value)
         return value
+
+
+def find_tag(context, primitive, name_tag, elem):
+    print("find_tag")
+    if primitive == "None":
+        return elem
+        
+    tag = json.load(open(os.path.join(context.config.base_dir + "/../resources/query_AutomationTest.json")))
+    selected_tag = tag.get("constanti").get(name_tag)
+    print(selected_tag)
+
+    if selected_tag:
+        elem = type_numb(elem)
+        print("elem1: ", elem)
+    
+    return elem
