@@ -412,6 +412,11 @@ def step_impl(context, primitive, new_primitive):
     soap_response = getattr(context, primitive + RESPONSE)
     setattr(context, new_primitive + RESPONSE, soap_response)
 
+@step('saving {primitive} request in {new_primitive}')
+def step_impl(context, primitive, new_primitive):
+    soap_response = getattr(context, primitive)
+    setattr(context, new_primitive + REQUEST, soap_response)
+
 
 @then('{response} response is equal to {response_1} response')
 def step_impl(context, response, response_1):
@@ -580,7 +585,7 @@ def step_impl(context, elem, primitive):
     my_document = parseString(payload)
     if len(my_document.getElementsByTagName(elem)) > 0:
         elem_value = my_document.getElementsByTagName(elem)[0].firstChild.data
-        wait_time = int(elem_value) / 1000
+        wait_time = int(elem_value)+200 / 1000
         print(f"wait for: {wait_time} seconds")
         time.sleep(wait_time)
     else:
@@ -615,8 +620,8 @@ def step_impl(context, seconds):
     pass
 
 
-@then(u"checks the value {value} in primitive {primitives} with the tag name {name_tag} of the record at column {column} of the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
-def step_impl(context, value, column, query_name, table_name, db_name, name_macro, primitives, name_tag):
+@step(u"checks the value {value} of the record at column {column} of the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
+def step_impl(context, value, column, query_name, table_name, db_name, name_macro):
     db_config = context.config.userdata.get("db_configuration")
     db_selected = db_config.get(db_name)
 
@@ -638,10 +643,13 @@ def step_impl(context, value, column, query_name, table_name, db_name, name_macr
     else:
         value = utils.replace_local_variables(value, context)
         split_value = [status.strip() for status in value.split(',')]
-        if primitives != "notPrimitives":
-            for i, elem in enumerate(split_value):
-                new_elem = utils.find_tag(context, primitives, name_tag, elem)
-                split_value[i] = new_elem
+        for i, elem in enumerate(query_result):
+            if isinstance(elem, int) or isinstance(elem, float): continue
+            if elem.isdigit():
+                query_result[i] = float(elem)
+        for i, elem in enumerate(split_value):
+            if utils.isFloat(elem) or elem.isdigit():
+                split_value[i] = float(elem)
 
         print("value: ", split_value)
         for elem in split_value:

@@ -115,12 +115,12 @@ Feature: process tests for retry a token scaduto
     And checks the value NOTIFIED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro NewMod3
     #test4
     #$sendPaymentOutcome.fee
-    And checks the value 2 of the record at column fee of the table POSITION_PAYMENT retrived by the query position_payment on db nodo_online under macro NewMod3
-    And checks the value $sendPaymentOutcome.outcome of the record at column outcome of the table POSITION_STATUS_SNAPSHOT retrived by the query position_payment on db nodo_online under macro NewMod3
-    And checks the value $sendPaymentOutcome.paymentMethod of the record at column payment_method of the table POSITION_STATUS_SNAPSHOT retrived by the query position_payment on db nodo_online under macro NewMod3
-    And checks the value $sendPaymentOutcome.paymentChannel of the record at column payment_channel of the table POSITION_STATUS_SNAPSHOT retrived by the query position_payment on db nodo_online under macro NewMod3
-    And checks the value $sendPaymentOutcome.transferDate of the record at column TO_CHAR(transfer_date, 'YYYY-MM-DD') as tdate of the table POSITION_STATUS_SNAPSHOT retrived by the query position_payment on db nodo_online under macro NewMod3
-    And checks the value $sendPaymentOutcome.applicationDate of the record at column TO_CHAR(application_date, 'YYYY-MM-DD') as adate of the table POSITION_STATUS_SNAPSHOT retrived by the query position_payment on db nodo_online under macro NewMod3
+    And checks the value $sendPaymentOutcome.fee of the record at column fee of the table POSITION_PAYMENT retrived by the query position_payment on db nodo_online under macro NewMod3
+    And checks the value $sendPaymentOutcome.outcome of the record at column outcome of the table POSITION_PAYMENT retrived by the query position_payment on db nodo_online under macro NewMod3
+    And checks the value $sendPaymentOutcome.paymentMethod of the record at column payment_method of the table POSITION_PAYMENT retrived by the query position_payment on db nodo_online under macro NewMod3
+    And checks the value $sendPaymentOutcome.paymentChannel of the record at column payment_channel of the table POSITION_PAYMENT retrived by the query position_payment on db nodo_online under macro NewMod3
+    And checks the value $sendPaymentOutcome.transferDate of the record at column TO_CHAR(transfer_date, 'YYYY-MM-DD') as tdate of the table POSITION_PAYMENT retrived by the query position_payment on db nodo_online under macro NewMod3
+    And checks the value $sendPaymentOutcome.applicationDate of the record at column TO_CHAR(application_date, 'YYYY-MM-DD') as adate of the table POSITION_PAYMENT retrived by the query position_payment on db nodo_online under macro NewMod3
     #test5
     And checks the value NotNone of the record at column ID of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro NewMod3
     And checks the value PAYER of the record at column SUBJECT_TYPE of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro NewMod3
@@ -139,6 +139,7 @@ Feature: process tests for retry a token scaduto
     And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro NewMod3
     #verifica un solo risultato
     And verify one record for the table POSITION_SUBJECT retrivied by the query position_subject on db nodo_online under macro NewMod3
+    
 
 
 

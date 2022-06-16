@@ -57,7 +57,7 @@ Feature: process tests for retry a token scaduto
     When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
 
-   #sleep phase1 + poller annulli
+  #sleep phase1 + poller annulli
   Scenario: Execute sleep phase1
     Given the Execute activatePaymentNotice request scenario executed successfully
     When job mod3CancelV2 triggered after 3 seconds
@@ -77,7 +77,7 @@ Feature: process tests for retry a token scaduto
                <idChannel>70000000001_01</idChannel>
                <password>pwdpwdpwd</password>
                <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
-               <outcome>OK</outcome>
+               <outcome>KO</outcome>
                <details>
                   <paymentMethod>creditCard</paymentMethod>
                   <paymentChannel>app</paymentChannel>
@@ -106,17 +106,18 @@ Feature: process tests for retry a token scaduto
     When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     #Test1
     Then check outcome is KO of sendPaymentOutcome response
+    And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcome response
     #sleep phase2
     And wait 5 second for expiration
     #Test2
-    And checks the value PAYING,NOTICE_GENERATED,PAID,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
-    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro NewMod3
+    And checks the value PAYING,FAILED,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
+    And checks the value FAILED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro NewMod3
     #test3
-    And checks the value PAYING,PAID,INSERTED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
-    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro NewMod3
+    And checks the value PAYING,INSERTED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
+    And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro NewMod3
     #test4
     #$sendPaymentOutcome.fee
-    And checks the value $sendPaymentOutcome.fee of the record at column fee of the table POSITION_PAYMENT retrived by the query position_payment on db nodo_online under macro NewMod3
+    And checks the value 2 of the record at column fee of the table POSITION_PAYMENT retrived by the query position_payment on db nodo_online under macro NewMod3
     And checks the value $sendPaymentOutcome.outcome of the record at column outcome of the table POSITION_PAYMENT retrived by the query position_payment on db nodo_online under macro NewMod3
     And checks the value $sendPaymentOutcome.paymentMethod of the record at column payment_method of the table POSITION_PAYMENT retrived by the query position_payment on db nodo_online under macro NewMod3
     And checks the value $sendPaymentOutcome.paymentChannel of the record at column payment_channel of the table POSITION_PAYMENT retrived by the query position_payment on db nodo_online under macro NewMod3
@@ -140,6 +141,3 @@ Feature: process tests for retry a token scaduto
     And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro NewMod3
     #verifica un solo risultato
     And verify one record for the table POSITION_SUBJECT retrivied by the query position_subject on db nodo_online under macro NewMod3
-    
-
-
