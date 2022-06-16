@@ -17,3 +17,4 @@ Feature: Non hai spid
     |sl  |
     |fr  |
     |de  |
+    |ch  |
