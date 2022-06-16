@@ -155,7 +155,7 @@ class WebApp:
 
     def seleziono_carta_non_onus(self):
         self.driver.wait_until(By.CLASS_NAME, 'credit-card').click()
-        self.driver.wait_until(By.NAME, 'pan').send_keys("40031711022701113")
+        self.driver.wait_until(By.NAME, 'pan').send_keys("4003171102270113")
         self.driver.wait_until(By.NAME, 'expDate').send_keys(self.holder['expDate'])
         self.driver.wait_until(By.CLASS_NAME, 'input-cvc').send_keys(self.holder['cvc'])
         self.driver.wait_until(By.CLASS_NAME, 'input-holder').send_keys(self.holder['name'])
