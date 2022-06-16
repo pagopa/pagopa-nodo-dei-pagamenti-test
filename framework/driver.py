@@ -16,7 +16,7 @@ class Driver:
             case "chrome":
                 options = webdriver.ChromeOptions()
                 self.add_options(options, browser['options'])
-                #options.add_argument('--headless')
+                options.add_argument('--headless')
                 self.driver = webdriver.Chrome(options=options)
             case _:
                 self.driver = webdriver.Firefox()
