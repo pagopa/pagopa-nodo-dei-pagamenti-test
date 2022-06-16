@@ -22,5 +22,5 @@ steps:
   inputs:
     testResultsFiles: '**/report/*.xml'
     mergeTestResults: true
-    testRunTitle: Integration test nodo-dei-pagamenti $(Build.BuildNumber)
+    testRunTitle: Integration test payment-manager $(Build.BuildNumber)
     failTaskOnFailedTests: true
