@@ -77,7 +77,11 @@ class WebApp:
     def selezionolingua(self,lingua):
         try:
             self.driver.wait_until(By.XPATH, 'html/body/div[5]/div/button').click()
-            self.driver.wait_until(By.XPATH,'html/body/div[5]/div/ul/li/a[@href="#'+lingua+'"]').click()
+            tmp = self.driver.find_element(By.XPATH,'html/body/div[5]/div/ul/li/a[@href="#'+lingua+'"]')
+            if tmp:
+                tmp.click()
+            else:
+                assert False
         except:
             assert False
 
