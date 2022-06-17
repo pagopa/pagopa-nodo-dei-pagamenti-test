@@ -100,27 +100,28 @@ Feature: process tests for Retry_DB_GR_08
       </soapenv:Envelope>
       
       """
-  When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+    When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is KO of sendPaymentOutcome response
 
       # test execution
    Scenario: Execution test
-    Given the Execute sendPaymentOutcome request scenario executed successfully
-    And the Define paGetPayment scenario executed successfully
-    And transferList with <transferList><transfer><idTransfer>1</idTransfer><transferAmount>3.00</transferAmount><fiscalCodePA>77777777777</fiscalCodePA><IBAN>IT45R0760103200000000001016</IBAN><remittanceInformation>testPaGetPayment</remittanceInformation><transferCategory>paGetPaymentTest</transferCategory></transfer></transferList> in paGetPayment
-    When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-    And EC replies to nodo-dei-pagamenti with the paGetPaymentRes
-    And job mod3CancelV2 triggered after 3 seconds
-    And verify the HTTP status code of mod3CancelV2 response is 200
-    And checks the value $sendPaymentOutcome.pa1 of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient on db nodo_online under macro NewMod3
-    And checks the value $sendPaymentOutcome.noticeID of the record at column NOTICE_ID of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient on db nodo_online under macro NewMod3
-    And checks the value $sendPaymentOutcome.creditorReferenceId of the record at column CREDITOR_REFERENCE_ID of the table POSITION_RECEIPT retrived by the query position_receipt_recipient on db nodo_online under macro NewMod3
-    And checks the value $sendPaymentOutcome.token of the record at column PAYMENT_TOKEN of the table POSITION_RECEIPT retrived by the query position_receipt_recipient on db nodo_online under macro NewMod3
-    And checks the value $sendPaymentOutcome.recipientPA of the record at column RECIPIENT_PA_FISCAL_CODE of the table POSITION_RECEIPT retrived by the query position_receipt_recipient on db nodo_online under macro NewMod3
-    And checks the value $sendPaymentOutcome.recipientStation of the record at column RECIPIENT_STATION_ID of the table POSITION_RECEIPT retrived by the query position_receipt_recipient on db nodo_online under macro NewMod3
-    And checks the value $sendPaymentOutcome.recipientBroker of the record at column RECIPIENT_BROKER_PA_ID of the table POSITION_RECEIPT retrived by the query position_receipt_recipient on db nodo_online under macro NewMod3
-    And checks the value $sendPaymentOutcome.status of the record at column STATUS of the table POSITION_RECEIPT retrived by the query position_receipt_recipient on db nodo_online under macro NewMod3
-    And checks the value $sendPaymentOutcome.fkPositionReceipt of the record at column FK_POSITION_RECEIPT of the table POSITION_RECEIPT retrived by the query position_receipt_recipient on db nodo_online under macro NewMod3
+      Given the Execute sendPaymentOutcome request scenario executed successfully
+      And the Define paGetPayment scenario executed successfully
+      And EC replies to nodo-dei-pagamenti with the paGetPaymentRes
+
+      And transferList with <transferList><transfer><idTransfer>1</idTransfer><transferAmount>3.00</transferAmount><fiscalCodePA>77777777777</fiscalCodePA><IBAN>IT45R0760103200000000001016</IBAN><remittanceInformation>testPaGetPayment</remittanceInformation><transferCategory>paGetPaymentTest</transferCategory></transfer></transferList> in paGetPayment
+      When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+      
+      Then verify the HTTP status code of mod3CancelV2 response is 200
+      And checks the value $sendPaymentOutcome.pa1 of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient on db nodo_online under macro NewMod3
+      And checks the value $sendPaymentOutcome.noticeID of the record at column NOTICE_ID of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient on db nodo_online under macro NewMod3
+      And checks the value $sendPaymentOutcome.creditorReferenceId of the record at column CREDITOR_REFERENCE_ID of the table POSITION_RECEIPT retrived by the query position_receipt_recipient on db nodo_online under macro NewMod3
+      And checks the value $sendPaymentOutcome.token of the record at column PAYMENT_TOKEN of the table POSITION_RECEIPT retrived by the query position_receipt_recipient on db nodo_online under macro NewMod3
+      And checks the value $sendPaymentOutcome.recipientPA of the record at column RECIPIENT_PA_FISCAL_CODE of the table POSITION_RECEIPT retrived by the query position_receipt_recipient on db nodo_online under macro NewMod3
+      And checks the value $sendPaymentOutcome.recipientStation of the record at column RECIPIENT_STATION_ID of the table POSITION_RECEIPT retrived by the query position_receipt_recipient on db nodo_online under macro NewMod3
+      And checks the value $sendPaymentOutcome.recipientBroker of the record at column RECIPIENT_BROKER_PA_ID of the table POSITION_RECEIPT retrived by the query position_receipt_recipient on db nodo_online under macro NewMod3
+      And checks the value $sendPaymentOutcome.status of the record at column STATUS of the table POSITION_RECEIPT retrived by the query position_receipt_recipient on db nodo_online under macro NewMod3
+      And checks the value $sendPaymentOutcome.fkPositionReceipt of the record at column FK_POSITION_RECEIPT of the table POSITION_RECEIPT retrived by the query position_receipt_recipient on db nodo_online under macro NewMod3
 
 
 

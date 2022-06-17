@@ -118,3 +118,4 @@ __pycache__
 
 /instantclient_21_3
 /.idea
+/environment.py

@@ -60,7 +60,7 @@ Feature: process tests for retry a token scaduto
    #sleep phase1
   Scenario: Execute sleep phase1
     Given the Execute activatePaymentNotice request scenario executed successfully
-    And PSP waits expirationTime of activatePaymentNotice expires
+    And wait 3 second for expiration
     
 # Payment Outcome Phase outcome OK 
   Scenario: Execute sendPaymentOutcome request
