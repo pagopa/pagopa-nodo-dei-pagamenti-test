@@ -116,6 +116,6 @@ __pycache__
 .idea/
 /config.json
 
-/instantclient_21_3
+/instantclient_*
 /.idea
 /environment.py

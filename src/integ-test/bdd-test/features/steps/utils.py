@@ -1,6 +1,5 @@
 import re, json, os
 from xml.dom.minidom import parseString
-from numpy import char
 
 import requests
 from requests.adapters import HTTPAdapter
