@@ -103,9 +103,9 @@ Scenario: Execute nodoInoltroEsitoCarta (Phase 4)
         }
     """
     Then verify the HTTP status code of inoltroEsito/carta response is 200
-    #And check esito is OK of inoltroEsito/carta response
+    And check esito is OK of inoltroEsito/carta response
 
-Scenario: Check sendPaymentOutcome response after nodoInoltroEsitoCarta primitive and the correctness of column values
+Scenario: Check sendPaymentOutcome response after nodoInoltroEsitoCarta, and check correctness of database tables
     Given the Execute nodoInoltroEsitoCarta (Phase 4) scenario executed successfully
     And initial XML sendPaymentOutcome
     """

@@ -103,8 +103,9 @@ Scenario: Execute nodoInoltroEsitoCarta (Phase 4)
         }
     """
     Then verify the HTTP status code of inoltroEsito/carta response is 200
+    And check esito is OK of inoltroEsito/carta response
 
-Scenario: Check sendPaymentOutcome response on pspNotifyPayment OK response
+Scenario: Check sendPaymentOutcome response with pspNotifyPayment OK and sendPaymentOutcome KO, and check correctness of database tables
     Given the Execute nodoInoltroEsitoCarta (Phase 4) scenario executed successfully
     And initial XML sendPaymentOutcome
     """
@@ -118,7 +119,7 @@ Scenario: Check sendPaymentOutcome response on pspNotifyPayment OK response
           <password>pwdpwdpwd</password>
           <idempotencyKey>#idempotency_key#</idempotencyKey>
           <paymentToken>$activateIOPaymentResponse.paymentToken</paymentToken>
-          <outcome>OK</outcome>
+          <outcome>KO</outcome>
           <!--Optional:-->
           <details>
             <paymentMethod>creditCard</paymentMethod>
@@ -154,7 +155,6 @@ Scenario: Check sendPaymentOutcome response on pspNotifyPayment OK response
       </soapenv:Body>
     </soapenv:Envelope>
     """
-    And elem with value in sendPaymentOutcome 
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is KO of sendPaymentOutcome response
     And check faultCode is PPT_SEMANTICA of sendPaymentOutcome response

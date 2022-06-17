@@ -90,7 +90,7 @@ Scenario: Execute nodoNotificaAnnullamento (Phase 4)
     When WISP sends rest GET notificaAnnullamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
     Then verify the HTTP status code of notificaAnnullamento response is 200
 
-Scenario: Execute activateIOPayment1 (Phase 5)
+Scenario: Check activateIOPayment1 response with different idempotencyKey in the request after nodoNotificaAnnullamento
     Given the Execute nodoNotificaAnnullamento (Phase 4) scenario executed successfully
     And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
     And random idempotencyKey having 70000000001 as idPSP in activateIOPayment

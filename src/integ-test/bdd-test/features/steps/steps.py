@@ -3,7 +3,6 @@ import random
 from sre_constants import ASSERT
 import time
 from xml.dom.minidom import parseString
-from parso import split_lines
 
 import requests
 from behave import *
@@ -280,6 +279,7 @@ def step_impl(context, sender, method, service, receiver):
     setattr(context, service.split('?')[0], json_body)
     setattr(context, service.split('?')[0] + RESPONSE, nodo_response)
     print(service.split('?')[0] + RESPONSE)
+    print(nodo_response.content)
 
 
 @then('verify the HTTP status code of {action} response is {value}')
@@ -636,7 +636,7 @@ def step_impl(context, value, column, query_name, table_name, db_name, name_macr
 
     if value == 'None':
         print('None')
-        assert len(query_result) == 0
+        assert query_result[0] == None
     elif value == 'NotNone':
         print('NotNone')
         assert query_result[0] != None

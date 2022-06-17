@@ -105,7 +105,7 @@ Scenario: Execute nodoInoltroEsitoCarta (Phase 4)
     Then verify the HTTP status code of inoltroEsito/carta response is 200
     And check esito is OK of inoltroEsito/carta response
 
-Scenario: Check sendPaymentOutcome response after nodoInoltroEsitoCarta primitive and the correctness of column values
+Scenario: Check sendPaymentOutcome response after nodoInoltroEsitoCarta
     Given the Execute nodoInoltroEsitoCarta (Phase 4) scenario executed successfully
     And checks the value PAYMENT_ACCEPTED of the record at column STATUS of the table POSITION_STATUS retrived by the query payemnt_status on db nodo_online under macro AppIO
     When WISP sends REST POST inoltroEsito/carta to nodo-dei-pagamenti

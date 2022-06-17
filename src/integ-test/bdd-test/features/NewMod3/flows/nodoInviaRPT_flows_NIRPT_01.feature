@@ -104,7 +104,7 @@ Feature: process tests for nodoInviaRPT [REV_NIRPT_01]
   Scenario: Execution test REV_NIRPT_01
     Given the Execute sendPaymentOutcome request scenario executed successfully
     When EC replies to nodo-dei-pagamenti with the nodoInviaRPT
-    ------primo blocco di test------
+    #------primo blocco di test------
     Then api-config executes the sql {sql_code} and check {status} # check in POSITION_PAYMENT_STATUS status == PAYING
     And api-config executes the sql {sql_code} and check {status} # check in POSITION_PAYMENT_STATUS status == PAYING
     And api-config executes the sql {sql_code} and check {status} # check in POSITION_PAYMENT_STATUS status == PAID
@@ -112,14 +112,14 @@ Feature: process tests for nodoInviaRPT [REV_NIRPT_01]
     And api-config executes the sql {sql_code} and check {status} # check in POSITION_PAYMENT_STATUS status == NOTICE_GENERATED
     And api-config executes the sql {sql_code} and check {status} # check in POSITION_PAYMENT_STATUS status == NOTICE_STORED
     And api-config executes the sql {sql_code} and check {status} # check in POSITION_PAYMENT_STATUS_SNAPSHOT status == NOTICE_STORED
-    ------secondo blocco di test------
+    #------secondo blocco di test------
     And api-config executes the sql {sql_code} and check {status} # check in STATI_RPT status == RPT_RICEVUTA_NODO
     And api-config executes the sql {sql_code} and check {status} # check in STATI_RPT status == RPT_ACCETTATA_NODO
     And api-config executes the sql {sql_code} and check {status} # check in STATI_RPT status == RPT_PARCHEGGIATA_NODO_MOD3
     And api-config executes the sql {sql_code} and check {status} # check in STATI_RPT status == RPT_RISOLTA_OK
     And api-config executes the sql {sql_code} and check {status} # check in STATI_RPT status == RT_GENERATA_NODO
     And api-config executes the sql {sql_code} and check {status} # check in STATI_RPT_SNAPSHOT status ==  RT_GENERATA_NODO
-    ------terzo blocco di test------
+   #------terzo blocco di test------
     #To Do implementare tutti gli altri test in funzione delle decisioni di pagopa
 
 

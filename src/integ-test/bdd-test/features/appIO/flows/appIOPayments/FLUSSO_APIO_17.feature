@@ -105,7 +105,7 @@ Scenario: Execute nodoInoltroEsitoCarta (Phase 4)
     Then verify the HTTP status code of inoltroEsito/carta response is 200
     And check esito is KO of inoltroEsito/carta response
 
-Scenario: Check nodoNotificaAnnullamento response after nodoInoltroEsitoCarta primitive and the correctness of column values
+Scenario: Check nodoNotificaAnnullamento response after nodoInoltroEsitoCarta, and check correctness of database tables
     Given the Execute nodoInoltroEsitoCarta (Phase 4) scenario executed successfully
     And checks the value PAYMENT_REFUSED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
     When WISP sends rest GET notificaAnnullamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
@@ -141,5 +141,5 @@ Scenario: Check nodoNotificaAnnullamento response after nodoInoltroEsitoCarta pr
     And checks the value None of the record at column ORIGINAL_PAYMENT_TOKEN of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
     And checks the value Y of the record at column FLAG_IO of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
     And checks the value Y of the record at column RICEVUTA_PM of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
-    ###### FIX EMPTY IDEMPOTENCY CACHE
-    ###### FIX MOTIVO_ANNULLAMENTO column in PM_SESSION_DATA table
+    ###### TODO: EMPTY IDEMPOTENCY CACHE
+    ###### TODO: MOTIVO_ANNULLAMENTO column in PM_SESSION_DATA table

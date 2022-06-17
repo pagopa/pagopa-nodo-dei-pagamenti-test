@@ -105,7 +105,7 @@ Scenario: Execute nodoInoltroEsitoCarta (Phase 4)
     Then verify the HTTP status code of inoltroEsito/carta response is 200
     And check esito is KO of inoltroEsito/carta response
 
-Scenario: Check sendPaymentOutcome response on pspNotifyPayment KO response
+Scenario: Check sendPaymentOutcome response with pspNotifyPayment KO and sendPaymentOutcome OK, and check correctness of database tables
     Given the Execute nodoInoltroEsitoCarta (Phase 4) scenario executed successfully
     And initial XML sendPaymentOutcome
     """
@@ -156,8 +156,7 @@ Scenario: Check sendPaymentOutcome response on pspNotifyPayment KO response
     </soapenv:Envelope>
     """
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-    # CORRETTO? COERENTE CON L'EXCEL
-    Then check outcome is OK of sendPaymentOutcome response
+    Then check outcome is KO of sendPaymentOutcome response
     And check faultCode is PPT_SEMANTICA of sendPaymentOutcome response
     And checks the value PAYING, PAYMENT_SENT, PAYMENT_REFUSED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
     And checks the value PAYMENT_REFUSED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO

@@ -60,3 +60,14 @@ Feature: Semantic checks for activateIOPaymentReq - OK
             | tag            | tag_value              | soapUI test |
             | idempotencyKey | 12345678901_1244gtg684 | SEM_AIPR_17 |
             | idempotencyKey | 80000000001_1244gtg684 | SEM_AIPR_18 |
+
+    # [SEM_AIPR_19]
+    Scenario: Execute activateIOPayment (Phase 1)
+        When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
+        And save activateIOPayment response in activateIOPayment_first
+        Then check outcome is OK of activateIOPayment_first response
+
+    Scenario: Check second activateIOPayment is equal to the first
+        Given the Execute activateIOPayment (Phase 1) scenario executed successfully
+        When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
+        Then activateIOPayment_first response is equal to activateIOPayment response

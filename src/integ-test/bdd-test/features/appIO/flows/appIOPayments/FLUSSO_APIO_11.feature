@@ -159,7 +159,7 @@ Scenario: (Phase 5)
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
 
-Scenario:
+Scenario: Check nodoInoltroEsitoCarta1 response after sendPaymentOutcome
     Given the (Phase 5) scenario executed successfully
     And check the value PAID of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payemnt_status on db nodo_online under macro AppIO
     When WISP sends REST POST inoltroEsito/carta to nodo-dei-pagamenti

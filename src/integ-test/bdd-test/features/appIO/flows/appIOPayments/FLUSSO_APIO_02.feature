@@ -85,7 +85,7 @@ Scenario: Execute nodoChiediInformazioniPagamento (Phase 3)
     When WISP sends rest GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
     Then verify the HTTP status code of informazioniPagamento response is 200
 
-Scenario: Check sendPaymentOutcome response before nodoInoltroEsitoCarta primitive and the correctness of db
+Scenario: Check sendPaymentOutcome response before nodoInoltroEsitoCarta with sendPaymentOutcome outcome OK, and check correctness of database tables
     Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
     And initial XML sendPaymentOutcome
     """
@@ -136,7 +136,7 @@ Scenario: Check sendPaymentOutcome response before nodoInoltroEsitoCarta primiti
     </soapenv:Envelope>
     """ 
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-    Then check outcome is OK of sendPaymentOutcome response
+    Then check outcome is KO of sendPaymentOutcome response
     And check faultCode is PPT_TOKEN_SCONOSCIUTO of sendPaymentOutcome response
     And checks the value PAYING of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
     And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro AppIO

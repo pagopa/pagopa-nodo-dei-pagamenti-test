@@ -5,24 +5,24 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - not
     And initial XML activatePaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-         <soapenv:Header/>
-         <soapenv:Body>
-            <nod:activatePaymentNoticeReq>
-               <idPSP>70000000001</idPSP>
-               <idBrokerPSP>70000000001</idBrokerPSP>
-               <idChannel>70000000001_01</idChannel>
-               <password>pwdpwdpwd</password>
-               <idempotencyKey>#idempotency_key#</idempotencyKey>
-               <qrCode>
-                  <fiscalCode>#creditor_institution_code#</fiscalCode>
-                  <noticeNumber>#notice_number#</noticeNumber>
-               </qrCode>
-			   <expirationTime>120000</expirationTime>
-               <amount>10.00</amount>
-			   <dueDate>2021-12-31</dueDate>
-			   <paymentNote>causale</paymentNote>
-            </nod:activatePaymentNoticeReq>
-         </soapenv:Body>
+        <soapenv:Header/>
+        <soapenv:Body>
+          <nod:activatePaymentNoticeReq>
+            <idPSP>70000000001</idPSP>
+            <idBrokerPSP>70000000001</idBrokerPSP>
+            <idChannel>70000000001_01</idChannel>
+            <password>pwdpwdpwd</password>
+            <idempotencyKey>#idempotency_key#</idempotencyKey>
+            <qrCode>
+              <fiscalCode>#creditor_institution_code#</fiscalCode>
+              <noticeNumber>#notice_number#</noticeNumber>
+            </qrCode>
+            <expirationTime>120000</expirationTime>
+            <amount>10.00</amount>
+            <dueDate>2021-12-31</dueDate>
+            <paymentNote>causale</paymentNote>
+          </nod:activatePaymentNoticeReq>
+        </soapenv:Body>
       </soapenv:Envelope>
       """
     And nodo-dei-pagamenti has config parameter useIdempotency set to false
@@ -38,7 +38,7 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - not
     And random noticeNumber in activatePaymentNotice
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
-    
+
   # Activate Phase 2 [SEM_APNR_20.1]
   # TODO modify with api-config
   # PA_STAZIONE_PA with OBJ_ID = 5266 to set:
@@ -53,6 +53,6 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - not
   #   -
   Scenario: Execute again activatePaymentNotice request with different fiscalCode
     Given the Execute activatePaymentNotice request scenario executed successfully
-	And fiscalCode with 44444444444 in activatePaymentNotice
+    And fiscalCode with 44444444444 in activatePaymentNotice
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response

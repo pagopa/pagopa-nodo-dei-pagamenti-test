@@ -85,7 +85,7 @@ Scenario: Execute nodoChiediInformazioniPagamento (Phase 3)
     When WISP sends rest GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
     Then verify the HTTP status code of informazioniPagamento response is 200
 
-Scenario: Execute nodoNotificaAnnullamento (Phase 4)
+Scenario: Check nodoNotificaAnnullamento after nodoChiediInformazioniPagamento, and check correctness of database tables
     Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
     And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
     When WISP sends rest GET notificaAnnullamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
@@ -119,4 +119,4 @@ Scenario: Execute nodoNotificaAnnullamento (Phase 4)
     And checks the value None of the record at column ORIGINAL_PAYMENT_TOKEN of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
     And checks the value Y of the record at column FLAG_IO of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
     And checks the value Y of the record at column RICEVUTA_PM of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
-    ###### FIX EMPTY IDEMPOTENCY CACHE
+    ###### TODO: EMPTY IDEMPOTENCY CACHE
