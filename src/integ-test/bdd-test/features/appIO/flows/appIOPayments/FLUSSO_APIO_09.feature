@@ -104,7 +104,7 @@ Scenario: Execute nodoInoltroEsitoCarta (Phase 4)
         }
     """
     Then verify the HTTP status code of inoltroEsito/carta response is 408
-    And check error is Operazione in timeout of inoltroEsito/carta
+    And check error is Operazione in timeout of inoltroEsito/carta response
 
 Scenario:
     Given the Execute nodoInoltroEsitoCarta (Phase 4) scenario executed successfully

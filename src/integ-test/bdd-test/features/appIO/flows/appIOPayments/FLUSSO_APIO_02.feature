@@ -1,4 +1,4 @@
-Feature: FLUSSO_API0_02
+Feature: FLUSSO_APIO_02
 
 Background:
  Given systems up

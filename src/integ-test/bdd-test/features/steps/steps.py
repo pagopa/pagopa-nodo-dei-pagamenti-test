@@ -636,7 +636,7 @@ def step_impl(context, value, column, query_name, table_name, db_name, name_macr
 
     if value == 'None':
         print('None')
-        assert query_result[0] == None
+        assert len(query_result) == 0
     elif value == 'NotNone':
         print('NotNone')
         assert query_result[0] != None

@@ -88,6 +88,51 @@ Feature: process tests for retry a token scaduto
                <idBrokerPSP>70000000001</idBrokerPSP>
                <idChannel>70000000001_01</idChannel>
                <password>pwdpwdpwd</password>
+               <paymentToken>$activatePaymentNotice1Response.paymentToken</paymentToken>
+               <outcome>OK</outcome>
+               <details>
+                  <paymentMethod>creditCard</paymentMethod>
+                  <paymentChannel>app</paymentChannel>
+                  <fee>2.00</fee>
+                  <payer>
+                     <uniqueIdentifier>
+                        <entityUniqueIdentifierType>F</entityUniqueIdentifierType>
+                        <entityUniqueIdentifierValue>JHNDOE00A01F205N</entityUniqueIdentifierValue>
+                     </uniqueIdentifier>
+                     <fullName>John Doe</fullName>
+                     <streetName>street</streetName>
+                     <civicNumber>12</civicNumber>
+                     <postalCode>89020</postalCode>
+                     <city>city</city>
+                     <stateProvinceRegion>MI</stateProvinceRegion>
+                     <country>IT</country>
+                     <e-mail>john.doe@test.it</e-mail>
+                  </payer>
+                  <applicationDate>2021-10-01</applicationDate>
+                  <transferDate>2021-10-02</transferDate>
+               </details>
+            </nod:sendPaymentOutcomeReq>
+         </soapenv:Body>
+      </soapenv:Envelope>
+      """
+    When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+    Then check outcome is KO of sendPaymentOutcome response
+    #Test1
+    And check faultCode is PPT_PAGAMENTO_DUPLICATO of sendPaymentOutcome response
+
+    # Payment Outcome Phase outcome OK 
+  Scenario: Execute sendPaymentOutcome2 request
+    Given the Execute sendPaymentOutcome1 request scenario executed successfully
+    And initial XML sendPaymentOutcome
+      """
+      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+         <soapenv:Header/>
+         <soapenv:Body>
+            <nod:sendPaymentOutcomeReq>
+               <idPSP>70000000001</idPSP>
+               <idBrokerPSP>70000000001</idBrokerPSP>
+               <idChannel>70000000001_01</idChannel>
+               <password>pwdpwdpwd</password>
                <paymentToken>$activatePaymentNotice2Response.paymentToken</paymentToken>
                <outcome>OK</outcome>
                <details>
@@ -117,67 +162,22 @@ Feature: process tests for retry a token scaduto
       """
     When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
-
-    # Payment Outcome Phase outcome OK 
-  Scenario: Execute sendPaymentOutcome2 request
-    Given the Execute sendPaymentOutcome1 request scenario executed successfully
-    And initial XML sendPaymentOutcome
-      """
-      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-         <soapenv:Header/>
-         <soapenv:Body>
-            <nod:sendPaymentOutcomeReq>
-               <idPSP>70000000001</idPSP>
-               <idBrokerPSP>70000000001</idBrokerPSP>
-               <idChannel>70000000001_01</idChannel>
-               <password>pwdpwdpwd</password>
-               <paymentToken>$activatePaymentNotice1Response.paymentToken</paymentToken>
-               <outcome>KO</outcome>
-               <details>
-                  <paymentMethod>creditCard</paymentMethod>
-                  <paymentChannel>app</paymentChannel>
-                  <fee>2.00</fee>
-                  <payer>
-                     <uniqueIdentifier>
-                        <entityUniqueIdentifierType>F</entityUniqueIdentifierType>
-                        <entityUniqueIdentifierValue>JHNDOE00A01F205N</entityUniqueIdentifierValue>
-                     </uniqueIdentifier>
-                     <fullName>John Doe</fullName>
-                     <streetName>street</streetName>
-                     <civicNumber>12</civicNumber>
-                     <postalCode>89020</postalCode>
-                     <city>city</city>
-                     <stateProvinceRegion>MI</stateProvinceRegion>
-                     <country>IT</country>
-                     <e-mail>john.doe@test.it</e-mail>
-                  </payer>
-                  <applicationDate>2021-10-01</applicationDate>
-                  <transferDate>2021-10-02</transferDate>
-               </details>
-            </nod:sendPaymentOutcomeReq>
-         </soapenv:Body>
-      </soapenv:Envelope>
-      """
-    When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-    Then check outcome is KO of sendPaymentOutcome response
     And wait 5 second for expiration
-    #Test1
-    And check faultCode is PPT_PAGAMENTO_DUPLICATO of sendPaymentOutcome response
     #Test2
     #paymentToken1
     And checks the value PAYING,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query position_payment_retry_05_token1 on db nodo_online under macro NewMod3
     #paymentToken2
-    And checks the value PAYING,PAID,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query position_payment_retry_05_token2 on db nodo_online under macro NewMod3
+    And checks the value PAYING,NOTICE_SENT,PAID,NOTICE_GENERATED,NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query position_payment_retry_05_token2 on db nodo_online under macro NewMod3
     #paymentToken1
     And checks the value CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query position_payment_retry_05_token1 on db nodo_online under macro NewMod3
     #paymentToken2
     And checks the value NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query position_payment_retry_05_token2 on db nodo_online under macro NewMod3
     #test3
     #paymentToken1
-    And checks the value PAYING,INSERTED,PAYING,PAID,NOTIFIED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status_retry_05_token1 on db nodo_online under macro NewMod3
+    And checks the value PAYING,INSERTED,PAYING,INSERTED,PAID,NOTIFIED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status_retry_05_token1 on db nodo_online under macro NewMod3
     And checks the value NOTIFIED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_retry_05_token1 on db nodo_online under macro NewMod3
     
- 
+    
     
 
     

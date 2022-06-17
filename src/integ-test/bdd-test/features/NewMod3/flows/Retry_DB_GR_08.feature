@@ -27,8 +27,78 @@ Feature: process tests for Retry_DB_GR_08
       When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
       Then check outcome is OK of verifyPaymentNotice response
 
+# Define primitive paGetPayment
+  Scenario: Define paGetPayment
+    Given initial XML paGetPayment
+    """
+    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+                      xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
+      <soapenv:Header/>
+      <soapenv:Body>
+        <paf:paGetPaymentRes>
+          <outcome>OK</outcome>
+          <data>
+            <creditorReferenceId>$iuv</creditorReferenceId>
+            <paymentAmount>10.00</paymentAmount>
+            <dueDate>2021-12-31</dueDate>
+            <!--Optional:-->
+            <retentionDate>2021-12-31T12:12:12</retentionDate>
+            <!--Optional:-->
+            <lastPayment>1</lastPayment>
+            <description>description</description>
+            <!--Optional:-->
+            <companyName>company</companyName>
+            <!--Optional:-->
+            <officeName>office</officeName>
+            <debtor>
+              <uniqueIdentifier>
+                <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
+                <entityUniqueIdentifierValue>77777777777</entityUniqueIdentifierValue>
+              </uniqueIdentifier>
+              <fullName>paGetPaymentName</fullName>
+              <!--Optional:-->
+              <streetName>paGetPaymentStreet</streetName>
+              <!--Optional:-->
+              <civicNumber>paGetPayment99</civicNumber>
+              <!--Optional:-->
+              <postalCode>20155</postalCode>
+              <!--Optional:-->
+              <city>paGetPaymentCity</city>
+              <!--Optional:-->
+              <stateProvinceRegion>paGetPaymentState</stateProvinceRegion>
+              <!--Optional:-->
+              <country>IT</country>
+              <!--Optional:-->
+              <e-mail>paGetPayment@test.it</e-mail>
+            </debtor>
+            <!--Optional:-->
+            <transferList>
+              <!--1 to 5 repetitions:-->
+              <transfer>
+                <idTransfer>1</idTransfer>
+                <transferAmount>10.00</transferAmount>
+                <fiscalCodePA>77777777777</fiscalCodePA>
+                <IBAN>IT45R0760103200000000001016</IBAN>
+                <remittanceInformation>testPaGetPayment</remittanceInformation>
+                <transferCategory>paGetPaymentTest</transferCategory>
+              </transfer>
+            </transferList>
+            <!--Optional:-->
+            <metadata>
+              <!--1 to 10 repetitions:-->
+              <mapEntry>
+                <key>1</key>
+                <value>22</value>
+              </mapEntry>
+            </metadata>
+          </data>
+        </paf:paGetPaymentRes>
+      </soapenv:Body>
+    </soapenv:Envelope>
+    """
+
   Scenario: Initial activatePaymentNotice request
-      Given the Execute verifyPaymentNotice request scenario executed successfully
+      Given the Define paGetPayment scenario executed successfully
       And initial XML activatePaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
@@ -54,18 +124,24 @@ Feature: process tests for Retry_DB_GR_08
       </soapenv:Envelope>
       """
 
+
+
+
   # Activate phase
   Scenario: Execute activatePaymentNotice request
       Given the Initial activatePaymentNotice request scenario executed successfully
+      And the Define paGetPayment scenario executed successfully
       When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
       And job mod3CancelV2 triggered after 3 seconds
       Then check outcome is OK of activatePaymentNotice response
       And verify the HTTP status code of mod3CancelV2 response is 200
 
 
+
    # Payment Outcome Phase outcome OK
-  Scenario: Execute sendPaymentOutcome request
+    Scenario: Execute sendPaymentOutcome request
       Given the Execute activatePaymentNotice request scenario executed successfully
+      And EC replies to nodo-dei-pagamenti with the paGetPayment
       And transferList with <transferList><transfer><idTransfer>1</idTransfer><transferAmount>3.00</transferAmount><fiscalCodePA>77777777777</fiscalCodePA><IBAN>IT45R0760103200000000001016</IBAN><remittanceInformation>testPaGetPayment</remittanceInformation><transferCategory>paGetPaymentTest</transferCategory></transfer></transferList> in paGetPayment
       And initial XML sendPaymentOutcome
       """
@@ -107,16 +183,15 @@ Feature: process tests for Retry_DB_GR_08
       """
       When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
       Then check outcome is KO of sendPaymentOutcome response
-      And EC replies to nodo-dei-pagamenti with the paGetPaymentRes
-      And checks the value $sendPaymentOutcome.pa1 of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient on db nodo_online under macro NewMod3
-      And checks the value $sendPaymentOutcome.noticeID of the record at column NOTICE_ID of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient on db nodo_online under macro NewMod3
-      And checks the value $sendPaymentOutcome.creditorReferenceId of the record at column CREDITOR_REFERENCE_ID of the table POSITION_RECEIPT retrived by the query position_receipt_recipient on db nodo_online under macro NewMod3
-      And checks the value $sendPaymentOutcome.token of the record at column PAYMENT_TOKEN of the table POSITION_RECEIPT retrived by the query position_receipt_recipient on db nodo_online under macro NewMod3
-      And checks the value $sendPaymentOutcome.recipientPA of the record at column RECIPIENT_PA_FISCAL_CODE of the table POSITION_RECEIPT retrived by the query position_receipt_recipient on db nodo_online under macro NewMod3
-      And checks the value $sendPaymentOutcome.recipientStation of the record at column RECIPIENT_STATION_ID of the table POSITION_RECEIPT retrived by the query position_receipt_recipient on db nodo_online under macro NewMod3
-      And checks the value $sendPaymentOutcome.recipientBroker of the record at column RECIPIENT_BROKER_PA_ID of the table POSITION_RECEIPT retrived by the query position_receipt_recipient on db nodo_online under macro NewMod3
-      And checks the value $sendPaymentOutcome.status of the record at column STATUS of the table POSITION_RECEIPT retrived by the query position_receipt_recipient on db nodo_online under macro NewMod3
-      And checks the value $sendPaymentOutcome.fkPositionReceipt of the record at column FK_POSITION_RECEIPT of the table POSITION_RECEIPT retrived by the query position_receipt_recipient on db nodo_online under macro NewMod3
+      And checks the value None of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient on db nodo_online under macro NewMod3
+      And checks the value None of the record at column NOTICE_ID of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient on db nodo_online under macro NewMod3
+      And checks the value None of the record at column CREDITOR_REFERENCE_ID of the table POSITION_RECEIPT retrived by the query position_receipt_recipient on db nodo_online under macro NewMod3
+      And checks the value None of the record at column PAYMENT_TOKEN of the table POSITION_RECEIPT retrived by the query position_receipt_recipient on db nodo_online under macro NewMod3
+      And checks the value None of the record at column RECIPIENT_PA_FISCAL_CODE of the table POSITION_RECEIPT retrived by the query position_receipt_recipient on db nodo_online under macro NewMod3
+      And checks the value None of the record at column RECIPIENT_STATION_ID of the table POSITION_RECEIPT retrived by the query position_receipt_recipient on db nodo_online under macro NewMod3
+      And checks the value None of the record at column RECIPIENT_BROKER_PA_ID of the table POSITION_RECEIPT retrived by the query position_receipt_recipient on db nodo_online under macro NewMod3
+      And checks the value None of the record at column STATUS of the table POSITION_RECEIPT retrived by the query position_receipt_recipient on db nodo_online under macro NewMod3
+      And checks the value None of the record at column FK_POSITION_RECEIPT of the table POSITION_RECEIPT retrived by the query position_receipt_recipient on db nodo_online under macro NewMod3
 
 
       

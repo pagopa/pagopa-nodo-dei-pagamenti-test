@@ -89,7 +89,7 @@ Feature: process tests for retry a token scaduto
                <idChannel>70000000001_01</idChannel>
                <password>pwdpwdpwd</password>
                <paymentToken>$activatePaymentNotice2Response.paymentToken</paymentToken>
-               <outcome>OK</outcome>
+               <outcome>KO</outcome>
                <details>
                   <paymentMethod>creditCard</paymentMethod>
                   <paymentChannel>app</paymentChannel>
@@ -132,7 +132,7 @@ Feature: process tests for retry a token scaduto
                <idChannel>70000000001_01</idChannel>
                <password>pwdpwdpwd</password>
                <paymentToken>$activatePaymentNotice1Response.paymentToken</paymentToken>
-               <outcome>KO</outcome>
+               <outcome>OK</outcome>
                <details>
                   <paymentMethod>creditCard</paymentMethod>
                   <paymentChannel>app</paymentChannel>
@@ -162,19 +162,19 @@ Feature: process tests for retry a token scaduto
     Then check outcome is KO of sendPaymentOutcome response
     And wait 5 second for expiration
     #Test1
-    And check faultCode is PPT_PAGAMENTO_DUPLICATO of sendPaymentOutcome response
+    And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcome response
     #Test2
     #paymentToken1
-    And checks the value PAYING,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query position_payment_retry_05_token1 on db nodo_online under macro NewMod3
+    And checks the value PAYING,CANCELLED,PAID,NOTICE_GENERATED,NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query position_payment_retry_05_token1 on db nodo_online under macro NewMod3
     #paymentToken2
-    And checks the value PAYING,PAID,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query position_payment_retry_05_token2 on db nodo_online under macro NewMod3
+    And checks the value PAYING,FAILED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query position_payment_retry_05_token2 on db nodo_online under macro NewMod3
     #paymentToken1
-    And checks the value CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query position_payment_retry_05_token1 on db nodo_online under macro NewMod3
+    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query position_payment_retry_05_token1 on db nodo_online under macro NewMod3
     #paymentToken2
-    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query position_payment_retry_05_token2 on db nodo_online under macro NewMod3
+    And checks the value FAILED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query position_payment_retry_05_token2 on db nodo_online under macro NewMod3
     #test3
     #paymentToken1
-    And checks the value PAYING,INSERTED,PAYING,PAID,NOTIFIED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status_retry_05_token1 on db nodo_online under macro NewMod3
+    And checks the value PAYING,INSERTED,PAYING,INSERTED,PAID,NOTIFIED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status_retry_05_token1 on db nodo_online under macro NewMod3
     And checks the value NOTIFIED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_retry_05_token1 on db nodo_online under macro NewMod3
     
  

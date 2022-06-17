@@ -1,4 +1,4 @@
-Feature: FLUSSO_APIO_10.1
+Feature: FLUSSO_APIO_34
 
 Background:
  Given systems up
@@ -11,13 +11,13 @@ Background:
         <soapenv:Header/>
         <soapenv:Body>
         <nod:verifyPaymentNoticeReq>
-            <idPSP>70000000001</idPSP>
-            <idBrokerPSP>70000000001</idBrokerPSP>
-            <idChannel>70000000001_01</idChannel>
+            <idPSP>AGID_01</idPSP>
+            <idBrokerPSP>97735020584</idBrokerPSP>
+            <idChannel>97735020584_03</idChannel>
             <password>pwdpwdpwd</password>
             <qrCode>
                 <fiscalCode>#creditor_institution_code#</fiscalCode>
-                <noticeNumber>302094719472095710</noticeNumber>
+                <noticeNumber>#notice_number#</noticeNumber>
             </qrCode>
         </nod:verifyPaymentNoticeReq>
         </soapenv:Body>
@@ -34,9 +34,9 @@ Scenario: Execute activateIOPayment (Phase 2)
         <soapenv:Header/>
         <soapenv:Body>
             <nod:activateIOPaymentReq>
-                <idPSP>70000000001</idPSP>
-                <idBrokerPSP>70000000001</idBrokerPSP>
-                <idChannel>70000000001_01</idChannel>
+                <idPSP>AGID_01</idPSP>
+                <idBrokerPSP>97735020584</idBrokerPSP>
+                <idChannel>97735020584_03</idChannel>
                 <password>pwdpwdpwd</password>
                 <!--Optional:-->
                 <idempotencyKey>#idempotency_key#</idempotencyKey>
@@ -45,7 +45,7 @@ Scenario: Execute activateIOPayment (Phase 2)
                     <noticeNumber>#notice_number#</noticeNumber>
                 </qrCode>
                 <!--Optional:-->
-                <expirationTime>12345</expirationTime>
+                <expirationTime>60000</expirationTime>
                 <amount>10.00</amount>
                 <!--Optional:-->
                 <dueDate>2021-12-12</dueDate>
@@ -55,7 +55,7 @@ Scenario: Execute activateIOPayment (Phase 2)
                 <payer>
                     <uniqueIdentifier>
                         <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-                        <entityUniqueIdentifierValue>44444444444</entityUniqueIdentifierValue>
+                        <entityUniqueIdentifierValue>#creditor_institution_code#</entityUniqueIdentifierValue>
                     </uniqueIdentifier>
                     <fullName>name</fullName>
                     <!--Optional:-->
@@ -77,37 +77,57 @@ Scenario: Execute activateIOPayment (Phase 2)
         </soapenv:Body>
     </soapenv:Envelope>
     """
+    And initial XML paGetPayment
+    """
+    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
+        <soapenv:Header/>
+        <soapenv:Body>
+            <paf:paGetPaymentRes>
+                <outcome>KO</outcome>
+                <fault>
+                    <faultCode>PAA_SEMANTICA</faultCode>
+                    <faultString>errore semantico PA</faultString>
+                    <id>$activateIOPayment.fiscalCode</id>
+                    <description>Errore semantico emesso dalla PA</description>
+                    </fault>
+            </paf:paGetPaymentRes>
+        </soapenv:Body>
+    </soapenv:Envelope>
+    """
+    And EC replies to nodo-dei-pagamenti with the paGetPayment
     When AppIO sends SOAP activateIOPayment to nodo-dei-pagamenti
-    Then check outcome is OK of activateIOPayment response
+    Then check outcome is KO of activateIOPayment response
 
 Scenario: Execute nodoChiediInformazioniPagamento (Phase 3)
     Given the Execute activateIOPayment (Phase 2) scenario executed successfully
-    When WISP sends rest GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
-    Then verify the HTTP status code of informazioniPagamento response is 200
+    And get value from PAYMENT_TOKEN column in POSITION_ACTIVATE table retrivied by the query payment_status on nodo_online db under AppIO macro
+    # COME PRENDO IL PAYMENT TOKEN DAL DB PER PASSARLO POI AL SERVIZIO INFORMAZIONI PAGAMENTO?
+    When WISP sends rest GET informazioniPagamento?idPagamento=%PAYMENT_TOKEN to nodo-dei-pagamenti
+    Then verify the HTTP status code of informazioniPagamento response is 404
+    And check error is Il pagamento non esiste of informazioniPagamento response
 
 Scenario: Execute nodoInoltroEsitoCarta (Phase 4) 
     Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
     When WISP sends REST POST inoltroEsito/carta to nodo-dei-pagamenti
     """
     {
-        "RRN":10026669,
-        "tipoVersamento":"CP",
-        "idPagamento":"$activateIOPaymentResponse.paymentToken",
-        "identificativoIntermediario":"40000000001",
-        "identificativoPsp":"40000000001",
-        "identificativoCanale":"40000000001_06",
-        "importoTotalePagato":10.00,
-        "timestampOperazione":"2021-07-09T17:06:03.100+01:00",
-        "codiceAutorizzativo":"resOK",
-        "esitoTransazioneCarta":"00"
-        }
+        "idPagamento": "%PAYMENT_TOKEN",
+        "RRN": 0,
+        "identificativoPsp": "40000000001",
+        "tipoVersamento": "CP",
+        "identificativoIntermediario": "40000000001",
+        "identificativoCanale": "40000000001_06",
+        "importoTotalePagato": 10.00,
+        "timestampOperazione": "2012-04-23T18:25:43Z",
+        "codiceAutorizzativo": "resOk",
+        "esitoTransazioneCarta": "00"
+    }
     """
-    Then verify the HTTP status code of inoltroEsito/carta response is 408
-    And check esito is OK of inoltroEsito/carta response
+    Then verify the HTTP status code of inoltroEsito/carta response is 404
+    And check error is Il Pagamento indicato non esiste of inoltroEsito/carta response
 
-Scenario: (Phase 5)
+Scenario: Check sendPaymentOutcome response after nodoInoltroEsitoPaypal primitive and the correctness of column values
     Given the Execute nodoInoltroEsitoCarta (Phase 4) scenario executed successfully
-    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
     And initial XML sendPaymentOutcome
     """
     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -119,7 +139,7 @@ Scenario: (Phase 5)
           <idChannel>70000000001_01</idChannel>
           <password>pwdpwdpwd</password>
           <idempotencyKey>#idempotency_key#</idempotencyKey>
-          <paymentToken>$activateIOPaymentResponse.paymentToken</paymentToken>
+          <paymentToken>%PAYMENT_TOKEN</paymentToken>
           <outcome>OK</outcome>
           <!--Optional:-->
           <details>
@@ -133,7 +153,7 @@ Scenario: (Phase 5)
                 <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
                 <entityUniqueIdentifierValue>77777777777_01</entityUniqueIdentifierValue>
               </uniqueIdentifier>
-              <fullName>name</fullName>
+              <fullName>SPOname_%PAYMENT_TOKEN</fullName>
               <!--Optional:-->
               <streetName>street</streetName>
               <!--Optional:-->
@@ -157,11 +177,5 @@ Scenario: (Phase 5)
     </soapenv:Envelope>
     """
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-    Then check outcome is OK of sendPaymentOutcome response
-
-Scenario:
-    Given the (Phase 5) scenario executed successfully
-    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
-    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is KO of sendPaymentOutcome response
-    And check faultCode is PPT_ESITO_GIA_ACQUISITO of sendPaymentOutcome response
+    And check faultCode is PPT_TOKEN_SCONOSCIUTO of sendPaymentOutcome response

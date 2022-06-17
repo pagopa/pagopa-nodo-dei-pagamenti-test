@@ -11,7 +11,7 @@
         "position_subject":"SELECT s.columns FROM table_name s JOIN POSITION_PAYMENT p ON s.ID = p.PAYER_ID WHERE p.PAYMENT_TOKEN ='$activatePaymentNoticeResponse.paymentToken'",
         "position_receipt": "SELECT s.columns FROM table_name s where s.NOTICE_ID = '$activatePaymentNotice.noticeNumber' and s.PA_FISCAL_CODE= '$activatePaymentNotice.fiscalCode'",
         "position_receipt_retry_rev_db_gr_02_1" :"SELECT s.columns FROM table_name s where s.NOTICE_ID = '$activatePaymentNotice.noticeNumber' and s.PA_FISCAL_CODE= '$activatePaymentNotice.fiscalCode' and s.PAYMENT_TOKEN='$activatePaymentNotice.paymentToken' ",
-        "position_receipt_recipient": "SELECT s.columns FROM table_name s where s.NOTICE_ID = '$activatePaymentNotice.noticeNumber' and s.PAYMENT_TOKEN= '$activatePaymentNotice.paymentToken'",
+        "position_receipt_recipient": "SELECT s.columns FROM table_name s where s.NOTICE_ID = '$activatePaymentNotice.noticeNumber' and s.PAYMENT_TOKEN= '$activatePaymentNoticeResponse.paymentToken'",
         "position_receipt_xml" : "SELECT s.columns FROM table_name s where s.NOTICE_ID = '$activatePaymentNotice.noticeNumber' AND s.PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode'",
         "position_receipt_recipient_status": "SELECT s.columns FROM table_name s where s.NOTICE_ID = '$activatePaymentNotice.noticeNumber' and s.PAYMENT_TOKEN= '$activatePaymentNotice.paymentToken'"
     },
