@@ -585,7 +585,7 @@ def step_impl(context, elem, primitive):
     my_document = parseString(payload)
     if len(my_document.getElementsByTagName(elem)) > 0:
         elem_value = my_document.getElementsByTagName(elem)[0].firstChild.data
-        wait_time = int(elem_value)+200 / 1000
+        wait_time = (int(elem_value)+200) / 1000
         print(f"wait for: {wait_time} seconds")
         time.sleep(wait_time)
     else:
