@@ -655,8 +655,8 @@ def step_impl(context, value, column, query_name, table_name, db_name, name_macr
         for elem in split_value:
             assert elem in query_result
 
-@then(u"verify one record for the table {table_name} retrivied by the query {query_name} on db {db_name} under macro {name_macro}")
-def step_impl(context, query_name, table_name, db_name,name_macro):
+@then(u"verify {numb:d} record for the table {table_name} retrivied by the query {query_name} on db {db_name} under macro {name_macro}")
+def step_impl(context, query_name, table_name, db_name,name_macro, numb):
     db_config = context.config.userdata.get("db_configuration")
     db_selected = db_config.get(db_name)
     column = "*"
@@ -666,5 +666,5 @@ def step_impl(context, query_name, table_name, db_name,name_macro):
    
     exec_query = db.executeQuery(conn, selected_query)
 
-    assert len(exec_query) == 1
+    assert len(exec_query) == numb
 
