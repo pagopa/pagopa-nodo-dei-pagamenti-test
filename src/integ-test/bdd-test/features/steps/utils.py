@@ -1,4 +1,4 @@
-import re, json, os
+import re, json, os, datetime
 from xml.dom.minidom import parseString
 
 import requests
@@ -192,6 +192,12 @@ def query_json(context, name_query, name_macro):
 def isFloat(string: str) -> bool:
     value = string.split('.')
     return len(value) == 2 and value[0].isdigit() and value[1].isdigit()
+
+def isDate(string: str):
+    try:
+        return string == datetime.datetime.strptime(string, '%Y-%m-%d')
+    except ValueError:
+        return False
 
 
 

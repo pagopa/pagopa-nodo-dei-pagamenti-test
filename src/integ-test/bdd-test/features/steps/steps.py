@@ -1,3 +1,4 @@
+import datetime
 import json
 import random
 from sre_constants import ASSERT
@@ -137,7 +138,7 @@ def step_impl(context, tag, value, primitive):
         node_response = getattr(context, primitive + RESPONSE)
         json_response = node_response.json()
         print(f'check tag "{tag}" - expected: {value}, obtained: {json_response.get(tag)}')
-        assert json_response.get(tag) == value
+        assert str(json_response.get(tag)) == value
 
 
 @then('check {tag} contains {value} of {primitive} response')
@@ -645,18 +646,19 @@ def step_impl(context, value, column, query_name, table_name, db_name, name_macr
         split_value = [status.strip() for status in value.split(',')]
         for i, elem in enumerate(query_result):
             if isinstance(elem, int) or isinstance(elem, float): continue
-            if elem.isdigit():
-                query_result[i] = float(elem)
+            if isinstance(elem, str) and elem.isdigit(): query_result[i] = float(elem)
+            elif isinstance(elem, datetime.date): query_result[i] = elem.strftime('%Y-%m-%d')
+        
         for i, elem in enumerate(split_value):
             if utils.isFloat(elem) or elem.isdigit():
                 split_value[i] = float(elem)
 
         print("value: ", split_value)
         for elem in split_value:
-            assert elem in query_result
+            assert elem in query_result, f"check expected element: {value}, obtained: {query_result[0]}"
 
-@then(u"verify {numb:d} record for the table {table_name} retrivied by the query {query_name} on db {db_name} under macro {name_macro}")
-def step_impl(context, query_name, table_name, db_name,name_macro, numb):
+@then(u"verify {number:d} record for the table {table_name} retrivied by the query {query_name} on db {db_name} under macro {name_macro}")
+def step_impl(context, query_name, table_name, db_name, name_macro, number):
     db_config = context.config.userdata.get("db_configuration")
     db_selected = db_config.get(db_name)
     column = "*"
@@ -666,5 +668,5 @@ def step_impl(context, query_name, table_name, db_name,name_macro, numb):
    
     exec_query = db.executeQuery(conn, selected_query)
 
-    assert len(exec_query) == numb
+    assert len(exec_query) == number
 

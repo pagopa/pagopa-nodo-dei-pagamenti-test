@@ -116,10 +116,10 @@ function Collapsible_expandAllFailed()
         <div id="summary">
           <p id="totals">
             <p id="feature_totals">Features: passed: 1</p>
-            <p id="scenario_totals">Scenarios: passed: 3</p>
-            <p id="step_totals">Steps: untested: 3, passed: 6</p>
+            <p id="scenario_totals">Scenarios: passed: 4</p>
+            <p id="step_totals">Steps: passed: 13</p>
           </p>
-          <p id="duration">Finished in 5.8 seconds</p>
+          <p id="duration">Finished in 6.8 seconds</p>
           <div id="expand-collapse">
             <a id="expander" href="#" onclick="Collapsible_expandAll('scenario_steps')">Expand All</a>
             <span> | </span>
@@ -131,7 +131,7 @@ function Collapsible_expandAllFailed()
       </div>
       <div class="feature">
         <h2>
-          <span class="val">Feature: Semantic checks for activateIOPaymentReq - OK</span>
+          <span class="val">Feature: Semantic checks OK for activatePaymentNotice</span>
         </h2>
         <span/>
       </div>
@@ -143,19 +143,19 @@ function Collapsible_expandAllFailed()
         <span/>
       </div>
       <div class="scenario">
-        <span class="scenario_file">src/integ-test/bdd-test/features/appIO/primitives/activateIOPaymentReq_semantic_ok.feature:61</span>
+        <span class="scenario_file">src/integ-test/bdd-test/features/NewMod3/primitives/activatePaymentNotice_semantic_ok.feature:33</span>
         <h3 onclick="Collapsible_toggle('scenario_0')">
-          <span class="val">Scenario Outline: Check Unknown/Disabled PSP in idempotencyKey -- @1.1 </span>
+          <span class="val">Scenario: Check valid URL in WSDL namespace</span>
         </h3>
         <ol class="scenario_steps" id="scenario_0">
           <li class="step passed">
             <div class="step_name">
               <span class="keyword">Given </span>
               <span class="step val">systems up</span>
-              <small class="step_duration">(0.080s)</small>
+              <small class="step_duration">(0.076s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:21</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:22</span>
             </div>
             <span class="embed"/>
             <table>
@@ -187,100 +187,59 @@ function Collapsible_expandAllFailed()
               <span class="keyword">And </span>
               <span class="step val">
                 <span>initial XML </span>
-                <b>activateIOPayment</b>
+                <b>activatePaymentNotice</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.022s)</small>
+              <small class="step_duration">(0.020s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:46</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:47</span>
             </div>
             <span class="embed"/>
             <div class="message">
-              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd&quot;&gt;
-    &lt;soapenv:Header/&gt;
-    &lt;soapenv:Body&gt;
-        &lt;nod:activateIOPaymentReq&gt;
-            &lt;idPSP&gt;70000000001&lt;/idPSP&gt;
-            &lt;idBrokerPSP&gt;70000000001&lt;/idBrokerPSP&gt;
-            &lt;idChannel&gt;70000000001_01&lt;/idChannel&gt;
-            &lt;password&gt;pwdpwdpwd&lt;/password&gt;
-            &lt;!--Optional:--&gt;
-            &lt;idempotencyKey&gt;#idempotency_key#&lt;/idempotencyKey&gt;
-            &lt;qrCode&gt;
-                &lt;fiscalCode&gt;#creditor_institution_code#&lt;/fiscalCode&gt;
-                &lt;noticeNumber&gt;#notice_number#&lt;/noticeNumber&gt;
-            &lt;/qrCode&gt;
-            &lt;!--Optional:--&gt;
-            &lt;expirationTime&gt;12345&lt;/expirationTime&gt;
-            &lt;amount&gt;10.00&lt;/amount&gt;
-            &lt;!--Optional:--&gt;
-            &lt;dueDate&gt;2021-12-12&lt;/dueDate&gt;
-            &lt;!--Optional:--&gt;
-            &lt;paymentNote&gt;test&lt;/paymentNote&gt;
-            &lt;!--Optional:--&gt;
-            &lt;payer&gt;
-                &lt;uniqueIdentifier&gt;
-                    &lt;entityUniqueIdentifierType&gt;G&lt;/entityUniqueIdentifierType&gt;
-                    &lt;entityUniqueIdentifierValue&gt;44444444444&lt;/entityUniqueIdentifierValue&gt;
-                &lt;/uniqueIdentifier&gt;
-                &lt;fullName&gt;name&lt;/fullName&gt;
-                &lt;!--Optional:--&gt;
-                &lt;streetName&gt;street&lt;/streetName&gt;
-                &lt;!--Optional:--&gt;
-                &lt;civicNumber&gt;civic&lt;/civicNumber&gt;
-                &lt;!--Optional:--&gt;
-                &lt;postalCode&gt;code&lt;/postalCode&gt;
-                &lt;!--Optional:--&gt;
-                &lt;city&gt;city&lt;/city&gt;
-                &lt;!--Optional:--&gt;
-                &lt;stateProvinceRegion&gt;state&lt;/stateProvinceRegion&gt;
-                &lt;!--Optional:--&gt;
-                &lt;country&gt;IT&lt;/country&gt;
-                &lt;!--Optional:--&gt;
-                &lt;e-mail&gt;test.prova@gmail.com&lt;/e-mail&gt;
-            &lt;/payer&gt;
-        &lt;/nod:activateIOPaymentReq&gt;
-    &lt;/soapenv:Body&gt;
+              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd&quot;&gt;
+  &lt;soapenv:Header/&gt;
+  &lt;soapenv:Body&gt;
+    &lt;nod:activatePaymentNoticeReq&gt;
+      &lt;idPSP&gt;70000000001&lt;/idPSP&gt;
+      &lt;idBrokerPSP&gt;70000000001&lt;/idBrokerPSP&gt;
+      &lt;idChannel&gt;70000000001_01&lt;/idChannel&gt;
+      &lt;password&gt;pwdpwdpwd&lt;/password&gt;
+      &lt;idempotencyKey&gt;#idempotency_key#&lt;/idempotencyKey&gt;
+      &lt;qrCode&gt;
+        &lt;fiscalCode&gt;#creditor_institution_code#&lt;/fiscalCode&gt;
+        &lt;noticeNumber&gt;#notice_number#&lt;/noticeNumber&gt;
+      &lt;/qrCode&gt;
+      &lt;!--Optional:--&gt;
+      &lt;expirationTime&gt;12345&lt;/expirationTime&gt;
+      &lt;!--Optional:--&gt;
+      &lt;amount&gt;10.00&lt;/amount&gt;
+      &lt;!--Optional:--&gt;
+      &lt;dueDate&gt;2021-12-12&lt;/dueDate&gt;
+      &lt;!--Optional:--&gt;
+      &lt;paymentNote&gt;responseFull&lt;/paymentNote&gt;
+    &lt;/nod:activatePaymentNoticeReq&gt;
+  &lt;/soapenv:Body&gt;
 &lt;/soapenv:Envelope&gt;
 </pre>
             </div>
           </li>
           <li class="step passed">
             <div class="step_name">
-              <span class="keyword">Given </span>
-              <span class="step val">
-                <span/>
-                <b>idempotencyKey</b>
-                <span> with </span>
-                <b>12345678901_1244gtg684</b>
-                <span> in </span>
-                <b>activateIOPayment</b>
-                <span/>
-              </span>
-              <small class="step_duration">(0.004s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:81</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
               <span class="keyword">When </span>
               <span class="step val">
                 <span/>
-                <b>psp</b>
+                <b>PSP</b>
                 <span> sends SOAP </span>
-                <b>activateIOPayment</b>
+                <b>activatePaymentNotice</b>
                 <span> to </span>
                 <b>nodo-dei-pagamenti</b>
                 <span/>
               </span>
-              <small class="step_duration">(1.528s)</small>
+              <small class="step_duration">(1.500s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:99</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:100</span>
             </div>
             <span class="embed"/>
           </li>
@@ -293,13 +252,13 @@ function Collapsible_expandAllFailed()
                 <span> is </span>
                 <b>OK</b>
                 <span> of </span>
-                <b>activateIOPayment</b>
+                <b>activatePaymentNotice</b>
                 <span> response</span>
               </span>
-              <small class="step_duration">(0.003s)</small>
+              <small class="step_duration">(0.002s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:121</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:122</span>
             </div>
             <span class="embed"/>
           </li>
@@ -307,19 +266,19 @@ function Collapsible_expandAllFailed()
         <span/>
       </div>
       <div class="scenario">
-        <span class="scenario_file">src/integ-test/bdd-test/features/appIO/primitives/activateIOPaymentReq_semantic_ok.feature:62</span>
+        <span class="scenario_file">src/integ-test/bdd-test/features/NewMod3/primitives/activatePaymentNotice_semantic_ok.feature:38</span>
         <h3 onclick="Collapsible_toggle('scenario_1')">
-          <span class="val">Scenario Outline: Check Unknown/Disabled PSP in idempotencyKey -- @1.2 </span>
+          <span class="val">Scenario: Check outcome OK if combination psp-channel-pa in denylist</span>
         </h3>
         <ol class="scenario_steps" id="scenario_1">
           <li class="step passed">
             <div class="step_name">
               <span class="keyword">Given </span>
               <span class="step val">systems up</span>
-              <small class="step_duration">(0.068s)</small>
+              <small class="step_duration">(0.053s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:21</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:22</span>
             </div>
             <span class="embed"/>
             <table>
@@ -351,61 +310,39 @@ function Collapsible_expandAllFailed()
               <span class="keyword">And </span>
               <span class="step val">
                 <span>initial XML </span>
-                <b>activateIOPayment</b>
+                <b>activatePaymentNotice</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.005s)</small>
+              <small class="step_duration">(0.006s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:46</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:47</span>
             </div>
             <span class="embed"/>
             <div class="message">
-              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd&quot;&gt;
-    &lt;soapenv:Header/&gt;
-    &lt;soapenv:Body&gt;
-        &lt;nod:activateIOPaymentReq&gt;
-            &lt;idPSP&gt;70000000001&lt;/idPSP&gt;
-            &lt;idBrokerPSP&gt;70000000001&lt;/idBrokerPSP&gt;
-            &lt;idChannel&gt;70000000001_01&lt;/idChannel&gt;
-            &lt;password&gt;pwdpwdpwd&lt;/password&gt;
-            &lt;!--Optional:--&gt;
-            &lt;idempotencyKey&gt;#idempotency_key#&lt;/idempotencyKey&gt;
-            &lt;qrCode&gt;
-                &lt;fiscalCode&gt;#creditor_institution_code#&lt;/fiscalCode&gt;
-                &lt;noticeNumber&gt;#notice_number#&lt;/noticeNumber&gt;
-            &lt;/qrCode&gt;
-            &lt;!--Optional:--&gt;
-            &lt;expirationTime&gt;12345&lt;/expirationTime&gt;
-            &lt;amount&gt;10.00&lt;/amount&gt;
-            &lt;!--Optional:--&gt;
-            &lt;dueDate&gt;2021-12-12&lt;/dueDate&gt;
-            &lt;!--Optional:--&gt;
-            &lt;paymentNote&gt;test&lt;/paymentNote&gt;
-            &lt;!--Optional:--&gt;
-            &lt;payer&gt;
-                &lt;uniqueIdentifier&gt;
-                    &lt;entityUniqueIdentifierType&gt;G&lt;/entityUniqueIdentifierType&gt;
-                    &lt;entityUniqueIdentifierValue&gt;44444444444&lt;/entityUniqueIdentifierValue&gt;
-                &lt;/uniqueIdentifier&gt;
-                &lt;fullName&gt;name&lt;/fullName&gt;
-                &lt;!--Optional:--&gt;
-                &lt;streetName&gt;street&lt;/streetName&gt;
-                &lt;!--Optional:--&gt;
-                &lt;civicNumber&gt;civic&lt;/civicNumber&gt;
-                &lt;!--Optional:--&gt;
-                &lt;postalCode&gt;code&lt;/postalCode&gt;
-                &lt;!--Optional:--&gt;
-                &lt;city&gt;city&lt;/city&gt;
-                &lt;!--Optional:--&gt;
-                &lt;stateProvinceRegion&gt;state&lt;/stateProvinceRegion&gt;
-                &lt;!--Optional:--&gt;
-                &lt;country&gt;IT&lt;/country&gt;
-                &lt;!--Optional:--&gt;
-                &lt;e-mail&gt;test.prova@gmail.com&lt;/e-mail&gt;
-            &lt;/payer&gt;
-        &lt;/nod:activateIOPaymentReq&gt;
-    &lt;/soapenv:Body&gt;
+              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd&quot;&gt;
+  &lt;soapenv:Header/&gt;
+  &lt;soapenv:Body&gt;
+    &lt;nod:activatePaymentNoticeReq&gt;
+      &lt;idPSP&gt;70000000001&lt;/idPSP&gt;
+      &lt;idBrokerPSP&gt;70000000001&lt;/idBrokerPSP&gt;
+      &lt;idChannel&gt;70000000001_01&lt;/idChannel&gt;
+      &lt;password&gt;pwdpwdpwd&lt;/password&gt;
+      &lt;idempotencyKey&gt;#idempotency_key#&lt;/idempotencyKey&gt;
+      &lt;qrCode&gt;
+        &lt;fiscalCode&gt;#creditor_institution_code#&lt;/fiscalCode&gt;
+        &lt;noticeNumber&gt;#notice_number#&lt;/noticeNumber&gt;
+      &lt;/qrCode&gt;
+      &lt;!--Optional:--&gt;
+      &lt;expirationTime&gt;12345&lt;/expirationTime&gt;
+      &lt;!--Optional:--&gt;
+      &lt;amount&gt;10.00&lt;/amount&gt;
+      &lt;!--Optional:--&gt;
+      &lt;dueDate&gt;2021-12-12&lt;/dueDate&gt;
+      &lt;!--Optional:--&gt;
+      &lt;paymentNote&gt;responseFull&lt;/paymentNote&gt;
+    &lt;/nod:activatePaymentNoticeReq&gt;
+  &lt;/soapenv:Body&gt;
 &lt;/soapenv:Envelope&gt;
 </pre>
             </div>
@@ -415,17 +352,55 @@ function Collapsible_expandAllFailed()
               <span class="keyword">Given </span>
               <span class="step val">
                 <span/>
-                <b>idempotencyKey</b>
+                <b>fiscalCode</b>
                 <span> with </span>
-                <b>80000000001_1244gtg684</b>
+                <b>77777777777</b>
                 <span> in </span>
-                <b>activateIOPayment</b>
+                <b>activatePaymentNotice</b>
                 <span/>
               </span>
               <small class="step_duration">(0.004s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:81</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:82</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span/>
+                <b>idBrokerPSP</b>
+                <span> with </span>
+                <b>70000000002</b>
+                <span> in </span>
+                <b>activatePaymentNotice</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.002s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:82</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span/>
+                <b>idChannel</b>
+                <span> with </span>
+                <b>70000000002_01</b>
+                <span> in </span>
+                <b>activatePaymentNotice</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.003s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:82</span>
             </div>
             <span class="embed"/>
           </li>
@@ -434,17 +409,17 @@ function Collapsible_expandAllFailed()
               <span class="keyword">When </span>
               <span class="step val">
                 <span/>
-                <b>psp</b>
+                <b>PSP</b>
                 <span> sends SOAP </span>
-                <b>activateIOPayment</b>
+                <b>activatePaymentNotice</b>
                 <span> to </span>
                 <b>nodo-dei-pagamenti</b>
                 <span/>
               </span>
-              <small class="step_duration">(1.485s)</small>
+              <small class="step_duration">(1.968s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:99</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:100</span>
             </div>
             <span class="embed"/>
           </li>
@@ -457,13 +432,13 @@ function Collapsible_expandAllFailed()
                 <span> is </span>
                 <b>OK</b>
                 <span> of </span>
-                <b>activateIOPayment</b>
+                <b>activatePaymentNotice</b>
                 <span> response</span>
               </span>
-              <small class="step_duration">(0.003s)</small>
+              <small class="step_duration">(0.004s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:121</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:122</span>
             </div>
             <span class="embed"/>
           </li>
@@ -471,9 +446,9 @@ function Collapsible_expandAllFailed()
         <span/>
       </div>
       <div class="scenario">
-        <span class="scenario_file">src/integ-test/bdd-test/features/appIO/primitives/activateIOPaymentReq_semantic_ok.feature:64</span>
+        <span class="scenario_file">src/integ-test/bdd-test/features/NewMod3/primitives/activatePaymentNotice_semantic_ok.feature:46</span>
         <h3 onclick="Collapsible_toggle('scenario_2')">
-          <span class="val">Scenario: Execute activateIOPayment (Phase 1)</span>
+          <span class="val">Scenario: Check outcome OK on non-existent psp in idempotencyKey</span>
         </h3>
         <ol class="scenario_steps" id="scenario_2">
           <li class="step passed">
@@ -483,7 +458,7 @@ function Collapsible_expandAllFailed()
               <small class="step_duration">(0.064s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:21</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:22</span>
             </div>
             <span class="embed"/>
             <table>
@@ -515,64 +490,59 @@ function Collapsible_expandAllFailed()
               <span class="keyword">And </span>
               <span class="step val">
                 <span>initial XML </span>
-                <b>activateIOPayment</b>
+                <b>activatePaymentNotice</b>
                 <span/>
               </span>
               <small class="step_duration">(0.005s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:46</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:47</span>
             </div>
             <span class="embed"/>
             <div class="message">
-              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd&quot;&gt;
-    &lt;soapenv:Header/&gt;
-    &lt;soapenv:Body&gt;
-        &lt;nod:activateIOPaymentReq&gt;
-            &lt;idPSP&gt;70000000001&lt;/idPSP&gt;
-            &lt;idBrokerPSP&gt;70000000001&lt;/idBrokerPSP&gt;
-            &lt;idChannel&gt;70000000001_01&lt;/idChannel&gt;
-            &lt;password&gt;pwdpwdpwd&lt;/password&gt;
-            &lt;!--Optional:--&gt;
-            &lt;idempotencyKey&gt;#idempotency_key#&lt;/idempotencyKey&gt;
-            &lt;qrCode&gt;
-                &lt;fiscalCode&gt;#creditor_institution_code#&lt;/fiscalCode&gt;
-                &lt;noticeNumber&gt;#notice_number#&lt;/noticeNumber&gt;
-            &lt;/qrCode&gt;
-            &lt;!--Optional:--&gt;
-            &lt;expirationTime&gt;12345&lt;/expirationTime&gt;
-            &lt;amount&gt;10.00&lt;/amount&gt;
-            &lt;!--Optional:--&gt;
-            &lt;dueDate&gt;2021-12-12&lt;/dueDate&gt;
-            &lt;!--Optional:--&gt;
-            &lt;paymentNote&gt;test&lt;/paymentNote&gt;
-            &lt;!--Optional:--&gt;
-            &lt;payer&gt;
-                &lt;uniqueIdentifier&gt;
-                    &lt;entityUniqueIdentifierType&gt;G&lt;/entityUniqueIdentifierType&gt;
-                    &lt;entityUniqueIdentifierValue&gt;44444444444&lt;/entityUniqueIdentifierValue&gt;
-                &lt;/uniqueIdentifier&gt;
-                &lt;fullName&gt;name&lt;/fullName&gt;
-                &lt;!--Optional:--&gt;
-                &lt;streetName&gt;street&lt;/streetName&gt;
-                &lt;!--Optional:--&gt;
-                &lt;civicNumber&gt;civic&lt;/civicNumber&gt;
-                &lt;!--Optional:--&gt;
-                &lt;postalCode&gt;code&lt;/postalCode&gt;
-                &lt;!--Optional:--&gt;
-                &lt;city&gt;city&lt;/city&gt;
-                &lt;!--Optional:--&gt;
-                &lt;stateProvinceRegion&gt;state&lt;/stateProvinceRegion&gt;
-                &lt;!--Optional:--&gt;
-                &lt;country&gt;IT&lt;/country&gt;
-                &lt;!--Optional:--&gt;
-                &lt;e-mail&gt;test.prova@gmail.com&lt;/e-mail&gt;
-            &lt;/payer&gt;
-        &lt;/nod:activateIOPaymentReq&gt;
-    &lt;/soapenv:Body&gt;
+              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd&quot;&gt;
+  &lt;soapenv:Header/&gt;
+  &lt;soapenv:Body&gt;
+    &lt;nod:activatePaymentNoticeReq&gt;
+      &lt;idPSP&gt;70000000001&lt;/idPSP&gt;
+      &lt;idBrokerPSP&gt;70000000001&lt;/idBrokerPSP&gt;
+      &lt;idChannel&gt;70000000001_01&lt;/idChannel&gt;
+      &lt;password&gt;pwdpwdpwd&lt;/password&gt;
+      &lt;idempotencyKey&gt;#idempotency_key#&lt;/idempotencyKey&gt;
+      &lt;qrCode&gt;
+        &lt;fiscalCode&gt;#creditor_institution_code#&lt;/fiscalCode&gt;
+        &lt;noticeNumber&gt;#notice_number#&lt;/noticeNumber&gt;
+      &lt;/qrCode&gt;
+      &lt;!--Optional:--&gt;
+      &lt;expirationTime&gt;12345&lt;/expirationTime&gt;
+      &lt;!--Optional:--&gt;
+      &lt;amount&gt;10.00&lt;/amount&gt;
+      &lt;!--Optional:--&gt;
+      &lt;dueDate&gt;2021-12-12&lt;/dueDate&gt;
+      &lt;!--Optional:--&gt;
+      &lt;paymentNote&gt;responseFull&lt;/paymentNote&gt;
+    &lt;/nod:activatePaymentNoticeReq&gt;
+  &lt;/soapenv:Body&gt;
 &lt;/soapenv:Envelope&gt;
 </pre>
             </div>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">Given </span>
+              <span class="step val">
+                <span>random idempotencyKey having </span>
+                <b>00088877799</b>
+                <span> as idPSP in </span>
+                <b>activatePaymentNotice</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.005s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:513</span>
+            </div>
+            <span class="embed"/>
           </li>
           <li class="step passed">
             <div class="step_name">
@@ -581,32 +551,15 @@ function Collapsible_expandAllFailed()
                 <span/>
                 <b>PSP</b>
                 <span> sends SOAP </span>
-                <b>activateIOPayment</b>
+                <b>activatePaymentNotice</b>
                 <span> to </span>
                 <b>nodo-dei-pagamenti</b>
                 <span/>
               </span>
-              <small class="step_duration">(1.319s)</small>
+              <small class="step_duration">(1.609s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:99</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
-                <span>save </span>
-                <b>activateIOPayment</b>
-                <span> response in </span>
-                <b>activateIOPayment_first</b>
-                <span/>
-              </span>
-              <small class="step_duration">(0.003s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:410</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:100</span>
             </div>
             <span class="embed"/>
           </li>
@@ -619,13 +572,13 @@ function Collapsible_expandAllFailed()
                 <span> is </span>
                 <b>OK</b>
                 <span> of </span>
-                <b>activateIOPayment_first</b>
+                <b>activatePaymentNotice</b>
                 <span> response</span>
               </span>
-              <small class="step_duration">(0.003s)</small>
+              <small class="step_duration">(0.004s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:121</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:122</span>
             </div>
             <span class="embed"/>
           </li>
@@ -633,19 +586,19 @@ function Collapsible_expandAllFailed()
         <span/>
       </div>
       <div class="scenario">
-        <span class="scenario_file">src/integ-test/bdd-test/features/appIO/primitives/activateIOPaymentReq_semantic_ok.feature:69</span>
+        <span class="scenario_file">src/integ-test/bdd-test/features/NewMod3/primitives/activatePaymentNotice_semantic_ok.feature:52</span>
         <h3 onclick="Collapsible_toggle('scenario_3')">
-          <span class="val">Scenario: Check second activateIOPayment is equal to the first</span>
+          <span class="val">Scenario: Check outcome OK on disabled psp in idempotencyKey</span>
         </h3>
         <ol class="scenario_steps" id="scenario_3">
           <li class="step passed">
             <div class="step_name">
               <span class="keyword">Given </span>
               <span class="step val">systems up</span>
-              <small class="step_duration">(0.061s)</small>
+              <small class="step_duration">(0.062s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:21</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:22</span>
             </div>
             <span class="embed"/>
             <table>
@@ -677,61 +630,39 @@ function Collapsible_expandAllFailed()
               <span class="keyword">And </span>
               <span class="step val">
                 <span>initial XML </span>
-                <b>activateIOPayment</b>
+                <b>activatePaymentNotice</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.003s)</small>
+              <small class="step_duration">(0.006s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:46</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:47</span>
             </div>
             <span class="embed"/>
             <div class="message">
-              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd&quot;&gt;
-    &lt;soapenv:Header/&gt;
-    &lt;soapenv:Body&gt;
-        &lt;nod:activateIOPaymentReq&gt;
-            &lt;idPSP&gt;70000000001&lt;/idPSP&gt;
-            &lt;idBrokerPSP&gt;70000000001&lt;/idBrokerPSP&gt;
-            &lt;idChannel&gt;70000000001_01&lt;/idChannel&gt;
-            &lt;password&gt;pwdpwdpwd&lt;/password&gt;
-            &lt;!--Optional:--&gt;
-            &lt;idempotencyKey&gt;#idempotency_key#&lt;/idempotencyKey&gt;
-            &lt;qrCode&gt;
-                &lt;fiscalCode&gt;#creditor_institution_code#&lt;/fiscalCode&gt;
-                &lt;noticeNumber&gt;#notice_number#&lt;/noticeNumber&gt;
-            &lt;/qrCode&gt;
-            &lt;!--Optional:--&gt;
-            &lt;expirationTime&gt;12345&lt;/expirationTime&gt;
-            &lt;amount&gt;10.00&lt;/amount&gt;
-            &lt;!--Optional:--&gt;
-            &lt;dueDate&gt;2021-12-12&lt;/dueDate&gt;
-            &lt;!--Optional:--&gt;
-            &lt;paymentNote&gt;test&lt;/paymentNote&gt;
-            &lt;!--Optional:--&gt;
-            &lt;payer&gt;
-                &lt;uniqueIdentifier&gt;
-                    &lt;entityUniqueIdentifierType&gt;G&lt;/entityUniqueIdentifierType&gt;
-                    &lt;entityUniqueIdentifierValue&gt;44444444444&lt;/entityUniqueIdentifierValue&gt;
-                &lt;/uniqueIdentifier&gt;
-                &lt;fullName&gt;name&lt;/fullName&gt;
-                &lt;!--Optional:--&gt;
-                &lt;streetName&gt;street&lt;/streetName&gt;
-                &lt;!--Optional:--&gt;
-                &lt;civicNumber&gt;civic&lt;/civicNumber&gt;
-                &lt;!--Optional:--&gt;
-                &lt;postalCode&gt;code&lt;/postalCode&gt;
-                &lt;!--Optional:--&gt;
-                &lt;city&gt;city&lt;/city&gt;
-                &lt;!--Optional:--&gt;
-                &lt;stateProvinceRegion&gt;state&lt;/stateProvinceRegion&gt;
-                &lt;!--Optional:--&gt;
-                &lt;country&gt;IT&lt;/country&gt;
-                &lt;!--Optional:--&gt;
-                &lt;e-mail&gt;test.prova@gmail.com&lt;/e-mail&gt;
-            &lt;/payer&gt;
-        &lt;/nod:activateIOPaymentReq&gt;
-    &lt;/soapenv:Body&gt;
+              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd&quot;&gt;
+  &lt;soapenv:Header/&gt;
+  &lt;soapenv:Body&gt;
+    &lt;nod:activatePaymentNoticeReq&gt;
+      &lt;idPSP&gt;70000000001&lt;/idPSP&gt;
+      &lt;idBrokerPSP&gt;70000000001&lt;/idBrokerPSP&gt;
+      &lt;idChannel&gt;70000000001_01&lt;/idChannel&gt;
+      &lt;password&gt;pwdpwdpwd&lt;/password&gt;
+      &lt;idempotencyKey&gt;#idempotency_key#&lt;/idempotencyKey&gt;
+      &lt;qrCode&gt;
+        &lt;fiscalCode&gt;#creditor_institution_code#&lt;/fiscalCode&gt;
+        &lt;noticeNumber&gt;#notice_number#&lt;/noticeNumber&gt;
+      &lt;/qrCode&gt;
+      &lt;!--Optional:--&gt;
+      &lt;expirationTime&gt;12345&lt;/expirationTime&gt;
+      &lt;!--Optional:--&gt;
+      &lt;amount&gt;10.00&lt;/amount&gt;
+      &lt;!--Optional:--&gt;
+      &lt;dueDate&gt;2021-12-12&lt;/dueDate&gt;
+      &lt;!--Optional:--&gt;
+      &lt;paymentNote&gt;responseFull&lt;/paymentNote&gt;
+    &lt;/nod:activatePaymentNoticeReq&gt;
+  &lt;/soapenv:Body&gt;
 &lt;/soapenv:Envelope&gt;
 </pre>
             </div>
@@ -740,14 +671,16 @@ function Collapsible_expandAllFailed()
             <div class="step_name">
               <span class="keyword">Given </span>
               <span class="step val">
-                <span>the </span>
-                <b>Execute activateIOPayment (Phase 1)</b>
-                <span> scenario executed successfully</span>
+                <span>random idempotencyKey having </span>
+                <b>80000000001</b>
+                <span> as idPSP in </span>
+                <b>activatePaymentNotice</b>
+                <span/>
               </span>
-              <small class="step_duration">(1.087s)</small>
+              <small class="step_duration">(0.006s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:252</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:513</span>
             </div>
             <span class="embed"/>
           </li>
@@ -758,15 +691,15 @@ function Collapsible_expandAllFailed()
                 <span/>
                 <b>PSP</b>
                 <span> sends SOAP </span>
-                <b>activateIOPayment</b>
+                <b>activatePaymentNotice</b>
                 <span> to </span>
                 <b>nodo-dei-pagamenti</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.039s)</small>
+              <small class="step_duration">(1.402s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:99</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:100</span>
             </div>
             <span class="embed"/>
           </li>
@@ -774,16 +707,18 @@ function Collapsible_expandAllFailed()
             <div class="step_name">
               <span class="keyword">Then </span>
               <span class="step val">
-                <span/>
-                <b>activateIOPayment_first</b>
-                <span> response is equal to </span>
-                <b>activateIOPayment</b>
+                <span>check </span>
+                <b>outcome</b>
+                <span> is </span>
+                <b>OK</b>
+                <span> of </span>
+                <b>activatePaymentNotice</b>
                 <span> response</span>
               </span>
-              <small class="step_duration">(0.001s)</small>
+              <small class="step_duration">(0.003s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:421</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:122</span>
             </div>
             <span class="embed"/>
           </li>
