@@ -593,20 +593,20 @@ def step_impl(context, elem, primitive):
         assert False
 
 
-@step("{mock:EcPsp} waits {number} minutes for expiration")
+@step("{mock:EcPsp} waits {number:f} minutes for expiration")
 def step_impl(context, mock, number):
     seconds = int(number) * 60
     print(f"wait for: {seconds} seconds")
     time.sleep(seconds)
 
-@step("wait {number} second for expiration")
+@step("wait {number:f} second for expiration")
 def step_impl(context, number):
     seconds = int(number) 
     print(f"wait for: {seconds} seconds")
     time.sleep(seconds)
 
 
-@step("{mock:EcPsp} waits {number} seconds for expiration")
+@step("{mock:EcPsp} waits {number:f} seconds for expiration")
 def step_impl(context, mock, number):
     seconds = int(number)
     print(f"wait for: {seconds} seconds")
@@ -669,3 +669,8 @@ def step_impl(context, query_name, table_name, db_name, name_macro, number):
 
     assert len(exec_query) == number
 
+
+@step("calling primitive {primitive1} and {primitive2} in parallel")
+def step_impl(context, primitive1, primitive2):
+    list_of_primitive=[primitive1, primitive2]
+    utils.threading(context,list_of_primitive)

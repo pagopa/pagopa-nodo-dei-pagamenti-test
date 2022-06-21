@@ -1,6 +1,9 @@
+from concurrent.futures import thread
 import re, json, os, datetime
 from xml.dom.minidom import parseString
 
+import time
+from threading import Thread
 import requests
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
@@ -193,27 +196,6 @@ def isFloat(string: str) -> bool:
     value = string.split('.')
     return len(value) == 2 and value[0].isdigit() and value[1].isdigit()
 
-
-
-"""
-def type_numb(value):
-    print("type_numb")
-    x = re.findall("^\d+(?:[.,]\d+)?$", value)
-
-    if len(x) != 0:
-        if '.' in value:
-            split_value = value.split('.')
-            if int(split_value[1])>0:
-                return float(value)
-            else:
-                return int(split_value[0])
-        else:
-            print("in1")
-            return int(value)
-    else:
-        return value
-
-
 def find_tag(context, primitive, name_tag, elem):
     print("find_tag")
     if primitive == "None":
@@ -225,6 +207,33 @@ def find_tag(context, primitive, name_tag, elem):
 
     if selected_tag:
         elem = type_numb(elem)
+def isDate(string: str):
+    try:
+        return string == datetime.datetime.strptime(string, '%Y-%m-%d')
+    except ValueError:
+        return False
+
+def single_thread(context, soap_primitive):
+    print("single_thread")
+    primitive = soap_primitive.split("_")[0]
+    print(primitive)
+    print(soap_primitive.split("_")[1])
+    headers = {'Content-Type': 'application/xml', "SOAPAction": primitive}  # set what your server accepts
+    url_nodo = get_soap_url_nodo(context, primitive)
+    print("nodo soap_request sent >>>", getattr(context, soap_primitive.split("_")[1]))
+    soap_response = requests.post(url_nodo, getattr(context, soap_primitive.split("_")[1]), headers=headers)
+    print("nodo soap_response: ", soap_response.content)
+    setattr(context, soap_primitive + "Response", soap_response)
     
-    return elem
-"""
+  
+def threading(context, primitive_list):
+ i = 0
+ threads = list()
+ while i<len(primitive_list):
+    t = Thread(target=single_thread, args=(context, primitive_list[i]))
+    threads.append(t)
+    t.start() 
+    i+=1
+
+    for thread in threads:
+        thread.join()

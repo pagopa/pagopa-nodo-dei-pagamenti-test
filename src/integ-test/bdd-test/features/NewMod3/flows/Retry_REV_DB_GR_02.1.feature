@@ -1,4 +1,4 @@
-Feature: process tests for Retry_DB_GR_40
+Feature: process tests for Retry_DB_GR_02.1
 
   Background:
     Given systems up
@@ -121,7 +121,6 @@ Feature: process tests for Retry_DB_GR_40
       </soapenv:Body>
       </soapenv:Envelope>
       """
-    And transferList with <transferList><transfer><idTransfer>1</idTransfer><transferAmount>10.00</transferAmount><fiscalCodePA>77777777777</fiscalCodePA><IBAN>IT45R0760103200000000001016</IBAN><remittanceInformation>testPaGetPayment</remittanceInformation><transferCategory>paGetPaymentTest</transferCategory></transfer></transferList> in paGetPayment
     And EC replies to nodo-dei-pagamenti with the paGetPayment
     When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
@@ -176,6 +175,4 @@ Feature: process tests for Retry_DB_GR_40
       """
     When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is KO of sendPaymentOutcome response
-    And verify 0 record for the table POSITION_RECEIPT_XML retrivied by the query position_receipt_xml on db nodo_online under macro NewMod3
-
-
+    And verify 0 record for the table POSITION_RECEIPT retrivied by the query position_receipt_retry_rev_db_gr_02_1 on db nodo_online under macro NewMod3
