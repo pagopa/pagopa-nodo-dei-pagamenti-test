@@ -33,7 +33,7 @@ Feature: semantic checks for nodoInviaCarrelloRPT - PPT_SEMANTICA [SEM_Mb_15]
 
    Scenario Outline: Check PPT_SEMANTICA error
       Given identificativoPSP different from WISP parking
-      and multiBeneficiario with True
+      And multiBeneficiario with True
       When psp sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
       Then check outcome is KO of nodoInviaCarrelloRPT response
       And check faultCode with <value> is PPT_SEMANTICA of nodoInviaCarrelloRPT response

@@ -1,4 +1,4 @@
-Feature: FLUSSO_APIO_12.1
+Feature: FLUSSO_APIO_12.3
 
 Background:
  Given systems up
@@ -105,9 +105,9 @@ Scenario: Execute nodoInoltroEsitoCarta (Phase 4)
     Then verify the HTTP status code of inoltroEsito/carta response is 200
     And check esito is OK of inoltroEsito/carta response
 
-Scenario: Check nodoInoltraEsitoCarta1 response after nodoInoltroEsitoCarta
+Scenario: Check nodoInoltraEsitoCarte1 response after nodoInoltroEsitoCarta
     Given the Execute nodoInoltroEsitoCarta (Phase 4) scenario executed successfully
-    And checks the value PAYMENT_ACCEPTED of the record at column STATUS of the table POSITION_STATUS retrived by the query payemnt_status on db nodo_online under macro AppIO
+    And checks the value PAYMENT_UNKNOWN of the record at column STATUS of the table POSITION_STATUS retrived by the query payemnt_status on db nodo_online under macro AppIO
     When WISP sends REST POST inoltroEsito/carta to nodo-dei-pagamenti
     """
     {
@@ -124,4 +124,5 @@ Scenario: Check nodoInoltraEsitoCarta1 response after nodoInoltroEsitoCarta
         }
     """
     Then verify the HTTP status code of inoltroEsito/carta response is 200
-    And check esito is OK of inoltroEsito/carta response
+    And check esito is KO of inoltroEsito/carta response
+    And check errorCode is RIFPSP of inoltroEsito/carta response

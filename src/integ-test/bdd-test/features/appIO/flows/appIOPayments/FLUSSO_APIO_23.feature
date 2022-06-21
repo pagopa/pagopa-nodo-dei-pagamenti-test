@@ -1,4 +1,4 @@
-Feature: FLUSSO_APIO_25
+Feature: FLUSSO_APIO_23
 
 Background:
  Given systems up
@@ -103,16 +103,16 @@ Scenario: Execute nodoInoltroEsitoCarta (Phase 4)
         }
     """
     Then verify the HTTP status code of inoltroEsito/carta response is 200
-    And check esito is KO of inoltroEsito/carta response
+    And check esito is OK of inoltroEsito/carta response
 
 Scenario: Check nodoChiediAvanzamentoPagamento response after nodoInoltroEsitoCarta, and check correctness of database tables
     Given The Execute nodoInoltroEsitoCarta (Phase 4) scenario executed successfully
-    And checks the value PAYMENT_REFUSED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
+    And checks the value PAYMENT_ACCEPTED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
     When WISP sends rest GET avanzamentoPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
     Then verify the HTTP status code of avanzamentoPagamento response is 200
-    And check esito is KO of avanzamentoPagamento response
-    And checks the value PAYING, PAYMENT_SENT, PAYMENT_REFUSED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
-    And checks the value PAYMENT_REFUSED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
+    And check esito is OK of avanzamentoPagamento response
+    And checks the value PAYING, PAYMENT_SENT, PAYMENT_ACCEPTED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
+    And checks the value PAYMENT_ACCEPTED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
     And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
     And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
     # correctness of POSITION_PAYMENT table 
@@ -140,3 +140,4 @@ Scenario: Check nodoChiediAvanzamentoPagamento response after nodoInoltroEsitoCa
     And checks the value None of the record at column ORIGINAL_PAYMENT_TOKEN of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
     And checks the value Y of the record at column FLAG_IO of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
     And checks the value Y of the record at column RICEVUTA_PM of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
+    ###### TODO: CHECK CORRECTNESS PM_SESSION_DATA TABLE

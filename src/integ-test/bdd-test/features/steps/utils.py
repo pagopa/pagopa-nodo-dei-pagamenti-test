@@ -193,12 +193,6 @@ def isFloat(string: str) -> bool:
     value = string.split('.')
     return len(value) == 2 and value[0].isdigit() and value[1].isdigit()
 
-def isDate(string: str):
-    try:
-        return string == datetime.datetime.strptime(string, '%Y-%m-%d')
-    except ValueError:
-        return False
-
 
 
 """

@@ -415,8 +415,8 @@ def step_impl(context, primitive, new_primitive):
 
 @step('saving {primitive} request in {new_primitive}')
 def step_impl(context, primitive, new_primitive):
-    soap_response = getattr(context, primitive)
-    setattr(context, new_primitive + REQUEST, soap_response)
+    soap_request = getattr(context, primitive)
+    setattr(context, new_primitive, soap_request)
 
 
 @then('{response} response is equal to {response_1} response')
@@ -645,7 +645,6 @@ def step_impl(context, value, column, query_name, table_name, db_name, name_macr
         value = utils.replace_local_variables(value, context)
         split_value = [status.strip() for status in value.split(',')]
         for i, elem in enumerate(query_result):
-            if isinstance(elem, int) or isinstance(elem, float): continue
             if isinstance(elem, str) and elem.isdigit(): query_result[i] = float(elem)
             elif isinstance(elem, datetime.date): query_result[i] = elem.strftime('%Y-%m-%d')
         
@@ -657,7 +656,7 @@ def step_impl(context, value, column, query_name, table_name, db_name, name_macr
         for elem in split_value:
             assert elem in query_result, f"check expected element: {value}, obtained: {query_result[0]}"
 
-@then(u"verify {number:d} record for the table {table_name} retrivied by the query {query_name} on db {db_name} under macro {name_macro}")
+@then(u"verify {number:d} record for the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
 def step_impl(context, query_name, table_name, db_name, name_macro, number):
     db_config = context.config.userdata.get("db_configuration")
     db_selected = db_config.get(db_name)
