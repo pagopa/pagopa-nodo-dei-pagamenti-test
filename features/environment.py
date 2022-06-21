@@ -1,10 +1,12 @@
 
-from steps.common import webapp
-from framework.driver import Driver
-
 def before_feature(context,feature):
-    webapp.driver = Driver()
+    #print('before feature')
+    pass
 
 def after_feature(context,feature):
-    #print("###########################################################################")
-    webapp.driver.close()
+    #print('after feature')
+    pass
+
+def before_scenario(contxt,scenario):
+    #print('before scenario')
+    pass
