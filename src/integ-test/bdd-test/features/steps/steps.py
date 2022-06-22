@@ -1,4 +1,5 @@
 import datetime
+from email.policy import default
 import json
 import os
 import random
@@ -513,6 +514,7 @@ def step_impl(context):
 
 @step("random idempotencyKey having {value} as idPSP in {primitive}")
 def step_impl(context, value, primitive):
+    value = utils.replace_local_variables(value, context)
     xml = utils.manipulate_soap_action(getattr(context, primitive), "idempotencyKey",
                                        f"{value}_{str(random.randint(1000000000, 9999999999))}")
     setattr(context, primitive, xml)
@@ -942,7 +944,25 @@ def step_impl(context, ):
 
     assert ID51 == None
 
+@step('check token validity')
+def step_impl(context):
+    nodo_online_db = context.config.userdata.get("db_configuration").get('nodo_online')
+    nodo_online_conn = db.getConnection(nodo_online_db.get('host'), nodo_online_db.get('database'), nodo_online_db.get('user'), nodo_online_db.get('password'), nodo_online_db.get('port'))
 
+    query_1 = utils.replace_local_variables("SELECT TOKEN_VALID_FROM FROM POSITION_ACTIVATE WHERE CREDITOR_REFERENCE_ID  = '$activateIOPaymentResponse.creditorReferenceId' AND PA_FISCAL_CODE = '$activateIOPaymentResponse.fiscalCodePA' AND PAYMENT_TOKEN = '$activateIOPaymentResponse.paymentToken'", context)
+    token_valid_from = db.executeQuery(nodo_online_conn, query_1)[0][0]
+    print(token_valid_from, type(token_valid_from))
 
+    query_3 = utils.replace_local_variables("SELECT TOKEN_VALID_TO FROM POSITION_ACTIVATE WHERE CREDITOR_REFERENCE_ID  = '$activateIOPaymentResponse.creditorReferenceId' AND PA_FISCAL_CODE = '$activateIOPaymentResponse.fiscalCodePA' AND PAYMENT_TOKEN = '$activateIOPaymentResponse.paymentToken'", context)
+    token_valid_to = db.executeQuery(nodo_online_conn, query_3)[0][0]
+    print(token_valid_to, type(token_valid_to))
 
+    nodo_cfg_db = context.config.userdata.get("db_configuration").get('nodo_cfg')
+    nodo_cfg_conn = db.getConnection(nodo_cfg_db.get('host'), nodo_cfg_db.get('database'), nodo_cfg_db.get('user'), nodo_cfg_db.get('password'), nodo_cfg_db.get('port'))
 
+    
+    query_2 = utils.replace_local_variables("SELECT CONFIG_VALUE FROM CONFIGURATION_KEYS ck WHERE CONFIG_KEY = 'default_durata_token_IO'", context)
+    default_validity_token = int(db.executeQuery(nodo_cfg_conn, query_2)[0][0])
+    print(default_validity_token, type(default_validity_token))
+
+    assert token_valid_from + datetime.timedelta(milliseconds=default_validity_token) == token_valid_to

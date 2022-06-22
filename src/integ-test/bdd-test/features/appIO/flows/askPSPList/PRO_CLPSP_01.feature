@@ -11,13 +11,13 @@ Background:
         <soapenv:Header/>
         <soapenv:Body>
         <nod:verifyPaymentNoticeReq>
-            <idPSP>70000000001</idPSP>
-            <idBrokerPSP>70000000001</idBrokerPSP>
-            <idChannel>70000000001_01</idChannel>
+            <idPSP>AGID_01</idPSP>
+            <idBrokerPSP>97735020584</idBrokerPSP>
+            <idChannel>97735020584_03</idChannel>
             <password>pwdpwdpwd</password>
             <qrCode>
                 <fiscalCode>#creditor_institution_code#</fiscalCode>
-                <noticeNumber>302094719472095710</noticeNumber>
+                <noticeNumber>#notice_number#</noticeNumber>
             </qrCode>
         </nod:verifyPaymentNoticeReq>
         </soapenv:Body>
@@ -34,9 +34,9 @@ Scenario: Execute activateIOPayment (Phase 2)
         <soapenv:Header/>
         <soapenv:Body>
             <nod:activateIOPaymentReq>
-                <idPSP>70000000001</idPSP>
-                <idBrokerPSP>70000000001</idBrokerPSP>
-                <idChannel>70000000001_01</idChannel>
+                <idPSP>AGID_01</idPSP>
+                <idBrokerPSP>97735020584</idBrokerPSP>
+                <idChannel>97735020584_03</idChannel>
                 <password>pwdpwdpwd</password>
                 <!--Optional:-->
                 <idempotencyKey>#idempotency_key#</idempotencyKey>
@@ -45,7 +45,7 @@ Scenario: Execute activateIOPayment (Phase 2)
                     <noticeNumber>#notice_number#</noticeNumber>
                 </qrCode>
                 <!--Optional:-->
-                <expirationTime>1234</expirationTime>
+                <expirationTime>12345</expirationTime>
                 <amount>10.00</amount>
                 <!--Optional:-->
                 <dueDate>2021-12-12</dueDate>

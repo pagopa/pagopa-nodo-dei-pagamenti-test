@@ -1,10 +1,8 @@
-Feature: Token handler
+Feature: GT_01
 
     Background:
         Given systems up
-        And EC old version
-    # RICEVUTA_PM = 'Y'
-    # FLAG = Y
+        And EC new version
 
     Scenario: Execute verifyPaymentNotice (Phase 1)
         Given initial XML verifyPaymentNotice
@@ -79,41 +77,20 @@ Feature: Token handler
                 </soapenv:Body>
             </soapenv:Envelope>
             """
+        And expirationTime with None in activateIOPayment
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
         And verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro AppIO
+        And checks the value activateIOPayment of the record at column PRIMITIVA of the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro AppIO
+        And checks the value $activateIOPayment.idPSP of the record at column PSP_ID of the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro AppIO
+        And checks the value $activateIOPayment.idempotencyKey of the record at column IDEMPOTENCY_KEY of the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro AppIO
+        And checks the value $activateIOPaymentResponse.paymentToken of the record at column IDEMPOTENCY_CACHE of the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro AppIO
+        And checks the value NotNone of the record at column IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value NotNone of the record at column TOKEN_VALID_FROM of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
         And Handling validity
 
-    @prova
     Scenario: Execute nodoChiediInformazioniPagamento (Phase 3)
         Given the Execute activateIOPayment (Phase 2) scenario executed successfully
         When WISP sends rest GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200
         And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro AppIO
-
-    Scenario: nodoInoltraEsitoPagamentoCarta
-        Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
-        When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
-            """
-            {
-                "idPagamento": "2d6a54714c72499eb71115d606152632",
-                "RRN": 18865881,
-                "identificativoPsp": "40000000001",
-                "tipoVersamento": "CP",
-                "identificativoIntermediario": "40000000001",
-                "identificativoCanale": "40000000001_03",
-                "importoTotalePagato": 10,
-                "timestampOperazione": "2021-07-09T17:06:03.100+01:00",
-                "codiceAutorizzativo": "resOK",
-                "esitoTransazioneCarta": "00"
-            }
-            """
-        Then verify the HTTP status code of nodoInoltraEsitoPagamentoCarta response is 200
-
-    Scenario: GT_01
-        Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
-        Then checks 
-
-
-

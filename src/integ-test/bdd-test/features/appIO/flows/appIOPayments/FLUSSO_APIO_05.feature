@@ -11,9 +11,9 @@ Background:
         <soapenv:Header/>
         <soapenv:Body>
         <nod:verifyPaymentNoticeReq>
-            <idPSP>70000000001</idPSP>
-            <idBrokerPSP>70000000001</idBrokerPSP>
-            <idChannel>70000000001_01</idChannel>
+            <idPSP>AGID_01</idPSP>
+            <idBrokerPSP>97735020584</idBrokerPSP>
+            <idChannel>97735020584_03</idChannel>
             <password>pwdpwdpwd</password>
             <qrCode>
                 <fiscalCode>#creditor_institution_code#</fiscalCode>
@@ -34,9 +34,9 @@ Scenario: Execute activateIOPayment (Phase 2)
         <soapenv:Header/>
         <soapenv:Body>
             <nod:activateIOPaymentReq>
-                <idPSP>70000000001</idPSP>
-                <idBrokerPSP>70000000001</idBrokerPSP>
-                <idChannel>70000000001_01</idChannel>
+                <idPSP>AGID_01</idPSP>
+                <idBrokerPSP>97735020584</idBrokerPSP>
+                <idChannel>97735020584_03</idChannel>
                 <password>pwdpwdpwd</password>
                 <!--Optional:-->
                 <idempotencyKey>#idempotency_key#</idempotencyKey>
@@ -113,13 +113,13 @@ Scenario: Check sendPaymentOutcome response with pspNotifyPayment KO and sendPay
       <soapenv:Header/>
       <soapenv:Body>
         <nod:sendPaymentOutcomeReq>
-          <idPSP>70000000001</idPSP>
-          <idBrokerPSP>70000000001</idBrokerPSP>
-          <idChannel>70000000001_01</idChannel>
+          <idPSP>40000000001</idPSP>
+          <idBrokerPSP>40000000001</idBrokerPSP>
+          <idChannel>40000000001_03</idChannel>
           <password>pwdpwdpwd</password>
           <idempotencyKey>#idempotency_key#</idempotencyKey>
           <paymentToken>$activateIOPaymentResponse.paymentToken</paymentToken>
-          <outcome>KO</outcome>
+          <outcome>OK</outcome>
           <!--Optional:-->
           <details>
             <paymentMethod>creditCard</paymentMethod>

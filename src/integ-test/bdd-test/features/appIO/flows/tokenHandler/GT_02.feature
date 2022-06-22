@@ -1,10 +1,8 @@
-Feature: Token handler
+Feature: GT_01
 
     Background:
         Given systems up
-        And EC old version
-    # RICEVUTA_PM = 'Y'
-    # FLAG = Y
+        And EC new version
 
     Scenario: Execute verifyPaymentNotice (Phase 1)
         Given initial XML verifyPaymentNotice
@@ -82,10 +80,14 @@ Feature: Token handler
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
         And verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro AppIO
+        And checks the value activateIOPayment of the record at column PRIMITIVA of the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro AppIO
+        And checks the value $activateIOPayment.idPSP of the record at column PSP_ID of the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro AppIO
+        And checks the value $activateIOPayment.idempotencyKey of the record at column IDEMPOTENCY_KEY of the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro AppIO
+        And checks the value $activateIOPaymentResponse.paymentToken of the record at column IDEMPOTENCY_CACHE of the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro AppIO
+        And checks the value NotNone of the record at column IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value NotNone of the record at column TOKEN_VALID_FROM of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
         And Handling validity
 
-    @prova
     Scenario: Execute nodoChiediInformazioniPagamento (Phase 3)
         Given the Execute activateIOPayment (Phase 2) scenario executed successfully
         When WISP sends rest GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
@@ -110,10 +112,4 @@ Feature: Token handler
             }
             """
         Then verify the HTTP status code of nodoInoltraEsitoPagamentoCarta response is 200
-
-    Scenario: GT_01
-        Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
-        Then checks 
-
-
-
+        #TODO: check TOKEN_VALID_TO column update

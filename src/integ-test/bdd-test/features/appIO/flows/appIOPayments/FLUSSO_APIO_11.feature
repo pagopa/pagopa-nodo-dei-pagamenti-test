@@ -11,9 +11,9 @@ Background:
         <soapenv:Header/>
         <soapenv:Body>
         <nod:verifyPaymentNoticeReq>
-            <idPSP>70000000001</idPSP>
-            <idBrokerPSP>70000000001</idBrokerPSP>
-            <idChannel>70000000001_01</idChannel>
+            <idPSP>AGID_01</idPSP>
+            <idBrokerPSP>97735020584</idBrokerPSP>
+            <idChannel>97735020584_03</idChannel>
             <password>pwdpwdpwd</password>
             <qrCode>
                 <fiscalCode>#creditor_institution_code#</fiscalCode>
@@ -34,9 +34,9 @@ Scenario: Execute activateIOPayment (Phase 2)
         <soapenv:Header/>
         <soapenv:Body>
             <nod:activateIOPaymentReq>
-                <idPSP>70000000001</idPSP>
-                <idBrokerPSP>70000000001</idBrokerPSP>
-                <idChannel>70000000001_01</idChannel>
+                <idPSP>AGID_01</idPSP>
+                <idBrokerPSP>97735020584</idBrokerPSP>
+                <idChannel>97735020584_03</idChannel>
                 <password>pwdpwdpwd</password>
                 <!--Optional:-->
                 <idempotencyKey>#idempotency_key#</idempotencyKey>
@@ -107,7 +107,7 @@ Scenario: Execute nodoInoltroEsitoCarta (Phase 4)
 
 Scenario: (Phase 5)
     Given the Execute nodoInoltroEsitoCarta (Phase 4) scenario executed successfully
-    And check STATUS column of POSITION_PAYMENT_STATUS table contains NOTIFIED value in nodo_online db
+    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
     And initial XML sendPaymentOutcome
     """
     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -161,7 +161,7 @@ Scenario: (Phase 5)
 
 Scenario: Check nodoInoltroEsitoCarta1 response after sendPaymentOutcome
     Given the (Phase 5) scenario executed successfully
-    And check the value PAID of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payemnt_status on db nodo_online under macro AppIO
+    And checks the value PAID of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payemnt_status on db nodo_online under macro AppIO
     When WISP sends REST POST inoltroEsito/carta to nodo-dei-pagamenti
     """
     {
