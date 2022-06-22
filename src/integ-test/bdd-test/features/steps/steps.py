@@ -682,9 +682,9 @@ def step_impl(context, primitive1, primitive2):
     response_primitive2 = parseString(getattr(context, primitive2))
     
 
-    outcome1 = response_primitive1.getElementsByTagName('outcome').firstChild.data
+    outcome1 = response_primitive1.getElementsByTagName('outcome')[0].firstChild.data
     print("outcome1: ", outcome1)
-    outcome2 = response_primitive2.getElementsByTagName('outcome').firstChild.data
+    outcome2 = response_primitive2.getElementsByTagName('outcome')[0].firstChild.data
     print("outcome2: ", outcome2)
 
     if outcome1 == 'KO':
