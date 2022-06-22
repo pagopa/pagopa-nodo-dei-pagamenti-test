@@ -119,7 +119,7 @@ function Collapsible_expandAllFailed()
             <p id="scenario_totals">Scenarios: passed: 1, failed: 1</p>
             <p id="step_totals">Steps: passed: 4, failed: 1</p>
           </p>
-          <p id="duration">Finished in 1.3 seconds</p>
+          <p id="duration">Finished in 1.7 seconds</p>
           <div id="expand-collapse">
             <a id="expander" href="#" onclick="Collapsible_expandAll('scenario_steps')">Expand All</a>
             <span> | </span>
@@ -152,7 +152,7 @@ function Collapsible_expandAllFailed()
             <div class="step_name">
               <span class="keyword">Given </span>
               <span class="step val">systems up</span>
-              <small class="step_duration">(0.074s)</small>
+              <small class="step_duration">(0.072s)</small>
             </div>
             <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:22</span>
@@ -190,7 +190,7 @@ function Collapsible_expandAllFailed()
                 <b>activatePaymentNotice</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.015s)</small>
+              <small class="step_duration">(0.057s)</small>
             </div>
             <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:47</span>
@@ -246,7 +246,7 @@ xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd&quot;&gt;
                 <b>activatePaymentNotice</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.003s)</small>
+              <small class="step_duration">(0.004s)</small>
             </div>
             <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:47</span>
@@ -286,7 +286,7 @@ xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd&quot;&gt;
                 <b>activatePaymentNotice2</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.001s)</small>
+              <small class="step_duration">(0.009s)</small>
             </div>
             <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:416</span>
@@ -306,7 +306,7 @@ xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd&quot;&gt;
             <div class="step_name">
               <span class="keyword">Given </span>
               <span class="step val">systems up</span>
-              <small class="step_duration">(0.071s)</small>
+              <small class="step_duration">(0.076s)</small>
             </div>
             <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:22</span>
@@ -385,7 +385,7 @@ xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd&quot;&gt;
                 <b>activatePaymentNotice1</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.001s)</small>
+              <small class="step_duration">(0.002s)</small>
             </div>
             <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:416</span>
@@ -417,7 +417,7 @@ xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd&quot;&gt;
                 <b>activatePaymentNotice_activatePaymentNotice2</b>
                 <span> in parallel</span>
               </span>
-              <small class="step_duration">(1.151s)</small>
+              <small class="step_duration">(1.482s)</small>
             </div>
             <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:673</span>
@@ -434,7 +434,7 @@ xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd&quot;&gt;
                 <b>activatePaymentNotice2</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.004s)</small>
+              <small class="step_duration">(0.019s)</small>
             </div>
             <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:679</span>
@@ -447,8 +447,8 @@ xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd&quot;&gt;
   File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\behave\matchers.py&quot;, line 98, in run
     self.func(context, *args, **kwargs)
   File &quot;src\integ-test\bdd-test\features\steps\steps.py&quot;, line 685, in step_impl
-    outcome1 = response_primitive1.getElementsByTagName('outcome')[0].firstChild.data
-IndexError: list index out of range
+    outcome1 = response_primitive1.getElementsByTagName('outcome').firstChild.data
+AttributeError: 'NodeList' object has no attribute 'firstChild'
 </pre>
                   
             </span>
