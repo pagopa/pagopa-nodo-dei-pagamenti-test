@@ -56,8 +56,11 @@ Feature: process tests for retry a token scaduto
         Then saving activatePaymentNotice request in activatePaymentNotice2
 
 
-    Scenario: parallel calls and check scenario
+    Scenario: parallel calls scenario
         Given the Initial activatePaymentNotice2 request scenario executed successfully
         And calling primitive activatePaymentNotice_activatePaymentNotice1 and activatePaymentNotice_activatePaymentNotice2 in parallel
+
+    Scenario: test
+        Given the parallel calls scenario executed successfully
         Then check primitive response activatePaymentNotice1 and primitive response activatePaymentNotice2
 

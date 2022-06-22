@@ -118,4 +118,4 @@ __pycache__
 
 /instantclient_*
 /.idea
-src/integ-test/bdd-test/features/environment.py
+environment.py
