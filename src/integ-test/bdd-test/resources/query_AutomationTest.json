@@ -14,7 +14,11 @@
         "position_receipt_recipient": "SELECT s.columns FROM table_name s where s.NOTICE_ID = '$activatePaymentNotice.noticeNumber' and s.PAYMENT_TOKEN= '$activatePaymentNoticeResponse.paymentToken'",
         "position_receipt_xml" : "SELECT s.columns FROM table_name s where s.NOTICE_ID = '$activatePaymentNotice.noticeNumber' AND s.PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode'",
         "position_receipt_recipient_status": "SELECT s.columns FROM table_name s where s.NOTICE_ID = '$activatePaymentNotice.noticeNumber' and s.PAYMENT_TOKEN= '$activatePaymentNotice.paymentToken'",
-        "position_receipt_transfer" : "SELECT s.columns FROM table_name s JOIN POSITION_TRANSFER pt ON pt.ID = s.FK_POSITION_TRANSFER WHERE pt.NOTICE_ID = '$activatePaymentNotice.noticeNumber' AND pt.PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode'"
+        "position_receipt_transfer" : "SELECT s.columns FROM table_name s JOIN POSITION_TRANSFER pt ON pt.ID = s.FK_POSITION_TRANSFER WHERE pt.NOTICE_ID = '$activatePaymentNotice.noticeNumber' AND pt.PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode'",
+        "position_payment_status_1" :"SELECT s.columns FROM table_name s WHERE s.NOTICE_ID ='$activatePaymentNotice1.noticeNumber' AND s.PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode' AND s.PAYMENT_TOKEN = '$activatePaymentNotice1Response.paymentToken'",
+        "position_payment_status_2" :"SELECT s.columns FROM table_name s WHERE s.NOTICE_ID ='$activatePaymentNotice2.noticeNumber' AND s.PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode' AND s.PAYMENT_TOKEN = '$activatePaymentNotice2Response.paymentToken'",
+        "position_status_1" :"SELECT s.columns FROM table_name s WHERE s.NOTICE_ID ='$activatePaymentNotice1.noticeNumber' AND s.PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode'",
+        "position_status_2" :"SELECT s.columns FROM table_name s WHERE s.NOTICE_ID ='$activatePaymentNotice2.noticeNumber' AND s.PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode'"
     },
     "AppIO":{
         "DB_AIPR_01_AppIO" : "SELECT * from POSITION_ACTIVATE WHERE CREDITOR_REFERENCE_ID  = '$activateIOPaymentResponse.creditorReferenceId' AND PA_FISCAL_CODE = '$activateIOPaymentResponse.fiscalCodePA' AND PAYMENT_TOKEN = '$activateIOPaymentResponse.paymentToken'",

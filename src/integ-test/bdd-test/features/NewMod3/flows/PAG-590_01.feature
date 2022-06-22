@@ -1,4 +1,4 @@
-Feature: process tests for retry a token scaduto
+Feature: process PAG-590_01
 
     Background:
         Given systems up
@@ -21,7 +21,7 @@ Feature: process tests for retry a token scaduto
             <expirationTime>2000</expirationTime>
             <amount>10.00</amount>
             <dueDate>2021-12-31</dueDate>
-            <paymentNote>causale</paymentNote>
+            <paymentNote>OK_sleep</paymentNote>
             </nod:activatePaymentNoticeReq>
             </soapenv:Body>
             </soapenv:Envelope>
@@ -48,7 +48,7 @@ Feature: process tests for retry a token scaduto
             </qrCode>
             <amount>10.00</amount>
             <dueDate>2021-12-31</dueDate>
-            <paymentNote>causale</paymentNote>
+            <paymentNote>OK_sleep</paymentNote>
             </nod:activatePaymentNoticeReq>
             </soapenv:Body>
             </soapenv:Envelope>
@@ -56,11 +56,10 @@ Feature: process tests for retry a token scaduto
         Then saving activatePaymentNotice request in activatePaymentNotice2
 
 
-    Scenario: parallel calls scenario
+    Scenario: parallel calls and test scenario
         Given the Initial activatePaymentNotice2 request scenario executed successfully
         And calling primitive activatePaymentNotice_activatePaymentNotice1 and activatePaymentNotice_activatePaymentNotice2 in parallel
+        Then check primitive response activatePaymentNotice1Response and primitive response activatePaymentNotice2Response
+        And check db PAG-590_01
 
-    Scenario: test
-        Given the parallel calls scenario executed successfully
-        Then check primitive response activatePaymentNotice1 and primitive response activatePaymentNotice2
 

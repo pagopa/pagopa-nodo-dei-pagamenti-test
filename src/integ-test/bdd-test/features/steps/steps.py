@@ -1,5 +1,6 @@
 import datetime
 import json
+import os
 import random
 from sre_constants import ASSERT
 import time
@@ -683,35 +684,263 @@ def step_impl(context, primitive1, primitive2):
     
 
     outcome1 = response_primitive1.getElementsByTagName('outcome')[0].firstChild.data
-    print("outcome1: ", outcome1)
     outcome2 = response_primitive2.getElementsByTagName('outcome')[0].firstChild.data
-    print("outcome2: ", outcome2)
 
     if outcome1 == 'KO':
         faultCode1 = response_primitive1.getElementsByTagName('faultCode')[0].firstChild.data
-        print("faultCode1: ", faultCode1)
         faultString1 = response_primitive1.getElementsByTagName('faultString')[0].firstChild.data
-        print("faultString1: ", faultString1)
         description1 = response_primitive1.getElementsByTagName('description')[0].firstChild.data
-        print("description1: ", description1)
     if outcome2 == 'KO':
         faultCode2 = response_primitive2.getElementsByTagName('faultCode')[0].firstChild.data
-        print("faultCode2: ", faultCode2)
         faultString2 = response_primitive2.getElementsByTagName('faultString')[0].firstChild.data
-        print("faultString2: ", faultString2)
         description2 = response_primitive2.getElementsByTagName('description')[0].firstChild.data
-        print("description2: ", description2)
 
-    if outcome1 == 'KO' and faultCode2 == 'PPT_PAGAMENTO_IN_CORSO' and faultString2 == 'Pagamento in attesa risulta in corso al sistema pagoPA' \
+    if outcome1 == 'OK' and faultCode2 == 'PPT_PAGAMENTO_IN_CORSO' and faultString2 == 'Pagamento in attesa risulta in corso al sistema pagoPA' \
             and description2 == 'Pagamento in attesa risulta in corso al sistema pagoPA':
-            print('primo assert')
-            assert 1 == 1
-    elif outcome2 == 'KO' and faultCode1 == 'PPT_PAGAMENTO_IN_CORSO' and faultString1 == 'Pagamento in attesa risulta in corso al sistema pagoPA' \
+            assert True
+    elif outcome2 == 'OK' and faultCode1 == 'PPT_PAGAMENTO_IN_CORSO' and faultString1 == 'Pagamento in attesa risulta in corso al sistema pagoPA' \
             and description1 == 'Pagamento in attesa risulta in corso al sistema pagoPA':
-            print('secondo assert')
-            assert 1 == 1
+            assert True
     else:
-        assert 1 == 0
+        assert False
+
+@then("check db PAG-590_01")
+def step_impl(context, ):
+    
+    #from activatePaymentNotice2 = activatePaymentNotice1
+    activatePaymentNotice2 = parseString(getattr(context, 'activatePaymentNotice2'))
+    pa = activatePaymentNotice2.getElementsByTagName('fiscalCode')[0].firstChild.data
+    psp = activatePaymentNotice2.getElementsByTagName('idPSP')[0].firstChild.data
+    numavv = activatePaymentNotice2.getElementsByTagName('noticeNumber')[0].firstChild.data
+    iuv = numavv[1:]
+    print("iuv: ", iuv)
+
+
+    config = json.load(open(os.path.join(context.config.base_dir + "/../resources/config.json")))
+    intermediarioPA = config.get('global_configuration').get('id_broker')
+    stazione = config.get('global_configuration').get('id_station')
+
+    
+    query_payment = "SELECT * FROM POSITION_PAYMENT WHERE NOTICE_ID = '$activatePaymentNotice1.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNotice1.fiscalCode'"
+    query_service = "SELECT * FROM POSITION_SERVICE WHERE NOTICE_ID = '$activatePaymentNotice1.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNotice1.fiscalCode'"
+    query_transfer = "SELECT * FROM POSITION_TRANSFER WHERE NOTICE_ID = '$activatePaymentNotice1.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNotice1.fiscalCode'"
+    query1 = f"SELECT * FROM RPT WHERE IUV = '{iuv}' AND IDENT_DOMINIO = '$activatePaymentNotice1.fiscalCode'"
+    query2 = "SELECT * FROM POSITION_PAYMENT_PLAN WHERE NOTICE_ID = '$activatePaymentNotice1.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNotice1.fiscalCode'"
+    query3 = "SELECT * FROM POSITION_ACTIVATE WHERE NOTICE_ID = '$activatePaymentNotice1.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNotice1.fiscalCode'"
+    query4 = f"SELECT * FROM RPT_VERSAMENTI v JOIN RPT r ON v.FK_RPT = r.ID WHERE r.IUV = '{iuv}' AND r.IDENT_DOMINIO = '$activatePaymentNotice1.fiscalCode'"
+    
+
+    db_config = context.config.userdata.get("db_configuration")
+    db_selected = db_config.get("nodo_online")
+
+
+    conn = db.getConnection(db_selected.get('host'), db_selected.get('database'),db_selected.get('user'),db_selected.get('password'),db_selected.get('port'))
+
+    query_payment_replaced = utils.replace_local_variables(query_payment, context)
+    query_service_replaced = utils.replace_local_variables(query_service, context)
+    query_transfer_replaced = utils.replace_local_variables(query_transfer, context)
+    query1_replaced = utils.replace_local_variables(query1, context)
+    query2_replaced = utils.replace_local_variables(query2, context)
+    query3_replaced = utils.replace_local_variables(query3, context)
+    query4_replaced = utils.replace_local_variables(query4, context)
+    
+    rpt_id_row = db.executeQuery(conn, query_payment_replaced)
+    service_row = db.executeQuery(conn, query_service_replaced)
+    transfer_row = db.executeQuery(conn, query_transfer_replaced)
+    rpt = db.executeQuery(conn, query1_replaced)
+    plan = db.executeQuery(conn, query2_replaced)
+    act  = db.executeQuery(conn, query3_replaced)
+    vers  = db.executeQuery(conn, query4_replaced)
+
+    debtor_id = service_row[0][0]
+    print(debtor_id)
+
+    query_debtor = f"SELECT ID, ENTITY_UNIQUE_IDENTIFIER_VALUE FROM POSITION_SUBJECT WHERE ID = '{debtor_id}'"
+    debtor_row  = db.executeQuery(conn, query_debtor)
+
+    db.closeConnection(conn)
+    
+    #POSITION_ACTIVATE
+    ID2 = act[0][0]
+    PA_FISCAL_CODE2 = act[0][1]
+    NOTICE_ID2 = act[0][2]
+    CREDITOR_REFERENCE_ID2 = act[0][3]
+    PSP_ID2 = act[0][4]
+    IDEMPOTENCY_KEY2 = act[0][5]
+    print("IDEMPOTENCY_KEY2: ", IDEMPOTENCY_KEY2)
+    PAYMENT_TOKEN2 = act[0][6]
+    TOKEN_VALID_FROM2 = act[0][7]
+    TOKEN_VALID_TO2 = act[0][8]
+    DUE_DATE2 = act[0][9]
+    AMOUNT2 = act[0][10]
+
+    ID21 = act[1][0]
+    PA_FISCAL_CODE21 = act[1][1]
+    NOTICE_ID21 = act[1][2]
+    CREDITOR_REFERENCE_ID21 = act[1][3]
+    PSP_ID21 = act[1][4]
+    IDEMPOTENCY_KEY21 = act[1][5]
+    PAYMENT_TOKEN21 = act[1][6]
+    TOKEN_VALID_FROM21 = act[1][7]
+    TOKEN_VALID_TO21 = act[1][8]
+    DUE_DATE21 = act[1][9]
+    AMOUNT21 = act[1][10]
+
+    if TOKEN_VALID_TO2 == None:
+        tokenPay = PAYMENT_TOKEN21
+        assert TOKEN_VALID_FROM2 == None
+        assert TOKEN_VALID_TO2 == None
+        assert TOKEN_VALID_FROM21 != None
+        assert TOKEN_VALID_TO21 != None
+        assert CREDITOR_REFERENCE_ID21 == iuv
+    elif TOKEN_VALID_TO21 == None:
+        tokenPay = PAYMENT_TOKEN2
+        assert TOKEN_VALID_FROM2 != None
+        assert TOKEN_VALID_TO2 != None
+        assert TOKEN_VALID_FROM21 == None
+        assert TOKEN_VALID_TO21 == None
+        assert CREDITOR_REFERENCE_ID2 == iuv
+    
+
+    assert ID2 != None
+    assert PA_FISCAL_CODE2 == pa
+    assert NOTICE_ID2 == numavv
+    assert PSP_ID2 == psp
+    assert IDEMPOTENCY_KEY2 == None
+    assert PAYMENT_TOKEN2 != None
+    assert DUE_DATE2 == None
+    assert AMOUNT2 == 10
+
+    assert ID21 != None
+    assert PA_FISCAL_CODE21 == pa
+    assert NOTICE_ID21 == numavv
+    assert PSP_ID21 == psp
+    assert IDEMPOTENCY_KEY21 == None
+    assert PAYMENT_TOKEN21 != None
+    assert DUE_DATE21 == None
+    assert AMOUNT21 == 10
+
+
+    #POSITION_PAYMENT
+    ID = rpt_id_row[0][0]
+    PA_FISCAL_CODE = rpt_id_row[0][1]
+    NOTICE_ID = rpt_id_row[0][2]
+    CREDITOR_REFERENCE_ID = rpt_id_row[0][3]
+    PAYMENT_TOKEN = rpt_id_row[0][4]
+    BROKER_PA_ID = rpt_id_row[0][5]
+    STATION_ID = rpt_id_row[0][6]
+    STATION_VERSION = rpt_id_row[0][7]
+    PSP_ID = rpt_id_row[0][8]
+    BROKER_PSP_ID = rpt_id_row[0][9]
+    CHANNEL_ID = rpt_id_row[0][8]
+    IDEMPOTENCY_KEY = rpt_id_row[0][9]
+    AMOUNT = rpt_id_row[0][10]
+    FEE = rpt_id_row[0][11]
+    OUTCOME = rpt_id_row[0][12]
+    PAYMENT_METHOD = rpt_id_row[0][13]
+    PAYMENT_CHANNEL = rpt_id_row[0][14]
+    TRANSFER_DATE = rpt_id_row[0][15]
+    PAYER_ID = rpt_id_row[0][16]
+    APPLICATION_DATE = rpt_id_row[0][16]
+    INSERTED_TIMESTAMP = rpt_id_row[0][17]
+    UPDATED_TIMESTAMP = rpt_id_row[0][18]
+    FK_PAYMENT_PLAN = rpt_id_row[0][19]
+    RPT_ID = rpt_id_row[0][20]
+    PAYMENT_TYPE = rpt_id_row[0][21]
+    CARRELLO_ID = rpt_id_row[0][22]
+    ORIGINAL_PAYMENT_TOKEN = rpt_id_row[0][23]
+    FLAGATTIVAMISSING = rpt_id_row[0][24]
+
+    ID1 = rpt_id_row[1][0]
+
+    assert ID != None
+    assert PA_FISCAL_CODE == pa
+    assert NOTICE_ID == numavv
+    assert CREDITOR_REFERENCE_ID == iuv
+    assert PAYMENT_TOKEN == tokenPay
+    assert BROKER_PA_ID == intermediarioPA
+    assert STATION_ID == stazione
+    assert STATION_VERSION == 2
+    assert PSP_ID == psp
+    assert BROKER_PSP_ID == psp
+    assert CHANNEL_ID == psp+'_01'
+    assert IDEMPOTENCY_KEY == None
+    assert AMOUNT == 10
+    assert FEE == None
+    assert OUTCOME == None
+    assert PAYMENT_METHOD == None
+    assert PAYMENT_CHANNEL == 'NA'
+    assert TRANSFER_DATE == None
+    assert PAYER_ID == None
+    assert APPLICATION_DATE == None
+    assert INSERTED_TIMESTAMP != None
+    assert UPDATED_TIMESTAMP != None
+    assert FK_PAYMENT_PLAN == plan[0][0]
+    assert RPT_ID == rpt[0][0]
+    assert PAYMENT_TYPE == 'MOD3'
+    assert CARRELLO_ID == None
+    assert ORIGINAL_PAYMENT_TOKEN == None
+    assert FLAGATTIVAMISSING == None
+
+    assert ID1 == None
+
+
+    #POSITION_PAYMENT_PLAN
+    ID4 = plan[0][0]
+    PA_FISCAL_CODE4 = plan[0][1]
+    NOTICE_ID4 = plan[0][2]
+    CREDITOR_REFERENCE_ID4 = plan[0][3]
+    DUE_DATE4 = plan[0][4]
+    RETENTION_DATE4 = plan[0][5]
+    AMOUNT4 = plan[0][6]
+    FLAG_FINAL_PAYMENT4 = plan[0][7]
+    INSERTED_TIMESTAMP4 = plan[0][8]
+    UPDATED_TIMESTAMP4 = plan[0][9]
+    METADATA4 = plan[0][10]
+    FK_POSITION_SERVICE4 = plan[0][11]
+
+    ID41 = rpt_id_row[1][0]
+
+    assert ID4 != None
+    assert PA_FISCAL_CODE4 == pa
+    assert NOTICE_ID4 == numavv
+    assert CREDITOR_REFERENCE_ID4 == iuv
+    assert DUE_DATE4 != None
+    assert RETENTION_DATE4 == None
+    assert AMOUNT4 == 10
+    assert FLAG_FINAL_PAYMENT4 == 'Y'
+    assert INSERTED_TIMESTAMP4 != None
+    assert UPDATED_TIMESTAMP4 != None
+    assert METADATA4 != None
+    assert FK_POSITION_SERVICE4 == service_row[0][0]
+
+    assert ID41 == None
+
+
+    #POSITION_SERVICE
+    ID5 = service_row[0][0]
+    PA_FISCAL_CODE5 = service_row[0][1]
+    NOTICE_ID5 = service_row[0][2]
+    DESCRIPTION5 = service_row[0][3]
+    COMPANY_NAME5 = service_row[0][4]
+    OFFICE_NAME5 = service_row[0][5]
+    DEBTOR_ID5 = service_row[0][6]
+    INSERTED_TIMESTAMP5 = service_row[0][7]
+    UPDATED_TIMESTAMP5 = service_row[0][8]
+
+    ID51 = service_row[1][0]
+
+    assert ID5 != None
+    assert PA_FISCAL_CODE5 == pa
+    assert NOTICE_ID5 == numavv
+    assert DESCRIPTION5 == 'test'
+    assert COMPANY_NAME5 != None
+    assert OFFICE_NAME5 == 'office'
+    assert DEBTOR_ID5 != None
+    assert INSERTED_TIMESTAMP5 != None
+    assert UPDATED_TIMESTAMP5 != None
+
+    assert ID51 == None
 
 
 
