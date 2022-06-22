@@ -205,7 +205,6 @@ def isDate(string: str):
 def single_thread(context, soap_primitive):
     print("single_thread")
     primitive = soap_primitive.split("_")[0]
-    print(primitive)
     print(soap_primitive.split("_")[1])
     headers = {'Content-Type': 'application/xml', "SOAPAction": primitive}  # set what your server accepts
     url_nodo = get_soap_url_nodo(context, primitive)
@@ -216,13 +215,13 @@ def single_thread(context, soap_primitive):
     
   
 def threading(context, primitive_list):
- i = 0
- threads = list()
- while i<len(primitive_list):
-    t = Thread(target=single_thread, args=(context, primitive_list[i]))
-    threads.append(t)
-    t.start() 
-    i+=1
+    i = 0
+    threads = list()
+    while i<len(primitive_list):
+        t = Thread(target=single_thread, args=(context, primitive_list[i]))
+        threads.append(t)
+        t.start() 
+        i+=1
 
     for thread in threads:
         thread.join()
