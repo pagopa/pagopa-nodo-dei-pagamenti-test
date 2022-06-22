@@ -196,17 +196,6 @@ def isFloat(string: str) -> bool:
     value = string.split('.')
     return len(value) == 2 and value[0].isdigit() and value[1].isdigit()
 
-def find_tag(context, primitive, name_tag, elem):
-    print("find_tag")
-    if primitive == "None":
-        return elem
-
-    tag = json.load(open(os.path.join(context.config.base_dir + "/../resources/query_AutomationTest.json")))
-    selected_tag = tag.get("constanti").get(name_tag)
-    print(selected_tag)
-
-    if selected_tag:
-        elem = type_numb(elem)
 def isDate(string: str):
     try:
         return string == datetime.datetime.strptime(string, '%Y-%m-%d')
