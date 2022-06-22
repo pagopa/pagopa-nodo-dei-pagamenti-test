@@ -674,3 +674,46 @@ def step_impl(context, query_name, table_name, db_name, name_macro, number):
 def step_impl(context, primitive1, primitive2):
     list_of_primitive=[primitive1, primitive2]
     utils.threading(context,list_of_primitive)
+
+
+@then("check primitive response {primitive1} and primitive response {primitive2}")
+def step_impl(context, primitive1, primitive2):
+    response_primitive1 = parseString(getattr(context, primitive1))
+    response_primitive2 = parseString(getattr(context, primitive2))
+    
+
+    outcome1 = response_primitive1.getElementsByTagName('outcome')[0].firstChild.data
+    print("outcome1: ", outcome1)
+    outcome2 = response_primitive2.getElementsByTagName('outcome')[0].firstChild.data
+    print("outcome2: ", outcome2)
+
+    if outcome1 == 'KO':
+        faultCode1 = response_primitive1.getElementsByTagName('faultCode')[0].firstChild.data
+        print("faultCode1: ", faultCode1)
+        faultString1 = response_primitive1.getElementsByTagName('faultString')[0].firstChild.data
+        print("faultString1: ", faultString1)
+        description1 = response_primitive1.getElementsByTagName('description')[0].firstChild.data
+        print("description1: ", description1)
+    if outcome2 == 'KO':
+        faultCode2 = response_primitive2.getElementsByTagName('faultCode')[0].firstChild.data
+        print("faultCode2: ", faultCode2)
+        faultString2 = response_primitive2.getElementsByTagName('faultString')[0].firstChild.data
+        print("faultString2: ", faultString2)
+        description2 = response_primitive2.getElementsByTagName('description')[0].firstChild.data
+        print("description2: ", description2)
+
+    if outcome1 == 'KO' and faultCode2 == 'PPT_PAGAMENTO_IN_CORSO' and faultString2 == 'Pagamento in attesa risulta in corso al sistema pagoPA' \
+            and description2 == 'Pagamento in attesa risulta in corso al sistema pagoPA':
+            print('primo assert')
+            assert 1 == 1
+    elif outcome2 == 'KO' and faultCode1 == 'PPT_PAGAMENTO_IN_CORSO' and faultString1 == 'Pagamento in attesa risulta in corso al sistema pagoPA' \
+            and description1 == 'Pagamento in attesa risulta in corso al sistema pagoPA':
+            print('secondo assert')
+            assert 1 == 1
+    else:
+        assert 1 == 0
+
+
+
+
+

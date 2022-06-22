@@ -211,7 +211,7 @@ def single_thread(context, soap_primitive):
     print("nodo soap_request sent >>>", getattr(context, soap_primitive.split("_")[1]))
     soap_response = requests.post(url_nodo, getattr(context, soap_primitive.split("_")[1]), headers=headers)
     print("nodo soap_response: ", soap_response.content)
-    setattr(context, soap_primitive + "Response", soap_response)
+    setattr(context, soap_primitive.split("_")[1] + "Response", soap_response)
     
   
 def threading(context, primitive_list):

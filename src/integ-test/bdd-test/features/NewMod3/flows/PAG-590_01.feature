@@ -43,7 +43,7 @@ Feature: process tests for retry a token scaduto
             <password>pwdpwdpwd</password>
             <idempotencyKey>#idempotency_key#</idempotencyKey>
             <qrCode>
-            <fiscalCode>#creditor_institution_code#</fiscalCode>
+            <fiscalCode>$activatePaymentNotice1.fiscalCode</fiscalCode>
             <noticeNumber>$activatePaymentNotice1.noticeNumber</noticeNumber>
             </qrCode>
             <amount>10.00</amount>
@@ -56,7 +56,8 @@ Feature: process tests for retry a token scaduto
         Then saving activatePaymentNotice request in activatePaymentNotice2
 
 
-    Scenario: chiamate in parallelo
+    Scenario: parallel calls and check scenario
         Given the Initial activatePaymentNotice2 request scenario executed successfully
-        Then calling primitive activatePaymentNotice_activatePaymentNotice1 and activatePaymentNotice_activatePaymentNotice2 in parallel
+        And calling primitive activatePaymentNotice_activatePaymentNotice1 and activatePaymentNotice_activatePaymentNotice2 in parallel
+        Then check primitive response activatePaymentNotice1 and primitive response activatePaymentNotice2
 
