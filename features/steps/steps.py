@@ -15,14 +15,16 @@ def step_impl(context):
 @step('Browse the payment response url')
 def step_impl(context):
     url_wisp = context.resp['url']
-    #print(url_wisp)
+    print('##############################################################')
+    print(url_wisp)
     context.driver = Driver()
     context.driver.get(url_wisp)
 
 @step('Enter with the mail')
 def step_impl(context):
     context.driver.wait_until(By.XPATH,
-                           '//*[@action="enterEmail"]//button[contains(text(),"Entra con la tua email")][contains(@class, "azure")]') \
+                           #'//*[@action="enterEmail"]//button[contains(text(),"Entra con la tua email")][contains(@class, "azure")]') \
+                           '//*[@action="enterEmail"]//button[contains(@class, "azure")]') \
         .click()
     casella = context.driver.wait_until(By.CLASS_NAME, 'input-email')
     casella.send_keys(settings['holder']['mail'])
@@ -46,7 +48,7 @@ def step_impl(context):
     context.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
     context.driver.submit()
 
-@then('Payment is made successfully')
+@step('Payment is made successfully')
 def step_impl(context):
     context.driver.wait_until(By.ID, "success_message")
     context.driver.find_element(By.XPATH,
@@ -85,6 +87,7 @@ def step_impl(context,lang):
         a.click()
     else:
         assert False
+    sleep(0.5)
 
 
 @then('Check the text in {lang}')
@@ -255,3 +258,151 @@ def step_impl(context):
     assert mod
     mod.click()
     assert context.driver.wait_until(By.CLASS_NAME,'psp-menu')
+
+
+@step('Select a card from the list')
+def step_impl(context):
+    #implementare modo più robusto di trovare l'elemento?
+    context.driver.wait_until(By.XPATH,"html/body/div[5]/div/div/div/div[2]/div/div/div[2]/div").click()
+
+
+@step('Select favorite card from the list')
+def step_impl(context):
+    context.driver.wait_until(By.XPATH, "html/body/div[5]/div/div[2]/div/div[2]/div/div/div[2]/div").click()
+
+
+@step('Select credit card amex')
+def step_impl(context):
+    context.driver.wait_until(By.CLASS_NAME, 'credit-card').click()
+    context.driver.wait_until(By.NAME, 'pan').send_keys(settings['holder']['pan_amex'])
+    context.driver.wait_until(By.NAME, 'expDate').send_keys(settings['holder']['expDate'])
+    context.driver.wait_until(By.CLASS_NAME, 'input-cvc').send_keys(settings['holder']['cvc'])
+    context.driver.wait_until(By.CLASS_NAME, 'input-holder').send_keys(settings['holder']['name'])
+    a = context.driver.wait_until(By.XPATH, "/html/body/div[5]/form/div[4]/button")
+    a.click()
+
+@then('check not change payment manager')
+def step_impl(context):
+    f=False
+    try:
+        context.driver.wait_until(By.XPATH,"html/body/div[5]/div/div[5]/div[2]/h2/a")
+    except:
+        f=True
+
+    assert f
+
+@step('Select add Payment method')
+def step_impl(context):
+    print('###########################')
+    #a=context.driver.wait_until(By.CSS_SELECTOR,"button[class='btn button azure']")
+    a=context.driver.wait_until(By.XPATH,"//div[@data-card-id='22373']/div/div/div[2]/div")
+    print(a)
+    print(a.text)
+    print('#####################################')
+    a.click()
+    print('&&&&&&&&&')
+
+@step('Select amex card')
+def step_impl(context):
+    a1 = context.driver.wait_until(By.XPATH, "//div[@data-card-id='22373']/div/div")
+    print(a1.text)
+
+    #a1.click()
+    sleep(1000)
+
+
+
+@step('look for the psp by entering Ragione sociale')
+def step_impl(context):
+    context.driver.wait_until(By.CLASS_NAME,'input-search').send_keys('intesa')
+    context.driver.find_element(By.XPATH,"//form[@id='search-form']/a/img").click()
+
+
+@then('psp found successfully')
+def step_impl(context):
+    a=context.driver.wait_until(By.XPATH,"//div[@class='psp-menu']/a")
+    assert a
+    pass
+
+@step('Select conto')
+def step_impl(context):
+    context.driver.wait_until(By.CLASS_NAME, 'bank_account').click()
+
+@step('Select Altri metodi')
+def step_impl(context):
+    context.driver.wait_until(By.CLASS_NAME, 'other').click()
+
+@step('look for the psp by entering Nome servizi')
+def step_impl(context):
+    context.driver.wait_until(By.CLASS_NAME, 'input-search').send_keys('mod')
+    context.driver.find_element(By.XPATH, "//form[@id='search-form']/a/img").click()
+
+
+@step('Select transaction history')
+def step_impl(context):
+    context.driver.wait_until(By.CLASS_NAME,'navbar-toggler-icon').click()
+    context.driver.find_element(By.XPATH,"//div[@class='modal-body']/div[@class='modal-area']/ul/li[2]/a").click()
+
+@then('Check previous transactions')
+def step_impl(context):
+    context.driver.wait_until(By.XPATH,"//div[@class='transaction-list']/div")
+    list=context.driver.find_elements(By.XPATH,"//div[@class='transaction-list']/div")
+    print(len(list))
+    assert len(list)>0
+
+@then('circuit logo is visible')
+def step_impl(context):
+    assert context.driver.wait_until(By.CLASS_NAME,'card-logo')
+
+@then('circuit logo is not visible')
+def step_impl(context):
+    assert context.driver.wait_until(By.CLASS_NAME,'card-logo')
+
+@then('Error message is shown')
+def step_impl(context):
+    assert context.driver.wait_until(By.CLASS_NAME,'error-title')
+    assert context.driver.wait_until(By.CLASS_NAME,'error-description')
+
+@step('Select credit card with wrong card holder')
+def step_impl(context):
+    context.driver.wait_until(By.CLASS_NAME, 'credit-card').click()
+    context.driver.wait_until(By.NAME, 'pan').send_keys(settings['holder']['pan'])
+    context.driver.wait_until(By.NAME, 'expDate').send_keys(settings['holder']['expDate'])
+    context.driver.wait_until(By.CLASS_NAME, 'input-cvc').send_keys(settings['holder']['cvc'])
+    context.driver.wait_until(By.CLASS_NAME, 'input-holder').send_keys(settings['holder']['wrong_name'])
+
+
+@then('Check name error')
+def step_impl(context):
+    f=False
+    a = context.driver.find_elements(By.CLASS_NAME, "input-label")
+    for i in a:
+        if 'nome e cognome non validi' in i.text:
+            f=True
+    assert f
+
+@step('Enter with mail with uppercase characters')
+def step_impl(context):
+    context.driver.wait_until(By.XPATH,
+                              '//*[@action="enterEmail"]//button[contains(@class, "azure")]') \
+        .click()
+    casella = context.driver.wait_until(By.CLASS_NAME, 'input-email')
+    casella.send_keys(settings['holder']['mail_upper'])
+    casella.submit()
+    context.driver.wait_until(By.XPATH, '//input[@name="privacy"]').click()
+    context.driver.submit()
+
+@then('Login successfully as guest')
+def step_impl(context):
+    assert context.driver.wait_until(By.CLASS_NAME,'wallet-menu')
+
+
+@step('Select credit card with apostrophe on cardHolder')
+def step_impl(context):
+    context.driver.wait_until(By.CLASS_NAME, 'credit-card').click()
+    context.driver.wait_until(By.NAME, 'pan').send_keys(settings['holder']['pan'])
+    context.driver.wait_until(By.NAME, 'expDate').send_keys(settings['holder']['expDate'])
+    context.driver.wait_until(By.CLASS_NAME, 'input-cvc').send_keys(settings['holder']['cvc'])
+    context.driver.wait_until(By.CLASS_NAME, 'input-holder').send_keys(settings['holder']['name_apostrophe'])
+    a = context.driver.wait_until(By.XPATH, "/html/body/div[5]/form/div[4]/button")
+    a.click()

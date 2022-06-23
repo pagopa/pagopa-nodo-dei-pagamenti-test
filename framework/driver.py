@@ -14,7 +14,7 @@ class Driver:
 
         match browser:
             case "chrome":
-                #print('init driverrrr')
+                print('init driverrrr')
                 options = webdriver.ChromeOptions()
                 #options.add_argument('--headless')
                 options.add_argument('no-sandbox')
@@ -84,3 +84,9 @@ class Driver:
 
     def back(self):
         self.driver.back()
+
+    def click(self):
+        self.driver.click()
+
+    def find_element_by_class_name(self,name):
+        return self.driver.find_element_by_class_name(name)

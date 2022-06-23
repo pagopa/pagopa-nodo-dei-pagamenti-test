@@ -19,10 +19,14 @@
       "holder": {
         "pan": "5255000010002856",
         "pan_not_onus": "4003171102270111",
+        "pan_amex": "375200000000003",
         "expDate": "1230",
         "cvc": "123",
         "name": "Test Guy",
-        "mail": "matteo@aaaaaa.com"
+        "name_apostrophe": "Jane O'Connor",
+        "wrong_name": "'Niccolò Macchiavelli'",
+        "mail": "matteo@aaaaaa.com",
+        "mail_upper": "MaTTeO@bhbhbh.com"
       },
       "browser": {
         "type": "chrome",
