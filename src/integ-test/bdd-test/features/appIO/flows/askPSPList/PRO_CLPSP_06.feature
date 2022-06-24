@@ -1,4 +1,4 @@
-Feature: PRO_CLPSP_01
+Feature: PRO_CLPSP_06
 
 Background:
  Given systems up
@@ -11,13 +11,13 @@ Background:
         <soapenv:Header/>
         <soapenv:Body>
         <nod:verifyPaymentNoticeReq>
-            <idPSP>AGID_01</idPSP>
-            <idBrokerPSP>97735020584</idBrokerPSP>
-            <idChannel>97735020584_03</idChannel>
+            <idPSP>70000000001</idPSP>
+            <idBrokerPSP>70000000001</idBrokerPSP>
+            <idChannel>70000000001_01</idChannel>
             <password>pwdpwdpwd</password>
             <qrCode>
                 <fiscalCode>#creditor_institution_code#</fiscalCode>
-                <noticeNumber>#notice_number#</noticeNumber>
+                <noticeNumber>302094719472095710</noticeNumber>
             </qrCode>
         </nod:verifyPaymentNoticeReq>
         </soapenv:Body>
@@ -34,9 +34,9 @@ Scenario: Execute activateIOPayment (Phase 2)
         <soapenv:Header/>
         <soapenv:Body>
             <nod:activateIOPaymentReq>
-                <idPSP>AGID_01</idPSP>
-                <idBrokerPSP>97735020584</idBrokerPSP>
-                <idChannel>97735020584_03</idChannel>
+                <idPSP>70000000001</idPSP>
+                <idBrokerPSP>70000000001</idBrokerPSP>
+                <idChannel>70000000001_01</idChannel>
                 <password>pwdpwdpwd</password>
                 <!--Optional:-->
                 <idempotencyKey>#idempotency_key#</idempotencyKey>
@@ -77,16 +77,6 @@ Scenario: Execute activateIOPayment (Phase 2)
         </soapenv:Body>
     </soapenv:Envelope>
     """
-    When AppIO sends SOAP activateIOPayment to nodo-dei-pagamenti
-    Then check outcome is OK of activateIOPayment response
-
-Scenario: Execute nodoChiediInformazioniPagamento (Phase 3)
-    Given the Execute activateIOPayment (Phase 2) scenario executed successfully
-    When WISP sends rest GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
-    Then verify the HTTP status code of informazioniPagamento response is 200
-
-Scenario: Check correct PSP list
-    Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
     And initial XML paGetPayment
     """
     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
@@ -101,7 +91,7 @@ Scenario: Check correct PSP list
                      <!--Optional:-->
                      <retentionDate>2021-12-31T12:12:12</retentionDate>
                      <!--Optional:-->
-                     <lastPayment>1</lastPayment>
+                     <lastPayment>0</lastPayment>
                      <description>description</description>
                      <!--Optional:-->
                      <companyName>company</companyName>
@@ -170,6 +160,105 @@ Scenario: Check correct PSP list
          </soapenv:Envelope>
     """
     And EC replies to nodo-dei-pagamenti with the paGetPayment
+    When AppIO sends SOAP activateIOPayment to nodo-dei-pagamenti
+    Then check outcome is OK of activateIOPayment response
+
+Scenario: Execute nodoChiediInformazioniPagamento (Phase 3)
+    Given the Execute activateIOPayment (Phase 2) scenario executed successfully
+    When WISP sends rest GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
+    Then verify the HTTP status code of informazioniPagamento response is 200
+
+Scenario: Execute activateIOPayment1 (Phase 4)
+    Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
+    And PSP waits expirationTime of activateIOPayment expires
+    # potrei usare anche elem with value in action
+    And initial XML paGetPayment
+    """
+    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
+            <soapenv:Header />
+            <soapenv:Body>
+               <paf:paGetPaymentRes>
+                  <outcome>OK</outcome>
+                  <data>
+                     <creditorReferenceId>$iuv</creditorReferenceId>
+                     <paymentAmount>10.00</paymentAmount>
+                     <dueDate>2021-12-31</dueDate>
+                     <!--Optional:-->
+                     <retentionDate>2021-12-31T12:12:12</retentionDate>
+                     <!--Optional:-->
+                     <lastPayment>0</lastPayment>
+                     <description>description</description>
+                     <!--Optional:-->
+                     <companyName>company</companyName>
+                     <!--Optional:-->
+                     <officeName>office</officeName>
+                     <debtor>
+                        <uniqueIdentifier>
+                           <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
+                           <entityUniqueIdentifierValue>77777777777</entityUniqueIdentifierValue>
+                        </uniqueIdentifier>
+                        <fullName>paGetPaymentName</fullName>
+                        <!--Optional:-->
+                        <streetName>paGetPaymentStreet</streetName>
+                        <!--Optional:-->
+                        <civicNumber>paGetPayment99</civicNumber>
+                        <!--Optional:-->
+                        <postalCode>20155</postalCode>
+                        <!--Optional:-->
+                        <city>paGetPaymentCity</city>
+                        <!--Optional:-->
+                        <stateProvinceRegion>paGetPaymentState</stateProvinceRegion>
+                        <!--Optional:-->
+                        <country>IT</country>
+                        <!--Optional:-->
+                        <e-mail>paGetPayment@test.it</e-mail>
+                     </debtor>
+                     <!--Optional:-->
+                     <transferList>
+                     <!--1 to 5 repetitions:-->
+                        <transfer>
+                           <idTransfer>1</idTransfer>
+                           <transferAmount>3.00</transferAmount>
+                           <fiscalCodePA>77777777777</fiscalCodePA>
+                           <IBAN>IT45R0760103200000000001016</IBAN>
+                           <remittanceInformation>testPaGetPayment</remittanceInformation>
+                           <transferCategory>paGetPaymentTest</transferCategory>
+                        </transfer>
+                        <transfer>
+                           <idTransfer>2</idTransfer>
+                           <transferAmount>3.00</transferAmount>
+                           <fiscalCodePA>77777777777</fiscalCodePA>
+                           <IBAN>IT45R0760103200000000001016</IBAN>
+                           <remittanceInformation>testPaGetPayment</remittanceInformation>
+                           <transferCategory>paGetPaymentTest</transferCategory>
+                        </transfer>
+                        <transfer>
+                           <idTransfer>3</idTransfer>
+                           <transferAmount>4.00</transferAmount>
+                           <fiscalCodePA>77777777777</fiscalCodePA>
+                           <IBAN>IT96R0123451234512345678904</IBAN>
+                           <remittanceInformation>testPaGetPayment</remittanceInformation>
+                           <transferCategory>paGetPaymentTest</transferCategory>
+                        </transfer>
+                     </transferList>
+                     <!--Optional:-->
+                     <metadata>
+                     <!--1 to 10 repetitions:-->
+                        <mapEntry>
+                           <key>1</key>
+                           <value>22</value>
+                        </mapEntry>
+                     </metadata>
+                  </data>
+               </paf:paGetPaymentRes>
+            </soapenv:Body>
+         </soapenv:Envelope>
+    """
+    When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
+    Then check outcome is OK of activateIOPayment response
+
+Scenario: Check PSP list
+    Given the Execute activateIOPayment1 scenario executed successfully
     When WISP sends rest GET listaPSP?idPagamento=$activateIOPaymentResponse.paymentToken&percorsoPagamento=CARTE to nodo-dei-pagamenti
     Then verify the HTTP status code of listaPSP response is 200
     And check data contains POSTE of listaPSP response

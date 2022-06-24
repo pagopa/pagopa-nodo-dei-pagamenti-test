@@ -1,4 +1,4 @@
-Feature: PRO_CLPSP_01
+Feature: PRO_CLPSP_03
 
 Background:
  Given systems up
@@ -11,13 +11,13 @@ Background:
         <soapenv:Header/>
         <soapenv:Body>
         <nod:verifyPaymentNoticeReq>
-            <idPSP>AGID_01</idPSP>
-            <idBrokerPSP>97735020584</idBrokerPSP>
-            <idChannel>97735020584_03</idChannel>
+            <idPSP>70000000001</idPSP>
+            <idBrokerPSP>70000000001</idBrokerPSP>
+            <idChannel>70000000001_01</idChannel>
             <password>pwdpwdpwd</password>
             <qrCode>
                 <fiscalCode>#creditor_institution_code#</fiscalCode>
-                <noticeNumber>#notice_number#</noticeNumber>
+                <noticeNumber>302094719472095710</noticeNumber>
             </qrCode>
         </nod:verifyPaymentNoticeReq>
         </soapenv:Body>
@@ -34,9 +34,9 @@ Scenario: Execute activateIOPayment (Phase 2)
         <soapenv:Header/>
         <soapenv:Body>
             <nod:activateIOPaymentReq>
-                <idPSP>AGID_01</idPSP>
-                <idBrokerPSP>97735020584</idBrokerPSP>
-                <idChannel>97735020584_03</idChannel>
+                <idPSP>70000000001</idPSP>
+                <idBrokerPSP>70000000001</idBrokerPSP>
+                <idChannel>70000000001_01</idChannel>
                 <password>pwdpwdpwd</password>
                 <!--Optional:-->
                 <idempotencyKey>#idempotency_key#</idempotencyKey>
@@ -77,16 +77,6 @@ Scenario: Execute activateIOPayment (Phase 2)
         </soapenv:Body>
     </soapenv:Envelope>
     """
-    When AppIO sends SOAP activateIOPayment to nodo-dei-pagamenti
-    Then check outcome is OK of activateIOPayment response
-
-Scenario: Execute nodoChiediInformazioniPagamento (Phase 3)
-    Given the Execute activateIOPayment (Phase 2) scenario executed successfully
-    When WISP sends rest GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
-    Then verify the HTTP status code of informazioniPagamento response is 200
-
-Scenario: Check correct PSP list
-    Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
     And initial XML paGetPayment
     """
     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
@@ -101,7 +91,7 @@ Scenario: Check correct PSP list
                      <!--Optional:-->
                      <retentionDate>2021-12-31T12:12:12</retentionDate>
                      <!--Optional:-->
-                     <lastPayment>1</lastPayment>
+                     <lastPayment>0</lastPayment>
                      <description>description</description>
                      <!--Optional:-->
                      <companyName>company</companyName>
@@ -151,7 +141,7 @@ Scenario: Check correct PSP list
                            <idTransfer>3</idTransfer>
                            <transferAmount>4.00</transferAmount>
                            <fiscalCodePA>77777777777</fiscalCodePA>
-                           <IBAN>IT45R0760103200000000001016</IBAN>
+                           <IBAN>IT96R0123451234512345678904</IBAN>
                            <remittanceInformation>testPaGetPayment</remittanceInformation>
                            <transferCategory>paGetPaymentTest</transferCategory>
                         </transfer>
@@ -170,6 +160,16 @@ Scenario: Check correct PSP list
          </soapenv:Envelope>
     """
     And EC replies to nodo-dei-pagamenti with the paGetPayment
-    When WISP sends rest GET listaPSP?idPagamento=$activateIOPaymentResponse.paymentToken&percorsoPagamento=CARTE to nodo-dei-pagamenti
+    When AppIO sends SOAP activateIOPayment to nodo-dei-pagamenti
+    Then check outcome is OK of activateIOPayment response
+
+Scenario: Execute nodoChiediInformazioniPagamento (Phase 3)
+    Given the Execute activateIOPayment (Phase 2) scenario executed successfully
+    When WISP sends rest GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
+    Then verify the HTTP status code of informazioniPagamento response is 200
+
+Scenario: Check correct PSP list
+    Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
+    When WISP sends rest GET listaPSP?idPagamento=$activateIOPaymentResponse.paymentToken&percorsoPagamento=CARTE&lingua=IT to nodo-dei-pagamenti
     Then verify the HTTP status code of listaPSP response is 200
-    And check data contains POSTE of listaPSP response
+    And check totalRows is 0 of listaPSP response
