@@ -11,7 +11,7 @@
                  <idBrokerPSP>70000000001</idBrokerPSP>
                  <idChannel>70000000001_01</idChannel>
                  <password>pwdpwdpwd</password>
-                 <idServizio>00001</idServizio>
+                 <idSoggettoServizio>00001</idSoggettoServizio>
                  <datiSpecificiServizio>ciao</datiSpecificiServizio>
               </nod:demandPaymentNoticeRequest>
            </soapenv:Body>
@@ -52,18 +52,18 @@
       | password                   | Empty                                 | SIN_DPNR_15   |
       | password                   | 1234567                               | SIN_DPNR_16   |
       | password                   | 123456789012345678901234567890123456  | SIN_DPNR_17   |
-      | idServizio                 | None                                  | SIN_DPNR_18   |
-      | idServizio                 | Empty                                 | SIN_DPNR_19   |      
-      | idServizio                 | 123456                                | SIN_DPNR_20   |      
-      | idServizio                 | 1234                                  | SIN_DPNR_20.1 |
+      | idSoggettoServizio                 | None                                  | SIN_DPNR_18   |
+      | idSoggettoServizio                 | Empty                                 | SIN_DPNR_19   |      
+      | idSoggettoServizio                 | 123456                                | SIN_DPNR_20   |      
+      | idSoggettoServizio                 | 1234                                  | SIN_DPNR_20.1 |
       | datiSpecificiServizio      | None                                  | SIN_DPNR_22   |
       | datiSpecificiServizio      | Empty                                 | SIN_DPNR_23   |
       | datiSpecificiServizio      | cia                                   | SIN_DPNR_24   |
       | datiSpecificiServizio      | cia$                                  | SIN_DPNR_25   |
       
-  # two occurrences of idServizio - SIN_DPNR_21.1
+  # two occurrences of idSoggettoServizio - SIN_DPNR_21.1
    Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error on invalid demandPaymentNoticeReq
-    Given demandPaymentNotice soap-request with two occurrences of idServizio
+    Given demandPaymentNotice soap-request with two occurrences of idSoggettoServizio
     When psp sends demandPaymentNoticeReq to nodo-dei-pagamenti
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -74,8 +74,8 @@
                  <idBrokerPSP>70000000001</idBrokerPSP>
                  <idChannel>70000000001_01</idChannel>
                  <password>pwdpwdpwd</password>
-                 <idServizio>00001</idServizio>
-                 <idServizio>00001</idServizio>
+                 <idSoggettoServizio>00001</idSoggettoServizio>
+                 <idSoggettoServizio>00001</idSoggettoServizio>
                  <datiSpecificiServizio>ciao</datiSpecificiServizio>
               </nod:demandPaymentNoticeRequest>
            </soapenv:Body>
@@ -97,7 +97,7 @@
                  <idBrokerPSP>70000000001</idBrokerPSP>
                  <idChannel>70000000001_01</idChannel>
                  <password>pwdpwdpwd</password>
-                 <idServizio>00001</idServizio>
+                 <idSoggettoServizio>00001</idSoggettoServizio>
                  <datiSpecificiServizio>ciao</datiSpecificiServizio>
                  <datiSpecificiServizio>ciao</datiSpecificiServizio>
               </nod:demandPaymentNoticeRequest>
