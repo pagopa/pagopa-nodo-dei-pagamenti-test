@@ -12,7 +12,7 @@ Feature: response checks for paDemandPaymentNoticeResponse - OK
              <idBrokerPSP>70000000001</idBrokerPSP>
              <idChannel>70000000001_01</idChannel>
              <password>pwdpwdpwd</password>
-             <idServizio>#idServizio#</idServizio>
+             <idSoggettoServizio>#idSoggettoServizio#</idSoggettoServizio>
              <datiSpecificiServizio>#xmlServizio_Base64Binary#</datiSpecificiServizio>
           </nod:demandPaymentNoticeRequest>
        </soapenv:Body>
