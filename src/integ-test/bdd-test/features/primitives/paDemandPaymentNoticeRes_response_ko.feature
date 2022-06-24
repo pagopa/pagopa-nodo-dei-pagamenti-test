@@ -12,7 +12,7 @@ Feature: response checks for paDemandPaymentNoticeResponse - KO
              <idBrokerPSP>70000000001</idBrokerPSP>
              <idChannel>70000000001_01</idChannel>
              <password>pwdpwdpwd</password>
-             <idServizio>#idServizio#</idServizio>
+             <idSoggettoServizio>#idSoggettoServizio#</idSoggettoServizio>
              <datiSpecificiServizio>#xmlServizio_Base64Binary#</datiSpecificiServizio>
           </nod:demandPaymentNoticeRequest>
        </soapenv:Body>
@@ -154,7 +154,7 @@ Feature: response checks for paDemandPaymentNoticeResponse - KO
 	  </soapenv:Envelope>
     """
     And nodo-dei-pagamenti has intermediari_psp parameter FAULT_BEAN_ESTESO set to Y
-    And EC replies to nodo-dei-pagamenti with the paDemandPaymentNoticeResponse
+    And EC replies to nodo-dei-pagamenti swith the paDemandPaymentNoticeResponse
     When psp sends SOAP demandPaymentNotice to nodo-dei-pagamenti
     Then check outcome is KO of demandPaymentNotice response
     And fields originalFaultCode, originalFaultString, originalDescription are present in faultBean of demandPaymentNotice response
