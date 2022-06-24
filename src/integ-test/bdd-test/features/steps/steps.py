@@ -5,6 +5,7 @@ from xml.dom.minidom import parseString
 
 import requests
 from behave import *
+from requests.exceptions import RetryError
 
 import utils as utils
 
@@ -14,7 +15,6 @@ REQUEST = "Request"
 
 
 # Steps definitions
-
 @given('systems up')
 def step_impl(context):
     """
@@ -82,13 +82,11 @@ def step_impl(context, attribute, value, elem, primitive):
     setattr(context, primitive, my_document.toxml())
 
 
-# Scenario : Check valid URL in WSDL namespace
 @step('{sender} sends soap {soap_primitive} to {receiver}')
 def step_impl(context, sender, soap_primitive, receiver):
     primitive = soap_primitive.split("_")[0]
     headers = {'Content-Type': 'application/xml', "SOAPAction": primitive}  # set what your server accepts
-    # TODO get url according to receiver
-    url_nodo = utils.get_soap_url_nodo(context)
+    url_nodo = utils.get_soap_url_nodo(context, primitive)
     print("nodo soap_request sent >>>", getattr(context, soap_primitive))
 
     soap_response = requests.post(url_nodo, getattr(context, soap_primitive), headers=headers)
@@ -97,7 +95,6 @@ def step_impl(context, sender, soap_primitive, receiver):
     assert (soap_response.status_code == 200), f"status_code {soap_response.status_code}"
 
 
-# When job <JOB_NAME> triggered
 @when('job {job_name} triggered after {seconds} seconds')
 def step_impl(context, job_name, seconds):
     time.sleep(int(seconds))
@@ -106,7 +103,6 @@ def step_impl(context, job_name, seconds):
     setattr(context, job_name + RESPONSE, nodo_response)
 
 
-# Scenario: Execute activateIOPayment request
 @then('check {tag} is {value} of {primitive} response')
 def step_impl(context, tag, value, primitive):
     soap_response = getattr(context, primitive + RESPONSE)
@@ -125,6 +121,7 @@ def step_impl(context, tag, value, primitive):
     else:
         node_response = getattr(context, primitive + RESPONSE)
         json_response = node_response.json()
+        print(f'check tag "{tag}" - expected: {value}, obtained: {json_response.get(tag)}')
         assert json_response.get(tag) == value
 
 
@@ -157,7 +154,7 @@ def step_impl(context, tag, primitive):
         assert False
 
 
-# TODO greater/equals than ...
+# TODO improve with greater/equals than options
 @then('{tag} length is less than {value} of {primitive} response')
 def step_impl(context, tag, value, primitive):
     soap_response = getattr(context, primitive + RESPONSE)
@@ -182,12 +179,62 @@ def step_impl(context, mock, primitive):
 
     s = requests.Session()
     responseJson = utils.requests_retry_session(session=s).get(
-        f"{rest_mock}/api/v1/history/{notice_number}/{primitive}")
+        f"{rest_mock}/history/{notice_number}/{primitive}")
     json = responseJson.json()
     assert "request" in json and len(json.get("request").keys()) > 0
 
 
-@given('the {name} scenario executed successfully')
+@then(u'check {mock:EcPsp} receives {primitive} {status:ProperlyNotProperly} with noticeNumber {notice_number}')
+def step_impl(context, mock, primitive, status, notice_number):
+    rest_mock = utils.get_rest_mock_ec(context) if mock == "EC" else utils.get_rest_mock_psp(context)
+    if "$" in notice_number:
+        notice_number = utils.replace_local_variables(notice_number, context)
+
+    if status == "properly":
+        json, status_code = utils.get_history(rest_mock, notice_number, primitive)
+        setattr(context, primitive, json)
+        assert "request" in json and len(json.get("request").keys()) > 0
+    else:
+        try:
+            json, status_code = utils.get_history(rest_mock, notice_number, primitive)
+            assert status_code != 200
+        except RetryError:
+            assert True
+
+
+@then(u'check {mock:EcPsp} receives {primitive} properly having in the receipt {value} as {elem}')
+def step_impl(context, mock, primitive, value, elem):
+    json = getattr(context, primitive)
+    if "$" in value:
+        value = utils.replace_local_variables(value, context)
+    body = json.get("request").get("soapenv:envelope").get("soapenv:body")[0]
+    primitive_name = list(body.keys())[0]
+    assert body.get(primitive_name)[0].get("receipt")[0].get(elem)[0] == value
+
+
+@then(
+    u'check {mock:EcPsp} receives {primitive} properly having in the transfer with idTransfer {idTransfer} the same {elem} of {other_primitive}')
+def step_impl(context, mock, primitive, idTransfer, elem, other_primitive):
+    _assert = False
+    soap_action = getattr(context, other_primitive)
+    my_document = parseString(soap_action)
+    map = {}
+    for transfer in my_document.getElementsByTagName("transfer"):
+        if transfer.getElementsByTagName("idTransfer")[0].firstChild.nodeValue == idTransfer:
+            map[idTransfer] = transfer.getElementsByTagName(elem)[0].firstChild.nodeValue
+
+    json = getattr(context, primitive)
+    body = json.get("request").get("soapenv:envelope").get("soapenv:body")[0]
+    primitive_name = list(body.keys())[0]
+
+    for transfer in body.get(primitive_name)[0].get("receipt")[0].get("transferlist")[0].get("transfer"):
+        if transfer.get("idtransfer")[0] == str(idTransfer):
+            _assert = transfer.get(str(elem).lower())[0] == map[idTransfer]
+            break
+    assert _assert
+
+
+@step('the {name} scenario executed successfully')
 def step_impl(context, name):
     phase = ([phase for phase in context.feature.scenarios if name in phase.name] or [None])[0]
     text_step = ''.join(
@@ -217,6 +264,7 @@ def step_impl(context, sender, method, service, receiver):
                                      json=json_body)
 
     print(nodo_response.text)
+    setattr(context, service.split('?')[0], json_body)
     setattr(context, service.split('?')[0] + RESPONSE, nodo_response)
 
 
@@ -269,9 +317,14 @@ def step_impl(context):
     my_document = parseString(soap_request)
     notice_number = my_document.getElementsByTagName('noticeNumber')[0].firstChild.data
 
-    paGetPaymentJson = requests.get(f"{utils.get_rest_mock_ec(context)}/api/v1/history/{notice_number}/paGetPayment")
+    inoltroEsito = getattr(context, "inoltroEsito/carta")
+
+    activateIOPaymentResponse = getattr(context, "activateIOPayment" + RESPONSE)
+    activateIOPaymentResponseXml = parseString(activateIOPaymentResponse.content)
+
+    paGetPaymentJson = requests.get(f"{utils.get_rest_mock_ec(context)}/history/{notice_number}/paGetPayment")
     pspNotifyPaymentJson = requests.get(
-        f"{utils.get_rest_mock_ec(context)}/api/v1/history/{notice_number}/pspNotifyPayment")
+        f"{utils.get_rest_mock_ec(context)}/history/{notice_number}/pspNotifyPayment")
 
     paGetPayment = paGetPaymentJson.json()
     pspNotifyPayment = pspNotifyPaymentJson.json()
@@ -296,6 +349,127 @@ def step_impl(context):
         assert x[0].get("transfer")[0].get("fiscalCodePA")[0] == x[1].get("transfer")[0].get("fiscalcodepa")[0]
         assert x[0].get("transfer")[0].get("IBAN")[0] == x[1].get("transfer")[0].get("iban")[0]
 
+    pspNotifyPaymentBody = \
+        pspNotifyPayment.get("request").get("soapenv:envelope").get("soapenv:body")[0].get("pspfn:pspnotifypaymentreq")[
+            0]
+
+    data = \
+        paGetPayment.get("response").get("soapenv:Envelope").get("soapenv:Body")[0].get("paf:paGetPaymentRes")[0].get(
+            "data")[0]
+    assert pspNotifyPaymentBody.get("idpsp")[0] == inoltroEsito["identificativoPsp"]
+    assert pspNotifyPaymentBody.get("idbrokerpsp")[0] == inoltroEsito["identificativoIntermediario"]
+    assert pspNotifyPaymentBody.get("idchannel")[0] == inoltroEsito["identificativoCanale"]
+    assert float(pspNotifyPaymentBody.get("creditcardpayment")[0].get("fee")[0]) == float(
+        inoltroEsito["importoTotalePagato"]) - float(data["paymentAmount"][0])
+    assert pspNotifyPaymentBody.get("creditcardpayment")[0].get("rrn")[0] == str(inoltroEsito["RRN"])
+    assert pspNotifyPaymentBody.get("creditcardpayment")[0].get("outcomepaymentgateway")[0] == str(
+        inoltroEsito["esitoTransazioneCarta"])
+    assert pspNotifyPaymentBody.get("creditcardpayment")[0].get("totalamount")[0] == str(
+        inoltroEsito["importoTotalePagato"])
+    assert pspNotifyPaymentBody.get("creditcardpayment")[0].get("timestampoperation")[0] in str(
+        inoltroEsito["timestampOperazione"])
+    assert pspNotifyPaymentBody.get("creditcardpayment")[0].get("authorizationcode")[0] == str(
+        inoltroEsito["codiceAutorizzativo"])
+
+    assert pspNotifyPaymentBody.get("paymentdescription")[0] == \
+           paGetPayment.get("response").get("soapenv:Envelope").get("soapenv:Body")[0].get("paf:paGetPaymentRes")[
+               0].get(
+               "data")[0].get("description")[0]
+    assert pspNotifyPaymentBody.get("companyname")[0] == \
+           paGetPayment.get("response").get("soapenv:Envelope").get("soapenv:Body")[0].get("paf:paGetPaymentRes")[
+               0].get(
+               "data")[0].get("companyName")[0]
+
+    assert pspNotifyPaymentBody.get("paymenttoken")[0] == \
+           activateIOPaymentResponseXml.getElementsByTagName("paymentToken")[0].firstChild.data
+    assert pspNotifyPaymentBody.get("fiscalcodepa")[0] == my_document.getElementsByTagName('fiscalCode')[
+        0].firstChild.data
+    assert pspNotifyPaymentBody.get("debtamount")[0] == \
+           paGetPayment.get("response").get("soapenv:Envelope").get("soapenv:Body")[0].get("paf:paGetPaymentRes")[
+               0].get(
+               "data")[0].get("paymentAmount")[0]
+    assert pspNotifyPaymentBody.get("creditorreferenceid")[0] == \
+           paGetPayment.get("response").get("soapenv:Envelope").get("soapenv:Body")[0].get("paf:paGetPaymentRes")[
+               0].get(
+               "data")[0].get("creditorReferenceId")[0]
+
+
+@then('activateIOPayment response and pspNotifyPayment request are consistent with paypal')
+def step_impl(context):
+    # retrieve info from soap request of background step
+    soap_request = getattr(context, "activateIOPayment")
+    my_document = parseString(soap_request)
+    notice_number = my_document.getElementsByTagName('noticeNumber')[0].firstChild.data
+
+    inoltroEsito = getattr(context, "inoltroEsito/paypal")
+
+    activateIOPaymentResponse = getattr(context, "activateIOPayment" + RESPONSE)
+    activateIOPaymentResponseXml = parseString(activateIOPaymentResponse.content)
+
+    paGetPaymentJson = requests.get(f"{utils.get_rest_mock_ec(context)}/history/{notice_number}/paGetPayment")
+    pspNotifyPaymentJson = requests.get(
+        f"{utils.get_rest_mock_ec(context)}/history/{notice_number}/pspNotifyPayment")
+
+    paGetPayment = paGetPaymentJson.json()
+    pspNotifyPayment = pspNotifyPaymentJson.json()
+
+    # verify transfer list are equal
+    paGetPaymentRes_transferList = \
+        paGetPayment.get("response").get("soapenv:Envelope").get("soapenv:Body")[0].get("paf:paGetPaymentRes")[0].get(
+            "data")[0].get("transferList")
+    pspNotifyPaymentReq_transferList = \
+        pspNotifyPayment.get("request").get("soapenv:envelope").get("soapenv:body")[0].get("pspfn:pspnotifypaymentreq")[
+            0].get("transferlist")
+
+    paGetPaymentRes_transferList_sorted = sorted(paGetPaymentRes_transferList, key=lambda transfer: int(
+        transfer.get("transfer")[0].get("idTransfer")[0]))
+    pspNotifyPaymentReq_transferList_sorted = sorted(pspNotifyPaymentReq_transferList, key=lambda transfer: int(
+        transfer.get("transfer")[0].get("idtransfer")[0]))
+
+    mixed_list = zip(paGetPaymentRes_transferList_sorted, pspNotifyPaymentReq_transferList_sorted)
+    for x in mixed_list:
+        assert x[0].get("transfer")[0].get("idTransfer")[0] == x[1].get("transfer")[0].get("idtransfer")[0]
+        assert x[0].get("transfer")[0].get("transferAmount")[0] == x[1].get("transfer")[0].get("transferamount")[0]
+        assert x[0].get("transfer")[0].get("fiscalCodePA")[0] == x[1].get("transfer")[0].get("fiscalcodepa")[0]
+        assert x[0].get("transfer")[0].get("IBAN")[0] == x[1].get("transfer")[0].get("iban")[0]
+
+    pspNotifyPaymentBody = \
+        pspNotifyPayment.get("request").get("soapenv:envelope").get("soapenv:body")[0].get("pspfn:pspnotifypaymentreq")[
+            0]
+
+    data = \
+        paGetPayment.get("response").get("soapenv:Envelope").get("soapenv:Body")[0].get("paf:paGetPaymentRes")[0].get(
+            "data")[0]
+    assert pspNotifyPaymentBody.get("idpsp")[0] == inoltroEsito["identificativoPsp"]
+    assert pspNotifyPaymentBody.get("idbrokerpsp")[0] == inoltroEsito["identificativoIntermediario"]
+    assert pspNotifyPaymentBody.get("idchannel")[0] == inoltroEsito["identificativoCanale"]
+    assert pspNotifyPaymentBody.get("paymenttoken")[0] == \
+           activateIOPaymentResponseXml.getElementsByTagName("paymentToken")[0].firstChild.data
+    assert pspNotifyPaymentBody.get("paymentdescription")[0] == \
+           paGetPayment.get("response").get("soapenv:Envelope").get("soapenv:Body")[0].get("paf:paGetPaymentRes")[
+               0].get(
+               "data")[0].get("description")[0]
+    assert pspNotifyPaymentBody.get("fiscalcodepa")[0] == my_document.getElementsByTagName('fiscalCode')[
+        0].firstChild.data
+    assert pspNotifyPaymentBody.get("companyname")[0] == \
+           paGetPayment.get("response").get("soapenv:Envelope").get("soapenv:Body")[0].get("paf:paGetPaymentRes")[
+               0].get(
+               "data")[0].get("companyName")[0]
+    assert pspNotifyPaymentBody.get("creditorreferenceid")[0] == \
+           paGetPayment.get("response").get("soapenv:Envelope").get("soapenv:Body")[0].get("paf:paGetPaymentRes")[
+               0].get(
+               "data")[0].get("creditorReferenceId")[0]
+    assert pspNotifyPaymentBody.get("debtamount")[0] == \
+           paGetPayment.get("response").get("soapenv:Envelope").get("soapenv:Body")[0].get("paf:paGetPaymentRes")[
+               0].get(
+               "data")[0].get("paymentAmount")[0]
+    assert pspNotifyPaymentBody.get("paypalpayment")[0].get("transactionid")[0] == inoltroEsito["idTransazione"]
+    assert pspNotifyPaymentBody.get("paypalpayment")[0].get("psptransactionid")[0] == inoltroEsito["idTransazionePsp"]
+    assert float(pspNotifyPaymentBody.get("paypalpayment")[0].get("fee")[0]) == float(
+        inoltroEsito["importoTotalePagato"]) - float(data["paymentAmount"][0])
+    assert pspNotifyPaymentBody.get("paypalpayment")[0].get("timestampoperation")[0] in str(
+        inoltroEsito["timestampOperazione"])
+
 
 @step('idChannel with USE_NEW_FAULT_CODE=Y')
 def step_impl(context):
@@ -305,13 +479,15 @@ def step_impl(context):
 
 @step("random idempotencyKey having {value} as idPSP in {primitive}")
 def step_impl(context, value, primitive):
-    xml = utils.manipulate_soap_action(getattr(context, primitive), "idempotencyKey", f"{value}_{str(random.randint(1000000000, 9999999999))}")
+    xml = utils.manipulate_soap_action(getattr(context, primitive), "idempotencyKey",
+                                       f"{value}_{str(random.randint(1000000000, 9999999999))}")
     setattr(context, primitive, xml)
 
 
 @step("random noticeNumber in {primitive}")
 def step_impl(context, primitive):
-    xml = utils.manipulate_soap_action(getattr(context, primitive), "noticeNumber", f"30211{str(random.randint(1000000000000, 9999999999999))}")
+    xml = utils.manipulate_soap_action(getattr(context, primitive), "noticeNumber",
+                                       f"30211{str(random.randint(1000000000000, 9999999999999))}")
     setattr(context, primitive, xml)
 
 
@@ -373,15 +549,15 @@ def step_impl(context, elem, primitive):
         assert False
 
 
-@given("PSP waits {number} minutes for expiration")
-def step_impl(context, number):
+@step("{mock:EcPsp} waits {number} minutes for expiration")
+def step_impl(context, mock, number):
     seconds = int(number) * 60
     print(f"wait for: {seconds} seconds")
     time.sleep(seconds)
 
 
-@given("PSP waits {number} seconds for expiration")
-def step_impl(context, number):
+@step("{mock:EcPsp} waits {number} seconds for expiration")
+def step_impl(context, mock, number):
     seconds = int(number)
     print(f"wait for: {seconds} seconds")
     time.sleep(seconds)
@@ -389,5 +565,13 @@ def step_impl(context, number):
 
 @step("idempotencyKey valid for {seconds} seconds")
 def step_impl(context, seconds):
-    #     And field VALID_TO set to current time + <seconds> seconds in NODO_ONLINE.IDEMPOTENCY_CACHE table for sendPaymentOutcome record
-    pass;
+    # TODO with apiconfig:
+    #  And field VALID_TO set to current time + <seconds> seconds in NODO_ONLINE.IDEMPOTENCY_CACHE table for
+    #  sendPaymentOutcome record
+    pass
+
+
+@step("api-config executes the sql {sql_code}")
+def step_impl(context, sql_code):
+    # TODO
+    pass

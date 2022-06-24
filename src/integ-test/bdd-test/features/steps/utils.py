@@ -26,12 +26,27 @@ def requests_retry_session(
     return session
 
 
-def get_soap_url_nodo(context):
-    if context.config.userdata.get("services").get("nodo-dei-pagamenti").get("soap_service") is not None:
+def get_soap_url_nodo(context, primitive=-1):
+    base_path = "/nodo"
+    primitive_mapping = {
+        "verificaBollettino": "/node-for-psp/v1",
+        "verifyPaymentNotice": "/node-for-psp/v1",
+        "activatePaymentNotice": "/node-for-psp/v1",
+        "sendPaymentOutcome": "/node-for-psp/v1",
+        "activateIOPayment": "/node-for-io/v1",
+        "nodoVerificaRPT": "/nodo-per-psp/v1",
+        "nodoAttivaRPT": "/nodo-per-psp/v1",
+        "nodoInviaFlussoRendicontazione": "/nodo-per-psp/v1",
+        "pspNotifyPayment": "/psp-for-node/v1",
+        "nodoChiediElencoFlussiRendicontazione": "/nodo-per-pa/v1",
+        "nodoChiediFlussoRendicontazione": "/nodo-per-pa/v1",
+    }
+    if "soap_service" in context.config.userdata.get("services").get("nodo-dei-pagamenti"):
         return context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url") \
                + context.config.userdata.get("services").get("nodo-dei-pagamenti").get("soap_service")
     else:
-        return ""
+        return context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url") \
+               + base_path + primitive_mapping.get(primitive)
 
 
 def get_rest_url_nodo(context):
@@ -61,7 +76,7 @@ def get_rest_mock_psp(context):
 
 def save_soap_action(mock, primitive, soap_action, override=False):
     headers = {'Content-Type': 'application/xml'}  # set what your server accepts
-    response = requests.post(f"{mock}/api/v1/response/{primitive}?override={override}", soap_action, headers=headers)
+    response = requests.post(f"{mock}/response/{primitive}?override={override}", soap_action, headers=headers)
     return response.status_code
 
 
@@ -90,12 +105,23 @@ def manipulate_soap_action(soap_action, elem, value):
             original_node = cloned_node
             cloned_node = original_node.cloneNode(2)
     else:
-        if len(my_document.getElementsByTagName(elem)[0].childNodes) > 0:
-            element = my_document.getElementsByTagName(elem)[0].childNodes[0]
-            element.nodeValue = value
-        else:
+        node = my_document.getElementsByTagName(elem)[0] if my_document.getElementsByTagName(elem) else None
+
+        if node is None:
+            # create
             element = my_document.createTextNode(value)
             my_document.getElementsByTagName(elem)[0].appendChild(element)
+        elif len(node.childNodes) > 1:
+            # replace object
+            object = parseString(value)
+            node.parentNode.replaceChild(object.childNodes[0], node)
+        else:
+            # leaf -> single value
+            while node.hasChildNodes():
+                node.removeChild(node.firstChild)
+            element = my_document.createTextNode(value)
+            node.appendChild(element)
+
     return my_document.toxml()
 
 
@@ -127,3 +153,9 @@ def replace_global_variables(payload, context):
         if replaced_sharp in context.config.userdata.get("global_configuration"):
             payload = payload.replace(elem, context.config.userdata.get("global_configuration").get(replaced_sharp))
     return payload
+
+
+def get_history(rest_mock, notice_number, primitive):
+    s = requests.Session()
+    response = requests_retry_session(session=s).get(f"{rest_mock}/history/{notice_number}/{primitive}")
+    return response.json(), response.status_code

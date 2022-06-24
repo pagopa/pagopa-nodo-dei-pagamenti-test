@@ -9,3 +9,6 @@ register_type(EcPsp=parse_ecpsp)
 
 parse_method = TypeBuilder.make_enum({"get": "GET", "post": "POST"})
 register_type(Method=parse_method)
+
+parse_properly_notproperly = TypeBuilder.make_enum({"properly": "properly", "not properly": "not-properly"})
+register_type(ProperlyNotProperly=parse_properly_notproperly)
