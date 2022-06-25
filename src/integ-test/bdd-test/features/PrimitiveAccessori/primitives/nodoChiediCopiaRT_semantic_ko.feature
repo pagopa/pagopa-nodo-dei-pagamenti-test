@@ -1,4 +1,4 @@
-Feature: Check semantic KO for nodoChiediCopiaRT
+Feature: Semantic checks for nodoChiediCopiaRT - KO
 
     Background:
         Given systems up

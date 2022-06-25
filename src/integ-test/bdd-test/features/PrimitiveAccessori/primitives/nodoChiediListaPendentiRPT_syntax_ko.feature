@@ -1,4 +1,4 @@
-Feature: Syntax check KO for nodoChiediListaPendentiRPT
+Feature: Syntax checks for nodoChiediListaPendentiRPT - KO
 
     Background:
         Given systems up
@@ -13,6 +13,9 @@ Feature: Syntax check KO for nodoChiediListaPendentiRPT
                         <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
                         <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
                         <password>pwdpwdpwd</password>
+                        <identificativoDominio>44444444444</identificativoDominio>
+                        <rangeDa>2001-02-02T12:00:00</rangeDa>
+                        <rangeA>2017-11-11T12:00:00</rangeA>
                         <dimensioneLista>10</dimensioneLista>
                     </wss:nodoChiediListaPendentiRPT>
                 </soapenv:Body>
@@ -30,7 +33,10 @@ Feature: Syntax check KO for nodoChiediListaPendentiRPT
                     <ws:nodoChiediListaPendentiRPT>
                         <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
                         <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
-                        <password>pwd</password>
+                        <password>pwdpwdpwd</password>
+                        <identificativoDominio>44444444444</identificativoDominio>
+                        <rangeDa>2001-02-02T12:00:00</rangeDa>
+                        <rangeA>2017-11-11T12:00:00</rangeA>
                         <dimensioneLista>10</dimensioneLista>
                     </ws:nodoChiediListaPendentiRPT>
                 </soapenv:Body>
@@ -54,17 +60,16 @@ Feature: Syntax check KO for nodoChiediListaPendentiRPT
             | password                              | Empty                                | CLPRPTSIN12 |
             | password                              | aaaaaaa                              | CLPRPTSIN13 |
             | password                              | aaaaaaaaaaaaaaaa                     | CLPRPTSIN14 |
-            # CHANGE IN OK | identificativoDominio                 | None                                 | CLPRPTSIN15 |
             | identificativoDominio                 | Empty                                | CLPRPTSIN16 |
             | identificativoDominio                 | aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | CLPRPTSIN17 |
-            | rangeDA                               | Empty                                | CLPRPTSIN18 |
-            | rangeDA                               | 2021:12:12                           | CLPRPTSIN19 |
-            | rangeDA                               | 12-12-2021                           | CLPRPTSIN19 |
-            | rangeDA                               | 2021-12-12T13:04:21                  | CLPRPTSIN19 |
+            | rangeDa                               | Empty                                | CLPRPTSIN18 |
+            | rangeDa                               | 2021:12:12                           | CLPRPTSIN19 |
+            | rangeDa                               | 12-12-2021                           | CLPRPTSIN19 |
+            | rangeDa                               | 2021-12-12T13:04:21:00               | CLPRPTSIN19 |
             | rangeA                                | Empty                                | CLPRPTSIN20 |
             | rangeA                                | 2021:12:12                           | CLPRPTSIN21 |
             | rangeA                                | 12-12-2021                           | CLPRPTSIN21 |
-            | rangeA                                | 2021-12-12T13:04:21                  | CLPRPTSIN21 |
+            | rangeA                                | 2021-12-12T13:04:21:00               | CLPRPTSIN21 |
             | dimensioneLista                       | Empty                                | CLPRPTSIN22 |
             | dimensioneLista                       | A                                    | CLPRPTSIN23 |
             | dimensioneLista                       | 2.51                                 | CLPRPTSIN24 |

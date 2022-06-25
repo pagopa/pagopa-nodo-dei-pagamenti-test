@@ -1,4 +1,4 @@
-Feature: Check semantic KO for nodoChiediStatoRPT
+Feature: Semantic checks for nodoChiediStatoRPT - KO
 
     Background:
         Given systems up
