@@ -545,6 +545,31 @@ def step_impl(context, param, value):
         print(f'executed query: {exec_query}')
 
 
+@step("execution query {query_name} under macro {macro} with db name {db_name}")
+def step_impl(context, query_name, macro, db_name):
+    db_config = context.config.userdata.get("db_configuration")
+    db_selected = db_config.get(db_name)
+    
+    selected_query = utils.query_json(context, query_name, macro)
+    selected_query = utils.replace_local_variables(selected_query, context)
+
+    conn = db.getConnection(db_selected.get('host'), db_selected.get('database'),db_selected.get('user'),db_selected.get('password'),db_selected.get('port'))
+
+    exec_query = db.executeQuery(conn, selected_query)
+    if exec_query is not None:
+        print(f'executed query: {exec_query}')
+    setattr(context, query_name, exec_query)
+
+
+
+@step("with the query {query_name1} check assert beetwen elem {elem1} in posisition {position1:d} and elem {elem2} with position {position2:d} of the query {query_name2}")
+def stemp_impl(context, query_name1, elem1, position1, elem2, query_name2, position2):
+    result_query1 = getattr(context, query_name1)
+    result_query2 = getattr(context, query_name2)
+
+    assert result_query1[0][position1] == result_query2[0][position2]
+
+
 
 @Step("call the {elem} of {primitive} response as {name}")
 def step_impl(context, elem, primitive, name):
@@ -640,7 +665,7 @@ def step_impl(context, value, column, query_name, table_name, db_name, name_macr
 
     if value == 'None':
         print('None')
-        assert query_result[0] == None
+        assert len(query_result) == 0
     elif value == 'NotNone':
         print('NotNone')
         assert query_result[0] != None
@@ -707,7 +732,7 @@ def step_impl(context, primitive1, primitive2):
         assert False
 
 @then("check db PAG-590_01")
-def step_impl(context, ):
+def step_impl(context):
     
     #from activatePaymentNotice2 = activatePaymentNotice1
     activatePaymentNotice2 = parseString(getattr(context, 'activatePaymentNotice2'))
@@ -966,3 +991,69 @@ def step_impl(context):
     print(default_validity_token, type(default_validity_token))
 
     assert token_valid_from + datetime.timedelta(milliseconds=default_validity_token) == token_valid_to
+
+@then("check DB_GR_01")
+def step_impl(context):
+    #from activatePaymentNotice
+    activatePaymentNotice = parseString(getattr(context, 'activatePaymentNotice'))
+    pa = activatePaymentNotice.getElementsByTagName('fiscalCode')[0].firstChild.data
+    psp = activatePaymentNotice.getElementsByTagName('idPSP')[0].firstChild.data
+    noticeNumber = activatePaymentNotice.getElementsByTagName('noticeNumber')[0].firstChild.data
+
+
+    config = json.load(open(os.path.join(context.config.base_dir + "/../resources/config.json")))
+    intermediarioPA = config.get('global_configuration').get('id_broker')
+    stazione = config.get('global_configuration').get('id_station')
+
+    query = f"SELECT s.* FROM POSITION_RECEIPT s where s.NOTICE_ID = '{noticeNumber}' and s.PA_FISCAL_CODE= '{pa}'"
+    query1 = f"SELECT s.PAYMENT_TOKEN, s.NOTICE_ID,s.OUTCOME, s.PA_FISCAL_CODE, s.CREDITOR_REFERENCE_ID, s.AMOUNT, s.CHANNEL_ID, s.PAYMENT_CHANNEL, s.PAYER_ID, s.PAYMENT_METHOD, s.FEE, s.ID FROM POSITION_PAYMENT s where s.NOTICE_ID = '{noticeNumber}' and s.PA_FISCAL_CODE= '{pa}' "
+    query2 = f"SELECT s.DESCRIPTION, s.COMPANY_NAME, s.OFFICE_NAME, s.DEBTOR_ID FROM POSITION_SERVICE s where s.NOTICE_ID = '{noticeNumber}' and s.PA_FISCAL_CODE= '{pa}'"
+    query3 = f"SELECT s.* FROM PSP s where s.ID_PSP = '{psp}'"
+    query4 = f"SELECT s.METADATA FROM POSITION_PAYMENT_PLAN s where s.NOTICE_ID = '{noticeNumber}' and s.PA_FISCAL_CODE= '{pa}'"
+
+    db_config = context.config.userdata.get("db_configuration").get("nodo_online")
+
+    conn = db.getConnection(db_config.get('host'), db_config.get('database'),db_config.get('user'),db_config.get('password'),db_config.get('port'))
+    
+    rows = db.executeQuery(conn, query)
+    rows1 = db.executeQuery(conn, query1)
+    rows2 = db.executeQuery(conn, query2)
+    rows4 = db.executeQuery(conn, query4)
+
+    db.closeConnection(conn)
+
+    db_config = context.config.userdata.get("db_configuration").get("nodo_cfg")
+
+    conn = db.getConnection(db_config.get('host'), db_config.get('database'),db_config.get('user'),db_config.get('password'),db_config.get('port'))
+
+    rows3 = db.executeQuery(conn, query3)
+    
+    db.closeConnection(conn)
+
+    assert rows[0][1] == rows1[0][4]
+    assert rows[0][2] == rows1[0][2]
+    assert rows[0][3] == rows1[0][3]
+    assert rows[0][4] == rows1[0][14]
+    assert rows[0][5] == rows1[0][12]
+    assert rows[0][6] == rows1[0][4]
+    assert rows[0][7] == rows1[0][5]
+    assert rows[0][8] == rows2[0][3]
+    assert rows[0][9] == rows2[0][4]
+    assert rows[0][10] == rows2[0][5]
+    assert rows[0][11] == rows2[0][6]
+    assert rows[0][12] == psp
+    assert rows[0][13] == rows3[0][6]
+    assert rows[0][14] == rows3[0][16]
+    assert rows[0][15] == rows3[0][17]
+    assert rows[0][16] == rows1[0][10]
+    assert rows[0][17] == rows1[0][16]
+    assert rows[0][18] == rows1[0][18]
+    assert rows[0][19] == rows1[0][15]
+    assert rows[0][20] == rows1[0][13]
+    assert rows[0][21] != None
+    assert rows[0][22] != rows1[0][19]
+    assert rows[0][23] != None
+    assert rows[0][24] == rows4[0][0]
+    assert rows[0][25] == None
+    assert rows[0][26] == rows1[0][0] #id
+    assert rows[0][27] == None
