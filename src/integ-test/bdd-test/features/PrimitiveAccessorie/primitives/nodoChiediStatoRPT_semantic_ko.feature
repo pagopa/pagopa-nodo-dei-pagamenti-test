@@ -2,9 +2,7 @@ Feature: Semantic checks for nodoChiediStatoRPT - KO
 
     Background:
         Given systems up
-
-    Scenario Outline: Check semantic errors for nodoChiediStatoRPT primitive
-        Given initial XML nodoChiediStatoRPT
+        And initial XML nodoChiediStatoRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
                 <soapenv:Header/>
@@ -20,7 +18,9 @@ Feature: Semantic checks for nodoChiediStatoRPT - KO
                 </soapenv:Body>
             </soapenv:Envelope>
             """
-        And <tag> with <tag_value> in nodoChiediStatoRPT
+
+    Scenario Outline: Check semantic errors for nodoChiediStatoRPT primitive
+        Given <tag> with <tag_value> in nodoChiediStatoRPT
         When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
         Then check faultCode is <error> of nodoChiediStatoRPT response
         Examples:
@@ -35,3 +35,10 @@ Feature: Semantic checks for nodoChiediStatoRPT - KO
             | identificativoUnivocoVersamento       | wrongIUV                | PPT_RPT_SCONOSCIUTA               | CSRPTSEM8   |
             | codiceContestoPagamento               | wrongPaymentContextCode | PPT_RPT_SCONOSCIUTA               | CSRPTSEM9   |
             | identificativoIntermediarioPA         | 77777777777             | PPT_AUTORIZZAZIONE                | CSRPTSEM11  |
+
+    # [CSRPTSEM10]
+    Scenario: Check semantic errors for nodoChiediStatoRPT primitive
+        Given identificativoUnivocoVersamento with iuv_value_in_db in nodoChiediStatoRPT
+        And codiceContestoPagamento with ccp_value_in_db in nodoChiediStatoRPT
+        When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
+        Then check faultCode is PPT_RPT_SCONOSCIUTA of nodoChiediStatoRPT response

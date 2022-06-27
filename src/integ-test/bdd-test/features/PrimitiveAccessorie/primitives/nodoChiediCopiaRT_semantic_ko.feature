@@ -36,10 +36,13 @@ Feature: Semantic checks for nodoChiediCopiaRT - KO
             | codiceContestoPagamento               | wrongPaymentContextCode | PPT_RT_SCONOSCIUTA                | CCRTSEM9    |
             | identificativoIntermediarioPA         | 77777777777             | PPT_AUTORIZZAZIONE                | CCRTSEM12   |
 
+    # TODO: COMPLETARE CON VALORI ESATTI
     Scenario Outline: Check semantic errors for nodoChiediCopiaRT primitive
         Given identificativoUnivocoVersamento with <iuv_value> in nodoChiediCopiaRT
         And codiceContestoPagamento with <ccp_value> in nodoChiediCopiaRT
         When EC sends SOAP nodoChiediCopiaRT to nodo-dei-pagamenti
         Then check faultCode is <error> of nodoChiediCopiaRT response
         Examples:
-            | iuv_value | ccp_value | error | soapUI test |
+            | iuv_value         | ccp_value         | error                 | soapUI test |
+            | iuv_value_in_db_1 | ccp_value_in_db_1 | PPT_RT_SCONOSCIUTA    | CCRTSEM10   |
+            | iuv_value_in_db_2 | ccp_value_in_db_2 | PPT_RT_NONDISPONIBILE | CCRTSEM11   |
