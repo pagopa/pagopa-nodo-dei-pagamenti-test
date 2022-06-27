@@ -4,23 +4,23 @@ Feature: check syntax KO for paaVerificaRPTRes
         Given systems up
         And EC old version
         And initial XML verifyPaymentNotice
-         """
-              <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-                 <soapenv:Header/>
-                 <soapenv:Body>
-                    <nod:verifyPaymentNoticeReq>
-                       <idPSP>70000000001</idPSP>
-                       <idBrokerPSP>70000000001</idBrokerPSP>
-                       <idChannel>70000000001_01</idChannel>
-                       <password>pwdpwdpwd</password>
-                       <qrCode>
-                          <fiscalCode>#creditor_institution_code#</fiscalCode>
-                          <noticeNumber>302094719472095710</noticeNumber>
-                       </qrCode>
-                    </nod:verifyPaymentNoticeReq>
-                 </soapenv:Body>
-              </soapenv:Envelope>
-      """
+        """
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <nod:verifyPaymentNoticeReq>
+                <idPSP>70000000001</idPSP>
+                <idBrokerPSP>70000000001</idBrokerPSP>
+                <idChannel>70000000001_01</idChannel>
+                <password>pwdpwdpwd</password>
+                <qrCode>
+                    <fiscalCode>#creditor_institution_code#</fiscalCode>
+                    <noticeNumber>302094719472095710</noticeNumber>
+                </qrCode>
+            </nod:verifyPaymentNoticeReq>
+            </soapenv:Body>
+        </soapenv:Envelope>
+        """
 
     Scenario Outline: Check PPT_STAZIONE_INT_PA_ERRORE_RESPONSE error on invalid body element value
         Given initial XML paaVerificaRPTRisposta
@@ -49,7 +49,6 @@ Feature: check syntax KO for paaVerificaRPTRes
                 </soapenv:Body>
             </soapenv:Envelope>
             """
-            
         And <tag> with <tag_value> in paaVerificaRPTRisposta
         And if esito is KO set fault to None in paaVerificaRPTRisposta
         And EC replies to nodo-dei-pagamenti with the paaVerificaRPTRisposta

@@ -115,6 +115,8 @@ def step_impl(context, sender, soap_primitive, receiver):
 
 @when('job {job_name} triggered after {seconds} seconds')
 def step_impl(context, job_name, seconds):
+    print(seconds)
+    seconds = utils.replace_local_variables(seconds, context)
     time.sleep(int(seconds))
     url_nodo = utils.get_rest_url_nodo(context)
     nodo_response = requests.get(f"{url_nodo}/jobs/trigger/{job_name}")
@@ -627,7 +629,7 @@ def step_impl(context, mock, number):
     print(f"wait for: {seconds} seconds")
     time.sleep(seconds)
 
-@step("wait {number:f} second for expiration")
+@step("wait {number:f} seconds for expiration")
 def step_impl(context, number):
     seconds = int(number) 
     print(f"wait for: {seconds} seconds")

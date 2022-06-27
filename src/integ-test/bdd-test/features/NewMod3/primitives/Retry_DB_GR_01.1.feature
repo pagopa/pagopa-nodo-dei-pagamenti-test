@@ -124,8 +124,8 @@ Feature: process tests Retry_DB_GR_01.1
     #Test1
     Then check outcome is OK of sendPaymentOutcome response
     #sleep phase2
-    And wait 2.2 second for expiration
-    And the value id, is same as null, of the record at column ID of the table POSITION_RECEIPT retrivied by the query position_receipt on db nodo_online under macro NewMod3
+    And wait 2.2 seconds for expiration
+    And checks the value None of the record at column ID of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
     And checks the value $sendPaymentOutcome.pa_fiscal_code of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
     And checks the value $sendPaymentOutcome.creditor_reference_id of the record at column CREDITOR_REFERENCE_ID of the table POSITION_RECEIPT retrived by the query position_subject on db nodo_online under macro NewMod3
     And checks the value $sendPaymentOutcome.payment_token of the record at column PAYMENT_TOKEN of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
@@ -143,15 +143,10 @@ Feature: process tests Retry_DB_GR_01.1
     And checks the value $sendPaymentOutcome.channel_description of the record at column CHANNEL_DESCRIPTION of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
     And checks the value $sendPaymentOutcome.payer_id of the record at column PAYER_ID of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
     And checks the value $sendPaymentOutcome.fee of the record at column FEE of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
-    And the value payment_date_time, is different from null, of the record at column PAYMENT_DATE_TIME of the table POSITION_RECEIPT retrivied by the query position_receipt on db nodo_online under macro NewMod3
+    And checks the value NotNone of the record at column PAYMENT_DATE_TIME of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
     And checks the value $sendPaymentOutcome.application_date of the record at column FEE of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
-    And the value transfer_date, is different from null, of the record at column TRANSFER_DATE of the table POSITION_RECEIPT retrivied by the query position_receipt on db nodo_online under macro NewMod3
+    And checks the value NotNone of the record at column TRANSFER_DATE of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
     And checks the value $sendPaymentOutcome.metadata of the record at column METADATA of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
-    And the value rt_id, is different from null, of the record at column RT_ID of the table POSITION_SUBJECT retrivied by the query position_receipt on db nodo_online under macro NewMod3
+    And checks the value NotNone of the record at column RT_ID of the table POSITION_SUBJECT retrived by the query position_receipt on db nodo_online under macro NewMod3
     And checks the value $sendPaymentOutcome.fk_position_payment of the record at column FK_POSITION_PAYMENT of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
-    And the value rt_id, is same as null, of the record at column RT_ID of the table POSITION_SUBJECT retrivied by the query position_receipt on db nodo_online under macro NewMod3
-
-
-
-
-
+    And checks the value None of the record at column RT_ID of the table POSITION_SUBJECT retrived by the query position_receipt on db nodo_online under macro NewMod3

@@ -37,6 +37,7 @@ Feature: Semantic checks for nodoChiediStatoRPT - KO
             | identificativoIntermediarioPA         | 77777777777             | PPT_AUTORIZZAZIONE                | CSRPTSEM11  |
 
     # [CSRPTSEM10]
+    # TODO: COMPLETARE CON VALORI ESATTI
     Scenario: Check semantic errors for nodoChiediStatoRPT primitive
         Given identificativoUnivocoVersamento with iuv_value_in_db in nodoChiediStatoRPT
         And codiceContestoPagamento with ccp_value_in_db in nodoChiediStatoRPT

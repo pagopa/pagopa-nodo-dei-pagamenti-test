@@ -35,20 +35,24 @@ Feature: check syntax KO for paaAttivaRPT
         xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
             <soapenv:Header/>
             <soapenv:Body>
-                <nod:activatePaymentNoticeReq>
-                    <idPSP>70000000001</idPSP>
-                    <idBrokerPSP>70000000001</idBrokerPSP>
-                    <idChannel>70000000001_01</idChannel>
-                    <password>pwdpwdpwd</password>
-                    <idempotencyKey>#idempotency_key#</idempotencyKey>
-                    <qrCode>
-                        <fiscalCode>#creditor_institution_code#</fiscalCode>
-                        <noticeNumber>#notice_number#</noticeNumber>
-                    </qrCode>
-                    <amount>10.00</amount>
-                    <dueDate>2021-12-31</dueDate>
-                    <paymentNote>causale</paymentNote>
-                </nod:activatePaymentNoticeReq>
+                <nod:paaAttivaRPTRisposta>
+                    <esito>OK</esito>
+                    <datiPagamento>
+                        <importoSingoloVersamento>importo_singolo_versamento</importoSingoloVersamento>
+                        <ibanAccredito>iban_accredito</ibanAccredito>
+                        <bicAccredito>bic_accredito</bicAccredito>
+                        <enteBeneficiario>ente_beneficiario</enteBeneficiario>
+                        <credenzialiPagatore>credenziali_pagatore</credenzialiPagatore>
+                        <causaleVersamento>causale_versamento</causaleVersamento>
+                        <spezzoniCausaleVersamento>
+                            <spezzoneCausaleVersamento>spezzone_causale_versamento</spezzoneCausaleVersamento>
+                            <spezzoneStrutturaCausaleVersamento>
+                                <causaleSpezzone>causale_spezzone</causaleSpezzone>
+                                <importoSpezzone>importo_spezzone</importoSpezzone>
+                            </spezzoneStrutturaCausaleVersamento>
+                        </spezzoniCausaleVersamento>
+                    </datiPagamento>
+                </nod:paaAttivaRPTRisposta>
             </soapenv:Body>
         </soapenv:Envelope>
         """
