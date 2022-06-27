@@ -3,6 +3,7 @@ Feature: Syntax checks for nodoChiediListaPendentiRPT - KO
     Background:
         Given systems up
 
+    # [CLPRPTSIN1]
     Scenario: Check PPT_SINTASSI_EXTRAXSD error for nodoChiediListaPendentiRPT primitive
         Given initial XML nodoChiediListaPendentiRPT
             """

@@ -2,9 +2,7 @@ Feature: Semantic checks for nodoChiediCopiaRT - KO
 
     Background:
         Given systems up
-
-    Scenario Outline: Check semantic errors for nodoChiediCopiaRT primitive
-        Given initial XML nodoChiediCopiaRT
+        And initial XML nodoChiediCopiaRT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
                 <soapenv:Header/>
@@ -20,7 +18,9 @@ Feature: Semantic checks for nodoChiediCopiaRT - KO
                 </soapenv:Body>
             </soapenv:Envelope>
             """
-        And <tag> with <tag_value> in nodoChiediCopiaRT
+
+    Scenario Outline: Check semantic errors for nodoChiediCopiaRT primitive
+        Given <tag> with <tag_value> in nodoChiediCopiaRT
         When EC sends SOAP nodoChiediCopiaRT to nodo-dei-pagamenti
         Then check faultCode is <error> of nodoChiediCopiaRT response
         Examples:
@@ -35,3 +35,11 @@ Feature: Semantic checks for nodoChiediCopiaRT - KO
             | identificativoUnivocoVersamento       | wrongIUV                | PPT_RT_SCONOSCIUTA                | CCRTSEM8    |
             | codiceContestoPagamento               | wrongPaymentContextCode | PPT_RT_SCONOSCIUTA                | CCRTSEM9    |
             | identificativoIntermediarioPA         | 77777777777             | PPT_AUTORIZZAZIONE                | CCRTSEM12   |
+
+    Scenario Outline: Check semantic errors for nodoChiediCopiaRT primitive
+        Given identificativoUnivocoVersamento with <iuv_value> in nodoChiediCopiaRT
+        And codiceContestoPagamento with <ccp_value> in nodoChiediCopiaRT
+        When EC sends SOAP nodoChiediCopiaRT to nodo-dei-pagamenti
+        Then check faultCode is <error> of nodoChiediCopiaRT response
+        Examples:
+            | iuv_value | ccp_value | error | soapUI test |

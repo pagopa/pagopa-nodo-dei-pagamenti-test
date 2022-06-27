@@ -2,9 +2,7 @@ Feature: Semantic checks for nodoChiediListaPendentiRPT - KO
 
     Background:
         Given systems up
-
-    Scenario Outline: Check semantic errors for nodoChiediListaPendentiRPT primitive
-        Given initial XML nodoChiediListaPendentiRPT
+        And initial XML nodoChiediListaPendentiRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
                 <soapenv:Header />
@@ -15,13 +13,15 @@ Feature: Semantic checks for nodoChiediListaPendentiRPT - KO
                         <password>pwdpwdpwd</password>
                         <identificativoDominio>44444444444</identificativoDominio>
                         <rangeDa>2001-02-02T12:00:00</rangeDa>
-                        <rangeA>2500-12-12T12:00:00</rangeA>
+                        <rangeA>2001-12-12T12:00:00</rangeA>
                         <dimensioneLista>10</dimensioneLista>
                     </ws:nodoChiediListaPendentiRPT>
                 </soapenv:Body>
             </soapenv:Envelope>
             """
-        And <tag> with <tag_value> in nodoChiediListaPendentiRPT
+
+    Scenario Outline: Check semantic errors for nodoChiediListaPendentiRPT primitive
+        Given <tag> with <tag_value> in nodoChiediListaPendentiRPT
         When EC sends SOAP nodoChiediListaPendentiRPT to nodo-dei-pagamenti
         Then check faultCode is <error> of nodoChiediListaPendentiRPT response
         Examples:
@@ -33,5 +33,11 @@ Feature: Semantic checks for nodoChiediListaPendentiRPT - KO
             | password                              | wrongPassword        | PPT_AUTENTICAZIONE                | CLPRPTSEM5  |
             | identificativoDominio                 | 12345678902          | PPT_DOMINIO_SCONOSCIUTO           | CLPRPTSEM6  |
             | identificativoDominio                 | NOT_ENABLED          | PPT_DOMINIO_DISABILITATO          | CLPRPTSEM7  |
-            | rangeDa                               | 2501-12-12T12:00:00  | PPT_SEMANTICA                     | CLPRPTSEM8  |
-            | identificativoIntermediarioPA         | 77777777777          | PPT_AUTORIZZAZIONE                | CLPRPTSEM13  |
+            | identificativoIntermediarioPA         | 77777777777          | PPT_AUTORIZZAZIONE                | CLPRPTSEM13 |
+
+    # [CLPRPTSEM8]
+    Scenario: Check semantic errors for nodoChiediListaPendentiRPT primitive
+        Given rangeDa with 2005-01-01T12:00:00 in nodoChiediListaPendentiRPT
+        And rangeA with 2004-01-01T12:00:00 in nodoChiediListaPendentiRPT
+        When EC sends SOAP nodoChiediListaPendentiRPT to nodo-dei-pagamenti
+        Then check faultCode is PPT_SEMANTICA of nodoChiediListaPendentiRPT response

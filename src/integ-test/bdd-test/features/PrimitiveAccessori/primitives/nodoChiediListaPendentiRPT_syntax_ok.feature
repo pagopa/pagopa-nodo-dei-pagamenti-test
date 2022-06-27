@@ -5,7 +5,7 @@ Feature: Syntax checks for nodoChiediListaPendentiRPT - OK
 
     # [CLPRPTSIN15]
     Scenario: Check valid response for nodoChiediListaPendenti primitive
-        Given initial XML nodoChiediListaPendenti
+        Given initial XML nodoChiediListaPendentiRPT
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header />
@@ -22,6 +22,6 @@ Feature: Syntax checks for nodoChiediListaPendentiRPT - OK
             </soapenv:Body>
         </soapenv:Envelope>
         """
-        And identificativoDominio with None in nodoChiediListaPendenti
-        When EC sends nodoChiediListaPendenti to nodo-dei-pagamenti
-        # TODO: cosa controllo?
+        And identificativoDominio with None in nodoChiediListaPendentiRPT
+        When EC sends SOAP nodoChiediListaPendentiRPT to nodo-dei-pagamenti
+        Then check totRestituiti field exists in nodoChiediListaPendentiRPT response
