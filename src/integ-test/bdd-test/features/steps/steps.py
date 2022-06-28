@@ -1007,8 +1007,8 @@ def step_impl(context):
     intermediarioPA = config.get('global_configuration').get('id_broker')
     stazione = config.get('global_configuration').get('id_station')
 
-    query = f"SELECT s.* FROM POSITION_RECEIPT s where s.NOTICE_ID = '{noticeNumber}' and s.PA_FISCAL_CODE= '{pa}'"
-    query1 = f"SELECT s.PAYMENT_TOKEN, s.NOTICE_ID,s.OUTCOME, s.PA_FISCAL_CODE, s.CREDITOR_REFERENCE_ID, s.AMOUNT, s.CHANNEL_ID, s.PAYMENT_CHANNEL, s.PAYER_ID, s.PAYMENT_METHOD, s.FEE, s.ID FROM POSITION_PAYMENT s where s.NOTICE_ID = '{noticeNumber}' and s.PA_FISCAL_CODE= '{pa}' "
+    query = f"SELECT s.*, TO_CHAR(s.APPLICATION_DATE, 'YYYY-MM-DD') as tdate FROM POSITION_RECEIPT s where s.NOTICE_ID = '{noticeNumber}' and s.PA_FISCAL_CODE= '{pa}'"
+    query1 = f"SELECT s.PAYMENT_TOKEN, s.NOTICE_ID,s.OUTCOME, s.PA_FISCAL_CODE, s.CREDITOR_REFERENCE_ID, s.AMOUNT, s.CHANNEL_ID, s.PAYMENT_CHANNEL, s.PAYER_ID, s.PAYMENT_METHOD, s.FEE, s.ID, TO_CHAR(s.APPLICATION_DATE, 'YYYY-MM-DD') FROM POSITION_PAYMENT s where s.NOTICE_ID = '{noticeNumber}' and s.PA_FISCAL_CODE= '{pa}' "
     query2 = f"SELECT s.DESCRIPTION, s.COMPANY_NAME, s.OFFICE_NAME, s.DEBTOR_ID FROM POSITION_SERVICE s where s.NOTICE_ID = '{noticeNumber}' and s.PA_FISCAL_CODE= '{pa}'"
     query3 = f"SELECT s.* FROM PSP s where s.ID_PSP = '{psp}'"
     query4 = f"SELECT s.METADATA FROM POSITION_PAYMENT_PLAN s where s.NOTICE_ID = '{noticeNumber}' and s.PA_FISCAL_CODE= '{pa}'"
@@ -1032,30 +1032,30 @@ def step_impl(context):
     
     db.closeConnection(conn)
 
-    assert rows[0][1] == rows1[0][4]
-    assert rows[0][2] == rows1[0][2]
+    assert rows[0][1] == rows1[0][0]
+    assert rows[0][2] == rows1[0][1]
     assert rows[0][3] == rows1[0][3]
-    assert rows[0][4] == rows1[0][14]
-    assert rows[0][5] == rows1[0][12]
-    assert rows[0][6] == rows1[0][4]
+    assert rows[0][4] == rows1[0][4]
+    assert rows[0][5] == rows1[0][0]
+    assert rows[0][6] == rows1[0][2]
     assert rows[0][7] == rows1[0][5]
-    assert rows[0][8] == rows2[0][3]
-    assert rows[0][9] == rows2[0][4]
-    assert rows[0][10] == rows2[0][5]
-    assert rows[0][11] == rows2[0][6]
+    assert rows[0][8] == rows2[0][0]
+    assert rows[0][9] == rows2[0][1]
+    assert rows[0][10] == rows2[0][2]
+    assert rows[0][11] == rows2[0][3]
     assert rows[0][12] == psp
-    assert rows[0][13] == rows3[0][6]
-    assert rows[0][14] == rows3[0][16]
-    assert rows[0][15] == rows3[0][17]
-    assert rows[0][16] == rows1[0][10]
-    assert rows[0][17] == rows1[0][16]
-    assert rows[0][18] == rows1[0][18]
-    assert rows[0][19] == rows1[0][15]
-    assert rows[0][20] == rows1[0][13]
+    assert rows[0][15] == rows3[0][6]
+    assert rows[0][13] == rows3[0][16]
+    assert rows[0][14] == rows3[0][17]
+    assert rows[0][16] == rows1[0][6]
+    assert rows[0][17] == rows1[0][7]
+    assert rows[0][18] == rows1[0][8]
+    assert rows[0][19] == rows1[0][9]
+    assert rows[0][20] == rows1[0][10]
     assert rows[0][21] != None
-    assert rows[0][22] != rows1[0][19]
+    assert rows[0][31] == rows1[0][12]
     assert rows[0][23] != None
     assert rows[0][24] == rows4[0][0]
     assert rows[0][25] == None
-    assert rows[0][26] == rows1[0][0] #id
-    assert rows[0][27] == None
+    assert rows[0][26] == rows1[0][11] #id
+    assert len(rows) == 1
