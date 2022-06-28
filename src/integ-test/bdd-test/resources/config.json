@@ -5,7 +5,8 @@
       "url": "http://localhost:9080/",
       "healthcheck": "nodo-dev-health/ready",
       "soap_service": "nodo-dev/webservices/input",
-      "rest_service": "nodo-dev"
+      "rest_service": "nodo-dev",
+      "refresh_config_service": "nodo-dev/config/refresh/CONFIG"
     },
     "mock-ec": {
       "url": "http://localhost:8089/",

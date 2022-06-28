@@ -1,4 +1,4 @@
-Feature: process tests for retry a token scaduto
+Feature: Process tests for retry a token scaduto
 
    Background:
       Given systems up
@@ -55,8 +55,8 @@ Feature: process tests for retry a token scaduto
          <password>pwdpwdpwd</password>
          <idempotencyKey>#idempotency_key#</idempotencyKey>
          <qrCode>
-         <fiscalCode>$activatePaymentNotice1Request.fiscalCode</fiscalCode>
-         <noticeNumber>$activatePaymentNotice1Request.noticeNumber</noticeNumber>
+         <fiscalCode>$activatePaymentNotice1.fiscalCode</fiscalCode>
+         <noticeNumber>$activatePaymentNotice1.noticeNumber</noticeNumber>
          </qrCode>
          <amount>10.00</amount>
          <dueDate>2021-12-31</dueDate>
@@ -73,7 +73,7 @@ Feature: process tests for retry a token scaduto
    #sleep phase2
    Scenario: Execute sleep phase2
       Given the Execute activatePaymentNotice2 request scenario executed successfully
-      Then wait 10 second for expiration
+      Then wait 10 seconds for expiration
 
    # Payment Outcome Phase outcome OK
    Scenario: Execute sendPaymentOutcome1 request
@@ -162,7 +162,7 @@ Feature: process tests for retry a token scaduto
          """
       When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
       Then check outcome is OK of sendPaymentOutcome response
-      And wait 5 second for expiration
+      And wait 5 seconds for expiration
       #Test2
       #paymentToken1
       And checks the value PAYING,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query position_payment_retry_05_token1 on db nodo_online under macro NewMod3

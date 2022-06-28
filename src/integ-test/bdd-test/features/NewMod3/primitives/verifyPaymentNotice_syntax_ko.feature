@@ -1,4 +1,4 @@
-Feature: Syntax checks KO for verifyPaymentReq
+Feature: Syntax checks for verifyPaymentReq - KO
 
   Background:
     Given systems up

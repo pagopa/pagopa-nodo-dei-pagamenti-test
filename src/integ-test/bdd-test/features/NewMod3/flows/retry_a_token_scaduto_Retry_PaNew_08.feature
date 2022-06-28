@@ -1,4 +1,4 @@
-Feature: process tests for retry a token scaduto
+Feature: Process tests for retry a token scaduto
 
   Background:
     Given systems up
@@ -55,8 +55,8 @@ Feature: process tests for retry a token scaduto
                     <password>pwdpwdpwd</password>
                     <idempotencyKey>#idempotency_key#</idempotencyKey>
                     <qrCode>
-                        <fiscalCode>$activatePaymentNotice1Request.fiscalCode</fiscalCode>
-                        <noticeNumber>$activatePaymentNotice1Request.noticeNumber</noticeNumber>
+                        <fiscalCode>$activatePaymentNotice1.fiscalCode</fiscalCode>
+                        <noticeNumber>$activatePaymentNotice1.noticeNumber</noticeNumber>
                     </qrCode>
                     <amount>10.00</amount>
                     <dueDate>2021-12-31</dueDate>
@@ -73,7 +73,7 @@ Feature: process tests for retry a token scaduto
   #sleep phase2
   Scenario: Execute sleep phase2
     Given the Execute activatePaymentNotice2 request scenario executed successfully
-    Then wait 10 second for expiration
+    Then wait 10 seconds for expiration
 
 # Payment Outcome Phase outcome OK 
   Scenario: Execute sendPaymentOutcome1 request
@@ -160,7 +160,7 @@ Feature: process tests for retry a token scaduto
       """
     When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is KO of sendPaymentOutcome response
-    And wait 5 second for expiration
+    And wait 5 seconds for expiration
     #Test1
     And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcome response
     #Test2

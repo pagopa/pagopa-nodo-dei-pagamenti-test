@@ -4,7 +4,8 @@ import time
 
 import steps.db_operation as db
 from behave.model import Table
-import os, cx_Oracle
+import os, cx_Oracle, requests
+import steps.utils as utils
 
 
 def before_all(context):
@@ -14,8 +15,23 @@ def before_all(context):
     #cx_Oracle.init_oracle_client(lib_dir = lib_dir)
     more_userdata = json.load(open(os.path.join(context.config.base_dir + "/../resources/config.json")))
     context.config.update_userdata(more_userdata)
-    services = context.config.userdata.get("services")
-    db_config = context.config.userdata.get("db_configuration")
+    #services = context.config.userdata.get("services")
+    #db_config = context.config.userdata.get("db_configuration")
+    db_selected = context.config.userdata.get("db_configuration").get('nodo_cfg')
+    selected_query = utils.query_json(context, 'select_config', 'configurations')
+    conn = db.getConnection(db_selected.get('host'), db_selected.get('database'),db_selected.get('user'),db_selected.get('password'),db_selected.get('port'))
+
+    exec_query = db.executeQuery(conn, selected_query)
+    db.closeConnection(conn)
+
+    config_dict = {}
+    for row in exec_query:
+        config_key, config_value = row
+        config_dict[config_key] = config_value
+    
+    setattr(context, 'configurations', config_dict)
+    
+
 
 def before_feature(context, feature):
     services = context.config.userdata.get("services")

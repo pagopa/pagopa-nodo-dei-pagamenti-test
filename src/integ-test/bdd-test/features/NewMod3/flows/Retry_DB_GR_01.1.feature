@@ -1,23 +1,23 @@
-Feature: process tests Retry_DB_GR_01
+Feature: process tests Retry_DB_GR_01.1
 
   Background:
     Given systems up
     And initial XML verifyPaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-      <soapenv:Header />
-      <soapenv:Body>
-      <nod:verifyPaymentNoticeReq>
-      <idPSP>70000000001</idPSP>
-      <idBrokerPSP>70000000001</idBrokerPSP>
-      <idChannel>70000000001_01</idChannel>
-      <password>pwdpwdpwd</password>
-      <qrCode>
-      <fiscalCode>#creditor_institution_code#</fiscalCode>
-      <noticeNumber>#notice_number#</noticeNumber>
-      </qrCode>
-      </nod:verifyPaymentNoticeReq>
-      </soapenv:Body>
+        <soapenv:Header />
+        <soapenv:Body>
+          <nod:verifyPaymentNoticeReq>
+            <idPSP>70000000001</idPSP>
+            <idBrokerPSP>70000000001</idBrokerPSP>
+            <idChannel>70000000001_01</idChannel>
+            <password>pwdpwdpwd</password>
+            <qrCode>
+              <fiscalCode>#creditor_institution_code#</fiscalCode>
+              <noticeNumber>#notice_number#</noticeNumber>
+            </qrCode>
+          </nod:verifyPaymentNoticeReq>
+        </soapenv:Body>
       </soapenv:Envelope>
       """
     And EC new version
@@ -57,10 +57,12 @@ Feature: process tests Retry_DB_GR_01
     When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
 
-  #sleep phase1
-  Scenario: Execute sleep phase1
-    Given the Execute activatePaymentNotice request scenario executed successfully
-    And PSP waits expirationTime of activatePaymentNotice expires
+  # test execution
+  Scenario: Execution test
+    Given the activatePaymentNoticeReq request scenario executed successfully
+    When job mod3Cancel triggered after 3 seconds
+    Then verify the HTTP status code of mod3Cancel response is 200
+
 
   # Payment Outcome Phase outcome OK
   Scenario: Execute sendPaymentOutcome request
@@ -117,8 +119,8 @@ Feature: process tests Retry_DB_GR_01
     #Test1
     Then check outcome is OK of sendPaymentOutcome response
     #sleep phase2
-    And wait 2.2 second for expiration
-    And the value id, is same as null, of the record at column ID of the table POSITION_RECEIPT retrivied by the query position_receipt on db nodo_online under macro NewMod3
+    And wait 2.2 seconds for expiration
+    And checks the value None of the record at column ID of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
     And checks the value $sendPaymentOutcome.pa_fiscal_code of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
     And checks the value $sendPaymentOutcome.creditor_reference_id of the record at column CREDITOR_REFERENCE_ID of the table POSITION_RECEIPT retrived by the query position_subject on db nodo_online under macro NewMod3
     And checks the value $sendPaymentOutcome.payment_token of the record at column PAYMENT_TOKEN of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
@@ -136,19 +138,10 @@ Feature: process tests Retry_DB_GR_01
     And checks the value $sendPaymentOutcome.channel_description of the record at column CHANNEL_DESCRIPTION of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
     And checks the value $sendPaymentOutcome.payer_id of the record at column PAYER_ID of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
     And checks the value $sendPaymentOutcome.fee of the record at column FEE of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
-    And the value payment_date_time, is different from null, of the record at column PAYMENT_DATE_TIME of the table POSITION_RECEIPT retrivied by the query position_receipt on db nodo_online under macro NewMod3
+    And checks the value NotNone of the record at column PAYMENT_DATE_TIME of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
     And checks the value $sendPaymentOutcome.application_date of the record at column FEE of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
-    And the value transfer_date, is different from null, of the record at column TRANSFER_DATE of the table POSITION_RECEIPT retrivied by the query position_receipt on db nodo_online under macro NewMod3
+    And checks the value NotNone of the record at column TRANSFER_DATE of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
     And checks the value $sendPaymentOutcome.metadata of the record at column METADATA of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
-    And the value rt_id, is different from null, of the record at column RT_ID of the table POSITION_SUBJECT retrivied by the query position_receipt on db nodo_online under macro NewMod3
+    And checks the value NotNone of the record at column RT_ID of the table POSITION_SUBJECT retrived by the query position_receipt on db nodo_online under macro NewMod3
     And checks the value $sendPaymentOutcome.fk_position_payment of the record at column FK_POSITION_PAYMENT of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
-    And the value rt_id, is same as null, of the record at column RT_ID of the table POSITION_SUBJECT retrivied by the query position_receipt on db nodo_online under macro NewMod3
-
-
-  # test execution
-  Scenario: Execution test
-    Given the activatePaymentNoticeReq request scenario executed successfully
-    When job mod3Cancel triggered after 3 seconds
-    Then verify the HTTP status code of mod3Cancel response is 200
-
-
+    And checks the value None of the record at column RT_ID of the table POSITION_SUBJECT retrived by the query position_receipt on db nodo_online under macro NewMod3

@@ -528,23 +528,34 @@ def step_impl(context, primitive):
                                        f"30211{str(random.randint(1000000000000, 9999999999999))}")
     setattr(context, primitive, xml)
 
-
 @given("nodo-dei-pagamenti has config parameter {param} set to {value}")
 def step_impl(context, param, value):
-    db_config = context.config.userdata.get("db_configuration")
-    db_selected = db_config.get('nodo_cfg')
-
-    name_query = 'query_config'
-    name_macro = 'configurazione'
-    
-    selected_query = utils.query_json(context, name_query, name_macro)
-    selected_query = selected_query.replace('?1', value).replace('?2', param)
-
+    db_selected = context.config.userdata.get("db_configuration").get('nodo_cfg')
+    selected_query = utils.query_json(context, 'update_config', 'configurations').replace('value', value).replace('key', param)
     conn = db.getConnection(db_selected.get('host'), db_selected.get('database'),db_selected.get('user'),db_selected.get('password'),db_selected.get('port'))
 
     exec_query = db.executeQuery(conn, selected_query)
     if exec_query is not None:
         print(f'executed query: {exec_query}')
+
+    refresh_response = requests.get(utils.get_refresh_config_url(context))
+    db.closeConnection(conn)
+
+    assert refresh_response.status_code == 200
+
+@then("restore initial configurations")
+def step_impl(context):
+    db_selected = context.config.userdata.get("db_configuration").get('nodo_cfg')
+    conn = db.getConnection(db_selected.get('host'), db_selected.get('database'), db_selected.get('user'), db_selected.get('password'),db_selected.get('port'))
+
+    config_dict = getattr(context, 'configurations')
+    for key, value in config_dict.items():
+        selected_query = utils.query_json(context, 'update_config', 'configurations').replace('value', value).replace('key', key)
+        exec_query = db.executeQuery(conn, selected_query)
+
+    db.closeConnection(conn)
+    refresh_response = requests.get(utils.get_refresh_config_url(context))
+    assert refresh_response.status_code == 200
 
 
 @step("execution query {query_name} under macro {macro} with db name {db_name}")
@@ -623,22 +634,22 @@ def step_impl(context, elem, primitive):
         assert False
 
 
-@step("{mock:EcPsp} waits {number:f} minutes for expiration")
+@step("{mock:EcPsp} waits {number} minutes for expiration")
 def step_impl(context, mock, number):
-    seconds = int(number) * 60
+    seconds = float(number) * 60
     print(f"wait for: {seconds} seconds")
     time.sleep(seconds)
 
-@step("wait {number:f} seconds for expiration")
+@step("wait {number} seconds for expiration")
 def step_impl(context, number):
-    seconds = int(number) 
+    seconds = float(number) 
     print(f"wait for: {seconds} seconds")
     time.sleep(seconds)
 
 
-@step("{mock:EcPsp} waits {number:f} seconds for expiration")
+@step("{mock:EcPsp} waits {number} seconds for expiration")
 def step_impl(context, mock, number):
-    seconds = int(number)
+    seconds = float(number)
     print(f"wait for: {seconds} seconds")
     time.sleep(seconds)
 
@@ -697,7 +708,7 @@ def step_impl(context, query_name, table_name, db_name, name_macro, number):
    
     exec_query = db.executeQuery(conn, selected_query)
 
-    assert len(exec_query) == number
+    assert len(exec_query) == number, f"{len(exec_query)}"
 
 
 @step("calling primitive {primitive1} and {primitive2} in parallel")

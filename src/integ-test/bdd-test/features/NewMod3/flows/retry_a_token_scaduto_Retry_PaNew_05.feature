@@ -1,4 +1,4 @@
-Feature: process tests for retry a token scaduto
+Feature: Process tests for retry a token scaduto
 
   Background:
     Given systems up
@@ -72,7 +72,7 @@ Feature: process tests for retry a token scaduto
   #sleep phase2
   Scenario: Execute sleep phase2
     Given the Execute activatePaymentNotice2 request scenario executed successfully
-    Then wait 10 second for expiration
+    Then wait 10 seconds for expiration
 
 # Payment Outcome Phase outcome OK 
   Scenario: Execute sendPaymentOutcome request

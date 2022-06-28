@@ -1,4 +1,4 @@
-Feature: semantic checks for verificaBollettinoReq
+Feature: Semantic checks for verificaBollettino - OK
 
   Background:
     Given systems up
@@ -40,20 +40,19 @@ Feature: semantic checks for verificaBollettinoReq
 
   #[SEM_VB_13] pt.1
   Scenario Outline: Execute verificaBollettino request
+    Given saving verificaBollettino request in verificaBollettinoTmp
     Given <elem> with <value> in verificaBollettino
     When psp sends soap verificaBollettino to nodo-dei-pagamenti
     Then check outcome is KO of verificaBollettino response
     And check faultCode is PPT_SINTASSI_EXTRAXSD of verificaBollettino response
     Examples:
       | elem  | value | soapUI test |
-      | idPSP | None  | SEM_VB_13   |
+      | idPSP | 123456789012345678901234567890123456  | SEM_VB_13   |
 
   #[SEM_VB_13] pt.2
-  Scenario Outline: Last call verificaBollettino
+  Scenario: Last call verificaBollettino
     Given the Execute verificaBollettino request scenario executed successfully
-    And <elem> with <value> in verificaBollettino
+    And saving verificaBollettinoTmp request in verificaBollettino
+    And idPSP with POSTE3 in verificaBollettino
     When psp sends soap verificaBollettino to nodo-dei-pagamenti
     Then check outcome is OK of verificaBollettino response
-    Examples:
-      | elem  | value  | soapUI test |
-      | idPSP | POSTE3 | SEM_VB_13   |

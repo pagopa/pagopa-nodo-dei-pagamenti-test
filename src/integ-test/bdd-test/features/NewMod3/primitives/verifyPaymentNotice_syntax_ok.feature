@@ -1,4 +1,4 @@
-Feature: syntax checks OK for verifyPaymentReq
+Feature: Syntax checks for verifyPaymentReq - OK
 
   Background:
     Given systems up

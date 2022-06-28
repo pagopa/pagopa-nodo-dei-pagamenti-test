@@ -1,4 +1,4 @@
-Feature: process tests for retry a token scaduto
+Feature: Process tests for retry a token scaduto
 
   Background:
     Given systems up
@@ -107,7 +107,7 @@ Feature: process tests for retry a token scaduto
     #Test1
     Then check outcome is KO of sendPaymentOutcome response
     #sleep phase2
-    And wait 5 second for expiration
+    And wait 5 seconds for expiration
     #Test2
     And checks the value PAYING,NOTICE_GENERATED,PAID,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
     And checks the value NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro NewMod3
@@ -139,7 +139,7 @@ Feature: process tests for retry a token scaduto
     And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro NewMod3
     And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro NewMod3
     #verifica un solo risultato
-    And verify one record for the table POSITION_SUBJECT retrivied by the query position_subject on db nodo_online under macro NewMod3
+    And verify 1 record for the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro NewMod3
     
 
 

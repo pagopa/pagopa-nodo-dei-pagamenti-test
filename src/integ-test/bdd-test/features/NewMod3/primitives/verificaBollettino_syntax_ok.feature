@@ -1,4 +1,4 @@
- Feature: syntax checks for verificaBollettinoReq - OK
+ Feature: Syntax checks for verificaBollettino - OK
  
  Background:
     Given systems up

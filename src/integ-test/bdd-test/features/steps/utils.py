@@ -65,6 +65,13 @@ def get_soap_mock_ec(context):
     else:
         return ""
 
+def get_refresh_config_url(context):
+    if context.config.userdata.get('services').get('nodo-dei-pagamenti').get('refresh_config_service') is not None:
+        return context.config.userdata.get('services').get('nodo-dei-pagamenti').get('url') \
+            + context.config.userdata.get('services').get('nodo-dei-pagamenti').get('refresh_config_service')
+    else:
+        return "" 
+
 def get_rest_mock_ec(context):
     if context.config.userdata.get("services").get("mock-ec").get("rest_service") is not None:
         return context.config.userdata.get("services").get("mock-ec").get("url") \

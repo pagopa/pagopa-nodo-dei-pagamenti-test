@@ -1,4 +1,4 @@
-Feature:  semantic checks for sendPaymentOutcomeReq - OUTCOME KO #[SEM_SPO_22]
+Feature: Semantic checks for sendPaymentOutcome - OUTCOME KO [SEM_SPO_22]
 
   Background:
     Given systems up

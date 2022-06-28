@@ -1,4 +1,4 @@
- Feature: syntax checks for verificaBollettinoReq - KO
+ Feature: Syntax checks for verificaBollettino - KO
  
  Background:
     Given systems up
@@ -64,6 +64,3 @@
       | noticeNumber               | 12345678901234567                     | SIN_VB_26   |
       | noticeNumber               | 12345678901234567A                    | SIN_VB_27   |
       | noticeNumber               | 12345678901234567!                    | SIN_VB_27   | 
-      
-      
-      
