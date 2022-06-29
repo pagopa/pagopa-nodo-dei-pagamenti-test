@@ -11,8 +11,8 @@ import steps.utils as utils
 def before_all(context):
     print('Global settings...')
 
-    #lib_dir = os.path.abspath(os.path.join(__file__, os.pardir, os.pardir, os.pardir, os.pardir, os.pardir, 'instantclient_21_3'))
-    #cx_Oracle.init_oracle_client(lib_dir = lib_dir)
+    lib_dir = os.path.abspath(os.path.join(__file__, os.pardir, os.pardir, os.pardir, os.pardir, os.pardir, 'instantclient_21_3'))
+    cx_Oracle.init_oracle_client(lib_dir = lib_dir)
     more_userdata = json.load(open(os.path.join(context.config.base_dir + "/../resources/config.json")))
     context.config.update_userdata(more_userdata)
     #services = context.config.userdata.get("services")
@@ -60,6 +60,20 @@ def after_feature(context, feature):
     #     if tag == 'config-ec':
     #         # reset apiconfig
     #         context.apiconfig.delete_creditor_institution(global_configuration.get("creditor_institution_code"))
+
+def after_all(context):
+    db_selected = context.config.userdata.get("db_configuration").get('nodo_cfg')
+    conn = db.getConnection(db_selected.get('host'), db_selected.get('database'), db_selected.get('user'), db_selected.get('password'),db_selected.get('port'))
+
+    config_dict = getattr(context, 'configurations')
+    for key, value in config_dict.items():
+        print(key, value)
+        selected_query = utils.query_json(context, 'update_config', 'configurations').replace('value', value).replace('key', key)
+        db.executeQuery(conn, selected_query)
+
+    db.closeConnection(conn)
+    requests.get(utils.get_refresh_config_url(context))
+
 
 def config_ec(context):
     global_configuration = context.config.userdata.get("global_configuration")

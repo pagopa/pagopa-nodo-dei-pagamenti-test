@@ -31,6 +31,7 @@ Feature:  block check for activatePaymentNoticeReq - position status in PAYING [
       """ 
     When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
+    And save activatePaymentNotice response in activatePaymentNotice1
 
   # Activate Phase 2
   Scenario: Execute activatePaymentNotice request with same request as Activate Phase 1 except for idempotencyKey
@@ -59,3 +60,7 @@ Feature:  block check for activatePaymentNoticeReq - position status in PAYING [
     When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is KO of activatePaymentNotice response
     And check faultCode is PPT_PAGAMENTO_IN_CORSO of activatePaymentNotice response
+    And checks the value PAYING of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query position_payment_retry_05_token1 on db nodo_online under macro NewMod3
+    And checks the value PAYING of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query position_payment_retry_05_token1 on db nodo_online under macro NewMod3
+    And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
+    And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro NewMod3

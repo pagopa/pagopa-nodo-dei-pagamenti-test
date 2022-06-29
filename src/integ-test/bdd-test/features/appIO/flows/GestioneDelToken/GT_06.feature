@@ -5,7 +5,9 @@ Feature: GT_05
         And EC new version
 
     Scenario: Execute verifyPaymentNotice (Phase 1)
-        Given checks the value true of the record at column CONFIG_VALUE of the table CONFIGURATION_KEYS retrived by the query select_config on db nodo_cfg under macro configurazione
+        Given nodo-dei-pagamenti has config parameter useIdempotency set to true
+        And nodo-dei-pagamenti has config parameter default_token_duration_validity_millis set to 7000
+        And nodo-dei-pagamenti has config parameter default_durata_token_IO set to 15000
         And initial XML verifyPaymentNotice
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -78,7 +80,7 @@ Feature: GT_05
                 </soapenv:Body>
             </soapenv:Envelope>
             """
-        And expirationTime with 2000000 in activateIOPayment 
+        And expirationTime with 10000 in activateIOPayment 
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
         And verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro AppIO
@@ -95,5 +97,4 @@ Feature: GT_05
         When WISP sends rest GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200
         And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro AppIO
-
-    
+        And restore initial configurations

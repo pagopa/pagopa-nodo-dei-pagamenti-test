@@ -5,7 +5,7 @@ Feature: GT_03
         And EC new version
 
     Scenario: Execute verifyPaymentNotice (Phase 1)
-        Given checks the value true of the record at column CONFIG_VALUE of the table CONFIGURATION_KEYS retrived by the query select_config on db nodo_cfg under macro configurazione
+        Given nodo-dei-pagamenti has config parameter useIdempotency set to true
         And initial XML verifyPaymentNotice
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -95,3 +95,4 @@ Feature: GT_03
         When WISP sends rest GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200
         And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro AppIO
+        And restore initial configurations

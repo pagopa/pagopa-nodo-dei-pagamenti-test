@@ -5,7 +5,7 @@ Feature: GT_07
         And EC new version
 
     Scenario: Execute verifyPaymentNotice (Phase 1)
-        Given checks the value true of the record at column CONFIG_VALUE of the table CONFIGURATION_KEYS retrived by the query select_config on db nodo_cfg under macro configurazione
+        Given nodo-dei-pagamenti has config parameter useIdempotency set to true
         And initial XML verifyPaymentNotice
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -167,4 +167,5 @@ Feature: GT_07
         """
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
+        And restore initial configurations
     

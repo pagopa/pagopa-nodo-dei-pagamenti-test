@@ -22,13 +22,9 @@
         "position_status_2" :"SELECT s.columns FROM table_name s WHERE s.NOTICE_ID ='$activatePaymentNotice2.noticeNumber' AND s.PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode'"
     },
     "AppIO":{
-        "DB_AIPR_01_AppIO" : "SELECT * from POSITION_ACTIVATE WHERE CREDITOR_REFERENCE_ID  = '$activateIOPaymentResponse.creditorReferenceId' AND PA_FISCAL_CODE = '$activateIOPaymentResponse.fiscalCodePA' AND PAYMENT_TOKEN = '$activateIOPaymentResponse.paymentToken'",
-        "DB_AIPR_02_AppIO" : "SELECT * from POSITION_SERVICE WHERE COMPANY_NAME  = '$activateIOPaymentResponse.companyName' AND PA_FISCAL_CODE = '$activateIOPaymentResponse.fiscalCodePA' AND NOTICE_ID = '$activateIOPayment.noticeNumber'",
-        "DB_AIPR_03_AppIO" : "SELECT * from POSITION_SERVICE WHERE NOTICE_ID = '$activateIOPayment.noticeNumber'",
-        "DB_AIPR_04_AppIO" : "SELECT * from POSITION_PAYMENT_PLAN WHERE PA_FISCAL_CODE = '$activateIOPaymentResponse.fiscalCodePA' AND NOTICE_ID = '$activateIOPayment.noticeNumber' AND CREDITOR_REFERENCE_ID  = '$activateIOPaymentResponse.creditorReferenceId' AND AMOUNT = '$activateIOPaymentResponse.totalAmount'",
-        "DB_AIPR_05_AppIO" : "SELECT * from POSITION_TRANSFER WHERE PA_FISCAL_CODE = '$activateIOPaymentResponse.fiscalCodePA' AND NOTICE_ID = '$activateIOPayment.noticeNumber' AND CREDITOR_REFERENCE_ID  = '$activateIOPaymentResponse.creditorReferenceId' AND AMOUNT = '$activateIOPaymentResponse.totalAmount'",
-        "DB_AIPR_06_AppIO" : "SELECT x.* FROM  POSITION_SERVICE y LEFT JOIN POSITION_SUBJECT x ON y.DEBTOR_ID = x.ID WHERE y.PA_FISCAL_CODE = '$activateIOPaymentResponse.fiscalCodePA' AND y.NOTICE_ID = '$activateIOPayment.noticeNumber'",
-        "payment_status":"SELECT s.columns FROM table_name s WHERE s.NOTICE_ID ='$activateIOPayment.noticeNumber' AND s.PA_FISCAL_CODE = '$activateIOPayment.fiscalCode'"
+        "payment_status":"SELECT s.columns FROM table_name s WHERE s.NOTICE_ID ='$activateIOPayment.noticeNumber' AND s.PA_FISCAL_CODE = '$activateIOPayment.fiscalCode'",
+        "position_subject": "SELECT columns FROM POSITION_SERVICE ps RIGHT JOIN table_name ps2 ON ps.DEBTOR_ID = ps2.ID WHERE ps.PA_FISCAL_CODE = '$activateIOPayment.fiscalCode' AND  ps.NOTICE_ID = '$activateIOPayment.noticeNumber'",
+        "deny_list": "SELECT d.columns FROM DENYLIST d, PSP p, CANALI c, PA p2 WHERE d.FK_PSP = p.OBJ_ID AND d.FK_CANALE = c.OBJ_ID AND d.FK_PA = p2.OBJ_ID AND p.ID_PSP = '$activateIOPayment.idPSP' AND c.ID_CANALE = '$activateIOPayment.idChannel' AND p2.ID_DOMINIO = '$activateIOPayment.fiscalCode'"
     },
     "Mod1Mb":{
         "DB_INOLTRO_PAG_stati_carrello_napshot": "SELECT s.columns FROM table_name s WHERE s.IUV = '$nodoInoltraEsitoPagamentoCarte.noticenumber' and s.ID_DOMINIO = '$nodoInoltraEsitoPagamentoCarte.fiscalcode'",

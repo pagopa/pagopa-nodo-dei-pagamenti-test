@@ -5,7 +5,7 @@ Feature: GT_04
         And EC new version
 
     Scenario: Execute verifyPaymentNotice (Phase 1)
-        Given checks the value true of the record at column CONFIG_VALUE of the table CONFIGURATION_KEYS retrived by the query select_config on db nodo_cfg under macro configurazione
+        Given nodo-dei-pagamenti has config parameter useIdempotency set to true
         And initial XML verifyPaymentNotice
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -89,3 +89,4 @@ Feature: GT_04
         And checks the value NotNone of the record at column VALID_TO of the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value NotNone of the record at column TOKEN_VALID_FROM of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
         And check token validity
+        And restore initial configurations

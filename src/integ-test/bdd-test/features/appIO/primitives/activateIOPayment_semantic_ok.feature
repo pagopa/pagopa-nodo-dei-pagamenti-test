@@ -63,6 +63,7 @@ Feature: Semantic checks for activateIOPaymentReq - OK
 
     # [SEM_AIPR_19]
     Scenario: Execute activateIOPayment (Phase 1)
+        Given nodo-dei-pagamenti has config parameter useIdempotency set to true
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
         And save activateIOPayment response in activateIOPayment_first
         Then check outcome is OK of activateIOPayment_first response
@@ -71,3 +72,13 @@ Feature: Semantic checks for activateIOPaymentReq - OK
         Given the Execute activateIOPayment (Phase 1) scenario executed successfully
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then activateIOPayment_first response is equal to activateIOPayment response
+        And verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro AppIO
+        And restore initial configurations
+
+    # [SEM_AIPR_31]
+    Scenario: Check activateIOPayment response with parameters in deny list
+        Given idBrokerPSP with 70000000002 in activateIOPayment
+        And idChannel with 70000000002_01 in activateIOPayment
+        And verify 1 record for the table DENYLIST retrived by the query deny_list on db nodo_cfg under macro AppIO
+        When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
+        Then check outcome is OK of activateIOPayment response

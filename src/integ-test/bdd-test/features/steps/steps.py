@@ -538,8 +538,9 @@ def step_impl(context, param, value):
     if exec_query is not None:
         print(f'executed query: {exec_query}')
 
-    refresh_response = requests.get(utils.get_refresh_config_url(context))
     db.closeConnection(conn)
+    refresh_response = requests.get(utils.get_refresh_config_url(context))
+    time.sleep(5)
 
     assert refresh_response.status_code == 200
 
@@ -551,10 +552,11 @@ def step_impl(context):
     config_dict = getattr(context, 'configurations')
     for key, value in config_dict.items():
         selected_query = utils.query_json(context, 'update_config', 'configurations').replace('value', value).replace('key', key)
-        exec_query = db.executeQuery(conn, selected_query)
+        db.executeQuery(conn, selected_query)
 
     db.closeConnection(conn)
     refresh_response = requests.get(utils.get_refresh_config_url(context))
+    time.sleep(5)
     assert refresh_response.status_code == 200
 
 
@@ -678,7 +680,7 @@ def step_impl(context, value, column, query_name, table_name, db_name, name_macr
 
     if value == 'None':
         print('None')
-        assert len(query_result) == 0
+        assert query_result[0] == None
     elif value == 'NotNone':
         print('NotNone')
         assert query_result[0] != None
@@ -697,7 +699,7 @@ def step_impl(context, value, column, query_name, table_name, db_name, name_macr
         for elem in split_value:
             assert elem in query_result, f"check expected element: {value}, obtained: {query_result[0]}"
 
-@then(u"verify {number:d} record for the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
+@step(u"verify {number:d} record for the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
 def step_impl(context, query_name, table_name, db_name, name_macro, number):
     db_config = context.config.userdata.get("db_configuration")
     db_selected = db_config.get(db_name)

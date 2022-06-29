@@ -5,7 +5,7 @@ Feature: GT_05
         And EC new version
 
     Scenario: Execute verifyPaymentNotice (Phase 1)
-        Given checks the value true of the record at column CONFIG_VALUE of the table CONFIGURATION_KEYS retrived by the query select_config on db nodo_cfg under macro configurazione
+        Given nodo-dei-pagamenti has config parameter useIdempotency set to true
         And initial XML verifyPaymentNotice
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -101,4 +101,4 @@ Feature: GT_05
         Then verify the HTTP status code of notificaAnnullamento response is 200
         #TODO: check TOKEN_VALID_TO column update (CORRETTO?)
         And checks the value nodoNotificaAnnullamento of the record at column UPDATED_BY of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
-        
+        And restore initial configurations
