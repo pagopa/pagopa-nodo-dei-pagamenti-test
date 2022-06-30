@@ -13,21 +13,21 @@ Feature: process tests for generazioneRicevute
                <idChannel>70000000001_01</idChannel>
                <password>pwdpwdpwd</password>
                <qrCode>
-                  <fiscalCode>#creditor_institution_code#</fiscalCode>
+                  <fiscalCode>#codicePA_old#</fiscalCode>
                   <noticeNumber>#notice_number#</noticeNumber>
                </qrCode>
             </nod:verifyPaymentNoticeReq>
          </soapenv:Body>
       </soapenv:Envelope>
       """
-    And EC new version
+    And EC old version
 
   # Verify phase
   Scenario: Execute verifyPaymentNotice request
     When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of verifyPaymentNotice response
 
-
+  @prova
   # Activate Phase
   Scenario: Execute activatePaymentNotice request
     Given the Execute verifyPaymentNotice request scenario executed successfully
@@ -43,10 +43,10 @@ Feature: process tests for generazioneRicevute
                   <password>pwdpwdpwd</password>
                   <idempotencyKey>#idempotency_key#</idempotencyKey>
                   <qrCode>
-                      <fiscalCode>#creditor_institution_code#</fiscalCode>
+                      <fiscalCode>#creditor_institution_code_old#</fiscalCode>
                       <noticeNumber>#notice_number#</noticeNumber>
                   </qrCode>
-                  <expirationTime>120000</expirationTime>
+                  <expirationTime>2000</expirationTime>
                   <amount>10.00</amount>
                   <dueDate>2021-12-31</dueDate>
                   <paymentNote>causale</paymentNote>
@@ -56,7 +56,11 @@ Feature: process tests for generazioneRicevute
       """
     When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
-    # And db check 1 rt_activision
+    Then checks the value $activatePaymentNotice.iuv of the record at column CREDITOR_REFERENCE_ID of the table RPT_ACTIVATIONS retrived by the query rpt_activision on db nodo_online under macro NewMod3
+    And checks the value $activatePaymentNotice.paymentToken of the record at column PAYMENT_TOKEN of the table RPT_ACTIVATIONS retrived by the query rpt_activision on db nodo_online under macro NewMod3
+    And checks the value N of the record at column NODOINVIARPTREQ of the table RPT_ACTIVATIONS retrived by the query rpt_activision on db nodo_online under macro NewMod3
+    And checks the value Y of the record at column PAAATTIVARPTRESP of the table RPT_ACTIVATIONS retrived by the query rpt_activision on db nodo_online under macro NewMod3
+    And checks the value NotNone of the record at column INSERTED_TIMESTAMP8 of the table RPT_ACTIVATIONS retrived by the query rpt_activision on db nodo_online under macro NewMod3
 
 
     Scenario: Execute nodoInviaRPT request

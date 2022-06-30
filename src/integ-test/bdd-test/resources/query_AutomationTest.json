@@ -19,7 +19,9 @@
         "position_payment_status_1" :"SELECT s.columns FROM table_name s WHERE s.NOTICE_ID ='$activatePaymentNotice1.noticeNumber' AND s.PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode' AND s.PAYMENT_TOKEN = '$activatePaymentNotice1Response.paymentToken'",
         "position_payment_status_2" :"SELECT s.columns FROM table_name s WHERE s.NOTICE_ID ='$activatePaymentNotice2.noticeNumber' AND s.PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode' AND s.PAYMENT_TOKEN = '$activatePaymentNotice2Response.paymentToken'",
         "position_status_1" :"SELECT s.columns FROM table_name s WHERE s.NOTICE_ID ='$activatePaymentNotice1.noticeNumber' AND s.PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode'",
-        "position_status_2" :"SELECT s.columns FROM table_name s WHERE s.NOTICE_ID ='$activatePaymentNotice2.noticeNumber' AND s.PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode'"
+        "position_status_2" :"SELECT s.columns FROM table_name s WHERE s.NOTICE_ID ='$activatePaymentNotice2.noticeNumber' AND s.PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode'",
+        "rpt_activision": "SELECT s.* FROM RPT_ACTIVATIONS s where s.NOTICE_ID = '$activatePaymentNotice.noticeNumber' and s.PA_FISCAL_CODE= '$activatePaymentNotice.fiscalCode'"
+
     },
     "AppIO":{
         "payment_status":"SELECT s.columns FROM table_name s WHERE s.NOTICE_ID ='$activateIOPayment.noticeNumber' AND s.PA_FISCAL_CODE = '$activateIOPayment.fiscalCode'",
