@@ -27,3 +27,6 @@ steps:
 
 - script: az pipelines run --name app-ci --branch test-accenture
   displayName: 'Triggering second pipeline'
+
+- script: echo 'Pipeline 2 completed'
+  displayName: 'Running script after pipeline 2'
