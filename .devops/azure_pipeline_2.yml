@@ -8,7 +8,7 @@ resources:
   pipelines:
   - pipeline: azure_pipeline_1   # Name of the pipeline resource
     source: pipeline_test_1 # Name of the pipeline referenced by the pipeline resource
-    # project: Trigger-Pipeline-From-Another-Pipeline # Required only if the source pipeline is in another project
+    project: nodopagamenti# Required only if the source pipeline is in another project
     trigger: true # enable the trigger
 
 pool:
