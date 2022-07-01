@@ -8,6 +8,6 @@ pool:
 
 steps:
 - script: echo This pipeline runs first and will trigger another pipeline
-- templates: azure_pipeline_2.yml
+- template: azure_pipeline_2.yml
 - script: echo pipeline 2 OK and complete pipeline 1
 
