@@ -716,7 +716,7 @@ def step_impl(context, value, column, query_name, table_name, db_name, name_macr
 
         print("value: ", split_value)
         for elem in split_value:
-            assert elem in query_result, f"check expected element: {value}, obtained: {query_result[0]}"
+            assert elem in query_result, f"check expected element: {value}, obtained: {query_result}"
 
 @step(u"verify {number:d} record for the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
 def step_impl(context, query_name, table_name, db_name, name_macro, number):

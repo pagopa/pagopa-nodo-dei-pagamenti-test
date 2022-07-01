@@ -95,7 +95,7 @@ Scenario: Execute nodoInoltroEsitoCarta (Phase 4)
         "tipoVersamento":"CP",
         "idPagamento":"$activateIOPaymentResponse.paymentToken",
         "identificativoIntermediario":"irraggiungibile",
-        "identificativoPsp":"70000000001",
+        "identificativoPsp":"40000000001",
         "identificativoCanale":"irraggiungibile",
         "importoTotalePagato":10.00,
         "timestampOperazione":"2021-07-09T17:06:03.100+01:00",
@@ -114,9 +114,9 @@ Scenario: Check sendPaymentOutcome response with sendPaymentOutcome KO and unrea
       <soapenv:Header/>
       <soapenv:Body>
         <nod:sendPaymentOutcomeReq>
-          <idPSP>70000000001</idPSP>
-          <idBrokerPSP>70000000001</idBrokerPSP>
-          <idChannel>70000000001_01</idChannel>
+          <idPSP>40000000001</idPSP>
+          <idBrokerPSP>40000000001</idBrokerPSP>
+          <idChannel>40000000001_01</idChannel>
           <password>pwdpwdpwd</password>
           <idempotencyKey>#idempotency_key#</idempotencyKey>
           <paymentToken>$activateIOPaymentResponse.paymentToken</paymentToken>

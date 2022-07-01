@@ -93,9 +93,9 @@ Scenario: Execute nodoInoltroEsitoCarta (Phase 4)
         "RRN":10026669,
         "tipoVersamento":"CP",
         "idPagamento":"$activateIOPaymentResponse.paymentToken",
-        "identificativoIntermediario":"40000000001",
+        "identificativoIntermediario":"irraggiungibile",
         "identificativoPsp":"40000000001",
-        "identificativoCanale":"40000000001_06",
+        "identificativoCanale":"irraggiungibile",
         "importoTotalePagato":10.00,
         "timestampOperazione":"2021-07-09T17:06:03.100+01:00",
         "codiceAutorizzativo":"resOK",
@@ -142,4 +142,5 @@ Scenario: Check nodoNotificaAnnullamento response after nodoInoltroEsitoCarta wi
     And checks the value Y of the record at column FLAG_IO of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
     And checks the value Y of the record at column RICEVUTA_PM of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
     And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro AppIO
-    ###### TODO: MOTIVO_ANNULLAMENTO column in PM_SESSION_DATA table
+    ###### check correctness of MOTIVO_ANNULLAMENTO column in PM_SESSION_DATA table
+    And checks the value CONPSP of the record at column MOTIVO_ANNULLAMENTO of the table PM_SESSION_DATA retrived by the query pm_session on db nodo_online under macro AppIO
