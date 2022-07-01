@@ -6,6 +6,7 @@ import random
 from sre_constants import ASSERT
 import time
 from xml.dom.minidom import parseString
+import base64 as b64
 
 import requests
 from behave import *
@@ -70,15 +71,34 @@ def step_impl(context, primitive):
     if '$iuv' in payload:
         payload = payload.replace('$iuv', getattr(context, 'iuv'))
 
+    if '$rptAttachment' in payload:
+        rptAttachment = getattr(context, 'rptAttachment')
+        rptAttachment_b = bytes(rptAttachment, 'ascii')
+        rptAttachment_uni = b64.b64encode(rptAttachment_b)
+        rptAttachment_uni = f"{rptAttachment_uni}".split("'")[1]
+        payload = payload.replace('$rptAttachment', rptAttachment_uni)
+
+    if '$intermediarioPA' in payload:
+        payload = payload.replace('$intermediarioPA', getattr(context, 'intermediarioPA'))
+
     payload = utils.replace_global_variables(payload, context)
 
     setattr(context, primitive, payload)
     
-@given('{RPT} generation')
-def step_impl(context, RPT):
-    setattr(context,'RPT',RPT)
-    rpt = getattr(context, 'RPT')
-    print(rpt)
+@given('RPT generation')
+def step_impl(context):
+    payload = context.text or ""
+    payload = utils.replace_local_variables(payload, context)
+
+    if "#intermediarioPA#" in payload:     
+        intermediarioPA = "44444444444_01"
+        payload = payload.replace('#intermediarioPA#', intermediarioPA)
+        setattr(context,"intermediarioPA", intermediarioPA)
+
+    if '$iuv' in payload:
+        payload = payload.replace('$iuv', getattr(context, 'iuv'))
+
+    setattr(context,'rptAttachment', payload)
 
 
 @given('{elem} with {value} in {action}')
@@ -674,14 +694,16 @@ def step_impl(context, value, column, query_name, table_name, db_name, name_macr
     
     query_result = [t[0] for t in exec_query]
     print('query_result: ', query_result)
-
+    
     if value == 'None':
         print('None')
-        assert query_result[0] == None
+        assert len(query_result) == 0
     elif value == 'NotNone':
         print('NotNone')
-        assert query_result[0] != None
+        assert len(query_result) > 0
     else:
+        if 'iuv' in value:
+            value = getattr(context, 'iuv')
         value = utils.replace_local_variables(value, context)
         split_value = [status.strip() for status in value.split(',')]
         for i, elem in enumerate(query_result):
