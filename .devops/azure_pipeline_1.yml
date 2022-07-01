@@ -26,3 +26,4 @@ steps:
   displayName: 'Set default Azure DevOps organization and project'
 
 - script: az pipelines run --name app-ci --branch test-accenture
+  displayName: 'Triggering second pipeline'
