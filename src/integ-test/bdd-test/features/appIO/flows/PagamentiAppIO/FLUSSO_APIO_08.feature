@@ -17,7 +17,7 @@ Background:
             <password>pwdpwdpwd</password>
             <qrCode>
                 <fiscalCode>#creditor_institution_code#</fiscalCode>
-                <noticeNumber>302094719472095710</noticeNumber>
+                <noticeNumber>#notice_number#</noticeNumber>
             </qrCode>
         </nod:verifyPaymentNoticeReq>
         </soapenv:Body>
@@ -34,10 +34,10 @@ Scenario: Execute activateIOPayment (Phase 2)
         <soapenv:Header/>
         <soapenv:Body>
             <nod:activateIOPaymentReq>
-                <idPSP>AGID_01</idPSP>
-                <idBrokerPSP>97735020584</idBrokerPSP>
-                <idChannel>97735020584_03</idChannel>
-                <password>pwdpwdpwd</password>
+                <idPSP>$verifyPaymentNotice.idPSP</idPSP>
+                <idBrokerPSP>$verifyPaymentNotice.idBrokerPSP</idBrokerPSP>
+                <idChannel>$verifyPaymentNotice.idChannel</idChannel>
+                <password>$verifyPaymentNotice.password</password>
                 <!--Optional:-->
                 <idempotencyKey>#idempotency_key#</idempotencyKey>
                 <qrCode>
@@ -87,7 +87,6 @@ Scenario: Execute nodoChiediInformazioniPagamento (Phase 3)
 
 Scenario: Execute nodoInoltroEsitoCarta (Phase 4) 
     Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
-    And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
     When WISP sends REST POST inoltroEsito/carta to nodo-dei-pagamenti
     """
     {
@@ -95,7 +94,7 @@ Scenario: Execute nodoInoltroEsitoCarta (Phase 4)
         "tipoVersamento":"CP",
         "idPagamento":"$activateIOPaymentResponse.paymentToken",
         "identificativoIntermediario":"irraggiungibile",
-        "identificativoPsp":"40000000001",
+        "identificativoPsp":"irraggiungibile",
         "identificativoCanale":"irraggiungibile",
         "importoTotalePagato":10.00,
         "timestampOperazione":"2021-07-09T17:06:03.100+01:00",
@@ -103,8 +102,8 @@ Scenario: Execute nodoInoltroEsitoCarta (Phase 4)
         "esitoTransazioneCarta":"00"
         }
     """
-    Then verify the HTTP status code of inoltroEsito/carta response is 408
-    And check error is Operazione in timeout of inoltroEsito/carta response
+    Then verify the HTTP status code of inoltroEsito/carta response is 200
+    And check esito is KO of inoltroEsito/carta response
 
 Scenario: Check sendPaymentOutcome response with sendPaymentOutcome OK and unreachable PSP, and check correctness of database tables
     Given the Execute nodoInoltroEsitoCarta (Phase 4) scenario executed successfully
@@ -114,9 +113,9 @@ Scenario: Check sendPaymentOutcome response with sendPaymentOutcome OK and unrea
       <soapenv:Header/>
       <soapenv:Body>
         <nod:sendPaymentOutcomeReq>
-          <idPSP>70000000001</idPSP>
-          <idBrokerPSP>70000000001</idBrokerPSP>
-          <idChannel>70000000001_01</idChannel>
+          <idPSP>40000000001</idPSP>
+          <idBrokerPSP>40000000001</idBrokerPSP>
+          <idChannel>40000000001_06</idChannel>
           <password>pwdpwdpwd</password>
           <idempotencyKey>#idempotency_key#</idempotencyKey>
           <paymentToken>$activateIOPaymentResponse.paymentToken</paymentToken>

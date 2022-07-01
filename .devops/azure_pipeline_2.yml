@@ -1,0 +1,2 @@
+steps:
+- script: echo This pipeline will triggered by another pipeline

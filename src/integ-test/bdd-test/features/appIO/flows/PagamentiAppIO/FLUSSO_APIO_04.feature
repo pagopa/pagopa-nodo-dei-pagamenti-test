@@ -34,9 +34,9 @@ Scenario: Execute activateIOPayment (Phase 2)
         <soapenv:Header/>
         <soapenv:Body>
             <nod:activateIOPaymentReq>
-                <idPSP>AGID_01</idPSP>
-                <idBrokerPSP>97735020584</idBrokerPSP>
-                <idChannel>97735020584_03</idChannel>
+                <idPSP>$verifyPaymentNotice.idPSP</idPSP>
+                <idBrokerPSP>$verifyPaymentNotice.idBrokerPSP</idBrokerPSP>
+                <idChannel>$verifyPaymentNotice.idChannel</idChannel>
                 <password>pwdpwdpwd</password>
                 <!--Optional:-->
                 <idempotencyKey>#idempotency_key#</idempotencyKey>
@@ -87,6 +87,25 @@ Scenario: Execute nodoChiediInformazioniPagamento (Phase 3)
 
 Scenario: Execute nodoInoltroEsitoCarta (Phase 4) 
     Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
+    And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
+    """
+    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:psp="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
+        <soapenv:Header/>
+        <soapenv:Body>
+            <psp:pspNotifyPaymentRes>
+                <outcome>KO</outcome>
+                <!--Optional:-->
+                <fault>
+                    <faultCode>CANALE_SEMANTICA</faultCode>
+                    <faultString>Errore semantico dal psp</faultString>
+                    <id>1</id>
+                    <!--Optional:-->
+                    <description>Errore dal psp</description>
+                </fault>
+            </psp:pspNotifyPaymentRes>
+        </soapenv:Body>
+    </soapenv:Envelope>
+    """
     When WISP sends REST POST inoltroEsito/carta to nodo-dei-pagamenti
     """
     {
@@ -115,7 +134,7 @@ Scenario: Check sendPaymentOutcome response with pspNotifyPayment KO and sendPay
         <nod:sendPaymentOutcomeReq>
           <idPSP>40000000001</idPSP>
           <idBrokerPSP>40000000001</idBrokerPSP>
-          <idChannel>40000000001_03</idChannel>
+          <idChannel>40000000001_06</idChannel>
           <password>pwdpwdpwd</password>
           <idempotencyKey>#idempotency_key#</idempotencyKey>
           <paymentToken>$activateIOPaymentResponse.paymentToken</paymentToken>
@@ -167,15 +186,15 @@ Scenario: Check sendPaymentOutcome response with pspNotifyPayment KO and sendPay
     And checks the value $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
     And checks the value $activateIOPaymentResponse.fiscalCodePA of the record at column BROKER_PA_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
     And checks the value 2 of the record at column STATION_VERSION of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
-    And checks the value $activateIOPayment.idPSP of the record at column PSP_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
-    And checks the value $activateIOPayment.idBrokerPSP of the record at column BROKER_PSP_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
-    And checks the value $activateIOPayment.idChannel of the record at column CHANNEL_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
+    And checks the value $sendPaymentOutcome.idPSP of the record at column PSP_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
+    And checks the value $sendPaymentOutcome.idBrokerPSP of the record at column BROKER_PSP_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
+    And checks the value $sendPaymentOutcome.idChannel of the record at column CHANNEL_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
     And checks the value $activateIOPayment.idempotencyKey of the record at column IDEMPOTENCY_KEY of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
     And checks the value $activateIOPaymentResponse.totalAmount of the record at column AMOUNT of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
     And checks the value None of the record at column FEE of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
     And checks the value None of the record at column OUTCOME of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
-    And checks the value None of the record at column PAYMENT_METHOD of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
-    And checks the value NA of the record at column PAYMENT_CHANNEL of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
+    And checks the value CP of the record at column PAYMENT_METHOD of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
+    And checks the value WISP of the record at column PAYMENT_CHANNEL of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
     And checks the value None of the record at column TRANSFER_DATE of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
     And checks the value None of the record at column APPLICATION_DATE of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
     And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO

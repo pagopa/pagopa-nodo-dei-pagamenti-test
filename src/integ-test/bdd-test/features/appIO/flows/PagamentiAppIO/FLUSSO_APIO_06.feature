@@ -17,7 +17,7 @@ Background:
             <password>pwdpwdpwd</password>
             <qrCode>
                 <fiscalCode>#creditor_institution_code#</fiscalCode>
-                <noticeNumber>302094719472095710</noticeNumber>
+                <noticeNumber>#notice_number#</noticeNumber>
             </qrCode>
         </nod:verifyPaymentNoticeReq>
         </soapenv:Body>
@@ -34,10 +34,10 @@ Scenario: Execute activateIOPayment (Phase 2)
         <soapenv:Header/>
         <soapenv:Body>
             <nod:activateIOPaymentReq>
-                <idPSP>AGID_01</idPSP>
-                <idBrokerPSP>97735020584</idBrokerPSP>
-                <idChannel>97735020584_03</idChannel>
-                <password>pwdpwdpwd</password>
+                <idPSP>$verifyPaymentNotice.idPSP</idPSP>
+                <idBrokerPSP>$verifyPaymentNotice.idBrokerPSP</idBrokerPSP>
+                <idChannel>$verifyPaymentNotice.idChannel</idChannel>
+                <password>$verifyPaymentNotice.password</password>
                 <!--Optional:-->
                 <idempotencyKey>#idempotency_key#</idempotencyKey>
                 <qrCode>
@@ -88,6 +88,16 @@ Scenario: Execute nodoChiediInformazioniPagamento (Phase 3)
 Scenario: Execute nodoInoltroEsitoCarta (Phase 4) 
     Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
     And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
+    """
+    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:psp="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
+        <soapenv:Header/>
+        <soapenv:Body>
+            <psp:pspNotifyPaymentRes>
+                <outcome>Response malformata</outcome>
+            </psp:pspNotifyPaymentRes>
+        </soapenv:Body>
+    </soapenv:Envelope>
+    """
     When WISP sends REST POST inoltroEsito/carta to nodo-dei-pagamenti
     """
     {
@@ -115,9 +125,9 @@ Scenario: Check sendPaymentOutcome response with sendPaymentOutcome OK and malfo
       <soapenv:Header/>
       <soapenv:Body>
         <nod:sendPaymentOutcomeReq>
-          <idPSP>70000000001</idPSP>
-          <idBrokerPSP>70000000001</idBrokerPSP>
-          <idChannel>70000000001_01</idChannel>
+          <idPSP>40000000001</idPSP>
+          <idBrokerPSP>40000000001</idBrokerPSP>
+          <idChannel>40000000001_06</idChannel>
           <password>pwdpwdpwd</password>
           <idempotencyKey>#idempotency_key#</idempotencyKey>
           <paymentToken>$activateIOPaymentResponse.paymentToken</paymentToken>
@@ -157,7 +167,6 @@ Scenario: Check sendPaymentOutcome response with sendPaymentOutcome OK and malfo
       </soapenv:Body>
     </soapenv:Envelope>
     """
-    And outcome with KO in sendPaymentOutcome
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
     And checks the value PAYING, PAYMENT_SENT, PAYMENT_UNKNOWN, PAID, NOTICE_GENERATED, NOTICE_SENT, NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO

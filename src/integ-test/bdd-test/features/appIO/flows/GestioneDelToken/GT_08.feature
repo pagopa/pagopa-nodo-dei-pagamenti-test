@@ -100,33 +100,33 @@ Feature: GT_08
         When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
             """
             {
-                "idPagamento": "2d6a54714c72499eb71115d606152632",
+                "idPagamento": "$activateIOPaymentResponse.paymentToken",
                 "RRN": 18865881,
-                "identificativoPsp": "40000000001",
+                "identificativoPsp": "70000000001",
                 "tipoVersamento": "CP",
-                "identificativoIntermediario": "40000000001",
-                "identificativoCanale": "40000000001_03",
-                "importoTotalePagato": 10,
+                "identificativoIntermediario": "70000000001",
+                "identificativoCanale": "70000000001_03",
+                "importoTotalePagato": 10.00,
                 "timestampOperazione": "2021-07-09T17:06:03.100+01:00",
                 "codiceAutorizzativo": "resOK",
                 "esitoTransazioneCarta": "00"
             }
             """
-        Then verify the HTTP status code of nodoInoltraEsitoPagamentoCarta response is 200
+        Then verify the HTTP status code of inoltroEsito/carta response is 200
+        And check esito is OK of inoltroEsito/carta response
         #TODO: check TOKEN_VALID_TO scaduto
 
     Scenario: Execute sendPaymentOutcome (Phase 5)
         Given the Execute nodoInoltraEsitoPagamentoCarta (Phase 4) scenario executed successfully
-        #poller annulli
         And initial XML sendPaymentOutcome
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
             <soapenv:Header/>
             <soapenv:Body>
                 <nod:sendPaymentOutcomeReq>
-                    <idPSP>40000000001</idPSP>
-                    <idBrokerPSP>40000000001</idBrokerPSP>
-                    <idChannel>40000000001_03</idChannel>
+                    <idPSP>70000000001</idPSP>
+                    <idBrokerPSP>70000000001</idBrokerPSP>
+                    <idChannel>70000000001_03</idChannel>
                     <password>pwdpwdpwd</password>
                     <idempotencyKey>#idempotency_key#</idempotencyKey>
                     <paymentToken>$activateIOPaymentResponse.paymentToken</paymentToken>
@@ -166,8 +166,10 @@ Feature: GT_08
             </soapenv:Body>
         </soapenv:Envelope>
         """
+        When job mod3Cancel triggered after 15 seconds
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-        Then check outcome is OK of sendPaymentOutcome response
+        Then check outcome is KO of sendPaymentOutcome response
+        And check faultCode is PPT_SEMANTICA of sendPaymentOutcome response
     
     Scenario: activateIOPayment1
         Given the sendPaymentOutcome scenario executed successfully

@@ -17,7 +17,7 @@ Background:
             <password>pwdpwdpwd</password>
             <qrCode>
                 <fiscalCode>#creditor_institution_code#</fiscalCode>
-                <noticeNumber>302094719472095710</noticeNumber>
+                <noticeNumber>#notice_number#</noticeNumber>
             </qrCode>
         </nod:verifyPaymentNoticeReq>
         </soapenv:Body>
@@ -34,10 +34,10 @@ Scenario: Execute activateIOPayment (Phase 2)
         <soapenv:Header/>
         <soapenv:Body>
             <nod:activateIOPaymentReq>
-                <idPSP>AGID_01</idPSP>
-                <idBrokerPSP>97735020584</idBrokerPSP>
-                <idChannel>97735020584_03</idChannel>
-                <password>pwdpwdpwd</password>
+                <idPSP>$verifyPaymentNotice.idPSP</idPSP>
+                <idBrokerPSP>$verifyPaymentNotice.idBrokerPSP</idBrokerPSP>
+                <idChannel>$verifyPaymentNotice.idChannel</idChannel>
+                <password>$verifyPaymentNotice.password</password>
                 <!--Optional:-->
                 <idempotencyKey>#idempotency_key#</idempotencyKey>
                 <qrCode>
@@ -96,7 +96,7 @@ Scenario: Check sendPaymentOutcome response before nodoInoltroEsitoCarta with se
         <nod:sendPaymentOutcomeReq>
           <idPSP>40000000001</idPSP>
           <idBrokerPSP>40000000001</idBrokerPSP>
-          <idChannel>40000000001_03</idChannel>
+          <idChannel>40000000001_06</idChannel>
           <password>pwdpwdpwd</password>
           <idempotencyKey>#idempotency_key#</idempotencyKey>
           <paymentToken>$activateIOPaymentResponse.paymentToken</paymentToken>

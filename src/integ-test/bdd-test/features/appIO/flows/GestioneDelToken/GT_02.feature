@@ -102,17 +102,18 @@ Feature: GT_02
             {
                 "idPagamento": "$activateIOPaymentResponse.paymentToken",
                 "RRN": 18865881,
-                "identificativoPsp": "40000000001",
+                "identificativoPsp": "70000000001",
                 "tipoVersamento": "CP",
-                "identificativoIntermediario": "40000000001",
-                "identificativoCanale": "40000000001_03",
+                "identificativoIntermediario": "70000000001",
+                "identificativoCanale": "70000000001_03",
                 "importoTotalePagato": 10,
                 "timestampOperazione": "2021-07-09T17:06:03.100+01:00",
                 "codiceAutorizzativo": "resOK",
                 "esitoTransazioneCarta": "00"
             }
             """
-        Then verify the HTTP status code of nodoInoltraEsitoPagamentoCarta response is 200
+        Then verify the HTTP status code of inoltroEsito/carta response is 200
+        And check esito is OK of inoltroEsito/carta response
         #TODO: check TOKEN_VALID_TO column update (CORRETTO?)
         #And checks the value nodoNotificaAnnullamento of the record at column UPDATED_BY of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
         Then restore initial configurations

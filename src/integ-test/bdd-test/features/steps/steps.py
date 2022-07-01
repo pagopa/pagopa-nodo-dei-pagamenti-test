@@ -540,8 +540,6 @@ def step_impl(context, param, value):
 
     db.closeConnection(conn)
     refresh_response = requests.get(utils.get_refresh_config_url(context))
-    time.sleep(5)
-
     assert refresh_response.status_code == 200
 
 @then("restore initial configurations")
@@ -556,7 +554,6 @@ def step_impl(context):
 
     db.closeConnection(conn)
     refresh_response = requests.get(utils.get_refresh_config_url(context))
-    time.sleep(5)
     assert refresh_response.status_code == 200
 
 
