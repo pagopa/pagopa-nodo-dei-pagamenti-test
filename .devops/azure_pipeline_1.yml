@@ -25,4 +25,4 @@ steps:
 - script: az devops configure --defaults organization=$(System.TeamFoundationCollectionUri) project="$(System.TeamProject)" --use-git-aliases true
   displayName: 'Set default Azure DevOps organization and project'
 
-- script: az pipelines run --name app-ci
+- script: az pipelines run --name app-ci --branch test-accenture
