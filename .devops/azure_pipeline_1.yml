@@ -1,13 +1,11 @@
+# azure-pipelines.yml
 name: FirstPipeline
 
 trigger:
-- master
+- main
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: ubuntu-latest
 
 steps:
-- script: echo This pipeline runs first and will trigger another pipeline
-- template: azure_pipeline_2.yml
-- script: echo pipeline 2 OK and complete pipeline 1
-
+- script: echo This pipeline runs first !
