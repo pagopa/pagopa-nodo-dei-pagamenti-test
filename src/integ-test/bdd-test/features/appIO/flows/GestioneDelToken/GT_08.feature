@@ -102,10 +102,10 @@ Feature: GT_08
             {
                 "idPagamento": "$activateIOPaymentResponse.paymentToken",
                 "RRN": 18865881,
-                "identificativoPsp": "70000000001",
+                "identificativoPsp": "40000000001",
                 "tipoVersamento": "CP",
-                "identificativoIntermediario": "70000000001",
-                "identificativoCanale": "70000000001_03",
+                "identificativoIntermediario": "40000000001",
+                "identificativoCanale": "40000000001_06",
                 "importoTotalePagato": 10.00,
                 "timestampOperazione": "2021-07-09T17:06:03.100+01:00",
                 "codiceAutorizzativo": "resOK",
@@ -124,9 +124,9 @@ Feature: GT_08
             <soapenv:Header/>
             <soapenv:Body>
                 <nod:sendPaymentOutcomeReq>
-                    <idPSP>70000000001</idPSP>
-                    <idBrokerPSP>70000000001</idBrokerPSP>
-                    <idChannel>70000000001_03</idChannel>
+                    <idPSP>40000000001</idPSP>
+                    <idBrokerPSP>40000000001</idBrokerPSP>
+                    <idChannel>40000000001_06</idChannel>
                     <password>pwdpwdpwd</password>
                     <idempotencyKey>#idempotency_key#</idempotencyKey>
                     <paymentToken>$activateIOPaymentResponse.paymentToken</paymentToken>
@@ -166,8 +166,8 @@ Feature: GT_08
             </soapenv:Body>
         </soapenv:Envelope>
         """
-        When job mod3Cancel triggered after 15 seconds
-        When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+        When job mod3CancelV2 triggered after 15 seconds
+        And PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcome response
         And check faultCode is PPT_SEMANTICA of sendPaymentOutcome response
     

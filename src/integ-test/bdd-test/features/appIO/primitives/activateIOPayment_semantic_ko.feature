@@ -201,19 +201,30 @@ Feature: Semantic checks for activateIOPayment - KO
         And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro AppIO
         And restore initial configurations
   
-  #TROVARE UN MODO PER FAR COINCIDERE LE RICHIESTE NEL CASO OK E KO
+  # SISTEMARE MEGLIO
+  Scenario: prova
+    Given idempotencyKey with 70000000001_8976902111 in activateIOPayment
+    And noticeNumber with 302111622625506916 in activateIOPayment
+  
   Scenario: Execute activateIOPayment (Phase 1)
+    Given nodo-dei-pagamenti has config parameter useIdempotency set to true
+    Given the prova scenario executed successfully
     When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is OK of activateIOPayment response
+    And restore initial configurations
 
+  
   Scenario Outline: Check PPT_ERRORE_IDEMPOTENZA error on validity idempotencyKey (Phase 2)
-    Given the Execute activateIOPayment (Phase 1) scenario executed successfully
+    Given nodo-dei-pagamenti has config parameter useIdempotency set to true
+    Given the prova scenario executed successfully
     And <tag> with <tag_value> in activateIOPayment
     When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is KO of activateIOPayment response
     And check faultCode is PPT_ERRORE_IDEMPOTENZA of activateIOPayment response
+    And restore initial configurations
     Examples:
       | tag                         | tag_value             | soapUI test |
+      | noticeNumber                | 302119138889055636    | SEM_AIPR_21 |
       | fiscalCode                  | 90000000001           | SEM_AIPR_21 |
       | amount                      | 12.00                 | SEM_AIPR_21 |
       | dueDate                     | 2021-12-31            | SEM_AIPR_21 |

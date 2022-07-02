@@ -100,7 +100,7 @@ Scenario: Execute activateIOPayment (Phase 2)
 
 Scenario: Execute nodoChiediInformazioniPagamento (Phase 3)
     Given the Execute activateIOPayment (Phase 2) scenario executed successfully
-    And get value from PAYMENT_TOKEN column in POSITION_ACTIVATE table retrivied by the query payment_status on nodo_online db under AppIO macro
+    And get value from PAYMENT_TOKEN column in POSITION_ACTIVATE table retrived by the query payment_status on nodo_online db under AppIO macro
     # COME PRENDO IL PAYMENT TOKEN DAL DB PER PASSARLO POI AL SERVIZIO INFORMAZIONI PAGAMENTO?
     When WISP sends rest GET informazioniPagamento?idPagamento=%PAYMENT_TOKEN to nodo-dei-pagamenti
     Then verify the HTTP status code of informazioniPagamento response is 404

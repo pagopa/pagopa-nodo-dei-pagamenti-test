@@ -697,10 +697,10 @@ def step_impl(context, value, column, query_name, table_name, db_name, name_macr
     
     if value == 'None':
         print('None')
-        assert len(query_result) == 0
+        assert query_result[0] == None
     elif value == 'NotNone':
         print('NotNone')
-        assert len(query_result) > 0
+        assert query_result[0] != None
     else:
         if 'iuv' in value:
             value = getattr(context, 'iuv')
@@ -718,19 +718,33 @@ def step_impl(context, value, column, query_name, table_name, db_name, name_macr
         for elem in split_value:
             assert elem in query_result, f"check expected element: {value}, obtained: {query_result}"
 
+    db.closeConnection(conn)
+
 @step(u"verify {number:d} record for the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
 def step_impl(context, query_name, table_name, db_name, name_macro, number):
     db_config = context.config.userdata.get("db_configuration")
     db_selected = db_config.get(db_name)
-    column = "*"
     conn = db.getConnection(db_selected.get('host'), db_selected.get('database'),db_selected.get('user'),db_selected.get('password'),db_selected.get('port'))
 
-    selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
+    selected_query = utils.query_json(context, query_name, name_macro).replace("columns", '*').replace("table_name", table_name)
    
     exec_query = db.executeQuery(conn, selected_query)
 
     assert len(exec_query) == number, f"{len(exec_query)}"
 
+
+@step('check token validity')
+def step_impl(context):
+    nodo_online_db = context.config.userdata.get("db_configuration").get('nodo_online')
+    nodo_online_conn = db.getConnection(nodo_online_db.get('host'), nodo_online_db.get('database'), nodo_online_db.get('user'), nodo_online_db.get('password'), nodo_online_db.get('port'))
+
+    token_validity_query = utils.query_json(context, 'token_validity', 'AppIO')
+    token_valid_from, token_valid_to = db.executeQuery(nodo_online_conn, token_validity_query)[0]
+    db.closeConnection(nodo_online_conn)
+    
+    default_validity_token = int(getattr(context, 'configurations').get('default_durata_token_IO'))
+
+    assert token_valid_from + datetime.timedelta(milliseconds=default_validity_token) == token_valid_to
 
 @step("calling primitive {primitive1} and {primitive2} in parallel")
 def step_impl(context, primitive1, primitive2):
@@ -1002,29 +1016,6 @@ def step_impl(context):
     assert UPDATED_TIMESTAMP5 != None
 
     assert ID51 == None
-
-@step('check token validity')
-def step_impl(context):
-    nodo_online_db = context.config.userdata.get("db_configuration").get('nodo_online')
-    nodo_online_conn = db.getConnection(nodo_online_db.get('host'), nodo_online_db.get('database'), nodo_online_db.get('user'), nodo_online_db.get('password'), nodo_online_db.get('port'))
-
-    query_1 = utils.replace_local_variables("SELECT TOKEN_VALID_FROM FROM POSITION_ACTIVATE WHERE CREDITOR_REFERENCE_ID  = '$activateIOPaymentResponse.creditorReferenceId' AND PA_FISCAL_CODE = '$activateIOPaymentResponse.fiscalCodePA' AND PAYMENT_TOKEN = '$activateIOPaymentResponse.paymentToken'", context)
-    token_valid_from = db.executeQuery(nodo_online_conn, query_1)[0][0]
-    print(token_valid_from, type(token_valid_from))
-
-    query_3 = utils.replace_local_variables("SELECT TOKEN_VALID_TO FROM POSITION_ACTIVATE WHERE CREDITOR_REFERENCE_ID  = '$activateIOPaymentResponse.creditorReferenceId' AND PA_FISCAL_CODE = '$activateIOPaymentResponse.fiscalCodePA' AND PAYMENT_TOKEN = '$activateIOPaymentResponse.paymentToken'", context)
-    token_valid_to = db.executeQuery(nodo_online_conn, query_3)[0][0]
-    print(token_valid_to, type(token_valid_to))
-
-    nodo_cfg_db = context.config.userdata.get("db_configuration").get('nodo_cfg')
-    nodo_cfg_conn = db.getConnection(nodo_cfg_db.get('host'), nodo_cfg_db.get('database'), nodo_cfg_db.get('user'), nodo_cfg_db.get('password'), nodo_cfg_db.get('port'))
-
-    
-    query_2 = utils.replace_local_variables("SELECT CONFIG_VALUE FROM CONFIGURATION_KEYS ck WHERE CONFIG_KEY = 'default_durata_token_IO'", context)
-    default_validity_token = int(db.executeQuery(nodo_cfg_conn, query_2)[0][0])
-    print(default_validity_token, type(default_validity_token))
-
-    assert token_valid_from + datetime.timedelta(milliseconds=default_validity_token) == token_valid_to
 
 @then("check DB_GR_01")
 def step_impl(context):

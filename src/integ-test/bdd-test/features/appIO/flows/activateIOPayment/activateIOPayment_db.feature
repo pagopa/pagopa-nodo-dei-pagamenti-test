@@ -8,9 +8,9 @@ Feature: DB checks for activateIOPayment primitive
                 <soapenv:Header/>
                 <soapenv:Body>
                     <nod:activateIOPaymentReq>
-                        <idPSP>70000000001</idPSP>
-                        <idBrokerPSP>70000000001</idBrokerPSP>
-                        <idChannel>70000000001_01</idChannel>
+                        <idPSP>AGID_01</idPSP>
+                        <idBrokerPSP>97735020584</idBrokerPSP>
+                        <idChannel>97735020584_03</idChannel>
                         <password>pwdpwdpwd</password>
                         <!--Optional:-->
                         <idempotencyKey>#idempotency_key#</idempotencyKey>
@@ -89,7 +89,7 @@ Feature: DB checks for activateIOPayment primitive
     Scenario: Check correctness POSITION_SERVICE table
         Given the Execute activateIOPaymentReq request scenario executed successfully
         And save activateIOPayment response in activateIOPayment_first
-        And random idempotencyKey having 70000000001 as idPSP in activateIOPayment
+        And random idempotencyKey having AGID_01 as idPSP in activateIOPayment
         And noticeNumber with $activateIOPayment.noticeNumber in activateIOPayment
         When psp sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is KO of activateIOPayment response

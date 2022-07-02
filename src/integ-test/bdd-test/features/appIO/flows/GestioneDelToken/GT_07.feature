@@ -102,10 +102,10 @@ Feature: GT_07
             {
                 "idPagamento": "$activateIOPaymentResponse.paymentToken",
                 "RRN": 18865881,
-                "identificativoPsp": "70000000001",
+                "identificativoPsp": "40000000001",
                 "tipoVersamento": "CP",
-                "identificativoIntermediario": "70000000001",
-                "identificativoCanale": "70000000001_03",
+                "identificativoIntermediario": "40000000001",
+                "identificativoCanale": "40000000001_06",
                 "importoTotalePagato": 10,
                 "timestampOperazione": "2021-07-09T17:06:03.100+01:00",
                 "codiceAutorizzativo": "resOK",
@@ -124,9 +124,9 @@ Feature: GT_07
             <soapenv:Header/>
             <soapenv:Body>
                 <nod:sendPaymentOutcomeReq>
-                    <idPSP>70000000001</idPSP>
-                    <idBrokerPSP>70000000001</idBrokerPSP>
-                    <idChannel>70000000001_03</idChannel>
+                    <idPSP>40000000001</idPSP>
+                    <idBrokerPSP>40000000001</idBrokerPSP>
+                    <idChannel>40000000001_06</idChannel>
                     <password>pwdpwdpwd</password>
                     <idempotencyKey>#idempotency_key#</idempotencyKey>
                     <paymentToken>$activateIOPaymentResponse.paymentToken</paymentToken>
