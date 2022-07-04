@@ -1,4 +1,5 @@
 from concurrent.futures import thread
+import math
 import re, json, os, datetime
 from xml.dom.minidom import parseString
 
@@ -154,6 +155,15 @@ def manipulate_soap_action(soap_action, elem, value):
 
     return my_document.toxml()
 
+def replace_context_variables(body, context):
+    pattern = re.compile('\\$\\w+')
+    match = pattern.findall(body)
+    for field in match:
+        saved_elem = getattr(context, field.replace('$', ''))
+        value = saved_elem
+        body = body.replace(field, value)
+    return body
+
 
 def replace_local_variables(body, context):
     pattern = re.compile('\\$\\w+\\.\\w+')
@@ -195,6 +205,7 @@ def query_json(context, name_query, name_macro):
     
     if '$' in selected_query:
         selected_query = replace_local_variables(selected_query, context)
+        selected_query = replace_context_variables(selected_query, context)
         
     return selected_query
 

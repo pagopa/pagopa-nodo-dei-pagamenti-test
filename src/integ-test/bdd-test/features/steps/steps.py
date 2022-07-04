@@ -577,12 +577,12 @@ def step_impl(context):
     assert refresh_response.status_code == 200
 
 
-@step("execution query {query_name} under macro {macro} with db name {db_name}")
-def step_impl(context, query_name, macro, db_name):
+@step("execution query {query_name} to get value on the table {table_name}, with the columns {columns} under macro {macro} with db name {db_name}")
+def step_impl(context, query_name, macro, db_name,table_name,columns):
     db_config = context.config.userdata.get("db_configuration")
     db_selected = db_config.get(db_name)
     
-    selected_query = utils.query_json(context, query_name, macro)
+    selected_query = utils.query_json(context, query_name, macro).replace("columns", columns).replace("table_name", table_name)
     selected_query = utils.replace_local_variables(selected_query, context)
 
     conn = db.getConnection(db_selected.get('host'), db_selected.get('database'),db_selected.get('user'),db_selected.get('password'),db_selected.get('port'))
@@ -598,6 +598,8 @@ def step_impl(context, query_name, macro, db_name):
 def stemp_impl(context, query_name1, elem1, position1, elem2, query_name2, position2):
     result_query1 = getattr(context, query_name1)
     result_query2 = getattr(context, query_name2)
+    print("elem1: ", result_query1[0][position1])
+    print("elem2: ", result_query2[0][position2])
 
     assert result_query1[0][position1] == result_query2[0][position2]
 
