@@ -91,8 +91,9 @@ Scenario: Execute nodoNotificaAnnullamento (Phase 4)
     Then verify the HTTP status code of notificaAnnullamento response is 200
 
 Scenario: Execute activateIOPayment1 (Phase 5)
+    Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 6000
     Given the Execute nodoNotificaAnnullamento (Phase 4) scenario executed successfully
-    And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
     When AppIO sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is OK of activateIOPayment response
+    And restore initial configurations
 

@@ -1,30 +1,30 @@
-Feature: FLUSSO_APIO_14
+Feature: FLUSSO_APIO_36
 
     Background:
         Given systems up
         And EC new version
 
     Scenario: Execute verifyPaymentNotice (Phase 1)
-    Given initial XML verifyPaymentNotice
-    """
-    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-        <soapenv:Header/>
-        <soapenv:Body>
-        <nod:verifyPaymentNoticeReq>
-            <idPSP>AGID_01</idPSP>
-            <idBrokerPSP>97735020584</idBrokerPSP>
-            <idChannel>97735020584_03</idChannel>
-            <password>pwdpwdpwd</password>
-            <qrCode>
-                <fiscalCode>#creditor_institution_code#</fiscalCode>
-                <noticeNumber>302094719472095710</noticeNumber>
-            </qrCode>
-        </nod:verifyPaymentNoticeReq>
-        </soapenv:Body>
-    </soapenv:Envelope>
-    """
-    When AppIO sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
-    Then check outcome is OK of verifyPaymentNotice response
+        Given initial XML verifyPaymentNotice
+        """
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <nod:verifyPaymentNoticeReq>
+                <idPSP>AGID_01</idPSP>
+                <idBrokerPSP>97735020584</idBrokerPSP>
+                <idChannel>97735020584_03</idChannel>
+                <password>pwdpwdpwd</password>
+                <qrCode>
+                    <fiscalCode>#creditor_institution_code#</fiscalCode>
+                    <noticeNumber>302094719472095710</noticeNumber>
+                </qrCode>
+            </nod:verifyPaymentNoticeReq>
+            </soapenv:Body>
+        </soapenv:Envelope>
+        """
+        When AppIO sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
+        Then check outcome is OK of verifyPaymentNotice response
 
     Scenario: Execute activateIOPayment (Phase 2)
         Given the Execute verifyPaymentNotice (Phase 1) scenario executed successfully
@@ -81,23 +81,25 @@ Feature: FLUSSO_APIO_14
         Then check outcome is OK of activateIOPayment response
 
     Scenario: Execute nodoChiediInformazioniPagamento (Phase 3)
-    Given the Execute activateIOPayment (Phase 2) scenario executed successfully
-    When WISP sends rest GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
-    Then verify the HTTP status code of informazioniPagamento response is 200
+        Given the Execute activateIOPayment (Phase 2) scenario executed successfully
+        When WISP sends rest GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
+        Then verify the HTTP status code of informazioniPagamento response is 200
 
-    Scenario: Execute nodoInoltroEsitoCarta (Phase 4) 
+    Scenario: Execute nodoChiediAvanzamentoPagamento1 (Phase 4)
         Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
-        And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
-        """
-        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:psp="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
-            <soapenv:Header/>
-            <soapenv:Body>
-                <psp:pspNotifyPaymentRes>
-                    <outcome>Response malformata</outcome>
-                </psp:pspNotifyPaymentRes>
-            </soapenv:Body>
-        </soapenv:Envelope>
-        """
+        When WISP sends rest GET avanzamentoPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
+        Then verify the HTTP status code of avanzamentoPagamento response is 200
+        And check esito is PARKED of avanzamentoPagamento response
+
+    Scenario: Execute nodoChiediAvanzamentoPagamento2 (Phase 5)
+        Given the Execute nodoChiediAvanzamentoPagamento1 (Phase 4) scenario executed successfully
+        When WISP sends rest GET avanzamentoPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
+        Then verify the HTTP status code of avanzamentoPagamento response is 200
+        And check esito is PARKED of avanzamentoPagamento response
+
+    
+    Scenario: Execute nodoInoltroEsitoCarta (Phase 6)
+        Given the Execute nodoChiediAvanzamentoPagamento2 (Phase 5) scenario executed successfully
         When WISP sends REST POST inoltroEsito/carta to nodo-dei-pagamenti
         """
         {
@@ -111,15 +113,15 @@ Feature: FLUSSO_APIO_14
             "timestampOperazione":"2021-07-09T17:06:03.100+01:00",
             "codiceAutorizzativo":"resOK",
             "esitoTransazioneCarta":"00"
-            }
+        }
         """
-        Then verify the HTTP status code of inoltroEsito/carta response is 408
-        And check error is Operazione in timeout of inoltroEsito/carta response
-        And checks the value PAYING, PAYMENT_SENT, PAYMENT_UNKNOWN of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
-        And checks the value PAYMENT_UNKNOWN of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
+        Then verify the HTTP status code of inoltroEsito/carta response is 200
+        And check esito is OK of inoltroEsito/carta response
+        And checks the value PAYING, PAYMENT_SENT, PAYMENT_ACCEPTED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
+        And checks the value PAYMENT_ACCEPTED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
-        # check correctness POSITION_PAYMENT table
+        # correctness of POSITION_PAYMENT table
         And checks the value $activateIOPaymentResponse.creditorReferenceId of the record at column CREDITOR_REFERENCE_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value $activateIOPaymentResponse.fiscalCodePA of the record at column BROKER_PA_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
@@ -158,9 +160,10 @@ Feature: FLUSSO_APIO_14
         And checks the value None of the record at column MOTIVO_ANNULLAMENTO of the table PM_SESSION_DATA retrived by the query pm_session on db nodo_online under macro AppIO
         And checks the value None of the record at column CODICE_CONVENZIONE of the table PM_SESSION_DATA retrived by the query pm_session on db nodo_online under macro AppIO
 
-    Scenario: Check sendPaymentOutcome response after nodoInoltroEsitoCarta, and check correctness of database tables
-        Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 6000
-        And the Execute nodoInoltroEsitoCarta (Phase 4) scenario executed successfully
+    Scenario: Execute sendPaymentOutcome (Phase 9)
+        Given nodo-dei-pagamenti has config parameter maxChiediAvanzamento set to 1
+        Given nodo-dei-pagamenti has config parameter useCountChiediAvanzamento set to true
+        And the Execute nodoInoltroEsitoCarta (Phase 6) scenario executed successfully
         And initial XML sendPaymentOutcome
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -186,7 +189,7 @@ Feature: FLUSSO_APIO_14
                     <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
                     <entityUniqueIdentifierValue>77777777777_01</entityUniqueIdentifierValue>
                 </uniqueIdentifier>
-                <fullName>SPOname_$activateIOPaymentResponse.paymentToken</fullName>
+                <fullName>name</fullName>
                 <!--Optional:-->
                 <streetName>street</streetName>
                 <!--Optional:-->
@@ -209,16 +212,13 @@ Feature: FLUSSO_APIO_14
         </soapenv:Body>
         </soapenv:Envelope>
         """
-        When wait 7 seconds for expiration
-        And job mod3CancelV2 triggered after 6 seconds
-        And PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-        Then check outcome is KO of sendPaymentOutcome response
-        And check faultCode is PPT_SEMANTICA of sendPaymentOutcome response
-        And checks the value PAYING, PAYMENT_SENT, PAYMENT_UNKNOWN, CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
-        And checks the value CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
-        And checks the value PAYING, INSERTED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
-        And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
-        #check correctness of POSITION_PAYMENT table
+        When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+        Then check outcome is OK of sendPaymentOutcome response
+        And checks the value PAYING, PAYMENT_SENT, PAYMENT_ACCEPTED, PAID, NOTICE_GENERATED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
+        And checks the value NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
+        And checks the value PAYING, PAID of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
+        And checks the value NOTIFIED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
+        # correctness of POSITION_PAYMENT table
         And checks the value $activateIOPaymentResponse.creditorReferenceId of the record at column CREDITOR_REFERENCE_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value $activateIOPaymentResponse.fiscalCodePA of the record at column BROKER_PA_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
@@ -228,12 +228,12 @@ Feature: FLUSSO_APIO_14
         And checks the value 40000000001_06 of the record at column CHANNEL_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value $activateIOPayment.idempotencyKey of the record at column IDEMPOTENCY_KEY of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value $activateIOPaymentResponse.totalAmount of the record at column AMOUNT of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
-        And checks the value None of the record at column FEE of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
-        And checks the value None of the record at column OUTCOME of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
+        And checks the value $sendPaymentOutcome.fee of the record at column FEE of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
+        And checks the value $sendPaymentOutcome.outcome of the record at column OUTCOME of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value CP of the record at column PAYMENT_METHOD of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value WISP of the record at column PAYMENT_CHANNEL of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
-        And checks the value None of the record at column TRANSFER_DATE of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
-        And checks the value None of the record at column APPLICATION_DATE of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
+        And checks the value NotNone of the record at column TRANSFER_DATE of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
+        And checks the value NotNone of the record at column APPLICATION_DATE of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value NotNone of the record at column FK_PAYMENT_PLAN of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
@@ -243,4 +243,11 @@ Feature: FLUSSO_APIO_14
         And checks the value None of the record at column ORIGINAL_PAYMENT_TOKEN of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value Y of the record at column FLAG_IO of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value Y of the record at column RICEVUTA_PM of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
+        # check correctness POSITION_SUBJECT table
+        And verify 0 record for the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro AppIO
+        # TODO: check correctness POSITION_RECEIPT table
+        # TODO: check correctness of POSITION_RECEIPT_RECIPIENT table
+        # TODO: check correctness of POSITION_RECEIPT_RECIPIENT_STATUS table
+        # TODO: check correctness of POSITION_RECEIPT_XML table
+        # TODO: check correctness of XML Receipt
         And restore initial configurations
