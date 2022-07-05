@@ -53,7 +53,6 @@ Feature: process tests for generazioneRicevute
       </soapenv:Body>
       </soapenv:Envelope>
       """
-    And initial XML paaAttivaRPT
     When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
     Then checks the value iuv of the record at column CREDITOR_REFERENCE_ID of the table RPT_ACTIVATIONS retrived by the query rpt_activision on db nodo_online under macro NewMod3
@@ -225,7 +224,7 @@ Feature: process tests for generazioneRicevute
     #RT
     Then execution query rt to get value on the table RT, with the columns ID_SESSIONE,CCP,IDENT_DOMINIO,IUV,COD_ESITO,DATA_RICEVUTA,DATA_RICHIESTA,ID_RICEVUTA,ID_RICHIESTA,SOMMA_VERSAMENTI,INSERTED_TIMESTAMP,UPDATED_TIMESTAMP,CANALE,ID under macro NewMod3 with db name nodo_online
     And execution query rpt to get value on the table RPT, with the columns CCP,IDENT_DOMINIO,IUV,ID_MSG_RICH,CANALE under macro NewMod3 with db name nodo_online
-    And execution query payment_status to get value on the table POSITION_PAYMENT, with the columns AMOUNT,FEE,PAYMENT_TOKEN,NOTICE_ID,PA_FISCAL_CODE,OUTCOME,CHANNEL_ID,PAYMENT_CHANNEL,PAYER_ID,PAYMENT_METHOD,ID,APPLICATION_DATE,CREDITOR_REFERENCE_ID under macro NewMod3 with db name nodo_online
+    And execution query payment_status to get value on the table POSITION_PAYMENT, with the columns AMOUNT,FEE,PAYMENT_TOKEN,NOTICE_ID,PA_FISCAL_CODE,OUTCOME,CHANNEL_ID,PAYMENT_CHANNEL,PAYER_ID,PAYMENT_METHOD,ID,APPLICATION_DATE,CREDITOR_REFERENCE_ID,BROKER_PA_ID,STATION_ID under macro NewMod3 with db name nodo_online
     And checks the value NotNone of the record at column ID_SESSIONE of the table RT retrived by the query rt on db nodo_online under macro NewMod3
     And with the query rt check assert beetwen elem CCP in posisition 1 and elem CCP with position 0 of the query rpt
     And with the query rt check assert beetwen elem IDENT_DOMINIO in posisition 2 and elem IDENT_DOMINIO with position 1 of the query rpt
@@ -252,7 +251,7 @@ Feature: process tests for generazioneRicevute
     And checks the value NotNone of the record at column s.INSERTED_TIMESTAMP of the table RT_VERSAMENTI retrived by the query rt_versamenti on db nodo_online under macro NewMod3
     And checks the value NotNone of the record at column s.UPDATED_TIMESTAMP of the table RT_VERSAMENTI retrived by the query rt_versamenti on db nodo_online under macro NewMod3
     #POSITION_RECEIPT
-    And execution query position_receipt to get value on the table POSITION_RECEIPT, with the columns RECEIPT_ID,s.NOTICE_ID,s.PA_FISCAL_CODE,s.CREDITOR_REFERENCE_ID,s.PAYMENT_TOKEN,s.OUTCOME,s.PAYMENT_AMOUNT,s.DESCRIPTION,s.COMPANY_NAME,s.OFFICE_NAME,s.DEBTOR_ID,s.PSP_ID,s.PSP_COMPANY_NAME,s.PSP_FISCAL_CODE,s.PSP_VAT_NUMBER,s.CHANNEL_ID,s.CHANNEL_DESCRIPTION,s.PAYER_ID,s.PAYMENT_METHOD,s.FEE,s.PAYMENT_DATE_TIME,s.APPLICATION_DATE,s.TRANSFER_DATE,s.METADATA,s.RT_ID,s.FK_POSITION_PAYMENT under macro NewMod3 with db name nodo_online
+    And execution query position_receipt to get value on the table POSITION_RECEIPT, with the columns RECEIPT_ID,s.NOTICE_ID,s.PA_FISCAL_CODE,s.CREDITOR_REFERENCE_ID,s.PAYMENT_TOKEN,s.OUTCOME,s.PAYMENT_AMOUNT,s.DESCRIPTION,s.COMPANY_NAME,s.OFFICE_NAME,s.DEBTOR_ID,s.PSP_ID,s.PSP_COMPANY_NAME,s.PSP_FISCAL_CODE,s.PSP_VAT_NUMBER,s.CHANNEL_ID,s.CHANNEL_DESCRIPTION,s.PAYER_ID,s.PAYMENT_METHOD,s.FEE,s.PAYMENT_DATE_TIME,s.APPLICATION_DATE,s.TRANSFER_DATE,s.METADATA,s.RT_ID,s.FK_POSITION_PAYMENT,s.ID under macro NewMod3 with db name nodo_online
     And execution query position_service to get value on the table POSITION_SERVICE, with the columns DESCRIPTION,COMPANY_NAME,OFFICE_NAME,DEBTOR_ID under macro NewMod3 with db name nodo_online
     And execution query psp to get value on the table PSP, with the columns RAGIONE_SOCIALE,CODICE_FISCALE,VAT_NUMBER under macro NewMod3 with db name nodo_cfg
     And execution query position_payment_plan to get value on the table POSITION_PAYMENT_PLAN, with the columns METADATA under macro NewMod3 with db name nodo_online
@@ -285,15 +284,35 @@ Feature: process tests for generazioneRicevute
     #RT_XML
     And execution query rt_xml to get value on the table RT_XML, with the columns ID,CCP,IDENT_DOMINIO,IUV,FK_RT,TIPO_FIRMA,XML_CONTENT,INSERTED_TIMESTAMP,UPDATED_TIMESTAMP,ID_SESSIONE under macro NewMod3 with db name nodo_online
     And checks the value NotNone of the record at column ID of the table RT_XML retrived by the query rt_xml on db nodo_online under macro NewMod3
-    And with the query rt_xml check assert beetwen elem CCP in posisition 0 and elem CCP with position 0 of the query rpt
-    And with the query rt_xml check assert beetwen elem IDENT_DOMINIO in posisition 1 and elem IDENT_DOMINIO with position 1 of the query rpt
-    And with the query rt_xml check assert beetwen elem iuv in posisition 2 and elem iuv with position 2 of the query rpt
-    And with the query rt_xml check assert beetwen elem FK_RT in posisition 3 and elem iuv with position 13 of the query rt
+    And with the query rt_xml check assert beetwen elem CCP in posisition 1 and elem CCP with position 0 of the query rpt
+    And with the query rt_xml check assert beetwen elem IDENT_DOMINIO in posisition 2 and elem IDENT_DOMINIO with position 1 of the query rpt
+    And with the query rt_xml check assert beetwen elem iuv in posisition 3 and elem iuv with position 2 of the query rpt
+    And with the query rt_xml check assert beetwen elem FK_RT in posisition 4 and elem iuv with position 13 of the query rt
     And checks the value None of the record at column TIPO_FIRMA of the table RT_XML retrived by the query rt_xml on db nodo_online under macro NewMod3
     And checks the value NotNone of the record at column XML_CONTENT of the table RT_XML retrived by the query rt_xml on db nodo_online under macro NewMod3
     And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RT_XML retrived by the query rt_xml on db nodo_online under macro NewMod3
     And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table RT_XML retrived by the query rt_xml on db nodo_online under macro NewMod3
     And with the query rt_xml check assert beetwen elem ID_SESSIONE in posisition 9 and elem iuv with position 0 of the query rt
+    #POSITION_RECEIPT_TRANSFER
+    And execution query position_receipt_transfer to get value on the table POSITION_RECEIPT_TRANSFER, with the columns FK_POSITION_RECEIPT,s.FK_POSITION_TRANSFER under macro NewMod3 with db name nodo_online
+    And execution query position_transfer to get value on the table POSITION_TRANSFER, with the columns ID under macro NewMod3 with db name nodo_online
+    And with the query position_receipt_transfer check assert beetwen elem RECEIPT in posisition 0 and elem ID with position 26 of the query position_receipt
+    And verify 1 record for the table POSITION_RECEIPT_TRANSFER retrived by the query position_receipt_transfer on db nodo_online under macro NewMod3
+    And with the query position_receipt_transfer check assert beetwen elem TRANSFER in posisition 1 and elem ID with position 0 of the query position_transfer
+    #POSITION_RECEIPT_XML
+    And execution query position_receipt_xml to get value on the table POSITION_RECEIPT_XML, with the columns ID,PA_FISCAL_CODE,NOTICE_ID,CREDITOR_REFERENCE_ID,PAYMENT_TOKEN,RECIPIENT_PA_FISCAL_CODE,RECIPIENT_BROKER_PA_ID,RECIPIENT_STATION_ID,XML,INSERTED_TIMESTAMP,FK_POSITION_RECEIPT under macro NewMod3 with db name nodo_online
+    And checks the value NotNone of the record at column ID of the table POSITION_RECEIPT_XML retrived by the query position_receipt_xml on db nodo_online under macro NewMod3
+    And with the query position_receipt_xml check assert beetwen elem PA_FISCAL_CODE in posisition 1 and elem PA_FISCAL_CODE with position 4 of the query payment_status
+    And with the query position_receipt_xml check assert beetwen elem NOTICE_ID in posisition 2 and elem NOTICE_ID with position 3 of the query payment_status
+    And with the query position_receipt_xml check assert beetwen elem CREDITOR_REFERENCE_ID in posisition 3 and elem CREDITOR_REFERENCE_ID with position 12 of the query payment_status
+    And with the query position_receipt_xml check assert beetwen elem PAYMENT_TOKEN in posisition 4 and elem PAYMENT_TOKEN with position 2 of the query payment_status
+    And with the query position_receipt_xml check assert beetwen elem RECIPIENT_PA_FISCAL_CODE in posisition 5 and elem PA_FISCAL_CODE with position 4 of the query payment_status
+    And with the query position_receipt_xml check assert beetwen elem RECIPIENT_BROKER_PA_ID in posisition 6 and elem RECIPIENT_BROKER_PA_ID with position 13 of the query payment_status
+    And with the query position_receipt_xml check assert beetwen elem RECIPIENT_STATION_ID in posisition 7 and elem RECIPIENT_STATION_ID with position 14 of the query payment_status
+    And checks the value NotNone of the record at column XML of the table POSITION_RECEIPT_XML retrived by the query position_receipt_xml on db nodo_online under macro NewMod3
+    And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RECEIPT_XML retrived by the query position_receipt_xml on db nodo_online under macro NewMod3
+    And with the query position_receipt_xml check assert beetwen elem FK_POSITION_RECEIPT in posisition 10 and elem ID with position 26 of the query position_receipt
+
 
 
 
