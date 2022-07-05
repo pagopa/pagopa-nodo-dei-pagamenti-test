@@ -4,4 +4,3 @@ Feature: cvv predictive
     When Browse the payment response url
     And Enter with the mail
     Then check cvv not predictive
-    Then sleep 100 s

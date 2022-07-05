@@ -4,7 +4,7 @@
     "mockPayment": {
         "url": "https://portal.test.pagopa.gov.it/pmmockserviceapiauth/nodo/sit/send/rpt",
         "headers": {
-          "Ocp-Apim-Subscription-Key": "99fcdd11168b41858ca497d2dcbd6e18",
+          "Ocp-Apim-Subscription-Key": "38d7e9a75c2a47429f698f84b4fc38a6",
           "Num-Payments": "1",
           "content-type": "application/json"
         },
@@ -26,7 +26,10 @@
         "name_apostrophe": "Jane O'Connor",
         "wrong_name": "'Niccolò Macchiavelli'",
         "mail": "matteo@aaaaaa.com",
-        "mail_upper": "MaTTeO@bhbhbh.com"
+        "mail_upper": "MaTTeO@bhbhbh.com",
+        "jiffy_phone": "3470110102",
+        "jiffy_phone_disabled": "3472203058",
+        "jiffy_phone_wrong": "3470110214"
       },
       "browser": {
         "type": "chrome",

@@ -1,9 +1,12 @@
-Feature: Holder with apostrophe
-    Scenario: Verify payment successfully of guest user with card with cardHolder containing apostrophes
+Feature: Preferred method
+    Scenario: Verify presence of box salva metodo e imposta come preferito after payment Altri metodi
         Given Payment generated with mock
         When Browse the payment response url
-        And Enter with the mail
-        And Select credit card with apostrophe on cardHolder
-        And Confirm payment
-        Then Payment is made successfully
+        And Login as registered user
+        And Select add payment method
+        Then sleep 1000 s
+        #And Select Altri metodi
+        #And Payment is made successfully
+        #Then box "salva il metodo" is on the page
+        #And box "imposta come preferito" is on the page
 

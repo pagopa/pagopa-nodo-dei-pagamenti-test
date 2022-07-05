@@ -197,7 +197,8 @@ def step_impl(context):
 
 @then('Check login is successful')
 def step_impl(context):
-    pass
+    assert context.driver.wait_until(By.ID,'navbar')
+
 
 @step('Check login with spid ways')
 def step_impl(context):
@@ -242,6 +243,8 @@ def step_impl(context):
     context.driver.wait_until(By.CLASS_NAME, 'input-holder').send_keys(settings['holder']['name'])
     a = context.driver.wait_until(By.XPATH, "/html/body/div[5]/form/div[4]/button")
     a.click()
+    context.driver.back()
+    context.driver.back()
 
 
 @then('Check burger menu')
@@ -270,6 +273,11 @@ def step_impl(context):
 def step_impl(context):
     context.driver.wait_until(By.XPATH, "html/body/div[5]/div/div[2]/div/div[2]/div/div/div[2]/div").click()
 
+@step('Select amex card from the list')
+def step_impl(context):
+    #sleep(1000)
+    context.driver.wait_until(By.XPATH, "html/body/div[5]/div/div[4]/div/div[2]/div/div/div[2]/div").click()
+    sleep(1000)
 
 @step('Select credit card amex')
 def step_impl(context):
@@ -293,21 +301,15 @@ def step_impl(context):
 
 @step('Select add Payment method')
 def step_impl(context):
-    print('###########################')
-    #a=context.driver.wait_until(By.CSS_SELECTOR,"button[class='btn button azure']")
-    a=context.driver.wait_until(By.XPATH,"//div[@data-card-id='22373']/div/div/div[2]/div")
-    print(a)
-    print(a.text)
-    print('#####################################')
-    a.click()
-    print('&&&&&&&&&')
+    context.driver.get('https://acardste.vaservices.eu:1443/wallet/addWallet?')
+
 
 @step('Select amex card')
 def step_impl(context):
-    a1 = context.driver.wait_until(By.XPATH, "//div[@data-card-id='22373']/div/div")
+    a1 = context.driver.wait_until(By.XPATH, "//div[@data-card-id='22373']/div/div/div[2]/div")
     print(a1.text)
 
-    #a1.click()
+    a1.click()
     sleep(1000)
 
 
@@ -327,6 +329,9 @@ def step_impl(context):
 @step('Select conto')
 def step_impl(context):
     context.driver.wait_until(By.CLASS_NAME, 'bank_account').click()
+    context.driver.wait_until(By.XPATH,"//div[@class='psp-menu']/a/div/div").click()
+    context.driver.wait_until(By.XPATH,"//form[@action='/wallet/psp']/button").click()
+
 
 @step('Select Altri metodi')
 def step_impl(context):
@@ -406,3 +411,187 @@ def step_impl(context):
     context.driver.wait_until(By.CLASS_NAME, 'input-holder').send_keys(settings['holder']['name_apostrophe'])
     a = context.driver.wait_until(By.XPATH, "/html/body/div[5]/form/div[4]/button")
     a.click()
+
+@step('Select conto after login')
+def step_impl(context):
+    print('holaaa')
+    #sleep(1000)
+    a=context.driver.wait_until(By.CLASS_NAME,"azure")
+    print('gctctfc')
+    print(a)
+    print(a.text)
+    a.click()
+
+@step('Select Bancomat Pay')
+def step_impl(context):
+    context.driver.wait_until(By.CLASS_NAME,'input-search').click()
+    context.driver.find_element(By.CLASS_NAME, 'input-search').send_keys('bancomat')
+    context.driver.wait_until(By.CLASS_NAME, 'search-ico').click()
+    sleep(1)
+    context.driver.wait_until(By.XPATH,"//div[@class='psp-menu']/a/div/div").click()
+
+
+@step('Insert a valid jiffy telephone number')
+def step_impl(context):
+    context.driver.wait_until(By.XPATH, "//form[@action='/wallet/jiffy/change-phone']/button").click()
+    context.driver.wait_until(By.CLASS_NAME, 'input-cellphone').click()
+    context.driver.wait_until(By.CLASS_NAME, 'input-cellphone').send_keys(settings['holder']['jiffy_phone'])
+    context.driver.find_element(By.CLASS_NAME, 'fhSubmit').click()
+
+@step('Insert a valid jiffy telephone number and confirm')
+def step_impl(context):
+    context.driver.wait_until(By.XPATH, "//form[@action='/wallet/jiffy/change-phone']/button").click()
+    context.driver.wait_until(By.CLASS_NAME, 'input-cellphone').click()
+    context.driver.wait_until(By.CLASS_NAME, 'input-cellphone').send_keys(settings['holder']['jiffy_phone'])
+    context.driver.find_element(By.CLASS_NAME, 'fhSubmit').click()
+    context.driver.wait_until(By.CLASS_NAME, 'azure').click()
+
+@step('Payment is made successfully jiffy')
+def step_impl(context):
+    assert True
+
+
+@step('Insert a not valid jiffy telephone number')
+def step_impl(context):
+    context.driver.wait_until(By.XPATH, "//form[@action='/wallet/jiffy/change-phone']/button").click()
+    context.driver.wait_until(By.CLASS_NAME, 'input-cellphone').click()
+    context.driver.wait_until(By.CLASS_NAME, 'input-cellphone').send_keys(settings['holder']['jiffy_phone_wrong'])
+    context.driver.find_element(By.CLASS_NAME, 'fhSubmit').click()
+
+@step('Telephone number must be requested again')
+def step_impl(context):
+    assert context.driver.wait_until(By.CLASS_NAME,'alert-dismissable')
+
+
+@step('Insert a valid jiffy telephone number but disabled')
+def step_impl(context):
+    context.driver.wait_until(By.XPATH, "//form[@action='/wallet/jiffy/change-phone']/button").click()
+    context.driver.wait_until(By.CLASS_NAME, 'input-cellphone').click()
+    context.driver.wait_until(By.CLASS_NAME, 'input-cellphone').send_keys(settings['holder']['jiffy_phone_disabled'])
+    context.driver.find_element(By.CLASS_NAME, 'fhSubmit').click()
+
+@then('psp is displayed')
+def step_impl(context):
+    assert context.driver.wait_until(By.XPATH,"//img[@class='img-fluid']")
+
+
+
+@step('Add credit card')
+def step_impl(context):
+    context.driver.get('https://acardste.vaservices.eu:1443/wallet/addWallet?')
+    context.driver.wait_until(By.CLASS_NAME,'credit-card').click()
+
+
+@then('Boxes save and preferred are on the page')
+def step_impl(context):
+    sleep(5)
+    assert context.driver.wait_until(By.XPATH,"//input[@id='saveCheckBox']")
+    assert context.driver.wait_until(By.XPATH,"//input[@id='favoriteCheckBox']")
+
+
+@then('check label is not equal to "paga con il tuo conto corrente presso"')
+def step_impl(context):
+    a=context.driver.wait_until(By.XPATH,"//div[@id='main-element']/div/p")
+    assert a
+    assert 'conto corrente' not in a.text
+
+
+#########################AdminPanel
+@given('Access to Admin Panel with Admin')
+def step_impl(context):
+    context.driver = Driver()
+    context.driver.get("https://api.dev.platform.pagopa.it/pp-admin-panel/bo/")
+    context.driver.wait_until(By.XPATH,
+                              '/html/body/app-root/main/app-login/page-without-sidebar/div/div/div/section/div/form/div/div/input').send_keys(
+        "admin")
+    context.driver.wait_until(By.XPATH, "//input[@placeholder='Password']").send_keys("admin")
+    context.driver.wait_until(By.CLASS_NAME, "login").click()
+
+
+@step('search fiscal code of registered user')
+def step_impl(context):
+    context.driver.wait_until(By.XPATH,
+                              '/html/body/app-root/main/page-search/page-with-sidebar/div/div/div/div/div/section/div/app-search/div/div/div/div/input').send_keys(
+        "GMMMRA79L13H703E")
+    context.driver.wait_until(By.XPATH,
+                              '/html/body/app-root/main/page-search/page-with-sidebar/div/div/div/div/div/section/div/app-search/div/div/div/button').click()
+
+
+@step('click on Elimina Utente')
+def step_impl(context):
+    context.driver.wait_until(By.XPATH,
+                              'html/body/app-root/main/app-customer/page-with-sidebar/div/div/div/div/div/div/div/div/button').click()
+
+
+@step('click on view transactions')
+def step_impl(context):
+    context.driver.wait_until(By.XPATH, "//a[@href='/pp-admin-panel/bo/transaction-list/18966']").click()
+
+
+@then('the list of transactions is displayed')
+def step_impl(context):
+    a = context.driver.find_element(By.XPATH,
+                                    'html/body/app-root/main/app-transaction-list/page-with-sidebar/div/div/div/div/div/div/div/h2')
+    assert a
+
+
+@then('the list is displayed')
+def step_impl(context):
+    a = context.driver.wait_until(By.XPATH,
+                                  '/html/body/app-root/main/app-customer/page-with-sidebar/div/div/div/div/div/div/div/div/div/div/label')
+    assert a
+
+
+@then('mail is displayed')
+def step_impl(context):
+    a = context.driver.wait_until(By.XPATH,
+                                  'html/body/app-root/main/app-customer/page-with-sidebar/div/div/div/div/div/div/div/div/div/div/div')
+    assert a
+
+
+@step('search fiscal code of not registered user')
+def step_impl(context):
+    context.driver.wait_until(By.XPATH,
+                              '/html/body/app-root/main/page-search/page-with-sidebar/div/div/div/div/div/section/div/app-search/div/div/div/div/input').send_keys(
+        "GMMMRA79L13H703O")
+    context.driver.wait_until(By.XPATH,
+                              '/html/body/app-root/main/page-search/page-with-sidebar/div/div/div/div/div/section/div/app-search/div/div/div/button').click()
+
+
+@then('the user is not displayed')
+def step_impl(context):
+    a = context.driver.wait_until(By.XPATH,
+                                  'html/body/app-root/main/app-customer/page-with-sidebar/div/div/div/div/div/div/table')
+    assert a
+
+
+@step('search a user\'s mail')
+def step_impl(context):
+    context.driver.find_element(By.XPATH, "//input[@placeholder='Cerca per mail']").send_keys("ilariafurla91@gmail.com")
+    context.driver.wait_until(By.XPATH,
+                              '/html/body/app-root/main/page-search/page-with-sidebar/div/div/div/div/div/section/div/app-search/div/div/div/button').click()
+
+
+@step('search a user\'s telephone number')
+def step_impl(context):
+    context.driver.find_element(By.XPATH,
+                                "//input[@placeholder='Cerca per numero di telefono con prefisso (es. +39)']").send_keys(
+        "ilariafurla91@gmail.com")
+    context.driver.wait_until(By.XPATH,
+                              '/html/body/app-root/main/page-search/page-with-sidebar/div/div/div/div/div/section/div/app-search/div/div/div/button').click()
+
+
+@when('search payment')
+def step_impl(context):
+    context.driver.wait_until(By.XPATH,
+                              'html/body/app-root/main/page-search/page-with-sidebar/div/div/div/div/div/section/div/app-search-payment/div/div/div/div/input').send_keys(
+        'ae51ff05-a836-4c60-bdcf-d7c9f64bf330')
+    context.driver.wait_until(By.XPATH,
+                              'html/body/app-root/main/page-search/page-with-sidebar/div/div/div/div/div/section/div/app-search-payment/div/div/div/button').click()
+
+
+@then('payment detail is displayed')
+def step_impl(context):
+    a = context.driver.wait_until(By.XPATH,
+                                  'html/body/app-root/main/app-payment/page-with-sidebar/div/div/div/div/div/div/div/div/table/thead/tr')
+    assert a
