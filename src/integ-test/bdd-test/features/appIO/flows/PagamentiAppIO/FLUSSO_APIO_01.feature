@@ -225,6 +225,8 @@ Scenario: Check sendPaymentOutcome response after nodoInoltroEsitoCarta, and che
     And checks the value $activateIOPaymentResponse.paymentDescription of the record at column DESCRIPTION of the table POSITION_RECEIPT retrived by the query payment_status on db nodo_online under macro AppIO
     And checks the value $activateIOPaymentResponse.companyName of the record at column COMPANY_NAME of the table POSITION_RECEIPT retrived by the query payment_status on db nodo_online under macro AppIO
     And checks the value $activateIOPaymentResponse.officeName of the record at column OFFICE_NAME of the table POSITION_RECEIPT retrived by the query payment_status on db nodo_online under macro AppIO
+    And checks the value 40000000001 of the record at column PSP_ID of the table POSITION_RECEIPT retrived by the query payment_status on db nodo_online under macro AppIO
+    And checks the value Cassa di Risparmio di Parma e Piacenza S.p.A. descrizione lunga of the record at column PSP_ID of the table PSP retrived by the query psp on db nodo_cfg under macro AppIO 
     # TODO: check correctness of POSITION_RECEIPT_RECIPIENT table
     # TODO: check correctness of POSITION_RECEIPT_RECIPIENT_STATUS table
     # TODO: check correctness of POSITION_RECEIPT_XML table

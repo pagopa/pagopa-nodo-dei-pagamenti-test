@@ -162,8 +162,8 @@ Scenario: Check nodoInoltroEsitoCarta1 response after nodoInoltroEsitoCarta
     Given the Execute nodoInoltroEsitoCarta (Phase 4) scenario executed successfully
     And nodo-dei-pagamenti has config parameter default_durata_token_IO set to 6000
     And nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
-    When wait 7 seconds for expiration
-    And job mod3CancelV2 triggered after 10 seconds
+    When job mod3CancelV2 triggered after 7 seconds
+    And wait 10 seconds for expiration
     And WISP sends REST POST inoltroEsito/carta to nodo-dei-pagamenti
     """
     {

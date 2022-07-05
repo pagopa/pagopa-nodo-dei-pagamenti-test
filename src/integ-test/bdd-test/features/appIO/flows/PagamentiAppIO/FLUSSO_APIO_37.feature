@@ -1,4 +1,4 @@
-Feature: FLUSSO_APIO_36
+Feature: FLUSSO_APIO_37
 
     Background:
         Given systems up
@@ -225,6 +225,7 @@ Feature: FLUSSO_APIO_36
         """
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
+        And wait 5 seconds for expiration
         And checks the value PAYING, PAYMENT_SENT, PAYMENT_ACCEPTED, PAID, NOTICE_GENERATED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value PAYING, PAID of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
@@ -255,7 +256,7 @@ Feature: FLUSSO_APIO_36
         And checks the value Y of the record at column FLAG_IO of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value Y of the record at column RICEVUTA_PM of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
         # check correctness POSITION_SUBJECT table
-        And verify 0 record for the table POSITION_SUBJECT retrived by the query payment_status on db nodo_online under macro AppIO
+        And verify 0 record for the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro AppIO
         # TODO: check correctness POSITION_RECEIPT table
         # TODO: check correctness of POSITION_RECEIPT_RECIPIENT table
         # TODO: check correctness of POSITION_RECEIPT_RECIPIENT_STATUS table
