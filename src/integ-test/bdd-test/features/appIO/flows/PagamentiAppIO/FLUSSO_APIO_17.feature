@@ -204,5 +204,5 @@ Scenario: Check nodoNotificaAnnullamento response after nodoInoltroEsitoCarta, a
     And checks the value Y of the record at column RICEVUTA_PM of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
     # check correctness IDEMPOTENCY_CACHE table
     And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro AppIO
-    ###### check correctness of MOTIVO_ANNULLAMENTO column in PM_SESSION_DATA table
+    # check correctness of MOTIVO_ANNULLAMENTO column in PM_SESSION_DATA table
     And checks the value RIFPSP of the record at column MOTIVO_ANNULLAMENTO of the table PM_SESSION_DATA retrived by the query pm_session on db nodo_online under macro AppIO

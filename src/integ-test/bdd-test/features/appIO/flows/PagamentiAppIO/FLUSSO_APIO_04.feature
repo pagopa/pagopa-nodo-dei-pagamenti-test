@@ -249,4 +249,5 @@ Scenario: Check sendPaymentOutcome response with pspNotifyPayment KO and sendPay
     And checks the value None of the record at column ORIGINAL_PAYMENT_TOKEN of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
     And checks the value Y of the record at column FLAG_IO of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
     And checks the value Y of the record at column RICEVUTA_PM of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
-    # TODO: check correctness of POSITION_RECEIPT table
+    # check correctness of POSITION_RECEIPT table
+    And verify 0 record for the table POSITION_RECEIPT retrived by the query payment_status on db nodo_online under macro AppIO

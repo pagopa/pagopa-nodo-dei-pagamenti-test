@@ -6,8 +6,6 @@ Feature: GT_05
 
     Scenario: Execute verifyPaymentNotice (Phase 1)
         Given nodo-dei-pagamenti has config parameter useIdempotency set to true
-        And nodo-dei-pagamenti has config parameter default_token_duration_validity_millis set to 7000
-        And nodo-dei-pagamenti has config parameter default_durata_token_IO set to 15000
         And initial XML verifyPaymentNotice
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -30,7 +28,9 @@ Feature: GT_05
         Then check outcome is OK of verifyPaymentNotice response
 
     Scenario: Execute activateIOPayment (Phase 2)
-        Given the Execute verifyPaymentNotice (Phase 1) scenario executed successfully
+        Given nodo-dei-pagamenti has config parameter default_token_duration_validity_millis set to 7000
+        And nodo-dei-pagamenti has config parameter default_durata_token_IO set to 15000
+        And the Execute verifyPaymentNotice (Phase 1) scenario executed successfully
         And initial XML activateIOPayment
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd">
@@ -42,7 +42,6 @@ Feature: GT_05
                         <idChannel>97735020584_03</idChannel>
                         <password>pwdpwdpwd</password>
                         <!--Optional:-->
-                        <idempotencyKey>#idempotency_key#</idempotencyKey>
                         <qrCode>
                             <fiscalCode>#creditor_institution_code#</fiscalCode>
                             <noticeNumber>#notice_number#</noticeNumber>
@@ -83,18 +82,4 @@ Feature: GT_05
         And expirationTime with 10000 in activateIOPayment 
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
-        And verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro AppIO
-        And checks the value activateIOPayment of the record at column PRIMITIVA of the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro AppIO
-        And checks the value $activateIOPayment.idPSP of the record at column PSP_ID of the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro AppIO
-        And checks the value $activateIOPayment.idempotencyKey of the record at column IDEMPOTENCY_KEY of the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro AppIO
-        And checks the value $activateIOPaymentResponse.paymentToken of the record at column TOKEN of the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro AppIO
-        And checks the value NotNone of the record at column VALID_TO of the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro AppIO
-        And checks the value NotNone of the record at column TOKEN_VALID_FROM of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
         And check token validity
-
-    Scenario: Execute nodoChiediInformazioniPagamento (Phase 3)
-        Given the Execute activateIOPayment (Phase 2) scenario executed successfully
-        When WISP sends rest GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
-        Then verify the HTTP status code of informazioniPagamento response is 200
-        And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro AppIO
-        And restore initial configurations
