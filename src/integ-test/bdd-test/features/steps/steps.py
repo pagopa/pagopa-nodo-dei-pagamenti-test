@@ -142,6 +142,12 @@ def step_impl(context, job_name, seconds):
     nodo_response = requests.get(f"{url_nodo}/jobs/trigger/{job_name}")
     setattr(context, job_name + RESPONSE, nodo_response)
 
+@when('{job_name} triggered')
+def step_impl(context, job_name):
+    url_nodo = utils.get_rest_url_nodo(context)
+    nodo_response = requests.get(f"{url_nodo}/jobs/trigger/{job_name}")
+    setattr(context, job_name + RESPONSE, nodo_response)
+
 
 @then('check {tag} is {value} of {primitive} response')
 def step_impl(context, tag, value, primitive):

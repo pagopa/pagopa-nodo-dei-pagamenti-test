@@ -29,7 +29,7 @@ Feature:  block check for activatePaymentNoticeReq - position status in PAYING [
           </soapenv:Body>
       </soapenv:Envelope>
       """ 
-    When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+    When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti 
     Then check outcome is OK of activatePaymentNotice response
     And save activatePaymentNotice response in activatePaymentNotice1
 
