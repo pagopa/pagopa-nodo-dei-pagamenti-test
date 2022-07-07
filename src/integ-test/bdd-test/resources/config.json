@@ -22,8 +22,9 @@
     "codicePA_old" :"44444444444",
     "fiscalCodePA": "12345678901",
     "id_station": "77777777777_01",
-    "id_station_old" : "44444444444_01",
-    "id_broker": "77777777777"
+    "id_station_old" : "44444444444_05",
+    "id_broker": "77777777777",
+    "id_broker_old": "44444444444"
   },
   "db_configuration": {
     "nodo_cfg" : {

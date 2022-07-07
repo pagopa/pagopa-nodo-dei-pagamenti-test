@@ -169,15 +169,18 @@ Feature: process tests for generazioneRicevute
 
   Scenario: Execute poller Annulli
     Given the Execute nodoInviaRPT request scenario executed successfully
-    When job mod3CancelV1 triggered after 5 seconds
+    When job mod3CancelV1 triggered after 4 seconds
     Then verify the HTTP status code of mod3CancelV1 response is 200
 
   Scenario: Execute paInviaRT
     Given the Execute poller Annulli scenario executed successfully
-    When paInviaRt triggered
+    When job paInviaRt triggered after 5 seconds
     Then verify the HTTP status code of paInviaRt response is 200
 
-
+  Scenario: DB check
+    Given the Execute paInviaRT scenario executed successfully
+    And PSP waits 5 seconds for expiration
+    Then checks the value RT_RIFIUTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query stati_rpt on db nodo_online under macro NewMod3
 
 
 

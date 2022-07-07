@@ -91,7 +91,7 @@ def step_impl(context):
     payload = utils.replace_local_variables(payload, context)
 
     if "#intermediarioPA#" in payload:     
-        intermediarioPA = "44444444444_01"
+        intermediarioPA = "44444444444_05"
         payload = payload.replace('#intermediarioPA#', intermediarioPA)
         setattr(context,"intermediarioPA", intermediarioPA)
 
@@ -141,13 +141,6 @@ def step_impl(context, job_name, seconds):
     url_nodo = utils.get_rest_url_nodo(context)
     nodo_response = requests.get(f"{url_nodo}/jobs/trigger/{job_name}")
     setattr(context, job_name + RESPONSE, nodo_response)
-
-@when('{job_name} triggered')
-def step_impl(context, job_name):
-    url_nodo = utils.get_rest_url_nodo(context)
-    nodo_response = requests.get(f"{url_nodo}/jobs/trigger/{job_name}")
-    setattr(context, job_name + RESPONSE, nodo_response)
-
 
 @then('check {tag} is {value} of {primitive} response')
 def step_impl(context, tag, value, primitive):
@@ -569,6 +562,24 @@ def step_impl(context, param, value):
     time.sleep(5)
     assert refresh_response.status_code == 200
 
+"""
+@step("")
+def step_impl(context,query_name):
+    db_selected = context.config.userdata.get("db_configuration").get('nodo_cfg')
+    selected_query = utils.query_json(context, query_name, 'configurations')
+    conn = db.getConnection(db_selected.get('host'), db_selected.get('database'),db_selected.get('user'),db_selected.get('password'),db_selected.get('port'))
+
+    exec_query = db.executeQuery(conn, selected_query)
+    db.closeConnection(conn)
+
+    query_to_dict = {}
+    for row in exec_query:
+        config_key, config_value = row
+        query_to_dict[config_key] = config_value
+
+    setattr(context, query_name, query_to_dict)
+"""
+
 @then("restore initial configurations")
 def step_impl(context):
     db_selected = context.config.userdata.get("db_configuration").get('nodo_cfg')
@@ -713,6 +724,7 @@ def step_impl(context, value, column, query_name, table_name, db_name, name_macr
     else:
         if 'iuv' in value:
             value = getattr(context, 'iuv')
+        value = utils.replace_global_variables(value,context)
         value = utils.replace_local_variables(value, context)
         split_value = [status.strip() for status in value.split(',')]
         for i, elem in enumerate(query_result):

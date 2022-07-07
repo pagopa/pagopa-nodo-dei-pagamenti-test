@@ -29,7 +29,10 @@
         "psp": "SELECT columns FROM table_name where ID_PSP = '$activatePaymentNotice.idPSP'",
         "position_service":"SELECT columns FROM table_name WHERE NOTICE_ID ='$activatePaymentNotice.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode'",
         "position_payment_plan":"SELECT columns FROM table_name WHERE NOTICE_ID ='$activatePaymentNotice.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode'",
-        "rt_xml": "SELECT columns FROM table_name where IUV = '$iuv' and IDENT_DOMINIO= '$activatePaymentNotice.fiscalCode' and CCP = '$activatePaymentNoticeResponse.paymentToken'"
+        "rt_xml": "SELECT columns FROM table_name where IUV = '$iuv' and IDENT_DOMINIO= '$activatePaymentNotice.fiscalCode' and CCP = '$activatePaymentNoticeResponse.paymentToken'",
+        "stati_rpt": "SELECT s.columns FROM table_name s where s.IUV = '$iuv' and s.ID_DOMINIO= '$activatePaymentNotice.fiscalCode'",
+        "rpt_id":"SELECT columns FROM table_name  where IUV = '$iuv' and IDENT_DOMINIO= '$activatePaymentNotice.fiscalCode'",
+        "payment_token_v2":"SELECT columns FROM table_name where PAYMENT_TOKEN = '$activatePaymentNoticeResponse.paymentToken-v2'"
     },
     "AppIO":{
         "payment_status":"SELECT s.columns FROM table_name s WHERE s.NOTICE_ID ='$activateIOPayment.noticeNumber' AND s.PA_FISCAL_CODE = '$activateIOPayment.fiscalCode'",

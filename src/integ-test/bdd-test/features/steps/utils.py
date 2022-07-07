@@ -159,6 +159,7 @@ def replace_context_variables(body, context):
     pattern = re.compile('\\$\\w+')
     match = pattern.findall(body)
     for field in match:
+        print(field)
         saved_elem = getattr(context, field.replace('$', ''))
         value = saved_elem
         body = body.replace(field, value)
