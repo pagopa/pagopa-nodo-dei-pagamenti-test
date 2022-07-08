@@ -4,7 +4,6 @@ Feature: Payment with conto as registered user
     When Browse the payment response url
     And Login as registered user
     And Select conto after login
-    Then sleep 1000 s
-    #And Confirm payment
-    #Then Payment is made successfully
+    And Confirm payment with conto
+    Then Payment is made successfully
     #And mail sent successfully

@@ -56,7 +56,6 @@ def step_impl(context):
 @step('Confirm payment')
 def step_impl(context):
     sleep(2)
-    context.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
     context.driver.submit()
 
 @step('Payment is made successfully')
@@ -286,9 +285,9 @@ def step_impl(context):
 
 @step('Select amex card from the list')
 def step_impl(context):
+    context.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+    context.driver.wait_until(By.XPATH, "//div[@id='walletCard-21785']/div/div[2]/div/div/div").click()
     #sleep(1000)
-    context.driver.wait_until(By.XPATH, "html/body/div[5]/div/div[4]/div/div[2]/div/div/div[2]/div").click()
-    sleep(1000)
 
 @step('Select credit card amex')
 def step_impl(context):
@@ -312,9 +311,9 @@ def step_impl(context):
 
 @step('Select add Payment method')
 def step_impl(context):
-    #context.driver.get('https://acardste.vaservices.eu:1443/wallet/addWallet?')
-    context.driver.get('https://api.dev.platform.pagopa.it/wallet/addWallet?')
-
+    context.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+    a=context.driver.wait_until(By.XPATH,"//form[@action='/wallet/addWallet']/button")
+    a.click()
 
 @step('Select amex card')
 def step_impl(context):
@@ -426,13 +425,16 @@ def step_impl(context):
 
 @step('Select conto after login')
 def step_impl(context):
-    print('holaaa')
-    #sleep(1000)
+    context.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
     a=context.driver.wait_until(By.CLASS_NAME,"azure")
-    print('gctctfc')
-    print(a)
-    print(a.text)
     a.click()
+    context.driver.wait_until(By.CLASS_NAME,'bank_account').click()
+    context.driver.wait_until(By.CLASS_NAME,'input-search').click()
+    context.driver.wait_until(By.CLASS_NAME,'input-search').send_keys('mod2 bp ila')
+    context.driver.find_element(By.CLASS_NAME,'search-ico').click()
+    sleep(2)
+    context.driver.wait_until(By.XPATH,"//div[@class='psp-menu']/a/div/div").click()
+
 
 @step('Select Bancomat Pay')
 def step_impl(context):
@@ -553,6 +555,11 @@ def step_impl(context):
 @step('change psp')
 def step_impl(context):
     context.driver.wait_until(By.XPATH,"//div/h2/a[@href]").click()
+
+
+@step('Confirm payment with conto')
+def step_impl(context):
+    context.driver.wait_until(By.XPATH,"//form[@action='/wallet/psp']/button[@type='submit']").click()
 
 
 

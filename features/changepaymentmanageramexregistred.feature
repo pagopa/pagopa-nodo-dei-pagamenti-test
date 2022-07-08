@@ -3,6 +3,6 @@ Feature: Change payment manager amex registred
         Given Payment generated with mock
         When Browse the payment response url
         And Login as registered user
-        And Select add Payment method
-
+        And Select amex card from the list
+        Then change
         Then sleep 1000 s
