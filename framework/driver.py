@@ -12,12 +12,8 @@ from time import sleep
 class Driver:
 
     def __init__(self,browser="chrome"):
-<<<<<<< HEAD
+
         service=Service(executable_path=r"C:\\Users\\matteo.villano\\OneDrive - Accenture\\Desktop\\pm test\\Pm_new\\chromedriver_win32\\chromedriver.exe")
-        #service=Service()
-=======
-        service=Service(executable_path="C:\\Users\\alessandro.cancelli\\Desktop\\ciao\\chromedriver_win32\\chromedriver.exe")
->>>>>>> 874d0097dda411bf76023ddfa778ae1cbad3d6b9
         match browser:
             case "chrome":
                 print('init driverrrr')
@@ -27,7 +23,7 @@ class Driver:
                 options.add_argument('--disable-gpu')
                 options.add_argument('--disable-dev-shm-usage')
                 options.add_argument('start-fullscreen')
-                self.driver = webdriver.Chrome(options=options,service=service)
+                self.driver = webdriver.Chrome(options=options, service=service)
                 #sleep(10)
             case "firefox":
                 pass
