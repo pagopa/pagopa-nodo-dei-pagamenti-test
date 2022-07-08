@@ -561,6 +561,18 @@ def step_impl(context):
 def step_impl(context):
     context.driver.wait_until(By.XPATH,"//form[@action='/wallet/psp']/button[@type='submit']").click()
 
+@then('change payment manager is not present')
+def step_impl(context):
+    pass
+
+
+@then('Check cvv is required')
+def step_impl(context):
+    assert context.driver.wait_until(By.XPATH,'//input[@class]')
+    context.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+    context.driver.wait_until(By.XPATH,'//input[@class]').click()
+    context.driver.wait_until(By.XPATH,'//input[@class]').send_keys('1234')
+
 
 
 #########################AdminPanel

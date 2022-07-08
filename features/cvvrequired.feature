@@ -4,3 +4,4 @@ Feature: cvv required
     When Browse the payment response url
     And Login as registered user
     And Select amex card from the list
+    Then Check cvv is required
