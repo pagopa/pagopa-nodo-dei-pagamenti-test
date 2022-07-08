@@ -51,6 +51,7 @@ def get_soap_url_nodo(context, primitive=-1):
     else:
         return context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url") \
                + base_path + primitive_mapping.get(primitive)
+               
 
 def get_rest_url_nodo(context):
     if context.config.userdata.get("services").get("nodo-dei-pagamenti").get("rest_service") is not None:

@@ -47,7 +47,6 @@ Feature: process tests for generazioneRicevute
       </qrCode>
       <expirationTime>2000</expirationTime>
       <amount>10.00</amount>
-      <dueDate>2021-12-31</dueDate>
       <paymentNote>causale</paymentNote>
       </nod:activatePaymentNoticeReq>
       </soapenv:Body>
@@ -61,7 +60,6 @@ Feature: process tests for generazioneRicevute
     And checks the value Y of the record at column PAAATTIVARPTRESP of the table RPT_ACTIVATIONS retrived by the query rpt_activision on db nodo_online under macro NewMod3
     And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RPT_ACTIVATIONS retrived by the query rpt_activision on db nodo_online under macro NewMod3
 
-
   Scenario: Execute Poller Annulli
     Given the Execute activatePaymentNotice request scenario executed successfully
     When job mod3CancelV1 triggered after 5 seconds
@@ -70,6 +68,7 @@ Feature: process tests for generazioneRicevute
   # Payment Outcome Phase outcome KO
   Scenario: Execute sendPaymentOutcome request
     Given the Execute Poller Annulli scenario executed successfully
+    And PSP waits 5 seconds for expiration
     And initial XML sendPaymentOutcome
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -100,8 +99,8 @@ Feature: process tests for generazioneRicevute
       <country>IT</country>
       <e-mail>john.doe@test.it</e-mail>
       </payer>
-      <applicationDate>2021-10-01</applicationDate>
-      <transferDate>2021-10-02</transferDate>
+      <applicationDate>2021-12-12</applicationDate>
+      <transferDate>2021-12-11</transferDate>
       </details>
       </nod:sendPaymentOutcomeReq>
       </soapenv:Body>
@@ -110,7 +109,6 @@ Feature: process tests for generazioneRicevute
     When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is KO of sendPaymentOutcome response
     And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcome response
-    And PSP waits 5 seconds for expiration
 
   Scenario: Define RPT
     Given the Execute sendPaymentOutcome request scenario executed successfully
@@ -173,7 +171,7 @@ Feature: process tests for generazioneRicevute
       <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
       <pay_i:tipoVersamento>PO</pay_i:tipoVersamento>
       <pay_i:identificativoUnivocoVersamento>$iuv</pay_i:identificativoUnivocoVersamento>
-      <pay_i:codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken-v2</pay_i:codiceContestoPagamento>
+      <pay_i:codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken</pay_i:codiceContestoPagamento>
       <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
       <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
       <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -191,7 +189,7 @@ Feature: process tests for generazioneRicevute
       </pay_i:datiVersamento>
       </pay_i:RPT>
       """
-
+  @prova
   Scenario: Execute nodoInviaRPT request
     Given the Define RPT scenario executed successfully
     And initial XML nodoInviaRPT
@@ -203,7 +201,7 @@ Feature: process tests for generazioneRicevute
       <identificativoStazioneIntermediarioPA>$intermediarioPA</identificativoStazioneIntermediarioPA>
       <identificativoDominio>$activatePaymentNotice.fiscalCode</identificativoDominio>
       <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
-      <codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken-v2</codiceContestoPagamento>
+      <codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken</codiceContestoPagamento>
       </ppt:intestazionePPT>
       </soapenv:Header>
       <soapenv:Body>
@@ -220,15 +218,18 @@ Feature: process tests for generazioneRicevute
       """
     #  When psp sends SOAP nodoInviaRPT to nodo-dei-pagamenti using the token of the activate phase
     When psp sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-    Then check faultCode is PPT_SEMANTICA of nodoInviaRPT response
-    And check description is RPT non attivata of nodoInviaRPT response
+    Then check esito is OK of nodoInviaRPT response
+    And check redirect is 0 of nodoInviaRPT response
+
+
+    #scenario trigger painviart
 
   # test execution
-  Scenario: Execution test rety_PaOld_20
+  Scenario: Execution test rety_PaOld_24
     Given the Execute sendPaymentOutcome request scenario executed successfully
-    Then execution query payment_status to get value on the table POSITION_PAYMENT, with the columns FK_PAYMENT_PLAN,RPT_ID under macro NewMod3 with db name nodo_online
+    Then execution query payment_status to get value on the table POSITION_PAYMENT, with the columns FK_PAYMENT_PLAN,RPT_ID,AMOUNT,CHANNEL_ID,PAYMENT_CHANNEL,PAYER_ID,PAYMENT_METHOD,FEE,INSERTED_TIMESTAMP,APPLICATION_DATE,TRANSFER_DATE under macro NewMod3 with db name nodo_online
     And execution query rpt_id to get value on the table RPT, with the columns ID under macro NewMod3 with db name nodo_online
-    And execution query position_receipt to get value on the table POSITION_PAYMENT_PLAN, with the columns ID under macro NewMod3 with db name nodo_online
+    And execution query position_receipt to get value on the table POSITION_PAYMENT_PLAN, with the columns ID,METADATA under macro NewMod3 with db name nodo_online
     And checks the value NotNone of the record at column ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
     And checks the value $activatePaymentNotice.fiscalCode of the record at column PA_FISCAL_CODE of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
     And checks the value $activatePaymentNotice.noticeNumber of the record at column NOTICE_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
@@ -236,6 +237,7 @@ Feature: process tests for generazioneRicevute
     And checks the value $activatePaymentNoticeResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
     And checks the value #id_broker_old# of the record at column BROKER_PA_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
     And checks the value #id_station_old# of the record at column STATION_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
+    And checks the value 1 of the record at column STATION_VERSION of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
     And checks the value $activatePaymentNotice.idPSP of the record at column PSP_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
     And checks the value $activatePaymentNotice.idBrokerPSP of the record at column BROKER_PSP_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
     And checks the value $activatePaymentNotice.idChannel of the record at column CHANNEL_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
@@ -255,7 +257,47 @@ Feature: process tests for generazioneRicevute
     And checks the value None of the record at column ORIGINAL_PAYMENT_TOKEN of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
     And with the query payment_status check assert beetwen elem FK_PAYMENT_PLAN in position 0 and elem ID with position 0 of the query position_receipt
     And verify 0 record for the table RPT retrived by the query rpt_id on db nodo_online under macro NewMod3
-    And checks the value PAYING,CANCELLED_NORPT,PAID_NORPT of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
+    And checks the value PAYING,CANCELLED_NORPT,PAID_NORPT,PAID,NOTICE_GENERATED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
     And verify 0 record for the table RPT_ACTIVATIONS retrived by the query payment_token_v2 on db nodo_online under macro NewMod3
+    And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO_MOD3,RPT_RISOLTA_OK,RPT_RISOLTA_OK,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query stati_rpt on db nodo_online under macro NewMod3
+    And checks the value PAYING,INSERTED,PAID,NOTICE_STORED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
+    And checks the value NotNone of the record at column ID of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro NewMod3
+    And checks the value $activatePaymentNotice.fiscalCode of the record at column PA_FISCAL_CODE of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro NewMod3
+    And checks the value $activatePaymentNotice.noticeNumber of the record at column NOTICE_ID of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro NewMod3
+    And checks the value iuv of the record at column CREDITOR_REFERENCE_ID of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro NewMod3
+    And checks the value $activatePaymentNotice.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro NewMod3
+    #IDEMPOTENCY_KEY10 == psp+'_'+context.expand('${#TestCase#idempotenza}')
+    And checks the value $activatePaymentNotice.idempotencyKey of the record at column IDEMPOTENCY_KEY of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro NewMod3
+    And checks the value $activatePaymentNoticeResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro NewMod3
+    And checks the value NotNone of the record at column TOKEN_VALID_FROM of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro NewMod3
+    And checks the value NotNone of the record at column TOKEN_VALID_TO of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro NewMod3
+    And checks the value None of the record at column DUE_DATE of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro NewMod3
+    And checks the value 10 of the record at column AMOUNT of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro NewMod3
+    And checks the value $iuv of the record at column CREDITOR_REFERENCE_ID of the table RPT_ACTIVATIONS retrived by the query rpt_activision on db nodo_online under macro NewMod3
+    And checks the value $activatePaymentNoticeResponse.paymentToken of the record at column PAYMENT_TOKEN of the table RPT_ACTIVATIONS retrived by the query rpt_activision on db nodo_online under macro NewMod3
+    And checks the value N of the record at column NODOINVIARPTREQ of the table RPT_ACTIVATIONS retrived by the query rpt_activision on db nodo_online under macro NewMod3
+    And checks the value Y of the record at column PAAATTIVARPTRESP of the table RPT_ACTIVATIONS retrived by the query rpt_activision on db nodo_online under macro NewMod3
+    And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RPT_ACTIVATIONS retrived by the query rpt_activision on db nodo_online under macro NewMod3
 
- 
+    And checks the value NotNone of the record at column ID of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
+    And checks the value $activatePaymentNoticeResponse.paymentToken of the record at column RECEIPT_ID of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
+    And checks the value $activatePaymentNotice.noticeNumber of the record at column NOTICE_ID of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
+    And checks the value $activatePaymentNotice.fiscalCode of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
+    And checks the value $iuv of the record at column CREDITOR_REFERENCE_ID of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
+    And checks the value $activatePaymentNoticeResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
+    And checks the value OK of the record at column OUTCOME of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
+    And checks the value NotNone of the record at column ID of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
+    And checks the value NotNone of the record at column ID of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
+    And checks the value NotNone of the record at column ID of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
+    And checks the value $activatePaymentNotice.idPSP of the record at column PSP_ID of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
+    And execution query position_service to get value on the table POSITION_SERVICE, with the columns DESCRIPTION,COMPANY_NAME,OFFICE_NAME,DEBTOR_ID under macro NewMod3 with db name nodo_online
+    And execution query psp to get value on the table PSP, with the columns CODICE_FISCALE,VAT_NUMBER,RAGIONE_SOCIALE under macro NewMod3 with db name nodo_online
+    And execution query position_receipt to get value on the table POSITION_RECEIPT, with the columns PSP_FISCAL_CODE,PSP_VAT_NUMBER,PSP_COMPANY_NAME,CHANNEL_ID,CHANNEL_DESCRIPTION,PAYER_ID,PAYMENT_METHOD,FEE,PAYMENT_DATE_TIME,APPLICATION_DATE,TRANSFER_DATE,METADATA under macro NewMod3 with db name nodo_online
+    And with the query position_receipt check assert beetwen elem PSP_FISCAL_CODE in position 0 and elem CODICE_FISCALE with position 0 of the query PSP
+    And with the query position_receipt check assert beetwen elem VAT_NUMBER in position 1 and elem VAT_NUMBER with position 1 of the query PSP
+    And with the query position_receipt check assert beetwen elem PSP_COMPANY_NAME in position 2 and elem RAGIONE_SOCIALE with position 2 of the query PSP
+    And with the query position_receipt check assert beetwen elem CHANNEL_ID in posisition 3 and elem CHANNEL_ID with position 0 of the query PSP
+#da completare
+
+
+

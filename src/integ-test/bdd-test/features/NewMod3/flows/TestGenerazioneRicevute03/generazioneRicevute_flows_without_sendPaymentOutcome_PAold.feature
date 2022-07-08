@@ -181,15 +181,15 @@ Feature: process tests for generazioneRicevute
     And execution query rpt to get value on the table RPT, with the columns CCP,IDENT_DOMINIO,IUV,ID_MSG_RICH,CANALE under macro NewMod3 with db name nodo_online
     And execution query payment_status to get value on the table POSITION_PAYMENT, with the columns AMOUNT,FEE,PAYMENT_TOKEN,NOTICE_ID,PA_FISCAL_CODE,OUTCOME,CHANNEL_ID,PAYMENT_CHANNEL,PAYER_ID,PAYMENT_METHOD,ID,APPLICATION_DATE,CREDITOR_REFERENCE_ID,BROKER_PA_ID,STATION_ID under macro NewMod3 with db name nodo_online
     And checks the value NotNone of the record at column ID_SESSIONE of the table RT retrived by the query rt on db nodo_online under macro NewMod3
-    And with the query rt check assert beetwen elem CCP in posisition 1 and elem CCP with position 0 of the query rpt
-    And with the query rt check assert beetwen elem IDENT_DOMINIO in posisition 2 and elem IDENT_DOMINIO with position 1 of the query rpt
-    And with the query rt check assert beetwen elem IUV in posisition 3 and elem IUV with position 2 of the query rpt
+    And with the query rt check assert beetwen elem CCP in position 1 and elem CCP with position 0 of the query rpt
+    And with the query rt check assert beetwen elem IDENT_DOMINIO in position 2 and elem IDENT_DOMINIO with position 1 of the query rpt
+    And with the query rt check assert beetwen elem IUV in position 3 and elem IUV with position 2 of the query rpt
     And checks the value 1 of the record at column COD_ESITO of the table RT retrived by the query rt on db nodo_online under macro NewMod3
     And checks the value NON_ESEGUITO of the record at column ESITO of the table RT retrived by the query rt on db nodo_online under macro NewMod3
     And checks the value NotNone of the record at column ID_RICEVUTA of the table RT retrived by the query rt on db nodo_online under macro NewMod3
-    And with the query rt check assert beetwen elem ID_RICHIESTA in posisition 8 and elem ID_MSG_RICH with position 3 of the query rpt
+    And with the query rt check assert beetwen elem ID_RICHIESTA in position 8 and elem ID_MSG_RICH with position 3 of the query rpt
     And checks the value 0 of the record at column SOMMA_VERSAMENTI of the table RT retrived by the query rt on db nodo_online under macro NewMod3
-    And with the query rt check assert beetwen elem CANALE in posisition 12 and elem CANALE with position 4 of the query rpt
+    And with the query rt check assert beetwen elem CANALE in position 12 and elem CANALE with position 4 of the query rpt
     And checks the value NotNone of the record at column DATA_RICEVUTA of the table RT retrived by the query rt on db nodo_online under macro NewMod3
     And checks the value NotNone of the record at column DATA_RICHIESTA of the table RT retrived by the query rt on db nodo_online under macro NewMod3
     And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RT retrived by the query rt on db nodo_online under macro NewMod3
@@ -201,10 +201,10 @@ Feature: process tests for generazioneRicevute
     And checks the value 1 of the record at column PROGRESSIVO of the table RT_VERSAMENTI retrived by the query rt_versamenti on db nodo_online under macro NewMod3
     And checks the value 0 of the record at column IMPORTO_RT of the table RT_VERSAMENTI retrived by the query rt_versamenti on db nodo_online under macro NewMod3
     And checks the value BATCH_ANNULLAMENTO:TOKEN_SCADUTO of the record at column s.ESITO of the table RT_VERSAMENTI retrived by the query rt_versamenti on db nodo_online under macro NewMod3
-    And with the query rt_versamenti check assert beetwen elem CAUSALE_VERSAMENTO in posisition 3 and elem CAUSALE_VERSAMENTO with position 0 of the query rpt_versamenti
-    And with the query rt_versamenti check assert beetwen elem DATI_SPECIFICI_RISCOSSIONE in posisition 4 and elem DATI_SPECIFICI_RISCOSSIONE with position 1 of the query rpt_versamenti
+    And with the query rt_versamenti check assert beetwen elem CAUSALE_VERSAMENTO in position 3 and elem CAUSALE_VERSAMENTO with position 0 of the query rpt_versamenti
+    And with the query rt_versamenti check assert beetwen elem DATI_SPECIFICI_RISCOSSIONE in position 4 and elem DATI_SPECIFICI_RISCOSSIONE with position 1 of the query rpt_versamenti
     And checks the value 0 of the record at column s.COMMISSIONE_APPLICATE_PSP of the table RT_VERSAMENTI retrived by the query rt_versamenti on db nodo_online under macro NewMod3
-    And with the query rt_versamenti check assert beetwen elem FK_RT in posisition 6 and elem ID with position 13 of the query rt
+    And with the query rt_versamenti check assert beetwen elem FK_RT in position 6 and elem ID with position 13 of the query rt
     And checks the value NotNone of the record at column s.INSERTED_TIMESTAMP of the table RT_VERSAMENTI retrived by the query rt_versamenti on db nodo_online under macro NewMod3
     And checks the value NotNone of the record at column s.UPDATED_TIMESTAMP of the table RT_VERSAMENTI retrived by the query rt_versamenti on db nodo_online under macro NewMod3
     #POSITION_RECEIPT
@@ -216,15 +216,15 @@ Feature: process tests for generazioneRicevute
     #RT_XML
     And execution query rt_xml to get value on the table RT_XML, with the columns ID,CCP,IDENT_DOMINIO,IUV,FK_RT,TIPO_FIRMA,XML_CONTENT,INSERTED_TIMESTAMP,UPDATED_TIMESTAMP,ID_SESSIONE under macro NewMod3 with db name nodo_online
     And checks the value NotNone of the record at column ID of the table RT_XML retrived by the query rt_xml on db nodo_online under macro NewMod3
-    And with the query rt_xml check assert beetwen elem CCP in posisition 1 and elem CCP with position 0 of the query rpt
-    And with the query rt_xml check assert beetwen elem IDENT_DOMINIO in posisition 2 and elem IDENT_DOMINIO with position 1 of the query rpt
-    And with the query rt_xml check assert beetwen elem iuv in posisition 3 and elem iuv with position 2 of the query rpt
-    And with the query rt_xml check assert beetwen elem FK_RT in posisition 4 and elem iuv with position 13 of the query rt
+    And with the query rt_xml check assert beetwen elem CCP in position 1 and elem CCP with position 0 of the query rpt
+    And with the query rt_xml check assert beetwen elem IDENT_DOMINIO in position 2 and elem IDENT_DOMINIO with position 1 of the query rpt
+    And with the query rt_xml check assert beetwen elem iuv in position 3 and elem iuv with position 2 of the query rpt
+    And with the query rt_xml check assert beetwen elem FK_RT in position 4 and elem iuv with position 13 of the query rt
     And checks the value None of the record at column TIPO_FIRMA of the table RT_XML retrived by the query rt_xml on db nodo_online under macro NewMod3
     And checks the value NotNone of the record at column XML_CONTENT of the table RT_XML retrived by the query rt_xml on db nodo_online under macro NewMod3
     And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RT_XML retrived by the query rt_xml on db nodo_online under macro NewMod3
     And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table RT_XML retrived by the query rt_xml on db nodo_online under macro NewMod3
-    And with the query rt_xml check assert beetwen elem ID_SESSIONE in posisition 9 and elem iuv with position 0 of the query rt
+    And with the query rt_xml check assert beetwen elem ID_SESSIONE in position 9 and elem iuv with position 0 of the query rt
     #POSITION_RECEIPT_TRANSFER
     And execution query position_receipt_transfer to get value on the table POSITION_RECEIPT_TRANSFER, with the columns FK_POSITION_RECEIPT,s.FK_POSITION_TRANSFER under macro NewMod3 with db name nodo_online
     And execution query position_transfer to get value on the table POSITION_TRANSFER, with the columns ID under macro NewMod3 with db name nodo_online

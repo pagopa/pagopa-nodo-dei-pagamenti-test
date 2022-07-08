@@ -11,6 +11,7 @@
         "position_payment_retry_05_token2": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN ='$activatePaymentNotice2Response.paymentToken'",
         "position_subject":"SELECT s.columns FROM table_name s JOIN POSITION_PAYMENT p ON s.ID = p.PAYER_ID WHERE p.PAYMENT_TOKEN ='$activatePaymentNoticeResponse.paymentToken'",
         "position_receipt": "SELECT s.columns FROM table_name s where s.NOTICE_ID = '$activatePaymentNotice.noticeNumber' and s.PA_FISCAL_CODE= '$activatePaymentNotice.fiscalCode'",
+        "position_receipt_n": "SELECT s.columns FROM table_name s where s.NOTICE_ID = '$activatePaymentNotice.noticeNumber' and s.PA_FISCAL_CODE= '$activatePaymentNotice.fiscalCode'",
         "position_receipt_retry_rev_db_gr_02_1" :"SELECT s.columns FROM table_name s where s.NOTICE_ID = '$activatePaymentNotice.noticeNumber' and s.PA_FISCAL_CODE= '$activatePaymentNotice.fiscalCode' and s.PAYMENT_TOKEN='$activatePaymentNotice.paymentToken' ",
         "position_receipt_recipient": "SELECT s.columns FROM table_name s where s.NOTICE_ID = '$activatePaymentNotice.noticeNumber' and s.PAYMENT_TOKEN= '$activatePaymentNoticeResponse.paymentToken'",
         "position_receipt_xml" : "SELECT s.columns FROM table_name s where s.NOTICE_ID = '$activatePaymentNotice.noticeNumber' AND s.PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode'",
@@ -20,6 +21,7 @@
         "position_payment_status_2" :"SELECT s.columns FROM table_name s WHERE s.NOTICE_ID ='$activatePaymentNotice2.noticeNumber' AND s.PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode' AND s.PAYMENT_TOKEN = '$activatePaymentNotice2Response.paymentToken'",
         "position_transfer":"SELECT columns FROM table_name WHERE NOTICE_ID ='$activatePaymentNotice.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode' ORDER BY ID ASC",
         "position_status_1" :"SELECT s.columns FROM table_name s WHERE s.NOTICE_ID ='$activatePaymentNotice1.noticeNumber' AND s.PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode'",
+        "position_status_n" :"SELECT s.columns FROM table_name s WHERE s.NOTICE_ID ='$activatePaymentNotice.noticeNumber' AND s.PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode'",
         "position_status_2" :"SELECT s.columns FROM table_name s WHERE s.NOTICE_ID ='$activatePaymentNotice2.noticeNumber' AND s.PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode'",
         "rpt_activision": "SELECT s.columns FROM table_name s where s.NOTICE_ID = '$activatePaymentNotice.noticeNumber' and s.PA_FISCAL_CODE= '$activatePaymentNotice.fiscalCode'",
         "rt": "SELECT columns FROM table_name WHERE IUV = '$iuv' AND CCP= '$activatePaymentNoticeResponse.paymentToken' AND IDENT_DOMINIO= '$activatePaymentNotice.fiscalCode'",
@@ -32,7 +34,10 @@
         "rt_xml": "SELECT columns FROM table_name where IUV = '$iuv' and IDENT_DOMINIO= '$activatePaymentNotice.fiscalCode' and CCP = '$activatePaymentNoticeResponse.paymentToken'",
         "stati_rpt": "SELECT s.columns FROM table_name s where s.IUV = '$iuv' and s.ID_DOMINIO= '$activatePaymentNotice.fiscalCode'",
         "rpt_id":"SELECT columns FROM table_name  where IUV = '$iuv' and IDENT_DOMINIO= '$activatePaymentNotice.fiscalCode'",
-        "payment_token_v2":"SELECT columns FROM table_name where PAYMENT_TOKEN = '$activatePaymentNoticeResponse.paymentToken-v2'"
+        "payment_token_v2":"SELECT columns FROM table_name where PAYMENT_TOKEN = '$activatePaymentNoticeResponse.paymentToken-v2'",
+        "rt_stati":"SELECT columns FROM table_name  where IUV = '$iuv' and IDENT_DOMINIO= '$activatePaymentNotice.fiscalCode'",
+        "retrieve_xml_rt": "SELECT XML_CONTENT FROM RT_XML WHERE CCP ='${paymentToken}' and IDENT_DOMINIO='${pa}' and IUV='${iuvNumber}'",
+        "retrieve_xml_rpt": "SELECT XML_CONTENT FROM RPT_XML WHERE CCP ='${paymentToken}' and IDENT_DOMINIO='${pa}' and IUV='${iuvNumber}'"
     },
     "AppIO":{
         "payment_status":"SELECT s.columns FROM table_name s WHERE s.NOTICE_ID ='$activateIOPayment.noticeNumber' AND s.PA_FISCAL_CODE = '$activateIOPayment.fiscalCode'",

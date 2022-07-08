@@ -59,7 +59,7 @@ def step_impl(context, primitive):
         payload = payload.replace('#idempotency_key#', f"{idBrokerPSP}_{str(random.randint(1000000000, 9999999999))}")
 
     if '#notice_number#' in payload:
-        notice_number = f"30211{str(random.randint(1000000000000, 9999999999999))}"
+        notice_number = f"31111{str(random.randint(1000000000000, 9999999999999))}"
         payload = payload.replace('#notice_number#', notice_number)
         setattr(context, "iuv", notice_number[1:])
     
@@ -124,6 +124,7 @@ def step_impl(context, sender, soap_primitive, receiver):
     primitive = soap_primitive.split("_")[0]
     headers = {'Content-Type': 'application/xml', "SOAPAction": primitive}  # set what your server accepts
     url_nodo = utils.get_soap_url_nodo(context, primitive)
+    print("url_nodo: ", url_nodo)
     print("nodo soap_request sent >>>", getattr(context, soap_primitive))
 
     soap_response = requests.post(url_nodo, getattr(context, soap_primitive), headers=headers)
@@ -612,7 +613,7 @@ def step_impl(context, query_name, macro, db_name,table_name,columns):
 
 
 
-@step("with the query {query_name1} check assert beetwen elem {elem1} in posisition {position1:d} and elem {elem2} with position {position2:d} of the query {query_name2}")
+@step("with the query {query_name1} check assert beetwen elem {elem1} in position {position1:d} and elem {elem2} with position {position2:d} of the query {query_name2}")
 def stemp_impl(context, query_name1, elem1, position1, elem2, query_name2, position2):
     result_query1 = getattr(context, query_name1)
     result_query2 = getattr(context, query_name2)
