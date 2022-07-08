@@ -1,3 +1,4 @@
+from datetime import datetime
 from behave import *
 import json
 from data.config import settings
@@ -604,7 +605,7 @@ def step_impl(context):
 
 @step('click on view transactions')
 def step_impl(context):
-    context.driver.wait_until(By.XPATH, "//a[@href='/pp-admin-panel/bo/transaction-list/18966']").click()
+    context.driver.wait_until(By.XPATH, "/html/body/app-root/main/app-customer/page-with-sidebar/div/div/div/div/div/div[2]/a[3]").click()
 
 
 @then('the list of transactions is displayed')
@@ -646,9 +647,8 @@ def step_impl(context):
 
 @step('search a user\'s mail')
 def step_impl(context):
-    context.driver.find_element(By.XPATH, "//input[@placeholder='Cerca per mail']").send_keys("ilariafurla91@gmail.com")
-    context.driver.wait_until(By.XPATH,
-                              '/html/body/app-root/main/page-search/page-with-sidebar/div/div/div/div/div/section/div/app-search/div/div/div/button').click()
+    context.driver.wait_until(By.XPATH, '/html/body/app-root/main/page-search/page-with-sidebar/div/div/div/div/div/section/div/app-search/div/div/div/div[3]/input').send_keys('fabio.pizzini@gft.com')
+    context.driver.wait_until(By.XPATH, '/html/body/app-root/main/page-search/page-with-sidebar/div/div/div/div/div/section/div/app-search/div/div/div/button').click()
 
 
 @step('search a user\'s telephone number')
@@ -674,3 +674,34 @@ def step_impl(context):
     a = context.driver.wait_until(By.XPATH,
                                   'html/body/app-root/main/app-payment/page-with-sidebar/div/div/div/div/div/div/div/div/table/thead/tr')
     assert a
+
+
+@step('Check historical payments')
+def step_impl(context):
+    context.driver.wait_until(By.CLASS_NAME, 'navbar-toggler-icon').click()
+    context.driver.wait_until(By.XPATH, 'html/body/div/div/div/ul/li[2]/a').click()
+    date = context.driver.wait_until(By.XPATH, 'html/body/div[5]/div[2]/div/div/p').text
+    date_converted = datetime.strptime(date, '%m/%d/%Y, %I:%M:%S %p')
+    date = datetime.strftime(date_converted, '%d.%m.%Y - %H.%M')
+    setattr(context, 'transaction_date', date)
+
+
+@step('Check the date is correct')
+def step_impl(context):
+     current_date = context.driver.wait_until(By.XPATH, 'html/body/app-root/main/app-transaction-list/page-with-sidebar/div/div/div/div/div/div/div/div/table/tbody/tr/td').text
+     transaction_date = getattr(context, 'transaction_date')
+     assert current_date == transaction_date, f'{current_date} != {transaction_date}'
+    
+
+@when('Search a user\'s Codice Fiscale')
+def step_impl(context):
+    context.driver.wait_until(By.XPATH, '/html/body/app-root/main/page-search/page-with-sidebar/div/div/div/div/div/section/div/app-search/div/div/div/div/input').send_keys('FABIOP00A00A000A')
+    context.driver.wait_until(By.XPATH, '/html/body/app-root/main/page-search/page-with-sidebar/div/div/div/div/div/section/div/app-search/div/div/div/button').click() 
+
+
+
+@given('the {name} scenario executed successfully')
+def step_impl(context, name):
+    phase = ([phase for phase in context.feature.scenarios if name in phase.name] or [None])[0]
+    text_step = ''.join([step.keyword + " " + step.name + "\n\"\"\"\n" + (step.text or '') + "\n\"\"\"\n" for step in phase.steps])
+    context.execute_steps(text_step)
