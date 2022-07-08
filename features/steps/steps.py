@@ -10,15 +10,26 @@ def step_impl(context):
     resp=requests.patch(url=settings['mockPayment']['url'],
                     headers=settings['mockPayment']['headers'],
                     data=json.dumps(settings['mockPayment']['body']))
+    #print(resp)
+    #print(resp.json())
     context.resp=resp.json()[0]
 
 @step('Browse the payment response url')
 def step_impl(context):
-    url_wisp = context.resp['url']
+    url_wisp = context.resp['urlCloud']
     print('##############################################################')
     print(url_wisp)
     context.driver = Driver()
     context.driver.get(url_wisp)
+    elem=context.driver.wait_until(By.XPATH,"//div[@style='display:none'][@class='block']")
+    print(elem)
+    print(elem.text)
+    print(elem.get_attribute("style"))
+    context.driver.execute_script("arguments[0].setAttribute('style','display')", elem)
+    #context.driver.execute_script("arguments[0].style.display = 'block';", elem)
+    #context.driver.get('https://spid-ppt-lmi-npa-sit.tst-npc.sia.eu/login')
+    #context.driver.execute_script("arguments[0].style.display = 'block';", elem)
+
 
 @step('Enter with the mail')
 def step_impl(context):
@@ -301,7 +312,8 @@ def step_impl(context):
 
 @step('Select add Payment method')
 def step_impl(context):
-    context.driver.get('https://acardste.vaservices.eu:1443/wallet/addWallet?')
+    #context.driver.get('https://acardste.vaservices.eu:1443/wallet/addWallet?')
+    context.driver.get('https://api.dev.platform.pagopa.it/wallet/addWallet?')
 
 
 @step('Select amex card')
@@ -494,6 +506,54 @@ def step_impl(context):
     a=context.driver.wait_until(By.XPATH,"//div[@id='main-element']/div/p")
     assert a
     assert 'conto corrente' not in a.text
+
+@then('psp are displayed')
+def step_impl(context):
+    assert context.driver.wait_until(By.CLASS_NAME,'psp-logo')
+    context.driver.wait_until(By.XPATH,'//div/h2/a').click()
+    assert context.driver.wait_until(By.CLASS_NAME,'psp-menu')
+
+@given('Payment generated with mock charity')
+def step_impl(context):
+    resp=requests.patch(url=settings['mockPayment']['url'],
+                    headers=settings['mockPayment']['headers'],
+                    data=json.dumps(settings['mockPayment']['body_charity']))
+    context.resp=resp.json()[0]
+
+@given('Payment generated with mock high amount')
+def step_impl(context):
+    resp=requests.patch(url=settings['mockPayment']['url'],
+                    headers=settings['mockPayment']['headers'],
+                    data=json.dumps(settings['mockPayment']['body_high_amount']))
+    context.resp=resp.json()[0]
+
+@then('the corresponding psp is displayed')
+def step_impl(context):
+    assert context.driver.wait_until(By.CLASS_NAME,'psp-logo')
+
+@then('the corresponding psp is not displayed')
+def step_impl(context):
+    pass
+
+@then('operation denied')
+def step_impl(context):
+    print('#######################')
+    sleep(10)
+    a=context.driver.wait_until(By.CLASS_NAME,"fhSubmit")
+    print(a)
+    print(a.text)
+    a.click()
+    sleep(1000)
+
+@step('the high amount message is displayed')
+def step_impl(context):
+    a=context.driver.wait_until(By.CLASS_NAME,'alert-warning')
+    assert "Il tuo pagamento supera l'importo massimo accettato dai gestori su pagoPA per il metodo di pagamento scelto. Ti invitiamo a selezionarne un altro." in a.text
+
+@step('change psp')
+def step_impl(context):
+    context.driver.wait_until(By.XPATH,"//div/h2/a[@href]").click()
+
 
 
 #########################AdminPanel

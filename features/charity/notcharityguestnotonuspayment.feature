@@ -3,7 +3,7 @@ Feature: Not Charity Payment with card not onus
     Given Payment generated with mock
     When Browse the payment response url
     And Enter with the mail
-    And Select credit card 
-    And Insert a not onus card
+    And select not onus credit card
     Then psp are displayed
-    And id_psp not in PP_CONFIG.CCPS_CHARITY
+    #Then sleep 1000 s
+    #And id_psp not in PP_CONFIG.CCPS_CHARITY

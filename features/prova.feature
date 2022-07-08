@@ -1,12 +1,9 @@
-Feature: Preferred method
-    Scenario: Verify presence of box salva metodo e imposta come preferito after payment Altri metodi
-        Given Payment generated with mock
+Feature: Charity Payment with card amex
+    Scenario: Charity Payment on wisp with card amex as guest user.
+        Given Payment generated with mock charity
         When Browse the payment response url
-        And Login as registered user
-        And Select add payment method
-        Then sleep 1000 s
-        #And Select Altri metodi
-        #And Payment is made successfully
-        #Then box "salva il metodo" is on the page
-        #And box "imposta come preferito" is on the page
+        And Enter with the mail
+        And Select credit card amex
+        #Then sleep 1000 s
+        Then operation denied
 

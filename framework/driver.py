@@ -5,13 +5,14 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from data.config import settings
 from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
 
 from time import sleep
 
 class Driver:
 
     def __init__(self,browser="chrome"):
-
+        #service=Service(executable_path='C:\\Users\\matteo.villano\\OneDrive - Accenture\\Desktop\\pm test\\Pm_new\\chromedriver_win32')
         match browser:
             case "chrome":
                 print('init driverrrr')
@@ -21,7 +22,7 @@ class Driver:
                 options.add_argument('--disable-gpu')
                 options.add_argument('--disable-dev-shm-usage')
                 options.add_argument('start-fullscreen')
-                self.driver = webdriver.Chrome(options=options)
+                self.driver = webdriver.Chrome(options=options)#,service=service)
                 #sleep(10)
             case "firefox":
                 pass
@@ -71,8 +72,8 @@ class Driver:
     def find_elements(self, by, param):
         return self.driver.find_elements(by, param)
 
-    def execute_script(self, script):
-        self.driver.execute_script(script)
+    def execute_script(self, script,e=None):
+        self.driver.execute_script(script,e)
 
     def wait_until(self, type_of_search: str, content_of_search: str):
         try:

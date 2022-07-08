@@ -14,8 +14,22 @@
           "identificativoDominio": "90000000001",
           "importoTotaleDaVersare": "8.14",
           "responseEnum": "OK"
+        },
+        "body_charity": {
+          "identificativoIntermediarioPA": "11111111111",
+          "identificativoStazioneIntermediarioPA": "11111111111_01",
+          "identificativoDominio": "11111111111",
+          "importoTotaleDaVersare": "10.50",
+          "responseEnum": "OK"
+        },
+      "body_high_amount": {
+          "identificativoIntermediarioPA": "90000000001",
+          "identificativoStazioneIntermediarioPA": "90000000001_01",
+          "identificativoDominio": "90000000001",
+          "importoTotaleDaVersare": "700000000.23",
+          "responseEnum": "OK"
         }
-      },
+    },
       "holder": {
         "pan": "5255000010002856",
         "pan_not_onus": "4003171102270111",
