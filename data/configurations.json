@@ -1,0 +1,7 @@
+{
+    "host": "10.70.67.16",
+    "database": "AGIDT",
+    "user": "AGID_USER",
+    "password": "AGID_USER01",
+    "port": "1523"
+}

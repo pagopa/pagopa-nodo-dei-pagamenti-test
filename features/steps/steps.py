@@ -1,10 +1,12 @@
 from datetime import datetime
+from webbrowser import get
 from behave import *
 import json
 from data.config import settings
 from framework.driver import *
 from time import sleep
 import requests
+import db_operation as db
 
 @given('Payment generated with mock')
 def step_impl(context):
@@ -540,6 +542,28 @@ def step_impl(context):
     context.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
     context.driver.wait_until(By.XPATH,'//input[@class]').click()
     context.driver.wait_until(By.XPATH,'//input[@class]').send_keys('1234')
+
+######################## DB OPERATION ###########################
+
+@given('db connection opened')
+def step_impl(context):
+    with open(os.path.abspath(os.path.join(__file__, os.pardir, os.pardir, os.pardir, 'data\\configurations.json'))) as f:
+        json_file = json.load(f)
+    
+    host, database, user, password, port = json_file.get('host'), json_file.get('database'), json_file.get('user'), json_file.get('password'), json_file.get('port')
+    conn = db.getConnection(host, database, user, password, port)
+    setattr(context, 'conn', conn)
+
+@then('close db connection')
+def step_impl(context):
+    db.closeConnection(getattr(context, 'conn'))
+
+
+@step('Check resultCode in {column} is {status_response}')
+def step_impl(context, column, value):
+    conn = getattr(context, 'conn')
+    query = f'SELECT v.{column} from PP_VPOS_AUTH v, PP_TRANSACTION t, PP_PAYMENT p WHERE v.FK_TRANSACTION = t.ID \
+            AND t.FK_PAYMENT = p.ID AND p.ID_SESSION =  '
 
 
 
