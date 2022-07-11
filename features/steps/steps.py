@@ -56,6 +56,16 @@ def step_impl(context):
     context.driver.wait_until(By.ID, "success_message")
     context.driver.find_element(By.XPATH,
                              '//*[@action="/wallet/logout"]//button').click()
+    
+
+
+@step('Close the page')
+def step_imp(context):
+    context.driver.close()
+
+@then('Check card number is incorrect')
+def step_impl(context):
+    assert context.driver.wait_until(By.CLASS_NAME, "invalid-error")   
 
 
 @step("Select don't you have spid")
@@ -158,6 +168,7 @@ def step_impl(context, type_credit_card):
     context.driver.wait_until(By.CLASS_NAME, 'input-holder').send_keys(settings['holder']['name'])
     a = context.driver.wait_until(By.XPATH, "/html/body/div[5]/form/div[4]/button")
     a.click()
+    
 
 @step('Login as registered user')
 def step_impl(context):
@@ -661,3 +672,9 @@ def step_impl(context, name):
     phase = ([phase for phase in context.feature.scenarios if name in phase.name] or [None])[0]
     text_step = ''.join([step.keyword + " " + step.name + "\n\"\"\"\n" + (step.text or '') + "\n\"\"\"\n" for step in phase.steps])
     context.execute_steps(text_step)
+
+
+@when('Search a {value} user\'s Codice Fiscale')
+def step_impl(context, value):
+    fiscal_code = context.driver.wait_until(By.XPATH, '/html/body/app-root/main/page-search/page-with-sidebar/div/div/div/div/div/section/div/app-search/div/div/div/div/input').send_keys(settings['fiscal_codes'][value])
+    context.driver.wait_until(By.XPATH, '/html/body/app-root/main/page-search/page-with-sidebar/div/div/div/div/div/section/div/app-search/div/div/div/button').click() 
