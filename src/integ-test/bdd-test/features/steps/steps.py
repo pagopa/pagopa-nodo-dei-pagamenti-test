@@ -186,6 +186,29 @@ def step_impl(context, tag, value, primitive):
         assert value in json_response.get(tag)
 
 
+# TODO tag.sort in xml response 
+@then('check {tag} containsList {value} of {primitive} response')
+def step_impl(context, tag, value, primitive):
+    soap_response = getattr(context, primitive + RESPONSE)
+    if 'xml' in soap_response.headers['content-type']:
+        my_document = parseString(soap_response.content)
+        if len(my_document.getElementsByTagName('faultCode')) > 0:
+            print("fault code: ", my_document.getElementsByTagName('faultCode')[0].firstChild.data)
+            print("fault string: ", my_document.getElementsByTagName('faultString')[0].firstChild.data)
+            if my_document.getElementsByTagName('description'):
+                print("description: ", my_document.getElementsByTagName('description')[0].firstChild.data)
+        data = my_document.getElementsByTagName(tag)[0].firstChild.data
+        print(f'check tag "{tag}" - expected: {value}, obtained: {data}')
+        assert value in data
+    else:
+        node_response = getattr(context, primitive + RESPONSE)
+        json_response = node_response.json()
+        print("value", value)
+        json_response.get(tag).sort()
+        print("tag", json_response.get(tag))
+        assert str(json_response.get(tag)) == value
+
+
 @then('check {tag} field exists in {primitive} response')
 def step_impl(context, tag, primitive):
     soap_response = getattr(context, primitive + RESPONSE)

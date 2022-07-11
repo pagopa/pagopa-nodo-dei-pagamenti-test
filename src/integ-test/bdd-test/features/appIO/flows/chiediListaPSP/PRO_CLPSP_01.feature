@@ -77,16 +77,6 @@ Scenario: Execute activateIOPayment (Phase 2)
         </soapenv:Body>
     </soapenv:Envelope>
     """
-    When AppIO sends SOAP activateIOPayment to nodo-dei-pagamenti
-    Then check outcome is OK of activateIOPayment response
-
-Scenario: Execute nodoChiediInformazioniPagamento (Phase 3)
-    Given the Execute activateIOPayment (Phase 2) scenario executed successfully
-    When WISP sends rest GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
-    Then verify the HTTP status code of informazioniPagamento response is 200
-
-Scenario: Check correct PSP list
-    Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
     And initial XML paGetPayment
     """
     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
@@ -170,6 +160,17 @@ Scenario: Check correct PSP list
          </soapenv:Envelope>
     """
     And EC replies to nodo-dei-pagamenti with the paGetPayment
+    When AppIO sends SOAP activateIOPayment to nodo-dei-pagamenti
+    Then check outcome is OK of activateIOPayment response
+
+Scenario: Execute nodoChiediInformazioniPagamento (Phase 3)
+    Given the Execute activateIOPayment (Phase 2) scenario executed successfully
+    When WISP sends rest GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
+    Then verify the HTTP status code of informazioniPagamento response is 200
+
+Scenario: Check correct PSP list
+    Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
     When WISP sends rest GET listaPSP?idPagamento=$activateIOPaymentResponse.paymentToken&percorsoPagamento=CARTE to nodo-dei-pagamenti
     Then verify the HTTP status code of listaPSP response is 200
-    And check data contains POSTE of listaPSP response
+    And check totalRows is 39 of listaPSP response
+    And check data containsList [301, 302, 303, 304, 305, 306, 307, 308, 309, 310, 1021, 1022, 1023, 1024, 1025, 1056, 1057, 1058, 1059, 1060, 1441, 1442, 1443, 1444, 1445, 1836, 1837, 1838, 1839, 1840, 1847, 1848, 1853, 1854, 1979, 1980, 1981, 1982, 1983] of listaPSP response

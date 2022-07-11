@@ -86,7 +86,7 @@ Scenario: Execute activateIOPayment (Phase 2)
                   <outcome>OK</outcome>
                   <data>
                      <creditorReferenceId>$iuv</creditorReferenceId>
-                     <paymentAmount>10.00</paymentAmount>
+                     <paymentAmount>999999999.99</paymentAmount>
                      <dueDate>2021-12-31</dueDate>
                      <!--Optional:-->
                      <retentionDate>2021-12-31T12:12:12</retentionDate>
@@ -123,23 +123,7 @@ Scenario: Execute activateIOPayment (Phase 2)
                      <!--1 to 5 repetitions:-->
                         <transfer>
                            <idTransfer>1</idTransfer>
-                           <transferAmount>3.00</transferAmount>
-                           <fiscalCodePA>77777777777</fiscalCodePA>
-                           <IBAN>IT45R0760103200000000001016</IBAN>
-                           <remittanceInformation>testPaGetPayment</remittanceInformation>
-                           <transferCategory>paGetPaymentTest</transferCategory>
-                        </transfer>
-                        <transfer>
-                           <idTransfer>2</idTransfer>
-                           <transferAmount>3.00</transferAmount>
-                           <fiscalCodePA>77777777777</fiscalCodePA>
-                           <IBAN>IT45R0760103200000000001016</IBAN>
-                           <remittanceInformation>testPaGetPayment</remittanceInformation>
-                           <transferCategory>paGetPaymentTest</transferCategory>
-                        </transfer>
-                        <transfer>
-                           <idTransfer>3</idTransfer>
-                           <transferAmount>4.00</transferAmount>
+                           <transferAmount>999999999.99</transferAmount>
                            <fiscalCodePA>77777777777</fiscalCodePA>
                            <IBAN>IT45R0760103200000000001016</IBAN>
                            <remittanceInformation>testPaGetPayment</remittanceInformation>
