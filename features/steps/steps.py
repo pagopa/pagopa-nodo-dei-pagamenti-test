@@ -12,7 +12,7 @@ def step_impl(context):
                     headers=settings['mockPayment']['headers'],
                     data=json.dumps(settings['mockPayment']['body']))
     #print(resp)
-    #print(resp.json())
+    print(resp.json())
     context.resp=resp.json()[0]
 
 @step('Browse the payment response url')
@@ -152,13 +152,7 @@ def step_impl(context):
 @step('Select {type_credit_card} credit card')
 def step_impl(context, type_credit_card):
     context.driver.wait_until(By.CLASS_NAME, 'credit-card').click()
-    if type_credit_card == 'onus' or type_credit_card == '':
-        context.driver.wait_until(By.NAME, 'pan').send_keys(settings['holder']['pan'])
-    elif type_credit_card == 'not onus':
-        context.driver.wait_until(By.NAME, 'pan').send_keys(settings['holder']['pan_not_onus'])
-    elif type_credit_card == 'amex':
-        context.driver.wait_until(By.NAME, 'pan').send_keys(settings['holder']['pan_amex'])
-    else: assert False
+    context.driver.wait_until(By.NAME, 'pan').send_keys(settings['holder'][type_credit_card])
     context.driver.wait_until(By.NAME, 'expDate').send_keys(settings['holder']['expDate'])
     context.driver.wait_until(By.CLASS_NAME, 'input-cvc').send_keys(settings['holder']['cvc'])
     context.driver.wait_until(By.CLASS_NAME, 'input-holder').send_keys(settings['holder']['name'])
