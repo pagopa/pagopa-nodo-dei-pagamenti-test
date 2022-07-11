@@ -20,7 +20,9 @@ steps:
     sudo unzip instantclient-basic-linux.x64-21.6.0.0.0dbru.zip
     sudo apt update
     sudo apt install libaio1
-    sudo ldconfig    
+    sudo ldconfig
+    ls -la /opt/oracle/instantclient_21_6/
+    pwd    
   displayName: 'Install Oracle Instant Client'
 - script: python3 -m pip install -r requirements.txt
   displayName: 'Install requirements'
