@@ -22,12 +22,14 @@ steps:
     sudo apt install libaio1
     sudo ldconfig
     ls -la /opt/oracle/instantclient_21_6/
-    pwd    
+
+    sudo mkdir /home/vsts/work/1/s/instantclient_21_6
+        
   displayName: 'Install Oracle Instant Client'
 - script: python3 -m pip install -r requirements.txt
   displayName: 'Install requirements'
 - script: |
-    pwd
+    cp -R /opt/oracle/instantclient_21_6 /home/vsts/work/1/s/instantclient_21_6
     behave --junit-directory=report --junit ./src/integ-test/bdd-test/features/NewMod3/flows/TestGenerazioneRicevute03/generazioneRicevute_flows_ko_PAnew.feature
   displayName: 'Run tests'
 - task: PublishTestResults@2
