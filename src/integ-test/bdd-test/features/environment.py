@@ -13,7 +13,7 @@ def before_all(context):
 
     lib_dir = os.path.abspath(os.path.join(__file__, os.pardir, os.pardir, os.pardir, os.pardir, os.pardir, '/opt/oracle/instantclient-basic-linux.x64-21.6.0.0.0dbru'))
     cx_Oracle.init_oracle_client(lib_dir = lib_dir)
-    more_userdata = json.load(open(os.path.join(context.config.base_dir + "/../resources/config.json")))
+    more_userdata = json.load(open(os.path.join(context.config.base_dir + "/../resources/pipeline_config.json")))
     context.config.update_userdata(more_userdata)
     #services = context.config.userdata.get("services")
     #db_config = context.config.userdata.get("db_configuration")

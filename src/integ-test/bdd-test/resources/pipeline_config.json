@@ -6,6 +6,12 @@
       "healthcheck": "/monitor/health",
       "soap_service": "/webservices/input",
       "rest_service": ""
+    },
+    "mock-ec": {
+      "url": "https://api.dev.platform.pagopa.it/mock-ec/api/v1/mock-ec",
+      "healthcheck": "",
+      "soap_service": "",
+      "rest_service": ""
     }
   },
   "global_configuration": {
@@ -17,25 +23,25 @@
   },
   "db_configuration": {
     "nodo_cfg" : {
-      "host" : "localhost",
-      "database" : "ORCLCDB.localdomain",
+      "host" : "10.70.67.18",
+      "database" : "NDPSPCT_NODO4_CFG",
       "user" : "NODO4_CFG",
       "password": "NODO4_CFG",
-      "port" : "1521"
+      "port" : "1522"
     },
     "nodo_online" : {
-      "host" : "localhost",
-      "database" : "ORCLCDB.localdomain",
+      "host" : "10.70.67.18",
+      "database" : "NDPSPCT_NODO_ONLINE",
       "user" : "NODO_ONLINE",
       "password": "NODO_ONLINE",
-      "port" : "1521"
+      "port" : "1522"
     },
     "nodo_offline" : {
-      "host" : "localhost",
-      "database" : "ORCLCDB.localdomain",
+      "host" : "10.70.67.18",
+      "database" : "NDPSPCT_NODO_OFFLINE",
       "user" : "NODO_OFFLINE",
       "password": "NODO_OFFLINE",
-      "port" : "1521"
+      "port" : "1522"
     },
     "re" : {
       "host" : "localhost",
