@@ -20,16 +20,12 @@ steps:
     sudo unzip instantclient-basic-linux.x64-21.6.0.0.0dbru.zip
     sudo apt update
     sudo apt install libaio1
-    sudo ldconfig
-    ls -la /opt/oracle/
-    
+    sudo ldconfig    
   displayName: 'Install Oracle Instant Client'
 - script: python3 -m pip install -r requirements.txt
   displayName: 'Install requirements'
 - script: |
-    ls -la /opt/oracle/
-    ls -la /opt/oracle/instantclient-basic-linux.x64-21.6.0.0.0dbru/
-#    behave --junit-directory=report --junit ./src/integ-test/bdd-test/features/NewMod3/flows/TestGenerazioneRicevute03/generazioneRicevute_flows_ko_PAnew.feature
+    behave --junit-directory=report --junit ./src/integ-test/bdd-test/features/NewMod3/flows/TestGenerazioneRicevute03/generazioneRicevute_flows_ko_PAnew.feature
   displayName: 'Run tests'
 - task: PublishTestResults@2
   condition: succeededOrFailed()
