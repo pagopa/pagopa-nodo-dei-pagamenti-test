@@ -1,5 +1,5 @@
-Feature: Payment with onus as guest
-  Scenario: Payment with onus as guest goes successfully
+Feature: Payment on wisp as guest
+  Scenario: Payment on wisp goes to success as guest.
     Given Payment generated with mock
     When Browse the payment response url
     And Enter with the mail

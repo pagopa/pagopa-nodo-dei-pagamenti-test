@@ -1,6 +1,6 @@
-Feature: Charity Payment with card amex
-  
-  Scenario: Charity Payment on wisp with card amex as guest user.
+Feature: Charity Payment with card not onus
+
+  Scenario Outline: Charity Payment on wisp with card not onus as guest user.
     Given Payment generated with mock body
       """
       {
@@ -13,6 +13,9 @@ Feature: Charity Payment with card amex
       """
     When Browse the payment response url
     And Enter with the mail
-    And Select amex credit card
-    And Confirm payment
-    Then operation denied
+    And Select <type_credit_card> credit card
+    Then the corresponding psp is displayed
+    Examples:
+      | type_credit_card |
+      | onus             |
+      | not onus         |

@@ -44,20 +44,12 @@ def step_impl(context):
     context.driver.wait_until(By.XPATH, '//input[@name="privacy"]').click()
     context.driver.submit()
 
-@step('Select credit card')
-def step_impl(context):
-    context.driver.wait_until(By.CLASS_NAME, 'credit-card').click()
-    context.driver.wait_until(By.NAME, 'pan').send_keys(settings['holder']['pan'])
-    context.driver.wait_until(By.NAME, 'expDate').send_keys(settings['holder']['expDate'])
-    context.driver.wait_until(By.CLASS_NAME, 'input-cvc').send_keys(settings['holder']['cvc'])
-    context.driver.wait_until(By.CLASS_NAME, 'input-holder').send_keys(settings['holder']['name'])
-    a = context.driver.wait_until(By.XPATH, "/html/body/div[5]/form/div[4]/button")
-    a.click()
-
 @step('Confirm payment')
 def step_impl(context):
     sleep(2)
-    context.driver.submit()
+    context.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+    #context.driver.wait_until(By.XPATH, "//button[@class='fhSubmit']").click()
+    context.driver.wait_until(By.CLASS_NAME, "fhSubmit").click()
 
 @step('Payment is made successfully')
 def step_impl(context):
@@ -135,27 +127,18 @@ def step_impl(context):
                                    "html/body/div[5]/form/div/label[@class='input-label fhError invalid-error']")
     assert mes
 
-@step('Enter with not valid mail')
-def step_impl(context):
-    context.driver.wait_until(By.XPATH,
-                       '//*[@action="enterEmail"]//button[contains(text(),"Entra con la tua email")][contains(@class, "azure")]') \
-        .click()
-    casella = context.driver.wait_until(By.CLASS_NAME, 'input-email')
-    casella.send_keys('aaaaaa@arjbfu')
-    casella.submit()
-
 @then('Check not valid mail message')
 def step_impl(context):
     mes = context.driver.wait_until(By.XPATH, "//*[@class='alert alert-warning alert-dismissable']")
     assert mes.text
 
-@step('Enter with your mail')
-def step_impl(context):
+@step('Enter with {type_email} mail')
+def step_impl(context, type_email):
     context.driver.wait_until(By.XPATH,
                            '//*[@action="enterEmail"]//button[contains(text(),"Entra con la tua email")][contains(@class, "azure")]') \
         .click()
     casella = context.driver.wait_until(By.CLASS_NAME, 'input-email')
-    casella.send_keys('aaaaaa@arjbfu.com')
+    casella.send_keys(settings['holder'][type_email])
     casella.submit()
 
 
@@ -166,26 +149,21 @@ def step_impl(context):
     assert 'privacy' in titolo.text
 
 
-@step('Select onus credit card')
-def step_impl(context):
+@step('Select {type_credit_card} credit card')
+def step_impl(context, type_credit_card):
     context.driver.wait_until(By.CLASS_NAME, 'credit-card').click()
-    context.driver.wait_until(By.NAME, 'pan').send_keys(settings['holder']['pan'])
+    if type_credit_card == 'onus' or type_credit_card == '':
+        context.driver.wait_until(By.NAME, 'pan').send_keys(settings['holder']['pan'])
+    elif type_credit_card == 'not onus':
+        context.driver.wait_until(By.NAME, 'pan').send_keys(settings['holder']['pan_not_onus'])
+    elif type_credit_card == 'amex':
+        context.driver.wait_until(By.NAME, 'pan').send_keys(settings['holder']['pan_amex'])
+    else: assert False
     context.driver.wait_until(By.NAME, 'expDate').send_keys(settings['holder']['expDate'])
     context.driver.wait_until(By.CLASS_NAME, 'input-cvc').send_keys(settings['holder']['cvc'])
     context.driver.wait_until(By.CLASS_NAME, 'input-holder').send_keys(settings['holder']['name'])
     a = context.driver.wait_until(By.XPATH, "/html/body/div[5]/form/div[4]/button")
     a.click()
-
-@step('Select not onus credit card')
-def step_impl(context):
-    context.driver.wait_until(By.CLASS_NAME, 'credit-card').click()
-    context.driver.wait_until(By.NAME, 'pan').send_keys(settings['holder']['pan_not_onus'])
-    context.driver.wait_until(By.NAME, 'expDate').send_keys(settings['holder']['expDate'])
-    context.driver.wait_until(By.CLASS_NAME, 'input-cvc').send_keys(settings['holder']['cvc'])
-    context.driver.wait_until(By.CLASS_NAME, 'input-holder').send_keys(settings['holder']['name'])
-    a = context.driver.wait_until(By.XPATH, "/html/body/div[5]/form/div[4]/button")
-    a.click()
-
 
 @step('Login as registered user')
 def step_impl(context):
@@ -289,16 +267,6 @@ def step_impl(context):
     context.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
     context.driver.wait_until(By.XPATH, "//div[@id='walletCard-21785']/div/div[2]/div/div/div").click()
     #sleep(1000)
-
-@step('Select credit card amex')
-def step_impl(context):
-    context.driver.wait_until(By.CLASS_NAME, 'credit-card').click()
-    context.driver.wait_until(By.NAME, 'pan').send_keys(settings['holder']['pan_amex'])
-    context.driver.wait_until(By.NAME, 'expDate').send_keys(settings['holder']['expDate'])
-    context.driver.wait_until(By.CLASS_NAME, 'input-cvc').send_keys(settings['holder']['cvc'])
-    context.driver.wait_until(By.CLASS_NAME, 'input-holder').send_keys(settings['holder']['name'])
-    a = context.driver.wait_until(By.XPATH, "/html/body/div[5]/form/div[4]/button")
-    a.click()
 
 @then('check not change payment manager')
 def step_impl(context):
@@ -516,18 +484,12 @@ def step_impl(context):
     context.driver.wait_until(By.XPATH,'//div/h2/a').click()
     assert context.driver.wait_until(By.CLASS_NAME,'psp-menu')
 
-@given('Payment generated with mock charity')
+@given('Payment generated with mock body')
 def step_impl(context):
+    payload = context.text
     resp=requests.patch(url=settings['mockPayment']['url'],
                     headers=settings['mockPayment']['headers'],
-                    data=json.dumps(settings['mockPayment']['body_charity']))
-    context.resp=resp.json()[0]
-
-@given('Payment generated with mock high amount')
-def step_impl(context):
-    resp=requests.patch(url=settings['mockPayment']['url'],
-                    headers=settings['mockPayment']['headers'],
-                    data=json.dumps(settings['mockPayment']['body_high_amount']))
+                    data=payload)
     context.resp=resp.json()[0]
 
 @then('the corresponding psp is displayed')
@@ -536,17 +498,17 @@ def step_impl(context):
 
 @then('the corresponding psp is not displayed')
 def step_impl(context):
-    pass
+    flag = False
+    try:
+        context.driver.wait_until(By.CLASS_NAME,'psp-logo')
+    except:
+        flag = True
+    assert flag
 
 @then('operation denied')
 def step_impl(context):
-    print('#######################')
-    sleep(10)
-    a=context.driver.wait_until(By.CLASS_NAME,"fhSubmit")
-    print(a)
-    print(a.text)
-    a.click()
-    sleep(1000)
+    assert context.driver.wait_until(By.XPATH, "//div[@id='error_message']/div/div/h3")
+    
 
 @step('the high amount message is displayed')
 def step_impl(context):

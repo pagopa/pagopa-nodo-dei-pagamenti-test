@@ -3,7 +3,7 @@ Feature: Charity Payment with card amex
         Given Payment generated with mock charity
         When Browse the payment response url
         And Enter with the mail
-        And Select credit card amex
+        And Select amex credit card
         #Then sleep 1000 s
         Then operation denied
 

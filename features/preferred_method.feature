@@ -4,6 +4,6 @@ Feature: Preferred method
         When Browse the payment response url
         And Login as registered user
         And Select add Payment method
-        And Select credit card
+        And Select onus credit card
         And Confirm payment
         Then Boxes save and preferred are on the page

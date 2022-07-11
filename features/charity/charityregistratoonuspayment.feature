@@ -9,6 +9,6 @@ Feature: Charity Payment with card onus
     }
     When Browse the payment response url
     And Enter as registered user
-    And Select credit card 
+    And Select onus credit card 
     And Insert a onus card
     Then the corresponding psp is displayed

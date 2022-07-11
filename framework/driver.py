@@ -6,6 +6,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from data.config import settings
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
+import os
 
 from time import sleep
 
@@ -13,7 +14,7 @@ class Driver:
 
     def __init__(self,browser="chrome"):
 
-        service=Service(executable_path=r"C:\\Users\\matteo.villano\\OneDrive - Accenture\\Desktop\\pm test\\Pm_new\\chromedriver_win32\\chromedriver.exe")
+        service = Service(executable_path=os.path.abspath(os.path.join(__file__, os.pardir, os.pardir, 'chromedriver_win32\\chromedriver.exe')))
         match browser:
             case "chrome":
                 print('init driverrrr')

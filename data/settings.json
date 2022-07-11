@@ -41,6 +41,8 @@
         "wrong_name": "'Niccolò Macchiavelli'",
         "mail": "matteo@aaaaaa.com",
         "mail_upper": "MaTTeO@bhbhbh.com",
+        "mail_not_valid": "aaaaaa@arjbfu",
+        "wrong_mail": "aaaaaaaaa",
         "jiffy_phone": "3470110102",
         "jiffy_phone_disabled": "3472203058",
         "jiffy_phone_wrong": "3470110214"
@@ -50,5 +52,20 @@
         "options": [
           "no-sandbox", "--disable-gpu", "--disable-dev-shm-usage", "start-fullscreen", "--headless"
         ]
+    },
+    "users": {
+      "registered": {
+        "username_equal_email": {
+          "username": "mario.gammaldi@pagopa.it",
+          "email": "mario.gammaldi@pagopa.it",
+          "CF": "GMMMRA79L13H703E",
+          "cell_phone": "+393472167430"
+        },
+        "username_not_equal_email": {
+          "username": "fabio.pizzini@gft.com",
+          "email": "FABIOP00A00A000A",
+          "CF": "FABIOP00A00A000A"
+        }
+      }
     }
 } 
