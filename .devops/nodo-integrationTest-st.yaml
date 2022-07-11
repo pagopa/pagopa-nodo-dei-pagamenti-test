@@ -11,8 +11,19 @@ steps:
     versionSpec: '3.6'
 - script: python -m pip install --upgrade pip
   displayName: 'Install dependencies'
-- script: python3 -m pip install -r requirements.txt
-  displayName: 'Install requirements'
 - script: |
-    curl --location --request POST 'https://api.dev.platform.pagopa.it/mock-ec/api/v1/mock-ec' --header 'Content-Type: application/xml' --data-raw '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pafn="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd"><soapenv:Header /><soapenv:Body><pafn:paVerifyPaymentNoticeReq><idPA>77777777777</idPA><idBrokerPA>77777777777</idBrokerPA><idStation>77777777777_01</idStation><qrCode><fiscalCode>77777777777</fiscalCode><noticeNumber>302190921337126000</noticeNumber></qrCode></pafn:paVerifyPaymentNoticeReq></soapenv:Body></soapenv:Envelope>'
-  displayName: 'Run tests'
+    sudo apt-get install build-essential unzip
+    cd /opt/
+    sudo mkdir /opt/oracle
+    sudo wget https://download.oracle.com/otn_software/linux/instantclient/216000/instantclient-basic-linux.x64-21.6.0.0.0dbru.zip
+    sudo unzip instantclient_21_6
+    sudo apt update
+    sudo apt install libaio1
+    sudo sh -c "echo /opt/oracle/instantclient_21_6 > /etc/ld.so.conf.d/oracle-instantclient.conf"
+    sudo ldconfig
+  displayName: 'Install Oracle Instant Client'
+#- script: python3 -m pip install -r requirements.txt
+#  displayName: 'Install requirements'
+#- script: |
+#    curl --location --request POST 'https://api.dev.platform.pagopa.it/mock-ec/api/v1/mock-ec' --header 'Content-Type: application/xml' --data-raw '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pafn="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd"><soapenv:Header /><soapenv:Body><pafn:paVerifyPaymentNoticeReq><idPA>77777777777</idPA><idBrokerPA>77777777777</idBrokerPA><idStation>77777777777_01</idStation><qrCode><fiscalCode>77777777777</fiscalCode><noticeNumber>302190921337126000</noticeNumber></qrCode></pafn:paVerifyPaymentNoticeReq></soapenv:Body></soapenv:Envelope>'
+#  displayName: 'Run tests'
