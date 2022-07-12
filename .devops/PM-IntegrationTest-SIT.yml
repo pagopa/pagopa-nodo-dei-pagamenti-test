@@ -28,7 +28,7 @@ steps:
   displayName: 'Install requirements'
 - script: |
     ls -la ./src/integ-test/bdd-test/features
-    behave --junit-directory=report --junit ./src/integ-test/bdd-test/features/3DS/15_3ds.feature
+    behave --junit-directory=report --junit ./features/3DS/15_3ds.feature
   displayName: 'Run tests'
 - task: PublishTestResults@2
   condition: succeededOrFailed()
