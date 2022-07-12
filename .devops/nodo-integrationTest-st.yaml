@@ -30,3 +30,49 @@ stages:
           - publish: $(Agent.BuildDirectory)/s
             displayName: "Publish Behave Test Suite"
             artifact: TestSuite
+            
+  - stage: execute
+    displayName: "Execute NRT and Publish results"
+    dependsOn:
+      - retrieve_testsuite    
+    condition: succeeded()
+    jobs:
+      - job: execute
+        displayName: "Execute Test Suite"
+        pool: nodopagamenti-agent-pool-sit
+        steps:
+          - checkout: none
+
+          #- script: |
+              #ls -la $(Pipeline.Workspace)/$(appVersion)-${{ parameters.env }}-manifest-app
+              #rm -rf $(Pipeline.Workspace)/$(appVersion)-${{ parameters.env }}-manifest-app
+            #displayName: "Clean old cached files $(appVersion)-${{ parameters.env }}-manifest-app"
+
+          - download: current
+            artifact: $(Agent.BuildDirectory)/s
+            displayName: "Download Behave Test Suite"
+
+          - task: UsePythonVersion@0
+            inputs:
+              versionSpec: '3.6'
+          - script: python -m pip install --upgrade pip
+            displayName: 'Install dependencies'
+          - script: |
+              sudo apt-get install build-essential unzip
+              cd /opt/
+              sudo mkdir /opt/oracle
+              cd /opt/oracle
+              sudo wget https://download.oracle.com/otn_software/linux/instantclient/216000/instantclient-basic-linux.x64-21.6.0.0.0dbru.zip
+              sudo unzip instantclient-basic-linux.x64-21.6.0.0.0dbru.zip
+              sudo apt update
+              sudo apt install libaio1
+              sudo sh -c "echo /opt/oracle/instantclient_21_6 > /etc/ld.so.conf.d/oracle-instantclient.conf"
+              sudo ldconfig
+              ls -la /opt/oracle/instantclient_21_6/
+            displayName: 'Install Oracle Instant Client'
+          - script: python3 -m pip install -r requirements.txt
+            displayName: 'Install requirements'
+          - script: |
+              ls -la
+              pwd
+            displayName: 'Run tests'
