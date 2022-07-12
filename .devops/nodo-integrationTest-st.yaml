@@ -54,7 +54,7 @@ stages:
 
           - task: UsePythonVersion@0
             inputs:
-              versionSpec: '3.6'
+              versionSpec: '3.7'
           - script: python -m pip install --upgrade pip
             displayName: 'Install dependencies'
           - script: |
