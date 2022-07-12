@@ -8,14 +8,27 @@ name: '$(Date:yyyy-MM-dd)$(Rev:.rr)'
 steps:
 - task: UsePythonVersion@0
   inputs:
-    versionSpec: '3.10'
+    versionSpec: '3.6'
 - script: python -m pip install --upgrade pip
   displayName: 'Install dependencies'
-  
+- script: |
+    sudo apt-get install build-essential unzip
+    cd /opt/
+    sudo mkdir /opt/oracle
+    cd /opt/oracle
+    sudo wget https://download.oracle.com/otn_software/linux/instantclient/216000/instantclient-basic-linux.x64-21.6.0.0.0dbru.zip
+    sudo unzip instantclient-basic-linux.x64-21.6.0.0.0dbru.zip
+    sudo apt update
+    sudo apt install libaio1
+    sudo sh -c "echo /opt/oracle/instantclient_21_6 > /etc/ld.so.conf.d/oracle-instantclient.conf"
+    sudo ldconfig
+    ls -la /opt/oracle/instantclient_21_6/
+  displayName: 'Install Oracle Instant Client'
 - script: python3 -m pip install -r requirements.txt
   displayName: 'Install requirements'
 - script: |
-    behave --junit-directory=report --junit ./features
+    ls -la ./src/integ-test/bdd-test/features
+    behave --junit-directory=report --junit ./src/integ-test/bdd-test/features/NewMod3/flows/TestGenerazioneRicevute03/generazioneRicevute_flows_ko_PAnew.feature
   displayName: 'Run tests'
 - task: PublishTestResults@2
   condition: succeededOrFailed()
