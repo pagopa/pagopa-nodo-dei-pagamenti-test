@@ -53,8 +53,9 @@ stages:
             displayName: "Download Behave Test Suite"
 
           - task: UsePythonVersion@0
-            inputs:
-              versionSpec: '3.7'
+            displayName: 'Use Python 3.x'
+            #inputs:
+              #versionSpec: '3.7'
           - script: python -m pip install --upgrade pip
             displayName: 'Install dependencies'
           - script: |
