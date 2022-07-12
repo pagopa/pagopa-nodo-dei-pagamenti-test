@@ -49,7 +49,7 @@ stages:
             #displayName: "Clean old cached files $(appVersion)-${{ parameters.env }}-manifest-app"
 
           - download: current
-            artifact: $(Agent.BuildDirectory)/s
+            artifact: TestSuite
             displayName: "Download Behave Test Suite"
 
           - task: UsePythonVersion@0
