@@ -8,4 +8,4 @@ Feature: 15
         And select 3ds credit card
         And confirm payment
         And close browser
-        Then check resultCode in <columm> |of <table>| is <value>
+        Then check resultCode in METHOD_RESPONSE_3D2  is 25
