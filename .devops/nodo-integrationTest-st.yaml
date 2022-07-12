@@ -23,7 +23,9 @@ stages:
   jobs:
   - job:
     displayName: "Prepare Behave"
+    pool: nodopagamenti-agent-pool-sit
     steps:
+      - checkout: none
       - task: UsePythonVersion@0
         inputs:
           versionSpec: '3.6'
@@ -44,15 +46,11 @@ stages:
         displayName: 'Install Oracle Instant Client'
       - script: python3 -m pip install -r requirements.txt
         displayName: 'Install requirements'
-  - job:
-    displayName: "Run Behave Features"
-    pool: nodopagamenti-agent-pool-sit
-    steps:
-      - checkout: none
       - script: |
           ls -la ./src/integ-test/bdd-test/features
           behave --junit-directory=report --junit ./src/integ-test/bdd-test/features/NewMod3/flows/TestGenerazioneRicevute03/generazioneRicevute_flows_ko_PAnew.feature
         displayName: 'Run tests'
+        
 - stage: publish
   dependsOn: enviroment
   displayName: Publish NRT Results
