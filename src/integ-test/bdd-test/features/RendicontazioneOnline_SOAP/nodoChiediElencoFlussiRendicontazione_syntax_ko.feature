@@ -60,23 +60,24 @@ Feature: Syntax checks for nodoChiediElencoFlussiRendicontazione - KO
         Then check faultString is Errore di sintassi extra XSD. of nodoChiediElencoFlussiRendicontazione response
         And check faultCode is PPT_SINTASSI_EXTRAXSD of nodoChiediElencoFlussiRendicontazione response
 
+    
     #[CEFRSIN5]
     #Scenario: Check PPT_SINTASSI_EXTRAXSD error for nodoChiediElencoFlussiRendicontazione primitive
     #    Given initial XML nodoChiediElencoFlussiRendicontazione
     #        """
     #        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
     #        <soapenv:Header/>
-    #        <soapenv:Body>
-    #            <ws:nodoChiediElencoFlussiRendicontazione>
-    #                <identificativoIntermediarioPA>#codicePA#</identificativoIntermediarioPA>
-    #                <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
-    #                <password>pwdpwdpwd</password>
-    #            </ws:nodoChiediElencoFlussiRendicontazione>
-    #        </soapenv:Body>
+    #            <soapenv:Body>
+    #                <ppt:nodoChiediElencoFlussiRendicontazione>
+    #                    <identificativoIntermediarioPA>#codicePA#</identificativoIntermediarioPA>
+    #                    <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
+    #                    <password>pwdpwdpwd</password>
+    #                </ppt:nodoChiediElencoFlussiRendicontazione>
+    #            </soapenv:Body>
     #        </soapenv:Envelope>
-    #        """
-    #    When EC sends SOAP nodoChiediElencoFlussiRendicontazione to nodo-dei-pagamenti
-    #    Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoChiediElencoFlussiRendicontazione response
+    #       """
+    #   When EC sends SOAP nodoChiediElencoFlussiRendicontazione to nodo-dei-pagamenti
+    #   Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoChiediElencoFlussiRendicontazione response
 
 
     Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error for nodoChiediElencoFlussiRendicontazione primitive
@@ -139,23 +140,24 @@ Feature: Syntax checks for nodoChiediElencoFlussiRendicontazione - KO
             | identificativoPSP     | Empty                                | CEFRSIN19   |
             | identificativoPSP     | qHtFhwjP3lTEs5SmYehnnK5aEZaAD1vqQukR | CEFRSIN20   |
 
+   
     #[CEFRSIN21]
-    Scenario: Check XML_STREAM_EXC error for nodoChiediElencoFlussiRendicontazione primitive
-        Given initial XML nodoChiediElencoFlussiRendicontazione
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <ws:nodoChiediElencoFlussiRendicontazione>
-            <identificativoIntermediarioPA>#codicePA#</identificativoIntermediarioPA>
-            <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
-            <password>pwdpwdpwd<password>
-            <identificativoDominio>#codicePA#</identificativoDominio>
-            <identificativoPSP>#psp#</identificativoPSP>
-            </ws:nodoChiediElencoFlussiRendicontazione>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        When EC sends SOAP nodoChiediElencoFlussiRendicontazione to nodo-dei-pagamenti
-        Then check faultString is soap:Client of nodoChiediElencoFlussiRendicontazione response
-        And check faultCode is XML_STREAM_EXC of nodoChiediElencoFlussiRendicontazione response
+    #Scenario: Check XML_STREAM_EXC error for nodoChiediElencoFlussiRendicontazione primitive
+    #    Given initial XML nodoChiediElencoFlussiRendicontazione
+    #        """
+    #        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+    #        <soapenv:Header/>
+    #        <soapenv:Body>
+    #        <ws:nodoChiediElencoFlussiRendicontazione>
+    #        <identificativoIntermediarioPA>#codicePA#</identificativoIntermediarioPA>
+    #        <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
+    #        <password>pwdpwdpwd<password>
+    #        <identificativoDominio>#codicePA#</identificativoDominio>
+    #        <identificativoPSP>#psp#</identificativoPSP>
+    #        </ws:nodoChiediElencoFlussiRendicontazione>
+    #        </soapenv:Body>
+    #        </soapenv:Envelope>
+    #        """
+    #    When EC sends SOAP nodoChiediElencoFlussiRendicontazione to nodo-dei-pagamenti
+    #    Then check faultString is soap:Client of nodoChiediElencoFlussiRendicontazione response
+    #    And check faultCode is XML_STREAM_EXC of nodoChiediElencoFlussiRendicontazione response

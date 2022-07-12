@@ -12,6 +12,8 @@ import requests
 from behave import *
 from requests.exceptions import RetryError
 
+
+
 import utils as utils
 import db_operation as db
 
@@ -1129,3 +1131,191 @@ def step_impl(context):
     assert rows[0][25] == None
     assert rows[0][26] == rows1[0][11] #id
     assert len(rows) == 1
+
+
+@then("RTP XML check")
+def step_impl(context):
+
+    XML = "SELECT XML FROM POSITION_RECEIPT_XML WHERE PAYMENT_TOKEN ='$activatePaymentNoticeResponse.paymentToken' and PA_FISCAL_CODE='$activatePaymentNotice.fiscalCode' and NOTICE_ID='$activatePaymentNotice.noticeNumber'"
+    query = "SELECT BROKER_PA_ID, STATION_ID, PAYMENT_TOKEN, NOTICE_ID, PA_FISCAL_CODE, OUTCOME, CREDITOR_REFERENCE_ID, AMOUNT, PSP_ID, CHANNEL_ID, PAYMENT_CHANNEL, PAYMENT_METHOD, FEE, INSERTED_TIMESTAMP, APPLICATION_DATE, TRANSFER_DATE  FROM POSITION_PAYMENT WHERE PAYMENT_TOKEN ='$activatePaymentNoticeResponse.paymentToken' and PA_FISCAL_CODE='$activatePaymentNotice.fiscalCode' and NOTICE_ID='$activatePaymentNotice.noticeNumber'"
+    query1 = "SELECT DESCRIPTION, COMPANY_NAME, OFFICE_NAME  FROM POSITION_SERVICE WHERE PA_FISCAL_CODE='$activatePaymentNotice.fiscalCode' and NOTICE_ID='$activatePaymentNotice.noticeNumber'"
+    query2 = "SELECT su.ENTITY_UNIQUE_IDENTIFIER_TYPE, su.ENTITY_UNIQUE_IDENTIFIER_VALUE, su.FULL_NAME, su.STREET_NAME, su.CIVIC_NUMBER, su.POSTAL_CODE, su.CITY, su.STATE_PROVINCE_REGION, su.COUNTRY, su.EMAIL  FROM POSITION_SUBJECT su JOIN POSITION_SERVICE se ON su.ID = se.DEBTOR_ID WHERE se.PA_FISCAL_CODE='$activatePaymentNotice.fiscalCode' and se.NOTICE_ID='$activatePaymentNotice.noticeNumber' and su.SUBJECT_TYPE='DEBTOR'"
+    query3 = "SELECT su.ENTITY_UNIQUE_IDENTIFIER_TYPE, su.ENTITY_UNIQUE_IDENTIFIER_VALUE, su.FULL_NAME, su.STREET_NAME, su.CIVIC_NUMBER, su.POSTAL_CODE, su.CITY, su.STATE_PROVINCE_REGION, su.COUNTRY, su.EMAIL  FROM POSITION_SUBJECT su JOIN POSITION_RECEIPT sr ON su.ID = sr.PAYER_ID WHERE sr.PA_FISCAL_CODE='$activatePaymentNotice.fiscalCode' and sr.NOTICE_ID='$activatePaymentNotice.noticeNumber' and su.SUBJECT_TYPE='PAYER'"
+    query4 = "SELECT TRANSFER_IDENTIFIER, AMOUNT, PA_FISCAL_CODE_SECONDARY, IBAN, REMITTANCE_INFORMATION, TRANSFER_CATEGORY  FROM POSITION_TRANSFER WHERE PA_FISCAL_CODE='$activatePaymentNotice.fiscalCode' and NOTICE_ID='$activatePaymentNotice.noticeNumber'"
+
+    db_config = context.config.userdata.get("db_configuration").get("nodo_online")
+
+    conn = db.getConnection(db_config.get('host'), db_config.get('database'),db_config.get('user'),db_config.get('password'),db_config.get('port'))
+
+    XML = utils.replace_local_variables(XML, context)
+    xml_rows = db.executeQuery(conn, XML)
+    query = utils.replace_local_variables(query, context)
+    rows = db.executeQuery(conn, query)
+    query1 = utils.replace_local_variables(query1, context)
+    rows1 = db.executeQuery(conn, query1)
+    query2 = utils.replace_local_variables(query2, context)
+    rows2 = db.executeQuery(conn, query2)
+    query3 = utils.replace_local_variables(query3, context)
+    rows3 = db.executeQuery(conn, query3)
+    query4 = utils.replace_local_variables(query4, context)
+    rows4 = db.executeQuery(conn, query4)
+
+    
+    xml_rpt = parseString(xml_rows[0][0].read())
+
+    brokerPaId = rows[0][0]
+    stationId = rows[0][1]
+    payToken = rows[0][2]
+    noticeId = rows[0][3]
+    paFiscalCode = rows[0][4]
+    outcome = rows[0][5]
+    credRefId = rows[0][6]
+    amount = rows[0][7]
+    description = rows1[0][0]
+    companyName = rows1[0][1]
+    debIdentifierType = rows2[0][0]
+    debIdentifierValue = rows2[0][1]
+    debName = rows2[0][2]
+    debStreet = rows2[0][3]
+    debCivic = rows2[0][4]
+    debCode = rows2[0][5]
+    debCity = rows2[0][6]
+    debRegion = rows2[0][7]
+    debCountry = rows2[0][8]
+    debEmail = rows2[0][9]
+
+    #TBD
+    transTransferId = rows4[0][0]
+    transAmount = rows4[0][1]
+    transPaFiscalCodeSecondary = rows4[0][2]
+    transIban = rows4[0][3]
+    transRemittanceInformation = rows4[0][4]
+    transTransferCategory = rows4[0][5]
+
+    pspId = rows[0][8]
+
+    db.closeConnection(conn)
+
+    query5 = "SELECT CODICE_FISCALE, RAGIONE_SOCIALE  FROM PSP WHERE ID_PSP='$activatePaymentNotice.idPSP'"
+    db_config = context.config.userdata.get("db_configuration").get("nodo_cfg")
+    conn = db.getConnection(db_config.get('host'), db_config.get('database'),db_config.get('user'),db_config.get('password'),db_config.get('port'))
+    
+    query5 = utils.replace_local_variables(query5, context)
+    rows5 = db.executeQuery(conn, query5)
+
+    db.closeConnection(conn)
+
+    pspCodiceFiscale = rows5[0][0]
+    #campo pspPartitaIVA mancante nella tabella PSP
+    pspRagioneSociale = rows5[0][1]
+    channelId = rows[0][9]
+    payChannel = rows[0][10]
+
+  
+    assert xml_rpt.getElementsByTagName("idPA")[0].firstChild.data == paFiscalCode
+    assert xml_rpt.getElementsByTagName("idBrokerPA")[0].firstChild.data == brokerPaId 
+    assert xml_rpt.getElementsByTagName("idStation")[0].firstChild.data == stationId 
+    assert xml_rpt.getElementsByTagName("receiptId")[0].firstChild.data == payToken 
+    assert xml_rpt.getElementsByTagName("noticeNumber")[0].firstChild.data == noticeId 
+    assert xml_rpt.getElementsByTagName("fiscalCode")[0].firstChild.data == paFiscalCode 
+    assert xml_rpt.getElementsByTagName("outcome")[0].firstChild.data == outcome 
+    assert xml_rpt.getElementsByTagName("creditorReferenceId")[0].firstChild.data == credRefId 
+    
+    paymentAmount = xml_rpt.getElementsByTagName("paymentAmount")[0].firstChild.data
+    if isinstance(paymentAmount, str) and paymentAmount.isdigit(): 
+        paymentAmount = float(paymentAmount)
+        assert paymentAmount == amount 
+    
+    assert xml_rpt.getElementsByTagName("companyName")[0].firstChild.data == companyName 
+    assert xml_rpt.getElementsByTagName("description")[0].firstChild.data == description 
+    assert xml_rpt.getElementsByTagName("entityUniqueIdentifierType")[0].firstChild.data == debIdentifierType 
+    assert xml_rpt.getElementsByTagName("entityUniqueIdentifierValue")[0].firstChild.data == debIdentifierValue 
+    assert xml_rpt.getElementsByTagName("fullName")[0].firstChild.data == debName 
+    assert xml_rpt.getElementsByTagName("streetName")[0].firstChild.data == debStreet 
+    assert xml_rpt.getElementsByTagName("civicNumber")[0].firstChild.data == debCivic 
+    assert xml_rpt.getElementsByTagName("postalCode")[0].firstChild.data == debCode 
+    assert xml_rpt.getElementsByTagName("city")[0].firstChild.data == debCity 
+    assert xml_rpt.getElementsByTagName("stateProvinceRegion")[0].firstChild.data == debRegion 
+    assert xml_rpt.getElementsByTagName("country")[0].firstChild.data == debCountry 
+    assert xml_rpt.getElementsByTagName("e-mail")[0].firstChild.data == debEmail 
+    assert xml_rpt.getElementsByTagName("idTransfer")[0].firstChild.data == transTransferId 
+   
+    transferAmount = xml_rpt.getElementsByTagName("transferAmount")[0].firstChild.data
+    if isinstance(transferAmount, str) and transferAmount.isdigit(): 
+        transferAmount = float(transferAmount)
+        assert transferAmount == transAmount 
+
+    assert xml_rpt.getElementsByTagName("fiscalCodePA")[0].firstChild.data == transPaFiscalCodeSecondary 
+    assert xml_rpt.getElementsByTagName("IBAN")[0].firstChild.data == transIban 
+    assert xml_rpt.getElementsByTagName("remittanceInformation")[0].firstChild.data == transRemittanceInformation 
+    assert xml_rpt.getElementsByTagName("transferCategory")[0].firstChild.data == transTransferCategory 
+
+    assert xml_rpt.getElementsByTagName("idPSP")[0].firstChild.data == pspId 
+    assert xml_rpt.getElementsByTagName("pspFiscalCode")[0].firstChild.data == pspCodiceFiscale 
+    assert xml_rpt.getElementsByTagName("PSPCompanyName")[0].firstChild.data == pspRagioneSociale 
+    assert xml_rpt.getElementsByTagName("idChannel")[0].firstChild.data == channelId 
+  
+
+    if payChannel == None:
+        assert xml_rpt.getElementsByTagName("channelDescription")[0].firstChild.data == 'NA' 
+    else:
+        assert xml_rpt.getElementsByTagName("channelDescription")[0].firstChild.data == payChannel
+
+    if xml_rpt.getElementsByTagName("officeName")[0].firstChild.data:
+        officeName = rows1[0][2]
+        assert xml_rpt.getElementsByTagName("officeName")[0].firstChild.data == officeName
+
+    if xml_rpt.getElementsByTagName("payer")[0].firstChild.data:
+        payIdentifierType = rows3[0][0]
+        payIdentifierValue = rows3[0][1]
+        payName = rows3[0][2]
+        payStreet = rows3[0][3]
+        payCivic = rows3[0][4]
+        payCode = rows3[0][5]
+        payCity = rows3[0][6]
+        payRegion = rows3[0][7]
+        payCountry = rows3[0][8]
+        payEmail = rows3[0][9]
+    
+
+    assert xml_rpt.getElementsByTagName("entityUniqueIdentifierType")[0].firstChild.data == payIdentifierType
+    assert xml_rpt.getElementsByTagName("entityUniqueIdentifierValue")[0].firstChild.data == payIdentifierValue
+    assert xml_rpt.getElementsByTagName("fullName")[0].firstChild.data == payName
+    assert xml_rpt.getElementsByTagName("streetName")[0].firstChild.data == payStreet
+    assert xml_rpt.getElementsByTagName("civicNumber")[0].firstChild.data == payCivic
+    assert xml_rpt.getElementsByTagName("postalCode")[0].firstChild.data == payCode
+    assert xml_rpt.getElementsByTagName("city")[0].firstChild.data == payCity
+    assert xml_rpt.getElementsByTagName("stateProvinceRegion")[0].firstChild.data == payRegion
+    assert xml_rpt.getElementsByTagName("country")[0].firstChild.data == payCountry
+    assert xml_rpt.getElementsByTagName("e-mail")[0].firstChild.data == payEmail
+    
+
+
+    if xml_rpt.getElementsByTagName("paymentMethod")[0].firstChild.data: 
+        payMethod = rows[0][11]
+        assert xml_rpt.getElementsByTagName("paymentMethod")[0].firstChild.data == payMethod
+
+    if xml_rpt.getElementsByTagName("fee")[0].firstChild.data:
+        fee = rows[0][12]
+        assert xml_rpt.getElementsByTagName("fee")[0].firstChild.data == fee
+
+    #elif isinstance(elem, datetime.date): query_result[i] = elem.strftime('%Y-%m-%d')
+    """
+    if xml_rpt.getElementsByTagName("paymentDateTime")[0].firstChild.data:
+        print(rows[0][13])
+        insTimestampString = rows[0][13].strftime("%H:%M:%S")+'T'+
+        assert xml_rpt.getElementsByTagName("paymentDateTime")[0].firstChild.data == insTimestampString
+    
+
+    if xml_rpt.getElementsByTagName("applicationDate")[0].firstChild.data:
+        print(rows[0][14])
+        traDateString = rows[0][14].strftime("%H:%M:%S")+'T'+
+        assert xml_rpt.getElementsByTagName("applicationDate")[0].firstChild.data == appDateString    
+
+        if xml_rpt.getElementsByTagName("transferDate")[0].firstChild.data:
+        print(rows[0][15])
+        appDateString = rows[0][15].strftime("%H:%M:%S")+'T'+
+        assert xml_rpt.getElementsByTagName("transferDate")[0].firstChild.data == appDateString 
+    """
+
+    #campo METADATA opzionale da aggiungere

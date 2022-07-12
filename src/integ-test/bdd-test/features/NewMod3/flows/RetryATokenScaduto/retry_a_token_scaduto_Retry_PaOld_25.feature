@@ -320,9 +320,7 @@ Feature: process tests for generazioneRicevute
     And checks the value NotNone of the record at column TOKEN_VALID_FROM of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro NewMod3
     And checks the value NotNone of the record at column TOKEN_VALID_TO of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro NewMod3
     And checks the value None of the record at column DUE_DATE of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro NewMod3
-    And execution query retrieve_xml_rpt to get value on the table POSITION_RECEIPT, with the columns PAYMENT_AMOUNT,DESCRIPTION,COMPANY_NAME,OFFICE_NAME,DEBTOR_ID,PSP_FISCAL_CODE,PSP_VAT_NUMBER,PSP_COMPANY_NAME,CHANNEL_ID,CHANNEL_DESCRIPTION,PAYER_ID,PAYMENT_METHOD,FEE,PAYMENT_DATE_TIME,APPLICATION_DATE,TRANSFER_DATE,METADATA,RT_ID,FK_POSITION_PAYMENT under macro NewMod3 with db name nodo_online
-    And execution query position_status_n to get value on the table POSITION_PAYMENT, with the columns AMOUNT,CHANNEL_ID,PAYMENT_CHANNEL,PAYER_ID,PAYMENT_METHOD,FEE,INSERTED_TIMESTAMP,APPLICATION_DATE,TRANSFER_DATE,ID under macro NewMod3 with db name nodo_online
-
+    And RTP XML check
 
 
 
