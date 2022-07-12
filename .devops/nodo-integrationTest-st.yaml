@@ -27,7 +27,6 @@ stages:
           - checkout: self
             clean: true
             persistCredentials: true
-            path: $(Agent.BuildDirectory)/s
           - publish: $(Agent.BuildDirectory)/s
             displayName: "Publish Behave Test Suite"
             artifact: TestSuite
