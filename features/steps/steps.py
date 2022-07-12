@@ -166,7 +166,7 @@ def step_impl(context, type_credit_card):
     context.driver.wait_until(By.CLASS_NAME, 'credit-card').click()
     context.driver.wait_until(By.NAME, 'pan').send_keys(settings['holder'][type_credit_card])
     context.driver.wait_until(By.NAME, 'expDate').send_keys(settings['holder']['expDate'])
-    context.driver.wait_until(By.CLASS_NAME, 'input-cvc').send_keys(settings['holder']['cvc'])
+    context.driver.wait_until(By.CLASS_NAME, 'input-cvc').send_keys(settings['holder']['cvc'][type_credit_card])
     context.driver.wait_until(By.CLASS_NAME, 'input-holder').send_keys(settings['holder']['name'])
     a = context.driver.wait_until(By.XPATH, "/html/body/div[5]/form/div[4]/button")
     a.click()
@@ -542,6 +542,15 @@ def step_impl(context):
     context.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
     context.driver.wait_until(By.XPATH,'//input[@class]').click()
     context.driver.wait_until(By.XPATH,'//input[@class]').send_keys('1234')
+
+
+################3ds
+@step('Insert OTP')
+def step_impl(context):
+    sleep(10)
+    context.driver.wait_until(By.ID,'challengeDataEntry').send_keys('1234')
+    context.driver.wait_until(By.ID, 'confirm').click()
+
 
 ######################## DB OPERATION ###########################
 

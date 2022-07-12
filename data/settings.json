@@ -38,7 +38,14 @@
         "3ds": "5111114000023477",
         "3ds_wrong_cc": "5111114000023476",
         "expDate": "1230",
-        "cvc": "123",
+        "cvc": {
+          "onus": "123",
+          "not onus": "123",
+          "amex": "1234",
+          "not valid": "123",
+          "3ds": "123",
+          "3ds_wrong_cc": "123"
+        },
         "name": "Test Guy",
         "name_apostrophe": "Jane O'Connor",
         "wrong_name": "'Niccolò Macchiavelli'",
