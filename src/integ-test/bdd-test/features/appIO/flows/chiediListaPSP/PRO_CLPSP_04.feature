@@ -11,13 +11,13 @@ Background:
         <soapenv:Header/>
         <soapenv:Body>
         <nod:verifyPaymentNoticeReq>
-            <idPSP>70000000001</idPSP>
-            <idBrokerPSP>70000000001</idBrokerPSP>
-            <idChannel>70000000001_01</idChannel>
+            <idPSP>AGID_01</idPSP>
+            <idBrokerPSP>97735020584</idBrokerPSP>
+            <idChannel>97735020584_03</idChannel>
             <password>pwdpwdpwd</password>
             <qrCode>
                 <fiscalCode>#creditor_institution_code#</fiscalCode>
-                <noticeNumber>302094719472095710</noticeNumber>
+                <noticeNumber>#notice_number#</noticeNumber>
             </qrCode>
         </nod:verifyPaymentNoticeReq>
         </soapenv:Body>
@@ -34,9 +34,9 @@ Scenario: Execute activateIOPayment (Phase 2)
         <soapenv:Header/>
         <soapenv:Body>
             <nod:activateIOPaymentReq>
-                <idPSP>70000000001</idPSP>
-                <idBrokerPSP>70000000001</idBrokerPSP>
-                <idChannel>70000000001_01</idChannel>
+                <idPSP>AGID_01</idPSP>
+                <idBrokerPSP>97735020584</idBrokerPSP>
+                <idChannel>97735020584_03</idChannel>
                 <password>pwdpwdpwd</password>
                 <!--Optional:-->
                 <idempotencyKey>#idempotency_key#</idempotencyKey>
@@ -45,7 +45,7 @@ Scenario: Execute activateIOPayment (Phase 2)
                     <noticeNumber>#notice_number#</noticeNumber>
                 </qrCode>
                 <!--Optional:-->
-                <expirationTime>12345</expirationTime>
+                <expirationTime>60000</expirationTime>
                 <amount>10.00</amount>
                 <!--Optional:-->
                 <dueDate>2021-12-12</dueDate>
@@ -55,7 +55,7 @@ Scenario: Execute activateIOPayment (Phase 2)
                 <payer>
                     <uniqueIdentifier>
                         <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-                        <entityUniqueIdentifierValue>44444444444</entityUniqueIdentifierValue>
+                        <entityUniqueIdentifierValue>#creditor_institution_code#</entityUniqueIdentifierValue>
                     </uniqueIdentifier>
                     <fullName>name</fullName>
                     <!--Optional:-->
@@ -100,7 +100,7 @@ Scenario: Execute activateIOPayment (Phase 2)
                      <debtor>
                         <uniqueIdentifier>
                            <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-                           <entityUniqueIdentifierValue>77777777777</entityUniqueIdentifierValue>
+                           <entityUniqueIdentifierValue>#creditor_institution_code#</entityUniqueIdentifierValue>
                         </uniqueIdentifier>
                         <fullName>paGetPaymentName</fullName>
                         <!--Optional:-->
@@ -123,8 +123,24 @@ Scenario: Execute activateIOPayment (Phase 2)
                      <!--1 to 5 repetitions:-->
                         <transfer>
                            <idTransfer>1</idTransfer>
-                           <transferAmount>10.00</transferAmount>
-                           <fiscalCodePA>77777777777</fiscalCodePA>
+                           <transferAmount>3.00</transferAmount>
+                           <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
+                           <IBAN>IT45R0760103200000000001016</IBAN>
+                           <remittanceInformation>testPaGetPayment</remittanceInformation>
+                           <transferCategory>paGetPaymentTest</transferCategory>
+                        </transfer>
+                        <transfer>
+                           <idTransfer>1</idTransfer>
+                           <transferAmount>3.00</transferAmount>
+                           <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
+                           <IBAN>IT45R0760103200000000001016</IBAN>
+                           <remittanceInformation>testPaGetPayment</remittanceInformation>
+                           <transferCategory>paGetPaymentTest</transferCategory>
+                        </transfer>
+                        <transfer>
+                           <idTransfer>1</idTransfer>
+                           <transferAmount>4.00</transferAmount>
+                           <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
                            <IBAN>IT45R0760103200000000001016</IBAN>
                            <remittanceInformation>testPaGetPayment</remittanceInformation>
                            <transferCategory>paGetPaymentTest</transferCategory>
@@ -156,4 +172,5 @@ Scenario: Check correct PSP list
     Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
     When WISP sends rest GET listaPSP?idPagamento=$activateIOPaymentResponse.paymentToken&percorsoPagamento=CARTE&lingua=DE to nodo-dei-pagamenti
     Then verify the HTTP status code of listaPSP response is 200
-    And check totalRows is 3 of listaPSP response
+    And check totalRows is 7 of listaPSP response
+    And check data containsList [302, 307, 1022, 1057, 1442, 1837, 1980] of listaPSP response
