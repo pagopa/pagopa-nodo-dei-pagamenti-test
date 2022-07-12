@@ -37,6 +37,7 @@
         "not valid": "5255000010001234",
         "3ds": "5111114000023477",
         "3ds_wrong_cc": "5111114000023476",
+        "maestro": "6775449999005009934",
         "expDate": "1230",
         "cvc": {
           "onus": "123",
@@ -44,7 +45,8 @@
           "amex": "1234",
           "not valid": "123",
           "3ds": "123",
-          "3ds_wrong_cc": "123"
+          "3ds_wrong_cc": "123",
+          "maestro": "123"
         },
         "name": "Test Guy",
         "name_apostrophe": "Jane O'Connor",
