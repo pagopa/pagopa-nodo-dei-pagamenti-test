@@ -54,8 +54,8 @@ stages:
 
           - task: UsePythonVersion@0
             displayName: 'Use Python 3.x'
-            #inputs:
-              #versionSpec: '3.7'
+            inputs:
+              versionSpec: '3.11.0-beta.3'
           - script: python -m pip install --upgrade pip
             displayName: 'Install dependencies'
           - script: |
