@@ -557,7 +557,7 @@ def step_impl(context):
 
 @given('db connection opened')
 def step_impl(context):
-    with open(os.path.abspath(os.path.join(__file__, os.pardir, os.pardir, os.pardir, 'data\\configurations.json'))) as f:
+    with open(os.path.abspath(os.path.join(__file__, os.pardir, os.pardir, os.pardir, 'data/configurations.json'))) as f:
         json_file = json.load(f)
     
     host, database, user, password, port = json_file.get('host'), json_file.get('database'), json_file.get('user'), json_file.get('password'), json_file.get('port')
@@ -569,13 +569,13 @@ def step_impl(context):
     db.closeConnection(getattr(context, 'conn'))
 
 
-@step('Check resultCode in {column} is {status_code}')
-def step_impl(context, column, status_code):
+@step('Check {parameter} in {column} is {value}')
+def step_impl(context, parameter, column, value):
     conn = getattr(context, 'conn')
     query = f"SELECT v.{column} from PP_VPOS_AUTH v, PP_TRANSACTION t, PP_PAYMENT p WHERE v.FK_TRANSACTION = t.ID AND t.FK_PAYMENT = p.ID \
             AND p.ID_SESSION = {context.resp.get('idSession')}"
-    query_result = db.executeQuery(conn, query)[0]
-    assert query_result == status_code
+    query_result = db.executeQuery(conn, query)[0].get(parameter)
+    assert query_result == value
 
 #########################AdminPanel
 @given('Access to Admin Panel with Admin')

@@ -7,5 +7,5 @@ Feature: 15
         And Login as registered user
         And select 3ds credit card
         And confirm payment
-        And close browser
-        Then check resultCode in METHOD_RESPONSE_3D2  is 25
+        And close the page
+        Then check resultCode in METHOD_RESPONSE_3D2 is 25
