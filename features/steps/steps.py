@@ -548,7 +548,7 @@ def step_impl(context):
 ################3ds
 @step('Insert OTP')
 def step_impl(context):
-    sleep(10)
+    sleep(20)
     context.driver.wait_until(By.ID,'challengeDataEntry').send_keys('1234')
     context.driver.wait_until(By.ID, 'confirm').click()
 

@@ -1,12 +1,13 @@
 Feature:
-  Scenario: 6
+  Scenario: 20
     #Given db connection opened
     Given Payment generated with mock
     When Browse the payment response url
-    And Enter with the mail
+    And Login as registered user
+    And select add payment method
     And Select 3ds credit card
     And Confirm payment
     And Insert OTP
-    Then sleep 1000 s
+    And close the page
     #Then check resultCode in METHOD_RESPONSE_3D2 is 25
     #Then check resultCode in CHALLENGE_RESPONSE_3D2 is 26
