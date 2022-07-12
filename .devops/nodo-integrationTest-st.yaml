@@ -27,7 +27,7 @@ stages:
           - checkout: self
             clean: true
             persistCredentials: true
-          - script: | 
-              ls -la
-              pwd
-            displayName: "Get Gherkin Files"
+            path: $(Agent.BuildDirectory)/s
+          - publish: $(Agent.BuildDirectory)/s
+            displayName: "Publish Behave Test Suite"
+            artifact: TestSuite
