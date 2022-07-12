@@ -14,7 +14,7 @@ class Driver:
 
     def __init__(self,browser="chrome"):
 
-        service = Service(executable_path=os.path.abspath(os.path.join(__file__, os.pardir, os.pardir, 'chromedriver_win32\\chromedriver.exe')))
+        service = Service(executable_path=os.path.abspath(os.path.join(__file__, os.pardir, os.pardir, 'chromedriver_win32/chromedriver.exe')))
         match browser:
             case "chrome":
                 print('init driverrrr')
