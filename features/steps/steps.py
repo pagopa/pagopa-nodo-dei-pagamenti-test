@@ -8,6 +8,13 @@ from time import sleep
 import requests
 import db_operation as db
 
+
+@given('the {name} scenario executed successfully')
+def step_impl(context, name):
+    phase = ([phase for phase in context.feature.scenarios if name in phase.name] or [None])[0]
+    text_step = ''.join([step.keyword + " " + step.name + "\n\"\"\"\n" + (step.text or '') + "\n\"\"\"\n" for step in phase.steps])
+    context.execute_steps(text_step)
+
 @given('Payment generated with mock')
 def step_impl(context):
     resp=requests.patch(url=settings['mockPayment']['url'],
@@ -59,8 +66,6 @@ def step_impl(context):
     context.driver.wait_until(By.ID, "success_message")
     context.driver.find_element(By.XPATH,
                              '//*[@action="/wallet/logout"]//button').click()
-    
-
 
 @step('Close the page')
 def step_imp(context):
@@ -111,8 +116,6 @@ def step_impl(context,lang):
     context.driver.wait_until(By.XPATH, '/html/body[1]/div[5]/div[4]/div/div/a').click()
     a = context.driver.find_element(By.XPATH, '/html/body/div[2]/div/div/div[2]')
 
-
-
 @step('click on why costs')
 def step_impl(context):
     context.driver.wait_until(By.XPATH,'html/body/div[5]/div/div[6]/div[2]/h2/a').click()
@@ -123,16 +126,14 @@ def step_impl(context):
     assert context.driver.wait_until(By.XPATH, 'html/body/div[4]/div/div/div/button')
     assert context.driver.wait_until(By.XPATH, 'html/body/div[4]/div/div/div[3]/button')
 
-
-
-@step('Enter with wrong mail')
-def step_impl(context):
+@step('Enter with {type_email} mail')
+def step_impl(context, type_email):
     context.driver.wait_until(By.XPATH,
                            '//*[@action="enterEmail"]//button[contains(text(),"Entra con la tua email")][contains(@class, "azure")]') \
         .click()
     casella = context.driver.wait_until(By.CLASS_NAME, 'input-email')
-    casella.send_keys('aaaaaaaaa')
-
+    casella.send_keys(settings['holder'][type_email])
+    casella.submit()
 
 @then('Check wrong mail message')
 def step_impl(context):
@@ -144,15 +145,6 @@ def step_impl(context):
 def step_impl(context):
     mes = context.driver.wait_until(By.XPATH, "//*[@class='alert alert-warning alert-dismissable']")
     assert mes.text
-
-@step('Enter with {type_email} mail')
-def step_impl(context, type_email):
-    context.driver.wait_until(By.XPATH,
-                           '//*[@action="enterEmail"]//button[contains(text(),"Entra con la tua email")][contains(@class, "azure")]') \
-        .click()
-    casella = context.driver.wait_until(By.CLASS_NAME, 'input-email')
-    casella.send_keys(settings['holder'][type_email])
-    casella.submit()
 
 
 @then('Check privacy page landing')
@@ -588,16 +580,6 @@ def step_impl(context):
     context.driver.wait_until(By.XPATH, "//input[@placeholder='Password']").send_keys("admin")
     context.driver.wait_until(By.CLASS_NAME, "login").click()
 
-
-@step('search fiscal code of registered user')
-def step_impl(context):
-    context.driver.wait_until(By.XPATH,
-                              '/html/body/app-root/main/page-search/page-with-sidebar/div/div/div/div/div/section/div/app-search/div/div/div/div/input').send_keys(
-        "GMMMRA79L13H703E")
-    context.driver.wait_until(By.XPATH,
-                              '/html/body/app-root/main/page-search/page-with-sidebar/div/div/div/div/div/section/div/app-search/div/div/div/button').click()
-
-
 @step('click on Elimina Utente')
 def step_impl(context):
     context.driver.wait_until(By.XPATH,
@@ -650,15 +632,6 @@ def step_impl(context):
     a = context.driver.wait_until(By.XPATH,
                                   'html/body/app-root/main/app-customer/page-with-sidebar/div/div/div/div/div/div/div/div/div/div/div')
     assert a
-
-
-@step('search fiscal code of not registered user')
-def step_impl(context):
-    context.driver.wait_until(By.XPATH,
-                              '/html/body/app-root/main/page-search/page-with-sidebar/div/div/div/div/div/section/div/app-search/div/div/div/div/input').send_keys(
-        "GMMMRA79L13H703O")
-    context.driver.wait_until(By.XPATH,
-                              '/html/body/app-root/main/page-search/page-with-sidebar/div/div/div/div/div/section/div/app-search/div/div/div/button').click()
 
 
 @then('the user is not displayed')
@@ -733,25 +706,13 @@ def step_impl(context):
      assert current_date == transaction_date, f'{current_date} != {transaction_date}'
     
 
+
 @when('Search a user\'s Codice Fiscale')
 def step_impl(context):
-    context.driver.wait_until(By.XPATH, '/html/body/app-root/main/page-search/page-with-sidebar/div/div/div/div/div/section/div/app-search/div/div/div/div/input').send_keys('GMMMRA79L13H703E')
+    context.driver.wait_until(By.XPATH, '/html/body/app-root/main/page-search/page-with-sidebar/div/div/div/div/div/section/div/app-search/div/div/div/div/input').send_keys(settings['users']['registered']['username_equal_email']['CF'])
     context.driver.wait_until(By.XPATH, '/html/body/app-root/main/page-search/page-with-sidebar/div/div/div/div/div/section/div/app-search/div/div/div/button').click() 
-
-@then('The page is displayed')
-def step_impl(context):
-    a= context.driver.wait_until(By.XPATH, '/html/body/app-root/main/app-customer/page-with-sidebar/div/app-header/header/button')
-    assert a
-
-
-@given('the {name} scenario executed successfully')
-def step_impl(context, name):
-    phase = ([phase for phase in context.feature.scenarios if name in phase.name] or [None])[0]
-    text_step = ''.join([step.keyword + " " + step.name + "\n\"\"\"\n" + (step.text or '') + "\n\"\"\"\n" for step in phase.steps])
-    context.execute_steps(text_step)
-
 
 @when('Search a {value} user\'s Codice Fiscale')
 def step_impl(context, value):
-    value = context.driver.wait_until(By.XPATH, '/html/body/app-root/main/page-search/page-with-sidebar/div/div/div/div/div/section/div/app-search/div/div/div/div/input').send_keys(settings['registered']['CF'])
+    fiscal_code = context.driver.wait_until(By.XPATH, '/html/body/app-root/main/page-search/page-with-sidebar/div/div/div/div/div/section/div/app-search/div/div/div/div/input').send_keys(settings['users']['registered'][value]['CF'])
     context.driver.wait_until(By.XPATH, '/html/body/app-root/main/page-search/page-with-sidebar/div/div/div/div/div/section/div/app-search/div/div/div/button').click() 
