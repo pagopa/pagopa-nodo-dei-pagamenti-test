@@ -27,4 +27,7 @@ stages:
           - checkout: self
             clean: true
             persistCredentials: true
-          - script: ls -la
+          - script: | 
+              ls -la
+              pwd
+            displayName: "Get Gherkin Files"
