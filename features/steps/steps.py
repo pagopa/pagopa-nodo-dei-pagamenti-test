@@ -1,5 +1,4 @@
 from datetime import datetime
-from tkinter import N
 from webbrowser import get
 from behave import *
 import json
@@ -15,7 +14,7 @@ def step_impl(context):
                     headers=settings['mockPayment']['headers'],
                     data=json.dumps(settings['mockPayment']['body']))
     #print(resp)
-    print(resp.json())
+    #print(resp.json())
     context.resp=resp.json()[0]
     print(context.resp)
 
@@ -549,12 +548,6 @@ def step_impl(context):
 ################3ds
 @step('Insert OTP')
 def step_impl(context):
-    sleep(20)
-    context.driver.wait_until(By.ID,'challengeDataEntry').send_keys('1234')
-    context.driver.wait_until(By.ID, 'confirm').click()
-
-@step('Insert PIN')
-def step_impl(context):
     sleep(10)
     context.driver.wait_until(By.ID,'challengeDataEntry').send_keys('1234')
     context.driver.wait_until(By.ID, 'confirm').click()
@@ -576,16 +569,13 @@ def step_impl(context):
     db.closeConnection(getattr(context, 'conn'))
 
 
-@step('check {parameter} in {column} column is {value}')
+@step('Check {parameter} in {column} is {value}')
 def step_impl(context, parameter, column, value):
     conn = getattr(context, 'conn')
     query = f"SELECT v.{column} from PP_VPOS_AUTH v, PP_TRANSACTION t, PP_PAYMENT p WHERE v.FK_TRANSACTION = t.ID AND t.FK_PAYMENT = p.ID \
-            AND p.ID_PAYMENT = {context.resp.get('idSession')}"
+            AND p.ID_SESSION = {context.resp.get('idSession')}"
     query_result = db.executeQuery(conn, query)[0].get(parameter)
-    if value == 'None':
-        assert query_result == None
-    else:
-        assert query_result == value
+    assert query_result == value
 
 #########################AdminPanel
 @given('Access to Admin Panel with Admin')
@@ -624,6 +614,28 @@ def step_impl(context):
     a = context.driver.find_element(By.XPATH,
                                     'html/body/app-root/main/app-transaction-list/page-with-sidebar/div/div/div/div/div/div/div/h2')
     assert a
+
+@then('the user is displayed')
+def step_impl(context):
+    name = context.driver.wait_until(By.XPATH, '/html/body/app-root/main/app-customer/page-with-sidebar/div/div/div/div/div/div[3]/div[2]/div/div/div/p').text           
+    surname = context.driver.wait_until(By.XPATH, '/html/body/app-root/main/app-customer/page-with-sidebar/div/div/div/div/div/div[3]/div[2]/div[2]/div/div/p').text
+    assert name and surname
+
+@step('username is displayed')
+def step_impl(context):
+    assert context.driver.wait_until(By.XPATH, '/html/body/app-root/main/app-customer/page-with-sidebar/div/div/div/div/div/div[3]/div[2]/div[3]/div/div/p').text           
+
+
+
+@step('field Registered_Spid is displayed')
+def step_impl(context):
+    assert context.driver.wait_until(By.XPATH, '/html/body/app-root/main/app-customer/page-with-sidebar/div/div/div/div/div/div/div[2]/div[5]/div/div/p')           
+
+
+@step('user\'s stato is displayed')
+def step_impl(context):
+    assert context.driver.find_element(By.XPATH, 'html/body/app-root/main/app-customer/page-with-sidebar/div/div/div/div/div/div[3]/div[2]/div[5]/div/div/p').text
+
 
 
 @then('the list is displayed')
@@ -670,6 +682,23 @@ def step_impl(context):
     context.driver.wait_until(By.XPATH,
                               '/html/body/app-root/main/page-search/page-with-sidebar/div/div/div/div/div/section/div/app-search/div/div/div/button').click()
 
+@step('username is equal to mail')
+def step_impl(context):
+    username =  context.driver.wait_until(By.XPATH, '/html/body/app-root/main/app-customer/page-with-sidebar/div/div/div/div/div/div[3]/div[2]/div[3]/div/div/p').text
+    email = context.driver.wait_until(By.XPATH, '/html/body/app-root/main/app-customer/page-with-sidebar/div/div/div/div/div/div[3]/div[2]/div[2]/div/div/p').text          
+    print('username', username)
+    print('email', email)
+    assert username == email
+
+
+
+@step('username is not equal to mail')
+def step_impl(context):
+    username =  context.driver.wait_until(By.XPATH, '/html/body/app-root/main/app-customer/page-with-sidebar/div/div/div/div/div/div[3]/div[2]/div[3]/div/div/p').text
+    email = context.driver.wait_until(By.XPATH, '/html/body/app-root/main/app-customer/page-with-sidebar/div/div/div/div/div/div[3]/div[2]/div[2]/div/div/p').text          
+    print('username', username)
+    print('email', email)   
+    assert username != email
 
 @when('search payment')
 def step_impl(context):
@@ -706,9 +735,13 @@ def step_impl(context):
 
 @when('Search a user\'s Codice Fiscale')
 def step_impl(context):
-    context.driver.wait_until(By.XPATH, '/html/body/app-root/main/page-search/page-with-sidebar/div/div/div/div/div/section/div/app-search/div/div/div/div/input').send_keys('FABIOP00A00A000A')
+    context.driver.wait_until(By.XPATH, '/html/body/app-root/main/page-search/page-with-sidebar/div/div/div/div/div/section/div/app-search/div/div/div/div/input').send_keys('GMMMRA79L13H703E')
     context.driver.wait_until(By.XPATH, '/html/body/app-root/main/page-search/page-with-sidebar/div/div/div/div/div/section/div/app-search/div/div/div/button').click() 
 
+@then('The page is displayed')
+def step_impl(context):
+    a= context.driver.wait_until(By.XPATH, '/html/body/app-root/main/app-customer/page-with-sidebar/div/app-header/header/button')
+    assert a
 
 
 @given('the {name} scenario executed successfully')
@@ -720,5 +753,5 @@ def step_impl(context, name):
 
 @when('Search a {value} user\'s Codice Fiscale')
 def step_impl(context, value):
-    fiscal_code = context.driver.wait_until(By.XPATH, '/html/body/app-root/main/page-search/page-with-sidebar/div/div/div/div/div/section/div/app-search/div/div/div/div/input').send_keys(settings['fiscal_codes'][value])
+    value = context.driver.wait_until(By.XPATH, '/html/body/app-root/main/page-search/page-with-sidebar/div/div/div/div/div/section/div/app-search/div/div/div/div/input').send_keys(settings['registered']['CF'])
     context.driver.wait_until(By.XPATH, '/html/body/app-root/main/page-search/page-with-sidebar/div/div/div/div/div/section/div/app-search/div/div/div/button').click() 
