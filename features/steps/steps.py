@@ -14,8 +14,9 @@ def step_impl(context):
                     headers=settings['mockPayment']['headers'],
                     data=json.dumps(settings['mockPayment']['body']))
     #print(resp)
-    print(resp.json())
+    #print(resp.json())
     context.resp=resp.json()[0]
+    print(context.resp)
 
 @step('Browse the payment response url')
 def step_impl(context):
@@ -568,13 +569,13 @@ def step_impl(context):
     db.closeConnection(getattr(context, 'conn'))
 
 
-@step('Check resultCode in {column} is {status_response}')
-def step_impl(context, column, value):
+@step('Check resultCode in {column} is {status_code}')
+def step_impl(context, column, status_code):
     conn = getattr(context, 'conn')
-    query = f'SELECT v.{column} from PP_VPOS_AUTH v, PP_TRANSACTION t, PP_PAYMENT p WHERE v.FK_TRANSACTION = t.ID \
-            AND t.FK_PAYMENT = p.ID AND p.ID_SESSION =  '
-
-
+    query = f"SELECT v.{column} from PP_VPOS_AUTH v, PP_TRANSACTION t, PP_PAYMENT p WHERE v.FK_TRANSACTION = t.ID AND t.FK_PAYMENT = p.ID \
+            AND p.ID_SESSION = {context.resp.get('idSession')}"
+    query_result = db.executeQuery(conn, query)[0]
+    assert query_result == status_code
 
 #########################AdminPanel
 @given('Access to Admin Panel with Admin')
