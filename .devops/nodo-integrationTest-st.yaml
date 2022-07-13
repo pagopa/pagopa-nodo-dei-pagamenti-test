@@ -52,10 +52,12 @@ stages:
             artifact: TestSuite
             displayName: "Download Behave Test Suite"
 
-          - task: UsePythonVersion@0
-            displayName: 'Use Python 3.x'
-            inputs:
-              versionSpec: '3.11.0-beta.3'
+          #- task: UsePythonVersion@0
+            #displayName: 'Use Python 3.x'
+            #inputs:
+              #versionSpec: '3.11.0-beta.3'
+          - script: python --version
+            displayName: 'Get Python version'          
           - script: python -m pip install --upgrade pip
             displayName: 'Install dependencies'
           - script: |
