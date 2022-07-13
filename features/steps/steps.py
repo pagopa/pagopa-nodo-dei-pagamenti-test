@@ -726,6 +726,11 @@ def step_impl(context):
      assert current_date == transaction_date, f'{current_date} != {transaction_date}'
     
 
+@then('the mail is displayed')
+def step_impl(context):
+    a = context.driver.wait_until(By.XPATH, '/html/body/app-root/main/app-customer/page-with-sidebar/div/div/div/div/div/div[2]/table/tbody/tr[1]/td[8]/button/span')
+    a.click()
+    context.driver.wait_until(By.XPATH, '/html/body/app-root/main/app-customer/page-with-sidebar/div/div/div/div/div/div[3]/div[2]/div[2]/div[1]/div/p')
 
 @when('Search a user\'s Codice Fiscale')
 def step_impl(context):
