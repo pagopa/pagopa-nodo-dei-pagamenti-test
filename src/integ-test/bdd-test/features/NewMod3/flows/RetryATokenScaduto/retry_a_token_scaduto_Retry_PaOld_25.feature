@@ -222,12 +222,15 @@ Feature: process tests for generazioneRicevute
     When job mod3CancelV1 triggered after 5 seconds
     Then verify the HTTP status code of mod3CancelV1 response is 200
 
-
+  Scenario: Execute paaInviaRT
+    Given the Execute Poller Annulli scenario executed successfully
+    When job paInviaRt triggered after 0 seconds
+    Then verify the HTTP status code of paInviaRt response is 200
   #scenario trigger painviart
 
   # test execution
   Scenario: Execution test rety_PaOld_25
-    Given the Execute Poller Annulli scenario executed successfully
+    Given the Execute paaInviaRT scenario executed successfully
     Then execution query payment_status to get value on the table POSITION_PAYMENT, with the columns FK_PAYMENT_PLAN,RPT_ID,AMOUNT,CHANNEL_ID,PAYMENT_CHANNEL,PAYER_ID,PAYMENT_METHOD,FEE,INSERTED_TIMESTAMP,APPLICATION_DATE,TRANSFER_DATE under macro NewMod3 with db name nodo_online
     And execution query rpt_id to get value on the table RPT, with the columns ID,ID_MSG_RICH under macro NewMod3 with db name nodo_online
     And execution query position_receipt to get value on the table POSITION_PAYMENT_PLAN, with the columns ID,METADATA under macro NewMod3 with db name nodo_online
@@ -264,8 +267,7 @@ Feature: process tests for generazioneRicevute
     #position_payment_status
     And checks the value PAYING,PAYING_RPT,PAID,NOTICE_GENERATED,NOTICE_STORED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
     #stati_rpt
-    #ESPLODE QUI
-    #And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO_MOD3,RPT_RISOLTA_OK,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query stati_rpt on db nodo_online under macro NewMod3
+    And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO_MOD3,RPT_RISOLTA_OK,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query stati_rpt on db nodo_online under macro NewMod3
     #rt
     And execution query rt_stati to get value on the table RT, with the columns ID_RICHIESTA,SOMMA_VERSAMENTI,ID under macro NewMod3 with db name nodo_online
     And checks the value NotNone of the record at column ID of the table RT retrived by the query rpt_id on db nodo_online under macro NewMod3

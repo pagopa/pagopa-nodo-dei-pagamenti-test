@@ -63,7 +63,7 @@ def step_impl(context, primitive):
         payload = payload.replace('#idempotency_key#', f"{idBrokerPSP}_{str(random.randint(1000000000, 9999999999))}")
 
     if '#notice_number#' in payload:
-        notice_number = f"31111{str(random.randint(1000000000000, 9999999999999))}"
+        notice_number = f"30211{str(random.randint(1000000000000, 9999999999999))}"
         payload = payload.replace('#notice_number#', notice_number)
         setattr(context, "iuv", notice_number[1:])
     
@@ -1301,8 +1301,7 @@ def step_impl(context):
         payMethod = rows[0][11]
         assert xml_rpt.getElementsByTagName("paymentMethod")[0].firstChild.data == payMethod
 
-    
-    """
+    """    
     if len(xml_rpt.getElementsByTagName("fee")) > 0:
         print(xml_rpt.getElementsByTagName("fee"))
     
