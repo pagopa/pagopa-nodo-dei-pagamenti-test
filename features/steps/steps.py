@@ -536,6 +536,15 @@ def step_impl(context):
     context.driver.wait_until(By.XPATH,'//input[@class]').click()
     context.driver.wait_until(By.XPATH,'//input[@class]').send_keys('1234')
 
+@step('cancel payment')
+def step_impl(context):
+    context.driver.wait_until(By.CLASS_NAME,'annulla-blue').click()
+
+@step('cancel payment from burger menu')
+def step_impl(context):
+    context.driver.wait_until(By.CLASS_NAME,'navbar-toggler-icon').click()
+    context.driver.wait_until(By.ID,'cancel_payment_button').click()
+
 
 ################3ds
 @step('Insert OTP')
