@@ -6,7 +6,6 @@ Feature: guest_payment_3DS2.0
     And Select 3ds credit card
     And Confirm payment
     Then close the page
-     
 
    Scenario: DB checks
     Given the 4 scenario executed successfully

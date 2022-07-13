@@ -157,9 +157,9 @@ def step_impl(context):
 @step('Select {type_credit_card} credit card')
 def step_impl(context, type_credit_card):
     context.driver.wait_until(By.CLASS_NAME, 'credit-card').click()
-    context.driver.wait_until(By.NAME, 'pan').send_keys(settings['holder'][type_credit_card])
-    context.driver.wait_until(By.NAME, 'expDate').send_keys(settings['holder']['expDate'])
-    context.driver.wait_until(By.CLASS_NAME, 'input-cvc').send_keys(settings['holder']['cvc'][type_credit_card])
+    context.driver.wait_until(By.NAME, 'pan').send_keys(settings['holder']['credit_cards'][type_credit_card]['pan'])
+    context.driver.wait_until(By.NAME, 'expDate').send_keys(settings['holder']['credit_cards'][type_credit_card]['expDate'])
+    context.driver.wait_until(By.CLASS_NAME, 'input-cvc').send_keys(settings['holder']['credit_cards'][type_credit_card]['cvc'])
     context.driver.wait_until(By.CLASS_NAME, 'input-holder').send_keys(settings['holder']['name'])
     a = context.driver.wait_until(By.XPATH, "/html/body/div[5]/form/div[4]/button")
     a.click()
