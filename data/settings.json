@@ -31,23 +31,6 @@
         }
     },
       "holder": {
-        "onus": "5255000010002856",
-        "not onus": "4003171102270111",
-        "amex": "375200000000003",
-        "not valid": "5255000010001234",
-        "3ds": "5111114000023477",
-        "3ds_wrong_cc": "5111114000023476",
-        "maestro": "6775449999005009934",
-        "expDate": "1230",
-        "cvc": {
-          "onus": "123",
-          "not onus": "123",
-          "amex": "1234",
-          "not valid": "123",
-          "3ds": "123",
-          "3ds_wrong_cc": "123",
-          "maestro": "123"
-        },
         "name": "Test Guy",
         "name_apostrophe": "Jane O'Connor",
         "wrong_name": "'Niccolò Macchiavelli'",
@@ -57,7 +40,149 @@
         "wrong_mail": "aaaaaaaaa",
         "jiffy_phone": "3470110102",
         "jiffy_phone_disabled": "3472203058",
-        "jiffy_phone_wrong": "3470110214"
+        "jiffy_phone_wrong": "3470110214",
+        "credit_cards": {
+          "onus":{
+            "pan":"5255000010002856",
+            "cvc": "123",
+            "expDate": "1230"
+          },
+          "not_onus":{
+            "pan":"4003171102270111",
+            "cvc": "123",
+            "expDate": "1230"
+          },
+          "amex":{
+            "pan":"375200000000003",
+            "cvc": "1234",
+            "expDate": "1230"
+          },
+          "not_valid":{
+            "pan":"5255000010001234",
+            "cvc": "123",
+            "expDate": "1230"
+          },
+          "3ds":{
+            "pan":"5111114000023477",
+            "cvc": "123",
+            "expDate": "1230"
+          },
+          "3ds_wrong_cc":{
+            "pan":"5111114000023476",
+            "cvc": "123",
+            "expDate": "1230"
+          },
+          "maestro":{
+            "pan":"6775449999005009934",
+            "cvc": "123",
+            "expDate": "1230"
+          },
+          "cartaTest1": {
+            "pan": "340000000000009",
+            "cvc": "123",
+            "expDate": "1230"
+          },
+          "cartaTest2": {
+            "pan": "5430799734927342",
+            "cvc": "123",
+            "expDate": "1230"
+          },
+          "cartaTest3": {
+            "pan": "5255000010002856",
+            "cvc": "123",
+            "expDate": "1230"
+          },
+          "cartaTest4": {
+            "pan": "4539970000000006",
+            "cvc": "123",
+            "expDate": "1230"
+          },
+          "cartaTest5": {
+            "pan": "5255999999999992",
+            "cvc": "123",
+            "expDate": "1230"
+          },
+          "cartaTest6": {
+            "pan": "5430793131242025",
+            "cvc": "123",
+            "expDate": "1230"
+          },
+          "cartaTest7": {
+            "pan": "5255000010002856",
+            "cvc": "123",
+            "expDate": "1230"
+          },
+          "cartaTest8": {
+            "pan": "4539970000000006",
+            "cvc": "123",
+            "expDate": "1230"
+          },
+          "cartaTest9": {
+            "pan": "5255999999999992",
+            "cvc": "123",
+            "expDate": "1230"
+          },
+          "cartaTest10": {
+            "pan": "5430793131242025",
+            "cvc": "123",
+            "expDate": "1230"
+          },     
+          "cartaTest11":{
+            "pan": "5255000010002856",
+            "cvc": "123",
+            "expDate": "1230"
+          },
+          "cartaTest12":{       
+            "pan": "4539970000000006",
+            "cvc": "123",
+            "expDate": "1230"
+          },
+          "cartaTest13":{
+            "pan": "5255999999999992",      
+            "cvc": "123",
+            "expDate": "1230"
+          },
+          "cartaTest14":{
+            "pan": "5430793131242025",
+            "cvc": "123",
+            "expDate": "1230"
+          },
+          "cartaTest15": {
+            "pan": "",
+            "cvc": "123",
+            "expDate": "1230"
+          },
+          "cartaTest16": {
+            "pan": "5255000010002856",
+            "cvc": "123",
+            "expDate": "1230"
+          },
+          "cartaTest17": {
+            "pan": "4539970000000006",
+            "cvc": "123",
+            "expDate": "1230"
+          },
+          "cartaTest18": {
+            "pan": "5255999999999992",
+            "cvc": "123",
+            "expDate": "1230"
+          },
+          "cartaTest19": {
+            "pan": "5430793131242025",
+            "cvc": "123",
+            "expDate": "1230"
+          },
+          "cartaTest20": {
+            "pan": "340000000000009",
+            "cvc": "123",
+            "expDate": "1230"
+          },
+          "cartaTest20_cvc4": {
+            "pan": "340000000000009",
+            "cvc": "1234",
+            "expDate": "1230"
+          }
+        }
       },
       "browser": {
         "type": "chrome",
