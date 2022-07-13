@@ -11,13 +11,13 @@ Background:
         <soapenv:Header/>
         <soapenv:Body>
         <nod:verifyPaymentNoticeReq>
-            <idPSP>70000000001</idPSP>
-            <idBrokerPSP>70000000001</idBrokerPSP>
-            <idChannel>70000000001_01</idChannel>
+            <idPSP>AGID_01</idPSP>
+            <idBrokerPSP>97735020584</idBrokerPSP>
+            <idChannel>97735020584_03</idChannel>
             <password>pwdpwdpwd</password>
             <qrCode>
                 <fiscalCode>#creditor_institution_code#</fiscalCode>
-                <noticeNumber>302094719472095710</noticeNumber>
+                <noticeNumber>#notice_number#</noticeNumber>
             </qrCode>
         </nod:verifyPaymentNoticeReq>
         </soapenv:Body>
@@ -34,9 +34,9 @@ Scenario: Execute activateIOPayment (Phase 2)
         <soapenv:Header/>
         <soapenv:Body>
             <nod:activateIOPaymentReq>
-                <idPSP>70000000001</idPSP>
-                <idBrokerPSP>70000000001</idBrokerPSP>
-                <idChannel>70000000001_01</idChannel>
+                <idPSP>AGID_01</idPSP>
+                <idBrokerPSP>97735020584</idBrokerPSP>
+                <idChannel>97735020584_03</idChannel>
                 <password>pwdpwdpwd</password>
                 <!--Optional:-->
                 <idempotencyKey>#idempotency_key#</idempotencyKey>
@@ -45,7 +45,7 @@ Scenario: Execute activateIOPayment (Phase 2)
                     <noticeNumber>#notice_number#</noticeNumber>
                 </qrCode>
                 <!--Optional:-->
-                <expirationTime>12345</expirationTime>
+                <expirationTime>4000</expirationTime>
                 <amount>10.00</amount>
                 <!--Optional:-->
                 <dueDate>2021-12-12</dueDate>
@@ -55,7 +55,7 @@ Scenario: Execute activateIOPayment (Phase 2)
                 <payer>
                     <uniqueIdentifier>
                         <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-                        <entityUniqueIdentifierValue>44444444444</entityUniqueIdentifierValue>
+                        <entityUniqueIdentifierValue>#creditor_institution_code#</entityUniqueIdentifierValue>
                     </uniqueIdentifier>
                     <fullName>name</fullName>
                     <!--Optional:-->
@@ -69,7 +69,7 @@ Scenario: Execute activateIOPayment (Phase 2)
                     <!--Optional:-->
                     <stateProvinceRegion>state</stateProvinceRegion>
                     <!--Optional:-->
-                    <country>IT</country>
+                    <country>DE</country>
                     <!--Optional:-->
                     <e-mail>test.prova@gmail.com</e-mail>
                 </payer>
@@ -100,7 +100,7 @@ Scenario: Execute activateIOPayment (Phase 2)
                      <debtor>
                         <uniqueIdentifier>
                            <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-                           <entityUniqueIdentifierValue>77777777777</entityUniqueIdentifierValue>
+                           <entityUniqueIdentifierValue>#creditor_institution_code#</entityUniqueIdentifierValue>
                         </uniqueIdentifier>
                         <fullName>paGetPaymentName</fullName>
                         <!--Optional:-->
@@ -125,23 +125,23 @@ Scenario: Execute activateIOPayment (Phase 2)
                            <idTransfer>1</idTransfer>
                            <transferAmount>3.00</transferAmount>
                            <fiscalCodePA>77777777777</fiscalCodePA>
-                           <IBAN>IT45R0760103200000000001016</IBAN>
+                           <IBAN>IT96R0123454321000000012345</IBAN>
                            <remittanceInformation>testPaGetPayment</remittanceInformation>
                            <transferCategory>paGetPaymentTest</transferCategory>
                         </transfer>
                         <transfer>
                            <idTransfer>2</idTransfer>
                            <transferAmount>3.00</transferAmount>
-                           <fiscalCodePA>77777777777</fiscalCodePA>
-                           <IBAN>IT45R0760103200000000001016</IBAN>
+                           <fiscalCodePA>90000000001</fiscalCodePA>
+                           <IBAN>IT96R0123454321000000012345</IBAN>
                            <remittanceInformation>testPaGetPayment</remittanceInformation>
                            <transferCategory>paGetPaymentTest</transferCategory>
                         </transfer>
                         <transfer>
                            <idTransfer>3</idTransfer>
                            <transferAmount>4.00</transferAmount>
-                           <fiscalCodePA>77777777777</fiscalCodePA>
-                           <IBAN>IT96R0123451234512345678904</IBAN>
+                           <fiscalCodePA>90000000002</fiscalCodePA>
+                           <IBAN>IT45R0760103200000000001016</IBAN>
                            <remittanceInformation>testPaGetPayment</remittanceInformation>
                            <transferCategory>paGetPaymentTest</transferCategory>
                         </transfer>
@@ -168,10 +168,64 @@ Scenario: Execute nodoChiediInformazioniPagamento (Phase 3)
     When WISP sends rest GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
     Then verify the HTTP status code of informazioniPagamento response is 200
 
-Scenario: Execute activateIOPayment1 (Phase 4)
+Scenario: trigger poller annulli (Phase 3.1)
     Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
-    And PSP waits expirationTime of activateIOPayment expires
+    When job mod3CancelV2 triggered after 7 seconds
+    Then verify the HTTP status code of mod3CancelV2 response is 200
+
+Scenario: Execute activateIOPayment1 (Phase 4)
+    Given the trigger poller annulli (Phase 3.1) scenario executed successfully
+    #And PSP waits expirationTime of activateIOPayment expires
     # potrei usare anche elem with value in action
+    And initial XML activateIOPayment
+    """
+    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd">
+        <soapenv:Header/>
+        <soapenv:Body>
+            <nod:activateIOPaymentReq>
+                <idPSP>AGID_01</idPSP>
+                <idBrokerPSP>97735020584</idBrokerPSP>
+                <idChannel>97735020584_03</idChannel>
+                <password>pwdpwdpwd</password>
+                <!--Optional:-->
+                <idempotencyKey>$activateIOPayment.idempotencyKey</idempotencyKey>
+                <qrCode>
+                    <fiscalCode>#creditor_institution_code#</fiscalCode>
+                    <noticeNumber>$activateIOPayment.noticeNumber</noticeNumber>
+                </qrCode>
+                <!--Optional:-->
+                <expirationTime>60000</expirationTime>
+                <amount>10.00</amount>
+                <!--Optional:-->
+                <dueDate>2021-12-12</dueDate>
+                <!--Optional:-->
+                <paymentNote>test</paymentNote>
+                <!--Optional:-->
+                <payer>
+                    <uniqueIdentifier>
+                        <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
+                        <entityUniqueIdentifierValue>#creditor_institution_code#</entityUniqueIdentifierValue>
+                    </uniqueIdentifier>
+                    <fullName>name</fullName>
+                    <!--Optional:-->
+                    <streetName>street</streetName>
+                    <!--Optional:-->
+                    <civicNumber>civic</civicNumber>
+                    <!--Optional:-->
+                    <postalCode>code</postalCode>
+                    <!--Optional:-->
+                    <city>city</city>
+                    <!--Optional:-->
+                    <stateProvinceRegion>state</stateProvinceRegion>
+                    <!--Optional:-->
+                    <country>DE</country>
+                    <!--Optional:-->
+                    <e-mail>test.prova@gmail.com</e-mail>
+                </payer>
+            </nod:activateIOPaymentReq>
+        </soapenv:Body>
+    </soapenv:Envelope>
+    """
     And initial XML paGetPayment
     """
     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
@@ -195,7 +249,7 @@ Scenario: Execute activateIOPayment1 (Phase 4)
                      <debtor>
                         <uniqueIdentifier>
                            <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-                           <entityUniqueIdentifierValue>77777777777</entityUniqueIdentifierValue>
+                           <entityUniqueIdentifierValue>#creditor_institution_code#</entityUniqueIdentifierValue>
                         </uniqueIdentifier>
                         <fullName>paGetPaymentName</fullName>
                         <!--Optional:-->
@@ -220,23 +274,23 @@ Scenario: Execute activateIOPayment1 (Phase 4)
                            <idTransfer>1</idTransfer>
                            <transferAmount>3.00</transferAmount>
                            <fiscalCodePA>77777777777</fiscalCodePA>
-                           <IBAN>IT45R0760103200000000001016</IBAN>
+                           <IBAN>IT96R0123454321000000012345</IBAN>
                            <remittanceInformation>testPaGetPayment</remittanceInformation>
                            <transferCategory>paGetPaymentTest</transferCategory>
                         </transfer>
                         <transfer>
                            <idTransfer>2</idTransfer>
                            <transferAmount>3.00</transferAmount>
-                           <fiscalCodePA>77777777777</fiscalCodePA>
-                           <IBAN>IT45R0760103200000000001016</IBAN>
+                           <fiscalCodePA>90000000001</fiscalCodePA>
+                           <IBAN>IT96R0123454321000000012345</IBAN>
                            <remittanceInformation>testPaGetPayment</remittanceInformation>
                            <transferCategory>paGetPaymentTest</transferCategory>
                         </transfer>
                         <transfer>
                            <idTransfer>3</idTransfer>
                            <transferAmount>4.00</transferAmount>
-                           <fiscalCodePA>77777777777</fiscalCodePA>
-                           <IBAN>IT45R0760103200000000001016</IBAN>
+                           <fiscalCodePA>90000000002</fiscalCodePA>
+                           <IBAN>IT96R0123454321000000012345</IBAN>
                            <remittanceInformation>testPaGetPayment</remittanceInformation>
                            <transferCategory>paGetPaymentTest</transferCategory>
                         </transfer>
@@ -254,6 +308,7 @@ Scenario: Execute activateIOPayment1 (Phase 4)
             </soapenv:Body>
          </soapenv:Envelope>
     """
+    And wait 5 seconds for expiration
     When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is OK of activateIOPayment response
 
