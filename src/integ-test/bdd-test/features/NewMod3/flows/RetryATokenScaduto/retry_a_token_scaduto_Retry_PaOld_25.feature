@@ -196,16 +196,16 @@ Feature: process tests for generazioneRicevute
       <payer>
       <uniqueIdentifier>
       <entityUniqueIdentifierType>F</entityUniqueIdentifierType>
-      <entityUniqueIdentifierValue>JHNDOE00A01F205N</entityUniqueIdentifierValue>
+      <entityUniqueIdentifierValue>RCCGLD09P09H501E</entityUniqueIdentifierValue>
       </uniqueIdentifier>
-      <fullName>John Doe</fullName>
-      <streetName>street</streetName>
-      <civicNumber>12</civicNumber>
-      <postalCode>89020</postalCode>
-      <city>city</city>
-      <stateProvinceRegion>MI</stateProvinceRegion>
+      <fullName>Gesualdo;Riccitelli</fullName>
+      <streetName>via del gesu</streetName>
+      <civicNumber>11</civicNumber>
+      <postalCode>00186</postalCode>
+      <city>Roma</city>
+      <stateProvinceRegion>RM</stateProvinceRegion>
       <country>IT</country>
-      <e-mail>john.doe@test.it</e-mail>
+      <e-mail>gesualdo.riccitelli@poste.it</e-mail>
       </payer>
       <applicationDate>2021-12-12</applicationDate>
       <transferDate>2021-12-11</transferDate>

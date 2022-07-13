@@ -85,6 +85,10 @@ def step_impl(context, primitive):
     if '$intermediarioPA' in payload:
         payload = payload.replace('$intermediarioPA', getattr(context, 'intermediarioPA'))
 
+    if '#identificativoFlusso#':
+        identificativoFlusso = datetime.datetime.now().strftime("%Y-%m-%d")+context.config.userdata.get("global_configuration").get('psp')+'-'+str(random.randint(0,10000))
+        payload = payload.replace('#identificativoFlusso#', identificativoFlusso)
+
     payload = utils.replace_global_variables(payload, context)
 
     setattr(context, primitive, payload)
@@ -1265,7 +1269,7 @@ def step_impl(context):
         officeName = rows1[0][2]
         assert xml_rpt.getElementsByTagName("officeName")[0].firstChild.data == officeName
     
-    """
+    
     if len(xml_rpt.getElementsByTagName("payer")) > 0:
         payIdentifierType = rows3[0][0]
         payIdentifierValue = rows3[0][1]
@@ -1279,10 +1283,9 @@ def step_impl(context):
         payEmail = rows3[0][9]
     
     
-    #print(xml_rpt.getElementsByTagName("entityUniqueIdentifierValue")[0].firstChild.data)
-    #print(payIdentifierValue)
+    
     assert xml_rpt.getElementsByTagName("entityUniqueIdentifierType")[0].firstChild.data == payIdentifierType
-    #assert xml_rpt.getElementsByTagName("entityUniqueIdentifierValue")[0].firstChild.data == payIdentifierValue
+    assert xml_rpt.getElementsByTagName("entityUniqueIdentifierValue")[0].firstChild.data == payIdentifierValue
     assert xml_rpt.getElementsByTagName("fullName")[0].firstChild.data == payName
     assert xml_rpt.getElementsByTagName("streetName")[0].firstChild.data == payStreet
     assert xml_rpt.getElementsByTagName("civicNumber")[0].firstChild.data == payCivic
@@ -1298,8 +1301,13 @@ def step_impl(context):
         payMethod = rows[0][11]
         assert xml_rpt.getElementsByTagName("paymentMethod")[0].firstChild.data == payMethod
 
+    
+    """
     if len(xml_rpt.getElementsByTagName("fee")) > 0:
+        print(xml_rpt.getElementsByTagName("fee"))
+    
         fee = rows[0][12]
+        print(fee)
         assert xml_rpt.getElementsByTagName("fee")[0].firstChild.data == fee
 
     #elif isinstance(elem, datetime.date): query_result[i] = elem.strftime('%Y-%m-%d')
