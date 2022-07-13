@@ -545,6 +545,11 @@ def step_impl(context):
     context.driver.wait_until(By.CLASS_NAME,'navbar-toggler-icon').click()
     context.driver.wait_until(By.ID,'cancel_payment_button').click()
 
+@step('Select enter with mail')
+def step_impl(context):
+    context.driver.wait_until(By.XPATH,
+                              '//*[@action="enterEmail"]//button[contains(@class, "azure")]') \
+        .click()
 
 ################3ds
 @step('Insert OTP')
