@@ -722,3 +722,9 @@ def step_impl(context):
 def step_impl(context, value):
     fiscal_code = context.driver.wait_until(By.XPATH, '/html/body/app-root/main/page-search/page-with-sidebar/div/div/div/div/div/section/div/app-search/div/div/div/div/input').send_keys(settings['users']['registered'][value]['CF'])
     context.driver.wait_until(By.XPATH, '/html/body/app-root/main/page-search/page-with-sidebar/div/div/div/div/div/section/div/app-search/div/div/div/button').click() 
+
+
+@then('{message} is dislpayed')
+def step_impl(context, message):
+    a = context.driver.wait_until(By.XPATH, '//div[@class="col"]/h3').text
+    assert message in a, f'{message}, {a}'
