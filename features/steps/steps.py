@@ -544,6 +544,12 @@ def step_impl(context):
     context.driver.wait_until(By.ID,'challengeDataEntry').send_keys('1234')
     context.driver.wait_until(By.ID, 'confirm').click()
 
+@step('Insert PIN')
+def step_impl(context):
+    sleep(10)
+    context.driver.wait_until(By.ID,'challengeDataEntry').send_keys('1234')
+    context.driver.wait_until(By.ID, 'confirm').click()
+
 
 ######################## DB OPERATION ###########################
 
