@@ -74,3 +74,35 @@ stages:
           - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
             displayName: "Publish Virtual Enviroment (${{ parameters.env }})"
             artifact: TestSuite
+            
+            
+  - stage: test_execute
+    displayName: "Execute Test Suite (${{ parameters.env }})"
+    dependsOn:
+      - python_env
+    variables:
+      - group: nodo-${{ parameters.env }}
+    condition: succeeded()
+    jobs:
+      - job: test_execute
+        displayName: "execute test suite (${{ parameters.env }})"
+        pool: $(deploy-pool-${{ parameters.env }})
+        steps:
+          - checkout: none
+          
+          - download: current
+            artifact: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+            displayName: "Download Test Suite $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip"
+            
+          
+          - task: ExtractFiles@1
+            inputs:
+              archiveFilePatterns: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+              cleanDestinationFolder: true
+              overwriteExistingFiles: false
+              
+          - script: |
+             pwd
+             ls -la
+             
+            displayName: 'After Extracting Archive'
