@@ -85,9 +85,21 @@ def step_impl(context, primitive):
     if '$intermediarioPA' in payload:
         payload = payload.replace('$intermediarioPA', getattr(context, 'intermediarioPA'))
 
-    if '#identificativoFlusso#':
-        identificativoFlusso = datetime.datetime.now().strftime("%Y-%m-%d")+context.config.userdata.get("global_configuration").get('psp')+'-'+str(random.randint(0,10000))
-        payload = payload.replace('#identificativoFlusso#', identificativoFlusso)
+    if '$identificativoFlusso' in payload:
+        payload = payload.replace('$identificativoFlusso', getattr(context, 'identificativoFlusso'))
+
+    if '$date' in payload:
+        payload = payload.replace('$date', getattr(context, 'date'))
+
+    if '$datetime' in payload:
+        payload = payload.replace('$datetime', getattr(context, 'datetime'))
+
+    if '$rendAttachment' in payload:
+        rendAttachment = getattr(context, 'rendAttachment')
+        rendAttachment_b = bytes(rendAttachment, 'ascii')
+        rendAttachment_uni = b64.b64encode(rendAttachment_b)
+        rendAttachment_uni = f"{rendAttachment_uni}".split("'")[1]
+        payload = payload.replace('$rendAttachment', rendAttachment_uni)
 
     payload = utils.replace_global_variables(payload, context)
 
@@ -108,6 +120,33 @@ def step_impl(context):
 
     setattr(context,'rptAttachment', payload)
 
+@given('REND generation')
+def step_impl(context):
+    payload = context.text or ""
+    payload = utils.replace_local_variables(payload, context)
+    payload = utils.replace_global_variables(payload, context)
+    date = datetime.date.today().strftime("%Y-%m-%d")
+    datetime = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
+    identificativoFlusso = date + context.config.userdata.get("global_configuration").get("psp") + "-" + str(random.randint(0, 10000))
+    iuv = "IUV" + str(random.randint(0, 10000)) + "-" + datetime.datetime.now().strftime("%Y-%m-%d-%H:%M:%S.%f")[:-3]
+    setattr(context,'date', date)
+    setattr(context,'datetime', datetime)
+    setattr(context,'identificativoFlusso', identificativoFlusso)
+    setattr(context,'iuv', iuv)
+
+    if '#date#' in payload:
+        payload = payload.replace('#date#', date)
+
+    if "#dateTime#" in payload:     
+        payload = payload.replace('#datetime#', datetime)
+
+    if '#identificativoFlusso#' in payload:
+        payload = payload.replace('#identificativoFlusso#', identificativoFlusso)
+
+    if '#iuv#' in payload:
+        payload = payload.replace('#iuv#', iuv)
+
+    setattr(context,'rendAttachment', payload)
 
 @given('{elem} with {value} in {action}')
 def step_impl(context, elem, value, action):
