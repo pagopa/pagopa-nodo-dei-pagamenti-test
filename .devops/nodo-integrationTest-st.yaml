@@ -30,3 +30,4 @@ stages:
           - script: |
               pwd
               ls -la
+              ls -la /agent/_work/_tool
