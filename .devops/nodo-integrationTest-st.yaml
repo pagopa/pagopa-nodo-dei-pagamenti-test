@@ -25,7 +25,7 @@ stages:
           - checkout: self
             clean: true
             persistCredentials: true
-            path: $(checkoutpath)
+            
             
           - task: UsePythonVersion@0
             displayName: 'Use Python 3.x'
@@ -34,7 +34,7 @@ stages:
             
           - script: |
               sudo apt install python3-venv
-              cd $(checkoutpath)/pagopa-nodo-dei-pagamenti-test
+              cd $(System.DefaultWorkingDirectory)/pagopa-nodo-dei-pagamenti-test
               python3 -m venv env
               source ./env/bin/activate
             displayName: 'Create Virtual Environment  (${{ parameters.env }})'
@@ -53,6 +53,6 @@ stages:
           - script: python3 -m pip install -r requirements.txt
             displayName: 'Install requirements (${{ parameters.env }})'
             
-          - publish: $(Agent.BuildDirectory)/s
+          - publish: $(Agent.DefaultWorkingDirectory)
             displayName: "Publish Behave Test Suite (${{ parameters.env }})"
             artifact: TestSuite
