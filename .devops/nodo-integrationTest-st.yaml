@@ -16,7 +16,7 @@ variables:
 
   nodopath: /home/vsts/work/1/s/pagopa-nodo-dei-pagamenti-test
   artifactName: TestSuite
-  downloadArtifactRelativePath: /agent/_work/1/s
+  downloadArtifactRelativePath: /agent/_work/1/
   
 
 stages:
