@@ -99,7 +99,7 @@ stages:
           - script: |
              pwd
 
-             ls -la $(downloadArtifactRelativePath)/$(artifactName)
+             ls -la $(downloadArtifactRelativePath)
              
             displayName: 'Check After Downloading Archive'
             
