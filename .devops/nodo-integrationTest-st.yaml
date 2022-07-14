@@ -18,6 +18,8 @@ parameters:
 stages:
   - stage: retrieve_testsuite
     displayName: "Fetch Test Suite (${{ parameters.env }})"
+    variables:
+      - group: nodo-${{ parameters.env }}   
     jobs:
       - job: execute
         displayName: "Execute Test Suite (${{ parameters.env }})"
