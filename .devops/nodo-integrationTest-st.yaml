@@ -48,11 +48,15 @@ stages:
               sudo unzip instantclient-basic-linux.x64-21.6.0.0.0dbru.zip
               sudo apt update
               sudo apt install libaio1
+              pwd
+              ls -la
             displayName: 'Install Oracle Instant Client (${{ parameters.env }})'
             
-          - script: python3 -m pip install -r requirements.txt
+          - script: |
+             cd ..
+             python3 -m pip install -r requirements.txt
             displayName: 'Install requirements (${{ parameters.env }})'
             
-          - publish: $(Agent.DefaultWorkingDirectory)
-            displayName: "Publish Behave Test Suite (${{ parameters.env }})"
-            artifact: TestSuite
+          #- publish: $(Agent.DefaultWorkingDirectory)
+            #displayName: "Publish Behave Test Suite (${{ parameters.env }})"
+            #artifact: TestSuite
