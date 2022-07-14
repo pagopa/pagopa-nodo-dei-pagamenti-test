@@ -41,13 +41,13 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - not us
         <soapenv:Header/>
         <soapenv:Body>
             <nod:sendPaymentOutcomeReq>
-                <idPSP>70000000001</idPSP>
+                <idPSP></idPSP>
                 <idBrokerPSP>70000000001</idBrokerPSP>
                 <idChannel>70000000001_01</idChannel>
                 <password>pwdpwdpwd</password>
                 <idempotencyKey>#idempotency_key#</idempotencyKey>
                 <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
-                <outcome>OK</outcome>
+                <outcome>KO</outcome>
                 <details>
                     <paymentMethod>creditCard</paymentMethod>
                     <paymentChannel>app</paymentChannel>
@@ -74,9 +74,9 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - not us
       </soapenv:Envelope>
     """
     When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-    Then check outcome is OK of sendPaymentOutcome response
+    Then check outcome is KO of sendPaymentOutcome response
  
   Scenario: DB check
     Given the Execute sendPaymentOutcome request scenario executed successfully
-    Then check datetime plus number of date 2 of the record at column VALID_TO of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod3
-    And checks the value sendPaymentOutcome of the record at column PRIMITIVA of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod3
+    Then verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod3
+    

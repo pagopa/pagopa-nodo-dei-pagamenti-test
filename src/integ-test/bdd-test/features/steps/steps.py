@@ -91,14 +91,15 @@ def step_impl(context, primitive):
     if '$date' in payload:
         payload = payload.replace('$date', getattr(context, 'date'))
 
-    if '$datetime' in payload:
-        payload = payload.replace('$datetime', getattr(context, 'datetime'))
+    if '$timedate' in payload:
+        payload = payload.replace('$timedate', getattr(context, 'timedate'))
 
     if '$rendAttachment' in payload:
         rendAttachment = getattr(context, 'rendAttachment')
         rendAttachment_b = bytes(rendAttachment, 'ascii')
         rendAttachment_uni = b64.b64encode(rendAttachment_b)
         rendAttachment_uni = f"{rendAttachment_uni}".split("'")[1]
+        print("rendAttachment_uni: ",rendAttachment_uni)
         payload = payload.replace('$rendAttachment', rendAttachment_uni)
 
     payload = utils.replace_global_variables(payload, context)
@@ -126,19 +127,19 @@ def step_impl(context):
     payload = utils.replace_local_variables(payload, context)
     payload = utils.replace_global_variables(payload, context)
     date = datetime.date.today().strftime("%Y-%m-%d")
-    datetime = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
+    timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
     identificativoFlusso = date + context.config.userdata.get("global_configuration").get("psp") + "-" + str(random.randint(0, 10000))
     iuv = "IUV" + str(random.randint(0, 10000)) + "-" + datetime.datetime.now().strftime("%Y-%m-%d-%H:%M:%S.%f")[:-3]
     setattr(context,'date', date)
-    setattr(context,'datetime', datetime)
+    setattr(context,'timedate', timedate)
     setattr(context,'identificativoFlusso', identificativoFlusso)
     setattr(context,'iuv', iuv)
 
     if '#date#' in payload:
         payload = payload.replace('#date#', date)
 
-    if "#dateTime#" in payload:     
-        payload = payload.replace('#datetime#', datetime)
+    if "#timedate#" in payload:     
+        payload = payload.replace('#timedate#', timedate)
 
     if '#identificativoFlusso#' in payload:
         payload = payload.replace('#identificativoFlusso#', identificativoFlusso)
@@ -809,6 +810,31 @@ def step_impl(context, value, column, query_name, table_name, db_name, name_macr
         print("value: ", split_value)
         for elem in split_value:
             assert elem in query_result, f"check expected element: {value}, obtained: {query_result}"
+
+    db.closeConnection(conn)
+
+
+@step(u"check datetime plus number of date {number:d} of the record at column {column} of the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
+def step_impl(context, column, query_name, table_name, db_name, name_macro, number):
+    db_config = context.config.userdata.get("db_configuration")
+    db_selected = db_config.get(db_name)
+
+    conn = db.getConnection(db_selected.get('host'), db_selected.get('database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+
+    selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
+   
+    exec_query = db.executeQuery(conn, selected_query)
+    
+    query_result = [t[0] for t in exec_query]
+    print('query_result: ', query_result)
+    
+    
+    value = (datetime.datetime.today()+datetime.timedelta(days= number)).strftime('%Y-%m-%d') 
+
+    elem = query_result[0].strftime('%Y-%m-%d')
+    
+    print(f"check expected element: {value}, obtained: {elem}")
+    assert elem == value
 
     db.closeConnection(conn)
 

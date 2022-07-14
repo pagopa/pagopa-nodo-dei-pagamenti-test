@@ -5,6 +5,7 @@
     },
     "NewMod3" : { 
         "payment_status":"SELECT columns FROM table_name WHERE NOTICE_ID ='$activatePaymentNotice.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode'",
+        "payment_status_pay":"SELECT columns FROM table_name WHERE NOTICE_ID ='$activatePaymentNotice.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode' AND PAYMENT_TOKEN ='$activatePaymentNoticeResponse.paymentToken'",
         "payment_status_orderby":"SELECT columns FROM table_name WHERE NOTICE_ID ='$activatePaymentNotice.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode' ORDER BY ID ASC",
         "position_payment": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN ='$activatePaymentNoticeResponse.paymentToken'",
         "payment_status_retry_05_token1":"SELECT s.columns FROM table_name s WHERE s.NOTICE_ID ='$activatePaymentNotice1.noticeNumber' AND s.PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode'",
@@ -37,8 +38,7 @@
         "rpt_id":"SELECT columns FROM table_name  where IUV = '$iuv' and IDENT_DOMINIO= '$activatePaymentNotice.fiscalCode'",
         "payment_token_v2":"SELECT columns FROM table_name where PAYMENT_TOKEN = '$activatePaymentNoticeResponse.paymentToken-v2'",
         "rt_stati":"SELECT columns FROM table_name  where IUV = '$iuv' and IDENT_DOMINIO= '$activatePaymentNotice.fiscalCode'",
-        "retrieve_xml_rt": "SELECT XML_CONTENT FROM RT_XML WHERE CCP ='${paymentToken}' and IDENT_DOMINIO='${pa}' and IUV='${iuvNumber}'",
-        "retrieve_xml_rpt": "SELECT XML_CONTENT FROM RPT_XML WHERE CCP ='${paymentToken}' and IDENT_DOMINIO='${pa}' and IUV='${iuvNumber}'"
+        "idempotency_cache":"SELECT columns FROM table_name WHERE IDEMPOTENCY_KEY = '$sendPaymentOutcome.idempotencyKey'"
     },
     "AppIO":{
         "payment_status":"SELECT s.columns FROM table_name s WHERE s.NOTICE_ID ='$activateIOPayment.noticeNumber' AND s.PA_FISCAL_CODE = '$activateIOPayment.fiscalCode'",
