@@ -16,6 +16,7 @@ variables:
 
   nodopath: /home/vsts/work/1/s/pagopa-nodo-dei-pagamenti-test
   artifactName: TestSuite
+  downloadArtifactRelativePath: /agent/_work/1/s/$(TestSuite)
   
 
 stages:
@@ -98,7 +99,7 @@ stages:
           
           - task: ExtractFiles@1
             inputs:
-              archiveFilePatterns: $(artifactName)/*.zip
+              archiveFilePatterns: $(downloadArtifactRelativePath)/*.zip
               cleanDestinationFolder: true
               overwriteExistingFiles: false
               
