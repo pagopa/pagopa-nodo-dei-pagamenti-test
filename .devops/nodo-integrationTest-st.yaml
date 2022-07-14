@@ -19,37 +19,11 @@ stages:
   - stage: retrieve_testsuite
     displayName: "Fetch Test Suite (${{ parameters.env }})"
     jobs:
-      - job: 
-        displayName: "Retrieve Test Suite"
-        steps:
-          - checkout: self
-            clean: true
-            persistCredentials: true
-
-          - publish: $(Agent.BuildDirectory)/s
-            displayName: "Publish Behave Test Suite (${{ parameters.env }})"
-            artifact: TestSuite
-            
-  - stage: execute
-    displayName: "Execute NRT and Publish results (${{ parameters.env }})"
-    dependsOn:
-      - retrieve_testsuite
-    variables:
-      - group: nodo-${{ parameters.env }}    
-    condition: succeeded()
-    jobs:
       - job: execute
         displayName: "Execute Test Suite (${{ parameters.env }})"
         pool: $(deploy-pool-${{ parameters.env }})
         steps:
-          - checkout: none
 
-          - download: current
-            artifact: TestSuite
-            displayName: "Download Behave Test Suite (${{ parameters.env }})"
-
-          #- task: UsePythonVersion@0
-            #displayName: 'Use Python 3.x'
-            #inputs:
-              #versionSpec: '3.11.0-beta.3'
-          - script: ls -la _work/_tool
+          - script: |
+              pwd
+              ls -la
