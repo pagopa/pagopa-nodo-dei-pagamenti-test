@@ -119,3 +119,4 @@ __pycache__
 /instantclient_*
 /.idea
 environment.py
+reports.html
