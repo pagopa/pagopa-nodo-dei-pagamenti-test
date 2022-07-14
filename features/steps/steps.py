@@ -748,3 +748,10 @@ def step_impl(context, value):
 def step_impl(context, message):
     a = context.driver.wait_until(By.XPATH, '//div[@class="col"]/h3').text
     assert message in a, f'{message}, {a}'
+
+
+##############Annulli
+
+@step('exit with annulla')
+def step_impl(context):
+    context.driver.wait_until(By.XPATH,'//span[@class="annulla-blue"]').click()
