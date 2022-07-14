@@ -109,17 +109,17 @@ function Collapsible_expandAllFailed()
   </head>
   <body>
     <div class="behave">
-      <div id="behave-header" class="failed">
+      <div id="behave-header">
         <div id="label">
           <h1>Behave Test Report</h1>
         </div>
         <div id="summary">
           <p id="totals">
-            <p id="feature_totals">Features: failed: 1</p>
-            <p id="scenario_totals">Scenarios: passed: 6, failed: 2</p>
-            <p id="step_totals">Steps: passed: 28, failed: 2, skipped: 59, undefined: 1</p>
+            <p id="feature_totals">Features: passed: 1</p>
+            <p id="scenario_totals">Scenarios: passed: 3</p>
+            <p id="step_totals">Steps: passed: 7</p>
           </p>
-          <p id="duration">Finished in 78.6 seconds</p>
+          <p id="duration">Finished in 18.8 seconds</p>
           <div id="expand-collapse">
             <a id="expander" href="#" onclick="Collapsible_expandAll('scenario_steps')">Expand All</a>
             <span> | </span>
@@ -131,7 +131,7 @@ function Collapsible_expandAllFailed()
       </div>
       <div class="feature">
         <h2>
-          <span class="val">Feature: process tests for generazioneRicevute</span>
+          <span class="val">Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - not use idempotency [IDMP_SPO_22]</span>
         </h2>
         <span/>
       </div>
@@ -143,9 +143,9 @@ function Collapsible_expandAllFailed()
         <span/>
       </div>
       <div class="scenario">
-        <span class="scenario_file">src/integ-test/bdd-test/features/NewMod3/flows/RetryATokenScaduto/retry_a_token_scaduto_Retry_PaOld_24.feature:26</span>
+        <span class="scenario_file">src/integ-test/bdd-test/features/NewMod3/flows/sendPaymentOutcome/sendPaymentOutcome_IDMP_SPO_01.feature:31</span>
         <h3 onclick="Collapsible_toggle('scenario_0')">
-          <span class="val">Scenario: Execute verifyPaymentNotice request</span>
+          <span class="val">Scenario: Execute activatePaymentNotice request</span>
         </h3>
         <ol class="scenario_steps" id="scenario_0">
           <li class="step passed">
@@ -187,10 +187,10 @@ function Collapsible_expandAllFailed()
               <span class="keyword">And </span>
               <span class="step val">
                 <span>initial XML </span>
-                <b>verifyPaymentNotice</b>
+                <b>activatePaymentNotice</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.016s)</small>
+              <small class="step_duration">(0.012s)</small>
             </div>
             <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:54</span>
@@ -198,19 +198,24 @@ function Collapsible_expandAllFailed()
             <span class="embed"/>
             <div class="message">
               <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd&quot;&gt;
-&lt;soapenv:Header/&gt;
-&lt;soapenv:Body&gt;
-&lt;nod:verifyPaymentNoticeReq&gt;
-&lt;idPSP&gt;70000000001&lt;/idPSP&gt;
-&lt;idBrokerPSP&gt;70000000001&lt;/idBrokerPSP&gt;
-&lt;idChannel&gt;70000000001_01&lt;/idChannel&gt;
-&lt;password&gt;pwdpwdpwd&lt;/password&gt;
-&lt;qrCode&gt;
-&lt;fiscalCode&gt;#creditor_institution_code_old#&lt;/fiscalCode&gt;
-&lt;noticeNumber&gt;#notice_number_old#&lt;/noticeNumber&gt;
-&lt;/qrCode&gt;
-&lt;/nod:verifyPaymentNoticeReq&gt;
-&lt;/soapenv:Body&gt;
+   &lt;soapenv:Header/&gt;
+   &lt;soapenv:Body&gt;
+      &lt;nod:activatePaymentNoticeReq&gt;
+         &lt;idPSP&gt;70000000001&lt;/idPSP&gt;
+         &lt;idBrokerPSP&gt;70000000001&lt;/idBrokerPSP&gt;
+         &lt;idChannel&gt;70000000001_01&lt;/idChannel&gt;
+         &lt;password&gt;pwdpwdpwd&lt;/password&gt;
+         &lt;idempotencyKey&gt;#idempotency_key#&lt;/idempotencyKey&gt;
+         &lt;qrCode&gt;
+            &lt;fiscalCode&gt;#creditor_institution_code#&lt;/fiscalCode&gt;
+            &lt;noticeNumber&gt;#notice_number#&lt;/noticeNumber&gt;
+         &lt;/qrCode&gt;
+         &lt;expirationTime&gt;4000&lt;/expirationTime&gt;
+         &lt;amount&gt;10.00&lt;/amount&gt;
+         &lt;dueDate&gt;2021-12-31&lt;/dueDate&gt;
+         &lt;paymentNote&gt;causale&lt;/paymentNote&gt;
+      &lt;/nod:activatePaymentNoticeReq&gt;
+   &lt;/soapenv:Body&gt;
 &lt;/soapenv:Envelope&gt;
 </pre>
             </div>
@@ -219,14 +224,16 @@ function Collapsible_expandAllFailed()
             <div class="step_name">
               <span class="keyword">And </span>
               <span class="step val">
-                <span>EC </span>
-                <b>old</b>
-                <span> version</span>
+                <span>nodo-dei-pagamenti has config parameter </span>
+                <b>useIdempotency</b>
+                <span> set to </span>
+                <b>false</b>
+                <span/>
               </span>
-              <small class="step_duration">(0.001s)</small>
+              <small class="step_duration">(5.293s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:48</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:582</span>
             </div>
             <span class="embed"/>
           </li>
@@ -237,12 +244,12 @@ function Collapsible_expandAllFailed()
                 <span/>
                 <b>PSP</b>
                 <span> sends SOAP </span>
-                <b>verifyPaymentNotice</b>
+                <b>activatePaymentNotice</b>
                 <span> to </span>
                 <b>nodo-dei-pagamenti</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.884s)</small>
+              <small class="step_duration">(1.179s)</small>
             </div>
             <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:130</span>
@@ -258,7 +265,7 @@ function Collapsible_expandAllFailed()
                 <span> is </span>
                 <b>OK</b>
                 <span> of </span>
-                <b>verifyPaymentNotice</b>
+                <b>activatePaymentNotice</b>
                 <span> response</span>
               </span>
               <small class="step_duration">(0.002s)</small>
@@ -272,9 +279,9 @@ function Collapsible_expandAllFailed()
         <span/>
       </div>
       <div class="scenario">
-        <span class="scenario_file">src/integ-test/bdd-test/features/NewMod3/flows/RetryATokenScaduto/retry_a_token_scaduto_Retry_PaOld_24.feature:31</span>
+        <span class="scenario_file">src/integ-test/bdd-test/features/NewMod3/flows/sendPaymentOutcome/sendPaymentOutcome_IDMP_SPO_01.feature:36</span>
         <h3 onclick="Collapsible_toggle('scenario_1')">
-          <span class="val">Scenario: Execute activatePaymentNotice request</span>
+          <span class="val">Scenario: Execute sendPaymentOutcome request</span>
         </h3>
         <ol class="scenario_steps" id="scenario_1">
           <li class="step passed">
@@ -316,10 +323,10 @@ function Collapsible_expandAllFailed()
               <span class="keyword">And </span>
               <span class="step val">
                 <span>initial XML </span>
-                <b>verifyPaymentNotice</b>
+                <b>activatePaymentNotice</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.004s)</small>
+              <small class="step_duration">(0.002s)</small>
             </div>
             <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:54</span>
@@ -327,19 +334,24 @@ function Collapsible_expandAllFailed()
             <span class="embed"/>
             <div class="message">
               <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd&quot;&gt;
-&lt;soapenv:Header/&gt;
-&lt;soapenv:Body&gt;
-&lt;nod:verifyPaymentNoticeReq&gt;
-&lt;idPSP&gt;70000000001&lt;/idPSP&gt;
-&lt;idBrokerPSP&gt;70000000001&lt;/idBrokerPSP&gt;
-&lt;idChannel&gt;70000000001_01&lt;/idChannel&gt;
-&lt;password&gt;pwdpwdpwd&lt;/password&gt;
-&lt;qrCode&gt;
-&lt;fiscalCode&gt;#creditor_institution_code_old#&lt;/fiscalCode&gt;
-&lt;noticeNumber&gt;#notice_number_old#&lt;/noticeNumber&gt;
-&lt;/qrCode&gt;
-&lt;/nod:verifyPaymentNoticeReq&gt;
-&lt;/soapenv:Body&gt;
+   &lt;soapenv:Header/&gt;
+   &lt;soapenv:Body&gt;
+      &lt;nod:activatePaymentNoticeReq&gt;
+         &lt;idPSP&gt;70000000001&lt;/idPSP&gt;
+         &lt;idBrokerPSP&gt;70000000001&lt;/idBrokerPSP&gt;
+         &lt;idChannel&gt;70000000001_01&lt;/idChannel&gt;
+         &lt;password&gt;pwdpwdpwd&lt;/password&gt;
+         &lt;idempotencyKey&gt;#idempotency_key#&lt;/idempotencyKey&gt;
+         &lt;qrCode&gt;
+            &lt;fiscalCode&gt;#creditor_institution_code#&lt;/fiscalCode&gt;
+            &lt;noticeNumber&gt;#notice_number#&lt;/noticeNumber&gt;
+         &lt;/qrCode&gt;
+         &lt;expirationTime&gt;4000&lt;/expirationTime&gt;
+         &lt;amount&gt;10.00&lt;/amount&gt;
+         &lt;dueDate&gt;2021-12-31&lt;/dueDate&gt;
+         &lt;paymentNote&gt;causale&lt;/paymentNote&gt;
+      &lt;/nod:activatePaymentNoticeReq&gt;
+   &lt;/soapenv:Body&gt;
 &lt;/soapenv:Envelope&gt;
 </pre>
             </div>
@@ -348,14 +360,16 @@ function Collapsible_expandAllFailed()
             <div class="step_name">
               <span class="keyword">And </span>
               <span class="step val">
-                <span>EC </span>
-                <b>old</b>
-                <span> version</span>
+                <span>nodo-dei-pagamenti has config parameter </span>
+                <b>useIdempotency</b>
+                <span> set to </span>
+                <b>false</b>
+                <span/>
               </span>
-              <small class="step_duration">(0.001s)</small>
+              <small class="step_duration">(5.245s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:48</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:582</span>
             </div>
             <span class="embed"/>
           </li>
@@ -364,10 +378,10 @@ function Collapsible_expandAllFailed()
               <span class="keyword">Given </span>
               <span class="step val">
                 <span>the </span>
-                <b>Execute verifyPaymentNotice request</b>
+                <b>Execute activatePaymentNotice request</b>
                 <span> scenario executed successfully</span>
               </span>
-              <small class="step_duration">(1.329s)</small>
+              <small class="step_duration">(0.739s)</small>
             </div>
             <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:308</span>
@@ -379,35 +393,51 @@ function Collapsible_expandAllFailed()
               <span class="keyword">And </span>
               <span class="step val">
                 <span>initial XML </span>
-                <b>activatePaymentNotice</b>
+                <b>sendPaymentOutcome</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.009s)</small>
+              <small class="step_duration">(0.003s)</small>
             </div>
             <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:54</span>
             </div>
             <span class="embed"/>
             <div class="message">
-              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd&quot;&gt;
-&lt;soapenv:Header/&gt;
-&lt;soapenv:Body&gt;
-&lt;nod:activatePaymentNoticeReq&gt;
-&lt;idPSP&gt;70000000001&lt;/idPSP&gt;
-&lt;idBrokerPSP&gt;70000000001&lt;/idBrokerPSP&gt;
-&lt;idChannel&gt;70000000001_01&lt;/idChannel&gt;
-&lt;password&gt;pwdpwdpwd&lt;/password&gt;
-&lt;idempotencyKey&gt;#idempotency_key#&lt;/idempotencyKey&gt;
-&lt;qrCode&gt;
-&lt;fiscalCode&gt;#creditor_institution_code_old#&lt;/fiscalCode&gt;
-&lt;noticeNumber&gt;#notice_number_old#&lt;/noticeNumber&gt;
-&lt;/qrCode&gt;
-&lt;expirationTime&gt;2000&lt;/expirationTime&gt;
-&lt;amount&gt;10.00&lt;/amount&gt;
-&lt;paymentNote&gt;causale&lt;/paymentNote&gt;
-&lt;/nod:activatePaymentNoticeReq&gt;
-&lt;/soapenv:Body&gt;
-&lt;/soapenv:Envelope&gt;
+              <pre> &lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd&quot;&gt;
+    &lt;soapenv:Header/&gt;
+    &lt;soapenv:Body&gt;
+        &lt;nod:sendPaymentOutcomeReq&gt;
+            &lt;idPSP&gt;70000000001&lt;/idPSP&gt;
+            &lt;idBrokerPSP&gt;70000000001&lt;/idBrokerPSP&gt;
+            &lt;idChannel&gt;70000000001_01&lt;/idChannel&gt;
+            &lt;password&gt;pwdpwdpwd&lt;/password&gt;
+            &lt;idempotencyKey&gt;#idempotency_key#&lt;/idempotencyKey&gt;
+            &lt;paymentToken&gt;$activatePaymentNoticeResponse.paymentToken&lt;/paymentToken&gt;
+            &lt;outcome&gt;OK&lt;/outcome&gt;
+            &lt;details&gt;
+                &lt;paymentMethod&gt;creditCard&lt;/paymentMethod&gt;
+                &lt;paymentChannel&gt;app&lt;/paymentChannel&gt;
+                &lt;fee&gt;2.00&lt;/fee&gt;
+                &lt;payer&gt;
+                    &lt;uniqueIdentifier&gt;
+                        &lt;entityUniqueIdentifierType&gt;F&lt;/entityUniqueIdentifierType&gt;
+                        &lt;entityUniqueIdentifierValue&gt;JHNDOE00A01F205N&lt;/entityUniqueIdentifierValue&gt;
+                    &lt;/uniqueIdentifier&gt;
+                    &lt;fullName&gt;John Doe&lt;/fullName&gt;
+                    &lt;streetName&gt;street&lt;/streetName&gt;
+                    &lt;civicNumber&gt;12&lt;/civicNumber&gt;
+                    &lt;postalCode&gt;89020&lt;/postalCode&gt;
+                    &lt;city&gt;city&lt;/city&gt;
+                    &lt;stateProvinceRegion&gt;MI&lt;/stateProvinceRegion&gt;
+                    &lt;country&gt;IT&lt;/country&gt;
+                    &lt;e-mail&gt;john.doe@test.it&lt;/e-mail&gt;
+                &lt;/payer&gt;
+                &lt;applicationDate&gt;2021-10-01&lt;/applicationDate&gt;
+                &lt;transferDate&gt;2021-10-02&lt;/transferDate&gt;
+          &lt;/details&gt;
+        &lt;/nod:sendPaymentOutcomeReq&gt;
+    &lt;/soapenv:Body&gt;
+  &lt;/soapenv:Envelope&gt;
 </pre>
             </div>
           </li>
@@ -418,12 +448,12 @@ function Collapsible_expandAllFailed()
                 <span/>
                 <b>psp</b>
                 <span> sends SOAP </span>
-                <b>activatePaymentNotice</b>
+                <b>sendPaymentOutcome</b>
                 <span> to </span>
                 <b>nodo-dei-pagamenti</b>
                 <span/>
               </span>
-              <small class="step_duration">(1.342s)</small>
+              <small class="step_duration">(0.228s)</small>
             </div>
             <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:130</span>
@@ -439,138 +469,13 @@ function Collapsible_expandAllFailed()
                 <span> is </span>
                 <b>OK</b>
                 <span> of </span>
-                <b>activatePaymentNotice</b>
+                <b>sendPaymentOutcome</b>
                 <span> response</span>
               </span>
-              <small class="step_duration">(0.002s)</small>
+              <small class="step_duration">(0.001s)</small>
             </div>
             <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:154</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
-                <span>checks the value </span>
-                <b>$iuv</b>
-                <span> of the record at column </span>
-                <b>CREDITOR_REFERENCE_ID</b>
-                <span> of the table </span>
-                <b>RPT_ACTIVATIONS</b>
-                <span> retrived by the query </span>
-                <b>rpt_activision</b>
-                <span> on db </span>
-                <b>nodo_online</b>
-                <span> under macro </span>
-                <b>NewMod3</b>
-                <span/>
-              </span>
-              <small class="step_duration">(0.132s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:736</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
-                <span>checks the value </span>
-                <b>$activatePaymentNoticeResponse.paymentToken</b>
-                <span> of the record at column </span>
-                <b>PAYMENT_TOKEN</b>
-                <span> of the table </span>
-                <b>RPT_ACTIVATIONS</b>
-                <span> retrived by the query </span>
-                <b>rpt_activision</b>
-                <span> on db </span>
-                <b>nodo_online</b>
-                <span> under macro </span>
-                <b>NewMod3</b>
-                <span/>
-              </span>
-              <small class="step_duration">(0.142s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:736</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
-                <span>checks the value </span>
-                <b>N</b>
-                <span> of the record at column </span>
-                <b>NODOINVIARPTREQ</b>
-                <span> of the table </span>
-                <b>RPT_ACTIVATIONS</b>
-                <span> retrived by the query </span>
-                <b>rpt_activision</b>
-                <span> on db </span>
-                <b>nodo_online</b>
-                <span> under macro </span>
-                <b>NewMod3</b>
-                <span/>
-              </span>
-              <small class="step_duration">(0.151s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:736</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
-                <span>checks the value </span>
-                <b>Y</b>
-                <span> of the record at column </span>
-                <b>PAAATTIVARPTRESP</b>
-                <span> of the table </span>
-                <b>RPT_ACTIVATIONS</b>
-                <span> retrived by the query </span>
-                <b>rpt_activision</b>
-                <span> on db </span>
-                <b>nodo_online</b>
-                <span> under macro </span>
-                <b>NewMod3</b>
-                <span/>
-              </span>
-              <small class="step_duration">(0.152s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:736</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
-                <span>checks the value </span>
-                <b>NotNone</b>
-                <span> of the record at column </span>
-                <b>INSERTED_TIMESTAMP</b>
-                <span> of the table </span>
-                <b>RPT_ACTIVATIONS</b>
-                <span> retrived by the query </span>
-                <b>rpt_activision</b>
-                <span> on db </span>
-                <b>nodo_online</b>
-                <span> under macro </span>
-                <b>NewMod3</b>
-                <span/>
-              </span>
-              <small class="step_duration">(0.151s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:736</span>
             </div>
             <span class="embed"/>
           </li>
@@ -578,9 +483,9 @@ function Collapsible_expandAllFailed()
         <span/>
       </div>
       <div class="scenario">
-        <span class="scenario_file">src/integ-test/bdd-test/features/NewMod3/flows/RetryATokenScaduto/retry_a_token_scaduto_Retry_PaOld_24.feature:63</span>
+        <span class="scenario_file">src/integ-test/bdd-test/features/NewMod3/flows/sendPaymentOutcome/sendPaymentOutcome_IDMP_SPO_01.feature:79</span>
         <h3 onclick="Collapsible_toggle('scenario_2')">
-          <span class="val">Scenario: Execute Poller Annulli</span>
+          <span class="val">Scenario: DB check</span>
         </h3>
         <ol class="scenario_steps" id="scenario_2">
           <li class="step passed">
@@ -622,10 +527,10 @@ function Collapsible_expandAllFailed()
               <span class="keyword">And </span>
               <span class="step val">
                 <span>initial XML </span>
-                <b>verifyPaymentNotice</b>
+                <b>activatePaymentNotice</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.002s)</small>
+              <small class="step_duration">(0.003s)</small>
             </div>
             <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:54</span>
@@ -633,19 +538,24 @@ function Collapsible_expandAllFailed()
             <span class="embed"/>
             <div class="message">
               <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd&quot;&gt;
-&lt;soapenv:Header/&gt;
-&lt;soapenv:Body&gt;
-&lt;nod:verifyPaymentNoticeReq&gt;
-&lt;idPSP&gt;70000000001&lt;/idPSP&gt;
-&lt;idBrokerPSP&gt;70000000001&lt;/idBrokerPSP&gt;
-&lt;idChannel&gt;70000000001_01&lt;/idChannel&gt;
-&lt;password&gt;pwdpwdpwd&lt;/password&gt;
-&lt;qrCode&gt;
-&lt;fiscalCode&gt;#creditor_institution_code_old#&lt;/fiscalCode&gt;
-&lt;noticeNumber&gt;#notice_number_old#&lt;/noticeNumber&gt;
-&lt;/qrCode&gt;
-&lt;/nod:verifyPaymentNoticeReq&gt;
-&lt;/soapenv:Body&gt;
+   &lt;soapenv:Header/&gt;
+   &lt;soapenv:Body&gt;
+      &lt;nod:activatePaymentNoticeReq&gt;
+         &lt;idPSP&gt;70000000001&lt;/idPSP&gt;
+         &lt;idBrokerPSP&gt;70000000001&lt;/idBrokerPSP&gt;
+         &lt;idChannel&gt;70000000001_01&lt;/idChannel&gt;
+         &lt;password&gt;pwdpwdpwd&lt;/password&gt;
+         &lt;idempotencyKey&gt;#idempotency_key#&lt;/idempotencyKey&gt;
+         &lt;qrCode&gt;
+            &lt;fiscalCode&gt;#creditor_institution_code#&lt;/fiscalCode&gt;
+            &lt;noticeNumber&gt;#notice_number#&lt;/noticeNumber&gt;
+         &lt;/qrCode&gt;
+         &lt;expirationTime&gt;4000&lt;/expirationTime&gt;
+         &lt;amount&gt;10.00&lt;/amount&gt;
+         &lt;dueDate&gt;2021-12-31&lt;/dueDate&gt;
+         &lt;paymentNote&gt;causale&lt;/paymentNote&gt;
+      &lt;/nod:activatePaymentNoticeReq&gt;
+   &lt;/soapenv:Body&gt;
 &lt;/soapenv:Envelope&gt;
 </pre>
             </div>
@@ -654,526 +564,16 @@ function Collapsible_expandAllFailed()
             <div class="step_name">
               <span class="keyword">And </span>
               <span class="step val">
-                <span>EC </span>
-                <b>old</b>
-                <span> version</span>
-              </span>
-              <small class="step_duration">(0.001s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:48</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">Given </span>
-              <span class="step val">
-                <span>the </span>
-                <b>Execute activatePaymentNotice request</b>
-                <span> scenario executed successfully</span>
-              </span>
-              <small class="step_duration">(2.444s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:308</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">When </span>
-              <span class="step val">
-                <span>job </span>
-                <b>mod3CancelV1</b>
-                <span> triggered after </span>
-                <b>5</b>
-                <span> seconds</span>
-              </span>
-              <small class="step_duration">(5.263s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:145</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">Then </span>
-              <span class="step val">
-                <span>verify the HTTP status code of </span>
-                <b>mod3CancelV1</b>
-                <span> response is </span>
-                <b>200</b>
+                <span>nodo-dei-pagamenti has config parameter </span>
+                <b>useIdempotency</b>
+                <span> set to </span>
+                <b>false</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.001s)</small>
+              <small class="step_duration">(5.297s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:341</span>
-            </div>
-            <span class="embed"/>
-          </li>
-        </ol>
-        <span/>
-      </div>
-      <div class="scenario">
-        <span class="scenario_file">src/integ-test/bdd-test/features/NewMod3/flows/RetryATokenScaduto/retry_a_token_scaduto_Retry_PaOld_24.feature:68</span>
-        <h3 onclick="Collapsible_toggle('scenario_3')">
-          <span class="val">Scenario: Execute paInviaRT</span>
-        </h3>
-        <ol class="scenario_steps" id="scenario_3">
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">Given </span>
-              <span class="step val">systems up</span>
-              <small class="step_duration">(0.001s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:27</span>
-            </div>
-            <span class="embed"/>
-            <table>
-              <tr>
-                <th>name</th>
-                <th>url</th>
-                <th>healthcheck</th>
-                <th>soap_service</th>
-                <th>rest_service</th>
-              </tr>
-              <tr>
-                <td>nodo-dei-pagamenti</td>
-                <td>http://localhost:9080/</td>
-                <td>nodo-dev-health/ready</td>
-                <td>nodo-dev/webservices/input</td>
-                <td>nodo-dev</td>
-              </tr>
-              <tr>
-                <td>mock-ec</td>
-                <td>http://localhost:8089/</td>
-                <td>servizi/PagamentiTelematiciRPT/info</td>
-                <td>servizi/PagamentiTelematiciRPT</td>
-                <td/>
-              </tr>
-            </table>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
-                <span>initial XML </span>
-                <b>verifyPaymentNotice</b>
-                <span/>
-              </span>
-              <small class="step_duration">(0.002s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:54</span>
-            </div>
-            <span class="embed"/>
-            <div class="message">
-              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd&quot;&gt;
-&lt;soapenv:Header/&gt;
-&lt;soapenv:Body&gt;
-&lt;nod:verifyPaymentNoticeReq&gt;
-&lt;idPSP&gt;70000000001&lt;/idPSP&gt;
-&lt;idBrokerPSP&gt;70000000001&lt;/idBrokerPSP&gt;
-&lt;idChannel&gt;70000000001_01&lt;/idChannel&gt;
-&lt;password&gt;pwdpwdpwd&lt;/password&gt;
-&lt;qrCode&gt;
-&lt;fiscalCode&gt;#creditor_institution_code_old#&lt;/fiscalCode&gt;
-&lt;noticeNumber&gt;#notice_number_old#&lt;/noticeNumber&gt;
-&lt;/qrCode&gt;
-&lt;/nod:verifyPaymentNoticeReq&gt;
-&lt;/soapenv:Body&gt;
-&lt;/soapenv:Envelope&gt;
-</pre>
-            </div>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
-                <span>EC </span>
-                <b>old</b>
-                <span> version</span>
-              </span>
-              <small class="step_duration">(0.001s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:48</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">Given </span>
-              <span class="step val">
-                <span>the </span>
-                <b>Execute Poller Annulli</b>
-                <span> scenario executed successfully</span>
-              </span>
-              <small class="step_duration">(7.436s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:308</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">When </span>
-              <span class="step val">
-                <span>job </span>
-                <b>paInviaRt</b>
-                <span> triggered after </span>
-                <b>5</b>
-                <span> seconds</span>
-              </span>
-              <small class="step_duration">(5.056s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:145</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">Then </span>
-              <span class="step val">
-                <span>verify the HTTP status code of </span>
-                <b>paInviaRt</b>
-                <span> response is </span>
-                <b>200</b>
-                <span/>
-              </span>
-              <small class="step_duration">(0.001s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:341</span>
-            </div>
-            <span class="embed"/>
-          </li>
-        </ol>
-        <span/>
-      </div>
-      <div class="scenario">
-        <span class="scenario_file">src/integ-test/bdd-test/features/NewMod3/flows/RetryATokenScaduto/retry_a_token_scaduto_Retry_PaOld_24.feature:74</span>
-        <h3 onclick="Collapsible_toggle('scenario_4')">
-          <span class="val">Scenario: Execute sendPaymentOutcome request</span>
-        </h3>
-        <ol class="scenario_steps" id="scenario_4">
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">Given </span>
-              <span class="step val">systems up</span>
-              <small class="step_duration">(0.002s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:27</span>
-            </div>
-            <span class="embed"/>
-            <table>
-              <tr>
-                <th>name</th>
-                <th>url</th>
-                <th>healthcheck</th>
-                <th>soap_service</th>
-                <th>rest_service</th>
-              </tr>
-              <tr>
-                <td>nodo-dei-pagamenti</td>
-                <td>http://localhost:9080/</td>
-                <td>nodo-dev-health/ready</td>
-                <td>nodo-dev/webservices/input</td>
-                <td>nodo-dev</td>
-              </tr>
-              <tr>
-                <td>mock-ec</td>
-                <td>http://localhost:8089/</td>
-                <td>servizi/PagamentiTelematiciRPT/info</td>
-                <td>servizi/PagamentiTelematiciRPT</td>
-                <td/>
-              </tr>
-            </table>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
-                <span>initial XML </span>
-                <b>verifyPaymentNotice</b>
-                <span/>
-              </span>
-              <small class="step_duration">(0.002s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:54</span>
-            </div>
-            <span class="embed"/>
-            <div class="message">
-              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd&quot;&gt;
-&lt;soapenv:Header/&gt;
-&lt;soapenv:Body&gt;
-&lt;nod:verifyPaymentNoticeReq&gt;
-&lt;idPSP&gt;70000000001&lt;/idPSP&gt;
-&lt;idBrokerPSP&gt;70000000001&lt;/idBrokerPSP&gt;
-&lt;idChannel&gt;70000000001_01&lt;/idChannel&gt;
-&lt;password&gt;pwdpwdpwd&lt;/password&gt;
-&lt;qrCode&gt;
-&lt;fiscalCode&gt;#creditor_institution_code_old#&lt;/fiscalCode&gt;
-&lt;noticeNumber&gt;#notice_number_old#&lt;/noticeNumber&gt;
-&lt;/qrCode&gt;
-&lt;/nod:verifyPaymentNoticeReq&gt;
-&lt;/soapenv:Body&gt;
-&lt;/soapenv:Envelope&gt;
-</pre>
-            </div>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
-                <span>EC </span>
-                <b>old</b>
-                <span> version</span>
-              </span>
-              <small class="step_duration">(0.000s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:48</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">Given </span>
-              <span class="step val">
-                <span>the </span>
-                <b>Execute Poller Annulli</b>
-                <span> scenario executed successfully</span>
-              </span>
-              <small class="step_duration">(8.304s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:308</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
-                <span/>
-                <b>psp</b>
-                <span> waits </span>
-                <b>5</b>
-                <span> seconds for expiration</span>
-              </span>
-              <small class="step_duration">(5.003s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:721</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
-                <span>initial XML </span>
-                <b>sendPaymentOutcome</b>
-                <span/>
-              </span>
-              <small class="step_duration">(0.002s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:54</span>
-            </div>
-            <span class="embed"/>
-            <div class="message">
-              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd&quot;&gt;
-&lt;soapenv:Header/&gt;
-&lt;soapenv:Body&gt;
-&lt;nod:sendPaymentOutcomeReq&gt;
-&lt;idPSP&gt;70000000001&lt;/idPSP&gt;
-&lt;idBrokerPSP&gt;70000000001&lt;/idBrokerPSP&gt;
-&lt;idChannel&gt;70000000001_01&lt;/idChannel&gt;
-&lt;password&gt;pwdpwdpwd&lt;/password&gt;
-&lt;paymentToken&gt;$activatePaymentNoticeResponse.paymentToken&lt;/paymentToken&gt;
-&lt;outcome&gt;OK&lt;/outcome&gt;
-&lt;details&gt;
-&lt;paymentMethod&gt;creditCard&lt;/paymentMethod&gt;
-&lt;paymentChannel&gt;app&lt;/paymentChannel&gt;
-&lt;fee&gt;2.00&lt;/fee&gt;
-&lt;payer&gt;
-&lt;uniqueIdentifier&gt;
-&lt;entityUniqueIdentifierType&gt;F&lt;/entityUniqueIdentifierType&gt;
-&lt;entityUniqueIdentifierValue&gt;RCCGLD09P09H502E&lt;/entityUniqueIdentifierValue&gt;
-&lt;/uniqueIdentifier&gt;
-&lt;fullName&gt;Gesualdo;Riccitelli&lt;/fullName&gt;
-&lt;streetName&gt;via del gesu&lt;/streetName&gt;
-&lt;civicNumber&gt;11&lt;/civicNumber&gt;
-&lt;postalCode&gt;00186&lt;/postalCode&gt;
-&lt;city&gt;Roma&lt;/city&gt;
-&lt;stateProvinceRegion&gt;RM&lt;/stateProvinceRegion&gt;
-&lt;country&gt;IT&lt;/country&gt;
-&lt;e-mail&gt;gesualdo.riccitelli@poste.it&lt;/e-mail&gt;
-&lt;/payer&gt;
-&lt;applicationDate&gt;2021-12-12&lt;/applicationDate&gt;
-&lt;transferDate&gt;2021-12-11&lt;/transferDate&gt;
-&lt;/details&gt;
-&lt;/nod:sendPaymentOutcomeReq&gt;
-&lt;/soapenv:Body&gt;
-&lt;/soapenv:Envelope&gt;
-</pre>
-            </div>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">When </span>
-              <span class="step val">
-                <span/>
-                <b>psp</b>
-                <span> sends SOAP </span>
-                <b>sendPaymentOutcome</b>
-                <span> to </span>
-                <b>nodo-dei-pagamenti</b>
-                <span/>
-              </span>
-              <small class="step_duration">(0.062s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:130</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">Then </span>
-              <span class="step val">
-                <span>check </span>
-                <b>outcome</b>
-                <span> is </span>
-                <b>KO</b>
-                <span> of </span>
-                <b>sendPaymentOutcome</b>
-                <span> response</span>
-              </span>
-              <small class="step_duration">(0.002s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:154</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
-                <span>check </span>
-                <b>faultCode</b>
-                <span> is </span>
-                <b>PPT_TOKEN_SCADUTO</b>
-                <span> of </span>
-                <b>sendPaymentOutcome</b>
-                <span> response</span>
-              </span>
-              <small class="step_duration">(0.001s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:154</span>
-            </div>
-            <span class="embed"/>
-          </li>
-        </ol>
-        <span/>
-      </div>
-      <div class="scenario">
-        <span class="scenario_file">src/integ-test/bdd-test/features/NewMod3/flows/RetryATokenScaduto/retry_a_token_scaduto_Retry_PaOld_24.feature:118</span>
-        <h3 onclick="Collapsible_toggle('scenario_5')">
-          <span class="val">Scenario: Define RPT</span>
-        </h3>
-        <ol class="scenario_steps" id="scenario_5">
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">Given </span>
-              <span class="step val">systems up</span>
-              <small class="step_duration">(0.001s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:27</span>
-            </div>
-            <span class="embed"/>
-            <table>
-              <tr>
-                <th>name</th>
-                <th>url</th>
-                <th>healthcheck</th>
-                <th>soap_service</th>
-                <th>rest_service</th>
-              </tr>
-              <tr>
-                <td>nodo-dei-pagamenti</td>
-                <td>http://localhost:9080/</td>
-                <td>nodo-dev-health/ready</td>
-                <td>nodo-dev/webservices/input</td>
-                <td>nodo-dev</td>
-              </tr>
-              <tr>
-                <td>mock-ec</td>
-                <td>http://localhost:8089/</td>
-                <td>servizi/PagamentiTelematiciRPT/info</td>
-                <td>servizi/PagamentiTelematiciRPT</td>
-                <td/>
-              </tr>
-            </table>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
-                <span>initial XML </span>
-                <b>verifyPaymentNotice</b>
-                <span/>
-              </span>
-              <small class="step_duration">(0.002s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:54</span>
-            </div>
-            <span class="embed"/>
-            <div class="message">
-              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd&quot;&gt;
-&lt;soapenv:Header/&gt;
-&lt;soapenv:Body&gt;
-&lt;nod:verifyPaymentNoticeReq&gt;
-&lt;idPSP&gt;70000000001&lt;/idPSP&gt;
-&lt;idBrokerPSP&gt;70000000001&lt;/idBrokerPSP&gt;
-&lt;idChannel&gt;70000000001_01&lt;/idChannel&gt;
-&lt;password&gt;pwdpwdpwd&lt;/password&gt;
-&lt;qrCode&gt;
-&lt;fiscalCode&gt;#creditor_institution_code_old#&lt;/fiscalCode&gt;
-&lt;noticeNumber&gt;#notice_number_old#&lt;/noticeNumber&gt;
-&lt;/qrCode&gt;
-&lt;/nod:verifyPaymentNoticeReq&gt;
-&lt;/soapenv:Body&gt;
-&lt;/soapenv:Envelope&gt;
-</pre>
-            </div>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
-                <span>EC </span>
-                <b>old</b>
-                <span> version</span>
-              </span>
-              <small class="step_duration">(0.001s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:48</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:582</span>
             </div>
             <span class="embed"/>
           </li>
@@ -1185,740 +585,12 @@ function Collapsible_expandAllFailed()
                 <b>Execute sendPaymentOutcome request</b>
                 <span> scenario executed successfully</span>
               </span>
-              <small class="step_duration">(12.900s)</small>
+              <small class="step_duration">(0.748s)</small>
             </div>
             <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:308</span>
             </div>
             <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">RPT generation</span>
-              <small class="step_duration">(0.002s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:96</span>
-            </div>
-            <span class="embed"/>
-            <div class="message">
-              <pre>&lt;pay_i:RPT xmlns:pay_i=&quot;http://www.digitpa.gov.it/schemas/2011/Pagamenti/&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xsi:schemaLocation=&quot;http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd &quot;&gt;
-&lt;pay_i:versioneOggetto&gt;1.0&lt;/pay_i:versioneOggetto&gt;
-&lt;pay_i:dominio&gt;
-&lt;pay_i:identificativoDominio&gt;$activatePaymentNotice.fiscalCode&lt;/pay_i:identificativoDominio&gt;
-&lt;pay_i:identificativoStazioneRichiedente&gt;#intermediarioPA#&lt;/pay_i:identificativoStazioneRichiedente&gt;
-&lt;/pay_i:dominio&gt;
-&lt;pay_i:identificativoMessaggioRichiesta&gt;MSGRICHIESTA01&lt;/pay_i:identificativoMessaggioRichiesta&gt;
-&lt;pay_i:dataOraMessaggioRichiesta&gt;2016-09-16T11:24:10&lt;/pay_i:dataOraMessaggioRichiesta&gt;
-&lt;pay_i:autenticazioneSoggetto&gt;CNS&lt;/pay_i:autenticazioneSoggetto&gt;
-&lt;pay_i:soggettoVersante&gt;
-&lt;pay_i:identificativoUnivocoVersante&gt;
-&lt;pay_i:tipoIdentificativoUnivoco&gt;F&lt;/pay_i:tipoIdentificativoUnivoco&gt;
-&lt;pay_i:codiceIdentificativoUnivoco&gt;RCCGLD09P09H502E&lt;/pay_i:codiceIdentificativoUnivoco&gt;
-&lt;/pay_i:identificativoUnivocoVersante&gt;
-&lt;pay_i:anagraficaVersante&gt;Gesualdo;Riccitelli&lt;/pay_i:anagraficaVersante&gt;
-&lt;pay_i:indirizzoVersante&gt;via del gesu&lt;/pay_i:indirizzoVersante&gt;
-&lt;pay_i:civicoVersante&gt;11&lt;/pay_i:civicoVersante&gt;
-&lt;pay_i:capVersante&gt;00186&lt;/pay_i:capVersante&gt;
-&lt;pay_i:localitaVersante&gt;Roma&lt;/pay_i:localitaVersante&gt;
-&lt;pay_i:provinciaVersante&gt;RM&lt;/pay_i:provinciaVersante&gt;
-&lt;pay_i:nazioneVersante&gt;IT&lt;/pay_i:nazioneVersante&gt;
-&lt;pay_i:e-mailVersante&gt;gesualdo.riccitelli@poste.it&lt;/pay_i:e-mailVersante&gt;
-&lt;/pay_i:soggettoVersante&gt;
-&lt;pay_i:soggettoPagatore&gt;
-&lt;pay_i:identificativoUnivocoPagatore&gt;
-&lt;pay_i:tipoIdentificativoUnivoco&gt;F&lt;/pay_i:tipoIdentificativoUnivoco&gt;
-&lt;pay_i:codiceIdentificativoUnivoco&gt;RCCGLD09P09H501E&lt;/pay_i:codiceIdentificativoUnivoco&gt;
-&lt;/pay_i:identificativoUnivocoPagatore&gt;
-&lt;pay_i:anagraficaPagatore&gt;Gesualdo;Riccitelli&lt;/pay_i:anagraficaPagatore&gt;
-&lt;pay_i:indirizzoPagatore&gt;via del gesu&lt;/pay_i:indirizzoPagatore&gt;
-&lt;pay_i:civicoPagatore&gt;11&lt;/pay_i:civicoPagatore&gt;
-&lt;pay_i:capPagatore&gt;00186&lt;/pay_i:capPagatore&gt;
-&lt;pay_i:localitaPagatore&gt;Roma&lt;/pay_i:localitaPagatore&gt;
-&lt;pay_i:provinciaPagatore&gt;RM&lt;/pay_i:provinciaPagatore&gt;
-&lt;pay_i:nazionePagatore&gt;IT&lt;/pay_i:nazionePagatore&gt;
-&lt;pay_i:e-mailPagatore&gt;gesualdo.riccitelli@poste.it&lt;/pay_i:e-mailPagatore&gt;
-&lt;/pay_i:soggettoPagatore&gt;
-&lt;pay_i:enteBeneficiario&gt;
-&lt;pay_i:identificativoUnivocoBeneficiario&gt;
-&lt;pay_i:tipoIdentificativoUnivoco&gt;G&lt;/pay_i:tipoIdentificativoUnivoco&gt;
-&lt;pay_i:codiceIdentificativoUnivoco&gt;11111111117&lt;/pay_i:codiceIdentificativoUnivoco&gt;
-&lt;/pay_i:identificativoUnivocoBeneficiario&gt;
-&lt;pay_i:denominazioneBeneficiario&gt;AZIENDA XXX&lt;/pay_i:denominazioneBeneficiario&gt;
-&lt;pay_i:codiceUnitOperBeneficiario&gt;123&lt;/pay_i:codiceUnitOperBeneficiario&gt;
-&lt;pay_i:denomUnitOperBeneficiario&gt;XXX&lt;/pay_i:denomUnitOperBeneficiario&gt;
-&lt;pay_i:indirizzoBeneficiario&gt;IndirizzoBeneficiario&lt;/pay_i:indirizzoBeneficiario&gt;
-&lt;pay_i:civicoBeneficiario&gt;123&lt;/pay_i:civicoBeneficiario&gt;
-&lt;pay_i:capBeneficiario&gt;22222&lt;/pay_i:capBeneficiario&gt;
-&lt;pay_i:localitaBeneficiario&gt;Roma&lt;/pay_i:localitaBeneficiario&gt;
-&lt;pay_i:provinciaBeneficiario&gt;RM&lt;/pay_i:provinciaBeneficiario&gt;
-&lt;pay_i:nazioneBeneficiario&gt;IT&lt;/pay_i:nazioneBeneficiario&gt;
-&lt;/pay_i:enteBeneficiario&gt;
-&lt;pay_i:datiVersamento&gt;
-&lt;pay_i:dataEsecuzionePagamento&gt;2016-09-16&lt;/pay_i:dataEsecuzionePagamento&gt;
-&lt;pay_i:importoTotaleDaVersare&gt;10.00&lt;/pay_i:importoTotaleDaVersare&gt;
-&lt;pay_i:tipoVersamento&gt;PO&lt;/pay_i:tipoVersamento&gt;
-&lt;pay_i:identificativoUnivocoVersamento&gt;$iuv&lt;/pay_i:identificativoUnivocoVersamento&gt;
-&lt;pay_i:codiceContestoPagamento&gt;$activatePaymentNoticeResponse.paymentToken&lt;/pay_i:codiceContestoPagamento&gt;
-&lt;pay_i:ibanAddebito&gt;IT96R0123451234512345678904&lt;/pay_i:ibanAddebito&gt;
-&lt;pay_i:bicAddebito&gt;ARTIITM1045&lt;/pay_i:bicAddebito&gt;
-&lt;pay_i:firmaRicevuta&gt;0&lt;/pay_i:firmaRicevuta&gt;
-&lt;pay_i:datiSingoloVersamento&gt;
-&lt;pay_i:importoSingoloVersamento&gt;10.00&lt;/pay_i:importoSingoloVersamento&gt;
-&lt;pay_i:commissioneCaricoPA&gt;1.00&lt;/pay_i:commissioneCaricoPA&gt;
-&lt;pay_i:ibanAccredito&gt;IT96R0123454321000000012345&lt;/pay_i:ibanAccredito&gt;
-&lt;pay_i:bicAccredito&gt;ARTIITM1050&lt;/pay_i:bicAccredito&gt;
-&lt;pay_i:ibanAppoggio&gt;IT96R0123454321000000012345&lt;/pay_i:ibanAppoggio&gt;
-&lt;pay_i:bicAppoggio&gt;ARTIITM1050&lt;/pay_i:bicAppoggio&gt;
-&lt;pay_i:credenzialiPagatore&gt;CP1.1&lt;/pay_i:credenzialiPagatore&gt;
-&lt;pay_i:causaleVersamento&gt;pagamento fotocopie pratica RPT&lt;/pay_i:causaleVersamento&gt;
-&lt;pay_i:datiSpecificiRiscossione&gt;1/abc&lt;/pay_i:datiSpecificiRiscossione&gt;
-&lt;/pay_i:datiSingoloVersamento&gt;
-&lt;/pay_i:datiVersamento&gt;
-&lt;/pay_i:RPT&gt;
-</pre>
-            </div>
-          </li>
-        </ol>
-        <span/>
-      </div>
-      <div class="scenario">
-        <span class="scenario_file">src/integ-test/bdd-test/features/NewMod3/flows/RetryATokenScaduto/retry_a_token_scaduto_Retry_PaOld_24.feature:198</span>
-        <h3 onclick="Collapsible_toggle('scenario_6')" class="failed">
-          <span class="val">Scenario: Execute nodoInviaRPT request</span>
-        </h3>
-        <ol class="scenario_steps" id="scenario_6">
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">Given </span>
-              <span class="step val">systems up</span>
-              <small class="step_duration">(0.001s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:27</span>
-            </div>
-            <span class="embed"/>
-            <table>
-              <tr>
-                <th>name</th>
-                <th>url</th>
-                <th>healthcheck</th>
-                <th>soap_service</th>
-                <th>rest_service</th>
-              </tr>
-              <tr>
-                <td>nodo-dei-pagamenti</td>
-                <td>http://localhost:9080/</td>
-                <td>nodo-dev-health/ready</td>
-                <td>nodo-dev/webservices/input</td>
-                <td>nodo-dev</td>
-              </tr>
-              <tr>
-                <td>mock-ec</td>
-                <td>http://localhost:8089/</td>
-                <td>servizi/PagamentiTelematiciRPT/info</td>
-                <td>servizi/PagamentiTelematiciRPT</td>
-                <td/>
-              </tr>
-            </table>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
-                <span>initial XML </span>
-                <b>verifyPaymentNotice</b>
-                <span/>
-              </span>
-              <small class="step_duration">(0.003s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:54</span>
-            </div>
-            <span class="embed"/>
-            <div class="message">
-              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd&quot;&gt;
-&lt;soapenv:Header/&gt;
-&lt;soapenv:Body&gt;
-&lt;nod:verifyPaymentNoticeReq&gt;
-&lt;idPSP&gt;70000000001&lt;/idPSP&gt;
-&lt;idBrokerPSP&gt;70000000001&lt;/idBrokerPSP&gt;
-&lt;idChannel&gt;70000000001_01&lt;/idChannel&gt;
-&lt;password&gt;pwdpwdpwd&lt;/password&gt;
-&lt;qrCode&gt;
-&lt;fiscalCode&gt;#creditor_institution_code_old#&lt;/fiscalCode&gt;
-&lt;noticeNumber&gt;#notice_number_old#&lt;/noticeNumber&gt;
-&lt;/qrCode&gt;
-&lt;/nod:verifyPaymentNoticeReq&gt;
-&lt;/soapenv:Body&gt;
-&lt;/soapenv:Envelope&gt;
-</pre>
-            </div>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
-                <span>EC </span>
-                <b>old</b>
-                <span> version</span>
-              </span>
-              <small class="step_duration">(0.001s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:48</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">Given </span>
-              <span class="step val">
-                <span>the </span>
-                <b>Define RPT</b>
-                <span> scenario executed successfully</span>
-              </span>
-              <small class="step_duration">(13.203s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:308</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
-                <span>initial XML </span>
-                <b>nodoInviaRPT</b>
-                <span/>
-              </span>
-              <small class="step_duration">(0.004s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:54</span>
-            </div>
-            <span class="embed"/>
-            <div class="message">
-              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:ppt=&quot;http://ws.pagamenti.telematici.gov/ppthead&quot; xmlns:ws=&quot;http://ws.pagamenti.telematici.gov/&quot;&gt;
-&lt;soapenv:Header&gt;
-&lt;ppt:intestazionePPT&gt;
-&lt;identificativoIntermediarioPA&gt;$activatePaymentNotice.fiscalCode&lt;/identificativoIntermediarioPA&gt;
-&lt;identificativoStazioneIntermediarioPA&gt;$intermediarioPA&lt;/identificativoStazioneIntermediarioPA&gt;
-&lt;identificativoDominio&gt;$activatePaymentNotice.fiscalCode&lt;/identificativoDominio&gt;
-&lt;identificativoUnivocoVersamento&gt;$iuv&lt;/identificativoUnivocoVersamento&gt;
-&lt;codiceContestoPagamento&gt;$activatePaymentNoticeResponse.paymentToken&lt;/codiceContestoPagamento&gt;
-&lt;/ppt:intestazionePPT&gt;
-&lt;/soapenv:Header&gt;
-&lt;soapenv:Body&gt;
-&lt;ws:nodoInviaRPT&gt;
-&lt;password&gt;pwdpwdpwd&lt;/password&gt;
-&lt;identificativoPSP&gt;15376371009&lt;/identificativoPSP&gt;
-&lt;identificativoIntermediarioPSP&gt;15376371009&lt;/identificativoIntermediarioPSP&gt;
-&lt;identificativoCanale&gt;15376371009_01&lt;/identificativoCanale&gt;
-&lt;tipoFirma&gt;&lt;/tipoFirma&gt;
-&lt;rpt&gt;$rptAttachment&lt;/rpt&gt;
-&lt;/ws:nodoInviaRPT&gt;
-&lt;/soapenv:Body&gt;
-&lt;/soapenv:Envelope&gt;
-</pre>
-            </div>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">When </span>
-              <span class="step val">
-                <span/>
-                <b>psp</b>
-                <span> sends SOAP </span>
-                <b>nodoInviaRPT</b>
-                <span> to </span>
-                <b>nodo-dei-pagamenti</b>
-                <span/>
-              </span>
-              <small class="step_duration">(0.407s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:130</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step failed">
-            <div class="step_name">
-              <span class="keyword">Then </span>
-              <span class="step val">
-                <span>check </span>
-                <b>esito</b>
-                <span> is </span>
-                <b>OK</b>
-                <span> of </span>
-                <b>nodoInviaRPT</b>
-                <span> response</span>
-              </span>
-              <small class="step_duration">(0.021s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:154</span>
-            </div>
-            <span class="embed">
-              <a onclick="Collapsible_toggle('embed_1')">Error Message</a>
-              <pre id="embed_1" style="display: none">Traceback (most recent call last):
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\behave\model.py&quot;, line 1329, in run
-    match.run(runner.context)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\behave\matchers.py&quot;, line 98, in run
-    self.func(context, *args, **kwargs)
-  File &quot;src\integ-test\bdd-test\features\steps\steps.py&quot;, line 168, in step_impl
-    assert value == data
-AssertionError
-
-Captured stdout:
-url_nodo:  http://localhost:9080/nodo-dev/webservices/input
-nodo soap_request sent &gt;&gt;&gt; &lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd&quot;&gt;
-&lt;soapenv:Header/&gt;
-&lt;soapenv:Body&gt;
-&lt;nod:verifyPaymentNoticeReq&gt;
-&lt;idPSP&gt;70000000001&lt;/idPSP&gt;
-&lt;idBrokerPSP&gt;70000000001&lt;/idBrokerPSP&gt;
-&lt;idChannel&gt;70000000001_01&lt;/idChannel&gt;
-&lt;password&gt;pwdpwdpwd&lt;/password&gt;
-&lt;qrCode&gt;
-&lt;fiscalCode&gt;44444444444&lt;/fiscalCode&gt;
-&lt;noticeNumber&gt;312117179673953069&lt;/noticeNumber&gt;
-&lt;/qrCode&gt;
-&lt;/nod:verifyPaymentNoticeReq&gt;
-&lt;/soapenv:Body&gt;
-&lt;/soapenv:Envelope&gt;
-b'&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot; ?&gt;&lt;soapenv:Envelope xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nfpsp=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd&quot; xmlns:tns=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForPsp.wsdl&quot;&gt;&lt;soapenv:Body&gt;&lt;nfpsp:verifyPaymentNoticeRes&gt;&lt;outcome&gt;OK&lt;/outcome&gt;&lt;paymentList&gt;&lt;paymentOptionDescription&gt;&lt;amount&gt;1.00&lt;/amount&gt;&lt;options&gt;EQ&lt;/options&gt;&lt;paymentNote&gt;prova/RFDB/019551233153100/TXT/&lt;/paymentNote&gt;&lt;/paymentOptionDescription&gt;&lt;/paymentList&gt;&lt;paymentDescription&gt;prova/RFDB/019551233153100/TXT/&lt;/paymentDescription&gt;&lt;fiscalCodePA&gt;44444444444&lt;/fiscalCodePA&gt;&lt;companyName&gt;Pa Gabri&lt;/companyName&gt;&lt;/nfpsp:verifyPaymentNoticeRes&gt;&lt;/soapenv:Body&gt;&lt;/soapenv:Envelope&gt;'
-check tag &quot;outcome&quot; - expected: OK, obtained: OK
-url_nodo:  http://localhost:9080/nodo-dev/webservices/input
-nodo soap_request sent &gt;&gt;&gt; &lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd&quot;&gt;
-&lt;soapenv:Header/&gt;
-&lt;soapenv:Body&gt;
-&lt;nod:activatePaymentNoticeReq&gt;
-&lt;idPSP&gt;70000000001&lt;/idPSP&gt;
-&lt;idBrokerPSP&gt;70000000001&lt;/idBrokerPSP&gt;
-&lt;idChannel&gt;70000000001_01&lt;/idChannel&gt;
-&lt;password&gt;pwdpwdpwd&lt;/password&gt;
-&lt;idempotencyKey&gt;70000000001_3591794617&lt;/idempotencyKey&gt;
-&lt;qrCode&gt;
-&lt;fiscalCode&gt;44444444444&lt;/fiscalCode&gt;
-&lt;noticeNumber&gt;312117743190665805&lt;/noticeNumber&gt;
-&lt;/qrCode&gt;
-&lt;expirationTime&gt;2000&lt;/expirationTime&gt;
-&lt;amount&gt;10.00&lt;/amount&gt;
-&lt;paymentNote&gt;causale&lt;/paymentNote&gt;
-&lt;/nod:activatePaymentNoticeReq&gt;
-&lt;/soapenv:Body&gt;
-&lt;/soapenv:Envelope&gt;
-b'&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot; ?&gt;&lt;soapenv:Envelope xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nfpsp=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd&quot; xmlns:tns=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForPsp.wsdl&quot;&gt;&lt;soapenv:Body&gt;&lt;nfpsp:activatePaymentNoticeRes&gt;&lt;outcome&gt;OK&lt;/outcome&gt;&lt;totalAmount&gt;10.00&lt;/totalAmount&gt;&lt;paymentDescription&gt;prova/RFDB/018701385178400/TXT/causale 0dfe2e934e6648f798c5d64ce2f4ab23&lt;/paymentDescription&gt;&lt;fiscalCodePA&gt;44444444444&lt;/fiscalCodePA&gt;&lt;companyName&gt;Pa Gabri&lt;/companyName&gt;&lt;paymentToken&gt;ba0ab4248f374423b20c145571131f1d&lt;/paymentToken&gt;&lt;transferList&gt;&lt;transfer&gt;&lt;idTransfer&gt;1&lt;/idTransfer&gt;&lt;transferAmount&gt;10.00&lt;/transferAmount&gt;&lt;fiscalCodePA&gt;44444444444&lt;/fiscalCodePA&gt;&lt;IBAN&gt;IT45R0760103200000000001016&lt;/IBAN&gt;&lt;remittanceInformation&gt;prova/RFDB/018701385178400/TXT/causale 0dfe2e934e6648f798c5d64ce2f4ab23&lt;/remittanceInformation&gt;&lt;/transfer&gt;&lt;/transferList&gt;&lt;creditorReferenceId&gt;12117743190665805&lt;/creditorReferenceId&gt;&lt;/nfpsp:activatePaymentNoticeRes&gt;&lt;/soapenv:Body&gt;&lt;/soapenv:Envelope&gt;'
-check tag &quot;outcome&quot; - expected: OK, obtained: OK
-Connecting to the OracleDB... NODO_ONLINE
-Successfully connected to OracleDB
- Executing query [SELECT s.CREDITOR_REFERENCE_ID FROM RPT_ACTIVATIONS s where s.NOTICE_ID = '312117743190665805' and s.PA_FISCAL_CODE= '44444444444'] on OracleDB instance...
- Query executed successfully - [1] row/s found
-query_result:  ['12117743190665805']
-value:  [1.2117743190665804e+16]
-Closing connection to the OracleDb...
-Connection to OracleDB closed successfully
-Connecting to the OracleDB... NODO_ONLINE
-Successfully connected to OracleDB
- Executing query [SELECT s.PAYMENT_TOKEN FROM RPT_ACTIVATIONS s where s.NOTICE_ID = '312117743190665805' and s.PA_FISCAL_CODE= '44444444444'] on OracleDB instance...
- Query executed successfully - [1] row/s found
-query_result:  ['ba0ab4248f374423b20c145571131f1d']
-paymentToken
-value:  ['ba0ab4248f374423b20c145571131f1d']
-Closing connection to the OracleDb...
-Connection to OracleDB closed successfully
-Connecting to the OracleDB... NODO_ONLINE
-Successfully connected to OracleDB
- Executing query [SELECT s.NODOINVIARPTREQ FROM RPT_ACTIVATIONS s where s.NOTICE_ID = '312117743190665805' and s.PA_FISCAL_CODE= '44444444444'] on OracleDB instance...
- Query executed successfully - [1] row/s found
-query_result:  ['N']
-value:  ['N']
-Closing connection to the OracleDb...
-Connection to OracleDB closed successfully
-Connecting to the OracleDB... NODO_ONLINE
-Successfully connected to OracleDB
- Executing query [SELECT s.PAAATTIVARPTRESP FROM RPT_ACTIVATIONS s where s.NOTICE_ID = '312117743190665805' and s.PA_FISCAL_CODE= '44444444444'] on OracleDB instance...
- Query executed successfully - [1] row/s found
-query_result:  ['Y']
-value:  ['Y']
-Closing connection to the OracleDb...
-Connection to OracleDB closed successfully
-Connecting to the OracleDB... NODO_ONLINE
-Successfully connected to OracleDB
- Executing query [SELECT s.INSERTED_TIMESTAMP FROM RPT_ACTIVATIONS s where s.NOTICE_ID = '312117743190665805' and s.PA_FISCAL_CODE= '44444444444'] on OracleDB instance...
- Query executed successfully - [1] row/s found
-query_result:  [datetime.datetime(2022, 7, 13, 18, 7, 29, 701990)]
-NotNone
-Closing connection to the OracleDb...
-Connection to OracleDB closed successfully
-5
-HTTP status expected: 200 - obtained:200
-wait for: 5.0 seconds
-paymentToken
-url_nodo:  http://localhost:9080/nodo-dev/webservices/input
-nodo soap_request sent &gt;&gt;&gt; &lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd&quot;&gt;
-&lt;soapenv:Header/&gt;
-&lt;soapenv:Body&gt;
-&lt;nod:sendPaymentOutcomeReq&gt;
-&lt;idPSP&gt;70000000001&lt;/idPSP&gt;
-&lt;idBrokerPSP&gt;70000000001&lt;/idBrokerPSP&gt;
-&lt;idChannel&gt;70000000001_01&lt;/idChannel&gt;
-&lt;password&gt;pwdpwdpwd&lt;/password&gt;
-&lt;paymentToken&gt;ba0ab4248f374423b20c145571131f1d&lt;/paymentToken&gt;
-&lt;outcome&gt;OK&lt;/outcome&gt;
-&lt;details&gt;
-&lt;paymentMethod&gt;creditCard&lt;/paymentMethod&gt;
-&lt;paymentChannel&gt;app&lt;/paymentChannel&gt;
-&lt;fee&gt;2.00&lt;/fee&gt;
-&lt;payer&gt;
-&lt;uniqueIdentifier&gt;
-&lt;entityUniqueIdentifierType&gt;F&lt;/entityUniqueIdentifierType&gt;
-&lt;entityUniqueIdentifierValue&gt;RCCGLD09P09H502E&lt;/entityUniqueIdentifierValue&gt;
-&lt;/uniqueIdentifier&gt;
-&lt;fullName&gt;Gesualdo;Riccitelli&lt;/fullName&gt;
-&lt;streetName&gt;via del gesu&lt;/streetName&gt;
-&lt;civicNumber&gt;11&lt;/civicNumber&gt;
-&lt;postalCode&gt;00186&lt;/postalCode&gt;
-&lt;city&gt;Roma&lt;/city&gt;
-&lt;stateProvinceRegion&gt;RM&lt;/stateProvinceRegion&gt;
-&lt;country&gt;IT&lt;/country&gt;
-&lt;e-mail&gt;gesualdo.riccitelli@poste.it&lt;/e-mail&gt;
-&lt;/payer&gt;
-&lt;applicationDate&gt;2021-12-12&lt;/applicationDate&gt;
-&lt;transferDate&gt;2021-12-11&lt;/transferDate&gt;
-&lt;/details&gt;
-&lt;/nod:sendPaymentOutcomeReq&gt;
-&lt;/soapenv:Body&gt;
-&lt;/soapenv:Envelope&gt;
-b'&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot; ?&gt;&lt;soapenv:Envelope xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nfpsp=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd&quot; xmlns:tns=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForPsp.wsdl&quot;&gt;&lt;soapenv:Body&gt;&lt;nfpsp:sendPaymentOutcomeRes&gt;&lt;outcome&gt;KO&lt;/outcome&gt;&lt;fault&gt;&lt;faultCode&gt;PPT_TOKEN_SCADUTO&lt;/faultCode&gt;&lt;faultString&gt;paymentToken is expired&lt;/faultString&gt;&lt;id&gt;NodoDeiPagamentiSPC&lt;/id&gt;&lt;description&gt;paymentToken is expired&lt;/description&gt;&lt;/fault&gt;&lt;/nfpsp:sendPaymentOutcomeRes&gt;&lt;/soapenv:Body&gt;&lt;/soapenv:Envelope&gt;'
-fault code:  PPT_TOKEN_SCADUTO
-fault string:  paymentToken is expired
-description:  paymentToken is expired
-check tag &quot;outcome&quot; - expected: KO, obtained: KO
-fault code:  PPT_TOKEN_SCADUTO
-fault string:  paymentToken is expired
-description:  paymentToken is expired
-check tag &quot;faultCode&quot; - expected: PPT_TOKEN_SCADUTO, obtained: PPT_TOKEN_SCADUTO
-paymentToken
-paymentToken
-url_nodo:  http://localhost:9080/nodo-dev/webservices/input
-nodo soap_request sent &gt;&gt;&gt; &lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:ppt=&quot;http://ws.pagamenti.telematici.gov/ppthead&quot; xmlns:ws=&quot;http://ws.pagamenti.telematici.gov/&quot;&gt;
-&lt;soapenv:Header&gt;
-&lt;ppt:intestazionePPT&gt;
-&lt;identificativoIntermediarioPA&gt;44444444444&lt;/identificativoIntermediarioPA&gt;
-&lt;identificativoStazioneIntermediarioPA&gt;44444444444_05&lt;/identificativoStazioneIntermediarioPA&gt;
-&lt;identificativoDominio&gt;44444444444&lt;/identificativoDominio&gt;
-&lt;identificativoUnivocoVersamento&gt;12117743190665805&lt;/identificativoUnivocoVersamento&gt;
-&lt;codiceContestoPagamento&gt;ba0ab4248f374423b20c145571131f1d&lt;/codiceContestoPagamento&gt;
-&lt;/ppt:intestazionePPT&gt;
-&lt;/soapenv:Header&gt;
-&lt;soapenv:Body&gt;
-&lt;ws:nodoInviaRPT&gt;
-&lt;password&gt;pwdpwdpwd&lt;/password&gt;
-&lt;identificativoPSP&gt;15376371009&lt;/identificativoPSP&gt;
-&lt;identificativoIntermediarioPSP&gt;15376371009&lt;/identificativoIntermediarioPSP&gt;
-&lt;identificativoCanale&gt;15376371009_01&lt;/identificativoCanale&gt;
-&lt;tipoFirma&gt;&lt;/tipoFirma&gt;
-&lt;rpt&gt;PHBheV9pOlJQVCB4bWxuczpwYXlfaT0iaHR0cDovL3d3dy5kaWdpdHBhLmdvdi5pdC9zY2hlbWFzLzIwMTEvUGFnYW1lbnRpLyIgeG1sbnM6eHNpPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYS1pbnN0YW5jZSIgeHNpOnNjaGVtYUxvY2F0aW9uPSJodHRwOi8vd3d3LmRpZ2l0cGEuZ292Lml0L3NjaGVtYXMvMjAxMS9QYWdhbWVudGkvIFBhZ0luZl9SUFRfUlRfNl8wXzEueHNkICI+DQo8cGF5X2k6dmVyc2lvbmVPZ2dldHRvPjEuMDwvcGF5X2k6dmVyc2lvbmVPZ2dldHRvPg0KPHBheV9pOmRvbWluaW8+DQo8cGF5X2k6aWRlbnRpZmljYXRpdm9Eb21pbmlvPjQ0NDQ0NDQ0NDQ0PC9wYXlfaTppZGVudGlmaWNhdGl2b0RvbWluaW8+DQo8cGF5X2k6aWRlbnRpZmljYXRpdm9TdGF6aW9uZVJpY2hpZWRlbnRlPjQ0NDQ0NDQ0NDQ0XzA1PC9wYXlfaTppZGVudGlmaWNhdGl2b1N0YXppb25lUmljaGllZGVudGU+DQo8L3BheV9pOmRvbWluaW8+DQo8cGF5X2k6aWRlbnRpZmljYXRpdm9NZXNzYWdnaW9SaWNoaWVzdGE+TVNHUklDSElFU1RBMDE8L3BheV9pOmlkZW50aWZpY2F0aXZvTWVzc2FnZ2lvUmljaGllc3RhPg0KPHBheV9pOmRhdGFPcmFNZXNzYWdnaW9SaWNoaWVzdGE+MjAxNi0wOS0xNlQxMToyNDoxMDwvcGF5X2k6ZGF0YU9yYU1lc3NhZ2dpb1JpY2hpZXN0YT4NCjxwYXlfaTphdXRlbnRpY2F6aW9uZVNvZ2dldHRvPkNOUzwvcGF5X2k6YXV0ZW50aWNhemlvbmVTb2dnZXR0bz4NCjxwYXlfaTpzb2dnZXR0b1ZlcnNhbnRlPg0KPHBheV9pOmlkZW50aWZpY2F0aXZvVW5pdm9jb1ZlcnNhbnRlPg0KPHBheV9pOnRpcG9JZGVudGlmaWNhdGl2b1VuaXZvY28+RjwvcGF5X2k6dGlwb0lkZW50aWZpY2F0aXZvVW5pdm9jbz4NCjxwYXlfaTpjb2RpY2VJZGVudGlmaWNhdGl2b1VuaXZvY28+UkNDR0xEMDlQMDlINTAyRTwvcGF5X2k6Y29kaWNlSWRlbnRpZmljYXRpdm9Vbml2b2NvPg0KPC9wYXlfaTppZGVudGlmaWNhdGl2b1VuaXZvY29WZXJzYW50ZT4NCjxwYXlfaTphbmFncmFmaWNhVmVyc2FudGU+R2VzdWFsZG87UmljY2l0ZWxsaTwvcGF5X2k6YW5hZ3JhZmljYVZlcnNhbnRlPg0KPHBheV9pOmluZGlyaXp6b1ZlcnNhbnRlPnZpYSBkZWwgZ2VzdTwvcGF5X2k6aW5kaXJpenpvVmVyc2FudGU+DQo8cGF5X2k6Y2l2aWNvVmVyc2FudGU+MTE8L3BheV9pOmNpdmljb1ZlcnNhbnRlPg0KPHBheV9pOmNhcFZlcnNhbnRlPjAwMTg2PC9wYXlfaTpjYXBWZXJzYW50ZT4NCjxwYXlfaTpsb2NhbGl0YVZlcnNhbnRlPlJvbWE8L3BheV9pOmxvY2FsaXRhVmVyc2FudGU+DQo8cGF5X2k6cHJvdmluY2lhVmVyc2FudGU+Uk08L3BheV9pOnByb3ZpbmNpYVZlcnNhbnRlPg0KPHBheV9pOm5hemlvbmVWZXJzYW50ZT5JVDwvcGF5X2k6bmF6aW9uZVZlcnNhbnRlPg0KPHBheV9pOmUtbWFpbFZlcnNhbnRlPmdlc3VhbGRvLnJpY2NpdGVsbGlAcG9zdGUuaXQ8L3BheV9pOmUtbWFpbFZlcnNhbnRlPg0KPC9wYXlfaTpzb2dnZXR0b1ZlcnNhbnRlPg0KPHBheV9pOnNvZ2dldHRvUGFnYXRvcmU+DQo8cGF5X2k6aWRlbnRpZmljYXRpdm9Vbml2b2NvUGFnYXRvcmU+DQo8cGF5X2k6dGlwb0lkZW50aWZpY2F0aXZvVW5pdm9jbz5GPC9wYXlfaTp0aXBvSWRlbnRpZmljYXRpdm9Vbml2b2NvPg0KPHBheV9pOmNvZGljZUlkZW50aWZpY2F0aXZvVW5pdm9jbz5SQ0NHTEQwOVAwOUg1MDFFPC9wYXlfaTpjb2RpY2VJZGVudGlmaWNhdGl2b1VuaXZvY28+DQo8L3BheV9pOmlkZW50aWZpY2F0aXZvVW5pdm9jb1BhZ2F0b3JlPg0KPHBheV9pOmFuYWdyYWZpY2FQYWdhdG9yZT5HZXN1YWxkbztSaWNjaXRlbGxpPC9wYXlfaTphbmFncmFmaWNhUGFnYXRvcmU+DQo8cGF5X2k6aW5kaXJpenpvUGFnYXRvcmU+dmlhIGRlbCBnZXN1PC9wYXlfaTppbmRpcml6em9QYWdhdG9yZT4NCjxwYXlfaTpjaXZpY29QYWdhdG9yZT4xMTwvcGF5X2k6Y2l2aWNvUGFnYXRvcmU+DQo8cGF5X2k6Y2FwUGFnYXRvcmU+MDAxODY8L3BheV9pOmNhcFBhZ2F0b3JlPg0KPHBheV9pOmxvY2FsaXRhUGFnYXRvcmU+Um9tYTwvcGF5X2k6bG9jYWxpdGFQYWdhdG9yZT4NCjxwYXlfaTpwcm92aW5jaWFQYWdhdG9yZT5STTwvcGF5X2k6cHJvdmluY2lhUGFnYXRvcmU+DQo8cGF5X2k6bmF6aW9uZVBhZ2F0b3JlPklUPC9wYXlfaTpuYXppb25lUGFnYXRvcmU+DQo8cGF5X2k6ZS1tYWlsUGFnYXRvcmU+Z2VzdWFsZG8ucmljY2l0ZWxsaUBwb3N0ZS5pdDwvcGF5X2k6ZS1tYWlsUGFnYXRvcmU+DQo8L3BheV9pOnNvZ2dldHRvUGFnYXRvcmU+DQo8cGF5X2k6ZW50ZUJlbmVmaWNpYXJpbz4NCjxwYXlfaTppZGVudGlmaWNhdGl2b1VuaXZvY29CZW5lZmljaWFyaW8+DQo8cGF5X2k6dGlwb0lkZW50aWZpY2F0aXZvVW5pdm9jbz5HPC9wYXlfaTp0aXBvSWRlbnRpZmljYXRpdm9Vbml2b2NvPg0KPHBheV9pOmNvZGljZUlkZW50aWZpY2F0aXZvVW5pdm9jbz4xMTExMTExMTExNzwvcGF5X2k6Y29kaWNlSWRlbnRpZmljYXRpdm9Vbml2b2NvPg0KPC9wYXlfaTppZGVudGlmaWNhdGl2b1VuaXZvY29CZW5lZmljaWFyaW8+DQo8cGF5X2k6ZGVub21pbmF6aW9uZUJlbmVmaWNpYXJpbz5BWklFTkRBIFhYWDwvcGF5X2k6ZGVub21pbmF6aW9uZUJlbmVmaWNpYXJpbz4NCjxwYXlfaTpjb2RpY2VVbml0T3BlckJlbmVmaWNpYXJpbz4xMjM8L3BheV9pOmNvZGljZVVuaXRPcGVyQmVuZWZpY2lhcmlvPg0KPHBheV9pOmRlbm9tVW5pdE9wZXJCZW5lZmljaWFyaW8+WFhYPC9wYXlfaTpkZW5vbVVuaXRPcGVyQmVuZWZpY2lhcmlvPg0KPHBheV9pOmluZGlyaXp6b0JlbmVmaWNpYXJpbz5JbmRpcml6em9CZW5lZmljaWFyaW88L3BheV9pOmluZGlyaXp6b0JlbmVmaWNpYXJpbz4NCjxwYXlfaTpjaXZpY29CZW5lZmljaWFyaW8+MTIzPC9wYXlfaTpjaXZpY29CZW5lZmljaWFyaW8+DQo8cGF5X2k6Y2FwQmVuZWZpY2lhcmlvPjIyMjIyPC9wYXlfaTpjYXBCZW5lZmljaWFyaW8+DQo8cGF5X2k6bG9jYWxpdGFCZW5lZmljaWFyaW8+Um9tYTwvcGF5X2k6bG9jYWxpdGFCZW5lZmljaWFyaW8+DQo8cGF5X2k6cHJvdmluY2lhQmVuZWZpY2lhcmlvPlJNPC9wYXlfaTpwcm92aW5jaWFCZW5lZmljaWFyaW8+DQo8cGF5X2k6bmF6aW9uZUJlbmVmaWNpYXJpbz5JVDwvcGF5X2k6bmF6aW9uZUJlbmVmaWNpYXJpbz4NCjwvcGF5X2k6ZW50ZUJlbmVmaWNpYXJpbz4NCjxwYXlfaTpkYXRpVmVyc2FtZW50bz4NCjxwYXlfaTpkYXRhRXNlY3V6aW9uZVBhZ2FtZW50bz4yMDE2LTA5LTE2PC9wYXlfaTpkYXRhRXNlY3V6aW9uZVBhZ2FtZW50bz4NCjxwYXlfaTppbXBvcnRvVG90YWxlRGFWZXJzYXJlPjEwLjAwPC9wYXlfaTppbXBvcnRvVG90YWxlRGFWZXJzYXJlPg0KPHBheV9pOnRpcG9WZXJzYW1lbnRvPlBPPC9wYXlfaTp0aXBvVmVyc2FtZW50bz4NCjxwYXlfaTppZGVudGlmaWNhdGl2b1VuaXZvY29WZXJzYW1lbnRvPjEyMTE3NzQzMTkwNjY1ODA1PC9wYXlfaTppZGVudGlmaWNhdGl2b1VuaXZvY29WZXJzYW1lbnRvPg0KPHBheV9pOmNvZGljZUNvbnRlc3RvUGFnYW1lbnRvPmJhMGFiNDI0OGYzNzQ0MjNiMjBjMTQ1NTcxMTMxZjFkPC9wYXlfaTpjb2RpY2VDb250ZXN0b1BhZ2FtZW50bz4NCjxwYXlfaTppYmFuQWRkZWJpdG8+SVQ5NlIwMTIzNDUxMjM0NTEyMzQ1Njc4OTA0PC9wYXlfaTppYmFuQWRkZWJpdG8+DQo8cGF5X2k6YmljQWRkZWJpdG8+QVJUSUlUTTEwNDU8L3BheV9pOmJpY0FkZGViaXRvPg0KPHBheV9pOmZpcm1hUmljZXZ1dGE+MDwvcGF5X2k6ZmlybWFSaWNldnV0YT4NCjxwYXlfaTpkYXRpU2luZ29sb1ZlcnNhbWVudG8+DQo8cGF5X2k6aW1wb3J0b1NpbmdvbG9WZXJzYW1lbnRvPjEwLjAwPC9wYXlfaTppbXBvcnRvU2luZ29sb1ZlcnNhbWVudG8+DQo8cGF5X2k6Y29tbWlzc2lvbmVDYXJpY29QQT4xLjAwPC9wYXlfaTpjb21taXNzaW9uZUNhcmljb1BBPg0KPHBheV9pOmliYW5BY2NyZWRpdG8+SVQ5NlIwMTIzNDU0MzIxMDAwMDAwMDEyMzQ1PC9wYXlfaTppYmFuQWNjcmVkaXRvPg0KPHBheV9pOmJpY0FjY3JlZGl0bz5BUlRJSVRNMTA1MDwvcGF5X2k6YmljQWNjcmVkaXRvPg0KPHBheV9pOmliYW5BcHBvZ2dpbz5JVDk2UjAxMjM0NTQzMjEwMDAwMDAwMTIzNDU8L3BheV9pOmliYW5BcHBvZ2dpbz4NCjxwYXlfaTpiaWNBcHBvZ2dpbz5BUlRJSVRNMTA1MDwvcGF5X2k6YmljQXBwb2dnaW8+DQo8cGF5X2k6Y3JlZGVuemlhbGlQYWdhdG9yZT5DUDEuMTwvcGF5X2k6Y3JlZGVuemlhbGlQYWdhdG9yZT4NCjxwYXlfaTpjYXVzYWxlVmVyc2FtZW50bz5wYWdhbWVudG8gZm90b2NvcGllIHByYXRpY2EgUlBUPC9wYXlfaTpjYXVzYWxlVmVyc2FtZW50bz4NCjxwYXlfaTpkYXRpU3BlY2lmaWNpUmlzY29zc2lvbmU+MS9hYmM8L3BheV9pOmRhdGlTcGVjaWZpY2lSaXNjb3NzaW9uZT4NCjwvcGF5X2k6ZGF0aVNpbmdvbG9WZXJzYW1lbnRvPg0KPC9wYXlfaTpkYXRpVmVyc2FtZW50bz4NCjwvcGF5X2k6UlBUPg0=&lt;/rpt&gt;
-&lt;/ws:nodoInviaRPT&gt;
-&lt;/soapenv:Body&gt;
-&lt;/soapenv:Envelope&gt;
-b'&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot; ?&gt;&lt;soapenv:Envelope xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:ppt=&quot;http://ws.pagamenti.telematici.gov/&quot; xmlns:tns=&quot;http://NodoPagamentiSPC.spcoop.gov.it/servizi/PagamentiTelematiciRPT&quot; xmlns:ppthead=&quot;http://ws.pagamenti.telematici.gov/ppthead&quot;&gt;&lt;soapenv:Body&gt;&lt;ppt:nodoInviaRPTRisposta&gt;&lt;fault&gt;&lt;faultCode&gt;PPT_SYSTEM_ERROR&lt;/faultCode&gt;&lt;faultString&gt;Errore generico.&lt;/faultString&gt;&lt;id&gt;NodoDeiPagamentiSPC&lt;/id&gt;&lt;description&gt;Errore generico.&lt;/description&gt;&lt;/fault&gt;&lt;esito&gt;KO&lt;/esito&gt;&lt;/ppt:nodoInviaRPTRisposta&gt;&lt;/soapenv:Body&gt;&lt;/soapenv:Envelope&gt;'
-fault code:  PPT_SYSTEM_ERROR
-fault string:  Errore generico.
-description:  Errore generico.
-check tag &quot;esito&quot; - expected: OK, obtained: KO</pre>
-                  
-            </span>
-          </li>
-        </ol>
-        <span/>
-      </div>
-      <div class="scenario">
-        <span class="scenario_file">src/integ-test/bdd-test/features/NewMod3/flows/RetryATokenScaduto/retry_a_token_scaduto_Retry_PaOld_24.feature:230</span>
-        <h3 onclick="Collapsible_toggle('scenario_7')" class="failed">
-          <span class="val">Scenario: Execution test rety_PaOld_24</span>
-        </h3>
-        <ol class="scenario_steps" id="scenario_7">
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">Given </span>
-              <span class="step val">systems up</span>
-              <small class="step_duration">(0.001s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:27</span>
-            </div>
-            <span class="embed"/>
-            <table>
-              <tr>
-                <th>name</th>
-                <th>url</th>
-                <th>healthcheck</th>
-                <th>soap_service</th>
-                <th>rest_service</th>
-              </tr>
-              <tr>
-                <td>nodo-dei-pagamenti</td>
-                <td>http://localhost:9080/</td>
-                <td>nodo-dev-health/ready</td>
-                <td>nodo-dev/webservices/input</td>
-                <td>nodo-dev</td>
-              </tr>
-              <tr>
-                <td>mock-ec</td>
-                <td>http://localhost:8089/</td>
-                <td>servizi/PagamentiTelematiciRPT/info</td>
-                <td>servizi/PagamentiTelematiciRPT</td>
-                <td/>
-              </tr>
-            </table>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
-                <span>initial XML </span>
-                <b>verifyPaymentNotice</b>
-                <span/>
-              </span>
-              <small class="step_duration">(0.003s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:54</span>
-            </div>
-            <span class="embed"/>
-            <div class="message">
-              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd&quot;&gt;
-&lt;soapenv:Header/&gt;
-&lt;soapenv:Body&gt;
-&lt;nod:verifyPaymentNoticeReq&gt;
-&lt;idPSP&gt;70000000001&lt;/idPSP&gt;
-&lt;idBrokerPSP&gt;70000000001&lt;/idBrokerPSP&gt;
-&lt;idChannel&gt;70000000001_01&lt;/idChannel&gt;
-&lt;password&gt;pwdpwdpwd&lt;/password&gt;
-&lt;qrCode&gt;
-&lt;fiscalCode&gt;#creditor_institution_code_old#&lt;/fiscalCode&gt;
-&lt;noticeNumber&gt;#notice_number_old#&lt;/noticeNumber&gt;
-&lt;/qrCode&gt;
-&lt;/nod:verifyPaymentNoticeReq&gt;
-&lt;/soapenv:Body&gt;
-&lt;/soapenv:Envelope&gt;
-</pre>
-            </div>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
-                <span>EC </span>
-                <b>old</b>
-                <span> version</span>
-              </span>
-              <small class="step_duration">(0.001s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:48</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step failed">
-            <div class="step_name">
-              <span class="keyword">Given </span>
-              <span class="step val">
-                <span>the </span>
-                <b>Execute nodoInviaRPT request</b>
-                <span> scenario executed successfully</span>
-              </span>
-              <small class="step_duration">(14.128s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:308</span>
-            </div>
-            <span class="embed">
-              <a onclick="Collapsible_toggle('embed_2')">Error Message</a>
-              <pre id="embed_2" style="display: none">Assertion Failed: FAILED SUB-STEP: Then check esito is OK of nodoInviaRPT response
-Substep info: Traceback (most recent call last):
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\behave\model.py&quot;, line 1329, in run
-    match.run(runner.context)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\behave\matchers.py&quot;, line 98, in run
-    self.func(context, *args, **kwargs)
-  File &quot;src\integ-test\bdd-test\features\steps\steps.py&quot;, line 168, in step_impl
-    assert value == data
-AssertionError
-
-Traceback (of failed substep):
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\behave\model.py&quot;, line 1329, in run
-    match.run(runner.context)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\behave\matchers.py&quot;, line 98, in run
-    self.func(context, *args, **kwargs)
-  File &quot;src\integ-test\bdd-test\features\steps\steps.py&quot;, line 168, in step_impl
-    assert value == data
-
-Captured stdout:
-url_nodo:  http://localhost:9080/nodo-dev/webservices/input
-nodo soap_request sent &gt;&gt;&gt; &lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd&quot;&gt;
-&lt;soapenv:Header/&gt;
-&lt;soapenv:Body&gt;
-&lt;nod:verifyPaymentNoticeReq&gt;
-&lt;idPSP&gt;70000000001&lt;/idPSP&gt;
-&lt;idBrokerPSP&gt;70000000001&lt;/idBrokerPSP&gt;
-&lt;idChannel&gt;70000000001_01&lt;/idChannel&gt;
-&lt;password&gt;pwdpwdpwd&lt;/password&gt;
-&lt;qrCode&gt;
-&lt;fiscalCode&gt;44444444444&lt;/fiscalCode&gt;
-&lt;noticeNumber&gt;312116914223456328&lt;/noticeNumber&gt;
-&lt;/qrCode&gt;
-&lt;/nod:verifyPaymentNoticeReq&gt;
-&lt;/soapenv:Body&gt;
-&lt;/soapenv:Envelope&gt;
-b'&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot; ?&gt;&lt;soapenv:Envelope xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nfpsp=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd&quot; xmlns:tns=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForPsp.wsdl&quot;&gt;&lt;soapenv:Body&gt;&lt;nfpsp:verifyPaymentNoticeRes&gt;&lt;outcome&gt;OK&lt;/outcome&gt;&lt;paymentList&gt;&lt;paymentOptionDescription&gt;&lt;amount&gt;1.00&lt;/amount&gt;&lt;options&gt;EQ&lt;/options&gt;&lt;paymentNote&gt;prova/RFDB/019551233153100/TXT/&lt;/paymentNote&gt;&lt;/paymentOptionDescription&gt;&lt;/paymentList&gt;&lt;paymentDescription&gt;prova/RFDB/019551233153100/TXT/&lt;/paymentDescription&gt;&lt;fiscalCodePA&gt;44444444444&lt;/fiscalCodePA&gt;&lt;companyName&gt;Pa Gabri&lt;/companyName&gt;&lt;/nfpsp:verifyPaymentNoticeRes&gt;&lt;/soapenv:Body&gt;&lt;/soapenv:Envelope&gt;'
-check tag &quot;outcome&quot; - expected: OK, obtained: OK
-url_nodo:  http://localhost:9080/nodo-dev/webservices/input
-nodo soap_request sent &gt;&gt;&gt; &lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd&quot;&gt;
-&lt;soapenv:Header/&gt;
-&lt;soapenv:Body&gt;
-&lt;nod:activatePaymentNoticeReq&gt;
-&lt;idPSP&gt;70000000001&lt;/idPSP&gt;
-&lt;idBrokerPSP&gt;70000000001&lt;/idBrokerPSP&gt;
-&lt;idChannel&gt;70000000001_01&lt;/idChannel&gt;
-&lt;password&gt;pwdpwdpwd&lt;/password&gt;
-&lt;idempotencyKey&gt;70000000001_8475471854&lt;/idempotencyKey&gt;
-&lt;qrCode&gt;
-&lt;fiscalCode&gt;44444444444&lt;/fiscalCode&gt;
-&lt;noticeNumber&gt;312115387275946247&lt;/noticeNumber&gt;
-&lt;/qrCode&gt;
-&lt;expirationTime&gt;2000&lt;/expirationTime&gt;
-&lt;amount&gt;10.00&lt;/amount&gt;
-&lt;paymentNote&gt;causale&lt;/paymentNote&gt;
-&lt;/nod:activatePaymentNoticeReq&gt;
-&lt;/soapenv:Body&gt;
-&lt;/soapenv:Envelope&gt;
-b'&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot; ?&gt;&lt;soapenv:Envelope xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nfpsp=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd&quot; xmlns:tns=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForPsp.wsdl&quot;&gt;&lt;soapenv:Body&gt;&lt;nfpsp:activatePaymentNoticeRes&gt;&lt;outcome&gt;OK&lt;/outcome&gt;&lt;totalAmount&gt;10.00&lt;/totalAmount&gt;&lt;paymentDescription&gt;prova/RFDB/018701385178400/TXT/causale 0dfe2e934e6648f798c5d64ce2f4ab23&lt;/paymentDescription&gt;&lt;fiscalCodePA&gt;44444444444&lt;/fiscalCodePA&gt;&lt;companyName&gt;Pa Gabri&lt;/companyName&gt;&lt;paymentToken&gt;716f6aabf2954e7ab96fa49351f25474&lt;/paymentToken&gt;&lt;transferList&gt;&lt;transfer&gt;&lt;idTransfer&gt;1&lt;/idTransfer&gt;&lt;transferAmount&gt;10.00&lt;/transferAmount&gt;&lt;fiscalCodePA&gt;44444444444&lt;/fiscalCodePA&gt;&lt;IBAN&gt;IT45R0760103200000000001016&lt;/IBAN&gt;&lt;remittanceInformation&gt;prova/RFDB/018701385178400/TXT/causale 0dfe2e934e6648f798c5d64ce2f4ab23&lt;/remittanceInformation&gt;&lt;/transfer&gt;&lt;/transferList&gt;&lt;creditorReferenceId&gt;12115387275946247&lt;/creditorReferenceId&gt;&lt;/nfpsp:activatePaymentNoticeRes&gt;&lt;/soapenv:Body&gt;&lt;/soapenv:Envelope&gt;'
-check tag &quot;outcome&quot; - expected: OK, obtained: OK
-Connecting to the OracleDB... NODO_ONLINE
-Successfully connected to OracleDB
- Executing query [SELECT s.CREDITOR_REFERENCE_ID FROM RPT_ACTIVATIONS s where s.NOTICE_ID = '312115387275946247' and s.PA_FISCAL_CODE= '44444444444'] on OracleDB instance...
- Query executed successfully - [1] row/s found
-query_result:  ['12115387275946247']
-value:  [1.2115387275946248e+16]
-Closing connection to the OracleDb...
-Connection to OracleDB closed successfully
-Connecting to the OracleDB... NODO_ONLINE
-Successfully connected to OracleDB
- Executing query [SELECT s.PAYMENT_TOKEN FROM RPT_ACTIVATIONS s where s.NOTICE_ID = '312115387275946247' and s.PA_FISCAL_CODE= '44444444444'] on OracleDB instance...
- Query executed successfully - [1] row/s found
-query_result:  ['716f6aabf2954e7ab96fa49351f25474']
-paymentToken
-value:  ['716f6aabf2954e7ab96fa49351f25474']
-Closing connection to the OracleDb...
-Connection to OracleDB closed successfully
-Connecting to the OracleDB... NODO_ONLINE
-Successfully connected to OracleDB
- Executing query [SELECT s.NODOINVIARPTREQ FROM RPT_ACTIVATIONS s where s.NOTICE_ID = '312115387275946247' and s.PA_FISCAL_CODE= '44444444444'] on OracleDB instance...
- Query executed successfully - [1] row/s found
-query_result:  ['N']
-value:  ['N']
-Closing connection to the OracleDb...
-Connection to OracleDB closed successfully
-Connecting to the OracleDB... NODO_ONLINE
-Successfully connected to OracleDB
- Executing query [SELECT s.PAAATTIVARPTRESP FROM RPT_ACTIVATIONS s where s.NOTICE_ID = '312115387275946247' and s.PA_FISCAL_CODE= '44444444444'] on OracleDB instance...
- Query executed successfully - [1] row/s found
-query_result:  ['Y']
-value:  ['Y']
-Closing connection to the OracleDb...
-Connection to OracleDB closed successfully
-Connecting to the OracleDB... NODO_ONLINE
-Successfully connected to OracleDB
- Executing query [SELECT s.INSERTED_TIMESTAMP FROM RPT_ACTIVATIONS s where s.NOTICE_ID = '312115387275946247' and s.PA_FISCAL_CODE= '44444444444'] on OracleDB instance...
- Query executed successfully - [1] row/s found
-query_result:  [datetime.datetime(2022, 7, 13, 18, 7, 43, 991745)]
-NotNone
-Closing connection to the OracleDb...
-Connection to OracleDB closed successfully
-5
-HTTP status expected: 200 - obtained:200
-wait for: 5.0 seconds
-paymentToken
-url_nodo:  http://localhost:9080/nodo-dev/webservices/input
-nodo soap_request sent &gt;&gt;&gt; &lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd&quot;&gt;
-&lt;soapenv:Header/&gt;
-&lt;soapenv:Body&gt;
-&lt;nod:sendPaymentOutcomeReq&gt;
-&lt;idPSP&gt;70000000001&lt;/idPSP&gt;
-&lt;idBrokerPSP&gt;70000000001&lt;/idBrokerPSP&gt;
-&lt;idChannel&gt;70000000001_01&lt;/idChannel&gt;
-&lt;password&gt;pwdpwdpwd&lt;/password&gt;
-&lt;paymentToken&gt;716f6aabf2954e7ab96fa49351f25474&lt;/paymentToken&gt;
-&lt;outcome&gt;OK&lt;/outcome&gt;
-&lt;details&gt;
-&lt;paymentMethod&gt;creditCard&lt;/paymentMethod&gt;
-&lt;paymentChannel&gt;app&lt;/paymentChannel&gt;
-&lt;fee&gt;2.00&lt;/fee&gt;
-&lt;payer&gt;
-&lt;uniqueIdentifier&gt;
-&lt;entityUniqueIdentifierType&gt;F&lt;/entityUniqueIdentifierType&gt;
-&lt;entityUniqueIdentifierValue&gt;RCCGLD09P09H502E&lt;/entityUniqueIdentifierValue&gt;
-&lt;/uniqueIdentifier&gt;
-&lt;fullName&gt;Gesualdo;Riccitelli&lt;/fullName&gt;
-&lt;streetName&gt;via del gesu&lt;/streetName&gt;
-&lt;civicNumber&gt;11&lt;/civicNumber&gt;
-&lt;postalCode&gt;00186&lt;/postalCode&gt;
-&lt;city&gt;Roma&lt;/city&gt;
-&lt;stateProvinceRegion&gt;RM&lt;/stateProvinceRegion&gt;
-&lt;country&gt;IT&lt;/country&gt;
-&lt;e-mail&gt;gesualdo.riccitelli@poste.it&lt;/e-mail&gt;
-&lt;/payer&gt;
-&lt;applicationDate&gt;2021-12-12&lt;/applicationDate&gt;
-&lt;transferDate&gt;2021-12-11&lt;/transferDate&gt;
-&lt;/details&gt;
-&lt;/nod:sendPaymentOutcomeReq&gt;
-&lt;/soapenv:Body&gt;
-&lt;/soapenv:Envelope&gt;
-b'&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot; ?&gt;&lt;soapenv:Envelope xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nfpsp=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd&quot; xmlns:tns=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForPsp.wsdl&quot;&gt;&lt;soapenv:Body&gt;&lt;nfpsp:sendPaymentOutcomeRes&gt;&lt;outcome&gt;KO&lt;/outcome&gt;&lt;fault&gt;&lt;faultCode&gt;PPT_TOKEN_SCADUTO&lt;/faultCode&gt;&lt;faultString&gt;paymentToken is expired&lt;/faultString&gt;&lt;id&gt;NodoDeiPagamentiSPC&lt;/id&gt;&lt;description&gt;paymentToken is expired&lt;/description&gt;&lt;/fault&gt;&lt;/nfpsp:sendPaymentOutcomeRes&gt;&lt;/soapenv:Body&gt;&lt;/soapenv:Envelope&gt;'
-fault code:  PPT_TOKEN_SCADUTO
-fault string:  paymentToken is expired
-description:  paymentToken is expired
-check tag &quot;outcome&quot; - expected: KO, obtained: KO
-fault code:  PPT_TOKEN_SCADUTO
-fault string:  paymentToken is expired
-description:  paymentToken is expired
-check tag &quot;faultCode&quot; - expected: PPT_TOKEN_SCADUTO, obtained: PPT_TOKEN_SCADUTO
-paymentToken
-paymentToken
-url_nodo:  http://localhost:9080/nodo-dev/webservices/input
-nodo soap_request sent &gt;&gt;&gt; &lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:ppt=&quot;http://ws.pagamenti.telematici.gov/ppthead&quot; xmlns:ws=&quot;http://ws.pagamenti.telematici.gov/&quot;&gt;
-&lt;soapenv:Header&gt;
-&lt;ppt:intestazionePPT&gt;
-&lt;identificativoIntermediarioPA&gt;44444444444&lt;/identificativoIntermediarioPA&gt;
-&lt;identificativoStazioneIntermediarioPA&gt;44444444444_05&lt;/identificativoStazioneIntermediarioPA&gt;
-&lt;identificativoDominio&gt;44444444444&lt;/identificativoDominio&gt;
-&lt;identificativoUnivocoVersamento&gt;12115387275946247&lt;/identificativoUnivocoVersamento&gt;
-&lt;codiceContestoPagamento&gt;716f6aabf2954e7ab96fa49351f25474&lt;/codiceContestoPagamento&gt;
-&lt;/ppt:intestazionePPT&gt;
-&lt;/soapenv:Header&gt;
-&lt;soapenv:Body&gt;
-&lt;ws:nodoInviaRPT&gt;
-&lt;password&gt;pwdpwdpwd&lt;/password&gt;
-&lt;identificativoPSP&gt;15376371009&lt;/identificativoPSP&gt;
-&lt;identificativoIntermediarioPSP&gt;15376371009&lt;/identificativoIntermediarioPSP&gt;
-&lt;identificativoCanale&gt;15376371009_01&lt;/identificativoCanale&gt;
-&lt;tipoFirma&gt;&lt;/tipoFirma&gt;
-&lt;rpt&gt;PHBheV9pOlJQVCB4bWxuczpwYXlfaT0iaHR0cDovL3d3dy5kaWdpdHBhLmdvdi5pdC9zY2hlbWFzLzIwMTEvUGFnYW1lbnRpLyIgeG1sbnM6eHNpPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYS1pbnN0YW5jZSIgeHNpOnNjaGVtYUxvY2F0aW9uPSJodHRwOi8vd3d3LmRpZ2l0cGEuZ292Lml0L3NjaGVtYXMvMjAxMS9QYWdhbWVudGkvIFBhZ0luZl9SUFRfUlRfNl8wXzEueHNkICI+DQo8cGF5X2k6dmVyc2lvbmVPZ2dldHRvPjEuMDwvcGF5X2k6dmVyc2lvbmVPZ2dldHRvPg0KPHBheV9pOmRvbWluaW8+DQo8cGF5X2k6aWRlbnRpZmljYXRpdm9Eb21pbmlvPjQ0NDQ0NDQ0NDQ0PC9wYXlfaTppZGVudGlmaWNhdGl2b0RvbWluaW8+DQo8cGF5X2k6aWRlbnRpZmljYXRpdm9TdGF6aW9uZVJpY2hpZWRlbnRlPjQ0NDQ0NDQ0NDQ0XzA1PC9wYXlfaTppZGVudGlmaWNhdGl2b1N0YXppb25lUmljaGllZGVudGU+DQo8L3BheV9pOmRvbWluaW8+DQo8cGF5X2k6aWRlbnRpZmljYXRpdm9NZXNzYWdnaW9SaWNoaWVzdGE+TVNHUklDSElFU1RBMDE8L3BheV9pOmlkZW50aWZpY2F0aXZvTWVzc2FnZ2lvUmljaGllc3RhPg0KPHBheV9pOmRhdGFPcmFNZXNzYWdnaW9SaWNoaWVzdGE+MjAxNi0wOS0xNlQxMToyNDoxMDwvcGF5X2k6ZGF0YU9yYU1lc3NhZ2dpb1JpY2hpZXN0YT4NCjxwYXlfaTphdXRlbnRpY2F6aW9uZVNvZ2dldHRvPkNOUzwvcGF5X2k6YXV0ZW50aWNhemlvbmVTb2dnZXR0bz4NCjxwYXlfaTpzb2dnZXR0b1ZlcnNhbnRlPg0KPHBheV9pOmlkZW50aWZpY2F0aXZvVW5pdm9jb1ZlcnNhbnRlPg0KPHBheV9pOnRpcG9JZGVudGlmaWNhdGl2b1VuaXZvY28+RjwvcGF5X2k6dGlwb0lkZW50aWZpY2F0aXZvVW5pdm9jbz4NCjxwYXlfaTpjb2RpY2VJZGVudGlmaWNhdGl2b1VuaXZvY28+UkNDR0xEMDlQMDlINTAyRTwvcGF5X2k6Y29kaWNlSWRlbnRpZmljYXRpdm9Vbml2b2NvPg0KPC9wYXlfaTppZGVudGlmaWNhdGl2b1VuaXZvY29WZXJzYW50ZT4NCjxwYXlfaTphbmFncmFmaWNhVmVyc2FudGU+R2VzdWFsZG87UmljY2l0ZWxsaTwvcGF5X2k6YW5hZ3JhZmljYVZlcnNhbnRlPg0KPHBheV9pOmluZGlyaXp6b1ZlcnNhbnRlPnZpYSBkZWwgZ2VzdTwvcGF5X2k6aW5kaXJpenpvVmVyc2FudGU+DQo8cGF5X2k6Y2l2aWNvVmVyc2FudGU+MTE8L3BheV9pOmNpdmljb1ZlcnNhbnRlPg0KPHBheV9pOmNhcFZlcnNhbnRlPjAwMTg2PC9wYXlfaTpjYXBWZXJzYW50ZT4NCjxwYXlfaTpsb2NhbGl0YVZlcnNhbnRlPlJvbWE8L3BheV9pOmxvY2FsaXRhVmVyc2FudGU+DQo8cGF5X2k6cHJvdmluY2lhVmVyc2FudGU+Uk08L3BheV9pOnByb3ZpbmNpYVZlcnNhbnRlPg0KPHBheV9pOm5hemlvbmVWZXJzYW50ZT5JVDwvcGF5X2k6bmF6aW9uZVZlcnNhbnRlPg0KPHBheV9pOmUtbWFpbFZlcnNhbnRlPmdlc3VhbGRvLnJpY2NpdGVsbGlAcG9zdGUuaXQ8L3BheV9pOmUtbWFpbFZlcnNhbnRlPg0KPC9wYXlfaTpzb2dnZXR0b1ZlcnNhbnRlPg0KPHBheV9pOnNvZ2dldHRvUGFnYXRvcmU+DQo8cGF5X2k6aWRlbnRpZmljYXRpdm9Vbml2b2NvUGFnYXRvcmU+DQo8cGF5X2k6dGlwb0lkZW50aWZpY2F0aXZvVW5pdm9jbz5GPC9wYXlfaTp0aXBvSWRlbnRpZmljYXRpdm9Vbml2b2NvPg0KPHBheV9pOmNvZGljZUlkZW50aWZpY2F0aXZvVW5pdm9jbz5SQ0NHTEQwOVAwOUg1MDFFPC9wYXlfaTpjb2RpY2VJZGVudGlmaWNhdGl2b1VuaXZvY28+DQo8L3BheV9pOmlkZW50aWZpY2F0aXZvVW5pdm9jb1BhZ2F0b3JlPg0KPHBheV9pOmFuYWdyYWZpY2FQYWdhdG9yZT5HZXN1YWxkbztSaWNjaXRlbGxpPC9wYXlfaTphbmFncmFmaWNhUGFnYXRvcmU+DQo8cGF5X2k6aW5kaXJpenpvUGFnYXRvcmU+dmlhIGRlbCBnZXN1PC9wYXlfaTppbmRpcml6em9QYWdhdG9yZT4NCjxwYXlfaTpjaXZpY29QYWdhdG9yZT4xMTwvcGF5X2k6Y2l2aWNvUGFnYXRvcmU+DQo8cGF5X2k6Y2FwUGFnYXRvcmU+MDAxODY8L3BheV9pOmNhcFBhZ2F0b3JlPg0KPHBheV9pOmxvY2FsaXRhUGFnYXRvcmU+Um9tYTwvcGF5X2k6bG9jYWxpdGFQYWdhdG9yZT4NCjxwYXlfaTpwcm92aW5jaWFQYWdhdG9yZT5STTwvcGF5X2k6cHJvdmluY2lhUGFnYXRvcmU+DQo8cGF5X2k6bmF6aW9uZVBhZ2F0b3JlPklUPC9wYXlfaTpuYXppb25lUGFnYXRvcmU+DQo8cGF5X2k6ZS1tYWlsUGFnYXRvcmU+Z2VzdWFsZG8ucmljY2l0ZWxsaUBwb3N0ZS5pdDwvcGF5X2k6ZS1tYWlsUGFnYXRvcmU+DQo8L3BheV9pOnNvZ2dldHRvUGFnYXRvcmU+DQo8cGF5X2k6ZW50ZUJlbmVmaWNpYXJpbz4NCjxwYXlfaTppZGVudGlmaWNhdGl2b1VuaXZvY29CZW5lZmljaWFyaW8+DQo8cGF5X2k6dGlwb0lkZW50aWZpY2F0aXZvVW5pdm9jbz5HPC9wYXlfaTp0aXBvSWRlbnRpZmljYXRpdm9Vbml2b2NvPg0KPHBheV9pOmNvZGljZUlkZW50aWZpY2F0aXZvVW5pdm9jbz4xMTExMTExMTExNzwvcGF5X2k6Y29kaWNlSWRlbnRpZmljYXRpdm9Vbml2b2NvPg0KPC9wYXlfaTppZGVudGlmaWNhdGl2b1VuaXZvY29CZW5lZmljaWFyaW8+DQo8cGF5X2k6ZGVub21pbmF6aW9uZUJlbmVmaWNpYXJpbz5BWklFTkRBIFhYWDwvcGF5X2k6ZGVub21pbmF6aW9uZUJlbmVmaWNpYXJpbz4NCjxwYXlfaTpjb2RpY2VVbml0T3BlckJlbmVmaWNpYXJpbz4xMjM8L3BheV9pOmNvZGljZVVuaXRPcGVyQmVuZWZpY2lhcmlvPg0KPHBheV9pOmRlbm9tVW5pdE9wZXJCZW5lZmljaWFyaW8+WFhYPC9wYXlfaTpkZW5vbVVuaXRPcGVyQmVuZWZpY2lhcmlvPg0KPHBheV9pOmluZGlyaXp6b0JlbmVmaWNpYXJpbz5JbmRpcml6em9CZW5lZmljaWFyaW88L3BheV9pOmluZGlyaXp6b0JlbmVmaWNpYXJpbz4NCjxwYXlfaTpjaXZpY29CZW5lZmljaWFyaW8+MTIzPC9wYXlfaTpjaXZpY29CZW5lZmljaWFyaW8+DQo8cGF5X2k6Y2FwQmVuZWZpY2lhcmlvPjIyMjIyPC9wYXlfaTpjYXBCZW5lZmljaWFyaW8+DQo8cGF5X2k6bG9jYWxpdGFCZW5lZmljaWFyaW8+Um9tYTwvcGF5X2k6bG9jYWxpdGFCZW5lZmljaWFyaW8+DQo8cGF5X2k6cHJvdmluY2lhQmVuZWZpY2lhcmlvPlJNPC9wYXlfaTpwcm92aW5jaWFCZW5lZmljaWFyaW8+DQo8cGF5X2k6bmF6aW9uZUJlbmVmaWNpYXJpbz5JVDwvcGF5X2k6bmF6aW9uZUJlbmVmaWNpYXJpbz4NCjwvcGF5X2k6ZW50ZUJlbmVmaWNpYXJpbz4NCjxwYXlfaTpkYXRpVmVyc2FtZW50bz4NCjxwYXlfaTpkYXRhRXNlY3V6aW9uZVBhZ2FtZW50bz4yMDE2LTA5LTE2PC9wYXlfaTpkYXRhRXNlY3V6aW9uZVBhZ2FtZW50bz4NCjxwYXlfaTppbXBvcnRvVG90YWxlRGFWZXJzYXJlPjEwLjAwPC9wYXlfaTppbXBvcnRvVG90YWxlRGFWZXJzYXJlPg0KPHBheV9pOnRpcG9WZXJzYW1lbnRvPlBPPC9wYXlfaTp0aXBvVmVyc2FtZW50bz4NCjxwYXlfaTppZGVudGlmaWNhdGl2b1VuaXZvY29WZXJzYW1lbnRvPjEyMTE1Mzg3Mjc1OTQ2MjQ3PC9wYXlfaTppZGVudGlmaWNhdGl2b1VuaXZvY29WZXJzYW1lbnRvPg0KPHBheV9pOmNvZGljZUNvbnRlc3RvUGFnYW1lbnRvPjcxNmY2YWFiZjI5NTRlN2FiOTZmYTQ5MzUxZjI1NDc0PC9wYXlfaTpjb2RpY2VDb250ZXN0b1BhZ2FtZW50bz4NCjxwYXlfaTppYmFuQWRkZWJpdG8+SVQ5NlIwMTIzNDUxMjM0NTEyMzQ1Njc4OTA0PC9wYXlfaTppYmFuQWRkZWJpdG8+DQo8cGF5X2k6YmljQWRkZWJpdG8+QVJUSUlUTTEwNDU8L3BheV9pOmJpY0FkZGViaXRvPg0KPHBheV9pOmZpcm1hUmljZXZ1dGE+MDwvcGF5X2k6ZmlybWFSaWNldnV0YT4NCjxwYXlfaTpkYXRpU2luZ29sb1ZlcnNhbWVudG8+DQo8cGF5X2k6aW1wb3J0b1NpbmdvbG9WZXJzYW1lbnRvPjEwLjAwPC9wYXlfaTppbXBvcnRvU2luZ29sb1ZlcnNhbWVudG8+DQo8cGF5X2k6Y29tbWlzc2lvbmVDYXJpY29QQT4xLjAwPC9wYXlfaTpjb21taXNzaW9uZUNhcmljb1BBPg0KPHBheV9pOmliYW5BY2NyZWRpdG8+SVQ5NlIwMTIzNDU0MzIxMDAwMDAwMDEyMzQ1PC9wYXlfaTppYmFuQWNjcmVkaXRvPg0KPHBheV9pOmJpY0FjY3JlZGl0bz5BUlRJSVRNMTA1MDwvcGF5X2k6YmljQWNjcmVkaXRvPg0KPHBheV9pOmliYW5BcHBvZ2dpbz5JVDk2UjAxMjM0NTQzMjEwMDAwMDAwMTIzNDU8L3BheV9pOmliYW5BcHBvZ2dpbz4NCjxwYXlfaTpiaWNBcHBvZ2dpbz5BUlRJSVRNMTA1MDwvcGF5X2k6YmljQXBwb2dnaW8+DQo8cGF5X2k6Y3JlZGVuemlhbGlQYWdhdG9yZT5DUDEuMTwvcGF5X2k6Y3JlZGVuemlhbGlQYWdhdG9yZT4NCjxwYXlfaTpjYXVzYWxlVmVyc2FtZW50bz5wYWdhbWVudG8gZm90b2NvcGllIHByYXRpY2EgUlBUPC9wYXlfaTpjYXVzYWxlVmVyc2FtZW50bz4NCjxwYXlfaTpkYXRpU3BlY2lmaWNpUmlzY29zc2lvbmU+MS9hYmM8L3BheV9pOmRhdGlTcGVjaWZpY2lSaXNjb3NzaW9uZT4NCjwvcGF5X2k6ZGF0aVNpbmdvbG9WZXJzYW1lbnRvPg0KPC9wYXlfaTpkYXRpVmVyc2FtZW50bz4NCjwvcGF5X2k6UlBUPg0=&lt;/rpt&gt;
-&lt;/ws:nodoInviaRPT&gt;
-&lt;/soapenv:Body&gt;
-&lt;/soapenv:Envelope&gt;
-b'&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot; ?&gt;&lt;soapenv:Envelope xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:ppt=&quot;http://ws.pagamenti.telematici.gov/&quot; xmlns:tns=&quot;http://NodoPagamentiSPC.spcoop.gov.it/servizi/PagamentiTelematiciRPT&quot; xmlns:ppthead=&quot;http://ws.pagamenti.telematici.gov/ppthead&quot;&gt;&lt;soapenv:Body&gt;&lt;ppt:nodoInviaRPTRisposta&gt;&lt;fault&gt;&lt;faultCode&gt;PPT_SYSTEM_ERROR&lt;/faultCode&gt;&lt;faultString&gt;Errore generico.&lt;/faultString&gt;&lt;id&gt;NodoDeiPagamentiSPC&lt;/id&gt;&lt;description&gt;Errore generico.&lt;/description&gt;&lt;/fault&gt;&lt;esito&gt;KO&lt;/esito&gt;&lt;/ppt:nodoInviaRPTRisposta&gt;&lt;/soapenv:Body&gt;&lt;/soapenv:Envelope&gt;'
-fault code:  PPT_SYSTEM_ERROR
-fault string:  Errore generico.
-description:  Errore generico.
-check tag &quot;esito&quot; - expected: OK, obtained: KO</pre>
-                  
-            </span>
           </li>
         </ol>
         <span/>

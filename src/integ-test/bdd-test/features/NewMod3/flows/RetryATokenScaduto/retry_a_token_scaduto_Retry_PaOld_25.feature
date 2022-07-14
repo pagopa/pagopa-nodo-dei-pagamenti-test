@@ -226,7 +226,6 @@ Feature: process tests for generazioneRicevute
     Given the Execute Poller Annulli scenario executed successfully
     When job paInviaRt triggered after 0 seconds
     Then verify the HTTP status code of paInviaRt response is 200
-  #scenario trigger painviart
 
   # test execution
   Scenario: Execution test rety_PaOld_25
