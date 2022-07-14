@@ -69,11 +69,11 @@ stages:
               rootFolderOrFile: /home/vsts/work/1/s/
               includeRootFolder: false
               archiveType: zip
-              archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+              archiveFile: $(Build.ArtifactStagingDirectory)/nodo-dei-pagamenti.zip
               replaceExistingArchive: true
 
             
-          - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+          - publish: $(Build.ArtifactStagingDirectory)/nodo-dei-pagamenti.zip
             displayName: "Publish Virtual Enviroment (${{ parameters.env }})"
             artifact: $(artifactName)
             
@@ -98,15 +98,15 @@ stages:
             
           - script: |
              pwd
-             ls -la /agent/_work/1/
-             ls -la /agent/_work/1/TestSuite
+
+             ls -la $(downloadArtifactRelativePath)/$(artifactName)
              
-            displayName: 'After Extracting Archive'
+            displayName: 'Check After Downloading Archive'
             
           
           - task: ExtractFiles@1
             inputs:
-              archiveFilePatterns: $(downloadArtifactRelativePath)/$(artifactName)/*.zip
+              archiveFilePatterns: $(downloadArtifactRelativePath)/$(artifactName)/nodo-dei-pagamenti.zip
               cleanDestinationFolder: true
               overwriteExistingFiles: false
               
