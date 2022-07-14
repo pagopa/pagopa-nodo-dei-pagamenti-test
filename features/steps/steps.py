@@ -661,6 +661,7 @@ def step_impl(context):
     assert a
 
 
+
 @step('search a user\'s mail')
 def step_impl(context):
     context.driver.wait_until(By.XPATH, '/html/body/app-root/main/page-search/page-with-sidebar/div/div/div/div/div/section/div/app-search/div/div/div/div[3]/input').send_keys('fabio.pizzini@gft.com')
@@ -671,7 +672,7 @@ def step_impl(context):
 def step_impl(context):
     context.driver.find_element(By.XPATH,
                                 "//input[@placeholder='Cerca per numero di telefono con prefisso (es. +39)']").send_keys(
-        "ilariafurla91@gmail.com")
+        "+393470313278")
     context.driver.wait_until(By.XPATH,
                               '/html/body/app-root/main/page-search/page-with-sidebar/div/div/div/div/div/section/div/app-search/div/div/div/button').click()
 

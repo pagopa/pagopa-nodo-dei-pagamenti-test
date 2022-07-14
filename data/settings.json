@@ -2,9 +2,9 @@
     "prova": "prova1",
 
     "mockPayment": {
-        "url": "https://portal.test.pagopa.gov.it/pmmockserviceapiauth/nodo/sit/send/rpt",
+        "url": "https://api.dev.platform.pagopa.it/payment-manager/mock-services/v1/nodo/sit/send/rpt",
         "headers": {
-          "Ocp-Apim-Subscription-Key": "38d7e9a75c2a47429f698f84b4fc38a6",
+          "Ocp-Apim-Subscription-Key": "38be466128d341cdb47400a1a14cedfe",
           "Num-Payments": "1",
           "content-type": "application/json"
         },
