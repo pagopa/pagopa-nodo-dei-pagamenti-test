@@ -13,7 +13,9 @@ parameters:
       - sit
 
 variables:
-  checkoutpath: $(System.DefaultWorkingDirectory)
+
+  nodopath: /home/vsts/work/1/s/pagopa-nodo-dei-pagamenti-test
+  archivepath: pagopa-nodo-dei-pagamenti-test
 
 stages:
   - stage: python_env
@@ -33,19 +35,13 @@ stages:
               versionSpec: '3.10'
             
           - script: |
-              pwd
-              ls -la
               sudo apt install python3-venv
-              cd $(System.DefaultWorkingDirectory)/pagopa-nodo-dei-pagamenti-test
+              cd $(nodopath)
               python3 -m venv env
               source ./env/bin/activate
-              pwd
-              ls -la
             displayName: 'Create Virtual Environment  (${{ parameters.env }})'
             
           - script: |
-              pwd
-              ls -la
               sudo apt-get install build-essential unzip
               cd ./env
               sudo mkdir oracle
@@ -54,8 +50,6 @@ stages:
               sudo unzip instantclient-basic-linux.x64-21.6.0.0.0dbru.zip
               sudo apt update
               sudo apt install libaio1
-              pwd
-              ls -la
             displayName: 'Install Oracle Instant Client (${{ parameters.env }})'
             
           - script: |
@@ -63,7 +57,17 @@ stages:
              ls -la
              python3 -m pip install -r requirements.txt
             displayName: 'Install requirements (${{ parameters.env }})'
+
+          - task: ArchiveFiles@2
+            displayName: 'Archive files (${{ parameters.env }})'
+            inputs:
+              rootFolderOrFile: '$(nodopath)'
+              includeRootFolder: false
+              archiveType: zip
+              archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+              replaceExistingArchive: true
+
             
-          #- publish: $(Agent.DefaultWorkingDirectory)
-            #displayName: "Publish Behave Test Suite (${{ parameters.env }})"
-            #artifact: TestSuite
+          - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+            displayName: "Publish Virtual Enviroment (${{ parameters.env }})"
+            artifact: TestSuite
