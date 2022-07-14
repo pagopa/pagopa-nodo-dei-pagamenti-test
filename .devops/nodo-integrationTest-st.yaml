@@ -15,7 +15,7 @@ parameters:
 variables:
 
   nodopath: /home/vsts/work/1/s/pagopa-nodo-dei-pagamenti-test
-  archivepath: pagopa-nodo-dei-pagamenti-test
+  
 
 stages:
   - stage: python_env
@@ -56,12 +56,15 @@ stages:
              pwd
              ls -la
              python3 -m pip install -r requirements.txt
+             cd ./env
+             ls -la
+             pwd
             displayName: 'Install requirements (${{ parameters.env }})'
 
           - task: ArchiveFiles@2
             displayName: 'Archive files (${{ parameters.env }})'
             inputs:
-              rootFolderOrFile: '$(nodopath)'
+              rootFolderOrFile: /home/vsts/work/1/s/
               includeRootFolder: false
               archiveType: zip
               archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
