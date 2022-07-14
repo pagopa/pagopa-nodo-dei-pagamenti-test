@@ -12,22 +12,47 @@ parameters:
       - dev
       - sit
 
-#variables:
-
+variables:
+  checkoutpath: $(System.DefaultWorkingDirectory)/s
 
 stages:
-  - stage: retrieve_testsuite
+  - stage: python_env
     displayName: "Fetch Test Suite (${{ parameters.env }})"
-    variables:
-      - group: nodo-${{ parameters.env }}   
     jobs:
-      - job: execute
-        displayName: "Execute Test Suite (${{ parameters.env }})"
-        pool: $(deploy-pool-${{ parameters.env }})
+      - job: 
+        displayName: "python_env"
         steps:
-          - checkout: none
-
+          - checkout: self
+            clean: true
+            persistCredentials: true
+            path: $(checkoutpath)
+            
+          - task: UsePythonVersion@0
+            displayName: 'Use Python 3.x'
+            inputs:
+              versionSpec: '3.10'
+            
           - script: |
-              pwd
-              ls -la
-              ls -la /agent/_work/_tool
+              sudo apt install python3-venv
+              cd $(checkoutpath)/pagopa-nodo-dei-pagamenti-test
+              python3 -m venv env
+              source ./env/bin/activate
+            displayName: 'Create Virtual Environment  (${{ parameters.env }})'
+            
+          - script: |
+              sudo apt-get install build-essential unzip
+              cd ./env
+              sudo mkdir oracle
+              cd oracle
+              sudo wget https://download.oracle.com/otn_software/linux/instantclient/216000/instantclient-basic-linux.x64-21.6.0.0.0dbru.zip
+              sudo unzip instantclient-basic-linux.x64-21.6.0.0.0dbru.zip
+              sudo apt update
+              sudo apt install libaio1
+            displayName: 'Install Oracle Instant Client (${{ parameters.env }})'
+            
+          - script: python3 -m pip install -r requirements.txt
+            displayName: 'Install requirements (${{ parameters.env }})'
+            
+          - publish: $(Agent.BuildDirectory)/s
+            displayName: "Publish Behave Test Suite (${{ parameters.env }})"
+            artifact: TestSuite
