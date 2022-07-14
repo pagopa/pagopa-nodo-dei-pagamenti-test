@@ -25,6 +25,7 @@ stages:
         displayName: "Execute Test Suite (${{ parameters.env }})"
         pool: $(deploy-pool-${{ parameters.env }})
         steps:
+          - checkout: none
 
           - script: |
               pwd
