@@ -51,71 +51,7 @@ Feature: DB checks for activateIOPayment primitive
                 </soapenv:Body>
             </soapenv:Envelope>
             """
-
-    Scenario: Execute activateIOPaymentReq request
-        When psp sends SOAP activateIOPayment to nodo-dei-pagamenti
-        Then check outcome is OK of activateIOPayment response
-
-    # [DB_AIPR_01]
-    Scenario: Check correctness POSITION_ACTIVATE table
-        Given the Execute activateIOPaymentReq request scenario executed successfully
-        Then checks the value $activateIOPayment.fiscalCode of the record at column PA_FISCAL_CODE of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
-        And checks the value $activateIOPayment.noticeNumber of the record at column NOTICE_ID of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
-        And checks the value $activateIOPaymentResponse.creditorReferenceId of the record at column CREDITOR_REFERENCE_ID of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
-        And checks the value $activateIOPayment.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
-        And checks the value $activateIOPayment.idempotencyKey of the record at column IDEMPOTENCY_KEY of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
-        And checks the value $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
-        And checks the value $activateIOPayment.dueDate of the record at column DUE_DATE of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
-        And checks the value $activateIOPayment.amount of the record at column AMOUNT of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
-
-    # [DB_AIPR_02]
-    Scenario: Check correctness POSITION_SERVICE table
-        Given the Execute activateIOPaymentReq request scenario executed successfully
-        Then checks the value $activateIOPaymentResponse.paymentDescription of the record at column DESCRIPTION of the table POSITION_SERVICE retrived by the query payment_status on db nodo_online under macro AppIO
-        And checks the value $activateIOPaymentResponse.companyName of the record at column COMPANY_NAME of the table POSITION_SERVICE retrived by the query payment_status on db nodo_online under macro AppIO
-        And checks the value $activateIOPaymentResponse.officeName of the record at column OFFICE_NAME of the table POSITION_SERVICE retrived by the query payment_status on db nodo_online under macro AppIO
-        And checks the value $activateIOPayment.entityUniqueIdentifierType of the record at column ENTITY_UNIQUE_IDENTIFIER_TYPE of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro AppIO
-        And checks the value $activateIOPayment.entityUniqueIdentifierValue of the record at column ENTITY_UNIQUE_IDENTIFIER_VALUE of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro AppIO
-        And checks the value $activateIOPayment.fullName of the record at column FULL_NAME of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro AppIO
-        And checks the value $activateIOPayment.streetName of the record at column STREET_NAME of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro AppIO
-        And checks the value $activateIOPayment.civicNumber of the record at column CIVIC_NUMBER of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro AppIO
-        And checks the value $activateIOPayment.postalCode of the record at column POSTAL_CODE of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro AppIO
-        And checks the value $activateIOPayment.city of the record at column CITY of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro AppIO
-        And checks the value $activateIOPayment.stateProvinceRegion of the record at column STATE_PROVINCE_REGION of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro AppIO
-        And checks the value $activateIOPayment.country of the record at column COUNTRY of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro AppIO
-        And checks the value $activateIOPayment.e-mail of the record at column EMAIL of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro AppIO
-
-    # [DB_AIPR_03]
-    Scenario: Check correctness POSITION_SERVICE table
-        Given the Execute activateIOPaymentReq request scenario executed successfully
-        And save activateIOPayment response in activateIOPayment_first
-        And random idempotencyKey having AGID_01 as idPSP in activateIOPayment
-        And noticeNumber with $activateIOPayment.noticeNumber in activateIOPayment
-        When psp sends SOAP activateIOPayment to nodo-dei-pagamenti
-        Then check outcome is KO of activateIOPayment response
-        And checks the value $activateIOPaymentResponse.companyName of the record at column COMPANY_NAME of the table POSITION_SERVICE retrived by the query payment_status on db nodo_online under macro AppIO
-        And checks the value $activateIOPaymentResponse.officeName of the record at column OFFICE_NAME of the table POSITION_SERVICE retrived by the query payment_status on db nodo_online under macro AppIO
-        And checks the value $activateIOPayment.entityUniqueIdentifierType of the record at column ENTITY_UNIQUE_IDENTIFIER_TYPE of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro AppIO
-        And checks the value $activateIOPayment.entityUniqueIdentifierValue of the record at column ENTITY_UNIQUE_IDENTIFIER_VALUE of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro AppIO
-        And checks the value $activateIOPayment.fullName of the record at column FULL_NAME of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro AppIO
-        And checks the value $activateIOPayment.streetName of the record at column STREET_NAME of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro AppIO
-        And checks the value $activateIOPayment.civicNumber of the record at column CIVIC_NUMBER of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro AppIO
-        And checks the value $activateIOPayment.postalCode of the record at column POSTAL_CODE of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro AppIO
-        And checks the value $activateIOPayment.city of the record at column CITY of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro AppIO
-        And checks the value $activateIOPayment.stateProvinceRegion of the record at column STATE_PROVINCE_REGION of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro AppIO
-        And checks the value $activateIOPayment.country of the record at column COUNTRY of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro AppIO
-        And checks the value $activateIOPayment.e-mail of the record at column EMAIL of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro AppIO
-
-    # [DB_AIPR_04]
-    Scenario: Check correctness POSITION_PAYMENT_PLAN table
-        Given the Execute activateIOPaymentReq request scenario executed successfully
-        Then checks the value $activateIOPaymentResponse.creditorReferenceId of the record at column CREDITOR_REFERENCE_ID of the table POSITION_PAYMENT_PLAN retrived by the query payment_status on db nodo_online under macro AppIO
-        And checks the value $activateIOPayment.dueDate of the record at column DUE_DATE of the table POSITION_PAYMENT_PLAN retrived by the query payment_status on db nodo_online under macro AppIO
-        And checks the value $activateIOPayment.amount of the record at column AMOUNT of the table POSITION_PAYMENT_PLAN retrived by the query payment_status on db nodo_online under macro AppIO
-
-    # [DB_AIPR_05]
-    Scenario: Check correctness POSITION_TRANSFER table
-        Given initial XML paGetPayment
+            And initial XML paGetPayment
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
                 <soapenv:Header />
@@ -161,7 +97,7 @@ Feature: DB checks for activateIOPayment primitive
                                 <!--1 to 5 repetitions:-->
                                 <transfer>
                                     <idTransfer>1</idTransfer>
-                                    <transferAmount>10.00</transferAmount>
+                                    <transferAmount>3.00</transferAmount>
                                     <fiscalCodePA>77777777777</fiscalCodePA>
                                     <IBAN>IT45R0760103200000000001016</IBAN>
                                     <remittanceInformation>testPaGetPayment</remittanceInformation>
@@ -169,7 +105,7 @@ Feature: DB checks for activateIOPayment primitive
                                 </transfer>
                                 <transfer>
                                     <idTransfer>2</idTransfer>
-                                    <transferAmount>10.00</transferAmount>
+                                    <transferAmount>3.00</transferAmount>
                                     <fiscalCodePA>77777777777</fiscalCodePA>
                                     <IBAN>IT45R0760103200000000001016</IBAN>
                                     <remittanceInformation>testPaGetPayment</remittanceInformation>
@@ -177,7 +113,7 @@ Feature: DB checks for activateIOPayment primitive
                                 </transfer>
                                 <transfer>
                                     <idTransfer>3</idTransfer>
-                                    <transferAmount>10.00</transferAmount>
+                                    <transferAmount>4.00</transferAmount>
                                     <fiscalCodePA>77777777777</fiscalCodePA>
                                     <IBAN>IT45R0760103200000000001016</IBAN>
                                     <remittanceInformation>testPaGetPayment</remittanceInformation>
@@ -197,11 +133,75 @@ Feature: DB checks for activateIOPayment primitive
                 </soapenv:Body>
             </soapenv:Envelope>
             """
-        And EC replies to nodo-dei-pagamenti with the paGetPayment
-        And the Execute activateIOPaymentReq request scenario executed successfully
-        Then checks the value $paGetPaymentResponse.creditorReferenceId of the record at column CREDITOR_REFERENCE_ID of the table POSITION_TRANSFER retrived by the query payment_status on db nodo_online under macro AppIO
-        And checks the value $paGetPaymentResponse.IBAN of the record at column IBAN of the table POSITION_TRANSFER retrived by the query payment_status on db nodo_online under macro AppIO
-        And checks the value $paGetPayment.paymentAmount of the record at column AMOUNT of the table POSITION_TRANSFER retrived by the query payment_status on db nodo_online under macro AppIO
+            And EC replies to nodo-dei-pagamenti with the paGetPayment
+
+    Scenario: Execute activateIOPaymentReq request
+        When psp sends SOAP activateIOPayment to nodo-dei-pagamenti
+        Then check outcome is OK of activateIOPayment response
+
+    # [DB_AIPR_01]
+    Scenario: Check correctness POSITION_ACTIVATE table
+        Given the Execute activateIOPaymentReq request scenario executed successfully
+        Then checks the value $activateIOPayment.fiscalCode of the record at column PA_FISCAL_CODE of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
+        And checks the value $activateIOPayment.noticeNumber of the record at column NOTICE_ID of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
+        And checks the value $activateIOPaymentResponse.creditorReferenceId of the record at column CREDITOR_REFERENCE_ID of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
+        And checks the value $activateIOPayment.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
+        And checks the value $activateIOPayment.idempotencyKey of the record at column IDEMPOTENCY_KEY of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
+        And checks the value $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
+        And checks the value $activateIOPayment.dueDate of the record at column DUE_DATE of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
+        And checks the value $activateIOPayment.amount of the record at column AMOUNT of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
+
+    # [DB_AIPR_02]
+    Scenario: Check correctness POSITION_SERVICE table
+        Given the Execute activateIOPaymentReq request scenario executed successfully
+        Then checks the value $activateIOPaymentResponse.paymentDescription of the record at column DESCRIPTION of the table POSITION_SERVICE retrived by the query payment_status on db nodo_online under macro AppIO
+        And checks the value $activateIOPaymentResponse.companyName of the record at column COMPANY_NAME of the table POSITION_SERVICE retrived by the query payment_status on db nodo_online under macro AppIO
+        And checks the value $activateIOPaymentResponse.officeName of the record at column OFFICE_NAME of the table POSITION_SERVICE retrived by the query payment_status on db nodo_online under macro AppIO
+        And checks the value $paGetPayment.entityUniqueIdentifierType of the record at column ENTITY_UNIQUE_IDENTIFIER_TYPE of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro AppIO
+        And checks the value $paGetPayment.entityUniqueIdentifierValue of the record at column ENTITY_UNIQUE_IDENTIFIER_VALUE of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro AppIO
+        And checks the value $paGetPayment.fullName of the record at column FULL_NAME of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro AppIO
+        And checks the value $paGetPayment.streetName of the record at column STREET_NAME of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro AppIO
+        And checks the value $paGetPayment.civicNumber of the record at column CIVIC_NUMBER of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro AppIO
+        And checks the value $paGetPayment.postalCode of the record at column POSTAL_CODE of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro AppIO
+        And checks the value $paGetPayment.city of the record at column CITY of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro AppIO
+        And checks the value $paGetPayment.stateProvinceRegion of the record at column STATE_PROVINCE_REGION of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro AppIO
+        And checks the value $paGetPayment.country of the record at column COUNTRY of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro AppIO
+        #And checks the value $paGetPayment.e-mail of the record at column EMAIL of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro AppIO
+
+    # [DB_AIPR_03]
+    Scenario: Check correctness POSITION_SERVICE table
+        Given the Execute activateIOPaymentReq request scenario executed successfully
+        And save activateIOPayment response in activateIOPayment_first
+        And random idempotencyKey having AGID_01 as idPSP in activateIOPayment
+        And noticeNumber with $activateIOPayment.noticeNumber in activateIOPayment
+        When psp sends SOAP activateIOPayment to nodo-dei-pagamenti
+        Then check outcome is KO of activateIOPayment response
+        And checks the value $paGetPayment.companyName of the record at column COMPANY_NAME of the table POSITION_SERVICE retrived by the query payment_status on db nodo_online under macro AppIO
+        And checks the value $paGetPayment.officeName of the record at column OFFICE_NAME of the table POSITION_SERVICE retrived by the query payment_status on db nodo_online under macro AppIO
+        And checks the value $paGetPayment.entityUniqueIdentifierType of the record at column ENTITY_UNIQUE_IDENTIFIER_TYPE of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro AppIO
+        And checks the value $paGetPayment.entityUniqueIdentifierValue of the record at column ENTITY_UNIQUE_IDENTIFIER_VALUE of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro AppIO
+        And checks the value $paGetPayment.fullName of the record at column FULL_NAME of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro AppIO
+        And checks the value $paGetPayment.streetName of the record at column STREET_NAME of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro AppIO
+        And checks the value $paGetPayment.civicNumber of the record at column CIVIC_NUMBER of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro AppIO
+        And checks the value $paGetPayment.postalCode of the record at column POSTAL_CODE of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro AppIO
+        And checks the value $paGetPayment.city of the record at column CITY of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro AppIO
+        And checks the value $paGetPayment.stateProvinceRegion of the record at column STATE_PROVINCE_REGION of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro AppIO
+        And checks the value $paGetPayment.country of the record at column COUNTRY of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro AppIO
+        #And checks the value $paGetPayment.e-mail of the record at column EMAIL of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro AppIO
+
+    # [DB_AIPR_04]
+    Scenario: Check correctness POSITION_PAYMENT_PLAN table
+        Given the Execute activateIOPaymentReq request scenario executed successfully
+        Then checks the value $activateIOPaymentResponse.creditorReferenceId of the record at column CREDITOR_REFERENCE_ID of the table POSITION_PAYMENT_PLAN retrived by the query payment_status on db nodo_online under macro AppIO
+        And checks the value $paGetPayment.dueDate of the record at column DUE_DATE of the table POSITION_PAYMENT_PLAN retrived by the query payment_status on db nodo_online under macro AppIO
+        And checks the value $paGetPayment.paymentAmount of the record at column AMOUNT of the table POSITION_PAYMENT_PLAN retrived by the query payment_status on db nodo_online under macro AppIO
+
+    # [DB_AIPR_05]
+    Scenario: Check correctness POSITION_TRANSFER table
+        Given the Execute activateIOPaymentReq request scenario executed successfully
+        Then checks the value $paGetPayment.creditorReferenceId of the record at column CREDITOR_REFERENCE_ID of the table POSITION_TRANSFER retrived by the query payment_status on db nodo_online under macro AppIO
+        And checks the value $paGetPayment.IBAN of the record at column IBAN of the table POSITION_TRANSFER retrived by the query payment_status on db nodo_online under macro AppIO
+        And checks the value $paGetPayment.transferAmount of the record at column AMOUNT of the table POSITION_TRANSFER retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value $paGetPayment.remittanceInformation of the record at column REMITTANCE_INFORMATION of the table POSITION_TRANSFER retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value $paGetPayment.transferCategory of the record at column TRANSFER_CATEGORY of the table POSITION_TRANSFER retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value $paGetPayment.idTransfer of the record at column TRANSFER_IDENTIFIER of the table POSITION_TRANSFER retrived by the query payment_status on db nodo_online under macro AppIO
@@ -209,16 +209,16 @@ Feature: DB checks for activateIOPayment primitive
     # [DB_AIPR_06]
     Scenario: Check correctness POSITION_SUBJECT table
         Given the Execute activateIOPaymentReq request scenario executed successfully
-        Then checks the value $activateIOPayment.entityUniqueIdentifierType of the record at column ENTITY_UNIQUE_IDENTIFIER_TYPE of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro AppIO
-        And checks the value $activateIOPayment.entityUniqueIdentifierValue of the record at column ENTITY_UNIQUE_IDENTIFIER_VALUE of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro AppIO
-        And checks the value $activateIOPayment.fullName of the record at column FULL_NAME of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro AppIO
-        And checks the value $activateIOPayment.streetName of the record at column STREET_NAME of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro AppIO
-        And checks the value $activateIOPayment.civicNumber of the record at column CIVIC_NUMBER of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro AppIO
-        And checks the value $activateIOPayment.postalCode of the record at column POSTAL_CODE of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro AppIO
-        And checks the value $activateIOPayment.city of the record at column CITY of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro AppIO
-        And checks the value $activateIOPayment.stateProvinceRegion of the record at column STATE_PROVINCE_REGION of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro AppIO
-        And checks the value $activateIOPayment.country of the record at column COUNTRY of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro AppIO
-        And checks the value $activateIOPayment.e-mail of the record at column EMAIL of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro AppIO
+        Then checks the value $paGetPayment.entityUniqueIdentifierType of the record at column ENTITY_UNIQUE_IDENTIFIER_TYPE of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro AppIO
+        And checks the value $paGetPayment.entityUniqueIdentifierValue of the record at column ENTITY_UNIQUE_IDENTIFIER_VALUE of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro AppIO
+        And checks the value $paGetPayment.fullName of the record at column FULL_NAME of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro AppIO
+        And checks the value $paGetPayment.streetName of the record at column STREET_NAME of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro AppIO
+        And checks the value $paGetPayment.civicNumber of the record at column CIVIC_NUMBER of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro AppIO
+        And checks the value $paGetPayment.postalCode of the record at column POSTAL_CODE of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro AppIO
+        And checks the value $paGetPayment.city of the record at column CITY of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro AppIO
+        And checks the value $paGetPayment.stateProvinceRegion of the record at column STATE_PROVINCE_REGION of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro AppIO
+        And checks the value $paGetPayment.country of the record at column COUNTRY of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro AppIO
+        #And checks the value $paGetPayment.e-mail of the record at column EMAIL of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro AppIO
 
     # [DB_AIPR_07]
     Scenario: Check correctness POSITION_PAYMENT table
@@ -246,7 +246,7 @@ Feature: DB checks for activateIOPayment primitive
         And checks the value None of the record at column CARRELLO_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value None of the record at column ORIGINAL_PAYMENT_TOKEN of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value Y of the record at column FLAG_IO of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
-        And checks the value Y of the record at column RICEVUTA_PM of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
+        #And checks the value N of the record at column RICEVUTA_PM of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
 
     # [DB_AIPR_08]
     Scenario: Check correctness POSITION_PAYMENT_STATUS table

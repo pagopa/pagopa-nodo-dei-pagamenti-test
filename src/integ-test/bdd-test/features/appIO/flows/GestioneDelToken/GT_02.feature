@@ -105,8 +105,7 @@ Feature: GT_02
             """
         Then verify the HTTP status code of inoltroEsito/carta response is 200
         And check esito is OK of inoltroEsito/carta response
-        #TODO: check TOKEN_VALID_TO column update (CORRETTO?)
-        #And checks the value nodoNotificaAnnullamento of the record at column UPDATED_BY of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
+        And checks the value nodoInoltraEsitoPagamentoCarta of the record at column UPDATED_BY of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value PAYING, PAYMENT_SENT, PAYMENT_ACCEPTED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value PAYMENT_ACCEPTED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro AppIO

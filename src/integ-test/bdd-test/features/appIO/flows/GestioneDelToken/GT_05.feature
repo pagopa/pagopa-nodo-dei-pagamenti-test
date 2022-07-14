@@ -130,6 +130,5 @@ Feature: GT_05
         Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
         When WISP sends rest GET notificaAnnullamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
         Then verify the HTTP status code of notificaAnnullamento response is 200
-        #TODO: check TOKEN_VALID_TO column update (CORRETTO?)
-        #And checks the value nodoNotificaAnnullamento of the record at column UPDATED_BY of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
+        And checks the value nodoNotificaAnnullamento of the record at column UPDATED_BY of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
         And restore initial configurations

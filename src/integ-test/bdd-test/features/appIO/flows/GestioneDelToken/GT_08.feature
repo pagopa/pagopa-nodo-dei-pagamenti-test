@@ -6,6 +6,8 @@ Feature: GT_08
 
     Scenario: Execute verifyPaymentNotice (Phase 1)
         Given nodo-dei-pagamenti has config parameter useIdempotency set to true
+        And nodo-dei-pagamenti has config parameter default_durata_token_IO set to 6000
+        And nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 6000
         And initial XML verifyPaymentNotice
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -114,7 +116,6 @@ Feature: GT_08
             """
         Then verify the HTTP status code of inoltroEsito/carta response is 200
         And check esito is OK of inoltroEsito/carta response
-        #TODO: check TOKEN_VALID_TO scaduto
 
     Scenario: Execute sendPaymentOutcome (Phase 5)
         Given the Execute nodoInoltraEsitoPagamentoCarta (Phase 4) scenario executed successfully
@@ -170,9 +171,9 @@ Feature: GT_08
         And PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcome response
         And check faultCode is PPT_SEMANTICA of sendPaymentOutcome response
+        And restore initial configurations
     
     Scenario: activateIOPayment1
         Given the sendPaymentOutcome scenario executed successfully
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
-        And restore initial configurations
