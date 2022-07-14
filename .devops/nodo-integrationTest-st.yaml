@@ -13,7 +13,7 @@ parameters:
       - sit
 
 variables:
-  checkoutpath: $(System.DefaultWorkingDirectory)/s
+  checkoutpath: $(System.DefaultWorkingDirectory)
 
 stages:
   - stage: python_env
