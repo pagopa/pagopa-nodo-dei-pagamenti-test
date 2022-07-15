@@ -14,7 +14,7 @@ parameters:
 
 variables:
   artifactName: TestSuite
-  artifactDownloadedPath: /agent/_work/1
+  artifactDownloadedPath: /agent/_work/nodo
 
 
   
@@ -79,8 +79,9 @@ stages:
         steps:
           - checkout: none          
           - script: |
+              sudo rm -rf $(artifactDownloadedPath)
               sudo mkdir $(artifactDownloadedPath)
-              sudo rm -Rf /agent/_work/1/nodo/34e91b6d-98d0-464a-863a-670483357abb.tmp
+              
             displayName: 'Create Folder to Download Pipeline Artifact'
           - task: DownloadPipelineArtifact@2
             inputs:
@@ -127,6 +128,6 @@ stages:
               #testRunTitle: Integration test Nodo $(Build.BuildNumber)
               #failTaskOnFailedTests: true
           - script: |
-             sudo rm -Rf $(artifactDownloadedPath)
-             ls -la $(artifactDownloadedPath)
+             sudo rm -rf $(artifactDownloadedPath)
+             
             displayName: 'Agent Pool CleanUP'
