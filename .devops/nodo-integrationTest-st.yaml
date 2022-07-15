@@ -24,7 +24,7 @@ stages:
     displayName: "Fetch Test Suite (${{ parameters.env }})"
     jobs:
       - job: 
-        displayName: "python_env"
+        displayName: "python_env (${{ parameters.env }})"
         steps:
           - checkout: self
             clean: true
