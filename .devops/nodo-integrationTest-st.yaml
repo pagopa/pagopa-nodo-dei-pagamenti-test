@@ -89,6 +89,7 @@ stages:
               cleanDestinationFolder: true
               overwriteExistingFiles: false
           - script: |
+              echo $(System.ArtifactsDirectory)/extracted/oracle/instantclient_21_6
               sudo sh -c "echo $(System.ArtifactsDirectory)/extracted/oracle/instantclient_21_6 > /etc/ld.so.conf.d/oracle-instantclient.conf"
               sudo ldconfig
             displayName: 'Linux ldconfig Command for Oracle Instant Client'
