@@ -36,12 +36,6 @@ stages:
             inputs:
               versionSpec: '3.10'
             
-          - #script: |
-              #sudo apt install python3-venv
-              #cd $(nodopath)
-              #python3 -m venv env
-              #source ./env/bin/activate
-            #displayName: 'Create Virtual Environment  (${{ parameters.env }})'
             
           - script: |
               sudo apt-get install build-essential unzip
