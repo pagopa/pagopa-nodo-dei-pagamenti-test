@@ -147,5 +147,12 @@ stages:
              echo "==== Read pyvenv.cfg file ==== "
              cat /agent/_work/1/a/extracted/env/pyvenv.cfg
 
+             echo "==== Activate Virtual Env ==== "
+             export PYTHONPATH=/agent/_work/1/a/extracted/env/lib/python3.10/site-packages
+             source /agent/_work/1/a/extracted/env/bin/activate
+
+             echo "==== PiP List ==== "
+             pip list
+
 
             displayName: 'Read Extracted Archive'  
