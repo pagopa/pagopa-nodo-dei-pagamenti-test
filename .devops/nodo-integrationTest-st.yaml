@@ -14,7 +14,8 @@ parameters:
 
 variables:
   artifactName: TestSuite
-  artifactDownloadedPath: /agent/_work/nodo
+  artifactDownloadedPath: /agent/_work/1
+  destinationFolderExtractArtifact: /nodo/extracted
 
 
   
@@ -91,12 +92,12 @@ stages:
           - task: ExtractFiles@1
             inputs:
               archiveFilePatterns: $(artifactDownloadedPath)/nodo-dei-pagamenti-NRT.zip
-              destinationFolder: $(artifactDownloadedPath)/extracted
+              destinationFolder: $(artifactDownloadedPath)/$(destinationFolderExtractArtifact)
               cleanDestinationFolder: true
               overwriteExistingFiles: false
           - script: |
-              echo $(artifactDownloadedPath)/extracted/oracle/instantclient_21_6
-              sudo sh -c "echo $(artifactDownloadedPath)/extracted/oracle/instantclient_21_6 > /etc/ld.so.conf.d/oracle-instantclient.conf"
+              echo $(artifactDownloadedPath)/$(destinationFolderExtractArtifact)/oracle/instantclient_21_6
+              sudo sh -c "echo $(artifactDownloadedPath)/$(destinationFolderExtractArtifact)/oracle/instantclient_21_6 > /etc/ld.so.conf.d/oracle-instantclient.conf"
               sudo ldconfig
             displayName: 'Linux ldconfig Command for Oracle Instant Client'
           - script: |
@@ -113,17 +114,17 @@ stages:
              which pip
              
              sudo pip3 install behave 
-             sudo pip3 install -U -r $(artifactDownloadedPath)/extracted/requirements.txt #Install Requirements
+             sudo pip3 install -U -r $(artifactDownloadedPath)/$(destinationFolderExtractArtifact)/requirements.txt #Install Requirements
              whereis behave
              which behave
 
              behave --help #Run behave
-             #behave --junit-directory=$(artifactDownloadedPath)/extracted/report --junit $(artifactDownloadedPath)/extracted/src/integ-test/bdd-test/features/NewMod3/flows/TestGenerazioneRicevute03/generazioneRicevute_flows_ko_PAnew.feature
+             #behave --junit-directory=$(artifactDownloadedPath)/$(destinationFolderExtractArtifact)/report --junit $(artifactDownloadedPath)/extracted/src/integ-test/bdd-test/features/NewMod3/flows/TestGenerazioneRicevute03/generazioneRicevute_flows_ko_PAnew.feature
             displayName: 'Install Python requirements'
           #- task: PublishTestResults@2
             #condition: succeededOrFailed()
             #inputs:
-              #testResultsFiles: '$(System.ArtifactsDirectory)/extracted/report/*.xml'
+              #testResultsFiles: '$(artifactDownloadedPath)/$(destinationFolderExtractArtifact)/report/*.xml'
               #mergeTestResults: true
               #testRunTitle: Integration test Nodo $(Build.BuildNumber)
               #failTaskOnFailedTests: true
