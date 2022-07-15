@@ -118,5 +118,8 @@ stages:
              pwd
              echo "Files Extracted: "
              ls -la /agent/_work/1/a/extracted
+
+             echo "Files Extracted Inside venv "
+             ls -la /agent/_work/1/a/extracted/env
              
             displayName: 'Read Extracted Archive'
