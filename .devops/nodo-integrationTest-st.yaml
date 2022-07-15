@@ -94,7 +94,7 @@ stages:
 
           - script: |
              mkdir /agent/_work/1/a/extracted/src/integ-test/bdd-test/features/steps/requirements
-             python3 -m pip install -r requirements.txt -t /agent/_work/1/a/extracted/src/integ-test/bdd-test/features/steps/requirements
+             python3 -m pip install -r /agent/_work/1/a/extracted/requirements.txt -t /agent/_work/1/a/extracted/src/integ-test/bdd-test/features/steps/requirements
              echo "Get requirements"
              ls -la /agent/_work/1/a/extracted/src/integ-test/bdd-test/features/steps/requirements
             displayName: 'Install requirements using pip (${{ parameters.env }})'
@@ -116,7 +116,8 @@ stages:
              export PYTHONPATH=$PYTHONPATH:/agent/_work/1/a/extracted/src/integ-test/bdd-test/features/steps/requirements
 
              echo "==== Files Extracted (da aggiungere conf check a db) ==== "
-             behave --junit-directory=report --junit /agent/_work/1/a/extracted/src/integ-test/bdd-test/features/NewMod3/flows/TestGenerazioneRicevute03/generazioneRicevute_flows_ko_PAnew.feature
+             which behave
+             #behave --junit-directory=report --junit /agent/_work/1/a/extracted/src/integ-test/bdd-test/features/NewMod3/flows/TestGenerazioneRicevute03/generazioneRicevute_flows_ko_PAnew.feature
 
 
             displayName: 'Read Extracted Archive'  
