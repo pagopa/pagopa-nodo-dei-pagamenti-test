@@ -95,14 +95,15 @@ stages:
           - script: |
              whereis python3
              whereis pip3
+             whereis pip
              echo $PATH
              export PATH=/usr/bin:$PATH
              echo $PATH
              which python3
              which pip3
              which pip
-             python3 -m pip install
-             sudo apt install python3-pip
-             python3 -m pip -r $(System.ArtifactsDirectory)/extracted/requirements.txt
+             /usr/bin/python3 -m pip install
+
+             pip3 install behave
              whereis behave
             displayName: 'Install Python requirements'
