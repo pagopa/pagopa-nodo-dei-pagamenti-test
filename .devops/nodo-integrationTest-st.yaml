@@ -103,7 +103,7 @@ stages:
              sudo python3 -m pip3 install -r /agent/_work/1/a/extracted/requirements.txt
              #sudo pip3 install behave
              whereis behave
-             echo "Get requirements"
+             
              
             displayName: 'Install requirements using pip'
               
