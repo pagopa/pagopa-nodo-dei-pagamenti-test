@@ -57,11 +57,11 @@ stages:
               rootFolderOrFile: /home/vsts/work/1/s/
               includeRootFolder: false
               archiveType: zip
-              archiveFile: $(Build.ArtifactStagingDirectory)/nodo-dei-pagamenti.zip
+              archiveFile: $(Build.ArtifactStagingDirectory)/nodo-dei-pagamenti-NRT.zip
               replaceExistingArchive: true
 
             
-          - publish: $(Build.ArtifactStagingDirectory)/nodo-dei-pagamenti.zip
+          - publish: $(Build.ArtifactStagingDirectory)/nodo-dei-pagamenti-NRT.zip
             displayName: "Publish Virtual Enviroment"
             artifact: $(artifactName)
             
@@ -86,7 +86,7 @@ stages:
                     
           - task: ExtractFiles@1
             inputs:
-              archiveFilePatterns: /agent/_work/1/TestSuite/nodo-dei-pagamenti.zip
+              archiveFilePatterns: /agent/_work/1/TestSuite/nodo-dei-pagamenti-NRT.zip
               destinationFolder: '$(System.ArtifactsDirectory)/extracted'
               cleanDestinationFolder: true
               overwriteExistingFiles: false
