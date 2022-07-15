@@ -58,13 +58,16 @@ stages:
              pwd
              ls -la
              python3 -m pip install -r requirements.txt
+
              echo "Find requirements in lib"
-             ls -la /home/vsts/work/1/s/pagopa-nodo-dei-pagamenti-test/env/lib/
+             ls -la /home/vsts/work/1/s/env/lib/
+
              echo "Find requirements in lib64"
-             ls -la /home/vsts/work/1/s/pagopa-nodo-dei-pagamenti-test/env/lib64/
-             cd ./env
-             ls -la
-             pwd
+             ls -la /home/vsts/work/1/s/env/lib64/
+             
+             echo "pip list"
+             pip list
+
             displayName: 'Install requirements (${{ parameters.env }})'
 
           - task: ArchiveFiles@2
