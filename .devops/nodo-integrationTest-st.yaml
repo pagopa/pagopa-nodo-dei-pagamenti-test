@@ -102,8 +102,8 @@ stages:
              which python3
              which pip3
              which pip
-             /usr/bin/python3 -m pip install
+             
 
-             pip3 install behave
+             sudo pip3 install behave
              whereis behave
             displayName: 'Install Python requirements'
