@@ -98,6 +98,8 @@ stages:
              echo $PATH
              export PATH=/usr/bin:$PATH
              echo $PATH
-             /usr/bin/python3 -m /usr/bin/pip3 -r $(System.ArtifactsDirectory)/extracted/requirements.txt
+             which python3
+             which pip3
+             /usr/bin/python3 -m pip3 -r $(System.ArtifactsDirectory)/extracted/requirements.txt
              whereis behave
             displayName: 'Install Python requirements'
