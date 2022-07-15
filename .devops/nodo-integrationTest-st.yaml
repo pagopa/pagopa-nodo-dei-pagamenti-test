@@ -14,7 +14,7 @@ parameters:
 
 variables:
   artifactName: TestSuite
-  artifactDownloadedPath: /agent/_work/nodo-dei-pagamenti
+  artifactDownloadedPath: /agent/_work/1/nodo
 
 
   
