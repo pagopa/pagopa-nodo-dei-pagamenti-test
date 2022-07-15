@@ -121,12 +121,17 @@ stages:
 
              echo "==== Files Extracted Inside venv ==== "
              ls -la /agent/_work/1/a/extracted/env
+
              echo "==== Files Extracted Inside oracle directory ==== "
              ls -la /agent/_work/1/a/extracted/env/oracle
+
              echo "==== Files Extracted Inside lib/lib64 directory ==== "
-             ls -la /agent/_work/1/a/extracted/env/lib
-             ls -la /agent/_work/1/a/extracted/env/lib64
+             ls -la /agent/_work/1/a/extracted/env/lib/python3.10/site-packages
+
              echo "==== Read pyvenv.cfg file ==== "
              cat /agent/_work/1/a/extracted/env/pyvenv.cfg
-             
-            displayName: 'Read Extracted Archive'
+
+             echo "==== Read hostedtoolcache directory ==== "
+             ls -la /opt/hostedtoolcache
+
+            displayName: 'Read Extracted Archive'  
