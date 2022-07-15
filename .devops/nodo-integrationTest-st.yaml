@@ -14,7 +14,7 @@ parameters:
 
 variables:
   artifactName: TestSuite
-  artifactDownloadedPath: /agent/_work/1/nodo
+  artifactDownloadedPath: /agent/_work/1
 
 
   
@@ -80,6 +80,7 @@ stages:
           - checkout: none          
           - script: |
               sudo mkdir $(artifactDownloadedPath)
+              sudo rm -Rf /agent/_work/1/nodo/34e91b6d-98d0-464a-863a-670483357abb.tmp
             displayName: 'Create Folder to Download Pipeline Artifact'
           - task: DownloadPipelineArtifact@2
             inputs:
