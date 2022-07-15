@@ -98,6 +98,9 @@ stages:
             
           - script: |
              pwd
+             
+             ls -la /agent/_work/1/TestSuite
+             ls -la /agent/_work/1/s 
 
              ls -la /agent/_work/1/s/TestSuite
              
