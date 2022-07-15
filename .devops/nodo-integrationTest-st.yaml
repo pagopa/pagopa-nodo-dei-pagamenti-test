@@ -100,6 +100,9 @@ stages:
              echo $PATH
              which python3
              which pip3
-             /usr/bin/python3 -m pip3 -r $(System.ArtifactsDirectory)/extracted/requirements.txt
+             which pip
+             python3 -m pip install
+             sudo apt install python3-pip
+             python3 -m pip -r $(System.ArtifactsDirectory)/extracted/requirements.txt
              whereis behave
             displayName: 'Install Python requirements'
