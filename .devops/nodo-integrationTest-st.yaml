@@ -58,6 +58,10 @@ stages:
              pwd
              ls -la
              python3 -m pip install -r requirements.txt
+             echo "Find requirements in lib"
+             ls -la /home/vsts/work/1/s/pagopa-nodo-dei-pagamenti-test/env/lib/python3.10/site-packages
+             echo "Find requirements in lib64"
+             ls -la /home/vsts/work/1/s/pagopa-nodo-dei-pagamenti-test/env/lib64/python3.10/site-packages
              cd ./env
              ls -la
              pwd
@@ -125,8 +129,11 @@ stages:
              echo "==== Files Extracted Inside oracle directory ==== "
              ls -la /agent/_work/1/a/extracted/env/oracle
 
-             echo "==== Files Extracted Inside lib/lib64 directory ==== "
+             echo "==== Files Extracted Inside lib python directory ==== "
              ls -la /agent/_work/1/a/extracted/env/lib/python3.10/site-packages
+             
+             echo "==== Files Extracted Inside lib64 python directory ==== "
+             ls -la /agent/_work/1/a/extracted/env/lib64/python3.10/site-packages
 
              echo "==== Read pyvenv.cfg file ==== "
              cat /agent/_work/1/a/extracted/env/pyvenv.cfg
