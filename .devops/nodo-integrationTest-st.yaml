@@ -89,7 +89,7 @@ stages:
 
           - task: ExtractFiles@1
             inputs:
-              archiveFilePatterns: /agent/_work/1/TestSuite/nodo-dei-pagamenti-NRT.zip
+              archiveFilePatterns: /agent/_work/1/nodo-dei-pagamenti-NRT.zip
               destinationFolder: '$(System.ArtifactsDirectory)/extracted'
               cleanDestinationFolder: true
               overwriteExistingFiles: false
