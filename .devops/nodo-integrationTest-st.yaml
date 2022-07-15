@@ -124,8 +124,8 @@ stages:
              echo "==== Files Extracted Inside oracle directory ==== "
              ls -la /agent/_work/1/a/extracted/env/oracle
              echo "==== Files Extracted Inside lib/lib64 directory ==== "
-             ls -la /agent/_work/1/a/extracted/env/lib/site-packages
-             ls -la /agent/_work/1/a/extracted/env/lib64/site-packages
+             ls -la /agent/_work/1/a/extracted/env/lib
+             ls -la /agent/_work/1/a/extracted/env/lib64
              echo "==== Read pyvenv.cfg file ==== "
              cat /agent/_work/1/a/extracted/env/pyvenv.cfg
              
