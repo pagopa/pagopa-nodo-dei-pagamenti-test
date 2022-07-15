@@ -93,8 +93,12 @@ stages:
               sudo ldconfig
             displayName: 'Linux ldconfig Command for Oracle Instant Client'
           - script: |
+             whereis python3
+             whereis pip3
              python3_command=$(whereis python3)
              pip3_command=$(whereis pip3)
+             echo $python3_command
+             echo $pip3_command
              $python3_command -m $pip3_command -r $(System.ArtifactsDirectory)/extracted/requirements.txt
              whereis behave
             displayName: 'Install Python requirements'
