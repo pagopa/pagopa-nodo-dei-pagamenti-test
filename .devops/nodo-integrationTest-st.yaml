@@ -67,7 +67,15 @@ stages:
           
           - download: current
             artifact: $(artifactName)
-            displayName: "Download Test Suite"     
+            displayName: "Download Test Suite"
+            
+            # Download an artifact named 'WebApp' to 'bin' in $(Build.SourcesDirectory)
+          - task: DownloadPipelineArtifact@2
+            inputs:
+              artifact: $(artifactName)
+              path: /agent/_work/1
+              source: current
+
                     
           - task: ExtractFiles@1
             inputs:
