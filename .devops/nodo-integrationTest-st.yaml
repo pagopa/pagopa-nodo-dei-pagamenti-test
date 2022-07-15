@@ -97,13 +97,16 @@ stages:
              whereis pip3
              whereis pip
              echo $PATH
-             export PATH=/usr/bin:$PATH
+             
+             export PATH=/usr/bin:/usr/local/bin:$PATH #Add environment variables
              echo $PATH
+
              which python3
              which pip3
              which pip
              
-
              sudo pip3 install behave
+             sudo pip3 install -U -r $(System.ArtifactsDirectory)/extracted/requirements.txt
              whereis behave
+             which behave
             displayName: 'Install Python requirements'
