@@ -99,15 +99,12 @@ stages:
           - script: |
              pwd
              whoami
-
              echo "ls -la /agent/_work/1/TestSuite"
              ls -la /agent/_work/1/TestSuite
-
              echo "ls -la /agent/_work/1/s"
              ls -la /agent/_work/1/s 
-
-             
-            displayName: 'Check After Downloading Archive'
+            
+            displayName: 'Retrieve Artifact Published'
             
           
           - task: ExtractFiles@1
@@ -119,6 +116,7 @@ stages:
               
           - script: |
              pwd
-             ls -la
+             echo "Files Extracted: "
+             ls -la /agent/_work/1/a/extracted
              
-            displayName: 'After Extracting Archive'
+            displayName: 'Read Extracted Archive'
