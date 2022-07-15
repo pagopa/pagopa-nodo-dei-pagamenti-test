@@ -121,7 +121,8 @@ stages:
              echo "==== Files Extracted (da aggiungere conf check a db) ==== "
 
              sudo pip3 install behave
-             which behave
+             whereis behave
+             ls -la /usr/lib/python3.6/site-packages
              #behave --junit-directory=report --junit /agent/_work/1/a/extracted/src/integ-test/bdd-test/features/NewMod3/flows/TestGenerazioneRicevute03/generazioneRicevute_flows_ko_PAnew.feature
 
 
