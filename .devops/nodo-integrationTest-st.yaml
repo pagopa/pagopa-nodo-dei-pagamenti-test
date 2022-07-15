@@ -12,7 +12,8 @@ parameters:
       - dev
       - sit
 
-#variables:
+variables:
+  artifactName: TestSuite
 
 
   
