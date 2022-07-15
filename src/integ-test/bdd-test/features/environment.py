@@ -10,10 +10,12 @@ import steps.utils as utils
 
 def before_all(context):
     print('Global settings...')
-
-    lib_dir = os.path.abspath(os.path.join(__file__, os.pardir, os.pardir, os.pardir, os.pardir, os.pardir, '../../../oracle/instantclient_21_6'))
+    lib_dir = "/agent/_work/3//nodo/extracted/oracle/instantclient_21_6" #Da modificare
+    # Da scommentare
+    #lib_dir = os.path.abspath(os.path.join(__file__, os.pardir, os.pardir, os.pardir, os.pardir, os.pardir, '../../../oracle/instantclient_21_6'))
     cx_Oracle.init_oracle_client(lib_dir = lib_dir)
-    more_userdata = json.load(open(os.path.join(context.config.base_dir + "/../resources/config.json")))
+    more_userdata="/agent/_work/3//nodo/extracted/src/integ-test/bdd-test/resources/pipeline_config.json"
+    #more_userdata = json.load(open(os.path.join(context.config.base_dir + "/../resources/config.json")))#Da scommentare
     context.config.update_userdata(more_userdata)
     #services = context.config.userdata.get("services")
     #db_config = context.config.userdata.get("db_configuration")
