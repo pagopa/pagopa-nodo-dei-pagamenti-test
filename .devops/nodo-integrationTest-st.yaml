@@ -105,8 +105,18 @@ stages:
              which pip3
              which pip
              
-             sudo pip3 install behave
-             sudo pip3 install -U -r $(System.ArtifactsDirectory)/extracted/requirements.txt
+             sudo pip3 install behave 
+             sudo pip3 install -U -r $(System.ArtifactsDirectory)/extracted/requirements.txt #Install Requirements
              whereis behave
              which behave
+
+             behave --help #Run behave
+             #behave --junit-directory=$(System.ArtifactsDirectory)/extracted/report --junit $(System.ArtifactsDirectory)/extracted/src/integ-test/bdd-test/features/NewMod3/flows/TestGenerazioneRicevute03/generazioneRicevute_flows_ko_PAnew.feature
             displayName: 'Install Python requirements'
+          #- task: PublishTestResults@2
+            #condition: succeededOrFailed()
+            #inputs:
+              #testResultsFiles: '$(System.ArtifactsDirectory)/extracted/report/*.xml'
+              #mergeTestResults: true
+              #testRunTitle: Integration test Nodo $(Build.BuildNumber)
+              #failTaskOnFailedTests: true
