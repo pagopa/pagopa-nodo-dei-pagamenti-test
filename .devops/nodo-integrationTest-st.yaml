@@ -92,7 +92,7 @@ stages:
               overwriteExistingFiles: false
 
           - script: |
-             mkdir /agent/_work/1/a/extracted/src/integ-test/bdd-test/features/steps/requirements
+             
              whereis python3
              sudo pip3 install -r /agent/_work/1/a/extracted/requirements.txt
              sudo pip3 install behave
