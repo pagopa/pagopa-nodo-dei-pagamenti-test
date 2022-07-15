@@ -79,27 +79,20 @@ stages:
         pool: $(deploy-pool-${{ parameters.env }})
         steps:
           - checkout: none          
-          - script: |
-              
-              sudo rm -rf $(artifactDownloadedPath)
-              sudo mkdir $(artifactDownloadedPath)
-              sudo chown -R 777 $(artifactDownloadedPath)
-              
-            displayName: 'Create Folder to Download Pipeline Artifact'
+
           - task: DownloadPipelineArtifact@2
             inputs:
               artifact: $(artifactName)
-              path: $(artifactDownloadedPath)
               source: current
           - task: ExtractFiles@1
             inputs:
-              archiveFilePatterns: $(artifactDownloadedPath)/nodo-dei-pagamenti-NRT.zip
-              destinationFolder: $(artifactDownloadedPath)/$(destinationFolderExtractArtifact)
+              archiveFilePatterns: $(Pipeline.Workspace)/nodo-dei-pagamenti-NRT.zip
+              destinationFolder: $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)
               cleanDestinationFolder: true
               overwriteExistingFiles: false
           - script: |
-              echo $(artifactDownloadedPath)/$(destinationFolderExtractArtifact)/oracle/instantclient_21_6
-              sudo sh -c "echo $(artifactDownloadedPath)/$(destinationFolderExtractArtifact)/oracle/instantclient_21_6 > /etc/ld.so.conf.d/oracle-instantclient.conf"
+              echo $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/oracle/instantclient_21_6
+              sudo sh -c "echo $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/oracle/instantclient_21_6 > /etc/ld.so.conf.d/oracle-instantclient.conf"
               sudo ldconfig
             displayName: 'Linux ldconfig Command for Oracle Instant Client'
           - script: |
@@ -116,21 +109,21 @@ stages:
              which pip
              
              sudo pip3 install behave 
-             sudo pip3 install -U -r $(artifactDownloadedPath)/$(destinationFolderExtractArtifact)/requirements.txt #Install Requirements
+             sudo pip3 install -U -r $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/requirements.txt #Install Requirements
              whereis behave
              which behave
 
              behave --help #Run behave
-             #behave --junit-directory=$(artifactDownloadedPath)/$(destinationFolderExtractArtifact)/report --junit $(artifactDownloadedPath)/extracted/src/integ-test/bdd-test/features/NewMod3/flows/TestGenerazioneRicevute03/generazioneRicevute_flows_ko_PAnew.feature
+             #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(artifactDownloadedPath)/extracted/src/integ-test/bdd-test/features/NewMod3/flows/TestGenerazioneRicevute03/generazioneRicevute_flows_ko_PAnew.feature
             displayName: 'Install Python requirements'
           #- task: PublishTestResults@2
             #condition: succeededOrFailed()
             #inputs:
-              #testResultsFiles: '$(artifactDownloadedPath)/$(destinationFolderExtractArtifact)/report/*.xml'
+              #testResultsFiles: '$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report/*.xml'
               #mergeTestResults: true
               #testRunTitle: Integration test Nodo $(Build.BuildNumber)
               #failTaskOnFailedTests: true
           - script: |
-             sudo rm -rf $(artifactDownloadedPath)/*
+             sudo rm -rf $(Pipeline.Workspace)/*
              
             displayName: 'Agent Pool CleanUP'
