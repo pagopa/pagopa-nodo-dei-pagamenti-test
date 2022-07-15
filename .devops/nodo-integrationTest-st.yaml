@@ -114,16 +114,13 @@ stages:
              echo "==== Files Extracted: Read Oracle CX ==== "
              ls -la /agent/_work/1/a/extracted/env/oracle
 
-                     
-             
+                                
              export PYTHONPATH=$PYTHONPATH:/agent/_work/1/a/extracted/src/integ-test/bdd-test/features/steps/requirements
+             export PATH=$PATH:/usr/local/bin
 
-             echo "==== Files Extracted (da aggiungere conf check a db) ==== "
-
-             sudo pip3 install behave
-             whereis behave
-             ls -la /usr/lib/python3.6/site-packages
-             #behave --junit-directory=report --junit /agent/_work/1/a/extracted/src/integ-test/bdd-test/features/NewMod3/flows/TestGenerazioneRicevute03/generazioneRicevute_flows_ko_PAnew.feature
+             echo "==== Run Test (da aggiungere conf check a db) ==== "
+                         
+             /usr/local/bin/behave --junit-directory=report --junit /agent/_work/1/a/extracted/src/integ-test/bdd-test/features/NewMod3/flows/TestGenerazioneRicevute03/generazioneRicevute_flows_ko_PAnew.feature
 
 
             displayName: 'Read Extracted Archive'  
