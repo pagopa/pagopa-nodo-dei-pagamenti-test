@@ -171,6 +171,7 @@ stages:
 
              echo "==== PiP List ==== "
              pip3 list
+             pip3 install behave
 
 
             displayName: 'Read Extracted Archive'  
