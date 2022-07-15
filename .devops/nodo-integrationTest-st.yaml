@@ -98,10 +98,15 @@ stages:
             
           - script: |
              pwd
-             
+             whoami
+
+             echo "ls -la /agent/_work/1/TestSuite"
              ls -la /agent/_work/1/TestSuite
+
+             echo "ls -la /agent/_work/1/s"
              ls -la /agent/_work/1/s 
 
+             echo "ls -la /agent/_work/1/s/TestSuite"
              ls -la /agent/_work/1/s/TestSuite
              
             displayName: 'Check After Downloading Archive'
