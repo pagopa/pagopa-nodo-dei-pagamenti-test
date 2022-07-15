@@ -36,16 +36,17 @@ stages:
             inputs:
               versionSpec: '3.10'
             
-          - script: |
-              sudo apt install python3-venv
-              cd $(nodopath)
-              python3 -m venv env
-              source ./env/bin/activate
-            displayName: 'Create Virtual Environment  (${{ parameters.env }})'
+          - #script: |
+              #sudo apt install python3-venv
+              #cd $(nodopath)
+              #python3 -m venv env
+              #source ./env/bin/activate
+            #displayName: 'Create Virtual Environment  (${{ parameters.env }})'
             
           - script: |
               sudo apt-get install build-essential unzip
-              cd ./env
+              mkdir /home/vsts/work/1/s/env
+              cd /home/vsts/work/1/s/env
               sudo mkdir oracle
               cd oracle
               sudo wget https://download.oracle.com/otn_software/linux/instantclient/216000/instantclient-basic-linux.x64-21.6.0.0.0dbru.zip
@@ -55,20 +56,11 @@ stages:
             displayName: 'Install Oracle Instant Client (${{ parameters.env }})'
             
           - script: |
-             pwd
-             ls -la
-             python3 -m pip install -r requirements.txt
-
-             echo "Find requirements in lib"
-             ls -la /home/vsts/work/1/s/env/lib/
-
-             echo "Find requirements in lib64"
-             ls -la /home/vsts/work/1/s/env/lib64/
-             
-             echo "pip list"
-             pip list
-
-            displayName: 'Install requirements (${{ parameters.env }})'
+             mkdir /home/vsts/work/1/s/src/integ-test/bdd-test/features/steps/requirements
+             python3 -m pip install -r requirements.txt -t /home/vsts/work/1/s/src/integ-test/bdd-test/features/steps/requirements
+             echo "Get requirements"
+             ls -la /home/vsts/work/1/s/src/integ-test/bdd-test/features/steps/requirements
+            displayName: 'Install requirements using pip (${{ parameters.env }})'
 
           - task: ArchiveFiles@2
             displayName: 'Archive files (${{ parameters.env }})'
@@ -101,18 +93,8 @@ stages:
           
           - download: current
             artifact: $(artifactName)
-            displayName: "Download Test Suite"
-            
-          - script: |
-             pwd
-             whoami
-             echo "ls -la /agent/_work/1/TestSuite"
-             ls -la /agent/_work/1/TestSuite
-             echo "ls -la /agent/_work/1/s"
-             ls -la /agent/_work/1/s 
-            
-            displayName: 'Retrieve Artifact Published'
-            
+            displayName: "Download Test Suite"     
+          
           
           - task: ExtractFiles@1
             inputs:
@@ -123,55 +105,23 @@ stages:
               
           - script: |
              pwd
-             ls -la /home
-             ls -la /bin/
 
-             echo "==== Files Extracted: ==== "
+             echo "==== Files Extracted ==== "
              ls -la /agent/_work/1/a/extracted
 
-             echo "==== Files Extracted Inside venv ==== "
-             ls -la /agent/_work/1/a/extracted/env
+             echo "==== Files Extracted: Read requirements ==== "
+             ls -la /agent/_work/1/a/extracted/src/integ-test/bdd-test/features/steps/requirements
 
-             echo "==== Files Extracted Inside oracle directory ==== "
+             echo "==== Files Extracted: Read Oracle CX ==== "
              ls -la /agent/_work/1/a/extracted/env/oracle
-
-             echo "==== Files Extracted Inside lib directory ==== "
-             ls -la /agent/_work/1/a/extracted/env/lib/
-
-             echo "==== Files Extracted Inside lib64 directory ==== "
-             ls -la /agent/_work/1/a/extracted/env/lib64/
-
-             echo "==== Files Extracted Inside bin directory ==== "
-             ls -la /agent/_work/1/a/extracted/env/bin/
-
-             echo "==== Files Extracted Inside include directory ==== "
-             ls -la /agent/_work/1/a/extracted/env/include/
-
-
-             echo "==== Files Extracted Inside lib python directory ==== "
-             ls -la /agent/_work/1/a/extracted/env/lib/python3.10
-             
-             echo "==== Files Extracted Inside lib64 python directory ==== "
-             ls -la /agent/_work/1/a/extracted/env/lib64/python3.10
 
              echo "==== Read pyvenv.cfg file ==== "
              cat /agent/_work/1/a/extracted/env/pyvenv.cfg
 
-             echo "==== Activate Virtual Env ==== "
-             
+                      
              
              #export PYTHONPATH=/agent/_work/1/a/extracted/env/bin/python3
              echo $PATH
-             export PATH=$PATH:/agent/_work/1/s/env/bin/python3
-             ls -la /etc/environment
-             echo $PATH
-             source /agent/_work/1/a/extracted/env/bin/activate
-                         
-             which python3
-
-             echo "==== PiP List ==== "
-             pip3 list
-             pip3 install behave
-
+             echo (which python3)
 
             displayName: 'Read Extracted Archive'  
