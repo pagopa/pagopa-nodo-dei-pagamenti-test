@@ -116,7 +116,7 @@ stages:
              export PYTHONPATH=$PYTHONPATH:/agent/_work/1/a/extracted/src/integ-test/bdd-test/features/steps/requirements
 
              echo "==== Files Extracted (da aggiungere conf check a db) ==== "
-             /agent/_work/1/a/extracted/src/integ-test/bdd-test/features/steps/requirements/behave --junit-directory=report --junit ./src/integ-test/bdd-test/features/NewMod3/flows/TestGenerazioneRicevute03/generazioneRicevute_flows_ko_PAnew.feature
+             /agent/_work/1/a/extracted/src/integ-test/bdd-test/features/steps/requirements/behave --junit-directory=report --junit /agent/_work/1/a/extracted/src/integ-test/bdd-test/features/NewMod3/flows/TestGenerazioneRicevute03/generazioneRicevute_flows_ko_PAnew.feature
 
 
             displayName: 'Read Extracted Archive'  
