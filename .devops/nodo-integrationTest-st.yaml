@@ -109,14 +109,12 @@ stages:
              echo "==== Files Extracted: Read Oracle CX ==== "
              ls -la /agent/_work/1/a/extracted/env/oracle
 
-             echo "==== Read pyvenv.cfg file ==== "
-             cat /agent/_work/1/a/extracted/env/pyvenv.cfg
                      
              
              export PYTHONPATH=$PYTHONPATH:/agent/_work/1/a/extracted/src/integ-test/bdd-test/features/steps/requirements
 
              echo "==== Files Extracted (da aggiungere conf check a db) ==== "
-             /agent/_work/1/a/extracted/src/integ-test/bdd-test/features/steps/requirements/behave --junit-directory=report --junit /agent/_work/1/a/extracted/src/integ-test/bdd-test/features/NewMod3/flows/TestGenerazioneRicevute03/generazioneRicevute_flows_ko_PAnew.feature
+             behave --junit-directory=report --junit /agent/_work/1/a/extracted/src/integ-test/bdd-test/features/NewMod3/flows/TestGenerazioneRicevute03/generazioneRicevute_flows_ko_PAnew.feature
 
 
             displayName: 'Read Extracted Archive'  
