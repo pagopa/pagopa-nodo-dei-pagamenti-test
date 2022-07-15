@@ -93,15 +93,17 @@ stages:
 
           - script: |
              mkdir /agent/_work/1/a/extracted/src/integ-test/bdd-test/features/steps/requirements
-             python3 -m pip3 install -r /agent/_work/1/a/extracted/requirements.txt -t /agent/_work/1/a/extracted/src/integ-test/bdd-test/features/steps/requirements
+             whereis python3
+             sudo pip3 install -r /agent/_work/1/a/extracted/requirements.txt -t /agent/_work/1/a/extracted/src/integ-test/bdd-test/features/steps/requirements
+             whereis behave
              echo "Get requirements"
              ls -la /agent/_work/1/a/extracted/src/integ-test/bdd-test/features/steps/requirements
             displayName: 'Install requirements using pip'
               
           - script: |
              export PYTHONPATH=$PYTHONPATH:/agent/_work/1/a/extracted/src/integ-test/bdd-test/features/steps/requirements
-             export PATH=$PATH:/usr/local/bin
-             whereis behave
+             #export PATH=$PATH:/usr/local/bin
+             
              #/usr/local/bin/behave --junit-directory=report --junit /agent/_work/1/a/extracted/src/integ-test/bdd-test/features/NewMod3/flows/TestGenerazioneRicevute03/generazioneRicevute_flows_ko_PAnew.feature
             displayName: 'Edit Python Path Environment Variables'  
 
