@@ -83,8 +83,7 @@ stages:
           - download: current
             artifact: $(artifactName)
             displayName: "Download Test Suite"     
-          
-          
+                    
           - task: ExtractFiles@1
             inputs:
               archiveFilePatterns: /agent/_work/1/TestSuite/nodo-dei-pagamenti.zip
@@ -100,27 +99,23 @@ stages:
             displayName: 'Install requirements using pip (${{ parameters.env }})'
               
           - script: |
-             pwd
-
-             echo "==== Files Extracted ==== "
-             ls -la /agent/_work/1/a/extracted
-
-             echo "==== Files Extracted: Read requirements ==== "
-             ls -la /agent/_work/1/a/extracted/src/integ-test/bdd-test/features/steps/requirements
-
-             echo "==== Files Extracted: Read requirements#behave==== "
-             ls -la /agent/_work/1/a/extracted/src/integ-test/bdd-test/features/steps/requirements/behave
-
-             echo "==== Files Extracted: Read Oracle CX ==== "
-             ls -la /agent/_work/1/a/extracted/env/oracle
-
-                                
              export PYTHONPATH=$PYTHONPATH:/agent/_work/1/a/extracted/src/integ-test/bdd-test/features/steps/requirements
              export PATH=$PATH:/usr/local/bin
+             #/usr/local/bin/behave --junit-directory=report --junit /agent/_work/1/a/extracted/src/integ-test/bdd-test/features/NewMod3/flows/TestGenerazioneRicevute03/generazioneRicevute_flows_ko_PAnew.feature
+            displayName: 'Edit Python Path Environment Variables'  
 
-             echo "==== Run Test (da aggiungere conf check a db) ==== "
-                         
-             /usr/local/bin/behave --junit-directory=report --junit /agent/_work/1/a/extracted/src/integ-test/bdd-test/features/NewMod3/flows/TestGenerazioneRicevute03/generazioneRicevute_flows_ko_PAnew.feature
+          - script: |
+             sudo sh -c "echo /agent/_work/1/a/extracted/env/oracle/instantclient_21_6 > /etc/ld.so.conf.d/oracle-instantclient.conf"
+             sudo ldconfig
+            displayName: 'Linux ldconfig Command'  
 
-
-            displayName: 'Read Extracted Archive'  
+          - script: |
+             /usr/local/bin/behave --junit-directory=/agent/_work/1/a/extracted/src/integ-test/bdd-test/features/report --junit /agent/_work/1/a/extracted/src/integ-test/bdd-test/features/NewMod3/flows/TestGenerazioneRicevute03/generazioneRicevute_flows_ko_PAnew.feature
+            displayName: 'Run Behave Test Suite' 
+          - task: PublishTestResults@2
+            condition: succeededOrFailed()
+            inputs:
+              testResultsFiles: '/agent/_work/1/a/extracted/src/integ-test/bdd-test/features/*.xml'
+              mergeTestResults: true
+              testRunTitle: Integration Test Nodo-dei-Pagamenti (${{ parameters.env }}) - $(Build.BuildNumber)
+              failTaskOnFailedTests: true
