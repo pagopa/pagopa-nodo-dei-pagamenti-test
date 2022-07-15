@@ -80,7 +80,8 @@ stages:
         steps:
           - checkout: none          
           - script: |
-              sudo rm -rf $(artifactDownloadedPath)
+              sudo rm -rf $(artifactDownloadedPath)/*.tmp
+              
               sudo mkdir $(artifactDownloadedPath)
               
             displayName: 'Create Folder to Download Pipeline Artifact'
