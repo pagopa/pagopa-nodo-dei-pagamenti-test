@@ -323,8 +323,7 @@ def step_impl(context, mock, primitive, value, elem):
     assert body.get(primitive_name)[0].get("receipt")[0].get(elem)[0] == value
 
 
-@then(
-    u'check {mock:EcPsp} receives {primitive} properly having in the transfer with idTransfer {idTransfer} the same {elem} of {other_primitive}')
+@then(u'check {mock:EcPsp} receives {primitive} properly having in the transfer with idTransfer {idTransfer} the same {elem} of {other_primitive}')
 def step_impl(context, mock, primitive, idTransfer, elem, other_primitive):
     _assert = False
     soap_action = getattr(context, other_primitive)
@@ -634,23 +633,20 @@ def step_impl(context, param, value):
     time.sleep(5)
     assert refresh_response.status_code == 200
 
-"""
-@step("")
-def step_impl(context,query_name):
-    db_selected = context.config.userdata.get("db_configuration").get('nodo_cfg')
-    selected_query = utils.query_json(context, query_name, 'configurations')
+
+@step("update through the query {query_name} with date {date} under macro {macro} on db {db_name}")
+def step_impl(context, query_name, date, macro, db_name):
+    db_selected = context.config.userdata.get("db_configuration").get(db_name)
+    if date == 'Today':
+        date = str(datetime.datetime.today())
+    
+    selected_query = utils.query_json(context, query_name, macro).replace('date', date)
     conn = db.getConnection(db_selected.get('host'), db_selected.get('database'),db_selected.get('user'),db_selected.get('password'),db_selected.get('port'))
 
     exec_query = db.executeQuery(conn, selected_query)
     db.closeConnection(conn)
 
-    query_to_dict = {}
-    for row in exec_query:
-        config_key, config_value = row
-        query_to_dict[config_key] = config_value
 
-    setattr(context, query_name, query_to_dict)
-"""
 
 @then("restore initial configurations")
 def step_impl(context):

@@ -144,63 +144,48 @@ Feature: process tests for Retry_REV_DB_GR_5
     #sleep phase
     Scenario: Execute sleep phase
         Given the Execute activatePaymentNotice request scenario executed successfully
-        Then wait 2.2 second for expiration
+        Then PSP waits 3 seconds for expiration
 
     # Payment Outcome Phase outcome OK
     Scenario: Execute sendPaymentOutcome request
         Given the Execute sleep phase scenario executed successfully
         And initial XML sendPaymentOutcome
-
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
             <soapenv:Header/>
             <soapenv:Body>
             <nod:sendPaymentOutcomeReq>
-            <idPSP>${psp}</idPSP>
-            <idBrokerPSP>${intermediarioPSP}</idBrokerPSP>
-            <idChannel>${canale3}</idChannel>
-            <password>${password}</password>
-            <paymentToken>${#TestCase#token}</paymentToken>
+            <idPSP>70000000001</idPSP>
+            <idBrokerPSP>70000000001</idBrokerPSP>
+            <idChannel>70000000001_01</idChannel>
+            <password>pwdpwdpwd</password>
+            <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
             <outcome>KO</outcome>
-            <!--Optional:-->
             <details>
             <paymentMethod>creditCard</paymentMethod>
-            <!--Optional:-->
             <paymentChannel>app</paymentChannel>
             <fee>2.00</fee>
-            <!--Optional:-->
             <payer>
             <uniqueIdentifier>
-            <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-            <entityUniqueIdentifierValue>77777777777_01</entityUniqueIdentifierValue>
+            <entityUniqueIdentifierType>F</entityUniqueIdentifierType>
+            <entityUniqueIdentifierValue>JHNDOE00A01F205N</entityUniqueIdentifierValue>
             </uniqueIdentifier>
-            <fullName>name</fullName>
-            <!--Optional:-->
+            <fullName>John Doe</fullName>
             <streetName>street</streetName>
-            <!--Optional:-->
-            <civicNumber>civic</civicNumber>
-            <!--Optional:-->
-            <postalCode>postal</postalCode>
-            <!--Optional:-->
+            <civicNumber>12</civicNumber>
+            <postalCode>89020</postalCode>
             <city>city</city>
-            <!--Optional:-->
-            <stateProvinceRegion>state</stateProvinceRegion>
-            <!--Optional:-->
+            <stateProvinceRegion>MI</stateProvinceRegion>
             <country>IT</country>
-            <!--Optional:-->
-            <e-mail>prova@test.it</e-mail>
+            <e-mail>john.doe@test.it</e-mail>
             </payer>
-            <applicationDate>2021-12-12</applicationDate>
-            <transferDate>2021-12-11</transferDate>
+            <applicationDate>2021-10-01</applicationDate>
+            <transferDate>2021-10-02</transferDate>
             </details>
             </nod:sendPaymentOutcomeReq>
             </soapenv:Body>
             </soapenv:Envelope>
             """
         When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-        Then check outcome is KO of sendPaymentOutcome response
-        And verify 0 record for the table POSITION_RECEIPT_TRANSFER retrivied by the query position_receipt_transfer on db nodo_online under macro NewMod3
-
-
-
-
+        Then check outcome is OK of sendPaymentOutcome response
+        And verify 0 record for the table POSITION_RECEIPT_TRANSFER retrived by the query position_receipt_transfer on db nodo_online under macro NewMod3
