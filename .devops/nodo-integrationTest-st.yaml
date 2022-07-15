@@ -80,7 +80,7 @@ stages:
         steps:
           - checkout: none          
           - script: |
-              sudo rm -rf $(artifactDownloadedPath)/*
+              sudo rm -rf /agent/_work/1/97a5fb24-3dcb-4eee-85a7-653dba1c3c27.tmp
               
               #sudo mkdir $(artifactDownloadedPath)
               
