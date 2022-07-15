@@ -10,24 +10,35 @@ Feature: Check codifica QR code - OK
         Given systems up
         And EC old version
 
-    Scenario:
         Given initial XML verifyRPT
             """
-
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+                <soapenv:Header/>
+                <soapenv:Body>
+                    <ws:nodoVerificaRPT>
+                        <identificativoPSP>?</identificativoPSP>
+                        <identificativoIntermediarioPSP>?</identificativoIntermediarioPSP>
+                        <identificativoCanale>?</identificativoCanale>
+                        <password>?</password>
+                        <codiceContestoPagamento>?</codiceContestoPagamento>
+                        <codificaInfrastrutturaPSP>?</codificaInfrastrutturaPSP>
+                        <codiceIdRPT>
+                            <!--You may enter ANY elements at this point-->
+                        </codiceIdRPT>
+                    </ws:nodoVerificaRPT>
+                </soapenv:Body>
+            </soapenv:Envelope>
             """
-
-    Scenario:
         Given initial XML activateRPT
             """
 
             """
 
-    Scenario:
         Given initial XML sendRPT
             """
 
             """
-    Scenario:
+
         Given initial XML sendRT
             """
 

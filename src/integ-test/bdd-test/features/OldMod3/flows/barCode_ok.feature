@@ -10,7 +10,6 @@ Feature: Check codifica bar code- OK
         Given systems up
         And EC old version
 
-    Scenario:
         Given initial XML verifyRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:bc="http://PuntoAccessoPSP.spcoop.gov.it/BarCode_GS1_128_Modified" xmlns:aim="http://PuntoAccessoPSP.spcoop.gov.it/Code_128_AIM_USS-128_tipo_C" xmlns:qrc="http://PuntoAccessoPSP.spcoop.gov.it/QrCode">
@@ -29,18 +28,16 @@ Feature: Check codifica bar code- OK
             </soapenv:Envelope>
             """
 
-    Scenario:
         Given initial XML activateRPT
             """
 
             """
 
-    Scenario:
         Given initial XML sendRPT
             """
 
             """
-    Scenario:
+
         Given initial XML sendRT
             """
 
@@ -49,13 +46,13 @@ Feature: Check codifica bar code- OK
     # [FLUSSO_OK_barCode_GS1_aux0]
     Scenario: verifyRPT phase
         Given bc:AuxDigit with 0 in verifyRPT
-        When PSP sends verifyRPT to nodo-dei-pagamenti
+        When PSP sends soap verifyRPT to nodo-dei-pagamenti
         Then check esito is OK of verifyRPT response
 
     Scenario: activateRPT phase
         Given the verifyRPT phase scenario request executed successfully
         And bc:AuxDigit with 0 in activateRPT
-        When PSP sends activateRPT to nodo-dei-pagamenti
+        When PSP sends soap activateRPT to nodo-dei-pagamenti
         Then check esito is OK of activateRPT
 
     Scenario: sendRPT phase
