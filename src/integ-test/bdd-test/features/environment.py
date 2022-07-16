@@ -10,7 +10,7 @@ import steps.utils as utils
 
 def before_all(context):
     print('Global settings...')
-    lib_dir = "/agent/_work/3/nodo/extracted/oracle/instantclient_21_6" #Da modificare
+    lib_dir = "/agent/_work/1/nodo/extracted/oracle/instantclient_21_6" #Da modificare
     # Da scommentare
     #lib_dir = os.path.abspath(os.path.join(__file__, os.pardir, os.pardir, os.pardir, os.pardir, os.pardir, '../../../oracle/instantclient_21_6'))
     cx_Oracle.init_oracle_client(lib_dir = lib_dir)
