@@ -74,7 +74,7 @@ def after_all(context):
         db.executeQuery(conn, selected_query)
 
     db.closeConnection(conn)
-    requests.get(utils.get_refresh_config_url(context))
+    #requests.get(utils.get_refresh_config_url(context))
 
 
 def config_ec(context):
