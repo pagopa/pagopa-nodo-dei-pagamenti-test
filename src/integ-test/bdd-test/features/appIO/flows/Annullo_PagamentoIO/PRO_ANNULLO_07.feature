@@ -1,11 +1,10 @@
-Feature: PRO_ANNULLO_06
+Feature: PRO_ANNULLO_07
 
     Background:
         Given systems up
 
     Scenario: Execute verifyPaymentNotice (Phase 1)
-        Given nodo-dei-pagamenti has config parameter default_durata_token_IO set to 6000
-        And nodo-dei-pagamenti has config parameter scheduler.cancelIOPaymentActorMinutesToBack set to 1
+        Given nodo-dei-pagamenti has config parameter scheduler.cancelIOPaymentActorMinutesToBack set to 1
         And initial XML verifyPaymentNotice
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -79,18 +78,18 @@ Feature: PRO_ANNULLO_06
         </soapenv:Envelope>
         """
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
-        And job annullamentoRptMaiRichiesteDaPm triggered after 80 seconds
-        And wait 10 seconds for expiration
+        And job annullamentoRptMaiRichiesteDaPm triggered after 62 seconds
+        And wait 20 seconds for expiration
         Then check outcome is OK of activateIOPayment response
         And checks the value PAYING, CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value PAYING, INSERTED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
-        
+        And restore initial configurations
+
     Scenario: Execute activateIOPayment1 (Phase 3)
         Given the Execute activateIOPayment (Phase 2) scenario executed successfully
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
-        And wait 10 seconds for expiration
         Then check outcome is OK of activateIOPayment response
         And checks the value PAYING, CANCELLED, PAYING of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value CANCELLED, PAYING of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
@@ -98,4 +97,3 @@ Feature: PRO_ANNULLO_06
         And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
         # check correctness POSITION_TRANSFER table
         And checks the value Y, N of the record at column VALID of the table POSITION_TRANSFER retrived by the query payment_status on db nodo_online under macro AppIO
-        And restore initial configurations

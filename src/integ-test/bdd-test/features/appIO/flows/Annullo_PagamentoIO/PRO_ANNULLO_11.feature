@@ -1,11 +1,10 @@
-Feature: PRO_ANNULLO_06
+Feature: PRO_ANNULLO_11
 
     Background:
         Given systems up
 
     Scenario: Execute verifyPaymentNotice (Phase 1)
-        Given nodo-dei-pagamenti has config parameter default_durata_token_IO set to 6000
-        And nodo-dei-pagamenti has config parameter scheduler.cancelIOPaymentActorMinutesToBack set to 1
+        Given nodo-dei-pagamenti has config parameter scheduler.cancelIOPaymentActorMinutesToBack set to 1
         And initial XML verifyPaymentNotice
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -79,23 +78,31 @@ Feature: PRO_ANNULLO_06
         </soapenv:Envelope>
         """
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
-        And job annullamentoRptMaiRichiesteDaPm triggered after 80 seconds
-        And wait 10 seconds for expiration
         Then check outcome is OK of activateIOPayment response
-        And checks the value PAYING, CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
-        And checks the value CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
-        And checks the value PAYING, INSERTED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
-        And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
-        
-    Scenario: Execute activateIOPayment1 (Phase 3)
+    
+    Scenario: Execute nodoInoltroEsitoPagamentoCarta (Phase 3)
         Given the Execute activateIOPayment (Phase 2) scenario executed successfully
-        When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
+        When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
+        """
+        {
+        "idPagamento":"$activateIOPaymentResponse.paymentToken",
+        "RRN":10026669,
+        "tipoVersamento":"CP",
+        "identificativoIntermediario":"40000000001",
+        "identificativoPsp":"40000000001",
+        "identificativoCanale":"40000000001_06",
+        "importoTotalePagato":10.00,
+        "timestampOperazione":"2021-07-09T17:06:03.100+01:00",
+        "codiceAutorizzativo":"resKO",
+        "esitoTransazioneCarta":"00"
+        }
+        """
+        And job annullamentoRptMaiRichiesteDaPm triggered after 61 seconds
         And wait 10 seconds for expiration
-        Then check outcome is OK of activateIOPayment response
-        And checks the value PAYING, CANCELLED, PAYING of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
-        And checks the value CANCELLED, PAYING of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
-        And checks the value PAYING, INSERTED, PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
+        Then verify the HTTP status code of inoltroEsito/carta response is 200
+        And check esito is OK of inoltroEsito/carta response
+        And checks the value PAYING, PAYMENT_SENT, PAYMENT_ACCEPTED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
+        And checks the value PAYMENT_ACCEPTED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
+        And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
-        # check correctness POSITION_TRANSFER table
-        And checks the value Y, N of the record at column VALID of the table POSITION_TRANSFER retrived by the query payment_status on db nodo_online under macro AppIO
         And restore initial configurations
