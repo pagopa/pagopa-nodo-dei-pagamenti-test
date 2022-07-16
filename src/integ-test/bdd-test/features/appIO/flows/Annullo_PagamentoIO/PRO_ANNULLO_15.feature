@@ -1,4 +1,4 @@
-Feature: PRO_ANNULLO_13
+Feature: PRO_ANNULLO_14
 
     Background:
         Given systems up
@@ -80,45 +80,21 @@ Feature: PRO_ANNULLO_13
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
 
-    Scenario: Execute nodoChiediInformazioniPagamento (Phase 3)
-        Given the Execute activateIOPayment (Phase 2) scenario executed successfully
-        When WISP sends rest GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
-        Then verify the HTTP status code of informazioniPagamento response is 200
-
     
-    Scenario: Execute nodoInoltroEsitoPagamentoCarta (Phase 4)
-        Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
-        And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
-        """
-        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:psp="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
-        <soapenv:Header/>
-        <soapenv:Body>
-            <psp:pspNotifyPaymentRes>
-            <outcome>KO</outcome>
-            <!--Optional:-->
-            <fault>
-                <faultCode>CANALE_SEMANTICA</faultCode>
-                <faultString>Errore semantico dal psp</faultString>
-                <id>1</id>
-                <!--Optional:-->
-                <description>Errore dal psp</description>
-            </fault>
-            </psp:pspNotifyPaymentRes>
-        </soapenv:Body>
-        </soapenv:Envelope>
-        """
+    Scenario: Execute nodoInoltroEsitoPagamentoCarta (Phase 3)
+        Given the Execute activateIOPayment (Phase 2) scenario executed successfully
         When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
         """
         {
         "idPagamento":"$activateIOPaymentResponse.paymentToken",
         "RRN":10026669,
         "tipoVersamento":"CP",
-        "identificativoIntermediario":"40000000001",
-        "identificativoPsp":"40000000001",
-        "identificativoCanale":"40000000001_06",
+        "identificativoIntermediario":"irraggiungibile",
+        "identificativoPsp":"irraggiungibile",
+        "identificativoCanale":"irraggiungibile",
         "importoTotalePagato":10.00,
         "timestampOperazione":"2021-07-09T17:06:03.100+01:00",
-        "codiceAutorizzativo":"resKO",
+        "codiceAutorizzativo":"resOK",
         "esitoTransazioneCarta":"00"
         }
         """
@@ -126,9 +102,9 @@ Feature: PRO_ANNULLO_13
         And wait 6 seconds for expiration
         Then verify the HTTP status code of inoltroEsito/carta response is 200
         And check esito is KO of inoltroEsito/carta response
-        And check errorCode is RIFPSP of inoltroEsito/carta response
-        And checks the value PAYING, PAYMENT_SENT, PAYMENT_REFUSED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
-        And checks the value PAYMENT_REFUSED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
+        And check errorCode is CONPSP of inoltroEsito/carta response
+        And checks the value PAYING, PAYMENT_SENT, PAYMENT_SEND_ERROR of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
+        And checks the value PAYMENT_SEND_ERROR of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
         And restore initial configurations
