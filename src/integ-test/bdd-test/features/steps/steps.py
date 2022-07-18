@@ -99,7 +99,6 @@ def step_impl(context, primitive):
         rendAttachment_b = bytes(rendAttachment, 'ascii')
         rendAttachment_uni = b64.b64encode(rendAttachment_b)
         rendAttachment_uni = f"{rendAttachment_uni}".split("'")[1]
-        print("rendAttachment_uni: ",rendAttachment_uni)
         payload = payload.replace('$rendAttachment', rendAttachment_uni)
 
     payload = utils.replace_global_variables(payload, context)

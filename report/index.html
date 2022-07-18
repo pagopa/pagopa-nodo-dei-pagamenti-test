@@ -109,17 +109,17 @@ function Collapsible_expandAllFailed()
   </head>
   <body>
     <div class="behave">
-      <div id="behave-header">
+      <div id="behave-header" class="failed">
         <div id="label">
           <h1>Behave Test Report</h1>
         </div>
         <div id="summary">
           <p id="totals">
-            <p id="feature_totals">Features: passed: 1</p>
-            <p id="scenario_totals">Scenarios: passed: 5</p>
-            <p id="step_totals">Steps: passed: 35</p>
+            <p id="feature_totals">Features: failed: 1</p>
+            <p id="scenario_totals">Scenarios: skipped: 6, failed: 1</p>
+            <p id="step_totals">Steps: skipped: 13, untested: 15</p>
           </p>
-          <p id="duration">Finished in 61.3 seconds</p>
+          <p id="duration">Finished in 0.6 seconds</p>
           <div id="expand-collapse">
             <a id="expander" href="#" onclick="Collapsible_expandAll('scenario_steps')">Expand All</a>
             <span> | </span>
@@ -131,7 +131,7 @@ function Collapsible_expandAllFailed()
       </div>
       <div class="feature">
         <h2>
-          <span class="val">Feature: semantic check for sendPaymentOutcomeReq regarding idempotency</span>
+          <span class="val">Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO</span>
         </h2>
         <span/>
       </div>
@@ -143,750 +143,252 @@ function Collapsible_expandAllFailed()
         <span/>
       </div>
       <div class="scenario">
-        <span class="scenario_file">src/integ-test/bdd-test/features/NewMod3/flows/sendPaymentOutcome/sendPaymentOutcome_IDMP_SPO_07.feature:32</span>
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:6</span>
         <h3 onclick="Collapsible_toggle('scenario_0')">
-          <span class="val">Scenario: Execute activatePaymentNotice request</span>
+          <span class="val">Scenario: Generazione rendicontazione</span>
         </h3>
-        <ol class="scenario_steps" id="scenario_0">
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">Given </span>
-              <span class="step val">systems up</span>
-              <small class="step_duration">(0.000s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:27</span>
-            </div>
-            <span class="embed"/>
-            <table>
-              <tr>
-                <th>name</th>
-                <th>url</th>
-                <th>healthcheck</th>
-                <th>soap_service</th>
-                <th>rest_service</th>
-              </tr>
-              <tr>
-                <td>nodo-dei-pagamenti</td>
-                <td>http://localhost:9080/</td>
-                <td>nodo-dev-health/ready</td>
-                <td>nodo-dev/webservices/input</td>
-                <td>nodo-dev</td>
-              </tr>
-              <tr>
-                <td>mock-ec</td>
-                <td>http://localhost:8089/</td>
-                <td>servizi/PagamentiTelematiciRPT/info</td>
-                <td>servizi/PagamentiTelematiciRPT</td>
-                <td/>
-              </tr>
-            </table>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
-                <span>initial XML </span>
-                <b>activatePaymentNotice</b>
-                <span/>
-              </span>
-              <small class="step_duration">(0.012s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:54</span>
-            </div>
-            <span class="embed"/>
-            <div class="message">
-              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd&quot;&gt;
-&lt;soapenv:Header/&gt;
-&lt;soapenv:Body&gt;
-&lt;nod:activatePaymentNoticeReq&gt;
-&lt;idPSP&gt;70000000001&lt;/idPSP&gt;
-&lt;idBrokerPSP&gt;70000000001&lt;/idBrokerPSP&gt;
-&lt;idChannel&gt;70000000001_01&lt;/idChannel&gt;
-&lt;password&gt;pwdpwdpwd&lt;/password&gt;
-&lt;idempotencyKey&gt;#idempotency_key#&lt;/idempotencyKey&gt;
-&lt;qrCode&gt;
-&lt;fiscalCode&gt;#creditor_institution_code_old#&lt;/fiscalCode&gt;
-&lt;noticeNumber&gt;#notice_number_old#&lt;/noticeNumber&gt;
-&lt;/qrCode&gt;
-&lt;expirationTime&gt;15000&lt;/expirationTime&gt;
-&lt;amount&gt;10.00&lt;/amount&gt;
-&lt;dueDate&gt;2021-12-31&lt;/dueDate&gt;
-&lt;paymentNote&gt;causale&lt;/paymentNote&gt;
-&lt;/nod:activatePaymentNoticeReq&gt;
-&lt;/soapenv:Body&gt;
-&lt;/soapenv:Envelope&gt;
-</pre>
-            </div>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
-                <span>nodo-dei-pagamenti has config parameter </span>
-                <b>useIdempotency</b>
-                <span> set to </span>
-                <b>true</b>
-                <span/>
-              </span>
-              <small class="step_duration">(5.360s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:621</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">When </span>
-              <span class="step val">
-                <span/>
-                <b>PSP</b>
-                <span> sends SOAP </span>
-                <b>activatePaymentNotice</b>
-                <span> to </span>
-                <b>nodo-dei-pagamenti</b>
-                <span/>
-              </span>
-              <small class="step_duration">(0.919s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:170</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">Then </span>
-              <span class="step val">
-                <span>check </span>
-                <b>outcome</b>
-                <span> is </span>
-                <b>OK</b>
-                <span> of </span>
-                <b>activatePaymentNotice</b>
-                <span> response</span>
-              </span>
-              <small class="step_duration">(0.001s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:194</span>
-            </div>
-            <span class="embed"/>
-          </li>
-        </ol>
+        <ol class="scenario_steps" id="scenario_0"/>
         <span/>
       </div>
       <div class="scenario">
-        <span class="scenario_file">src/integ-test/bdd-test/features/NewMod3/flows/sendPaymentOutcome/sendPaymentOutcome_IDMP_SPO_07.feature:37</span>
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:43</span>
         <h3 onclick="Collapsible_toggle('scenario_1')">
-          <span class="val">Scenario: Execute sendPaymentOutcome request</span>
+          <span class="val">Scenario: Check PPT_SINTASSI_EXTRAXSD error for nodoInviaFlussoRendicontazione primitive</span>
         </h3>
-        <ol class="scenario_steps" id="scenario_1">
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">Given </span>
-              <span class="step val">systems up</span>
-              <small class="step_duration">(0.001s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:27</span>
-            </div>
-            <span class="embed"/>
-            <table>
-              <tr>
-                <th>name</th>
-                <th>url</th>
-                <th>healthcheck</th>
-                <th>soap_service</th>
-                <th>rest_service</th>
-              </tr>
-              <tr>
-                <td>nodo-dei-pagamenti</td>
-                <td>http://localhost:9080/</td>
-                <td>nodo-dev-health/ready</td>
-                <td>nodo-dev/webservices/input</td>
-                <td>nodo-dev</td>
-              </tr>
-              <tr>
-                <td>mock-ec</td>
-                <td>http://localhost:8089/</td>
-                <td>servizi/PagamentiTelematiciRPT/info</td>
-                <td>servizi/PagamentiTelematiciRPT</td>
-                <td/>
-              </tr>
-            </table>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
-                <span>initial XML </span>
-                <b>activatePaymentNotice</b>
-                <span/>
-              </span>
-              <small class="step_duration">(0.003s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:54</span>
-            </div>
-            <span class="embed"/>
-            <div class="message">
-              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd&quot;&gt;
-&lt;soapenv:Header/&gt;
-&lt;soapenv:Body&gt;
-&lt;nod:activatePaymentNoticeReq&gt;
-&lt;idPSP&gt;70000000001&lt;/idPSP&gt;
-&lt;idBrokerPSP&gt;70000000001&lt;/idBrokerPSP&gt;
-&lt;idChannel&gt;70000000001_01&lt;/idChannel&gt;
-&lt;password&gt;pwdpwdpwd&lt;/password&gt;
-&lt;idempotencyKey&gt;#idempotency_key#&lt;/idempotencyKey&gt;
-&lt;qrCode&gt;
-&lt;fiscalCode&gt;#creditor_institution_code_old#&lt;/fiscalCode&gt;
-&lt;noticeNumber&gt;#notice_number_old#&lt;/noticeNumber&gt;
-&lt;/qrCode&gt;
-&lt;expirationTime&gt;15000&lt;/expirationTime&gt;
-&lt;amount&gt;10.00&lt;/amount&gt;
-&lt;dueDate&gt;2021-12-31&lt;/dueDate&gt;
-&lt;paymentNote&gt;causale&lt;/paymentNote&gt;
-&lt;/nod:activatePaymentNoticeReq&gt;
-&lt;/soapenv:Body&gt;
-&lt;/soapenv:Envelope&gt;
-</pre>
-            </div>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
-                <span>nodo-dei-pagamenti has config parameter </span>
-                <b>useIdempotency</b>
-                <span> set to </span>
-                <b>true</b>
-                <span/>
-              </span>
-              <small class="step_duration">(5.405s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:621</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">Given </span>
-              <span class="step val">
-                <span>the </span>
-                <b>Execute activatePaymentNotice request</b>
-                <span> scenario executed successfully</span>
-              </span>
-              <small class="step_duration">(1.292s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:347</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
-                <span>initial XML </span>
-                <b>sendPaymentOutcome</b>
-                <span/>
-              </span>
-              <small class="step_duration">(0.002s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:54</span>
-            </div>
-            <span class="embed"/>
-            <div class="message">
-              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd&quot;&gt;
-&lt;soapenv:Header/&gt;
-&lt;soapenv:Body&gt;
-&lt;nod:sendPaymentOutcomeReq&gt;
-&lt;idPSP&gt;70000000001&lt;/idPSP&gt;
-&lt;idBrokerPSP&gt;70000000001&lt;/idBrokerPSP&gt;
-&lt;idChannel&gt;70000000001_01&lt;/idChannel&gt;
-&lt;password&gt;pwdpwdpwd&lt;/password&gt;
-&lt;idempotencyKey&gt;#idempotency_key#&lt;/idempotencyKey&gt;
-&lt;paymentToken&gt;$activatePaymentNoticeResponse.paymentToken&lt;/paymentToken&gt;
-&lt;outcome&gt;OK&lt;/outcome&gt;
-&lt;details&gt;
-&lt;paymentMethod&gt;creditCard&lt;/paymentMethod&gt;
-&lt;paymentChannel&gt;app&lt;/paymentChannel&gt;
-&lt;fee&gt;2.00&lt;/fee&gt;
-&lt;payer&gt;
-&lt;uniqueIdentifier&gt;
-&lt;entityUniqueIdentifierType&gt;F&lt;/entityUniqueIdentifierType&gt;
-&lt;entityUniqueIdentifierValue&gt;JHNDOE00A01F205N&lt;/entityUniqueIdentifierValue&gt;
-&lt;/uniqueIdentifier&gt;
-&lt;fullName&gt;John Doe&lt;/fullName&gt;
-&lt;streetName&gt;street&lt;/streetName&gt;
-&lt;civicNumber&gt;12&lt;/civicNumber&gt;
-&lt;postalCode&gt;89020&lt;/postalCode&gt;
-&lt;city&gt;city&lt;/city&gt;
-&lt;stateProvinceRegion&gt;MI&lt;/stateProvinceRegion&gt;
-&lt;country&gt;IT&lt;/country&gt;
-&lt;e-mail&gt;john.doe@test.it&lt;/e-mail&gt;
-&lt;/payer&gt;
-&lt;applicationDate&gt;2021-10-01&lt;/applicationDate&gt;
-&lt;transferDate&gt;2021-10-02&lt;/transferDate&gt;
-&lt;/details&gt;
-&lt;/nod:sendPaymentOutcomeReq&gt;
-&lt;/soapenv:Body&gt;
-&lt;/soapenv:Envelope&gt;
-</pre>
-            </div>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">When </span>
-              <span class="step val">
-                <span/>
-                <b>psp</b>
-                <span> sends SOAP </span>
-                <b>sendPaymentOutcome</b>
-                <span> to </span>
-                <b>nodo-dei-pagamenti</b>
-                <span/>
-              </span>
-              <small class="step_duration">(0.197s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:170</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">Then </span>
-              <span class="step val">
-                <span>check </span>
-                <b>outcome</b>
-                <span> is </span>
-                <b>OK</b>
-                <span> of </span>
-                <b>sendPaymentOutcome</b>
-                <span> response</span>
-              </span>
-              <small class="step_duration">(0.002s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:194</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
-                <span>checks the value </span>
-                <b>NotNone</b>
-                <span> of the record at column </span>
-                <b>ID</b>
-                <span> of the table </span>
-                <b>IDEMPOTENCY_CACHE</b>
-                <span> retrived by the query </span>
-                <b>idempotency_cache</b>
-                <span> on db </span>
-                <b>nodo_online</b>
-                <span> under macro </span>
-                <b>NewMod3</b>
-                <span/>
-              </span>
-              <small class="step_duration">(0.145s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:772</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
-                <span>checks the value </span>
-                <b>sendPaymentOutcome</b>
-                <span> of the record at column </span>
-                <b>PRIMITIVA</b>
-                <span> of the table </span>
-                <b>IDEMPOTENCY_CACHE</b>
-                <span> retrived by the query </span>
-                <b>idempotency_cache</b>
-                <span> on db </span>
-                <b>nodo_online</b>
-                <span> under macro </span>
-                <b>NewMod3</b>
-                <span/>
-              </span>
-              <small class="step_duration">(0.150s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:772</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
-                <span>checks the value </span>
-                <b>$activatePaymentNotice.fiscalCode</b>
-                <span> of the record at column </span>
-                <b>PA_FISCAL_CODE</b>
-                <span> of the table </span>
-                <b>IDEMPOTENCY_CACHE</b>
-                <span> retrived by the query </span>
-                <b>idempotency_cache</b>
-                <span> on db </span>
-                <b>nodo_online</b>
-                <span> under macro </span>
-                <b>NewMod3</b>
-                <span/>
-              </span>
-              <small class="step_duration">(0.144s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:772</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
-                <span>checks the value </span>
-                <b>$activatePaymentNotice.noticeNumber</b>
-                <span> of the record at column </span>
-                <b>NOTICE_ID</b>
-                <span> of the table </span>
-                <b>IDEMPOTENCY_CACHE</b>
-                <span> retrived by the query </span>
-                <b>idempotency_cache</b>
-                <span> on db </span>
-                <b>nodo_online</b>
-                <span> under macro </span>
-                <b>NewMod3</b>
-                <span/>
-              </span>
-              <small class="step_duration">(0.146s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:772</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
-                <span>checks the value </span>
-                <b>$sendPaymentOutcome.idempotencyKey</b>
-                <span> of the record at column </span>
-                <b>IDEMPOTENCY_KEY</b>
-                <span> of the table </span>
-                <b>IDEMPOTENCY_CACHE</b>
-                <span> retrived by the query </span>
-                <b>idempotency_cache</b>
-                <span> on db </span>
-                <b>nodo_online</b>
-                <span> under macro </span>
-                <b>NewMod3</b>
-                <span/>
-              </span>
-              <small class="step_duration">(0.136s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:772</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
-                <span>checks the value </span>
-                <b>$activatePaymentNoticeResponse.paymentToken</b>
-                <span> of the record at column </span>
-                <b>TOKEN</b>
-                <span> of the table </span>
-                <b>IDEMPOTENCY_CACHE</b>
-                <span> retrived by the query </span>
-                <b>idempotency_cache</b>
-                <span> on db </span>
-                <b>nodo_online</b>
-                <span> under macro </span>
-                <b>NewMod3</b>
-                <span/>
-              </span>
-              <small class="step_duration">(0.121s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:772</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
-                <span>check datetime plus number of date </span>
-                <b>2</b>
-                <span> of the record at column </span>
-                <b>VALID_TO</b>
-                <span> of the table </span>
-                <b>IDEMPOTENCY_CACHE</b>
-                <span> retrived by the query </span>
-                <b>idempotency_cache</b>
-                <span> on db </span>
-                <b>nodo_online</b>
-                <span> under macro </span>
-                <b>NewMod3</b>
-                <span/>
-              </span>
-              <small class="step_duration">(0.129s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:813</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
-                <span>checks the value </span>
-                <b>NotNone</b>
-                <span> of the record at column </span>
-                <b>HASH_REQUEST</b>
-                <span> of the table </span>
-                <b>IDEMPOTENCY_CACHE</b>
-                <span> retrived by the query </span>
-                <b>idempotency_cache</b>
-                <span> on db </span>
-                <b>nodo_online</b>
-                <span> under macro </span>
-                <b>NewMod3</b>
-                <span/>
-              </span>
-              <small class="step_duration">(0.170s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:772</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
-                <span>checks the value </span>
-                <b>NotNone</b>
-                <span> of the record at column </span>
-                <b>RESPONSE</b>
-                <span> of the table </span>
-                <b>IDEMPOTENCY_CACHE</b>
-                <span> retrived by the query </span>
-                <b>idempotency_cache</b>
-                <span> on db </span>
-                <b>nodo_online</b>
-                <span> under macro </span>
-                <b>NewMod3</b>
-                <span/>
-              </span>
-              <small class="step_duration">(0.165s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:772</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
-                <span>checks the value </span>
-                <b>NotNone</b>
-                <span> of the record at column </span>
-                <b>INSERTED_TIMESTAMP</b>
-                <span> of the table </span>
-                <b>IDEMPOTENCY_CACHE</b>
-                <span> retrived by the query </span>
-                <b>idempotency_cache</b>
-                <span> on db </span>
-                <b>nodo_online</b>
-                <span> under macro </span>
-                <b>NewMod3</b>
-                <span/>
-              </span>
-              <small class="step_duration">(0.209s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:772</span>
-            </div>
-            <span class="embed"/>
-          </li>
-        </ol>
+        <ol class="scenario_steps" id="scenario_1"/>
         <span/>
       </div>
       <div class="scenario">
-        <span class="scenario_file">src/integ-test/bdd-test/features/NewMod3/flows/sendPaymentOutcome/sendPaymentOutcome_IDMP_SPO_07.feature:90</span>
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:91</span>
         <h3 onclick="Collapsible_toggle('scenario_2')">
-          <span class="val">Scenario: update column valid_to idempotency_cache</span>
+          <span class="val">Scenario: Check PPT_SINTASSI_EXTRAXSD error for nodoInviaFlussoRendicontazione primitive</span>
         </h3>
-        <ol class="scenario_steps" id="scenario_2">
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">Given </span>
-              <span class="step val">systems up</span>
-              <small class="step_duration">(0.003s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:27</span>
-            </div>
-            <span class="embed"/>
-            <table>
-              <tr>
-                <th>name</th>
-                <th>url</th>
-                <th>healthcheck</th>
-                <th>soap_service</th>
-                <th>rest_service</th>
-              </tr>
-              <tr>
-                <td>nodo-dei-pagamenti</td>
-                <td>http://localhost:9080/</td>
-                <td>nodo-dev-health/ready</td>
-                <td>nodo-dev/webservices/input</td>
-                <td>nodo-dev</td>
-              </tr>
-              <tr>
-                <td>mock-ec</td>
-                <td>http://localhost:8089/</td>
-                <td>servizi/PagamentiTelematiciRPT/info</td>
-                <td>servizi/PagamentiTelematiciRPT</td>
-                <td/>
-              </tr>
-            </table>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
-                <span>initial XML </span>
-                <b>activatePaymentNotice</b>
-                <span/>
-              </span>
-              <small class="step_duration">(0.021s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:54</span>
-            </div>
-            <span class="embed"/>
-            <div class="message">
-              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd&quot;&gt;
-&lt;soapenv:Header/&gt;
-&lt;soapenv:Body&gt;
-&lt;nod:activatePaymentNoticeReq&gt;
-&lt;idPSP&gt;70000000001&lt;/idPSP&gt;
-&lt;idBrokerPSP&gt;70000000001&lt;/idBrokerPSP&gt;
-&lt;idChannel&gt;70000000001_01&lt;/idChannel&gt;
-&lt;password&gt;pwdpwdpwd&lt;/password&gt;
-&lt;idempotencyKey&gt;#idempotency_key#&lt;/idempotencyKey&gt;
-&lt;qrCode&gt;
-&lt;fiscalCode&gt;#creditor_institution_code_old#&lt;/fiscalCode&gt;
-&lt;noticeNumber&gt;#notice_number_old#&lt;/noticeNumber&gt;
-&lt;/qrCode&gt;
-&lt;expirationTime&gt;15000&lt;/expirationTime&gt;
-&lt;amount&gt;10.00&lt;/amount&gt;
-&lt;dueDate&gt;2021-12-31&lt;/dueDate&gt;
-&lt;paymentNote&gt;causale&lt;/paymentNote&gt;
-&lt;/nod:activatePaymentNoticeReq&gt;
-&lt;/soapenv:Body&gt;
-&lt;/soapenv:Envelope&gt;
-</pre>
-            </div>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
-                <span>nodo-dei-pagamenti has config parameter </span>
-                <b>useIdempotency</b>
-                <span> set to </span>
-                <b>true</b>
-                <span/>
-              </span>
-              <small class="step_duration">(5.610s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:621</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">Given </span>
-              <span class="step val">
-                <span>the </span>
-                <b>Execute sendPaymentOutcome request</b>
-                <span> scenario executed successfully</span>
-              </span>
-              <small class="step_duration">(2.432s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:347</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">Then </span>
-              <span class="step val">
-                <span>update through the query </span>
-                <b>idempotency_update</b>
-                <span> with date </span>
-                <b>Today</b>
-                <span> under macro </span>
-                <b>update_query</b>
-                <span> on db </span>
-                <b>nodo_cfg</b>
-                <span/>
-              </span>
-              <small class="step_duration">(0.149s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:637</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
-                <span>wait </span>
-                <b>7</b>
-                <span> seconds for expiration</span>
-              </span>
-              <small class="step_duration">(7.009s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:750</span>
-            </div>
-            <span class="embed"/>
-          </li>
-        </ol>
+        <ol class="scenario_steps" id="scenario_2"/>
         <span/>
       </div>
       <div class="scenario">
-        <span class="scenario_file">src/integ-test/bdd-test/features/NewMod3/flows/sendPaymentOutcome/sendPaymentOutcome_IDMP_SPO_07.feature:96</span>
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:140</span>
         <h3 onclick="Collapsible_toggle('scenario_3')">
-          <span class="val">Scenario: Execute sendPaymentOutcome request 1</span>
+          <span class="val">Scenario: Check PPT_SOAPACTION_ERRATA error for nodoInviaFlussoRendicontazione primitive</span>
         </h3>
-        <ol class="scenario_steps" id="scenario_3">
+        <ol class="scenario_steps" id="scenario_3"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:188</span>
+        <h3 onclick="Collapsible_toggle('scenario_4')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error for nodoInviaFlussoRendicontazione primitive -- @1.1 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_4"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:189</span>
+        <h3 onclick="Collapsible_toggle('scenario_5')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error for nodoInviaFlussoRendicontazione primitive -- @1.2 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_5"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:190</span>
+        <h3 onclick="Collapsible_toggle('scenario_6')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error for nodoInviaFlussoRendicontazione primitive -- @1.3 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_6"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:191</span>
+        <h3 onclick="Collapsible_toggle('scenario_7')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error for nodoInviaFlussoRendicontazione primitive -- @1.4 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_7"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:192</span>
+        <h3 onclick="Collapsible_toggle('scenario_8')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error for nodoInviaFlussoRendicontazione primitive -- @1.5 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_8"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:193</span>
+        <h3 onclick="Collapsible_toggle('scenario_9')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error for nodoInviaFlussoRendicontazione primitive -- @1.6 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_9"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:194</span>
+        <h3 onclick="Collapsible_toggle('scenario_10')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error for nodoInviaFlussoRendicontazione primitive -- @1.7 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_10"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:195</span>
+        <h3 onclick="Collapsible_toggle('scenario_11')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error for nodoInviaFlussoRendicontazione primitive -- @1.8 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_11"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:196</span>
+        <h3 onclick="Collapsible_toggle('scenario_12')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error for nodoInviaFlussoRendicontazione primitive -- @1.9 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_12"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:197</span>
+        <h3 onclick="Collapsible_toggle('scenario_13')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error for nodoInviaFlussoRendicontazione primitive -- @1.10 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_13"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:198</span>
+        <h3 onclick="Collapsible_toggle('scenario_14')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error for nodoInviaFlussoRendicontazione primitive -- @1.11 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_14"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:199</span>
+        <h3 onclick="Collapsible_toggle('scenario_15')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error for nodoInviaFlussoRendicontazione primitive -- @1.12 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_15"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:200</span>
+        <h3 onclick="Collapsible_toggle('scenario_16')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error for nodoInviaFlussoRendicontazione primitive -- @1.13 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_16"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:201</span>
+        <h3 onclick="Collapsible_toggle('scenario_17')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error for nodoInviaFlussoRendicontazione primitive -- @1.14 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_17"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:202</span>
+        <h3 onclick="Collapsible_toggle('scenario_18')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error for nodoInviaFlussoRendicontazione primitive -- @1.15 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_18"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:203</span>
+        <h3 onclick="Collapsible_toggle('scenario_19')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error for nodoInviaFlussoRendicontazione primitive -- @1.16 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_19"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:204</span>
+        <h3 onclick="Collapsible_toggle('scenario_20')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error for nodoInviaFlussoRendicontazione primitive -- @1.17 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_20"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:205</span>
+        <h3 onclick="Collapsible_toggle('scenario_21')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error for nodoInviaFlussoRendicontazione primitive -- @1.18 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_21"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:206</span>
+        <h3 onclick="Collapsible_toggle('scenario_22')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error for nodoInviaFlussoRendicontazione primitive -- @1.19 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_22"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:207</span>
+        <h3 onclick="Collapsible_toggle('scenario_23')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error for nodoInviaFlussoRendicontazione primitive -- @1.20 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_23"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:208</span>
+        <h3 onclick="Collapsible_toggle('scenario_24')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error for nodoInviaFlussoRendicontazione primitive -- @1.21 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_24"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:209</span>
+        <h3 onclick="Collapsible_toggle('scenario_25')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error for nodoInviaFlussoRendicontazione primitive -- @1.22 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_25"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:210</span>
+        <h3 onclick="Collapsible_toggle('scenario_26')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error for nodoInviaFlussoRendicontazione primitive -- @1.23 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_26"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:211</span>
+        <h3 onclick="Collapsible_toggle('scenario_27')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error for nodoInviaFlussoRendicontazione primitive -- @1.24 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_27"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:212</span>
+        <h3 onclick="Collapsible_toggle('scenario_28')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error for nodoInviaFlussoRendicontazione primitive -- @1.25 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_28"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:213</span>
+        <h3 onclick="Collapsible_toggle('scenario_29')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error for nodoInviaFlussoRendicontazione primitive -- @1.26 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_29"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:242</span>
+        <span class="tag">@prova</span>
+        <h3 onclick="Collapsible_toggle('scenario_30')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error for nodoInviaFlussoRendicontazione primitive -- @1.1 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_30">
           <li class="step passed">
             <div class="step_name">
               <span class="keyword">Given </span>
@@ -923,71 +425,16 @@ function Collapsible_expandAllFailed()
           </li>
           <li class="step passed">
             <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
-                <span>initial XML </span>
-                <b>activatePaymentNotice</b>
-                <span/>
-              </span>
-              <small class="step_duration">(0.002s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:54</span>
-            </div>
-            <span class="embed"/>
-            <div class="message">
-              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd&quot;&gt;
-&lt;soapenv:Header/&gt;
-&lt;soapenv:Body&gt;
-&lt;nod:activatePaymentNoticeReq&gt;
-&lt;idPSP&gt;70000000001&lt;/idPSP&gt;
-&lt;idBrokerPSP&gt;70000000001&lt;/idBrokerPSP&gt;
-&lt;idChannel&gt;70000000001_01&lt;/idChannel&gt;
-&lt;password&gt;pwdpwdpwd&lt;/password&gt;
-&lt;idempotencyKey&gt;#idempotency_key#&lt;/idempotencyKey&gt;
-&lt;qrCode&gt;
-&lt;fiscalCode&gt;#creditor_institution_code_old#&lt;/fiscalCode&gt;
-&lt;noticeNumber&gt;#notice_number_old#&lt;/noticeNumber&gt;
-&lt;/qrCode&gt;
-&lt;expirationTime&gt;15000&lt;/expirationTime&gt;
-&lt;amount&gt;10.00&lt;/amount&gt;
-&lt;dueDate&gt;2021-12-31&lt;/dueDate&gt;
-&lt;paymentNote&gt;causale&lt;/paymentNote&gt;
-&lt;/nod:activatePaymentNoticeReq&gt;
-&lt;/soapenv:Body&gt;
-&lt;/soapenv:Envelope&gt;
-</pre>
-            </div>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
-                <span>nodo-dei-pagamenti has config parameter </span>
-                <b>useIdempotency</b>
-                <span> set to </span>
-                <b>true</b>
-                <span/>
-              </span>
-              <small class="step_duration">(5.229s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:621</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
               <span class="keyword">Given </span>
               <span class="step val">
                 <span>the </span>
-                <b>update column valid_to idempotency_cache</b>
+                <b>Generazione rendicontazione</b>
                 <span> scenario executed successfully</span>
               </span>
-              <small class="step_duration">(9.809s)</small>
+              <small class="step_duration">(0.006s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:347</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:346</span>
             </div>
             <span class="embed"/>
           </li>
@@ -996,108 +443,88 @@ function Collapsible_expandAllFailed()
               <span class="keyword">And </span>
               <span class="step val">
                 <span>initial XML </span>
-                <b>sendPaymentOutcome</b>
+                <b>nodoInviaFlussoRendicontazione</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.003s)</small>
+              <small class="step_duration">(0.011s)</small>
             </div>
             <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:54</span>
             </div>
             <span class="embed"/>
             <div class="message">
-              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd&quot;&gt;
+              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:ws=&quot;http://ws.pagamenti.telematici.gov/&quot;&gt;
 &lt;soapenv:Header/&gt;
 &lt;soapenv:Body&gt;
-&lt;nod:sendPaymentOutcomeReq&gt;
-&lt;idPSP&gt;70000000001&lt;/idPSP&gt;
-&lt;idBrokerPSP&gt;70000000001&lt;/idBrokerPSP&gt;
-&lt;idChannel&gt;70000000001_01&lt;/idChannel&gt;
+&lt;ws:nodoInviaFlussoRendicontazione&gt;
+&lt;identificativoPSP&gt;#psp#&lt;/identificativoPSP&gt;
+&lt;identificativoIntermediarioPSP&gt;#psp#&lt;/identificativoIntermediarioPSP&gt;
+&lt;identificativoCanale&gt;#canale#&lt;/identificativoCanale&gt;
 &lt;password&gt;pwdpwdpwd&lt;/password&gt;
-&lt;idempotencyKey&gt;$sendPaymentOutcome.idempotencyKey&lt;/idempotencyKey&gt;
-&lt;paymentToken&gt;$activatePaymentNoticeResponse.paymentToken&lt;/paymentToken&gt;
-&lt;outcome&gt;OK&lt;/outcome&gt;
-&lt;details&gt;
-&lt;paymentMethod&gt;creditCard&lt;/paymentMethod&gt;
-&lt;paymentChannel&gt;app&lt;/paymentChannel&gt;
-&lt;fee&gt;2.00&lt;/fee&gt;
-&lt;payer&gt;
-&lt;uniqueIdentifier&gt;
-&lt;entityUniqueIdentifierType&gt;F&lt;/entityUniqueIdentifierType&gt;
-&lt;entityUniqueIdentifierValue&gt;JHNDOE00A01F205N&lt;/entityUniqueIdentifierValue&gt;
-&lt;/uniqueIdentifier&gt;
-&lt;fullName&gt;John Doe&lt;/fullName&gt;
-&lt;streetName&gt;street3&lt;/streetName&gt;
-&lt;civicNumber&gt;12&lt;/civicNumber&gt;
-&lt;postalCode&gt;89020&lt;/postalCode&gt;
-&lt;city&gt;city&lt;/city&gt;
-&lt;stateProvinceRegion&gt;MI&lt;/stateProvinceRegion&gt;
-&lt;country&gt;IT&lt;/country&gt;
-&lt;e-mail&gt;john.doe@test.it&lt;/e-mail&gt;
-&lt;/payer&gt;
-&lt;applicationDate&gt;2021-10-01&lt;/applicationDate&gt;
-&lt;transferDate&gt;2021-10-02&lt;/transferDate&gt;
-&lt;/details&gt;
-&lt;/nod:sendPaymentOutcomeReq&gt;
+&lt;identificativoDominio&gt;#codicePA#&lt;/identificativoDominio&gt;
+&lt;identificativoFlusso&gt;$identificativoFlusso&lt;/identificativoFlusso&gt;
+&lt;dataOraFlusso&gt;$timedate&lt;/dataOraFlusso&gt;
+&lt;xmlRendicontazione&gt;$rendAttachment&lt;/xmlRendicontazione&gt;
+&lt;/ws:nodoInviaFlussoRendicontazione&gt;
 &lt;/soapenv:Body&gt;
 &lt;/soapenv:Envelope&gt;
 </pre>
             </div>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span/>
+                <b>xmlRendicontazione</b>
+                <span> with </span>
+                <b>123456789</b>
+                <span> in </span>
+                <b>nodoInviaFlussoRendicontazione</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.001s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:151</span>
+            </div>
+            <span class="embed"/>
           </li>
           <li class="step passed">
             <div class="step_name">
               <span class="keyword">When </span>
               <span class="step val">
                 <span/>
-                <b>psp</b>
+                <b>EC</b>
                 <span> sends SOAP </span>
-                <b>sendPaymentOutcome</b>
+                <b>nodoInviaFlussoRendicontazione</b>
                 <span> to </span>
                 <b>nodo-dei-pagamenti</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.061s)</small>
+              <small class="step_duration">(0.064s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:170</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:169</span>
             </div>
             <span class="embed"/>
           </li>
           <li class="step passed">
             <div class="step_name">
               <span class="keyword">Then </span>
-              <span class="step val">
-                <span>check </span>
-                <b>outcome</b>
-                <span> is </span>
-                <b>KO</b>
-                <span> of </span>
-                <b>sendPaymentOutcome</b>
-                <span> response</span>
-              </span>
-              <small class="step_duration">(0.002s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:194</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
               <span class="step val">
                 <span>check </span>
                 <b>faultCode</b>
                 <span> is </span>
-                <b>PPT_ERRORE_IDEMPOTENZA</b>
+                <b>PPT_SINTASSI_EXTRAXSD</b>
                 <span> of </span>
-                <b>sendPaymentOutcome</b>
+                <b>nodoInviaFlussoRendicontazione</b>
                 <span> response</span>
               </span>
               <small class="step_duration">(0.002s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:194</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:193</span>
             </div>
             <span class="embed"/>
           </li>
@@ -1105,11 +532,378 @@ function Collapsible_expandAllFailed()
         <span/>
       </div>
       <div class="scenario">
-        <span class="scenario_file">src/integ-test/bdd-test/features/NewMod3/flows/sendPaymentOutcome/sendPaymentOutcome_IDMP_SPO_07.feature:140</span>
-        <h3 onclick="Collapsible_toggle('scenario_4')">
-          <span class="val">Scenario: DB check</span>
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:245</span>
+        <span class="tag">@prova</span>
+        <h3 onclick="Collapsible_toggle('scenario_31')" class="failed">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error for nodoInviaFlussoRendicontazione primitive -- @1.2 </span>
         </h3>
-        <ol class="scenario_steps" id="scenario_4">
+        <ol class="scenario_steps" id="scenario_31">
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">Given </span>
+              <span class="step val">systems up</span>
+              <small class="step_duration">(0.000s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:27</span>
+            </div>
+            <span class="embed"/>
+            <table>
+              <tr>
+                <th>name</th>
+                <th>url</th>
+                <th>healthcheck</th>
+                <th>soap_service</th>
+                <th>rest_service</th>
+              </tr>
+              <tr>
+                <td>nodo-dei-pagamenti</td>
+                <td>http://localhost:9080/</td>
+                <td>nodo-dev-health/ready</td>
+                <td>nodo-dev/webservices/input</td>
+                <td>nodo-dev</td>
+              </tr>
+              <tr>
+                <td>mock-ec</td>
+                <td>http://localhost:8089/</td>
+                <td>servizi/PagamentiTelematiciRPT/info</td>
+                <td>servizi/PagamentiTelematiciRPT</td>
+                <td/>
+              </tr>
+            </table>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">Given </span>
+              <span class="step val">
+                <span>the </span>
+                <b>Generazione rendicontazione</b>
+                <span> scenario executed successfully</span>
+              </span>
+              <small class="step_duration">(0.005s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:346</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>initial XML </span>
+                <b>nodoInviaFlussoRendicontazione</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.002s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:54</span>
+            </div>
+            <span class="embed"/>
+            <div class="message">
+              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:ws=&quot;http://ws.pagamenti.telematici.gov/&quot;&gt;
+&lt;soapenv:Header/&gt;
+&lt;soapenv:Body&gt;
+&lt;ws:nodoInviaFlussoRendicontazione&gt;
+&lt;identificativoPSP&gt;#psp#&lt;/identificativoPSP&gt;
+&lt;identificativoIntermediarioPSP&gt;#psp#&lt;/identificativoIntermediarioPSP&gt;
+&lt;identificativoCanale&gt;#canale#&lt;/identificativoCanale&gt;
+&lt;password&gt;pwdpwdpwd&lt;/password&gt;
+&lt;identificativoDominio&gt;#codicePA#&lt;/identificativoDominio&gt;
+&lt;identificativoFlusso&gt;$identificativoFlusso&lt;/identificativoFlusso&gt;
+&lt;dataOraFlusso&gt;$timedate&lt;/dataOraFlusso&gt;
+&lt;xmlRendicontazione&gt;$rendAttachment&lt;/xmlRendicontazione&gt;
+&lt;/ws:nodoInviaFlussoRendicontazione&gt;
+&lt;/soapenv:Body&gt;
+&lt;/soapenv:Envelope&gt;
+</pre>
+            </div>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span/>
+                <b>xmlRendicontazione</b>
+                <span> with </span>
+                <b>PHBheV9pOkZsdXNzb1JpdmVyc2FtZW50byB4bWxuczpwYXlfaT0iaHR0cDovL3d3dy5kaWdpdHBhLmdvdi5pdC9zY2hlbWFzLzIwMTEvUGFnYW1lbnRpLyIgeG1sbnM6eHNpPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYS1pbnN0YW5jZSIgeHNpOnNjaGVtYUxvY2F0aW9uPSJodHRwOi8vd3d3LmRpZ2l0cGEuZ292Lml0L3NjaGVtYXMvMjAxMS9QYWdhbWVudGkvIEZsdXNzb1JlbmRpY29udGF6aW9uZV92XzFfMF8xLnhzZCAiPgogICAgICAgICAgICA8cGF5X2k6dmVyc2lvbmVPZ2dldHRvPjEuMDwvcGF5X2k6dmVyc2lvbmVPZ2dldHRvPgogICAgICAgICAgICA8cGF5X2k6aWRlbnRpZmljYXRpdm9GbHVzc28+I2lkZW50aWZpY2F0aXZvRmx1c3NvIzwvcGF5X2k6aWRlbnRpZmljYXRpdm9GbHVzc28+CiAgICAgICAgICAgIDxwYXlfaTpkYXRhT3JhRmx1c3NvPiN0aW1lZGF0ZSM8L3BheV9pOmRhdGFPcmFGbHVzc28+CiAgICAgICAgICAgIDxwYXlfaTppZGVudGlmaWNhdGl2b1VuaXZvY29SZWdvbGFtZW50bz4jaXV2IzwvcGF5X2k6aWRlbnRpZmljYXRpdm9Vbml2b2NvUmVnb2xhbWVudG8+CiAgICAgICAgICAgIDxwYXlfaTpkYXRhUmVnb2xhbWVudG8+I2RhdGUjPC9wYXlfaTpkYXRhUmVnb2xhbWVudG8+CiAgICAgICAgICAgIDxwYXlfaTppZGVudGlmaWNhdGl2b1VuaXZvY29NaXR0ZW50ZT4KICAgICAgICAgICAgPHBheV9pOnRpcG9JZGVudGlmaWNhdGl2b1VuaXZvY28+RzwvcGF5X2k6dGlwb0lkZW50aWZpY2F0aXZvVW5pdm9jbz4KICAgICAgICAgICAgPHBheV9pOmNvZGljZUlkZW50aWZpY2F0aXZvVW5pdm9jbz4jcHNwIzwvcGF5X2k6Y29kaWNlSWRlbnRpZmljYXRpdm9Vbml2b2NvPgogICAgICAgICAgICA8L3BheV9pOmlkZW50aWZpY2F0aXZvVW5pdm9jb01pdHRlbnRlPgogICAgICAgICAgICA8cGF5X2k6ZGVub21pbmF6aW9uZU1pdHRlbnRlPmRlbk1pdHRfMTwvcGF5X2k6ZGVub21pbmF6aW9uZU1pdHRlbnRlPgogICAgICAgICAgICA8cGF5X2k6Y29kaWNlQmljQmFuY2FEaVJpdmVyc2FtZW50bz5CSUNJRFBTUDwvcGF5X2k6Y29kaWNlQmljQmFuY2FEaVJpdmVyc2FtZW50bz4KICAgICAgICAgICAgPHBheV9pOmlzdGl0dXRvUmljZXZlbnRlPgogICAgICAgICAgICA8cGF5X2k6aWRlbnRpZmljYXRpdm9Vbml2b2NvUmljZXZlbnRlPgogICAgICAgICAgICA8cGF5X2k6dGlwb0lkZW50aWZpY2F0aXZvVW5pdm9jbz5HPC9wYXlfaTp0aXBvSWRlbnRpZmljYXRpdm9Vbml2b2NvPgogICAgICAgICAgICA8cGF5X2k6Y29kaWNlSWRlbnRpZmljYXRpdm9Vbml2b2NvPmNvZElkVW5pdl8yPC9wYXlfaTpjb2RpY2VJZGVudGlmaWNhdGl2b1VuaXZvY28+CiAgICAgICAgICAgIDwvcGF5X2k6aWRlbnRpZmljYXRpdm9Vbml2b2NvUmljZXZlbnRlPgogICAgICAgICAgICA8cGF5X2k6ZGVub21pbmF6aW9uZVJpY2V2ZW50ZT5kZW5SaWNfMjwvcGF5X2k6ZGVub21pbmF6aW9uZVJpY2V2ZW50ZT4KICAgICAgICAgICAgPC9wYXlfaTppc3RpdHV0b1JpY2V2ZW50ZT4KICAgICAgICAgICAgPHBheV9pOm51bWVyb1RvdGFsZVBhZ2FtZW50aT4xPC9wYXlfaTpudW1lcm9Ub3RhbGVQYWdhbWVudGk+CiAgICAgICAgICAgIDxwYXlfaTppbXBvcnRvVG90YWxlUGFnYW1lbnRpPjEwLjAwPC9wYXlfaTppbXBvcnRvVG90YWxlUGFnYW1lbnRpPgogICAgICAgICAgICA8cGF5X2k6ZGF0aVNpbmdvbGlQYWdhbWVudGk+CiAgICAgICAgICAgIDxwYXlfaTppZGVudGlmaWNhdGl2b1VuaXZvY29WZXJzYW1lbnRvPiNpdXYjPC9wYXlfaTppZGVudGlmaWNhdGl2b1VuaXZvY29WZXJzYW1lbnRvPgogICAgICAgICAgICA8cGF5X2k6aWRlbnRpZmljYXRpdm9Vbml2b2NvUmlzY29zc2lvbmU+I2l1diM8L3BheV9pOmlkZW50aWZpY2F0aXZvVW5pdm9jb1Jpc2Nvc3Npb25lPgogICAgICAgICAgICA8cGF5X2k6aW5kaWNlRGF0aVNpbmdvbG9QYWdhbWVudG8+MTwvcGF5X2k6aW5kaWNlRGF0aVNpbmdvbG9QYWdhbWVudG8+CiAgICAgICAgICAgIDxwYXlfaTpzaW5nb2xvSW1wb3J0b1BhZ2F0bz4xMC4wMDwvcGF5X2k6c2luZ29sb0ltcG9ydG9QYWdhdG8+CiAgICAgICAgICAgIDxwYXlfaTpjb2RpY2VFc2l0b1NpbmdvbG9QYWdhbWVudG8+MDwvcGF5X2k6Y29kaWNlRXNpdG9TaW5nb2xvUGFnYW1lbnRvPgogICAgICAgICAgICA8cGF5X2k6ZGF0YUVzaXRvU2luZ29sb1BhZ2FtZW50bz4jZGF0ZSM8L3BheV9pOmRhdGFFc2l0b1NpbmdvbG9QYWdhbWVudG8+CiAgICAgICAgICAgIDwvcGF5X2k6ZGF0aVNpbmdvbGlQYWdhbWVudGk+CiAgICAgICAgICAgIDwvcGF5X2k6Rmx1c3NvUml2ZXJzYW1lbnRvPg==</b>
+                <span> in </span>
+                <b>nodoInviaFlussoRendicontazione</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.002s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:151</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">When </span>
+              <span class="step val">
+                <span/>
+                <b>EC</b>
+                <span> sends SOAP </span>
+                <b>nodoInviaFlussoRendicontazione</b>
+                <span> to </span>
+                <b>nodo-dei-pagamenti</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.077s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:169</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step failed">
+            <div class="step_name">
+              <span class="keyword">Then </span>
+              <span class="step val">
+                <span>check </span>
+                <b>faultCode</b>
+                <span> is </span>
+                <b>PPT_SINTASSI_EXTRAXSD</b>
+                <span> of </span>
+                <b>nodoInviaFlussoRendicontazione</b>
+                <span> response</span>
+              </span>
+              <small class="step_duration">(0.005s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:193</span>
+            </div>
+            <span class="embed">
+              <a onclick="Collapsible_toggle('embed_1')">Error Message</a>
+              <pre id="embed_1" style="display: none">Traceback (most recent call last):
+  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\behave\model.py&quot;, line 1329, in run
+    match.run(runner.context)
+  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\behave\matchers.py&quot;, line 98, in run
+    self.func(context, *args, **kwargs)
+  File &quot;src\integ-test\bdd-test\features\steps\steps.py&quot;, line 207, in step_impl
+    assert value == data
+AssertionError
+
+Captured stdout:
+url_nodo:  http://localhost:9080/nodo-dev/webservices/input
+nodo soap_request sent &gt;&gt;&gt; &lt;?xml version=&quot;1.0&quot; ?&gt;&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:ws=&quot;http://ws.pagamenti.telematici.gov/&quot;&gt;
+&lt;soapenv:Header/&gt;
+&lt;soapenv:Body&gt;
+&lt;ws:nodoInviaFlussoRendicontazione&gt;
+&lt;identificativoPSP&gt;70000000001&lt;/identificativoPSP&gt;
+&lt;identificativoIntermediarioPSP&gt;70000000001&lt;/identificativoIntermediarioPSP&gt;
+&lt;identificativoCanale&gt;70000000001_07&lt;/identificativoCanale&gt;
+&lt;password&gt;pwdpwdpwd&lt;/password&gt;
+&lt;identificativoDominio&gt;77777777777&lt;/identificativoDominio&gt;
+&lt;identificativoFlusso&gt;2022-07-1870000000001-6770&lt;/identificativoFlusso&gt;
+&lt;dataOraFlusso&gt;2022-07-18T17:06:40.151&lt;/dataOraFlusso&gt;
+&lt;xmlRendicontazione&gt;PHBheV9pOkZsdXNzb1JpdmVyc2FtZW50byB4bWxuczpwYXlfaT0iaHR0cDovL3d3dy5kaWdpdHBhLmdvdi5pdC9zY2hlbWFzLzIwMTEvUGFnYW1lbnRpLyIgeG1sbnM6eHNpPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYS1pbnN0YW5jZSIgeHNpOnNjaGVtYUxvY2F0aW9uPSJodHRwOi8vd3d3LmRpZ2l0cGEuZ292Lml0L3NjaGVtYXMvMjAxMS9QYWdhbWVudGkvIEZsdXNzb1JlbmRpY29udGF6aW9uZV92XzFfMF8xLnhzZCAiPgogICAgICAgICAgICA8cGF5X2k6dmVyc2lvbmVPZ2dldHRvPjEuMDwvcGF5X2k6dmVyc2lvbmVPZ2dldHRvPgogICAgICAgICAgICA8cGF5X2k6aWRlbnRpZmljYXRpdm9GbHVzc28+I2lkZW50aWZpY2F0aXZvRmx1c3NvIzwvcGF5X2k6aWRlbnRpZmljYXRpdm9GbHVzc28+CiAgICAgICAgICAgIDxwYXlfaTpkYXRhT3JhRmx1c3NvPiN0aW1lZGF0ZSM8L3BheV9pOmRhdGFPcmFGbHVzc28+CiAgICAgICAgICAgIDxwYXlfaTppZGVudGlmaWNhdGl2b1VuaXZvY29SZWdvbGFtZW50bz4jaXV2IzwvcGF5X2k6aWRlbnRpZmljYXRpdm9Vbml2b2NvUmVnb2xhbWVudG8+CiAgICAgICAgICAgIDxwYXlfaTpkYXRhUmVnb2xhbWVudG8+I2RhdGUjPC9wYXlfaTpkYXRhUmVnb2xhbWVudG8+CiAgICAgICAgICAgIDxwYXlfaTppZGVudGlmaWNhdGl2b1VuaXZvY29NaXR0ZW50ZT4KICAgICAgICAgICAgPHBheV9pOnRpcG9JZGVudGlmaWNhdGl2b1VuaXZvY28+RzwvcGF5X2k6dGlwb0lkZW50aWZpY2F0aXZvVW5pdm9jbz4KICAgICAgICAgICAgPHBheV9pOmNvZGljZUlkZW50aWZpY2F0aXZvVW5pdm9jbz4jcHNwIzwvcGF5X2k6Y29kaWNlSWRlbnRpZmljYXRpdm9Vbml2b2NvPgogICAgICAgICAgICA8L3BheV9pOmlkZW50aWZpY2F0aXZvVW5pdm9jb01pdHRlbnRlPgogICAgICAgICAgICA8cGF5X2k6ZGVub21pbmF6aW9uZU1pdHRlbnRlPmRlbk1pdHRfMTwvcGF5X2k6ZGVub21pbmF6aW9uZU1pdHRlbnRlPgogICAgICAgICAgICA8cGF5X2k6Y29kaWNlQmljQmFuY2FEaVJpdmVyc2FtZW50bz5CSUNJRFBTUDwvcGF5X2k6Y29kaWNlQmljQmFuY2FEaVJpdmVyc2FtZW50bz4KICAgICAgICAgICAgPHBheV9pOmlzdGl0dXRvUmljZXZlbnRlPgogICAgICAgICAgICA8cGF5X2k6aWRlbnRpZmljYXRpdm9Vbml2b2NvUmljZXZlbnRlPgogICAgICAgICAgICA8cGF5X2k6dGlwb0lkZW50aWZpY2F0aXZvVW5pdm9jbz5HPC9wYXlfaTp0aXBvSWRlbnRpZmljYXRpdm9Vbml2b2NvPgogICAgICAgICAgICA8cGF5X2k6Y29kaWNlSWRlbnRpZmljYXRpdm9Vbml2b2NvPmNvZElkVW5pdl8yPC9wYXlfaTpjb2RpY2VJZGVudGlmaWNhdGl2b1VuaXZvY28+CiAgICAgICAgICAgIDwvcGF5X2k6aWRlbnRpZmljYXRpdm9Vbml2b2NvUmljZXZlbnRlPgogICAgICAgICAgICA8cGF5X2k6ZGVub21pbmF6aW9uZVJpY2V2ZW50ZT5kZW5SaWNfMjwvcGF5X2k6ZGVub21pbmF6aW9uZVJpY2V2ZW50ZT4KICAgICAgICAgICAgPC9wYXlfaTppc3RpdHV0b1JpY2V2ZW50ZT4KICAgICAgICAgICAgPHBheV9pOm51bWVyb1RvdGFsZVBhZ2FtZW50aT4xPC9wYXlfaTpudW1lcm9Ub3RhbGVQYWdhbWVudGk+CiAgICAgICAgICAgIDxwYXlfaTppbXBvcnRvVG90YWxlUGFnYW1lbnRpPjEwLjAwPC9wYXlfaTppbXBvcnRvVG90YWxlUGFnYW1lbnRpPgogICAgICAgICAgICA8cGF5X2k6ZGF0aVNpbmdvbGlQYWdhbWVudGk+CiAgICAgICAgICAgIDxwYXlfaTppZGVudGlmaWNhdGl2b1VuaXZvY29WZXJzYW1lbnRvPiNpdXYjPC9wYXlfaTppZGVudGlmaWNhdGl2b1VuaXZvY29WZXJzYW1lbnRvPgogICAgICAgICAgICA8cGF5X2k6aWRlbnRpZmljYXRpdm9Vbml2b2NvUmlzY29zc2lvbmU+I2l1diM8L3BheV9pOmlkZW50aWZpY2F0aXZvVW5pdm9jb1Jpc2Nvc3Npb25lPgogICAgICAgICAgICA8cGF5X2k6aW5kaWNlRGF0aVNpbmdvbG9QYWdhbWVudG8+MTwvcGF5X2k6aW5kaWNlRGF0aVNpbmdvbG9QYWdhbWVudG8+CiAgICAgICAgICAgIDxwYXlfaTpzaW5nb2xvSW1wb3J0b1BhZ2F0bz4xMC4wMDwvcGF5X2k6c2luZ29sb0ltcG9ydG9QYWdhdG8+CiAgICAgICAgICAgIDxwYXlfaTpjb2RpY2VFc2l0b1NpbmdvbG9QYWdhbWVudG8+MDwvcGF5X2k6Y29kaWNlRXNpdG9TaW5nb2xvUGFnYW1lbnRvPgogICAgICAgICAgICA8cGF5X2k6ZGF0YUVzaXRvU2luZ29sb1BhZ2FtZW50bz4jZGF0ZSM8L3BheV9pOmRhdGFFc2l0b1NpbmdvbG9QYWdhbWVudG8+CiAgICAgICAgICAgIDwvcGF5X2k6ZGF0aVNpbmdvbGlQYWdhbWVudGk+CiAgICAgICAgICAgIDwvcGF5X2k6Rmx1c3NvUml2ZXJzYW1lbnRvPg==&lt;/xmlRendicontazione&gt;
+&lt;/ws:nodoInviaFlussoRendicontazione&gt;
+&lt;/soapenv:Body&gt;
+&lt;/soapenv:Envelope&gt;
+b'&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot; ?&gt;&lt;soapenv:Envelope xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:bc=&quot;http://PuntoAccessoPSP.spcoop.gov.it/BarCode_GS1_128_Modified&quot; xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:pay_i=&quot;http://www.digitpa.gov.it/schemas/2011/Pagamenti/&quot; xmlns:ppt=&quot;http://ws.pagamenti.telematici.gov/&quot; xmlns:tns=&quot;http://PuntoAccessoPSP.spcoop.gov.it/servizi/PagamentiTelematiciPspNodo&quot; xmlns:qrc=&quot;http://PuntoAccessoPSP.spcoop.gov.it/QrCode&quot;&gt;&lt;soapenv:Body&gt;&lt;ppt:nodoInviaFlussoRendicontazioneRisposta&gt;&lt;fault&gt;&lt;faultCode&gt;PPT_SINTASSI_XSD&lt;/faultCode&gt;&lt;faultString&gt;Errore di sintassi XSD.&lt;/faultString&gt;&lt;id&gt;NodoDeiPagamentiSPC&lt;/id&gt;&lt;description&gt;Errore validazione XML [FlussoRiversamento/identificativoFlusso] - cvc-pattern-valid: il valore &amp;quot;#identificativoFlusso#&amp;quot; non \xc3\xa8 valido come facet rispetto al pattern &amp;quot;[a-zA-Z0-9\\-_]{1,35}&amp;quot; per il tipo \'stIdentificativoFlusso\'.&lt;/description&gt;&lt;/fault&gt;&lt;esito&gt;KO&lt;/esito&gt;&lt;/ppt:nodoInviaFlussoRendicontazioneRisposta&gt;&lt;/soapenv:Body&gt;&lt;/soapenv:Envelope&gt;'
+fault code:  PPT_SINTASSI_XSD
+fault string:  Errore di sintassi XSD.
+description:  Errore validazione XML [FlussoRiversamento/identificativoFlusso] - cvc-pattern-valid: il valore &quot;#identificativoFlusso#&quot; non è valido come facet rispetto al pattern &quot;[a-zA-Z0-9\-_]{1,35}&quot; per il tipo 'stIdentificativoFlusso'.
+check tag &quot;faultCode&quot; - expected: PPT_SINTASSI_EXTRAXSD, obtained: PPT_SINTASSI_XSD</pre>
+                  
+            </span>
+          </li>
+        </ol>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:246</span>
+        <span class="tag">@prova</span>
+        <h3 onclick="Collapsible_toggle('scenario_32')" class="failed">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error for nodoInviaFlussoRendicontazione primitive -- @1.3 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_32">
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">Given </span>
+              <span class="step val">systems up</span>
+              <small class="step_duration">(0.002s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:27</span>
+            </div>
+            <span class="embed"/>
+            <table>
+              <tr>
+                <th>name</th>
+                <th>url</th>
+                <th>healthcheck</th>
+                <th>soap_service</th>
+                <th>rest_service</th>
+              </tr>
+              <tr>
+                <td>nodo-dei-pagamenti</td>
+                <td>http://localhost:9080/</td>
+                <td>nodo-dev-health/ready</td>
+                <td>nodo-dev/webservices/input</td>
+                <td>nodo-dev</td>
+              </tr>
+              <tr>
+                <td>mock-ec</td>
+                <td>http://localhost:8089/</td>
+                <td>servizi/PagamentiTelematiciRPT/info</td>
+                <td>servizi/PagamentiTelematiciRPT</td>
+                <td/>
+              </tr>
+            </table>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">Given </span>
+              <span class="step val">
+                <span>the </span>
+                <b>Generazione rendicontazione</b>
+                <span> scenario executed successfully</span>
+              </span>
+              <small class="step_duration">(0.007s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:346</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>initial XML </span>
+                <b>nodoInviaFlussoRendicontazione</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.003s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:54</span>
+            </div>
+            <span class="embed"/>
+            <div class="message">
+              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:ws=&quot;http://ws.pagamenti.telematici.gov/&quot;&gt;
+&lt;soapenv:Header/&gt;
+&lt;soapenv:Body&gt;
+&lt;ws:nodoInviaFlussoRendicontazione&gt;
+&lt;identificativoPSP&gt;#psp#&lt;/identificativoPSP&gt;
+&lt;identificativoIntermediarioPSP&gt;#psp#&lt;/identificativoIntermediarioPSP&gt;
+&lt;identificativoCanale&gt;#canale#&lt;/identificativoCanale&gt;
+&lt;password&gt;pwdpwdpwd&lt;/password&gt;
+&lt;identificativoDominio&gt;#codicePA#&lt;/identificativoDominio&gt;
+&lt;identificativoFlusso&gt;$identificativoFlusso&lt;/identificativoFlusso&gt;
+&lt;dataOraFlusso&gt;$timedate&lt;/dataOraFlusso&gt;
+&lt;xmlRendicontazione&gt;$rendAttachment&lt;/xmlRendicontazione&gt;
+&lt;/ws:nodoInviaFlussoRendicontazione&gt;
+&lt;/soapenv:Body&gt;
+&lt;/soapenv:Envelope&gt;
+</pre>
+            </div>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span/>
+                <b>xmlRendicontazione</b>
+                <span> with </span>
+                <b>PHBheV9pOkZsdXNzb1JpdmVyc2FtZW50byB4bWxuczpwYXlfaT0iaHR0cDovL3d3dy5kaWdpdHBhLmdvdi5pdC9zY2hlbWFzLzIwMTEvUGFnYW1lbnRpLyIgeG1sbnM6eHNpPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYS1pbnN0YW5jZSIgeHNpOnNjaGVtYUxvY2F0aW9uPSJodHRwOi8vd3d3LmRpZ2l0cGEuZ292Lml0L3NjaGVtYXMvMjAxMS9QYWdhbWVudGkvIEZsdXNzb1JlbmRpY29udGF6aW9uZV92XzFfMF8xLnhzZCAiPgogICAgICAgICAgICA8cGF5X2k6dmVyc2lvbmVPZ2dldHRvPjEuMDwvcGF5X2k6dmVyc2lvbmVPZ2dldHRvPgogICAgICAgICAgICA8cGF5X2k6aWRlbnRpZmljYXRpdm9GbHVzc28+I2lkZW50aWZpY2F0aXZvRmx1c3NvIzwvcGF5X2k6aWRlbnRpZmljYXRpdm9GbHVzc28+CiAgICAgICAgICAgIDxwYXlfaTpkYXRhT3JhRmx1c3NvPiN0aW1lZGF0ZSM8L3BheV9pOmRhdGFPcmFGbHVzc28+CiAgICAgICAgICAgIDxwYXlfaTppZGVudGlmaWNhdGl2b1VuaXZvY29SZWdvbGFtZW50bz4jaXV2IzwvcGF5X2k6aWRlbnRpZmljYXRpdm9Vbml2b2NvUmVnb2xhbWVudG8+CiAgICAgICAgICAgIDxwYXlfaTpkYXRhUmVnb2xhbWVudG8+I2RhdGUjPC9wYXlfaTpkYXRhUmVnb2xhbWVudG8+CiAgICAgICAgICAgIDxwYXlfaTppc3RpdHV0b01pdHRlbnRlPgogICAgICAgICAgICA8cGF5X2k6dGlwb0lkZW50aWZpY2F0aXZvVW5pdm9jbz5HPC9wYXlfaTp0aXBvSWRlbnRpZmljYXRpdm9Vbml2b2NvPgogICAgICAgICAgICA8cGF5X2k6Y29kaWNlSWRlbnRpZmljYXRpdm9Vbml2b2NvPiNwc3AjPC9wYXlfaTpjb2RpY2VJZGVudGlmaWNhdGl2b1VuaXZvY28+CiAgICAgICAgICAgIDxwYXlfaTpkZW5vbWluYXppb25lTWl0dGVudGU+ZGVuTWl0dF8xPC9wYXlfaTpkZW5vbWluYXppb25lTWl0dGVudGU+CiAgICAgICAgICAgIDwvcGF5X2k6aXN0aXR1dG9NaXR0ZW50ZT4KICAgICAgICAgICAgPHBheV9pOmNvZGljZUJpY0JhbmNhRGlSaXZlcnNhbWVudG8+QklDSURQU1A8L3BheV9pOmNvZGljZUJpY0JhbmNhRGlSaXZlcnNhbWVudG8+CiAgICAgICAgICAgIDxwYXlfaTppc3RpdHV0b1JpY2V2ZW50ZT4KICAgICAgICAgICAgPHBheV9pOmlkZW50aWZpY2F0aXZvVW5pdm9jb1JpY2V2ZW50ZT4KICAgICAgICAgICAgPHBheV9pOnRpcG9JZGVudGlmaWNhdGl2b1VuaXZvY28+RzwvcGF5X2k6dGlwb0lkZW50aWZpY2F0aXZvVW5pdm9jbz4KICAgICAgICAgICAgPHBheV9pOmNvZGljZUlkZW50aWZpY2F0aXZvVW5pdm9jbz5jb2RJZFVuaXZfMjwvcGF5X2k6Y29kaWNlSWRlbnRpZmljYXRpdm9Vbml2b2NvPgogICAgICAgICAgICA8L3BheV9pOmlkZW50aWZpY2F0aXZvVW5pdm9jb1JpY2V2ZW50ZT4KICAgICAgICAgICAgPHBheV9pOmRlbm9taW5hemlvbmVSaWNldmVudGU+ZGVuUmljXzI8L3BheV9pOmRlbm9taW5hemlvbmVSaWNldmVudGU+CiAgICAgICAgICAgIDwvcGF5X2k6aXN0aXR1dG9SaWNldmVudGU+CiAgICAgICAgICAgIDxwYXlfaTpudW1lcm9Ub3RhbGVQYWdhbWVudGk+MTwvcGF5X2k6bnVtZXJvVG90YWxlUGFnYW1lbnRpPgogICAgICAgICAgICA8cGF5X2k6aW1wb3J0b1RvdGFsZVBhZ2FtZW50aT4xMC4wMDwvcGF5X2k6aW1wb3J0b1RvdGFsZVBhZ2FtZW50aT4KICAgICAgICAgICAgPHBheV9pOmRhdGlTaW5nb2xpUGFnYW1lbnRpPgogICAgICAgICAgICA8cGF5X2k6aWRlbnRpZmljYXRpdm9Vbml2b2NvVmVyc2FtZW50bz4jaXV2IzwvcGF5X2k6aWRlbnRpZmljYXRpdm9Vbml2b2NvVmVyc2FtZW50bz4KICAgICAgICAgICAgPHBheV9pOmlkZW50aWZpY2F0aXZvVW5pdm9jb1Jpc2Nvc3Npb25lPiNpdXYjPC9wYXlfaTppZGVudGlmaWNhdGl2b1VuaXZvY29SaXNjb3NzaW9uZT4KICAgICAgICAgICAgPHBheV9pOmluZGljZURhdGlTaW5nb2xvUGFnYW1lbnRvPjE8L3BheV9pOmluZGljZURhdGlTaW5nb2xvUGFnYW1lbnRvPgogICAgICAgICAgICA8cGF5X2k6c2luZ29sb0ltcG9ydG9QYWdhdG8+MTAuMDA8L3BheV9pOnNpbmdvbG9JbXBvcnRvUGFnYXRvPgogICAgICAgICAgICA8cGF5X2k6Y29kaWNlRXNpdG9TaW5nb2xvUGFnYW1lbnRvPjA8L3BheV9pOmNvZGljZUVzaXRvU2luZ29sb1BhZ2FtZW50bz4KICAgICAgICAgICAgPHBheV9pOmRhdGFFc2l0b1NpbmdvbG9QYWdhbWVudG8+I2RhdGUjPC9wYXlfaTpkYXRhRXNpdG9TaW5nb2xvUGFnYW1lbnRvPgogICAgICAgICAgICA8L3BheV9pOmRhdGlTaW5nb2xpUGFnYW1lbnRpPgogICAgICAgICAgICA8L3BheV9pOkZsdXNzb1JpdmVyc2FtZW50bz4=</b>
+                <span> in </span>
+                <b>nodoInviaFlussoRendicontazione</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.002s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:151</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">When </span>
+              <span class="step val">
+                <span/>
+                <b>EC</b>
+                <span> sends SOAP </span>
+                <b>nodoInviaFlussoRendicontazione</b>
+                <span> to </span>
+                <b>nodo-dei-pagamenti</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.158s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:169</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step failed">
+            <div class="step_name">
+              <span class="keyword">Then </span>
+              <span class="step val">
+                <span>check </span>
+                <b>faultCode</b>
+                <span> is </span>
+                <b>PPT_SINTASSI_EXTRAXSD</b>
+                <span> of </span>
+                <b>nodoInviaFlussoRendicontazione</b>
+                <span> response</span>
+              </span>
+              <small class="step_duration">(0.003s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:193</span>
+            </div>
+            <span class="embed">
+              <a onclick="Collapsible_toggle('embed_2')">Error Message</a>
+              <pre id="embed_2" style="display: none">Traceback (most recent call last):
+  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\behave\model.py&quot;, line 1329, in run
+    match.run(runner.context)
+  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\behave\matchers.py&quot;, line 98, in run
+    self.func(context, *args, **kwargs)
+  File &quot;src\integ-test\bdd-test\features\steps\steps.py&quot;, line 207, in step_impl
+    assert value == data
+AssertionError
+
+Captured stdout:
+url_nodo:  http://localhost:9080/nodo-dev/webservices/input
+nodo soap_request sent &gt;&gt;&gt; &lt;?xml version=&quot;1.0&quot; ?&gt;&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:ws=&quot;http://ws.pagamenti.telematici.gov/&quot;&gt;
+&lt;soapenv:Header/&gt;
+&lt;soapenv:Body&gt;
+&lt;ws:nodoInviaFlussoRendicontazione&gt;
+&lt;identificativoPSP&gt;70000000001&lt;/identificativoPSP&gt;
+&lt;identificativoIntermediarioPSP&gt;70000000001&lt;/identificativoIntermediarioPSP&gt;
+&lt;identificativoCanale&gt;70000000001_07&lt;/identificativoCanale&gt;
+&lt;password&gt;pwdpwdpwd&lt;/password&gt;
+&lt;identificativoDominio&gt;77777777777&lt;/identificativoDominio&gt;
+&lt;identificativoFlusso&gt;2022-07-1870000000001-2740&lt;/identificativoFlusso&gt;
+&lt;dataOraFlusso&gt;2022-07-18T17:06:40.252&lt;/dataOraFlusso&gt;
+&lt;xmlRendicontazione&gt;PHBheV9pOkZsdXNzb1JpdmVyc2FtZW50byB4bWxuczpwYXlfaT0iaHR0cDovL3d3dy5kaWdpdHBhLmdvdi5pdC9zY2hlbWFzLzIwMTEvUGFnYW1lbnRpLyIgeG1sbnM6eHNpPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYS1pbnN0YW5jZSIgeHNpOnNjaGVtYUxvY2F0aW9uPSJodHRwOi8vd3d3LmRpZ2l0cGEuZ292Lml0L3NjaGVtYXMvMjAxMS9QYWdhbWVudGkvIEZsdXNzb1JlbmRpY29udGF6aW9uZV92XzFfMF8xLnhzZCAiPgogICAgICAgICAgICA8cGF5X2k6dmVyc2lvbmVPZ2dldHRvPjEuMDwvcGF5X2k6dmVyc2lvbmVPZ2dldHRvPgogICAgICAgICAgICA8cGF5X2k6aWRlbnRpZmljYXRpdm9GbHVzc28+I2lkZW50aWZpY2F0aXZvRmx1c3NvIzwvcGF5X2k6aWRlbnRpZmljYXRpdm9GbHVzc28+CiAgICAgICAgICAgIDxwYXlfaTpkYXRhT3JhRmx1c3NvPiN0aW1lZGF0ZSM8L3BheV9pOmRhdGFPcmFGbHVzc28+CiAgICAgICAgICAgIDxwYXlfaTppZGVudGlmaWNhdGl2b1VuaXZvY29SZWdvbGFtZW50bz4jaXV2IzwvcGF5X2k6aWRlbnRpZmljYXRpdm9Vbml2b2NvUmVnb2xhbWVudG8+CiAgICAgICAgICAgIDxwYXlfaTpkYXRhUmVnb2xhbWVudG8+I2RhdGUjPC9wYXlfaTpkYXRhUmVnb2xhbWVudG8+CiAgICAgICAgICAgIDxwYXlfaTppc3RpdHV0b01pdHRlbnRlPgogICAgICAgICAgICA8cGF5X2k6dGlwb0lkZW50aWZpY2F0aXZvVW5pdm9jbz5HPC9wYXlfaTp0aXBvSWRlbnRpZmljYXRpdm9Vbml2b2NvPgogICAgICAgICAgICA8cGF5X2k6Y29kaWNlSWRlbnRpZmljYXRpdm9Vbml2b2NvPiNwc3AjPC9wYXlfaTpjb2RpY2VJZGVudGlmaWNhdGl2b1VuaXZvY28+CiAgICAgICAgICAgIDxwYXlfaTpkZW5vbWluYXppb25lTWl0dGVudGU+ZGVuTWl0dF8xPC9wYXlfaTpkZW5vbWluYXppb25lTWl0dGVudGU+CiAgICAgICAgICAgIDwvcGF5X2k6aXN0aXR1dG9NaXR0ZW50ZT4KICAgICAgICAgICAgPHBheV9pOmNvZGljZUJpY0JhbmNhRGlSaXZlcnNhbWVudG8+QklDSURQU1A8L3BheV9pOmNvZGljZUJpY0JhbmNhRGlSaXZlcnNhbWVudG8+CiAgICAgICAgICAgIDxwYXlfaTppc3RpdHV0b1JpY2V2ZW50ZT4KICAgICAgICAgICAgPHBheV9pOmlkZW50aWZpY2F0aXZvVW5pdm9jb1JpY2V2ZW50ZT4KICAgICAgICAgICAgPHBheV9pOnRpcG9JZGVudGlmaWNhdGl2b1VuaXZvY28+RzwvcGF5X2k6dGlwb0lkZW50aWZpY2F0aXZvVW5pdm9jbz4KICAgICAgICAgICAgPHBheV9pOmNvZGljZUlkZW50aWZpY2F0aXZvVW5pdm9jbz5jb2RJZFVuaXZfMjwvcGF5X2k6Y29kaWNlSWRlbnRpZmljYXRpdm9Vbml2b2NvPgogICAgICAgICAgICA8L3BheV9pOmlkZW50aWZpY2F0aXZvVW5pdm9jb1JpY2V2ZW50ZT4KICAgICAgICAgICAgPHBheV9pOmRlbm9taW5hemlvbmVSaWNldmVudGU+ZGVuUmljXzI8L3BheV9pOmRlbm9taW5hemlvbmVSaWNldmVudGU+CiAgICAgICAgICAgIDwvcGF5X2k6aXN0aXR1dG9SaWNldmVudGU+CiAgICAgICAgICAgIDxwYXlfaTpudW1lcm9Ub3RhbGVQYWdhbWVudGk+MTwvcGF5X2k6bnVtZXJvVG90YWxlUGFnYW1lbnRpPgogICAgICAgICAgICA8cGF5X2k6aW1wb3J0b1RvdGFsZVBhZ2FtZW50aT4xMC4wMDwvcGF5X2k6aW1wb3J0b1RvdGFsZVBhZ2FtZW50aT4KICAgICAgICAgICAgPHBheV9pOmRhdGlTaW5nb2xpUGFnYW1lbnRpPgogICAgICAgICAgICA8cGF5X2k6aWRlbnRpZmljYXRpdm9Vbml2b2NvVmVyc2FtZW50bz4jaXV2IzwvcGF5X2k6aWRlbnRpZmljYXRpdm9Vbml2b2NvVmVyc2FtZW50bz4KICAgICAgICAgICAgPHBheV9pOmlkZW50aWZpY2F0aXZvVW5pdm9jb1Jpc2Nvc3Npb25lPiNpdXYjPC9wYXlfaTppZGVudGlmaWNhdGl2b1VuaXZvY29SaXNjb3NzaW9uZT4KICAgICAgICAgICAgPHBheV9pOmluZGljZURhdGlTaW5nb2xvUGFnYW1lbnRvPjE8L3BheV9pOmluZGljZURhdGlTaW5nb2xvUGFnYW1lbnRvPgogICAgICAgICAgICA8cGF5X2k6c2luZ29sb0ltcG9ydG9QYWdhdG8+MTAuMDA8L3BheV9pOnNpbmdvbG9JbXBvcnRvUGFnYXRvPgogICAgICAgICAgICA8cGF5X2k6Y29kaWNlRXNpdG9TaW5nb2xvUGFnYW1lbnRvPjA8L3BheV9pOmNvZGljZUVzaXRvU2luZ29sb1BhZ2FtZW50bz4KICAgICAgICAgICAgPHBheV9pOmRhdGFFc2l0b1NpbmdvbG9QYWdhbWVudG8+I2RhdGUjPC9wYXlfaTpkYXRhRXNpdG9TaW5nb2xvUGFnYW1lbnRvPgogICAgICAgICAgICA8L3BheV9pOmRhdGlTaW5nb2xpUGFnYW1lbnRpPgogICAgICAgICAgICA8L3BheV9pOkZsdXNzb1JpdmVyc2FtZW50bz4=&lt;/xmlRendicontazione&gt;
+&lt;/ws:nodoInviaFlussoRendicontazione&gt;
+&lt;/soapenv:Body&gt;
+&lt;/soapenv:Envelope&gt;
+b'&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot; ?&gt;&lt;soapenv:Envelope xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:bc=&quot;http://PuntoAccessoPSP.spcoop.gov.it/BarCode_GS1_128_Modified&quot; xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:pay_i=&quot;http://www.digitpa.gov.it/schemas/2011/Pagamenti/&quot; xmlns:ppt=&quot;http://ws.pagamenti.telematici.gov/&quot; xmlns:tns=&quot;http://PuntoAccessoPSP.spcoop.gov.it/servizi/PagamentiTelematiciPspNodo&quot; xmlns:qrc=&quot;http://PuntoAccessoPSP.spcoop.gov.it/QrCode&quot;&gt;&lt;soapenv:Body&gt;&lt;ppt:nodoInviaFlussoRendicontazioneRisposta&gt;&lt;fault&gt;&lt;faultCode&gt;PPT_SINTASSI_XSD&lt;/faultCode&gt;&lt;faultString&gt;Errore di sintassi XSD.&lt;/faultString&gt;&lt;id&gt;NodoDeiPagamentiSPC&lt;/id&gt;&lt;description&gt;Errore validazione XML [FlussoRiversamento/identificativoFlusso] - cvc-pattern-valid: il valore &amp;quot;#identificativoFlusso#&amp;quot; non \xc3\xa8 valido come facet rispetto al pattern &amp;quot;[a-zA-Z0-9\\-_]{1,35}&amp;quot; per il tipo \'stIdentificativoFlusso\'.&lt;/description&gt;&lt;/fault&gt;&lt;esito&gt;KO&lt;/esito&gt;&lt;/ppt:nodoInviaFlussoRendicontazioneRisposta&gt;&lt;/soapenv:Body&gt;&lt;/soapenv:Envelope&gt;'
+fault code:  PPT_SINTASSI_XSD
+fault string:  Errore di sintassi XSD.
+description:  Errore validazione XML [FlussoRiversamento/identificativoFlusso] - cvc-pattern-valid: il valore &quot;#identificativoFlusso#&quot; non è valido come facet rispetto al pattern &quot;[a-zA-Z0-9\-_]{1,35}&quot; per il tipo 'stIdentificativoFlusso'.
+check tag &quot;faultCode&quot; - expected: PPT_SINTASSI_EXTRAXSD, obtained: PPT_SINTASSI_XSD</pre>
+                  
+            </span>
+          </li>
+        </ol>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:247</span>
+        <span class="tag">@prova</span>
+        <h3 onclick="Collapsible_toggle('scenario_33')" class="failed">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error for nodoInviaFlussoRendicontazione primitive -- @1.4 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_33">
           <li class="step passed">
             <div class="step_name">
               <span class="keyword">Given </span>
@@ -1146,10 +940,25 @@ function Collapsible_expandAllFailed()
           </li>
           <li class="step passed">
             <div class="step_name">
+              <span class="keyword">Given </span>
+              <span class="step val">
+                <span>the </span>
+                <b>Generazione rendicontazione</b>
+                <span> scenario executed successfully</span>
+              </span>
+              <small class="step_duration">(0.006s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:346</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
               <span class="keyword">And </span>
               <span class="step val">
                 <span>initial XML </span>
-                <b>activatePaymentNotice</b>
+                <b>nodoInviaFlussoRendicontazione</b>
                 <span/>
               </span>
               <small class="step_duration">(0.002s)</small>
@@ -1159,24 +968,19 @@ function Collapsible_expandAllFailed()
             </div>
             <span class="embed"/>
             <div class="message">
-              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd&quot;&gt;
+              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:ws=&quot;http://ws.pagamenti.telematici.gov/&quot;&gt;
 &lt;soapenv:Header/&gt;
 &lt;soapenv:Body&gt;
-&lt;nod:activatePaymentNoticeReq&gt;
-&lt;idPSP&gt;70000000001&lt;/idPSP&gt;
-&lt;idBrokerPSP&gt;70000000001&lt;/idBrokerPSP&gt;
-&lt;idChannel&gt;70000000001_01&lt;/idChannel&gt;
+&lt;ws:nodoInviaFlussoRendicontazione&gt;
+&lt;identificativoPSP&gt;#psp#&lt;/identificativoPSP&gt;
+&lt;identificativoIntermediarioPSP&gt;#psp#&lt;/identificativoIntermediarioPSP&gt;
+&lt;identificativoCanale&gt;#canale#&lt;/identificativoCanale&gt;
 &lt;password&gt;pwdpwdpwd&lt;/password&gt;
-&lt;idempotencyKey&gt;#idempotency_key#&lt;/idempotencyKey&gt;
-&lt;qrCode&gt;
-&lt;fiscalCode&gt;#creditor_institution_code_old#&lt;/fiscalCode&gt;
-&lt;noticeNumber&gt;#notice_number_old#&lt;/noticeNumber&gt;
-&lt;/qrCode&gt;
-&lt;expirationTime&gt;15000&lt;/expirationTime&gt;
-&lt;amount&gt;10.00&lt;/amount&gt;
-&lt;dueDate&gt;2021-12-31&lt;/dueDate&gt;
-&lt;paymentNote&gt;causale&lt;/paymentNote&gt;
-&lt;/nod:activatePaymentNoticeReq&gt;
+&lt;identificativoDominio&gt;#codicePA#&lt;/identificativoDominio&gt;
+&lt;identificativoFlusso&gt;$identificativoFlusso&lt;/identificativoFlusso&gt;
+&lt;dataOraFlusso&gt;$timedate&lt;/dataOraFlusso&gt;
+&lt;xmlRendicontazione&gt;$rendAttachment&lt;/xmlRendicontazione&gt;
+&lt;/ws:nodoInviaFlussoRendicontazione&gt;
 &lt;/soapenv:Body&gt;
 &lt;/soapenv:Envelope&gt;
 </pre>
@@ -1186,31 +990,149 @@ function Collapsible_expandAllFailed()
             <div class="step_name">
               <span class="keyword">And </span>
               <span class="step val">
-                <span>nodo-dei-pagamenti has config parameter </span>
-                <b>useIdempotency</b>
-                <span> set to </span>
-                <b>true</b>
+                <span/>
+                <b>xmlRendicontazione</b>
+                <span> with </span>
+                <b>PHBheV9pOkZsdXNzb1JpdmVyc2FtZW50byB4bWxuczpwYXlfaT0iaHR0cDovL3d3dy5kaWdpdHBhLmdvdi5pdC9zY2hlbWFzLzIwMTEvUGFnYW1lbnRpLyIgeG1sbnM6eHNpPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYS1pbnN0YW5jZSIgeHNpOnNjaGVtYUxvY2F0aW9uPSJodHRwOi8vd3d3LmRpZ2l0cGEuZ292Lml0L3NjaGVtYXMvMjAxMS9QYWdhbWVudGkvIEZsdXNzb1JlbmRpY29udGF6aW9uZV92XzFfMF8xLnhzZCAiPgogICAgICAgICAgICA8cGF5X2k6dmVyc2lvbmVPZ2dldHRvPjEuMDwvcGF5X2k6dmVyc2lvbmVPZ2dldHRvPgogICAgICAgICAgICA8cGF5X2k6aWRlbnRpZmljYXRpdm9GbHVzc28+I2lkZW50aWZpY2F0aXZvRmx1c3NvIzwvcGF5X2k6aWRlbnRpZmljYXRpdm9GbHVzc28+CiAgICAgICAgICAgIDxwYXlfaTpkYXRhT3JhRmx1c3NvPiN0aW1lZGF0ZSM8L3BheV9pOmRhdGFPcmFGbHVzc28+CiAgICAgICAgICAgIDxwYXlfaTppZGVudGlmaWNhdGl2b1VuaXZvY29SZWdvbGFtZW50bz4jaXV2IzwvcGF5X2k6aWRlbnRpZmljYXRpdm9Vbml2b2NvUmVnb2xhbWVudG8+CiAgICAgICAgICAgIDxwYXlfaTpkYXRhUmVnb2xhbWVudG8+I2RhdGUjPC9wYXlfaTpkYXRhUmVnb2xhbWVudG8+CiAgICAgICAgICAgIDxwYXlfaTppc3RpdHV0b01pdHRlbnRlPgogICAgICAgICAgICA8cGF5X2k6aWRlbnRpZmljYXRpdm9Vbml2b2NvTWl0dGVudGU+CiAgICAgICAgICAgIDxwYXlfaTp0aXBvSWRlbnRpZmljYXRpdm9Vbml2b2NvPkc8L3BheV9pOnRpcG9JZGVudGlmaWNhdGl2b1VuaXZvY28+CiAgICAgICAgICAgIDxwYXlfaTpjb2RpY2VJZGVudGlmaWNhdGl2b1VuaXZvY28+I3BzcCM8L3BheV9pOmNvZGljZUlkZW50aWZpY2F0aXZvVW5pdm9jbz4KICAgICAgICAgICAgPC9wYXlfaTppZGVudGlmaWNhdGl2b1VuaXZvY29NaXR0ZW50ZT4KICAgICAgICAgICAgPHBheV9pOmRlbm9taW5hemlvbmVNaXR0ZW50ZT5kZW5NaXR0XzE8L3BheV9pOmRlbm9taW5hemlvbmVNaXR0ZW50ZT4KICAgICAgICAgICAgPC9wYXlfaTppc3RpdHV0b01pdHRlbnRlPgogICAgICAgICAgICA8cGF5X2k6Y29kaWNlQmljQmFuY2FEaVJpdmVyc2FtZW50bz5CSUNJRFBTUDwvcGF5X2k6Y29kaWNlQmljQmFuY2FEaVJpdmVyc2FtZW50bz4KICAgICAgICAgICAgPHBheV9pOmlkZW50aWZpY2F0aXZvVW5pdm9jb1JpY2V2ZW50ZT4KICAgICAgICAgICAgPHBheV9pOnRpcG9JZGVudGlmaWNhdGl2b1VuaXZvY28+RzwvcGF5X2k6dGlwb0lkZW50aWZpY2F0aXZvVW5pdm9jbz4KICAgICAgICAgICAgPHBheV9pOmNvZGljZUlkZW50aWZpY2F0aXZvVW5pdm9jbz5jb2RJZFVuaXZfMjwvcGF5X2k6Y29kaWNlSWRlbnRpZmljYXRpdm9Vbml2b2NvPgogICAgICAgICAgICA8L3BheV9pOmlkZW50aWZpY2F0aXZvVW5pdm9jb1JpY2V2ZW50ZT4KICAgICAgICAgICAgPHBheV9pOmRlbm9taW5hemlvbmVSaWNldmVudGU+ZGVuUmljXzI8L3BheV9pOmRlbm9taW5hemlvbmVSaWNldmVudGU+CiAgICAgICAgICAgIDxwYXlfaTpudW1lcm9Ub3RhbGVQYWdhbWVudGk+MTwvcGF5X2k6bnVtZXJvVG90YWxlUGFnYW1lbnRpPgogICAgICAgICAgICA8cGF5X2k6aW1wb3J0b1RvdGFsZVBhZ2FtZW50aT4xMC4wMDwvcGF5X2k6aW1wb3J0b1RvdGFsZVBhZ2FtZW50aT4KICAgICAgICAgICAgPHBheV9pOmRhdGlTaW5nb2xpUGFnYW1lbnRpPgogICAgICAgICAgICA8cGF5X2k6aWRlbnRpZmljYXRpdm9Vbml2b2NvVmVyc2FtZW50bz4jaXV2IzwvcGF5X2k6aWRlbnRpZmljYXRpdm9Vbml2b2NvVmVyc2FtZW50bz4KICAgICAgICAgICAgPHBheV9pOmlkZW50aWZpY2F0aXZvVW5pdm9jb1Jpc2Nvc3Npb25lPiNpdXYjPC9wYXlfaTppZGVudGlmaWNhdGl2b1VuaXZvY29SaXNjb3NzaW9uZT4KICAgICAgICAgICAgPHBheV9pOmluZGljZURhdGlTaW5nb2xvUGFnYW1lbnRvPjE8L3BheV9pOmluZGljZURhdGlTaW5nb2xvUGFnYW1lbnRvPgogICAgICAgICAgICA8cGF5X2k6c2luZ29sb0ltcG9ydG9QYWdhdG8+MTAuMDA8L3BheV9pOnNpbmdvbG9JbXBvcnRvUGFnYXRvPgogICAgICAgICAgICA8cGF5X2k6Y29kaWNlRXNpdG9TaW5nb2xvUGFnYW1lbnRvPjA8L3BheV9pOmNvZGljZUVzaXRvU2luZ29sb1BhZ2FtZW50bz4KICAgICAgICAgICAgPHBheV9pOmRhdGFFc2l0b1NpbmdvbG9QYWdhbWVudG8+I2RhdGUjPC9wYXlfaTpkYXRhRXNpdG9TaW5nb2xvUGFnYW1lbnRvPgogICAgICAgICAgICA8L3BheV9pOmRhdGlTaW5nb2xpUGFnYW1lbnRpPgogICAgICAgICAgICA8L3BheV9pOkZsdXNzb1JpdmVyc2FtZW50bz4=</b>
+                <span> in </span>
+                <b>nodoInviaFlussoRendicontazione</b>
                 <span/>
               </span>
-              <small class="step_duration">(5.235s)</small>
+              <small class="step_duration">(0.002s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:621</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:151</span>
             </div>
             <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">When </span>
+              <span class="step val">
+                <span/>
+                <b>EC</b>
+                <span> sends SOAP </span>
+                <b>nodoInviaFlussoRendicontazione</b>
+                <span> to </span>
+                <b>nodo-dei-pagamenti</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.086s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:169</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step failed">
+            <div class="step_name">
+              <span class="keyword">Then </span>
+              <span class="step val">
+                <span>check </span>
+                <b>faultCode</b>
+                <span> is </span>
+                <b>PPT_SINTASSI_EXTRAXSD</b>
+                <span> of </span>
+                <b>nodoInviaFlussoRendicontazione</b>
+                <span> response</span>
+              </span>
+              <small class="step_duration">(0.002s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:193</span>
+            </div>
+            <span class="embed">
+              <a onclick="Collapsible_toggle('embed_3')">Error Message</a>
+              <pre id="embed_3" style="display: none">Traceback (most recent call last):
+  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\behave\model.py&quot;, line 1329, in run
+    match.run(runner.context)
+  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\behave\matchers.py&quot;, line 98, in run
+    self.func(context, *args, **kwargs)
+  File &quot;src\integ-test\bdd-test\features\steps\steps.py&quot;, line 207, in step_impl
+    assert value == data
+AssertionError
+
+Captured stdout:
+url_nodo:  http://localhost:9080/nodo-dev/webservices/input
+nodo soap_request sent &gt;&gt;&gt; &lt;?xml version=&quot;1.0&quot; ?&gt;&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:ws=&quot;http://ws.pagamenti.telematici.gov/&quot;&gt;
+&lt;soapenv:Header/&gt;
+&lt;soapenv:Body&gt;
+&lt;ws:nodoInviaFlussoRendicontazione&gt;
+&lt;identificativoPSP&gt;70000000001&lt;/identificativoPSP&gt;
+&lt;identificativoIntermediarioPSP&gt;70000000001&lt;/identificativoIntermediarioPSP&gt;
+&lt;identificativoCanale&gt;70000000001_07&lt;/identificativoCanale&gt;
+&lt;password&gt;pwdpwdpwd&lt;/password&gt;
+&lt;identificativoDominio&gt;77777777777&lt;/identificativoDominio&gt;
+&lt;identificativoFlusso&gt;2022-07-1870000000001-4520&lt;/identificativoFlusso&gt;
+&lt;dataOraFlusso&gt;2022-07-18T17:06:40.432&lt;/dataOraFlusso&gt;
+&lt;xmlRendicontazione&gt;PHBheV9pOkZsdXNzb1JpdmVyc2FtZW50byB4bWxuczpwYXlfaT0iaHR0cDovL3d3dy5kaWdpdHBhLmdvdi5pdC9zY2hlbWFzLzIwMTEvUGFnYW1lbnRpLyIgeG1sbnM6eHNpPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYS1pbnN0YW5jZSIgeHNpOnNjaGVtYUxvY2F0aW9uPSJodHRwOi8vd3d3LmRpZ2l0cGEuZ292Lml0L3NjaGVtYXMvMjAxMS9QYWdhbWVudGkvIEZsdXNzb1JlbmRpY29udGF6aW9uZV92XzFfMF8xLnhzZCAiPgogICAgICAgICAgICA8cGF5X2k6dmVyc2lvbmVPZ2dldHRvPjEuMDwvcGF5X2k6dmVyc2lvbmVPZ2dldHRvPgogICAgICAgICAgICA8cGF5X2k6aWRlbnRpZmljYXRpdm9GbHVzc28+I2lkZW50aWZpY2F0aXZvRmx1c3NvIzwvcGF5X2k6aWRlbnRpZmljYXRpdm9GbHVzc28+CiAgICAgICAgICAgIDxwYXlfaTpkYXRhT3JhRmx1c3NvPiN0aW1lZGF0ZSM8L3BheV9pOmRhdGFPcmFGbHVzc28+CiAgICAgICAgICAgIDxwYXlfaTppZGVudGlmaWNhdGl2b1VuaXZvY29SZWdvbGFtZW50bz4jaXV2IzwvcGF5X2k6aWRlbnRpZmljYXRpdm9Vbml2b2NvUmVnb2xhbWVudG8+CiAgICAgICAgICAgIDxwYXlfaTpkYXRhUmVnb2xhbWVudG8+I2RhdGUjPC9wYXlfaTpkYXRhUmVnb2xhbWVudG8+CiAgICAgICAgICAgIDxwYXlfaTppc3RpdHV0b01pdHRlbnRlPgogICAgICAgICAgICA8cGF5X2k6aWRlbnRpZmljYXRpdm9Vbml2b2NvTWl0dGVudGU+CiAgICAgICAgICAgIDxwYXlfaTp0aXBvSWRlbnRpZmljYXRpdm9Vbml2b2NvPkc8L3BheV9pOnRpcG9JZGVudGlmaWNhdGl2b1VuaXZvY28+CiAgICAgICAgICAgIDxwYXlfaTpjb2RpY2VJZGVudGlmaWNhdGl2b1VuaXZvY28+I3BzcCM8L3BheV9pOmNvZGljZUlkZW50aWZpY2F0aXZvVW5pdm9jbz4KICAgICAgICAgICAgPC9wYXlfaTppZGVudGlmaWNhdGl2b1VuaXZvY29NaXR0ZW50ZT4KICAgICAgICAgICAgPHBheV9pOmRlbm9taW5hemlvbmVNaXR0ZW50ZT5kZW5NaXR0XzE8L3BheV9pOmRlbm9taW5hemlvbmVNaXR0ZW50ZT4KICAgICAgICAgICAgPC9wYXlfaTppc3RpdHV0b01pdHRlbnRlPgogICAgICAgICAgICA8cGF5X2k6Y29kaWNlQmljQmFuY2FEaVJpdmVyc2FtZW50bz5CSUNJRFBTUDwvcGF5X2k6Y29kaWNlQmljQmFuY2FEaVJpdmVyc2FtZW50bz4KICAgICAgICAgICAgPHBheV9pOmlkZW50aWZpY2F0aXZvVW5pdm9jb1JpY2V2ZW50ZT4KICAgICAgICAgICAgPHBheV9pOnRpcG9JZGVudGlmaWNhdGl2b1VuaXZvY28+RzwvcGF5X2k6dGlwb0lkZW50aWZpY2F0aXZvVW5pdm9jbz4KICAgICAgICAgICAgPHBheV9pOmNvZGljZUlkZW50aWZpY2F0aXZvVW5pdm9jbz5jb2RJZFVuaXZfMjwvcGF5X2k6Y29kaWNlSWRlbnRpZmljYXRpdm9Vbml2b2NvPgogICAgICAgICAgICA8L3BheV9pOmlkZW50aWZpY2F0aXZvVW5pdm9jb1JpY2V2ZW50ZT4KICAgICAgICAgICAgPHBheV9pOmRlbm9taW5hemlvbmVSaWNldmVudGU+ZGVuUmljXzI8L3BheV9pOmRlbm9taW5hemlvbmVSaWNldmVudGU+CiAgICAgICAgICAgIDxwYXlfaTpudW1lcm9Ub3RhbGVQYWdhbWVudGk+MTwvcGF5X2k6bnVtZXJvVG90YWxlUGFnYW1lbnRpPgogICAgICAgICAgICA8cGF5X2k6aW1wb3J0b1RvdGFsZVBhZ2FtZW50aT4xMC4wMDwvcGF5X2k6aW1wb3J0b1RvdGFsZVBhZ2FtZW50aT4KICAgICAgICAgICAgPHBheV9pOmRhdGlTaW5nb2xpUGFnYW1lbnRpPgogICAgICAgICAgICA8cGF5X2k6aWRlbnRpZmljYXRpdm9Vbml2b2NvVmVyc2FtZW50bz4jaXV2IzwvcGF5X2k6aWRlbnRpZmljYXRpdm9Vbml2b2NvVmVyc2FtZW50bz4KICAgICAgICAgICAgPHBheV9pOmlkZW50aWZpY2F0aXZvVW5pdm9jb1Jpc2Nvc3Npb25lPiNpdXYjPC9wYXlfaTppZGVudGlmaWNhdGl2b1VuaXZvY29SaXNjb3NzaW9uZT4KICAgICAgICAgICAgPHBheV9pOmluZGljZURhdGlTaW5nb2xvUGFnYW1lbnRvPjE8L3BheV9pOmluZGljZURhdGlTaW5nb2xvUGFnYW1lbnRvPgogICAgICAgICAgICA8cGF5X2k6c2luZ29sb0ltcG9ydG9QYWdhdG8+MTAuMDA8L3BheV9pOnNpbmdvbG9JbXBvcnRvUGFnYXRvPgogICAgICAgICAgICA8cGF5X2k6Y29kaWNlRXNpdG9TaW5nb2xvUGFnYW1lbnRvPjA8L3BheV9pOmNvZGljZUVzaXRvU2luZ29sb1BhZ2FtZW50bz4KICAgICAgICAgICAgPHBheV9pOmRhdGFFc2l0b1NpbmdvbG9QYWdhbWVudG8+I2RhdGUjPC9wYXlfaTpkYXRhRXNpdG9TaW5nb2xvUGFnYW1lbnRvPgogICAgICAgICAgICA8L3BheV9pOmRhdGlTaW5nb2xpUGFnYW1lbnRpPgogICAgICAgICAgICA8L3BheV9pOkZsdXNzb1JpdmVyc2FtZW50bz4=&lt;/xmlRendicontazione&gt;
+&lt;/ws:nodoInviaFlussoRendicontazione&gt;
+&lt;/soapenv:Body&gt;
+&lt;/soapenv:Envelope&gt;
+b'&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot; ?&gt;&lt;soapenv:Envelope xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:bc=&quot;http://PuntoAccessoPSP.spcoop.gov.it/BarCode_GS1_128_Modified&quot; xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:pay_i=&quot;http://www.digitpa.gov.it/schemas/2011/Pagamenti/&quot; xmlns:ppt=&quot;http://ws.pagamenti.telematici.gov/&quot; xmlns:tns=&quot;http://PuntoAccessoPSP.spcoop.gov.it/servizi/PagamentiTelematiciPspNodo&quot; xmlns:qrc=&quot;http://PuntoAccessoPSP.spcoop.gov.it/QrCode&quot;&gt;&lt;soapenv:Body&gt;&lt;ppt:nodoInviaFlussoRendicontazioneRisposta&gt;&lt;fault&gt;&lt;faultCode&gt;PPT_SINTASSI_XSD&lt;/faultCode&gt;&lt;faultString&gt;Errore di sintassi XSD.&lt;/faultString&gt;&lt;id&gt;NodoDeiPagamentiSPC&lt;/id&gt;&lt;description&gt;Errore validazione XML [FlussoRiversamento/identificativoFlusso] - cvc-pattern-valid: il valore &amp;quot;#identificativoFlusso#&amp;quot; non \xc3\xa8 valido come facet rispetto al pattern &amp;quot;[a-zA-Z0-9\\-_]{1,35}&amp;quot; per il tipo \'stIdentificativoFlusso\'.&lt;/description&gt;&lt;/fault&gt;&lt;esito&gt;KO&lt;/esito&gt;&lt;/ppt:nodoInviaFlussoRendicontazioneRisposta&gt;&lt;/soapenv:Body&gt;&lt;/soapenv:Envelope&gt;'
+fault code:  PPT_SINTASSI_XSD
+fault string:  Errore di sintassi XSD.
+description:  Errore validazione XML [FlussoRiversamento/identificativoFlusso] - cvc-pattern-valid: il valore &quot;#identificativoFlusso#&quot; non è valido come facet rispetto al pattern &quot;[a-zA-Z0-9\-_]{1,35}&quot; per il tipo 'stIdentificativoFlusso'.
+check tag &quot;faultCode&quot; - expected: PPT_SINTASSI_EXTRAXSD, obtained: PPT_SINTASSI_XSD</pre>
+                  
+            </span>
+          </li>
+        </ol>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:248</span>
+        <span class="tag">@prova</span>
+        <h3 onclick="Collapsible_toggle('scenario_34')" class="failed">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error for nodoInviaFlussoRendicontazione primitive -- @1.5 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_34">
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">Given </span>
+              <span class="step val">systems up</span>
+              <small class="step_duration">(0.001s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:27</span>
+            </div>
+            <span class="embed"/>
+            <table>
+              <tr>
+                <th>name</th>
+                <th>url</th>
+                <th>healthcheck</th>
+                <th>soap_service</th>
+                <th>rest_service</th>
+              </tr>
+              <tr>
+                <td>nodo-dei-pagamenti</td>
+                <td>http://localhost:9080/</td>
+                <td>nodo-dev-health/ready</td>
+                <td>nodo-dev/webservices/input</td>
+                <td>nodo-dev</td>
+              </tr>
+              <tr>
+                <td>mock-ec</td>
+                <td>http://localhost:8089/</td>
+                <td>servizi/PagamentiTelematiciRPT/info</td>
+                <td>servizi/PagamentiTelematiciRPT</td>
+                <td/>
+              </tr>
+            </table>
           </li>
           <li class="step passed">
             <div class="step_name">
               <span class="keyword">Given </span>
               <span class="step val">
                 <span>the </span>
-                <b>Execute sendPaymentOutcome request 1</b>
+                <b>Generazione rendicontazione</b>
                 <span> scenario executed successfully</span>
               </span>
-              <small class="step_duration">(9.719s)</small>
+              <small class="step_duration">(0.006s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:347</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:346</span>
             </div>
             <span class="embed"/>
           </li>
@@ -1218,253 +1140,719 @@ function Collapsible_expandAllFailed()
             <div class="step_name">
               <span class="keyword">And </span>
               <span class="step val">
-                <span>checks the value </span>
-                <b>NotNone</b>
-                <span> of the record at column </span>
-                <b>ID</b>
-                <span> of the table </span>
-                <b>IDEMPOTENCY_CACHE</b>
-                <span> retrived by the query </span>
-                <b>idempotency_cache</b>
-                <span> on db </span>
-                <b>nodo_online</b>
-                <span> under macro </span>
-                <b>NewMod3</b>
+                <span>initial XML </span>
+                <b>nodoInviaFlussoRendicontazione</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.136s)</small>
+              <small class="step_duration">(0.002s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:772</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:54</span>
             </div>
             <span class="embed"/>
+            <div class="message">
+              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:ws=&quot;http://ws.pagamenti.telematici.gov/&quot;&gt;
+&lt;soapenv:Header/&gt;
+&lt;soapenv:Body&gt;
+&lt;ws:nodoInviaFlussoRendicontazione&gt;
+&lt;identificativoPSP&gt;#psp#&lt;/identificativoPSP&gt;
+&lt;identificativoIntermediarioPSP&gt;#psp#&lt;/identificativoIntermediarioPSP&gt;
+&lt;identificativoCanale&gt;#canale#&lt;/identificativoCanale&gt;
+&lt;password&gt;pwdpwdpwd&lt;/password&gt;
+&lt;identificativoDominio&gt;#codicePA#&lt;/identificativoDominio&gt;
+&lt;identificativoFlusso&gt;$identificativoFlusso&lt;/identificativoFlusso&gt;
+&lt;dataOraFlusso&gt;$timedate&lt;/dataOraFlusso&gt;
+&lt;xmlRendicontazione&gt;$rendAttachment&lt;/xmlRendicontazione&gt;
+&lt;/ws:nodoInviaFlussoRendicontazione&gt;
+&lt;/soapenv:Body&gt;
+&lt;/soapenv:Envelope&gt;
+</pre>
+            </div>
           </li>
           <li class="step passed">
             <div class="step_name">
               <span class="keyword">And </span>
               <span class="step val">
-                <span>checks the value </span>
-                <b>sendPaymentOutcome</b>
-                <span> of the record at column </span>
-                <b>PRIMITIVA</b>
-                <span> of the table </span>
-                <b>IDEMPOTENCY_CACHE</b>
-                <span> retrived by the query </span>
-                <b>idempotency_cache</b>
-                <span> on db </span>
-                <b>nodo_online</b>
-                <span> under macro </span>
-                <b>NewMod3</b>
+                <span/>
+                <b>xmlRendicontazione</b>
+                <span> with </span>
+                <b>PHBheV9pOkZsdXNzb1JpdmVyc2FtZW50byB4bWxuczpwYXlfaT0iaHR0cDovL3d3dy5kaWdpdHBhLmdvdi5pdC9zY2hlbWFzLzIwMTEvUGFnYW1lbnRpLyIgeG1sbnM6eHNpPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYS1pbnN0YW5jZSIgeHNpOnNjaGVtYUxvY2F0aW9uPSJodHRwOi8vd3d3LmRpZ2l0cGEuZ292Lml0L3NjaGVtYXMvMjAxMS9QYWdhbWVudGkvIEZsdXNzb1JlbmRpY29udGF6aW9uZV92XzFfMF8xLnhzZCAiPgogICAgICAgICAgICA8cGF5X2k6dmVyc2lvbmVPZ2dldHRvPjEuMDwvcGF5X2k6dmVyc2lvbmVPZ2dldHRvPgogICAgICAgICAgICA8cGF5X2k6aWRlbnRpZmljYXRpdm9GbHVzc28+I2lkZW50aWZpY2F0aXZvRmx1c3NvIzwvcGF5X2k6aWRlbnRpZmljYXRpdm9GbHVzc28+CiAgICAgICAgICAgIDxwYXlfaTpkYXRhT3JhRmx1c3NvPiN0aW1lZGF0ZSM8L3BheV9pOmRhdGFPcmFGbHVzc28+CiAgICAgICAgICAgIDxwYXlfaTppZGVudGlmaWNhdGl2b1VuaXZvY29SZWdvbGFtZW50bz4jaXV2IzwvcGF5X2k6aWRlbnRpZmljYXRpdm9Vbml2b2NvUmVnb2xhbWVudG8+CiAgICAgICAgICAgIDxwYXlfaTpkYXRhUmVnb2xhbWVudG8+I2RhdGUjPC9wYXlfaTpkYXRhUmVnb2xhbWVudG8+CiAgICAgICAgICAgIDxwYXlfaTppc3RpdHV0b01pdHRlbnRlPgogICAgICAgICAgICA8cGF5X2k6aWRlbnRpZmljYXRpdm9Vbml2b2NvTWl0dGVudGU+CiAgICAgICAgICAgIDxwYXlfaTp0aXBvSWRlbnRpZmljYXRpdm9Vbml2b2NvPkc8L3BheV9pOnRpcG9JZGVudGlmaWNhdGl2b1VuaXZvY28+CiAgICAgICAgICAgIDxwYXlfaTpjb2RpY2VJZGVudGlmaWNhdGl2b1VuaXZvY28+I3BzcCM8L3BheV9pOmNvZGljZUlkZW50aWZpY2F0aXZvVW5pdm9jbz4KICAgICAgICAgICAgPC9wYXlfaTppZGVudGlmaWNhdGl2b1VuaXZvY29NaXR0ZW50ZT4KICAgICAgICAgICAgPHBheV9pOmRlbm9taW5hemlvbmVNaXR0ZW50ZT5kZW5NaXR0XzE8L3BheV9pOmRlbm9taW5hemlvbmVNaXR0ZW50ZT4KICAgICAgICAgICAgPC9wYXlfaTppc3RpdHV0b01pdHRlbnRlPgogICAgICAgICAgICA8cGF5X2k6Y29kaWNlQmljQmFuY2FEaVJpdmVyc2FtZW50bz5CSUNJRFBTUDwvcGF5X2k6Y29kaWNlQmljQmFuY2FEaVJpdmVyc2FtZW50bz4KICAgICAgICAgICAgPHBheV9pOmlzdGl0dXRvUmljZXZlbnRlPgogICAgICAgICAgICA8cGF5X2k6dGlwb0lkZW50aWZpY2F0aXZvVW5pdm9jbz5HPC9wYXlfaTp0aXBvSWRlbnRpZmljYXRpdm9Vbml2b2NvPgogICAgICAgICAgICA8cGF5X2k6Y29kaWNlSWRlbnRpZmljYXRpdm9Vbml2b2NvPmNvZElkVW5pdl8yPC9wYXlfaTpjb2RpY2VJZGVudGlmaWNhdGl2b1VuaXZvY28+CiAgICAgICAgICAgIDxwYXlfaTpkZW5vbWluYXppb25lUmljZXZlbnRlPmRlblJpY18yPC9wYXlfaTpkZW5vbWluYXppb25lUmljZXZlbnRlPgogICAgICAgICAgICA8L3BheV9pOmlzdGl0dXRvUmljZXZlbnRlPgogICAgICAgICAgICA8cGF5X2k6bnVtZXJvVG90YWxlUGFnYW1lbnRpPjE8L3BheV9pOm51bWVyb1RvdGFsZVBhZ2FtZW50aT4KICAgICAgICAgICAgPHBheV9pOmltcG9ydG9Ub3RhbGVQYWdhbWVudGk+MTAuMDA8L3BheV9pOmltcG9ydG9Ub3RhbGVQYWdhbWVudGk+CiAgICAgICAgICAgIDxwYXlfaTpkYXRpU2luZ29saVBhZ2FtZW50aT4KICAgICAgICAgICAgPHBheV9pOmlkZW50aWZpY2F0aXZvVW5pdm9jb1ZlcnNhbWVudG8+I2l1diM8L3BheV9pOmlkZW50aWZpY2F0aXZvVW5pdm9jb1ZlcnNhbWVudG8+CiAgICAgICAgICAgIDxwYXlfaTppZGVudGlmaWNhdGl2b1VuaXZvY29SaXNjb3NzaW9uZT4jaXV2IzwvcGF5X2k6aWRlbnRpZmljYXRpdm9Vbml2b2NvUmlzY29zc2lvbmU+CiAgICAgICAgICAgIDxwYXlfaTppbmRpY2VEYXRpU2luZ29sb1BhZ2FtZW50bz4xPC9wYXlfaTppbmRpY2VEYXRpU2luZ29sb1BhZ2FtZW50bz4KICAgICAgICAgICAgPHBheV9pOnNpbmdvbG9JbXBvcnRvUGFnYXRvPjEwLjAwPC9wYXlfaTpzaW5nb2xvSW1wb3J0b1BhZ2F0bz4KICAgICAgICAgICAgPHBheV9pOmNvZGljZUVzaXRvU2luZ29sb1BhZ2FtZW50bz4wPC9wYXlfaTpjb2RpY2VFc2l0b1NpbmdvbG9QYWdhbWVudG8+CiAgICAgICAgICAgIDxwYXlfaTpkYXRhRXNpdG9TaW5nb2xvUGFnYW1lbnRvPiNkYXRlIzwvcGF5X2k6ZGF0YUVzaXRvU2luZ29sb1BhZ2FtZW50bz4KICAgICAgICAgICAgPC9wYXlfaTpkYXRpU2luZ29saVBhZ2FtZW50aT4KICAgICAgICAgICAgPC9wYXlfaTpGbHVzc29SaXZlcnNhbWVudG8+</b>
+                <span> in </span>
+                <b>nodoInviaFlussoRendicontazione</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.135s)</small>
+              <small class="step_duration">(0.002s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:772</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:151</span>
             </div>
             <span class="embed"/>
           </li>
           <li class="step passed">
             <div class="step_name">
-              <span class="keyword">And </span>
+              <span class="keyword">When </span>
               <span class="step val">
-                <span>checks the value </span>
-                <b>$activatePaymentNotice.fiscalCode</b>
-                <span> of the record at column </span>
-                <b>PA_FISCAL_CODE</b>
-                <span> of the table </span>
-                <b>IDEMPOTENCY_CACHE</b>
-                <span> retrived by the query </span>
-                <b>idempotency_cache</b>
-                <span> on db </span>
-                <b>nodo_online</b>
-                <span> under macro </span>
-                <b>NewMod3</b>
+                <span/>
+                <b>EC</b>
+                <span> sends SOAP </span>
+                <b>nodoInviaFlussoRendicontazione</b>
+                <span> to </span>
+                <b>nodo-dei-pagamenti</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.121s)</small>
+              <small class="step_duration">(0.100s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:772</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:169</span>
             </div>
             <span class="embed"/>
           </li>
-          <li class="step passed">
+          <li class="step failed">
             <div class="step_name">
-              <span class="keyword">And </span>
+              <span class="keyword">Then </span>
               <span class="step val">
-                <span>checks the value </span>
-                <b>$activatePaymentNotice.noticeNumber</b>
-                <span> of the record at column </span>
-                <b>NOTICE_ID</b>
-                <span> of the table </span>
-                <b>IDEMPOTENCY_CACHE</b>
-                <span> retrived by the query </span>
-                <b>idempotency_cache</b>
-                <span> on db </span>
-                <b>nodo_online</b>
-                <span> under macro </span>
-                <b>NewMod3</b>
-                <span/>
+                <span>check </span>
+                <b>faultCode</b>
+                <span> is </span>
+                <b>PPT_SINTASSI_EXTRAXSD</b>
+                <span> of </span>
+                <b>nodoInviaFlussoRendicontazione</b>
+                <span> response</span>
               </span>
-              <small class="step_duration">(0.125s)</small>
+              <small class="step_duration">(0.003s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:772</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:193</span>
             </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
-                <span>checks the value </span>
-                <b>$sendPaymentOutcome.idempotencyKey</b>
-                <span> of the record at column </span>
-                <b>IDEMPOTENCY_KEY</b>
-                <span> of the table </span>
-                <b>IDEMPOTENCY_CACHE</b>
-                <span> retrived by the query </span>
-                <b>idempotency_cache</b>
-                <span> on db </span>
-                <b>nodo_online</b>
-                <span> under macro </span>
-                <b>NewMod3</b>
-                <span/>
-              </span>
-              <small class="step_duration">(0.129s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:772</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
-                <span>checks the value </span>
-                <b>$activatePaymentNoticeResponse.paymentToken</b>
-                <span> of the record at column </span>
-                <b>TOKEN</b>
-                <span> of the table </span>
-                <b>IDEMPOTENCY_CACHE</b>
-                <span> retrived by the query </span>
-                <b>idempotency_cache</b>
-                <span> on db </span>
-                <b>nodo_online</b>
-                <span> under macro </span>
-                <b>NewMod3</b>
-                <span/>
-              </span>
-              <small class="step_duration">(0.110s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:772</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
-                <span>check datetime plus number of date </span>
-                <b>2</b>
-                <span> of the record at column </span>
-                <b>VALID_TO</b>
-                <span> of the table </span>
-                <b>IDEMPOTENCY_CACHE</b>
-                <span> retrived by the query </span>
-                <b>idempotency_cache</b>
-                <span> on db </span>
-                <b>nodo_online</b>
-                <span> under macro </span>
-                <b>NewMod3</b>
-                <span/>
-              </span>
-              <small class="step_duration">(0.126s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:813</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
-                <span>checks the value </span>
-                <b>NotNone</b>
-                <span> of the record at column </span>
-                <b>HASH_REQUEST</b>
-                <span> of the table </span>
-                <b>IDEMPOTENCY_CACHE</b>
-                <span> retrived by the query </span>
-                <b>idempotency_cache</b>
-                <span> on db </span>
-                <b>nodo_online</b>
-                <span> under macro </span>
-                <b>NewMod3</b>
-                <span/>
-              </span>
-              <small class="step_duration">(0.125s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:772</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
-                <span>checks the value </span>
-                <b>NotNone</b>
-                <span> of the record at column </span>
-                <b>RESPONSE</b>
-                <span> of the table </span>
-                <b>IDEMPOTENCY_CACHE</b>
-                <span> retrived by the query </span>
-                <b>idempotency_cache</b>
-                <span> on db </span>
-                <b>nodo_online</b>
-                <span> under macro </span>
-                <b>NewMod3</b>
-                <span/>
-              </span>
-              <small class="step_duration">(0.144s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:772</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
-                <span>checks the value </span>
-                <b>NotNone</b>
-                <span> of the record at column </span>
-                <b>INSERTED_TIMESTAMP</b>
-                <span> of the table </span>
-                <b>IDEMPOTENCY_CACHE</b>
-                <span> retrived by the query </span>
-                <b>idempotency_cache</b>
-                <span> on db </span>
-                <b>nodo_online</b>
-                <span> under macro </span>
-                <b>NewMod3</b>
-                <span/>
-              </span>
-              <small class="step_duration">(0.110s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:772</span>
-            </div>
-            <span class="embed"/>
+            <span class="embed">
+              <a onclick="Collapsible_toggle('embed_4')">Error Message</a>
+              <pre id="embed_4" style="display: none">Traceback (most recent call last):
+  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\behave\model.py&quot;, line 1329, in run
+    match.run(runner.context)
+  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\behave\matchers.py&quot;, line 98, in run
+    self.func(context, *args, **kwargs)
+  File &quot;src\integ-test\bdd-test\features\steps\steps.py&quot;, line 207, in step_impl
+    assert value == data
+AssertionError
+
+Captured stdout:
+url_nodo:  http://localhost:9080/nodo-dev/webservices/input
+nodo soap_request sent &gt;&gt;&gt; &lt;?xml version=&quot;1.0&quot; ?&gt;&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:ws=&quot;http://ws.pagamenti.telematici.gov/&quot;&gt;
+&lt;soapenv:Header/&gt;
+&lt;soapenv:Body&gt;
+&lt;ws:nodoInviaFlussoRendicontazione&gt;
+&lt;identificativoPSP&gt;70000000001&lt;/identificativoPSP&gt;
+&lt;identificativoIntermediarioPSP&gt;70000000001&lt;/identificativoIntermediarioPSP&gt;
+&lt;identificativoCanale&gt;70000000001_07&lt;/identificativoCanale&gt;
+&lt;password&gt;pwdpwdpwd&lt;/password&gt;
+&lt;identificativoDominio&gt;77777777777&lt;/identificativoDominio&gt;
+&lt;identificativoFlusso&gt;2022-07-1870000000001-8935&lt;/identificativoFlusso&gt;
+&lt;dataOraFlusso&gt;2022-07-18T17:06:40.538&lt;/dataOraFlusso&gt;
+&lt;xmlRendicontazione&gt;PHBheV9pOkZsdXNzb1JpdmVyc2FtZW50byB4bWxuczpwYXlfaT0iaHR0cDovL3d3dy5kaWdpdHBhLmdvdi5pdC9zY2hlbWFzLzIwMTEvUGFnYW1lbnRpLyIgeG1sbnM6eHNpPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYS1pbnN0YW5jZSIgeHNpOnNjaGVtYUxvY2F0aW9uPSJodHRwOi8vd3d3LmRpZ2l0cGEuZ292Lml0L3NjaGVtYXMvMjAxMS9QYWdhbWVudGkvIEZsdXNzb1JlbmRpY29udGF6aW9uZV92XzFfMF8xLnhzZCAiPgogICAgICAgICAgICA8cGF5X2k6dmVyc2lvbmVPZ2dldHRvPjEuMDwvcGF5X2k6dmVyc2lvbmVPZ2dldHRvPgogICAgICAgICAgICA8cGF5X2k6aWRlbnRpZmljYXRpdm9GbHVzc28+I2lkZW50aWZpY2F0aXZvRmx1c3NvIzwvcGF5X2k6aWRlbnRpZmljYXRpdm9GbHVzc28+CiAgICAgICAgICAgIDxwYXlfaTpkYXRhT3JhRmx1c3NvPiN0aW1lZGF0ZSM8L3BheV9pOmRhdGFPcmFGbHVzc28+CiAgICAgICAgICAgIDxwYXlfaTppZGVudGlmaWNhdGl2b1VuaXZvY29SZWdvbGFtZW50bz4jaXV2IzwvcGF5X2k6aWRlbnRpZmljYXRpdm9Vbml2b2NvUmVnb2xhbWVudG8+CiAgICAgICAgICAgIDxwYXlfaTpkYXRhUmVnb2xhbWVudG8+I2RhdGUjPC9wYXlfaTpkYXRhUmVnb2xhbWVudG8+CiAgICAgICAgICAgIDxwYXlfaTppc3RpdHV0b01pdHRlbnRlPgogICAgICAgICAgICA8cGF5X2k6aWRlbnRpZmljYXRpdm9Vbml2b2NvTWl0dGVudGU+CiAgICAgICAgICAgIDxwYXlfaTp0aXBvSWRlbnRpZmljYXRpdm9Vbml2b2NvPkc8L3BheV9pOnRpcG9JZGVudGlmaWNhdGl2b1VuaXZvY28+CiAgICAgICAgICAgIDxwYXlfaTpjb2RpY2VJZGVudGlmaWNhdGl2b1VuaXZvY28+I3BzcCM8L3BheV9pOmNvZGljZUlkZW50aWZpY2F0aXZvVW5pdm9jbz4KICAgICAgICAgICAgPC9wYXlfaTppZGVudGlmaWNhdGl2b1VuaXZvY29NaXR0ZW50ZT4KICAgICAgICAgICAgPHBheV9pOmRlbm9taW5hemlvbmVNaXR0ZW50ZT5kZW5NaXR0XzE8L3BheV9pOmRlbm9taW5hemlvbmVNaXR0ZW50ZT4KICAgICAgICAgICAgPC9wYXlfaTppc3RpdHV0b01pdHRlbnRlPgogICAgICAgICAgICA8cGF5X2k6Y29kaWNlQmljQmFuY2FEaVJpdmVyc2FtZW50bz5CSUNJRFBTUDwvcGF5X2k6Y29kaWNlQmljQmFuY2FEaVJpdmVyc2FtZW50bz4KICAgICAgICAgICAgPHBheV9pOmlzdGl0dXRvUmljZXZlbnRlPgogICAgICAgICAgICA8cGF5X2k6dGlwb0lkZW50aWZpY2F0aXZvVW5pdm9jbz5HPC9wYXlfaTp0aXBvSWRlbnRpZmljYXRpdm9Vbml2b2NvPgogICAgICAgICAgICA8cGF5X2k6Y29kaWNlSWRlbnRpZmljYXRpdm9Vbml2b2NvPmNvZElkVW5pdl8yPC9wYXlfaTpjb2RpY2VJZGVudGlmaWNhdGl2b1VuaXZvY28+CiAgICAgICAgICAgIDxwYXlfaTpkZW5vbWluYXppb25lUmljZXZlbnRlPmRlblJpY18yPC9wYXlfaTpkZW5vbWluYXppb25lUmljZXZlbnRlPgogICAgICAgICAgICA8L3BheV9pOmlzdGl0dXRvUmljZXZlbnRlPgogICAgICAgICAgICA8cGF5X2k6bnVtZXJvVG90YWxlUGFnYW1lbnRpPjE8L3BheV9pOm51bWVyb1RvdGFsZVBhZ2FtZW50aT4KICAgICAgICAgICAgPHBheV9pOmltcG9ydG9Ub3RhbGVQYWdhbWVudGk+MTAuMDA8L3BheV9pOmltcG9ydG9Ub3RhbGVQYWdhbWVudGk+CiAgICAgICAgICAgIDxwYXlfaTpkYXRpU2luZ29saVBhZ2FtZW50aT4KICAgICAgICAgICAgPHBheV9pOmlkZW50aWZpY2F0aXZvVW5pdm9jb1ZlcnNhbWVudG8+I2l1diM8L3BheV9pOmlkZW50aWZpY2F0aXZvVW5pdm9jb1ZlcnNhbWVudG8+CiAgICAgICAgICAgIDxwYXlfaTppZGVudGlmaWNhdGl2b1VuaXZvY29SaXNjb3NzaW9uZT4jaXV2IzwvcGF5X2k6aWRlbnRpZmljYXRpdm9Vbml2b2NvUmlzY29zc2lvbmU+CiAgICAgICAgICAgIDxwYXlfaTppbmRpY2VEYXRpU2luZ29sb1BhZ2FtZW50bz4xPC9wYXlfaTppbmRpY2VEYXRpU2luZ29sb1BhZ2FtZW50bz4KICAgICAgICAgICAgPHBheV9pOnNpbmdvbG9JbXBvcnRvUGFnYXRvPjEwLjAwPC9wYXlfaTpzaW5nb2xvSW1wb3J0b1BhZ2F0bz4KICAgICAgICAgICAgPHBheV9pOmNvZGljZUVzaXRvU2luZ29sb1BhZ2FtZW50bz4wPC9wYXlfaTpjb2RpY2VFc2l0b1NpbmdvbG9QYWdhbWVudG8+CiAgICAgICAgICAgIDxwYXlfaTpkYXRhRXNpdG9TaW5nb2xvUGFnYW1lbnRvPiNkYXRlIzwvcGF5X2k6ZGF0YUVzaXRvU2luZ29sb1BhZ2FtZW50bz4KICAgICAgICAgICAgPC9wYXlfaTpkYXRpU2luZ29saVBhZ2FtZW50aT4KICAgICAgICAgICAgPC9wYXlfaTpGbHVzc29SaXZlcnNhbWVudG8+&lt;/xmlRendicontazione&gt;
+&lt;/ws:nodoInviaFlussoRendicontazione&gt;
+&lt;/soapenv:Body&gt;
+&lt;/soapenv:Envelope&gt;
+b'&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot; ?&gt;&lt;soapenv:Envelope xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:bc=&quot;http://PuntoAccessoPSP.spcoop.gov.it/BarCode_GS1_128_Modified&quot; xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:pay_i=&quot;http://www.digitpa.gov.it/schemas/2011/Pagamenti/&quot; xmlns:ppt=&quot;http://ws.pagamenti.telematici.gov/&quot; xmlns:tns=&quot;http://PuntoAccessoPSP.spcoop.gov.it/servizi/PagamentiTelematiciPspNodo&quot; xmlns:qrc=&quot;http://PuntoAccessoPSP.spcoop.gov.it/QrCode&quot;&gt;&lt;soapenv:Body&gt;&lt;ppt:nodoInviaFlussoRendicontazioneRisposta&gt;&lt;fault&gt;&lt;faultCode&gt;PPT_SINTASSI_XSD&lt;/faultCode&gt;&lt;faultString&gt;Errore di sintassi XSD.&lt;/faultString&gt;&lt;id&gt;NodoDeiPagamentiSPC&lt;/id&gt;&lt;description&gt;Errore validazione XML [FlussoRiversamento/identificativoFlusso] - cvc-pattern-valid: il valore &amp;quot;#identificativoFlusso#&amp;quot; non \xc3\xa8 valido come facet rispetto al pattern &amp;quot;[a-zA-Z0-9\\-_]{1,35}&amp;quot; per il tipo \'stIdentificativoFlusso\'.&lt;/description&gt;&lt;/fault&gt;&lt;esito&gt;KO&lt;/esito&gt;&lt;/ppt:nodoInviaFlussoRendicontazioneRisposta&gt;&lt;/soapenv:Body&gt;&lt;/soapenv:Envelope&gt;'
+fault code:  PPT_SINTASSI_XSD
+fault string:  Errore di sintassi XSD.
+description:  Errore validazione XML [FlussoRiversamento/identificativoFlusso] - cvc-pattern-valid: il valore &quot;#identificativoFlusso#&quot; non è valido come facet rispetto al pattern &quot;[a-zA-Z0-9\-_]{1,35}&quot; per il tipo 'stIdentificativoFlusso'.
+check tag &quot;faultCode&quot; - expected: PPT_SINTASSI_EXTRAXSD, obtained: PPT_SINTASSI_XSD</pre>
+                  
+            </span>
           </li>
         </ol>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:275</span>
+        <h3 onclick="Collapsible_toggle('scenario_35')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive -- @1.1 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_35"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:276</span>
+        <h3 onclick="Collapsible_toggle('scenario_36')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive -- @1.2 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_36"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:277</span>
+        <h3 onclick="Collapsible_toggle('scenario_37')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive -- @1.3 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_37"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:278</span>
+        <h3 onclick="Collapsible_toggle('scenario_38')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive -- @1.4 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_38"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:279</span>
+        <h3 onclick="Collapsible_toggle('scenario_39')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive -- @1.5 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_39"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:280</span>
+        <h3 onclick="Collapsible_toggle('scenario_40')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive -- @1.6 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_40"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:281</span>
+        <h3 onclick="Collapsible_toggle('scenario_41')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive -- @1.7 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_41"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:282</span>
+        <h3 onclick="Collapsible_toggle('scenario_42')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive -- @1.8 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_42"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:283</span>
+        <h3 onclick="Collapsible_toggle('scenario_43')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive -- @1.9 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_43"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:284</span>
+        <h3 onclick="Collapsible_toggle('scenario_44')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive -- @1.10 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_44"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:285</span>
+        <h3 onclick="Collapsible_toggle('scenario_45')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive -- @1.11 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_45"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:286</span>
+        <h3 onclick="Collapsible_toggle('scenario_46')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive -- @1.12 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_46"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:287</span>
+        <h3 onclick="Collapsible_toggle('scenario_47')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive -- @1.13 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_47"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:288</span>
+        <h3 onclick="Collapsible_toggle('scenario_48')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive -- @1.14 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_48"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:289</span>
+        <h3 onclick="Collapsible_toggle('scenario_49')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive -- @1.15 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_49"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:290</span>
+        <h3 onclick="Collapsible_toggle('scenario_50')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive -- @1.16 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_50"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:291</span>
+        <h3 onclick="Collapsible_toggle('scenario_51')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive -- @1.17 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_51"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:292</span>
+        <h3 onclick="Collapsible_toggle('scenario_52')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive -- @1.18 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_52"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:293</span>
+        <h3 onclick="Collapsible_toggle('scenario_53')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive -- @1.19 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_53"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:294</span>
+        <h3 onclick="Collapsible_toggle('scenario_54')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive -- @1.20 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_54"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:295</span>
+        <h3 onclick="Collapsible_toggle('scenario_55')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive -- @1.21 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_55"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:296</span>
+        <h3 onclick="Collapsible_toggle('scenario_56')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive -- @1.22 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_56"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:297</span>
+        <h3 onclick="Collapsible_toggle('scenario_57')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive -- @1.23 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_57"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:298</span>
+        <h3 onclick="Collapsible_toggle('scenario_58')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive -- @1.24 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_58"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:299</span>
+        <h3 onclick="Collapsible_toggle('scenario_59')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive -- @1.25 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_59"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:300</span>
+        <h3 onclick="Collapsible_toggle('scenario_60')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive -- @1.26 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_60"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:301</span>
+        <h3 onclick="Collapsible_toggle('scenario_61')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive -- @1.27 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_61"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:302</span>
+        <h3 onclick="Collapsible_toggle('scenario_62')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive -- @1.28 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_62"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:303</span>
+        <h3 onclick="Collapsible_toggle('scenario_63')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive -- @1.29 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_63"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:304</span>
+        <h3 onclick="Collapsible_toggle('scenario_64')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive -- @1.30 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_64"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:305</span>
+        <h3 onclick="Collapsible_toggle('scenario_65')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive -- @1.31 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_65"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:306</span>
+        <h3 onclick="Collapsible_toggle('scenario_66')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive -- @1.32 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_66"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:307</span>
+        <h3 onclick="Collapsible_toggle('scenario_67')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive -- @1.33 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_67"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:308</span>
+        <h3 onclick="Collapsible_toggle('scenario_68')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive -- @1.34 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_68"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:309</span>
+        <h3 onclick="Collapsible_toggle('scenario_69')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive -- @1.35 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_69"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:310</span>
+        <h3 onclick="Collapsible_toggle('scenario_70')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive -- @1.36 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_70"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:311</span>
+        <h3 onclick="Collapsible_toggle('scenario_71')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive -- @1.37 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_71"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:312</span>
+        <h3 onclick="Collapsible_toggle('scenario_72')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive -- @1.38 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_72"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:313</span>
+        <h3 onclick="Collapsible_toggle('scenario_73')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive -- @1.39 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_73"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:314</span>
+        <h3 onclick="Collapsible_toggle('scenario_74')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive -- @1.40 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_74"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:315</span>
+        <h3 onclick="Collapsible_toggle('scenario_75')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive -- @1.41 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_75"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:316</span>
+        <h3 onclick="Collapsible_toggle('scenario_76')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive -- @1.42 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_76"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:317</span>
+        <h3 onclick="Collapsible_toggle('scenario_77')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive -- @1.43 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_77"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:318</span>
+        <h3 onclick="Collapsible_toggle('scenario_78')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive -- @1.44 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_78"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:319</span>
+        <h3 onclick="Collapsible_toggle('scenario_79')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive -- @1.45 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_79"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:320</span>
+        <h3 onclick="Collapsible_toggle('scenario_80')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive -- @1.46 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_80"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:321</span>
+        <h3 onclick="Collapsible_toggle('scenario_81')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive -- @1.47 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_81"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:322</span>
+        <h3 onclick="Collapsible_toggle('scenario_82')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive -- @1.48 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_82"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:323</span>
+        <h3 onclick="Collapsible_toggle('scenario_83')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive -- @1.49 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_83"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:324</span>
+        <h3 onclick="Collapsible_toggle('scenario_84')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive -- @1.50 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_84"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:325</span>
+        <h3 onclick="Collapsible_toggle('scenario_85')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive -- @1.51 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_85"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:326</span>
+        <h3 onclick="Collapsible_toggle('scenario_86')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive -- @1.52 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_86"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:327</span>
+        <h3 onclick="Collapsible_toggle('scenario_87')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive -- @1.53 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_87"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:328</span>
+        <h3 onclick="Collapsible_toggle('scenario_88')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive -- @1.54 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_88"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:329</span>
+        <h3 onclick="Collapsible_toggle('scenario_89')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive -- @1.55 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_89"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:330</span>
+        <h3 onclick="Collapsible_toggle('scenario_90')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive -- @1.56 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_90"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:331</span>
+        <h3 onclick="Collapsible_toggle('scenario_91')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive -- @1.57 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_91"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:332</span>
+        <h3 onclick="Collapsible_toggle('scenario_92')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive -- @1.58 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_92"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:333</span>
+        <h3 onclick="Collapsible_toggle('scenario_93')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive -- @1.59 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_93"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:334</span>
+        <h3 onclick="Collapsible_toggle('scenario_94')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive -- @1.60 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_94"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:335</span>
+        <h3 onclick="Collapsible_toggle('scenario_95')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive -- @1.61 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_95"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:336</span>
+        <h3 onclick="Collapsible_toggle('scenario_96')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive -- @1.62 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_96"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:337</span>
+        <h3 onclick="Collapsible_toggle('scenario_97')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive -- @1.63 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_97"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:338</span>
+        <h3 onclick="Collapsible_toggle('scenario_98')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive -- @1.64 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_98"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:339</span>
+        <h3 onclick="Collapsible_toggle('scenario_99')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive -- @1.65 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_99"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:340</span>
+        <h3 onclick="Collapsible_toggle('scenario_100')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive -- @1.66 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_100"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:341</span>
+        <h3 onclick="Collapsible_toggle('scenario_101')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive -- @1.67 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_101"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:342</span>
+        <h3 onclick="Collapsible_toggle('scenario_102')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive -- @1.68 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_102"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:343</span>
+        <h3 onclick="Collapsible_toggle('scenario_103')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive -- @1.69 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_103"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:344</span>
+        <h3 onclick="Collapsible_toggle('scenario_104')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive -- @1.70 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_104"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:345</span>
+        <h3 onclick="Collapsible_toggle('scenario_105')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive -- @1.71 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_105"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:346</span>
+        <h3 onclick="Collapsible_toggle('scenario_106')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive -- @1.72 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_106"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:347</span>
+        <h3 onclick="Collapsible_toggle('scenario_107')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive -- @1.73 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_107"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/nodoInviaFlussoRendicontazione_syntax_ko.feature:348</span>
+        <h3 onclick="Collapsible_toggle('scenario_108')">
+          <span class="val">Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive -- @1.74 </span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_108"/>
         <span/>
       </div>
     </div>
