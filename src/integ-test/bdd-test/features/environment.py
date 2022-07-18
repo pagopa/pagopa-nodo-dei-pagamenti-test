@@ -12,9 +12,9 @@ def before_all(context):
     print('Global settings...')
     #lib_dir = "/agent/_work/1/nodo/extracted/oracle/instantclient_21_6" #Da modificare
     # Da scommentare
-    lib_dir = os.path.abspath(os.path.join(__file__, os.pardir, os.pardir, os.pardir, os.pardir))#, os.pardir, os.pardir, os.pardir, os.pardir, os.pardir, '../../../oracle/instantclient_21_6'))
-    print(lib_dir)
+    lib_dir = os.path.abspath(os.path.join(__file__, os.pardir, os.pardir, os.pardir, os.pardir, '/oracle/instantclient_21_6'))#, os.pardir, os.pardir, os.pardir, os.pardir, os.pardir, '../../../oracle/instantclient_21_6'))
     cx_Oracle.init_oracle_client(lib_dir = lib_dir)
+    print(os.path.abspath(os.path.join(__file__), os.pardir, os.pardir, '/resources/pipeline_config.json'))
     more_userdata=json.load(open("/agent/_work/1/nodo/extracted/src/integ-test/bdd-test/resources/pipeline_config.json"))
     #more_userdata = json.load(open(os.path.join(context.config.base_dir + "/../resources/config.json")))#Da scommentare
     context.config.update_userdata(more_userdata)
