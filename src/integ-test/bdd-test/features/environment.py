@@ -14,9 +14,7 @@ def before_all(context):
     # Da scommentare
     lib_dir = os.path.abspath(os.path.join(__file__, os.pardir, os.pardir, os.pardir, os.pardir, os.pardir, 'oracle', 'instantclient_21_6'))#, os.pardir, os.pardir, os.pardir, os.pardir, os.pardir, '../../../oracle/instantclient_21_6'))
     cx_Oracle.init_oracle_client(lib_dir = lib_dir)
-    #print(os.path.abspath(os.path.join(__file__, os.pardir, os.pardir, 'resources' ,'pipeline_config.json')))
     more_userdata=json.load(open(os.path.abspath(os.path.join(__file__, os.pardir, os.pardir, 'resources' ,'pipeline_config.json'))))
-    print(os.path.join(context.config.base_dir + "/../resources/config.json"))
     #more_userdata = json.load(open(os.path.join(context.config.base_dir + "/../resources/config.json")))#Da scommentare
     context.config.update_userdata(more_userdata)
     #services = context.config.userdata.get("services")
@@ -71,7 +69,7 @@ def after_all(context):
 
     config_dict = getattr(context, 'configurations')
     for key, value in config_dict.items():
-        print(key, value)
+        #print(key, value)
         selected_query = utils.query_json(context, 'update_config', 'configurations').replace('value', value).replace('key', key)
         db.executeQuery(conn, selected_query)
 
