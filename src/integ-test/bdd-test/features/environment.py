@@ -67,12 +67,12 @@ def after_all(context):
 
     config_dict = getattr(context, 'configurations')
     for key, value in config_dict.items():
-        print(key, value)
+        #print(key, value)
         selected_query = utils.query_json(context, 'update_config', 'configurations').replace('value', value).replace('key', key)
         db.executeQuery(conn, selected_query)
 
     db.closeConnection(conn)
-    #requests.get(utils.get_refresh_config_url(context))
+    requests.get(utils.get_refresh_config_url(context))
 
 
 def config_ec(context):
