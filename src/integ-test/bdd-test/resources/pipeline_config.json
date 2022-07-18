@@ -8,9 +8,9 @@
       "rest_service": ""
     },
     "mock-ec": {
-      "url": "https://api.dev.platform.pagopa.it/mock-ec/api/v1/mock-ec",
+      "url": "https://api.dev.platform.pagopa.it/",
       "healthcheck": "",
-      "soap_service": "",
+      "soap_service": "mock-ec/api/v1/mock-ec",
       "rest_service": ""
     }
   },
