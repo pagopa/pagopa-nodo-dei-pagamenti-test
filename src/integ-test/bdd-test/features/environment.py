@@ -14,6 +14,7 @@ def before_all(context):
     # Da scommentare
     lib_dir = os.path.abspath(os.path.join(__file__, os.pardir, os.pardir, os.pardir, os.pardir, os.pardir, '/oracle/instantclient_21_6'))
     cx_Oracle.init_oracle_client(lib_dir = lib_dir)
+    print(lib_dir)
     more_userdata=json.load(open(__file__, os.pardir, os.pardir, os.pardir, os.pardir, os.pardir, '/resources/pipeline_config.json'))
     #more_userdata = json.load(open(os.path.join(context.config.base_dir + "/../resources/config.json")))#Da scommentare
     context.config.update_userdata(more_userdata)
