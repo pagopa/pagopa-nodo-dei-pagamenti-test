@@ -13,6 +13,16 @@ parameters:
       - sit
 
 stages:
+  - stage: prepare_env
+    displayName: "Prepare env (${{ parameters.env }} )"
+    jobs:
+      - job: 
+        displayName: "Prepare env (${{ parameters.env }})"
+        steps:
+          - checkout: self
+            clean: true
+            persistCredentials: true
+
   - stage: run
     displayName: "${{ parameters.env }} - Run"
     pool: $(deploy-pool-${{ parameters.env }})
@@ -21,7 +31,15 @@ stages:
         displayName: "python_env (${{ parameters.env }})"
         steps:
 
-
-          - checkout: self
-            clean: true
-            persistCredentials: true
+          - script: |
+              
+              sudo apt-get install build-essential unzip
+              mkdir /home/vsts/work/1/s/oracle
+              cd /home/vsts/work/1/s/oracle
+              sudo wget https://download.oracle.com/otn_software/linux/instantclient/216000/instantclient-basic-linux.x64-21.6.0.0.0dbru.zip
+              sudo unzip instantclient-basic-linux.x64-21.6.0.0.0dbru.zip
+              sudo apt update
+              sudo apt install libaio1
+              #sudo sh -c "echo /agent/_work/1/a/extracted/oracle/instantclient_21_6 > /etc/ld.so.conf.d/oracle-instantclient.conf"
+              #sudo ldconfig
+            displayName: 'Install Oracle Instant Client'
