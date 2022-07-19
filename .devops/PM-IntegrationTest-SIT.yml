@@ -100,7 +100,8 @@ stages:
           - script: |
              echo "==== Add python3 and pip3 in PATH var==== "
              echo $PATH
-             export PATH=/usr/bin:/usr/local/bin:$PATH 
+             
+             export PATH=/usr/bin:/usr/local/bin:$(Pipeline.Workspace)/$(destinationFolderExtractArtifact):$PATH
              echo $PATH
              
              echo "==== install behave ==== "
