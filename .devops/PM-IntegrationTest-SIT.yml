@@ -98,19 +98,25 @@ stages:
               sudo ldconfig
             displayName: 'Linux ldconfig Command for Oracle Instant Client'
           - script: |
-             
+             echo "==== Add python3 and pip3 in PATH var==== "
              echo $PATH
-             export PATH=/usr/bin:/usr/local/bin:$PATH #Add python3 and pip3 as environment variables
+             export PATH=/usr/bin:/usr/local/bin:$PATH 
              echo $PATH
 
+             echo "==== upgrade pip ==== "
              python3 -m pip install --upgrade pip # upgrade pip
+             sudo pip3 install behave
 
-             sudo pip3 install behave 
-             sudo pip3 install -U -r $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/requirements.txt #Install Requirements
+             echo "==== install python dependencies...==== "
+             sudo pip3 install -U -r $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/requirements.txt
              
+             "==== install selenium...==== "
              sudo pip3 install selenium
-             pip3 list #Check packages installed
 
+             "==== Check packages installed...==== "
+             pip3 list 
+
+             "==== Behave Test Suite...==== "
              behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/features/3DS/15_3ds.feature
 
 
