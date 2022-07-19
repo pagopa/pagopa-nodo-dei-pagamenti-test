@@ -12,6 +12,10 @@ parameters:
       - dev
       - sit
 
+variables:
+  archiveName: nodo-dei-pagamenti-NRT.zip
+  destinationFolderExtractArtifact: nodo/extracted
+
 stages:
   - stage: prepare_env
     displayName: "Prepare env (${{ parameters.env }} )"
@@ -22,24 +26,53 @@ stages:
           - checkout: self
             clean: true
             persistCredentials: true
+          
+          - task: ArchiveFiles@2
+            displayName: 'Create zip $(archiveName)'
+            inputs:
+              rootFolderOrFile: $(Build.SourcesDirectory)
+              includeRootFolder: false
+              archiveType: zip
+              archiveFile: $(Build.ArtifactStagingDirectory)/$(archiveName)
+              replaceExistingArchive: true
 
-  - stage: run
-    displayName: "${{ parameters.env }} - Run"
+          - publish: $(Build.ArtifactStagingDirectory)/$(archiveName)
+            displayName: "Publish Artifact $(archiveName)"
+            artifact: $(archiveName)
+
+
+  - stage: run_test
+    displayName: "Run integration test (${{ parameters.env }})"
     pool: $(deploy-pool-${{ parameters.env }})
     jobs:
       - job: 
-        displayName: "python_env (${{ parameters.env }})"
+        displayName: "Run integration test (${{ parameters.env }})"
         steps:
           - checkout: none 
+
           - script: |
+              cd $(Pipeline.Workspace)/oracle-lib
+
+              wget https://download.oracle.com/otn_software/linux/instantclient/215000/instantclient-basic-linux.x64-21.5.0.0.0dbru.zip
               
-              sudo apt-get install build-essential unzip
-              mkdir /home/vsts/work/1/s/oracle
-              cd /home/vsts/work/1/s/oracle
-              sudo wget https://download.oracle.com/otn_software/linux/instantclient/216000/instantclient-basic-linux.x64-21.6.0.0.0dbru.zip
-              sudo unzip instantclient-basic-linux.x64-21.6.0.0.0dbru.zip
-              sudo apt update
-              sudo apt install libaio1
-              #sudo sh -c "echo /agent/_work/1/a/extracted/oracle/instantclient_21_6 > /etc/ld.so.conf.d/oracle-instantclient.conf"
-              #sudo ldconfig
+              unzip instantclient-basic-linux.x64-21.5.0.0.0dbru.zip
+              
+              echo "##vso[task.prependpath]$(Pipeline.Workspace)/oracle-lib/instantclient_21_5"
+              echo "##vso[task.setvariable variable=LD_LIBRARY_PATH;isOutput=false]$(Pipeline.Workspace)/oracle-lib/instantclient_21_5"
             displayName: 'Install Oracle Instant Client'
+          
+          - task: DownloadPipelineArtifact@2
+            inputs:
+              artifact: $(archiveName)
+              source: current
+          
+          - task: ExtractFiles@1
+            inputs:
+              archiveFilePatterns: $(Pipeline.Workspace)/$(archiveName)
+              destinationFolder: $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)
+              cleanDestinationFolder: true
+              overwriteExistingFiles: false
+
+          - script: |
+              behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/appIO/flows/Annullo_PagamentoIO/PRO_ANNULLO_01.feature
+            displayName: 'Run'
