@@ -74,5 +74,8 @@ stages:
               overwriteExistingFiles: false
 
           - script: |
+              export $PATH
+
+
               behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/appIO/flows/Annullo_PagamentoIO/PRO_ANNULLO_01.feature
             displayName: 'Run'
