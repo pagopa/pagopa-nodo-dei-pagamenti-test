@@ -128,9 +128,9 @@ stages:
               echo "##vso[task.prependpath]$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/instantclient_21_5"
               echo "##vso[task.setvariable variable=LD_LIBRARY_PATH;isOutput=false]$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/instantclient_21_5"
 
-              sudo sh -c "echo $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/instantclient_21_5 > /etc/ld.so.conf.d/oracle-instantclient.conf"
-              cat /etc/ld.so.conf.d/oracle-instantclient.conf
-              sudo ldconfig
+              #sudo sh -c "echo $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/instantclient_21_5 > /etc/ld.so.conf.d/oracle-instantclient.conf"
+              #cat /etc/ld.so.conf.d/oracle-instantclient.conf
+              #sudo ldconfig
             displayName: 'Install Oracle Instant Client and append to PATH'
 
           - script: |
