@@ -109,8 +109,8 @@ stages:
               sudo ln -sf /usr/local/share/chromedriver /usr/local/bin/chromedriver
               sudo ln -sf /usr/local/share/chromedriver /usr/bin/chromedriver
               sudo ldconfig
-              
-              
+              sudo apt install libgconf-2-4
+              yum provides */libgconf-2.so.4
               sudo find / -name libgconf-2.so.4
               echo $LD_LIBRARY_PATH 
             displayName: 'Install chrome driver'
