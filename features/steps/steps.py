@@ -558,16 +558,12 @@ def step_impl(context):
 
 @given('db connection opened')
 def step_impl(context):
-    print(os.path.abspath(os.path.join(__file__, os.pardir, os.pardir, os.pardir, 'data/configurations.json')))
+    
     with open(os.path.abspath(os.path.join(__file__, os.pardir, os.pardir, os.pardir, 'data/configurations.json'))) as f:
         json_file = json.load(f)
     
     host, database, user, password, port = json_file.get('db').get('host'), json_file.get('db').get('database'), json_file.get('db').get('user'), json_file.get('db').get('password'), json_file.get('db').get('port')
-    print(host)
-    print(database)
-    print(user)
-    print(password)
-    print(port)
+
     conn = db.getConnection(host, database, user, password, port)
     setattr(context, 'conn', conn)
 
