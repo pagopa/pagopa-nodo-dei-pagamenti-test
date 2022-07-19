@@ -20,7 +20,7 @@ parameters:
 steps:
 - task: AzureKeyVault@2
   inputs:
-    azureSubscription: 'DDS - Test Environment'
+    connectedServiceName: 'nodo_srv_endpoint_azurerm_kv_sit'
     KeyVaultName: 'KMN-nodo-sit'
     SecretsFilter: '*'
     RunAsPreJob: false
