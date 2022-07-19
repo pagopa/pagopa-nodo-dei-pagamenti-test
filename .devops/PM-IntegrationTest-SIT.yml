@@ -110,10 +110,11 @@ stages:
              which pip3
              which pip
              
-             python3 -m pip3 install --upgrade pip # upgrade pip
+             python3 -m pip install --upgrade pip # upgrade pip
 
              sudo pip3 install behave 
              sudo pip3 install -U -r $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/requirements.txt #Install Requirements
+             pip list
              whereis behave
              which behave
              #echo "whereis make" 
