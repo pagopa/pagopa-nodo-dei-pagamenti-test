@@ -63,7 +63,7 @@ stages:
               
               echo "##vso[task.prependpath]$(Pipeline.Workspace)/oracle-lib/instantclient_21_5"
               echo "##vso[task.setvariable variable=LD_LIBRARY_PATH;isOutput=false]$(Pipeline.Workspace)/oracle-lib/instantclient_21_5"
-            displayName: 'Install Oracle Instant Client'
+            displayName: 'Install Oracle Instant Client and append to PATH'
           
           - task: DownloadPipelineArtifact@2
             displayName: "Download Artifact $(archiveName)"
@@ -80,8 +80,10 @@ stages:
               overwriteExistingFiles: false
 
           - script: |
-              export $PATH
               echo "##vso[task.prependpath]/usr/local/bin"
+            displayName: 'Append /usr/local/bin at PATH'
+
+          - script: |
               export $PATH
           
 
