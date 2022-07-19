@@ -98,46 +98,18 @@ stages:
               sudo ldconfig
             displayName: 'Linux ldconfig Command for Oracle Instant Client'
           - script: |
-             whereis python3
-             whereis pip3
-             whereis pip
-             echo $PATH
              
-             export PATH=/usr/bin:/usr/local/bin:$PATH #Add environment variables
+             echo $PATH
+             export PATH=/usr/bin:/usr/local/bin:$PATH #Add python3 and pip3 as environment variables
              echo $PATH
 
-             which python3
-             which pip3
-             
              python3 -m pip install --upgrade pip # upgrade pip
 
              sudo pip3 install behave 
              sudo pip3 install -U -r $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/requirements.txt #Install Requirements
-             pip3 list
-             whereis behave
-             which behave
-             #echo "whereis make" 
-             #whereis make
-             #export PATH=/usr/share/man/man1p/make.1p.gz:$PATH #Add environment variables
-             #echo $PATH
-             #which make
-             echo "Check Python Version" 
-             python3 --version
-             #sudo apt install python3.10
-
-             #echo "START ----------- Upgrade Python"
-             #wget  https://www.python.org/ftp/python/3.10.5/Python-3.10.5.tgz
-             #tar -zxvf Python-3.10.5.tgz
-             #cd Python-3.10.5/
-             #./configure --enable-optimizations
-             #sudo make altinstall
-             #make install
-             #echo "END ----------- Upgrade Python"
-             #python3 --version
-
-             export PYTHONPATH=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)
-             #behave --help #Run behave
              
+             pip3 list #Check packages installed
+
              behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/features/3DS/15_3ds.feature
 
 
