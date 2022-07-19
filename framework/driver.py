@@ -19,11 +19,8 @@ class Driver:
                 print('init driverrrr')
                 options = Options()
                 options.binary_location = '/usr/local/bin/chromedriver'
-                options.add_argument("start-maximized"); # open Browser in maximized mode
-                options.add_argument("disable-infobars"); # disabling infobars
-                options.add_argument("--disable-extensions"); # disabling extensions
-                options.add_argument('--headless')
                 options.add_argument('--no-sandbox')
+                options.add_argument('--headless')
                 #options.add_argument('--disable-gpu') Only for Windows
                 options.add_argument('--disable-dev-shm-usage')
                 #options.add_argument('--start-fullscreen')
