@@ -99,14 +99,8 @@ stages:
             displayName: 'Linux ldconfig Command for Oracle Instant Client'
 
           - script: |
-              echo "installing google-chrome-stable"
-              sudo yum install google-chrome-stable
-              echo "installing libgconf2-4"
-              sudo yum install libgconf*
-
+              sudo yum install libaio.x86_64
               
-              
-
               echo $(Pipeline.Workspace)
               ls -la $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/chromedriver_linux64
               cd $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/chromedriver_linux64
