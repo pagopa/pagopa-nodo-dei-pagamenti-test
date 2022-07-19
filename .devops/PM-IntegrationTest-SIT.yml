@@ -102,22 +102,22 @@ stages:
              echo $PATH
              export PATH=/usr/bin:/usr/local/bin:$PATH 
              echo $PATH
-
-             echo "==== upgrade pip ==== "
-             python3 -m pip install --upgrade pip # upgrade pip
-             sudo pip3 install behave
-
-             echo "==== install python dependencies...==== "
-             sudo pip3 install -U -r $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/requirements.txt
              
-             "==== install selenium...==== "
-             sudo pip3 install selenium
-
-             "==== Check packages installed...==== "
-             pip3 list 
-
-             "==== Behave Test Suite...==== "
-             behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/features/3DS/15_3ds.feature
+             echo "==== install behave ==== " # install behave
+             sudo pip3 install behave # install behave
+             
+             echo "==== install python dependencies...==== " #install python dependencies
+             echo $(Pipeline.Workspace)/$(destinationFolderExtractArtifact) #
+             sudo pip3 install -U -r $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/requirements.txt #install python dependencies
+             
+             "==== install selenium...==== " #selenium
+             sudo pip3 install selenium #selenium
+             
+             "==== Check packages installed...==== "#Check packages installed
+             pip3 list #pip3 list
+             
+             "==== Behave Test Suite...==== " #run test
+             behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/features/3DS/15_3ds.feature #behave
 
 
             displayName: 'Run Behave Test Suite'
