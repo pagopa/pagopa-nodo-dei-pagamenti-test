@@ -562,7 +562,7 @@ def step_impl(context):
     with open(os.path.abspath(os.path.join(__file__, os.pardir, os.pardir, os.pardir, 'data/configurations.json'))) as f:
         json_file = json.load(f)
     
-    host, database, user, password, port = json_file.get('host'), json_file.get('database'), json_file.get('user'), json_file.get('password'), json_file.get('port')
+    host, database, user, password, port = json_file.get('db').get('host'), json_file.get('db').get('database'), json_file.get('db').get('user'), json_file.get('db').get('password'), json_file.get('db').get('port')
     print(host)
     print(database)
     print(user)
