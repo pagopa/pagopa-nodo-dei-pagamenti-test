@@ -108,6 +108,7 @@ stages:
              sudo pip3 install behave 
              sudo pip3 install -U -r $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/requirements.txt #Install Requirements
              
+             sudo pip3 install selenium
              pip3 list #Check packages installed
 
              behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/features/3DS/15_3ds.feature
