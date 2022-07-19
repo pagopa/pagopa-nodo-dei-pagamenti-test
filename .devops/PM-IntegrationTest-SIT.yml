@@ -116,24 +116,24 @@ stages:
              sudo pip3 install -U -r $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/requirements.txt #Install Requirements
              whereis behave
              which behave
-             echo "whereis make" 
-             whereis make
-             export PATH=/usr/share/man/man1p/make.1p.gz:$PATH #Add environment variables
-             echo $PATH
-             which make
+             #echo "whereis make" 
+             #whereis make
+             #export PATH=/usr/share/man/man1p/make.1p.gz:$PATH #Add environment variables
+             #echo $PATH
+             #which make
              echo "Check Python Version" 
              python3 --version
              #sudo apt install python3.10
 
-             echo "START ----------- Upgrade Python"
-             wget  https://www.python.org/ftp/python/3.10.5/Python-3.10.5.tgz
-             tar -zxvf Python-3.10.5.tgz
-             cd Python-3.10.5/
-             ./configure --enable-optimizations
-             sudo make altinstall
-             make install
-             echo "END ----------- Upgrade Python"
-             python3 --version
+             #echo "START ----------- Upgrade Python"
+             #wget  https://www.python.org/ftp/python/3.10.5/Python-3.10.5.tgz
+             #tar -zxvf Python-3.10.5.tgz
+             #cd Python-3.10.5/
+             #./configure --enable-optimizations
+             #sudo make altinstall
+             #make install
+             #echo "END ----------- Upgrade Python"
+             #python3 --version
 
              export PYTHONPATH=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)
              #behave --help #Run behave
