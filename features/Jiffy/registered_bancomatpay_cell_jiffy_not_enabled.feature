@@ -6,5 +6,5 @@ Feature: BancomatPay Payment with cell jiffy disabled as registered user
     And Select add payment method
     And Select Altri metodi 
     And Select Bancomat Pay 
-    And Insert a valid jiffy telephone number but disabled 
+    And Insert a disabled jiffy telephone number
     Then telephone number must be requested again

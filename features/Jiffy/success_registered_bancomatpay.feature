@@ -6,5 +6,6 @@ Feature: BancomatPay Payment on wisp as registered user
     Then Select add payment method
     And Select Altri metodi
     And Select Bancomat Pay
-    And Insert a valid jiffy telephone number and confirm
+    And Insert a valid jiffy telephone number
+    And choose continue jiffy
     Then Payment is made successfully jiffy

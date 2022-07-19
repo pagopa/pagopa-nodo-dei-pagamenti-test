@@ -5,5 +5,6 @@ Feature: BancomatPay Payment on wisp as guest
     And Enter with the mail
     And Select Altri metodi
     And Select Bancomat Pay
-    And Insert a valid jiffy telephone number and confirm
+    And Insert a valid jiffy telephone number
+    And choose continue jiffy
     Then Payment is made successfully jiffy
