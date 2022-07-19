@@ -35,7 +35,7 @@ stages:
           - task: UsePythonVersion@0
             displayName: 'Use Python 3.x'
             inputs:
-              versionSpec: '3.10.5'
+              versionSpec: '3.10'
 
           - script: |
               
