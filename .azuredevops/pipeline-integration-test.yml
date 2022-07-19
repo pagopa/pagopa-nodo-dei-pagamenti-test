@@ -102,26 +102,6 @@ stages:
         steps:
           - checkout: none 
 
-          - script: |
-              rm -rf $(Pipeline.Workspace)/oracle-lib
-              mkdir -p $(Pipeline.Workspace)/oracle-lib
-              cd $(Pipeline.Workspace)/oracle-lib
-
-              wget https://download.oracle.com/otn_software/linux/instantclient/215000/instantclient-basic-linux.x64-21.5.0.0.0dbru.zip
-              
-              unzip instantclient-basic-linux.x64-21.5.0.0.0dbru.zip
-
-              rm -rf instantclient-basic-linux.x64-21.5.0.0.0dbru.zip*
-              
-              echo "##vso[task.prependpath]$(Pipeline.Workspace)/oracle-lib/instantclient_21_5"
-              echo "##vso[task.setvariable variable=LD_LIBRARY_PATH;isOutput=false]$(Pipeline.Workspace)/oracle-lib/instantclient_21_5"
-
-              sudo sh -c "echo $(Pipeline.Workspace)/oracle-lib/instantclient_21_5 > /etc/ld.so.conf.d/oracle-instantclient.conf"
-              sudo ldconfig
-              #sudo echo $(Pipeline.Workspace)/oracle-lib/instantclient_21_5 > /etc/ld.so.conf.d/oracle-instantclient.conf
-              #sudo ldconfig
-            displayName: 'Install Oracle Instant Client and append to PATH'
-          
           - task: DownloadPipelineArtifact@2
             displayName: "Download Artifact $(archiveName)"
             inputs:
@@ -137,11 +117,27 @@ stages:
               overwriteExistingFiles: false
 
           - script: |
+              cd $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)
+
+              wget https://download.oracle.com/otn_software/linux/instantclient/215000/instantclient-basic-linux.x64-21.5.0.0.0dbru.zip
+              
+              unzip instantclient-basic-linux.x64-21.5.0.0.0dbru.zip
+
+              rm -rf instantclient-basic-linux.x64-21.5.0.0.0dbru.zip*
+              
+              echo "##vso[task.prependpath]$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/instantclient_21_5"
+              echo "##vso[task.setvariable variable=LD_LIBRARY_PATH;isOutput=false]$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/instantclient_21_5"
+
+              sudo sh -c "echo $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/instantclient_21_5 > /etc/ld.so.conf.d/oracle-instantclient.conf"
+              sudo ldconfig
+            displayName: 'Install Oracle Instant Client and append to PATH'
+
+          - script: |
               echo "##vso[task.prependpath]/usr/local/bin"
 
               sudo pip3 install behave 
               sudo pip3 install -U -r $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/requirements.txt #Install Requirements
-            displayName: 'Append /usr/local/bin at PATH'
+            displayName: 'Append /usr/local/bin at PATH and install beahve'
 
           - script: |
               behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/appIO/flows/Annullo_PagamentoIO/PRO_ANNULLO_01.feature
