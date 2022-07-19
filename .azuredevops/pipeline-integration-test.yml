@@ -30,7 +30,7 @@ stages:
       - job: 
         displayName: "python_env (${{ parameters.env }})"
         steps:
-
+          - checkout: none 
           - script: |
               
               sudo apt-get install build-essential unzip
