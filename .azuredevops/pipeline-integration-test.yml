@@ -27,6 +27,57 @@ stages:
             clean: true
             persistCredentials: true
           
+          - task: AzureKeyVault@2
+            inputs:
+              connectedServiceName: $(kv-service-connection-${{ parameters.env }})
+              keyVaultName: $(az-kv-name-${{ parameters.env }})
+              secretsFilter: '*'
+              runAsPreJob: true
+          
+          - script: |
+              function replace {
+                  file=$1
+                  key=$2
+                  value=$3
+                  
+                  contents=$(jq "$key = \"$value\"" $file) && echo "${contents}" > $file
+              }
+
+              file=$(Build.SourcesDirectory)/src/integ-test/bdd-test/resources/pipeline_config.json
+
+              replace $file ".db_configuration.nodo_cfg.host"     $(db-cfg-host-${{ parameters.env }})
+              replace $file ".db_configuration.nodo_cfg.database" $(db-cfg-service-name-${{ parameters.env }})
+              replace $file ".db_configuration.nodo_cfg.user"     $(db-cfg-username-${{ parameters.env }})
+              replace $file ".db_configuration.nodo_cfg.password" $(db-cfg-password-${{ parameters.env }})
+              replace $file ".db_configuration.nodo_cfg.port"     $(db-cfg-port-${{ parameters.env }})
+
+              replace $file ".db_configuration.nodo_online.host"      $(db-online-host-${{ parameters.env }})
+              replace $file ".db_configuration.nodo_online.database"  $(db-online-service-name-${{ parameters.env }})
+              replace $file ".db_configuration.nodo_online.user"      $(db-online-username-${{ parameters.env }})
+              replace $file ".db_configuration.nodo_online.password"  $(db-online-password-${{ parameters.env }})
+              replace $file ".db_configuration.nodo_online.port"      $(db-online-port-${{ parameters.env }})
+
+              replace $file ".db_configuration.nodo_offline.host"       $(db-offline-host-${{ parameters.env }})
+              replace $file ".db_configuration.nodo_offline.database"   $(db-offline-service-name-${{ parameters.env }})
+              replace $file ".db_configuration.nodo_offline.user"       $(db-offline-username-${{ parameters.env }})
+              replace $file ".db_configuration.nodo_offline.password"   $(db-offline-password-${{ parameters.env }})  
+              replace $file ".db_configuration.nodo_offline.port"       $(db-offline-port-${{ parameters.env }})
+
+              replace $file ".db_configuration.re.host"       $(db-re-host-${{ parameters.env }})
+              replace $file ".db_configuration.re.database"   $(db-re-service-name-${{ parameters.env }})
+              replace $file ".db_configuration.re.user"       $(db-re-username-${{ parameters.env }})
+              replace $file ".db_configuration.re.password"   $(db-re-password-${{ parameters.env }})  
+              replace $file ".db_configuration.re.port"       $(db-re-port-${{ parameters.env }})
+
+              replace $file ".db_configuration.wfesp.host"      $(db-wfesp-host-${{ parameters.env }}) 
+              replace $file ".db_configuration.wfesp.database"  $(db-wfesp-service-name-${{ parameters.env }}) 
+              replace $file ".db_configuration.wfesp.user"      $(db-wfesp-username-${{ parameters.env }}) 
+              replace $file ".db_configuration.wfesp.password"  $(db-wfesp-password-${{ parameters.env }})     
+              replace $file ".db_configuration.wfesp.port"      $(db-wfesp-port-${{ parameters.env }})
+
+              jq . $file
+            displayName: 'Configure DB'
+          
           - task: ArchiveFiles@2
             displayName: 'Zip $(archiveName)'
             inputs:
@@ -39,7 +90,6 @@ stages:
           - publish: $(Build.ArtifactStagingDirectory)/$(archiveName)
             displayName: "Publish Artifact $(archiveName)"
             artifact: $(archiveName)
-
 
   - stage: run_test
     displayName: "Run integration test (${{ parameters.env }})"
@@ -84,8 +134,5 @@ stages:
             displayName: 'Append /usr/local/bin at PATH'
 
           - script: |
-              export $PATH
-          
-
               behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/appIO/flows/Annullo_PagamentoIO/PRO_ANNULLO_01.feature
-            displayName: 'Run'
+            displayName: 'Run integration test'
