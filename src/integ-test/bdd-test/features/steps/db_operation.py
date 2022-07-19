@@ -8,7 +8,7 @@ def getConnection(host:str, database:str, user:str, password:str, port:str):
         dsn = cx_Oracle.makedsn(host, port, service_name= database)
         conn = cx_Oracle.connect(user=user, password=password, dsn=dsn)
 
-        print('Successfully connected to OracleDB')
+        print(f'Successfully connected to OracleDB {host}:{port}/{database}')
         return conn
     except :
         print(f'Error connection to db {host}:{port}/{database}')
