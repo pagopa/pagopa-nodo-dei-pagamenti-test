@@ -14,7 +14,7 @@ class Driver:
 
     def __init__(self,browser="chrome"):
 
-        service = Service(executable_path=os.path.abspath(os.path.join(__file__, os.pardir, os.pardir, 'chromedriver_win32\\chromedriver.exe')))
+        #service = Service(executable_path=os.path.abspath(os.path.join(__file__, os.pardir, os.pardir, 'chromedriver_win32\\chromedriver.exe')))
         if browser == 'chrome':
                 print('init driverrrr')
                 options = webdriver.ChromeOptions()
@@ -23,7 +23,7 @@ class Driver:
                 options.add_argument('--disable-gpu')
                 options.add_argument('--disable-dev-shm-usage')
                 options.add_argument('start-fullscreen')
-                self.driver = webdriver.Chrome(options=options, service=service)
+                self.driver = webdriver.Chrome(options=options)
                 #sleep(10)
         elif "firefox":
             pass
