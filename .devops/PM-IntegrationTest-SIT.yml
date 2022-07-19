@@ -35,7 +35,7 @@ stages:
           - task: UsePythonVersion@0
             displayName: 'Use Python 3.x'
             inputs:
-              versionSpec: '3.10'
+              versionSpec: '3.10.5'
 
           - script: |
               
@@ -114,6 +114,7 @@ stages:
              whereis behave
              which behave
 
+             export PYTHONPATH=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)
              #behave --help #Run behave
              
              behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/features/3DS/15_3ds.feature
