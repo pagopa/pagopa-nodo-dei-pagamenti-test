@@ -46,15 +46,15 @@ stages:
               file=$(Build.SourcesDirectory)/src/integ-test/bdd-test/resources/config.json
 
               
-              replace $file ".services.nodo\-dei\-pagamenti.url"           "https://api.dev.platform.pagopa.it/nodo-pagamenti/api/v1"
-              replace $file ".services.nodo\-dei\-pagamenti.healthcheck"   "/monitor/health"
-              replace $file ".services.nodo\-dei\-pagamenti.soap_service"  "/webservices/input"
-              replace $file ".services.nodo\-dei\-pagamenti.rest_service"  ""
+              replace $file ".services.\"nodo-dei-pagamenti\".url"           "https://api.dev.platform.pagopa.it/nodo-pagamenti/api/v1"
+              replace $file ".services.\"nodo-dei-pagamenti\".healthcheck"   "/monitor/health"
+              replace $file ".services.\"nodo-dei-pagamenti\".soap_service"  "/webservices/input"
+              replace $file ".services.\"nodo-dei-pagamenti\".rest_service"  ""
 
-              replace $file ".services.mock\-ec.url"           "https://api.dev.platform.pagopa.it/mock-ec/api/v1/mock-ec"
-              replace $file ".services.mock\-ec.healthcheck"   ""
-              replace $file ".services.mock\-ec.soap_service"  ""
-              replace $file ".services.mock\-ec.rest_service"  ""
+              replace $file ".services.\"mock-ec\".url"           "https://api.dev.platform.pagopa.it/mock-ec/api/v1/mock-ec"
+              replace $file ".services.\"mock-ec\".healthcheck"   ""
+              replace $file ".services.\"mock-ec\".soap_service"  ""
+              replace $file ".services.\"mock-ec\".rest_service"  ""
 
 
               replace $file ".db_configuration.nodo_cfg.host"     $(db-cfg-host-${{ parameters.env }})
