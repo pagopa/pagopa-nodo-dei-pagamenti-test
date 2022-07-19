@@ -116,6 +116,8 @@ stages:
              sudo pip3 install -U -r $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/requirements.txt #Install Requirements
              whereis behave
              which behave
+             echo "whereis make" 
+             whereis make
              echo "Check Python Version" 
              python3 --version
              #sudo apt install python3.10
@@ -123,7 +125,7 @@ stages:
              echo "START ----------- Upgrade Python"
              wget  https://www.python.org/ftp/python/3.10.5/Python-3.10.5.tgz
              tar -zxvf Python-3.10.5.tgz
-             cd 3.10.5/
+             cd Python-3.10.5/
              ./configure --enable-optimizations
              sudo make altinstall
              make install
