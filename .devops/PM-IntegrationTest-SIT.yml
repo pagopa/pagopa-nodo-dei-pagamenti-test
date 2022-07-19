@@ -88,6 +88,11 @@ stages:
               destinationFolder: $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)
               cleanDestinationFolder: true
               overwriteExistingFiles: false
+          - task: UsePythonVersion@0
+            displayName: 'Use Python 3.x'
+            inputs:
+              versionSpec: '3.10'
+              
           - script: |
               echo $(Pipeline.Workspace)
               echo $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/oracle/instantclient_21_6
