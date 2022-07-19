@@ -99,10 +99,11 @@ stages:
             displayName: 'Linux ldconfig Command for Oracle Instant Client'
 
           - script: |
-
+              echo "install libgconf"
               sudo yum install libgconf*
+              echo "google-chrome-stable"
               sudo yum install google-chrome-stable
-              sudo yum install libgconf2-4
+              
               
 
               echo $(Pipeline.Workspace)
