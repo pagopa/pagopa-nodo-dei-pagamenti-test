@@ -51,10 +51,10 @@ stages:
           - checkout: none 
 
           - script: |
+              rm -rf $(Pipeline.Workspace)/oracle-lib
+              mkdir -p $(Pipeline.Workspace)/oracle-lib
               cd $(Pipeline.Workspace)/oracle-lib
-              
-              rm -rf instantclient-basic-linux.x64-21.5.0.0.0dbru.zip*
-              
+
               wget https://download.oracle.com/otn_software/linux/instantclient/215000/instantclient-basic-linux.x64-21.5.0.0.0dbru.zip
               
               unzip instantclient-basic-linux.x64-21.5.0.0.0dbru.zip
