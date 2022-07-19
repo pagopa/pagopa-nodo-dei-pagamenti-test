@@ -821,3 +821,33 @@ def step_impl(context):
     context.driver = Driver()
     context.driver.get(r'C:\Users\nicolo.isaia\Documents\GitHub\PM_official\Return_mod1.html')
     sleep(100)
+
+
+####################RTD
+@step('Add wallet np')
+def step_impl(context):
+    resp = requests.post(url=settings['RTD']['url'],
+                         headers=settings['RTD']['headers'],
+                         data=json.dumps(settings['RTD']['body_add_wallet']))
+    context.resp=resp
+
+
+@step('Migrate to PM')
+def step_impl(context):
+    resp = requests.patch(url=settings['RTD']['url'],
+                         headers=settings['RTD']['headers'],
+                         data=json.dumps(settings['RTD']['body']))
+
+
+@step('Update wallet np')
+def step_impl(context):
+    resp = requests.patch(url=settings['RTD']['url'],
+                         headers=settings['RTD']['headers'],
+                         data=json.dumps(settings['RTD']['body_update_wallet']))
+    context.resp = resp
+
+
+@step('check RTD response')
+def step_impl(context):
+    print(context.resp.status_code)
+    print(context.resp.content)

@@ -207,5 +207,31 @@
           "CF": "FABIOP00A00A000A"
         }
       }
+    },
+  "RTD": {
+    "url": "https://api.dev.platform.pagopa.it/payment-manager/pp-restapi-rtd/v1/wallets/np-wallets",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "body_add_wallet": {
+      "taxCode": "ANLPNY94A24X227N",
+      "channel": "Channel",
+      "walletType": "Card",
+      "info": {
+        "pan": "-----BEGIN PGP MESSAGE-----\nVersion: BCPG v1.58\n\nhIwDxJQrySYbEVIBBAC8EU5jWU5WvH9s40qT49ii6bQg3R7PUmr4P0TGZaIggnqK\nZ/CSor32d/ATyPuhMPQPu9TX52eLYp3Iua/q2wAnwyjKDNFun+wAZroXGjO3nlO4\nYXufCwhYrJ53ZaSMAn7qSg3r6VVcJnsIppiNnxdC22ZdoKhX6fiFrC+VA/24HNJN\nAQo2i+FdZeZtiBavl/CTN6YzMhxBgA6n84R7jhkdZyWEYD4pJBRbbQc1ffAs9qzD\nFcjOMPi85yhLnhgehOoJbCjrDz+l0cVOpCFY05c=\n=XOiw\n-----END PGP MESSAGE-----\n",
+        "expireMonth": "12",
+        "expireYear": "2022",
+        "type": "CRD",
+        "holder": "holder",
+        "brand": "VISA",
+        "issuerAbiCode": "12345"
+      }
+    },
+    "body_update_wallet": {
+      "taxCode": "ANLPNY94A24X227N",
+      "walletType": "Card",
+      "pan": "-----BEGIN PGP MESSAGE-----\nVersion: BCPG v1.58\n\nhIwDxJQrySYbEVIBBAC8EU5jWU5WvH9s40qT49ii6bQg3R7PUmr4P0TGZaIggnqK\nZ/CSor32d/ATyPuhMPQPu9TX52eLYp3Iua/q2wAnwyjKDNFun+wAZroXGjO3nlO4\nYXufCwhYrJ53ZaSMAn7qSg3r6VVcJnsIppiNnxdC22ZdoKhX6fiFrC+VA/24HNJN\nAQo2i+FdZeZtiBavl/CTN6YzMhxBgA6n84R7jhkdZyWEYD4pJBRbbQc1ffAs9qzD\nFcjOMPi85yhLnhgehOoJbCjrDz+l0cVOpCFY05c=\n=XOiw\n-----END PGP MESSAGE-----\n"
     }
+
+  }
 } 
