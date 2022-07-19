@@ -1,4 +1,7 @@
 from datetime import datetime
+from email import header
+from multiprocessing import context
+from ntpath import join
 from webbrowser import get
 from behave import *
 import json
@@ -23,7 +26,6 @@ def step_impl(context):
     #print(resp)
     #print(resp.json())
     context.resp=resp.json()[0]
-    print(context.resp)
 
 @step('Browse the payment response url')
 def step_impl(context):
@@ -385,7 +387,7 @@ def step_impl(context):
 @step('Select credit card with apostrophe on cardHolder')
 def step_impl(context):
     context.driver.wait_until(By.CLASS_NAME, 'credit-card').click()
-    context.driver.wait_until(By.NAME, 'pan').send_keys(settings['holder']['pan'])
+    context.driver.wait_until(By.NAME, 'pan').send_keys(settings['holder']['credit_cards']['onus']['pan'])
     context.driver.wait_until(By.NAME, 'expDate').send_keys(settings['holder']['expDate'])
     context.driver.wait_until(By.CLASS_NAME, 'input-cvc').send_keys(settings['holder']['cvc'])
     context.driver.wait_until(By.CLASS_NAME, 'input-holder').send_keys(settings['holder']['name_apostrophe'])
@@ -650,7 +652,17 @@ def step_impl(context):
 @then('mail is displayed')
 def step_impl(context):
     a = context.driver.wait_until(By.XPATH,
-                                  'html/body/app-root/main/app-customer/page-with-sidebar/div/div/div/div/div/div/div/div/div/div/div')
+                                  '/html/body/app-root/main/app-customer/page-with-sidebar/div/div/div/div/div/div[2]/table/tbody/tr[1]/td[3]')
+    assert a
+
+@then('the mail is displayed')
+def step_impl(context):
+    pass
+
+@then('The page is displayed')
+
+def step_impl(context):
+    a = context.driver.wait_until(By.XPATH, '/html/body/app-root/main/app-customer/page-with-sidebar/div/app-header/header/button')
     assert a
 
 
@@ -719,7 +731,6 @@ def step_impl(context):
     date = datetime.strftime(date_converted, '%d.%m.%Y - %H.%M')
     setattr(context, 'transaction_date', date)
 
-
 @step('Check the date is correct')
 def step_impl(context):
      current_date = context.driver.wait_until(By.XPATH, 'html/body/app-root/main/app-transaction-list/page-with-sidebar/div/div/div/div/div/div/div/div/table/tbody/tr/td').text
@@ -733,6 +744,7 @@ def step_impl(context):
     a.click()
     context.driver.wait_until(By.XPATH, '/html/body/app-root/main/app-customer/page-with-sidebar/div/div/div/div/div/div[3]/div[2]/div[2]/div[1]/div/p')
 
+    
 @when('Search a user\'s Codice Fiscale')
 def step_impl(context):
     context.driver.wait_until(By.XPATH, '/html/body/app-root/main/page-search/page-with-sidebar/div/div/div/div/div/section/div/app-search/div/div/div/div/input').send_keys(settings['users']['registered']['username_equal_email']['CF'])
@@ -744,7 +756,7 @@ def step_impl(context, value):
     context.driver.wait_until(By.XPATH, '/html/body/app-root/main/page-search/page-with-sidebar/div/div/div/div/div/section/div/app-search/div/div/div/button').click() 
 
 
-@then('{message} is dislpayed')
+@then('check the {message} is displayed')
 def step_impl(context, message):
     a = context.driver.wait_until(By.XPATH, '//div[@class="col"]/h3').text
     assert message in a, f'{message}, {a}'
@@ -755,3 +767,72 @@ def step_impl(context, message):
 @step('exit with annulla')
 def step_impl(context):
     context.driver.wait_until(By.XPATH,'//span[@class="annulla-blue"]').click()
+    web_message = context.driver.wait_until(By.XPATH, '//div[@class="col"]/h3').text
+    assert message in web_message, f'expectd: {message}, obtained: {web_message}'
+
+
+#############################################################################################
+
+@given('retrieved session token')
+def step_impl(context):
+    with open(os.path.abspath(os.path.join(__file__, os.pardir, os.pardir, os.pardir, 'data/configurations.json'))) as f:
+        json_file = json.load(f)
+
+    mock_url, pm_url = json_file.get('mock_url'), json_file.get('pm_url')
+    mock_response_json = requests.get(f'{mock_url}/pmmockserviceapi/cd/user/get').json()
+    requests.put(f'{mock_url}/pmmockserviceapi/cd/user/save', headers={'Content-Type': 'application/json', 'Accept': '*/*'}, data=json.dumps(mock_response_json))
+    session_token = mock_response_json.get('sessionToken')
+    session_token = requests.get(f'{pm_url}/pp-restapi-CD/v1/users/actions/start-session?token={session_token}').json().get('data').get('sessionToken')
+    print(session_token)
+    setattr(context, 'sessionToken', session_token)
+
+@given('onboarding credit card')
+def step_impl(context):
+    with open(os.path.abspath(os.path.join(__file__, os.pardir, os.pardir, os.pardir, 'data/configurations.json'))) as f:
+        json_file = json.load(f)
+    
+    credit_card = context.text
+    cvv = json.loads(credit_card).get('data').get('creditCard').get('securityCode')
+    session_token = getattr(context, 'sessionToken')
+    pm_url, mock_url = json_file.get('pm_url'), json_file.get('mock_url')
+    headers = {'Authorization': f"Bearer {session_token}", 'Content-Type': 'application/json'}
+    response = requests.post(f'{pm_url}/pp-restapi-CD/v1/wallet/cc', headers=headers, data=credit_card)
+    idWallet = response.json().get('data').get('idWallet')
+    setattr(context, 'idWallet', idWallet)
+    context.driver = Driver()
+    context.driver.get(f'{mock_url}/pmmockserviceapi/cd/emulate/webview/verification')
+    context.driver.wait_until(By.XPATH, '//*[@id="pmUrlSelect"]/option[5]').click()
+
+    context.driver.wait_until(By.XPATH, '//*[@id="inputIdWallet"]').send_keys(idWallet)
+    context.driver.wait_until(By.XPATH, '//*[@id="inputCvv"]').send_keys(cvv)
+    context.driver.wait_until(By.XPATH, '//*[@id="inputSessionToken"]').send_keys(session_token)
+    context.driver.wait_until(By.XPATH, '//*[@id="formPayWebview"]/div[6]/div/button').submit()
+    sleep(10)
+    #response = requests.get(f'{pm_url}/pp-restapi-CD/v3/wallet', headers={'Authorization': f"Bearer {session_token}"})
+    #print(response.json())
+    print(context.driver.get_current_url())
+    assert 'outcome=0' in context.driver.get_current_url()
+
+@given('Payment with credit card')
+def step_impl(context):
+    with open(os.path.abspath(os.path.join(__file__, os.pardir, os.pardir, os.pardir, 'data/configurations.json'))) as f:
+        json_file = json.load(f)
+    
+    mock_url = json_file.get('mock_url')
+    context.driver = Driver()
+    context.driver.get(f'{mock_url}/pmmockserviceapi/cd/emulate/webview/pay')
+    context.driver.wait_until(By.XPATH, '//*[@id="pmUrlSelect"]/option[5]').click()
+    
+    context.driver.wait_until(By.XPATH, '//*[@id="inputIdWallet"]').send_keys(getattr(context, 'idWallet'))
+    context.driver.wait_until(By.XPATH, '//*[@id="inputIdPayment"]').send_keys(context.resp.get('idPayment'))
+    context.driver.wait_until(By.XPATH, '//*[@id="inputSessionToken"]').send_keys(getattr(context, 'sessionToken'))
+    context.driver.wait_until(By.XPATH, '//*[@id="formPayWebview"]/div[6]/div/button').submit()
+
+    sleep(10)
+    #assert 'outcome=0' in context.driver.get_current_url()
+
+@given('Open local file')
+def step_impl(context):
+    context.driver = Driver()
+    context.driver.get(r'C:\Users\nicolo.isaia\Documents\GitHub\PM_official\Return_mod1.html')
+    sleep(100)

@@ -93,3 +93,6 @@ class Driver:
 
     def find_element_by_class_name(self,name):
         return self.driver.find_element_by_class_name(name)
+
+    def get_current_url(self):
+        return self.driver.current_url

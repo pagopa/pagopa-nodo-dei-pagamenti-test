@@ -1,7 +1,11 @@
 {
-    "host": "10.70.67.16",
-    "database": "AGIDT",
-    "user": "AGID_USER",
-    "password": "AGID_USER01",
-    "port": "1523"
+    "db": {
+        "host": "10.70.67.16",
+        "database": "AGIDT",
+        "user": "AGID_USER",
+        "password": "AGID_USER01",
+        "port": "1523"
+    },
+    "mock_url": "https://portal.test.pagopa.gov.it",
+    "pm_url": "https://api.dev.platform.pagopa.it"
 }

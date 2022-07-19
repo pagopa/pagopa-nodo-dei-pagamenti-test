@@ -2,8 +2,8 @@ import cx_Oracle, os
 
 def before_all(context):
 
-    #lib_dir = os.path.abspath(os.path.join(__file__, os.pardir, os.pardir, os.pardir, os.pardir, os.pardir, '/opt/oracle/instantclient_21_6'))
-    #cx_Oracle.init_oracle_client(lib_dir = lib_dir)
+    lib_dir = os.path.abspath(os.path.join(__file__, os.pardir, os.pardir, os.pardir, os.pardir, os.pardir, 'instantclient_21_6'))
+    cx_Oracle.init_oracle_client(lib_dir = lib_dir)
     pass
 
 def before_feature(context,feature):
