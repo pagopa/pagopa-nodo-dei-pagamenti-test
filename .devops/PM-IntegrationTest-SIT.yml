@@ -88,10 +88,8 @@ stages:
               destinationFolder: $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)
               cleanDestinationFolder: true
               overwriteExistingFiles: false
-          - task: UsePythonVersion@0
-            displayName: 'Use Python 3.x'
-            inputs:
-              versionSpec: '3.10'
+
+
               
           - script: |
               echo $(Pipeline.Workspace)
@@ -118,11 +116,16 @@ stages:
              sudo pip3 install -U -r $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/requirements.txt #Install Requirements
              whereis behave
              which behave
+             echo "Check Python Version" 
+             python3 --version
+             #sudo apt install python3.10
 
              export PYTHONPATH=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)
              #behave --help #Run behave
              
-             behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/features/3DS/15_3ds.feature
+             #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/features/3DS/15_3ds.feature
+
+
             displayName: 'Run Behave Test Suite'
           - task: PublishTestResults@2
             condition: succeededOrFailed()
