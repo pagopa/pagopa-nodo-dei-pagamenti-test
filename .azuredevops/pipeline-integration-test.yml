@@ -136,6 +136,9 @@ stages:
 
           - script: |
               echo "##vso[task.prependpath]/usr/local/bin"
+
+              sudo pip3 install behave 
+              sudo pip3 install -U -r $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/requirements.txt #Install Requirements
             displayName: 'Append /usr/local/bin at PATH'
 
           - script: |
