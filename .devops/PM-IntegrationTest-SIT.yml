@@ -106,11 +106,11 @@ stages:
               cd $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/chromedriver_linux64
               unzip chromedriver_linux64.zip
               chmod +x ./chromedriver
-              ./chromedriver
+              #./chromedriver
               sudo mv -f chromedriver /usr/local/share/chromedriver
               sudo ln -sf /usr/local/share/chromedriver /usr/local/bin/chromedriver
               sudo ln -sf /usr/local/share/chromedriver /usr/bin/chromedriver
-              sudo ldconfig
+              #sudo ldconfig
               
               
 
