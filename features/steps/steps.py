@@ -5,7 +5,7 @@ from ntpath import join
 from webbrowser import get
 from behave import *
 import json
-from data.config import settings
+import data
 from framework.driver import *
 from time import sleep
 import requests
@@ -20,9 +20,9 @@ def step_impl(context, name):
 
 @given('Payment generated with mock')
 def step_impl(context):
-    resp=requests.patch(url=settings['mockPayment']['url'],
-                    headers=settings['mockPayment']['headers'],
-                    data=json.dumps(settings['mockPayment']['body']))
+    resp=requests.patch(url=data.config.settings['mockPayment']['url'],
+                    headers=data.config.settings['mockPayment']['headers'],
+                    data=json.dumps(data.config.settings['mockPayment']['body']))
     #print(resp)
     #print(resp.json())
     context.resp=resp.json()[0]
@@ -51,7 +51,7 @@ def step_impl(context):
                            '//*[@action="enterEmail"]//button[contains(@class, "azure")]') \
         .click()
     casella = context.driver.wait_until(By.CLASS_NAME, 'input-email')
-    casella.send_keys(settings['holder']['mail'])
+    casella.send_keys(data.config.settings['holder']['mail'])
     casella.submit()
     context.driver.wait_until(By.XPATH, '//input[@name="privacy"]').click()
     context.driver.submit()
@@ -134,7 +134,7 @@ def step_impl(context, type_email):
                            '//*[@action="enterEmail"]//button[contains(text(),"Entra con la tua email")][contains(@class, "azure")]') \
         .click()
     casella = context.driver.wait_until(By.CLASS_NAME, 'input-email')
-    casella.send_keys(settings['holder'][type_email])
+    casella.send_keys(data.config.settings['holder'][type_email])
     casella.submit()
 
 @then('Check wrong mail message')
@@ -159,10 +159,10 @@ def step_impl(context):
 @step('Select {type_credit_card} credit card')
 def step_impl(context, type_credit_card):
     context.driver.wait_until(By.CLASS_NAME, 'credit-card').click()
-    context.driver.wait_until(By.NAME, 'pan').send_keys(settings['holder']['credit_cards'][type_credit_card]['pan'])
-    context.driver.wait_until(By.NAME, 'expDate').send_keys(settings['holder']['credit_cards'][type_credit_card]['expDate'])
-    context.driver.wait_until(By.CLASS_NAME, 'input-cvc').send_keys(settings['holder']['credit_cards'][type_credit_card]['cvc'])
-    context.driver.wait_until(By.CLASS_NAME, 'input-holder').send_keys(settings['holder']['name'])
+    context.driver.wait_until(By.NAME, 'pan').send_keys(data.config.settings['holder']['credit_cards'][type_credit_card]['pan'])
+    context.driver.wait_until(By.NAME, 'expDate').send_keys(data.config.settings['holder']['credit_cards'][type_credit_card]['expDate'])
+    context.driver.wait_until(By.CLASS_NAME, 'input-cvc').send_keys(data.config.settings['holder']['credit_cards'][type_credit_card]['cvc'])
+    context.driver.wait_until(By.CLASS_NAME, 'input-holder').send_keys(data.config.settings['holder']['name'])
     a = context.driver.wait_until(By.XPATH, "/html/body/div[5]/form/div[4]/button")
     a.click()
     
@@ -224,14 +224,14 @@ def step_impl(context):
 @step('check cvv not predictive')
 def step_impl(context):
     context.driver.wait_until(By.CLASS_NAME, 'credit-card').click()
-    context.driver.wait_until(By.NAME, 'pan').send_keys(settings['holder']['pan'])
-    context.driver.wait_until(By.NAME, 'expDate').send_keys(settings['holder']['expDate'])
+    context.driver.wait_until(By.NAME, 'pan').send_keys(data.config.settings['holder']['pan'])
+    context.driver.wait_until(By.NAME, 'expDate').send_keys(data.config.settings['holder']['expDate'])
     a = context.driver.wait_until(By.CLASS_NAME, 'input-cvc')
     a.click()
     #list=context.driver.find_elements(By.XPATH,'//li')
     #assert len(list)==0
-    a.send_keys(settings['holder']['cvc'])
-    context.driver.wait_until(By.CLASS_NAME, 'input-holder').send_keys(settings['holder']['name'])
+    a.send_keys(data.config.settings['holder']['cvc'])
+    context.driver.wait_until(By.CLASS_NAME, 'input-holder').send_keys(data.config.settings['holder']['name'])
     a = context.driver.wait_until(By.XPATH, "/html/body/div[5]/form/div[4]/button")
     a.click()
     context.driver.back()
@@ -353,10 +353,10 @@ def step_impl(context):
 @step('Select credit card with wrong card holder')
 def step_impl(context):
     context.driver.wait_until(By.CLASS_NAME, 'credit-card').click()
-    context.driver.wait_until(By.NAME, 'pan').send_keys(settings['holder']['pan'])
-    context.driver.wait_until(By.NAME, 'expDate').send_keys(settings['holder']['expDate'])
-    context.driver.wait_until(By.CLASS_NAME, 'input-cvc').send_keys(settings['holder']['cvc'])
-    context.driver.wait_until(By.CLASS_NAME, 'input-holder').send_keys(settings['holder']['wrong_name'])
+    context.driver.wait_until(By.NAME, 'pan').send_keys(data.config.settings['holder']['pan'])
+    context.driver.wait_until(By.NAME, 'expDate').send_keys(data.config.settings['holder']['expDate'])
+    context.driver.wait_until(By.CLASS_NAME, 'input-cvc').send_keys(data.config.settings['holder']['cvc'])
+    context.driver.wait_until(By.CLASS_NAME, 'input-holder').send_keys(data.config.settings['holder']['wrong_name'])
 
 
 @then('Check name error')
@@ -374,7 +374,7 @@ def step_impl(context):
                               '//*[@action="enterEmail"]//button[contains(@class, "azure")]') \
         .click()
     casella = context.driver.wait_until(By.CLASS_NAME, 'input-email')
-    casella.send_keys(settings['holder']['mail_upper'])
+    casella.send_keys(data.config.settings['holder']['mail_upper'])
     casella.submit()
     context.driver.wait_until(By.XPATH, '//input[@name="privacy"]').click()
     context.driver.submit()
@@ -387,10 +387,10 @@ def step_impl(context):
 @step('Select credit card with apostrophe on cardHolder')
 def step_impl(context):
     context.driver.wait_until(By.CLASS_NAME, 'credit-card').click()
-    context.driver.wait_until(By.NAME, 'pan').send_keys(settings['holder']['credit_cards']['onus']['pan'])
-    context.driver.wait_until(By.NAME, 'expDate').send_keys(settings['holder']['expDate'])
-    context.driver.wait_until(By.CLASS_NAME, 'input-cvc').send_keys(settings['holder']['cvc'])
-    context.driver.wait_until(By.CLASS_NAME, 'input-holder').send_keys(settings['holder']['name_apostrophe'])
+    context.driver.wait_until(By.NAME, 'pan').send_keys(data.config.settings['holder']['credit_cards']['onus']['pan'])
+    context.driver.wait_until(By.NAME, 'expDate').send_keys(data.config.settings['holder']['expDate'])
+    context.driver.wait_until(By.CLASS_NAME, 'input-cvc').send_keys(data.config.settings['holder']['cvc'])
+    context.driver.wait_until(By.CLASS_NAME, 'input-holder').send_keys(data.config.settings['holder']['name_apostrophe'])
     a = context.driver.wait_until(By.XPATH, "/html/body/div[5]/form/div[4]/button")
     a.click()
 
@@ -420,7 +420,7 @@ def step_impl(context):
 def step_impl(context,type):
     context.driver.wait_until(By.XPATH, "//form[@action='/wallet/jiffy/change-phone']/button").click()
     context.driver.wait_until(By.CLASS_NAME, 'input-cellphone').click()
-    context.driver.wait_until(By.CLASS_NAME, 'input-cellphone').send_keys(settings['holder']['jiffy_phone'][type])
+    context.driver.wait_until(By.CLASS_NAME, 'input-cellphone').send_keys(data.config.settings['holder']['jiffy_phone'][type])
     context.driver.find_element(By.CLASS_NAME, 'fhSubmit').click()
 
 
@@ -476,8 +476,8 @@ def step_impl(context):
 @given('Payment generated with mock body')
 def step_impl(context):
     payload = context.text
-    resp=requests.patch(url=settings['mockPayment']['url'],
-                    headers=settings['mockPayment']['headers'],
+    resp=requests.patch(url=data.config.settings['mockPayment']['url'],
+                    headers=data.config.settings['mockPayment']['headers'],
                     data=payload)
     context.resp=resp.json()[0]
 
@@ -732,12 +732,12 @@ def step_impl(context):
     
 @when('Search a user\'s Codice Fiscale')
 def step_impl(context):
-    context.driver.wait_until(By.XPATH, '/html/body/app-root/main/page-search/page-with-sidebar/div/div/div/div/div/section/div/app-search/div/div/div/div/input').send_keys(settings['users']['registered']['username_equal_email']['CF'])
+    context.driver.wait_until(By.XPATH, '/html/body/app-root/main/page-search/page-with-sidebar/div/div/div/div/div/section/div/app-search/div/div/div/div/input').send_keys(data.config.settings['users']['registered']['username_equal_email']['CF'])
     context.driver.wait_until(By.XPATH, '/html/body/app-root/main/page-search/page-with-sidebar/div/div/div/div/div/section/div/app-search/div/div/div/button').click() 
 
 @when('Search a {value} user\'s Codice Fiscale')
 def step_impl(context, value):
-    fiscal_code = context.driver.wait_until(By.XPATH, '/html/body/app-root/main/page-search/page-with-sidebar/div/div/div/div/div/section/div/app-search/div/div/div/div/input').send_keys(settings['users']['registered'][value]['CF'])
+    fiscal_code = context.driver.wait_until(By.XPATH, '/html/body/app-root/main/page-search/page-with-sidebar/div/div/div/div/div/section/div/app-search/div/div/div/div/input').send_keys(data.config.settings['users']['registered'][value]['CF'])
     context.driver.wait_until(By.XPATH, '/html/body/app-root/main/page-search/page-with-sidebar/div/div/div/div/div/section/div/app-search/div/div/div/button').click() 
 
 
