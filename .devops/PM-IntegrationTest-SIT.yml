@@ -118,6 +118,9 @@ stages:
              which behave
              echo "whereis make" 
              whereis make
+             export PATH=/usr/share:$PATH #Add environment variables
+             echo $PATH
+             which make
              echo "Check Python Version" 
              python3 --version
              #sudo apt install python3.10
