@@ -416,44 +416,31 @@ def step_impl(context):
     context.driver.wait_until(By.XPATH,"//div[@class='psp-menu']/a/div/div").click()
 
 
-@step('Insert a valid jiffy telephone number')
-def step_impl(context):
+@step('Insert a {type} jiffy telephone number')
+def step_impl(context,type):
     context.driver.wait_until(By.XPATH, "//form[@action='/wallet/jiffy/change-phone']/button").click()
     context.driver.wait_until(By.CLASS_NAME, 'input-cellphone').click()
-    context.driver.wait_until(By.CLASS_NAME, 'input-cellphone').send_keys(settings['holder']['jiffy_phone'])
+    context.driver.wait_until(By.CLASS_NAME, 'input-cellphone').send_keys(settings['holder']['jiffy_phone'][type])
     context.driver.find_element(By.CLASS_NAME, 'fhSubmit').click()
 
-@step('Insert a valid jiffy telephone number and confirm')
+
+@step('choose continue jiffy')
 def step_impl(context):
-    context.driver.wait_until(By.XPATH, "//form[@action='/wallet/jiffy/change-phone']/button").click()
-    context.driver.wait_until(By.CLASS_NAME, 'input-cellphone').click()
-    context.driver.wait_until(By.CLASS_NAME, 'input-cellphone').send_keys(settings['holder']['jiffy_phone'])
-    context.driver.find_element(By.CLASS_NAME, 'fhSubmit').click()
     context.driver.wait_until(By.CLASS_NAME, 'azure').click()
+
 
 @step('Payment is made successfully jiffy')
 def step_impl(context):
     assert True
 
 
-@step('Insert a not valid jiffy telephone number')
-def step_impl(context):
-    context.driver.wait_until(By.XPATH, "//form[@action='/wallet/jiffy/change-phone']/button").click()
-    context.driver.wait_until(By.CLASS_NAME, 'input-cellphone').click()
-    context.driver.wait_until(By.CLASS_NAME, 'input-cellphone').send_keys(settings['holder']['jiffy_phone_wrong'])
-    context.driver.find_element(By.CLASS_NAME, 'fhSubmit').click()
 
 @step('Telephone number must be requested again')
 def step_impl(context):
     assert context.driver.wait_until(By.CLASS_NAME,'alert-dismissable')
 
 
-@step('Insert a valid jiffy telephone number but disabled')
-def step_impl(context):
-    context.driver.wait_until(By.XPATH, "//form[@action='/wallet/jiffy/change-phone']/button").click()
-    context.driver.wait_until(By.CLASS_NAME, 'input-cellphone').click()
-    context.driver.wait_until(By.CLASS_NAME, 'input-cellphone').send_keys(settings['holder']['jiffy_phone_disabled'])
-    context.driver.find_element(By.CLASS_NAME, 'fhSubmit').click()
+
 
 @then('psp is displayed')
 def step_impl(context):
@@ -655,9 +642,7 @@ def step_impl(context):
                                   '/html/body/app-root/main/app-customer/page-with-sidebar/div/div/div/div/div/div[2]/table/tbody/tr[1]/td[3]')
     assert a
 
-@then('the mail is displayed')
-def step_impl(context):
-    pass
+
 
 @then('The page is displayed')
 

@@ -5,5 +5,5 @@ Feature: BancomatPay Payment with cell no jiffy
     And Enter with the mail
     And Select Altri metodi 
     And Select Bancomat Pay
-    And Insert a not valid jiffy telephone number
+    And Insert a wrong jiffy telephone number
     Then Telephone number must be requested again

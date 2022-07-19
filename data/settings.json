@@ -38,9 +38,12 @@
         "mail_upper": "MaTTeO@bhbhbh.com",
         "mail_not_valid": "aaaaaa@arjbfu",
         "wrong_mail": "aaaaaaaaa",
-        "jiffy_phone": "3470110102",
-        "jiffy_phone_disabled": "3472203058",
-        "jiffy_phone_wrong": "3470110214",
+        "jiffy_phone": {
+          "valid": "3470110102",
+          "disabled": "3472203058",
+          "wrong": "3470110214",
+          "not valid": "123"
+        },
         "credit_cards": {
           "onus":{
             "pan":"5255000010002856",

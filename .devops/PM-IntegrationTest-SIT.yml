@@ -40,8 +40,9 @@ stages:
           - script: |
               
               sudo apt-get install build-essential unzip
-              mkdir (Agent.BuildDirectory)/s/oracle
-              cd (Agent.BuildDirectory)/s/oracle
+              echo $(Agent.BuildDirectory)
+              mkdir $(Agent.BuildDirectory)/s/oracle
+              cd $(Agent.BuildDirectory)/s/oracle
               sudo wget https://download.oracle.com/otn_software/linux/instantclient/216000/instantclient-basic-linux.x64-21.6.0.0.0dbru.zip
               sudo unzip instantclient-basic-linux.x64-21.6.0.0.0dbru.zip
               sudo apt update
@@ -52,7 +53,7 @@ stages:
           - task: ArchiveFiles@2
             displayName: 'Archive files'
             inputs:
-              rootFolderOrFile: (Agent.BuildDirectory)/s/
+              rootFolderOrFile: $(Agent.BuildDirectory)/s/
               includeRootFolder: false
               archiveType: zip
               archiveFile: $(Build.ArtifactStagingDirectory)/payment-manager-NRT.zip
