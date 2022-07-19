@@ -118,7 +118,7 @@ stages:
              which behave
              echo "whereis make" 
              whereis make
-             export PATH=/usr/share:$PATH #Add environment variables
+             export PATH=/usr/share/man/man1p/make.1p.gz:$PATH #Add environment variables
              echo $PATH
              which make
              echo "Check Python Version" 
