@@ -97,6 +97,18 @@ stages:
               sudo sh -c "echo $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/oracle/instantclient_21_6 > /etc/ld.so.conf.d/oracle-instantclient.conf"
               sudo ldconfig
             displayName: 'Linux ldconfig Command for Oracle Instant Client'
+
+          - script: |
+              echo $(Pipeline.Workspace)
+              ls -la $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/chromedriver_linux64
+              cd $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/chromedriver_linux64
+              unzip chromedriver_linux64.zip
+              chmod +x chromedriver
+              sudo mv -f chromedriver /usr/local/share/chromedriver
+              sudo ln -s /usr/local/share/chromedriver /usr/local/bin/chromedriver
+              sudo ln -s /usr/local/share/chromedriver /usr/bin/chromedriver
+            displayName: 'Install chrome driver'
+
           - script: |
              echo "==== Add python3 and pip3 in PATH var==== "
              echo $PATH
@@ -122,7 +134,7 @@ stages:
              ls -R /usr/local/lib/python3.6/site-packages
              ls -la /usr/local/lib/python3.6/site-packages
 
-             export PYTHONPATH=$PYTHONPATH:$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)
+             
 
              behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/features/3DS/15_3ds.feature
 
