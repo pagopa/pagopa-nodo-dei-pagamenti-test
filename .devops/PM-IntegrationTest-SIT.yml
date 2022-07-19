@@ -89,8 +89,6 @@ stages:
               cleanDestinationFolder: true
               overwriteExistingFiles: false
 
-
-              
           - script: |
               echo $(Pipeline.Workspace)
               echo $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/oracle/instantclient_21_6
@@ -98,7 +96,7 @@ stages:
               sudo ldconfig
             displayName: 'Linux ldconfig Command for Oracle Instant Client'
           - script: |
-             whereis python3
+             whereis python3.10
              whereis pip3
              whereis pip
              echo $PATH
