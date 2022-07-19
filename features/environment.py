@@ -5,6 +5,7 @@ def before_all(context):
     #PROVA
     sys.path.append(os.path.abspath(os.path.join(os.pardir, 'data')))
     sys.path.append(os.path.abspath(os.path.join(os.pardir, 'framework')))
+    print(sys.path)
 
     lib_dir = os.path.abspath(os.path.join(__file__, os.pardir, os.pardir, os.pardir, os.pardir, os.pardir, 'instantclient_21_6'))
     cx_Oracle.init_oracle_client(lib_dir = lib_dir)
