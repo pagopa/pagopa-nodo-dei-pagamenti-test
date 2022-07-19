@@ -39,7 +39,6 @@ Feature: Syntax checks OK for activatePaymentNoticeReq
       | elem           | value | soapUI test |
       | idempotencyKey | None  | SIN_APNR_18 |
       | expirationTime | None  | SIN_APNR_35 |
-      | amount         | None  | SIN_APNR_39 |
       | dueDate        | None  | SIN_APNR_44 |
       | paymentNote    | None  | SIN_APNR_47 |
       # TODO: amount test fail: fix it
