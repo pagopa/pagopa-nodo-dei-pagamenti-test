@@ -108,6 +108,9 @@ stages:
               sudo mv -f chromedriver /usr/local/share/chromedriver
               sudo ln -sf /usr/local/share/chromedriver /usr/local/bin/chromedriver
               sudo ln -sf /usr/local/share/chromedriver /usr/bin/chromedriver
+              sudo ldconfig
+              echo $LD_LIBRARY_PATH 
+              ls -R $LD_LIBRARY_PATH
             displayName: 'Install chrome driver'
 
           - script: |
