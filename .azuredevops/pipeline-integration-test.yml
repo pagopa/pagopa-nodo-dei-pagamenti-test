@@ -15,7 +15,7 @@ parameters:
 stages:
   - stage: run
     displayName: "${{ parameters.env }} - Run"
-    pool: $(deploy-pool-${{ parameters.k8sEnv }})
+    pool: $(deploy-pool-${{ parameters.env }})
     jobs:
       - job: 
         displayName: "python_env (${{ parameters.env }})"
