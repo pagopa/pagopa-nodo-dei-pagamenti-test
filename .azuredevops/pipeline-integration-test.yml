@@ -75,7 +75,9 @@ stages:
 
           - script: |
               export $PATH
-
+              echo "##vso[task.prependpath]/usr/local/bin"
+              export $PATH
+              #export PATH=/usr/bin:/usr/local/bin:$PATH #Add environment variables
 
               behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/appIO/flows/Annullo_PagamentoIO/PRO_ANNULLO_01.feature
             displayName: 'Run'
