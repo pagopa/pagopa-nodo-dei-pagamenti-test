@@ -129,14 +129,15 @@ stages:
               echo "##vso[task.setvariable variable=LD_LIBRARY_PATH;isOutput=false]$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/instantclient_21_5"
 
               sudo sh -c "echo $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/instantclient_21_5 > /etc/ld.so.conf.d/oracle-instantclient.conf"
+              cat /etc/ld.so.conf.d/oracle-instantclient.conf
               sudo ldconfig
             displayName: 'Install Oracle Instant Client and append to PATH'
 
           - script: |
               echo "##vso[task.prependpath]/usr/local/bin"
 
-              sudo pip3 install behave 
-              sudo pip3 install -U -r $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/requirements.txt #Install Requirements
+              pip3 install behave 
+              pip3 install -U -r $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/requirements.txt #Install Requirements
             displayName: 'Append /usr/local/bin at PATH and install beahve'
 
           - script: |
