@@ -138,7 +138,7 @@ stages:
              export PYTHONPATH=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)
              #behave --help #Run behave
              
-             #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/features/3DS/15_3ds.feature
+             behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/features/3DS/15_3ds.feature
 
 
             displayName: 'Run Behave Test Suite'
