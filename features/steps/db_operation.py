@@ -4,6 +4,12 @@ def getConnection(host:str, database:str, user:str, password:str, port:str):
     print(f'Connecting to the OracleDB... {user}')
 
     try:
+        print(f' Get Connection: ')
+        print(f' user -->[{user}] ')
+        print(f' password -->[{password}] ')
+        print(f' dsn -->[{dsn}] ')
+        print(f' host -->[{host}] ')
+        print(f' service_name -->[{database}] ')
         
         dsn = cx_Oracle.makedsn(host, port, service_name= database)
         conn = cx_Oracle.connect(user=user, password=password, dsn=dsn)

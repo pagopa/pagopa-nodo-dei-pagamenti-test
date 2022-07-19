@@ -17,13 +17,14 @@ class Driver:
         #service = Service(executable_path=os.path.abspath(os.path.join(__file__, os.pardir, os.pardir, 'chromedriver_win32\\chromedriver.exe')))
         if browser == 'chrome':
                 print('init driverrrr')
-                options = webdriver.ChromeOptions()
+                options = Options()
+                options.binary_location = '/usr/local/share/chromedriver'
                 options.add_argument('--headless')
-                options.add_argument('no-sandbox')
+                options.add_argument('--no-sandbox')
                 options.add_argument('--disable-gpu')
                 options.add_argument('--disable-dev-shm-usage')
-                options.add_argument('start-fullscreen')
-                self.driver = webdriver.Chrome(options=options)
+                options.add_argument('--start-fullscreen')
+                self.driver = webdriver.Chrome(options=options, executable_path='/usr/local/share/chromedriver')
                 #sleep(10)
         elif "firefox":
             pass
