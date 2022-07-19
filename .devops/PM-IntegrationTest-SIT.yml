@@ -105,7 +105,8 @@ stages:
               ls -la $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/chromedriver_linux64
               cd $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/chromedriver_linux64
               unzip chromedriver_linux64.zip
-              chmod +x ./chromedriver
+              sudo chmod +x ./chromedriver
+              sudo chmod -x "/usr/bin/google-chrome"
               #./chromedriver
               sudo mv -f chromedriver /usr/local/share/chromedriver
               sudo ln -sf /usr/local/share/chromedriver /usr/local/bin/chromedriver
