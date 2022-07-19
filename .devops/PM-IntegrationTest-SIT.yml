@@ -1,39 +1,128 @@
-trigger:
-- master
+pr: none
+trigger: none
+
 pool:
   vmImage: 'ubuntu-latest'
 
-name: '$(Date:yyyy-MM-dd)$(Rev:.rr)'
+parameters:
+  - name: env
+    displayName: Environment to Run Test
+    type: string
+    values:
+      - dev
+      - sit
 
-steps:
-- task: UsePythonVersion@0
-  inputs:
-    versionSpec: '3.10'
-- script: python -m pip install --upgrade pip
-  displayName: 'Install dependencies'
-- script: |
-    sudo apt-get install build-essential unzip
-    cd /opt/
-    sudo mkdir /opt/oracle
-    cd /opt/oracle
-    sudo wget https://download.oracle.com/otn_software/linux/instantclient/216000/instantclient-basic-linux.x64-21.6.0.0.0dbru.zip
-    sudo unzip instantclient-basic-linux.x64-21.6.0.0.0dbru.zip
-    sudo apt update
-    sudo apt install libaio1
-    sudo sh -c "echo /opt/oracle/instantclient_21_6 > /etc/ld.so.conf.d/oracle-instantclient.conf"
-    sudo ldconfig
-    ls -la /opt/oracle/instantclient_21_6/
-  displayName: 'Install Oracle Instant Client'
-- script: python3 -m pip install -r requirements.txt
-  displayName: 'Install requirements'
-- script: |
-    ls -la ./src/integ-test/bdd-test/features
-    behave --junit-directory=report --junit ./features/3DS/15_3ds.feature
-  displayName: 'Run tests'
-- task: PublishTestResults@2
-  condition: succeededOrFailed()
-  inputs:
-    testResultsFiles: '**/report/*.xml'
-    mergeTestResults: true
-    testRunTitle: Integration test payment-manager $(Build.BuildNumber)
-    failTaskOnFailedTests: true
+variables:
+  artifactName: TestSuite
+  destinationFolderExtractArtifact: payment-manager/extracted
+
+
+  
+
+stages:
+  - stage: python_env
+    displayName: "Fetch Test Suite (${{ parameters.env }})"
+    jobs:
+      - job: 
+        displayName: "python_env (${{ parameters.env }})"
+        steps:
+          - checkout: self
+            clean: true
+            persistCredentials: true
+            
+            
+          - task: UsePythonVersion@0
+            displayName: 'Use Python 3.x'
+            inputs:
+              versionSpec: '3.10'
+
+          - script: |
+              
+              sudo apt-get install build-essential unzip
+              mkdir (Agent.BuildDirectory)/s/oracle
+              cd (Agent.BuildDirectory)/s/oracle
+              sudo wget https://download.oracle.com/otn_software/linux/instantclient/216000/instantclient-basic-linux.x64-21.6.0.0.0dbru.zip
+              sudo unzip instantclient-basic-linux.x64-21.6.0.0.0dbru.zip
+              sudo apt update
+              sudo apt install libaio1
+            displayName: 'Install Oracle Instant Client'
+
+
+          - task: ArchiveFiles@2
+            displayName: 'Archive files'
+            inputs:
+              rootFolderOrFile: (Agent.BuildDirectory)/s/
+              includeRootFolder: false
+              archiveType: zip
+              archiveFile: $(Build.ArtifactStagingDirectory)/payment-manager-NRT.zip
+              replaceExistingArchive: true
+
+            
+          - publish: $(Build.ArtifactStagingDirectory)/payment-manager-NRT.zip
+            displayName: "Publish Artifact"
+            artifact: $(artifactName)
+            
+            
+  - stage: test_execute
+    displayName: "Execute Test Suite (${{ parameters.env }})"
+    dependsOn:
+      - python_env
+    variables:
+      - group: nodo-${{ parameters.env }}
+    condition: succeeded()
+    jobs:
+      - job: test_execute
+        displayName: "execute test suite (${{ parameters.env }})"
+        pool: $(deploy-pool-${{ parameters.env }})
+        steps:
+          - checkout: none          
+
+          - task: DownloadPipelineArtifact@2
+            inputs:
+              artifact: $(artifactName)
+              source: current
+          - task: ExtractFiles@1
+            inputs:
+              archiveFilePatterns: $(Pipeline.Workspace)/payment-manager-NRT.zip
+              destinationFolder: $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)
+              cleanDestinationFolder: true
+              overwriteExistingFiles: false
+          - script: |
+              echo $(Pipeline.Workspace)
+              echo $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/oracle/instantclient_21_6
+              sudo sh -c "echo $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/oracle/instantclient_21_6 > /etc/ld.so.conf.d/oracle-instantclient.conf"
+              sudo ldconfig
+            displayName: 'Linux ldconfig Command for Oracle Instant Client'
+          - script: |
+             whereis python3
+             whereis pip3
+             whereis pip
+             echo $PATH
+             
+             export PATH=/usr/bin:/usr/local/bin:$PATH #Add environment variables
+             echo $PATH
+
+             which python3
+             which pip3
+             which pip
+             
+             sudo pip3 install behave 
+             sudo pip3 install -U -r $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/requirements.txt #Install Requirements
+             whereis behave
+             which behave
+
+             #behave --help #Run behave
+             
+             behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/features/3DS/15_3ds.feature
+            displayName: 'Run Behave Test Suite'
+          - task: PublishTestResults@2
+            condition: succeededOrFailed()
+            inputs:
+              testResultsFiles: '$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report/*.xml'
+              mergeTestResults: true
+              testRunTitle: Integration Test Payment Manager $(Build.BuildNumber)
+              failTaskOnFailedTests: true
+          - script: |
+             sudo rm -rf $(Pipeline.Workspace)/*
+             
+            displayName: 'Agent Pool CleanUP'
