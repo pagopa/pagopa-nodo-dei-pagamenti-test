@@ -20,9 +20,7 @@ stages:
       - job: 
         displayName: "python_env (${{ parameters.env }})"
         steps:
-          - script: |
-              sudo apt-get install git
-            displayName: 'Install GIT'
+
 
           - checkout: self
             clean: true
