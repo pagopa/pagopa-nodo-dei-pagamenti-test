@@ -11,7 +11,7 @@ def getConnection(host:str, database:str, user:str, password:str, port:str):
         print('Successfully connected to OracleDB')
         return conn
     except :
-        print('Error connection to db')
+        print(f'Error connection to db {host}:{port}/{database}')
         traceback.print_exc() 
 
 def closeConnection(conn) -> None:
