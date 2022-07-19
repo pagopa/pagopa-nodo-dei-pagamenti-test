@@ -33,7 +33,7 @@ def step_impl(context):
             - pagopa-api-config ( used in tests to set DB's nodo-dei-pagamenti correctly according to input test ))
     """
     responses = True
-    """ DA DECOMMENTARE APPENA SPICA RISOLVE MAPPING HEALTHCHECK 
+    
     for row in context.table:
         print(f"calling: {row.get('name')} -> {row.get('url')}")
         url = row.get("url") + row.get("healthcheck")
@@ -41,7 +41,7 @@ def step_impl(context):
         resp = requests.get(url)
         print(f"response: {resp.status_code}")
         responses &= (resp.status_code == 200)
-    """
+
     assert responses
 
 
@@ -676,7 +676,6 @@ def step_impl(context, query_name, macro, db_name,table_name,columns):
     if exec_query is not None:
         print(f'executed query: {exec_query}')
     setattr(context, query_name, exec_query)
-
 
 
 @step("with the query {query_name1} check assert beetwen elem {elem1} in position {position1:d} and elem {elem2} with position {position2:d} of the query {query_name2}")

@@ -38,7 +38,9 @@
         "rpt_id":"SELECT columns FROM table_name  where IUV = '$iuv' and IDENT_DOMINIO= '$activatePaymentNotice.fiscalCode'",
         "payment_token_v2":"SELECT columns FROM table_name where PAYMENT_TOKEN = '$activatePaymentNoticeResponse.paymentToken-v2'",
         "rt_stati":"SELECT columns FROM table_name  where IUV = '$iuv' and IDENT_DOMINIO= '$activatePaymentNotice.fiscalCode'",
-        "idempotency_cache":"SELECT columns FROM table_name WHERE IDEMPOTENCY_KEY = '$sendPaymentOutcome.idempotencyKey'"
+        "idempotency_cache":"SELECT columns FROM table_name WHERE IDEMPOTENCY_KEY = '$sendPaymentOutcome.idempotencyKey'",
+        "idempotency_cache_psp_1" : "SELECT columns FROM table_name WHERE IDEMPOTENCY_KEY = '$activatePaymentNotice1.idempotencyKey' AND PSP_ID = '$activatePaymentNotice1.idPSP'",
+        "idempotency_cache_psp_2" : "SELECT columns FROM table_name WHERE IDEMPOTENCY_KEY = '$activatePaymentNotice2.idempotencyKey' AND PSP_ID = '$activatePaymentNotice2.idPSP'"
     },
     "AppIO":{
         "payment_status":"SELECT s.columns FROM table_name s WHERE s.NOTICE_ID ='$activateIOPayment.noticeNumber' AND s.PA_FISCAL_CODE = '$activateIOPayment.fiscalCode'",
