@@ -15,8 +15,7 @@ class Driver:
     def __init__(self,browser="chrome"):
 
         service = Service(executable_path=os.path.abspath(os.path.join(__file__, os.pardir, os.pardir, 'chromedriver_win32\\chromedriver.exe')))
-        match browser:
-            case "chrome":
+        if browser == 'chrome':
                 print('init driverrrr')
                 options = webdriver.ChromeOptions()
                 options.add_argument('--headless')
@@ -26,10 +25,10 @@ class Driver:
                 options.add_argument('start-fullscreen')
                 self.driver = webdriver.Chrome(options=options, service=service)
                 #sleep(10)
-            case "firefox":
-                pass
-            case _:
-                pass
+        elif "firefox":
+            pass
+        elif _:
+            pass
 
     """
     def __init__(self):
