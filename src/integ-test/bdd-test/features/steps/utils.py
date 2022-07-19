@@ -82,8 +82,7 @@ def get_rest_mock_ec(context):
 
 def get_soap_mock_ec(context):
     if context.config.userdata.get("services").get("mock-ec").get("soap_service") is not None:
-        return context.config.userdata.get("services").get("mock-ec").get("url") \
-               + context.config.userdata.get("services").get("mock-ec").get("soap_service")
+        return context.config.userdata.get("services").get("mock-ec").get("url")
     else:
         return ""
 
