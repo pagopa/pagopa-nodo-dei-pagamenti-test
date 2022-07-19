@@ -113,7 +113,7 @@ stages:
              echo "==== Add python3 and pip3 in PATH var==== "
              echo $PATH
              
-             export PATH=/usr/bin:/usr/local/bin:$(Pipeline.Workspace)/$(destinationFolderExtractArtifact):$PATH
+             export PATH=/usr/bin:/usr/local/bin:/usr/local/share/chromedriver:$PATH
              echo $PATH
              
              echo "==== install behave ==== "
