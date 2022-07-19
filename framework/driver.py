@@ -44,11 +44,11 @@ class Driver:
                 self.driver = webdriver.Chrome(options=options)
             case _:
                 self.driver = webdriver.Firefox()
-        """
+        
     @staticmethod
-    def add_options(options: ChromiumOptions, options_settings: list):
+    def add_options(options: webdriver.ChromeOptions(), options_settings: list):
         for o in options_settings:
-            options.add_argument(o)
+            options.add_argument(o)"""
 
     def get(self, url):
         self.driver.get(url)
