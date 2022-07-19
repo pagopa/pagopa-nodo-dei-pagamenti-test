@@ -28,7 +28,7 @@ stages:
             persistCredentials: true
           
           - task: ArchiveFiles@2
-            displayName: 'Create zip $(archiveName)'
+            displayName: 'Zip $(archiveName)'
             inputs:
               rootFolderOrFile: $(Build.SourcesDirectory)
               includeRootFolder: false
@@ -56,17 +56,21 @@ stages:
               wget https://download.oracle.com/otn_software/linux/instantclient/215000/instantclient-basic-linux.x64-21.5.0.0.0dbru.zip
               
               unzip instantclient-basic-linux.x64-21.5.0.0.0dbru.zip
+
+              rm -rf instantclient-basic-linux.x64-21.5.0.0.0dbru.zip
               
               echo "##vso[task.prependpath]$(Pipeline.Workspace)/oracle-lib/instantclient_21_5"
               echo "##vso[task.setvariable variable=LD_LIBRARY_PATH;isOutput=false]$(Pipeline.Workspace)/oracle-lib/instantclient_21_5"
             displayName: 'Install Oracle Instant Client'
           
           - task: DownloadPipelineArtifact@2
+            displayName: "Download Artifact $(archiveName)"
             inputs:
               artifact: $(archiveName)
               source: current
           
           - task: ExtractFiles@1
+            displayName: 'Unzip $(archiveName)'
             inputs:
               archiveFilePatterns: $(Pipeline.Workspace)/$(archiveName)
               destinationFolder: $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)
@@ -77,7 +81,7 @@ stages:
               export $PATH
               echo "##vso[task.prependpath]/usr/local/bin"
               export $PATH
-              #export PATH=/usr/bin:/usr/local/bin:$PATH #Add environment variables
+          
 
               behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/appIO/flows/Annullo_PagamentoIO/PRO_ANNULLO_01.feature
             displayName: 'Run'
