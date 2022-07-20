@@ -90,9 +90,9 @@ stages:
               which google-chrome
               echo "You are using $(getconf LONG_BIT) bit Linux distro."
               uname -m
-              wget https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
+             
               
-              sudo yum localinstall google-chrome-stable_current_x86_64.rpm
+              curl https://intoli.com/install-google-chrome.sh | bash
               whereis google-chrome
               which google-chrome
 
