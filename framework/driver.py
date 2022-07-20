@@ -21,7 +21,7 @@ class Driver:
                 options.binary_location = '/usr/local/bin/chromedriver'
                 options.add_argument('--no-sandbox')
                 options.add_argument('--headless')
-                chromeOptions.add_argument("--remote-debugging-port=9222")
+                options.add_argument("--remote-debugging-port=9222")
                 #options.add_argument('--disable-gpu') Only for Windows
                 options.add_argument('--disable-dev-shm-usage')
                 options.add_argument("--disable-extensions") 
