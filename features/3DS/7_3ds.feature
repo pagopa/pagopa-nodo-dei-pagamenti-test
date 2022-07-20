@@ -5,7 +5,7 @@ Feature:
     And Enter with the mail
     And Select 3ds credit card
     And Confirm payment
-    And sleep 300 s
     And Insert OTP
-    #Then check resultCode in METHOD_RESPONSE_3D2 is 25
-    #Then check resultCode in CHALLENGE_RESPONSE_3D2 is ??
+    And sleep 5 s
+    Then check resultCode in METHOD_RESPONSE_3D2 is 25
+    And check resultCode in CHALLENGE_RESPONSE_3D2 is ??

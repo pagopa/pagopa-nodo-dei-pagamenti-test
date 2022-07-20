@@ -1,5 +1,5 @@
-Feature: guest_payment_3DS2.0
-  Scenario: check for result step0 MethodURL on 3DS2.0
+Feature: 3
+  Scenario: 3
     Given db connection opened
     And payment generated with mock
     When Browse the payment response url
@@ -7,9 +7,10 @@ Feature: guest_payment_3DS2.0
     And Select 3ds credit card
     And Confirm payment
     Then close the page
+    And sleep 5 s
     And Check resultCode in METHOD_RESPONSE_3DS2 is 25
     And Check threeDSMethodUrl in METHOD_RESPONSE_3DS2 is Empty
-    Then close db connection
+    And close db connection
 
 
 
