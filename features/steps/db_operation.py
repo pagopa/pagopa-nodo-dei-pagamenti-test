@@ -36,11 +36,13 @@ def executeQuery(conn, query:str) -> list:
     print(f' Executing query [{query}] on OracleDB instance...')
     try:
         
+        print(query)
         cur = conn.cursor()
         cur.execute(query)
 
         if 'SELECT' in query:    
             rows = cur.fetchall()
+            print(rows)
             print(f' Query executed successfully - [{len(rows)}] row/s found')
             return rows
         elif 'UPDATE' in query:
