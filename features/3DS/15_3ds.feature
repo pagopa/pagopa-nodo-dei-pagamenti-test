@@ -5,6 +5,7 @@ Feature: 15
         And payment generated with mock
         When browse the payment response url
         And Login as registered user
+        And Select add Payment method
         And select 3ds credit card
         And confirm payment
         And close the page
