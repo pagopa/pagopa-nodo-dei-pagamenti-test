@@ -577,9 +577,10 @@ def step_impl(context, parameter, column, value):
     conn = getattr(context, 'conn')
     query = f"SELECT v.{column} from PP_VPOS_AUTH v, PP_TRANSACTION t, PP_PAYMENT p WHERE v.FK_TRANSACTION = t.ID AND t.FK_PAYMENT = p.ID AND p.ID_PAYMENT = '{context.resp.get('idPayment')}'"
     print(query)
-    query_result = db.executeQuery(conn, query)[0].get(parameter)
-    print(query_result)
-    assert query_result == value
+    query_result = db.executeQuery(conn, query)[0][0]
+    column_value = json.loads(query_result.read()).get(parameter)
+    print(column_value)
+    assert column_value == value
 
 #########################AdminPanel
 @given('Access to Admin Panel with Admin')
