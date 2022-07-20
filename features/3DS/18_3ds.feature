@@ -9,4 +9,4 @@ Feature: 18
         And confirm payment
         And close the page
         And sleep 5 s
-        Then check resultCode in METHOD_RESPONSE_3DS column is 25
+        Then check resultCode in METHOD_RESPONSE_3DS is 25

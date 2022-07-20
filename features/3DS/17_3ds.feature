@@ -8,5 +8,5 @@ Feature: 17
         And select 3ds credit card
         And confirm payment
         And sleep 5 s
-        Then check resultCode in METHOD_RESPONSE_3DS column is 25
+        Then check resultCode in METHOD_RESPONSE_3DS is 25
 

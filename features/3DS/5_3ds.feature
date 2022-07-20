@@ -9,7 +9,7 @@ Feature: 5
     Then close the page
     And sleep 5 s
     And Check resultCode in METHOD_RESPONSE_3DS2 is 25
-    And Check threeDSMethodUrl in METHOD_RESPONSE_3DS2 is NULL
+    And Check threeDSMethodUrl in METHOD_RESPONSE_3DS2 is Empty
     Then close db connection
 
 

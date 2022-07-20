@@ -10,6 +10,6 @@ Feature: 20
         And insert OTP
         And close the page
         And sleep 5 s
-        Then check resultCode in METHOD_RESPONSE_3DS column is 25
-        And check resultCode in CHALLENGE_RESPONSE_3DS column is 26
+        Then check resultCode in METHOD_RESPONSE_3DS is 25
+        And check resultCode in CHALLENGE_RESPONSE_3DS is 26
 

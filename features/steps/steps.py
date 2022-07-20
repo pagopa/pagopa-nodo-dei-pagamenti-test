@@ -2,6 +2,7 @@ from datetime import datetime
 from email import header
 from multiprocessing import context
 from ntpath import join
+from queue import Empty
 from webbrowser import get
 from behave import *
 import json
@@ -579,9 +580,12 @@ def step_impl(context, parameter, column, value):
     query = f"SELECT v.{column} from PP_VPOS_AUTH v, PP_TRANSACTION t, PP_PAYMENT p WHERE v.FK_TRANSACTION = t.ID AND t.FK_PAYMENT = p.ID AND p.ID_PAYMENT = '{context.resp.get('idPayment')}'"
     print(query)
     query_result = db.executeQuery(conn, query)[0][0]
-    column_value = json.loads(query_result.read()).get(parameter)
-    print(column_value)
-    assert column_value == value
+    if value == 'Empty':
+        assert query_result == None
+    else:
+        column_value = json.loads(query_result.read()).get(parameter)
+        print(column_value)
+        assert column_value == value
 
 #########################AdminPanel
 @given('Access to Admin Panel with Admin')

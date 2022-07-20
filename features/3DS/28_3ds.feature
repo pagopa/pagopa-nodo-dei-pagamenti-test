@@ -7,4 +7,4 @@ Feature: 28_3d2
     And Select add payment method
     And select amex credit card
     And confirm payment
-    Then check resultCode in AUTH_RESPONSE_3DS2 column is 00
+    Then check resultCode in AUTH_RESPONSE_3DS2 is 00

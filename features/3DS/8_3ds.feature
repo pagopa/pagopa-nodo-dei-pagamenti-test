@@ -9,7 +9,7 @@ Feature:
     And Insert OTP
     And close the page
     Then check resultCode in METHOD_RESPONSE_3DS2 is 25
-    And check resultCode in AUTH_RESPONSE_3DS2 column is 00
+    And check resultCode in AUTH_RESPONSE_3DS2 is 00
     And close db connection
 
 
