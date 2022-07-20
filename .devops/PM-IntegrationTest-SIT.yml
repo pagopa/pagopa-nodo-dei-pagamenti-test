@@ -143,7 +143,7 @@ stages:
              "==== Check packages installed...==== "
              pip3 list
              export PYTHONPATH=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)
-             behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/features/3DS/15_3ds.feature
+             behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/features/3DS/
              
             displayName: 'Run Behave Test Suite'
           - task: PublishTestResults@2
