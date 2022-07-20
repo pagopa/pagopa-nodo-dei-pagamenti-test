@@ -143,8 +143,8 @@ stages:
              "==== Check packages installed...==== "
              pip3 list
              export PYTHONPATH=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)
-             behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/features/3DS/15_3ds.feature
              sudo kill -9 $(sudo lsof -t -i:9222)
+             behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/features/3DS/15_3ds.feature
             displayName: 'Run Behave Test Suite'
           - task: PublishTestResults@2
             condition: succeededOrFailed()
