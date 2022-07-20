@@ -88,7 +88,7 @@ stages:
               which google-chrome
               echo "You are using $(getconf LONG_BIT) bit Linux distro."
               uname -m
-             curl https://intoli.com/install-google-chrome.sh | bash
+              curl https://intoli.com/install-google-chrome.sh | bash
               whereis google-chrome
               which google-chrome
 
@@ -120,7 +120,6 @@ stages:
               sudo ln -sf /usr/local/share/chromedriver /usr/bin/chromedriver
               pwd
               ls -la .
-
             displayName: 'Install chrome driver'
 
           - script: |
@@ -143,11 +142,9 @@ stages:
              
              "==== Check packages installed...==== "
              pip3 list
-
              export PYTHONPATH=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)
              behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/features/3DS/15_3ds.feature
-
-
+             
             displayName: 'Run Behave Test Suite'
           - task: PublishTestResults@2
             condition: succeededOrFailed()
