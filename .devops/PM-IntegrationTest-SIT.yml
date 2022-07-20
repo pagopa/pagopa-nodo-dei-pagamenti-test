@@ -136,7 +136,7 @@ stages:
              sudo pip3 install -U -r $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/requirements.txt
              
              "==== install selenium - cx-Oracle and chromedriver-binary...==== "
-             #sudo pip3 install selenium
+             sudo pip3 install selenium
              sudo pip3 install cx-Oracle
              sudo pip3 install install chromedriver-binary
              
