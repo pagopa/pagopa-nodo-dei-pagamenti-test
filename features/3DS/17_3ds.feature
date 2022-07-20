@@ -1,6 +1,7 @@
 Feature: 17
 
     Scenario: 17
+        Given db connection opened
         Given payment generated with mock
         When browse the payment response url
         And login as registered user
@@ -9,4 +10,4 @@ Feature: 17
         And confirm payment
         And sleep 5 s
         Then check resultCode in METHOD_RESPONSE_3DS is 25
-
+        And close db connection

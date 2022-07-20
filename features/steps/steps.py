@@ -577,7 +577,7 @@ def step_impl(context):
 @step('Check {parameter} in {column} is {value}')
 def step_impl(context, parameter, column, value):
     conn = getattr(context, 'conn')
-    query = f"SELECT v.{column} from PP_VPOS_AUTH v, PP_TRANSACTION t, PP_PAYMENT p WHERE v.FK_TRANSACTION = t.ID AND t.FK_PAYMENT = p.ID AND p.ID_PAYMENT = '{context.resp.get('idPayment')}'"
+    query = f"SELECT v.{column} FROM PP_VPOS_AUTH v, PP_TRANSACTION t, PP_PAYMENT p WHERE v.FK_TRANSACTION = t.ID AND t.FK_PAYMENT = p.ID AND p.ID_PAYMENT = '{context.resp.get('idPayment')}'"
     print(query)
     query_result = db.executeQuery(conn, query)[0][0]
     if value == 'Empty':

@@ -7,5 +7,5 @@ Feature: 13_3d2
     And select maestro credit card
     And confirm payment
     And sleep 5 s
-    Then check resultCode in AUTH_RESPONSE_3DS2 column is 00
+    Then check resultCode in AUTH_RESPONSE_3DS2 is 00
     And close db connection
