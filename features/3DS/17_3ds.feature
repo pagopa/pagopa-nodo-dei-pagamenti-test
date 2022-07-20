@@ -6,5 +6,7 @@ Feature: 17
         And login as registered user
         And select add payment method
         And select 3ds credit card
-        And sleep 60 s
         And confirm payment
+        And sleep 5 s
+        Then check resultCode in METHOD_RESPONSE_3DS column is 25
+

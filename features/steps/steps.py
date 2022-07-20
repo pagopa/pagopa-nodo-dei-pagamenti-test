@@ -25,6 +25,7 @@ def step_impl(context):
                     data=json.dumps(settings['mockPayment']['body']))
     #print(resp)
     #print(resp.json())
+    print(resp.json())
     context.resp=resp.json()[0]
 
 @step('Browse the payment response url')
@@ -849,5 +850,6 @@ def step_impl(context):
 
 @step('check RTD response')
 def step_impl(context):
+    assert context.resp.status_code//100==2
     print(context.resp.status_code)
     print(context.resp.content)
