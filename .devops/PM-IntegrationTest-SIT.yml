@@ -82,6 +82,15 @@ stages:
             inputs:
               artifact: $(artifactName)
               source: current
+
+
+
+          - script: |
+              echo "You are using $(getconf LONG_BIT) bit Linux distro."
+              uname -m
+
+            displayName: 'Find out if Linux distro'
+
           - task: ExtractFiles@1
             inputs:
               archiveFilePatterns: $(Pipeline.Workspace)/payment-manager-NRT.zip
@@ -132,7 +141,7 @@ stages:
              sudo pip3 install -U -r $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/requirements.txt
              
              "==== install selenium - cx-Oracle and chromedriver-binary...==== "
-             sudo pip3 install selenium
+             #sudo pip3 install selenium
              sudo pip3 install cx-Oracle
              sudo pip3 install install chromedriver-binary
              
