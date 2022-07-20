@@ -86,10 +86,16 @@ stages:
 
 
           - script: |
+              whereis google-chrome
+              which google-chrome
               echo "You are using $(getconf LONG_BIT) bit Linux distro."
               uname -m
+              wget https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
+              sudo yum install ./google-chrome-stable_current_*.rpm
+              whereis google-chrome
+              which google-chrome
 
-            displayName: 'Find out if Linux distro'
+            displayName: 'install Google Chrome'
 
           - task: ExtractFiles@1
             inputs:
@@ -120,7 +126,8 @@ stages:
               sudo mv -f chromedriver /usr/local/share/chromedriver
               sudo ln -sf /usr/local/share/chromedriver /usr/local/bin/chromedriver
               sudo ln -sf /usr/local/share/chromedriver /usr/bin/chromedriver
-              #sudo ldconfig
+              pwd
+              ls -la .
               
               
 
