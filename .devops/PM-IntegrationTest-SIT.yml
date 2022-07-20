@@ -131,16 +131,15 @@ stages:
              echo $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)
              sudo pip3 install -U -r $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/requirements.txt
              
-             "==== install selenium...==== "
+             "==== install selenium - cx-Oracle and chromedriver-binary...==== "
              sudo pip3 install selenium
              sudo pip3 install cx-Oracle
+             sudo pip3 install install chromedriver-binary
              
              "==== Check packages installed...==== "
              pip3 list
              
-             "==== Behave Test Suite...==== "
-             ls -R /usr/local/lib/python3.6/site-packages
-             ls -la /usr/local/lib/python3.6/site-packages
+
 
              export PYTHONPATH=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)
              behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/features/3DS/15_3ds.feature
