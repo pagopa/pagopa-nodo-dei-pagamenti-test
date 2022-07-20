@@ -83,8 +83,6 @@ stages:
               artifact: $(artifactName)
               source: current
 
-
-
           - script: |
               whereis google-chrome
               which google-chrome
@@ -102,8 +100,6 @@ stages:
               destinationFolder: $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)
               cleanDestinationFolder: true
               overwriteExistingFiles: false
-
-
               
           - script: |
               echo $(Pipeline.Workspace)
@@ -114,7 +110,6 @@ stages:
 
           - script: |
               sudo yum install libaio.x86_64
-              
               echo $(Pipeline.Workspace)
               ls -la $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/chromedriver_linux64
               cd $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/chromedriver_linux64
@@ -131,7 +126,6 @@ stages:
           - script: |
              echo "==== Add python3 and pip3 in PATH var==== "
              echo $PATH
-             
              export PATH=/usr/bin:/usr/local/bin:/usr/local/share/chromedriver:$PATH
              echo $PATH
              
