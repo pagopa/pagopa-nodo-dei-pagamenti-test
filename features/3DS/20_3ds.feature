@@ -1,6 +1,7 @@
 Feature: 20
 
     Scenario: 20
+        Given db opened connection
         Given payment generated with mock
         When browse the payment response url
         And login as registered user
@@ -9,6 +10,7 @@ Feature: 20
         And confirm payment
         And insert OTP
         And close the page
-        Then check resultCode in METHOD_RESPONSE_3DS column is 25
-        And check resultCode in CHALLENGE_RESPONSE_3DS column is 26
-
+        And sleep 5 s
+        Then check resultCode in METHOD_RESPONSE_3DS is 25
+        And check resultCode in CHALLENGE_RESPONSE_3DS is 26
+        And close db connection

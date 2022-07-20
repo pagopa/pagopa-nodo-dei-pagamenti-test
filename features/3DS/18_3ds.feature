@@ -1,6 +1,7 @@
 Feature: 18
 
     Scenario: 18
+        Given db connection opened
         Given payment generated with mock
         When browse the payment response url
         And login as registered user
@@ -8,5 +9,6 @@ Feature: 18
         And select 3ds credit card
         And confirm payment
         And close the page
-        Then check resultCode in METHOD_RESPONSE_3DS column is 25
-        And check resultCode in CHALLENGE_RESPONSE_3DS column is None
+        And sleep 5 s
+        Then check resultCode in METHOD_RESPONSE_3DS is 25
+        And close db connection
