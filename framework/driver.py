@@ -16,7 +16,7 @@ class Driver:
 
         #service = Service(executable_path=os.path.abspath(os.path.join(__file__, os.pardir, os.pardir, 'chromedriver_win32\\chromedriver.exe')))
         if browser == 'chrome':
-                print('init driverrrr')
+                print('init driver')
                 options = Options()
                 options.binary_location = '/usr/bin/google-chrome'
                 options.add_argument('--no-sandbox')
