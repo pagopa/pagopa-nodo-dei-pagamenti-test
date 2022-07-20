@@ -576,7 +576,7 @@ def step_impl(context):
 def step_impl(context, parameter, column, value):
     conn = getattr(context, 'conn')
     query = f"SELECT v.{column} from PP_VPOS_AUTH v, PP_TRANSACTION t, PP_PAYMENT p WHERE v.FK_TRANSACTION = t.ID AND t.FK_PAYMENT = p.ID \
-            AND p.ID_SESSION = {context.resp.get('idSession')}"
+            AND p.ID_SESSION = {context.resp.get('idPayment')}"
     query_result = db.executeQuery(conn, query)[0].get(parameter)
     assert query_result == value
 
