@@ -18,7 +18,7 @@ class Driver:
         if browser == 'chrome':
                 print('init driverrrr')
                 options = Options()
-                options.binary_location = '/usr/local/bin/chromedriver'
+                #options.binary_location = '/usr/local/bin/chromedriver'
                 options.add_argument('--no-sandbox')
                 options.add_argument('--headless')
                 options.add_argument("--remote-debugging-port=9222")
@@ -27,7 +27,7 @@ class Driver:
                 options.add_argument("--disable-extensions") 
                 options.add_argument("start-maximized") 
                 options.add_argument("disable-infobars") 
-                self.driver = webdriver.Chrome(chrome_options=options, executable_path='/usr/local/bin/chromedriver' )
+                self.driver = webdriver.Chrome(chrome_options=options, executable_path='/agent/_work/1/payment-manager/extracted/chromedriver_win32/chromedriver.exe' )
                 #sleep(10)
         elif "firefox":
             pass
