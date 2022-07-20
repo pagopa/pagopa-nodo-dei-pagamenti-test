@@ -27,7 +27,7 @@ class Driver:
                 options.add_argument("--disable-extensions") 
                 options.add_argument("start-maximized") 
                 options.add_argument("disable-infobars") 
-                self.driver = webdriver.Chrome(chrome_options=options, service=Service('/usr/local/bin/chromedriver') )
+                self.driver = webdriver.Chrome(chrome_options=options, executable_path='/usr/local/bin/chromedriver' )
                 #sleep(10)
         elif "firefox":
             pass
