@@ -504,6 +504,7 @@ def step_impl(context):
 @step('save {primitive} response in {new_primitive}')
 def step_impl(context, primitive, new_primitive):
     soap_response = getattr(context, primitive + RESPONSE)
+    print(new_primitive + RESPONSE)
     setattr(context, new_primitive + RESPONSE, soap_response)
 
 @step('saving {primitive} request in {new_primitive}')
@@ -617,7 +618,7 @@ def step_impl(context, primitive):
                                        f"30211{str(random.randint(1000000000000, 9999999999999))}")
     setattr(context, primitive, xml)
 
-@given("nodo-dei-pagamenti has config parameter {param} set to {value}")
+@step("nodo-dei-pagamenti has config parameter {param} set to {value}")
 def step_impl(context, param, value):
     db_selected = context.config.userdata.get("db_configuration").get('nodo_cfg')
     selected_query = utils.query_json(context, 'update_config', 'configurations').replace('value', value).replace('key', param)
