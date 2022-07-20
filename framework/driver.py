@@ -1,5 +1,5 @@
 from selenium.common.exceptions import TimeoutException
-from selenium.webdriver.chromium.options import ChromiumOptions
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -14,16 +14,20 @@ class Driver:
 
     def __init__(self,browser="chrome"):
 
-        service = Service(executable_path=os.path.abspath(os.path.join(__file__, os.pardir, os.pardir, 'chromedriver_win32\\chromedriver.exe')))
+        #service = Service(executable_path=os.path.abspath(os.path.join(__file__, os.pardir, os.pardir, 'chromedriver_win32\\chromedriver.exe')))
         if browser == 'chrome':
                 print('init driverrrr')
-                options = webdriver.ChromeOptions()
-                #options.add_argument('--headless')
-                options.add_argument('no-sandbox')
-                options.add_argument('--disable-gpu')
+                options = Options()
+                options.binary_location = '/usr/bin/google-chrome'
+                options.add_argument('--no-sandbox')
+                options.add_argument('--headless')
+                options.add_argument("--remote-debugging-port=9222")
+                #options.add_argument('--disable-gpu') Only for Windows
                 options.add_argument('--disable-dev-shm-usage')
-                options.add_argument('start-fullscreen')
-                self.driver = webdriver.Chrome(options=options, service=service)
+                options.add_argument("--disable-extensions") 
+                options.add_argument("start-maximized") 
+                options.add_argument("disable-infobars") 
+                self.driver = webdriver.Chrome(chrome_options=options, executable_path='/usr/local/share/chromedriver' )
                 #sleep(10)
         elif "firefox":
             pass
@@ -44,11 +48,11 @@ class Driver:
                 self.driver = webdriver.Chrome(options=options)
             case _:
                 self.driver = webdriver.Firefox()
-        """
+        
     @staticmethod
-    def add_options(options: ChromiumOptions, options_settings: list):
+    def add_options(options: webdriver.ChromeOptions(), options_settings: list):
         for o in options_settings:
-            options.add_argument(o)
+            options.add_argument(o)"""
 
     def get(self, url):
         self.driver.get(url)

@@ -559,10 +559,12 @@ def step_impl(context):
 
 @given('db connection opened')
 def step_impl(context):
+    
     with open(os.path.abspath(os.path.join(__file__, os.pardir, os.pardir, os.pardir, 'data/configurations.json'))) as f:
         json_file = json.load(f)
     
-    host, database, user, password, port = json_file.get('host'), json_file.get('database'), json_file.get('user'), json_file.get('password'), json_file.get('port')
+    host, database, user, password, port = json_file.get('db').get('host'), json_file.get('db').get('database'), json_file.get('db').get('user'), json_file.get('db').get('password'), json_file.get('db').get('port')
+
     conn = db.getConnection(host, database, user, password, port)
     setattr(context, 'conn', conn)
 
@@ -574,10 +576,12 @@ def step_impl(context):
 @step('Check {parameter} in {column} is {value}')
 def step_impl(context, parameter, column, value):
     conn = getattr(context, 'conn')
-    query = f"SELECT v.{column} from PP_VPOS_AUTH v, PP_TRANSACTION t, PP_PAYMENT p WHERE v.FK_TRANSACTION = t.ID AND t.FK_PAYMENT = p.ID \
-            AND p.ID_SESSION = {context.resp.get('idSession')}"
-    query_result = db.executeQuery(conn, query)[0].get(parameter)
-    assert query_result == value
+    query = f"SELECT v.{column} from PP_VPOS_AUTH v, PP_TRANSACTION t, PP_PAYMENT p WHERE v.FK_TRANSACTION = t.ID AND t.FK_PAYMENT = p.ID AND p.ID_PAYMENT = '{context.resp.get('idPayment')}'"
+    print(query)
+    query_result = db.executeQuery(conn, query)[0][0]
+    column_value = json.loads(query_result.read()).get(parameter)
+    print(column_value)
+    assert column_value == value
 
 #########################AdminPanel
 @given('Access to Admin Panel with Admin')

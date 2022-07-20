@@ -4,8 +4,15 @@ def getConnection(host:str, database:str, user:str, password:str, port:str):
     print(f'Connecting to the OracleDB... {user}')
 
     try:
+        print(f' Get Connection: ')
+        print(f' user -->[{user}] ')
+        print(f' password -->[{password}] ')
+        print(f' host -->[{host}] ')
+        print(f' service_name -->[{database}] ')
         
         dsn = cx_Oracle.makedsn(host, port, service_name= database)
+
+        print(f' dsn -->[{dsn}] ')
         conn = cx_Oracle.connect(user=user, password=password, dsn=dsn)
 
         print('Successfully connected to OracleDB')
@@ -29,11 +36,13 @@ def executeQuery(conn, query:str) -> list:
     print(f' Executing query [{query}] on OracleDB instance...')
     try:
         
+        print(query)
         cur = conn.cursor()
         cur.execute(query)
 
         if 'SELECT' in query:    
             rows = cur.fetchall()
+            print(rows)
             print(f' Query executed successfully - [{len(rows)}] row/s found')
             return rows
         elif 'UPDATE' in query:
