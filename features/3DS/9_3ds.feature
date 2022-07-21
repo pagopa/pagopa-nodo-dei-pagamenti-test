@@ -8,6 +8,8 @@ Feature:
     And Confirm payment
     And Insert OTP
     And insert PIN
+    And close the page
+    And sleep 5 s
     Then check resultCode in METHOD_RESPONSE_3D2 is 25
     Then check resultCode in CHALLENGE_RESPONSE_3D2 is 26
     Then check resultCode in AUTH_RESPONSE_3D2 is 00
