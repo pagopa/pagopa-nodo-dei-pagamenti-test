@@ -579,11 +579,11 @@ def step_impl(context, parameter, column, value):
     query = f"SELECT v.{column} FROM PP_VPOS_AUTH v, PP_TRANSACTION t, PP_PAYMENT p WHERE v.FK_TRANSACTION = t.ID AND t.FK_PAYMENT = p.ID AND p.ID_PAYMENT = '{context.resp.get('idPayment')}'"
     print(query)
     query_result = db.executeQuery(conn, query)[0][0]
+    column_value = json.loads(query_result.read()).get(parameter)
     if value == 'Empty':
-        print(query_result.get(parameter))
-        assert query_result == None
+        print(column_value)
+        assert column_value == None
     else:
-        column_value = json.loads(query_result.read()).get(parameter)
         print(column_value)
         assert column_value == value
 
