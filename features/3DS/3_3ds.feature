@@ -6,12 +6,8 @@ Feature: 3
     And enter with the mail
     And Select 3ds credit card
     And Confirm payment
-    Then close the page
-    And sleep 5 s
-    And Check resultCode in METHOD_RESPONSE_3DS2 is 25
+    And close the page
+    And sleep 60 s
+    Then Check resultCode in METHOD_RESPONSE_3DS2 is 25
     And Check threeDSMethodUrl in METHOD_RESPONSE_3DS2 is Empty
     And close db connection
-
-
-
-

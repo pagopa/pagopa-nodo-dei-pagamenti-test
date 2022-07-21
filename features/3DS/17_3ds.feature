@@ -8,6 +8,7 @@ Feature: 17
         And select add payment method
         And select 3ds credit card
         And confirm payment
+        And close the page
         And sleep 5 s
         Then check resultCode in METHOD_RESPONSE_3DS is 25
         And close db connection

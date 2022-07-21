@@ -5,6 +5,3 @@ Feature: guest_payment_3DS2.0
     And enter with the mail
     And Select 3ds credit card
     And Confirm payment
-    Then close the page
-
-
