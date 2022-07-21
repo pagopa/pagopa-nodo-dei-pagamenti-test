@@ -27,7 +27,6 @@ Feature: process tests for Retry_REV_DB_GR_05.1
         When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of verifyPaymentNotice response
 
-
     Scenario: Execute activatePaymentNotice request
         Given the Execute verifyPaymentNotice request scenario executed successfully
         And initial XML activatePaymentNotice
@@ -141,13 +140,11 @@ Feature: process tests for Retry_REV_DB_GR_05.1
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
 
-
     # Activate phase
     Scenario: Poller Annulli Scenario
         Given the Execute activatePaymentNotice request scenario executed successfully
         When job mod3CancelV2 triggered after 3 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
-
 
     # Payment Outcome Phase outcome OK
     Scenario: Execute sendPaymentOutcome request
