@@ -151,7 +151,7 @@ stages:
             displayName: 'Append /usr/local/bin at PATH and install beahve'
 
           - script: |
-              behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/NewMod3/flows/RetryATokenScaduto/Retry_REV_DB_GR_05.1.feature
+              behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/test-pipeline
             displayName: 'Run integration test'
         
           - task: PublishTestResults@2
