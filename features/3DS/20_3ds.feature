@@ -1,7 +1,7 @@
 Feature: 20
 
     Scenario: 20
-        Given db opened connection
+        Given db connection opened
         Given payment generated with mock
         When browse the payment response url
         And login as registered user
