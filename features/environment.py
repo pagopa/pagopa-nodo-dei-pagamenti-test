@@ -19,3 +19,6 @@ def after_feature(context,feature):
 def before_scenario(contxt,scenario):
     #print('before scenario')
     pass
+
+def after_scenario(context):
+    time.sleep(5)
