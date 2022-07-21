@@ -580,7 +580,7 @@ def step_impl(context, parameter, column, value):
     print(query)
     query_result = db.executeQuery(conn, query)[0][0]
     if value == 'Empty':
-        print(query_result)
+        print(query_result.get(param))
         assert query_result == None
     else:
         column_value = json.loads(query_result.read()).get(parameter)
