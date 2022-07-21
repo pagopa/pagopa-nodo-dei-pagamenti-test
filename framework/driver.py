@@ -12,47 +12,33 @@ from time import sleep
 
 class Driver:
 
-    def __init__(self,browser="chrome"):
+    def __init__(self,browser=None):
 
-        #service = Service(executable_path=os.path.abspath(os.path.join(__file__, os.pardir, os.pardir, 'chromedriver_win32\\chromedriver.exe')))
-        if browser == 'chrome':
-                print('init driver')
-                options = Options()
-                options.binary_location = '/usr/bin/google-chrome'
-                options.add_argument('--no-sandbox')
-                options.add_argument('--headless')
-                options.add_argument("--remote-debugging-port=9222")
-                #options.add_argument('--disable-gpu') Only for Windows
-                options.add_argument('--disable-dev-shm-usage')
-                options.add_argument("--disable-extensions") 
-                options.add_argument("start-maximized") 
-                options.add_argument("disable-infobars") 
-                self.driver = webdriver.Chrome(chrome_options=options, executable_path='/usr/local/share/chromedriver' )
-                #sleep(10)
-        elif "firefox":
+        if browser=="chrome":
+            service=Service(executable_path=os.path.abspath(os.path.join(__file__, os.pardir, os.pardir, 'chromedriver_win32\\chromedriver.exe')))
+            options = webdriver.ChromeOptions()
+            # options.add_argument('--headless')
+            options.add_argument('no-sandbox')
+            options.add_argument('--disable-gpu')
+            options.add_argument('--disable-dev-shm-usage')
+            options.add_argument('start-fullscreen')
+            self.driver = webdriver.Chrome(options=options, service=service)
+        elif browser=="firefox":
             pass
-        elif _:
-            pass
+        else:
+            options = Options()
+            options.binary_location = '/usr/bin/google-chrome'
+            options.add_argument('--no-sandbox')
+            options.add_argument('--headless')
+            options.add_argument("--remote-debugging-port=9222")
+            # options.add_argument('--disable-gpu') Only for Windows
+            options.add_argument('--disable-dev-shm-usage')
+            options.add_argument("--disable-extensions")
+            options.add_argument("start-maximized")
+            options.add_argument("disable-infobars")
+            self.driver = webdriver.Chrome(chrome_options=options, executable_path='/usr/local/share/chromedriver')
+            # sleep(10)
 
-    """
-    def __init__(self):
-        print('sto inizializzando il browser')
-        browser = settings['browser']
-        match browser['type']:
-            case "firefox":
-                self.driver = webdriver.Firefox()
-            case "chrome":
-                options = webdriver.ChromeOptions()
-                self.add_options(options, browser['options'])
-                #options.add_argument('--headless')
-                self.driver = webdriver.Chrome(options=options)
-            case _:
-                self.driver = webdriver.Firefox()
-        
-    @staticmethod
-    def add_options(options: webdriver.ChromeOptions(), options_settings: list):
-        for o in options_settings:
-            options.add_argument(o)"""
 
     def get(self, url):
         self.driver.get(url)
@@ -94,8 +80,6 @@ class Driver:
     def click(self):
         self.driver.click()
 
-    def find_element_by_class_name(self,name):
-        return self.driver.find_element_by_class_name(name)
 
     def get_current_url(self):
         return self.driver.current_url

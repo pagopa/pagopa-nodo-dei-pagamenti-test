@@ -26,15 +26,13 @@ def step_impl(context):
                     data=json.dumps(settings['mockPayment']['body']))
     #print(resp)
     #print(resp.json())
-    print(resp.json())
     context.resp=resp.json()[0]
 
 @step('Browse the payment response url')
 def step_impl(context):
     url_wisp = context.resp['urlCloud']
-    print('##############################################################')
     print(url_wisp)
-    context.driver = Driver()
+    context.driver = Driver(context.browser)
     context.driver.get(url_wisp)
     elem=context.driver.wait_until(By.XPATH,"//div[@style='display:none'][@class='block']")
     print(elem)
