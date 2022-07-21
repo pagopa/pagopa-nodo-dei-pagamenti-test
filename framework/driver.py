@@ -68,7 +68,7 @@ class Driver:
 
     def wait_until(self, type_of_search: str, content_of_search: str):
         try:
-            return WebDriverWait(self.driver, 10).until(
+            return WebDriverWait(self.driver, 20).until(
                 EC.presence_of_element_located((type_of_search, content_of_search)))
         except TimeoutException:
             self.driver.close()
