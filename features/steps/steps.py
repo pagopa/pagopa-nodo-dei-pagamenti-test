@@ -581,7 +581,7 @@ def step_impl(context):
 ################3ds
 @step('Insert OTP')
 def step_impl(context):
-    sleep(10)
+    sleep(15)
     context.driver.wait_until(By.ID, 'challengeDataEntry').send_keys('1234')
     context.driver.wait_until(By.ID, 'confirm').click()
 
@@ -635,7 +635,7 @@ def step_impl(context, parameter, column, value):
 #########################AdminPanel
 @given('Access to Admin Panel with Admin')
 def step_impl(context):
-    context.driver = Driver()
+    context.driver = Driver(context.browser)
     context.driver.get("https://api.dev.platform.pagopa.it/pp-admin-panel/bo/")
     context.driver.wait_until(By.XPATH,
                               '/html/body/app-root/main/app-login/page-without-sidebar/div/div/div/section/div/form/div/div/input').send_keys(
@@ -700,7 +700,7 @@ def step_impl(context):
 @then('mail is displayed')
 def step_impl(context):
     a = context.driver.wait_until(By.XPATH,
-                                  '/html/body/app-root/main/app-customer/page-with-sidebar/div/div/div/div/div/div[2]/table/tbody/tr[1]/td[3]')
+                                  '/html/body/app-root/main/app-customer/page-with-sidebar/div/div/div/div/div/div[3]/div[2]/div[2]/div[1]/div/p')
     assert a
 
 
@@ -868,7 +868,7 @@ def step_impl(context):
     response = requests.post(f'{pm_url}/pp-restapi-CD/v1/wallet/cc', headers=headers, data=credit_card)
     idWallet = response.json().get('data').get('idWallet')
     setattr(context, 'idWallet', idWallet)
-    context.driver = Driver()
+    context.driver = Driver(context.browser)
     context.driver.get(f'{mock_url}/pmmockserviceapi/cd/emulate/webview/verification')
     context.driver.wait_until(By.XPATH, '//*[@id="pmUrlSelect"]/option[5]').click()
 
@@ -890,7 +890,7 @@ def step_impl(context):
         json_file = json.load(f)
 
     mock_url = json_file.get('mock_url')
-    context.driver = Driver()
+    context.driver = Driver(context.browser)
     context.driver.get(f'{mock_url}/pmmockserviceapi/cd/emulate/webview/pay')
     context.driver.wait_until(By.XPATH, '//*[@id="pmUrlSelect"]/option[5]').click()
 
@@ -905,7 +905,7 @@ def step_impl(context):
 
 @given('Open local file')
 def step_impl(context):
-    context.driver = Driver()
+    context.driver = Driver(context.browser)
     context.driver.get(r'C:\Users\nicolo.isaia\Documents\GitHub\PM_official\Return_mod1.html')
     sleep(100)
 

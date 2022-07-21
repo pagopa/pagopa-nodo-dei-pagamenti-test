@@ -1,13 +1,14 @@
-Feature: 27_3d2
+Feature: 28_3d2
   
-  Scenario: Payment with maestro as registred user
+  Scenario: Payment with amex as registred user
     Given db connection opened
     Given Payment generated with mock
     When Browse the payment response url
     And Login as registered user
     And Select add payment method
-    And select maestro credit card
+    And select amex credit card
     And confirm payment
+    And close the page
     And sleep 10 s
     Then check resultCode in AUTH_RESPONSE_3DS2 is 00
     And close db connection

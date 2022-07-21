@@ -1,7 +1,7 @@
 Feature:
-  Scenario: 8
+  Scenario: 6
     Given db connection opened
-    And Payment generated with mock
+    Given Payment generated with mock
     When Browse the payment response url
     And Enter with the mail
     And Select 3ds credit card
@@ -12,5 +12,3 @@ Feature:
     Then check resultCode in METHOD_RESPONSE_3DS2 is 25
     And check resultCode in CHALLENGE_RESPONSE_3DS2 is 26
     And close db connection
-
-
