@@ -4,6 +4,4 @@ Feature: guest_payment_3DS2.0
     When Browse the payment response url
     And enter with the mail
     And Select 3ds_wrong_cc credit card
-    Then Check card number is incorrect
-    And Close the page
-    
+    Then Check card number is incorrect   

@@ -11,7 +11,3 @@ Feature: 3
     And Check resultCode in METHOD_RESPONSE_3DS2 is 25
     And Check threeDSMethodUrl in METHOD_RESPONSE_3DS2 is Empty
     And close db connection
-
-
-
-
