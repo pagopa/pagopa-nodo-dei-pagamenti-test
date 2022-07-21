@@ -10,5 +10,5 @@ Feature: 17
         And confirm payment
         And close the page
         And sleep 10 s
-        Then check resultCode in METHOD_RESPONSE_3DS is 25
+        Then check resultCode in METHOD_RESPONSE_3DS2 is 25
         And close db connection
