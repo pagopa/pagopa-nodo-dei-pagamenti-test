@@ -8,5 +8,7 @@ Feature: 28_3d2
     And Select add payment method
     And select amex credit card
     And confirm payment
+    And close the page
+    And sleep 10 s
     Then check resultCode in AUTH_RESPONSE_3DS2 is 00
     And close db connection

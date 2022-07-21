@@ -9,6 +9,6 @@ Feature: 15
         And select 3ds credit card
         And confirm payment
         And close the page
-        And sleep 5 s
+        And sleep 10 s
         Then check resultCode in METHOD_RESPONSE_3DS2 is 25
         And close db connection

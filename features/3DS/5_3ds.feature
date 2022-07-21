@@ -7,7 +7,7 @@ Feature: 5
     And Select 3ds credit card
     And Confirm payment
     And close the page
-    And sleep 5 s
+    And sleep 10 s
     Then Check resultCode in METHOD_RESPONSE_3DS2 is 25
     And Check threeDSMethodUrl in METHOD_RESPONSE_3DS2 is Empty
     And close db connection

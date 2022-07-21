@@ -8,5 +8,6 @@ Feature: 27_3d2
     And Select add payment method
     And select maestro credit card
     And confirm payment
+    And sleep 10 s
     Then check resultCode in AUTH_RESPONSE_3DS2 is 00
     And close db connection

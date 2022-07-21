@@ -8,7 +8,7 @@ Feature:
     And Confirm payment
     And Insert OTP
     And close the page
-    And sleep 5 s
+    And sleep 10 s
     Then check resultCode in METHOD_RESPONSE_3DS2 is 25
     And check resultCode in AUTH_RESPONSE_3DS2 is 00
     And close db connection

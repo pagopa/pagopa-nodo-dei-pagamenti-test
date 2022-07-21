@@ -8,6 +8,6 @@ Feature: 14_3d2
     And select amex credit card
     And confirm payment
     And close the page
-    And sleep 5 s
+    And sleep 10 s
     Then check resultCode in AUTH_RESPONSE_3DS2 is 00
     And close db connection
