@@ -1,4 +1,5 @@
 import cx_Oracle, os, sys
+import time
 
 def before_all(context):
     context.browser = None
@@ -20,5 +21,6 @@ def before_scenario(contxt,scenario):
     #print('before scenario')
     pass
 
-def after_scenario(context):
-    time.sleep(5)
+def after_scenario(context,scenario):
+    context.driver.close()
+    #time.sleep(5)
