@@ -303,8 +303,8 @@ def step_impl(context):
 
 @step('Select add Payment method')
 def step_impl(context):
-    context.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
     a = context.driver.wait_until(By.XPATH, "//form[@action='/wallet/addWallet']/button")
+    context.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
     a.click()
 
 
