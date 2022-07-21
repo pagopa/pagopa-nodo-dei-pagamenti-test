@@ -22,4 +22,5 @@ def before_scenario(contxt,scenario):
     pass
 
 def after_scenario(context,scenario):
-    time.sleep(5)
+    context.driver.close()
+    #time.sleep(5)
