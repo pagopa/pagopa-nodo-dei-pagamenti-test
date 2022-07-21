@@ -1,0 +1,647 @@
+{
+    "onus": {
+        "pan": "5255000010002856",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "not_onus": {
+        "pan": "4003171102270111",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "amex": {
+        "pan": "375200000000003",
+        "cvc": "1234",
+        "expDate": "1230"
+    },
+    "not_valid": {
+        "pan": "5255000010001234",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "3ds": {
+        "pan": "5111114000023477",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "3ds_wrong_cc": {
+        "pan": "5111114000023476",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "maestro": {
+        "pan": "6775449999005009934",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "cartaTest1": {
+        "pan": "340000000000009",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "cartaTest2": {
+        "pan": "5430799734927342",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "cartaTest3": {
+        "pan": "5255000010002856",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "cartaTest4": {
+        "pan": "4539970000000006",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "cartaTest5": {
+        "pan": "5255999999999992",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "cartaTest6": {
+        "pan": "5430793131242025",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "cartaTest7": {
+        "pan": "5255000010002856",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "cartaTest8": {
+        "pan": "4539970000000006",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "cartaTest9": {
+        "pan": "5255999999999992",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "cartaTest10": {
+        "pan": "5430793131242025",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "cartaTest11": {
+        "pan": "5255000010002856",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "cartaTest12": {
+        "pan": "4539970000000006",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "cartaTest13": {
+        "pan": "5255999999999992",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "cartaTest14": {
+        "pan": "5430793131242025",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "cartaTest15": {
+        "pan": "",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "cartaTest16": {
+        "pan": "5255000010002856",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "cartaTest17": {
+        "pan": "4539970000000006",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "cartaTest18": {
+        "pan": "5255999999999992",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "cartaTest19": {
+        "pan": "5430793131242025",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "cartaTest20": {
+        "pan": "340000000000009",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "cartaTest20_cvc4": {
+        "pan": "340000000000009",
+        "cvc": "1234",
+        "expDate": "1230"
+    },
+    "CartaMCXPAY1": {
+        "pan": "5255000000000001",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaMCXPAY2": {
+        "pan": "5255000000000019",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaMCXPAY3": {
+        "pan": "5255000000101015",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaMCXPAY4": {
+        "pan": "5255000000104019",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaMCXPAY5": {
+        "pan": "5255000000109018",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaMCXPAY6": {
+        "pan": "5255000000110016",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaMCXPAY7": {
+        "pan": "5255000000116013",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaMCXPAY8": {
+        "pan": "5255000000117011",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaMCXPAY9": {
+        "pan": "5255000000118019",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaMCXPAY10": {
+        "pan": "5255000000902016",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaMCXPAY11": {
+        "pan": "5255000000907015",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaMCXPAY12": {
+        "pan": "5255000010002856",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaVisaXPAY1": {
+        "pan": "4539970000000006",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaVisaXPAY2": {
+        "pan": "4539970000000014",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaVisaXPAY3": {
+        "pan": "4539970000101010",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaVisaXPAY4": {
+        "pan": "4539970000104014",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaVisaXPAY5": {
+        "pan": "4539970000109013",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaVisaXPAY6": {
+        "pan": "4539970000110011",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaVisaXPAY7": {
+        "pan": "4539970000116018",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaVisaXPAY8": {
+        "pan": "4539970000117016",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaVisaXPAY9": {
+        "pan": "4539970000118014",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaVisaXPAY10": {
+        "pan": "4539970000902011",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaVisaXPAY11": {
+        "pan": "4539970000907010",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaVisaXPAY12": {
+        "pan": "4539970000000006",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaVisaXPAY13": {
+        "pan": "5255000010002856",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaVisaXPAY14": {
+        "pan": "4539970000000006",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaInvalida": {
+        "pan": "1230123012301230",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaXpay1": {
+        "pan": "5111110000000101",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaXpay2": {
+        "pan": "5102000000000204",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaXpay3": {
+        "pan": "5255000000000001",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaXpay4": {
+        "pan": "4000000000000101",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaXpay5": {
+        "pan": "4002000000000208",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaXpay6": {
+        "pan": "4000000000000002",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaXpay7": {
+        "pan": "4539970000000006",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaXpay8": {
+        "pan": "5111110000000119",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaXpay9": {
+        "pan": "5102000000000212",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaXpay10": {
+        "pan": "5255000000000019",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaXpay11": {
+        "pan": "4000000000000119",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaXpay12": {
+        "pan": "4002000000000216",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaXpay13": {
+        "pan": "4539970000000014",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaXpay14": {
+        "pan": "5255000000101015",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaXpay15": {
+        "pan": "4539970000101010",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaXpay16": {
+        "pan": "5255000000907015",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaXpay17": {
+        "pan": "4539970000907010",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaXpay18": {
+        "pan": "5255000000117011",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaXpay19": {
+        "pan": "4539970000117016",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaXpay20": {
+        "pan": "5255999999999992",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaXpay21": {
+        "pan": "5255000000109018",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaXpay22": {
+        "pan": "4539970000109013",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaXpay23": {
+        "pan": "5255000000118019",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaXpay24": {
+        "pan": "4539970000118014",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaXpay25": {
+        "pan": "5255000000116013",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaXpay26": {
+        "pan": "4539970000116018",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaXpay27": {
+        "pan": "5255000000104019",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaXpay28": {
+        "pan": "4539970000104014",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaXpay29": {
+        "pan": "5255000000902016",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaXpay30": {
+        "pan": "4539970000902011",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaXpay31": {
+        "pan": "5255000000110016",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaXpay32": {
+        "pan": "4539970000110011",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaXpayCond1": {
+        "pan": "4294410000000008",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaXpayCond2": {
+        "pan": "4485904627768368",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaXpayCond3": {
+        "pan": "4485627619623180",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaXpayCond4": {
+        "pan": "4916092514909300",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaXpayCond5": {
+        "pan": "4485927844232256",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaXpayCond6": {
+        "pan": "4916100219626556",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaXpayCond7": {
+        "pan": "4556476803099136",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaXpayCond8": {
+        "pan": "4024007120121859",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaXpayCond9": {
+        "pan": "4716270239204718",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaXpayCond10": {
+        "pan": "4929929211840392",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaXpayCond11": {
+        "pan": "4024007107208745",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaXpayCond12": {
+        "pan": "4485105044948985",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaXpayCond13": {
+        "pan": "4556267482248619",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaXpayCond14": {
+        "pan": "4929937696104440",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaXpayCond15": {
+        "pan": "4929411483238514",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaXpayCond16": {
+        "pan": "4532644021908250",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaXpayCond17": {
+        "pan": "4916494882575830",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaXpayCond18": {
+        "pan": "4485128238831866",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaXpayCond19": {
+        "pan": "4532514998296528",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaXpayCond20": {
+        "pan": "4539430732847232",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaXpayCond21": {
+        "pan": "4916366990463242",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaXpayCond22": {
+        "pan": "5255900000000002",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaXpayCond23": {
+        "pan": "5401961981645960",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaXpayCond24": {
+        "pan": "5189352871357643",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaXpayCond25": {
+        "pan": "5177635111397906",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaXpayCond26": {
+        "pan": "5278896679148168",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaXpayCond27": {
+        "pan": "5107415336548657",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaXpayCond28": {
+        "pan": "5142538392357791",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaXpayCond29": {
+        "pan": "5340134347388485",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaXpayCond30": {
+        "pan": "5151785958149074",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaXpayCond31": {
+        "pan": "5291270943698486",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaXpayCond32": {
+        "pan": "5311596877723924",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaXpayCond33": {
+        "pan": "5272519688038263",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaXpayCond34": {
+        "pan": "5420974725172222",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaXpayCond35": {
+        "pan": "5571909227487972",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaXpayCond36": {
+        "pan": "5451274219398421",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaXpayCond37": {
+        "pan": "5121962355547690",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaXpayCond38": {
+        "pan": "5273302536321234",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaXpayCond39": {
+        "pan": "5479855267769980",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaXpayCond40": {
+        "pan": "5247775519934318",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaXpayCond41": {
+        "pan": "5462192139217546",
+        "cvc": "123",
+        "expDate": "1230"
+    },
+    "CartaXpayCond42": {
+        "pan": "5208636540372679",
+        "cvc": "123",
+        "expDate": "1230"
+    }
+}

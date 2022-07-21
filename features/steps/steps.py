@@ -7,6 +7,7 @@ from webbrowser import get
 from behave import *
 import json
 from data.config import settings
+from data.config import cards
 from framework.driver import *
 from time import sleep
 import requests
@@ -159,9 +160,9 @@ def step_impl(context):
 @step('Select {type_credit_card} credit card')
 def step_impl(context, type_credit_card):
     context.driver.wait_until(By.CLASS_NAME, 'credit-card').click()
-    context.driver.wait_until(By.NAME, 'pan').send_keys(settings['holder']['credit_cards'][type_credit_card]['pan'])
-    context.driver.wait_until(By.NAME, 'expDate').send_keys(settings['holder']['credit_cards'][type_credit_card]['expDate'])
-    context.driver.wait_until(By.CLASS_NAME, 'input-cvc').send_keys(settings['holder']['credit_cards'][type_credit_card]['cvc'])
+    context.driver.wait_until(By.NAME, 'pan').send_keys(cards[type_credit_card]['pan'])
+    context.driver.wait_until(By.NAME, 'expDate').send_keys(cards[type_credit_card]['expDate'])
+    context.driver.wait_until(By.CLASS_NAME, 'input-cvc').send_keys(cards[type_credit_card]['cvc'])
     context.driver.wait_until(By.CLASS_NAME, 'input-holder').send_keys(settings['holder']['name'])
     a = context.driver.wait_until(By.XPATH, "/html/body/div[5]/form/div[4]/button")
     a.click()
@@ -224,13 +225,13 @@ def step_impl(context):
 @step('check cvv not predictive')
 def step_impl(context):
     context.driver.wait_until(By.CLASS_NAME, 'credit-card').click()
-    context.driver.wait_until(By.NAME, 'pan').send_keys(settings['holder']['pan'])
-    context.driver.wait_until(By.NAME, 'expDate').send_keys(settings['holder']['expDate'])
+    context.driver.wait_until(By.NAME, 'pan').send_keys(cards['onus']['pan'])
+    context.driver.wait_until(By.NAME, 'expDate').send_keys(cards['onus']['expDate'])
     a = context.driver.wait_until(By.CLASS_NAME, 'input-cvc')
     a.click()
     #list=context.driver.find_elements(By.XPATH,'//li')
     #assert len(list)==0
-    a.send_keys(settings['holder']['cvc'])
+    a.send_keys(cards['onus']['cvc'])
     context.driver.wait_until(By.CLASS_NAME, 'input-holder').send_keys(settings['holder']['name'])
     a = context.driver.wait_until(By.XPATH, "/html/body/div[5]/form/div[4]/button")
     a.click()
@@ -353,9 +354,9 @@ def step_impl(context):
 @step('Select credit card with wrong card holder')
 def step_impl(context):
     context.driver.wait_until(By.CLASS_NAME, 'credit-card').click()
-    context.driver.wait_until(By.NAME, 'pan').send_keys(settings['holder']['pan'])
-    context.driver.wait_until(By.NAME, 'expDate').send_keys(settings['holder']['expDate'])
-    context.driver.wait_until(By.CLASS_NAME, 'input-cvc').send_keys(settings['holder']['cvc'])
+    context.driver.wait_until(By.NAME, 'pan').send_keys(cards['onus']['pan'])
+    context.driver.wait_until(By.NAME, 'expDate').send_keys(cards['onus']['expDate'])
+    context.driver.wait_until(By.CLASS_NAME, 'input-cvc').send_keys(cards['onus']['cvc'])
     context.driver.wait_until(By.CLASS_NAME, 'input-holder').send_keys(settings['holder']['wrong_name'])
 
 
@@ -387,9 +388,9 @@ def step_impl(context):
 @step('Select credit card with apostrophe on cardHolder')
 def step_impl(context):
     context.driver.wait_until(By.CLASS_NAME, 'credit-card').click()
-    context.driver.wait_until(By.NAME, 'pan').send_keys(settings['holder']['credit_cards']['onus']['pan'])
-    context.driver.wait_until(By.NAME, 'expDate').send_keys(settings['holder']['expDate'])
-    context.driver.wait_until(By.CLASS_NAME, 'input-cvc').send_keys(settings['holder']['cvc'])
+    context.driver.wait_until(By.NAME, 'pan').send_keys(cards['onus']['pan'])
+    context.driver.wait_until(By.NAME, 'expDate').send_keys(cards['onus']['expDate'])
+    context.driver.wait_until(By.CLASS_NAME, 'input-cvc').send_keys(cards['onus']['cvc'])
     context.driver.wait_until(By.CLASS_NAME, 'input-holder').send_keys(settings['holder']['name_apostrophe'])
     a = context.driver.wait_until(By.XPATH, "/html/body/div[5]/form/div[4]/button")
     a.click()
