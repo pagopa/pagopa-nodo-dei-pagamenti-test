@@ -1,3 +1,4 @@
+import time
 from datetime import datetime
 from email import header
 from multiprocessing import context
@@ -74,7 +75,7 @@ def step_impl(context):
 
 @step('Payment is made successfully')
 def step_impl(context):
-    context.driver.wait_until(By.ID, "success_message")
+    assert context.driver.wait_until(By.ID, "success_message")
     #context.driver.find_element(By.XPATH,'//*[@action="/wallet/logout"]//button').click()
 
 
@@ -170,7 +171,7 @@ def step_impl(context):
 @then('Check privacy page landing')
 def step_impl(context):
     titolo = context.driver.wait_until(By.XPATH, 'html/body/div[5]/form/div[1]/h5')
-    print(titolo.text)
+    #print(titolo.text)
     assert 'privacy' in titolo.text
 
 
@@ -316,7 +317,7 @@ def step_impl(context):
 @step('Select amex card')
 def step_impl(context):
     a1 = context.driver.wait_until(By.XPATH, "//div[@data-card-id='22373']/div/div/div[2]/div")
-    print(a1.text)
+    #print(a1.text)
 
     a1.click()
     sleep(1000)
@@ -381,7 +382,7 @@ def step_impl(context):
 def step_impl(context):
     context.driver.wait_until(By.XPATH, "//div[@class='transaction-list']/div")
     list = context.driver.find_elements(By.XPATH, "//div[@class='transaction-list']/div")
-    print(len(list))
+    #print(len(list))
     assert len(list) > 0
 
 
@@ -629,17 +630,17 @@ def step_impl(context):
 def step_impl(context, parameter, column, value):
     conn = getattr(context, 'conn')
     query = f"SELECT v.{column} FROM PP_VPOS_AUTH v, PP_TRANSACTION t, PP_PAYMENT p WHERE v.FK_TRANSACTION = t.ID AND t.FK_PAYMENT = p.ID AND p.ID_PAYMENT = '{context.resp.get('idPayment')}'"
-    print(query)
+    #print(query)
     query_result = db.executeQuery(conn, query)[0][0]
     if query_result != None:
         column_value = json.loads(query_result.read()).get(parameter)
     else:
         column_value = None
     if value == 'Empty':
-        print(column_value)
+        #print(column_value)
         assert column_value == None
     else:
-        print(column_value)
+        #print(column_value)
         assert column_value == value
 
 
@@ -753,8 +754,8 @@ def step_impl(context):
                                          '/html/body/app-root/main/app-customer/page-with-sidebar/div/div/div/div/div/div[3]/div[2]/div[3]/div/div/p').text
     email = context.driver.wait_until(By.XPATH,
                                       '/html/body/app-root/main/app-customer/page-with-sidebar/div/div/div/div/div/div[3]/div[2]/div[2]/div/div/p').text
-    print('username', username)
-    print('email', email)
+    #print('username', username)
+    #print('email', email)
     assert username == email
 
 
@@ -764,8 +765,8 @@ def step_impl(context):
                                          '/html/body/app-root/main/app-customer/page-with-sidebar/div/div/div/div/div/div[3]/div[2]/div[3]/div/div/p').text
     email = context.driver.wait_until(By.XPATH,
                                       '/html/body/app-root/main/app-customer/page-with-sidebar/div/div/div/div/div/div[3]/div[2]/div[2]/div/div/p').text
-    print('username', username)
-    print('email', email)
+    #print('username', username)
+    #print('email', email)
     assert username != email
 
 
@@ -863,7 +864,7 @@ def step_impl(context):
     session_token = requests.get(
         f'{pm_url}/pp-restapi-CD/v1/users/actions/start-session?token={session_token}').json().get('data').get(
         'sessionToken')
-    print(session_token)
+    #print(session_token)
     setattr(context, 'sessionToken', session_token)
 
 
@@ -892,7 +893,7 @@ def step_impl(context):
     sleep(10)
     # response = requests.get(f'{pm_url}/pp-restapi-CD/v3/wallet', headers={'Authorization': f"Bearer {session_token}"})
     # print(response.json())
-    print(context.driver.get_current_url())
+    #print(context.driver.get_current_url())
     assert 'outcome=0' in context.driver.get_current_url()
 
 
@@ -950,5 +951,24 @@ def step_impl(context):
 @step('check RTD response')
 def step_impl(context):
     assert context.resp.status_code // 100 == 2
-    print(context.resp.status_code)
-    print(context.resp.content)
+    #print(context.resp.status_code)
+    #print(context.resp.content)
+
+
+@step('wait until {url}')
+def step_impl(context,url):
+    sleep(5)
+    start_time = time.time()
+    print(start_time)
+    curr_url = context.driver.get_current_url()
+    print('###########################################')
+    print(curr_url)
+    while True:
+        curr_url = context.driver.get_current_url()
+        if 'api.dev.platform.pagopa.it' in curr_url:
+            break
+        curr_time=time.time()
+        if curr_time-start_time>60:
+            assert False
+        sleep(5)
+    print(time.time()-start_time)
