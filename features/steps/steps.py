@@ -43,9 +43,8 @@ def step_impl(context):
     print(elem.text)
     print(elem.get_attribute("style"))
     context.driver.execute_script("arguments[0].setAttribute('style','display')", elem)
-    # context.driver.execute_script("arguments[0].style.display = 'block';", elem)
-    # context.driver.get('https://spid-ppt-lmi-npa-sit.tst-npc.sia.eu/login')
-    # context.driver.execute_script("arguments[0].style.display = 'block';", elem)
+    elem = context.driver.wait_until(By.XPATH,'//*[@id="main-element"]/div[4]/div/div')
+    context.driver.execute_script("arguments[0].setAttribute('style','display')", elem)
 
 
 @step('Enter with the mail')
@@ -124,6 +123,8 @@ def step_impl(context, lang):
 
 @then('Check the text in {lang}')
 def step_impl(context, lang):
+    elem = context.driver.wait_until(By.XPATH, '//*[@id="main-element"]/div[4]/div/div')
+    context.driver.execute_script("arguments[0].setAttribute('style','display')", elem)
     context.driver.wait_until(By.XPATH, '/html/body[1]/div[5]/div[4]/div/div/a').click()
     a = context.driver.find_element(By.XPATH, '/html/body/div[2]/div/div/div[2]')
 

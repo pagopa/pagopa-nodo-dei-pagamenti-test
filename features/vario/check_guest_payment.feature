@@ -10,4 +10,4 @@ Feature: Payment with onus as guest
     Examples:
       | type_credit_card |
       | onus             |
-      | not onus         |
+      | not_onus         |

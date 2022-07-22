@@ -6,7 +6,7 @@ Feature: Logo card onus
     And Enter with the mail
  
   Scenario: Not visible Logo for card not onus
-    And Select not onus credit card
+    And Select not_onus credit card
     Then circuit logo is not visible
 
   Scenario: Visible Logo for card onus

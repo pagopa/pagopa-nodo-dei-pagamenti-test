@@ -6,7 +6,7 @@ Feature: Search Ragione sociale
     And Enter with the mail
 
   Scenario: Search PSP for CDC with Ragione sociale
-    When Select credit card
+    When Select onus credit card
     Then check change payment manager
     And look for the psp by entering Ragione sociale
     Then psp found successfully
