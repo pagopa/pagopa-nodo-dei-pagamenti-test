@@ -12,12 +12,12 @@ Background:
         Examples:
             | credit_card |
             | CartaXpay1  |
-            | CartaXpay2  |
-            | CartaXpay3  |
-            | CartaXpay4  |
-            | CartaXpay5  |
-            | CartaXpay6  |
-            | CartaXpay7  |
+            #| CartaXpay2  |
+            #| CartaXpay3  |
+            #| CartaXpay4  |
+            #| CartaXpay5  |
+            #| CartaXpay6  |
+            #| CartaXpay7  |
 
 
 
