@@ -8,8 +8,7 @@ Feature: Visa - XPay
     Scenario: XPAY with Visa cards - OK
         Given select CartaVisaXPAY1 credit card
         And confirm payment
-
-        And wait until aaa
+        And wait until api.dev.platform.pagopa.it
         Then Payment is made successfully
 
     @prova1

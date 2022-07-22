@@ -10,7 +10,7 @@ Feature: XPAY - MC
         When select CartaMCXPAY1 credit card
         And select XPAY from psp list
         And confirm payment
-        And sleep 40 s 
+        And wait until api.dev.platform.pagopa.it 
         Then Payment is made successfully
         And close the page
 
@@ -18,7 +18,7 @@ Feature: XPAY - MC
         When select <credit_card> credit card
         And select XPAY from psp list
         And confirm payment
-        And sleep 30 s
+        And wait until api.dev.platform.pagopa.it
         Then check Operazione rifiutata is displayed
         And check Rivolgiti alla tua banca per avere indicazione sui motivi is displayed
         Examples:
