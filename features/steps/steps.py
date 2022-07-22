@@ -135,7 +135,7 @@ def step_impl(context, lang):
 
 @step('click on why costs')
 def step_impl(context):
-    context.driver.wait_until(By.XPATH, 'html/body/div[5]/div/div[6]/div[2]/h2/a').click()
+    context.driver.wait_until(By.XPATH, '//*[@id="main-element"]/div/div[6]/div[2]/h2/a/img').click()
 
 
 @then('check costs pop up')
