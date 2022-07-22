@@ -959,16 +959,11 @@ def step_impl(context):
 def step_impl(context,url):
     sleep(5)
     start_time = time.time()
-    print(start_time)
-    curr_url = context.driver.get_current_url()
-    print('###########################################')
-    print(curr_url)
     while True:
         curr_url = context.driver.get_current_url()
-        if 'api.dev.platform.pagopa.it' in curr_url:
+        if url in curr_url:
             break
         curr_time=time.time()
         if curr_time-start_time>60:
             assert False
         sleep(5)
-    print(time.time()-start_time)
