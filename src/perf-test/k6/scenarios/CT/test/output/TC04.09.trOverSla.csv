@@ -1,0 +1,8 @@
+api,trOverSla1000,trOverSla300,trOverSla400,trOverSla500,trOverSla600,trOverSla800,
+chiediInformazioniPagamento,0,2,1,1,0,0,
+nodoChiediAvanzamentoPagamento_Pre,0,13,7,6,2,0,
+ActivateIOPayment,0,8,8,6,4,0,
+nodoChiediAvanzamentoPagamento_Post,0,2,2,2,2,1,
+ALL,0,41,25,22,14,6,
+sendPaymentOutcome,0,6,2,2,1,0,
+inoltraEsitoPagamentoPaypal,0,10,5,5,5,5,

@@ -1,0 +1,4 @@
+ENV;BASEURL;PRIVATEURL;SOAP_BASEURL;REST_BASEURL
+pagoPA_DEV_apim;https://api.dev.platform.pagopa.it/nodo-pagamenti/api/v1/webservices/input;10.230.8.5;https://api.dev.platform.pagopa.it/nodo-pagamenti/api/v1/webservices/input;https://10.230.8.5/nodo-pagamenti/api/v1
+pagoPA_UAT_apim;https://api.uat.platform.pagopa.it/nodo-pagamenti/api/v1/webservices/input;10.230.9.5;;
+pagoPA_PRD_apim;https://api.platform.pagopa.it/nodo-pagamenti/api/v1/webservices/input;10.230.10.5;;

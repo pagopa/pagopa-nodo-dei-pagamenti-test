@@ -1,0 +1,6 @@
+api,avgEl,maxEl,minEl,percOK,trNum,trOK,trOverSla300,
+chiediInformazioniPagamento,156,689,34,0.00,135,0,20,
+Attiva,273,1081,51,0.00,135,0,59,
+RPT,376,1019,69,0.00,135,0,79,
+ALL,239,1081,34,0.00,540,0,177,
+closePayment,151,708,37,0.00,135,0,19,

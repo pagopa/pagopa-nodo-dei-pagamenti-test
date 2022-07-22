@@ -1,0 +1,5 @@
+api,avgEl,maxEl,minEl,percOK,trNum,trOK,trOverSla300,
+activatePaymentNotice,439,938,201,1.00,16,16,9,
+RPT_Semplice_N3,187,329,85,0.00,14,0,3,
+ALL,328,938,85,1.00,45,45,18,
+sendPaymentOutcome,340,792,126,1.00,15,15,6,

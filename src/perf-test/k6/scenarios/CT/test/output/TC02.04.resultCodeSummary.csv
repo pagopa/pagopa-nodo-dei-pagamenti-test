@@ -1,0 +1,3 @@
+Code,verifyPaymentNotice_NN,sendPaymentOutcome_NN,activatePaymentNotice_NN,ALL,
+"200_OK",31,0,0,31,
+"Error",0,31,31,62,
