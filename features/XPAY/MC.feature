@@ -4,12 +4,13 @@ Feature: XPAY - MC
         Given payment generated with mock
         When browse the payment response url
         And enter with the mail
-
+    
+    @prova
     Scenario: XPAY with MC cards - OK
         When select CartaMCXPAY1 credit card
         And select XPAY from psp list
         And confirm payment
-        And sleep 60 s
+        And sleep 40 s 
         Then Payment is made successfully
         And close the page
 

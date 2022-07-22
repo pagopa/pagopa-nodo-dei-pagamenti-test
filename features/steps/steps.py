@@ -835,7 +835,7 @@ def step_impl(context, message):
     a = context.driver.wait_until(By.XPATH, '//div[@class="col"]')
     #print(a.text)
     assert a
-    assert message in a.text, f'{message}, {a}'
+    assert message in a.text, f'{message}, {a.text}'
 
 
 ##############Annulli
