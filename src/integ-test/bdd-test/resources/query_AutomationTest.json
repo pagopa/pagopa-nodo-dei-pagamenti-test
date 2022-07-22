@@ -39,6 +39,7 @@
         "payment_token_v2":"SELECT columns FROM table_name where PAYMENT_TOKEN = '$activatePaymentNoticeResponse.paymentToken-v2'",
         "rt_stati":"SELECT columns FROM table_name  where IUV = '$iuv' and IDENT_DOMINIO= '$activatePaymentNotice.fiscalCode'",
         "idempotency_cache":"SELECT columns FROM table_name WHERE IDEMPOTENCY_KEY = '$sendPaymentOutcome.idempotencyKey'",
+        "idempotency_cache_act":"SELECT columns FROM table_name WHERE IDEMPOTENCY_KEY = '$activatePaymentNotice.idempotencyKey'",
         "idempotency_key":"SELECT * FROM IDEMPOTENCY_CACHE WHERE IDEMPOTENCY_KEY = '$sendPaymentOutcome.idempotencyKey' AND PSP_ID = '$activatePaymentNotice.idPSP'",
         "idempotency_cache_psp":"SELECT columns FROM table_name WHERE IDEMPOTENCY_KEY = '$activatePaymentNotice.idempotencyKey' AND PSP_ID = '$activatePaymentNotice.idPSP'",
         "idempotency_cache_psp_1" : "SELECT columns FROM table_name WHERE IDEMPOTENCY_KEY = '$activatePaymentNotice1.idempotencyKey' AND PSP_ID = '$activatePaymentNotice1.idPSP'",

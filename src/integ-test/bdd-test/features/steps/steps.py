@@ -624,6 +624,8 @@ def step_impl(context, param, value):
     selected_query = utils.query_json(context, 'update_config', 'configurations').replace('value', value).replace('key', param)
     conn = db.getConnection(db_selected.get('host'), db_selected.get('database'),db_selected.get('user'),db_selected.get('password'),db_selected.get('port'))
 
+    setattr(context,param, value)
+
     exec_query = db.executeQuery(conn, selected_query)
     if exec_query is not None:
         print(f'executed query: {exec_query}')
@@ -637,9 +639,10 @@ def step_impl(context, param, value):
 @step("update through the query {query_name} with date {date} under macro {macro} on db {db_name}")
 def step_impl(context, query_name, date, macro, db_name):
     db_selected = context.config.userdata.get("db_configuration").get(db_name)
+    
     if date == 'Today':
         date = str(datetime.datetime.today())
-    
+
     selected_query = utils.query_json(context, query_name, macro).replace('date', date)
     conn = db.getConnection(db_selected.get('host'), db_selected.get('database'),db_selected.get('user'),db_selected.get('password'),db_selected.get('port'))
 
@@ -809,29 +812,32 @@ def step_impl(context, value, column, query_name, table_name, db_name, name_macr
     db.closeConnection(conn)
 
 
-@step(u"check datetime plus number of date {number:d} of the record at column {column} of the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
+@step(u"check datetime plus number of date {number} of the record at column {column} of the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
 def step_impl(context, column, query_name, table_name, db_name, name_macro, number):
     db_config = context.config.userdata.get("db_configuration")
     db_selected = db_config.get(db_name)
-
     conn = db.getConnection(db_selected.get('host'), db_selected.get('database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
 
-    selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
-   
-    exec_query = db.executeQuery(conn, selected_query)
-    
-    query_result = [t[0] for t in exec_query]
-    print('query_result: ', query_result)
-    
-    
-    value = (datetime.datetime.today()+datetime.timedelta(days= number)).strftime('%Y-%m-%d') 
-
-    elem = query_result[0].strftime('%Y-%m-%d')
+    if number == 'default_idempotency_key_validity_minutes':
+        default = int(getattr(context, 'default_idempotency_key_validity_minutes')) / 60000
+        value = (datetime.datetime.today()+datetime.timedelta(minutes= default)).strftime('%Y-%m-%d %H:%M')    
+        selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
+        exec_query = db.executeQuery(conn, selected_query)
+        query_result = [t[0] for t in exec_query]
+        print('query_result: ', query_result)
+        elem = query_result[0].strftime('%Y-%m-%d %H:%M')
+    else:
+         value = (datetime.datetime.today()+datetime.timedelta(days= number)).strftime('%Y-%m-%d')
+         selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
+         exec_query = db.executeQuery(conn, selected_query)
+         query_result = [t[0] for t in exec_query]
+         print('query_result: ', query_result)
+         elem = query_result[0].strftime('%Y-%m-%d')
+         
+    db.closeConnection(conn)
     
     print(f"check expected element: {value}, obtained: {elem}")
     assert elem == value
-
-    db.closeConnection(conn)
 
 @step(u"verify {number:d} record for the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
 def step_impl(context, query_name, table_name, db_name, name_macro, number):
