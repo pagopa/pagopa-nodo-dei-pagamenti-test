@@ -7,6 +7,7 @@ Feature: Visa - XPay
     Scenario Outline: XPAY with Visa cards - KO
         When select <credit_card> credit card
         And confirm payment
+        And sleep 30 s
         Then check the Autorizzazione negata is displayed
         And check the Rivolgiti alla tua banca per avere indicazione sulle motivazioni is displayed
         Examples:
