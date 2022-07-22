@@ -144,7 +144,7 @@ stages:
              pip3 list
              export PYTHONPATH=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)
              sudo kill -9 $(sudo lsof -t -i:9222)
-             behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/features/XPAY/MC.feature $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/features/XPAY/VISA.feature
+             behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/features/XPAY/
             displayName: 'Run Behave Test Suite'
           - task: PublishTestResults@2
             condition: succeededOrFailed()

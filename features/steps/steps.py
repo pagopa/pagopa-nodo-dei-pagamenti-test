@@ -966,4 +966,4 @@ def step_impl(context,url):
         curr_time=time.time()
         if curr_time-start_time>60:
             assert False
-        sleep(5)
+        sleep(3)
