@@ -66,17 +66,16 @@ def step_impl(context):
 
 @step('Confirm payment')
 def step_impl(context):
-    sleep(2)
+    sleep(1)
+    elem=context.driver.wait_until(By.CLASS_NAME, "fhSubmit")
     context.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-    # context.driver.wait_until(By.XPATH, "//button[@class='fhSubmit']").click()
-    context.driver.wait_until(By.CLASS_NAME, "fhSubmit").click()
+    elem.click()
 
 
 @step('Payment is made successfully')
 def step_impl(context):
     context.driver.wait_until(By.ID, "success_message")
-    context.driver.find_element(By.XPATH,
-                                '//*[@action="/wallet/logout"]//button').click()
+    #context.driver.find_element(By.XPATH,'//*[@action="/wallet/logout"]//button').click()
 
 
 @step('Close the page')

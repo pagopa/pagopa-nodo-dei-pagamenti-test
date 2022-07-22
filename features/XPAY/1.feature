@@ -5,7 +5,7 @@ Feature:
     And Enter with the mail
     And select CartaVisaXPAY1 credit card
     And confirm payment
-    And sleep 100 s
+    And sleep 30 s
     Then Payment is made successfully
 
 
