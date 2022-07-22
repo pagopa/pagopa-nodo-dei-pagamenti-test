@@ -41,6 +41,7 @@ const csvPay_CC = new SharedArray('pay_CC_data', function () {
 const csvPay = new SharedArray('pay_data', function () {
     
   return papaparse.parse(open('../../../../data/pay.csv'), { header: true }).data;
+});
 
 
 const csvCards = new SharedArray('cards_data', function () {
