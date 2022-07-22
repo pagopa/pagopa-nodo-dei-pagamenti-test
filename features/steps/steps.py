@@ -833,19 +833,10 @@ def step_impl(context, value):
 @then('check {message} is displayed')
 def step_impl(context, message):
     a = context.driver.wait_until(By.XPATH, '//div[@class="col"]')
-    print(a.text)
+    #print(a.text)
     assert a
     assert message in a.text, f'{message}, {a}'
 
-"""
-@then('check {message} is displayed subtitle')
-def step_impl(context, message):
-    sleep(1000)
-    a = context.driver.wait_until(By.XPATH, '//*[@id="error_message"]/div/div/')
-    print(a.text)
-    assert a
-    assert message in a.text, f'{message}, {a}'
-"""
 
 ##############Annulli
 
