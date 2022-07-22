@@ -16,8 +16,7 @@ Feature: Visa - XPay
     Scenario Outline: XPAY with Visa cards - KO
         When select <credit_card> credit card
         And confirm payment
-        And wait until aaa
-        #And sleep 40 s
+        And wait until api.dev.platform.pagopa.it
         Then check Operazione rifiutata is displayed
         And check <text> is displayed
         Examples:
