@@ -3,7 +3,8 @@ Feature: Payment with conto as registered user
     Given Payment generated with mock
     When Browse the payment response url
     And Login as registered user
-    And Select conto after login
-    And Confirm payment with conto
+    And select add payment method
+    And select conto
+    And select mod2 bp ila from bank accounts list
     Then Payment is made successfully
     #And mail sent successfully

@@ -4,4 +4,5 @@ Feature: Payment with conto as guest
     When Browse the payment response url
     And Enter with the mail
     And Select conto
+    And select mod2 bp ila from bank accounts list
     Then Payment is made successfully

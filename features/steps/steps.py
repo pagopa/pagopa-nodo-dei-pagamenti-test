@@ -334,13 +334,22 @@ def step_impl(context):
 @step('Select conto')
 def step_impl(context):
     context.driver.wait_until(By.CLASS_NAME, 'bank_account').click()
-    context.driver.wait_until(By.XPATH, "//div[@class='psp-menu']/a/div/div").click()
-    context.driver.wait_until(By.XPATH, "//form[@action='/wallet/psp']/button").click()
+    #context.driver.wait_until(By.XPATH, "//div[@class='psp-menu']/a/div/div").click()
+    #context.driver.wait_until(By.XPATH, "//form[@action='/wallet/psp']/button").click()
 
 
 @step('Select Altri metodi')
 def step_impl(context):
     context.driver.wait_until(By.CLASS_NAME, 'other').click()
+
+@step('select {bankaccount} from bank accounts list')
+def step_impl(context,bankaccount):
+    context.driver.wait_until(By.CLASS_NAME,'input-search').send_keys(bankaccount)
+    context.driver.wait_until(By.XPATH,'//*[@id="search-form"]/a/img').click()
+    context.driver.wait_until(By.XPATH,'//*[@id="main-element"]/div[4]/a/div/div[1]/img').click()
+    context.driver.wait_until(By.XPATH,'/html/body/div[5]/div/div[8]/div/div/form/button').click()
+
+
 
 
 @step('look for the psp by entering Nome servizi')
@@ -425,18 +434,6 @@ def step_impl(context):
     a = context.driver.wait_until(By.XPATH, "/html/body/div[5]/form/div[4]/button")
     a.click()
 
-
-@step('Select conto after login')
-def step_impl(context):
-    context.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-    a = context.driver.wait_until(By.CLASS_NAME, "azure")
-    a.click()
-    context.driver.wait_until(By.CLASS_NAME, 'bank_account').click()
-    context.driver.wait_until(By.CLASS_NAME, 'input-search').click()
-    context.driver.wait_until(By.CLASS_NAME, 'input-search').send_keys('mod2 bp ila')
-    context.driver.find_element(By.CLASS_NAME, 'search-ico').click()
-    sleep(2)
-    context.driver.wait_until(By.XPATH, "//div[@class='psp-menu']/a/div/div").click()
 
 
 @step('Select Bancomat Pay')
