@@ -11,13 +11,16 @@ Feature: XPAY - MC
         And confirm payment
         And sleep 60 s
         Then Payment is made successfully
+        And close the page
 
     @prova
     Scenario Outline: XPAY with MC cards - KO
         When select <credit_card> credit card
+        And select XPAY from psp list
         And confirm payment
         Then check the Autorizzazione negata is displayed
         And check the Rivolgiti alla tua banca per avere indicazione sulle motivazioni is displayed
+        And close the page
         Examples:
             | credit_card   |
             | CartaMCXPAY2  |
