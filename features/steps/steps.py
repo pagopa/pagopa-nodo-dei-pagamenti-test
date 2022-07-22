@@ -354,6 +354,15 @@ def step_impl(context,bankaccount):
     context.driver.wait_until(By.XPATH,'//*[@id="main-element"]/div[4]/a/div/div[1]/img').click()
     context.driver.wait_until(By.XPATH,'/html/body/div[5]/div/div[8]/div/div/form/button').click()
 
+@step('select {psp} from psp list')
+def step_impl(context, psp):
+    context.driver.wait_until(By.XPATH, '//*[@id="main-element"]/div/div[5]/div[2]/h2/a').click()
+    context.driver.wait_until(By.CLASS_NAME,'input-search').send_keys(psp)
+    context.driver.wait_until(By.XPATH,'//*[@id="search-form"]/a/img').click()
+    sleep(2)
+    context.driver.wait_until(By.XPATH,'//*[@id="main-element"]/div[6]/a/div/div[1]/img').click()
+    #context.driver.wait_until(By.XPATH,'/html/body/div[5]/div/div[8]/div/div/form/button').click()
+
 
 
 
