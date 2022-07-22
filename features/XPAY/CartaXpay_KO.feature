@@ -8,7 +8,7 @@ Background:
     Scenario: CartaXpay8
         When select CartaXpay8 credit card
         And confirm payment
-        And wait until https://api.dev.platform.pagopa.it/payment-manager/mock-services/v1/nodo/sit/send/rpt
+        And wait until api.dev.platform.pagopa.it
         And insert OTP
         Then check Autorizzazione negata. is displayed
 
@@ -17,7 +17,7 @@ Background:
         When select <credit_card> credit card
         And select XPAY from psp list
         And confirm payment
-        And wait until https://api.dev.platform.pagopa.it/payment-manager/mock-services/v1/nodo/sit/send/rpt
+        And wait until api.dev.platform.pagopa.it
         Then check Autorizazione negata. Rivolgiti alla tua banca per avere indicazione sulle motivazioni is displayed
         Examples:
             | credit_card |
