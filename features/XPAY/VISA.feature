@@ -4,10 +4,20 @@ Feature: Visa - XPay
         When browse the payment response url
         And enter with the mail
 
+    @prova
+    Scenario: XPAY with Visa cards - OK
+        Given select CartaVisaXPAY1 credit card
+        And confirm payment
+
+        And wait until aaa
+        Then Payment is made successfully
+
+    @prova1
     Scenario Outline: XPAY with Visa cards - KO
         When select <credit_card> credit card
         And confirm payment
-        And sleep 40 s
+        And wait until aaa
+        #And sleep 40 s
         Then check Operazione rifiutata is displayed
         And check <text> is displayed
         Examples:

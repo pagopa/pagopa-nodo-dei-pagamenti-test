@@ -1,3 +1,4 @@
+import time
 from datetime import datetime
 from email import header
 from multiprocessing import context
@@ -952,3 +953,22 @@ def step_impl(context):
     assert context.resp.status_code // 100 == 2
     #print(context.resp.status_code)
     #print(context.resp.content)
+
+
+@step('wait until {url}')
+def step_impl(context,url):
+    sleep(5)
+    start_time = time.time()
+    print(start_time)
+    curr_url = context.driver.get_current_url()
+    print('###########################################')
+    print(curr_url)
+    while True:
+        curr_url = context.driver.get_current_url()
+        if 'api.dev.platform.pagopa.it' in curr_url:
+            break
+        curr_time=time.time()
+        if curr_time-start_time>60:
+            assert False
+        sleep(5)
+    print(time.time()-start_time)
