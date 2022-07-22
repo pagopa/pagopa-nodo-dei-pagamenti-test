@@ -38,13 +38,17 @@ def step_impl(context):
     print(url_wisp)
     context.driver = Driver(context.browser)
     context.driver.get(url_wisp)
-    elem = context.driver.wait_until(By.XPATH, "//div[@style='display:none'][@class='block']")
-    print(elem)
-    print(elem.text)
-    print(elem.get_attribute("style"))
-    context.driver.execute_script("arguments[0].setAttribute('style','display')", elem)
-    elem = context.driver.wait_until(By.XPATH,'//*[@id="main-element"]/div[4]/div/div')
-    context.driver.execute_script("arguments[0].setAttribute('style','display')", elem)
+    flag=False
+    try:
+        context.driver.find_element(By.XPATH, '//*[@id="main-element"]/div[2]/div/div/img')
+        flag=True
+    except:
+        pass
+    if flag:
+        elem = context.driver.wait_until(By.XPATH, "//div[@style='display:none'][@class='block']")
+        context.driver.execute_script("arguments[0].setAttribute('style','display')", elem)
+        elem = context.driver.wait_until(By.XPATH,'//*[@id="main-element"]/div[4]/div/div')
+        context.driver.execute_script("arguments[0].setAttribute('style','display')", elem)
 
 
 @step('Enter with the mail')
@@ -281,6 +285,7 @@ def step_impl(context):
 
 @step('Select favorite card from the list')
 def step_impl(context):
+    #sleep(1000)
     context.driver.wait_until(By.XPATH, "html/body/div[5]/div/div[2]/div/div[2]/div/div/div[2]/div").click()
 
 

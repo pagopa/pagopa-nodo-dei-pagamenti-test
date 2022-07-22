@@ -19,6 +19,8 @@ Feature: Change payment manager
         And Select amex card from the list
         Then check not change payment manager
 
+
+    @prova
     Scenario: Check that modify payment manager is available for registered users with favorite card
         When Login as registered user
         And Select favorite card from the list
