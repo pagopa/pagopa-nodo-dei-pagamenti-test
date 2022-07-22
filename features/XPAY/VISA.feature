@@ -8,8 +8,8 @@ Feature: Visa - XPay
         When select <credit_card> credit card
         And confirm payment
         And sleep 30 s
-        Then check the Autorizzazione negata is displayed
-        And check the Rivolgiti alla tua banca per avere indicazione sulle motivazioni is displayed
+        Then check Operazione rifiutata is displayed
+        And check Rivolgiti alla tua banca per avere indicazione sui motivi is displayed
         Examples:
             | credit_card       |
             | CartaVisaXPAY2    |

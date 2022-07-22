@@ -830,11 +830,22 @@ def step_impl(context, value):
                               '/html/body/app-root/main/page-search/page-with-sidebar/div/div/div/div/div/section/div/app-search/div/div/div/button').click()
 
 
-@then('check the {message} is displayed')
+@then('check {message} is displayed')
 def step_impl(context, message):
-    a = context.driver.wait_until(By.XPATH, '//div[@class="col"]/h3').text
-    assert message in a, f'{message}, {a}'
+    a = context.driver.wait_until(By.XPATH, '//div[@class="col"]')
+    print(a.text)
+    assert a
+    assert message in a.text, f'{message}, {a}'
 
+"""
+@then('check {message} is displayed subtitle')
+def step_impl(context, message):
+    sleep(1000)
+    a = context.driver.wait_until(By.XPATH, '//*[@id="error_message"]/div/div/')
+    print(a.text)
+    assert a
+    assert message in a.text, f'{message}, {a}'
+"""
 
 ##############Annulli
 
