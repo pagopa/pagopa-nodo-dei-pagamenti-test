@@ -37,16 +37,15 @@ Feature: check syntax KO for nodoCarrelloMultibeneficiarioRPT
   # element value check
   Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error on invalid body element value
     Given <tag> with <tag_value> in nodoInviaCarrelloRPT
-    When psp sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
+    When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
     Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
     And check faultCode is PPT_SINTASSI_EXTRAXSD of nodoInviaCarrelloRPT response
     Examples:
-      | tag                    | tag_value                            | soapUI test                             |
-      | multiBeneficiario      | Empty                                | SIN_PASIN_nodoInviaCarrelloMb_01RPTR_02 |
-      | multiBeneficiario      | ABCDEFG                              | SIN_PASIN_nodoInviaCarrelloMb_01RPTR_03 |
-      | multiBeneficiario      | OK                                   | SIN_PASIN_nodoInviaCarrelloMb_01RPTR_03 |
-      | multiBeneficiario      | 3                                    | SIN_PASIN_nodoInviaCarrelloMb_01RPTR_03 |
-      | multiBeneficiario      | lunghezza != 2n                      | SIN_PASIN_nodoInviaCarrelloMb_01RPTR_03 |
-      | identificativoCarrello | None                                 | SIN_PASIN_nodoInviaCarrelloMb_01RPTR_04 |
-      | identificativoCarrello | Empty                                | SIN_PASIN_nodoInviaCarrelloMb_01RPTR_05 |
-      | multiBeneficiario      | 123456789BBCDEFGHILMNOPQRSTVZ3423123 | SIN_PASIN_nodoInviaCarrelloMb_01RPTR_06 |
+      | tag                    | tag_value                            | soapUI test |
+      | multiBeneficiario      | Empty                                | SIN_MB_02   |
+      | multiBeneficiario      | ABCDEFG                              | SIN_MB_03   |
+      | multiBeneficiario      | 3                                    | SIN_MB_03   |
+      | multiBeneficiario      | 00                                   | SIN_MB_03   |
+      | identificativoCarrello | None                                 | SIN_MB_04   |
+      | identificativoCarrello | Empty                                | SIN_MB_05   |
+      | identificativoCarrello | 123456789BBCDEFGHILMNOPQRSTVZ3423123 | SIN_MB_06   |

@@ -47,14 +47,25 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          | identificativoCarrello | 7777777777311019851406136900-65584  | SEM_MB_01   |
 
    Scenario Outline: Check PPT_DOMINIO_SCONOSCIUTO error on non-existent domain
-      Given <tag> with <value> in nodoInviaCarrelloRPT
+      Given identificativoCarrello with <idCarrello_value> in nodoInviaCarrelloRPT
+      And identificativoDominio with <idDominio_value> in nodoInviaCarrelloRPT
       When PSP sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
       Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
       And check faultCode is PPT_DOMINIO_SCONOSCIUTO of nodoInviaCarrelloRPT response
       Examples:
-         | tag                    | value                               | soapUI test |
-         | identificativoCarrello | 31101985140613690044444444444-67668 | SEM_MB_01   |
-         | identificativoDominio  | idDominioUnknown                    | SEM_MB_02   |
+         | idCarrello_value                    | idDominio | soapUI test |
+         | 31101985140613690044444444444-67668 | -         | SEM_MB_01   |
+         |                                     |           | SEM_MB_02   |
+         |                                     |           | SEM_MB_03   |
+         |                                     |           | SEM_MB_04   |
+         |                                     |           | SEM_MB_05   |
+         |                                     |           | SEM_MB_06   |
+         |                                     |           | SEM_MB_07   |
+         |                                     |           | SEM_MB_08   |
+         |                                     |           | SEM_MB_09   |
+         |                                     |           | SEM_MB_10   |
+
+   Scenario:
 
    # station value check: combination idDominio-noticeNumber identifies a station not present inside column ID_CARRELLO in NODO4_CFG.STAZIONI table of nodo-dei-pagamenti database [SEM_Mb_11]
    Scenario Outline: Check PPT_STAZIONE_INT_PA_SCONOSCIUTA error on non-existent station
