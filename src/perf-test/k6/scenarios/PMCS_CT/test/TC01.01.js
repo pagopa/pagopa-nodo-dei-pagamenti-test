@@ -341,8 +341,8 @@ export function total() {
  
  
  
-    if(statusTr === 'In attesa del metodo 3ds2'){
-    //if(statusTr === 'Confermato'){ //to comment
+    //if(statusTr === 'In attesa del metodo 3ds2'){
+    if(statusTr === 'Confermato'){
 		
 	  
 	  let threeDSMethodData = 'threeDSMethodData';
