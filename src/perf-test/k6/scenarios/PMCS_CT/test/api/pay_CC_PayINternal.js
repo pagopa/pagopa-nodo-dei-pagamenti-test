@@ -11,12 +11,12 @@ securityCode=${rndSecCode}&browserJavaEnabled=false&browserLanguage=en-US&browse
 };
 
 
-export function pay_CC_PayINternal(baseUrl, token, idWallet, idPay) {
+export function pay_CC_PayINternal(baseUrl, rndSecCode) {
  
  
  const res = http.post(
     baseUrl+'/pp-restapi-CD/v3/webview/transactions/payInternal',
-	reqBody( token, rndSecCode),
+	reqBody( rndSecCode),
     { headers: { 'Content-Type': 'application/x-www-form-urlencoded'} ,
 	tags: { pay_CC_PayINternal: 'http_req_duration', ALL: 'http_req_duration'}
 	}
