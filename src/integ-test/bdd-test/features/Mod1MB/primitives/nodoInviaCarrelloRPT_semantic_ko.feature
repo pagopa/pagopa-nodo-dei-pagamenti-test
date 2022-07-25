@@ -9,7 +9,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          <ppt:intestazioneCarrelloPPT>
          <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
          <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
-         <identificativoCarrello>CARRELLO-2022-05-25-14:15:59.098</identificativoCarrello>
+         <identificativoCarrello>09812374659311014901220113600-83957</identificativoCarrello>
          </ppt:intestazioneCarrelloPPT>
          </soapenv:Header>
          <soapenv:Body>
@@ -38,14 +38,23 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
       Given <tag> with <value> in nodoInviaCarrelloRPT
       When psp sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
       Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
-      And check faultCode is <fault_code> of nodoInviaCarrelloRPT response
+      And check faultCode is PPT_MULTI_BENEFICIARIO of nodoInviaCarrelloRPT response
       Examples:
-         | tag        | value             | fault_code              | soapUI test |
-         | idCarrello | idCarrelloUnknown | PPT_MULTIBENEFICIARIO   | SEM_MB_01   |
-         | idDominio  | idDominioUnknown  | PPT_DOMINIO_SCONOSCIUTO | SEM_MB_02   |
+         | tag                    | value                               | soapUI test |
+         | identificativoCarrello | 444444444431101985140613690012216   | SEM_MB_01   |
+         | identificativoCarrello | 90000000001311019851406136900-51484 | SEM_MB_01   |
+         | identificativoCarrello | 44444444444311019851406136900-21630 | SEM_MB_01   |
+         | identificativoCarrello | 7777777777311019851406136900-65584  | SEM_MB_01   |
 
-
-
+   Scenario Outline: Check PPT_DOMINIO_SCONOSCIUTO error on non-existent domain
+      Given <tag> with <value> in nodoInviaCarrelloRPT
+      When PSP sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
+      Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
+      And check faultCode is PPT_DOMINIO_SCONOSCIUTO of nodoInviaCarrelloRPT response
+      Examples:
+         | tag                    | value                               | soapUI test |
+         | identificativoCarrello | 31101985140613690044444444444-67668 | SEM_MB_01   |
+         | identificativoDominio  | idDominioUnknown                    | SEM_MB_02   |
 
    # station value check: combination idDominio-noticeNumber identifies a station not present inside column ID_CARRELLO in NODO4_CFG.STAZIONI table of nodo-dei-pagamenti database [SEM_Mb_11]
    Scenario Outline: Check PPT_STAZIONE_INT_PA_SCONOSCIUTA error on non-existent station
@@ -77,7 +86,3 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
       When psp sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
       Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
       And check faultCode is PPT_INTERMEDIARIO_PA_DISABILITATO of nodoInviaCarrelloRPT response
-
-
-
-
