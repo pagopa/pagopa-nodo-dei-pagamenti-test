@@ -213,7 +213,6 @@ Feature: Semantic checks for activateIOPayment - KO
     Then check outcome is OK of activateIOPayment response
     And restore initial configurations
 
-  
   Scenario Outline: Check PPT_ERRORE_IDEMPOTENZA error on validity idempotencyKey (Phase 2)
     Given nodo-dei-pagamenti has config parameter useIdempotency set to true
     Given the prova scenario executed successfully
@@ -276,11 +275,35 @@ Feature: Semantic checks for activateIOPayment - KO
     And the Execute activateIOPayment (Phase 1) scenario executed successfully
     And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
     And wait 15 seconds for expiration
-    And $activateIOPayment.expirationTime with 25000 in activateIOPayment
+    And expirationTime with 25000 in activateIOPayment
     When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is KO of activateIOPayment response
     And check faultCode is PPT_PAGAMENTO_IN_CORSO of activateIOPayment response
     And restore initial configurations
+
+  Scenario: [SEM_AIPR_25]
+    Given nodo-dei-pagamenti has config parameter useIdempotency set to false
+    And the Execute activateIOPayment (Phase 1) scenario executed successfully
+    And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
+    And wait 10 seconds for expiration
+    When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
+    Then check outcome is KO of activateIOPayment response
+    And check faultCode is PPT_PAGAMENTO_IN_CORSO of activateIOPayment response
+    And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro AppIO
+    And restore initial configurations
+
+  Scenario: [SEM_AIPR_26]
+    Given nodo-dei-pagamenti has config parameter useIdempotency set to false
+    And the Execute activateIOPayment (Phase 1) scenario executed successfully
+    And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
+    And wait 10 seconds for expiration
+    And expirationTime with 25000 in activateIOPayment
+    When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
+    Then check outcome is KO of activateIOPayment response
+    And check faultCode is PPT_PAGAMENTO_IN_CORSO of activateIOPayment response
+    And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro AppIO
+    And restore initial configurations
+
 
   # SEM_AIPR_27
   Scenario: Check reuse of idempotencyKey with expired idempotencyKey validity
