@@ -117,7 +117,7 @@ def step_impl(context):
 
     if '$iuv' in payload:
         payload = payload.replace('$iuv', getattr(context, 'iuv'))
-
+    print("RPT generato: ", payload)
     setattr(context,'rptAttachment', payload)
 
 @given('REND generation')
@@ -146,6 +146,7 @@ def step_impl(context):
     if '#iuv#' in payload:
         payload = payload.replace('#iuv#', iuv)
 
+    print("REND generata: ", payload)
     setattr(context,'rendAttachment', payload)
 
 @given('{elem} with {value} in {action}')
@@ -818,8 +819,16 @@ def step_impl(context, column, query_name, table_name, db_name, name_macro, numb
     db_selected = db_config.get(db_name)
     conn = db.getConnection(db_selected.get('host'), db_selected.get('database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
 
-    if number == 'default_idempotency_key_validity_minutes':
-        default = int(getattr(context, 'default_idempotency_key_validity_minutes')) / 60000
+    if number == 'default_token_duration_validity_millis':
+        default = int(getattr(context, 'default_token_duration_validity_millis')) / 60000
+        value = (datetime.datetime.today()+datetime.timedelta(minutes= default)).strftime('%Y-%m-%d %H:%M')    
+        selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
+        exec_query = db.executeQuery(conn, selected_query)
+        query_result = [t[0] for t in exec_query]
+        print('query_result: ', query_result)
+        elem = query_result[0].strftime('%Y-%m-%d %H:%M')
+    elif number == 'default_idempotency_key_validity_minutes':
+        default = int(getattr(context, 'default_idempotency_key_validity_minutes'))
         value = (datetime.datetime.today()+datetime.timedelta(minutes= default)).strftime('%Y-%m-%d %H:%M')    
         selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
         exec_query = db.executeQuery(conn, selected_query)
@@ -833,6 +842,26 @@ def step_impl(context, column, query_name, table_name, db_name, name_macro, numb
          query_result = [t[0] for t in exec_query]
          print('query_result: ', query_result)
          elem = query_result[0].strftime('%Y-%m-%d')
+         
+    db.closeConnection(conn)
+    
+    print(f"check expected element: {value}, obtained: {elem}")
+    assert elem == value
+
+@step(u"verify datetime plus number of minutes {number} of the record at column {column} of the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
+def step_impl(context, column, query_name, table_name, db_name, name_macro, number):
+    db_config = context.config.userdata.get("db_configuration")
+    db_selected = db_config.get(db_name)
+    conn = db.getConnection(db_selected.get('host'), db_selected.get('database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+
+    number = int(number) / 60000
+    value = (datetime.datetime.today()+datetime.timedelta(minutes= number)).strftime('%Y-%m-%d %H:%M')
+    selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
+    exec_query = db.executeQuery(conn, selected_query)
+    query_result = [t[0] for t in exec_query]
+    print('query_result: ', query_result)
+    elem = query_result[0].strftime('%Y-%m-%d %H:%M')
+
          
     db.closeConnection(conn)
     
