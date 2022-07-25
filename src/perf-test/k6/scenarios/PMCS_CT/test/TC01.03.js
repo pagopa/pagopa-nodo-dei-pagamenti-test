@@ -14,15 +14,15 @@ import { getWallet_v2 } from './api/getWallet_v2.js';
 import { pay_CC_PayINternal } from './api/pay_CC_PayINternal.js';
 import { pay_CC_Pay } from './api/pay_CC_Pay.js';
 import { pay_CC_CheckOut } from './api/pay_CC_CheckOut.js';
+import { ob_CC_Check_1 } from './api/ob_CC_Check_1.js';
 import { ob_CC_Check_2 } from './api/ob_CC_Check_2.js';
 import { ob_CC_Check_3 } from './api/ob_CC_Check_3.js';
+import { ob_CC_continueToStep1 } from './api/ob_CC_continueToStep1.js';
 import { ob_CC_Logout } from './api/ob_CC_Logout.js';
 import { ob_CC_Challenge } from './api/ob_CC_Challenge.js';
 import { ob_CC_Response} from './api/ob_CC_Response.js';
-import { ob_CC_update} from './api/ob_CC_update.js';
 import { ob_CC_bye} from './api/ob_CC_bye.js';
 import { ob_CC_resume3ds2} from './api/ob_CC_resume3ds2.js';
-import { ob_CC_continueToStep1 } from './api/ob_CC_continueToStep1.js';
 import { parseHTML } from "k6/html";
 import * as outputUtil from './util/output_util.js';
 import * as inputDataUtil from './util/input_data_util.js';
@@ -90,11 +90,13 @@ export const options = {
 	'http_req_duration{pay_CC_PayINternal:http_req_duration}': [],
 	'http_req_duration{pay_CC_Pay:http_req_duration}': [],
 	'http_req_duration{pay_CC_CheckOut:http_req_duration}': [],
+	'http_req_duration{ob_CC_Check_1:http_req_duration}': [],
 	'http_req_duration{ob_CC_Check_2:http_req_duration}': [],
 	'http_req_duration{ob_CC_Check_3:http_req_duration}': [],
+	'http_req_duration{ob_CC_continueToStep1:http_req_duration}': [],
 	'http_req_duration{ob_CC_Logout:http_req_duration}': [],
 	'http_req_duration{ob_CC_bye:http_req_duration}': [],
-	'http_req_duration{ob_CC_update:http_req_duration}': [],
+
 	'http_req_duration{ob_CC_Challenge:http_req_duration}': [],
 	'http_req_duration{ob_CC_Response:http_req_duration}': [],
 	'http_req_duration{ob_CC_resume3ds2:http_req_duration}': [],
@@ -140,6 +142,14 @@ export const options = {
 	'checks{pay_CC_CheckOut:over_sla1000}': [],
 	'checks{pay_CC_CheckOut:ok_rate}': [],
 	'checks{pay_CC_CheckOut:ko_rate}': [],
+	'checks{ob_CC_Check_1:over_sla300}': [],
+	'checks{ob_CC_Check_1:over_sla400}': [],
+	'checks{ob_CC_Check_1:over_sla500}': [],
+	'checks{ob_CC_Check_1:over_sla600}': [],
+	'checks{ob_CC_Check_1:over_sla800}': [],
+	'checks{ob_CC_Check_1:over_sla1000}': [],
+	'checks{ob_CC_Check_1:ok_rate}': [],
+	'checks{ob_CC_Check_1:ko_rate}': [],
 	'checks{ob_CC_Check_2:over_sla300}': [],
 	'checks{ob_CC_Check_2:over_sla400}': [],
 	'checks{ob_CC_Check_2:over_sla500}': [],
@@ -156,6 +166,14 @@ export const options = {
 	'checks{ob_CC_Check_3:over_sla1000}': [],
 	'checks{ob_CC_Check_3:ok_rate}': [],
 	'checks{ob_CC_Check_3:ko_rate}': [],
+	'checks{ob_CC_continueToStep1:over_sla300}': [],
+	'checks{ob_CC_continueToStep1:over_sla400}': [],
+	'checks{ob_CC_continueToStep1:over_sla500}': [],
+	'checks{ob_CC_continueToStep1:over_sla600}': [],
+	'checks{ob_CC_continueToStep1:over_sla800}': [],
+	'checks{ob_CC_continueToStep1:over_sla1000}': [],
+	'checks{ob_CC_continueToStep1:ok_rate}': [],
+	'checks{ob_CC_continueToStep1:ko_rate}': [],
 	'checks{ob_CC_Logout:over_sla300}': [],
 	'checks{ob_CC_Logout:over_sla400}': [],
 	'checks{ob_CC_Logout:over_sla500}': [],
@@ -172,14 +190,6 @@ export const options = {
 	'checks{ob_CC_bye:over_sla1000}': [],
 	'checks{ob_CC_bye:ok_rate}': [],
 	'checks{ob_CC_bye:ko_rate}': [],
-	'checks{ob_CC_update:over_sla300}': [],
-	'checks{ob_CC_update:over_sla400}': [],
-	'checks{ob_CC_update:over_sla500}': [],
-	'checks{ob_CC_update:over_sla600}': [],
-	'checks{ob_CC_update:over_sla800}': [],
-	'checks{ob_CC_update:over_sla1000}': [],
-	'checks{ob_CC_update:ok_rate}': [],
-	'checks{ob_CC_update:ko_rate}': [],
 	'checks{startSession:over_sla300}': [],
 	'checks{startSession:over_sla400}': [],
 	'checks{startSession:over_sla500}': [],
@@ -292,7 +302,7 @@ export function total() {
   }catch(err){idTr='NA'; RED_Path='NA';}
   
  
- 
+  RED_Path='/fgfgggg?op=1'
   res=pay_CC_CheckOut(baseUrl, RED_Path);
   idTr='NA';
   let regexTransId =  new RegExp(`id="transactionId" value=".*?"`);
@@ -305,8 +315,119 @@ export function total() {
   invertedChecks(res, idTr, 'matches', 'NA'); 
   
   
-  
+
+  let resCheck1 = '';
+  let statusTr = '';
+  do {
+    //console.log("dentro while");
+    resCheck1 = ob_CC_Check_1(baseUrl, idTr);
+    statusTr = resCheck1['statusMessage'];
+    statusTr = 'In attesa del metodo 3ds2'; //to comment
+
+    commonChecks(resCheck1);
+    invertedChecks(resCheck1, statusTr, 'matches', undefined);
+  }
+  while (statusTr !== 'Confermato' && statusTr !== 'In attesa del metodo 3ds2');
+  //console.log("dopo while");
+
+
+ if(statusTr === 'In attesa del metodo 3ds2'){
+    //if(statusTr === 'Confermato'){ //to comment
+
+	  let threeDSMethodData = 'threeDSMethodData';
+	  res = ob_CC_continueToStep1(baseUrl, idTr, threeDSMethodData);
+	  commonChecks(res);
+      standardChecks(res, res.status, 'matches', 200);
+
+
+       let resCheck2 = '';
+       let creq = '';
+       do {
+            resCheck2 = ob_CC_Check_2(baseUrl, idTr);
+            statusTr = resCheck2['statusMessage'];
+            statusTr = 'In attesa della challenge 3ds2'; //to comment
+      		creq = resCheck2['params.creq'];
+      		//console.log("dentro while 2");
+      		commonChecks(resCheck2);
+            invertedChecks(resCheck2, statusTr, 'matches', undefined);
+           }
+       while (statusTr !== 'In attesa della challenge 3ds2');
+
+
+
+       res= ob_CC_Challenge(baseUrl, creq); //baseUrlPM
+       commonChecks(res);
+       standardChecks(res, res.status, 'matches', 200);
+       //res=`<prova1 id="xxxx">xxxx</prova1><prova id="threeDSServerTransID">12345</prova>`;
+       let threedstransId = 'NA';
+       let threeDSServerTransID =  new RegExp(`id="threeDSServerTransID">.*?<`);
+       try{
+             let dsServTransId = threeDSServerTransID.exec(res);
+             //console.log('dsServTransId='+dsServTransId);
+             let sl = dsServTransId.split('>');
+             threedstransId = sl[1].replace('<','');
+       }catch(err){threedstransId='NA';}
+       //console.log('threedstransId='+threedstransId);
+
+
+
+       res= ob_CC_Response(baseUrl, threedstransId, token); //baseUrlPM
+       commonChecks(res);
+       standardChecks(res, res.status, 'matches', 200);
+
+
+
+       let rndCres ='';
+       let chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+       for (var i = 12; i > 0; --i) rndCres += chars[Math.floor(Math.random() * chars.length)];
+       res= ob_CC_resume3ds2(baseUrl, idTr, rndCres);
+       commonChecks(res);
+       standardChecks(res, res.status, 'matches', 200);
+
+
+
+       let resCheck3 = '';
+       	  do {
+              resCheck3 = ob_CC_Check_3(baseUrl, idTr);
+              statusTr = resCheck3['statusMessage'];
+              statusTr = 'Confermato'; //to comment
+       		  //console.log("dentro while 3");
+       		  commonChecks(resCheck3);
+              invertedChecks(resCheck3, statusTr, 'matches', undefined);
+             }
+             while (statusTr !== 'Confermato');
+
+ }
+
+
+
+ res= ob_CC_Logout(baseUrl, idTr);
+ headers = res.headers;
+ redirect = headers['Location'];
+ commonChecks(res);
+ invertedChecks(res, redirect, 'matches', undefined);
+ RED_Path='NA';
+ if(redirect !== undefined){
+ 		try{
+ 		RED_Path = redirect.substr(redirect.indexOf("/pp-restapi-CD"));
+ 		idTr = redirect.substr(redirect.indexOf("id=")+3);
+ 		}catch(err){idTr='NA';}
+ }
+
+
+
+ RED_Path="/hfhfhfhfh?tyty=1"; //to comment
+ res= ob_CC_bye(baseUrl, RED_Path);
+ let esitoTrEdt = 'NA';
+ if (RED_Path!=="NA"){
+     esitoTrEdt = RED_Path.substr(RED_Path.indexOf("outcome=")+8);
+ }
+ commonChecks(res);
+ standardChecks(res, esitoTrEdt, 'matches', '0');
+
+
 }
+
 
 
 export default function(){
