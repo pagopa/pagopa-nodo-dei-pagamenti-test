@@ -1,6 +1,7 @@
 from concurrent.futures import thread
 import math
 import re, json, os, datetime
+from turtle import update
 from xml.dom.minidom import parseString
 
 import time
@@ -159,7 +160,6 @@ def replace_context_variables(body, context):
     pattern = re.compile('\\$\\w+')
     match = pattern.findall(body)
     for field in match:
-        print(field)
         saved_elem = getattr(context, field.replace('$', ''))
         value = saved_elem
         body = body.replace(field, value)
@@ -203,7 +203,7 @@ def get_history(rest_mock, notice_number, primitive):
 def query_json(context, name_query, name_macro):
     query = json.load(open(os.path.join(context.config.base_dir + "/../resources/query_AutomationTest.json")))
     selected_query = query.get(name_macro).get(name_query)
-    
+
     if '$' in selected_query:
         selected_query = replace_local_variables(selected_query, context)
         selected_query = replace_context_variables(selected_query, context)

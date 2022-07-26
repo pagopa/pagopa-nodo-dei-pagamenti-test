@@ -90,16 +90,16 @@ Feature: Semantic checks for nodoChiediFlussoRendicontazione
             | identificativoStazioneIntermediarioPA | 77777777777_05            | PPT_STAZIONE_INT_PA_DISABILITATA  | CFRSEM4     |
             | password                              | Password01                | PPT_AUTENTICAZIONE                | CFRSEM5     |
             | identificativoFlusso                  | 2017-09-11idPsp1-pluto123 | PPT_ID_FLUSSO_SCONOSCIUTO         | CFRSEM10    |
-           
 
-    
-    # Update database with identificativoDominio sconoscuito "ciaoDominio"
-	Scenario: Aggiornamento DB_1
-	Given the Executed nodoInviaFlussoRendicontazione scenario executed successfully
-	And nodo-dei-pagamenti has config parameter identificativoDominio set to ciaoDominio
-	
-	Scenario Outline: Check semantic errors for nodoChiediFlussoRendicontazione primitive
-        Given the Aggiornamento DB scenario executed successfully
+
+
+    # [CFRSEM6]
+    Scenario: Aggiornamento DB_1
+        Given the Executed nodoInviaFlussoRendicontazione scenario executed successfully
+        And update through the query param_update of the table RENDICONTAZIONE the parameter DOMINIO with ciaoDominio, with where condition ID_FLUSSO and where value $identificativoFlusso under macro update_query on db nodo_offline
+
+    Scenario: Check semantic errors for nodoChiediFlussoRendicontazione primitive
+        Given the Aggiornamento DB_1 scenario executed successfully
         And initial XML nodoChiediFlussoRendicontazione
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -116,93 +116,70 @@ Feature: Semantic checks for nodoChiediFlussoRendicontazione
             </soapenv:Body>
             </soapenv:Envelope>
             """
-
-        And <elem> with <value> in nodoChiediFlussoRendicontazione
+        And identificativoDominio with ciaoDominio in nodoChiediFlussoRendicontazione
         When EC sends SOAP nodoChiediFlussoRendicontazione to nodo-dei-pagamenti
-        Then check faultCode is <error> of nodoChiediFlussoRendicontazione response
-        Examples:
+        Then check faultCode is PPT_DOMINIO_SCONOSCIUTO of nodoChiediFlussoRendicontazione response
 
-			#| identificativoDominio                 | ciaoDominio               | PPT_DOMINIO_SCONOSCIUTO           | CFRSEM6     |
-            
-			
-			
-			
-			
-			
-			
-			# Update Data base with different values 
-			# Update database with identificativoDominio disabilitato "paDisabled"
-		Scenario: Aggiornamento DB_2
-		Given the Executed nodoInviaFlussoRendicontazione scenario executed successfully
-		And nodo-dei-pagamenti has config parameter identificativoDominio set to NOT_ENABLED
-		
-		Scenario Outline: Check semantic errors for nodoChiediFlussoRendicontazione primitive
-			Given the Aggiornamento DB_2 scenario executed successfully
-			And initial XML nodoChiediFlussoRendicontazione
-				"""
-				<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-				<soapenv:Header/>
-				<soapenv:Body>
-				<ws:nodoChiediFlussoRendicontazione>
-				<identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
-				<identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
-				<password>pwdpwdpwd</password>
-				<identificativoDominio>#codicePA#</identificativoDominio>
-				<identificativoPSP>#psp#</identificativoPSP>
-				<identificativoFlusso>$identificativoFlusso</identificativoFlusso>
-				</ws:nodoChiediFlussoRendicontazione>
-				</soapenv:Body>
-				</soapenv:Envelope>
-				"""
 
-        And <elem> with <value> in nodoChiediFlussoRendicontazione
-        When EC sends SOAP nodoChiediFlussoRendicontazione to nodo-dei-pagamenti
-        Then check faultCode is <error> of nodoChiediFlussoRendicontazione response
-        Examples:
-			
-			#| identificativoDominio                 | NOT_ENABLED               | PPT_DOMINIO_DISABILITATO          | CFRSEM7     | #Aggiornamento con PaDisabled
-			
-			
-			
-		# Update Data base with different values 
-		# Update database with identificativoDominio non AUTORIZZAZIATO "90000000001 "
-		Scenario: Aggiornamento DB_3
-		Given the Executed nodoInviaFlussoRendicontazione scenario executed successfully
-		And nodo-dei-pagamenti has config parameter identificativoDominio set to 90000000001 
-		
-		Scenario Outline: Check semantic errors for nodoChiediFlussoRendicontazione primitive
-			Given the Aggiornamento DB_3 scenario executed successfully
-			And initial XML nodoChiediFlussoRendicontazione
-				"""
-				<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-				<soapenv:Header/>
-				<soapenv:Body>
-				<ws:nodoChiediFlussoRendicontazione>
-				<identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
-				<identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
-				<password>pwdpwdpwd</password>
-				<identificativoDominio>#codicePA#</identificativoDominio>
-				<identificativoPSP>#psp#</identificativoPSP>
-				<identificativoFlusso>$identificativoFlusso</identificativoFlusso>
-				</ws:nodoChiediFlussoRendicontazione>
-				</soapenv:Body>
-				</soapenv:Envelope>
-				"""
 
-				And <elem> with <value> in nodoChiediFlussoRendicontazione
-				When EC sends SOAP nodoChiediFlussoRendicontazione to nodo-dei-pagamenti
-				Then check faultCode is <error> of nodoChiediFlussoRendicontazione response
-				Examples:
-					
-					#| identificativoDominio                 | 90000000001               | PPT_AUTORIZZAZIONE                | CFRSEM11    |
-			
-			
-			
-			
-	# Send un nuovo flusso rendicontazione coretto 
-	Scenario: Executed nodoInviaFlussoRendicontazione_1
-        Given initial XML nodoInviaFlussoRendicontazione
+    # [CFRSEM7]
+    Scenario: Aggiornamento DB_2
+        Given the Executed nodoInviaFlussoRendicontazione scenario executed successfully
+        And update through the query param_update of the table RENDICONTAZIONE the parameter DOMINIO with NOT_ENABLED, with where condition ID_FLUSSO and where value $identificativoFlusso under macro update_query on db nodo_offline
+
+    Scenario: Check semantic errors for nodoChiediFlussoRendicontazione primitive
+        Given the Aggiornamento DB_2 scenario executed successfully
+        And initial XML nodoChiediFlussoRendicontazione
             """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <ws:nodoChiediFlussoRendicontazione>
+            <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
+            <password>pwdpwdpwd</password>
+            <identificativoDominio>#codicePA#</identificativoDominio>
+            <identificativoPSP>#psp#</identificativoPSP>
+            <identificativoFlusso>$identificativoFlusso</identificativoFlusso>
+            </ws:nodoChiediFlussoRendicontazione>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And identificativoDominio with NOT_ENABLED in nodoChiediFlussoRendicontazione
+        When EC sends SOAP nodoChiediFlussoRendicontazione to nodo-dei-pagamenti
+        Then check faultCode is PPT_DOMINIO_DISABILITATO of nodoChiediFlussoRendicontazione response
+
+    # [CFRSEM11]
+    #Scenario: Aggiornamento DB_3
+    #    Given the Executed nodoInviaFlussoRendicontazione scenario executed successfully
+    #    And update through the query param_update of the table RENDICONTAZIONE the parameter DOMINIO with 90000000001, with where condition ID_FLUSSO and where value $identificativoFlusso under macro update_query on db nodo_offline
+
+    #Scenario: Check semantic errors for nodoChiediFlussoRendicontazione primitive
+    #    Given the Aggiornamento DB_3 scenario executed successfully
+    #    And initial XML nodoChiediFlussoRendicontazione
+    #        """
+    #        <soapenv:Envelope xmlns:soapenv=http://schemas.xmlsoap.org/soap/envelope/ xmlns:ws=http://ws.pagamenti.telematici.gov/>
+    #        <soapenv:Header/>
+    #        <soapenv:Body>
+    #        <ws:nodoChiediFlussoRendicontazione>
+    #        <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
+    #        <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
+    #        <password>pwdpwdpwd</password>
+    #        <identificativoDominio>#codicePA#</identificativoDominio>
+    #        <identificativoPSP>#psp#</identificativoPSP>
+    #        <identificativoFlusso>$identificativoFlusso</identificativoFlusso>
+    #        </ws:nodoChiediFlussoRendicontazione>
+    #        </soapenv:Body>
+    #        </soapenv:Envelope>
+    #        """
+    #    And identificativoDominio with 90000000001 in nodoChiediFlussoRendicontazione
+    #    When EC sends SOAP nodoChiediFlussoRendicontazione to nodo-dei-pagamenti
+    #    Then check faultCode is PPT_AUTORIZZAZIONE of nodoChiediFlussoRendicontazione response
+
+    # Send un nuovo flusso rendicontazione coretto
+    Scenario: Executed nodoInviaFlussoRendicontazione_1
+        Given initial XML nodoInviaFlussoRendicontazione
+          """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header/>
             <soapenv:Body>
@@ -219,19 +196,15 @@ Feature: Semantic checks for nodoChiediFlussoRendicontazione
             </soapenv:Body>
             </soapenv:Envelope>
             """
-			
         When PSP sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaFlussoRendicontazione response
-		
-		
-    # Update database with identificativoPSP sconoscuito (ciaoPsP)
-	Scenario: Aggiornamento DB_4
-	Given the Executed nodoInviaFlussoRendicontazione_1 scenario executed successfully
-	And nodo-dei-pagamenti has config parameter identificativoPSP set to ciaoPSP
-	
-	
-	
-	Scenario Outline: Check semantic errors for nodoChiediFlussoRendicontazione primitive
+
+    # [CFRSEM8]
+    Scenario: Aggiornamento DB_4
+        Given the Executed nodoInviaFlussoRendicontazione_1 scenario executed successfully
+        And update through the query param_update of the table RENDICONTAZIONE the parameter PSP with ciaoPSP, with where condition ID_FLUSSO and where value $identificativoFlusso under macro update_query on db nodo_offline
+
+    Scenario: Check semantic errors for nodoChiediFlussoRendicontazione primitive
         Given the Aggiornamento DB_4 scenario executed successfully
         And initial XML nodoChiediFlussoRendicontazione
             """
@@ -249,25 +222,16 @@ Feature: Semantic checks for nodoChiediFlussoRendicontazione
             </soapenv:Body>
             </soapenv:Envelope>
             """
-
-        And <elem> with <value> in nodoChiediFlussoRendicontazione
+        And identificativoPSP with ciaoPSP in nodoChiediFlussoRendicontazione
         When EC sends SOAP nodoChiediFlussoRendicontazione to nodo-dei-pagamenti
-        Then check faultCode is <error> of nodoChiediFlussoRendicontazione response
-        Examples:			
-			
-			#| identificativoPSP                     | ciaoPSP                   | PPT_PSP_SCONOSCIUTO               | CFRSEM8     |
-            
-			
-			
-			
-			# Update database with identificativoPSP sconoscuito (ciaoPsP)
-	Scenario: Aggiornamento DB_5
-	Given the Executed nodoInviaFlussoRendicontazione_1 scenario executed successfully
-	And nodo-dei-pagamenti has config parameter identificativoPSP set to NOT_ENABLED
-	
-	
-	
-	Scenario Outline: Check semantic errors for nodoChiediFlussoRendicontazione primitive
+        Then check faultCode is PPT_PSP_SCONOSCIUTO of nodoChiediFlussoRendicontazione response
+
+    # [CFRSEM9]
+    Scenario: Aggiornamento DB_5
+        Given the Executed nodoInviaFlussoRendicontazione_1 scenario executed successfully
+        And update through the query param_update of the table RENDICONTAZIONE the parameter PSP with NOT_ENABLED, with where condition ID_FLUSSO and where value $identificativoFlusso under macro update_query on db nodo_offline
+
+    Scenario: Check semantic errors for nodoChiediFlussoRendicontazione primitive
         Given the Aggiornamento DB_5 scenario executed successfully
         And initial XML nodoChiediFlussoRendicontazione
             """
@@ -285,11 +249,6 @@ Feature: Semantic checks for nodoChiediFlussoRendicontazione
             </soapenv:Body>
             </soapenv:Envelope>
             """
-
-        And <elem> with <value> in nodoChiediFlussoRendicontazione
+        And identificativoPSP with NOT_ENABLED in nodoChiediFlussoRendicontazione
         When EC sends SOAP nodoChiediFlussoRendicontazione to nodo-dei-pagamenti
-        Then check faultCode is <error> of nodoChiediFlussoRendicontazione response
-        Examples:			
-			
-			
-			#| identificativoPSP                     | NOT_ENABLED               | PPT_PSP_DISABILITATO              | CFRSEM9     | #Aggiornamento con PSP Disabled
+        Then check faultCode is PPT_PSP_DISABILITATO of nodoChiediFlussoRendicontazione response
