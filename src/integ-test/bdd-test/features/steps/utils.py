@@ -203,11 +203,12 @@ def get_history(rest_mock, notice_number, primitive):
 def query_json(context, name_query, name_macro):
     query = json.load(open(os.path.join(context.config.base_dir + "/../resources/query_AutomationTest.json")))
     selected_query = query.get(name_macro).get(name_query)
-
+    print(selected_query)
     if '$' in selected_query:
         selected_query = replace_local_variables(selected_query, context)
+        print(selected_query)
         selected_query = replace_context_variables(selected_query, context)
-        
+        print(selected_query)
     return selected_query
 
 

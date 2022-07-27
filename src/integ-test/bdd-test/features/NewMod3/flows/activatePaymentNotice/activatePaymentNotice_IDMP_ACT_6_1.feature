@@ -20,7 +20,6 @@ Feature: semantic check for activatePaymentNotice regarding idempotency
       <fiscalCode>#creditor_institution_code_old#</fiscalCode>
       <noticeNumber>#notice_number_old#</noticeNumber>
       </qrCode>
-      <expirationTime>5000</expirationTime>
       <amount>10.00</amount>
       <dueDate>2021-12-31</dueDate>
       <paymentNote>causale</paymentNote>
@@ -39,9 +38,9 @@ Feature: semantic check for activatePaymentNotice regarding idempotency
       <soapenv:Header/>
       <soapenv:Body>
       <nod:activatePaymentNoticeReq>
-      <idPSP>70000000001</idPSP>
-      <idBrokerPSP>70000000001</idBrokerPSP>
-      <idChannel>70000000001_01</idChannel>
+      <idPSP>60000000001</idPSP>
+      <idBrokerPSP>60000000001</idBrokerPSP>
+      <idChannel>60000000001_01</idChannel>
       <password>pwdpwdpwd</password>
       <idempotencyKey>$activatePaymentNotice.idempotencyKey</idempotencyKey>
       <qrCode>
@@ -56,7 +55,8 @@ Feature: semantic check for activatePaymentNotice regarding idempotency
       </soapenv:Envelope>
       """
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
-    Then check outcome is OK of activatePaymentNotice response
+    Then check outcome is KO of activatePaymentNotice response
+    And check faultCode is PPT_PAGAMENTO_IN_CORSO of activatePaymentNotice response
 
   #DB check
   Scenario: Execute activatePaymentNotice request
@@ -68,3 +68,9 @@ Feature: semantic check for activatePaymentNotice regarding idempotency
     And checks the value NotNone of the record at column ID of the table POSITION_ACTIVATE retrived by the query payment_status_pay on db nodo_online under macro NewMod3
     And checks the value NotNone of the record at column ID of the table POSITION_PAYMENT retrived by the query payment_status_pay on db nodo_online under macro NewMod3
     And checks the value NotNone of the record at column ID of the table IDEMPOTENCY_KEY retrived by the query idempotency_key on db nodo_online under macro NewMod3
+
+
+
+
+
+
