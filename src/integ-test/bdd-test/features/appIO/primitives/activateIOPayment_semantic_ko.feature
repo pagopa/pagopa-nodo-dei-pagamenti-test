@@ -201,7 +201,7 @@ Feature: Semantic checks for activateIOPayment - KO
         And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro AppIO
         And restore initial configurations
   
-  # SISTEMARE MEGLIO
+  # [SEM_AIPR_21] SISTEMARE MEGLIO
   Scenario: prova
     Given idempotencyKey with 70000000001_8976902111 in activateIOPayment
     And noticeNumber with 302111622625506916 in activateIOPayment
@@ -260,7 +260,7 @@ Feature: Semantic checks for activateIOPayment - KO
       | e-mail                      | Empty                 | SEM_AIPR_21 |
       | e-mail                      | None                  | SEM_AIPR_21 |
 
-  # SEM_AIPR_23
+  # [SEM_AIPR_23]
   Scenario: Check reuse of idempotencyKey with expired paymentToken
     Given the Execute activateIOPayment (Phase 1) scenario executed successfully
     And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
@@ -272,6 +272,7 @@ Feature: Semantic checks for activateIOPayment - KO
   # [SEM_AIPR_24]
   Scenario: [SEM_AIPR_24]
     Given nodo-dei-pagamenti has config parameter default_durata_token_IO set to 15000
+    And nodo-dei-pagamenti has config parameter useIdempotency set to true
     And the Execute activateIOPayment (Phase 1) scenario executed successfully
     And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
     And wait 15 seconds for expiration
@@ -279,8 +280,10 @@ Feature: Semantic checks for activateIOPayment - KO
     When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is KO of activateIOPayment response
     And check faultCode is PPT_PAGAMENTO_IN_CORSO of activateIOPayment response
+    And verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro AppIO
     And restore initial configurations
 
+  # [SEM_AIPR_25]
   Scenario: [SEM_AIPR_25]
     Given nodo-dei-pagamenti has config parameter useIdempotency set to false
     And the Execute activateIOPayment (Phase 1) scenario executed successfully
@@ -292,6 +295,7 @@ Feature: Semantic checks for activateIOPayment - KO
     And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro AppIO
     And restore initial configurations
 
+  # [SEM_AIPR_26]
   Scenario: [SEM_AIPR_26]
     Given nodo-dei-pagamenti has config parameter useIdempotency set to false
     And the Execute activateIOPayment (Phase 1) scenario executed successfully
@@ -304,8 +308,7 @@ Feature: Semantic checks for activateIOPayment - KO
     And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro AppIO
     And restore initial configurations
 
-
-  # SEM_AIPR_27
+  # [SEM_AIPR_27]
   Scenario: Check reuse of idempotencyKey with expired idempotencyKey validity
     Given the Execute activateIOPayment (Phase 1) scenario executed successfully
     And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
@@ -326,7 +329,7 @@ Feature: Semantic checks for activateIOPayment - KO
     And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro AppIO
     And restore initial configurations
   
-  # SEM_AIPR_29
+  # [SEM_AIPR_29]
   Scenario: Check PPT_PAGAMENTO_IN_CORSO error with PAYING debtor position
     Given the Execute activateIOPayment (Phase 1) scenario executed successfully
     And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
@@ -336,7 +339,7 @@ Feature: Semantic checks for activateIOPayment - KO
     Then check outcome is KO of activateIOPayment response
     And check faultCode is PPT_PAGAMENTO_IN_CORSO of activateIOPayment response
 
-  # SEM_AIPR_30
+  # [SEM_AIPR_30]
   Scenario: Check PPT_PAGAMENTO_IN_CORSO error with PAYING debtor position and without idempotencyKey
     Given the Execute activateIOPayment (Phase 1) scenario executed successfully
     And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro AppIO

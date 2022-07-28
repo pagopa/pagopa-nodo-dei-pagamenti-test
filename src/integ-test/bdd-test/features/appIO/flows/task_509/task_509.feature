@@ -126,12 +126,19 @@ Feature: task_509
         Then verify the HTTP status code of inoltroEsito/carta response is 200
         And check esito is OK of inoltroEsito/carta response
 
+    # [TASK_509_03]
+    Scenario: Execute nodoChiediListaPSP (Phase 4)
+        Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
+        When WISP sends rest GET listaPSP?idPagamento=$activateIOPaymentResponse.paymentToken&percorsoPagamento=CARTE to nodo-dei-pagamenti
+        Then verify the HTTP status code of listaPSP response is 200
+
 
     # [TASK_509_04]
     Scenario: Execute nodoNotificaAnnullamento (Phase 4)
         Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
         When WISP sends REST GET notificaAnnullamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
         Then verify the HTTP status code of notificaAnnullamento response is 200
+        And check esito is OK of notificaAnnullamento response
     
     # [TASK_509_05]
     Scenario: Execute nodoChiediAvanzamentoPagamento (Phase 4)
