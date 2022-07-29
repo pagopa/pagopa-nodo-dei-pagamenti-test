@@ -29,6 +29,8 @@ Feature: semantic check for activatePaymentNotice regarding idempotency
       """
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
+    And save activatePaymentNotice response in activatePaymentNotice1
+    And saving activatePaymentNotice request in activatePaymentNotice1
 
   Scenario: Execute activatePaymentNotice1 request
     Given the Execute activatePaymentNotice request scenario executed successfully
@@ -44,7 +46,7 @@ Feature: semantic check for activatePaymentNotice regarding idempotency
       <password>pwdpwdpwd</password>
       <idempotencyKey>$activatePaymentNotice.idempotencyKey</idempotencyKey>
       <qrCode>
-      <fiscalCode>#creditor_institution_code_old#</fiscalCode>
+      <fiscalCode>66666666666</fiscalCode>
       <noticeNumber>$activatePaymentNotice.noticeNumber</noticeNumber>
       </qrCode>
       <amount>10.00</amount>
@@ -55,18 +57,19 @@ Feature: semantic check for activatePaymentNotice regarding idempotency
       </soapenv:Envelope>
       """
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
-    Then check outcome is OK of activatePaymentNotice response
+    Then check outcome is KO of activatePaymentNotice response
+    And check faultCode is PPT_ERRORE_IDEMPOTENZA of activatePaymentNotice response
 
   #DB check
   Scenario: Execute activatePaymentNotice request
     Given the Execute activatePaymentNotice1 request scenario executed successfully
-    And checks the value PAYING of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_pay on db nodo_online under macro NewMod3
-    And checks the value PAYING of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_pay on db nodo_online under macro NewMod3
-    And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
-    And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro NewMod3
-    And checks the value NotNone of the record at column ID of the table POSITION_ACTIVATE retrived by the query payment_status_pay on db nodo_online under macro NewMod3
-    And checks the value NotNone of the record at column ID of the table POSITION_PAYMENT retrived by the query payment_status_pay on db nodo_online under macro NewMod3
-    And checks the value NotNone of the record at column ID of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache_act on db nodo_online under macro NewMod3
+    And checks the value PAYING of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_pay_only_act1 on db nodo_online under macro NewMod3
+    And checks the value PAYING of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_pay_only_act1 on db nodo_online under macro NewMod3
+    And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status_1 on db nodo_online under macro NewMod3
+    And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_1 on db nodo_online under macro NewMod3
+    And checks the value NotNone of the record at column ID of the table POSITION_ACTIVATE retrived by the query payment_status_pay_only_act1 on db nodo_online under macro NewMod3
+    And checks the value NotNone of the record at column ID of the table POSITION_PAYMENT retrived by the query payment_status_pay_only_act1 on db nodo_online under macro NewMod3
+    And checks the value NotNone of the record at column ID of the table IDEMPOTENCY_CACHE retrived by the query idempotency_act on db nodo_online under macro NewMod3
 
 
 
