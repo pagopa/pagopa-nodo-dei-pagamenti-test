@@ -114,9 +114,27 @@ def step_impl(context):
         intermediarioPA = "44444444444_05"
         payload = payload.replace('#intermediarioPA#', intermediarioPA)
         setattr(context,"intermediarioPA", intermediarioPA)
+    
+    if "nodoVerificaRPT_IUV" in payload:
+        nodoVerificaRPT = getattr(context, 'nodoVerificaRPT')
+        my_document = parseString(nodoVerificaRPT.content)
+        aux_digit = my_document.getElementsByTagName('AuxDigit')
+        if aux_digit == '0' or aux_digit == '1' or aux_digit == '2':
+             iuv = ''+random.randint(10000, 20000)+random.randint(10000, 20000)+random.randint(10000, 20000)
+        elif aux_digit == '3':
+            #per pa_old
+             iuv = '11' + (int)(random.randint(10000, 20000))+(int)(random.randint(10000, 20000))+(int)(random.randint(10000, 20000))
+        payload = payload.replace('iuv', iuv)
+        setattr(context,'iuv', iuv)
+
+    if "$ccp" in payload:
+        ccp = ''+random.randint(10000, 20000)+random.randint(10000, 20000)+random.randint(10000, 20000)
+        payload = payload.replace('ccp',ccp )
+        setattr(context, "ccp", ccp)
 
     if '$iuv' in payload:
         payload = payload.replace('$iuv', getattr(context, 'iuv'))
+    
     print("RPT generato: ", payload)
     setattr(context,'rptAttachment', payload)
 
@@ -770,7 +788,6 @@ def step_impl(context, seconds):
     #  And field VALID_TO set to current time + <seconds> seconds in NODO_ONLINE.IDEMPOTENCY_CACHE table for
     #  sendPaymentOutcome record
     pass
-
 
 @step(u"checks the value {value} of the record at column {column} of the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
 def step_impl(context, value, column, query_name, table_name, db_name, name_macro):

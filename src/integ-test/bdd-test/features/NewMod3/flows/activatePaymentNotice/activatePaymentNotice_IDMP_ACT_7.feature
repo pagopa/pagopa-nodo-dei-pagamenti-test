@@ -20,9 +20,7 @@ Feature: semantic check for activatePaymentNotice regarding idempotency
       <fiscalCode>#creditor_institution_code_old#</fiscalCode>
       <noticeNumber>#notice_number_old#</noticeNumber>
       </qrCode>
-      <expirationTime>10000</expirationTime>
       <amount>10.00</amount>
-      <dueDate>2021-12-31</dueDate>
       <paymentNote>causale</paymentNote>
       </nod:activatePaymentNoticeReq>
       </soapenv:Body>
@@ -50,8 +48,7 @@ Feature: semantic check for activatePaymentNotice regarding idempotency
       <fiscalCode>$activatePaymentNotice.fiscalCode</fiscalCode>
       <noticeNumber>$activatePaymentNotice.noticeNumber</noticeNumber>
       </qrCode>
-      <amount>10.00</amount>
-      <dueDate>2021-12-31</dueDate>
+      <amount>8.00</amount>
       <paymentNote>causale</paymentNote>
       </nod:activatePaymentNoticeReq>
       </soapenv:Body>
@@ -71,11 +68,3 @@ Feature: semantic check for activatePaymentNotice regarding idempotency
     And checks the value NotNone of the record at column ID of the table POSITION_ACTIVATE retrived by the query payment_status_pay_only_act1 on db nodo_online under macro NewMod3
     And checks the value NotNone of the record at column ID of the table POSITION_PAYMENT retrived by the query payment_status_pay_only_act1 on db nodo_online under macro NewMod3
     And checks the value NotNone of the record at column ID of the table IDEMPOTENCY_CACHE retrived by the query idempotency_act on db nodo_online under macro NewMod3
-
-
-
-
-
-
-
-
