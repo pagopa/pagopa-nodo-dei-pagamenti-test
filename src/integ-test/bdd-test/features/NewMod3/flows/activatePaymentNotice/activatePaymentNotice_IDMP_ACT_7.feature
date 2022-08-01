@@ -3,6 +3,9 @@ Feature: semantic check for activatePaymentNotice regarding idempotency
   Background:
     Given systems up
     And nodo-dei-pagamenti has config parameter useIdempotency set to true
+    And nodo-dei-pagamenti has config parameter default_idempotency_key_validity_minutes set to 1
+    And nodo-dei-pagamenti has config parameter default_token_duration_validity_millis set to 1800000
+    And nodo-dei-pagamenti has config parameter scheduler.jobName_idempotencyCacheClean.enabled set to false
 
   Scenario: Execute activatePaymentNotice request
     Given initial XML activatePaymentNotice
@@ -33,6 +36,7 @@ Feature: semantic check for activatePaymentNotice regarding idempotency
 
   Scenario: Execute activatePaymentNotice1 request
     Given the Execute activatePaymentNotice request scenario executed successfully
+    And PSP waits 70 seconds for expiration
     And initial XML activatePaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -45,26 +49,24 @@ Feature: semantic check for activatePaymentNotice regarding idempotency
       <password>pwdpwdpwd</password>
       <idempotencyKey>$activatePaymentNotice.idempotencyKey</idempotencyKey>
       <qrCode>
-      <fiscalCode>$activatePaymentNotice.fiscalCode</fiscalCode>
+      <fiscalCode>66666666666</fiscalCode>
       <noticeNumber>$activatePaymentNotice.noticeNumber</noticeNumber>
       </qrCode>
-      <amount>8.00</amount>
+      <amount>10.00</amount>
       <paymentNote>causale</paymentNote>
       </nod:activatePaymentNoticeReq>
       </soapenv:Body>
       </soapenv:Envelope>
       """
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
-    Then check outcome is KO of activatePaymentNotice response
-    And check faultCode is PPT_ERRORE_IDEMPOTENZA of activatePaymentNotice response
+    Then check outcome is OK of activatePaymentNotice response
+    And save activatePaymentNotice response in activatePaymentNotice2
+    And saving activatePaymentNotice request in activatePaymentNotice2
 
   #DB check
   Scenario: Execute activatePaymentNotice request
     Given the Execute activatePaymentNotice1 request scenario executed successfully
-    And checks the value PAYING of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_pay_only_act1 on db nodo_online under macro NewMod3
-    And checks the value PAYING of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_pay_only_act1 on db nodo_online under macro NewMod3
-    And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status_1 on db nodo_online under macro NewMod3
-    And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_1 on db nodo_online under macro NewMod3
-    And checks the value NotNone of the record at column ID of the table POSITION_ACTIVATE retrived by the query payment_status_pay_only_act1 on db nodo_online under macro NewMod3
-    And checks the value NotNone of the record at column ID of the table POSITION_PAYMENT retrived by the query payment_status_pay_only_act1 on db nodo_online under macro NewMod3
-    And checks the value NotNone of the record at column ID of the table IDEMPOTENCY_CACHE retrived by the query idempotency_act on db nodo_online under macro NewMod3
+    And checks the value NotNone of the record at column ID of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache_paymentToken1 on db nodo_online under macro NewMod3
+    And checks the value $activatePaymentNotice1.fiscalCode of the record at column PA_FISCAL_CODE of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache_paymentToken1 on db nodo_online under macro NewMod3
+     And checks the value NotNone of the record at column ID of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache_paymentToken2 on db nodo_online under macro NewMod3
+    And checks the value $activatePaymentNotice2.fiscalCode of the record at column PA_FISCAL_CODE of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache_paymentToken2 on db nodo_online under macro NewMod3
