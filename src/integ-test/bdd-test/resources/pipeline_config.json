@@ -5,7 +5,8 @@
       "url": "https://api.dev.platform.pagopa.it/nodo-pagamenti/api/v1",
       "healthcheck": "/monitor/health",
       "soap_service": "/webservices/input",
-      "rest_service": ""
+      "rest_service": "",
+      "refresh_config_service": "/config/refresh/CONFIG"
     },
     "mock-ec": {
       "url": "https://api.dev.platform.pagopa.it/mock-ec/api/v1",
