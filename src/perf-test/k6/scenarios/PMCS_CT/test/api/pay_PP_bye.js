@@ -16,52 +16,57 @@ export function pay_PP_bye(baseUrl, RED_Path) {
   check(res, {
  	'pay_PP_bye:over_sla300': (r) => r.timings.duration >300,
    },
-   { pay_PP_bye: 'over_sla300' }
+   { pay_PP_bye: 'over_sla300' , ALL:'over_sla300'}
    );
    
    check(res, {
  	'pay_PP_bye:over_sla400': (r) => r.timings.duration >400,
    },
-   { pay_PP_bye: 'over_sla400' }
+   { pay_PP_bye: 'over_sla400' , ALL:'over_sla400'}
    );
    
    check(res, {
  	'pay_PP_bye:over_sla500 ': (r) => r.timings.duration >500,
    },
-   { pay_PP_bye: 'over_sla500' }
+   { pay_PP_bye: 'over_sla500' , ALL:'over_sla500'}
    );
    
    check(res, {
  	'pay_PP_bye:over_sla600': (r) => r.timings.duration >600,
    },
-   { pay_PP_bye: 'over_sla600' }
+   { pay_PP_bye: 'over_sla600' , ALL:'over_sla600'}
    );
    
    check(res, {
  	'pay_PP_bye:over_sla800': (r) => r.timings.duration >800,
    },
-   { pay_PP_bye: 'over_sla800' }
+   { pay_PP_bye: 'over_sla800', ALL:'over_sla800' }
    );
    
    check(res, {
  	'pay_PP_bye:over_sla1000': (r) => r.timings.duration >1000,
    },
-   { pay_PP_bye: 'over_sla1000' }
+   { pay_PP_bye: 'over_sla1000', ALL:'over_sla1000' }
    );
   
-  
+
+
    let esitoTrEdt = 'NA';
    if (RED_Path!=="NA"){
-   esitoTrEdt = RED_Path.substr(RED_Path.indexOf("outcome=")+8);
+   try{
+   esitoTrEdt = RED_Path.substr(RED_Path.indexOf("outcome=")+8).toString();
+   }catch(error){}
    }
-   	 
+
+
+
    check(
     res,
     {
     
 	 'pay_PP_bye:ok_rate': (r) =>  esitoTrEdt == '0',
     },
-    { pay_PP_bye: 'ok_rate' }
+    { pay_PP_bye: 'ok_rate', ALL:'ok_rate' }
 	);
  
   check(
@@ -70,7 +75,7 @@ export function pay_PP_bye(baseUrl, RED_Path) {
      
 	 'pay_PP_bye:ko_rate': (r) => esitoTrEdt !== '0',
     },
-    { pay_PP_bye: 'ko_rate' }
+    { pay_PP_bye: 'ko_rate', ALL:'ko_rate' }
   );
     
   return res;

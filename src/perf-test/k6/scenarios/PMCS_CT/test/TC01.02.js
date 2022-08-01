@@ -3,7 +3,6 @@ import { sleep } from 'k6';
 import { Trend } from "k6/metrics";
 import { check } from 'k6';
 import encoding from 'k6/encoding';
-import { htmlReport } from "https://raw.githubusercontent.com/benc-uk/k6-reporter/main/dist/bundle.js";
 import { scenario } from 'k6/execution';
 import { SharedArray } from 'k6/data';
 import papaparse from 'https://jslib.k6.io/papaparse/5.1.1/index.js';
@@ -53,26 +52,30 @@ export const getScalini = new SharedArray('scalini', function () {
 
 export const options = {
 	
-    scenarios: {
+  /*  scenarios: {
   	total: {
-      executor: 'ramping-vus',
+      timeUnit: '1s',
+      preAllocatedVUs: 50, // how large the initial pool of VUs would be
+      executor: 'ramping-arrival-rate',
+      //executor: 'ramping-vus',
+      //maxVUs: 100,
       stages: [
         { target: getScalini[0].Scalino_CT_1, duration: getScalini[0].Scalino_CT_TIME_1+'s' }, 
         { target: getScalini[0].Scalino_CT_2, duration: getScalini[0].Scalino_CT_TIME_2+'s' }, 
         { target: getScalini[0].Scalino_CT_3, duration: getScalini[0].Scalino_CT_TIME_3+'s' }, 
-		{ target: getScalini[0].Scalino_CT_4, duration: getScalini[0].Scalino_CT_TIME_4+'s' }, 
+		{ target: getScalini[0].Scalino_CT_4, duration: getScalini[0].Scalino_CT_TIME_4+'s' },
         { target: getScalini[0].Scalino_CT_5, duration: getScalini[0].Scalino_CT_TIME_5+'s' }, 
         { target: getScalini[0].Scalino_CT_6, duration: getScalini[0].Scalino_CT_TIME_6+'s' },
 		{ target: getScalini[0].Scalino_CT_7, duration: getScalini[0].Scalino_CT_TIME_7+'s' }, 
 		{ target: getScalini[0].Scalino_CT_8, duration: getScalini[0].Scalino_CT_TIME_8+'s' }, 
         { target: getScalini[0].Scalino_CT_9, duration: getScalini[0].Scalino_CT_TIME_9+'s' }, 
-        { target: getScalini[0].Scalino_CT_10, duration: getScalini[0].Scalino_CT_TIME_10+'s' },
+        { target: getScalini[0].Scalino_CT_10, duration: getScalini[0].Scalino_CT_TIME_10+'s' }, //to uncomment
        ],
       tags: { test_type: 'ALL' }, 
       exec: 'total', 
     }
 	
-  },
+  },*/
   summaryTrendStats: ['avg', 'min', 'max', 'p(90)', 'p(95)', 'count'],
   discardResponseBodies: false,
   thresholds: {
@@ -182,7 +185,7 @@ export function total() {
   }
  
    
-  let tokenIO = inputDataUtil.getTokenIO_PP();
+  let tokenIO = inputDataUtil.getTokenIO_PP().tokenIO;
   /*let users = ["aPPantani@nft.it", "gPPgiuggiole@nft.it", "pPPpagliaccio@nft.it", "zPPzabalai@nft.it","sPPsacs@nft.it"];
 
   let tokenIO = '';
@@ -196,87 +199,113 @@ export function total() {
   //console.log("fc="+fc);
   //db.exec(tokenIO, mail, fc);*/
    
-  
   let res = startSession(baseUrl, tokenIO);
-	 
-  let token = res["data.sessionToken"];;
-  
-    
-  token='fh57gjgut8g4865j4tjy'; //to comment
-  res = ob_PP_psp(baseUrl,token);
+
+  /*
+    try{
+    out= res.body.toString();
+  //  }catch(error){ out='NA' }
+
   commonChecks(res);
-  standardChecks(res, res.status, 'matches', 200);  
+  standardChecks(res, out, 'substring', `"status":"REGISTERED_SPID"`);*/
+  let token = res.token;
+
+
+  /*let token = 'NA';
+     try{
+     token=res.json().data.sessionToken;
+     }catch(error){}*/
+
+
+
+  res = ob_PP_psp(baseUrl,token);
+  /*commonChecks(res);
+  standardChecks(res, res.status, 'matches', 200);  */
   
   
   
   res = ob_PP_pspInternal(baseUrl);
-  let redUrlPP= res["data.redirectUrl"];
+  //console.log(res);
+  /*let redUrlPP='NA';
+    try{
+    redUrlPP= res.json().data.redirectUrl;
+    }catch(error){
+    redUrlPP='NA';
+    }
   commonChecks(res);
-  standardChecks(res, redUrlPP, 'matches', '10.6.189.28');  
+  standardChecks(res, redUrlPP, 'substring', baseUrl); //'10.6.189.28'
   let pp_id_back='NA';
-  redUrlPP='htpp:/jfjfjffj.com/jgj?ere=1'; //to comment
-  if(redUrlPP==undefined){
+  //redUrlPP='htpp:/jfjfjffj.com/jgj?ere=1'; //to comment
+  try{
+  if(redUrlPP!==undefined){
 	  pp_id_back=redUrlPP.substr(redUrlPP.indexOf("id_back=")+8);
   }
-  
+  }catch(error){}
+  //console.log(pp_id_back);*/
+  let pp_id_back=res.pp_id_back;
   
   
   res= ob_PP_Confirm_Call(baseUrl,pp_id_back); //baseUrlPP
-  commonChecks(res);
-  standardChecks(res, res.status, 'matches', 200);
+  /*commonChecks(res);
+  standardChecks(res, res.status, 'matches', 200);*/
   
   
   
   res= ob_PP_Confirm(baseUrl); //baseUrlPP
-  let headers= res.headers;
-  let redirect = headers['Location'];
+  /*
+  let redirect=undefined;
   let RED_Path = "NA";
+  try{
+  let headers= res.headers;
+  redirect = headers['Location'];
   //redirect='htpp:/jfjfjffj.com/jgj?ere=1';
   if(redirect !== undefined){
 	 RED_Path=redirect.substr(redirect.indexOf("/pp-restapi-CD"));
   }
+  }catch(error){}
   commonChecks(res);
-  invertedChecks(res, redirect, 'matches', undefined);  
+  invertedChecks(res, redirect, 'matches', undefined);  */
+  let RED_Path=res.RED_Path;
   
   
   
-  RED_Path = '/pp-restapi-CD/ugugug?ip=1'; //to comment
+  //RED_Path = '/pp-restapi-CD/ugugug?ip=1'; //to comment
   res=ob_PP_Confirm_Continue(baseUrl, RED_Path);
+  /*redirect=undefined;
+  try{
   headers= res.headers;
   redirect = headers['Location'];
   RED_Path = "NA";
   if(redirect !== undefined){
 	 RED_Path=redirect.substr(redirect.indexOf("/pp-restapi-CD"));
   }
+  }catch(error){}
   commonChecks(res);
-  invertedChecks(res, redirect, 'matches', undefined);  
+  invertedChecks(res, redirect, 'matches', undefined);  */
+  RED_Path= res.RED_Path;
   
   
   
-  RED_Path = '/pp-restapi-CD/ugugug?ip=1'; //to comment
+  //RED_Path = '/pp-restapi-CD/ugugug?ip=1'; //to comment
   res=ob_PP_Confirm_Logout(baseUrl, RED_Path);
+  /*RED_Path = "NA";
+  try{
   headers= res.headers;
   redirect = headers['Location'];
-  RED_Path = "NA";
   if(redirect !== undefined){
-	 try{
+
 	 RED_Path=redirect.substr(redirect.indexOf("/pp-restapi-CD"));
-	 }catch(err){RED_Path='NA';}
+
   }
+  }catch(err){RED_Path='NA';}
   commonChecks(res);
-  invertedChecks(res, redirect, 'matches', undefined);  
+  invertedChecks(res, redirect, 'matches', undefined);  */
+  RED_Path =res.RED_Path;
   
   
-  RED_Path = '/pp-restapi-CD/ugugug?ip=1'; //to comment
+  //RED_Path = '/pp-restapi-CD/ugugug?ip=1'; //to comment
   res=ob_PP_Confirm_bye(baseUrl, RED_Path);
-  let esitoTrEdt = 'NA';
-  if (RED_Path!=="NA"){
-   esitoTrEdt = RED_Path.substr(RED_Path.indexOf("outcome=")+8);
-  }
-  commonChecks(res);
-  standardChecks(res, esitoTrEdt, 'matches', '0');  
-  
-  
+
   
 }
 

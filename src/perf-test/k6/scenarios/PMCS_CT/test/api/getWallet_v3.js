@@ -14,37 +14,37 @@ export function getWallet_v3(baseUrl,token) {
    check(res, {
  	'getWallet_v3:over_sla300': (r) => r.timings.duration >300,
    },
-   { getWallet_v3: 'over_sla300' }
+   { getWallet_v3: 'over_sla300', ALL: 'over_sla300' }
    );
    
    check(res, {
  	'getWallet_v3:over_sla400': (r) => r.timings.duration >400,
    },
-   { getWallet_v3: 'over_sla400' }
+   { getWallet_v3: 'over_sla400', ALL: 'over_sla400' }
    );
    
    check(res, {
  	'getWallet_v3:over_sla500 ': (r) => r.timings.duration >500,
    },
-   { getWallet_v3: 'over_sla500' }
+   { getWallet_v3: 'over_sla500' , ALL: 'over_sla500'}
    );
    
    check(res, {
  	'getWallet_v3:over_sla600': (r) => r.timings.duration >600,
    },
-   { getWallet_v3: 'over_sla600' }
+   { getWallet_v3: 'over_sla600', ALL: 'over_sla600' }
    );
    
    check(res, {
  	'getWallet_v3:over_sla800': (r) => r.timings.duration >800,
    },
-   { getWallet_v3: 'over_sla800' }
+   { getWallet_v3: 'over_sla800' , ALL: 'over_sla800'}
    );
    
    check(res, {
  	'getWallet_v3:over_sla1000': (r) => r.timings.duration >1000,
    },
-   { getWallet_v3: 'over_sla1000' }
+   { getWallet_v3: 'over_sla1000' , ALL: 'over_sla1000'}
    );
   
    // res.status = 200; //to comment
@@ -55,7 +55,7 @@ export function getWallet_v3(baseUrl,token) {
     
 	 'getWallet_v3:ok_rate': (r) =>  res.status==200,
     },
-    { getWallet_v3: 'ok_rate' }
+    { getWallet_v3: 'ok_rate' , ALL: 'ok_rate'}
 	);
  
   check(
@@ -64,7 +64,7 @@ export function getWallet_v3(baseUrl,token) {
      
 	 'getWallet_v3:ko_rate': (r) => res.status!==200,
     },
-    { getWallet_v3: 'ko_rate' }
+    { getWallet_v3: 'ko_rate' , ALL: 'ko_rate'}
   );
     
   return res;

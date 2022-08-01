@@ -1,15 +1,22 @@
 import http from 'k6/http';
 import { check } from 'k6';
+import { URL } from 'https://jslib.k6.io/url/1.0.0/index.js';
 
   
 
-export function ob_PP_Confirm(baseUrlPM, pp_id_back) {
+export function ob_PP_Confirm(baseUrlPM) {
  
 
- 
+ const url = new URL(baseUrlPM+'/paypalweb/management/success');
+
+ url.searchParams.append('paypalEmail', 'thea.peslegrini@example.com');
+ url.searchParams.append('paypalId', '31406');
+ url.searchParams.append('selectRedirect', 'true');
+
  const res = http.get(
-    baseUrlPM+'/paypalweb/management/success?paypalEmail=thea.peslegrini%40example.com&paypalId=31406&selectRedirect=true',
+    url.toString(),
 	{ headers: { 'Content-Type': 'application/x-www-form-urlencoded'},
+	redirects: 0,
 	tags: { ob_PP_Confirm:'http_req_duration', ALL:'http_req_duration'}
 	}
   );
@@ -17,41 +24,56 @@ export function ob_PP_Confirm(baseUrlPM, pp_id_back) {
    check(res, {
  	'ob_PP_Confirm:over_sla300': (r) => r.timings.duration >300,
    },
-   { ob_PP_Confirm: 'over_sla300' }
+   { ob_PP_Confirm: 'over_sla300' ,ALL: 'over_sla300'}
    );
    
    check(res, {
  	'ob_PP_Confirm:over_sla400': (r) => r.timings.duration >400,
    },
-   { ob_PP_Confirm: 'over_sla400' }
+   { ob_PP_Confirm: 'over_sla400',ALL: 'over_sla400' }
    );
    
    check(res, {
  	'ob_PP_Confirm:over_sla500 ': (r) => r.timings.duration >500,
    },
-   { ob_PP_Confirm: 'over_sla500' }
+   { ob_PP_Confirm: 'over_sla500',ALL: 'over_sla500' }
    );
    
    check(res, {
  	'ob_PP_Confirm:over_sla600': (r) => r.timings.duration >600,
    },
-   { ob_PP_Confirm: 'over_sla600' }
+   { ob_PP_Confirm: 'over_sla600' ,ALL: 'over_sla600'}
    );
    
    check(res, {
  	'ob_PP_Confirm:over_sla800': (r) => r.timings.duration >800,
    },
-   { ob_PP_Confirm: 'over_sla800' }
+   { ob_PP_Confirm: 'over_sla800',ALL: 'over_sla800' }
    );
    
    check(res, {
  	'ob_PP_Confirm:over_sla1000': (r) => r.timings.duration >1000,
    },
-   { ob_PP_Confirm: 'over_sla1000' }
+   { ob_PP_Confirm: 'over_sla1000', ALL: 'over_sla1000' }
    );
-   
-   const headers= res.headers;
-   let redirect = headers['Location'];
+
+   let result={};
+   let RED_Path = "NA";
+   const headers= '';
+   let redirect = undefined;
+
+   try{
+   headers=res.headers;
+   redirect=headers['Location'];
+   }catch(error){}
+
+   result.RED_Path='NA';
+   try{
+     if(redirect !== undefined){
+   	 result.RED_Path=redirect.substr(redirect.indexOf("/pp-restapi-CD"));
+     }
+   }catch(error){}
+
    
    
    check(
@@ -60,7 +82,7 @@ export function ob_PP_Confirm(baseUrlPM, pp_id_back) {
     
 	 'ob_PP_Confirm:ok_rate': (r) => redirect !== undefined,
     },
-    { ob_PP_Confirm: 'ok_rate' }
+    { ob_PP_Confirm: 'ok_rate', ALL: 'ok_rate' }
 	);
  
   check(
@@ -69,10 +91,10 @@ export function ob_PP_Confirm(baseUrlPM, pp_id_back) {
      
 	 'ob_PP_Confirm:ko_rate': (r) => redirect === undefined,
     },
-    { ob_PP_Confirm: 'ko_rate' }
+    { ob_PP_Confirm: 'ko_rate' , ALL: 'ko_rate'}
   );
   
-  return res;
+  return result;
    
    
 }

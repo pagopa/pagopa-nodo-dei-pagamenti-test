@@ -3,7 +3,6 @@ import { sleep } from 'k6';
 import { Trend } from "k6/metrics";
 import { check } from 'k6';
 import encoding from 'k6/encoding';
-import { htmlReport } from "https://raw.githubusercontent.com/benc-uk/k6-reporter/main/dist/bundle.js";
 import { scenario } from 'k6/execution';
 import { SharedArray } from 'k6/data';
 import papaparse from 'https://jslib.k6.io/papaparse/5.1.1/index.js';
@@ -16,6 +15,7 @@ import { B_Check } from './api/B_Check.js';
 import { pay_PP_Logout } from './api/pay_PP_Logout.js';
 import { pay_PP_bye } from './api/pay_PP_bye.js';
 import { parseHTML } from "k6/html";
+import { idpay_setup} from './idpay_setup_SIT.js';
 import * as outputUtil from './util/output_util.js';
 import * as inputDataUtil from './util/input_data_util.js';
 //import * as db from './db/db.js';
@@ -52,9 +52,13 @@ export const getScalini = new SharedArray('scalini', function () {
 
 export const options = {
 	
-    scenarios: {
+   /* scenarios: {
   	total: {
-      executor: 'ramping-vus',
+      timeUnit: '1s',
+      preAllocatedVUs: 50, // how large the initial pool of VUs would be
+      executor: 'ramping-arrival-rate',
+      //executor: 'ramping-vus',
+      //maxVUs: 100,
       stages: [
         { target: getScalini[0].Scalino_CT_1, duration: getScalini[0].Scalino_CT_TIME_1+'s' }, 
         { target: getScalini[0].Scalino_CT_2, duration: getScalini[0].Scalino_CT_TIME_2+'s' }, 
@@ -71,7 +75,7 @@ export const options = {
       exec: 'total', 
     }
 	
-  },
+  }, */
   summaryTrendStats: ['avg', 'min', 'max', 'p(90)', 'p(95)', 'count'],
   discardResponseBodies: false,
   thresholds: {
@@ -125,7 +129,7 @@ export const options = {
 	'checks{B_Check:over_sla1000}': [],
 	'checks{B_Check:ok_rate}': [],
 	'checks{B_Check:ko_rate}': [],
-	'checks{ob_PP_Logout:over_sla300}': [],
+	'checks{pay_PP_Logout:over_sla300}': [],
 	'checks{pay_PP_Logout:over_sla400}': [],
 	'checks{pay_PP_Logout:over_sla500}': [],
 	'checks{pay_PP_Logout:over_sla600}': [],
@@ -172,41 +176,35 @@ export function total() {
   let anagPayPP = inputDataUtil.getAnagPay_PP();
   let idWallet = anagPayPP.IdWallet;
   let tokenIO = anagPayPP.TokenIO;
-  
-  let idPay = inputDataUtil.getPay().idPay;
-  
+
   
   
   let res = startSession(baseUrl, tokenIO);
-	 
-  let token = res["data.sessionToken"];
-  
+
+  let token = res.token;
+
     
-  token='dhry56rhfyr'; //to comment
+  //token='dhry56rhfyr'; //to comment
   res = getWallet_v3(baseUrl,token);
-  commonChecks(res);
-  standardChecks(res, res.status, 'matches', 200);  
-  
-  
+
+
+
+  //to comment in perf
+    res=idpay_setup();
+    let idPay=res.json()[0].idPayment;
+    console.log("idPay="+idPay);
+    //-- fine comment in perf
+    //let idPay = inputDataUtil.getPay().idPay; //to uncomment in perf
   
   
   res = pay_PP_Check(baseUrl, idPay, token);
-  commonChecks(res);
-  standardChecks(res, res.status, 'matches', 200);  
+
   
   
   
   res = pay_PP_Pay(baseUrl, token, idWallet, idPay);
-  let idTr='NA';
-  let regexTransId =  new RegExp(`id="transactionId" value=".*?"`);
-  try{
-   let idTr1 = regexTransId.exec(res);
-   let sl = idTr1.split('="');
-   idTr = sl[1].replace('"','');
-  }catch(err){idTr='NA';}
-  commonChecks(res);
-  invertedChecks(res, idTr, 'matches', 'NA');  
-  
+  let idTr=res.idTr;
+
   
   
   
@@ -214,38 +212,27 @@ export function total() {
   let statusTr = '';
   do {
   //console.log("dentro while");
-  resCheck1 = B_Check(baseUrl, idTr);
-  statusTr = resCheck1['statusMessage'];
-  statusTr = 'Confermato'; //to comment
-  
-  commonChecks(resCheck1);
-  invertedChecks(resCheck1, statusTr, 'matches', undefined);  
+  let resBCheck = B_Check(baseUrl, idTr);
+  statusTr=resBCheck.statusTr;
   }
   while (statusTr !== 'Confermato');
   
   
   
   res= pay_PP_Logout(baseUrl, idTr);
-  let headers = res.headers;
-  let redirect = headers['Location'];
-  commonChecks(res);
-  invertedChecks(res, redirect, 'matches', undefined);
-  let RED_Path='NA';
-  if(redirect !== undefined){
-	try{
-		RED_Path = redirect.substr(redirect.indexOf("/pp-restapi-CD"));
-		idTr = redirect.substr(redirect.indexOf("id=")+3);
-	}catch(err){idTr='NA';}
-  }
-  
+  let RED_Path = res.RED_Path;
+  idTr = res.idTr;
+
   
   
   RED_Path="/hfhfhfhfh?tyty=1"; //to comment
   res= pay_PP_bye(baseUrl, RED_Path);
   let esitoTrEdt = 'NA';
+  try{
   if (RED_Path!=="NA"){
   esitoTrEdt = RED_Path.substr(RED_Path.indexOf("outcome=")+8);
   }
+  }catch(error){}
   commonChecks(res);
   standardChecks(res, esitoTrEdt, 'matches', '0');  
   

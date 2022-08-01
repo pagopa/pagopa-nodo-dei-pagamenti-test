@@ -5,25 +5,25 @@ import { SharedArray } from 'k6/data';
 
 const csvTokenIO_CC = new SharedArray('tokenIO_CC_data', function () {
     
-  return papaparse.parse(open('../../../../data/tokenIOList.csv'), { header: true }).data;
+  return papaparse.parse(open('../../../../data/tokenIOList_SIT.csv'), { header: true }).data;
 });
 
 
 const csvTokenIO_PP = new SharedArray('tokenIO_PP_data', function () {
     
-  return papaparse.parse(open('../../../../data/tokenPP_OB.csv'), { header: true }).data;
+  return papaparse.parse(open('../../../../data/tokenPP_OB_SIT.csv'), { header: true }).data;
 });
 
 
 const csvAnagPay_CC = new SharedArray('anagPayCC_data', function () {
     
-  return papaparse.parse(open('../../../../data/anagPayCC.csv'), { header: true }).data;
+  return papaparse.parse(open('../../../../data/anagPayCC_SIT.csv'), { header: true }).data;
 });
 
 
 const csvAnagPay_PP = new SharedArray('anagPayPP_data', function () {
     
-  return papaparse.parse(open('../../../../data/anagPayPP.csv'), { header: true }).data;
+  return papaparse.parse(open('../../../../data/anagPayPP_SIT.csv'), { header: true }).data;
 });
 
 /*

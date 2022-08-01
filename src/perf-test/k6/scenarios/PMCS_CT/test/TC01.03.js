@@ -3,7 +3,6 @@ import { sleep } from 'k6';
 import { Trend } from "k6/metrics";
 import { check } from 'k6';
 import encoding from 'k6/encoding';
-import { htmlReport } from "https://raw.githubusercontent.com/benc-uk/k6-reporter/main/dist/bundle.js";
 import { scenario } from 'k6/execution';
 import { SharedArray } from 'k6/data';
 import papaparse from 'https://jslib.k6.io/papaparse/5.1.1/index.js';
@@ -23,6 +22,7 @@ import { ob_CC_Challenge } from './api/ob_CC_Challenge.js';
 import { ob_CC_Response} from './api/ob_CC_Response.js';
 import { ob_CC_bye} from './api/ob_CC_bye.js';
 import { ob_CC_resume3ds2} from './api/ob_CC_resume3ds2.js';
+import { idpay_setup} from './idpay_setup_SIT.js';
 import { parseHTML } from "k6/html";
 import * as outputUtil from './util/output_util.js';
 import * as inputDataUtil from './util/input_data_util.js';
@@ -60,26 +60,30 @@ export const getScalini = new SharedArray('scalini', function () {
 
 export const options = {
 	
-    scenarios: {
+  /*  scenarios: {
   	total: {
-      executor: 'ramping-vus',
+      timeUnit: '1s',
+      preAllocatedVUs: 50, // how large the initial pool of VUs would be
+      executor: 'ramping-arrival-rate',
+      //executor: 'ramping-vus',
+      //maxVUs: 100,
       stages: [
         { target: getScalini[0].Scalino_CT_1, duration: getScalini[0].Scalino_CT_TIME_1+'s' }, 
         { target: getScalini[0].Scalino_CT_2, duration: getScalini[0].Scalino_CT_TIME_2+'s' }, 
         { target: getScalini[0].Scalino_CT_3, duration: getScalini[0].Scalino_CT_TIME_3+'s' }, 
-		{ target: getScalini[0].Scalino_CT_4, duration: getScalini[0].Scalino_CT_TIME_4+'s' }, 
+		/*{ target: getScalini[0].Scalino_CT_4, duration: getScalini[0].Scalino_CT_TIME_4+'s' },
         { target: getScalini[0].Scalino_CT_5, duration: getScalini[0].Scalino_CT_TIME_5+'s' }, 
         { target: getScalini[0].Scalino_CT_6, duration: getScalini[0].Scalino_CT_TIME_6+'s' },
 		{ target: getScalini[0].Scalino_CT_7, duration: getScalini[0].Scalino_CT_TIME_7+'s' }, 
 		{ target: getScalini[0].Scalino_CT_8, duration: getScalini[0].Scalino_CT_TIME_8+'s' }, 
         { target: getScalini[0].Scalino_CT_9, duration: getScalini[0].Scalino_CT_TIME_9+'s' }, 
-        { target: getScalini[0].Scalino_CT_10, duration: getScalini[0].Scalino_CT_TIME_10+'s' },
+        { target: getScalini[0].Scalino_CT_10, duration: getScalini[0].Scalino_CT_TIME_10+'s' }, //to uncomment
        ],
       tags: { test_type: 'ALL' }, 
       exec: 'total', 
     }
 	
-  },
+  }, */
   summaryTrendStats: ['avg', 'min', 'max', 'p(90)', 'p(95)', 'count'],
   discardResponseBodies: false,
   thresholds: {
@@ -257,123 +261,98 @@ export function total() {
   let idWallet = anagPayCC.IdWallet;
   let tokenIO = anagPayCC.TokenIO;
   
-  let idPay = inputDataUtil.getPay().idPay;
-   
-  
+
+
   let res = startSession(baseUrl, tokenIO);
+  //console.log(res);
+  /*let out = '';
+    try{
+    out= res.body.toString();
+    }catch(error){ out='NA' }
   commonChecks(res);
-  standardChecks(res, res.body, 'substring', `"status":"REGISTERED_SPID"`); 
-  let token = res["data.sessionToken"];
-  
-    
-	
-  token='dhry56rhfyr'; //to comment
+  standardChecks(res, out, 'substring', `"status":"REGISTERED_SPID"`);
+  //let token = res["data.sessionToken"];
+  let token = 'NA';
+     try{
+     token=res.json().data.sessionToken;
+     }catch(error){}
+   */
+   let token = res.token;
+
+
+  //to comment in perf
+  res=idpay_setup();
+  let idPay=res.json()[0].idPayment;
+  console.log("idPay="+idPay);
+  //-- fine comment in perf
+  //let idPay = inputDataUtil.getPay().idPay; //to uncomment in perf
+
+
+
   res = getWallet_v2(baseUrl,token);
-  commonChecks(res);
-  standardChecks(res, res.status, 'matches', 200);  
-  
-  
+
+
   
   res = pay_Check(baseUrl, idPay, token);
-  commonChecks(res);
-  standardChecks(res, res.status, 'matches', 200);  
-  
+  //console.log(res);
+
   
   
   res = pay_CC_Pay(baseUrl, token, idWallet, idPay);
-  commonChecks(res);
-  standardChecks(res, res.status, 'matches', 200); 
-  
+  //console.log(res);
+
   
   
   const chars = '0123456789';
   let rndSecCode='';
   for (var i = 3; i > 0; --i) rndSecCode += chars[Math.floor(Math.random() * chars.length)];
   res = pay_CC_PayINternal(baseUrl, rndSecCode);
-  let headers= res.headers;
-  let redirect = headers['Location'];
-  let idTr='NA';
-  let RED_Path='NA';
-  try{
-  if (redirect!=undefined){
-  RED_Path=redirect.substr(redirect.indexOf("/pp-restapi-CD"));
-  idTr=redirect.substr(redirect.indexOf("id=")+3);
-  }
-  }catch(err){idTr='NA'; RED_Path='NA';}
+  let idTr=res.idTr;
+  let RED_Path=res.RED_Path;
+
   
  
-  RED_Path='/fgfgggg?op=1'
+  //RED_Path='/fgfgggg?op=1'
   res=pay_CC_CheckOut(baseUrl, RED_Path);
-  idTr='NA';
-  let regexTransId =  new RegExp(`id="transactionId" value=".*?"`);
-  try{
-   let idTr1 = regexTransId.exec(res);
-   let sl = idTr1.split('="');
-   idTr = sl[1].replace('"','');
-  }catch(err){idTr='NA';}
-  commonChecks(res);
-  invertedChecks(res, idTr, 'matches', 'NA'); 
-  
+  idTr=res.idTr;
+
   
 
   let resCheck1 = '';
-  let statusTr = '';
+  let statusTr = undefined;
   do {
-    //console.log("dentro while");
     resCheck1 = ob_CC_Check_1(baseUrl, idTr);
-    statusTr = resCheck1['statusMessage'];
-    statusTr = 'In attesa del metodo 3ds2'; //to comment
-
-    commonChecks(resCheck1);
-    invertedChecks(resCheck1, statusTr, 'matches', undefined);
-  }
-  while (statusTr !== 'Confermato' && statusTr !== 'In attesa del metodo 3ds2');
+    statusTr=resCheck1.statusTr;
+    }
+  while (!(statusTr == 'Confermato' || statusTr == 'In attesa del metodo 3ds2'))
   //console.log("dopo while");
+
 
 
  if(statusTr === 'In attesa del metodo 3ds2'){
     //if(statusTr === 'Confermato'){ //to comment
 
-	  let threeDSMethodData = 'threeDSMethodData';
-	  res = ob_CC_continueToStep1(baseUrl, idTr, threeDSMethodData);
-	  commonChecks(res);
-      standardChecks(res, res.status, 'matches', 200);
+	 let threeDSMethodData = 'threeDSMethodData';
+     res = ob_CC_continueToStep1(baseUrl, idTr, threeDSMethodData);
 
 
        let resCheck2 = '';
        let creq = '';
        do {
-            resCheck2 = ob_CC_Check_2(baseUrl, idTr);
-            statusTr = resCheck2['statusMessage'];
-            statusTr = 'In attesa della challenge 3ds2'; //to comment
-      		creq = resCheck2['params.creq'];
-      		//console.log("dentro while 2");
-      		commonChecks(resCheck2);
-            invertedChecks(resCheck2, statusTr, 'matches', undefined);
+             resCheck2 = ob_CC_Check_2(baseUrl, idTr);
+             statusTr = resCheck2.statusTr;
+             creq=resCheck2.creq;
            }
        while (statusTr !== 'In attesa della challenge 3ds2');
 
 
 
        res= ob_CC_Challenge(baseUrl, creq); //baseUrlPM
-       commonChecks(res);
-       standardChecks(res, res.status, 'matches', 200);
-       //res=`<prova1 id="xxxx">xxxx</prova1><prova id="threeDSServerTransID">12345</prova>`;
-       let threedstransId = 'NA';
-       let threeDSServerTransID =  new RegExp(`id="threeDSServerTransID">.*?<`);
-       try{
-             let dsServTransId = threeDSServerTransID.exec(res);
-             //console.log('dsServTransId='+dsServTransId);
-             let sl = dsServTransId.split('>');
-             threedstransId = sl[1].replace('<','');
-       }catch(err){threedstransId='NA';}
-       //console.log('threedstransId='+threedstransId);
+       let threedstransId = res.threedstransId;
 
 
 
        res= ob_CC_Response(baseUrl, threedstransId, token); //baseUrlPM
-       commonChecks(res);
-       standardChecks(res, res.status, 'matches', 200);
 
 
 
@@ -381,49 +360,28 @@ export function total() {
        let chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
        for (var i = 12; i > 0; --i) rndCres += chars[Math.floor(Math.random() * chars.length)];
        res= ob_CC_resume3ds2(baseUrl, idTr, rndCres);
-       commonChecks(res);
-       standardChecks(res, res.status, 'matches', 200);
 
 
 
        let resCheck3 = '';
        	  do {
               resCheck3 = ob_CC_Check_3(baseUrl, idTr);
-              statusTr = resCheck3['statusMessage'];
-              statusTr = 'Confermato'; //to comment
-       		  //console.log("dentro while 3");
-       		  commonChecks(resCheck3);
-              invertedChecks(resCheck3, statusTr, 'matches', undefined);
-             }
-             while (statusTr !== 'Confermato');
+              statusTr = resCheck3.statusTr;
+              }
+          while (statusTr !== 'Confermato');
 
  }
 
 
 
  res= ob_CC_Logout(baseUrl, idTr);
- headers = res.headers;
- redirect = headers['Location'];
- commonChecks(res);
- invertedChecks(res, redirect, 'matches', undefined);
- RED_Path='NA';
- if(redirect !== undefined){
- 		try{
- 		RED_Path = redirect.substr(redirect.indexOf("/pp-restapi-CD"));
- 		idTr = redirect.substr(redirect.indexOf("id=")+3);
- 		}catch(err){idTr='NA';}
- }
+ RED_Path=res.RED_Path;
+ idTr=res.idTr;
 
 
 
  RED_Path="/hfhfhfhfh?tyty=1"; //to comment
  res= ob_CC_bye(baseUrl, RED_Path);
- let esitoTrEdt = 'NA';
- if (RED_Path!=="NA"){
-     esitoTrEdt = RED_Path.substr(RED_Path.indexOf("outcome=")+8);
- }
- commonChecks(res);
- standardChecks(res, esitoTrEdt, 'matches', '0');
 
 
 }
@@ -442,12 +400,12 @@ export function handleSummary(data) {
 	 
    return {
     'stdout': textSummary(data, { indent: ' ', enableColors: true, expected_response: 'ALL' }), // Show the text summary to stdout...
-	'./scenarios/PMCS_CT/test/output/TC01.01.summary.json': JSON.stringify(data), // and a JSON with all the details...
-	'./scenarios/PMCS_CT/test/output/TC01.01.summary.xml': jUnit(data), 
+	'./scenarios/PMCS_CT/test/output/TC01.03.summary.json': JSON.stringify(data), // and a JSON with all the details...
+	'./scenarios/PMCS_CT/test/output/TC01.03.summary.xml': jUnit(data),
 	//'./scenarios/CT/test/output/summary.html': htmlReport(data),
-	'./scenarios/PMCS_CT/test/output/TC01.01.summary.csv': csv[0],
-	'./scenarios/PMCS_CT/test/output/TC01.01.trOverSla.csv': csv[1],
-	'./scenarios/PMCS_CT/test/output/TC01.01.resultCodeSummary.csv': csv[2],
+	'./scenarios/PMCS_CT/test/output/TC01.03.summary.csv': csv[0],
+	'./scenarios/PMCS_CT/test/output/TC01.03.trOverSla.csv': csv[1],
+	'./scenarios/PMCS_CT/test/output/TC01.03.resultCodeSummary.csv': csv[2],
 	 	
   };
   

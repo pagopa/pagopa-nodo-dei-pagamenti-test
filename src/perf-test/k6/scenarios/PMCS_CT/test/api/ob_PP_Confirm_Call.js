@@ -17,37 +17,37 @@ export function ob_PP_Confirm_Call(baseUrlPM, pp_id_back) {
    check(res, {
  	'ob_PP_Confirm_Call:over_sla300': (r) => r.timings.duration >300,
    },
-   { ob_PP_Confirm_Call: 'over_sla300' }
+   { ob_PP_Confirm_Call: 'over_sla300' ,ALL: 'over_sla300'}
    );
    
    check(res, {
  	'ob_PP_Confirm_Call:over_sla400': (r) => r.timings.duration >400,
    },
-   { ob_PP_Confirm_Call: 'over_sla400' }
+   { ob_PP_Confirm_Call: 'over_sla400',ALL: 'over_sla400' }
    );
    
    check(res, {
  	'ob_PP_Confirm_Call:over_sla500 ': (r) => r.timings.duration >500,
    },
-   { ob_PP_Confirm_Call: 'over_sla500' }
+   { ob_PP_Confirm_Call: 'over_sla500',ALL: 'over_sla500' }
    );
    
    check(res, {
  	'ob_PP_Confirm_Call:over_sla600': (r) => r.timings.duration >600,
    },
-   { ob_PP_Confirm_Call: 'over_sla600' }
+   { ob_PP_Confirm_Call: 'over_sla600' ,ALL: 'over_sla600'}
    );
    
    check(res, {
  	'ob_PP_Confirm_Call:over_sla800': (r) => r.timings.duration >800,
    },
-   { ob_PP_Confirm_Call: 'over_sla800' }
+   { ob_PP_Confirm_Call: 'over_sla800',ALL: 'over_sla800' }
    );
    
    check(res, {
  	'ob_PP_Confirm_Call:over_sla1000': (r) => r.timings.duration >1000,
    },
-   { ob_PP_Confirm_Call: 'over_sla1000' }
+   { ob_PP_Confirm_Call: 'over_sla1000',ALL: 'over_sla1000' }
    );
    
    
@@ -57,7 +57,7 @@ export function ob_PP_Confirm_Call(baseUrlPM, pp_id_back) {
     
 	 'ob_PP_Confirm_Call:ok_rate': (r) => r.status === 200,
     },
-    { ob_PP_Confirm_Call: 'ok_rate' }
+    { ob_PP_Confirm_Call: 'ok_rate',ALL: 'ok_rate' }
 	);
  
   check(
@@ -66,7 +66,7 @@ export function ob_PP_Confirm_Call(baseUrlPM, pp_id_back) {
      
 	 'ob_PP_Confirm_Call:ko_rate': (r) => r.status !== 200,
     },
-    { ob_PP_Confirm_Call: 'ko_rate' }
+    { ob_PP_Confirm_Call: 'ko_rate',ALL: 'ko_rate' }
   );
   
   return res;

@@ -17,49 +17,69 @@ export function ob_CC_Check_2(baseUrl, idTr) {
   check(res, {
  	'ob_CC_Check_2:over_sla300': (r) => r.timings.duration >300,
    },
-   { ob_CC_Check_2: 'over_sla300' }
+   { ob_CC_Check_2: 'over_sla300' , ALL: 'over_sla300' }
    );
    
    check(res, {
  	'ob_CC_Check_2:over_sla400': (r) => r.timings.duration >400,
    },
-   { ob_CC_Check_2: 'over_sla400' }
+   { ob_CC_Check_2: 'over_sla400' , ALL: 'over_sla400' }
    );
    
    check(res, {
  	'ob_CC_Check_2:over_sla500 ': (r) => r.timings.duration >500,
    },
-   { ob_CC_Check_2: 'over_sla500' }
+   { ob_CC_Check_2: 'over_sla500' , ALL: 'over_sla500' }
    );
    
    check(res, {
  	'ob_CC_Check_2:over_sla600': (r) => r.timings.duration >600,
    },
-   { ob_CC_Check_2: 'over_sla600' }
+   { ob_CC_Check_2: 'over_sla600' , ALL: 'over_sla600' }
    );
    
    check(res, {
  	'ob_CC_Check_2:over_sla800': (r) => r.timings.duration >800,
    },
-   { ob_CC_Check_2: 'over_sla800' }
+   { ob_CC_Check_2: 'over_sla800', ALL: 'over_sla800'  }
    );
    
    check(res, {
  	'ob_CC_Check_2:over_sla1000': (r) => r.timings.duration >1000,
    },
-   { ob_CC_Check_2: 'over_sla1000' }
+   { ob_CC_Check_2: 'over_sla1000', ALL: 'over_sla1000' }
    );
   
-  
-   let statusTr = res['statusMessage'];
-   	 
+   console.log(resCheck2.body);
+   //let statusTr = res['statusMessage'];
+   let statusTr=undefined;
+   let result={};
+   try{
+   let subStMsg=res.body.substr(res.body.indexOf("statusMessage")+16);
+   statusTr = subStMsg.split('"')[0];
+   result.statusTr=statusTr;
+   }catch(error){result.statusTr=statusTr}
+
+   try{
+   let creq ='';
+   let subCreq=resCheck2.body.substr(resCheck2.body.indexOf("creq")+7);
+   console.log(subCreq);
+   creq = subCreq.split('"')[0];
+   result.creq=creq;
+   }catch(error){result.creq=creq}
+   console.log("creq="+creq);
+   console.log("statusTr="+statusTr);
+
+
+
+
    check(
     res,
     {
     
 	 'ob_CC_Check_2:ok_rate': (r) =>  statusTr !== undefined,
     },
-    { ob_CC_Check_2: 'ok_rate' }
+    { ob_CC_Check_2: 'ok_rate', ALL: 'ok_rate' }
 	);
  
   check(
@@ -68,10 +88,10 @@ export function ob_CC_Check_2(baseUrl, idTr) {
      
 	 'ob_CC_Check_2:ko_rate': (r) => statusTr == undefined,
     },
-    { ob_CC_Check_2: 'ko_rate' }
+    { ob_CC_Check_2: 'ko_rate', ALL: 'ko_rate' }
   );
     
-  return res;
+  return result;
    
 }
 

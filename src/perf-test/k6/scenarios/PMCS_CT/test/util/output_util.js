@@ -262,11 +262,11 @@ for(var i = 0; i < jsonArray.length; i++) {
   const rec1 = [];
   const rec2 = [];
   const header = [];
-  header.push('Code');
+  header.push('Result Code');
   
  
-  rec1.push("200_OK");
-  rec2.push("Error");
+  rec1.push("OK"); //200_OK
+  rec2.push("KO"); //Error
   //console.log(rec1);
 	
 	for (var i = 0; i < jsonArr.length; i++) {

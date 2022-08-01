@@ -16,52 +16,57 @@ export function ob_CC_bye(baseUrl, RED_Path) {
   check(res, {
  	'ob_CC_bye:over_sla300': (r) => r.timings.duration >300,
    },
-   { ob_CC_bye: 'over_sla300' }
+   { ob_CC_bye: 'over_sla300', ALL: 'over_sla300' }
    );
    
    check(res, {
  	'ob_CC_bye:over_sla400': (r) => r.timings.duration >400,
    },
-   { ob_CC_bye: 'over_sla400' }
+   { ob_CC_bye: 'over_sla400', ALL: 'over_sla400' }
    );
    
    check(res, {
  	'ob_CC_bye:over_sla500 ': (r) => r.timings.duration >500,
    },
-   { ob_CC_bye: 'over_sla500' }
+   { ob_CC_bye: 'over_sla500', ALL: 'over_sla500' }
    );
    
    check(res, {
  	'ob_CC_bye:over_sla600': (r) => r.timings.duration >600,
    },
-   { ob_CC_bye: 'over_sla600' }
+   { ob_CC_bye: 'over_sla600', ALL: 'over_sla600' }
    );
    
    check(res, {
  	'ob_CC_bye:over_sla800': (r) => r.timings.duration >800,
    },
-   { ob_CC_bye: 'over_sla800' }
+   { ob_CC_bye: 'over_sla800', ALL: 'over_sla800' }
    );
    
    check(res, {
  	'ob_CC_bye:over_sla1000': (r) => r.timings.duration >1000,
    },
-   { ob_CC_bye: 'over_sla1000' }
+   { ob_CC_bye: 'over_sla1000', ALL: 'over_sla1000' }
    );
   
-  
+
    let esitoTrEdt = 'NA';
    if (RED_Path!=="NA"){
-   esitoTrEdt = RED_Path.substr(RED_Path.indexOf("outcome=")+8);
+   try{
+      esitoTrEdt = RED_Path.substr(RED_Path.indexOf("outcome=")+8).toString();
+   }catch(error){}
    }
-   	 
+   console.log('esitoTrEdt='+esitoTrEdt+"|");
+
+
+
    check(
     res,
     {
     
 	 'ob_CC_bye:ok_rate': (r) =>  esitoTrEdt == '0',
     },
-    { ob_CC_bye: 'ok_rate' }
+    { ob_CC_bye: 'ok_rate', ALL: 'ok_rate' }
 	);
  
   check(
@@ -70,7 +75,7 @@ export function ob_CC_bye(baseUrl, RED_Path) {
      
 	 'ob_CC_bye:ko_rate': (r) => esitoTrEdt !== '0',
     },
-    { ob_CC_bye: 'ko_rate' }
+    { ob_CC_bye: 'ko_rate', ALL: 'ko_rate' }
   );
     
   return res;

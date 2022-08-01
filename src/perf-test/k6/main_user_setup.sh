@@ -1,10 +1,8 @@
 #active_scenario=CT
 active_scenario=PMCS_CT
-#active_test=TC03.07
-active_test=TC01.01
+active_test=user_setup
+#active_test=TC01.01
 test_step=rampa_1_1_10
-#test_step=rampa_50_300_10 #pm
-#test_step=rampa_30_300_10 #nodo
 env="pagoPA_DEV_apim"
 echo -----------------------------------------
 echo *** Main K6 Perf Test Script ***
@@ -18,7 +16,7 @@ echo configured env= $env
 #then
   #sh test_selector.sh $active_scenario $active_test $test_step $env
 #else 
-  sh './scenarios/'$active_scenario'/test_selector.sh' $active_scenario $active_test $test_step $env
+  sh './scenarios/'$active_scenario'/user_setup_selector.sh' $active_scenario $active_test $test_step $env
 #fi
 
 

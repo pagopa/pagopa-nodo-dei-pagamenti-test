@@ -3,7 +3,6 @@ import { sleep } from 'k6';
 import { Trend } from "k6/metrics";
 import { check } from 'k6';
 import encoding from 'k6/encoding';
-import { htmlReport } from "https://raw.githubusercontent.com/benc-uk/k6-reporter/main/dist/bundle.js";
 import { scenario } from 'k6/execution';
 import { SharedArray } from 'k6/data';
 import papaparse from 'https://jslib.k6.io/papaparse/5.1.1/index.js';
@@ -60,26 +59,32 @@ export const getScalini = new SharedArray('scalini', function () {
 
 export const options = {
 	
-    scenarios: {
+   /* scenarios: {
   	total: {
-      executor: 'ramping-vus',
+
+      timeUnit: '1s',
+      preAllocatedVUs: 50, // how large the initial pool of VUs would be
+      executor: 'ramping-arrival-rate',
+      //executor: 'ramping-vus',
+      //maxVUs: 100,
+
       stages: [
         { target: getScalini[0].Scalino_CT_1, duration: getScalini[0].Scalino_CT_TIME_1+'s' }, 
         { target: getScalini[0].Scalino_CT_2, duration: getScalini[0].Scalino_CT_TIME_2+'s' }, 
         { target: getScalini[0].Scalino_CT_3, duration: getScalini[0].Scalino_CT_TIME_3+'s' }, 
-		{ target: getScalini[0].Scalino_CT_4, duration: getScalini[0].Scalino_CT_TIME_4+'s' }, 
+	/*	{ target: getScalini[0].Scalino_CT_4, duration: getScalini[0].Scalino_CT_TIME_4+'s' },
         { target: getScalini[0].Scalino_CT_5, duration: getScalini[0].Scalino_CT_TIME_5+'s' }, 
         { target: getScalini[0].Scalino_CT_6, duration: getScalini[0].Scalino_CT_TIME_6+'s' },
 		{ target: getScalini[0].Scalino_CT_7, duration: getScalini[0].Scalino_CT_TIME_7+'s' }, 
 		{ target: getScalini[0].Scalino_CT_8, duration: getScalini[0].Scalino_CT_TIME_8+'s' }, 
         { target: getScalini[0].Scalino_CT_9, duration: getScalini[0].Scalino_CT_TIME_9+'s' }, 
-        { target: getScalini[0].Scalino_CT_10, duration: getScalini[0].Scalino_CT_TIME_10+'s' },
+        { target: getScalini[0].Scalino_CT_10, duration: getScalini[0].Scalino_CT_TIME_10+'s' }, //to uncomment
        ],
       tags: { test_type: 'ALL' }, 
       exec: 'total', 
     }
 	
-  },
+  },*/
   summaryTrendStats: ['avg', 'min', 'max', 'p(90)', 'p(95)', 'count'],
   discardResponseBodies: false,
   thresholds: {
@@ -252,7 +257,7 @@ export function total() {
   }
  
    
-  let tokenIO = inputDataUtil.getTokenIO_CC();
+  let tokenIO = inputDataUtil.getTokenIO_CC().tokenIO;
   /* let users = ["aPPantani@nft.it", "gPPgiuggiole@nft.it", "pPPpagliaccio@nft.it", "zPPzabalai@nft.it","sPPsacs@nft.it"];
 
   let tokenIO = '';
@@ -266,76 +271,97 @@ export function total() {
   //console.log("fc="+fc);
   //db.exec(tokenIO, mail, fc); */
    
-  
+  //console.log("----------------------startsess-------------"+tokenIO);
+
   let res = startSession(baseUrl, tokenIO);
-  commonChecks(res);
-  standardChecks(res, res.body, 'substring', `"status":"REGISTERED_SPID"`); 
-  let token = res["data.sessionToken"];
-  
-    
+  let token = res.token;
+
+
 	
-  let rndCard = inputDataUtil.getCards();
+  let rndCard = inputDataUtil.getCards().cardNumber;
   let rndM = Math.floor(Math.random() * myListMese.length);
   let scdMese = myListMese[rndM];
   let rndY = Math.floor(Math.random() * myListAnno.length);
   let scdAnno = myListAnno[rndY];
   
   res = ob_CC_Onboard(baseUrl,token, rndCard, scdMese, scdAnno);
-  let outcome= res["data.idWallet"];
+  //let outcome= res["data.idWallet"];
+  /*let outcome=undefined;
+      //console.log(res);
+      try{
+      outcome= res.json().data.idWallet;
+      }catch(error){
+      outcome=undefined;
+      }
   commonChecks(res);
   invertedChecks(res, outcome, 'matches', undefined);  
-  
+  console.log(res.status+";"+tokenIO+";"+res.json().data.idWallet+";"+rndCard)*/
+  let outcome=res.outcome;
   
   
   res = ob_CC_Verify(baseUrl,outcome,token);
-  commonChecks(res);
-  standardChecks(res, res, 'substring', 'DOCTYPE html');  
-  
-  
+
+  /*commonChecks(res);
+  standardChecks(res, res.body, 'substring', 'DOCTYPE html');*/
+  //console.log(res);
   
   res = ob_CC_VerifyInternal(baseUrl);
-  
-  let headers= res.headers;
+  let idTr=res.idTr;
+  let RED_Path = res.RED_Path;
+  //console.log(res);
+ /* let headers= res.headers;
   let redirect = headers['Location'];
   let idTr = "NA";
   let RED_Path = "NA";
    if(redirect !== undefined){ // !== 'NA'){
 	 RED_Path=redirect.substr(redirect.indexOf("/pp-restapi-CD"));
-     idTr=redirect.substr(redirect.indexOf("id=")+3);  
-   }/*else{
+     idTr=redirect.substr(redirect.indexOf("id=")+3);
+   }*//*else{
 	   redirect = 'NA';
    }*/
    
-  commonChecks(res);
-  invertedChecks(res, idTr, 'matches', 'NA');  
+  /* commonChecks(res);
+  invertedChecks(res, idTr, 'matches', 'NA');  */
   
-  RED_Path="/hfhfhfhfh?tyty=1"; //to comment
-  
+  //RED_Path="/hfhfhfhfh?tyty=1"; //to comment
+
+
   res = ob_CC_CheckOut(baseUrl, RED_Path);
-  idTr='NA';
-  let regexTransId =  new RegExp(`id="transactionId" value=".*?"`);
+  console.log(res.body);
+  idTr=res.idTr;
+
+  /*idTr='NA';
+
   try{
-   let idTr1 = regexTransId.exec(res);
-   let sl = idTr1.split('="');
-   idTr = sl[1].replace('"','');
+    let regexTransId =  new RegExp(`id="transactionId" value=".*?"`);
+    let idTr1 = regexTransId.exec(res.body);
+    let sl = idTr1[0].split('="');
+    idTr = sl[2].replace('"','');
    }catch(err){idTr='NA';}
-   
+
+  console.log(idTr);
   commonChecks(res);
-  invertedChecks(res, idTr, 'matches', 'NA');  
+  invertedChecks(res, idTr, 'matches', 'NA');  */
   
    
   let resCheck1 = ''; 
-  let statusTr = '';
+  let statusTr = undefined;
   do {
   //console.log("dentro while");
   resCheck1 = ob_CC_Check_1(baseUrl, idTr);
-  statusTr = resCheck1['statusMessage'];
-  statusTr = 'Confermato'; //to comment
-  
+  //statusTr = resCheck1['statusMessage'];
+
+  /*try{
+  let subStMsg=resCheck1.body.substr(resCheck1.body.indexOf("statusMessage")+16);
+  statusTr = subStMsg.split('"')[0];
+  }catch(err){}
+  //statusTr = 'In attesa del metodo 3ds2'; //to comment
+  console.log("========================"+statusTr+"===");
   commonChecks(resCheck1);
-  invertedChecks(resCheck1, statusTr, 'matches', undefined);  
+  invertedChecks(resCheck1, statusTr, 'matches', undefined);  */
+  statusTr=resCheck1.statusTr;
   }
-  while (statusTr !== 'Confermato' && statusTr !== 'In attesa del metodo 3ds2');
+  while (!(statusTr == 'Confermato' || statusTr == 'In attesa del metodo 3ds2'))
   //console.log("dopo while");
  
  
@@ -344,58 +370,79 @@ export function total() {
     if(statusTr === 'In attesa del metodo 3ds2'){
     //if(statusTr === 'Confermato'){ //to comment
 		
-	  
 	  let threeDSMethodData = 'threeDSMethodData';
 	  res = ob_CC_continueToStep1(baseUrl, idTr, threeDSMethodData);
-	  commonChecks(res);
-      standardChecks(res, res.status, 'matches', 200);  
+	  /*commonChecks(res);
+      standardChecks(res, res.status, 'matches', 200);  */
 	  
 	  
 	  
 	  let resCheck2 = ''; 
 	  let creq = '';
   	  do {
-       
+
         resCheck2 = ob_CC_Check_2(baseUrl, idTr);
-        statusTr = resCheck2['statusMessage'];
-        statusTr = 'In attesa della challenge 3ds2'; //to comment
-		creq = resCheck2['params.creq'];
+        statusTr = resCheck2.statusTr;
+        creq=resCheck2.creq;
+       /* console.log(resCheck2.body);
+        statusTr=undefined;
+        try{
+        let subStMsg=resCheck2.body.substr(resCheck2.body.indexOf("statusMessage")+16);
+        statusTr = subStMsg.split('"')[0];
+        /*statusTr = resCheck2['statusMessage'];
+        statusTr = 'In attesa della challenge 3ds2'; *///to comment
+        /*
+        let subCreq=resCheck2.body.substr(resCheck2.body.indexOf("creq")+7);
+        console.log(subCreq);
+        creq = subCreq.split('"')[0];
+        }catch(error){}
+        console.log("creq="+creq);
+        console.log("statusTr="+statusTr);
+		//creq = resCheck2['params.creq'];
 		//console.log("dentro while 2");
 		commonChecks(resCheck2);
-        invertedChecks(resCheck2, statusTr, 'matches', undefined);  
+        invertedChecks(resCheck2, statusTr, 'matches', undefined);  */
       }
       while (statusTr !== 'In attesa della challenge 3ds2');
-	  
+
+
+
+
 	  //console.log("dopo while 2");
 	  res= ob_CC_Challenge(baseUrl, creq); //baseUrlPM
-	  commonChecks(res);
+	 /* commonChecks(res);
 	  standardChecks(res, res.status, 'matches', 200);
 	  //res=`<prova1 id="xxxx">xxxx</prova1><prova id="threeDSServerTransID">12345</prova>`;
 	  let threedstransId = 'NA';
-	  let threeDSServerTransID =  new RegExp(`id="threeDSServerTransID">.*?<`);
+
       try{
+      let threeDSServerTransID =  new RegExp(`id="threeDSServerTransID">.*?<`);
 	  let dsServTransId = threeDSServerTransID.exec(res);
 	  //console.log('dsServTransId='+dsServTransId);
       let sl = dsServTransId.split('>');
 	  threedstransId = sl[1].replace('<','');
-      }catch(err){threedstransId='NA';}
-	  
-	  
+      }catch(err){threedstransId='NA';}*/
+      let threedstransId = res.threedstransId;
+
 	  console.log('threedstransId='+threedstransId);
 	  
-	  
+
+
+
 	  
 	  res= ob_CC_Response(baseUrl, threedstransId, token); //baseUrlPM
-	  commonChecks(res);
-	  standardChecks(res, res.status, 'matches', 200);
+	  /*commonChecks(res);
+	  standardChecks(res, res.status, 'matches', 200);*/
 	  
-	  
+
+
+
 	  let rndCres ='';
 	  let chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 	  for (var i = 12; i > 0; --i) rndCres += chars[Math.floor(Math.random() * chars.length)];
 	  res= ob_CC_resume3ds2(baseUrl, idTr, rndCres);
-	  commonChecks(res);
-	  standardChecks(res, res.status, 'matches', 200);
+	  /*commonChecks(res);
+	  standardChecks(res, res.status, 'matches', 200);*/
 	  
 	  
 	  
@@ -403,11 +450,17 @@ export function total() {
 	  do {
        
         resCheck3 = ob_CC_Check_3(baseUrl, idTr);
-        statusTr = resCheck3['statusMessage'];
-        statusTr = 'Confermato'; //to comment
+        statusTr = resCheck3.statusTr;
+        //statusTr = resCheck3['statusMessage'];
+        /*statusTr=undefined;
+        try{
+        let subStMsg=resCheck1.body.substr(resCheck1.body.indexOf("statusMessage")+16);
+        statusTr = subStMsg.split('"')[0];
+        }catch(error){}
+        //statusTr = 'Confermato'; //to comment
 		//console.log("dentro while 3");
 		commonChecks(resCheck3);
-        invertedChecks(resCheck3, statusTr, 'matches', undefined);  
+        invertedChecks(resCheck3, statusTr, 'matches', undefined);  */
       }
       while (statusTr !== 'Confermato');
 	  
@@ -416,8 +469,13 @@ export function total() {
 	
 	
     res= ob_CC_Logout(baseUrl, idTr);
+    RED_Path=res.RED_Path;
+    idTr=res.idTr;
+    /*redirect=undefined;
+    try{
 	headers = res.headers;
     redirect = headers['Location'];
+    }catch(error){}
 	commonChecks(res);
     invertedChecks(res, redirect, 'matches', undefined);
 	RED_Path='NA';
@@ -426,26 +484,28 @@ export function total() {
 		RED_Path = redirect.substr(redirect.indexOf("/pp-restapi-CD"));
 		idTr = redirect.substr(redirect.indexOf("id=")+3);
 		}catch(err){idTr='NA';}
-	}
+	}*/
 	
 	
-
-	RED_Path="/hfhfhfhfh?tyty=1"; //to comment
+    console.log("redPath="+RED_Path+"idTr="+idTr);
+	//RED_Path="/hfhfhfhfh?tyty=1"; //to comment
 	res= ob_CC_bye(baseUrl, RED_Path);
-	let esitoTrEdt = 'NA';
-    if (RED_Path!=="NA"){
-    esitoTrEdt = RED_Path.substr(RED_Path.indexOf("outcome=")+8);
-    }
-    commonChecks(res);
-    standardChecks(res, esitoTrEdt, 'matches', '0');  
-	
+
 	
 	
 	res = ob_CC_update(baseUrl,token, rndCard, scdMese, scdAnno);
-	let esito = res['data.saved'];
+	/*console.log(res.body);
+	//let esito = res['data.saved'];
+	 let esito=undefined;
+           //console.log(res);
+           try{
+           esito= res.json().data.saved;
+           }catch(error){
+           esito=undefined;
+           }
 	commonChecks(res);
-    standardChecks(res, esito, 'matches', '0');  
-	
+    standardChecks(res, esito, 'matches', '0');  */
+
 }
 
 
