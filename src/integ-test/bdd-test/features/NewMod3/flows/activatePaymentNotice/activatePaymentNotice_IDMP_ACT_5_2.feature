@@ -56,8 +56,8 @@ Feature: semantic check for activatePaymentNotice regarding idempotency
       </soapenv:Envelope>
       """
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
-    Then check outcome is OK of activatePaymentNotice response
-
+    Then check outcome is KO of activatePaymentNotice response
+    And check faultCode is PPT_ERRORE_IDEMPOTENZA of activatePaymentNotice response
   #DB check
   Scenario: Execute activatePaymentNotice request
     Given the Execute activatePaymentNotice1 request scenario executed successfully
