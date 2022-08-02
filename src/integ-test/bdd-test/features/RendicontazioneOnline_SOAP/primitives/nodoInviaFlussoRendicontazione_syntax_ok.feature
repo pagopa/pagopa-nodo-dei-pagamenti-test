@@ -3,10 +3,6 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - OK
     Background:
         Given systems up
 
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
     Scenario: Generazione rendicontazione
         Given REND generation
             """
