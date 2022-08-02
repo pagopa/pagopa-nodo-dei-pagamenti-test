@@ -72,6 +72,20 @@ def step_impl(context, primitive):
         payload = payload.replace('#notice_number_old#', notice_number)
         setattr(context, "iuv", notice_number[1:])
 
+    if '#identificativoFlusso#' in payload:
+        date = datetime.date.today().strftime("%Y-%m-%d")
+        identificativoFlusso = date + context.config.userdata.get("global_configuration").get("psp") + "-" + str(random.randint(0, 10000))
+        setattr(context,'identificativoFlusso', identificativoFlusso)
+        payload = payload.replace('#identificativoFlusso#', identificativoFlusso)
+    """
+    if '$timedate+1' in payload:
+        timedate = getattr(context, 'timedate')
+        timedate = datetime.datetime.strptime(timedate, '%Y-%m-%dT%H:%M:%S.%f')
+        timedate = timedate + datetime.timedelta(hours=1)
+        timedate = timedate.strftime("%Y-%m-%dT%H:%M:%S.%f")
+        payload = payload.replace('$timedate+1', timedate)
+    """
+    
     if '$iuv' in payload:
         payload = payload.replace('$iuv', getattr(context, 'iuv'))
 
@@ -141,6 +155,7 @@ def step_impl(context):
 @given('REND generation')
 def step_impl(context):
     payload = context.text or ""
+    payload = utils.replace_context_variables(payload, context)
     payload = utils.replace_local_variables(payload, context)
     payload = utils.replace_global_variables(payload, context)
     date = datetime.date.today().strftime("%Y-%m-%d")
@@ -154,6 +169,12 @@ def step_impl(context):
 
     if '#date#' in payload:
         payload = payload.replace('#date#', date)
+    
+    if '#timedate+1#' in payload:
+        date = datetime.date.today() + datetime.timedelta(hours=1)
+        date = date.strftime("%Y-%m-%d")
+        timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
+        payload = payload.replace('#timedate+1#', timedate)
 
     if "#timedate#" in payload:     
         payload = payload.replace('#timedate#', timedate)
