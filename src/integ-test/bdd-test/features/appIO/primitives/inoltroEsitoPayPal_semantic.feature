@@ -87,6 +87,7 @@ Scenario: Execute nodoChiediInformazioniPagamento (Phase 3)
     When WISP sends rest GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
     Then verify the HTTP status code of informazioniPagamento response is 200
 
+@test
 Scenario: Execute nodoInoltroEsitoPayPal (Phase 4) - OK
     Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
     When WISP sends REST POST inoltroEsito/paypal to nodo-dei-pagamenti
@@ -288,6 +289,7 @@ Scenario: Execute nodoInoltroEsitoPayPal (Phase 4) - KO (CONPSP)
     And checks the value $activateIOPayment.idempotencyKey of the record at column ID_TRANSAZIONE_PSP_PAYPAL of the table PM_SESSION_DATA retrived by the query pm_session on db nodo_online under macro AppIO
     And checks the value responseKO of the record at column ID_TRANSAZIONE_PM_PAYPAL of the table PM_SESSION_DATA retrived by the query pm_session on db nodo_online under macro AppIO
 
+@ciaone
 Scenario: Execute nodoInoltroEsitoPayPal (Phase 4) - Timeout
     Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
     And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
@@ -507,11 +509,23 @@ Scenario: Execute nodoInoltroEsitoPaypal (Phase 6) [SEM_NIEPP_01]
     And checks the value $activateIOPayment.idempotencyKey of the record at column ID_TRANSAZIONE_PSP_PAYPAL of the table PM_SESSION_DATA retrived by the query pm_session on db nodo_online under macro AppIO
     And checks the value responseOK of the record at column ID_TRANSAZIONE_PM_PAYPAL of the table PM_SESSION_DATA retrived by the query pm_session on db nodo_online under macro AppIO
 
+@ciaone
 # [SEM_NIEPP_02]
 Scenario: Execute nodoInoltroEsitoPaypal1 (Phase 5) [SEM_NIEPP_02]
     Given nodo-dei-pagamenti has config parameter default_durata_token_IO set to 6000
     And nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
     Given the Execute nodoInoltroEsitoPayPal (Phase 4) - Timeout scenario executed successfully
+    And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
+    """
+    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:psp="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
+        <soapenv:Header/>
+        <soapenv:Body>
+            <psp:pspNotifyPaymentRes>
+                <outcome>OK</outcome>
+            </psp:pspNotifyPaymentRes>
+        </soapenv:Body>
+    </soapenv:Envelope>
+    """
     When job mod3CancelV2 triggered after 7 seconds
     And wait 6 seconds for expiration
     And WISP sends REST POST inoltroEsito/paypal to nodo-dei-pagamenti
