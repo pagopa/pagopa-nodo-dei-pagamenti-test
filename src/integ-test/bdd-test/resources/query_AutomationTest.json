@@ -66,6 +66,13 @@
         "DB_INOLTRO_PAG_stati_carrello": "SELECT s.columns FROM table_name s WHERE s.IUV = '$nodoInoltraEsitoPagamentoCarte.noticenumber' and s.ID_DOMINIO = '$nodoInoltraEsitoPagamentoCarte.fiscalcode'",
         "DB_INOLTRO_PAG_stati_rpt_snapshot": "SELECT s.columns FROM table_name s WHERE s.IUV = '$nodoInoltraEsitoPagamentoCarte.noticenumber' and s.ID_DOMINIO = '$nodoInoltraEsitoPagamentoCarte.fiscalcode'"
     },
+    "Mod1":{
+        "esito": "SELECT v.columns FROM table_name r JOIN RT_VERSAMENTI v ON v.FK_RT=r.ID WHERE r.IUV='$iuv' AND r.CCP= '$nodoInviaRPT.codiceContestoPagamento' AND r.IDENT_DOMINIO='$nodoInviaRPT.identificativoDominio'",
+        "esito_2iuv": "SELECT v.columns FROM table_name r JOIN RT_VERSAMENTI v ON v.FK_RT=r.ID WHERE r.IUV=('$iuv','$iuv2') AND r.CCP= '$nodoInviaRPT.codiceContestoPagamento' AND r.IDENT_DOMINIO='$nodoInviaRPT.identificativoDominio'",
+        "motivo_annullamento": "SELECT columns FROM table_name WHERE ID_SESSIONE = '${idPagamento}'",
+        "tipo": "SELECT columns FROM table_name WHERE ID_SESSIONE = '${idPagamento}'",
+        "stati_RPT": "SELECT columns FROM table_name WHERE IUV='$iuv' AND CCP= '$nodoInviaRPT.codiceContestoPagamento' AND ID_DOMINIO='$nodoInviaRPT.identificativoDominio' ORDER BY INSERTED_TIMESTAMP"
+    },
     "constanti":{
     },
     "update_query":{

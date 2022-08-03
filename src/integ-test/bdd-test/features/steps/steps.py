@@ -85,6 +85,31 @@ def step_impl(context, primitive):
         timedate = timedate.strftime("%Y-%m-%dT%H:%M:%S.%f")
         payload = payload.replace('$timedate+1', timedate)
     """
+
+    if '#carrello#' in payload:
+        carrello = "77777777777" + "311" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + ''.join([s[random.randint(0, len(s) - 1)] for i in range(n)])
+        payload = payload.replace('#carrello#', carrello)
+        setattr(context,'carrello', carrello)
+
+    if '#carrello1#' in payload:
+        carrello1 = "77777777777" + "311" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + ''.join([s[random.randint(0, len(s) - 1)] for i in range(n)])
+        payload = payload.replace('#carrello1#', carrello1)
+        setattr(context,'carrello1', carrello1)
+
+    if '#carrello2#' in payload:
+        carrello2 = "77777777777" + "301" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + ''.join([s[random.randint(0, len(s) - 1)] for i in range(n)])
+        payload = payload.replace('#carrello2#', carrello2)
+        setattr(context,'carrello2', carrello2)
+
+    if '#carrello_NOT_ENABLED#' in payload:
+        carrello_NOT_ENABLED = "11111122223" + "311" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + ''.join([s[random.randint(0, len(s) - 1)] for i in range(n)])
+        payload = payload.replace('#carrello_NOT_ENABLED#', carrello_NOT_ENABLED)
+        setattr(context,'carrello_NOT_ENABLED', carrello_NOT_ENABLED)
+
+    if '#carrello3#' in payload:
+        carrello3 = "77777777777" + "088" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + ''.join([s[random.randint(0, len(s) - 1)] for i in range(n)])
+        payload = payload.replace('#carrello3#', carrello3)
+        setattr(context,'carrello3', carrello3)
     
     if '$iuv' in payload:
         payload = payload.replace('$iuv', getattr(context, 'iuv'))
@@ -105,8 +130,26 @@ def step_impl(context, primitive):
     if '$date' in payload:
         payload = payload.replace('$date', getattr(context, 'date'))
 
+    if '$ccp' in payload:
+        payload = payload.replace('$ccp', getattr(context, 'ccp'))
+
     if '$timedate' in payload:
         payload = payload.replace('$timedate', getattr(context, 'timedate'))
+
+    if '$idCarrello' in payload:
+        payload = payload.replace('$idCarrello', getattr(context, 'idCarrello'))
+
+    if '$carrello' in payload:
+        payload = payload.replace('$carrello', getattr(context, 'carrello'))
+
+    if '$carrello2' in payload:
+        payload = payload.replace('$carrello2', getattr(context, 'carrello2'))
+
+    if '$carrello3' in payload:
+        payload = payload.replace('$carrello3', getattr(context, 'carrello3'))
+
+    if '$carrello_NOT_ENABLED' in payload:
+        payload = payload.replace('$carrello_NOT_ENABLED', getattr(context, 'carrello_NOT_ENABLED'))
 
     if '$rendAttachment' in payload:
         rendAttachment = getattr(context, 'rendAttachment')
@@ -128,6 +171,52 @@ def step_impl(context):
         intermediarioPA = "44444444444_05"
         payload = payload.replace('#intermediarioPA#', intermediarioPA)
         setattr(context,"intermediarioPA", intermediarioPA)
+
+    if "#ccp#" in payload:     
+        ccp = str(int(time() * 1000))
+        payload = payload.replace('#ccp#', ccp)
+        setattr(context,"ccp", ccp)
+
+    if '#date#' in payload:
+        payload = payload.replace('#date#', date)
+
+    if "#codicePA#" in payload:     
+        codicePA = "77777777777"
+        payload = payload.replace('#codicePA#', codicePA)
+        setattr(context,"codicePA", codicePA)
+    
+    if '#iuv#' in payload:
+        payload = payload.replace('#iuv#', iuv)
+
+    if '#idCarrello#' in payload:
+        carrello = "09812374659" + "311" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + ''.join([s[random.randint(0, len(s) - 1)] for i in range(n)])
+        payload = payload.replace('#carrello#', carrello)
+        setattr(context,'carrello', carrello)
+
+    if '#carrello#' in payload:
+        carrello = "77777777777" + "311" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + ''.join([s[random.randint(0, len(s) - 1)] for i in range(n)])
+        payload = payload.replace('#carrello#', carrello)
+        setattr(context,'carrello', carrello)
+
+    if '#carrello1#' in payload:
+        carrello1 = "77777777777" + "311" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + ''.join([s[random.randint(0, len(s) - 1)] for i in range(n)])
+        payload = payload.replace('#carrello1#', carrello1)
+        setattr(context,'carrello1', carrello1)
+
+    if '#carrello2#' in payload:
+        carrello2 = "77777777777" + "301" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + ''.join([s[random.randint(0, len(s) - 1)] for i in range(n)])
+        payload = payload.replace('#carrello2#', carrello2)
+        setattr(context,'carrello2', carrello2)
+
+    if '#carrello3#' in payload:
+        carrello3 = "77777777777" + "088" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + ''.join([s[random.randint(0, len(s) - 1)] for i in range(n)])
+        payload = payload.replace('#carrello3#', carrello3)
+        setattr(context,'carrello3', carrello3)
+
+    if '#carrello_NOT_ENABLED#' in payload:
+        carrello_NOT_ENABLED = "11111122223" + "311" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + ''.join([s[random.randint(0, len(s) - 1)] for i in range(n)])
+        payload = payload.replace('#carrello_NOT_ENABLED#', carrello_NOT_ENABLED)
+        setattr(context,'carrello_NOT_ENABLED', carrello_NOT_ENABLED)
     
     if "nodoVerificaRPT_IUV" in payload:
         nodoVerificaRPT = getattr(context, 'nodoVerificaRPT')
