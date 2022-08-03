@@ -527,7 +527,7 @@ Scenario: Execute nodoInoltroEsitoPaypal1 (Phase 5) [SEM_NIEPP_02]
     </soapenv:Envelope>
     """
     When job mod3CancelV2 triggered after 7 seconds
-    And wait 6 seconds for expiration
+    And wait 10 seconds for expiration
     And WISP sends REST POST inoltroEsito/paypal to nodo-dei-pagamenti
     """
     {

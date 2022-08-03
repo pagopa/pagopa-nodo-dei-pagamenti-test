@@ -116,10 +116,10 @@ function Collapsible_expandAllFailed()
         <div id="summary">
           <p id="totals">
             <p id="feature_totals">Features: failed: 1</p>
-            <p id="scenario_totals">Scenarios: passed: 3, failed: 2</p>
-            <p id="step_totals">Steps: passed: 12, failed: 2, skipped: 75</p>
+            <p id="scenario_totals">Scenarios: failed: 2</p>
+            <p id="step_totals">Steps: passed: 2, failed: 2, skipped: 3</p>
           </p>
-          <p id="duration">Finished in 10.9 seconds</p>
+          <p id="duration">Finished in 1.7 seconds</p>
           <div id="expand-collapse">
             <a id="expander" href="#" onclick="Collapsible_expandAll('scenario_steps')">Expand All</a>
             <span> | </span>
@@ -131,7 +131,7 @@ function Collapsible_expandAllFailed()
       </div>
       <div class="feature">
         <h2>
-          <span class="val">Feature: FLUSSO_APIO_08</span>
+          <span class="val">Feature: Semantic checks on inoltroEsitoPayPal primitive for old EC</span>
         </h2>
         <span/>
       </div>
@@ -143,16 +143,16 @@ function Collapsible_expandAllFailed()
         <span/>
       </div>
       <div class="scenario">
-        <span class="scenario_file">src/integ-test/bdd-test/features/appIO/flows/PagamentiAppIO/FLUSSO_APIO_08.feature:7</span>
-        <h3 onclick="Collapsible_toggle('scenario_0')">
-          <span class="val">Scenario: Execute verifyPaymentNotice (Phase 1)</span>
+        <span class="scenario_file">src/integ-test/bdd-test/features/appIO/primitives/inoltroEsitoPayPal_semantic_old.feature:7</span>
+        <h3 onclick="Collapsible_toggle('scenario_0')" class="failed">
+          <span class="val">Scenario: Execute nodoVerificaRPT (Phase 1)</span>
         </h3>
         <ol class="scenario_steps" id="scenario_0">
           <li class="step passed">
             <div class="step_name">
               <span class="keyword">Given </span>
               <span class="step val">systems up</span>
-              <small class="step_duration">(0.056s)</small>
+              <small class="step_duration">(0.064s)</small>
             </div>
             <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:27</span>
@@ -187,7 +187,7 @@ function Collapsible_expandAllFailed()
               <span class="keyword">And </span>
               <span class="step val">
                 <span>EC </span>
-                <b>new</b>
+                <b>old</b>
                 <span> version</span>
               </span>
               <small class="step_duration">(0.001s)</small>
@@ -202,30 +202,36 @@ function Collapsible_expandAllFailed()
               <span class="keyword">Given </span>
               <span class="step val">
                 <span>initial XML </span>
-                <b>verifyPaymentNotice</b>
+                <b>nodoVerificaRPT</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.006s)</small>
+              <small class="step_duration">(0.009s)</small>
             </div>
             <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:54</span>
             </div>
             <span class="embed"/>
             <div class="message">
-              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd&quot;&gt;
-    &lt;soapenv:Header/&gt;
-    &lt;soapenv:Body&gt;
-    &lt;nod:verifyPaymentNoticeReq&gt;
-        &lt;idPSP&gt;AGID_01&lt;/idPSP&gt;
-        &lt;idBrokerPSP&gt;97735020584&lt;/idBrokerPSP&gt;
-        &lt;idChannel&gt;97735020584_03&lt;/idChannel&gt;
+              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:ws=&quot;http://ws.pagamenti.telematici.gov/&quot; xmlns:bc=&quot;http://PuntoAccessoPSP.spcoop.gov.it/BarCode_GS1_128_Modified&quot; xmlns:aim=&quot;http://PuntoAccessoPSP.spcoop.gov.it/Code_128_AIM_USS-128_tipo_C&quot; xmlns:qrc=&quot;http://PuntoAccessoPSP.spcoop.gov.it/QrCode&quot;&gt;
+&lt;soapenv:Header/&gt;
+&lt;soapenv:Body&gt;
+    &lt;ws:nodoVerificaRPT&gt;
+        &lt;identificativoPSP&gt;AGID_01&lt;/identificativoPSP&gt;
+        &lt;identificativoIntermediarioPSP&gt;97735020584&lt;/identificativoIntermediarioPSP&gt;
+        &lt;identificativoCanale&gt;97735020584_03&lt;/identificativoCanale&gt;
         &lt;password&gt;pwdpwdpwd&lt;/password&gt;
-        &lt;qrCode&gt;
-            &lt;fiscalCode&gt;#creditor_institution_code#&lt;/fiscalCode&gt;
-            &lt;noticeNumber&gt;#notice_number#&lt;/noticeNumber&gt;
-        &lt;/qrCode&gt;
-    &lt;/nod:verifyPaymentNoticeReq&gt;
-    &lt;/soapenv:Body&gt;
+        &lt;codiceContestoPagamento&gt;103421905719223&lt;/codiceContestoPagamento&gt;
+        &lt;codificaInfrastrutturaPSP&gt;QR-CODE&lt;/codificaInfrastrutturaPSP&gt;
+        &lt;codiceIdRPT&gt;
+            &lt;qrc:QrCode&gt;
+                &lt;qrc:CF&gt;44444444444&lt;/qrc:CF&gt;
+                &lt;qrc:CodStazPA&gt;02&lt;/qrc:CodStazPA&gt;
+                &lt;qrc:AuxDigit&gt;0&lt;/qrc:AuxDigit&gt;
+                &lt;qrc:CodIUV&gt;142151300018412&lt;/qrc:CodIUV&gt;
+            &lt;/qrc:QrCode&gt;
+        &lt;/codiceIdRPT&gt;
+    &lt;/ws:nodoVerificaRPT&gt;
+&lt;/soapenv:Body&gt;
 &lt;/soapenv:Envelope&gt;
 </pre>
             </div>
@@ -235,448 +241,36 @@ function Collapsible_expandAllFailed()
               <span class="keyword">When </span>
               <span class="step val">
                 <span/>
-                <b>AppIO</b>
+                <b>IO</b>
                 <span> sends SOAP </span>
-                <b>verifyPaymentNotice</b>
+                <b>nodoVerificaRPT</b>
                 <span> to </span>
                 <b>nodo-dei-pagamenti</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.944s)</small>
+              <small class="step_duration">(1.466s)</small>
             </div>
             <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:209</span>
             </div>
             <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">Then </span>
-              <span class="step val">
-                <span>check </span>
-                <b>outcome</b>
-                <span> is </span>
-                <b>OK</b>
-                <span> of </span>
-                <b>verifyPaymentNotice</b>
-                <span> response</span>
-              </span>
-              <small class="step_duration">(0.002s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:233</span>
-            </div>
-            <span class="embed"/>
-          </li>
-        </ol>
-        <span/>
-      </div>
-      <div class="scenario">
-        <span class="scenario_file">src/integ-test/bdd-test/features/appIO/flows/PagamentiAppIO/FLUSSO_APIO_08.feature:29</span>
-        <h3 onclick="Collapsible_toggle('scenario_1')">
-          <span class="val">Scenario: Execute activateIOPayment (Phase 2)</span>
-        </h3>
-        <ol class="scenario_steps" id="scenario_1">
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">Given </span>
-              <span class="step val">systems up</span>
-              <small class="step_duration">(0.058s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:27</span>
-            </div>
-            <span class="embed"/>
-            <table>
-              <tr>
-                <th>name</th>
-                <th>url</th>
-                <th>healthcheck</th>
-                <th>soap_service</th>
-                <th>rest_service</th>
-              </tr>
-              <tr>
-                <td>nodo-dei-pagamenti</td>
-                <td>http://localhost:9080/</td>
-                <td>nodo-dev-health/ready</td>
-                <td>nodo-dev/webservices/input</td>
-                <td>nodo-dev</td>
-              </tr>
-              <tr>
-                <td>mock-ec</td>
-                <td>http://localhost:8089/</td>
-                <td>servizi/PagamentiTelematiciRPT/info</td>
-                <td>servizi/PagamentiTelematiciRPT</td>
-                <td/>
-              </tr>
-            </table>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
-                <span>EC </span>
-                <b>new</b>
-                <span> version</span>
-              </span>
-              <small class="step_duration">(0.001s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:48</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">Given </span>
-              <span class="step val">
-                <span>the </span>
-                <b>Execute verifyPaymentNotice (Phase 1)</b>
-                <span> scenario executed successfully</span>
-              </span>
-              <small class="step_duration">(1.035s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:386</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
-                <span>initial XML </span>
-                <b>activateIOPayment</b>
-                <span/>
-              </span>
-              <small class="step_duration">(0.002s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:54</span>
-            </div>
-            <span class="embed"/>
-            <div class="message">
-              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd&quot;&gt;
-    &lt;soapenv:Header/&gt;
-    &lt;soapenv:Body&gt;
-        &lt;nod:activateIOPaymentReq&gt;
-            &lt;idPSP&gt;$verifyPaymentNotice.idPSP&lt;/idPSP&gt;
-            &lt;idBrokerPSP&gt;$verifyPaymentNotice.idBrokerPSP&lt;/idBrokerPSP&gt;
-            &lt;idChannel&gt;$verifyPaymentNotice.idChannel&lt;/idChannel&gt;
-            &lt;password&gt;$verifyPaymentNotice.password&lt;/password&gt;
-            &lt;!--Optional:--&gt;
-            &lt;idempotencyKey&gt;#idempotency_key#&lt;/idempotencyKey&gt;
-            &lt;qrCode&gt;
-                &lt;fiscalCode&gt;#creditor_institution_code#&lt;/fiscalCode&gt;
-                &lt;noticeNumber&gt;#notice_number#&lt;/noticeNumber&gt;
-            &lt;/qrCode&gt;
-            &lt;!--Optional:--&gt;
-            &lt;expirationTime&gt;12345&lt;/expirationTime&gt;
-            &lt;amount&gt;10.00&lt;/amount&gt;
-            &lt;!--Optional:--&gt;
-            &lt;dueDate&gt;2021-12-12&lt;/dueDate&gt;
-            &lt;!--Optional:--&gt;
-            &lt;paymentNote&gt;test&lt;/paymentNote&gt;
-            &lt;!--Optional:--&gt;
-            &lt;payer&gt;
-                &lt;uniqueIdentifier&gt;
-                    &lt;entityUniqueIdentifierType&gt;G&lt;/entityUniqueIdentifierType&gt;
-                    &lt;entityUniqueIdentifierValue&gt;44444444444&lt;/entityUniqueIdentifierValue&gt;
-                &lt;/uniqueIdentifier&gt;
-                &lt;fullName&gt;name&lt;/fullName&gt;
-                &lt;!--Optional:--&gt;
-                &lt;streetName&gt;street&lt;/streetName&gt;
-                &lt;!--Optional:--&gt;
-                &lt;civicNumber&gt;civic&lt;/civicNumber&gt;
-                &lt;!--Optional:--&gt;
-                &lt;postalCode&gt;code&lt;/postalCode&gt;
-                &lt;!--Optional:--&gt;
-                &lt;city&gt;city&lt;/city&gt;
-                &lt;!--Optional:--&gt;
-                &lt;stateProvinceRegion&gt;state&lt;/stateProvinceRegion&gt;
-                &lt;!--Optional:--&gt;
-                &lt;country&gt;IT&lt;/country&gt;
-                &lt;!--Optional:--&gt;
-                &lt;e-mail&gt;test.prova@gmail.com&lt;/e-mail&gt;
-            &lt;/payer&gt;
-        &lt;/nod:activateIOPaymentReq&gt;
-    &lt;/soapenv:Body&gt;
-&lt;/soapenv:Envelope&gt;
-</pre>
-            </div>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">When </span>
-              <span class="step val">
-                <span/>
-                <b>AppIO</b>
-                <span> sends SOAP </span>
-                <b>activateIOPayment</b>
-                <span> to </span>
-                <b>nodo-dei-pagamenti</b>
-                <span/>
-              </span>
-              <small class="step_duration">(1.127s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:209</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">Then </span>
-              <span class="step val">
-                <span>check </span>
-                <b>outcome</b>
-                <span> is </span>
-                <b>OK</b>
-                <span> of </span>
-                <b>activateIOPayment</b>
-                <span> response</span>
-              </span>
-              <small class="step_duration">(0.001s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:233</span>
-            </div>
-            <span class="embed"/>
-          </li>
-        </ol>
-        <span/>
-      </div>
-      <div class="scenario">
-        <span class="scenario_file">src/integ-test/bdd-test/features/appIO/flows/PagamentiAppIO/FLUSSO_APIO_08.feature:83</span>
-        <h3 onclick="Collapsible_toggle('scenario_2')">
-          <span class="val">Scenario: Execute nodoChiediInformazioniPagamento (Phase 3)</span>
-        </h3>
-        <ol class="scenario_steps" id="scenario_2">
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">Given </span>
-              <span class="step val">systems up</span>
-              <small class="step_duration">(0.056s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:27</span>
-            </div>
-            <span class="embed"/>
-            <table>
-              <tr>
-                <th>name</th>
-                <th>url</th>
-                <th>healthcheck</th>
-                <th>soap_service</th>
-                <th>rest_service</th>
-              </tr>
-              <tr>
-                <td>nodo-dei-pagamenti</td>
-                <td>http://localhost:9080/</td>
-                <td>nodo-dev-health/ready</td>
-                <td>nodo-dev/webservices/input</td>
-                <td>nodo-dev</td>
-              </tr>
-              <tr>
-                <td>mock-ec</td>
-                <td>http://localhost:8089/</td>
-                <td>servizi/PagamentiTelematiciRPT/info</td>
-                <td>servizi/PagamentiTelematiciRPT</td>
-                <td/>
-              </tr>
-            </table>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
-                <span>EC </span>
-                <b>new</b>
-                <span> version</span>
-              </span>
-              <small class="step_duration">(0.001s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:48</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">Given </span>
-              <span class="step val">
-                <span>the </span>
-                <b>Execute activateIOPayment (Phase 2)</b>
-                <span> scenario executed successfully</span>
-              </span>
-              <small class="step_duration">(2.307s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:386</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">When </span>
-              <span class="step val">
-                <span/>
-                <b>WISP</b>
-                <span> sends rest </span>
-                <b>GET</b>
-                <span> </span>
-                <b>informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken</b>
-                <span> to </span>
-                <b>nodo-dei-pagamenti</b>
-                <span/>
-              </span>
-              <small class="step_duration">(0.133s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:394</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">Then </span>
-              <span class="step val">
-                <span>verify the HTTP status code of </span>
-                <b>informazioniPagamento</b>
-                <span> response is </span>
-                <b>200</b>
-                <span/>
-              </span>
-              <small class="step_duration">(0.001s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:419</span>
-            </div>
-            <span class="embed"/>
-          </li>
-        </ol>
-        <span/>
-      </div>
-      <div class="scenario">
-        <span class="scenario_file">src/integ-test/bdd-test/features/appIO/flows/PagamentiAppIO/FLUSSO_APIO_08.feature:88</span>
-        <h3 onclick="Collapsible_toggle('scenario_3')" class="failed">
-          <span class="val">Scenario: Execute nodoInoltroEsitoCarta (Phase 4)</span>
-        </h3>
-        <ol class="scenario_steps" id="scenario_3">
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">Given </span>
-              <span class="step val">systems up</span>
-              <small class="step_duration">(0.070s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:27</span>
-            </div>
-            <span class="embed"/>
-            <table>
-              <tr>
-                <th>name</th>
-                <th>url</th>
-                <th>healthcheck</th>
-                <th>soap_service</th>
-                <th>rest_service</th>
-              </tr>
-              <tr>
-                <td>nodo-dei-pagamenti</td>
-                <td>http://localhost:9080/</td>
-                <td>nodo-dev-health/ready</td>
-                <td>nodo-dev/webservices/input</td>
-                <td>nodo-dev</td>
-              </tr>
-              <tr>
-                <td>mock-ec</td>
-                <td>http://localhost:8089/</td>
-                <td>servizi/PagamentiTelematiciRPT/info</td>
-                <td>servizi/PagamentiTelematiciRPT</td>
-                <td/>
-              </tr>
-            </table>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
-                <span>EC </span>
-                <b>new</b>
-                <span> version</span>
-              </span>
-              <small class="step_duration">(0.001s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:48</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">Given </span>
-              <span class="step val">
-                <span>the </span>
-                <b>Execute nodoChiediInformazioniPagamento (Phase 3)</b>
-                <span> scenario executed successfully</span>
-              </span>
-              <small class="step_duration">(2.342s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:386</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">When </span>
-              <span class="step val">
-                <span/>
-                <b>WISP</b>
-                <span> sends REST </span>
-                <b>POST</b>
-                <span> </span>
-                <b>inoltroEsito/carta</b>
-                <span> to </span>
-                <b>nodo-dei-pagamenti</b>
-                <span/>
-              </span>
-              <small class="step_duration">(0.242s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:394</span>
-            </div>
-            <span class="embed"/>
-            <div class="message">
-              <pre>{
-    &quot;RRN&quot;:10026669,
-    &quot;tipoVersamento&quot;:&quot;CP&quot;,
-    &quot;idPagamento&quot;:&quot;$activateIOPaymentResponse.paymentToken&quot;,
-    &quot;identificativoIntermediario&quot;:&quot;irraggiungibile&quot;,
-    &quot;identificativoPsp&quot;:&quot;40000000001&quot;,
-    &quot;identificativoCanale&quot;:&quot;irraggiungibile&quot;,
-    &quot;importoTotalePagato&quot;:10.00,
-    &quot;timestampOperazione&quot;:&quot;2021-07-09T17:06:03.100+01:00&quot;,
-    &quot;codiceAutorizzativo&quot;:&quot;resOK&quot;,
-    &quot;esitoTransazioneCarta&quot;:&quot;00&quot;
-    }
-</pre>
-            </div>
           </li>
           <li class="step failed">
             <div class="step_name">
               <span class="keyword">Then </span>
               <span class="step val">
-                <span>verify the HTTP status code of </span>
-                <b>inoltroEsito/carta</b>
-                <span> response is </span>
-                <b>200</b>
-                <span/>
+                <span>check </span>
+                <b>outcome</b>
+                <span> is </span>
+                <b>OK</b>
+                <span> of </span>
+                <b>nodoVerificaRPT</b>
+                <span> response</span>
               </span>
-              <small class="step_duration">(0.003s)</small>
+              <small class="step_duration">(0.002s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:419</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:233</span>
             </div>
             <span class="embed">
               <a onclick="Collapsible_toggle('embed_1')">Error Message</a>
@@ -685,9 +279,9 @@ function Collapsible_expandAllFailed()
     match.run(runner.context)
   File &quot;C:\Users\mascia.mariotti\AppData\Local\Programs\Python\Python310\lib\site-packages\behave\matchers.py&quot;, line 98, in run
     self.func(context, *args, **kwargs)
-  File &quot;src\integ-test\bdd-test\features\steps\steps.py&quot;, line 422, in step_impl
-    assert int(value) == getattr(context, action + RESPONSE).status_code
-AssertionError
+  File &quot;src\integ-test\bdd-test\features\steps\steps.py&quot;, line 243, in step_impl
+    data = my_document.getElementsByTagName(tag)[0].firstChild.data
+IndexError: list index out of range
 
 Captured stdout:
 calling: nodo-dei-pagamenti -&gt; http://localhost:9080/
@@ -697,82 +291,28 @@ calling: mock-ec -&gt; http://localhost:8089/
 calling -&gt; http://localhost:8089/servizi/PagamentiTelematiciRPT/info
 response: 200
 url_nodo:  http://localhost:9080/nodo-dev/webservices/input
-nodo soap_request sent &gt;&gt;&gt; &lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd&quot;&gt;
-    &lt;soapenv:Header/&gt;
-    &lt;soapenv:Body&gt;
-    &lt;nod:verifyPaymentNoticeReq&gt;
-        &lt;idPSP&gt;AGID_01&lt;/idPSP&gt;
-        &lt;idBrokerPSP&gt;97735020584&lt;/idBrokerPSP&gt;
-        &lt;idChannel&gt;97735020584_03&lt;/idChannel&gt;
+nodo soap_request sent &gt;&gt;&gt; &lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:ws=&quot;http://ws.pagamenti.telematici.gov/&quot; xmlns:bc=&quot;http://PuntoAccessoPSP.spcoop.gov.it/BarCode_GS1_128_Modified&quot; xmlns:aim=&quot;http://PuntoAccessoPSP.spcoop.gov.it/Code_128_AIM_USS-128_tipo_C&quot; xmlns:qrc=&quot;http://PuntoAccessoPSP.spcoop.gov.it/QrCode&quot;&gt;
+&lt;soapenv:Header/&gt;
+&lt;soapenv:Body&gt;
+    &lt;ws:nodoVerificaRPT&gt;
+        &lt;identificativoPSP&gt;AGID_01&lt;/identificativoPSP&gt;
+        &lt;identificativoIntermediarioPSP&gt;97735020584&lt;/identificativoIntermediarioPSP&gt;
+        &lt;identificativoCanale&gt;97735020584_03&lt;/identificativoCanale&gt;
         &lt;password&gt;pwdpwdpwd&lt;/password&gt;
-        &lt;qrCode&gt;
-            &lt;fiscalCode&gt;77777777777&lt;/fiscalCode&gt;
-            &lt;noticeNumber&gt;302117017756873067&lt;/noticeNumber&gt;
-        &lt;/qrCode&gt;
-    &lt;/nod:verifyPaymentNoticeReq&gt;
-    &lt;/soapenv:Body&gt;
+        &lt;codiceContestoPagamento&gt;103421905719223&lt;/codiceContestoPagamento&gt;
+        &lt;codificaInfrastrutturaPSP&gt;QR-CODE&lt;/codificaInfrastrutturaPSP&gt;
+        &lt;codiceIdRPT&gt;
+            &lt;qrc:QrCode&gt;
+                &lt;qrc:CF&gt;44444444444&lt;/qrc:CF&gt;
+                &lt;qrc:CodStazPA&gt;02&lt;/qrc:CodStazPA&gt;
+                &lt;qrc:AuxDigit&gt;0&lt;/qrc:AuxDigit&gt;
+                &lt;qrc:CodIUV&gt;142151300018412&lt;/qrc:CodIUV&gt;
+            &lt;/qrc:QrCode&gt;
+        &lt;/codiceIdRPT&gt;
+    &lt;/ws:nodoVerificaRPT&gt;
+&lt;/soapenv:Body&gt;
 &lt;/soapenv:Envelope&gt;
-b'&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot; ?&gt;&lt;soapenv:Envelope xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nfpsp=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd&quot; xmlns:tns=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForPsp.wsdl&quot;&gt;&lt;soapenv:Body&gt;&lt;nfpsp:verifyPaymentNoticeRes&gt;&lt;outcome&gt;OK&lt;/outcome&gt;&lt;paymentList&gt;&lt;paymentOptionDescription&gt;&lt;amount&gt;70.00&lt;/amount&gt;&lt;options&gt;EQ&lt;/options&gt;&lt;dueDate&gt;2021-07-31&lt;/dueDate&gt;&lt;paymentNote&gt;pagamentoTest&lt;/paymentNote&gt;&lt;/paymentOptionDescription&gt;&lt;/paymentList&gt;&lt;paymentDescription&gt;Pagamento di Test&lt;/paymentDescription&gt;&lt;fiscalCodePA&gt;77777777777&lt;/fiscalCodePA&gt;&lt;companyName&gt;companyName&lt;/companyName&gt;&lt;officeName&gt;officeName&lt;/officeName&gt;&lt;/nfpsp:verifyPaymentNoticeRes&gt;&lt;/soapenv:Body&gt;&lt;/soapenv:Envelope&gt;'
-check tag &quot;outcome&quot; - expected: OK, obtained: OK
-url_nodo:  http://localhost:9080/nodo-dev/webservices/input
-nodo soap_request sent &gt;&gt;&gt; &lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd&quot;&gt;
-    &lt;soapenv:Header/&gt;
-    &lt;soapenv:Body&gt;
-        &lt;nod:activateIOPaymentReq&gt;
-            &lt;idPSP&gt;AGID_01&lt;/idPSP&gt;
-            &lt;idBrokerPSP&gt;97735020584&lt;/idBrokerPSP&gt;
-            &lt;idChannel&gt;97735020584_03&lt;/idChannel&gt;
-            &lt;password&gt;pwdpwdpwd&lt;/password&gt;
-            &lt;!--Optional:--&gt;
-            &lt;idempotencyKey&gt;97735020584_4478323140&lt;/idempotencyKey&gt;
-            &lt;qrCode&gt;
-                &lt;fiscalCode&gt;77777777777&lt;/fiscalCode&gt;
-                &lt;noticeNumber&gt;302115469657712972&lt;/noticeNumber&gt;
-            &lt;/qrCode&gt;
-            &lt;!--Optional:--&gt;
-            &lt;expirationTime&gt;12345&lt;/expirationTime&gt;
-            &lt;amount&gt;10.00&lt;/amount&gt;
-            &lt;!--Optional:--&gt;
-            &lt;dueDate&gt;2021-12-12&lt;/dueDate&gt;
-            &lt;!--Optional:--&gt;
-            &lt;paymentNote&gt;test&lt;/paymentNote&gt;
-            &lt;!--Optional:--&gt;
-            &lt;payer&gt;
-                &lt;uniqueIdentifier&gt;
-                    &lt;entityUniqueIdentifierType&gt;G&lt;/entityUniqueIdentifierType&gt;
-                    &lt;entityUniqueIdentifierValue&gt;44444444444&lt;/entityUniqueIdentifierValue&gt;
-                &lt;/uniqueIdentifier&gt;
-                &lt;fullName&gt;name&lt;/fullName&gt;
-                &lt;!--Optional:--&gt;
-                &lt;streetName&gt;street&lt;/streetName&gt;
-                &lt;!--Optional:--&gt;
-                &lt;civicNumber&gt;civic&lt;/civicNumber&gt;
-                &lt;!--Optional:--&gt;
-                &lt;postalCode&gt;code&lt;/postalCode&gt;
-                &lt;!--Optional:--&gt;
-                &lt;city&gt;city&lt;/city&gt;
-                &lt;!--Optional:--&gt;
-                &lt;stateProvinceRegion&gt;state&lt;/stateProvinceRegion&gt;
-                &lt;!--Optional:--&gt;
-                &lt;country&gt;IT&lt;/country&gt;
-                &lt;!--Optional:--&gt;
-                &lt;e-mail&gt;test.prova@gmail.com&lt;/e-mail&gt;
-            &lt;/payer&gt;
-        &lt;/nod:activateIOPaymentReq&gt;
-    &lt;/soapenv:Body&gt;
-&lt;/soapenv:Envelope&gt;
-b'&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot; ?&gt;&lt;soapenv:Envelope xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:nfpsp=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd&quot;&gt;&lt;soapenv:Body&gt;&lt;nfpsp:activateIOPaymentRes&gt;&lt;outcome&gt;OK&lt;/outcome&gt;&lt;totalAmount&gt;70.00&lt;/totalAmount&gt;&lt;paymentDescription&gt;TARI 2021&lt;/paymentDescription&gt;&lt;fiscalCodePA&gt;77777777777&lt;/fiscalCodePA&gt;&lt;companyName&gt;company PA&lt;/companyName&gt;&lt;officeName&gt;office PA&lt;/officeName&gt;&lt;paymentToken&gt;db9feb45d9cc4dc99b4192d5fd94ded5&lt;/paymentToken&gt;&lt;creditorReferenceId&gt;02115469657712972&lt;/creditorReferenceId&gt;&lt;/nfpsp:activateIOPaymentRes&gt;&lt;/soapenv:Body&gt;&lt;/soapenv:Envelope&gt;'
-check tag &quot;outcome&quot; - expected: OK, obtained: OK
-paymentToken
-http://localhost:9080/nodo-dev/informazioniPagamento?idPagamento=db9feb45d9cc4dc99b4192d5fd94ded5
-informazioniPagamentoResponse
-b'{&quot;IBAN&quot;:&quot;IT96R0123454321000000012345&quot;,&quot;bolloDigitale&quot;:false,&quot;codiceFiscale&quot;:&quot;44444444444&quot;,&quot;dettagli&quot;:[{&quot;CCP&quot;:&quot;db9feb45d9cc4dc99b4192d5fd94ded5&quot;,&quot;IUV&quot;:&quot;02115469657712972&quot;,&quot;codicePagatore&quot;:&quot;JHNDOE00A01F205N&quot;,&quot;enteBeneficiario&quot;:&quot;Pa Salvo&quot;,&quot;idDominio&quot;:&quot;77777777777&quot;,&quot;importo&quot;:70.00,&quot;nomePagatore&quot;:&quot;John Doe&quot;,&quot;tipoPagatore&quot;:&quot;F&quot;}],&quot;email&quot;:&quot;test.prova@gmail.com&quot;,&quot;importoTotale&quot;:70.00,&quot;oggettoPagamento&quot;:&quot;TARI 2021&quot;,&quot;ragioneSociale&quot;:&quot;Pa Salvo&quot;,&quot;urlRedirectEC&quot;:&quot;http://siapagopa.rf.gd/ec?qrstr=prova&amp;idSession=db9feb45d9cc4dc99b4192d5fd94ded5&quot;}'
-HTTP status expected: 200 - obtained:200
-paymentToken
-http://localhost:9080/nodo-dev/inoltroEsito/carta
-inoltroEsito/cartaResponse
-b'{&quot;error&quot;:&quot;Configurazione psp-canale non corretta&quot;}'
-HTTP status expected: 200 - obtained:404</pre>
+b'&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot; ?&gt;&lt;soapenv:Envelope xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:bc=&quot;http://PuntoAccessoPSP.spcoop.gov.it/BarCode_GS1_128_Modified&quot; xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:pay_i=&quot;http://www.digitpa.gov.it/schemas/2011/Pagamenti/&quot; xmlns:ppt=&quot;http://ws.pagamenti.telematici.gov/&quot; xmlns:tns=&quot;http://PuntoAccessoPSP.spcoop.gov.it/servizi/PagamentiTelematiciPspNodo&quot; xmlns:qrc=&quot;http://PuntoAccessoPSP.spcoop.gov.it/QrCode&quot;&gt;&lt;soapenv:Body&gt;&lt;ppt:nodoVerificaRPTRisposta&gt;&lt;nodoVerificaRPTRisposta&gt;&lt;esito&gt;OK&lt;/esito&gt;&lt;datiPagamentoPA&gt;&lt;importoSingoloVersamento&gt;1.00&lt;/importoSingoloVersamento&gt;&lt;ibanAccredito&gt;IT45R0760103200000000001016&lt;/ibanAccredito&gt;&lt;bicAccredito&gt;BSCTCH22&lt;/bicAccredito&gt;&lt;enteBeneficiario&gt;&lt;pay_i:identificativoUnivocoBeneficiario&gt;&lt;pay_i:tipoIdentificativoUnivoco&gt;G&lt;/pay_i:tipoIdentificativoUnivoco&gt;&lt;pay_i:codiceIdentificativoUnivoco&gt;44444444444_05&lt;/pay_i:codiceIdentificativoUnivoco&gt;&lt;/pay_i:identificativoUnivocoBeneficiario&gt;&lt;pay_i:denominazioneBeneficiario&gt;f6&lt;/pay_i:denominazioneBeneficiario&gt;&lt;pay_i:codiceUnitOperBeneficiario&gt;r6&lt;/pay_i:codiceUnitOperBeneficiario&gt;&lt;pay_i:denomUnitOperBeneficiario&gt;yr&lt;/pay_i:denomUnitOperBeneficiario&gt;&lt;pay_i:indirizzoBeneficiario&gt;&amp;quot;paaVerificaRPT&amp;quot;&lt;/pay_i:indirizzoBeneficiario&gt;&lt;pay_i:civicoBeneficiario&gt;ut&lt;/pay_i:civicoBeneficiario&gt;&lt;pay_i:capBeneficiario&gt;jyr&lt;/pay_i:capBeneficiario&gt;&lt;pay_i:localitaBeneficiario&gt;yj&lt;/pay_i:localitaBeneficiario&gt;&lt;pay_i:provinciaBeneficiario&gt;h8&lt;/pay_i:provinciaBeneficiario&gt;&lt;pay_i:nazioneBeneficiario&gt;IT&lt;/pay_i:nazioneBeneficiario&gt;&lt;/enteBeneficiario&gt;&lt;credenzialiPagatore&gt;of8&lt;/credenzialiPagatore&gt;&lt;causaleVersamento&gt;prova/RFDB/019551233153100/TXT/&lt;/causaleVersamento&gt;&lt;/datiPagamentoPA&gt;&lt;/nodoVerificaRPTRisposta&gt;&lt;/ppt:nodoVerificaRPTRisposta&gt;&lt;/soapenv:Body&gt;&lt;/soapenv:Envelope&gt;'</pre>
                   
             </span>
           </li>
@@ -780,16 +320,17 @@ HTTP status expected: 200 - obtained:404</pre>
         <span/>
       </div>
       <div class="scenario">
-        <span class="scenario_file">src/integ-test/bdd-test/features/appIO/flows/PagamentiAppIO/FLUSSO_APIO_08.feature:152</span>
-        <h3 onclick="Collapsible_toggle('scenario_4')" class="failed">
-          <span class="val">Scenario: Check sendPaymentOutcome response with sendPaymentOutcome OK and unreachable PSP, and check correctness of database tables</span>
+        <span class="scenario_file">src/integ-test/bdd-test/features/appIO/primitives/inoltroEsitoPayPal_semantic_old.feature:36</span>
+        <span class="tag">@prova</span>
+        <h3 onclick="Collapsible_toggle('scenario_1')" class="failed">
+          <span class="val">Scenario: Execute nodoAttivaRPT (Phase 2)</span>
         </h3>
-        <ol class="scenario_steps" id="scenario_4">
+        <ol class="scenario_steps" id="scenario_1">
           <li class="step passed">
             <div class="step_name">
               <span class="keyword">Given </span>
               <span class="step val">systems up</span>
-              <small class="step_duration">(0.062s)</small>
+              <small class="step_duration">(0.055s)</small>
             </div>
             <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:27</span>
@@ -824,10 +365,10 @@ HTTP status expected: 200 - obtained:404</pre>
               <span class="keyword">And </span>
               <span class="step val">
                 <span>EC </span>
-                <b>new</b>
+                <b>old</b>
                 <span> version</span>
               </span>
-              <small class="step_duration">(0.002s)</small>
+              <small class="step_duration">(0.001s)</small>
             </div>
             <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:48</span>
@@ -839,33 +380,33 @@ HTTP status expected: 200 - obtained:404</pre>
               <span class="keyword">Given </span>
               <span class="step val">
                 <span>the </span>
-                <b>Execute nodoInoltroEsitoCarta (Phase 4)</b>
+                <b>Execute nodoVerificaRPT (Phase 1)</b>
                 <span> scenario executed successfully</span>
               </span>
-              <small class="step_duration">(2.450s)</small>
+              <small class="step_duration">(0.127s)</small>
             </div>
             <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:386</span>
             </div>
             <span class="embed">
               <a onclick="Collapsible_toggle('embed_2')">Error Message</a>
-              <pre id="embed_2" style="display: none">Assertion Failed: FAILED SUB-STEP: Then verify the HTTP status code of inoltroEsito/carta response is 200
+              <pre id="embed_2" style="display: none">Assertion Failed: FAILED SUB-STEP: Then check outcome is OK of nodoVerificaRPT response
 Substep info: Traceback (most recent call last):
   File &quot;C:\Users\mascia.mariotti\AppData\Local\Programs\Python\Python310\lib\site-packages\behave\model.py&quot;, line 1329, in run
     match.run(runner.context)
   File &quot;C:\Users\mascia.mariotti\AppData\Local\Programs\Python\Python310\lib\site-packages\behave\matchers.py&quot;, line 98, in run
     self.func(context, *args, **kwargs)
-  File &quot;src\integ-test\bdd-test\features\steps\steps.py&quot;, line 422, in step_impl
-    assert int(value) == getattr(context, action + RESPONSE).status_code
-AssertionError
+  File &quot;src\integ-test\bdd-test\features\steps\steps.py&quot;, line 243, in step_impl
+    data = my_document.getElementsByTagName(tag)[0].firstChild.data
+IndexError: list index out of range
 
 Traceback (of failed substep):
   File &quot;C:\Users\mascia.mariotti\AppData\Local\Programs\Python\Python310\lib\site-packages\behave\model.py&quot;, line 1329, in run
     match.run(runner.context)
   File &quot;C:\Users\mascia.mariotti\AppData\Local\Programs\Python\Python310\lib\site-packages\behave\matchers.py&quot;, line 98, in run
     self.func(context, *args, **kwargs)
-  File &quot;src\integ-test\bdd-test\features\steps\steps.py&quot;, line 422, in step_impl
-    assert int(value) == getattr(context, action + RESPONSE).status_code
+  File &quot;src\integ-test\bdd-test\features\steps\steps.py&quot;, line 243, in step_impl
+    data = my_document.getElementsByTagName(tag)[0].firstChild.data
 
 Captured stdout:
 calling: nodo-dei-pagamenti -&gt; http://localhost:9080/
@@ -875,82 +416,28 @@ calling: mock-ec -&gt; http://localhost:8089/
 calling -&gt; http://localhost:8089/servizi/PagamentiTelematiciRPT/info
 response: 200
 url_nodo:  http://localhost:9080/nodo-dev/webservices/input
-nodo soap_request sent &gt;&gt;&gt; &lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd&quot;&gt;
-    &lt;soapenv:Header/&gt;
-    &lt;soapenv:Body&gt;
-    &lt;nod:verifyPaymentNoticeReq&gt;
-        &lt;idPSP&gt;AGID_01&lt;/idPSP&gt;
-        &lt;idBrokerPSP&gt;97735020584&lt;/idBrokerPSP&gt;
-        &lt;idChannel&gt;97735020584_03&lt;/idChannel&gt;
+nodo soap_request sent &gt;&gt;&gt; &lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:ws=&quot;http://ws.pagamenti.telematici.gov/&quot; xmlns:bc=&quot;http://PuntoAccessoPSP.spcoop.gov.it/BarCode_GS1_128_Modified&quot; xmlns:aim=&quot;http://PuntoAccessoPSP.spcoop.gov.it/Code_128_AIM_USS-128_tipo_C&quot; xmlns:qrc=&quot;http://PuntoAccessoPSP.spcoop.gov.it/QrCode&quot;&gt;
+&lt;soapenv:Header/&gt;
+&lt;soapenv:Body&gt;
+    &lt;ws:nodoVerificaRPT&gt;
+        &lt;identificativoPSP&gt;AGID_01&lt;/identificativoPSP&gt;
+        &lt;identificativoIntermediarioPSP&gt;97735020584&lt;/identificativoIntermediarioPSP&gt;
+        &lt;identificativoCanale&gt;97735020584_03&lt;/identificativoCanale&gt;
         &lt;password&gt;pwdpwdpwd&lt;/password&gt;
-        &lt;qrCode&gt;
-            &lt;fiscalCode&gt;77777777777&lt;/fiscalCode&gt;
-            &lt;noticeNumber&gt;302112593278252984&lt;/noticeNumber&gt;
-        &lt;/qrCode&gt;
-    &lt;/nod:verifyPaymentNoticeReq&gt;
-    &lt;/soapenv:Body&gt;
+        &lt;codiceContestoPagamento&gt;103421905719223&lt;/codiceContestoPagamento&gt;
+        &lt;codificaInfrastrutturaPSP&gt;QR-CODE&lt;/codificaInfrastrutturaPSP&gt;
+        &lt;codiceIdRPT&gt;
+            &lt;qrc:QrCode&gt;
+                &lt;qrc:CF&gt;44444444444&lt;/qrc:CF&gt;
+                &lt;qrc:CodStazPA&gt;02&lt;/qrc:CodStazPA&gt;
+                &lt;qrc:AuxDigit&gt;0&lt;/qrc:AuxDigit&gt;
+                &lt;qrc:CodIUV&gt;142151300018412&lt;/qrc:CodIUV&gt;
+            &lt;/qrc:QrCode&gt;
+        &lt;/codiceIdRPT&gt;
+    &lt;/ws:nodoVerificaRPT&gt;
+&lt;/soapenv:Body&gt;
 &lt;/soapenv:Envelope&gt;
-b'&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot; ?&gt;&lt;soapenv:Envelope xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nfpsp=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd&quot; xmlns:tns=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForPsp.wsdl&quot;&gt;&lt;soapenv:Body&gt;&lt;nfpsp:verifyPaymentNoticeRes&gt;&lt;outcome&gt;OK&lt;/outcome&gt;&lt;paymentList&gt;&lt;paymentOptionDescription&gt;&lt;amount&gt;70.00&lt;/amount&gt;&lt;options&gt;EQ&lt;/options&gt;&lt;dueDate&gt;2021-07-31&lt;/dueDate&gt;&lt;paymentNote&gt;pagamentoTest&lt;/paymentNote&gt;&lt;/paymentOptionDescription&gt;&lt;/paymentList&gt;&lt;paymentDescription&gt;Pagamento di Test&lt;/paymentDescription&gt;&lt;fiscalCodePA&gt;77777777777&lt;/fiscalCodePA&gt;&lt;companyName&gt;companyName&lt;/companyName&gt;&lt;officeName&gt;officeName&lt;/officeName&gt;&lt;/nfpsp:verifyPaymentNoticeRes&gt;&lt;/soapenv:Body&gt;&lt;/soapenv:Envelope&gt;'
-check tag &quot;outcome&quot; - expected: OK, obtained: OK
-url_nodo:  http://localhost:9080/nodo-dev/webservices/input
-nodo soap_request sent &gt;&gt;&gt; &lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd&quot;&gt;
-    &lt;soapenv:Header/&gt;
-    &lt;soapenv:Body&gt;
-        &lt;nod:activateIOPaymentReq&gt;
-            &lt;idPSP&gt;AGID_01&lt;/idPSP&gt;
-            &lt;idBrokerPSP&gt;97735020584&lt;/idBrokerPSP&gt;
-            &lt;idChannel&gt;97735020584_03&lt;/idChannel&gt;
-            &lt;password&gt;pwdpwdpwd&lt;/password&gt;
-            &lt;!--Optional:--&gt;
-            &lt;idempotencyKey&gt;97735020584_3196402936&lt;/idempotencyKey&gt;
-            &lt;qrCode&gt;
-                &lt;fiscalCode&gt;77777777777&lt;/fiscalCode&gt;
-                &lt;noticeNumber&gt;302114828815035336&lt;/noticeNumber&gt;
-            &lt;/qrCode&gt;
-            &lt;!--Optional:--&gt;
-            &lt;expirationTime&gt;12345&lt;/expirationTime&gt;
-            &lt;amount&gt;10.00&lt;/amount&gt;
-            &lt;!--Optional:--&gt;
-            &lt;dueDate&gt;2021-12-12&lt;/dueDate&gt;
-            &lt;!--Optional:--&gt;
-            &lt;paymentNote&gt;test&lt;/paymentNote&gt;
-            &lt;!--Optional:--&gt;
-            &lt;payer&gt;
-                &lt;uniqueIdentifier&gt;
-                    &lt;entityUniqueIdentifierType&gt;G&lt;/entityUniqueIdentifierType&gt;
-                    &lt;entityUniqueIdentifierValue&gt;44444444444&lt;/entityUniqueIdentifierValue&gt;
-                &lt;/uniqueIdentifier&gt;
-                &lt;fullName&gt;name&lt;/fullName&gt;
-                &lt;!--Optional:--&gt;
-                &lt;streetName&gt;street&lt;/streetName&gt;
-                &lt;!--Optional:--&gt;
-                &lt;civicNumber&gt;civic&lt;/civicNumber&gt;
-                &lt;!--Optional:--&gt;
-                &lt;postalCode&gt;code&lt;/postalCode&gt;
-                &lt;!--Optional:--&gt;
-                &lt;city&gt;city&lt;/city&gt;
-                &lt;!--Optional:--&gt;
-                &lt;stateProvinceRegion&gt;state&lt;/stateProvinceRegion&gt;
-                &lt;!--Optional:--&gt;
-                &lt;country&gt;IT&lt;/country&gt;
-                &lt;!--Optional:--&gt;
-                &lt;e-mail&gt;test.prova@gmail.com&lt;/e-mail&gt;
-            &lt;/payer&gt;
-        &lt;/nod:activateIOPaymentReq&gt;
-    &lt;/soapenv:Body&gt;
-&lt;/soapenv:Envelope&gt;
-b'&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot; ?&gt;&lt;soapenv:Envelope xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:nfpsp=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd&quot;&gt;&lt;soapenv:Body&gt;&lt;nfpsp:activateIOPaymentRes&gt;&lt;outcome&gt;OK&lt;/outcome&gt;&lt;totalAmount&gt;70.00&lt;/totalAmount&gt;&lt;paymentDescription&gt;TARI 2021&lt;/paymentDescription&gt;&lt;fiscalCodePA&gt;77777777777&lt;/fiscalCodePA&gt;&lt;companyName&gt;company PA&lt;/companyName&gt;&lt;officeName&gt;office PA&lt;/officeName&gt;&lt;paymentToken&gt;abb8a1c5b5bc468da909e26bde631205&lt;/paymentToken&gt;&lt;creditorReferenceId&gt;02114828815035336&lt;/creditorReferenceId&gt;&lt;/nfpsp:activateIOPaymentRes&gt;&lt;/soapenv:Body&gt;&lt;/soapenv:Envelope&gt;'
-check tag &quot;outcome&quot; - expected: OK, obtained: OK
-paymentToken
-http://localhost:9080/nodo-dev/informazioniPagamento?idPagamento=abb8a1c5b5bc468da909e26bde631205
-informazioniPagamentoResponse
-b'{&quot;IBAN&quot;:&quot;IT96R0123454321000000012345&quot;,&quot;bolloDigitale&quot;:false,&quot;codiceFiscale&quot;:&quot;44444444444&quot;,&quot;dettagli&quot;:[{&quot;CCP&quot;:&quot;abb8a1c5b5bc468da909e26bde631205&quot;,&quot;IUV&quot;:&quot;02114828815035336&quot;,&quot;codicePagatore&quot;:&quot;JHNDOE00A01F205N&quot;,&quot;enteBeneficiario&quot;:&quot;Pa Salvo&quot;,&quot;idDominio&quot;:&quot;77777777777&quot;,&quot;importo&quot;:70.00,&quot;nomePagatore&quot;:&quot;John Doe&quot;,&quot;tipoPagatore&quot;:&quot;F&quot;}],&quot;email&quot;:&quot;test.prova@gmail.com&quot;,&quot;importoTotale&quot;:70.00,&quot;oggettoPagamento&quot;:&quot;TARI 2021&quot;,&quot;ragioneSociale&quot;:&quot;Pa Salvo&quot;,&quot;urlRedirectEC&quot;:&quot;http://siapagopa.rf.gd/ec?qrstr=prova&amp;idSession=abb8a1c5b5bc468da909e26bde631205&quot;}'
-HTTP status expected: 200 - obtained:200
-paymentToken
-http://localhost:9080/nodo-dev/inoltroEsito/carta
-inoltroEsito/cartaResponse
-b'{&quot;error&quot;:&quot;Configurazione psp-canale non corretta&quot;}'
-HTTP status expected: 200 - obtained:404</pre>
+b'&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot; ?&gt;&lt;soapenv:Envelope xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:bc=&quot;http://PuntoAccessoPSP.spcoop.gov.it/BarCode_GS1_128_Modified&quot; xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:pay_i=&quot;http://www.digitpa.gov.it/schemas/2011/Pagamenti/&quot; xmlns:ppt=&quot;http://ws.pagamenti.telematici.gov/&quot; xmlns:tns=&quot;http://PuntoAccessoPSP.spcoop.gov.it/servizi/PagamentiTelematiciPspNodo&quot; xmlns:qrc=&quot;http://PuntoAccessoPSP.spcoop.gov.it/QrCode&quot;&gt;&lt;soapenv:Body&gt;&lt;ppt:nodoVerificaRPTRisposta&gt;&lt;nodoVerificaRPTRisposta&gt;&lt;esito&gt;OK&lt;/esito&gt;&lt;datiPagamentoPA&gt;&lt;importoSingoloVersamento&gt;1.00&lt;/importoSingoloVersamento&gt;&lt;ibanAccredito&gt;IT45R0760103200000000001016&lt;/ibanAccredito&gt;&lt;bicAccredito&gt;BSCTCH22&lt;/bicAccredito&gt;&lt;enteBeneficiario&gt;&lt;pay_i:identificativoUnivocoBeneficiario&gt;&lt;pay_i:tipoIdentificativoUnivoco&gt;G&lt;/pay_i:tipoIdentificativoUnivoco&gt;&lt;pay_i:codiceIdentificativoUnivoco&gt;44444444444_05&lt;/pay_i:codiceIdentificativoUnivoco&gt;&lt;/pay_i:identificativoUnivocoBeneficiario&gt;&lt;pay_i:denominazioneBeneficiario&gt;f6&lt;/pay_i:denominazioneBeneficiario&gt;&lt;pay_i:codiceUnitOperBeneficiario&gt;r6&lt;/pay_i:codiceUnitOperBeneficiario&gt;&lt;pay_i:denomUnitOperBeneficiario&gt;yr&lt;/pay_i:denomUnitOperBeneficiario&gt;&lt;pay_i:indirizzoBeneficiario&gt;&amp;quot;paaVerificaRPT&amp;quot;&lt;/pay_i:indirizzoBeneficiario&gt;&lt;pay_i:civicoBeneficiario&gt;ut&lt;/pay_i:civicoBeneficiario&gt;&lt;pay_i:capBeneficiario&gt;jyr&lt;/pay_i:capBeneficiario&gt;&lt;pay_i:localitaBeneficiario&gt;yj&lt;/pay_i:localitaBeneficiario&gt;&lt;pay_i:provinciaBeneficiario&gt;h8&lt;/pay_i:provinciaBeneficiario&gt;&lt;pay_i:nazioneBeneficiario&gt;IT&lt;/pay_i:nazioneBeneficiario&gt;&lt;/enteBeneficiario&gt;&lt;credenzialiPagatore&gt;of8&lt;/credenzialiPagatore&gt;&lt;causaleVersamento&gt;prova/RFDB/019551233153100/TXT/&lt;/causaleVersamento&gt;&lt;/datiPagamentoPA&gt;&lt;/nodoVerificaRPTRisposta&gt;&lt;/ppt:nodoVerificaRPTRisposta&gt;&lt;/soapenv:Body&gt;&lt;/soapenv:Envelope&gt;'</pre>
                   
             </span>
           </li>
