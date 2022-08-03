@@ -37,42 +37,45 @@ export function verifyPaymentNotice(baseUrl,rndAnagPsp,rndAnagPa,noticeNmbr,idem
    check(res, {
  	'verifyPaymentNotice:over_sla300': (r) => r.timings.duration >300,
    },
-   { verifyPaymentNotice: 'over_sla300' }
+   { verifyPaymentNotice: 'over_sla300', ALL:'over_sla300' }
    );
    
    check(res, {
  	'verifyPaymentNotice:over_sla400': (r) => r.timings.duration >400,
    },
-   { verifyPaymentNotice: 'over_sla400' }
+   { verifyPaymentNotice: 'over_sla400', ALL:'over_sla400' }
    );
    
    check(res, {
  	'verifyPaymentNotice:over_sla500 ': (r) => r.timings.duration >500,
    },
-   { verifyPaymentNotice: 'over_sla500' }
+   { verifyPaymentNotice: 'over_sla500', ALL:'over_sla500' }
    );
    
    check(res, {
  	'verifyPaymentNotice:over_sla600': (r) => r.timings.duration >600,
    },
-   { verifyPaymentNotice: 'over_sla600' }
+   { verifyPaymentNotice: 'over_sla600', ALL:'over_sla600' }
    );
    
    check(res, {
  	'verifyPaymentNotice:over_sla800': (r) => r.timings.duration >800,
    },
-   { verifyPaymentNotice: 'over_sla800' }
+   { verifyPaymentNotice: 'over_sla800', ALL:'over_sla800' }
    );
    
    check(res, {
  	'verifyPaymentNotice:over_sla1000': (r) => r.timings.duration >1000,
    },
-   { verifyPaymentNotice: 'over_sla1000' }
+   { verifyPaymentNotice: 'over_sla1000' , ALL:'over_sla1000'}
    );
-   
+
+  let outcome='';
+  try{
   const doc = parseHTML(res.body);
   const script = doc.find('outcome');
-  const outcome = script.text();
+  outcome = script.text();
+  }catch(error){}
   //console.log("VERIFY RESPONSE----------------"+outcome);
   
    check(
@@ -81,7 +84,7 @@ export function verifyPaymentNotice(baseUrl,rndAnagPsp,rndAnagPa,noticeNmbr,idem
       //'verifyPaymentNotice:ok_rate': (r) => r.status == 200,
 	  'verifyPaymentNotice:ok_rate': (r) => outcome == 'OK',
     },
-    { verifyPaymentNotice: 'ok_rate' }
+    { verifyPaymentNotice: 'ok_rate' , ALL:'ok_rate'}
 	);
  
   check(
@@ -90,7 +93,7 @@ export function verifyPaymentNotice(baseUrl,rndAnagPsp,rndAnagPa,noticeNmbr,idem
       //'verifyPaymentNotice:ko_rate': (r) => r.status !== 200,
 	  'verifyPaymentNotice:ko_rate': (r) => outcome !== 'OK',
     },
-    { verifyPaymentNotice: 'ko_rate' }
+    { verifyPaymentNotice: 'ko_rate', ALL:'ko_rate' }
   );
   
   return res;

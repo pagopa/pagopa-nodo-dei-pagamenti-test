@@ -36,46 +36,49 @@ export function ChiediNumeroAvviso(baseUrl,rndAnagPsp,rndAnagPa) {
    check(res, {
  	'ChiediNumeroAvviso:over_sla300': (r) => r.timings.duration >300,
    },
-   { ChiediNumeroAvviso: 'over_sla300' }
+   { ChiediNumeroAvviso: 'over_sla300', ALL:'over_sla300' }
    );
    
    check(res, {
  	'ChiediNumeroAvviso:over_sla400': (r) => r.timings.duration >400,
    },
-   { ChiediNumeroAvviso: 'over_sla400' }
+   { ChiediNumeroAvviso: 'over_sla400', ALL:'over_sla400'  }
    );
    
    check(res, {
  	'ChiediNumeroAvviso:over_sla500 ': (r) => r.timings.duration >500,
    },
-   { ChiediNumeroAvviso: 'over_sla500' }
+   { ChiediNumeroAvviso: 'over_sla500', ALL:'over_sla500'  }
    );
    
    check(res, {
  	'ChiediNumeroAvviso:over_sla600': (r) => r.timings.duration >600,
    },
-   { ChiediNumeroAvviso: 'over_sla600' }
+   { ChiediNumeroAvviso: 'over_sla600', ALL:'over_sla600'  }
    );
    
    check(res, {
  	'ChiediNumeroAvviso:over_sla800': (r) => r.timings.duration >800,
    },
-   { ChiediNumeroAvviso: 'over_sla800' }
+   { ChiediNumeroAvviso: 'over_sla800', ALL:'over_sla800'  }
    );
    
    check(res, {
  	'ChiediNumeroAvviso:over_sla1000': (r) => r.timings.duration >1000,
    },
-   { ChiediNumeroAvviso: 'over_sla1000' }
+   { ChiediNumeroAvviso: 'over_sla1000', ALL:'over_sla1000' }
    );
-   
-  const doc = parseHTML(res.body);
-  const script = doc.find('esito');
-  const outcome = script.text();
- /* if(outcome=='KO'){
+
+  let outcome='';
+  try{
+  let doc = parseHTML(res.body);
+  let script = doc.find('esito');
+  outcome = script.text();
+  }catch(error){}
+  /*if(outcome=='KO'){
   console.log("ChiediNumAvviso REQuest----------------"+numAvvisoReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.PA)); 
   console.log("ChiediNumAvviso RESPONSE----------------"+res.body);
-  } */
+  }*/
   
    check(
     res,
@@ -83,7 +86,7 @@ export function ChiediNumeroAvviso(baseUrl,rndAnagPsp,rndAnagPa) {
       //'ChiediNumeroAvviso:ok_rate': (r) => r.status == 200,
 	  'ChiediNumeroAvviso:ok_rate': (r) => outcome == 'OK',
     },
-    { ChiediNumeroAvviso: 'ok_rate' }
+    { ChiediNumeroAvviso: 'ok_rate', ALL:'ok_rate' }
 	);
  
   check(
@@ -92,7 +95,7 @@ export function ChiediNumeroAvviso(baseUrl,rndAnagPsp,rndAnagPa) {
       //'ChiediNumeroAvviso:ko_rate': (r) => r.status !== 200,
 	  'ChiediNumeroAvviso:ko_rate': (r) => outcome !== 'OK',
     },
-    { ChiediNumeroAvviso: 'ko_rate' }
+    { ChiediNumeroAvviso: 'ko_rate', ALL:'ko_rate' }
   );
   
   return res;

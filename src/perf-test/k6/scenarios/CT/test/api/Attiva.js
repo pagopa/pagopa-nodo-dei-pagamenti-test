@@ -80,42 +80,47 @@ export function Attiva(baseUrl,rndAnagPsp,rndAnagPa,iuv, ccp) {
    check(res, {
  	'Attiva:over_sla300': (r) => r.timings.duration >300,
    },
-   { Attiva: 'over_sla300' }
+   { Attiva: 'over_sla300', ALL:'over_sla300' }
    );
    
    check(res, {
  	'Attiva:over_sla400': (r) => r.timings.duration >400,
    },
-   { Attiva: 'over_sla400' }
+   { Attiva: 'over_sla400', ALL:'over_sla400' }
    );
    
    check(res, {
  	'Attiva:over_sla500 ': (r) => r.timings.duration >500,
    },
-   { Attiva: 'over_sla500' }
+   { Attiva: 'over_sla500', ALL:'over_sla500' }
    );
    
    check(res, {
  	'Attiva:over_sla600': (r) => r.timings.duration >600,
    },
-   { Attiva: 'over_sla600' }
+   { Attiva: 'over_sla600', ALL:'over_sla600' }
    );
    
    check(res, {
  	'Attiva:over_sla800': (r) => r.timings.duration >800,
    },
-   { Attiva: 'over_sla800' }
+   { Attiva: 'over_sla800', ALL:'over_sla800' }
    );
    
    check(res, {
  	'Attiva:over_sla1000': (r) => r.timings.duration >1000,
    },
-   { Attiva: 'over_sla1000' }
+   { Attiva: 'over_sla1000', ALL:'over_sla1000' }
    );
-   
-  const doc = parseHTML(res.body);
-  const script = doc.find('esito');
-  const outcome = script.text();
+
+  let outcome='';
+  try{
+  let doc = parseHTML(res.body);
+  let script = doc.find('esito');
+  outcome = script.text();
+  }catch(error){}
+
+
   /*if(outcome=='KO'){
 	   console.log("ATTIVA REQuest----------------"+AttivaReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , iuv, ccp)); 
   console.log("ATTIVA RESPONSE----------------"+res.body);
@@ -127,7 +132,7 @@ export function Attiva(baseUrl,rndAnagPsp,rndAnagPa,iuv, ccp) {
       //'Attiva:ok_rate': (r) => r.status == 200,
 	  'Attiva:ok_rate': (r) => outcome == 'OK',
     },
-    { Attiva: 'ok_rate' }
+    { Attiva: 'ok_rate', ALL:'ok_rate' }
 	);
  
   check(
@@ -136,7 +141,7 @@ export function Attiva(baseUrl,rndAnagPsp,rndAnagPa,iuv, ccp) {
       //'Attiva:ko_rate': (r) => r.status !== 200,
 	  'Attiva:ko_rate': (r) => outcome !== 'OK',
     },
-    { Attiva: 'ko_rate' }
+    { Attiva: 'ko_rate', ALL:'ko_rate' }
   );
   
   return res;

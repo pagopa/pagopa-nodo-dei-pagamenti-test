@@ -39,55 +39,72 @@ export function activatePaymentNotice(baseUrl,rndAnagPsp,rndAnagPa,noticeNmbr,id
    check(res, {
  	'activatePaymentNotice:over_sla300': (r) => r.timings.duration >300,
    },
-   { activatePaymentNotice: 'over_sla300' }
+   { activatePaymentNotice: 'over_sla300', ALL: 'over_sla300' }
    );
    
    check(res, {
  	'activatePaymentNotice:over_sla400': (r) => r.timings.duration >400,
    },
-   { activatePaymentNotice: 'over_sla400' }
+   { activatePaymentNotice: 'over_sla400', ALL: 'over_sla400' }
    );
       
    check(res, {
  	'activatePaymentNotice:over_sla500': (r) => r.timings.duration >500,
    },
-   { activatePaymentNotice: 'over_sla500' }
+   { activatePaymentNotice: 'over_sla500', ALL: 'over_sla600' }
    );
    
    check(res, {
  	'activatePaymentNotice:over_sla600': (r) => r.timings.duration >600,
    },
-   { activatePaymentNotice: 'over_sla600' }
+   { activatePaymentNotice: 'over_sla600', ALL: 'over_sla600' }
    );
    
    check(res, {
  	'activatePaymentNotice:over_sla800': (r) => r.timings.duration >800,
    },
-   { activatePaymentNotice: 'over_sla800' }
+   { activatePaymentNotice: 'over_sla800', ALL: 'over_sla800' }
    );
    
    check(res, {
  	'activatePaymentNotice:over_sla1000': (r) => r.timings.duration >1000,
    },
-   { activatePaymentNotice: 'over_sla1000' }
+   { activatePaymentNotice: 'over_sla1000', ALL: 'over_sla1000' }
    );
-   
-  const doc = parseHTML(res.body);
-  const script = doc.find('outcome');
-  const outcome = script.text();
-   
+
+
+  let outcome='';
+  let paymentToken='';
+  let creditorReferenceId='';
+  let result={};
+  result.paymentToken=paymentToken;
+  result.creditorReferenceId=creditorReferenceId;
+  try{
+  let doc = parseHTML(res.body);
+  let script = doc.find('outcome');
+  outcome = script.text();
+  script = doc.find('paymentToken');
+  paymentToken = script.text();
+  result.paymentToken=paymentToken;
+  script = doc.find('creditorReferenceId');
+  creditorReferenceId = script.text();
+  result.creditorReferenceId=creditorReferenceId;
+  }catch(error){}
+
+
   if(outcome=='KO'){
   console.log("activate REQuest----------------"+activateReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , noticeNmbr, idempotencyKey)); 
   console.log("activate RESPONSE----------------"+res.body);
   }  
-   
+
+
    check(
     res,
     {
       //'activatePaymentNotice:ok_rate': (r) => r.status == 200,
 	  'activatePaymentNotice:ok_rate': (r) => outcome == 'OK',
     },
-    { activatePaymentNotice: 'ok_rate' }
+    { activatePaymentNotice: 'ok_rate', ALL: 'ok_rate' }
 	);
 	
 	 check(
@@ -96,8 +113,8 @@ export function activatePaymentNotice(baseUrl,rndAnagPsp,rndAnagPa,noticeNmbr,id
       //'activatePaymentNotice:ko_rate': (r) => r.status !== 200,
 	  'activatePaymentNotice:ko_rate': (r) => outcome !== 'OK',
     },
-    { activatePaymentNotice: 'ko_rate' }
+    { activatePaymentNotice: 'ko_rate', ALL: 'ko_rate' }
   );
    
-     return res;
+     return result;
 }

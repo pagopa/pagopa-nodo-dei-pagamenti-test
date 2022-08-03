@@ -57,26 +57,39 @@ export const getScalini = new SharedArray('scalini', function () {
 export const options = {
 	
   scenarios: {
-  	total: {
-      executor: 'ramping-vus',
-      //startTime: '2s', // the ramping API test starts a little later
-      stages: [
-        { target: getScalini[0].Scalino_CT_1, duration: getScalini[0].Scalino_CT_TIME_1+'s' }, 
-        { target: getScalini[0].Scalino_CT_2, duration: getScalini[0].Scalino_CT_TIME_2+'s' }, 
-        { target: getScalini[0].Scalino_CT_3, duration: getScalini[0].Scalino_CT_TIME_3+'s' }, 
-		{ target: getScalini[0].Scalino_CT_4, duration: getScalini[0].Scalino_CT_TIME_4+'s' }, 
-        { target: getScalini[0].Scalino_CT_5, duration: getScalini[0].Scalino_CT_TIME_5+'s' }, 
-        { target: getScalini[0].Scalino_CT_6, duration: getScalini[0].Scalino_CT_TIME_6+'s' },
-		{ target: getScalini[0].Scalino_CT_7, duration: getScalini[0].Scalino_CT_TIME_7+'s' }, 
-		{ target: getScalini[0].Scalino_CT_8, duration: getScalini[0].Scalino_CT_TIME_8+'s' }, 
-        { target: getScalini[0].Scalino_CT_9, duration: getScalini[0].Scalino_CT_TIME_9+'s' }, 
-        { target: getScalini[0].Scalino_CT_10, duration: getScalini[0].Scalino_CT_TIME_10+'s' },
-       ],
-      tags: { test_type: 'ALL' }, 
-      exec: 'total', 
-    }
-	
-  },
+      	total: {
+          timeUnit: '1s',
+          preAllocatedVUs: 1, // how large the initial pool of VUs would be
+          executor: 'ramping-arrival-rate',
+          //executor: 'ramping-vus',
+          maxVUs: 300,
+          stages: [
+            { target: getScalini[0].Scalino_CT_1, duration: 0+'s' },
+            { target: getScalini[0].Scalino_CT_1, duration: getScalini[0].Scalino_CT_TIME_1+'s' },
+            { target: getScalini[0].Scalino_CT_2, duration: 0+'s' },
+            { target: getScalini[0].Scalino_CT_2, duration: getScalini[0].Scalino_CT_TIME_2+'s' },
+            { target: getScalini[0].Scalino_CT_3, duration: 0+'s' },
+            { target: getScalini[0].Scalino_CT_3, duration: getScalini[0].Scalino_CT_TIME_3+'s' },
+            { target: getScalini[0].Scalino_CT_4, duration: 0+'s' },
+    		{ target: getScalini[0].Scalino_CT_4, duration: getScalini[0].Scalino_CT_TIME_4+'s' },
+    		{ target: getScalini[0].Scalino_CT_5, duration: 0+'s' },
+            { target: getScalini[0].Scalino_CT_5, duration: getScalini[0].Scalino_CT_TIME_5+'s' },
+            { target: getScalini[0].Scalino_CT_6, duration: 0+'s' },
+            { target: getScalini[0].Scalino_CT_6, duration: getScalini[0].Scalino_CT_TIME_6+'s' },
+            { target: getScalini[0].Scalino_CT_7, duration: 0+'s' },
+    		{ target: getScalini[0].Scalino_CT_7, duration: getScalini[0].Scalino_CT_TIME_7+'s' },
+    		{ target: getScalini[0].Scalino_CT_8, duration: 0+'s' },
+            { target: getScalini[0].Scalino_CT_8, duration: getScalini[0].Scalino_CT_TIME_8+'s' },
+    		{ target: getScalini[0].Scalino_CT_9, duration: 0+'s' },
+            { target: getScalini[0].Scalino_CT_9, duration: getScalini[0].Scalino_CT_TIME_9+'s' },
+            { target: getScalini[0].Scalino_CT_10, duration: 0+'s' },
+            { target: getScalini[0].Scalino_CT_10, duration: getScalini[0].Scalino_CT_TIME_10+'s' }, //to uncomment
+           ],
+          tags: { test_type: 'ALL' },
+          exec: 'total',
+        }
+
+      },
   summaryTrendStats: ['avg', 'min', 'max', 'p(90)', 'p(95)', 'count'],
   discardResponseBodies: false,
   thresholds: {
@@ -88,12 +101,12 @@ export const options = {
 	'http_req_duration{verifyPaymentNotice_NN:http_req_duration}': [],
 	'http_req_duration{ALL:http_req_duration}': [],
 	//'checks{webtest:ok_rate}': ['rate>0.85'],
-	'checks{sendPaymentOutcome_NN:over_sla300}': ['rate<0.50'],
-	'checks{sendPaymentOutcome_NN:over_sla400}': ['rate<0.45'],
-	'checks{sendPaymentOutcome_NN:over_sla500}': ['rate<0.40'],
-	'checks{sendPaymentOutcome_NN:over_sla600}': ['rate<0.30'],
-	'checks{sendPaymentOutcome_NN:over_sla800}': ['rate<0.10'],
-	'checks{sendPaymentOutcome_NN:over_sla1000}': ['rate<0.05'],
+	'checks{sendPaymentOutcome_NN:over_sla300}': [],
+	'checks{sendPaymentOutcome_NN:over_sla400}': [],
+	'checks{sendPaymentOutcome_NN:over_sla500}': [],
+	'checks{sendPaymentOutcome_NN:over_sla600}': [],
+	'checks{sendPaymentOutcome_NN:over_sla800}': [],
+	'checks{sendPaymentOutcome_NN:over_sla1000}': [],
 	'checks{sendPaymentOutcome_NN:ok_rate}': [],
 	'checks{sendPaymentOutcome_NN:ko_rate}': [],
 	'checks{activatePaymentNotice_NN:over_sla300}': [],
@@ -144,35 +157,17 @@ export function total() {
     
    
   let res =  verifyPaymentNotice_NN(baseUrl,rndAnagPsp,rndAnagPaNew,noticeNmbr,idempotencyKey);
-                                     
-  let doc = parseHTML(res.body);
-  let script = doc.find('outcome');
-  let outcome = script.text();
-    
-  checks(res, outcome);
-  
-  res = activatePaymentNotice_NN(baseUrl,rndAnagPsp,rndAnagPaNew,noticeNmbr,idempotencyKey,2);
-  	 
-  doc = parseHTML(res.body);
-  script = doc.find('outcome');
-  outcome = script.text();
-     
-  checks(res, outcome);
-  
-  script = doc.find('paymentToken');
-  var paymentToken = script.text();
-   
-  
- 
+
+
+
+ res = activatePaymentNotice_NN(baseUrl,rndAnagPsp,rndAnagPaNew,noticeNmbr,idempotencyKey,2);
+ let paymentToken=res.paymentToken;
+
+
+
   res = sendPaymentOutput_NN(baseUrl,rndAnagPsp,paymentToken);
 
-  doc = parseHTML(res.body);
-  script = doc.find('outcome');
-  outcome = script.text();
-    
-  checks(res, outcome);
-   
-  
+
 }
 
 
@@ -189,11 +184,11 @@ export function handleSummary(data) {
    return {
     'stdout': textSummary(data, { indent: ' ', enableColors: true, expected_response: 'ALL' }), // Show the text summary to stdout...
 	//'./junit.xml': jUnit(data), // but also transform it and save it as a JUnit XML...
-    './scenarios/CT/test/output/TC02.04.summary.json': JSON.stringify(data), // and a JSON with all the details...
+    './scenarios/CT/test/output/TC03.05.summary.json': JSON.stringify(data), // and a JSON with all the details...
 	//'./scenarios/CT/test/output/summary.html': htmlReport(data),
-	'./scenarios/CT/test/output/TC02.04.summary.csv': csv[0],
-	'./scenarios/CT/test/output/TC02.04.trOverSla.csv': csv[1],
-	'./scenarios/CT/test/output/TC02.04.resultCodeSummary.csv': csv[2],
+	'./scenarios/CT/test/output/TC03.05.summary.csv': csv[0],
+	'./scenarios/CT/test/output/TC03.05.trOverSla.csv': csv[1],
+	'./scenarios/CT/test/output/TC03.05.resultCodeSummary.csv': csv[2],
 	//'./xrayJunit.xml': generateXrayJUnitXML(data, 'summary.json', encoding.b64encode(JSON.stringify(data))),
  	
   };

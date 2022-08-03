@@ -14,37 +14,37 @@ export function chiediInformazioniPagamento(baseUrl,paymentToken, rndAnagPa) {
    check(res, {
  	'chiediInformazioniPagamento:over_sla300': (r) => r.timings.duration >300,
    },
-   { chiediInformazioniPagamento: 'over_sla300' }
+   { chiediInformazioniPagamento: 'over_sla300', ALL:'over_sla300'  }
    );
    
    check(res, {
  	'chiediInformazioniPagamento:over_sla400': (r) => r.timings.duration >400,
    },
-   { chiediInformazioniPagamento: 'over_sla400' }
+   { chiediInformazioniPagamento: 'over_sla400', ALL:'over_sla400'  }
    );
       
    check(res, {
  	'chiediInformazioniPagamento:over_sla500': (r) => r.timings.duration >500,
    },
-   { chiediInformazioniPagamento: 'over_sla500' }
+   { chiediInformazioniPagamento: 'over_sla500', ALL:'over_sla500'  }
    );
    
    check(res, {
  	'chiediInformazioniPagamento:over_sla600': (r) => r.timings.duration >600,
    },
-   { chiediInformazioniPagamento: 'over_sla600' }
+   { chiediInformazioniPagamento: 'over_sla600', ALL:'over_sla600'  }
    );
    
    check(res, {
  	'chiediInformazioniPagamento:over_sla800': (r) => r.timings.duration >800,
    },
-   { chiediInformazioniPagamento: 'over_sla800' }
+   { chiediInformazioniPagamento: 'over_sla800' , ALL:'over_sla800' }
    );
    
    check(res, {
  	'chiediInformazioniPagamento:over_sla1000': (r) => r.timings.duration >1000,
    },
-   { chiediInformazioniPagamento: 'over_sla1000' }
+   { chiediInformazioniPagamento: 'over_sla1000' , ALL:'over_sla1000'}
    );
    
   /*const doc = parseHTML(res.body);
@@ -65,32 +65,41 @@ export function chiediInformazioniPagamento(baseUrl,paymentToken, rndAnagPa) {
         }
    }; */
 	 
+   let ragioneSocialeExtr='';
+   let pa=''
+   let result={};
+   result.ragioneSocialeExtr=ragioneSocialeExtr;
+   try{
+   pa = rndAnagPa.PA;
+   ragioneSocialeExtr=res["ragioneSociale"];
+   result.ragioneSocialeExtr=ragioneSocialeExtr;
+   }catch(error){}
 
-   let ragioneSocialeExtr=res["ragioneSociale"];
-   
-   console.log("ragioneSocialeExtr="+ragioneSocialeExtr);
-   console.log(res.body);
-  if(ragioneSocialeExtr!==rndAnagPa.PA){
-   console.log("chiediInfoPagamento RESPONSE----------------"+res.body);
+     console.log(ragioneSocialeExtr+"---"+ rndAnagPa.PA);
+   // console.log("ragioneSocialeExtr="+ragioneSocialeExtr);
+  // console.log(res.body);
+  if(ragioneSocialeExtr!==pa){
+   console.log("chiediInfoPagamento RESPONSE----------------"+res.body+"---"+rndAnagPa.PA);
   }
+
    
    check(
     res,
     {
       //'chiediInformazioniPagamento:ok_rate': (r) => outcome == 'OK',
-	  'chiediInformazioniPagamento:ok_rate': (r) => ragioneSocialeExtr == rndAnagPa.PA,
+	  'chiediInformazioniPagamento:ok_rate': (r) => ragioneSocialeExtr == pa,
     },
-    { chiediInformazioniPagamento: 'ok_rate' }
+    { chiediInformazioniPagamento: 'ok_rate', ALL:'ok_rate' }
 	);
 	
 	 check(
     res,
     {
        //'chiediInformazioniPagamento:ko_rate': (r) => outcome !== 'OK',
-	   'chiediInformazioniPagamento:ko_rate': (r) => ragioneSocialeExtr !== rndAnagPa.PA,
+	   'chiediInformazioniPagamento:ko_rate': (r) => ragioneSocialeExtr !== pa,
     },
-    { chiediInformazioniPagamento: 'ko_rate' }
+    { chiediInformazioniPagamento: 'ko_rate', ALL:'ko_rate' }
   );
    
-     return res;
+     return result;
 }

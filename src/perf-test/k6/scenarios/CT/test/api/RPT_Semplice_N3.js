@@ -54,46 +54,52 @@ export function RPT_Semplice_N3(baseUrl,rndAnagPaNew,paymentToken, creditorRefer
    check(res, {
  	'RPT_Semplice_N3:over_sla300': (r) => r.timings.duration >300,
    },
-   { RPT_Semplice_N3: 'over_sla300' }
+   { RPT_Semplice_N3: 'over_sla300', ALL:'over_sla300' }
    );
    
    check(res, {
  	'RPT_Semplice_N3:over_sla400': (r) => r.timings.duration >400,
    },
-   { RPT_Semplice_N3: 'over_sla400' }
+   { RPT_Semplice_N3: 'over_sla400', ALL:'over_sla400' }
    );
    
    check(res, {
  	'RPT_Semplice_N3:over_sla500 ': (r) => r.timings.duration >500,
    },
-   { RPT_Semplice_N3: 'over_sla500' }
+   { RPT_Semplice_N3: 'over_sla500', ALL:'over_sla500' }
    );
    
    check(res, {
  	'RPT_Semplice_N3:over_sla600': (r) => r.timings.duration >600,
    },
-   { RPT_Semplice_N3: 'over_sla600' }
+   { RPT_Semplice_N3: 'over_sla600', ALL:'over_sla600' }
    );
    
    check(res, {
  	'RPT_Semplice_N3:over_sla800': (r) => r.timings.duration >800,
    },
-   { RPT_Semplice_N3: 'over_sla800' }
+   { RPT_Semplice_N3: 'over_sla800', ALL:'over_sla800' }
    );
    
    check(res, {
  	'RPT_Semplice_N3:over_sla1000': (r) => r.timings.duration >1000,
    },
-   { RPT_Semplice_N3: 'over_sla1000' }
+   { RPT_Semplice_N3: 'over_sla1000', ALL:'over_sla1000' }
    );
-   
-  const doc = parseHTML(res.body);
-  const script = doc.find('esito');
-  const outcome = script.text();
-  
+
+
+
+  let outcome='';
+  try{
+  let doc = parseHTML(res.body);
+  let script = doc.find('esito');
+  outcome = script.text();
+  }catch(error){}
+
+
   if(outcome=='KO'){
-  console.log("RPTSempliceN3 REQuest----------------"+ rptSempliceN3ReqBody(rndAnagPaNew.PA, rndAnagPaNew.INTPA, rndAnagPaNew.STAZPA,paymentToken, creditorReferenceId, rptEncoded)); 
-  console.log("RPTSempliceN3 RESPONSE----------------"+res.body);
+ // console.log("RPTSempliceN3 REQuest----------------"+ rptSempliceN3ReqBody(rndAnagPaNew.PA, rndAnagPaNew.INTPA, rndAnagPaNew.STAZPA,paymentToken, creditorReferenceId, rptEncoded));
+ // console.log("RPTSempliceN3 RESPONSE----------------"+res.body);
   }
    
    check(
@@ -102,7 +108,7 @@ export function RPT_Semplice_N3(baseUrl,rndAnagPaNew,paymentToken, creditorRefer
      
 	  'RPT_Semplice_N3:ok_rate': (r) => outcome == 'OK',
     },
-    { RPT_Semplice_N3: 'ok_rate' }
+    { RPT_Semplice_N3: 'ok_rate', ALL:'ok_rate' }
 	);
  
   check(
@@ -111,7 +117,7 @@ export function RPT_Semplice_N3(baseUrl,rndAnagPaNew,paymentToken, creditorRefer
      
 	  'RPT_Semplice_N3:ko_rate': (r) => outcome !== 'OK',
     },
-    { RPT_Semplice_N3: 'ko_rate' }
+    { RPT_Semplice_N3: 'ko_rate', ALL:'ko_rate' }
   );
   
   return res;

@@ -47,42 +47,55 @@ export function ActivateIOPayment(baseUrl,rndAnagPsp,rndAnagPaNew,noticeNmbr,ide
    check(res, {
  	'ActivateIOPayment:over_sla300': (r) => r.timings.duration >300,
    },
-   { ActivateIOPayment: 'over_sla300' }
+   { ActivateIOPayment: 'over_sla300', ALL: 'over_sla300' }
    );
    
    check(res, {
  	'ActivateIOPayment:over_sla400': (r) => r.timings.duration >400,
    },
-   { ActivateIOPayment: 'over_sla400' }
+   { ActivateIOPayment: 'over_sla400', ALL: 'over_sla400' }
    );
       
    check(res, {
  	'ActivateIOPayment:over_sla500': (r) => r.timings.duration >500,
    },
-   { ActivateIOPayment: 'over_sla500' }
+   { ActivateIOPayment: 'over_sla500', ALL: 'over_sla500' }
    );
    
    check(res, {
  	'ActivateIOPayment:over_sla600': (r) => r.timings.duration >600,
    },
-   { ActivateIOPayment: 'over_sla600' }
+   { ActivateIOPayment: 'over_sla600', ALL: 'over_sla600' }
    );
    
    check(res, {
  	'ActivateIOPayment:over_sla800': (r) => r.timings.duration >800,
    },
-   { ActivateIOPayment: 'over_sla800' }
+   { ActivateIOPayment: 'over_sla800', ALL: 'over_sla800' }
    );
    
    check(res, {
  	'ActivateIOPayment:over_sla1000': (r) => r.timings.duration >1000,
    },
-   { ActivateIOPayment: 'over_sla1000' }
+   { ActivateIOPayment: 'over_sla1000', ALL: 'over_sla1000' }
    );
-   
-  const doc = parseHTML(res.body);
-  const script = doc.find('outcome');
-  const outcome = script.text();
+
+
+
+
+    let outcome='';
+    let paymentToken='';
+    let result={};
+    result.paymentToken=paymentToken;
+    try{
+    let doc = parseHTML(res.body);
+    let script = doc.find('outcome');
+    outcome = script.text();
+    let scriptToken = doc.find('paymentToken');
+    paymentToken = scriptToken.text();
+    result.paymentToken=paymentToken;
+    }catch(error){}
+
   
   if(outcome=='KO'){
   console.log("ActivateIOPayment REQuest----------------"+activateIOPaymentReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPaNew.CF , noticeNmbr, idempotencyKey)); 
@@ -95,7 +108,7 @@ export function ActivateIOPayment(baseUrl,rndAnagPsp,rndAnagPaNew,noticeNmbr,ide
       //'ActivateIOPayment:ok_rate': (r) => r.status == 200,
 	  'ActivateIOPayment:ok_rate': (r) => outcome == 'OK',
     },
-    { ActivateIOPayment: 'ok_rate' }
+    { ActivateIOPayment: 'ok_rate', ALL: 'ok_rate' }
 	);
 	
 	 check(
@@ -104,8 +117,8 @@ export function ActivateIOPayment(baseUrl,rndAnagPsp,rndAnagPaNew,noticeNmbr,ide
       //'ActivateIOPayment:ko_rate': (r) => r.status !== 200,
 	  'ActivateIOPayment:ko_rate': (r) => outcome !== 'OK',
     },
-    { ActivateIOPayment: 'ko_rate' }
+    { ActivateIOPayment: 'ko_rate', ALL: 'ko_rate' }
   );
    
-     return res;
+     return result;
 }

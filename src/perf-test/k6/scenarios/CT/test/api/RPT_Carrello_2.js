@@ -67,46 +67,57 @@ export function RPT_Carrello_2(baseUrl,rndAnagPa,iuvs) {
    check(res, {
  	'RPT_Carrello_2:over_sla300': (r) => r.timings.duration >300,
    },
-   { RPT_Carrello_2: 'over_sla300' }
+   { RPT_Carrello_2: 'over_sla300', ALL:'over_sla300' }
    );
    
    check(res, {
  	'RPT_Carrello_2:over_sla400': (r) => r.timings.duration >400,
    },
-   { RPT_Carrello_2: 'over_sla400' }
+   { RPT_Carrello_2: 'over_sla400', ALL:'over_sla400' }
    );
    
    check(res, {
  	'RPT_Carrello_2:over_sla500 ': (r) => r.timings.duration >500,
    },
-   { RPT_Carrello_2: 'over_sla500' }
+   { RPT_Carrello_2: 'over_sla500', ALL:'over_sla500' }
    );
    
    check(res, {
  	'RPT_Carrello_2:over_sla600': (r) => r.timings.duration >600,
    },
-   { RPT_Carrello_2: 'over_sla600' }
+   { RPT_Carrello_2: 'over_sla600', ALL:'over_sla600' }
    );
    
    check(res, {
  	'RPT_Carrello_2:over_sla800': (r) => r.timings.duration >800,
    },
-   { RPT_Carrello_2: 'over_sla800' }
+   { RPT_Carrello_2: 'over_sla800', ALL:'over_sla800' }
    );
    
    check(res, {
  	'RPT_Carrello_2:over_sla1000': (r) => r.timings.duration >1000,
    },
-   { RPT_Carrello_2: 'over_sla1000' }
+   { RPT_Carrello_2: 'over_sla1000', ALL:'over_sla1000' }
    );
-   
-  const doc = parseHTML(res.body);
-  const script = doc.find('esitoComplessivoOperazione');
-  const outcome = script.text();
-  
+
+  let outcome='';
+  let paymentToken='';
+  let result={};
+  result.paymentToken=paymentToken;
+  try{
+  let doc = parseHTML(res.body);
+  let script = doc.find('esitoComplessivoOperazione');
+  outcome = script.text();
+  script = doc.find('url');
+  let token = script.text();
+  paymentToken = token.split('=')[1];
+  result.paymentToken=paymentToken;
+  }catch(error){}
+
+
   if(outcome=='KO'){
-  console.log("rptCarrello2 REQuest----------------"+rptReqBody(rndAnagPa.PA, rndAnagPa.INTPA, rndAnagPa.STAZPA, iuvs, rptEncodeds)); 
-  console.log("rptCarrello2 RESPONSE----------------"+res.body);
+  /*console.log("rptCarrello2 REQuest----------------"+rptReqBody(rndAnagPa.PA, rndAnagPa.INTPA, rndAnagPa.STAZPA, iuvs, rptEncodeds));
+  console.log("rptCarrello2 RESPONSE----------------"+res.body);*/
   }
     
    check(
@@ -115,7 +126,7 @@ export function RPT_Carrello_2(baseUrl,rndAnagPa,iuvs) {
     
 	  'RPT_Carrello_2:ok_rate': (r) => outcome == 'OK',
     },
-    { RPT_Carrello_2: 'ok_rate' }
+    { RPT_Carrello_2: 'ok_rate' , ALL:'ok_rate' }
 	);
  
   check(
@@ -124,10 +135,10 @@ export function RPT_Carrello_2(baseUrl,rndAnagPa,iuvs) {
      
 	  'RPT_Carrello_2:ko_rate': (r) => outcome !== 'OK',
     },
-    { RPT_Carrello_2: 'ko_rate' }
+    { RPT_Carrello_2: 'ko_rate', ALL:'ko_rate' }
   );
   
-  return res;
+  return result;
    
 }
 

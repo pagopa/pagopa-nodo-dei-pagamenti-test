@@ -14,48 +14,53 @@ export function nodoChiediAvanzamentoPagamento_Post(baseUrl,paymentToken) {
    check(res, {
  	'nodoChiediAvanzamentoPagamento_Post:over_sla300': (r) => r.timings.duration >300,
    },
-   { nodoChiediAvanzamentoPagamento_Post: 'over_sla300' }
+   { nodoChiediAvanzamentoPagamento_Post: 'over_sla300', ALL: 'over_sla300' }
    );
    
    check(res, {
  	'nodoChiediAvanzamentoPagamento_Post:over_sla400': (r) => r.timings.duration >400,
    },
-   { nodoChiediAvanzamentoPagamento_Post: 'over_sla400' }
+   { nodoChiediAvanzamentoPagamento_Post: 'over_sla400', ALL: 'over_sla400' }
    );
       
    check(res, {
  	'nodoChiediAvanzamentoPagamento_Post:over_sla500': (r) => r.timings.duration >500,
    },
-   { nodoChiediAvanzamentoPagamento_Post: 'over_sla500' }
+   { nodoChiediAvanzamentoPagamento_Post: 'over_sla500', ALL: 'over_sla500' }
    );
    
    check(res, {
  	'nodoChiediAvanzamentoPagamento_Post:over_sla600': (r) => r.timings.duration >600,
    },
-   { nodoChiediAvanzamentoPagamento_Post: 'over_sla600' }
+   { nodoChiediAvanzamentoPagamento_Post: 'over_sla600', ALL: 'over_sla600' }
    );
    
    check(res, {
  	'nodoChiediAvanzamentoPagamento_Post:over_sla800': (r) => r.timings.duration >800,
    },
-   { nodoChiediAvanzamentoPagamento_Post: 'over_sla800' }
+   { nodoChiediAvanzamentoPagamento_Post: 'over_sla800', ALL: 'over_sla800' }
    );
    
    check(res, {
  	'nodoChiediAvanzamentoPagamento_Post:over_sla1000': (r) => r.timings.duration >1000,
    },
-   { nodoChiediAvanzamentoPagamento_Post: 'over_sla1000' }
+   { nodoChiediAvanzamentoPagamento_Post: 'over_sla1000', ALL: 'over_sla1000' }
    );
-   
-  
-  const outcome= res["esito"];
+
+
+  let outcome='';
+  try{
+  outcome= res["esito"];
+  }catch(error){}
+
+
   
    check(
     res,
     {
       'nodoChiediAvanzamentoPagamento_Post:ok_rate': (r) => outcome == 'OK',
     },
-    { nodoChiediAvanzamentoPagamento_Post: 'ok_rate' }
+    { nodoChiediAvanzamentoPagamento_Post: 'ok_rate', ALL: 'ok_rate' }
 	);
 	
 	 check(
@@ -63,7 +68,7 @@ export function nodoChiediAvanzamentoPagamento_Post(baseUrl,paymentToken) {
     {
      'nodoChiediAvanzamentoPagamento_Post:ko_rate': (r) => outcome !== 'OK',
     },
-    { nodoChiediAvanzamentoPagamento_Post: 'ko_rate' }
+    { nodoChiediAvanzamentoPagamento_Post: 'ko_rate', ALL: 'ko_rate' }
   );
    
      return res;

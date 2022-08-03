@@ -47,42 +47,57 @@ export function RPT(baseUrl,rndAnagPa,iuv,ccp) {
    check(res, {
  	'RPT:over_sla300': (r) => r.timings.duration >300,
    },
-   { RPT: 'over_sla300' }
+   { RPT: 'over_sla300', ALL:'over_sla300' }
    );
    
    check(res, {
  	'RPT:over_sla400': (r) => r.timings.duration >400,
    },
-   { RPT: 'over_sla400' }
+   { RPT: 'over_sla400', ALL:'over_sla400' }
    );
    
    check(res, {
  	'RPT:over_sla500 ': (r) => r.timings.duration >500,
    },
-   { RPT: 'over_sla500' }
+   { RPT: 'over_sla500', ALL:'over_sla500' }
    );
    
    check(res, {
  	'RPT:over_sla600': (r) => r.timings.duration >600,
    },
-   { RPT: 'over_sla600' }
+   { RPT: 'over_sla600', ALL:'over_sla600' }
    );
    
    check(res, {
  	'RPT:over_sla800': (r) => r.timings.duration >800,
    },
-   { RPT: 'over_sla800' }
+   { RPT: 'over_sla800', ALL:'over_sla800' }
    );
    
    check(res, {
  	'RPT:over_sla1000': (r) => r.timings.duration >1000,
    },
-   { RPT: 'over_sla1000' }
+   { RPT: 'over_sla1000', ALL:'over_sla1000' }
    );
-   
-  const doc = parseHTML(res.body);
-  const script = doc.find('esito');
-  const outcome = script.text();
+
+
+
+    let outcome='';
+    let paymentToken='';
+    let result={};
+    result.paymentToken=paymentToken;
+    try{
+    let doc = parseHTML(res.body);
+    let script = doc.find('esito');
+    outcome = script.text();
+    script = doc.find('url');
+    let token = script.text();
+    paymentToken = token.split('=')[1];
+    result.paymentToken=paymentToken;
+    }catch(error){}
+
+
+
     
    check(
     res,
@@ -90,7 +105,7 @@ export function RPT(baseUrl,rndAnagPa,iuv,ccp) {
      
 	 'RPT:ok_rate': (r) => outcome == 'OK',
     },
-    { RPT: 'ok_rate' }
+    { RPT: 'ok_rate' , ALL:'ok_rate'}
 	);
  
   check(
@@ -99,10 +114,10 @@ export function RPT(baseUrl,rndAnagPa,iuv,ccp) {
       
 	 'RPT:ko_rate': (r) => outcome !== 'OK',
     },
-    { RPT: 'ko_rate' }
+    { RPT: 'ko_rate', ALL:'ko_rate' }
   );
   
-  return res;
+  return result;
    
 }
 

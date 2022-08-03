@@ -47,42 +47,45 @@ export function RPT(baseUrl,rndAnagPsp,rndAnagPa,iuv) {
    check(res, {
  	'RPT_Semplice:over_sla300': (r) => r.timings.duration >300,
    },
-   { RPT_Semplice: 'over_sla300' }
+   { RPT_Semplice: 'over_sla300', ALL:'over_sla300' }
    );
    
    check(res, {
  	'RPT_Semplice:over_sla400': (r) => r.timings.duration >400,
    },
-   { RPT_Semplice: 'over_sla400' }
+   { RPT_Semplice: 'over_sla400', ALL:'over_sla400' }
    );
    
    check(res, {
  	'RPT_Semplice:over_sla500 ': (r) => r.timings.duration >500,
    },
-   { RPT_Semplice: 'over_sla500' }
+   { RPT_Semplice: 'over_sla500', ALL:'over_sla500' }
    );
    
    check(res, {
  	'RPT_Semplice:over_sla600': (r) => r.timings.duration >600,
    },
-   { RPT_Semplice: 'over_sla600' }
+   { RPT_Semplice: 'over_sla600', ALL:'over_sla600' }
    );
    
    check(res, {
  	'RPT_Semplice:over_sla800': (r) => r.timings.duration >800,
    },
-   { RPT_Semplice: 'over_sla800' }
+   { RPT_Semplice: 'over_sla800', ALL:'over_sla800' }
    );
    
    check(res, {
  	'RPT_Semplice:over_sla1000': (r) => r.timings.duration >1000,
    },
-   { RPT_Semplice: 'over_sla1000' }
+   { RPT_Semplice: 'over_sla1000' , ALL:'over_sla1000'}
    );
-   
+
+  let outcome='';
+  try{
   const doc = parseHTML(res.body);
   const script = doc.find('esito');
-  const outcome = script.text();
+  outcome = script.text();
+  }catch(error){}
   
   /*if(outcome=='KO'){
   console.log("rptSemplice REQuest----------------"+rptReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.PA, rndAnagPa.INTPA, rndAnagPa.STAZPA, iuv, rptEncoded)); 
@@ -95,7 +98,7 @@ export function RPT(baseUrl,rndAnagPsp,rndAnagPa,iuv) {
      
 	  'RPT_Semplice:ok_rate': (r) => outcome == 'OK',
     },
-    { RPT_Semplice: 'ok_rate' }
+    { RPT_Semplice: 'ok_rate' , ALL:'ok_rate'}
 	);
  
   check(
@@ -104,7 +107,7 @@ export function RPT(baseUrl,rndAnagPsp,rndAnagPa,iuv) {
       
 	  'RPT_Semplice:ko_rate': (r) => outcome !== 'OK',
     },
-    { RPT_Semplice: 'ko_rate' }
+    { RPT_Semplice: 'ko_rate', ALL:'ko_rate' }
   );
   
   return res;

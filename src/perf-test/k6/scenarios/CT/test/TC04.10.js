@@ -9,15 +9,13 @@ import { SharedArray } from 'k6/data';
 import papaparse from 'https://jslib.k6.io/papaparse/5.1.1/index.js';
 import { jUnit, textSummary } from 'https://jslib.k6.io/k6-summary/0.0.1/index.js';
 import { chiediInformazioniPagamento } from './api/chiediInformazioniPagamento.js';
-import { sendPaymentOutput } from './api/sendPaymentOutput.js';
-import { ActivateIOPayment } from './api/ActivateIOPayment.js';
-import { inoltraEsitoPagamentoPaypal } from './api/inoltraEsitoPagamentoPaypal.js';
-import { nodoChiediAvanzamentoPagamento_Post } from './api/nodoChiediAvanzamentoPagamento_Post.js';
-import { nodoChiediAvanzamentoPagamento_Pre } from './api/nodoChiediAvanzamentoPagamento_Pre.js';
+import { RPT } from './api/RPT.js';
+import { nodoNotificaAnnullamento } from './api/nodoNotificaAnnullamento.js';
 import * as outputUtil from './util/output_util.js';
 import * as inputDataUtil from './util/input_data_util.js';
 import { parseHTML } from "k6/html";
 //import * as test_selector from '../../test_selector.js';
+
 
 
 const csvBaseUrl = new SharedArray('baseUrl', function () {
@@ -28,21 +26,25 @@ const csvBaseUrl = new SharedArray('baseUrl', function () {
 
 
 
-const chars = '0123456789';
-// NoticeNumber
-export function genNoticeNumber(){
-	let noticeNumber='311';
-	for (var i = 15; i > 0; --i) noticeNumber += chars[Math.floor(Math.random() * chars.length)];
-	return noticeNumber;
+
+export function genIuv(){
+	
+	let iuv = Math.random()*100000000000000000;
+	iuv = iuv.toString().split('.')[0];
+	let user ="";
+	let returnValue=user+iuv;
+    return returnValue;
+
 }
 
-// Idempotency
-export function genIdempotencyKey(){
-	let key1='';
-	let key2 = Math.round((Math.pow(36, 10 + 1) - Math.random() * Math.pow(36, 10))).toString(36).slice(1);
-	for (var i = 11; i > 0; --i) key1 += chars[Math.floor(Math.random() * chars.length)];
-	let returnValue=key1+"_"+key2;
-	return returnValue;
+function create_UUID(){
+    var dt = new Date().getTime();
+    var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = (dt + Math.random()*16)%16 | 0;
+        dt = Math.floor(dt/16);
+        return (c=='x' ? r :(r&0x3|0x8)).toString(16);
+    });
+    return uuid;
 }
 
 
@@ -50,8 +52,8 @@ export const getScalini = new SharedArray('scalini', function () {
 	
   // here you can open files, and then do additional processing or generate the array with data dynamically
   const f = JSON.parse(open('../../../cfg/'+`${__ENV.steps}`+'.json'));
-  //console.log(f);
-  return f; // f must be an array[]
+ 
+  return f; 
 });
 
 export const options = {
@@ -93,12 +95,11 @@ export const options = {
   summaryTrendStats: ['avg', 'min', 'max', 'p(90)', 'p(95)', 'count'],
   discardResponseBodies: false,
   thresholds: {
+    // we can set different thresholds for the different scenarios because
+    // of the extra metric tags we set!
     'http_req_duration{chiediInformazioniPagamento:http_req_duration}': [],
-    'http_req_duration{nodoChiediAvanzamentoPagamento_Pre:http_req_duration}': [],
-	'http_req_duration{nodoChiediAvanzamentoPagamento_Post:http_req_duration}': [],
-    'http_req_duration{inoltraEsitoPagamentoPaypal:http_req_duration}': [],
-	'http_req_duration{sendPaymentOutcome:http_req_duration}': [],
-	'http_req_duration{ActivateIOPayment:http_req_duration}': [],
+    'http_req_duration{RPT:http_req_duration}': [],
+	'http_req_duration{nodoNotificaAnnullamento:http_req_duration}': [],
 	'http_req_duration{ALL:http_req_duration}': [],
 	'checks{chiediInformazioniPagamento:over_sla300}': [],
 	'checks{chiediInformazioniPagamento:over_sla400}': [],
@@ -108,46 +109,22 @@ export const options = {
 	'checks{chiediInformazioniPagamento:over_sla1000}': [],
 	'checks{chiediInformazioniPagamento:ok_rate}': [],
 	'checks{chiediInformazioniPagamento:ko_rate}': [],
-	'checks{ActivateIOPayment:over_sla300}': [],
-	'checks{ActivateIOPayment:over_sla400}': [],
-	'checks{ActivateIOPayment:over_sla500}': [],
-	'checks{ActivateIOPayment:over_sla600}': [],
-	'checks{ActivateIOPayment:over_sla800}': [],
-	'checks{ActivateIOPayment:over_sla1000}': [],
-	'checks{ActivateIOPayment:ok_rate}': [],
-	'checks{ActivateIOPayment:ko_rate}': [],
-	'checks{inoltraEsitoPagamentoPaypal:over_sla300}': [],
-	'checks{inoltraEsitoPagamentoPaypal:over_sla400}': [],
-	'checks{inoltraEsitoPagamentoPaypal:over_sla500}': [],
-	'checks{inoltraEsitoPagamentoPaypal:over_sla600}': [],
-	'checks{inoltraEsitoPagamentoPaypal:over_sla800}': [],
-	'checks{inoltraEsitoPagamentoPaypal:over_sla1000}': [],
-	'checks{inoltraEsitoPagamentoPaypal:ok_rate}': [],
-	'checks{inoltraEsitoPagamentoPaypal:ko_rate}': [],
-	'checks{sendPaymentOutcome:over_sla300}': [],
-	'checks{sendPaymentOutcome:over_sla400}': [],
-	'checks{sendPaymentOutcome:over_sla500}': [],
-	'checks{sendPaymentOutcome:over_sla600}': [],
-	'checks{sendPaymentOutcome:over_sla800}': [],
-	'checks{sendPaymentOutcome:over_sla1000}': [],
-	'checks{sendPaymentOutcome:ok_rate}': [],
-	'checks{sendPaymentOutcome:ko_rate}': [],
-	'checks{nodoChiediAvanzamentoPagamento_Pre:over_sla300}': [],
-	'checks{nodoChiediAvanzamentoPagamento_Pre:over_sla400}': [],
-	'checks{nodoChiediAvanzamentoPagamento_Pre:over_sla500}': [],
-	'checks{nodoChiediAvanzamentoPagamento_Pre:over_sla600}': [],
-	'checks{nodoChiediAvanzamentoPagamento_Pre:over_sla800}': [],
-	'checks{nodoChiediAvanzamentoPagamento_Pre:over_sla1000}': [],
-	'checks{nodoChiediAvanzamentoPagamento_Pre:ok_rate}': [],
-	'checks{nodoChiediAvanzamentoPagamento_Pre:ko_rate}': [],
-	'checks{nodoChiediAvanzamentoPagamento_Post:over_sla300}': [],
-	'checks{nodoChiediAvanzamentoPagamento_Post:over_sla400}': [],
-	'checks{nodoChiediAvanzamentoPagamento_Post:over_sla500}': [],
-	'checks{nodoChiediAvanzamentoPagamento_Post:over_sla600}': [],
-	'checks{nodoChiediAvanzamentoPagamento_Post:over_sla800}': [],
-	'checks{nodoChiediAvanzamentoPagamento_Post:over_sla1000}': [],
-	'checks{nodoChiediAvanzamentoPagamento_Post:ok_rate}': [],
-	'checks{nodoChiediAvanzamentoPagamento_Post:ko_rate}': [],
+	'checks{RPT:over_sla300}': [],
+	'checks{RPT:over_sla400}': [],
+	'checks{RPT:over_sla500}': [],
+	'checks{RPT:over_sla600}': [],
+	'checks{RPT:over_sla800}': [],
+	'checks{RPT:over_sla1000}': [],
+	'checks{RPT:ok_rate}': [],
+	'checks{RPT:ko_rate}': [],
+	'checks{nodoNotificaAnnullamento:over_sla300}': [],
+	'checks{nodoNotificaAnnullamento:over_sla400}': [],
+	'checks{nodoNotificaAnnullamento:over_sla500}': [],
+	'checks{nodoNotificaAnnullamento:over_sla600}': [],
+	'checks{nodoNotificaAnnullamento:over_sla800}': [],
+	'checks{nodoNotificaAnnullamento:over_sla1000}': [],
+	'checks{nodoNotificaAnnullamento:ok_rate}': [],
+	'checks{nodoNotificaAnnullamento:ko_rate}': [],
 	'checks{ALL:over_sla300}': [],
 	'checks{ALL:over_sla400}': [],
 	'checks{ALL:over_sla500}': [],
@@ -177,33 +154,21 @@ export function total() {
   }
   
     let rndAnagPsp = inputDataUtil.getAnagPsp();
-    let rndAnagPaNew = inputDataUtil.getAnagPaNew();
-	let noticeNmbr = genNoticeNumber();
-    let idempotencyKey = genIdempotencyKey();
+	let rndAnagPa = inputDataUtil.getAnagPa();
+
+	let iuv = genIuv();
+    let ccp = create_UUID().replace("-", "");
+        
 
 
-	   
-	let res = ActivateIOPayment(baseSoapUrl,rndAnagPsp,rndAnagPaNew,noticeNmbr,idempotencyKey);
+    let res = RPT(baseSoapUrl,rndAnagPa,iuv,ccp);
 	let paymentToken=res.paymentToken;
 
 
-	
-    res = chiediInformazioniPagamento(baseRestUrl,paymentToken, rndAnagPaNew);
+    res = chiediInformazioniPagamento(baseRestUrl,paymentToken, rndAnagPa);
 
-  
  
-    res =  inoltraEsitoPagamentoPaypal(baseRestUrl,rndAnagPsp,paymentToken,'408');
-
-
-
-	res = nodoChiediAvanzamentoPagamento_Pre(baseRestUrl,paymentToken);
-
-
-	res = sendPaymentOutput(baseSoapUrl,rndAnagPsp,paymentToken);
-
-	
-	
-	res = nodoChiediAvanzamentoPagamento_Post(baseRestUrl,paymentToken);
+    res =  nodoNotificaAnnullamento(baseRestUrl,paymentToken);
 
 }
 
@@ -221,17 +186,18 @@ export function handleSummary(data) {
    return {
     'stdout': textSummary(data, { indent: ' ', enableColors: true, expected_response: 'ALL' }), // Show the text summary to stdout...
 	//'./junit.xml': jUnit(data), // but also transform it and save it as a JUnit XML...
-    './scenarios/CT/test/output/TC04.07.summary.json': JSON.stringify(data), // and a JSON with all the details...
+    './scenarios/CT/test/output/TC04.10.summary.json': JSON.stringify(data), // and a JSON with all the details...
 	//'./scenarios/CT/test/output/summary.html': htmlReport(data),
-	'./scenarios/CT/test/output/TC04.07.summary.csv': csv[0],
-	'./scenarios/CT/test/output/TC04.07.trOverSla.csv': csv[1],
-	'./scenarios/CT/test/output/TC04.07.resultCodeSummary.csv': csv[2],
-	//'./xrayJunit.xml': generateXrayJUnitXML(data, 'summary.json', encoding.b64encode(JSON.stringify(data))),
- 	
+	'./scenarios/CT/test/output/TC04.10.summary.csv': csv[0],
+	'./scenarios/CT/test/output/TC04.10.trOverSla.csv': csv[1],
+	'./scenarios/CT/test/output/TC04.10.resultCodeSummary.csv': csv[2],
+	
   };
   
   
 }
+
+
 
 
 

@@ -12,6 +12,7 @@ import { Verifica } from './api/Verifica.js';
 import { Attiva } from './api/Attiva.js';
 import { ChiediNumeroAvviso } from './api/ChiediNumeroAvviso.js';
 import { RPT } from './api/RPT_Semplice.js';
+import { RT } from './api/RT.js';
 import { RPT_Carrello_5 } from './api/RPT_Carrello_5.js';
 import { RPT_Carrello_1 } from './api/RPT_Carrello_1.js';
 import * as outputUtil from './util/output_util.js';
@@ -121,26 +122,39 @@ export const getScalini = new SharedArray('scalini', function () {
 export const options = {
 	
   scenarios: {
-  	total: {
-      executor: 'ramping-vus',
-      //startTime: '2s', // the ramping API test starts a little later
-      stages: [
-        { target: getScalini[0].Scalino_CT_1, duration: getScalini[0].Scalino_CT_TIME_1+'s' }, 
-        { target: getScalini[0].Scalino_CT_2, duration: getScalini[0].Scalino_CT_TIME_2+'s' }, 
-        { target: getScalini[0].Scalino_CT_3, duration: getScalini[0].Scalino_CT_TIME_3+'s' }, 
-		{ target: getScalini[0].Scalino_CT_4, duration: getScalini[0].Scalino_CT_TIME_4+'s' }, 
-        { target: getScalini[0].Scalino_CT_5, duration: getScalini[0].Scalino_CT_TIME_5+'s' }, 
-        { target: getScalini[0].Scalino_CT_6, duration: getScalini[0].Scalino_CT_TIME_6+'s' },
-		{ target: getScalini[0].Scalino_CT_7, duration: getScalini[0].Scalino_CT_TIME_7+'s' }, 
-		{ target: getScalini[0].Scalino_CT_8, duration: getScalini[0].Scalino_CT_TIME_8+'s' }, 
-        { target: getScalini[0].Scalino_CT_9, duration: getScalini[0].Scalino_CT_TIME_9+'s' }, 
-        { target: getScalini[0].Scalino_CT_10, duration: getScalini[0].Scalino_CT_TIME_10+'s' },
-       ],
-      tags: { test_type: 'ALL' }, 
-      exec: 'total', 
-    }
-	
-  },
+    	total: {
+        timeUnit: '1s',
+        preAllocatedVUs: 1, // how large the initial pool of VUs would be
+        executor: 'ramping-arrival-rate',
+        //executor: 'ramping-vus',
+        maxVUs: 300,
+        stages: [
+          { target: getScalini[0].Scalino_CT_1, duration: 0+'s' },
+          { target: getScalini[0].Scalino_CT_1, duration: getScalini[0].Scalino_CT_TIME_1+'s' },
+          { target: getScalini[0].Scalino_CT_2, duration: 0+'s' },
+          { target: getScalini[0].Scalino_CT_2, duration: getScalini[0].Scalino_CT_TIME_2+'s' },
+          { target: getScalini[0].Scalino_CT_3, duration: 0+'s' },
+          { target: getScalini[0].Scalino_CT_3, duration: getScalini[0].Scalino_CT_TIME_3+'s' },
+          { target: getScalini[0].Scalino_CT_4, duration: 0+'s' },
+  		  { target: getScalini[0].Scalino_CT_4, duration: getScalini[0].Scalino_CT_TIME_4+'s' },
+  		  { target: getScalini[0].Scalino_CT_5, duration: 0+'s' },
+          { target: getScalini[0].Scalino_CT_5, duration: getScalini[0].Scalino_CT_TIME_5+'s' },
+          { target: getScalini[0].Scalino_CT_6, duration: 0+'s' },
+          { target: getScalini[0].Scalino_CT_6, duration: getScalini[0].Scalino_CT_TIME_6+'s' },
+          { target: getScalini[0].Scalino_CT_7, duration: 0+'s' },
+  		  { target: getScalini[0].Scalino_CT_7, duration: getScalini[0].Scalino_CT_TIME_7+'s' },
+  		  { target: getScalini[0].Scalino_CT_8, duration: 0+'s' },
+  		  { target: getScalini[0].Scalino_CT_8, duration: getScalini[0].Scalino_CT_TIME_8+'s' },
+  		  { target: getScalini[0].Scalino_CT_9, duration: 0+'s' },
+          { target: getScalini[0].Scalino_CT_9, duration: getScalini[0].Scalino_CT_TIME_9+'s' },
+          { target: getScalini[0].Scalino_CT_10, duration: 0+'s' },
+          { target: getScalini[0].Scalino_CT_10, duration: getScalini[0].Scalino_CT_TIME_10+'s' }, //to uncomment
+         ],
+        tags: { test_type: 'ALL' },
+        exec: 'total',
+      }
+
+    },
   summaryTrendStats: ['avg', 'min', 'max', 'p(90)', 'p(95)', 'count'],
   discardResponseBodies: false,
   thresholds: {
@@ -151,6 +165,7 @@ export const options = {
     'http_req_duration{Verifica:http_req_duration}': [],
 	'http_req_duration{Attiva:http_req_duration}': [],
 	'http_req_duration{RPT_Semplice:http_req_duration}': [],
+	'http_req_duration{RT:http_req_duration}': [],
 	'http_req_duration{RPT_Carrello_5:http_req_duration}': [],
 	'http_req_duration{RPT_Carrello_1:http_req_duration}': [],
 	'http_req_duration{ALL:http_req_duration}': [],
@@ -187,6 +202,14 @@ export const options = {
 	'checks{RPT_Semplice:over_sla1000}': [],
 	'checks{RPT_Semplice:ok_rate}': [],
 	'checks{RPT_Semplice:ko_rate}': [],
+	'checks{RT:over_sla300}': [],
+    'checks{RT:over_sla400}': [],
+    'checks{RT:over_sla500}': [],
+    'checks{RT:over_sla600}': [],
+    'checks{RT:over_sla800}': [],
+    'checks{RT:over_sla1000}': [],
+    'checks{RT:ok_rate}': [],
+    'checks{RT:ko_rate}': [],
 	'checks{RPT_Carrello_5:over_sla300}': [],
 	'checks{RPT_Carrello_5:over_sla400}': [],
 	'checks{RPT_Carrello_5:over_sla500}': [],
@@ -332,21 +355,10 @@ export function verificaAttiva() {
     let rndAnagPa = inputDataUtil.getAnagPa();
     let iuv = genIuv();
 	
- 	let res = Verifica(baseUrl,rndAnagPsp,rndAnagPa,iuv,1);
-	
-    let doc = parseHTML(res.body);
-    let script = doc.find('esito');
-    let outcome = script.text();
-    
-    checks(res, outcome);
- 
- 
+
+ 	let res = Verifica(baseUrl,rndAnagPsp,rndAnagPa,iuv,1,'OK');
+
     res = Attiva(baseUrl,rndAnagPsp,rndAnagPa,iuv, "PERFORMANCE");
-	
-	script = doc.find('esito');
-    outcome = script.text();
-	
-    checks(res, outcome);
 
 }
 
@@ -356,22 +368,11 @@ export function chiediNumAvvisoAttiva() {
     let rndAnagPa = inputDataUtil.getAnagPa();
 	let rndAnagPaNew = inputDataUtil.getAnagPaNew();
     let iuv = genIuv();
-	
+
+
  	let res = ChiediNumeroAvviso(baseUrl,rndAnagPsp,rndAnagPa);
-	
-    let doc = parseHTML(res.body);
-    let script = doc.find('esito');
-    let outcome = script.text();
-    
-    checks(res, outcome);
- 
- 
+
     res = Attiva(baseUrl,rndAnagPsp,rndAnagPa,iuv,"PERFORMANCE");
-	
-	script = doc.find('esito');
-    outcome = script.text();
-	
-    checks(res, outcome);
 
 }
 
@@ -382,14 +383,11 @@ export function rptSemplice() {
 	
 	let iuv = genIuvSemplice();
 
+
+
  	let res = RPT(baseUrl,rndAnagPsp,rndAnagPa,iuv);
-	
-    let doc = parseHTML(res.body);
-    let script = doc.find('esito');
-    let outcome = script.text();
-    
-    checks(res, outcome);
- 
+
+    res = RT(baseUrl,rndAnagPsp,rndAnagPa,iuv);
 }
 
 export function rpt1() {
@@ -398,15 +396,12 @@ export function rpt1() {
     let rndAnagPa = inputDataUtil.getAnagPa();
 	
  	let iuvArray = genIuvArray(1);
-		
+
+
 	let res = RPT_Carrello_1(baseUrl,rndAnagPsp,rndAnagPa,iuvArray);
-	
-    let doc = parseHTML(res.body);
-    let script = doc.find('esitoComplessivoOperazione');
-    let outcome = script.text();
-    
-    checks(res, outcome);
- 
+
+
+    res = RT(baseUrl,rndAnagPsp,rndAnagPa,iuvArray[0]);
 }
 
 export function rpt5() {
@@ -417,14 +412,15 @@ export function rpt5() {
     let iuvArray = genIuvArray(5);
 	//console.log("iuvArray=="+iuvArray);
 
+
  	let res = RPT_Carrello_5(baseUrl,rndAnagPsp,rndAnagPa,iuvArray);
-	
-    let doc = parseHTML(res.body);
-    let script = doc.find('esitoComplessivoOperazione');
-    let outcome = script.text();
-    
-    checks(res, outcome);
- 
+
+
+    res = RT(baseUrl,rndAnagPsp,rndAnagPa,iuvArray[0]);
+    res = RT(baseUrl,rndAnagPsp,rndAnagPa,iuvArray[1]);
+    res = RT(baseUrl,rndAnagPsp,rndAnagPa,iuvArray[2]);
+    res = RT(baseUrl,rndAnagPsp,rndAnagPa,iuvArray[3]);
+    res = RT(baseUrl,rndAnagPsp,rndAnagPa,iuvArray[4]);
 }
 
 

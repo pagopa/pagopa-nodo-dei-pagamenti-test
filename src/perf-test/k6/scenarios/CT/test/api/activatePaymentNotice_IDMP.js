@@ -37,42 +37,45 @@ export function activatePaymentNotice_IDMP(baseUrl,rndAnagPsp,rndAnagPa,noticeNm
    check(res, {
  	'activatePaymentNotice_IDMP:over_sla300': (r) => r.timings.duration >300,
    },
-   { activatePaymentNotice_IDMP: 'over_sla300' }
+   { activatePaymentNotice_IDMP: 'over_sla300', ALL:'over_sla300' }
    );
    
    check(res, {
  	'activatePaymentNotice_IDMP:over_sla400': (r) => r.timings.duration >400,
    },
-   { activatePaymentNotice_IDMP: 'over_sla400' }
+   { activatePaymentNotice_IDMP: 'over_sla400', ALL:'over_sla400' }
    );
       
    check(res, {
  	'activatePaymentNotice_IDMP:over_sla500': (r) => r.timings.duration >500,
    },
-   { activatePaymentNotice_IDMP: 'over_sla500' }
+   { activatePaymentNotice_IDMP: 'over_sla500', ALL:'over_sla500' }
    );
    
    check(res, {
  	'activatePaymentNotice_IDMP:over_sla600': (r) => r.timings.duration >600,
    },
-   { activatePaymentNotice_IDMP: 'over_sla600' }
+   { activatePaymentNotice_IDMP: 'over_sla600', ALL:'over_sla600' }
    );
    
    check(res, {
  	'activatePaymentNotice_IDMP:over_sla800': (r) => r.timings.duration >800,
    },
-   { activatePaymentNotice_IDMP: 'over_sla800' }
+   { activatePaymentNotice_IDMP: 'over_sla800', ALL:'over_sla800' }
    );
    
    check(res, {
  	'activatePaymentNotice_IDMP:over_sla1000': (r) => r.timings.duration >1000,
    },
-   { activatePaymentNotice_IDMP: 'over_sla1000' }
+   { activatePaymentNotice_IDMP: 'over_sla1000', ALL:'over_sla1000' }
    );
-   
-  const doc = parseHTML(res.body);
-  const script = doc.find('outcome');
-  const outcome = script.text();
+
+  let outcome='';
+  try{
+  let doc = parseHTML(res.body);
+  let script = doc.find('outcome');
+  outcome = script.text();
+  }catch(error){}
   
   if(outcome=='KO'){
   console.log("activateIDP REQuest----------------"+ activateReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , noticeNmbr, idempotencyKey)); 
@@ -84,7 +87,7 @@ export function activatePaymentNotice_IDMP(baseUrl,rndAnagPsp,rndAnagPa,noticeNm
     {
       'activatePaymentNotice_IDMP:ok_rate': (r) => outcome == 'OK',
     },
-    { activatePaymentNotice_IDMP: 'ok_rate' }
+    { activatePaymentNotice_IDMP: 'ok_rate', ALL:'ok_rate' }
 	);
 	
 	 check(
@@ -92,7 +95,7 @@ export function activatePaymentNotice_IDMP(baseUrl,rndAnagPsp,rndAnagPa,noticeNm
     {
       'activatePaymentNotice_IDMP:ko_rate': (r) => outcome !== 'OK',
     },
-    { activatePaymentNotice_IDMP: 'ko_rate' }
+    { activatePaymentNotice_IDMP: 'ko_rate', ALL:'ko_rate' }
   );
    
      return res;

@@ -27,7 +27,7 @@ return `
 `
 };
 
-export function Verifica(baseUrl,rndAnagPsp,rndAnagPa,iuv, auxDigit) {
+export function Verifica(baseUrl,rndAnagPsp,rndAnagPa,iuv, auxDigit, valueToAssert) {
  
  const res = http.post(
     baseUrl+'?soapAction=nodoVerificaRPT',
@@ -41,42 +41,45 @@ export function Verifica(baseUrl,rndAnagPsp,rndAnagPa,iuv, auxDigit) {
    check(res, {
  	'Verifica:over_sla300': (r) => r.timings.duration >300,
    },
-   { Verifica: 'over_sla300' }
+   { Verifica: 'over_sla300', ALL:'over_sla300' }
    );
    
    check(res, {
  	'Verifica:over_sla400': (r) => r.timings.duration >400,
    },
-   { Verifica: 'over_sla400' }
+   { Verifica: 'over_sla400', ALL:'over_sla400' }
    );
    
    check(res, {
  	'Verifica:over_sla500 ': (r) => r.timings.duration >500,
    },
-   { Verifica: 'over_sla500' }
+   { Verifica: 'over_sla500', ALL:'over_sla500' }
    );
    
    check(res, {
  	'Verifica:over_sla600': (r) => r.timings.duration >600,
    },
-   { Verifica: 'over_sla600' }
+   { Verifica: 'over_sla600', ALL:'over_sla600' }
    );
    
    check(res, {
  	'Verifica:over_sla800': (r) => r.timings.duration >800,
    },
-   { Verifica: 'over_sla800' }
+   { Verifica: 'over_sla800', ALL:'over_sla800' }
    );
    
    check(res, {
  	'Verifica:over_sla1000': (r) => r.timings.duration >1000,
    },
-   { Verifica: 'over_sla1000' }
+   { Verifica: 'over_sla1000', ALL:'over_sla1000' }
    );
-   
+
+  let outcome='';
+  try{
   const doc = parseHTML(res.body);
   const script = doc.find('esito');
-  const outcome = script.text();
+  outcome = script.text();
+  }catch(error){}
   /*if(outcome=='KO'){
   console.log("VERIfica REQuest----------------"+verificaReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , iuv, auxDigit)); 
   console.log("VERIFICA RESPONSE----------------"+res.body);
@@ -86,18 +89,18 @@ export function Verifica(baseUrl,rndAnagPsp,rndAnagPa,iuv, auxDigit) {
     res,
     {
       //'Verifica:ok_rate': (r) => r.status == 200,
-	  'Verifica:ok_rate': (r) => outcome == 'OK',
+	  'Verifica:ok_rate': (r) => outcome == valueToAssert,
     },
-    { Verifica: 'ok_rate' }
+    { Verifica: 'ok_rate', ALL:'ok_rate' }
 	);
  
   check(
     res,
     {
       //'Verifica:ko_rate': (r) => r.status !== 200,
-	  'Verifica:ko_rate': (r) => outcome !== 'OK',
+	  'Verifica:ko_rate': (r) => outcome !== valueToAssert,
     },
-    { Verifica: 'ko_rate' }
+    { Verifica: 'ko_rate', ALL:'ko_rate' }
   );
   
   return res;

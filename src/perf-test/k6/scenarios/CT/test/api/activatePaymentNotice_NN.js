@@ -46,47 +46,60 @@ export function activatePaymentNotice_NN(baseUrl,rndAnagPsp,rndAnagPa,noticeNmbr
    check(res, {
  	'activatePaymentNotice_NN:over_sla300': (r) => r.timings.duration >300,
    },
-   { activatePaymentNotice_NN: 'over_sla300' }
+   { activatePaymentNotice_NN: 'over_sla300', ALL: 'over_sla300' }
    );
    
    check(res, {
  	'activatePaymentNotice_NN:over_sla400': (r) => r.timings.duration >400,
    },
-   { activatePaymentNotice_NN: 'over_sla400' }
+   { activatePaymentNotice_NN: 'over_sla400', ALL: 'over_sla400' }
    );
       
    check(res, {
  	'activatePaymentNotice_NN:over_sla500': (r) => r.timings.duration >500,
    },
-   { activatePaymentNotice_NN: 'over_sla500' }
+   { activatePaymentNotice_NN: 'over_sla500', ALL: 'over_sla500' }
    );
    
    check(res, {
  	'activatePaymentNotice_NN:over_sla600': (r) => r.timings.duration >600,
    },
-   { activatePaymentNotice_NN: 'over_sla600' }
+   { activatePaymentNotice_NN: 'over_sla600', ALL: 'over_sla600' }
    );
    
    check(res, {
  	'activatePaymentNotice_NN:over_sla800': (r) => r.timings.duration >800,
    },
-   { activatePaymentNotice_NN: 'over_sla800' }
+   { activatePaymentNotice_NN: 'over_sla800', ALL: 'over_sla800' }
    );
    
    check(res, {
  	'activatePaymentNotice_NN:over_sla1000': (r) => r.timings.duration >1000,
    },
-   { activatePaymentNotice_NN: 'over_sla1000' }
+   { activatePaymentNotice_NN: 'over_sla1000', ALL: 'over_sla1000'  }
    );
-   
-  const doc = parseHTML(res.body);
-  const script = doc.find('outcome');
-  const outcome = script.text();
-  
-  /*if(outcome=='KO'){
-  console.log("activateNN REQuest----------------"+ activateReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , noticeNmbr, idempotencyKey, paymentNote)); 
-  console.log("activateNN RESPONSE----------------"+res.body);
-  }*/
+
+  let outcome='';
+  let paymentToken='';
+  let result={};
+  result.paymentToken=paymentToken;
+  try{
+  let doc = parseHTML(res.body);
+  let script = doc.find('outcome');
+  outcome = script.text();
+  script = doc.find('paymentToken');
+  paymentToken = script.text();
+  result.paymentToken=paymentToken;
+  }catch(error){}
+  console.log("activatepaymentNotice="+outcome);
+
+
+
+
+  if(outcome=='KO'){
+  //console.log("activateNN REQuest----------------"+ activateReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , noticeNmbr, idempotencyKey, paymentNote));
+  //console.log("activateNN RESPONSE----------------"+res.body);
+  }
   
    check(
     res,
@@ -94,7 +107,7 @@ export function activatePaymentNotice_NN(baseUrl,rndAnagPsp,rndAnagPa,noticeNmbr
      
 	  'activatePaymentNotice_NN:ok_rate': (r) => outcome == 'OK',
     },
-    { activatePaymentNotice_NN: 'ok_rate' }
+    { activatePaymentNotice_NN: 'ok_rate', ALL: 'ok_rate'  }
 	);
 	
 	 check(
@@ -103,8 +116,8 @@ export function activatePaymentNotice_NN(baseUrl,rndAnagPsp,rndAnagPa,noticeNmbr
     
 	  'activatePaymentNotice_NN:ko_rate': (r) => outcome !== 'OK',
     },
-    { activatePaymentNotice_NN: 'ko_rate' }
+    { activatePaymentNotice_NN: 'ko_rate', ALL: 'ko_rate' }
   );
    
-     return res;
+     return result;
 }

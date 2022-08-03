@@ -46,50 +46,63 @@ export function activatePaymentNoticeIdp_NN(baseUrl,rndAnagPsp,rndAnagPa,noticeN
    check(res, {
  	'activatePaymentNoticeIdp_NN:over_sla300': (r) => r.timings.duration >300,
    },
-   { activatePaymentNoticeIdp_NN: 'over_sla300' }
+   { activatePaymentNoticeIdp_NN: 'over_sla300', ALL:'over_sla300' }
    );
    
    check(res, {
  	'activatePaymentNoticeIdp_NN:over_sla400': (r) => r.timings.duration >400,
    },
-   { activatePaymentNoticeIdp_NN: 'over_sla400' }
+   { activatePaymentNoticeIdp_NN: 'over_sla400', ALL:'over_sla400' }
    );
       
    check(res, {
  	'activatePaymentNoticeIdp_NN:over_sla500': (r) => r.timings.duration >500,
    },
-   { activatePaymentNoticeIdp_NN: 'over_sla500' }
+   { activatePaymentNoticeIdp_NN: 'over_sla500', ALL:'over_sla500' }
    );
    
    check(res, {
  	'activatePaymentNoticeIdp_NN:over_sla600': (r) => r.timings.duration >600,
    },
-   { activatePaymentNoticeIdp_NN: 'over_sla600' }
+   { activatePaymentNoticeIdp_NN: 'over_sla600', ALL:'over_sla600' }
    );
    
    check(res, {
  	'activatePaymentNoticeIdp_NN:over_sla800': (r) => r.timings.duration >800,
    },
-   { activatePaymentNoticeIdp_NN: 'over_sla800' }
+   { activatePaymentNoticeIdp_NN: 'over_sla800', ALL:'over_sla800' }
    );
-   
+
    check(res, {
  	'activatePaymentNoticeIdp_NN:over_sla1000': (r) => r.timings.duration >1000,
    },
-   { activatePaymentNoticeIdp_NN: 'over_sla1000' }
+   { activatePaymentNoticeIdp_NN: 'over_sla1000', ALL:'over_sla1000' }
    );
-   
-  const doc = parseHTML(res.body);
-  const script = doc.find('outcome');
-  const outcome = script.text();
-  
+
+
+
+  let outcome='';
+  let paymentToken='';
+  let result={};
+  result.paymentToken=paymentToken;
+  try{
+  let doc = parseHTML(res.body);
+  let script = doc.find('outcome');
+  outcome = script.text();
+  script = doc.find('paymentToken');
+  paymentToken = script.text();
+  result.paymentToken=paymentToken;
+  }catch(error){}
+
+
+
    check(
     res,
     {
      
 	  'activatePaymentNoticeIdp_NN:ok_rate': (r) => outcome == 'OK',
     },
-    { activatePaymentNoticeIdp_NN: 'ok_rate' }
+    { activatePaymentNoticeIdp_NN: 'ok_rate', ALL:'ok_rate' }
 	);
 	
 	 check(
@@ -98,8 +111,8 @@ export function activatePaymentNoticeIdp_NN(baseUrl,rndAnagPsp,rndAnagPa,noticeN
     
 	  'activatePaymentNoticeIdp_NN:ko_rate': (r) => outcome !== 'OK',
     },
-    { activatePaymentNoticeIdp_NN: 'ko_rate' }
+    { activatePaymentNoticeIdp_NN: 'ko_rate', ALL:'ko_rate'}
   );
    
-     return res;
+     return result;
 }
