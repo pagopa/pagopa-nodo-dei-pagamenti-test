@@ -52,30 +52,40 @@ export const getScalini = new SharedArray('scalini', function () {
 
 export const options = {
 	
-  /*  scenarios: {
+    scenarios: {
   	total: {
       timeUnit: '1s',
-      preAllocatedVUs: 50, // how large the initial pool of VUs would be
+      preAllocatedVUs: 1, // how large the initial pool of VUs would be
       executor: 'ramping-arrival-rate',
       //executor: 'ramping-vus',
-      //maxVUs: 100,
+      maxVUs: 500,
       stages: [
-        { target: getScalini[0].Scalino_CT_1, duration: getScalini[0].Scalino_CT_TIME_1+'s' }, 
-        { target: getScalini[0].Scalino_CT_2, duration: getScalini[0].Scalino_CT_TIME_2+'s' }, 
-        { target: getScalini[0].Scalino_CT_3, duration: getScalini[0].Scalino_CT_TIME_3+'s' }, 
+        { target: getScalini[0].Scalino_CT_1, duration: 0+'s' },
+        { target: getScalini[0].Scalino_CT_1, duration: getScalini[0].Scalino_CT_TIME_1+'s' },
+        { target: getScalini[0].Scalino_CT_2, duration: 0+'s' },
+        { target: getScalini[0].Scalino_CT_2, duration: getScalini[0].Scalino_CT_TIME_2+'s' },
+        { target: getScalini[0].Scalino_CT_3, duration: 0+'s' },
+        { target: getScalini[0].Scalino_CT_3, duration: getScalini[0].Scalino_CT_TIME_3+'s' },
+        { target: getScalini[0].Scalino_CT_4, duration: 0+'s' },
 		{ target: getScalini[0].Scalino_CT_4, duration: getScalini[0].Scalino_CT_TIME_4+'s' },
-        { target: getScalini[0].Scalino_CT_5, duration: getScalini[0].Scalino_CT_TIME_5+'s' }, 
+		{ target: getScalini[0].Scalino_CT_5, duration: 0+'s' },
+        { target: getScalini[0].Scalino_CT_5, duration: getScalini[0].Scalino_CT_TIME_5+'s' },
+        { target: getScalini[0].Scalino_CT_6, duration: 0+'s' },
         { target: getScalini[0].Scalino_CT_6, duration: getScalini[0].Scalino_CT_TIME_6+'s' },
-		{ target: getScalini[0].Scalino_CT_7, duration: getScalini[0].Scalino_CT_TIME_7+'s' }, 
-		{ target: getScalini[0].Scalino_CT_8, duration: getScalini[0].Scalino_CT_TIME_8+'s' }, 
-        { target: getScalini[0].Scalino_CT_9, duration: getScalini[0].Scalino_CT_TIME_9+'s' }, 
+        { target: getScalini[0].Scalino_CT_7, duration: 0+'s' },
+		{ target: getScalini[0].Scalino_CT_7, duration: getScalini[0].Scalino_CT_TIME_7+'s' },
+		{ target: getScalini[0].Scalino_CT_8, duration: 0+'s' },
+		{ target: getScalini[0].Scalino_CT_8, duration: getScalini[0].Scalino_CT_TIME_8+'s' },
+		{ target: getScalini[0].Scalino_CT_9, duration: 0+'s' },
+        { target: getScalini[0].Scalino_CT_9, duration: getScalini[0].Scalino_CT_TIME_9+'s' },
+        { target: getScalini[0].Scalino_CT_10, duration: 0+'s' },
         { target: getScalini[0].Scalino_CT_10, duration: getScalini[0].Scalino_CT_TIME_10+'s' }, //to uncomment
        ],
       tags: { test_type: 'ALL' }, 
       exec: 'total', 
     }
 	
-  },*/
+  },
   summaryTrendStats: ['avg', 'min', 'max', 'p(90)', 'p(95)', 'count'],
   discardResponseBodies: false,
   thresholds: {
@@ -216,97 +226,95 @@ export function total() {
      token=res.json().data.sessionToken;
      }catch(error){}*/
 
-
-
   res = ob_PP_psp(baseUrl,token);
-  /*commonChecks(res);
-  standardChecks(res, res.status, 'matches', 200);  */
-  
-  
-  
-  res = ob_PP_pspInternal(baseUrl);
-  //console.log(res);
-  /*let redUrlPP='NA';
+    /*commonChecks(res);
+    standardChecks(res, res.status, 'matches', 200);  */
+
+
+
+   res = ob_PP_pspInternal(baseUrl);
+    //console.log(res);
+    /*let redUrlPP='NA';
+      try{
+      redUrlPP= res.json().data.redirectUrl;
+      }catch(error){
+      redUrlPP='NA';
+      }
+    commonChecks(res);
+    standardChecks(res, redUrlPP, 'substring', baseUrl); //'10.6.189.28'
+    let pp_id_back='NA';
+    //redUrlPP='htpp:/jfjfjffj.com/jgj?ere=1'; //to comment
     try{
-    redUrlPP= res.json().data.redirectUrl;
-    }catch(error){
-    redUrlPP='NA';
+    if(redUrlPP!==undefined){
+  	  pp_id_back=redUrlPP.substr(redUrlPP.indexOf("id_back=")+8);
     }
-  commonChecks(res);
-  standardChecks(res, redUrlPP, 'substring', baseUrl); //'10.6.189.28'
-  let pp_id_back='NA';
-  //redUrlPP='htpp:/jfjfjffj.com/jgj?ere=1'; //to comment
-  try{
-  if(redUrlPP!==undefined){
-	  pp_id_back=redUrlPP.substr(redUrlPP.indexOf("id_back=")+8);
-  }
-  }catch(error){}
-  //console.log(pp_id_back);*/
+    }catch(error){}
+    //console.log(pp_id_back);*/
   let pp_id_back=res.pp_id_back;
-  
-  
+
+
   res= ob_PP_Confirm_Call(baseUrl,pp_id_back); //baseUrlPP
-  /*commonChecks(res);
-  standardChecks(res, res.status, 'matches', 200);*/
-  
-  
-  
+    /*commonChecks(res);
+    standardChecks(res, res.status, 'matches', 200);*/
+
+
+
   res= ob_PP_Confirm(baseUrl); //baseUrlPP
-  /*
-  let redirect=undefined;
-  let RED_Path = "NA";
-  try{
-  let headers= res.headers;
-  redirect = headers['Location'];
-  //redirect='htpp:/jfjfjffj.com/jgj?ere=1';
-  if(redirect !== undefined){
-	 RED_Path=redirect.substr(redirect.indexOf("/pp-restapi-CD"));
-  }
-  }catch(error){}
-  commonChecks(res);
-  invertedChecks(res, redirect, 'matches', undefined);  */
+    /*
+    let redirect=undefined;
+    let RED_Path = "NA";
+    try{
+    let headers= res.headers;
+    redirect = headers['Location'];
+    //redirect='htpp:/jfjfjffj.com/jgj?ere=1';
+    if(redirect !== undefined){
+  	 RED_Path=redirect.substr(redirect.indexOf("/pp-restapi-CD"));
+    }
+    }catch(error){}
+    commonChecks(res);
+    invertedChecks(res, redirect, 'matches', undefined);  */
   let RED_Path=res.RED_Path;
-  
-  
-  
-  //RED_Path = '/pp-restapi-CD/ugugug?ip=1'; //to comment
+
+
+
+    //RED_Path = '/pp-restapi-CD/ugugug?ip=1'; //to comment
   res=ob_PP_Confirm_Continue(baseUrl, RED_Path);
-  /*redirect=undefined;
-  try{
-  headers= res.headers;
-  redirect = headers['Location'];
-  RED_Path = "NA";
-  if(redirect !== undefined){
-	 RED_Path=redirect.substr(redirect.indexOf("/pp-restapi-CD"));
-  }
-  }catch(error){}
-  commonChecks(res);
-  invertedChecks(res, redirect, 'matches', undefined);  */
+    /*redirect=undefined;
+    try{
+    headers= res.headers;
+    redirect = headers['Location'];
+    RED_Path = "NA";
+    if(redirect !== undefined){
+  	 RED_Path=redirect.substr(redirect.indexOf("/pp-restapi-CD"));
+    }
+    }catch(error){}
+    commonChecks(res);
+    invertedChecks(res, redirect, 'matches', undefined);  */
   RED_Path= res.RED_Path;
-  
-  
-  
-  //RED_Path = '/pp-restapi-CD/ugugug?ip=1'; //to comment
+
+
+
+    //RED_Path = '/pp-restapi-CD/ugugug?ip=1'; //to comment
   res=ob_PP_Confirm_Logout(baseUrl, RED_Path);
-  /*RED_Path = "NA";
-  try{
-  headers= res.headers;
-  redirect = headers['Location'];
-  if(redirect !== undefined){
+    /*RED_Path = "NA";
+    try{
+    headers= res.headers;
+    redirect = headers['Location'];
+    if(redirect !== undefined){
 
-	 RED_Path=redirect.substr(redirect.indexOf("/pp-restapi-CD"));
+  	 RED_Path=redirect.substr(redirect.indexOf("/pp-restapi-CD"));
 
-  }
-  }catch(err){RED_Path='NA';}
-  commonChecks(res);
-  invertedChecks(res, redirect, 'matches', undefined);  */
+    }
+    }catch(err){RED_Path='NA';}
+    commonChecks(res);
+    invertedChecks(res, redirect, 'matches', undefined);  */
   RED_Path =res.RED_Path;
-  
-  
-  //RED_Path = '/pp-restapi-CD/ugugug?ip=1'; //to comment
+
+
+    //RED_Path = '/pp-restapi-CD/ugugug?ip=1'; //to comment
   res=ob_PP_Confirm_bye(baseUrl, RED_Path);
 
-  
+
 }
 
 
