@@ -3,7 +3,7 @@ Feature: semantic check for activatePaymentNotice regarding idempotency
   Background:
     Given systems up
     And nodo-dei-pagamenti has config parameter useIdempotency set to true
-    And nodo-dei-pagamenti has config parameter default_idempotency_key_validity_minutes set to 10
+    And nodo-dei-pagamenti has config parameter default_idempotency_key_validity_minutes set to 2
 
   Scenario: Execute activatePaymentNotice request
     Given initial XML activatePaymentNotice
@@ -21,7 +21,7 @@ Feature: semantic check for activatePaymentNotice regarding idempotency
       <fiscalCode>#creditor_institution_code#</fiscalCode>
       <noticeNumber>#notice_number#</noticeNumber>
       </qrCode>
-      <expirationTime>60000</expirationTime>
+      <expirationTime>240000</expirationTime>
       <amount>10.00</amount>
       <paymentNote>causale</paymentNote>
       </nod:activatePaymentNoticeReq>
@@ -34,7 +34,7 @@ Feature: semantic check for activatePaymentNotice regarding idempotency
    #DB check
   Scenario: DB check
     Given the Execute activatePaymentNotice request scenario executed successfully
-    And check datetime plus number of date minutes:60000 of the record at column VALID_TO of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache_act on db nodo_online under macro NewMod3
+    And check datetime plus number of date default_idempotency_key_validity_minutes of the record at column VALID_TO of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache_act on db nodo_online under macro NewMod3
     And checks the value NotNone of the record at column ID of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache_act on db nodo_online under macro NewMod3
     And checks the value $activatePaymentNotice.fiscalCode of the record at column PA_FISCAL_CODE of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache_act on db nodo_online under macro NewMod3
     And checks the value activatePaymentNotice of the record at column PRIMITIVA of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache_act on db nodo_online under macro NewMod3
