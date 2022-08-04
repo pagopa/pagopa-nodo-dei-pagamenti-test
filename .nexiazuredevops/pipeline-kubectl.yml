@@ -19,14 +19,14 @@ variables:
 
 stages:
 
-  - stage: Kubectl
-    displayName: "Kubectl for (${{ parameters.env }})"
+  - stage: kubectl
+    displayName: "kubectl"
     variables:
       - group: nodo-${{ parameters.env }}
 
     jobs:
-      - job: Reetrieve Info
-        displayName: "Reetrieve Info ${{ parameters.env }}"
+      - job: retrieve_info
+        displayName: "retrieve_info"
         pool: $(deploy-pool-${{ parameters.env }})
         steps:
 
