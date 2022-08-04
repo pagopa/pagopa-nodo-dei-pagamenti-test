@@ -166,7 +166,7 @@ Feature: checks semantic OK for nodoInviaCarrelloRPT
          """
 
 
-   Scenario: Check PPT_SEMANTICA error for nodoInviaCarrelloRPT
+   Scenario: Check no error for nodoInviaCarrelloRPT
          Given the Define RPT11 scenario executed successfully
          And initial XML nodoInviaCarrelloRPT
 
@@ -206,6 +206,6 @@ Feature: checks semantic OK for nodoInviaCarrelloRPT
          </soapenv:Envelope>
          """
 
-      And multiBeneficiario with False in nodoInviaCarrelloRPT
+      And multiBeneficiario with false in nodoInviaCarrelloRPT
       When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
       Then check outcome is OK of nodoInviaCarrelloRPT response
