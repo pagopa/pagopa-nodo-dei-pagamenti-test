@@ -144,12 +144,12 @@ def step_impl(context, primitive):
         rptAttachment_uni = f"{rptAttachment_uni}".split("'")[1]
         payload = payload.replace('$rptAttachment', rptAttachment_uni)
 
-    if '$rptAttachment2' in payload:
-        rptAttachment2 = getattr(context, 'rptAttachment2')
-        rptAttachment2_b = bytes(rptAttachment2, 'ascii')
-        rptAttachment2_uni = b64.b64encode(rptAttachment2_b)
-        rptAttachment2_uni = f"{rptAttachment2_uni}".split("'")[1]
-        payload = payload.replace('$rptAttachment2', rptAttachment2_uni)
+    if '$rpt2Attachment' in payload:
+        rpt2Attachment = getattr(context, 'rpt2Attachment')
+        rpt2Attachment_b = bytes(rpt2Attachment, 'ascii')
+        rpt2Attachment_uni = b64.b64encode(rpt2Attachment_b)
+        rpt2Attachment_uni = f"{rpt2Attachment_uni}".split("'")[1]
+        payload = payload.replace('$rpt2Attachment', rpt2Attachment_uni)
 
     if '$intermediarioPA' in payload:
         payload = payload.replace('$intermediarioPA', getattr(context, 'intermediarioPA'))
@@ -356,7 +356,7 @@ def step_impl(context):
     if '$iuv2' in payload:
         payload = payload.replace('$iuv2', getattr(context, 'iuv2'))
 
-    setattr(context,'rptAttachment2', payload)
+    setattr(context,'rpt2Attachment', payload)
 
 @given('REND generation')
 def step_impl(context):
