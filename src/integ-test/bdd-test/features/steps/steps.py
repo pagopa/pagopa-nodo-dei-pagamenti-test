@@ -133,6 +133,9 @@ def step_impl(context, primitive):
     
     if '$iuv' in payload:
         payload = payload.replace('$iuv', getattr(context, 'iuv'))
+    
+    if '$iuv2' in payload:
+        payload = payload.replace('$iuv2', getattr(context, 'iuv2'))
 
     if '$rptAttachment' in payload:
         rptAttachment = getattr(context, 'rptAttachment')
@@ -278,9 +281,9 @@ def step_impl(context):
     payload = context.text or ""
     payload = utils.replace_local_variables(payload, context)
     date = datetime.date.today().strftime("%Y-%m-%d")
-    iuv = "IUV" + str(random.randint(0, 10000)) + "-" + datetime.datetime.now().strftime("%Y-%m-%d-%H:%M:%S.%f")[:-3]
+    iuv2 = "IUV" + str(random.randint(0, 10000)) + "-" + datetime.datetime.now().strftime("%Y-%m-%d-%H:%M:%S.%f")[:-3]
     setattr(context,'date', date)
-    setattr(context,'iuv', iuv)
+    setattr(context,'iuv2', iuv2)
 
     if "#intermediarioPA#" in payload:     
         intermediarioPA = "44444444444_05"
@@ -300,8 +303,8 @@ def step_impl(context):
         payload = payload.replace('#codicePA#', codicePA)
         setattr(context,"codicePA", codicePA)
     
-    if '#iuv#' in payload:
-        payload = payload.replace('#iuv#', iuv)
+    if '#iuv2#' in payload:
+        payload = payload.replace('#iuv2#', iuv2)
 
     if '#idCarrello#' in payload:
         carrello = "09812374659" + "311" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + utils.random_s()
@@ -350,8 +353,8 @@ def step_impl(context):
         payload = payload.replace('ccp',ccp )
         setattr(context, "ccp", ccp)
 
-    if '$iuv' in payload:
-        payload = payload.replace('$iuv', getattr(context, 'iuv'))
+    if '$iuv2' in payload:
+        payload = payload.replace('$iuv2', getattr(context, 'iuv2'))
 
     setattr(context,'rptAttachment2', payload)
 
