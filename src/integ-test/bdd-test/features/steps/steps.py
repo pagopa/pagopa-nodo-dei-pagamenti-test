@@ -141,6 +141,13 @@ def step_impl(context, primitive):
         rptAttachment_uni = f"{rptAttachment_uni}".split("'")[1]
         payload = payload.replace('$rptAttachment', rptAttachment_uni)
 
+    if '$rptAttachment2' in payload:
+        rptAttachment2 = getattr(context, 'rptAttachment2')
+        rptAttachment2_b = bytes(rptAttachment2, 'ascii')
+        rptAttachment2_uni = b64.b64encode(rptAttachment2_b)
+        rptAttachment2_uni = f"{rptAttachment2_uni}".split("'")[1]
+        payload = payload.replace('$rptAttachment2', rptAttachment2_uni)
+
     if '$intermediarioPA' in payload:
         payload = payload.replace('$intermediarioPA', getattr(context, 'intermediarioPA'))
 
