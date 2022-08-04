@@ -243,3 +243,13 @@ def threading(context, primitive_list):
 
     for thread in threads:
         thread.join()
+
+def random_s():
+    import random
+    cont = 5
+    strNumRand = ''
+    while cont !=0:
+        strNumRand += str(random.randint(0,9))
+        cont -=1
+        return strNumRand 
+

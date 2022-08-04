@@ -59,7 +59,8 @@
         "pm_session": "SELECT columns FROM PM_SESSION_DATA WHERE ID_SESSIONE = '$activateIOPaymentResponse.paymentToken'",
         "token_validity": "SELECT TOKEN_VALID_FROM, TOKEN_VALID_TO FROM POSITION_ACTIVATE WHERE CREDITOR_REFERENCE_ID  = '$activateIOPaymentResponse.creditorReferenceId' AND PA_FISCAL_CODE = '$activateIOPaymentResponse.fiscalCodePA' AND PAYMENT_TOKEN = '$activateIOPaymentResponse.paymentToken'",
         "psp": "SELECT columns FROM table_name where ID_PSP = '$sendPaymentOutcome.idPSP'",
-        "payment_status_1": "SELECT columns FROM table_name s where s.NOTICE_ID = $activateIOPayment.noticeNumber and s.PAYMENT_TOKEN= '$activateIOPaymentResponse.paymentToken'"
+        "payment_status_1": "SELECT columns FROM table_name s where s.NOTICE_ID = $activateIOPayment.noticeNumber and s.PAYMENT_TOKEN= '$activateIOPaymentResponse.paymentToken'",
+        "info_pagamento": "SELECT columns FROM CD_INFO_PAGAMENTO WHERE ID_SESSIONE='$session_token'"
     },
     "Mod1Mb":{
         "DB_INOLTRO_PAG_stati_carrello_napshot": "SELECT s.columns FROM table_name s WHERE s.IUV = '$nodoInoltraEsitoPagamentoCarte.noticenumber' and s.ID_DOMINIO = '$nodoInoltraEsitoPagamentoCarte.fiscalcode'",
