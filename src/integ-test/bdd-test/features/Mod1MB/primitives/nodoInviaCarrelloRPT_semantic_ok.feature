@@ -192,12 +192,12 @@ Feature: checks semantic OK for nodoInviaCarrelloRPT
                         <codiceContestoPagamento>$carrello</codiceContestoPagamento>
                         <rpt>$rptAttachment</rpt>
                      </elementoListaRPT>
-                     <elementoListaRPT>
+                     <elementoListaRPT2>
                         <identificativoDominio>90000000001</identificativoDominio>
                         <identificativoUnivocoVersamento>$iuv2</identificativoUnivocoVersamento>
                         <codiceContestoPagamento>$carrello</codiceContestoPagamento>
-                        <rpt>$rptAttachment2</rpt>
-                     </elementoListaRPT>
+                        <rpt>$rpt2Attachment</rpt>
+                     </elementoListaRPT2>
                   </listaRPT>
                   <requireLightPayment>01</requireLightPayment>
                   <multiBeneficiario>1</multiBeneficiario>
