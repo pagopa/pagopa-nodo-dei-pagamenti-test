@@ -186,6 +186,8 @@ def step_impl(context, primitive):
 def step_impl(context):
     payload = context.text or ""
     payload = utils.replace_local_variables(payload, context)
+    date = datetime.date.today().strftime("%Y-%m-%d")
+    setattr(context,'date', date)
 
     if "#intermediarioPA#" in payload:     
         intermediarioPA = "44444444444_05"
