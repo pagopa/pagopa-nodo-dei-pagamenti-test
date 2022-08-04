@@ -85,8 +85,8 @@ Feature: checks semantic OK for nodoInviaCarrelloRPT
 
 
    Scenario: Define RPT11
-         Given the Define RPT10 scenario executed successfully
-         And RPT2 generation
+         Given RPT2 generation
+          
          """
          <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
          <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
@@ -166,8 +166,8 @@ Feature: checks semantic OK for nodoInviaCarrelloRPT
 
 
    Scenario: Check PPT_SEMANTICA error for nodoInviaCarrelloRPT
-         Given the Define RPT11 scenario executed successfully
-         And initial XML nodoInviaCarrelloRPT
+         Given initial XML nodoInviaCarrelloRPT
+
          """
          <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
