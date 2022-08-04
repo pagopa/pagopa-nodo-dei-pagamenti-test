@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration xmlns="http://logging.apache.org/log4j/2.0/config">
+	<Properties>
+		<Property name="LOG_LEVEL">DEBUG</Property>
+		<Property name="basePath">logs</Property>
+		<Property name="pattern">%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p %c{1}:%L - %m%n</Property>
+	</Properties>
+	<Appenders>
+		<RollingFile name="rollingFile" fileName="${basePath}/PA_Mock.log" filePattern="${basePath}/PA_Mock.log.%i"
+			ignoreExceptions="false">
+			<PatternLayout pattern="${pattern}" />
+			<Policies>
+				<SizeBasedTriggeringPolicy size="10MB" />
+			</Policies>
+			<DefaultRolloverStrategy max="5" />
+		</RollingFile>
+		<Console name="STDOUT" target="SYSTEM_OUT">
+			<PatternLayout pattern="${pattern}" />
+		</Console>
+	</Appenders>
+	<Loggers>
+		<Root level="${LOG_LEVEL}">
+			<AppenderRef ref="STDOUT" />
+			<AppenderRef ref="rollingFile" />
+		</Root>
+	</Loggers>
+</Configuration>
