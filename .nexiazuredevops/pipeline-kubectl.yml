@@ -29,6 +29,7 @@ stages:
         displayName: "retrieve_info"
         pool: $(deploy-pool-${{ parameters.env }})
         steps:
+          - checkout: none
 
 
           - script: |
