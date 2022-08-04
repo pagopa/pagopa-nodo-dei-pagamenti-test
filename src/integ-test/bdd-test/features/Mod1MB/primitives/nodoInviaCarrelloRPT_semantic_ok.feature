@@ -208,4 +208,4 @@ Feature: checks semantic OK for nodoInviaCarrelloRPT
 
       And multiBeneficiario with false in nodoInviaCarrelloRPT
       When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
-      Then check outcome is OK of nodoInviaCarrelloRPT response
+      Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
