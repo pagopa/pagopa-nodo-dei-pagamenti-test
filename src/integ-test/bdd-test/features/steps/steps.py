@@ -91,6 +91,26 @@ def step_impl(context, primitive):
         payload = payload.replace('#carrello#', carrello)
         setattr(context,'carrello', carrello)
 
+    if '#carrello_ordInvertito#' in payload:
+        carrello_ordInvertito = "311" + "77777777777" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + ''.join([s[random.randint(0, len(s) - 1)] for i in range(n)])
+        payload = payload.replace('#carrello_ordInvertito#', carrello_ordInvertito)
+        setattr(context,'carrello_ordInvertito', carrello_ordInvertito)
+
+    if '#carrello_lungInferiore#' in payload:
+        carrello_lungInferiore = "7777777777" + "311" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + ''.join([s[random.randint(0, len(s) - 1)] for i in range(n)])
+        payload = payload.replace('#carrello_lungInferiore#', carrello_lungInferiore)
+        setattr(context,'carrello_lungInferiore', carrello_lungInferiore)
+
+    if '#carrello_nessunaRPT#' in payload:
+        carrello_nessunaRPT = "22222222222" + "311" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + ''.join([s[random.randint(0, len(s) - 1)] for i in range(n)])
+        payload = payload.replace('#carrello_nessunaRPT#', carrello_nessunaRPT)
+        setattr(context,'carrello_nessunaRPT', carrello_nessunaRPT)
+
+    if '#carrello_PaIla#' in payload:
+        carrello_PaIla = "90000000001" + "311" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + ''.join([s[random.randint(0, len(s) - 1)] for i in range(n)])
+        payload = payload.replace('#carrello_PaIla#', carrello_PaIla)
+        setattr(context,'carrello_PaIla', carrello_PaIla)
+
     if '#carrello1#' in payload:
         carrello1 = "77777777777" + "311" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + ''.join([s[random.randint(0, len(s) - 1)] for i in range(n)])
         payload = payload.replace('#carrello1#', carrello1)
@@ -240,6 +260,19 @@ def step_impl(context):
     
     print("RPT generato: ", payload)
     setattr(context,'rptAttachment', payload)
+
+
+@given('RPT2 generation')
+def step_impl(context):
+    payload = context.text or ""
+    payload = utils.replace_local_variables(payload, context)
+
+    if '#carrello#' in payload:
+        carrello = "77777777777" + "311" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + ''.join([s[random.randint(0, len(s) - 1)] for i in range(n)])
+        payload = payload.replace('#carrello#', carrello)
+        setattr(context,'carrello', carrello)
+
+    setattr(context,'rptAttachment2', payload)
 
 @given('REND generation')
 def step_impl(context):
