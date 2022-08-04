@@ -1,7 +1,6 @@
 from concurrent.futures import thread
 import math
 import re, json, os, datetime
-from turtle import update
 from xml.dom.minidom import parseString
 
 import time
