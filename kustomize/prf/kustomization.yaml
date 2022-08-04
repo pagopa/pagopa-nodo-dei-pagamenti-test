@@ -5,8 +5,8 @@ namespace: mock-ec-prf
 
 images:
   - name: mock-ec-prf-image
-    newName: nodopasitregistry.azurecr.io/mock-ec-prf
-    newTag: 0.0.1
+    newName: nodopauatregistrypci.azurecr.io/mock-ec-prf
+    newTag: 1.1.1
 
 resources:
   - namespace.yaml
