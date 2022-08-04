@@ -64,7 +64,7 @@ Feature: checks semantic OK for nodoInviaCarrelloRPT
          <pay_i:importoTotaleDaVersare>1.5</pay_i:importoTotaleDaVersare>
          <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
          <pay_i:identificativoUnivocoVersamento>#iuv#</pay_i:identificativoUnivocoVersamento>
-         <pay_i:codiceContestoPagamento>#carrello#</pay_i:codiceContestoPagamento>
+         <pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
          <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
          <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
          <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -146,7 +146,7 @@ Feature: checks semantic OK for nodoInviaCarrelloRPT
          <pay_i:importoTotaleDaVersare>1.5</pay_i:importoTotaleDaVersare>
          <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
          <pay_i:identificativoUnivocoVersamento>#iuv2#</pay_i:identificativoUnivocoVersamento>
-         <pay_i:codiceContestoPagamento>#carrello#</pay_i:codiceContestoPagamento>
+         <pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
          <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
          <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
          <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -189,15 +189,15 @@ Feature: checks semantic OK for nodoInviaCarrelloRPT
                      <elementoListaRPT>
                         <identificativoDominio>#codicePA#</identificativoDominio>
                         <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
-                        <codiceContestoPagamento>$carrello</codiceContestoPagamento>
+                        <codiceContestoPagamento>CCD01</codiceContestoPagamento>
                         <rpt>$rptAttachment</rpt>
                      </elementoListaRPT>
-                     <elementoListaRPT2>
+                     <elementoListaRPT>
                         <identificativoDominio>90000000001</identificativoDominio>
                         <identificativoUnivocoVersamento>$iuv2</identificativoUnivocoVersamento>
-                        <codiceContestoPagamento>$carrello</codiceContestoPagamento>
+                        <codiceContestoPagamento>CCD01</codiceContestoPagamento>
                         <rpt>$rpt2Attachment</rpt>
-                     </elementoListaRPT2>
+                     </elementoListaRPT>
                   </listaRPT>
                   <requireLightPayment>01</requireLightPayment>
                   <multiBeneficiario>1</multiBeneficiario>
