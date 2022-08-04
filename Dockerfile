@@ -1,26 +1,10 @@
-FROM ubuntu:latest
+# Build stage
+FROM maven:3.6.0-jdk-11-slim
+COPY pom.xml /tmp/
+COPY src /tmp/src/
+WORKDIR /tmp/
 
-## python and relevant tools
-RUN apt-get update && apt-get install -y \
-    curl \
-    build-essential \
-    python3 \
-    python3-pip \
-    git
+RUN mvn package
 
-## clone the test repository
-RUN git clone https://github.com/pagopa/pagopa-nodo-dei-pagamenti-test.git
-
-## move to the test main folder
-WORKDIR pagopa-nodo-dei-pagamenti-test
-
-RUN git pull
-
-# copy config.json from local env to docker image
-COPY ./src/integ-test/bdd-test/resources/config.json ./src/integ-test/bdd-test/resources/config.json
-
-# install python libs
-RUN python3 -m pip install -r requirements.txt
-
-# execute behave
-CMD mkdir report && behave -f html -o report/index.html src/integ-test/bdd-test/features/
+ENTRYPOINT ["java", "-Dlog4j.configurationFile","/tmp/target/log4j2.xml", "-DLog4jContextSelector","org.apache.logging.log4j.core.async.AsyncLoggerContextSelector ",  "-jar","/tmp/target/PA_Mock-1.1.1.jar"]
+EXPOSE 8484
