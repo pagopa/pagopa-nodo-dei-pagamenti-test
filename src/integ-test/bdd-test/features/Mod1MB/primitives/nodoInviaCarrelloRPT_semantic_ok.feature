@@ -176,7 +176,7 @@ Feature: checks semantic OK for nodoInviaCarrelloRPT
                <ppt:intestazioneCarrelloPPT>
                   <identificativoIntermediarioPA>#codicePA#</identificativoIntermediarioPA>
                   <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
-                  <identificativoCarrello>$carrello</identificativoCarrello>
+                  <identificativoCarrello>#carrello#</identificativoCarrello>
                </ppt:intestazioneCarrelloPPT>
             </soapenv:Header>
             <soapenv:Body>
