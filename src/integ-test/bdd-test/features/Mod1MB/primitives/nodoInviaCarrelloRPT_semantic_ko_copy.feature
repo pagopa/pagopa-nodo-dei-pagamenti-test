@@ -81,7 +81,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          </pay_i:datiVersamento>
          </pay_i:RPT>
          """
-   
+  
    Scenario Outline: Check PPT_DOMINIO_SCONOSCIUTO error for nodoInviaCarrelloRPT primitive
          Given the Define RPT scenario executed successfully
          And <tag> with <value> in rptAttachment
@@ -107,7 +107,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
                         <identificativoDominio>#codicePA#</identificativoDominio>
                         <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
                         <codiceContestoPagamento>$idCarrello</codiceContestoPagamento>
-                        <rpt>rptAttachment</rpt>
+                        <rpt>$rptAttachment</rpt>
                      </elementoListaRPT>
                   </listaRPT>
                   <requireLightPayment>01</requireLightPayment>
