@@ -135,10 +135,15 @@ def step_impl(context, primitive):
 def step_impl(context):
     payload = context.text or ""
     payload = utils.replace_local_variables(payload, context)
+    #payload = utils.replace_context_variables(payload, context)
     date = datetime.date.today().strftime("%Y-%m-%d")
-    iuv = "IUV" + str(random.randint(0, 10000)) + "-" + datetime.datetime.now().strftime("%Y-%m-%d-%H:%M:%S.%f")[:-3]
+
+    if "#iuv#" in payload:
+        iuv = f"14{str(random.randint(1000000000000, 9999999999999))}" 
+        setattr(context,'iuv', iuv)
+        payload = payload.replace('#iuv#', iuv)
+        
     setattr(context,'date', date)
-    setattr(context,'iuv', iuv)
     if "#intermediarioPA#" in payload:     
         intermediarioPA = "44444444444_05"
         payload = payload.replace('#intermediarioPA#', intermediarioPA)
@@ -153,8 +158,7 @@ def step_impl(context):
         codicePA = "77777777777"
         payload = payload.replace('#codicePA#', codicePA)
         setattr(context,"codicePA", codicePA)
-    if '#iuv#' in payload:
-        payload = payload.replace('#iuv#', iuv)
+
     if '#idCarrello#' in payload:
         carrello = "09812374659" + "311" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + utils.random_s()
         payload = payload.replace('#carrello#', carrello)
@@ -1606,4 +1610,7 @@ def step_impl(context):
 @step('retrieve session token from {url}')
 def step_impl(context, url):
     url = utils.replace_local_variables(url, context)
-    setattr(context, '$sessionToken', url.split('idSession=')[1])
+    print(url)
+    setattr(context, 'sessionToken', url.split('idSession=')[1])
+
+
