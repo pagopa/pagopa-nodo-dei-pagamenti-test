@@ -84,13 +84,9 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
 
    Scenario Outline: Check PPT_DOMINIO_SCONOSCIUTO error for nodoInviaCarrelloRPT primitive
          Given the Define RPT scenario executed successfully
-         And <tag> with <value> in nodoInviaCarrelloRPT
-         Examples:
-            | tag                            | value                       | fault_code                     | soapUI test |
-            | pay_i:identificativoDominio    | 09812374659                 | PPT_DOMINIO_SCONOSCIUTO        | SEM_MB_02   |
-            | pay_i:identificativoDominio    | 77777777777                 | PPT_DOMINIO_SCONOSCIUTO        | SEM_MB_03   |
-
+         And <tag> with <value> in rptAttachment
          And initial XML nodoInviaCarrelloRPT
+
          """
          <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
@@ -125,7 +121,10 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
       When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
       Then check outcome is KO of nodoInviaCarrelloRPT response
       And check faultCode is PPT_DOMINIO_SCONOSCIUTO of nodoInviaCarrelloRPT response
-
+      Examples:
+         | tag                            | value                    | soapUI test |
+         | pay_i:identificativoDominio    | 09812374659              | SEM_MB_02   |
+         | pay_i:identificativoDominio    | 77777777777              | SEM_MB_03   |
 
 
 
