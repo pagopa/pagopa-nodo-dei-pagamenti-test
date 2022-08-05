@@ -213,11 +213,6 @@ def step_impl(context):
 
     if '#date#' in payload:
         payload = payload.replace('#date#', date)
-
-    if "#codicePA#" in payload:     
-        codicePA = "77777777777"
-        payload = payload.replace('#codicePA#', codicePA)
-        setattr(context,"codicePA", codicePA)
     
     if '#iuv#' in payload:
         payload = payload.replace('#iuv#', iuv)
@@ -297,11 +292,6 @@ def step_impl(context):
 
     if '#date#' in payload:
         payload = payload.replace('#date#', date)
-
-    if "#codicePA#" in payload:     
-        codicePA = "77777777777"
-        payload = payload.replace('#codicePA#', codicePA)
-        setattr(context,"codicePA", codicePA)
     
     if '#iuv2#' in payload:
         payload = payload.replace('#iuv2#', iuv2)
