@@ -195,7 +195,9 @@ def step_impl(context, primitive):
 @given('RPT generation')
 def step_impl(context):
     payload = context.text or ""
+    payload = utils.replace_context_variables(payload, context)
     payload = utils.replace_local_variables(payload, context)
+    payload = utils.replace_global_variables(payload, context)
     date = datetime.date.today().strftime("%Y-%m-%d")
     iuv = "IUV" + str(random.randint(0, 10000)) + "-" + datetime.datetime.now().strftime("%Y-%m-%d-%H:%M:%S.%f")[:-3]
     setattr(context,'date', date)
@@ -274,7 +276,9 @@ def step_impl(context):
 @given('RPT2 generation')
 def step_impl(context):
     payload = context.text or ""
+    payload = utils.replace_context_variables(payload, context)
     payload = utils.replace_local_variables(payload, context)
+    payload = utils.replace_global_variables(payload, context)
     date = datetime.date.today().strftime("%Y-%m-%d")
     iuv2 = "IUV" + str(random.randint(0, 10000)) + "-" + datetime.datetime.now().strftime("%Y-%m-%d-%H:%M:%S.%f")[:-3]
     setattr(context,'date', date)
