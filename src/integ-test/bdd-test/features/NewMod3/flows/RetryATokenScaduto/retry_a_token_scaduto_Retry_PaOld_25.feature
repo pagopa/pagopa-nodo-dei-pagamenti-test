@@ -140,7 +140,7 @@ Feature: process tests for generazioneRicevute
       </pay_i:datiVersamento>
       </pay_i:RPT>
       """
-  @prova
+  
   Scenario: Execute nodoInviaRPT request
     Given the Define RPT scenario executed successfully
     And initial XML nodoInviaRPT

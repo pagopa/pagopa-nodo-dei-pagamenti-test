@@ -116,10 +116,10 @@ function Collapsible_expandAllFailed()
         <div id="summary">
           <p id="totals">
             <p id="feature_totals">Features: passed: 1</p>
-            <p id="scenario_totals">Scenarios: passed: 4</p>
-            <p id="step_totals">Steps: passed: 33</p>
+            <p id="scenario_totals">Scenarios: passed: 7</p>
+            <p id="step_totals">Steps: passed: 59</p>
           </p>
-          <p id="duration">Finished in 200.1 seconds</p>
+          <p id="duration">Finished in 82.5 seconds</p>
           <div id="expand-collapse">
             <a id="expander" href="#" onclick="Collapsible_expandAll('scenario_steps')">Expand All</a>
             <span> | </span>
@@ -131,7 +131,7 @@ function Collapsible_expandAllFailed()
       </div>
       <div class="feature">
         <h2>
-          <span class="val">Feature: semantic check for activatePaymentNotice regarding idempotency</span>
+          <span class="val">Feature: process tests for generazioneRicevute</span>
         </h2>
         <span/>
       </div>
@@ -143,16 +143,16 @@ function Collapsible_expandAllFailed()
         <span/>
       </div>
       <div class="scenario">
-        <span class="scenario_file">src/integ-test/bdd-test/features/NewMod3/flows/activatePaymentNotice/activatePaymentNotice_IDMP_ACT_18.feature:10</span>
+        <span class="scenario_file">src/integ-test/bdd-test/features/NewMod3/flows/RetryATokenScaduto/retry_a_token_scaduto_Retry_PaOld_20.feature:26</span>
         <h3 onclick="Collapsible_toggle('scenario_0')">
-          <span class="val">Scenario: Execute activatePaymentNotice request</span>
+          <span class="val">Scenario: Execute verifyPaymentNotice request</span>
         </h3>
         <ol class="scenario_steps" id="scenario_0">
           <li class="step passed">
             <div class="step_name">
               <span class="keyword">Given </span>
               <span class="step val">systems up</span>
-              <small class="step_duration">(0.072s)</small>
+              <small class="step_duration">(0.173s)</small>
             </div>
             <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:27</span>
@@ -186,50 +186,176 @@ function Collapsible_expandAllFailed()
             <div class="step_name">
               <span class="keyword">And </span>
               <span class="step val">
-                <span>nodo-dei-pagamenti has config parameter </span>
-                <b>useIdempotency</b>
-                <span> set to </span>
-                <b>true</b>
+                <span>initial XML </span>
+                <b>verifyPaymentNotice</b>
                 <span/>
               </span>
-              <small class="step_duration">(5.359s)</small>
+              <small class="step_duration">(0.015s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:661</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:54</span>
             </div>
             <span class="embed"/>
+            <div class="message">
+              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd&quot;&gt;
+&lt;soapenv:Header/&gt;
+&lt;soapenv:Body&gt;
+&lt;nod:verifyPaymentNoticeReq&gt;
+&lt;idPSP&gt;70000000001&lt;/idPSP&gt;
+&lt;idBrokerPSP&gt;70000000001&lt;/idBrokerPSP&gt;
+&lt;idChannel&gt;70000000001_01&lt;/idChannel&gt;
+&lt;password&gt;pwdpwdpwd&lt;/password&gt;
+&lt;qrCode&gt;
+&lt;fiscalCode&gt;#creditor_institution_code_old#&lt;/fiscalCode&gt;
+&lt;noticeNumber&gt;#notice_number_old#&lt;/noticeNumber&gt;
+&lt;/qrCode&gt;
+&lt;/nod:verifyPaymentNoticeReq&gt;
+&lt;/soapenv:Body&gt;
+&lt;/soapenv:Envelope&gt;
+</pre>
+            </div>
           </li>
           <li class="step passed">
             <div class="step_name">
               <span class="keyword">And </span>
               <span class="step val">
-                <span>nodo-dei-pagamenti has config parameter </span>
-                <b>default_idempotency_key_validity_minutes</b>
-                <span> set to </span>
-                <b>1</b>
-                <span/>
+                <span>EC </span>
+                <b>old</b>
+                <span> version</span>
               </span>
-              <small class="step_duration">(5.670s)</small>
+              <small class="step_duration">(0.001s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:661</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:48</span>
             </div>
             <span class="embed"/>
           </li>
           <li class="step passed">
             <div class="step_name">
-              <span class="keyword">And </span>
+              <span class="keyword">When </span>
               <span class="step val">
-                <span>nodo-dei-pagamenti has config parameter </span>
-                <b>default_token_duration_validity_millis</b>
-                <span> set to </span>
-                <b>1800000</b>
+                <span/>
+                <b>PSP</b>
+                <span> sends SOAP </span>
+                <b>verifyPaymentNotice</b>
+                <span> to </span>
+                <b>nodo-dei-pagamenti</b>
                 <span/>
               </span>
-              <small class="step_duration">(5.350s)</small>
+              <small class="step_duration">(1.479s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:661</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:323</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">Then </span>
+              <span class="step val">
+                <span>check </span>
+                <b>outcome</b>
+                <span> is </span>
+                <b>OK</b>
+                <span> of </span>
+                <b>verifyPaymentNotice</b>
+                <span> response</span>
+              </span>
+              <small class="step_duration">(0.002s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:347</span>
+            </div>
+            <span class="embed"/>
+          </li>
+        </ol>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/NewMod3/flows/RetryATokenScaduto/retry_a_token_scaduto_Retry_PaOld_20.feature:31</span>
+        <h3 onclick="Collapsible_toggle('scenario_1')">
+          <span class="val">Scenario: Execute activatePaymentNotice request</span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_1">
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">Given </span>
+              <span class="step val">systems up</span>
+              <small class="step_duration">(0.120s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:27</span>
+            </div>
+            <span class="embed"/>
+            <table>
+              <tr>
+                <th>name</th>
+                <th>url</th>
+                <th>healthcheck</th>
+                <th>soap_service</th>
+                <th>rest_service</th>
+              </tr>
+              <tr>
+                <td>nodo-dei-pagamenti</td>
+                <td>http://localhost:9080/</td>
+                <td>nodo-dev-health/ready</td>
+                <td>nodo-dev/webservices/input</td>
+                <td>nodo-dev</td>
+              </tr>
+              <tr>
+                <td>mock-ec</td>
+                <td>http://localhost:8089/</td>
+                <td>servizi/PagamentiTelematiciRPT/info</td>
+                <td>servizi/PagamentiTelematiciRPT</td>
+                <td/>
+              </tr>
+            </table>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>initial XML </span>
+                <b>verifyPaymentNotice</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.005s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:54</span>
+            </div>
+            <span class="embed"/>
+            <div class="message">
+              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd&quot;&gt;
+&lt;soapenv:Header/&gt;
+&lt;soapenv:Body&gt;
+&lt;nod:verifyPaymentNoticeReq&gt;
+&lt;idPSP&gt;70000000001&lt;/idPSP&gt;
+&lt;idBrokerPSP&gt;70000000001&lt;/idBrokerPSP&gt;
+&lt;idChannel&gt;70000000001_01&lt;/idChannel&gt;
+&lt;password&gt;pwdpwdpwd&lt;/password&gt;
+&lt;qrCode&gt;
+&lt;fiscalCode&gt;#creditor_institution_code_old#&lt;/fiscalCode&gt;
+&lt;noticeNumber&gt;#notice_number_old#&lt;/noticeNumber&gt;
+&lt;/qrCode&gt;
+&lt;/nod:verifyPaymentNoticeReq&gt;
+&lt;/soapenv:Body&gt;
+&lt;/soapenv:Envelope&gt;
+</pre>
+            </div>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>EC </span>
+                <b>old</b>
+                <span> version</span>
+              </span>
+              <small class="step_duration">(0.002s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:48</span>
             </div>
             <span class="embed"/>
           </li>
@@ -237,11 +363,26 @@ function Collapsible_expandAllFailed()
             <div class="step_name">
               <span class="keyword">Given </span>
               <span class="step val">
+                <span>the </span>
+                <b>Execute verifyPaymentNotice request</b>
+                <span> scenario executed successfully</span>
+              </span>
+              <small class="step_duration">(1.615s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:500</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
                 <span>initial XML </span>
                 <b>activatePaymentNotice</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.012s)</small>
+              <small class="step_duration">(0.005s)</small>
             </div>
             <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:54</span>
@@ -258,10 +399,12 @@ function Collapsible_expandAllFailed()
 &lt;password&gt;pwdpwdpwd&lt;/password&gt;
 &lt;idempotencyKey&gt;#idempotency_key#&lt;/idempotencyKey&gt;
 &lt;qrCode&gt;
-&lt;fiscalCode&gt;#creditor_institution_code#&lt;/fiscalCode&gt;
-&lt;noticeNumber&gt;#notice_number#&lt;/noticeNumber&gt;
+&lt;fiscalCode&gt;#creditor_institution_code_old#&lt;/fiscalCode&gt;
+&lt;noticeNumber&gt;#notice_number_old#&lt;/noticeNumber&gt;
 &lt;/qrCode&gt;
+&lt;expirationTime&gt;2000&lt;/expirationTime&gt;
 &lt;amount&gt;10.00&lt;/amount&gt;
+&lt;dueDate&gt;2021-12-31&lt;/dueDate&gt;
 &lt;paymentNote&gt;causale&lt;/paymentNote&gt;
 &lt;/nod:activatePaymentNoticeReq&gt;
 &lt;/soapenv:Body&gt;
@@ -274,17 +417,17 @@ function Collapsible_expandAllFailed()
               <span class="keyword">When </span>
               <span class="step val">
                 <span/>
-                <b>PSP</b>
+                <b>psp</b>
                 <span> sends SOAP </span>
                 <b>activatePaymentNotice</b>
                 <span> to </span>
                 <b>nodo-dei-pagamenti</b>
                 <span/>
               </span>
-              <small class="step_duration">(1.235s)</small>
+              <small class="step_duration">(1.886s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:209</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:323</span>
             </div>
             <span class="embed"/>
           </li>
@@ -303,158 +446,7 @@ function Collapsible_expandAllFailed()
               <small class="step_duration">(0.002s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:233</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
-                <span>save </span>
-                <b>activatePaymentNotice</b>
-                <span> response in </span>
-                <b>activatePaymentNotice1</b>
-                <span/>
-              </span>
-              <small class="step_duration">(0.002s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:544</span>
-            </div>
-            <span class="embed"/>
-          </li>
-        </ol>
-        <span/>
-      </div>
-      <div class="scenario">
-        <span class="scenario_file">src/integ-test/bdd-test/features/NewMod3/flows/activatePaymentNotice/activatePaymentNotice_IDMP_ACT_18.feature:37</span>
-        <h3 onclick="Collapsible_toggle('scenario_1')">
-          <span class="val">Scenario: DB check1</span>
-        </h3>
-        <ol class="scenario_steps" id="scenario_1">
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">Given </span>
-              <span class="step val">systems up</span>
-              <small class="step_duration">(0.067s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:27</span>
-            </div>
-            <span class="embed"/>
-            <table>
-              <tr>
-                <th>name</th>
-                <th>url</th>
-                <th>healthcheck</th>
-                <th>soap_service</th>
-                <th>rest_service</th>
-              </tr>
-              <tr>
-                <td>nodo-dei-pagamenti</td>
-                <td>http://localhost:9080/</td>
-                <td>nodo-dev-health/ready</td>
-                <td>nodo-dev/webservices/input</td>
-                <td>nodo-dev</td>
-              </tr>
-              <tr>
-                <td>mock-ec</td>
-                <td>http://localhost:8089/</td>
-                <td>servizi/PagamentiTelematiciRPT/info</td>
-                <td>servizi/PagamentiTelematiciRPT</td>
-                <td/>
-              </tr>
-            </table>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
-                <span>nodo-dei-pagamenti has config parameter </span>
-                <b>useIdempotency</b>
-                <span> set to </span>
-                <b>true</b>
-                <span/>
-              </span>
-              <small class="step_duration">(5.223s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:661</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
-                <span>nodo-dei-pagamenti has config parameter </span>
-                <b>default_idempotency_key_validity_minutes</b>
-                <span> set to </span>
-                <b>1</b>
-                <span/>
-              </span>
-              <small class="step_duration">(5.242s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:661</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
-                <span>nodo-dei-pagamenti has config parameter </span>
-                <b>default_token_duration_validity_millis</b>
-                <span> set to </span>
-                <b>1800000</b>
-                <span/>
-              </span>
-              <small class="step_duration">(5.243s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:661</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">Given </span>
-              <span class="step val">
-                <span>the </span>
-                <b>Execute activatePaymentNotice request</b>
-                <span> scenario executed successfully</span>
-              </span>
-              <small class="step_duration">(1.635s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:386</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
-                <span>check datetime plus number of date </span>
-                <b>default_idempotency_key_validity_minutes</b>
-                <span> of the record at column </span>
-                <b>VALID_TO</b>
-                <span> of the table </span>
-                <b>IDEMPOTENCY_CACHE</b>
-                <span> retrived by the query </span>
-                <b>idempotency_cache_act</b>
-                <span> on db </span>
-                <b>nodo_online</b>
-                <span> under macro </span>
-                <b>NewMod3</b>
-                <span/>
-              </span>
-              <small class="step_duration">(0.139s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:863</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:347</span>
             </div>
             <span class="embed"/>
           </li>
@@ -463,148 +455,23 @@ function Collapsible_expandAllFailed()
               <span class="keyword">And </span>
               <span class="step val">
                 <span>checks the value </span>
-                <b>NotNone</b>
+                <b>$iuv</b>
                 <span> of the record at column </span>
-                <b>ID</b>
+                <b>CREDITOR_REFERENCE_ID</b>
                 <span> of the table </span>
-                <b>IDEMPOTENCY_CACHE</b>
+                <b>RPT_ACTIVATIONS</b>
                 <span> retrived by the query </span>
-                <b>idempotency_cache_act</b>
+                <b>rpt_activision</b>
                 <span> on db </span>
                 <b>nodo_online</b>
                 <span> under macro </span>
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.142s)</small>
+              <small class="step_duration">(0.237s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:813</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
-                <span>checks the value </span>
-                <b>$activatePaymentNotice.fiscalCode</b>
-                <span> of the record at column </span>
-                <b>PA_FISCAL_CODE</b>
-                <span> of the table </span>
-                <b>IDEMPOTENCY_CACHE</b>
-                <span> retrived by the query </span>
-                <b>idempotency_cache_act</b>
-                <span> on db </span>
-                <b>nodo_online</b>
-                <span> under macro </span>
-                <b>NewMod3</b>
-                <span/>
-              </span>
-              <small class="step_duration">(0.176s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:813</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
-                <span>checks the value </span>
-                <b>activatePaymentNotice</b>
-                <span> of the record at column </span>
-                <b>PRIMITIVA</b>
-                <span> of the table </span>
-                <b>IDEMPOTENCY_CACHE</b>
-                <span> retrived by the query </span>
-                <b>idempotency_cache_act</b>
-                <span> on db </span>
-                <b>nodo_online</b>
-                <span> under macro </span>
-                <b>NewMod3</b>
-                <span/>
-              </span>
-              <small class="step_duration">(0.148s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:813</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
-                <span>checks the value </span>
-                <b>$activatePaymentNotice.idPSP</b>
-                <span> of the record at column </span>
-                <b>PSP_ID</b>
-                <span> of the table </span>
-                <b>IDEMPOTENCY_CACHE</b>
-                <span> retrived by the query </span>
-                <b>idempotency_cache_act</b>
-                <span> on db </span>
-                <b>nodo_online</b>
-                <span> under macro </span>
-                <b>NewMod3</b>
-                <span/>
-              </span>
-              <small class="step_duration">(0.169s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:813</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
-                <span>checks the value </span>
-                <b>$activatePaymentNotice.noticeNumber</b>
-                <span> of the record at column </span>
-                <b>NOTICE_ID</b>
-                <span> of the table </span>
-                <b>IDEMPOTENCY_CACHE</b>
-                <span> retrived by the query </span>
-                <b>idempotency_cache_act</b>
-                <span> on db </span>
-                <b>nodo_online</b>
-                <span> under macro </span>
-                <b>NewMod3</b>
-                <span/>
-              </span>
-              <small class="step_duration">(0.182s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:813</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
-                <span>checks the value </span>
-                <b>$activatePaymentNotice.idempotencyKey</b>
-                <span> of the record at column </span>
-                <b>IDEMPOTENCY_KEY</b>
-                <span> of the table </span>
-                <b>IDEMPOTENCY_CACHE</b>
-                <span> retrived by the query </span>
-                <b>idempotency_cache_act</b>
-                <span> on db </span>
-                <b>nodo_online</b>
-                <span> under macro </span>
-                <b>NewMod3</b>
-                <span/>
-              </span>
-              <small class="step_duration">(0.159s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:813</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:928</span>
             </div>
             <span class="embed"/>
           </li>
@@ -615,21 +482,21 @@ function Collapsible_expandAllFailed()
                 <span>checks the value </span>
                 <b>$activatePaymentNoticeResponse.paymentToken</b>
                 <span> of the record at column </span>
-                <b>TOKEN</b>
+                <b>PAYMENT_TOKEN</b>
                 <span> of the table </span>
-                <b>IDEMPOTENCY_CACHE</b>
+                <b>RPT_ACTIVATIONS</b>
                 <span> retrived by the query </span>
-                <b>idempotency_cache_act</b>
+                <b>rpt_activision</b>
                 <span> on db </span>
                 <b>nodo_online</b>
                 <span> under macro </span>
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.160s)</small>
+              <small class="step_duration">(0.198s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:813</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:928</span>
             </div>
             <span class="embed"/>
           </li>
@@ -638,23 +505,23 @@ function Collapsible_expandAllFailed()
               <span class="keyword">And </span>
               <span class="step val">
                 <span>checks the value </span>
-                <b>NotNone</b>
+                <b>N</b>
                 <span> of the record at column </span>
-                <b>HASH_REQUEST</b>
+                <b>NODOINVIARPTREQ</b>
                 <span> of the table </span>
-                <b>IDEMPOTENCY_CACHE</b>
+                <b>RPT_ACTIVATIONS</b>
                 <span> retrived by the query </span>
-                <b>idempotency_cache_act</b>
+                <b>rpt_activision</b>
                 <span> on db </span>
                 <b>nodo_online</b>
                 <span> under macro </span>
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.133s)</small>
+              <small class="step_duration">(0.208s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:813</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:928</span>
             </div>
             <span class="embed"/>
           </li>
@@ -663,23 +530,23 @@ function Collapsible_expandAllFailed()
               <span class="keyword">And </span>
               <span class="step val">
                 <span>checks the value </span>
-                <b>NotNone</b>
+                <b>Y</b>
                 <span> of the record at column </span>
-                <b>RESPONSE</b>
+                <b>PAAATTIVARPTRESP</b>
                 <span> of the table </span>
-                <b>IDEMPOTENCY_CACHE</b>
+                <b>RPT_ACTIVATIONS</b>
                 <span> retrived by the query </span>
-                <b>idempotency_cache_act</b>
+                <b>rpt_activision</b>
                 <span> on db </span>
                 <b>nodo_online</b>
                 <span> under macro </span>
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.165s)</small>
+              <small class="step_duration">(0.342s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:813</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:928</span>
             </div>
             <span class="embed"/>
           </li>
@@ -692,19 +559,19 @@ function Collapsible_expandAllFailed()
                 <span> of the record at column </span>
                 <b>INSERTED_TIMESTAMP</b>
                 <span> of the table </span>
-                <b>IDEMPOTENCY_CACHE</b>
+                <b>RPT_ACTIVATIONS</b>
                 <span> retrived by the query </span>
-                <b>idempotency_cache_act</b>
+                <b>rpt_activision</b>
                 <span> on db </span>
                 <b>nodo_online</b>
                 <span> under macro </span>
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.144s)</small>
+              <small class="step_duration">(0.449s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:813</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:928</span>
             </div>
             <span class="embed"/>
           </li>
@@ -712,16 +579,16 @@ function Collapsible_expandAllFailed()
         <span/>
       </div>
       <div class="scenario">
-        <span class="scenario_file">src/integ-test/bdd-test/features/NewMod3/flows/activatePaymentNotice/activatePaymentNotice_IDMP_ACT_18.feature:51</span>
+        <span class="scenario_file">src/integ-test/bdd-test/features/NewMod3/flows/RetryATokenScaduto/retry_a_token_scaduto_Retry_PaOld_20.feature:65</span>
         <h3 onclick="Collapsible_toggle('scenario_2')">
-          <span class="val">Scenario: Execute activatePaymentNotice1 request</span>
+          <span class="val">Scenario: Execute Poller Annulli</span>
         </h3>
         <ol class="scenario_steps" id="scenario_2">
           <li class="step passed">
             <div class="step_name">
               <span class="keyword">Given </span>
               <span class="step val">systems up</span>
-              <small class="step_duration">(0.064s)</small>
+              <small class="step_duration">(0.076s)</small>
             </div>
             <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:27</span>
@@ -755,92 +622,11 @@ function Collapsible_expandAllFailed()
             <div class="step_name">
               <span class="keyword">And </span>
               <span class="step val">
-                <span>nodo-dei-pagamenti has config parameter </span>
-                <b>useIdempotency</b>
-                <span> set to </span>
-                <b>true</b>
-                <span/>
-              </span>
-              <small class="step_duration">(5.234s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:661</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
-                <span>nodo-dei-pagamenti has config parameter </span>
-                <b>default_idempotency_key_validity_minutes</b>
-                <span> set to </span>
-                <b>1</b>
-                <span/>
-              </span>
-              <small class="step_duration">(5.206s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:661</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
-                <span>nodo-dei-pagamenti has config parameter </span>
-                <b>default_token_duration_validity_millis</b>
-                <span> set to </span>
-                <b>1800000</b>
-                <span/>
-              </span>
-              <small class="step_duration">(5.220s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:661</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">Given </span>
-              <span class="step val">
-                <span>the </span>
-                <b>DB check1</b>
-                <span> scenario executed successfully</span>
-              </span>
-              <small class="step_duration">(2.829s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:386</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
-                <span>wait </span>
-                <b>62</b>
-                <span> seconds for expiration</span>
-              </span>
-              <small class="step_duration">(62.016s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:792</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
                 <span>initial XML </span>
-                <b>activatePaymentNotice</b>
+                <b>verifyPaymentNotice</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.003s)</small>
+              <small class="step_duration">(0.004s)</small>
             </div>
             <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:54</span>
@@ -850,19 +636,238 @@ function Collapsible_expandAllFailed()
               <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd&quot;&gt;
 &lt;soapenv:Header/&gt;
 &lt;soapenv:Body&gt;
-&lt;nod:activatePaymentNoticeReq&gt;
+&lt;nod:verifyPaymentNoticeReq&gt;
 &lt;idPSP&gt;70000000001&lt;/idPSP&gt;
 &lt;idBrokerPSP&gt;70000000001&lt;/idBrokerPSP&gt;
 &lt;idChannel&gt;70000000001_01&lt;/idChannel&gt;
 &lt;password&gt;pwdpwdpwd&lt;/password&gt;
-&lt;idempotencyKey&gt;$activatePaymentNotice.idempotencyKey&lt;/idempotencyKey&gt;
 &lt;qrCode&gt;
-&lt;fiscalCode&gt;$activatePaymentNotice.fiscalCode&lt;/fiscalCode&gt;
-&lt;noticeNumber&gt;$activatePaymentNotice.noticeNumber&lt;/noticeNumber&gt;
+&lt;fiscalCode&gt;#creditor_institution_code_old#&lt;/fiscalCode&gt;
+&lt;noticeNumber&gt;#notice_number_old#&lt;/noticeNumber&gt;
 &lt;/qrCode&gt;
-&lt;amount&gt;10.00&lt;/amount&gt;
-&lt;paymentNote&gt;causale&lt;/paymentNote&gt;
-&lt;/nod:activatePaymentNoticeReq&gt;
+&lt;/nod:verifyPaymentNoticeReq&gt;
+&lt;/soapenv:Body&gt;
+&lt;/soapenv:Envelope&gt;
+</pre>
+            </div>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>EC </span>
+                <b>old</b>
+                <span> version</span>
+              </span>
+              <small class="step_duration">(0.002s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:48</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">Given </span>
+              <span class="step val">
+                <span>the </span>
+                <b>Execute activatePaymentNotice request</b>
+                <span> scenario executed successfully</span>
+              </span>
+              <small class="step_duration">(4.444s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:500</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">When </span>
+              <span class="step val">
+                <span>job </span>
+                <b>mod3CancelV1</b>
+                <span> triggered after </span>
+                <b>5</b>
+                <span> seconds</span>
+              </span>
+              <small class="step_duration">(5.191s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:338</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">Then </span>
+              <span class="step val">
+                <span>verify the HTTP status code of </span>
+                <b>mod3CancelV1</b>
+                <span> response is </span>
+                <b>200</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.002s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:534</span>
+            </div>
+            <span class="embed"/>
+          </li>
+        </ol>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/NewMod3/flows/RetryATokenScaduto/retry_a_token_scaduto_Retry_PaOld_20.feature:71</span>
+        <h3 onclick="Collapsible_toggle('scenario_3')">
+          <span class="val">Scenario: Execute sendPaymentOutcome request</span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_3">
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">Given </span>
+              <span class="step val">systems up</span>
+              <small class="step_duration">(0.107s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:27</span>
+            </div>
+            <span class="embed"/>
+            <table>
+              <tr>
+                <th>name</th>
+                <th>url</th>
+                <th>healthcheck</th>
+                <th>soap_service</th>
+                <th>rest_service</th>
+              </tr>
+              <tr>
+                <td>nodo-dei-pagamenti</td>
+                <td>http://localhost:9080/</td>
+                <td>nodo-dev-health/ready</td>
+                <td>nodo-dev/webservices/input</td>
+                <td>nodo-dev</td>
+              </tr>
+              <tr>
+                <td>mock-ec</td>
+                <td>http://localhost:8089/</td>
+                <td>servizi/PagamentiTelematiciRPT/info</td>
+                <td>servizi/PagamentiTelematiciRPT</td>
+                <td/>
+              </tr>
+            </table>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>initial XML </span>
+                <b>verifyPaymentNotice</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.004s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:54</span>
+            </div>
+            <span class="embed"/>
+            <div class="message">
+              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd&quot;&gt;
+&lt;soapenv:Header/&gt;
+&lt;soapenv:Body&gt;
+&lt;nod:verifyPaymentNoticeReq&gt;
+&lt;idPSP&gt;70000000001&lt;/idPSP&gt;
+&lt;idBrokerPSP&gt;70000000001&lt;/idBrokerPSP&gt;
+&lt;idChannel&gt;70000000001_01&lt;/idChannel&gt;
+&lt;password&gt;pwdpwdpwd&lt;/password&gt;
+&lt;qrCode&gt;
+&lt;fiscalCode&gt;#creditor_institution_code_old#&lt;/fiscalCode&gt;
+&lt;noticeNumber&gt;#notice_number_old#&lt;/noticeNumber&gt;
+&lt;/qrCode&gt;
+&lt;/nod:verifyPaymentNoticeReq&gt;
+&lt;/soapenv:Body&gt;
+&lt;/soapenv:Envelope&gt;
+</pre>
+            </div>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>EC </span>
+                <b>old</b>
+                <span> version</span>
+              </span>
+              <small class="step_duration">(0.001s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:48</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">Given </span>
+              <span class="step val">
+                <span>the </span>
+                <b>Execute Poller Annulli</b>
+                <span> scenario executed successfully</span>
+              </span>
+              <small class="step_duration">(9.452s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:500</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>initial XML </span>
+                <b>sendPaymentOutcome</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.002s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:54</span>
+            </div>
+            <span class="embed"/>
+            <div class="message">
+              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd&quot;&gt;
+&lt;soapenv:Header/&gt;
+&lt;soapenv:Body&gt;
+&lt;nod:sendPaymentOutcomeReq&gt;
+&lt;idPSP&gt;70000000001&lt;/idPSP&gt;
+&lt;idBrokerPSP&gt;70000000001&lt;/idBrokerPSP&gt;
+&lt;idChannel&gt;70000000001_01&lt;/idChannel&gt;
+&lt;password&gt;pwdpwdpwd&lt;/password&gt;
+&lt;paymentToken&gt;$activatePaymentNoticeResponse.paymentToken&lt;/paymentToken&gt;
+&lt;outcome&gt;OK&lt;/outcome&gt;
+&lt;details&gt;
+&lt;paymentMethod&gt;creditCard&lt;/paymentMethod&gt;
+&lt;paymentChannel&gt;app&lt;/paymentChannel&gt;
+&lt;fee&gt;2.00&lt;/fee&gt;
+&lt;payer&gt;
+&lt;uniqueIdentifier&gt;
+&lt;entityUniqueIdentifierType&gt;F&lt;/entityUniqueIdentifierType&gt;
+&lt;entityUniqueIdentifierValue&gt;JHNDOE00A01F205N&lt;/entityUniqueIdentifierValue&gt;
+&lt;/uniqueIdentifier&gt;
+&lt;fullName&gt;John Doe&lt;/fullName&gt;
+&lt;streetName&gt;street&lt;/streetName&gt;
+&lt;civicNumber&gt;12&lt;/civicNumber&gt;
+&lt;postalCode&gt;89020&lt;/postalCode&gt;
+&lt;city&gt;city&lt;/city&gt;
+&lt;stateProvinceRegion&gt;MI&lt;/stateProvinceRegion&gt;
+&lt;country&gt;IT&lt;/country&gt;
+&lt;e-mail&gt;john.doe@test.it&lt;/e-mail&gt;
+&lt;/payer&gt;
+&lt;applicationDate&gt;2021-10-01&lt;/applicationDate&gt;
+&lt;transferDate&gt;2021-10-02&lt;/transferDate&gt;
+&lt;/details&gt;
+&lt;/nod:sendPaymentOutcomeReq&gt;
 &lt;/soapenv:Body&gt;
 &lt;/soapenv:Envelope&gt;
 </pre>
@@ -873,17 +878,17 @@ function Collapsible_expandAllFailed()
               <span class="keyword">When </span>
               <span class="step val">
                 <span/>
-                <b>PSP</b>
+                <b>psp</b>
                 <span> sends SOAP </span>
-                <b>activatePaymentNotice</b>
+                <b>sendPaymentOutcome</b>
                 <span> to </span>
                 <b>nodo-dei-pagamenti</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.090s)</small>
+              <small class="step_duration">(0.118s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:209</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:323</span>
             </div>
             <span class="embed"/>
           </li>
@@ -896,13 +901,13 @@ function Collapsible_expandAllFailed()
                 <span> is </span>
                 <b>KO</b>
                 <span> of </span>
-                <b>activatePaymentNotice</b>
+                <b>sendPaymentOutcome</b>
                 <span> response</span>
               </span>
-              <small class="step_duration">(0.001s)</small>
+              <small class="step_duration">(0.003s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:233</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:347</span>
             </div>
             <span class="embed"/>
           </li>
@@ -913,15 +918,32 @@ function Collapsible_expandAllFailed()
                 <span>check </span>
                 <b>faultCode</b>
                 <span> is </span>
-                <b>PPT_PAGAMENTO_IN_CORSO</b>
+                <b>PPT_TOKEN_SCADUTO</b>
                 <span> of </span>
-                <b>activatePaymentNotice</b>
+                <b>sendPaymentOutcome</b>
                 <span> response</span>
               </span>
-              <small class="step_duration">(0.001s)</small>
+              <small class="step_duration">(0.003s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:233</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:347</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span/>
+                <b>psp</b>
+                <span> waits </span>
+                <b>5</b>
+                <span> seconds for expiration</span>
+              </span>
+              <small class="step_duration">(5.012s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:914</span>
             </div>
             <span class="embed"/>
           </li>
@@ -929,16 +951,16 @@ function Collapsible_expandAllFailed()
         <span/>
       </div>
       <div class="scenario">
-        <span class="scenario_file">src/integ-test/bdd-test/features/NewMod3/flows/activatePaymentNotice/activatePaymentNotice_IDMP_ACT_18.feature:80</span>
-        <h3 onclick="Collapsible_toggle('scenario_3')">
-          <span class="val">Scenario: DB check2</span>
+        <span class="scenario_file">src/integ-test/bdd-test/features/NewMod3/flows/RetryATokenScaduto/retry_a_token_scaduto_Retry_PaOld_20.feature:115</span>
+        <h3 onclick="Collapsible_toggle('scenario_4')">
+          <span class="val">Scenario: Define RPT</span>
         </h3>
-        <ol class="scenario_steps" id="scenario_3">
+        <ol class="scenario_steps" id="scenario_4">
           <li class="step passed">
             <div class="step_name">
               <span class="keyword">Given </span>
               <span class="step val">systems up</span>
-              <small class="step_duration">(0.055s)</small>
+              <small class="step_duration">(0.060s)</small>
             </div>
             <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:27</span>
@@ -972,50 +994,47 @@ function Collapsible_expandAllFailed()
             <div class="step_name">
               <span class="keyword">And </span>
               <span class="step val">
-                <span>nodo-dei-pagamenti has config parameter </span>
-                <b>useIdempotency</b>
-                <span> set to </span>
-                <b>true</b>
+                <span>initial XML </span>
+                <b>verifyPaymentNotice</b>
                 <span/>
               </span>
-              <small class="step_duration">(5.375s)</small>
+              <small class="step_duration">(0.005s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:661</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:54</span>
             </div>
             <span class="embed"/>
+            <div class="message">
+              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd&quot;&gt;
+&lt;soapenv:Header/&gt;
+&lt;soapenv:Body&gt;
+&lt;nod:verifyPaymentNoticeReq&gt;
+&lt;idPSP&gt;70000000001&lt;/idPSP&gt;
+&lt;idBrokerPSP&gt;70000000001&lt;/idBrokerPSP&gt;
+&lt;idChannel&gt;70000000001_01&lt;/idChannel&gt;
+&lt;password&gt;pwdpwdpwd&lt;/password&gt;
+&lt;qrCode&gt;
+&lt;fiscalCode&gt;#creditor_institution_code_old#&lt;/fiscalCode&gt;
+&lt;noticeNumber&gt;#notice_number_old#&lt;/noticeNumber&gt;
+&lt;/qrCode&gt;
+&lt;/nod:verifyPaymentNoticeReq&gt;
+&lt;/soapenv:Body&gt;
+&lt;/soapenv:Envelope&gt;
+</pre>
+            </div>
           </li>
           <li class="step passed">
             <div class="step_name">
               <span class="keyword">And </span>
               <span class="step val">
-                <span>nodo-dei-pagamenti has config parameter </span>
-                <b>default_idempotency_key_validity_minutes</b>
-                <span> set to </span>
-                <b>1</b>
-                <span/>
+                <span>EC </span>
+                <b>old</b>
+                <span> version</span>
               </span>
-              <small class="step_duration">(5.237s)</small>
+              <small class="step_duration">(0.001s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:661</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
-                <span>nodo-dei-pagamenti has config parameter </span>
-                <b>default_token_duration_validity_millis</b>
-                <span> set to </span>
-                <b>1800000</b>
-                <span/>
-              </span>
-              <small class="step_duration">(5.287s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:661</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:48</span>
             </div>
             <span class="embed"/>
           </li>
@@ -1024,13 +1043,207 @@ function Collapsible_expandAllFailed()
               <span class="keyword">Given </span>
               <span class="step val">
                 <span>the </span>
-                <b>Execute activatePaymentNotice1 request</b>
+                <b>Execute sendPaymentOutcome request</b>
                 <span> scenario executed successfully</span>
               </span>
-              <small class="step_duration">(65.121s)</small>
+              <small class="step_duration">(14.887s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:386</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:500</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">RPT generation</span>
+              <small class="step_duration">(0.012s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:134</span>
+            </div>
+            <span class="embed"/>
+            <div class="message">
+              <pre>&lt;pay_i:RPT xmlns:pay_i=&quot;http://www.digitpa.gov.it/schemas/2011/Pagamenti/&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xsi:schemaLocation=&quot;http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd &quot;&gt;
+&lt;pay_i:versioneOggetto&gt;1.0&lt;/pay_i:versioneOggetto&gt;
+&lt;pay_i:dominio&gt;
+&lt;pay_i:identificativoDominio&gt;$activatePaymentNotice.fiscalCode&lt;/pay_i:identificativoDominio&gt;
+&lt;pay_i:identificativoStazioneRichiedente&gt;#intermediarioPA#&lt;/pay_i:identificativoStazioneRichiedente&gt;
+&lt;/pay_i:dominio&gt;
+&lt;pay_i:identificativoMessaggioRichiesta&gt;MSGRICHIESTA01&lt;/pay_i:identificativoMessaggioRichiesta&gt;
+&lt;pay_i:dataOraMessaggioRichiesta&gt;2016-09-16T11:24:10&lt;/pay_i:dataOraMessaggioRichiesta&gt;
+&lt;pay_i:autenticazioneSoggetto&gt;CNS&lt;/pay_i:autenticazioneSoggetto&gt;
+&lt;pay_i:soggettoVersante&gt;
+&lt;pay_i:identificativoUnivocoVersante&gt;
+&lt;pay_i:tipoIdentificativoUnivoco&gt;F&lt;/pay_i:tipoIdentificativoUnivoco&gt;
+&lt;pay_i:codiceIdentificativoUnivoco&gt;RCCGLD09P09H502E&lt;/pay_i:codiceIdentificativoUnivoco&gt;
+&lt;/pay_i:identificativoUnivocoVersante&gt;
+&lt;pay_i:anagraficaVersante&gt;Gesualdo;Riccitelli&lt;/pay_i:anagraficaVersante&gt;
+&lt;pay_i:indirizzoVersante&gt;via del gesu&lt;/pay_i:indirizzoVersante&gt;
+&lt;pay_i:civicoVersante&gt;11&lt;/pay_i:civicoVersante&gt;
+&lt;pay_i:capVersante&gt;00186&lt;/pay_i:capVersante&gt;
+&lt;pay_i:localitaVersante&gt;Roma&lt;/pay_i:localitaVersante&gt;
+&lt;pay_i:provinciaVersante&gt;RM&lt;/pay_i:provinciaVersante&gt;
+&lt;pay_i:nazioneVersante&gt;IT&lt;/pay_i:nazioneVersante&gt;
+&lt;pay_i:e-mailVersante&gt;gesualdo.riccitelli@poste.it&lt;/pay_i:e-mailVersante&gt;
+&lt;/pay_i:soggettoVersante&gt;
+&lt;pay_i:soggettoPagatore&gt;
+&lt;pay_i:identificativoUnivocoPagatore&gt;
+&lt;pay_i:tipoIdentificativoUnivoco&gt;F&lt;/pay_i:tipoIdentificativoUnivoco&gt;
+&lt;pay_i:codiceIdentificativoUnivoco&gt;RCCGLD09P09H501E&lt;/pay_i:codiceIdentificativoUnivoco&gt;
+&lt;/pay_i:identificativoUnivocoPagatore&gt;
+&lt;pay_i:anagraficaPagatore&gt;Gesualdo;Riccitelli&lt;/pay_i:anagraficaPagatore&gt;
+&lt;pay_i:indirizzoPagatore&gt;via del gesu&lt;/pay_i:indirizzoPagatore&gt;
+&lt;pay_i:civicoPagatore&gt;11&lt;/pay_i:civicoPagatore&gt;
+&lt;pay_i:capPagatore&gt;00186&lt;/pay_i:capPagatore&gt;
+&lt;pay_i:localitaPagatore&gt;Roma&lt;/pay_i:localitaPagatore&gt;
+&lt;pay_i:provinciaPagatore&gt;RM&lt;/pay_i:provinciaPagatore&gt;
+&lt;pay_i:nazionePagatore&gt;IT&lt;/pay_i:nazionePagatore&gt;
+&lt;pay_i:e-mailPagatore&gt;gesualdo.riccitelli@poste.it&lt;/pay_i:e-mailPagatore&gt;
+&lt;/pay_i:soggettoPagatore&gt;
+&lt;pay_i:enteBeneficiario&gt;
+&lt;pay_i:identificativoUnivocoBeneficiario&gt;
+&lt;pay_i:tipoIdentificativoUnivoco&gt;G&lt;/pay_i:tipoIdentificativoUnivoco&gt;
+&lt;pay_i:codiceIdentificativoUnivoco&gt;11111111117&lt;/pay_i:codiceIdentificativoUnivoco&gt;
+&lt;/pay_i:identificativoUnivocoBeneficiario&gt;
+&lt;pay_i:denominazioneBeneficiario&gt;AZIENDA XXX&lt;/pay_i:denominazioneBeneficiario&gt;
+&lt;pay_i:codiceUnitOperBeneficiario&gt;123&lt;/pay_i:codiceUnitOperBeneficiario&gt;
+&lt;pay_i:denomUnitOperBeneficiario&gt;XXX&lt;/pay_i:denomUnitOperBeneficiario&gt;
+&lt;pay_i:indirizzoBeneficiario&gt;IndirizzoBeneficiario&lt;/pay_i:indirizzoBeneficiario&gt;
+&lt;pay_i:civicoBeneficiario&gt;123&lt;/pay_i:civicoBeneficiario&gt;
+&lt;pay_i:capBeneficiario&gt;22222&lt;/pay_i:capBeneficiario&gt;
+&lt;pay_i:localitaBeneficiario&gt;Roma&lt;/pay_i:localitaBeneficiario&gt;
+&lt;pay_i:provinciaBeneficiario&gt;RM&lt;/pay_i:provinciaBeneficiario&gt;
+&lt;pay_i:nazioneBeneficiario&gt;IT&lt;/pay_i:nazioneBeneficiario&gt;
+&lt;/pay_i:enteBeneficiario&gt;
+&lt;pay_i:datiVersamento&gt;
+&lt;pay_i:dataEsecuzionePagamento&gt;2016-09-16&lt;/pay_i:dataEsecuzionePagamento&gt;
+&lt;pay_i:importoTotaleDaVersare&gt;10.00&lt;/pay_i:importoTotaleDaVersare&gt;
+&lt;pay_i:tipoVersamento&gt;PO&lt;/pay_i:tipoVersamento&gt;
+&lt;pay_i:identificativoUnivocoVersamento&gt;$iuv&lt;/pay_i:identificativoUnivocoVersamento&gt;
+&lt;pay_i:codiceContestoPagamento&gt;$activatePaymentNoticeResponse.paymentToken-v2&lt;/pay_i:codiceContestoPagamento&gt;
+&lt;pay_i:ibanAddebito&gt;IT96R0123451234512345678904&lt;/pay_i:ibanAddebito&gt;
+&lt;pay_i:bicAddebito&gt;ARTIITM1045&lt;/pay_i:bicAddebito&gt;
+&lt;pay_i:firmaRicevuta&gt;0&lt;/pay_i:firmaRicevuta&gt;
+&lt;pay_i:datiSingoloVersamento&gt;
+&lt;pay_i:importoSingoloVersamento&gt;10.00&lt;/pay_i:importoSingoloVersamento&gt;
+&lt;pay_i:commissioneCaricoPA&gt;1.00&lt;/pay_i:commissioneCaricoPA&gt;
+&lt;pay_i:ibanAccredito&gt;IT96R0123454321000000012345&lt;/pay_i:ibanAccredito&gt;
+&lt;pay_i:bicAccredito&gt;ARTIITM1050&lt;/pay_i:bicAccredito&gt;
+&lt;pay_i:ibanAppoggio&gt;IT96R0123454321000000012345&lt;/pay_i:ibanAppoggio&gt;
+&lt;pay_i:bicAppoggio&gt;ARTIITM1050&lt;/pay_i:bicAppoggio&gt;
+&lt;pay_i:credenzialiPagatore&gt;CP1.1&lt;/pay_i:credenzialiPagatore&gt;
+&lt;pay_i:causaleVersamento&gt;pagamento fotocopie pratica RPT&lt;/pay_i:causaleVersamento&gt;
+&lt;pay_i:datiSpecificiRiscossione&gt;1/abc&lt;/pay_i:datiSpecificiRiscossione&gt;
+&lt;/pay_i:datiSingoloVersamento&gt;
+&lt;/pay_i:datiVersamento&gt;
+&lt;/pay_i:RPT&gt;
+</pre>
+            </div>
+          </li>
+        </ol>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/NewMod3/flows/RetryATokenScaduto/retry_a_token_scaduto_Retry_PaOld_20.feature:195</span>
+        <h3 onclick="Collapsible_toggle('scenario_5')">
+          <span class="val">Scenario: Execute nodoInviaRPT request</span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_5">
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">Given </span>
+              <span class="step val">systems up</span>
+              <small class="step_duration">(0.065s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:27</span>
+            </div>
+            <span class="embed"/>
+            <table>
+              <tr>
+                <th>name</th>
+                <th>url</th>
+                <th>healthcheck</th>
+                <th>soap_service</th>
+                <th>rest_service</th>
+              </tr>
+              <tr>
+                <td>nodo-dei-pagamenti</td>
+                <td>http://localhost:9080/</td>
+                <td>nodo-dev-health/ready</td>
+                <td>nodo-dev/webservices/input</td>
+                <td>nodo-dev</td>
+              </tr>
+              <tr>
+                <td>mock-ec</td>
+                <td>http://localhost:8089/</td>
+                <td>servizi/PagamentiTelematiciRPT/info</td>
+                <td>servizi/PagamentiTelematiciRPT</td>
+                <td/>
+              </tr>
+            </table>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>initial XML </span>
+                <b>verifyPaymentNotice</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.003s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:54</span>
+            </div>
+            <span class="embed"/>
+            <div class="message">
+              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd&quot;&gt;
+&lt;soapenv:Header/&gt;
+&lt;soapenv:Body&gt;
+&lt;nod:verifyPaymentNoticeReq&gt;
+&lt;idPSP&gt;70000000001&lt;/idPSP&gt;
+&lt;idBrokerPSP&gt;70000000001&lt;/idBrokerPSP&gt;
+&lt;idChannel&gt;70000000001_01&lt;/idChannel&gt;
+&lt;password&gt;pwdpwdpwd&lt;/password&gt;
+&lt;qrCode&gt;
+&lt;fiscalCode&gt;#creditor_institution_code_old#&lt;/fiscalCode&gt;
+&lt;noticeNumber&gt;#notice_number_old#&lt;/noticeNumber&gt;
+&lt;/qrCode&gt;
+&lt;/nod:verifyPaymentNoticeReq&gt;
+&lt;/soapenv:Body&gt;
+&lt;/soapenv:Envelope&gt;
+</pre>
+            </div>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>EC </span>
+                <b>old</b>
+                <span> version</span>
+              </span>
+              <small class="step_duration">(0.001s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:48</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">Given </span>
+              <span class="step val">
+                <span>the </span>
+                <b>Define RPT</b>
+                <span> scenario executed successfully</span>
+              </span>
+              <small class="step_duration">(15.072s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:500</span>
             </div>
             <span class="embed"/>
           </li>
@@ -1038,24 +1251,270 @@ function Collapsible_expandAllFailed()
             <div class="step_name">
               <span class="keyword">And </span>
               <span class="step val">
-                <span>check datetime plus number of date </span>
-                <b>0</b>
-                <span> of the record at column </span>
-                <b>VALID_TO</b>
-                <span> of the table </span>
-                <b>IDEMPOTENCY_CACHE</b>
-                <span> retrived by the query </span>
-                <b>idempotency_cache_act_orderby</b>
-                <span> on db </span>
-                <b>nodo_online</b>
-                <span> under macro </span>
-                <b>NewMod3</b>
+                <span>initial XML </span>
+                <b>nodoInviaRPT</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.189s)</small>
+              <small class="step_duration">(0.003s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:863</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:54</span>
+            </div>
+            <span class="embed"/>
+            <div class="message">
+              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:ppt=&quot;http://ws.pagamenti.telematici.gov/ppthead&quot; xmlns:ws=&quot;http://ws.pagamenti.telematici.gov/&quot;&gt;
+&lt;soapenv:Header&gt;
+&lt;ppt:intestazionePPT&gt;
+&lt;identificativoIntermediarioPA&gt;$activatePaymentNotice.fiscalCode&lt;/identificativoIntermediarioPA&gt;
+&lt;identificativoStazioneIntermediarioPA&gt;$intermediarioPA&lt;/identificativoStazioneIntermediarioPA&gt;
+&lt;identificativoDominio&gt;$activatePaymentNotice.fiscalCode&lt;/identificativoDominio&gt;
+&lt;identificativoUnivocoVersamento&gt;$iuv&lt;/identificativoUnivocoVersamento&gt;
+&lt;codiceContestoPagamento&gt;$activatePaymentNoticeResponse.paymentToken-v2&lt;/codiceContestoPagamento&gt;
+&lt;/ppt:intestazionePPT&gt;
+&lt;/soapenv:Header&gt;
+&lt;soapenv:Body&gt;
+&lt;ws:nodoInviaRPT&gt;
+&lt;password&gt;pwdpwdpwd&lt;/password&gt;
+&lt;identificativoPSP&gt;15376371009&lt;/identificativoPSP&gt;
+&lt;identificativoIntermediarioPSP&gt;15376371009&lt;/identificativoIntermediarioPSP&gt;
+&lt;identificativoCanale&gt;15376371009_01&lt;/identificativoCanale&gt;
+&lt;tipoFirma&gt;&lt;/tipoFirma&gt;
+&lt;rpt&gt;$rptAttachment&lt;/rpt&gt;
+&lt;/ws:nodoInviaRPT&gt;
+&lt;/soapenv:Body&gt;
+&lt;/soapenv:Envelope&gt;
+</pre>
+            </div>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">When </span>
+              <span class="step val">
+                <span/>
+                <b>psp</b>
+                <span> sends SOAP </span>
+                <b>nodoInviaRPT</b>
+                <span> to </span>
+                <b>nodo-dei-pagamenti</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.281s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:323</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">Then </span>
+              <span class="step val">
+                <span>check </span>
+                <b>faultCode</b>
+                <span> is </span>
+                <b>PPT_SEMANTICA</b>
+                <span> of </span>
+                <b>nodoInviaRPT</b>
+                <span> response</span>
+              </span>
+              <small class="step_duration">(0.006s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:347</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>check </span>
+                <b>description</b>
+                <span> is </span>
+                <b>RPT non attivata</b>
+                <span> of </span>
+                <b>nodoInviaRPT</b>
+                <span> response</span>
+              </span>
+              <small class="step_duration">(0.003s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:347</span>
+            </div>
+            <span class="embed"/>
+          </li>
+        </ol>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/NewMod3/flows/RetryATokenScaduto/retry_a_token_scaduto_Retry_PaOld_20.feature:227</span>
+        <h3 onclick="Collapsible_toggle('scenario_6')">
+          <span class="val">Scenario: Execution test rety_PaOld_20</span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_6">
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">Given </span>
+              <span class="step val">systems up</span>
+              <small class="step_duration">(0.065s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:27</span>
+            </div>
+            <span class="embed"/>
+            <table>
+              <tr>
+                <th>name</th>
+                <th>url</th>
+                <th>healthcheck</th>
+                <th>soap_service</th>
+                <th>rest_service</th>
+              </tr>
+              <tr>
+                <td>nodo-dei-pagamenti</td>
+                <td>http://localhost:9080/</td>
+                <td>nodo-dev-health/ready</td>
+                <td>nodo-dev/webservices/input</td>
+                <td>nodo-dev</td>
+              </tr>
+              <tr>
+                <td>mock-ec</td>
+                <td>http://localhost:8089/</td>
+                <td>servizi/PagamentiTelematiciRPT/info</td>
+                <td>servizi/PagamentiTelematiciRPT</td>
+                <td/>
+              </tr>
+            </table>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>initial XML </span>
+                <b>verifyPaymentNotice</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.003s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:54</span>
+            </div>
+            <span class="embed"/>
+            <div class="message">
+              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd&quot;&gt;
+&lt;soapenv:Header/&gt;
+&lt;soapenv:Body&gt;
+&lt;nod:verifyPaymentNoticeReq&gt;
+&lt;idPSP&gt;70000000001&lt;/idPSP&gt;
+&lt;idBrokerPSP&gt;70000000001&lt;/idBrokerPSP&gt;
+&lt;idChannel&gt;70000000001_01&lt;/idChannel&gt;
+&lt;password&gt;pwdpwdpwd&lt;/password&gt;
+&lt;qrCode&gt;
+&lt;fiscalCode&gt;#creditor_institution_code_old#&lt;/fiscalCode&gt;
+&lt;noticeNumber&gt;#notice_number_old#&lt;/noticeNumber&gt;
+&lt;/qrCode&gt;
+&lt;/nod:verifyPaymentNoticeReq&gt;
+&lt;/soapenv:Body&gt;
+&lt;/soapenv:Envelope&gt;
+</pre>
+            </div>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>EC </span>
+                <b>old</b>
+                <span> version</span>
+              </span>
+              <small class="step_duration">(0.001s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:48</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">Given </span>
+              <span class="step val">
+                <span>the </span>
+                <b>Execute sendPaymentOutcome request</b>
+                <span> scenario executed successfully</span>
+              </span>
+              <small class="step_duration">(14.361s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:500</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">Then </span>
+              <span class="step val">
+                <span>execution query </span>
+                <b>payment_status</b>
+                <span> to get value on the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span>, with the columns </span>
+                <b>FK_PAYMENT_PLAN,RPT_ID</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span> with db name </span>
+                <b>nodo_online</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.178s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:824</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>execution query </span>
+                <b>rpt_id</b>
+                <span> to get value on the table </span>
+                <b>RPT</b>
+                <span>, with the columns </span>
+                <b>ID</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span> with db name </span>
+                <b>nodo_online</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.198s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:824</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>execution query </span>
+                <b>position_receipt</b>
+                <span> to get value on the table </span>
+                <b>POSITION_PAYMENT_PLAN</b>
+                <span>, with the columns </span>
+                <b>ID</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span> with db name </span>
+                <b>nodo_online</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.174s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:824</span>
             </div>
             <span class="embed"/>
           </li>
@@ -1068,19 +1527,19 @@ function Collapsible_expandAllFailed()
                 <span> of the record at column </span>
                 <b>ID</b>
                 <span> of the table </span>
-                <b>IDEMPOTENCY_CACHE</b>
+                <b>POSITION_PAYMENT</b>
                 <span> retrived by the query </span>
-                <b>idempotency_cache_act_orderby</b>
+                <b>payment_status</b>
                 <span> on db </span>
                 <b>nodo_online</b>
                 <span> under macro </span>
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.149s)</small>
+              <small class="step_duration">(0.194s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:813</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:928</span>
             </div>
             <span class="embed"/>
           </li>
@@ -1093,69 +1552,19 @@ function Collapsible_expandAllFailed()
                 <span> of the record at column </span>
                 <b>PA_FISCAL_CODE</b>
                 <span> of the table </span>
-                <b>IDEMPOTENCY_CACHE</b>
+                <b>POSITION_PAYMENT</b>
                 <span> retrived by the query </span>
-                <b>idempotency_cache_act_orderby</b>
+                <b>payment_status</b>
                 <span> on db </span>
                 <b>nodo_online</b>
                 <span> under macro </span>
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.154s)</small>
+              <small class="step_duration">(0.153s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:813</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
-                <span>checks the value </span>
-                <b>activatePaymentNotice</b>
-                <span> of the record at column </span>
-                <b>PRIMITIVA</b>
-                <span> of the table </span>
-                <b>IDEMPOTENCY_CACHE</b>
-                <span> retrived by the query </span>
-                <b>idempotency_cache_act_orderby</b>
-                <span> on db </span>
-                <b>nodo_online</b>
-                <span> under macro </span>
-                <b>NewMod3</b>
-                <span/>
-              </span>
-              <small class="step_duration">(0.156s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:813</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
-                <span>checks the value </span>
-                <b>$activatePaymentNotice.idPSP</b>
-                <span> of the record at column </span>
-                <b>PSP_ID</b>
-                <span> of the table </span>
-                <b>IDEMPOTENCY_CACHE</b>
-                <span> retrived by the query </span>
-                <b>idempotency_cache_act_orderby</b>
-                <span> on db </span>
-                <b>nodo_online</b>
-                <span> under macro </span>
-                <b>NewMod3</b>
-                <span/>
-              </span>
-              <small class="step_duration">(0.177s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:813</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:928</span>
             </div>
             <span class="embed"/>
           </li>
@@ -1168,19 +1577,194 @@ function Collapsible_expandAllFailed()
                 <span> of the record at column </span>
                 <b>NOTICE_ID</b>
                 <span> of the table </span>
-                <b>IDEMPOTENCY_CACHE</b>
+                <b>POSITION_PAYMENT</b>
                 <span> retrived by the query </span>
-                <b>idempotency_cache_act_orderby</b>
+                <b>payment_status</b>
                 <span> on db </span>
                 <b>nodo_online</b>
                 <span> under macro </span>
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.144s)</small>
+              <small class="step_duration">(0.316s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:813</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:928</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>iuv</b>
+                <span> of the record at column </span>
+                <b>CREDITOR_REFERENCE_ID</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.192s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:928</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>$activatePaymentNoticeResponse.paymentToken</b>
+                <span> of the record at column </span>
+                <b>PAYMENT_TOKEN</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.181s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:928</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>#id_broker_old#</b>
+                <span> of the record at column </span>
+                <b>BROKER_PA_ID</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.176s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:928</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>#id_station_old#</b>
+                <span> of the record at column </span>
+                <b>STATION_ID</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.211s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:928</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>$activatePaymentNotice.idPSP</b>
+                <span> of the record at column </span>
+                <b>PSP_ID</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.297s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:928</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>$activatePaymentNotice.idBrokerPSP</b>
+                <span> of the record at column </span>
+                <b>BROKER_PSP_ID</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.331s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:928</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>$activatePaymentNotice.idChannel</b>
+                <span> of the record at column </span>
+                <b>CHANNEL_ID</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.211s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:928</span>
             </div>
             <span class="embed"/>
           </li>
@@ -1193,19 +1777,169 @@ function Collapsible_expandAllFailed()
                 <span> of the record at column </span>
                 <b>IDEMPOTENCY_KEY</b>
                 <span> of the table </span>
-                <b>IDEMPOTENCY_CACHE</b>
+                <b>POSITION_PAYMENT</b>
                 <span> retrived by the query </span>
-                <b>idempotency_cache_act_orderby</b>
+                <b>payment_status</b>
                 <span> on db </span>
                 <b>nodo_online</b>
                 <span> under macro </span>
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.123s)</small>
+              <small class="step_duration">(0.204s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:813</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:928</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>10</b>
+                <span> of the record at column </span>
+                <b>AMOUNT</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.219s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:928</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>2</b>
+                <span> of the record at column </span>
+                <b>FEE</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.317s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:928</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>OK</b>
+                <span> of the record at column </span>
+                <b>OUTCOME</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.189s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:928</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>creditCard</b>
+                <span> of the record at column </span>
+                <b>PAYMENT_METHOD</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.201s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:928</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>app</b>
+                <span> of the record at column </span>
+                <b>PAYMENT_CHANNEL</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.191s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:928</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>$sendPaymentOutcome.transferDate</b>
+                <span> of the record at column </span>
+                <b>TRANSFER_DATE</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.231s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:928</span>
             </div>
             <span class="embed"/>
           </li>
@@ -1216,21 +1950,21 @@ function Collapsible_expandAllFailed()
                 <span>checks the value </span>
                 <b>NotNone</b>
                 <span> of the record at column </span>
-                <b>HASH_REQUEST</b>
+                <b>PAYER_ID</b>
                 <span> of the table </span>
-                <b>IDEMPOTENCY_CACHE</b>
+                <b>POSITION_PAYMENT</b>
                 <span> retrived by the query </span>
-                <b>idempotency_cache_act_orderby</b>
+                <b>payment_status</b>
                 <span> on db </span>
                 <b>nodo_online</b>
                 <span> under macro </span>
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.148s)</small>
+              <small class="step_duration">(0.182s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:813</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:928</span>
             </div>
             <span class="embed"/>
           </li>
@@ -1239,23 +1973,48 @@ function Collapsible_expandAllFailed()
               <span class="keyword">And </span>
               <span class="step val">
                 <span>checks the value </span>
-                <b>NotNone</b>
+                <b>$sendPaymentOutcome.applicationDate</b>
                 <span> of the record at column </span>
-                <b>RESPONSE</b>
+                <b>APPLICATION_DATE</b>
                 <span> of the table </span>
-                <b>IDEMPOTENCY_CACHE</b>
+                <b>POSITION_PAYMENT</b>
                 <span> retrived by the query </span>
-                <b>idempotency_cache_act_orderby</b>
+                <b>payment_status</b>
                 <span> on db </span>
                 <b>nodo_online</b>
                 <span> under macro </span>
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.142s)</small>
+              <small class="step_duration">(0.193s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:813</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:928</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>MOD3</b>
+                <span> of the record at column </span>
+                <b>PAYMENT_TYPE</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.207s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:928</span>
             </div>
             <span class="embed"/>
           </li>
@@ -1268,19 +2027,190 @@ function Collapsible_expandAllFailed()
                 <span> of the record at column </span>
                 <b>INSERTED_TIMESTAMP</b>
                 <span> of the table </span>
-                <b>IDEMPOTENCY_CACHE</b>
+                <b>POSITION_PAYMENT</b>
                 <span> retrived by the query </span>
-                <b>idempotency_cache_act_orderby</b>
+                <b>payment_status</b>
                 <span> on db </span>
                 <b>nodo_online</b>
                 <span> under macro </span>
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.120s)</small>
+              <small class="step_duration">(0.211s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:813</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:928</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>NotNone</b>
+                <span> of the record at column </span>
+                <b>UPDATED_TIMESTAMP</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.237s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:928</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>None</b>
+                <span> of the record at column </span>
+                <b>CARRELLO_ID</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.320s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:928</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>None</b>
+                <span> of the record at column </span>
+                <b>ORIGINAL_PAYMENT_TOKEN</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.223s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:928</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>with the query </span>
+                <b>payment_status</b>
+                <span> check assert beetwen elem </span>
+                <b>FK_PAYMENT_PLAN</b>
+                <span> in position </span>
+                <b>0</b>
+                <span> and elem </span>
+                <b>ID</b>
+                <span> with position </span>
+                <b>0</b>
+                <span> of the query </span>
+                <b>position_receipt</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.003s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:840</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>verify </span>
+                <b>0</b>
+                <span> record for the table </span>
+                <b>RPT</b>
+                <span> retrived by the query </span>
+                <b>rpt_id</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.199s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1049</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>PAYING,CANCELLED_NORPT,PAID_NORPT</b>
+                <span> of the record at column </span>
+                <b>STATUS</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT_STATUS</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.172s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:928</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>verify </span>
+                <b>0</b>
+                <span> record for the table </span>
+                <b>RPT_ACTIVATIONS</b>
+                <span> retrived by the query </span>
+                <b>payment_token_v2</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.186s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1049</span>
             </div>
             <span class="embed"/>
           </li>

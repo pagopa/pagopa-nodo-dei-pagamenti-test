@@ -327,7 +327,7 @@ def step_impl(context, sender, soap_primitive, receiver):
     url_nodo = utils.get_soap_url_nodo(context, primitive)
     print("url_nodo: ", url_nodo)
     print("nodo soap_request sent >>>", getattr(context, soap_primitive))
-
+    print("headers: ", headers)
     soap_response = requests.post(url_nodo, getattr(context, soap_primitive), headers=headers)
     print(soap_response.content)
     setattr(context, soap_primitive + RESPONSE, soap_response)
