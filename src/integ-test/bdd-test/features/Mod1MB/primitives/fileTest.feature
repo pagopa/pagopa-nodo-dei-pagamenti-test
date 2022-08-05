@@ -9,7 +9,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
          <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
          <pay_i:dominio>
-         <pay_i:identificativoDominio>#codicePA#</pay_i:identificativoDominio>
+         <pay_i:identificativoDominio>09812374659</pay_i:identificativoDominio>
          <pay_i:identificativoStazioneRichiedente>#intermediarioPA#</pay_i:identificativoStazioneRichiedente>
          </pay_i:dominio>
          <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
@@ -84,7 +84,6 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
    
    Scenario Outline: Check PPT_DOMINIO_SCONOSCIUTO error for nodoInviaCarrelloRPT primitive
       Given the Define RPT scenario executed successfully
-      And <tag> with <value> in rptAttachment
       And initial XML nodoInviaCarrelloRPT
 
          """
@@ -121,7 +120,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
       When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
       Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
       And check faultCode is PPT_DOMINIO_SCONOSCIUTO of nodoInviaCarrelloRPT response
-      Examples:
-         | tag                         | value       | soapUI test |
-         | pay_i:identificativoDominio | 09812374659 | SEM_MB_02   |
-        # | pay_i:identificativoDominio | 77777777777 | SEM_MB_03   |
+    #   Examples:
+    #      | tag                         | value       | soapUI test |
+    #      | pay_i:identificativoDominio | 09812374659 | SEM_MB_02   |
+    #      | pay_i:identificativoDominio | 77777777777 | SEM_MB_03   |
