@@ -33,7 +33,7 @@ def step_impl(context):
             - pagopa-api-config ( used in tests to set DB's nodo-dei-pagamenti correctly according to input test ))
     """
     responses = True
-    
+    """
     for row in context.table:
         print(f"calling: {row.get('name')} -> {row.get('url')}")
         url = row.get("url") + row.get("healthcheck")
@@ -41,7 +41,7 @@ def step_impl(context):
         resp = requests.get(url)
         print(f"response: {resp.status_code}")
         responses &= (resp.status_code == 200)
-
+    """
     assert responses
 
 
@@ -327,11 +327,11 @@ def step_impl(context, attribute, value, elem, primitive):
 @step('{sender} sends soap {soap_primitive} to {receiver}')
 def step_impl(context, sender, soap_primitive, receiver):
     primitive = soap_primitive.split("_")[0]
-    headers = {'Content-Type': 'application/xml', "SOAPAction": primitive, 'X-Forwarded-For': '10.82.39.148'}  # set what your server accepts
+    headers = {'Content-Type': 'application/xml', "SOAPAction": primitive, 'X-Original-Forwarded-For': '10.82.39.148', 'transactionid':'testdamiano'}  # set what your server accepts
     url_nodo = utils.get_soap_url_nodo(context, primitive)
     print("url_nodo: ", url_nodo)
     print("nodo soap_request sent >>>", getattr(context, soap_primitive))
-
+    print("headers: ", headers)
     soap_response = requests.post(url_nodo, getattr(context, soap_primitive), headers=headers)
     print(soap_response.content)
     setattr(context, soap_primitive + RESPONSE, soap_response)

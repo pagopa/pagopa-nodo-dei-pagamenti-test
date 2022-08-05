@@ -140,7 +140,7 @@ Feature: process tests for generazioneRicevute
       </pay_i:datiVersamento>
       </pay_i:RPT>
       """
-
+  
   Scenario: Execute nodoInviaRPT request
     Given the Define RPT scenario executed successfully
     And initial XML nodoInviaRPT
@@ -171,7 +171,6 @@ Feature: process tests for generazioneRicevute
     When psp sends SOAP nodoInviaRPT to nodo-dei-pagamenti
     Then check esito is OK of nodoInviaRPT response
     And check redirect is 0 of nodoInviaRPT response
-  
   
   # Payment Outcome Phase outcome KO
   Scenario: Execute sendPaymentOutcome request
