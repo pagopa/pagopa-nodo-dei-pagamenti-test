@@ -124,4 +124,4 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
       Examples:
          | tag                         | value       | soapUI test |
          | pay_i:identificativoDominio | 09812374659 | SEM_MB_02   |
-         | pay_i:identificativoDominio | 77777777777 | SEM_MB_03   |
+        # | pay_i:identificativoDominio | 77777777777 | SEM_MB_03   |
