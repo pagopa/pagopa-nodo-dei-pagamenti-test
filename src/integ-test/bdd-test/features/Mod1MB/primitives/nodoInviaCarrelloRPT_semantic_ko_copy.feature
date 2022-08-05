@@ -119,7 +119,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
 
       And multiBeneficiario with true in nodoInviaCarrelloRPT
       When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
-      Then check outcome is KO of nodoInviaCarrelloRPT response
+      Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
       And check faultCode is PPT_DOMINIO_SCONOSCIUTO of nodoInviaCarrelloRPT response
       Examples:
          | tag                         | value       | soapUI test |
@@ -243,7 +243,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
 
       And multiBeneficiario with true in nodoInviaCarrelloRPT
       When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
-      Then check outcome is KO of nodoInviaCarrelloRPT response
+      Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
       And check faultCode is <fault_code> of nodoInviaCarrelloRPT response
       Examples:
          | tag                         | value       | fault_code               | soapUI test |
@@ -368,7 +368,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
       And <tag> with <value> in nodoInviaCarrelloRPT
       And multiBeneficiario with true in nodoInviaCarrelloRPT
       When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
-      Then check outcome is KO of nodoInviaCarrelloRPT response
+      Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
       And check faultCode is <fault_code> of nodoInviaCarrelloRPT response
       Examples:
          | tag                   | value       | fault_code    | soapUI test |
@@ -491,7 +491,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
 
       And multiBeneficiario with true in nodoInviaCarrelloRPT
       When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
-      Then check outcome is KO of nodoInviaCarrelloRPT response
+      Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
       And check faultCode is <fault_code> of nodoInviaCarrelloRPT response
       Examples:
          | tag                         | value       | fault_code               | soapUI test |
@@ -615,7 +615,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
 
       And multiBeneficiario with true in nodoInviaCarrelloRPT
       When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
-      Then check outcome is KO of nodoInviaCarrelloRPT response
+      Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
       And check faultCode is PPT_STAZIONE_INT_PA_SCONOSCIUTA of nodoInviaCarrelloRPT response
 
 
@@ -735,7 +735,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
 
       And multiBeneficiario with true in nodoInviaCarrelloRPT
       When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
-      Then check outcome is KO of nodoInviaCarrelloRPT response
+      Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
       And check faultCode is PPT_STAZIONE_INT_PA_DISABILITATA of nodoInviaCarrelloRPT response
 
 
@@ -854,7 +854,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
 
       And multiBeneficiario with true in nodoInviaCarrelloRPT
       When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
-      Then check outcome is KO of nodoInviaCarrelloRPT response
+      Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
       And check faultCode is PPT_INTERMEDIARIO_PA_DISABILITATO of nodoInviaCarrelloRPT response
 
 
@@ -895,7 +895,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
 
       And multiBeneficiario with true in nodoInviaCarrelloRPT
       When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
-      Then check outcome is OK of nodoInviaCarrelloRPT response
+      Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
 
 
    Scenario: Check PPT_ID_CARRELLO_DUPLICATO error for nodoInviaCarrelloRPT primitive
@@ -1141,6 +1141,6 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
 
       And multiBeneficiario with true in nodoInviaCarrelloRPT
       When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
-      Then check outcome is KO of nodoInviaCarrelloRPT response
+      Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
       And check faultCode is PPT_SEMANTICA of nodoInviaCarrelloRPT response
       And check description is flagMultibeneficiario non disponibile per pagamenti diversi da WISP2 of nodoInviaCarrelloRPT response
