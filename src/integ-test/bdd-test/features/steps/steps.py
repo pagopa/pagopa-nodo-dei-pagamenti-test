@@ -116,10 +116,10 @@ def step_impl(context, primitive):
         payload = payload.replace('#carrello1#', carrello1)
         setattr(context,'carrello1', carrello1)
 
-    if '#carrello2#' in payload:
-        carrello2 = "77777777777" + "301" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
-        payload = payload.replace('#carrello2#', carrello2)
-        setattr(context,'carrello2', carrello2)
+    if '#secCarrello#' in payload:
+        secCarrello = "77777777777" + "301" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+        payload = payload.replace('#secCarrello#', secCarrello)
+        setattr(context,'secCarrello', secCarrello)
 
     if '#carrNOTENABLED#' in payload:
         carrNOTENABLED = "11111122223" + "311" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
@@ -172,8 +172,8 @@ def step_impl(context, primitive):
     if '$carrello' in payload:
         payload = payload.replace('$carrello', getattr(context, 'carrello'))
 
-    if '$carrello2' in payload:
-        payload = payload.replace('$carrello2', getattr(context, 'carrello2'))
+    if '$secCarrello' in payload:
+        payload = payload.replace('$secCarrello', getattr(context, 'secCarrello'))
 
     if '$carrello3' in payload:
         payload = payload.replace('$carrello3', getattr(context, 'carrello3'))
@@ -234,10 +234,10 @@ def step_impl(context):
         payload = payload.replace('#carrello1#', carrello1)
         setattr(context,'carrello1', carrello1)
 
-    if '#carrello2#' in payload:
-        carrello2 = "77777777777" + "301" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
-        payload = payload.replace('#carrello2#', carrello2)
-        setattr(context,'carrello2', carrello2)
+    if '#secCarrello#' in payload:
+        secCarrello = "77777777777" + "301" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+        payload = payload.replace('#secCarrello#', secCarrello)
+        setattr(context,'secCarrello', secCarrello)
 
     if '#carrello3#' in payload:
         carrello3 = "77777777777" + "088" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
@@ -315,10 +315,10 @@ def step_impl(context):
         payload = payload.replace('#carrello1#', carrello1)
         setattr(context,'carrello1', carrello1)
 
-    if '#carrello2#' in payload:
-        carrello2 = "77777777777" + "301" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
-        payload = payload.replace('#carrello2#', carrello2)
-        setattr(context,'carrello2', carrello2)
+    if '#secCarrello#' in payload:
+        secCarrello = "77777777777" + "301" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+        payload = payload.replace('#secCarrello#', secCarrello)
+        setattr(context,'secCarrello', secCarrello)
 
     if '#carrello3#' in payload:
         carrello3 = "77777777777" + "088" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
