@@ -63,7 +63,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          <pay_i:importoTotaleDaVersare>1.50</pay_i:importoTotaleDaVersare>
          <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
          <pay_i:identificativoUnivocoVersamento>#iuv#</pay_i:identificativoUnivocoVersamento>
-         <pay_i:codiceContestoPagamento>#carrello_NOT_ENABLED#</pay_i:codiceContestoPagamento>
+         <pay_i:codiceContestoPagamento>#carrelloNOTENABLED#</pay_i:codiceContestoPagamento>
          <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
          <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
          <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -91,7 +91,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          <ppt:intestazioneCarrelloPPT>
          <identificativoIntermediarioPA>#codicePA#</identificativoIntermediarioPA>
          <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
-         <identificativoCarrello>$carrello_NOT_ENABLED</identificativoCarrello>
+         <identificativoCarrello>$carrelloNOTENABLED</identificativoCarrello>
          </ppt:intestazioneCarrelloPPT>
          </soapenv:Header>
          <soapenv:Body>
@@ -104,7 +104,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          <elementoListaRPT>
          <identificativoDominio>#codicePA#</identificativoDominio>
          <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
-         <codiceContestoPagamento>$carrello_NOT_ENABLED</codiceContestoPagamento>
+         <codiceContestoPagamento>$carrelloNOTENABLED</codiceContestoPagamento>
          <rpt>$rptAttachment</rpt>
          </elementoListaRPT>
          </listaRPT>
@@ -181,7 +181,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          <pay_i:importoTotaleDaVersare>1.50</pay_i:importoTotaleDaVersare>
          <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
          <pay_i:identificativoUnivocoVersamento>#iuv#</pay_i:identificativoUnivocoVersamento>
-         <pay_i:codiceContestoPagamento>#carrello_NOT_ENABLED#</pay_i:codiceContestoPagamento>
+         <pay_i:codiceContestoPagamento>#carrelloNOTENABLED#</pay_i:codiceContestoPagamento>
          <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
          <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
          <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -210,7 +210,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          <ppt:intestazioneCarrelloPPT>
          <identificativoIntermediarioPA>#codicePA#</identificativoIntermediarioPA>
          <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
-         <identificativoCarrello>$carrello_NOT_ENABLED</identificativoCarrello>
+         <identificativoCarrello>$carrelloNOTENABLED</identificativoCarrello>
          </ppt:intestazioneCarrelloPPT>
          </soapenv:Header>
          <soapenv:Body>
@@ -223,7 +223,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          <elementoListaRPT>
          <identificativoDominio>#codicePA#</identificativoDominio>
          <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
-         <codiceContestoPagamento>$carrello_NOT_ENABLED</codiceContestoPagamento>
+         <codiceContestoPagamento>$carrelloNOTENABLED</codiceContestoPagamento>
          <rpt>$rptAttachment</rpt>
          </elementoListaRPT>
          </listaRPT>
