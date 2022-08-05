@@ -9,7 +9,9 @@ export function ob_PP_Confirm_Continue(baseUrl, RED_Path) {
  //console.log('ob_PP_Confirm_Continue='+baseUrl+RED_Path);
  const res = http.get(
     baseUrl+RED_Path,
+    //'https://api.dev.platform.pagopa.it/pp-restapi-CD/v3/webview/paypal/onboarding/continue/58896a04-b2ee-4b83-9940-a46207ec2848?esito=1&email_pp=the***@****.com&id_pp=31406&sha_val=d40b1a8cde0526f68b5af41b4753cf0015550eceeda3e50f4ebc8c73ef39dbbc',
 	{ headers: { 'Content-Type': 'application/x-www-form-urlencoded'},
+	redirects: 0,
 	tags: { ob_PP_Confirm_Continue:'http_req_duration', ALL:'http_req_duration'}
 	}
   );
@@ -50,7 +52,9 @@ export function ob_PP_Confirm_Continue(baseUrl, RED_Path) {
    { ob_PP_Confirm_Continue: 'over_sla1000', ALL: 'over_sla1000' }
    );
    
-
+   //console.log("continue header...");
+   //console.log(res);
+   //console.log(res.headers);
    let redirect=undefined;
    RED_Path = "NA";
    let result={};

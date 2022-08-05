@@ -5,7 +5,7 @@ import { check } from 'k6';
 
 export function ob_PP_Confirm_Call(baseUrlPM, pp_id_back) {
  
-
+ console.log('pp_id_back='+pp_id_back);
  //console.log("ob_PP_Confirm_Call="+baseUrlPM+'/paypalweb/pp_onboarding_call?id_back='+pp_id_back);
  const res = http.get(
     baseUrlPM+'/paypalweb/pp_onboarding_call?id_back='+pp_id_back,

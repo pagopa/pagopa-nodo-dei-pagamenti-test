@@ -11,7 +11,10 @@ export function ob_PP_Confirm(baseUrlPM) {
 
  url.searchParams.append('paypalEmail', 'thea.peslegrini@example.com');
  url.searchParams.append('paypalId', '31406');
+//url.searchParams.append('paypalEmail', 'gavino.grassi@example.com');/
+//url.searchParams.append('paypalId', 'S21EL');
  url.searchParams.append('selectRedirect', 'true');
+
 
  const res = http.get(
     url.toString(),
@@ -59,22 +62,24 @@ export function ob_PP_Confirm(baseUrlPM) {
 
    let result={};
    let RED_Path = "NA";
-   const headers= '';
+   let headers= '';
    let redirect = undefined;
-
+   //console.log(res);
    try{
-   headers=res.headers;
-   redirect=headers['Location'];
-   }catch(error){}
+    headers= res.headers;
+    redirect = headers['Location'];
+    }catch(error){}
 
-   result.RED_Path='NA';
-   try{
+   //console.log("redirect in ppConfirm="+redirect);
+
+  try{
      if(redirect !== undefined){
    	 result.RED_Path=redirect.substr(redirect.indexOf("/pp-restapi-CD"));
+   	 //result.RED_Path=redirect;
      }
    }catch(error){}
 
-   
+   //console.log(result.RED_Path);
    
    check(
     res,

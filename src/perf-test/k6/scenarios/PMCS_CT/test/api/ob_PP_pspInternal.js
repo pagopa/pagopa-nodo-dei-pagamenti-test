@@ -11,6 +11,7 @@ export function ob_PP_pspInternal(baseUrl, token) {
     baseUrl+'/pp-restapi-CD/v3/webview/paypal/onboarding/pspInternal',
 	'',
 	{ headers: { 'Content-Type': 'application/x-www-form-urlencoded'},
+	//redirects: 0,
 	tags: { ob_PP_pspInternal:'http_req_duration', ALL:'http_req_duration'}
 	}
   );
@@ -55,20 +56,20 @@ export function ob_PP_pspInternal(baseUrl, token) {
   let redUrlPP='NA';
   let pp_id_back='NA';
   let result={};
+  result.pp_id_back='NA';
   try{
   redUrlPP= res.json().data.redirectUrl;
-  }catch(error){
-  redUrlPP='NA';
-  }
+  }catch(error){}
+  console.log('redUrlPP='+redUrlPP);
   //let redUrlPP= res["data.redirectUrl"];
   try{
    if(redUrlPP!=='NA'){
  	  pp_id_back=redUrlPP.substr(redUrlPP.indexOf("id_back=")+8);
- 	  result.redUrlPP=pp_id_back;
+ 	  result.pp_id_back=pp_id_back;
    }
-   }catch(error){result.redUrlPP='NA';}
-
-   console.log(res.body);
+   }catch(error){}
+   console.log('pp_id_back dentro internal='+result.pp_id_back);
+   //console.log(res.body);
     //redUrlPP='htpp:/jfjfjffj.com/jgj?ere=1'; //to comment
 
    check(

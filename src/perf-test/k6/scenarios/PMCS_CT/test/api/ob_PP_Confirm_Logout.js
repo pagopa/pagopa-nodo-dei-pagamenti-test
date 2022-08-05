@@ -9,7 +9,8 @@ export function ob_PP_Confirm_Logout(baseUrl, RED_Path) {
  //console.log('ob_PP_Confirm_Logout='+baseUrl+RED_Path);
  const res = http.get(
     baseUrl+RED_Path,
-	{ headers: { 'Content-Type': 'application/x-www-form-urlencoded'},
+    { headers: { 'Content-Type': 'application/x-www-form-urlencoded'},
+    redirects: 0,
 	tags: { ob_PP_Confirm_Logout:'http_req_duration', ALL:'http_req_duration'}
 	}
   );

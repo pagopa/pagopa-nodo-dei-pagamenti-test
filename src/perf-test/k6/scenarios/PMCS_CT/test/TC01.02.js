@@ -21,7 +21,7 @@ import * as inputDataUtil from './util/input_data_util.js';
 //import * as db from './db/db.js';
 
 
-
+//NB in SIT x ogni run utilizzare token di utente con codice fiscale diverso
 
 const csvBaseUrl = new SharedArray('baseUrl', function () {
   
@@ -253,13 +253,13 @@ export function total() {
   let pp_id_back=res.pp_id_back;
 
 
-  res= ob_PP_Confirm_Call(baseUrl,pp_id_back); //baseUrlPP
+  res= ob_PP_Confirm_Call(baseUrlPP,pp_id_back); //baseUrlPP
     /*commonChecks(res);
     standardChecks(res, res.status, 'matches', 200);*/
 
 
 
-  res= ob_PP_Confirm(baseUrl); //baseUrlPP
+  res= ob_PP_Confirm(baseUrlPP); //baseUrlPP
     /*
     let redirect=undefined;
     let RED_Path = "NA";
