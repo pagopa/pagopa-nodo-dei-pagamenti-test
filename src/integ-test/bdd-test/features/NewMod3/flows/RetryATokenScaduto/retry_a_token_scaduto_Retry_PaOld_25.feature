@@ -172,7 +172,6 @@ Feature: process tests for generazioneRicevute
     Then check esito is OK of nodoInviaRPT response
     And check redirect is 0 of nodoInviaRPT response
   
-  
   # Payment Outcome Phase outcome KO
   Scenario: Execute sendPaymentOutcome request
     Given the Execute nodoInviaRPT request scenario executed successfully
