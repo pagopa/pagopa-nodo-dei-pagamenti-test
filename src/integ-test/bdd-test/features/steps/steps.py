@@ -121,10 +121,10 @@ def step_impl(context, primitive):
         payload = payload.replace('#carrello2#', carrello2)
         setattr(context,'carrello2', carrello2)
 
-    if '#carrello_NOT_ENABLED#' in payload:
-        carrello_NOT_ENABLED = "11111122223" + "311" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
-        payload = payload.replace('#carrello_NOT_ENABLED#', carrello_NOT_ENABLED)
-        setattr(context,'carrello_NOT_ENABLED', carrello_NOT_ENABLED)
+    if '#carrelloNOTENABLED#' in payload:
+        carrelloNOTENABLED = "11111122223" + "311" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+        payload = payload.replace('#carrelloNOTENABLED#', carrelloNOTENABLED)
+        setattr(context,'carrelloNOTENABLED', carrelloNOTENABLED)
 
     if '#carrello3#' in payload:
         carrello3 = "77777777777" + "088" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
@@ -178,8 +178,8 @@ def step_impl(context, primitive):
     if '$carrello3' in payload:
         payload = payload.replace('$carrello3', getattr(context, 'carrello3'))
 
-    if '$carrello_NOT_ENABLED' in payload:
-        payload = payload.replace('$carrello_NOT_ENABLED', getattr(context, 'carrello_NOT_ENABLED'))
+    if '$carrelloNOTENABLED' in payload:
+        payload = payload.replace('$carrelloNOTENABLED', getattr(context, 'carrelloNOTENABLED'))
 
     if '$rendAttachment' in payload:
         rendAttachment = getattr(context, 'rendAttachment')
@@ -244,10 +244,10 @@ def step_impl(context):
         payload = payload.replace('#carrello3#', carrello3)
         setattr(context,'carrello3', carrello3)
 
-    if '#carrello_NOT_ENABLED#' in payload:
-        carrello_NOT_ENABLED = "11111122223" + "311" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
-        payload = payload.replace('#carrello_NOT_ENABLED#', carrello_NOT_ENABLED)
-        setattr(context,'carrello_NOT_ENABLED', carrello_NOT_ENABLED)
+    if '#carrelloNOTENABLED#' in payload:
+        carrelloNOTENABLED = "11111122223" + "311" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+        payload = payload.replace('#carrelloNOTENABLED#', carrelloNOTENABLED)
+        setattr(context,'carrelloNOTENABLED', carrelloNOTENABLED)
     
     if "nodoVerificaRPT_IUV" in payload:
         nodoVerificaRPT = getattr(context, 'nodoVerificaRPT')
@@ -325,10 +325,10 @@ def step_impl(context):
         payload = payload.replace('#carrello3#', carrello3)
         setattr(context,'carrello3', carrello3)
 
-    if '#carrello_NOT_ENABLED#' in payload:
-        carrello_NOT_ENABLED = "11111122223" + "311" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
-        payload = payload.replace('#carrello_NOT_ENABLED#', carrello_NOT_ENABLED)
-        setattr(context,'carrello_NOT_ENABLED', carrello_NOT_ENABLED)
+    if '#carrelloNOTENABLED#' in payload:
+        carrelloNOTENABLED = "11111122223" + "311" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+        payload = payload.replace('#carrelloNOTENABLED#', carrelloNOTENABLED)
+        setattr(context,'carrelloNOTENABLED', carrelloNOTENABLED)
     
     if "nodoVerificaRPT_IUV" in payload:
         nodoVerificaRPT = getattr(context, 'nodoVerificaRPT')
