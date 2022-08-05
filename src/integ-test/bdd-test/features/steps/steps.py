@@ -142,7 +142,7 @@ def step_impl(context):
         iuv = f"14{str(random.randint(1000000000000, 9999999999999))}" 
         setattr(context,'iuv', iuv)
         payload = payload.replace('#iuv#', iuv)
-        
+
     setattr(context,'date', date)
     if "#intermediarioPA#" in payload:     
         intermediarioPA = "44444444444_05"
@@ -516,8 +516,10 @@ def step_impl(context, sender, method, service, receiver):
 
     headers = {'Content-Type': 'application/json'}
     body = context.text or ""
+    print(body)
 
     body = utils.replace_local_variables(body, context)
+    body = utils.replace_context_variables(body, context)
     service = utils.replace_local_variables(service, context)
     service = utils.replace_context_variables(service, context)
     print(f"{url_nodo}/{service}")
@@ -954,6 +956,7 @@ def step_impl(context, value, column, query_name, table_name, db_name, name_macr
             value = getattr(context, 'iuv')
         value = utils.replace_global_variables(value,context)
         value = utils.replace_local_variables(value, context)
+        value = utils.replace_context_variables(value, context)
         split_value = [status.strip() for status in value.split(',')]
         for i, elem in enumerate(query_result):
             if isinstance(elem, str) and elem.isdigit(): query_result[i] = float(elem)
