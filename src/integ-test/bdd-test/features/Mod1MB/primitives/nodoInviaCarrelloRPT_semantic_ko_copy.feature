@@ -209,6 +209,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
 
    Scenario Outline: Check error for nodoInviaCarrelloRPT primitive
          Given the Define RPT2 scenario executed successfully
+         And <tag> with <value> in rptAttachment
          And initial XML nodoInviaCarrelloRPT
          """
          <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -240,7 +241,6 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          </soapenv:Envelope>
          """
 
-      And <tag> with <value> in nodoInviaCarrelloRPT
       And multiBeneficiario with true in nodoInviaCarrelloRPT
       When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
       Then check outcome is KO of nodoInviaCarrelloRPT response
@@ -457,6 +457,7 @@ Scenario: Define RPT4
 
    Scenario Outline: Check PPT_DOMINIO_DISABILITATO error for nodoInviaCarrelloRPT primitive
          Given the Define RPT4 scenario executed successfully
+         And <tag> with <value> in rptAttachment
          And initial XML nodoInviaCarrelloRPT
          """
          <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -488,7 +489,6 @@ Scenario: Define RPT4
          </soapenv:Envelope>
          """
 
-      And <tag> with <value> in nodoInviaCarrelloRPT
       And multiBeneficiario with true in nodoInviaCarrelloRPT
       When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
       Then check outcome is KO of nodoInviaCarrelloRPT response
