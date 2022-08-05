@@ -64,7 +64,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
 #          <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
 #          <pay_i:importoTotaleDaVersare>1.50</pay_i:importoTotaleDaVersare>
 #          <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
-#          <pay_i:identificativoUnivocoVersamento>$iuv</pay_i:identificativoUnivocoVersamento>
+#          <pay_i:identificativoUnivocoVersamento>#iuv#</pay_i:identificativoUnivocoVersamento>
 #          <pay_i:codiceContestoPagamento>#idCarrello#</pay_i:codiceContestoPagamento>
 #          <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
 #          <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
@@ -184,7 +184,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
          <pay_i:importoTotaleDaVersare>1.50</pay_i:importoTotaleDaVersare>
          <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
-         <pay_i:identificativoUnivocoVersamento>$iuv</pay_i:identificativoUnivocoVersamento>
+         <pay_i:identificativoUnivocoVersamento>#iuv#</pay_i:identificativoUnivocoVersamento>
          <pay_i:codiceContestoPagamento>#idCarrello#</pay_i:codiceContestoPagamento>
          <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
          <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
