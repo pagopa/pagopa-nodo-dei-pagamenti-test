@@ -246,7 +246,7 @@ def step_impl(context):
 
     if '#carrNOTENABLED#' in payload:
         carrNOTENABLED = "11111122223" + "311" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
-        payload = payload.replace('#carrNOTENABLED#', carrellocarrNOTENABLEDNOTENABLED)
+        payload = payload.replace('#carrNOTENABLED#', carrNOTENABLED)
         setattr(context,'carrNOTENABLED', carrNOTENABLED)
     
     if "nodoVerificaRPT_IUV" in payload:
