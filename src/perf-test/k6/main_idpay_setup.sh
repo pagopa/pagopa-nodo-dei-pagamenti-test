@@ -1,6 +1,6 @@
 #active_scenario=CT
 active_scenario=PMCS_CT
-active_test=idpay_setup_SIT
+active_test=idpay_setup
 #active_test=TC01.01
 test_step=rampa_1_1_10
 env="pagoPA_DEV_apim"
