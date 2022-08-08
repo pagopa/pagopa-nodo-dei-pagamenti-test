@@ -28,7 +28,7 @@ import * as outputUtil from './util/output_util.js';
 import * as inputDataUtil from './util/input_data_util.js';
 //import * as db from './db/db.js';
 
-
+//NB TC01.01 è propedeutico a questo scenario --> la carta che viene verificata lì dev'essere usata qui
 
 
 const csvBaseUrl = new SharedArray('baseUrl', function () {
@@ -60,7 +60,7 @@ export const getScalini = new SharedArray('scalini', function () {
 
 export const options = {
 	
-  scenarios: {
+  /*scenarios: {
       	total: {
           timeUnit: '1s',
           preAllocatedVUs: 1, // how large the initial pool of VUs would be
@@ -93,7 +93,7 @@ export const options = {
           exec: 'total',
         }
 
-      },
+      },*/
   summaryTrendStats: ['avg', 'min', 'max', 'p(90)', 'p(95)', 'count'],
   discardResponseBodies: false,
   thresholds: {
@@ -291,11 +291,12 @@ export function total() {
 
 
   //to comment in perf
-  res=idpay_setup();
+  /*res=idpay_setup();
   let idPay=res.json()[0].idPayment;
   console.log("idPay="+idPay);
+  idPay='32e56479-8444-432b-9fb6-347d2f1e54a2';*/
   //-- fine comment in perf
-  //let idPay = inputDataUtil.getPay().idPay; //to uncomment in perf
+  let idPay = inputDataUtil.getPay().idPay; //to uncomment in perf
 
 
 
@@ -320,7 +321,7 @@ export function total() {
   let idTr=res.idTr;
   let RED_Path=res.RED_Path;
 
-  
+  console.log("redPath dopo internal:"+RED_Path);
  
   //RED_Path='/fgfgggg?op=1'
   res=pay_CC_CheckOut(baseUrl, RED_Path);
@@ -390,7 +391,7 @@ export function total() {
 
 
 
- RED_Path="/hfhfhfhfh?tyty=1"; //to comment
+ //RED_Path="/hfhfhfhfh?tyty=1"; //to comment
  res= ob_CC_bye(baseUrl, RED_Path);
 
 

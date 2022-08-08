@@ -57,14 +57,17 @@ export function pay_CC_PayINternal(baseUrl, rndSecCode) {
    { pay_CC_PayINternal: 'over_sla1000', ALL:'over_sla1000' }
    );
 
+   console.log(res);
 
    let redirect = undefined;
    let idTr='NA';
    let RED_Path='NA';
    try{
    let headers= res.headers;
-   let redirect = headers['Location'];
+   console.log(headers);
+   redirect = headers['Location'];
    }catch(error){}
+
 
    let result={};
    result.idTr=idTr;

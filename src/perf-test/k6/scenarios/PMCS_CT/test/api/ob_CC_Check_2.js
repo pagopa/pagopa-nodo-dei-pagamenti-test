@@ -3,7 +3,7 @@ import { check } from 'k6';
 import { sleep } from 'k6';
  
 export function ob_CC_Check_2(baseUrl, idTr) {
- 
+
   console.log(Date.now());
  const res = http.get(
     baseUrl+'/pp-restapi-CD/v3/webview/checkout/check?id='+idTr+'&_='+Date.now(),
@@ -50,7 +50,7 @@ export function ob_CC_Check_2(baseUrl, idTr) {
    { ob_CC_Check_2: 'over_sla1000', ALL: 'over_sla1000' }
    );
   
-   console.log(resCheck2.body);
+   console.log("check2body==="+res.body);
    //let statusTr = res['statusMessage'];
    let statusTr=undefined;
    let result={};
@@ -60,15 +60,18 @@ export function ob_CC_Check_2(baseUrl, idTr) {
    result.statusTr=statusTr;
    }catch(error){result.statusTr=statusTr}
 
+   let creq ='NA';
+   //let acsUrl=''; //commentare in perf
    try{
-   let creq ='';
-   let subCreq=resCheck2.body.substr(resCheck2.body.indexOf("creq")+7);
-   console.log(subCreq);
+   let subCreq=res.body.substr(res.body.indexOf("creq")+7);
+   //console.log(subCreq);
    creq = subCreq.split('"')[0];
-   result.creq=creq;
-   }catch(error){result.creq=creq}
-   console.log("creq="+creq);
-   console.log("statusTr="+statusTr);
+   /*let subAcs=res.body.substr(res.body.indexOf("acsUrl")+9);//commentare in perf
+   //acsUrl = subAcs.split('"')[0];//commentare in perf
+   result.acsUrl=acsUrl; */ //commentare in perf
+   }catch(error){}
+   //console.log("creq="+creq);
+   //console.log("statusTr="+statusTr);
 
 
 

@@ -61,10 +61,11 @@ export function ob_CC_update(baseUrl,token, rndCard, scdMese, scdAnno) {
    { ob_CC_update: 'over_sla1000', ALL: 'over_sla1000'  }
    );
   
-  
+
    //let esito = res['data.saved'];
    let esito=undefined;
-       //console.log(res);
+   console.log("CCupdate status..."+res.status)
+   console.log(res.json());
    try{
        esito= res.json().data.saved;
    }catch(error){}

@@ -60,7 +60,7 @@ export function ob_CC_VerifyInternal(baseUrl) {
    { ob_CC_VerifyInternal: 'over_sla1000', ALL:'over_sla1000' }
    );
 
-   console.log(res);
+   //console.log(res);
    //console.log("headers="+res.headers['Date']);
 
    let idTr = "NA";
@@ -68,7 +68,7 @@ export function ob_CC_VerifyInternal(baseUrl) {
    let result={};
    try{
    const headers= res.headers;
-   console.log(res);
+   //console.log(res);
    let redirect = headers['Location'];
 
    result.RED_Path=RED_Path;

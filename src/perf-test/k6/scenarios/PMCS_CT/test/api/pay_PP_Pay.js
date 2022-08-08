@@ -56,7 +56,7 @@ export function pay_PP_Pay(baseUrl, token, idWallet, idPay) {
    { pay_PP_Pay: 'over_sla1000', ALL:'over_sla1000' }
    );
 
-
+   console.log(res.body);
    //res=(`id="transactionId" value="1"; pos="dddd" value="2"`);//to comment
    let idTr='NA';
    let result={};

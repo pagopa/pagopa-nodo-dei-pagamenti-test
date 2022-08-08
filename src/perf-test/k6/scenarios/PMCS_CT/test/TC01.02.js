@@ -52,7 +52,7 @@ export const getScalini = new SharedArray('scalini', function () {
 
 export const options = {
 	
-    scenarios: {
+    /*scenarios: {
   	total: {
       timeUnit: '1s',
       preAllocatedVUs: 1, // how large the initial pool of VUs would be
@@ -85,7 +85,7 @@ export const options = {
       exec: 'total', 
     }
 	
-  },
+  },*/
   summaryTrendStats: ['avg', 'min', 'max', 'p(90)', 'p(95)', 'count'],
   discardResponseBodies: false,
   thresholds: {

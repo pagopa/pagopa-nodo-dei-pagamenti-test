@@ -27,8 +27,8 @@ import * as outputUtil from './util/output_util.js';
 import * as inputDataUtil from './util/input_data_util.js';
 //import * as db from './db/db.js';
 
-
-
+//NB in perf togliere riferimenti a acsUrl anche in obCC_Challenge e in check2 e scommentare la ob_CC_Response
+//   questo scenario è propedeutico al TC01.03 --> la carta usata lì deve essere verificata qui
 
 const csvBaseUrl = new SharedArray('baseUrl', function () {
   
@@ -59,7 +59,7 @@ export const getScalini = new SharedArray('scalini', function () {
 
 export const options = {
 	
-        scenarios: {
+        /*scenarios: {
         	total: {
             timeUnit: '1s',
             preAllocatedVUs: 1, // how large the initial pool of VUs would be
@@ -92,7 +92,7 @@ export const options = {
             exec: 'total',
           }
 
-        },
+        },*/
   summaryTrendStats: ['avg', 'min', 'max', 'p(90)', 'p(95)', 'count'],
   discardResponseBodies: false,
   thresholds: {
@@ -283,6 +283,8 @@ export function total() {
 
   let res = startSession(baseUrl, tokenIO);
   let token = res.token;
+  console.log("token="+token);
+  console.log("tokenIo="+tokenIO);
 
 
 	
@@ -291,7 +293,8 @@ export function total() {
   let scdMese = myListMese[rndM];
   let rndY = Math.floor(Math.random() * myListAnno.length);
   let scdAnno = myListAnno[rndY];
-  
+
+
   res = ob_CC_Onboard(baseUrl,token, rndCard, scdMese, scdAnno);
   //let outcome= res["data.idWallet"];
   /*let outcome=undefined;
@@ -305,6 +308,7 @@ export function total() {
   invertedChecks(res, outcome, 'matches', undefined);  
   console.log(res.status+";"+tokenIO+";"+res.json().data.idWallet+";"+rndCard)*/
   let outcome=res.outcome;
+  console.log("idWallet="+outcome);
   
   
   res = ob_CC_Verify(baseUrl,outcome,token);
@@ -317,56 +321,21 @@ export function total() {
   let idTr=res.idTr;
   let RED_Path = res.RED_Path;
   //console.log(res);
- /* let headers= res.headers;
-  let redirect = headers['Location'];
-  let idTr = "NA";
-  let RED_Path = "NA";
-   if(redirect !== undefined){ // !== 'NA'){
-	 RED_Path=redirect.substr(redirect.indexOf("/pp-restapi-CD"));
-     idTr=redirect.substr(redirect.indexOf("id=")+3);
-   }*//*else{
-	   redirect = 'NA';
-   }*/
-   
-  /* commonChecks(res);
-  invertedChecks(res, idTr, 'matches', 'NA');  */
-  
+
   //RED_Path="/hfhfhfhfh?tyty=1"; //to comment
 
 
   res = ob_CC_CheckOut(baseUrl, RED_Path);
-  console.log(res.body);
   idTr=res.idTr;
 
-  /*idTr='NA';
 
-  try{
-    let regexTransId =  new RegExp(`id="transactionId" value=".*?"`);
-    let idTr1 = regexTransId.exec(res.body);
-    let sl = idTr1[0].split('="');
-    idTr = sl[2].replace('"','');
-   }catch(err){idTr='NA';}
-
-  console.log(idTr);
-  commonChecks(res);
-  invertedChecks(res, idTr, 'matches', 'NA');  */
-  
    
   let resCheck1 = ''; 
   let statusTr = undefined;
   do {
   //console.log("dentro while");
   resCheck1 = ob_CC_Check_1(baseUrl, idTr);
-  //statusTr = resCheck1['statusMessage'];
 
-  /*try{
-  let subStMsg=resCheck1.body.substr(resCheck1.body.indexOf("statusMessage")+16);
-  statusTr = subStMsg.split('"')[0];
-  }catch(err){}
-  //statusTr = 'In attesa del metodo 3ds2'; //to comment
-  console.log("========================"+statusTr+"===");
-  commonChecks(resCheck1);
-  invertedChecks(resCheck1, statusTr, 'matches', undefined);  */
   statusTr=resCheck1.statusTr;
   }
   while (!(statusTr == 'Confermato' || statusTr == 'In attesa del metodo 3ds2'))
@@ -387,11 +356,13 @@ export function total() {
 	  
 	  let resCheck2 = ''; 
 	  let creq = '';
+	  //let acsUrl=''; //in perf non si usa
   	  do {
 
         resCheck2 = ob_CC_Check_2(baseUrl, idTr);
         statusTr = resCheck2.statusTr;
         creq=resCheck2.creq;
+        //acsUrl=resCheck2.acsUrl; //in perf non si usa
        /* console.log(resCheck2.body);
         statusTr=undefined;
         try{
@@ -415,33 +386,16 @@ export function total() {
 
 
 
-
 	  //console.log("dopo while 2");
-	  res= ob_CC_Challenge(baseUrl, creq); //baseUrlPM
-	 /* commonChecks(res);
-	  standardChecks(res, res.status, 'matches', 200);
-	  //res=`<prova1 id="xxxx">xxxx</prova1><prova id="threeDSServerTransID">12345</prova>`;
-	  let threedstransId = 'NA';
+	  //res= ob_CC_Challenge(baseUrlPM, creq);
+	  res= ob_CC_Challenge(baseUrlPM, creq); //in perf acsUrl non si usa
+	  let threedstransId = res.threedstransId;
 
-      try{
-      let threeDSServerTransID =  new RegExp(`id="threeDSServerTransID">.*?<`);
-	  let dsServTransId = threeDSServerTransID.exec(res);
-	  //console.log('dsServTransId='+dsServTransId);
-      let sl = dsServTransId.split('>');
-	  threedstransId = sl[1].replace('<','');
-      }catch(err){threedstransId='NA';}*/
-      let threedstransId = res.threedstransId;
-
-	  console.log('threedstransId='+threedstransId);
-	  
+	  //console.log('threedstransId='+threedstransId);
 
 
 
-	  
-	  res= ob_CC_Response(baseUrl, threedstransId, token); //baseUrlPM
-	  /*commonChecks(res);
-	  standardChecks(res, res.status, 'matches', 200);*/
-	  
+      res= ob_CC_Response(baseUrl, threedstransId, token); //scommentare in perf
 
 
 
@@ -459,6 +413,7 @@ export function total() {
        
         resCheck3 = ob_CC_Check_3(baseUrl, idTr);
         statusTr = resCheck3.statusTr;
+        console.log("check3====="+statusTr);
         //statusTr = resCheck3['statusMessage'];
         /*statusTr=undefined;
         try{
@@ -474,28 +429,12 @@ export function total() {
 	  
     }
 	
-	
-	
+
     res= ob_CC_Logout(baseUrl, idTr);
     RED_Path=res.RED_Path;
     idTr=res.idTr;
-    /*redirect=undefined;
-    try{
-	headers = res.headers;
-    redirect = headers['Location'];
-    }catch(error){}
-	commonChecks(res);
-    invertedChecks(res, redirect, 'matches', undefined);
-	RED_Path='NA';
-	if(redirect !== undefined){
-		try{
-		RED_Path = redirect.substr(redirect.indexOf("/pp-restapi-CD"));
-		idTr = redirect.substr(redirect.indexOf("id=")+3);
-		}catch(err){idTr='NA';}
-	}*/
-	
-	
-    console.log("redPath="+RED_Path+"idTr="+idTr);
+
+    //console.log("redPath="+RED_Path+"idTr="+idTr);
 	//RED_Path="/hfhfhfhfh?tyty=1"; //to comment
 	res= ob_CC_bye(baseUrl, RED_Path);
 
@@ -513,6 +452,8 @@ export function total() {
            }
 	commonChecks(res);
     standardChecks(res, esito, 'matches', '0');  */
+
+
 
 }
 

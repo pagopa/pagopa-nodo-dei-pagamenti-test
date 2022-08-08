@@ -58,23 +58,6 @@ export const options = {
 
 
 
-export function reqBody(tokenIO, mail) {
-return `
-{
-"name": "Mecren",
-"familyName": "Valentini",
-"spidEmail": "${mail}",
-"noticeEmail": "${mail}",
-"fiscalCode": "TBTNIZ20C79Y859O",
-"sessionToken": "${tokenIO}"
-}
-`
-};
-
- 
-
-
-
 export function total() {
 
   let baseUrl = "";
@@ -100,6 +83,7 @@ export function total() {
  //  console.log('tokenIO='+tokenIO);
   
   let users = ["aPPantani@nft.it", "gPPgiuggiole@nft.it", "pPPpagliaccio@nft.it", "zPPzabalai@nft.it","sPPsacs@nft.it"];
+  //let users=["paolini@libero.it"];
   let mail='';
   let tokenIO='';
   var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -109,16 +93,16 @@ export function total() {
   }
   mail= users[Math.floor(Math.random() * users.length)];
 
-  let body = {"name": "Mecren",
-             "familyName": "Valentini",
+  let body = {"name": "Marco",
+             "familyName": "Antinini",
              "spidEmail": mail,
              "noticeEmail": mail,
-             "fiscalCode": "TBTNIZ20C79Y859O",
+             "fiscalCode": "EE2NPS91X09YB997", //in sit da cambiare ad ogni run di pp
              "sessionToken": tokenIO
              };
 
    let res = http.put(
-    'https://api.dev.platform.pagopa.it/pmmockserviceapi/cd/user/save',
+    baseUrl+'/pmmockserviceapi/cd/user/save',
     JSON.stringify(body),
     { headers: { 'Accept':'*/*', 'Content-Type': 'application/json'} ,
 	tags: { userInjection: 'http_req_duration'}
@@ -142,7 +126,7 @@ export function total() {
 
       res = ob_CC_Onboard(baseUrl,token, rndCard, scdMese, scdAnno);
 
-      console.log(";"+res.status+";"+tokenIO+";"+res.outcome+";"+rndCard)
+      console.log(";"+res.status+";"+tokenIO+";"+res.outcome+";"+rndCard+";"+token)
 
 }
 

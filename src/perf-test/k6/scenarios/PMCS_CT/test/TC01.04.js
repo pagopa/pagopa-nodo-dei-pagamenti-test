@@ -52,7 +52,7 @@ export const getScalini = new SharedArray('scalini', function () {
 
 export const options = {
 	
-   scenarios: {
+   /*scenarios: {
         	total: {
             timeUnit: '1s',
             preAllocatedVUs: 1, // how large the initial pool of VUs would be
@@ -85,7 +85,7 @@ export const options = {
             exec: 'total',
           }
 
-        },
+        }, */
   summaryTrendStats: ['avg', 'min', 'max', 'p(90)', 'p(95)', 'count'],
   discardResponseBodies: false,
   thresholds: {
@@ -200,18 +200,18 @@ export function total() {
 
 
   //to comment in perf
-    res=idpay_setup();
+   /* res=idpay_setup();
     let idPay=res.json()[0].idPayment;
-    console.log("idPay="+idPay);
+    console.log("idPay="+idPay);*/
     //-- fine comment in perf
-    //let idPay = inputDataUtil.getPay().idPay; //to uncomment in perf
+    let idPay = inputDataUtil.getPay().idPay; //to uncomment in perf
   
   
   res = pay_PP_Check(baseUrl, idPay, token);
 
   
   
-  
+  console.log('token='+token+'idWallet='+idWallet+'idPay'+idPay);
   res = pay_PP_Pay(baseUrl, token, idWallet, idPay);
   let idTr=res.idTr;
 

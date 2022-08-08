@@ -7,6 +7,7 @@ export function pay_CC_CheckOut(baseUrl, RED_Path) {
  const res = http.get(
     baseUrl+RED_Path,
    	{ headers: { 'Content-Type': 'application/x-www-form-urlencoded'} ,
+   	redirects: 0,
 	tags: { pay_CC_CheckOut: 'http_req_duration', ALL: 'http_req_duration'}
 	}
 	);
@@ -52,6 +53,7 @@ export function pay_CC_CheckOut(baseUrl, RED_Path) {
    let idTr='NA';
    let result={};
    result.idTr=idTr;
+   console.log(res);
    try{
    let regexTransId =  new RegExp(`id="transactionId" value=".*?"`);
    let idTr1 = regexTransId.exec(res);

@@ -46,9 +46,11 @@ export function getWallet_v2(baseUrl,token) {
    },
    { getWallet_v2: 'over_sla1000' , ALL:'over_sla1000'}
    );
-  
-   // res.status = 200; //to comment
-  	 
+
+
+   //console.log(res);
+
+
    check(
     res,
     {
