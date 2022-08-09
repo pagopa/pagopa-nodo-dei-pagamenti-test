@@ -49,8 +49,10 @@
         "idempotency_cache_psp":"SELECT columns FROM table_name WHERE IDEMPOTENCY_KEY = '$activatePaymentNotice.idempotencyKey' AND PSP_ID = '$activatePaymentNotice.idPSP'",
         "idempotency_cache_psp_1" : "SELECT columns FROM table_name WHERE IDEMPOTENCY_KEY = '$activatePaymentNotice1.idempotencyKey' AND PSP_ID = '$activatePaymentNotice1.idPSP'",
         "idempotency_cache_psp_2" : "SELECT columns FROM table_name WHERE IDEMPOTENCY_KEY = '$activatePaymentNotice2.idempotencyKey' AND PSP_ID = '$activatePaymentNotice2.idPSP'",
+        "idempotency_cache_paymentToken" : "SELECT columns FROM table_name WHERE IDEMPOTENCY_KEY = '$activatePaymentNotice.idempotencyKey' AND PSP_ID = '$activatePaymentNotice.idPSP' AND TOKEN = '$activatePaymentNoticeResponse.paymentToken'",
         "idempotency_cache_paymentToken1" : "SELECT columns FROM table_name WHERE IDEMPOTENCY_KEY = '$activatePaymentNotice1.idempotencyKey' AND PSP_ID = '$activatePaymentNotice1.idPSP' AND TOKEN = '$activatePaymentNotice1Response.paymentToken'",
-        "idempotency_cache_paymentToken2" : "SELECT columns FROM table_name WHERE IDEMPOTENCY_KEY = '$activatePaymentNotice2.idempotencyKey' AND PSP_ID = '$activatePaymentNotice2.idPSP' AND TOKEN = '$activatePaymentNotice2Response.paymentToken'"
+        "idempotency_cache_paymentToken2" : "SELECT columns FROM table_name WHERE IDEMPOTENCY_KEY = '$activatePaymentNotice2.idempotencyKey' AND PSP_ID = '$activatePaymentNotice2.idPSP' AND TOKEN = '$activatePaymentNotice2Response.paymentToken'",
+        "idempotency_paymentToken" : "SELECT columns FROM table_name WHERE TOKEN = '$activatePaymentNoticeResponse.paymentToken'"
     },
     "AppIO":{
         "payment_status":"SELECT s.columns FROM table_name s WHERE s.NOTICE_ID ='$activateIOPayment.noticeNumber' AND s.PA_FISCAL_CODE = '$activateIOPayment.fiscalCode'",

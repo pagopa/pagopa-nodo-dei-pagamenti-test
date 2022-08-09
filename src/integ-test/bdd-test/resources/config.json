@@ -25,9 +25,13 @@
     "fiscalCodePA": "12345678901",
     "id_station": "77777777777_01",
     "canale":"70000000001_07",
+    "canale_ATTIVATO_PRESSO_PSP":"70000000001_01",
+    "intermediarioPSP2":"70000000002",
+    "canale32":"70000000002_01",
     "id_station_old" : "44444444444_05",
     "id_broker": "77777777777",
-    "id_broker_old": "44444444444"
+    "id_broker_old": "44444444444",
+    "cod_segr":"02"
   },
   "db_configuration": {
     "nodo_cfg" : {

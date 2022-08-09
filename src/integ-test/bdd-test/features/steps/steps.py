@@ -33,7 +33,7 @@ def step_impl(context):
             - pagopa-api-config ( used in tests to set DB's nodo-dei-pagamenti correctly according to input test ))
     """
     responses = True
-    """
+    
     for row in context.table:
         print(f"calling: {row.get('name')} -> {row.get('url')}")
         url = row.get("url") + row.get("healthcheck")
@@ -41,7 +41,7 @@ def step_impl(context):
         resp = requests.get(url)
         print(f"response: {resp.status_code}")
         responses &= (resp.status_code == 200)
-    """
+    
     assert responses
 
 
@@ -55,12 +55,23 @@ def step_impl(context, version):
 def step_impl(context, primitive):
     payload = context.text or ""
     payload = utils.replace_local_variables(payload, context)
+    
     if len(payload) > 0:
         my_document = parseString(payload)
         idBrokerPSP = "70000000001"
         if len(my_document.getElementsByTagName('idBrokerPSP')) > 0:
             idBrokerPSP = my_document.getElementsByTagName('idBrokerPSP')[0].firstChild.data
         payload = payload.replace('#idempotency_key#', f"{idBrokerPSP}_{str(random.randint(1000000000, 9999999999))}")
+
+    if "#ccp#" in payload:     
+        ccp = str(random.randint(100000000000000, 999999999999999))
+        payload = payload.replace('#ccp#', ccp)
+        setattr(context,"ccp", ccp)
+
+    if "#iuv#" in payload:     
+        iuv = str(random.randint(100000000000000, 999999999999999))
+        payload = payload.replace('#iuv#', iuv)
+        setattr(context,"iuv", iuv)
 
     if '#notice_number#' in payload:
         notice_number = f"31111{str(random.randint(1000000000000, 9999999999999))}"
@@ -77,14 +88,6 @@ def step_impl(context, primitive):
         identificativoFlusso = date + context.config.userdata.get("global_configuration").get("psp") + "-" + str(random.randint(0, 10000))
         setattr(context,'identificativoFlusso', identificativoFlusso)
         payload = payload.replace('#identificativoFlusso#', identificativoFlusso)
-    """
-    if '$timedate+1' in payload:
-        timedate = getattr(context, 'timedate')
-        timedate = datetime.datetime.strptime(timedate, '%Y-%m-%dT%H:%M:%S.%f')
-        timedate = timedate + datetime.timedelta(hours=1)
-        timedate = timedate.strftime("%Y-%m-%dT%H:%M:%S.%f")
-        payload = payload.replace('$timedate+1', timedate)
-    """
     
     if '$iuv' in payload:
         payload = payload.replace('$iuv', getattr(context, 'iuv'))
@@ -327,7 +330,7 @@ def step_impl(context, attribute, value, elem, primitive):
 @step('{sender} sends soap {soap_primitive} to {receiver}')
 def step_impl(context, sender, soap_primitive, receiver):
     primitive = soap_primitive.split("_")[0]
-    headers = {'Content-Type': 'application/xml', "SOAPAction": primitive, 'X-Original-Forwarded-For': '10.82.39.148', 'transactionid':'testdamiano'}  # set what your server accepts
+    headers = {'Content-Type': 'application/xml', "SOAPAction": primitive, 'X-Original-Forwarded-For': '10.82.39.148'}  # set what your server accepts
     url_nodo = utils.get_soap_url_nodo(context, primitive)
     print("url_nodo: ", url_nodo)
     print("nodo soap_request sent >>>", getattr(context, soap_primitive))
