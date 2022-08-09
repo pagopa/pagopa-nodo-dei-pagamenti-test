@@ -851,6 +851,7 @@ def step_impl(context, query_name, value, position, key):
     result_query = getattr(context, query_name)
     print(f'{query_name}: {result_query}')
     selected_element = result_query[0][position]
+    print(f'{value}: {selected_element}')
     setattr(context, key, selected_element)
 
 
