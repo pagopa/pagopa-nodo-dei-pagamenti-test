@@ -55,6 +55,7 @@ def step_impl(context, version):
 def step_impl(context, primitive):
     payload = context.text or ""
     payload = utils.replace_local_variables(payload, context)
+    payload = utils.replace_context_variables(payload, context)
     
     if len(payload) > 0:
         my_document = parseString(payload)
@@ -74,7 +75,7 @@ def step_impl(context, primitive):
         setattr(context,"iuv", iuv)
 
     if '#notice_number#' in payload:
-        notice_number = f"31111{str(random.randint(1000000000000, 9999999999999))}"
+        notice_number = f"30211{str(random.randint(1000000000000, 9999999999999))}"
         payload = payload.replace('#notice_number#', notice_number)
         setattr(context, "iuv", notice_number[1:])
     
@@ -846,12 +847,14 @@ def step_impl(context, query_name, macro, db_name,table_name,columns):
         print(f'executed query: {exec_query}')
     setattr(context, query_name, exec_query)
 
-@step("through the query {query_name} retrieve value {value} at position {position} and save it under the key {key}")
-def step_impl(context, query_name, value, position, key):
+
+# step per salvare nel context una variabile key recuperata dal db tramite query query_name
+@step("through the query {query_name} retrieve param {param} at position {position:d} and save it under the key {key}")
+def step_impl(context, query_name, param, position, key):
     result_query = getattr(context, query_name)
     print(f'{query_name}: {result_query}')
     selected_element = result_query[0][position]
-    print(f'{value}: {selected_element}')
+    print(f'{param}: {selected_element}')
     setattr(context, key, selected_element)
 
 

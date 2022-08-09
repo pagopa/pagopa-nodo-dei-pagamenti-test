@@ -100,9 +100,9 @@ Scenario: Execute activateIOPayment (Phase 2)
 
 Scenario: Execute nodoChiediInformazioniPagamento (Phase 3)
     Given the Execute activateIOPayment (Phase 2) scenario executed successfully
-    And get value from PAYMENT_TOKEN column in POSITION_ACTIVATE table retrived by the query payment_status on nodo_online db under AppIO macro
-    # COME PRENDO IL PAYMENT TOKEN DAL DB PER PASSARLO POI AL SERVIZIO INFORMAZIONI PAGAMENTO?
-    When WISP sends rest GET informazioniPagamento?idPagamento=%PAYMENT_TOKEN to nodo-dei-pagamenti
+    And execution query payment_status to get value on the table POSITION_ACTIVATE, with the columns PAYMENT_TOKEN under macro AppIO with db name nodo_online
+    And through the query payment_status retrieve param payment_token at position 0 and save it under the key paymentToken
+    When WISP sends rest GET informazioniPagamento?idPagamento=$paymentToken to nodo-dei-pagamenti
     Then verify the HTTP status code of informazioniPagamento response is 404
     And check error is Il pagamento non esiste of informazioniPagamento response
 
@@ -111,7 +111,7 @@ Scenario: Execute nodoInoltroEsitoCarta (Phase 4)
     When WISP sends REST POST inoltroEsito/carta to nodo-dei-pagamenti
     """
     {
-        "idPagamento": "%PAYMENT_TOKEN",
+        "idPagamento": "$paymentToken",
         "RRN": 0,
         "identificativoPsp": "40000000001",
         "tipoVersamento": "CP",
@@ -139,7 +139,7 @@ Scenario: Check sendPaymentOutcome response after nodoInoltroEsitoPaypal primiti
           <idChannel>40000000001_03</idChannel>
           <password>pwdpwdpwd</password>
           <idempotencyKey>#idempotency_key#</idempotencyKey>
-          <paymentToken>%PAYMENT_TOKEN</paymentToken>
+          <paymentToken>$paymentToken</paymentToken>
           <outcome>OK</outcome>
           <!--Optional:-->
           <details>
@@ -153,7 +153,7 @@ Scenario: Check sendPaymentOutcome response after nodoInoltroEsitoPaypal primiti
                 <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
                 <entityUniqueIdentifierValue>77777777777_01</entityUniqueIdentifierValue>
               </uniqueIdentifier>
-              <fullName>SPOname_%PAYMENT_TOKEN</fullName>
+              <fullName>SPOname_$paymentToken</fullName>
               <!--Optional:-->
               <streetName>street</streetName>
               <!--Optional:-->
