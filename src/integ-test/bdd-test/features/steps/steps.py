@@ -846,6 +846,13 @@ def step_impl(context, query_name, macro, db_name,table_name,columns):
         print(f'executed query: {exec_query}')
     setattr(context, query_name, exec_query)
 
+@step("through the query {query_name} retrieve value {value} at position {position} and save it under the key {key}")
+def step_impl(context, query_name, value, position, key):
+    result_query = getattr(context, query_name)
+    print(f'{query_name}: {result_query}')
+    selected_element = result_query[0][position]
+    setattr(context, key, selected_element)
+
 
 @step("with the query {query_name1} check assert beetwen elem {elem1} in position {position1:d} and elem {elem2} with position {position2:d} of the query {query_name2}")
 def stemp_impl(context, query_name1, elem1, position1, elem2, query_name2, position2):
