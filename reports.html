@@ -117,9 +117,9 @@ function Collapsible_expandAllFailed()
           <p id="totals">
             <p id="feature_totals">Features: passed: 1</p>
             <p id="scenario_totals">Scenarios: passed: 5</p>
-            <p id="step_totals">Steps: passed: 24</p>
+            <p id="step_totals">Steps: passed: 89</p>
           </p>
-          <p id="duration">Finished in 7.4 seconds</p>
+          <p id="duration">Finished in 32.2 seconds</p>
           <div id="expand-collapse">
             <a id="expander" href="#" onclick="Collapsible_expandAll('scenario_steps')">Expand All</a>
             <span> | </span>
@@ -131,7 +131,7 @@ function Collapsible_expandAllFailed()
       </div>
       <div class="feature">
         <h2>
-          <span class="val">Feature: FLUSSO_APIO_34</span>
+          <span class="val">Feature: FLUSSO_APIO_08</span>
         </h2>
         <span/>
       </div>
@@ -143,7 +143,7 @@ function Collapsible_expandAllFailed()
         <span/>
       </div>
       <div class="scenario">
-        <span class="scenario_file">src/integ-test/bdd-test/features/appIO/flows/PagamentiAppIO/FLUSSO_APIO_34.feature:7</span>
+        <span class="scenario_file">src/integ-test/bdd-test/features/appIO/flows/PagamentiAppIO/FLUSSO_APIO_08.feature:7</span>
         <h3 onclick="Collapsible_toggle('scenario_0')">
           <span class="val">Scenario: Execute verifyPaymentNotice (Phase 1)</span>
         </h3>
@@ -152,7 +152,7 @@ function Collapsible_expandAllFailed()
             <div class="step_name">
               <span class="keyword">Given </span>
               <span class="step val">systems up</span>
-              <small class="step_duration">(0.072s)</small>
+              <small class="step_duration">(0.100s)</small>
             </div>
             <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:27</span>
@@ -205,7 +205,7 @@ function Collapsible_expandAllFailed()
                 <b>verifyPaymentNotice</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.000s)</small>
+              <small class="step_duration">(0.009s)</small>
             </div>
             <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:54</span>
@@ -222,7 +222,7 @@ function Collapsible_expandAllFailed()
         &lt;password&gt;pwdpwdpwd&lt;/password&gt;
         &lt;qrCode&gt;
             &lt;fiscalCode&gt;#creditor_institution_code#&lt;/fiscalCode&gt;
-            &lt;noticeNumber&gt;302094719472095710&lt;/noticeNumber&gt;
+            &lt;noticeNumber&gt;#notice_number#&lt;/noticeNumber&gt;
         &lt;/qrCode&gt;
     &lt;/nod:verifyPaymentNoticeReq&gt;
     &lt;/soapenv:Body&gt;
@@ -242,7 +242,7 @@ function Collapsible_expandAllFailed()
                 <b>nodo-dei-pagamenti</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.095s)</small>
+              <small class="step_duration">(1.500s)</small>
             </div>
             <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:331</span>
@@ -261,7 +261,7 @@ function Collapsible_expandAllFailed()
                 <b>verifyPaymentNotice</b>
                 <span> response</span>
               </span>
-              <small class="step_duration">(0.001s)</small>
+              <small class="step_duration">(0.002s)</small>
             </div>
             <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:355</span>
@@ -272,7 +272,7 @@ function Collapsible_expandAllFailed()
         <span/>
       </div>
       <div class="scenario">
-        <span class="scenario_file">src/integ-test/bdd-test/features/appIO/flows/PagamentiAppIO/FLUSSO_APIO_34.feature:29</span>
+        <span class="scenario_file">src/integ-test/bdd-test/features/appIO/flows/PagamentiAppIO/FLUSSO_APIO_08.feature:29</span>
         <h3 onclick="Collapsible_toggle('scenario_1')">
           <span class="val">Scenario: Execute activateIOPayment (Phase 2)</span>
         </h3>
@@ -281,7 +281,7 @@ function Collapsible_expandAllFailed()
             <div class="step_name">
               <span class="keyword">Given </span>
               <span class="step val">systems up</span>
-              <small class="step_duration">(0.085s)</small>
+              <small class="step_duration">(0.069s)</small>
             </div>
             <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:27</span>
@@ -319,7 +319,7 @@ function Collapsible_expandAllFailed()
                 <b>new</b>
                 <span> version</span>
               </span>
-              <small class="step_duration">(0.001s)</small>
+              <small class="step_duration">(0.002s)</small>
             </div>
             <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:48</span>
@@ -334,7 +334,7 @@ function Collapsible_expandAllFailed()
                 <b>Execute verifyPaymentNotice (Phase 1)</b>
                 <span> scenario executed successfully</span>
               </span>
-              <small class="step_duration">(0.116s)</small>
+              <small class="step_duration">(1.360s)</small>
             </div>
             <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:508</span>
@@ -349,7 +349,7 @@ function Collapsible_expandAllFailed()
                 <b>activateIOPayment</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.005s)</small>
+              <small class="step_duration">(0.001s)</small>
             </div>
             <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:54</span>
@@ -407,57 +407,6 @@ function Collapsible_expandAllFailed()
           </li>
           <li class="step passed">
             <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
-                <span>initial XML </span>
-                <b>paGetPayment</b>
-                <span/>
-              </span>
-              <small class="step_duration">(0.003s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:54</span>
-            </div>
-            <span class="embed"/>
-            <div class="message">
-              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:paf=&quot;http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd&quot;&gt;
-    &lt;soapenv:Header/&gt;
-    &lt;soapenv:Body&gt;
-        &lt;paf:paGetPaymentRes&gt;
-            &lt;outcome&gt;KO&lt;/outcome&gt;
-            &lt;fault&gt;
-                &lt;faultCode&gt;PAA_SEMANTICA&lt;/faultCode&gt;
-                &lt;faultString&gt;errore semantico PA&lt;/faultString&gt;
-                &lt;id&gt;$activateIOPayment.fiscalCode&lt;/id&gt;
-                &lt;description&gt;Errore semantico emesso dalla PA&lt;/description&gt;
-                &lt;/fault&gt;
-        &lt;/paf:paGetPaymentRes&gt;
-    &lt;/soapenv:Body&gt;
-&lt;/soapenv:Envelope&gt;
-</pre>
-            </div>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
-                <span/>
-                <b>EC</b>
-                <span> replies to </span>
-                <b>nodo-dei-pagamenti</b>
-                <span> with the </span>
-                <b>paGetPayment</b>
-                <span/>
-              </span>
-              <small class="step_duration">(0.034s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:550</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
               <span class="keyword">When </span>
               <span class="step val">
                 <span/>
@@ -468,7 +417,7 @@ function Collapsible_expandAllFailed()
                 <b>nodo-dei-pagamenti</b>
                 <span/>
               </span>
-              <small class="step_duration">(1.406s)</small>
+              <small class="step_duration">(1.302s)</small>
             </div>
             <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:331</span>
@@ -482,7 +431,7 @@ function Collapsible_expandAllFailed()
                 <span>check </span>
                 <b>outcome</b>
                 <span> is </span>
-                <b>KO</b>
+                <b>OK</b>
                 <span> of </span>
                 <b>activateIOPayment</b>
                 <span> response</span>
@@ -498,7 +447,7 @@ function Collapsible_expandAllFailed()
         <span/>
       </div>
       <div class="scenario">
-        <span class="scenario_file">src/integ-test/bdd-test/features/appIO/flows/PagamentiAppIO/FLUSSO_APIO_34.feature:101</span>
+        <span class="scenario_file">src/integ-test/bdd-test/features/appIO/flows/PagamentiAppIO/FLUSSO_APIO_08.feature:83</span>
         <h3 onclick="Collapsible_toggle('scenario_2')">
           <span class="val">Scenario: Execute nodoChiediInformazioniPagamento (Phase 3)</span>
         </h3>
@@ -507,7 +456,7 @@ function Collapsible_expandAllFailed()
             <div class="step_name">
               <span class="keyword">Given </span>
               <span class="step val">systems up</span>
-              <small class="step_duration">(0.055s)</small>
+              <small class="step_duration">(0.063s)</small>
             </div>
             <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:27</span>
@@ -545,7 +494,7 @@ function Collapsible_expandAllFailed()
                 <b>new</b>
                 <span> version</span>
               </span>
-              <small class="step_duration">(0.002s)</small>
+              <small class="step_duration">(0.001s)</small>
             </div>
             <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:48</span>
@@ -560,54 +509,10 @@ function Collapsible_expandAllFailed()
                 <b>Execute activateIOPayment (Phase 2)</b>
                 <span> scenario executed successfully</span>
               </span>
-              <small class="step_duration">(1.481s)</small>
+              <small class="step_duration">(2.574s)</small>
             </div>
             <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:508</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
-                <span>execution query </span>
-                <b>payment_status</b>
-                <span> to get value on the table </span>
-                <b>POSITION_ACTIVATE</b>
-                <span>, with the columns </span>
-                <b>PAYMENT_TOKEN</b>
-                <span> under macro </span>
-                <b>AppIO</b>
-                <span> with db name </span>
-                <b>nodo_online</b>
-                <span/>
-              </span>
-              <small class="step_duration">(0.177s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:835</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
-                <span>through the query </span>
-                <b>payment_status</b>
-                <span> retrieve param </span>
-                <b>payment_token</b>
-                <span> at position </span>
-                <b>0</b>
-                <span> and save it under the key </span>
-                <b>paymentToken</b>
-                <span/>
-              </span>
-              <small class="step_duration">(0.002s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:850</span>
             </div>
             <span class="embed"/>
           </li>
@@ -620,12 +525,12 @@ function Collapsible_expandAllFailed()
                 <span> sends rest </span>
                 <b>GET</b>
                 <span> </span>
-                <b>informazioniPagamento?idPagamento=$paymentToken</b>
+                <b>informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken</b>
                 <span> to </span>
                 <b>nodo-dei-pagamenti</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.068s)</small>
+              <small class="step_duration">(0.059s)</small>
             </div>
             <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:516</span>
@@ -639,32 +544,13 @@ function Collapsible_expandAllFailed()
                 <span>verify the HTTP status code of </span>
                 <b>informazioniPagamento</b>
                 <span> response is </span>
-                <b>404</b>
+                <b>200</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.002s)</small>
+              <small class="step_duration">(0.001s)</small>
             </div>
             <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:545</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
-                <span>check </span>
-                <b>error</b>
-                <span> is </span>
-                <b>Il pagamento non esiste</b>
-                <span> of </span>
-                <b>informazioniPagamento</b>
-                <span> response</span>
-              </span>
-              <small class="step_duration">(0.002s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:355</span>
             </div>
             <span class="embed"/>
           </li>
@@ -672,7 +558,7 @@ function Collapsible_expandAllFailed()
         <span/>
       </div>
       <div class="scenario">
-        <span class="scenario_file">src/integ-test/bdd-test/features/appIO/flows/PagamentiAppIO/FLUSSO_APIO_34.feature:111</span>
+        <span class="scenario_file">src/integ-test/bdd-test/features/appIO/flows/PagamentiAppIO/FLUSSO_APIO_08.feature:88</span>
         <h3 onclick="Collapsible_toggle('scenario_3')">
           <span class="val">Scenario: Execute nodoInoltroEsitoCarta (Phase 4)</span>
         </h3>
@@ -681,7 +567,7 @@ function Collapsible_expandAllFailed()
             <div class="step_name">
               <span class="keyword">Given </span>
               <span class="step val">systems up</span>
-              <small class="step_duration">(0.082s)</small>
+              <small class="step_duration">(0.064s)</small>
             </div>
             <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:27</span>
@@ -734,7 +620,7 @@ function Collapsible_expandAllFailed()
                 <b>Execute nodoChiediInformazioniPagamento (Phase 3)</b>
                 <span> scenario executed successfully</span>
               </span>
-              <small class="step_duration">(1.765s)</small>
+              <small class="step_duration">(2.699s)</small>
             </div>
             <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:508</span>
@@ -755,7 +641,7 @@ function Collapsible_expandAllFailed()
                 <b>nodo-dei-pagamenti</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.045s)</small>
+              <small class="step_duration">(0.103s)</small>
             </div>
             <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:516</span>
@@ -763,17 +649,17 @@ function Collapsible_expandAllFailed()
             <span class="embed"/>
             <div class="message">
               <pre>{
-    &quot;idPagamento&quot;: &quot;$paymentToken&quot;,
-    &quot;RRN&quot;: 0,
-    &quot;identificativoPsp&quot;: &quot;40000000001&quot;,
-    &quot;tipoVersamento&quot;: &quot;CP&quot;,
-    &quot;identificativoIntermediario&quot;: &quot;40000000001&quot;,
-    &quot;identificativoCanale&quot;: &quot;40000000001_06&quot;,
-    &quot;importoTotalePagato&quot;: 10.00,
-    &quot;timestampOperazione&quot;: &quot;2012-04-23T18:25:43Z&quot;,
-    &quot;codiceAutorizzativo&quot;: &quot;resOk&quot;,
-    &quot;esitoTransazioneCarta&quot;: &quot;00&quot;
-}
+    &quot;RRN&quot;:10026669,
+    &quot;tipoVersamento&quot;:&quot;CP&quot;,
+    &quot;idPagamento&quot;:&quot;$activateIOPaymentResponse.paymentToken&quot;,
+    &quot;identificativoIntermediario&quot;:&quot;irraggiungibile&quot;,
+    &quot;identificativoPsp&quot;:&quot;#psp#&quot;,
+    &quot;identificativoCanale&quot;:&quot;irraggiungibile&quot;,
+    &quot;importoTotalePagato&quot;:10.00,
+    &quot;timestampOperazione&quot;:&quot;2021-07-09T17:06:03.100+01:00&quot;,
+    &quot;codiceAutorizzativo&quot;:&quot;resOK&quot;,
+    &quot;esitoTransazioneCarta&quot;:&quot;00&quot;
+    }
 </pre>
             </div>
           </li>
@@ -784,7 +670,7 @@ function Collapsible_expandAllFailed()
                 <span>verify the HTTP status code of </span>
                 <b>inoltroEsito/carta</b>
                 <span> response is </span>
-                <b>404</b>
+                <b>200</b>
                 <span/>
               </span>
               <small class="step_duration">(0.001s)</small>
@@ -799,9 +685,9 @@ function Collapsible_expandAllFailed()
               <span class="keyword">And </span>
               <span class="step val">
                 <span>check </span>
-                <b>error</b>
+                <b>esito</b>
                 <span> is </span>
-                <b>Il Pagamento indicato non esiste</b>
+                <b>KO</b>
                 <span> of </span>
                 <b>inoltroEsito/carta</b>
                 <span> response</span>
@@ -813,20 +699,1039 @@ function Collapsible_expandAllFailed()
             </div>
             <span class="embed"/>
           </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>check </span>
+                <b>errorCode</b>
+                <span> is </span>
+                <b>CONPSP</b>
+                <span> of </span>
+                <b>inoltroEsito/carta</b>
+                <span> response</span>
+              </span>
+              <small class="step_duration">(0.001s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:355</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>PAYING, PAYMENT_SENT, PAYMENT_SEND_ERROR</b>
+                <span> of the record at column </span>
+                <b>STATUS</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT_STATUS</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>AppIO</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.164s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:949</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>PAYMENT_SEND_ERROR</b>
+                <span> of the record at column </span>
+                <b>STATUS</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT_STATUS_SNAPSHOT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>AppIO</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.187s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:949</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>PAYING</b>
+                <span> of the record at column </span>
+                <b>STATUS</b>
+                <span> of the table </span>
+                <b>POSITION_STATUS</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>AppIO</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.143s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:949</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>PAYING</b>
+                <span> of the record at column </span>
+                <b>STATUS</b>
+                <span> of the table </span>
+                <b>POSITION_STATUS_SNAPSHOT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>AppIO</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.152s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:949</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>$activateIOPaymentResponse.creditorReferenceId</b>
+                <span> of the record at column </span>
+                <b>CREDITOR_REFERENCE_ID</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>AppIO</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.172s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:949</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>$activateIOPaymentResponse.paymentToken</b>
+                <span> of the record at column </span>
+                <b>PAYMENT_TOKEN</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>AppIO</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.170s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:949</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>$activateIOPaymentResponse.fiscalCodePA</b>
+                <span> of the record at column </span>
+                <b>BROKER_PA_ID</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>AppIO</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.148s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:949</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>2</b>
+                <span> of the record at column </span>
+                <b>STATION_VERSION</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>AppIO</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.174s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:949</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>#psp#</b>
+                <span> of the record at column </span>
+                <b>PSP_ID</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>AppIO</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.190s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:949</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>irraggiungibile</b>
+                <span> of the record at column </span>
+                <b>BROKER_PSP_ID</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>AppIO</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.171s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:949</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>irraggiungibile</b>
+                <span> of the record at column </span>
+                <b>CHANNEL_ID</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>AppIO</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.137s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:949</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>$activateIOPayment.idempotencyKey</b>
+                <span> of the record at column </span>
+                <b>IDEMPOTENCY_KEY</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>AppIO</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.136s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:949</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>$activateIOPaymentResponse.totalAmount</b>
+                <span> of the record at column </span>
+                <b>AMOUNT</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>AppIO</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.179s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:949</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>None</b>
+                <span> of the record at column </span>
+                <b>FEE</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>AppIO</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.128s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:949</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>None</b>
+                <span> of the record at column </span>
+                <b>OUTCOME</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>AppIO</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.124s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:949</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>CP</b>
+                <span> of the record at column </span>
+                <b>PAYMENT_METHOD</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>AppIO</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.162s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:949</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>WISP</b>
+                <span> of the record at column </span>
+                <b>PAYMENT_CHANNEL</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>AppIO</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.138s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:949</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>None</b>
+                <span> of the record at column </span>
+                <b>TRANSFER_DATE</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>AppIO</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.146s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:949</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>None</b>
+                <span> of the record at column </span>
+                <b>APPLICATION_DATE</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>AppIO</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.149s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:949</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>NotNone</b>
+                <span> of the record at column </span>
+                <b>INSERTED_TIMESTAMP</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>AppIO</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.148s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:949</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>NotNone</b>
+                <span> of the record at column </span>
+                <b>UPDATED_TIMESTAMP</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>AppIO</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.118s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:949</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>NotNone</b>
+                <span> of the record at column </span>
+                <b>FK_PAYMENT_PLAN</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>AppIO</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.135s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:949</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>None</b>
+                <span> of the record at column </span>
+                <b>RPT_ID</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>AppIO</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.147s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:949</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>MOD3</b>
+                <span> of the record at column </span>
+                <b>PAYMENT_TYPE</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>AppIO</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.150s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:949</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>None</b>
+                <span> of the record at column </span>
+                <b>CARRELLO_ID</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>AppIO</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.110s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:949</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>None</b>
+                <span> of the record at column </span>
+                <b>ORIGINAL_PAYMENT_TOKEN</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>AppIO</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.151s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:949</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>Y</b>
+                <span> of the record at column </span>
+                <b>FLAG_IO</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>AppIO</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.121s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:949</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>Y</b>
+                <span> of the record at column </span>
+                <b>RICEVUTA_PM</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>AppIO</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.119s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:949</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>PAYMENT_IO</b>
+                <span> of the record at column </span>
+                <b>TIPO</b>
+                <span> of the table </span>
+                <b>PM_SESSION_DATA</b>
+                <span> retrived by the query </span>
+                <b>pm_session</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>AppIO</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.148s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:949</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>None</b>
+                <span> of the record at column </span>
+                <b>MOBILE_TOKEN</b>
+                <span> of the table </span>
+                <b>PM_SESSION_DATA</b>
+                <span> retrived by the query </span>
+                <b>pm_session</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>AppIO</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.154s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:949</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>10026669</b>
+                <span> of the record at column </span>
+                <b>RRN</b>
+                <span> of the table </span>
+                <b>PM_SESSION_DATA</b>
+                <span> retrived by the query </span>
+                <b>pm_session</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>AppIO</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.142s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:949</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>None</b>
+                <span> of the record at column </span>
+                <b>TIPO_INTERAZIONE</b>
+                <span> of the table </span>
+                <b>PM_SESSION_DATA</b>
+                <span> retrived by the query </span>
+                <b>pm_session</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>AppIO</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.173s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:949</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>10</b>
+                <span> of the record at column </span>
+                <b>IMPORTO_TOTALE_PAGATO</b>
+                <span> of the table </span>
+                <b>PM_SESSION_DATA</b>
+                <span> retrived by the query </span>
+                <b>pm_session</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>AppIO</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.185s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:949</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>00</b>
+                <span> of the record at column </span>
+                <b>ESITO_TRANSAZIONE_CARTA</b>
+                <span> of the table </span>
+                <b>PM_SESSION_DATA</b>
+                <span> retrived by the query </span>
+                <b>pm_session</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>AppIO</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.132s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:949</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>resOK</b>
+                <span> of the record at column </span>
+                <b>CODICE_AUTORIZZATIVO</b>
+                <span> of the table </span>
+                <b>PM_SESSION_DATA</b>
+                <span> retrived by the query </span>
+                <b>pm_session</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>AppIO</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.133s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:949</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>NotNone</b>
+                <span> of the record at column </span>
+                <b>TIMESTAMP_OPERAZIONE</b>
+                <span> of the table </span>
+                <b>PM_SESSION_DATA</b>
+                <span> retrived by the query </span>
+                <b>pm_session</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>AppIO</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.159s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:949</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>NotNone</b>
+                <span> of the record at column </span>
+                <b>INSERTED_TIMESTAMP</b>
+                <span> of the table </span>
+                <b>PM_SESSION_DATA</b>
+                <span> retrived by the query </span>
+                <b>pm_session</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>AppIO</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.146s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:949</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>NotNone</b>
+                <span> of the record at column </span>
+                <b>UPDATED_TIMESTAMP</b>
+                <span> of the table </span>
+                <b>PM_SESSION_DATA</b>
+                <span> retrived by the query </span>
+                <b>pm_session</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>AppIO</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.171s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:949</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>None</b>
+                <span> of the record at column </span>
+                <b>MOTIVO_ANNULLAMENTO</b>
+                <span> of the table </span>
+                <b>PM_SESSION_DATA</b>
+                <span> retrived by the query </span>
+                <b>pm_session</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>AppIO</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.137s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:949</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>None</b>
+                <span> of the record at column </span>
+                <b>CODICE_CONVENZIONE</b>
+                <span> of the table </span>
+                <b>PM_SESSION_DATA</b>
+                <span> retrived by the query </span>
+                <b>pm_session</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>AppIO</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.161s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:949</span>
+            </div>
+            <span class="embed"/>
+          </li>
         </ol>
         <span/>
       </div>
       <div class="scenario">
-        <span class="scenario_file">src/integ-test/bdd-test/features/appIO/flows/PagamentiAppIO/FLUSSO_APIO_34.feature:131</span>
+        <span class="scenario_file">src/integ-test/bdd-test/features/appIO/flows/PagamentiAppIO/FLUSSO_APIO_08.feature:152</span>
         <h3 onclick="Collapsible_toggle('scenario_4')">
-          <span class="val">Scenario: Check sendPaymentOutcome response after nodoInoltroEsitoPaypal primitive and the correctness of column values</span>
+          <span class="val">Scenario: Check sendPaymentOutcome response with sendPaymentOutcome OK and unreachable PSP, and check correctness of database tables</span>
         </h3>
         <ol class="scenario_steps" id="scenario_4">
           <li class="step passed">
             <div class="step_name">
               <span class="keyword">Given </span>
               <span class="step val">systems up</span>
-              <small class="step_duration">(0.059s)</small>
+              <small class="step_duration">(0.061s)</small>
             </div>
             <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:27</span>
@@ -864,7 +1769,7 @@ function Collapsible_expandAllFailed()
                 <b>new</b>
                 <span> version</span>
               </span>
-              <small class="step_duration">(0.001s)</small>
+              <small class="step_duration">(0.002s)</small>
             </div>
             <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:48</span>
@@ -879,7 +1784,7 @@ function Collapsible_expandAllFailed()
                 <b>Execute nodoInoltroEsitoCarta (Phase 4)</b>
                 <span> scenario executed successfully</span>
               </span>
-              <small class="step_duration">(1.718s)</small>
+              <small class="step_duration">(9.136s)</small>
             </div>
             <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:508</span>
@@ -905,12 +1810,12 @@ function Collapsible_expandAllFailed()
   &lt;soapenv:Header/&gt;
   &lt;soapenv:Body&gt;
     &lt;nod:sendPaymentOutcomeReq&gt;
-      &lt;idPSP&gt;40000000001&lt;/idPSP&gt;
-      &lt;idBrokerPSP&gt;40000000001&lt;/idBrokerPSP&gt;
-      &lt;idChannel&gt;40000000001_03&lt;/idChannel&gt;
+      &lt;idPSP&gt;#psp#&lt;/idPSP&gt;
+      &lt;idBrokerPSP&gt;#psp#&lt;/idBrokerPSP&gt;
+      &lt;idChannel&gt;#canale#&lt;/idChannel&gt;
       &lt;password&gt;pwdpwdpwd&lt;/password&gt;
       &lt;idempotencyKey&gt;#idempotency_key#&lt;/idempotencyKey&gt;
-      &lt;paymentToken&gt;$paymentToken&lt;/paymentToken&gt;
+      &lt;paymentToken&gt;$activateIOPaymentResponse.paymentToken&lt;/paymentToken&gt;
       &lt;outcome&gt;OK&lt;/outcome&gt;
       &lt;!--Optional:--&gt;
       &lt;details&gt;
@@ -924,7 +1829,7 @@ function Collapsible_expandAllFailed()
             &lt;entityUniqueIdentifierType&gt;G&lt;/entityUniqueIdentifierType&gt;
             &lt;entityUniqueIdentifierValue&gt;77777777777_01&lt;/entityUniqueIdentifierValue&gt;
           &lt;/uniqueIdentifier&gt;
-          &lt;fullName&gt;SPOname_$paymentToken&lt;/fullName&gt;
+          &lt;fullName&gt;name&lt;/fullName&gt;
           &lt;!--Optional:--&gt;
           &lt;streetName&gt;street&lt;/streetName&gt;
           &lt;!--Optional:--&gt;
@@ -951,6 +1856,21 @@ function Collapsible_expandAllFailed()
           </li>
           <li class="step passed">
             <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>wait </span>
+                <b>3</b>
+                <span> seconds for expiration</span>
+              </span>
+              <small class="step_duration">(3.011s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:928</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
               <span class="keyword">When </span>
               <span class="step val">
                 <span/>
@@ -961,7 +1881,7 @@ function Collapsible_expandAllFailed()
                 <b>nodo-dei-pagamenti</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.104s)</small>
+              <small class="step_duration">(0.064s)</small>
             </div>
             <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:331</span>
@@ -994,15 +1914,715 @@ function Collapsible_expandAllFailed()
                 <span>check </span>
                 <b>faultCode</b>
                 <span> is </span>
-                <b>PPT_TOKEN_SCONOSCIUTO</b>
+                <b>PPT_SEMANTICA</b>
                 <span> of </span>
                 <b>sendPaymentOutcome</b>
                 <span> response</span>
               </span>
-              <small class="step_duration">(0.001s)</small>
+              <small class="step_duration">(0.000s)</small>
             </div>
             <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:355</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>PAYING, PAYMENT_SENT, PAYMENT_SEND_ERROR</b>
+                <span> of the record at column </span>
+                <b>STATUS</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT_STATUS</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>AppIO</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.127s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:949</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>PAYMENT_SEND_ERROR</b>
+                <span> of the record at column </span>
+                <b>STATUS</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT_STATUS_SNAPSHOT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>AppIO</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.110s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:949</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>PAYING</b>
+                <span> of the record at column </span>
+                <b>STATUS</b>
+                <span> of the table </span>
+                <b>POSITION_STATUS</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>AppIO</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.119s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:949</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>PAYING</b>
+                <span> of the record at column </span>
+                <b>STATUS</b>
+                <span> of the table </span>
+                <b>POSITION_STATUS_SNAPSHOT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>AppIO</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.153s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:949</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>$activateIOPaymentResponse.creditorReferenceId</b>
+                <span> of the record at column </span>
+                <b>CREDITOR_REFERENCE_ID</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>AppIO</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.148s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:949</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>$activateIOPaymentResponse.paymentToken</b>
+                <span> of the record at column </span>
+                <b>PAYMENT_TOKEN</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>AppIO</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.186s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:949</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>$activateIOPaymentResponse.fiscalCodePA</b>
+                <span> of the record at column </span>
+                <b>BROKER_PA_ID</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>AppIO</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.114s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:949</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>2</b>
+                <span> of the record at column </span>
+                <b>STATION_VERSION</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>AppIO</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.117s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:949</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>$sendPaymentOutcome.idPSP</b>
+                <span> of the record at column </span>
+                <b>PSP_ID</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>AppIO</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.149s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:949</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>irraggiungibile</b>
+                <span> of the record at column </span>
+                <b>BROKER_PSP_ID</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>AppIO</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.163s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:949</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>irraggiungibile</b>
+                <span> of the record at column </span>
+                <b>CHANNEL_ID</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>AppIO</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.120s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:949</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>$activateIOPayment.idempotencyKey</b>
+                <span> of the record at column </span>
+                <b>IDEMPOTENCY_KEY</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>AppIO</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.127s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:949</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>$activateIOPaymentResponse.totalAmount</b>
+                <span> of the record at column </span>
+                <b>AMOUNT</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>AppIO</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.127s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:949</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>None</b>
+                <span> of the record at column </span>
+                <b>FEE</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>AppIO</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.114s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:949</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>None</b>
+                <span> of the record at column </span>
+                <b>OUTCOME</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>AppIO</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.151s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:949</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>CP</b>
+                <span> of the record at column </span>
+                <b>PAYMENT_METHOD</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>AppIO</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.131s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:949</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>WISP</b>
+                <span> of the record at column </span>
+                <b>PAYMENT_CHANNEL</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>AppIO</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.171s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:949</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>None</b>
+                <span> of the record at column </span>
+                <b>TRANSFER_DATE</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>AppIO</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.138s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:949</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>None</b>
+                <span> of the record at column </span>
+                <b>APPLICATION_DATE</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>AppIO</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.190s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:949</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>NotNone</b>
+                <span> of the record at column </span>
+                <b>INSERTED_TIMESTAMP</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>AppIO</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.137s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:949</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>NotNone</b>
+                <span> of the record at column </span>
+                <b>UPDATED_TIMESTAMP</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>AppIO</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.144s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:949</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>NotNone</b>
+                <span> of the record at column </span>
+                <b>FK_PAYMENT_PLAN</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>AppIO</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.134s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:949</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>None</b>
+                <span> of the record at column </span>
+                <b>RPT_ID</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>AppIO</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.117s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:949</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>MOD3</b>
+                <span> of the record at column </span>
+                <b>PAYMENT_TYPE</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>AppIO</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.178s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:949</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>None</b>
+                <span> of the record at column </span>
+                <b>CARRELLO_ID</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>AppIO</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.145s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:949</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>None</b>
+                <span> of the record at column </span>
+                <b>ORIGINAL_PAYMENT_TOKEN</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>AppIO</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.159s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:949</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>Y</b>
+                <span> of the record at column </span>
+                <b>FLAG_IO</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>AppIO</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.147s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:949</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>Y</b>
+                <span> of the record at column </span>
+                <b>RICEVUTA_PM</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>AppIO</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.143s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:949</span>
             </div>
             <span class="embed"/>
           </li>

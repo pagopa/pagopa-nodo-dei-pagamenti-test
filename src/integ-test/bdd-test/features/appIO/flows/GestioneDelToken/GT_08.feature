@@ -89,7 +89,7 @@ Feature: GT_08
         And checks the value $activateIOPaymentResponse.paymentToken of the record at column TOKEN of the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value NotNone of the record at column VALID_TO of the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value NotNone of the record at column TOKEN_VALID_FROM of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
-        And check token validity
+        #And check token validity
 
     Scenario: Execute nodoChiediInformazioniPagamento (Phase 3)
         Given the Execute activateIOPayment (Phase 2) scenario executed successfully
@@ -104,10 +104,10 @@ Feature: GT_08
             {
                 "idPagamento": "$activateIOPaymentResponse.paymentToken",
                 "RRN": 18865881,
-                "identificativoPsp": "40000000001",
+                "identificativoPsp": "#psp#",
                 "tipoVersamento": "CP",
-                "identificativoIntermediario": "40000000001",
-                "identificativoCanale": "40000000001_06",
+                "identificativoIntermediario": "#psp#",
+                "identificativoCanale": "#canale#",
                 "importoTotalePagato": 10.00,
                 "timestampOperazione": "2021-07-09T17:06:03.100+01:00",
                 "codiceAutorizzativo": "resOK",
@@ -125,9 +125,9 @@ Feature: GT_08
             <soapenv:Header/>
             <soapenv:Body>
                 <nod:sendPaymentOutcomeReq>
-                    <idPSP>40000000001</idPSP>
-                    <idBrokerPSP>40000000001</idBrokerPSP>
-                    <idChannel>40000000001_06</idChannel>
+                    <idPSP>#psp#</idPSP>
+                    <idBrokerPSP>#psp#</idBrokerPSP>
+                    <idChannel>#canale#</idChannel>
                     <password>pwdpwdpwd</password>
                     <idempotencyKey>#idempotency_key#</idempotencyKey>
                     <paymentToken>$activateIOPaymentResponse.paymentToken</paymentToken>
