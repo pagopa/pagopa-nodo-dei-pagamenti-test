@@ -1,15 +1,10 @@
-Feature: process tests for Retry_DB_GR_13
+Feature: process tests for Retry_DB_GR_20
 
   Background:
     Given systems up
-    And update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with Y, with where condition FK_PA and where value ('13','1201') under macro update_query on db nodo_cfg
-
-  Scenario: job refresh pa (1)
-    Given refresh job PA triggered after 10 seconds
-
+ 
   Scenario: initial verifyPaymentNotice
-    Given the job refresh pa (1) scenario executed successfully
-    And initial XML verifyPaymentNotice
+    Given initial XML verifyPaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
       <soapenv:Header/>
@@ -53,9 +48,9 @@ Feature: process tests for Retry_DB_GR_13
       <noticeNumber>#notice_number#</noticeNumber>
       </qrCode>
       <expirationTime>2000</expirationTime>
-      <amount>17.00</amount>
+      <amount>10.00</amount>
       <dueDate>2021-12-31</dueDate>
-      <paymentNote>responseFull3Transfers</paymentNote>
+      <paymentNote>responseFull</paymentNote>
       </nod:activatePaymentNoticeReq>
       </soapenv:Body>
       </soapenv:Envelope>
@@ -70,7 +65,7 @@ Feature: process tests for Retry_DB_GR_13
       <outcome>OK</outcome>
       <data>
       <creditorReferenceId>$iuv</creditorReferenceId>
-      <paymentAmount>17.00</paymentAmount>
+      <paymentAmount>10.00</paymentAmount>
       <dueDate>2021-12-31</dueDate>
       <!--Optional:-->
       <retentionDate>2021-12-31T12:12:12</retentionDate>
@@ -111,22 +106,6 @@ Feature: process tests for Retry_DB_GR_13
       <fiscalCodePA>77777777777</fiscalCodePA>
       <IBAN>IT45R0760103200000000001016</IBAN>
       <remittanceInformation>testPaGetPayment</remittanceInformation>
-      <transferCategory>paGetPaymentTest</transferCategory>
-      </transfer>
-      <transfer>
-      <idTransfer>2</idTransfer>
-      <transferAmount>3.00</transferAmount>
-      <fiscalCodePA>90000000001</fiscalCodePA>
-      <IBAN>IT45R0760103200000000001016</IBAN>
-      <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
-      <transferCategory>paGetPaymentTest</transferCategory>
-      </transfer>
-      <transfer>
-      <idTransfer>3</idTransfer>
-      <transferAmount>4.00</transferAmount>
-      <fiscalCodePA>90000000002</fiscalCodePA>
-      <IBAN>IT45R0760103200000000001016</IBAN>
-      <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
       <transferCategory>paGetPaymentTest</transferCategory>
       </transfer>
       </transferList>
@@ -196,20 +175,7 @@ Feature: process tests for Retry_DB_GR_13
     Then check outcome is KO of sendPaymentOutcome response
     And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcome response
 
-   Scenario: trigger jobs paSendRt
-    Given the Execute sendPaymentOutcome request scenario executed successfully
-    When job paSendRt triggered after 5 seconds
-    Then verify the HTTP status code of paSendRt response is 200
-
   Scenario: DB check + db update
-    Given the trigger jobs paSendRt scenario executed successfully
-    And verify 3 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
-    And update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with N, with where condition OBJ_ID and where value ('13','1201') under macro update_query on db nodo_cfg
-
-  Scenario: job refresh pa (2)
-    Given the DB check + db update scenario executed successfully
-    Then refresh job PA triggered after 10 seconds
-
-
-
-
+    Given the Execute sendPaymentOutcome request scenario executed successfully
+    And wait 5 seconds for expiration
+    And verify 1 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
