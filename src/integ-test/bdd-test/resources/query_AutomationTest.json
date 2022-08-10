@@ -76,6 +76,7 @@
     },
     "update_query":{
         "idempotency_update":"UPDATE IDEMPOTENCY_CACHE SET VALID_TO = TO_DATE('date', 'YYYY-MM-DD HH24:MI:SS') WHERE IDEMPOTENCY_KEY = '$sendPaymentOutcome.idempotencyKey' AND PSP_ID = '$sendPaymentOutcome.idPSP'",
-        "param_update": "UPDATE table_name SET param = 'value' WHERE where_condition = 'valore'"
+        "param_update": "UPDATE table_name SET param = 'value' WHERE where_condition = 'valore'",
+        "param_update_in": "UPDATE table_name SET param = 'value' WHERE where_condition IN valore"
     }
 }

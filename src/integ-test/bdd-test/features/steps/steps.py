@@ -801,6 +801,15 @@ def step_impl(context, param, value):
     time.sleep(5)
     assert refresh_response.status_code == 200
 
+@step("refresh job {job_name} triggered after 10 seconds")
+def step_impl(context, job_name):
+    url_nodo = utils.get_rest_url_nodo(context)
+    nodo_response = requests.get(f"{url_nodo}/config/refresh/{job_name}")
+    setattr(context, job_name + RESPONSE, nodo_response)
+    refresh_response = requests.get(utils.get_refresh_config_url(context))
+    time.sleep(10)
+    assert refresh_response.status_code == 200
+
 
 @step("update through the query {query_name} with date {date} under macro {macro} on db {db_name}")
 def step_impl(context, query_name, date, macro, db_name):

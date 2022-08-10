@@ -1,8 +1,8 @@
-Feature: process tests for Retry_DB_GR_10
+Feature: process tests for Retry_DB_GR_13
 
   Background:
     Given systems up
-    And update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with N, with where condition FK_PA and where value ('6','8') under macro update_query on db nodo_cfg
+    And update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with Y, with where condition FK_PA and where value ('13','1201') under macro update_query on db nodo_cfg
 
   Scenario: job refresh pa (1)
     Given refresh job PA triggered after 10 seconds
@@ -198,7 +198,12 @@ Feature: process tests for Retry_DB_GR_10
 
   Scenario: DB check + db update
     Given the Execute sendPaymentOutcome request scenario executed successfully
-    And verify 1 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
+    And verify 3 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
+    And update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with N, with where condition OBJ_ID and where value ('13','1201') under macro update_query on db nodo_cfg
+
+  Scenario: job refresh pa (2)
+    Given the DB check + db update scenario executed successfully
+    Then refresh job PA triggered after 10 seconds
 
 
 

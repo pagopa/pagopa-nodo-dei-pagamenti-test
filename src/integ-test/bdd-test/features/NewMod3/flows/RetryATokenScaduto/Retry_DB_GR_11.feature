@@ -1,4 +1,4 @@
-Feature: process tests for Retry_DB_GR_10
+Feature: process tests for Retry_DB_GR_11
 
   Background:
     Given systems up
@@ -152,7 +152,7 @@ Feature: process tests for Retry_DB_GR_10
     When job mod3CancelV2 triggered after 3 seconds
     Then verify the HTTP status code of mod3CancelV2 response is 200
 
-  # Payment Outcome Phase outcome OK
+  # Payment Outcome Phase outcome KO
   Scenario: Execute sendPaymentOutcome request
     Given the Poller Annulli scenario executed successfully
     And initial XML sendPaymentOutcome
@@ -166,7 +166,7 @@ Feature: process tests for Retry_DB_GR_10
       <idChannel>70000000001_01</idChannel>
       <password>pwdpwdpwd</password>
       <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
-      <outcome>OK</outcome>
+      <outcome>KO</outcome>
       <details>
       <paymentMethod>creditCard</paymentMethod>
       <paymentChannel>app</paymentChannel>
@@ -198,7 +198,7 @@ Feature: process tests for Retry_DB_GR_10
 
   Scenario: DB check + db update
     Given the Execute sendPaymentOutcome request scenario executed successfully
-    And verify 1 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
+    And verify 0 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
 
 
 
