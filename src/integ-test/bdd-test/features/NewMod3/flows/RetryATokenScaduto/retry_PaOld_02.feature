@@ -129,7 +129,7 @@ Feature: process tests for generazioneRicevute
       <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio>
       <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
       <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
-      <pay_i:causaleVersamento>pagamento fotocopie pratica RPT</pay_i:causaleVersamento>
+      <pay_i:causaleVersamento>respKO</pay_i:causaleVersamento>
       <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
       </pay_i:datiSingoloVersamento>
       </pay_i:datiVersamento>
@@ -162,7 +162,6 @@ Feature: process tests for generazioneRicevute
       </soapenv:Body>
       </soapenv:Envelope>
       """
-    #  When psp sends SOAP nodoInviaRPT to nodo-dei-pagamenti using the token of the activate phase
     When psp sends SOAP nodoInviaRPT to nodo-dei-pagamenti
     Then check esito is OK of nodoInviaRPT response
     And verify 0 record for the table RPT_ACTIVATIONS retrived by the query rpt_activision on db nodo_online under macro NewMod3
@@ -174,6 +173,29 @@ Feature: process tests for generazioneRicevute
 
   Scenario: Execute paInviaRT
     Given the Execute poller Annulli scenario executed successfully
+    And initial XML paaInviaRT
+      """
+      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+      <soapenv:Header/>
+      <soapenv:Body>
+      <ws:paaInviaRTRisposta>
+      <paaInviaRTRisposta>
+      <!--Optional:-->
+      <fault>
+      <faultCode>PAA_SINTASSI_XSD</faultCode>
+      <faultString>RT non valida rispetto XSD</faultString>
+      <id>mockPa</id>
+      <!--Optional:-->
+      <description>test</description>
+      </fault>
+      <!--Optional:-->
+      <esito>KO</esito>
+      </paaInviaRTRisposta>
+      </ws:paaInviaRTRisposta>
+      </soapenv:Body>
+      </soapenv:Envelope>
+      """
+    And EC replies to nodo-dei-pagamenti with the paaInviaRT
     When job paInviaRt triggered after 5 seconds
     Then verify the HTTP status code of paInviaRt response is 200
 
@@ -182,6 +204,51 @@ Feature: process tests for generazioneRicevute
     And PSP waits 5 seconds for expiration
     Then checks the value RT_RIFIUTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query stati_rpt on db nodo_online under macro NewMod3
 
+  # Payment Outcome Phase outcome OK
+  Scenario: Execute sendPaymentOutcome request
+    Given the DB check scenario executed successfully
+    And initial XML sendPaymentOutcome
+      """
+      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+      <soapenv:Header/>
+      <soapenv:Body>
+      <nod:sendPaymentOutcomeReq>
+      <idPSP>70000000001</idPSP>
+      <idBrokerPSP>70000000001</idBrokerPSP>
+      <idChannel>70000000001_01</idChannel>
+      <password>pwdpwdpwd</password>
+      <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
+      <outcome>OK</outcome>
+      <details>
+      <paymentMethod>creditCard</paymentMethod>
+      <paymentChannel>app</paymentChannel>
+      <fee>2.00</fee>
+      <payer>
+      <uniqueIdentifier>
+      <entityUniqueIdentifierType>F</entityUniqueIdentifierType>
+      <entityUniqueIdentifierValue>JHNDOE00A01F205N</entityUniqueIdentifierValue>
+      </uniqueIdentifier>
+      <fullName>John Doe</fullName>
+      <streetName>street</streetName>
+      <civicNumber>12</civicNumber>
+      <postalCode>89020</postalCode>
+      <city>city</city>
+      <stateProvinceRegion>MI</stateProvinceRegion>
+      <country>IT</country>
+      <e-mail>john.doe@test.it</e-mail>
+      </payer>
+      <applicationDate>2021-10-01</applicationDate>
+      <transferDate>2021-10-02</transferDate>
+      </details>
+      </nod:sendPaymentOutcomeReq>
+      </soapenv:Body>
+      </soapenv:Envelope>
+      """
+    When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+    Then check outcome is KO of sendPaymentOutcome response
+    And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcome response
 
-
+  Scenario: check position_payment_status
+    Given the Execute sendPaymentOutcome request scenario executed successfully
+    Then checks the value PAYING,PAYING_RPT,CANCELLED of the record at column status of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
 

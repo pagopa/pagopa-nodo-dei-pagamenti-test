@@ -55,7 +55,6 @@ def step_impl(context, version):
 def step_impl(context, primitive):
     payload = context.text or ""
     payload = utils.replace_local_variables(payload, context)
-    payload = utils.replace_context_variables(payload, context)
     
     if len(payload) > 0:
         my_document = parseString(payload)
@@ -131,6 +130,7 @@ def step_impl(context, primitive):
         payload = payload.replace('#carrello#', carrello)
         setattr(context,'carrello', carrello)
 
+    payload = utils.replace_context_variables(payload, context)
     payload = utils.replace_global_variables(payload, context)
 
     setattr(context, primitive, payload)
@@ -345,7 +345,6 @@ def step_impl(context, sender, soap_primitive, receiver):
 
 @when('job {job_name} triggered after {seconds} seconds')
 def step_impl(context, job_name, seconds):
-    print(seconds)
     seconds = utils.replace_local_variables(seconds, context)
     time.sleep(int(seconds))
     url_nodo = utils.get_rest_url_nodo(context)
