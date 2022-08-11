@@ -87,7 +87,7 @@ Scenario: Execute nodoChiediInformazioniPagamento (Phase 3)
 
 Scenario: Execute nodoNotificaAnnullamento (Phase 4)
     Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
-    When WISP sends rest GET notificaAnnullamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
+    When WISP sends rest GET notificaAnnullamento?idPagamento=$activateIOPaymentResponse.paymentToken&motivoAnnullamento=UNKPSP to nodo-dei-pagamenti
     Then verify the HTTP status code of notificaAnnullamento response is 200
     And check esito is OK of notificaAnnullamento response
     And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro AppIO
@@ -95,7 +95,7 @@ Scenario: Execute nodoNotificaAnnullamento (Phase 4)
 
 Scenario: Check nodoNotificaAnnullamento1 response after nodoNotificaAnnullamento, and check correctness of database tables
     Given the Execute nodoNotificaAnnullamento (Phase 4) scenario executed successfully
-    When WISP sends rest GET notificaAnnullamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
+    When WISP sends rest GET notificaAnnullamento?idPagamento=$activateIOPaymentResponse.paymentToken&motivoAnnullamento=AUTNEG to nodo-dei-pagamenti
     Then verify the HTTP status code of notificaAnnullamento response is 404
     And check error is Payment annullato o scaduto of notificaAnnullamento response
     And checks the value PAYING, CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
