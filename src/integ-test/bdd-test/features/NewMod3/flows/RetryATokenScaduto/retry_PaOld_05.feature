@@ -171,7 +171,7 @@ Feature: process tests for generazioneRicevute
     When job mod3CancelV1 triggered after 4 seconds
     Then verify the HTTP status code of mod3CancelV1 response is 200
 
-  Scenario: Execute paInviaRT
+Scenario: Execute paInviaRT
     Given the Execute poller Annulli scenario executed successfully
     And initial XML paaInviaRT
       """
@@ -201,8 +201,7 @@ Feature: process tests for generazioneRicevute
 
   Scenario: DB check
     Given the Execute paInviaRT scenario executed successfully
-    And PSP waits 5 seconds for expiration
-    Then checks the value RT_RIFIUTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query stati_rpt on db nodo_online under macro NewMod3
+    Then checks the value RT_ESITO_SCONOSCIUTO_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query stati_rpt on db nodo_online under macro NewMod3
 
   # Payment Outcome Phase outcome OK
   Scenario: Execute sendPaymentOutcome request
@@ -250,5 +249,5 @@ Feature: process tests for generazioneRicevute
 
   Scenario: check position_payment_status
     Given the Execute sendPaymentOutcome request scenario executed successfully
-    Then checks the value PAYING,PAYING_RPT,CANCELLED of the record at column status of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
+    Then checks the value PAYING,PAYING_RPT,CANCELLED,PAID_NORPT of the record at column status of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
     And verify 0 record for the table RETRY_PA_INVIA_RT retrived by the query stati_rpt on db nodo_online under macro NewMod3
