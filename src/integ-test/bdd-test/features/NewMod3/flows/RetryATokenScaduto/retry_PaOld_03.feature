@@ -171,38 +171,10 @@ Feature: process tests for generazioneRicevute
     When job mod3CancelV1 triggered after 4 seconds
     Then verify the HTTP status code of mod3CancelV1 response is 200
 
-  Scenario: Execute paInviaRT
-    Given the Execute poller Annulli scenario executed successfully
-    And initial XML paaInviaRT
-      """
-      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-      <soapenv:Header/>
-      <soapenv:Body>
-      <ws:paaInviaRTRisposta>
-      <paaInviaRTRisposta>
-      <!--Optional:-->
-      <fault>
-      <faultCode>PAA_SINTASSI_XSD</faultCode>
-      <faultString>RT non valida rispetto XSD</faultString>
-      <id>mockPa</id>
-      <!--Optional:-->
-      <description>test</description>
-      </fault>
-      <!--Optional:-->
-      <esito>KO</esito>
-      </paaInviaRTRisposta>
-      </ws:paaInviaRTRisposta>
-      </soapenv:Body>
-      </soapenv:Envelope>
-      """
-    And EC replies to nodo-dei-pagamenti with the paaInviaRT
-    When job paInviaRt triggered after 5 seconds
-    Then verify the HTTP status code of paInviaRt response is 200
-
   Scenario: DB check
-    Given the Execute paInviaRT scenario executed successfully
+    Given the Execute poller Annulli scenario executed successfully
     And PSP waits 5 seconds for expiration
-    Then checks the value RT_RIFIUTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query stati_rpt on db nodo_online under macro NewMod3
+    Then checks the value RT_GENERATA_NODO of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query stati_rpt on db nodo_online under macro NewMod3
 
   # Payment Outcome Phase outcome OK
   Scenario: Execute sendPaymentOutcome request

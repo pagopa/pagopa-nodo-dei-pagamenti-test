@@ -2,6 +2,7 @@ Feature: process tests for generazioneRicevute
 
   Background:
     Given systems up
+    And nodo-dei-pagamenti has config parameter scheduler.jobName_paInviaRt.enabled set to false
     And initial XML verifyPaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -171,38 +172,11 @@ Feature: process tests for generazioneRicevute
     When job mod3CancelV1 triggered after 4 seconds
     Then verify the HTTP status code of mod3CancelV1 response is 200
 
-  Scenario: Execute paInviaRT
-    Given the Execute poller Annulli scenario executed successfully
-    And initial XML paaInviaRT
-      """
-      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-      <soapenv:Header/>
-      <soapenv:Body>
-      <ws:paaInviaRTRisposta>
-      <paaInviaRTRisposta>
-      <!--Optional:-->
-      <fault>
-      <faultCode>PAA_SINTASSI_XSD</faultCode>
-      <faultString>RT non valida rispetto XSD</faultString>
-      <id>mockPa</id>
-      <!--Optional:-->
-      <description>test</description>
-      </fault>
-      <!--Optional:-->
-      <esito>KO</esito>
-      </paaInviaRTRisposta>
-      </ws:paaInviaRTRisposta>
-      </soapenv:Body>
-      </soapenv:Envelope>
-      """
-    And EC replies to nodo-dei-pagamenti with the paaInviaRT
-    When job paInviaRt triggered after 5 seconds
-    Then verify the HTTP status code of paInviaRt response is 200
-
   Scenario: DB check
-    Given the Execute paInviaRT scenario executed successfully
-    And PSP waits 5 seconds for expiration
-    Then checks the value RT_RIFIUTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query stati_rpt on db nodo_online under macro NewMod3
+    Given the Execute poller Annulli scenario executed successfully
+    And generic update through the query param_update_generic_where_condition of the table STATI_RPT_SNAPSHOT the parameter STATO = 'RT_INVIATA_PA', with where condition ID_DOMINIO='$activatePaymentNotice.fiscalCode' AND IUV='$iuv' under macro update_query on db nodo_online
+    And wait 5 seconds for expiration
+    Then checks the value RT_INVIATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query stati_rpt on db nodo_online under macro NewMod3
 
   # Payment Outcome Phase outcome OK
   Scenario: Execute sendPaymentOutcome request
@@ -250,5 +224,5 @@ Feature: process tests for generazioneRicevute
 
   Scenario: check position_payment_status
     Given the Execute sendPaymentOutcome request scenario executed successfully
-    Then checks the value PAYING,PAYING_RPT,CANCELLED of the record at column status of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
+    Then checks the value PAYING,PAYING_RPT,CANCELLED,PAID_NORPT of the record at column status of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
     And verify 0 record for the table RETRY_PA_INVIA_RT retrived by the query stati_rpt on db nodo_online under macro NewMod3
