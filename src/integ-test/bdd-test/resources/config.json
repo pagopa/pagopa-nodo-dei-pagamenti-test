@@ -31,7 +31,11 @@
     "id_station_old" : "44444444444_05",
     "id_broker": "77777777777",
     "id_broker_old": "44444444444",
-    "cod_segr":"02"
+    "cod_segr":"02",
+    "ccPoste": "777777777777",
+    "pspPoste": "POSTE3",
+    "brokerPspPoste": "BANCOPOSTA",
+    "channelPoste": "POSTE3"
   },
   "db_configuration": {
     "nodo_cfg" : {
