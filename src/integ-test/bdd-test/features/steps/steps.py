@@ -153,7 +153,7 @@ def step_impl(context):
         payload = payload.replace('#intermediarioPA#', intermediarioPA)
         setattr(context,"intermediarioPA", intermediarioPA)
     if "#ccp#" in payload:     
-        ccp = str(int(time() * 1000))
+        ccp = str(random.randint(100000000000000, 999999999999999))
         payload = payload.replace('#ccp#', ccp)
         setattr(context,"ccp", ccp)
     if '#date#' in payload:
@@ -962,7 +962,7 @@ def step_impl(context, value, column, query_name, table_name, db_name, name_macr
     conn = db.getConnection(db_selected.get('host'), db_selected.get('database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
 
     selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
-   
+    print(selected_query)
     exec_query = db.executeQuery(conn, selected_query)
     
     query_result = [t[0] for t in exec_query]
@@ -1110,7 +1110,7 @@ def step_impl(context):
     
     default_validity_token = int(getattr(context, 'configurations').get('default_durata_token_IO'))
 
-    assert token_valid_from + datetime.timedelta(milliseconds=default_validity_token) == token_valid_to
+    assert token_valid_from + datetime.timedelta(milliseconds=default_validity_token) == token_valid_to, f"{token_valid_from + datetime.timedelta(milliseconds=default_validity_token)} != {token_valid_to}"
 
 @step("calling primitive {primitive1} and {primitive2} in parallel")
 def step_impl(context, primitive1, primitive2):
@@ -1646,7 +1646,6 @@ def step_impl(context):
 @step('retrieve session token from {url}')
 def step_impl(context, url):
     url = utils.replace_local_variables(url, context)
-    print(url)
-    setattr(context, 'sessionToken', url.split('idSession=')[1])
+    setattr(context, f'sessionToken', url.split('idSession=')[1])
 
 

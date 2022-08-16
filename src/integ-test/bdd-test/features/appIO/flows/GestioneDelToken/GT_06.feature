@@ -1,4 +1,4 @@
-Feature: GT_05
+Feature: GT_06
 
     Background:
         Given systems up

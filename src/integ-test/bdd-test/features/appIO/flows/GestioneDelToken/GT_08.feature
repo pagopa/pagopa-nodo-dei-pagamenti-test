@@ -99,6 +99,17 @@ Feature: GT_08
 
     Scenario: Execute nodoInoltraEsitoPagamentoCarta (Phase 4)
         Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
+        And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
+        """
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:psp="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+                <psp:pspNotifyPaymentRes>
+                    <outcome>Response malformata</outcome>
+                </psp:pspNotifyPaymentRes>
+            </soapenv:Body>
+        </soapenv:Envelope>
+        """
         When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
             """
             {
@@ -114,8 +125,8 @@ Feature: GT_08
                 "esitoTransazioneCarta": "00"
             }
             """
-        Then verify the HTTP status code of inoltroEsito/carta response is 200
-        And check esito is OK of inoltroEsito/carta response
+        Then verify the HTTP status code of inoltroEsito/carta response is 408
+        And check error is Operazione in timeout of inoltroEsito/carta response
 
     Scenario: Execute sendPaymentOutcome (Phase 5)
         Given the Execute nodoInoltraEsitoPagamentoCarta (Phase 4) scenario executed successfully
@@ -168,12 +179,13 @@ Feature: GT_08
         </soapenv:Envelope>
         """
         When job mod3CancelV2 triggered after 15 seconds
+        And wait 10 seconds for expiration
         And PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcome response
         And check faultCode is PPT_SEMANTICA of sendPaymentOutcome response
         And restore initial configurations
     
     Scenario: activateIOPayment1
-        Given the sendPaymentOutcome scenario executed successfully
+        Given the sendPaymentOutcome (Phase 5) scenario executed successfully
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
