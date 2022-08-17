@@ -184,7 +184,7 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
     And idempotencyKey with None in sendPaymentOutcome
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
-
+  
   # Send payment outcome Phase 2 [IDMP_SPO_26]
   Scenario: 10. Execute again the same sendPaymentOutcome request
     Given the 9. Execute sendPaymentOutcome request without idempotencyKey scenario executed successfully
