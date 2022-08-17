@@ -205,7 +205,8 @@ Feature: Semantic checks for activateIOPayment - KO
   Scenario: Execute activateIOPayment (Phase 1)
     When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is OK of activateIOPayment response
-
+  
+  @test
   Scenario Outline: Check PPT_ERRORE_IDEMPOTENZA error on validity idempotencyKey (Phase 2)
     Given nodo-dei-pagamenti has config parameter useIdempotency set to true
     And the Execute activateIOPayment (Phase 1) scenario executed successfully
@@ -263,7 +264,6 @@ Feature: Semantic checks for activateIOPayment - KO
     And check faultCode is PPT_PAGAMENTO_IN_CORSO of activateIOPayment response
 
   # [SEM_AIPR_24]
-  @test
   Scenario: [SEM_AIPR_24]
     Given nodo-dei-pagamenti has config parameter default_durata_token_IO set to 15000
     And the Execute activateIOPayment (Phase 1) scenario executed successfully
