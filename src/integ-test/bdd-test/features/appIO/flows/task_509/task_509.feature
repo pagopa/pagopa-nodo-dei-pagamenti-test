@@ -16,7 +16,7 @@ Feature: task_509
                     <password>pwdpwdpwd</password>
                     <qrCode>
                         <fiscalCode>#creditor_institution_code#</fiscalCode>
-                        <noticeNumber>302094719472095710</noticeNumber>
+                        <noticeNumber>#notice_number#</noticeNumber>
                     </qrCode>
                 </nod:verifyPaymentNoticeReq>
             </soapenv:Body>
@@ -40,8 +40,8 @@ Feature: task_509
                     <!--Optional:-->
                     <idempotencyKey>#idempotency_key#</idempotencyKey>
                     <qrCode>
-                        <fiscalCode>#creditor_institution_code#</fiscalCode>
-                        <noticeNumber>#notice_number#</noticeNumber>
+                        <fiscalCode>$verifyPaymentNotice.fiscalCode</fiscalCode>
+                        <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
                     </qrCode>
                     <!--Optional:-->
                     <expirationTime>12345</expirationTime>
