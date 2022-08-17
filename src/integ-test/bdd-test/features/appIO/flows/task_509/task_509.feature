@@ -2,6 +2,7 @@ Feature: task_509
 
     Background:
         Given systems up
+        And EC new version
 
     Scenario: Execute verifyPaymentNotice (Phase 1)
         Given initial XML verifyPaymentNotice
@@ -93,9 +94,9 @@ Feature: task_509
         "idPagamento":"$activateIOPaymentResponse.paymentToken",
         "RRN":10026669,
         "tipoVersamento":"CP",
-        "identificativoIntermediario":"40000000001",
-        "identificativoPsp":"40000000001",
-        "identificativoCanale":"40000000001_06",
+        "identificativoIntermediario":"#psp#",
+        "identificativoPsp":"#psp#",
+        "identificativoCanale":"#canale#",
         "importoTotalePagato":10.00,
         "timestampOperazione":"2021-07-09T17:06:03.100+01:00",
         "codiceAutorizzativo":"resOK",
@@ -114,9 +115,9 @@ Feature: task_509
         "idPagamento":"$activateIOPaymentResponse.paymentToken",
         "RRN":10026669,
         "tipoVersamento":"CP",
-        "identificativoIntermediario":"40000000001",
-        "identificativoPsp":"40000000001",
-        "identificativoCanale":"40000000001_06",
+        "identificativoIntermediario":"#psp#",
+        "identificativoPsp":"#psp#",
+        "identificativoCanale":"#canale#",
         "importoTotalePagato":10.00,
         "timestampOperazione":"2021-07-09T17:06:03.100+01:00",
         "codiceAutorizzativo":"resOK",
@@ -152,5 +153,6 @@ Feature: task_509
         Given nodo-dei-pagamenti has config parameter scheduler.cancelIOPaymentActorMinutesToBack set to 1
         And the Execute activateIOPayment (Phase 2) scenario executed successfully
         When job annullamentoRptMaiRichiesteDaPm triggered after 15 seconds
+        And wait 6 seconds for expiration
         Then checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
         And restore initial configurations
