@@ -29,13 +29,15 @@
     "intermediarioPSP2":"70000000002",
     "canale32":"70000000002_01",
     "id_station_old" : "44444444444_05",
-    "id_broker": "77777777777",
     "id_broker_old": "44444444444",
     "cod_segr":"02",
     "ccPoste": "777777777777",
     "pspPoste": "POSTE3",
     "brokerPspPoste": "BANCOPOSTA",
-    "channelPoste": "POSTE3"
+    "channelPoste": "POSTE3",
+    "psp_AGID": "AGID_01",
+    "broker_AGID": "97735020584",
+    "canale_AGID": "97735020584_03"
   },
   "db_configuration": {
     "nodo_cfg" : {
