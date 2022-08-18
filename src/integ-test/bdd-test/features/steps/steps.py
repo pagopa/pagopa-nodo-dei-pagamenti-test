@@ -1098,9 +1098,8 @@ def step_impl(context, query_name, table_name, db_name, name_macro, number):
 
     assert len(exec_query) == number, f"{len(exec_query)}"
 
-
-@step('check token validity with {param}')
-def step_impl(context, param):
+@step('check token_valid_to is {condition} token_valid_from plus {param}')
+def step_impl(context, condition, param):
     nodo_online_db = context.config.userdata.get("db_configuration").get('nodo_online')
     nodo_online_conn = db.getConnection(nodo_online_db.get('host'), nodo_online_db.get('database'), nodo_online_db.get('user'), nodo_online_db.get('password'), nodo_online_db.get('port'))
 
@@ -1117,9 +1116,13 @@ def step_impl(context, param):
     print(f"TOKEN_VALID_TO: {token_valid_to}")
     print(f"{token_valid_from + datetime.timedelta(milliseconds=int(param))}")
 
-    
-
-    assert token_valid_from + datetime.timedelta(milliseconds=int(param)) <= token_valid_to, f"{token_valid_from + datetime.timedelta(milliseconds=int(param))} > {token_valid_to}"
+    if condition == 'equal to':
+        assert token_valid_to == token_valid_from + datetime.timedelta(milliseconds=int(param)), f"{token_valid_to} != {token_valid_from + datetime.timedelta(milliseconds=int(param))}"
+    elif condition == 'greater than':
+        assert token_valid_to > token_valid_from + datetime.timedelta(milliseconds=int(param)), f"{token_valid_to} <= {token_valid_from + datetime.timedelta(milliseconds=int(param))}"
+    elif condition == 'smaller than':
+        assert token_valid_to < token_valid_from + datetime.timedelta(milliseconds=int(param)), f"{token_valid_to} >= {token_valid_from + datetime.timedelta(milliseconds=int(param))}"
+    else: assert False
 
 @step("calling primitive {primitive1} and {primitive2} in parallel")
 def step_impl(context, primitive1, primitive2):

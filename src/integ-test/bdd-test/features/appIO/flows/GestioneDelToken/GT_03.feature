@@ -83,5 +83,5 @@ Feature: GT_03
         Given the Execute activateIOPayment (Phase 2) scenario executed successfully
         When WISP sends rest GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200
-        And check token validity with default_durata_token_IO
+        And check token_valid_to is equal to token_valid_from plus default_durata_token_IO
         And restore initial configurations

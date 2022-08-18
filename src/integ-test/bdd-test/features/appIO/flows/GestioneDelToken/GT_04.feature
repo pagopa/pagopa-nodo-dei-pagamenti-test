@@ -88,5 +88,5 @@ Feature: GT_04
         And checks the value $activateIOPaymentResponse.paymentToken of the record at column TOKEN of the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value NotNone of the record at column VALID_TO of the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value NotNone of the record at column TOKEN_VALID_FROM of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
-        And check token validity with default_durata_token_IO
+        And check token_valid_to is equal to token_valid_from plus default_durata_token_IO
         And restore initial configurations

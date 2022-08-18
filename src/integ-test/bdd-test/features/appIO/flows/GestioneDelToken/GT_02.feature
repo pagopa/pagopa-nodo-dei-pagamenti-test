@@ -77,7 +77,7 @@ Feature: GT_02
             </soapenv:Envelope>
             """
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
-        And check token validity with default_durata_token_IO
+        And check token_valid_to is equal to token_valid_from plus default_durata_token_IO
 
     Scenario: Execute nodoChiediInformazioniPagamento (Phase 3)
         Given the Execute activateIOPayment (Phase 2) scenario executed successfully

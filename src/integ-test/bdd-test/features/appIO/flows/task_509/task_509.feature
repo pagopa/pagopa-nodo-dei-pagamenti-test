@@ -148,11 +148,12 @@ Feature: task_509
         And check esito is OK of avanzamentoPagamento response
 
     # [TASK_509_07]
+    @test
     Scenario: Check TOKEN_VALID_TO value (Phase 5)
-        Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 3600000
+        Given nodo-dei-pagamenti has config parameter default_durata_token_IO set to 3600000
         And wait 5 seconds for expiration
         And the Execute nodoInoltroEsitoCarta (Phase 4) scenario executed successfully
-        Then check token validity with 3600000
+        Then check token_valid_to is greater than token_valid_from plus default_durata_token_IO
         And restore initial configurations
 
     # [TASK_509_08]
