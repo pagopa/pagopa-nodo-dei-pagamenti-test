@@ -133,7 +133,6 @@ Feature: task_509
         When WISP sends rest GET listaPSP?idPagamento=$activateIOPaymentResponse.paymentToken&percorsoPagamento=CARTE to nodo-dei-pagamenti
         Then verify the HTTP status code of listaPSP response is 200
 
-
     # [TASK_509_04]
     Scenario: Execute nodoNotificaAnnullamento (Phase 4)
         Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
@@ -148,11 +147,19 @@ Feature: task_509
         Then verify the HTTP status code of avanzamentoPagamento response is 200
         And check esito is OK of avanzamentoPagamento response
 
+    # [TASK_509_07]
+    Scenario: Check TOKEN_VALID_TO value (Phase 5)
+        Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 3600000
+        And wait 5 seconds for expiration
+        And the Execute nodoInoltroEsitoCarta (Phase 4) scenario executed successfully
+        Then check token validity with 3600000
+        And restore initial configurations
+
     # [TASK_509_08]
-    Scenario: Check debtor position
-        Given nodo-dei-pagamenti has config parameter scheduler.cancelIOPaymentActorMinutesToBack set to 1
+    Scenario: Check debtor position (Phase 3)
+        Given nodo-dei-pagamenti has config parameter scheduler.annullamentoRptMaiRichiesteDaPmPollerMinutesToBack set to 1
         And the Execute activateIOPayment (Phase 2) scenario executed successfully
-        When job annullamentoRptMaiRichiesteDaPm triggered after 15 seconds
-        And wait 6 seconds for expiration
+        When job annullamentoRptMaiRichiesteDaPm triggered after 65 seconds
+        And wait 10 seconds for expiration
         Then checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
         And restore initial configurations

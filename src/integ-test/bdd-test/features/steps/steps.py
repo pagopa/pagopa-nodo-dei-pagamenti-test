@@ -1099,8 +1099,8 @@ def step_impl(context, query_name, table_name, db_name, name_macro, number):
     assert len(exec_query) == number, f"{len(exec_query)}"
 
 
-@step('check token validity')
-def step_impl(context):
+@step('check token validity with {param}')
+def step_impl(context, param):
     nodo_online_db = context.config.userdata.get("db_configuration").get('nodo_online')
     nodo_online_conn = db.getConnection(nodo_online_db.get('host'), nodo_online_db.get('database'), nodo_online_db.get('user'), nodo_online_db.get('password'), nodo_online_db.get('port'))
 
@@ -1108,9 +1108,18 @@ def step_impl(context):
     token_valid_from, token_valid_to = db.executeQuery(nodo_online_conn, token_validity_query)[0]
     db.closeConnection(nodo_online_conn)
     
-    default_validity_token = int(getattr(context, 'configurations').get('default_durata_token_IO'))
+    if not param.isdigit():
+        param = getattr(context, 'configurations').get(param)
 
-    assert token_valid_from + datetime.timedelta(milliseconds=default_validity_token) == token_valid_to, f"{token_valid_from + datetime.timedelta(milliseconds=default_validity_token)} != {token_valid_to}"
+    
+    print(f"PARAM: {param}")
+    print(f"TOKEN_VALID_FROM: {token_valid_from}")
+    print(f"TOKEN_VALID_TO: {token_valid_to}")
+    print(f"{token_valid_from + datetime.timedelta(milliseconds=int(param))}")
+
+    
+
+    assert token_valid_from + datetime.timedelta(milliseconds=int(param)) <= token_valid_to, f"{token_valid_from + datetime.timedelta(milliseconds=int(param))} > {token_valid_to}"
 
 @step("calling primitive {primitive1} and {primitive2} in parallel")
 def step_impl(context, primitive1, primitive2):

@@ -82,4 +82,4 @@ Feature: GT_06
         And expirationTime with 10000 in activateIOPayment 
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
-        And check token validity
+        And check token validity with default_durata_token_IO
