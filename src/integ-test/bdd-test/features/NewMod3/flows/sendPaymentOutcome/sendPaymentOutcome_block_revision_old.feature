@@ -1,4 +1,4 @@
-Feature: Block revision for sendPaymentOutcome
+Feature: Block revision for sendPaymentOutcome - PA old
 
     Background:
         Given systems up
@@ -15,8 +15,8 @@ Feature: Block revision for sendPaymentOutcome
                         <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
                         <password>pwdpwdpwd</password>
                         <qrCode>
-                            <fiscalCode>#creditor_institution_code#</fiscalCode>
-                            <noticeNumber>#notice_number#</noticeNumber>
+                            <fiscalCode>#creditor_institution_code_old#</fiscalCode>
+                            <noticeNumber>#notice_number_old#</noticeNumber>
                         </qrCode>
                     </nod:verifyPaymentNoticeReq>
                 </soapenv:Body>
@@ -39,7 +39,7 @@ Feature: Block revision for sendPaymentOutcome
                         <password>pwdpwdpwd</password>
                         <idempotencyKey>#idempotency_key#</idempotencyKey>
                         <qrCode>
-                            <fiscalCode>#creditor_institution_code#</fiscalCode>
+                            <fiscalCode>#creditor_institution_code_old#</fiscalCode>
                             <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
                         </qrCode>
                         <expirationTime>2000</expirationTime>
@@ -93,28 +93,28 @@ Feature: Block revision for sendPaymentOutcome
             </soapenv:Envelope>
             """
 
-    Scenario: [SPO_REV_03]
+    Scenario: [SPO_REV_01]
         Given the Initialize sendPaymentOutcome (Phase 3) scenario executed successfully
-        And EC new version
+        And EC old version
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
         And wait 10 seconds for expiration
-        And checks the value PAYING, PAID, NOTICE_GENERATED, NOTICE_SENT, NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
-        And checks the value NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro NewMod3
-        And checks the value PAYING, PAID, NOTIFIED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
-        And checks the value NOTIFIED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro NewMod3
+        And checks the value PAYING, PAID_NORPT of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
+        And checks the value PAID_NORPT of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro NewMod3
+        And checks the value PAYING, PAID of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
+        And checks the value PAID of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro NewMod3
         And checks the value $sendPaymentOutcome.entityUniqueIdentifierType of the record at column ENTITY_UNIQUE_IDENTIFIER_TYPE of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro NewMod3
         And checks the value $sendPaymentOutcome.entityUniqueIdentifierValue of the record at column ENTITY_UNIQUE_IDENTIFIER_VALUE of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro NewMod3
 
-    Scenario: [SPO_REV_04]
+    Scenario: [SPO_REV_02]
         Given the Initialize sendPaymentOutcome (Phase 3) scenario executed successfully
         And EC new version
         And outcome with KO in sendPaymentOutcome
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
-        And checks the value PAYING,FAILED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
-        And checks the value FAILED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro NewMod3
-        And checks the value PAYING,INSERTED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
+        And checks the value PAYING, FAILED_NORPT of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
+        And checks the value FAILED_NORPT of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro NewMod3
+        And checks the value PAYING, INSERTED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
         And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro NewMod3
         And checks the value $sendPaymentOutcome.entityUniqueIdentifierType of the record at column ENTITY_UNIQUE_IDENTIFIER_TYPE of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro NewMod3
         And checks the value $sendPaymentOutcome.entityUniqueIdentifierValue of the record at column ENTITY_UNIQUE_IDENTIFIER_VALUE of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro NewMod3
