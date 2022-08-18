@@ -255,7 +255,6 @@ Feature: Semantic checks for activateIOPayment - KO
     And restore initial configurations
 
   # [SEM_AIPR_21]
-  @test
   Scenario: Execute activateIOPayment (Phase 1.1)
     Given initial XML activateIOPayment
       """
@@ -308,15 +307,13 @@ Feature: Semantic checks for activateIOPayment - KO
       """
     When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is OK of activateIOPayment response
-  
-  @test
+
   Scenario Outline: Check PPT_ERRORE_IDEMPOTENZA error on idempotencyKey validity (Phase 2)
     Given the Execute activateIOPayment (Phase 1.1) scenario executed successfully
     And <tag> with <tag_value> in activateIOPayment
     When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is KO of activateIOPayment response
     And check faultCode is PPT_ERRORE_IDEMPOTENZA of activateIOPayment response
-    And restore initial configurations
     Examples:
       | tag                         | tag_value             | soapUI test |
       | noticeNumber                | 302119138889055636    | SEM_AIPR_21 |
@@ -357,56 +354,55 @@ Feature: Semantic checks for activateIOPayment - KO
       | e-mail                      | None                  | SEM_AIPR_21 |
 
   # [SEM_AIPR_22]
-  Scenario Outline: Check PPT_ERRORE_IDEMPOTENZA on idempotencyKey validity
-    Given nodo-dei-pagamenti has config parameter useIdempotency set to false
-    And the Execute activateIOPayment (Phase 1) scenario executed successfully
+  Scenario Outline: Check OK on idempotencyKey validity
+    Given the Execute activateIOPayment (Phase 1) - useIdempotency = false scenario executed successfully
+    And <tag> with <value> in activateIOPayment
+    When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
+    Then check outcome is OK of activateIOPayment response
+    And restore initial configurations
+    Examples:
+      | tag          | value              | soapUI test |
+      | noticeNumber | 302119138889055636 | SEM_AIPR_22 |
+      | fiscalCode   | 90000000001        | SEM_AIPR_22 |
+
+  Scenario Outline: Check PPT_PAGAMENTO_IN_CORSO error on idempotencyKey validity
+    Given the Execute activateIOPayment (Phase 1) - useIdempotency = false scenario executed successfully
     And <tag> with <value> in activateIOPayment
     When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is KO of activateIOPayment response
-    And check faultCode is PPT_ERRORE_IDEMPOTENZA of activateIOPayment response
-    And wait 1 seconds for expiration
+    And check faultCode is PPT_PAGAMENTO_IN_CORSO of activateIOPayment response
+    And restore initial configurations
     Examples:
       | tag                         | value                 | soapUI test |
-      | noticeNumber                | 302119138889055636    | SEM_AIPR_21 |
-      | fiscalCode                  | 90000000001           | SEM_AIPR_21 |
-      | amount                      | 12.00                 | SEM_AIPR_21 |
-      | dueDate                     | 2021-12-31            | SEM_AIPR_21 |
-      | dueDate                     | None                  | SEM_AIPR_21 |
-      | paymentNote                 | test_1                | SEM_AIPR_21 |
-      | paymentNote                 | Empty                 | SEM_AIPR_21 |
-      | paymentNote                 | None                  | SEM_AIPR_21 |
-      | expirationTime              | 123456                | SEM_AIPR_21 |
-      | expirationTime              | Empty                 | SEM_AIPR_21 |
-      | expirationTime              | None                  | SEM_AIPR_21 |
-      | payer                       | None                  | SEM_AIPR_21 |
-      | entityUniqueIdentifierType  | F                     | SEM_AIPR_21 |
-      | entityUniqueIdentifierValue | 55555555555           | SEM_AIPR_21 |
-      | fullName                    | name_1                | SEM_AIPR_21 |
-      | streetName                  | streetName            | SEM_AIPR_21 |
-      | streetName                  | Empty                 | SEM_AIPR_21 |
-      | streetName                  | None                  | SEM_AIPR_21 |
-      | civicNumber                 | civicNumber           | SEM_AIPR_21 |
-      | civicNumber                 | Empty                 | SEM_AIPR_21 |
-      | civicNumber                 | None                  | SEM_AIPR_21 |
-      | postalCode                  | postalCode            | SEM_AIPR_21 |
-      | postalCode                  | Empty                 | SEM_AIPR_21 |
-      | postalCode                  | None                  | SEM_AIPR_21 |
-      | city                        | new_city              | SEM_AIPR_21 |
-      | city                        | Empty                 | SEM_AIPR_21 |
-      | city                        | None                  | SEM_AIPR_21 |
-      | stateProvinceRegion         | stateProvinceRegion   | SEM_AIPR_21 |
-      | stateProvinceRegion         | Empty                 | SEM_AIPR_21 |
-      | stateProvinceRegion         | None                  | SEM_AIPR_21 |
-      | country                     | FR                    | SEM_AIPR_21 |
-      | country                     | Empty                 | SEM_AIPR_21 |
-      | country                     | None                  | SEM_AIPR_21 |
-      | e-mail                      | test1@prova.gmail.com | SEM_AIPR_21 |
-      | e-mail                      | Empty                 | SEM_AIPR_21 |
-      | e-mail                      | None                  | SEM_AIPR_21 |
+      | amount                      | 12.00                 | SEM_AIPR_22 |
+      | dueDate                     | 2021-12-31            | SEM_AIPR_22 |
+      | dueDate                     | None                  | SEM_AIPR_22 |
+      | paymentNote                 | test_1                | SEM_AIPR_22 |
+      | paymentNote                 | None                  | SEM_AIPR_22 |
+      | expirationTime              | 123456                | SEM_AIPR_22 |
+      | expirationTime              | None                  | SEM_AIPR_22 |
+      | payer                       | None                  | SEM_AIPR_22 |
+      | entityUniqueIdentifierType  | F                     | SEM_AIPR_22 |
+      | entityUniqueIdentifierValue | 55555555555           | SEM_AIPR_22 |
+      | fullName                    | name_1                | SEM_AIPR_22 |
+      | streetName                  | streetName            | SEM_AIPR_22 |
+      | streetName                  | None                  | SEM_AIPR_22 |
+      | civicNumber                 | civicNumber           | SEM_AIPR_22 |
+      | civicNumber                 | None                  | SEM_AIPR_22 |
+      | postalCode                  | postalCode            | SEM_AIPR_22 |
+      | postalCode                  | None                  | SEM_AIPR_22 |
+      | city                        | new_city              | SEM_AIPR_22 |
+      | city                        | None                  | SEM_AIPR_22 |
+      | stateProvinceRegion         | stateProvinceRegion   | SEM_AIPR_22 |
+      | stateProvinceRegion         | None                  | SEM_AIPR_22 |
+      | country                     | FR                    | SEM_AIPR_22 |
+      | country                     | None                  | SEM_AIPR_22 |
+      | e-mail                      | test1@prova.gmail.com | SEM_AIPR_22 |
+      | e-mail                      | None                  | SEM_AIPR_22 |
 
   # [SEM_AIPR_23]
   Scenario: Check reuse of idempotencyKey with expired paymentToken
-    Given the Execute activateIOPayment (Phase 1) scenario executed successfully
+    Given the Execute activateIOPayment (Phase 1.1) scenario executed successfully
     And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
     And PSP waits expirationTime of activateIOPayment expires
     When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
@@ -416,7 +412,7 @@ Feature: Semantic checks for activateIOPayment - KO
   # [SEM_AIPR_24]
   Scenario: [SEM_AIPR_24]
     Given nodo-dei-pagamenti has config parameter default_durata_token_IO set to 15000
-    And the Execute activateIOPayment (Phase 1) scenario executed successfully
+    And the Execute activateIOPayment (Phase 1.1) scenario executed successfully
     #And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
     And wait 20 seconds for expiration
     And expirationTime with 12345 in activateIOPayment
@@ -427,10 +423,9 @@ Feature: Semantic checks for activateIOPayment - KO
 
   # [SEM_AIPR_25]
   Scenario: [SEM_AIPR_25]
-    Given nodo-dei-pagamenti has config parameter useIdempotency set to false
-    And the Execute activateIOPayment (Phase 1) scenario executed successfully
+    Given the Execute activateIOPayment (Phase 1) - useIdempotency = false scenario executed successfully
     And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
-    And wait 10 seconds for expiration
+    And wait 20 seconds for expiration
     When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is KO of activateIOPayment response
     And check faultCode is PPT_PAGAMENTO_IN_CORSO of activateIOPayment response
@@ -439,11 +434,10 @@ Feature: Semantic checks for activateIOPayment - KO
 
   # [SEM_AIPR_26]
   Scenario: [SEM_AIPR_26]
-    Given nodo-dei-pagamenti has config parameter useIdempotency set to false
-    And the Execute activateIOPayment (Phase 1) scenario executed successfully
+    Given the Execute activateIOPayment (Phase 1) - useIdempotency = false scenario executed successfully
     And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
-    And wait 10 seconds for expiration
-    And expirationTime with 25000 in activateIOPayment
+    And wait 20 seconds for expiration
+    And expirationTime with 12345 in activateIOPayment
     When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is KO of activateIOPayment response
     And check faultCode is PPT_PAGAMENTO_IN_CORSO of activateIOPayment response
@@ -452,7 +446,7 @@ Feature: Semantic checks for activateIOPayment - KO
 
   # [SEM_AIPR_27]
   Scenario: Check reuse of idempotencyKey with expired idempotencyKey validity
-    Given the Execute activateIOPayment (Phase 1) scenario executed successfully
+    Given the Execute activateIOPayment (Phase 1.1) scenario executed successfully
     And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
     And PSP waits 3 minutes for expiration
     When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
@@ -461,8 +455,7 @@ Feature: Semantic checks for activateIOPayment - KO
 
   # [SEM_AIPR_28]
   Scenario: [SEM_AIPR_28]
-    Given nodo-dei-pagamenti has config parameter useIdempotency set to false
-    And the Execute activateIOPayment (Phase 1) scenario executed successfully
+    Given the Execute activateIOPayment (Phase 1) - useIdempotency = false scenario executed successfully
     And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
     And PSP waits 3 minutes for expiration
     When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
@@ -473,7 +466,7 @@ Feature: Semantic checks for activateIOPayment - KO
 
   # [SEM_AIPR_29]
   Scenario: Check PPT_PAGAMENTO_IN_CORSO error with PAYING debtor position
-    Given the Execute activateIOPayment (Phase 1) scenario executed successfully
+    Given the Execute activateIOPayment (Phase 1.1) scenario executed successfully
     And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
     And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
     And random idempotencyKey having $activateIOPayment.idPSP as idPSP in activateIOPayment
@@ -483,7 +476,7 @@ Feature: Semantic checks for activateIOPayment - KO
 
   # [SEM_AIPR_30]
   Scenario: Check PPT_PAGAMENTO_IN_CORSO error with PAYING debtor position and without idempotencyKey
-    Given the Execute activateIOPayment (Phase 1) scenario executed successfully
+    Given the Execute activateIOPayment (Phase 1.1) scenario executed successfully
     And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
     And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
     And idempotencyKey with None in activateIOPayment
