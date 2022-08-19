@@ -1103,18 +1103,12 @@ def step_impl(context, condition, param):
     nodo_online_db = context.config.userdata.get("db_configuration").get('nodo_online')
     nodo_online_conn = db.getConnection(nodo_online_db.get('host'), nodo_online_db.get('database'), nodo_online_db.get('user'), nodo_online_db.get('password'), nodo_online_db.get('port'))
 
-    token_validity_query = utils.query_json(context, 'token_validity', 'AppIO')
+    token_validity_query = utils.query_json(context, 'token_validity', 'AppIO').replace('columns', 'TOKEN_VALID_FROM, TOKEN_VALID_TO').replace('table_name', 'POSITION_ACTIVATE')
     token_valid_from, token_valid_to = db.executeQuery(nodo_online_conn, token_validity_query)[0]
     db.closeConnection(nodo_online_conn)
     
     if not param.isdigit():
         param = getattr(context, 'configurations').get(param)
-
-    
-    print(f"PARAM: {param}")
-    print(f"TOKEN_VALID_FROM: {token_valid_from}")
-    print(f"TOKEN_VALID_TO: {token_valid_to}")
-    print(f"{token_valid_from + datetime.timedelta(milliseconds=int(param))}")
 
     if condition == 'equal to':
         assert token_valid_to == token_valid_from + datetime.timedelta(milliseconds=int(param)), f"{token_valid_to} != {token_valid_from + datetime.timedelta(milliseconds=int(param))}"

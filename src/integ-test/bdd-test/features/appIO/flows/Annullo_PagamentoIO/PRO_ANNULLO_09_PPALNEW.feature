@@ -87,19 +87,6 @@ Feature: PRO_ANNULLO_08_PPALNEW
     
     Scenario: Execute nodoInoltroEsitoPaypal (Phase 4)
         Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
-        And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
-        """
-        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:psp="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
-            <soapenv:Header/>
-            <soapenv:Body>
-                <psp:pspNotifyPaymentRes>
-                <outcome>OK</outcome>
-                <!--Optional:-->
-                <wait>20</wait>
-                </psp:pspNotifyPaymentRes>
-            </soapenv:Body>
-        </soapenv:Envelope>
-        """
         When WISP sends rest POST inoltroEsito/paypal to nodo-dei-pagamenti
         """
         {
@@ -115,8 +102,9 @@ Feature: PRO_ANNULLO_08_PPALNEW
         """
         And job annullamentoRptMaiRichiesteDaPm triggered after 65 seconds
         And wait 15 seconds for expiration
-        Then verify the HTTP status code of inoltroEsito/paypal response is 408
-        And check error is Operazione in timeout of inoltroEsito/paypal response
+        Then verify the HTTP status code of inoltroEsito/paypal response is 200
+        And check esito is KO of inoltroEsito/paypal response
+        And check errorCode is CONPSP of inoltroEsito/paypal response
         And checks the value PAYING, PAYMENT_SENT, PAYMENT_SEND_ERROR of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value PAYMENT_SEND_ERROR of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro AppIO

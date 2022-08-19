@@ -12,9 +12,9 @@ Feature: GT_04
                 <soapenv:Header/>
                 <soapenv:Body>
                     <nod:verifyPaymentNoticeReq>
-                        <idPSP>AGID_01</idPSP>
-                        <idBrokerPSP>97735020584</idBrokerPSP>
-                        <idChannel>97735020584_03</idChannel>
+                        <idPSP>#psp_AGID#</idPSP>
+                        <idBrokerPSP>#broker_AGID#</idBrokerPSP>
+                        <idChannel>#canale_AGID#</idChannel>
                         <password>pwdpwdpwd</password>
                         <qrCode>
                             <fiscalCode>#creditor_institution_code#</fiscalCode>

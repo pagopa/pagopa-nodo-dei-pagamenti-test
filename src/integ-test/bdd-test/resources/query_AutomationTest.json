@@ -63,7 +63,7 @@
         "deny_list": "SELECT d.columns FROM DENYLIST d, PSP p, CANALI c, PA p2 WHERE d.FK_PSP = p.OBJ_ID AND d.FK_CANALE = c.OBJ_ID AND d.FK_PA = p2.OBJ_ID AND p.ID_PSP = '$activateIOPayment.idPSP' AND c.ID_CANALE = '$activateIOPayment.idChannel' AND p2.ID_DOMINIO = '$activateIOPayment.fiscalCode'",
         "pm_session": "SELECT columns FROM PM_SESSION_DATA WHERE ID_SESSIONE = '$activateIOPaymentResponse.paymentToken'",
         "pm_session_old": "SELECT columns FROM PM_SESSION_DATA WHERE ID_SESSIONE = '$sessionToken'",
-        "token_validity": "SELECT TOKEN_VALID_FROM, TOKEN_VALID_TO FROM POSITION_ACTIVATE WHERE CREDITOR_REFERENCE_ID  = '$activateIOPaymentResponse.creditorReferenceId' AND PA_FISCAL_CODE = '$activateIOPaymentResponse.fiscalCodePA' AND PAYMENT_TOKEN = '$activateIOPaymentResponse.paymentToken'",
+        "token_validity": "SELECT columns FROM table_name WHERE CREDITOR_REFERENCE_ID  = '$activateIOPaymentResponse.creditorReferenceId' AND PA_FISCAL_CODE = '$activateIOPaymentResponse.fiscalCodePA' AND PAYMENT_TOKEN = '$activateIOPaymentResponse.paymentToken'",
         "psp": "SELECT columns FROM table_name where ID_PSP = '$sendPaymentOutcome.idPSP'",
         "payment_status_1": "SELECT columns FROM table_name s where s.NOTICE_ID = $activateIOPayment.noticeNumber and s.PAYMENT_TOKEN= '$activateIOPaymentResponse.paymentToken'",
         "info_pagamento": "SELECT columns FROM CD_INFO_PAGAMENTO WHERE ID_SESSIONE='$sessionToken'",
