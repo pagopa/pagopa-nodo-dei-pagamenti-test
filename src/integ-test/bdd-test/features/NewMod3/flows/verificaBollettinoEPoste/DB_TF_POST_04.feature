@@ -2,19 +2,43 @@ Feature: process tests for TF_POSTE_04
 
     Background:
         Given systems up
+        And initial XML paVerifyPaymentNotice
+        """
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
+        <soapenv:Header />
+        <soapenv:Body>
+        <paf:paVerifyPaymentNoticeRes>
+        <outcome>OK</outcome>
+        <paymentList>
+        <paymentOptionDescription>
+        <amount>10.00</amount>
+        <options>EQ</options>
+        <dueDate>2021-07-31</dueDate>
+        <detailDescription>pagamentoTest</detailDescription>
+        <allCCP>false</allCCP>
+        </paymentOptionDescription>
+        </paymentList>
+        <paymentDescription>Pagamento di Test</paymentDescription>
+        <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
+        <companyName>companyName</companyName>
+        <officeName>officeName</officeName>
+        </paf:paVerifyPaymentNoticeRes>
+        </soapenv:Body>
+        </soapenv:Envelope>
+        """
         And initial XML verificaBollettino
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
             <soapenv:Header/>
             <soapenv:Body>
-            <nod:verificaBollettinoReq>
-            <idPSP>POSTE3</idPSP>
-            <idBrokerPSP>BANCOPOSTA</idBrokerPSP>
-            <idChannel>POSTE3</idChannel>
-            <password>pwdpwdpwd</password>
-            <ccPost>444444444444</ccPost>
-            <noticeNumber>311011121646144200</noticeNumber>
-            </nod:verificaBollettinoReq>
+                <nod:verificaBollettinoReq>
+                    <idPSP>#pspPoste#</idPSP>
+                    <idBrokerPSP>#brokerPspPoste#</idBrokerPSP>
+                    <idChannel>#channelPoste#</idChannel>
+                    <password>pwdpwdpwd</password>
+                    <ccPost>#ccPoste#</ccPost>
+                    <noticeNumber>#notice_number#</noticeNumber>
+                </nod:verificaBollettinoReq>
             </soapenv:Body>
             </soapenv:Envelope>
             """
@@ -22,38 +46,30 @@ Feature: process tests for TF_POSTE_04
 
     # Verify phase
     Scenario: Execute verificaBollettino request
+        Given EC replies to nodo-dei-pagamenti with the paVerifyPaymentNotice
         When PSP sends SOAP verificaBollettino to nodo-dei-pagamenti
-        Then check outcome is KO of verificaBollettino response
-        And checkS the value None of the record at column ID OF the table POSITION_TRANSFER retrived by the query position_transfer_TF_POSTE_04_1 on db nodo_online under macro NewMod3
-
-
+        Then check outcome is OK of verificaBollettino response
+        And verify 0 record for the table VERIFICA_BOLLETTINO retrived by the query verifica_bollettino on db nodo_online under macro NewMod3
 
 
     Scenario: Execute activatePaymentNotice request
         Given the Execute verificaBollettino request scenario executed successfully
         And initial XML activatePaymentNotice
             """
-            <soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nfpsp="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd" xmlns:tns="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.wsdl">
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+            <soapenv:Header/>
             <soapenv:Body>
-            <nfpsp:activatePaymentNoticeRes>
-            <outcome>OK</outcome>
-            <totalAmount>10.00</totalAmount>
-            <paymentDescription>test</paymentDescription>
-            <fiscalCodePA>44444444444</fiscalCodePA>
-            <companyName>company</companyName>
-            <officeName>office</officeName>
-            <paymentToken>2806a17f3ccd477c80a008672ac69696</paymentToken>
-            <transferList>
-            <transfer>
-            <idTransfer>1</idTransfer>
-            <transferAmount>10.00</transferAmount>
-            <fiscalCodePA>44444444444</fiscalCodePA>
-            <IBAN>IT45R0760103200000000001016</IBAN>
-            <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
-            </transfer>
-            </transferList>
-            <creditorReferenceId>11016111543194300</creditorReferenceId>
-            </nfpsp:activatePaymentNoticeRes>
+                <nod:activatePaymentNoticeReq>
+                    <idPSP>#pspPoste#</idPSP>
+                    <idBrokerPSP>#brokerPspPoste#</idBrokerPSP>
+                    <idChannel>#channelPoste#</idChannel>
+                    <password>pwdpwdpwd</password>
+                    <qrCode>
+                        <fiscalCode>#creditor_institution_code#</fiscalCode>
+                        <noticeNumber>$verificaBollettino.noticeNumber</noticeNumber>
+                    </qrCode>
+                    <amount>10.00</amount>
+                </nod:activatePaymentNoticeReq>
             </soapenv:Body>
             </soapenv:Envelope>
             """
@@ -127,4 +143,10 @@ Feature: process tests for TF_POSTE_04
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-        And checks the value $paGetPayment.IBAN of the record at column IBAN of the table POSITION_TRANSFER retrived by the query position_transfer_TF_POSTE_04_2 on db nodo_online under macro NewMod3
+        And checks the value IT45R0760103200000000001016 of the record at column IBAN of the table POSITION_TRANSFER retrived by the query position_transfer on db nodo_online under macro NewMod3
+        And checks the value PAYING of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
+        And checks the value PAYING of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro NewMod3
+        And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
+        And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro NewMod3
+        And checks the value NotNone of the record at column ID of the table POSITION_PAYMENT retrived by the query position_payment on db nodo_online under macro NewMod3
+        And checks the value NotNone of the record at column ID of the table POSITION_SERVICE retrived by the query position_service on db nodo_online under macro NewMod3
