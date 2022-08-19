@@ -128,4 +128,7 @@ Feature: flow checks for verificaBollettino
         Then check outcome is OK of verificaBollettino response
         And wait 5 seconds for expiration
         And checks the value $bollettinoId of the record at column ID of the table VERIFICA_BOLLETTINO retrived by the query verifica_bollettino on db nodo_online under macro NewMod3
-        And checks the value $ccPost of the record at column PA_FISCAL_CODE of the table VERIFICA_BOLLETTINO retrived by the query verifica_bollettino on db nodo_online under macro NewMod3
+        And checks the value $ccPost of the record at column CCPOST of the table VERIFICA_BOLLETTINO retrived by the query verifica_bollettino on db nodo_online under macro NewMod3
+        And execution query verifica_bollettino to get value on the table VERIFICA_BOLLETTINO, with the columns UPDATED_TIMESTAMP under macro NewMod3 with db name nodo_online
+        And through the query verifica_bollettino retrieve param updTimestamp2 at position 0 and save it under the key updTimestamp2
+        And check value updTimestamp2 is greater than value updTimestamp
