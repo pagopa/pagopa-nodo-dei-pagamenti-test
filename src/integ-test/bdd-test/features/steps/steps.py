@@ -1118,6 +1118,26 @@ def step_impl(context, condition, param):
         assert token_valid_to < token_valid_from + datetime.timedelta(milliseconds=int(param)), f"{token_valid_to} >= {token_valid_from + datetime.timedelta(milliseconds=int(param))}"
     else: assert False
 
+
+@step('check value {value1} is {condition} value {value2}')
+def step_impl(context, value1, condition, value2):
+    
+    value1 = utils.replace_local_variables(value1,context)
+    value1 = utils.replace_context_variables(value1,context)
+    value1 = utils.replace_global_variables(value1,context)
+    value2 = utils.replace_local_variables(value2,context)
+    value2 = utils.replace_context_variables(value2,context)
+    value2 = utils.replace_global_variables(value2,context)
+
+    if condition == 'equal to':
+        assert value1 == value2, f"{value1} != {value2}"
+    elif condition == 'greater than':
+        assert value1 > value2, f"{value1} <= {value2}"
+    elif condition == 'smaller than':
+        assert value1 < value2, f"{value1} >= {value2}"
+    else: assert False
+
+
 @step("calling primitive {primitive1} and {primitive2} in parallel")
 def step_impl(context, primitive1, primitive2):
     list_of_primitive=[primitive1, primitive2]
