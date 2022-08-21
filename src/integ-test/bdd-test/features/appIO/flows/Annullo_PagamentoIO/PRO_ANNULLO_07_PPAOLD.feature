@@ -1,0 +1,1 @@
+Feature: PRO_ANNULLO_07_PPAOLD
