@@ -220,7 +220,7 @@ def step_impl(context):
         payload = payload.replace('#iuv#', iuv)
 
     if '#idCarrello#' in payload:
-        idCarrello = "09812374659" + "311" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + utils.random_s()
+        idCarrello = "09812374659" + "311" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
         payload = payload.replace('#idCarrello#', idCarrello)
         setattr(context,'idCarrello', idCarrello)
 
