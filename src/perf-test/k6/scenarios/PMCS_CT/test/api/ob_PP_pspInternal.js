@@ -52,13 +52,14 @@ export function ob_PP_pspInternal(baseUrl, token) {
    { ob_PP_pspInternal: 'over_sla1000',ALL: 'over_sla1000' }
    );
    
-  //console.log(res);
+  console.log(res);
   let redUrlPP='NA';
   let pp_id_back='NA';
   let result={};
   result.pp_id_back='NA';
   try{
   redUrlPP= res.json().data.redirectUrl;
+  //redUrlPP= res.headers['Location'];
   }catch(error){}
   console.log('redUrlPP='+redUrlPP);
   //let redUrlPP= res["data.redirectUrl"];
@@ -68,7 +69,7 @@ export function ob_PP_pspInternal(baseUrl, token) {
  	  result.pp_id_back=pp_id_back;
    }
    }catch(error){}
-   console.log('pp_id_back dentro internal='+result.pp_id_back);
+   //console.log('pp_id_back dentro internal='+result.pp_id_back);
    //console.log(res.body);
     //redUrlPP='htpp:/jfjfjffj.com/jgj?ere=1'; //to comment
 

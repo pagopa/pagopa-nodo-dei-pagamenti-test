@@ -67,6 +67,7 @@ export function ob_PP_Confirm_Continue(baseUrl, RED_Path) {
    if(redirect !== undefined){
    try{
       RED_Path=redirect.substr(redirect.indexOf("/pp-restapi-CD"));
+      //RED_Path=redirect.substr(redirect.indexOf("/mock-psp"));
       result.RED_Path = RED_Path;
    }catch(error){}
    }

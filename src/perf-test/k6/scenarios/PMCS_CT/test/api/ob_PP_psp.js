@@ -5,9 +5,10 @@ import { check } from 'k6';
 
 export function ob_PP_psp(baseUrl, token) {
   
-
+  //in perf da controllare valore di idPsp --> SELECT d.ID_PSP FROM PP_PAYPAL_PSP_DETAILS d JOIN PP_PSP p ON d.ID_PSP = p.ID_PSP WHERE d.PSP_URL LIKE '%mock-psp%'
+  //PAYPAL_PSP_MOCK_AZURE
   const res = http.post(
-    baseUrl+'/pp-restapi-CD/v3/webview/paypal/onboarding/psp?idPsp=PAYPAL_PSP_MOCK_AZURE&sessionToken='+token,
+    baseUrl+'/pp-restapi-CD/v3/webview/paypal/onboarding/psp?idPsp=PAYTITM1&sessionToken='+token,
 	'',
 	{ headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
 	tags: { ob_PP_psp: 'http_req_duration', ALL:'http_req_duration'}
