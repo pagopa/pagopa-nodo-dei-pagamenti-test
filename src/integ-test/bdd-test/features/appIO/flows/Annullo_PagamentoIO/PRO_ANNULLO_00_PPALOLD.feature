@@ -1,10 +1,10 @@
-Feature: PRO_ANNULLO_01_PPAOLD
+Feature: PRO_ANNULLO_00_PPALOLD
 
     Background:
         Given systems up
 
     Scenario: Execute nodoVerificaRPT (Phase 1)
-        Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 10000
+        Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 2000
         And RPT generation
         """
         <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
@@ -195,7 +195,7 @@ Feature: PRO_ANNULLO_01_PPAOLD
         When IO sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoAttivaRPT response
         
-    Scenario: Execute nodoInviaRPT (Phase 3)
+        Scenario: Execute nodoInviaRPT (Phase 3)
         Given the Execute nodoAttivaRPT (Phase 2) scenario executed successfully
         And initial XML nodoInviaRPT
         """
@@ -231,7 +231,7 @@ Feature: PRO_ANNULLO_01_PPAOLD
         When WISP sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200
 
-    Scenario: Execute nodoInoltroEsitoPayPal (Phase 5) - Response malformata
+    Scenario: Execute nodoInoltroEsitoPayPal (Phase 5) - Timeout
         Given the Execute nodoChiediInformazioniPagamento (Phase 4) scenario executed successfully
         And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
         """
@@ -239,7 +239,9 @@ Feature: PRO_ANNULLO_01_PPAOLD
             <soapenv:Header/>
             <soapenv:Body>
                 <psp:pspNotifyPaymentRes>
-                    <outcome>Response malformata</outcome>
+                <outcome>OK</outcome>
+                <!--Optional:-->
+                <wait>20</wait>
                 </psp:pspNotifyPaymentRes>
             </soapenv:Body>
         </soapenv:Envelope>
@@ -257,7 +259,7 @@ Feature: PRO_ANNULLO_01_PPAOLD
             "timestampOperazione": "2012-04-23T18:25:43Z"
         }
         """
-        And job mod3CancelV1 triggered after 10 seconds
+        And job mod3CancelV1 triggered after 6 seconds
         And wait 15 seconds for expiration
         Then verify the HTTP status code of inoltroEsito/paypal response is 408
         And check error is Operazione in timeout of inoltroEsito/paypal response
@@ -314,9 +316,10 @@ Feature: PRO_ANNULLO_01_PPAOLD
         #check correctness STATI_RPT_SNAPSHOT table
         And checks the value RPT_ERRORE_INVIO_A_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro AppIO
 
+
     Scenario: Execute nodoNotificaAnnullamento (Phase 6)
-        Given the Execute nodoInoltroEsitoPayPal (Phase 5) - Response malformata scenario executed successfully
-        When WISP sends REST GET notificaAnnullamento?idPagamento=$sessionToken to nodo-dei-pagamenti
+        Given the Execute nodoInoltroEsitoPayPal (Phase 5) - Timeout scenario executed successfully
+        When WISP sends REST GET notificaAnnullamento?idPagamento=$sessionToken&motivoAnnullamento=SESSCA to nodo-dei-pagamenti
         Then verify the HTTP status code of notificaAnnullamento response is 200
         And check esito is OK of notificaAnnullamento response
         And checks the value PAYING, PAYMENT_SENT, PAYMENT_UNKNOWN, PAYMENT_SEND_ERROR, CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
@@ -371,3 +374,4 @@ Feature: PRO_ANNULLO_01_PPAOLD
         And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO, RPT_INVIATA_A_PSP, RPT_ESITO_SCONOSCIUTO_PSP, RPT_ERRORE_INVIO_A_PSP, RPT_ANNULLATA_WISP of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro AppIO
         #check correctness STATI_RPT_SNAPSHOT table
         And checks the value RPT_ANNULLATA_WISP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro AppIO
+        ANd restore initial configurations
