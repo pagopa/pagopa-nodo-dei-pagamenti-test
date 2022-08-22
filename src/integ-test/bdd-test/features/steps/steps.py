@@ -134,8 +134,8 @@ def step_impl(context, primitive):
     if '$iuv' in payload:
         payload = payload.replace('$iuv', getattr(context, 'iuv'))
     
-    if '$iuv2' in payload:
-        payload = payload.replace('$iuv2', getattr(context, 'iuv2'))
+    if '$2iuv' in payload:
+        payload = payload.replace('$2iuv', getattr(context, '2iuv'))
 
     if '$rptAttachment' in payload:
         rptAttachment = getattr(context, 'rptAttachment')
