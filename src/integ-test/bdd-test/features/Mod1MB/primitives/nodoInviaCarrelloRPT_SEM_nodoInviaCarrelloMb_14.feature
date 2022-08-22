@@ -193,7 +193,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          </elementoListaRPT>
          <elementoListaRPT>
          <identificativoDominio>90000000001</identificativoDominio>
-         <identificativoUnivocoVersamento>$2iuv</identificativoUnivocoVersamento>
+         <identificativoUnivocoVersamento>$iuv2</identificativoUnivocoVersamento>
          <codiceContestoPagamento>$carrello</codiceContestoPagamento>
          <rpt>$rptAttachment2</rpt>
          </elementoListaRPT>
@@ -238,7 +238,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          </elementoListaRPT>
          <elementoListaRPT>
          <identificativoDominio>90000000001</identificativoDominio>
-         <identificativoUnivocoVersamento>$2iuv</identificativoUnivocoVersamento>
+         <identificativoUnivocoVersamento>$iuv2</identificativoUnivocoVersamento>
          <codiceContestoPagamento>$carrello</codiceContestoPagamento>
          <rpt>$rptAttachment2</rpt>
          </elementoListaRPT>

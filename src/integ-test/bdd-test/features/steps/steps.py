@@ -114,7 +114,7 @@ def step_impl(context, primitive):
     if '#carrello1#' in payload:
         carrello1 = "77777777777" + "311" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + utils.random_s()
         payload = payload.replace('#carrello1#', carrello1)
-        setattr(context,'carrello1', carrello1)
+        setattr(context,'carrello1', carrello1)iuv2
 
     if '#secCarrello#' in payload:
         secCarrello = "77777777777" + "301" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
@@ -134,8 +134,8 @@ def step_impl(context, primitive):
     if '$iuv' in payload:
         payload = payload.replace('$iuv', getattr(context, 'iuv'))
     
-    if '$2iuv' in payload:
-        payload = payload.replace('$2iuv', getattr(context, '2iuv'))
+    if '$iuv2' in payload:
+        payload = payload.replace('$iuv2', getattr(context, 'iuv2'))
 
     if '$rptAttachment' in payload:
         rptAttachment = getattr(context, 'rptAttachment')
