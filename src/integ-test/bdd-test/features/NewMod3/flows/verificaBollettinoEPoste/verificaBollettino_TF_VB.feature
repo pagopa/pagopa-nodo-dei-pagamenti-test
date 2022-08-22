@@ -66,7 +66,7 @@ Feature: flow checks for verificaBollettino
         Then check esito is OK of nodoVerificaRPT response
 
 
-    # verificaBollettino phase - EC new [TF_VB_03 - TF_VB_05]
+    # verificaBollettino phase - EC new [TF_VB_03 - TF_VB_05 - TF_VB_08]
     Scenario: Execute verificaBollettino request
         Given the Execute nodoVerificaRPT request PPT_MULTI_BENEFICIARIO scenario executed successfully
         And initial XML verificaBollettino
@@ -89,6 +89,7 @@ Feature: flow checks for verificaBollettino
         When PSP sends SOAP verificaBollettino to nodo-dei-pagamenti
         Then check outcome is OK of verificaBollettino response
         And check allCCP field exists in verificaBollettino response
+        And verify 0 record for the table VERIFICA_BOLLETTINO retrived by the query verifica_bollettino on db nodo_online under macro NewMod3
         
 
     # verificaBollettino phase 1 - EC old [TF_VB_06]
@@ -132,3 +133,120 @@ Feature: flow checks for verificaBollettino
         And execution query verifica_bollettino to get value on the table VERIFICA_BOLLETTINO, with the columns UPDATED_TIMESTAMP under macro NewMod3 with db name nodo_online
         And through the query verifica_bollettino retrieve param updTimestamp2 at position 0 and save it under the key updTimestamp2
         And check value updTimestamp2 is greater than value updTimestamp
+    
+
+    # verificaBollettino KO - EC old [TF_VB_07]
+    Scenario: Execute verificaBollettino request OLD KO
+        Given initial XML paaVerificaRPT
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/"   xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">
+            <soapenv:Header/>
+            <soapenv:Body>
+                <ws:paaVerificaRPTRisposta>
+                    <paaVerificaRPTRisposta>
+                        <fault>
+                        <faultCode>PAA_SEMANTICA</faultCode>
+                        <faultString>chiamata da rifiutare</faultString>
+                        <id>${pa}</id>
+                        </fault>            
+                        <esito>KO</esito>
+                    </paaVerificaRPTRisposta>
+                </ws:paaVerificaRPTRisposta>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And EC replies to nodo-dei-pagamenti with the paaVerificaRPT
+        And initial XML verificaBollettino
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+                <nod:verificaBollettinoReq>
+                    <idPSP>#pspPoste#</idPSP>
+                    <idBrokerPSP>#brokerPspPoste#</idBrokerPSP>
+                    <idChannel>#channelPoste#</idChannel>
+                    <password>pwdpwdpwd</password>
+                    <ccPost>#ccPoste#</ccPost>
+                    <noticeNumber>#notice_number_old#</noticeNumber>
+                </nod:verificaBollettinoReq>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And EC old version
+        When PSP sends SOAP verificaBollettino to nodo-dei-pagamenti
+        Then check outcome is KO of verificaBollettino response
+        And check faultCode is PPT_ERRORE_EMESSO_DA_PAA of verificaBollettino response
+        And wait 5 seconds for expiration
+        And verify 0 record for the table VERIFICA_BOLLETTINO retrived by the query verifica_bollettino on db nodo_online under macro NewMod3
+
+
+    # verificaBollettino IBAN - EC old [TF_VB_09]
+    Scenario: Execute verificaBollettino request OLD IBAN
+        Given initial XML verificaBollettino
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+                <nod:verificaBollettinoReq>
+                    <idPSP>#pspPoste#</idPSP>
+                    <idBrokerPSP>#brokerPspPoste#</idBrokerPSP>
+                    <idChannel>#channelPoste#</idChannel>
+                    <password>pwdpwdpwd</password>
+                    <ccPost>#ccPoste_noIBAN#</ccPost>
+                    <noticeNumber>#notice_number_old#</noticeNumber>
+                </nod:verificaBollettinoReq>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And EC old version
+        When PSP sends SOAP verificaBollettino to nodo-dei-pagamenti
+        Then check outcome is KO of verificaBollettino response
+        And check faultCode is PPT_IBAN_ACCREDITO of verificaBollettino response
+        And wait 5 seconds for expiration
+        And verify 0 record for the table VERIFICA_BOLLETTINO retrived by the query verifica_bollettino on db nodo_online under macro NewMod3
+
+
+    # verificaBollettino IBAN KO - EC old [TF_VB_10]
+    Scenario: Execute verificaBollettino request OLD IBAN KO
+        Given initial XML paaVerificaRPT
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/"   xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">
+            <soapenv:Header/>
+            <soapenv:Body>
+                <ws:paaVerificaRPTRisposta>
+                    <paaVerificaRPTRisposta>
+                        <fault>
+                        <faultCode>PAA_SEMANTICA</faultCode>
+                        <faultString>chiamata da rifiutare</faultString>
+                        <id>${pa}</id>
+                        </fault>            
+                        <esito>KO</esito>
+                    </paaVerificaRPTRisposta>
+                </ws:paaVerificaRPTRisposta>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And EC replies to nodo-dei-pagamenti with the paaVerificaRPT
+        And initial XML verificaBollettino
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+                <nod:verificaBollettinoReq>
+                    <idPSP>#pspPoste#</idPSP>
+                    <idBrokerPSP>#brokerPspPoste#</idBrokerPSP>
+                    <idChannel>#channelPoste#</idChannel>
+                    <password>pwdpwdpwd</password>
+                    <ccPost>#ccPoste_noIBAN#</ccPost>
+                    <noticeNumber>#notice_number_old#</noticeNumber>
+                </nod:verificaBollettinoReq>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And EC old version
+        When PSP sends SOAP verificaBollettino to nodo-dei-pagamenti
+        Then check outcome is KO of verificaBollettino response
+        And check faultCode is PPT_ERRORE_EMESSO_DA_PAA of verificaBollettino response
+        And wait 5 seconds for expiration
+        And verify 0 record for the table VERIFICA_BOLLETTINO retrived by the query verifica_bollettino on db nodo_online under macro NewMod3
+
