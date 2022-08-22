@@ -204,7 +204,7 @@ export function total() {
     let idPay=res.json()[0].idPayment;
     console.log("idPay="+idPay);*/
     //-- fine comment in perf
-    let idPay = inputDataUtil.getPay().idPay; //to uncomment in perf
+  let idPay = inputDataUtil.getPay().idPay; //to uncomment in perf
   
   
   res = pay_PP_Check(baseUrl, idPay, token);
@@ -218,11 +218,11 @@ export function total() {
   
   
   
-  let resCheck1 = ''; 
+  let resBCheck = '';
   let statusTr = '';
   do {
   //console.log("dentro while");
-  let resBCheck = B_Check(baseUrl, idTr);
+  resBCheck = B_Check(baseUrl, idTr);
   statusTr=resBCheck.statusTr;
   }
   while (statusTr !== 'Confermato');
@@ -235,7 +235,7 @@ export function total() {
 
   
   
-  RED_Path="/hfhfhfhfh?tyty=1"; //to comment
+  //RED_Path="/hfhfhfhfh?tyty=1"; //to comment
   res= pay_PP_bye(baseUrl, RED_Path);
   let esitoTrEdt = 'NA';
   try{

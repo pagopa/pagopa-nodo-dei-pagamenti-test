@@ -1,18 +1,21 @@
 import http from 'k6/http';
 import { check } from 'k6';
+import { sleep } from 'k6';
 
 
 
 export function B_Check(baseUrl, idTr) {
  
- 
+ //console.log("idTr Bcheck="+idTr);
  const res = http.get(
     baseUrl+'/pp-restapi-CD/v3/webview/checkout/check?id='+idTr+'&_='+Date.now(),
 	{ headers: { 'Content-Type': 'application/x-www-form-urlencoded'} ,
 	tags: { B_Check: 'http_req_duration', ALL: 'http_req_duration'}
 	}
   );
-  
+
+  sleep(1-(res.timings.duration/1000));
+
   check(res, {
  	'B_Check:over_sla300': (r) => r.timings.duration >300,
    },
@@ -49,12 +52,13 @@ export function B_Check(baseUrl, idTr) {
    { B_Check: 'over_sla1000' , ALL: 'over_sla1000'}
    );
   
-
+   //console.log(res);
    let statusTr=undefined;
    let result={};
    result.statusTr=statusTr;
    try{
-   statusTr = res['statusMessage'];
+   statusTr = res.json().statusMessage;
+   console.log("statusTr Bcheck="+statusTr);
    result.statusTr=statusTr;
    }catch(error){}
 

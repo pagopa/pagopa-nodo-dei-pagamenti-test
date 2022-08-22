@@ -63,9 +63,10 @@ export function pay_PP_Pay(baseUrl, token, idWallet, idPay) {
    result.idTr=idTr;
    try{
    let regexTransId =  new RegExp(`id="transactionId" value=".*?"`);
-   let idTr1 = regexTransId.exec(res);
-   let sl = idTr1.split('="');
-   idTr = sl[1].replace('"','');
+   let idTr1 = regexTransId.exec(res.body);
+   console.log("idTr1=="+idTr1);
+   let sl = idTr1[0].split('="');
+   idTr = sl[2].replace('"','');
    result.idTr=idTr;
    }catch(err){}
 

@@ -7,7 +7,7 @@ export function pay_PP_Logout(baseUrl, idTr) {
  
  
  
- idTr='aGVsbG8gd29ybGQ='; //to comment
+ //idTr='aGVsbG8gd29ybGQ='; //to comment
  let idTrDec = encoding.b64decode(idTr, 'std', 's');
  //console.log("idTrDec==="+idTrDec);
  
@@ -15,6 +15,7 @@ export function pay_PP_Logout(baseUrl, idTr) {
     baseUrl+'/pp-restapi-CD/v3/webview/logout?id='+idTrDec,
 	{ headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Sec-Fetch-Dest': 'document', 
 	'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-Site': 'same-origin' } ,
+	redirects: 0,
 	tags: {pay_PP_Logout: 'http_req_duration', ALL: 'http_req_duration'}
 	}
   );
@@ -57,7 +58,7 @@ export function pay_PP_Logout(baseUrl, idTr) {
    );
 
 
-  
+   //console.log(res);
    let redirect=undefined;
    try{
    const headers= res.headers;
