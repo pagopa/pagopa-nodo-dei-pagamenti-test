@@ -124,7 +124,7 @@ Feature: FLUSSO_APIO_17_PPALNEW
         
     Scenario: Execute nodoNotificaAnnullamentoPagamento (Phase 5)
         Given the Execute nodoInoltroEsitoPayPal (Phase 4) scenario executed successfully
-        When WISP sends rest GET notificaAnnullamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
+        When WISP sends rest GET notificaAnnullamento?idPagamento=$activateIOPaymentResponse.paymentToken&motivoAnnullamento=RIFPSP to nodo-dei-pagamenti
         And wait 5 seconds for expiration
         Then verify the HTTP status code of notificaAnnullamento response is 200
         And checks the value PAYING, PAYMENT_SENT, PAYMENT_REFUSED, CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
