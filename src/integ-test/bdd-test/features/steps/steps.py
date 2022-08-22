@@ -301,7 +301,7 @@ def step_impl(context):
         payload = payload.replace('#iuv2#', iuv2)
 
     if '#idCarrello#' in payload:
-        carrello = "09812374659" + "311" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + utils.random_s()
+        carrello = "09812374659" + "311" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
         payload = payload.replace('#carrello#', carrello)
         setattr(context,'carrello', carrello)
 
