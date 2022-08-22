@@ -114,7 +114,7 @@ def step_impl(context, primitive):
     if '#carrello1#' in payload:
         carrello1 = "77777777777" + "311" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + utils.random_s()
         payload = payload.replace('#carrello1#', carrello1)
-        setattr(context,'carrello1', carrello1)iuv2
+        setattr(context,'carrello1', carrello1)
 
     if '#secCarrello#' in payload:
         secCarrello = "77777777777" + "301" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
