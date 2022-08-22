@@ -14,10 +14,10 @@ Feature: check syntax KO for paaAttivaRPT
                     <idChannel>70000000001_01</idChannel>
                     <password>pwdpwdpwd</password>
                     <idempotencyKey>#idempotency_key#</idempotencyKey>
-                    <qrCode>
-                        <fiscalCode>#creditor_institution_code#</fiscalCode>
-                        <noticeNumber>#notice_number#</noticeNumber>
-                    </qrCode>
+                     <qrCode>
+                        <fiscalCode>#creditor_institution_code_old#</fiscalCode>
+                        <noticeNumber>#notice_number_old#</noticeNumber>
+                     </qrCode>
                     <amount>10.00</amount>
                     <dueDate>2021-12-31</dueDate>
                     <paymentNote>causale</paymentNote>
