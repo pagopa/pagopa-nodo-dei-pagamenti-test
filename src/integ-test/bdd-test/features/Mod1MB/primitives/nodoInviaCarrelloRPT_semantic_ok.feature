@@ -4,7 +4,7 @@ Feature: checks semantic OK for nodoInviaCarrelloRPT
       Given systems up
 
    # [SEM_MB_16]
-   Scenario: Define RPT10
+   Scenario: Define RPT
          Given RPT generation
          """
          <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
@@ -84,8 +84,8 @@ Feature: checks semantic OK for nodoInviaCarrelloRPT
          """
 
 
-   Scenario: Define RPT11
-         Given the Define RPT10 scenario executed successfully
+   Scenario: Define RPT2
+         Given the Define RPT scenario executed successfully
          And RPT2 generation
           
          """
@@ -145,7 +145,7 @@ Feature: checks semantic OK for nodoInviaCarrelloRPT
          <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
          <pay_i:importoTotaleDaVersare>1.50</pay_i:importoTotaleDaVersare>
          <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
-         <pay_i:identificativoUnivocoVersamento>#iuv2#</pay_i:identificativoUnivocoVersamento>
+         <pay_i:identificativoUnivocoVersamento>#iuv#</pay_i:identificativoUnivocoVersamento>
          <pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
          <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
          <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
@@ -167,7 +167,7 @@ Feature: checks semantic OK for nodoInviaCarrelloRPT
 
 
    Scenario: Check no error for nodoInviaCarrelloRPT
-         Given the Define RPT11 scenario executed successfully
+         Given the Define RPT2 scenario executed successfully
          And initial XML nodoInviaCarrelloRPT
 
          """
@@ -194,7 +194,7 @@ Feature: checks semantic OK for nodoInviaCarrelloRPT
                      </elementoListaRPT>
                      <elementoListaRPT>
                         <identificativoDominio>90000000001</identificativoDominio>
-                        <identificativoUnivocoVersamento>$iuv2</identificativoUnivocoVersamento>
+                        <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
                         <codiceContestoPagamento>CCD01</codiceContestoPagamento>
                         <rpt>$rpt2Attachment</rpt>
                      </elementoListaRPT>
