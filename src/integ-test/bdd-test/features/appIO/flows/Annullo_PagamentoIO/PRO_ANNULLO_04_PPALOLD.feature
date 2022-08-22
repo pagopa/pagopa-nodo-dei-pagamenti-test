@@ -1,10 +1,10 @@
-Feature: PRO_ANNULLO_01_PPAOLD
+Feature: PRO_ANNULLO_04_PPALOLD
 
     Background:
         Given systems up
 
     Scenario: Execute nodoVerificaRPT (Phase 1)
-        Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 10000
+        Given nodo-dei-pagamenti has config parameter default_durata_token_IO set to 10000
         And RPT generation
         """
         <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
@@ -195,7 +195,7 @@ Feature: PRO_ANNULLO_01_PPAOLD
         When IO sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoAttivaRPT response
         
-    Scenario: Execute nodoInviaRPT (Phase 3)
+        Scenario: Execute nodoInviaRPT (Phase 3)
         Given the Execute nodoAttivaRPT (Phase 2) scenario executed successfully
         And initial XML nodoInviaRPT
         """
@@ -231,7 +231,7 @@ Feature: PRO_ANNULLO_01_PPAOLD
         When WISP sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200
 
-    Scenario: Execute nodoInoltroEsitoPayPal (Phase 5) - Response malformata
+    Scenario: Execute nodoInoltroEsitoPayPal (Phase 5) - Timeout
         Given the Execute nodoChiediInformazioniPagamento (Phase 4) scenario executed successfully
         And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
         """
@@ -239,7 +239,9 @@ Feature: PRO_ANNULLO_01_PPAOLD
             <soapenv:Header/>
             <soapenv:Body>
                 <psp:pspNotifyPaymentRes>
-                    <outcome>Response malformata</outcome>
+                <outcome>OK</outcome>
+                <!--Optional:-->
+                <wait>20</wait>
                 </psp:pspNotifyPaymentRes>
             </soapenv:Body>
         </soapenv:Envelope>
@@ -257,12 +259,12 @@ Feature: PRO_ANNULLO_01_PPAOLD
             "timestampOperazione": "2012-04-23T18:25:43Z"
         }
         """
-        And job mod3CancelV1 triggered after 10 seconds
+        And job mod3CancelV1 triggered after 6 seconds
         And wait 15 seconds for expiration
         Then verify the HTTP status code of inoltroEsito/paypal response is 408
         And check error is Operazione in timeout of inoltroEsito/paypal response
-        And checks the value PAYING, PAYMENT_SENT, PAYMENT_UNKNOWN, PAYMENT_SEND_ERROR of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-        And checks the value PAYMENT_SEND_ERROR of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+        And checks the value PAYING, PAYMENT_SENT, PAYMENT_UNKNOWN of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+        And checks the value PAYMENT_UNKNOWN of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
         And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
         And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
         # check correctness POSITION_PAYMENT table
@@ -313,62 +315,4 @@ Feature: PRO_ANNULLO_01_PPAOLD
         And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO, RPT_INVIATA_A_PSP, RPT_ESITO_SCONOSCIUTO_PSP, RPT_ERRORE_INVIO_A_PSP of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro AppIO
         #check correctness STATI_RPT_SNAPSHOT table
         And checks the value RPT_ERRORE_INVIO_A_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro AppIO
-
-    Scenario: Execute nodoNotificaAnnullamento (Phase 6)
-        Given the Execute nodoInoltroEsitoPayPal (Phase 5) - Response malformata scenario executed successfully
-        When WISP sends REST GET notificaAnnullamento?idPagamento=$sessionToken&motivoAnnullamento=SESSCA to nodo-dei-pagamenti
-        Then verify the HTTP status code of notificaAnnullamento response is 200
-        And check esito is OK of notificaAnnullamento response
-        And checks the value PAYING, PAYMENT_SENT, PAYMENT_UNKNOWN, PAYMENT_SEND_ERROR, CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-        And checks the value CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-        And checks the value PAYING, INSERTED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-        And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-        # check correctness POSITION_PAYMENT table
-        And checks the value $iuv of the record at column CREDITOR_REFERENCE_ID of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-        And checks the value $nodoInviaRPT.codiceContestoPagamento of the record at column PAYMENT_TOKEN of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-        #And checks the value $activateIOPaymentResponse.fiscalCodePA of the record at column BROKER_PA_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
-        And checks the value 1 of the record at column STATION_VERSION of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-        And checks the value #psp# of the record at column PSP_ID of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-        And checks the value #psp# of the record at column BROKER_PSP_ID of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-        And checks the value #canale# of the record at column CHANNEL_ID of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-        #And checks the value $activateIOPayment.idempotencyKey of the record at column IDEMPOTENCY_KEY of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
-        #And checks the value $activateIOPaymentResponse.totalAmount of the record at column AMOUNT of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
-        And checks the value None of the record at column FEE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-        And checks the value None of the record at column OUTCOME of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-        And checks the value PPAL of the record at column PAYMENT_METHOD of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-        And checks the value WISP of the record at column PAYMENT_CHANNEL of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-        And checks the value None of the record at column TRANSFER_DATE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-        And checks the value None of the record at column APPLICATION_DATE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-        And checks the value NotNone of the record at column FK_PAYMENT_PLAN of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-        And checks the value NotNone of the record at column RPT_ID of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-        And checks the value MOD3 of the record at column PAYMENT_TYPE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-        And checks the value None of the record at column CARRELLO_ID of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-        And checks the value None of the record at column ORIGINAL_PAYMENT_TOKEN of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-        And checks the value Y of the record at column FLAG_IO of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-        And checks the value Y of the record at column RICEVUTA_PM of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-        And checks the value Y of the record at column FLAG_PAYPAL of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-        # check correctness PM_SESSION_DATA table
-        And checks the value RPT of the record at column TIPO of the table PM_SESSION_DATA retrived by the query pm_session_old on db nodo_online under macro AppIO
-        And checks the value None of the record at column MOBILE_TOKEN of the table PM_SESSION_DATA retrived by the query pm_session_old on db nodo_online under macro AppIO
-        And checks the value None of the record at column RRN of the table PM_SESSION_DATA retrived by the query pm_session_old on db nodo_online under macro AppIO
-        And checks the value None of the record at column TIPO_INTERAZIONE of the table PM_SESSION_DATA retrived by the query pm_session_old on db nodo_online under macro AppIO
-        And checks the value 10 of the record at column IMPORTO_TOTALE_PAGATO of the table PM_SESSION_DATA retrived by the query pm_session_old on db nodo_online under macro AppIO
-        And checks the value None of the record at column ESITO_TRANSAZIONE_CARTA of the table PM_SESSION_DATA retrived by the query pm_session_old on db nodo_online under macro AppIO
-        And checks the value None of the record at column CODICE_AUTORIZZATIVO of the table PM_SESSION_DATA retrived by the query pm_session_old on db nodo_online under macro AppIO
-        And checks the value NotNone of the record at column TIMESTAMP_OPERAZIONE of the table PM_SESSION_DATA retrived by the query pm_session_old on db nodo_online under macro AppIO
-        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table PM_SESSION_DATA retrived by the query pm_session_old on db nodo_online under macro AppIO
-        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table PM_SESSION_DATA retrived by the query pm_session_old on db nodo_online under macro AppIO
-        And checks the value SESSCA of the record at column MOTIVO_ANNULLAMENTO of the table PM_SESSION_DATA retrived by the query pm_session_old on db nodo_online under macro AppIO
-        And checks the value None of the record at column CODICE_CONVENZIONE of the table PM_SESSION_DATA retrived by the query pm_session_old on db nodo_online under macro AppIO
-        And checks the value None of the record at column CODICE_AUTORIZZATIVO_PAYPAL of the table PM_SESSION_DATA retrived by the query pm_session_old on db nodo_online under macro AppIO
-        #And checks the value $activateIOPayment.idempotencyKey of the record at column ID_TRANSAZIONE_PSP_PAYPAL of the table PM_SESSION_DATA retrived by the query pm_session on db nodo_online under macro AppIO
-        And checks the value responseKO of the record at column ID_TRANSAZIONE_PM_PAYPAL of the table PM_SESSION_DATA retrived by the query pm_session_old on db nodo_online under macro AppIO
-        #check correctness POSITION_TRANSFER
-        And checks the value Y of the record at column VALID of the table POSITION_TRANSFER retrived by the query payment_status_old on db nodo_online under macro AppIO
-        #check correctness STATI_RPT table
-        And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO, RPT_INVIATA_A_PSP, RPT_ESITO_SCONOSCIUTO_PSP, RPT_ERRORE_INVIO_A_PSP, RPT_ANNULLATA_WISP of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro AppIO
-        #check correctness STATI_RPT_SNAPSHOT table
-        And checks the value RPT_ANNULLATA_WISP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro AppIO
         And restore initial configurations

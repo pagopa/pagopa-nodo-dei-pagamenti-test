@@ -1,4 +1,4 @@
-Feature: PRO_ANNULLO_13_PPAOLD
+Feature: PRO_ANNULLO_14_PPALOLD
 
     Background:
         Given systems up
@@ -233,29 +233,10 @@ Feature: PRO_ANNULLO_13_PPAOLD
 
     Scenario: Execute nodoInoltroEsitoPayPal (Phase 5) - Response malformata
         Given the Execute nodoChiediInformazioniPagamento (Phase 4) scenario executed successfully
-        And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
-        """
-        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:psp="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
-        <soapenv:Header/>
-        <soapenv:Body>
-            <psp:pspNotifyPaymentRes>
-            <outcome>KO</outcome>
-            <!--Optional:-->
-            <fault>
-                <faultCode>CANALE_SEMANTICA</faultCode>
-                <faultString>Errore semantico dal psp</faultString>
-                <id>1</id>
-                <!--Optional:-->
-                <description>Errore dal psp</description>
-            </fault>
-            </psp:pspNotifyPaymentRes>
-        </soapenv:Body>
-        </soapenv:Envelope>
-        """
         When WISP sends REST POST inoltroEsito/paypal to nodo-dei-pagamenti
         """
         {
-            "idTransazione": "responseKO",
+            "idTransazione": "responseOK",
             "idTransazionePsp":"153016btAE",
             "idPagamento": "$sessionToken",
             "identificativoIntermediario": "#psp#",
@@ -268,10 +249,9 @@ Feature: PRO_ANNULLO_13_PPAOLD
         And job mod3CancelV1 triggered after 10 seconds
         And wait 10 seconds for expiration
         Then verify the HTTP status code of inoltroEsito/paypal response is 200
-        And check esito is KO of inoltroEsito/paypal response
-        And check errorCode is RIFPSP of inoltroEsito/paypal response
-        And checks the value PAYING, PAYMENT_SENT, PAYMENT_REFUSED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-        And checks the value PAYMENT_REFUSED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+        And check esito is OK of inoltroEsito/paypal response
+        And checks the value PAYING, PAYMENT_SENT, PAYMENT_ACCEPTED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+        And checks the value PAYMENT_ACCEPTED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
         And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
         And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
         # check correctness of POSITION_PAYMENT table
@@ -316,7 +296,7 @@ Feature: PRO_ANNULLO_13_PPAOLD
         #check correctness POSITION_TRANSFER
         And checks the value Y of the record at column VALID of the table POSITION_TRANSFER retrived by the query payment_status_old on db nodo_online under macro AppIO
         #check correctness STATI_RPT table
-        And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO, RPT_INVIATA_A_PSP, RPT_RIFIUTATA_PSP of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro AppIO
+        And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO, RPT_INVIATA_A_PSP, RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro AppIO
         #check correctness STATI_RPT_SNAPSHOT table
-        And checks the value RPT_RIFIUTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro AppIO
+        And checks the value RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro AppIO
         And restore initial configurations
