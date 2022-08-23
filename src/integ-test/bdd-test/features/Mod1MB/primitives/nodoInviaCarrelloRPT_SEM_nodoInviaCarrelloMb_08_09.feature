@@ -3,6 +3,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
    Background:
       Given systems up
 
+   # [SEM_nodoInviaCarrelloMb_08]
    Scenario: Define RPT
       Given RPT generation
          """
@@ -120,7 +121,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
       Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
       And check faultCode is PPT_DOMINIO_DISABILITATO of nodoInviaCarrelloRPT response
 
-
+   # [SEM_nodoInviaCarrelloMb_09]
    Scenario: Define RPT2
       Given RPT generation
          """
