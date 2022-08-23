@@ -425,6 +425,16 @@ def step_impl(context, tag, primitive):
         assert False
 
 
+@then('check {tag} field not exists in {primitive} response')
+def step_impl(context, tag, primitive):
+    soap_response = getattr(context, primitive + RESPONSE)
+    if 'xml' in soap_response.headers['content-type']:
+        my_document = parseString(soap_response.content)
+        assert len(my_document.getElementsByTagName(tag)) == 0
+    else:
+        assert False
+
+
 # TODO improve with greater/equals than options
 @then('{tag} length is less than {value} of {primitive} response')
 def step_impl(context, tag, value, primitive):
