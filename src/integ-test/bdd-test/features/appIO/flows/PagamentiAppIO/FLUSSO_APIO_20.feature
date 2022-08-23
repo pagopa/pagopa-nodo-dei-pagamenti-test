@@ -201,7 +201,7 @@ Scenario: Execute sendPaymentOutcome (Phase 5)
 
 Scenario: Execute nodoNotificaAnnullamento (Phase 6)
     Given the Execute sendPaymentOutcome (Phase 5) scenario executed successfully
-    When WISP sends rest GET notificaAnnullamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
+    When WISP sends rest GET notificaAnnullamento?idPagamento=$activateIOPaymentResponse.paymentToken&motivoAnnullamento=SESSCA to nodo-dei-pagamenti
     Then verify the HTTP status code of notificaAnnullamento response is 404
     And check error is Il Pagamento indicato non esiste of notificaAnnullamento response
     And wait 5 seconds for expiration

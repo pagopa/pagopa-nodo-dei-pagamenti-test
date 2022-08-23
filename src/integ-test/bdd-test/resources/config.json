@@ -32,6 +32,7 @@
     "id_broker_old": "44444444444",
     "cod_segr":"02",
     "ccPoste": "777777777777",
+    "ccPoste_noIBAN": "717777777777",
     "pspPoste": "POSTE3",
     "brokerPspPoste": "BANCOPOSTA",
     "channelPoste": "POSTE3",

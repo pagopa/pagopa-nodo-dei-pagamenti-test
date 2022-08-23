@@ -150,7 +150,7 @@ Scenario: Execute nodoInoltroEsitoCarta (Phase 4)
 
 Scenario: Check nodoNotificaAnnullamento response after nodoInoltroEsitoCarta with unreachable PSP, and check correctness of database tables
     Given the Execute nodoInoltroEsitoCarta (Phase 4) scenario executed successfully
-    When WISP sends rest GET notificaAnnullamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
+    When WISP sends rest GET notificaAnnullamento?idPagamento=$activateIOPaymentResponse.paymentToken&motivoAnnullamento=SESSCA to nodo-dei-pagamenti
     Then verify the HTTP status code of notificaAnnullamento response is 404
     And check error is Il Pagamento indicato non esiste of notificaAnnullamento response
     # check correctness of POSITION_PAYMENT_STATUS table
