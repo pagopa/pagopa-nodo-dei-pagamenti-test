@@ -90,7 +90,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
          <soapenv:Header>
          <ppt:intestazioneCarrelloPPT>
-         <identificativoIntermediarioPA>#codicePA#</identificativoIntermediarioPA>
+         <identificativoIntermediarioPA>09871234560</identificativoIntermediarioPA>
          <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
          <identificativoCarrello>$carrello</identificativoCarrello>
          </ppt:intestazioneCarrelloPPT>
