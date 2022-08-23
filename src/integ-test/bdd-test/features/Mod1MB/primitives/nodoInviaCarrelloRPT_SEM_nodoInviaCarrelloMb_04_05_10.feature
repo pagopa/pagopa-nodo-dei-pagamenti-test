@@ -103,7 +103,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          <identificativoCanale>97735020584_02</identificativoCanale>
          <listaRPT>
          <elementoListaRPT>
-         <identificativoDominio>09871234560</identificativoDominio>
+         <identificativoDominio>#codicePA#</identificativoDominio>
          <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
          <codiceContestoPagamento>$carrello</codiceContestoPagamento>
          <rpt>$rptAttachment</rpt>
