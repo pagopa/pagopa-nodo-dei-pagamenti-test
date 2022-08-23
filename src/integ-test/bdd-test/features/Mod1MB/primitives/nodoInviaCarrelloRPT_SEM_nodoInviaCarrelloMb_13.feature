@@ -91,7 +91,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          <soapenv:Header>
          <ppt:intestazioneCarrelloPPT>
          <identificativoIntermediarioPA>#codicePA#</identificativoIntermediarioPA>
-         <identificativoStazioneIntermediarioPA>11111122222_01</identificativoStazioneIntermediarioPA>
+         <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
          <identificativoCarrello>$thrCarrello</identificativoCarrello>
          </ppt:intestazioneCarrelloPPT>
          </soapenv:Header>
