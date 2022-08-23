@@ -331,7 +331,7 @@ def step_impl(context, attribute, value, elem, primitive):
 @step('{sender} sends soap {soap_primitive} to {receiver}')
 def step_impl(context, sender, soap_primitive, receiver):
     primitive = soap_primitive.split("_")[0]
-    headers = {'Content-Type': 'application/xml', "SOAPAction": primitive, 'X-Original-Forwarded-For': '10.82.39.148'}  # set what your server accepts
+    headers = {'Content-Type': 'application/xml', "SOAPAction": primitive, 'X-Original-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it', 'X-Forwarded-For': '10.82.39.148'}  # set what your server accepts
     url_nodo = utils.get_soap_url_nodo(context, primitive)
     print("url_nodo: ", url_nodo)
     print("nodo soap_request sent >>>", getattr(context, soap_primitive))
@@ -517,7 +517,7 @@ def step_impl(context, sender, method, service, receiver):
     # TODO get url according to receiver
     url_nodo = utils.get_rest_url_nodo(context)
 
-    headers = {'Content-Type': 'application/json'}
+    headers = {'Content-Type': 'application/json', 'Host': 'api.dev.platform.pagopa.it'}
     body = context.text or ""
     print(body)
 

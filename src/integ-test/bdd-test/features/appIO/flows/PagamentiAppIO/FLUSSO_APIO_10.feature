@@ -148,7 +148,7 @@ Scenario: Execute nodoInoltroEsitoCarta (Phase 4)
     And checks the value None of the record at column CODICE_CONVENZIONE of the table PM_SESSION_DATA retrived by the query pm_session on db nodo_online under macro AppIO
 
 
-Scenario: (Phase 5)
+Scenario: Execute sendPaymentOutcome (Phase 5)
     Given the Execute nodoInoltroEsitoCarta (Phase 4) scenario executed successfully
     And initial XML sendPaymentOutcome
     """
@@ -202,7 +202,7 @@ Scenario: (Phase 5)
     Then check outcome is OK of sendPaymentOutcome response
 
 Scenario: Check sendPaymentOutcome1 response after sendPaymentOutcome with sendPaymentOutcome1 OK, and check correctness of database tables
-    Given the (Phase 5) scenario executed successfully
+    Given the Execute sendPaymentOutcome (Phase 5) scenario executed successfully
     And random idempotencyKey having $sendPaymentOutcome.idPSP as idPSP in sendPaymentOutcome
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is KO of sendPaymentOutcome response
