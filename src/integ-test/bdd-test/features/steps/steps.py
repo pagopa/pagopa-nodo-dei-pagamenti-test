@@ -772,6 +772,9 @@ def step_impl(context):
 @step("random idempotencyKey having {value} as idPSP in {primitive}")
 def step_impl(context, value, primitive):
     value = utils.replace_local_variables(value, context)
+    value = utils.replace_context_variables(value, context)
+    value = utils.replace_global_variables(value, context)
+    
     xml = utils.manipulate_soap_action(getattr(context, primitive), "idempotencyKey",
                                        f"{value}_{str(random.randint(1000000000, 9999999999))}")
     setattr(context, primitive, xml)

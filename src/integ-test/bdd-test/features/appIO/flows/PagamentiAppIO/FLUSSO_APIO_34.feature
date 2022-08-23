@@ -11,13 +11,13 @@ Background:
         <soapenv:Header/>
         <soapenv:Body>
         <nod:verifyPaymentNoticeReq>
-            <idPSP>AGID_01</idPSP>
-            <idBrokerPSP>97735020584</idBrokerPSP>
-            <idChannel>97735020584_03</idChannel>
+            <idPSP>#psp_AGID#</idPSP>
+            <idBrokerPSP>#broker_AGID#</idBrokerPSP>
+            <idChannel>#canale_AGID#</idChannel>
             <password>pwdpwdpwd</password>
             <qrCode>
                 <fiscalCode>#creditor_institution_code#</fiscalCode>
-                <noticeNumber>302094719472095710</noticeNumber>
+                <noticeNumber>#notice_number#</noticeNumber>
             </qrCode>
         </nod:verifyPaymentNoticeReq>
         </soapenv:Body>
@@ -42,7 +42,7 @@ Scenario: Execute activateIOPayment (Phase 2)
                 <idempotencyKey>#idempotency_key#</idempotencyKey>
                 <qrCode>
                     <fiscalCode>#creditor_institution_code#</fiscalCode>
-                    <noticeNumber>#notice_number#</noticeNumber>
+                    <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
                 </qrCode>
                 <!--Optional:-->
                 <expirationTime>12345</expirationTime>
@@ -113,10 +113,10 @@ Scenario: Execute nodoInoltroEsitoCarta (Phase 4)
     {
         "idPagamento": "$paymentToken",
         "RRN": 0,
-        "identificativoPsp": "40000000001",
+        "identificativoPsp": "#psp#",
         "tipoVersamento": "CP",
-        "identificativoIntermediario": "40000000001",
-        "identificativoCanale": "40000000001_06",
+        "identificativoIntermediario": "#psp#",
+        "identificativoCanale": "#canale#",
         "importoTotalePagato": 10.00,
         "timestampOperazione": "2012-04-23T18:25:43Z",
         "codiceAutorizzativo": "resOk",
@@ -134,9 +134,9 @@ Scenario: Check sendPaymentOutcome response after nodoInoltroEsitoPaypal primiti
       <soapenv:Header/>
       <soapenv:Body>
         <nod:sendPaymentOutcomeReq>
-          <idPSP>40000000001</idPSP>
-          <idBrokerPSP>40000000001</idBrokerPSP>
-          <idChannel>40000000001_03</idChannel>
+          <idPSP>#psp#</idPSP>
+          <idBrokerPSP>#psp#</idBrokerPSP>
+          <idChannel>#canale#</idChannel>
           <password>pwdpwdpwd</password>
           <idempotencyKey>#idempotency_key#</idempotencyKey>
           <paymentToken>$paymentToken</paymentToken>
