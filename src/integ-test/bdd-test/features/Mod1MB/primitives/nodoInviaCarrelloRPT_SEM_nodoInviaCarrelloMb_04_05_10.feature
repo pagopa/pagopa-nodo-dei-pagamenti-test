@@ -98,9 +98,9 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          <soapenv:Body>
          <ws:nodoInviaCarrelloRPT>
          <password>pwdpwdpwd</password>
-         <identificativoPSP>#psp#</identificativoPSP>
-         <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-         <identificativoCanale>#canale#</identificativoCanale>
+         <identificativoPSP>AGID_01</identificativoPSP>
+         <identificativoIntermediarioPSP>97735020584</identificativoIntermediarioPSP>
+         <identificativoCanale>97735020584_02</identificativoCanale>
          <listaRPT>
          <elementoListaRPT>
          <identificativoDominio>09871234560</identificativoDominio>
