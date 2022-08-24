@@ -1,0 +1,648 @@
+Feature:  flow checks for closePayment-v2 request - closePayment-v2 OK, sendPaymentOutcome OK and closePayment-v2 KO [FLUSSO_OLD_CP_18]
+ 
+  Background:
+    Given systems up 
+    And EC old version
+    
+   # nodoVerificaRPT phase
+    Scenario: Execute nodoVerificaRPT request
+    Given initial XML nodoVerificaRPT soap-request
+    
+    """
+    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:bc="http://PuntoAccessoPSP.spcoop.gov.it/BarCode_GS1_128_Modified" xmlns:aim="http://PuntoAccessoPSP.spcoop.gov.it/Code_128_AIM_USS-128_tipo_C" xmlns:qrc="http://PuntoAccessoPSP.spcoop.gov.it/QrCode">
+       <soapenv:Header/>
+       <soapenv:Body>
+          <ws:nodoVerificaRPT>
+             <identificativoPSP>AGID_01</identificativoPSP>
+             <identificativoIntermediarioPSP>97735020584</identificativoIntermediarioPSP>
+             <identificativoCanale>97735020584_03</identificativoCanale>
+             <password>pwdpwdpwd</password>
+             <codiceContestoPagamento>#ccp#</codiceContestoPagamento>
+             <codificaInfrastrutturaPSP>QR-CODE</codificaInfrastrutturaPSP>
+             <codiceIdRPT><qrc:QrCode>  <qrc:CF>#creditor_institution_code#</qrc:CF> <qrc:CodStazPA>02</qrc:CodStazPA> <qrc:AuxDigit>0</qrc:AuxDigit>  <qrc:CodIUV>#iuv#</qrc:CodIUV> </qrc:QrCode></codiceIdRPT>
+          </ws:nodoVerificaRPT>
+       </soapenv:Body>
+    </soapenv:Envelope>
+    """
+    
+    When psp sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
+    Then check esito is OK of nodoVerificaRPT response
+    
+   # nodoAttivaRPT phase
+    Scenario: Execute nodoAttivaRPT request
+    Given initial XML nodoAttivaRPT soap-request
+	
+    """
+    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:bc="http://PuntoAccessoPSP.spcoop.gov.it/BarCode_GS1_128_Modified"  xmlns:aim="http://PuntoAccessoPSP.spcoop.gov.it/Code_128_AIM_USS-128_tipo_C" xmlns:qrc="http://PuntoAccessoPSP.spcoop.gov.it/QrCode">
+       <soapenv:Header/>
+       <soapenv:Body>
+          <ws:nodoAttivaRPT>
+             <identificativoPSP>AGID_01</identificativoPSP>
+             <identificativoIntermediarioPSP>97735020584</identificativoIntermediarioPSP>
+             <identificativoCanale>97735020584_03</identificativoCanale>
+             <password>pwdpwdpwd</password>
+             <codiceContestoPagamento>#ccp#</codiceContestoPagamento>
+             <identificativoIntermediarioPSPPagamento>97735020584</identificativoIntermediarioPSPPagamento>
+             <identificativoCanalePagamento>97735020584_02</identificativoCanalePagamento>
+             <codificaInfrastrutturaPSP>QR-CODE</codificaInfrastrutturaPSP>
+             <codiceIdRPT><qrc:QrCode>  <qrc:CF>#creditor_institution_code#</qrc:CF> <qrc:CodStazPA>02</qrc:CodStazPA> <qrc:AuxDigit>0</qrc:AuxDigit>  <qrc:CodIUV>#iuv#</qrc:CodIUV> </qrc:QrCode></codiceIdRPT>
+             <datiPagamentoPSP>
+                <importoSingoloVersamento>10.00</importoSingoloVersamento>
+                <!--Optional:-->
+                <ibanAppoggio>IT96R0123454321000000012345</ibanAppoggio>
+                <!--Optional:-->
+                <bicAppoggio>CCRTIT5TXXX</bicAppoggio>
+                <!--Optional:-->
+                <soggettoVersante>
+                   <pag:identificativoUnivocoVersante>
+                      <pag:tipoIdentificativoUnivoco>F</pag:tipoIdentificativoUnivoco>
+                      <pag:codiceIdentificativoUnivoco>RSSFNC50S01L781H</pag:codiceIdentificativoUnivoco>
+                   </pag:identificativoUnivocoVersante>
+                   <pag:anagraficaVersante>Franco Rossi</pag:anagraficaVersante>
+                   <!--Optional:-->
+                   <pag:indirizzoVersante>viale Monza</pag:indirizzoVersante>
+                   <!--Optional:-->
+                   <pag:civicoVersante>1</pag:civicoVersante>
+                   <!--Optional:-->
+                   <pag:capVersante>20125</pag:capVersante>
+                   <!--Optional:-->
+                   <pag:localitaVersante>Milano</pag:localitaVersante>
+                   <!--Optional:-->
+                   <pag:provinciaVersante>MI</pag:provinciaVersante>
+                   <!--Optional:-->
+                   <pag:nazioneVersante>IT</pag:nazioneVersante>
+                   <!--Optional:-->
+                   <pag:e-mailVersante>mail@mail.it</pag:e-mailVersante>
+                </soggettoVersante>
+                <!--Optional:-->
+                <ibanAddebito>IT96R0123454321000000012346</ibanAddebito>
+                <!--Optional:-->
+                <bicAddebito>CCRTIT2TXXX</bicAddebito>
+                <!--Optional:-->
+                <soggettoPagatore>
+                   <pag:identificativoUnivocoPagatore>
+                      <pag:tipoIdentificativoUnivoco>F</pag:tipoIdentificativoUnivoco>
+                      <pag:codiceIdentificativoUnivoco>RSSFNC50S01L781H</pag:codiceIdentificativoUnivoco>
+                   </pag:identificativoUnivocoPagatore>
+                   <pag:anagraficaPagatore>Franco Rossi</pag:anagraficaPagatore>
+                   <!--Optional:-->
+                   <pag:indirizzoPagatore>viale Monza</pag:indirizzoPagatore>
+                   <!--Optional:-->
+                   <pag:civicoPagatore>1</pag:civicoPagatore>
+                   <!--Optional:-->
+                   <pag:capPagatore>20125</pag:capPagatore>
+                   <!--Optional:-->
+                   <pag:localitaPagatore>Milano</pag:localitaPagatore>
+                   <!--Optional:-->
+                   <pag:provinciaPagatore>MI</pag:provinciaPagatore>
+                   <!--Optional:-->
+                   <pag:nazionePagatore>IT</pag:nazionePagatore>
+                   <!--Optional:-->
+                   <pag:e-mailPagatore>mail@mail.it</pag:e-mailPagatore>
+                </soggettoPagatore>
+             </datiPagamentoPSP>
+          </ws:nodoAttivaRPT>
+       </soapenv:Body>
+    </soapenv:Envelope>
+    """
+        
+    When psp sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
+    Then check esito is OK of nodoAttivaRPT response
+    
+    
+    # nodoInviaRPT phase
+    Scenario: Execute nodoInviaRPT request
+    Given initial XML nodoInviaRPT soap-request
+    
+    """
+    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+       <soapenv:Header>
+          <ppt:intestazionePPT>
+             <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
+             <identificativoStazioneIntermediarioPA>#creditor_institution_code#_05</identificativoStazioneIntermediarioPA>
+             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+             <identificativoUnivocoVersamento>#iuv#</identificativoUnivocoVersamento>
+             <codiceContestoPagamento>#ccp#</codiceContestoPagamento>
+          </ppt:intestazionePPT>
+       </soapenv:Header>
+       <soapenv:Body>
+          <ws:nodoInviaRPT>
+             <password>pwdpwdpwd</password>
+             <identificativoPSP>AGID_01</identificativoPSP>
+             <identificativoIntermediarioPSP>97735020584</identificativoIntermediarioPSP>
+             <identificativoCanale>97735020584_02</identificativoCanale>
+             <tipoFirma></tipoFirma>
+             <rpt>PHBheV9pOlJQVCB4c2k6c2NoZW1hTG9jYXRpb249Imh0dHA6Ly93d3cuZGlnaXRwYS5nb3YuaXQvc2NoZW1hcy8yMDExL1BhZ2FtZW50aS8gUGFnSW5mX1JQVF9SVF82XzBfMS54c2QgIiB4bWxuczpwYXlfaT0iaHR0cDovL3d3dy5kaWdpdHBhLmdvdi5pdC9zY2hlbWFzLzIwMTEvUGFnYW1lbnRpLyIgeG1sbnM6eHNpPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYS1pbnN0YW5jZSI+PHBheV9pOnZlcnNpb25lT2dnZXR0bz4xLjA8L3BheV9pOnZlcnNpb25lT2dnZXR0bz48cGF5X2k6ZG9taW5pbz48cGF5X2k6aWRlbnRpZmljYXRpdm9Eb21pbmlvPjc3Nzc3Nzc3Nzc3PC9wYXlfaTppZGVudGlmaWNhdGl2b0RvbWluaW8+PHBheV9pOmlkZW50aWZpY2F0aXZvU3RhemlvbmVSaWNoaWVkZW50ZT43Nzc3Nzc3Nzc3N18wMTwvcGF5X2k6aWRlbnRpZmljYXRpdm9TdGF6aW9uZVJpY2hpZWRlbnRlPjwvcGF5X2k6ZG9taW5pbz48cGF5X2k6aWRlbnRpZmljYXRpdm9NZXNzYWdnaW9SaWNoaWVzdGE+TVNHUklDSElFU1RBMDE8L3BheV9pOmlkZW50aWZpY2F0aXZvTWVzc2FnZ2lvUmljaGllc3RhPjxwYXlfaTpkYXRhT3JhTWVzc2FnZ2lvUmljaGllc3RhPjIwMTYtMDktMTZUMTE6MjQ6MTA8L3BheV9pOmRhdGFPcmFNZXNzYWdnaW9SaWNoaWVzdGE+PHBheV9pOmF1dGVudGljYXppb25lU29nZ2V0dG8+Q05TPC9wYXlfaTphdXRlbnRpY2F6aW9uZVNvZ2dldHRvPjxwYXlfaTpzb2dnZXR0b1ZlcnNhbnRlPjxwYXlfaTppZGVudGlmaWNhdGl2b1VuaXZvY29WZXJzYW50ZT48cGF5X2k6dGlwb0lkZW50aWZpY2F0aXZvVW5pdm9jbz5GPC9wYXlfaTp0aXBvSWRlbnRpZmljYXRpdm9Vbml2b2NvPjxwYXlfaTpjb2RpY2VJZGVudGlmaWNhdGl2b1VuaXZvY28+UkNDR0xEMDlQMDlINTAyRTwvcGF5X2k6Y29kaWNlSWRlbnRpZmljYXRpdm9Vbml2b2NvPjwvcGF5X2k6aWRlbnRpZmljYXRpdm9Vbml2b2NvVmVyc2FudGU+PHBheV9pOmFuYWdyYWZpY2FWZXJzYW50ZT5HZXN1YWxkbztSaWNjaXRlbGxpPC9wYXlfaTphbmFncmFmaWNhVmVyc2FudGU+PHBheV9pOmluZGlyaXp6b1ZlcnNhbnRlPnZpYSBkZWwgZ2VzdTwvcGF5X2k6aW5kaXJpenpvVmVyc2FudGU+PHBheV9pOmNpdmljb1ZlcnNhbnRlPjExPC9wYXlfaTpjaXZpY29WZXJzYW50ZT48cGF5X2k6Y2FwVmVyc2FudGU+MDAxODY8L3BheV9pOmNhcFZlcnNhbnRlPjxwYXlfaTpsb2NhbGl0YVZlcnNhbnRlPlJvbWE8L3BheV9pOmxvY2FsaXRhVmVyc2FudGU+PHBheV9pOnByb3ZpbmNpYVZlcnNhbnRlPlJNPC9wYXlfaTpwcm92aW5jaWFWZXJzYW50ZT48cGF5X2k6bmF6aW9uZVZlcnNhbnRlPklUPC9wYXlfaTpuYXppb25lVmVyc2FudGU+PHBheV9pOmUtbWFpbFZlcnNhbnRlPmdlc3VhbGRvLnJpY2NpdGVsbGlAcG9zdGUuaXQ8L3BheV9pOmUtbWFpbFZlcnNhbnRlPjwvcGF5X2k6c29nZ2V0dG9WZXJzYW50ZT48cGF5X2k6c29nZ2V0dG9QYWdhdG9yZT48cGF5X2k6aWRlbnRpZmljYXRpdm9Vbml2b2NvUGFnYXRvcmU+PHBheV9pOnRpcG9JZGVudGlmaWNhdGl2b1VuaXZvY28+RjwvcGF5X2k6dGlwb0lkZW50aWZpY2F0aXZvVW5pdm9jbz48cGF5X2k6Y29kaWNlSWRlbnRpZmljYXRpdm9Vbml2b2NvPlJDQ0dMRDA5UDA5SDUwMUU8L3BheV9pOmNvZGljZUlkZW50aWZpY2F0aXZvVW5pdm9jbz48L3BheV9pOmlkZW50aWZpY2F0aXZvVW5pdm9jb1BhZ2F0b3JlPjxwYXlfaTphbmFncmFmaWNhUGFnYXRvcmU+R2VzdWFsZG87UmljY2l0ZWxsaTwvcGF5X2k6YW5hZ3JhZmljYVBhZ2F0b3JlPjxwYXlfaTppbmRpcml6em9QYWdhdG9yZT52aWEgZGVsIGdlc3U8L3BheV9pOmluZGlyaXp6b1BhZ2F0b3JlPjxwYXlfaTpjaXZpY29QYWdhdG9yZT4xMTwvcGF5X2k6Y2l2aWNvUGFnYXRvcmU+PHBheV9pOmNhcFBhZ2F0b3JlPjAwMTg2PC9wYXlfaTpjYXBQYWdhdG9yZT48cGF5X2k6bG9jYWxpdGFQYWdhdG9yZT5Sb21hPC9wYXlfaTpsb2NhbGl0YVBhZ2F0b3JlPjxwYXlfaTpwcm92aW5jaWFQYWdhdG9yZT5STTwvcGF5X2k6cHJvdmluY2lhUGFnYXRvcmU+PHBheV9pOm5hemlvbmVQYWdhdG9yZT5JVDwvcGF5X2k6bmF6aW9uZVBhZ2F0b3JlPjxwYXlfaTplLW1haWxQYWdhdG9yZT5nZXN1YWxkby5yaWNjaXRlbGxpQHBvc3RlLml0PC9wYXlfaTplLW1haWxQYWdhdG9yZT48L3BheV9pOnNvZ2dldHRvUGFnYXRvcmU+PHBheV9pOmVudGVCZW5lZmljaWFyaW8+PHBheV9pOmlkZW50aWZpY2F0aXZvVW5pdm9jb0JlbmVmaWNpYXJpbz48cGF5X2k6dGlwb0lkZW50aWZpY2F0aXZvVW5pdm9jbz5HPC9wYXlfaTp0aXBvSWRlbnRpZmljYXRpdm9Vbml2b2NvPjxwYXlfaTpjb2RpY2VJZGVudGlmaWNhdGl2b1VuaXZvY28+MTExMTExMTExMTc8L3BheV9pOmNvZGljZUlkZW50aWZpY2F0aXZvVW5pdm9jbz48L3BheV9pOmlkZW50aWZpY2F0aXZvVW5pdm9jb0JlbmVmaWNpYXJpbz48cGF5X2k6ZGVub21pbmF6aW9uZUJlbmVmaWNpYXJpbz5BWklFTkRBIFhYWDwvcGF5X2k6ZGVub21pbmF6aW9uZUJlbmVmaWNpYXJpbz48cGF5X2k6Y29kaWNlVW5pdE9wZXJCZW5lZmljaWFyaW8+MTIzPC9wYXlfaTpjb2RpY2VVbml0T3BlckJlbmVmaWNpYXJpbz48cGF5X2k6ZGVub21Vbml0T3BlckJlbmVmaWNpYXJpbz5YWFg8L3BheV9pOmRlbm9tVW5pdE9wZXJCZW5lZmljaWFyaW8+PHBheV9pOmluZGlyaXp6b0JlbmVmaWNpYXJpbz5JbmRpcml6em9CZW5lZmljaWFyaW88L3BheV9pOmluZGlyaXp6b0JlbmVmaWNpYXJpbz48cGF5X2k6Y2l2aWNvQmVuZWZpY2lhcmlvPjEyMzwvcGF5X2k6Y2l2aWNvQmVuZWZpY2lhcmlvPjxwYXlfaTpjYXBCZW5lZmljaWFyaW8+MjIyMjI8L3BheV9pOmNhcEJlbmVmaWNpYXJpbz48cGF5X2k6bG9jYWxpdGFCZW5lZmljaWFyaW8+Um9tYTwvcGF5X2k6bG9jYWxpdGFCZW5lZmljaWFyaW8+PHBheV9pOnByb3ZpbmNpYUJlbmVmaWNpYXJpbz5STTwvcGF5X2k6cHJvdmluY2lhQmVuZWZpY2lhcmlvPjxwYXlfaTpuYXppb25lQmVuZWZpY2lhcmlvPklUPC9wYXlfaTpuYXppb25lQmVuZWZpY2lhcmlvPjwvcGF5X2k6ZW50ZUJlbmVmaWNpYXJpbz48cGF5X2k6ZGF0aVZlcnNhbWVudG8+PHBheV9pOmRhdGFFc2VjdXppb25lUGFnYW1lbnRvPjIwMTYtMDktMTY8L3BheV9pOmRhdGFFc2VjdXppb25lUGFnYW1lbnRvPjxwYXlfaTppbXBvcnRvVG90YWxlRGFWZXJzYXJlPjEwLjAwPC9wYXlfaTppbXBvcnRvVG90YWxlRGFWZXJzYXJlPjxwYXlfaTp0aXBvVmVyc2FtZW50bz5QTzwvcGF5X2k6dGlwb1ZlcnNhbWVudG8+PHBheV9pOmlkZW50aWZpY2F0aXZvVW5pdm9jb1ZlcnNhbWVudG8+MTE5MjIxMDEzMjE5MDE4PC9wYXlfaTppZGVudGlmaWNhdGl2b1VuaXZvY29WZXJzYW1lbnRvPjxwYXlfaTpjb2RpY2VDb250ZXN0b1BhZ2FtZW50bz4xNzA0NjE1OTY0MTA3NjU8L3BheV9pOmNvZGljZUNvbnRlc3RvUGFnYW1lbnRvPjxwYXlfaTppYmFuQWRkZWJpdG8+SVQ5NlIwMTIzNDU0MzIxMDAwMDAwMDEyMzQ1PC9wYXlfaTppYmFuQWRkZWJpdG8+PHBheV9pOmJpY0FkZGViaXRvPkFSVElJVE0xMDQ1PC9wYXlfaTpiaWNBZGRlYml0bz48cGF5X2k6ZmlybWFSaWNldnV0YT4wPC9wYXlfaTpmaXJtYVJpY2V2dXRhPjxwYXlfaTpkYXRpU2luZ29sb1ZlcnNhbWVudG8+PHBheV9pOmltcG9ydG9TaW5nb2xvVmVyc2FtZW50bz4xMC4wMDwvcGF5X2k6aW1wb3J0b1NpbmdvbG9WZXJzYW1lbnRvPjxwYXlfaTpjb21taXNzaW9uZUNhcmljb1BBPjEuMDA8L3BheV9pOmNvbW1pc3Npb25lQ2FyaWNvUEE+PHBheV9pOmliYW5BY2NyZWRpdG8+SVQ5NlIwMTIzNDU0MzIxMDAwMDAwMDEyMzQ1PC9wYXlfaTppYmFuQWNjcmVkaXRvPjxwYXlfaTpiaWNBY2NyZWRpdG8+QVJUSUlUTTEwNTA8L3BheV9pOmJpY0FjY3JlZGl0bz48cGF5X2k6aWJhbkFwcG9nZ2lvPklUOTZSMDEyMzQ1MTIzNDUxMjM0NTY3ODkwNDwvcGF5X2k6aWJhbkFwcG9nZ2lvPjxwYXlfaTpiaWNBcHBvZ2dpbz5BUlRJSVRNMTA1MDwvcGF5X2k6YmljQXBwb2dnaW8+PHBheV9pOmNyZWRlbnppYWxpUGFnYXRvcmU+Q1AxLjE8L3BheV9pOmNyZWRlbnppYWxpUGFnYXRvcmU+PHBheV9pOmNhdXNhbGVWZXJzYW1lbnRvPnBhZ2FtZW50byBmb3RvY29waWUgcHJhdGljYTwvcGF5X2k6Y2F1c2FsZVZlcnNhbWVudG8+PHBheV9pOmRhdGlTcGVjaWZpY2lSaXNjb3NzaW9uZT4xL2FiYzwvcGF5X2k6ZGF0aVNwZWNpZmljaVJpc2Nvc3Npb25lPjwvcGF5X2k6ZGF0aVNpbmdvbG9WZXJzYW1lbnRvPjwvcGF5X2k6ZGF0aVZlcnNhbWVudG8+PC9wYXlfaTpSUFQ+</rpt>
+          </ws:nodoInviaRPT>
+       </soapenv:Body>
+    </soapenv:Envelope>
+    """
+    
+    When psp sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+    Then check esito is OK of nodoInviaRPT response
+
+    # DB check_00
+    # SELECT s.* FROM CD_INFO_PAGAMENTO s WHERE s.ID_SESSIONE = '${idSessione}' 
+    
+    # //CD_INFO_PAGAMENTO
+    # OBJ_ID != null
+    # IDENT_DOMINIO == #creditor_institution_code#
+    # IUV == #iuv#
+    # CCP == #ccp#
+    # INSERTED_TIMESTAMP != null
+    # UPDATED_TIMESTAMP != null
+          
+    # nodoChiediInformazioniPagamento phase
+    Scenario: Execute a nodoChiediInformazioniPagamento request
+    Given initial json nodoChiediInformazioniPagamento
+    """
+        {"idPagamento": "$idSessione"}
+    """
+    When PM sends nodoChiediInformazioniPagamento to nodo-dei-pagamenti
+    Then check errorCode is 200
+    
+    # closePayment-v2 request phase  
+    Scenario: Execute a closePayment-v2 request
+    Given initial json closePayment-v2
+    """
+    {"paymentTokens": [
+        "$idSessione"
+        ],
+    "outcome": "OK",
+    "idPSP": "70000000001",
+    "idBrokerPSP": "70000000001",
+    "idChannel": "70000000001_03",
+    "paymentMethod": "TPAY",
+    "transactionId": "18031665",
+    "totalAmount": 12.00,
+    "fee": 2.00,
+    "timestampOperation": "2033-04-23T18:25:43Z",
+    "additionalPaymentInformations": {
+          "key": "10365752"
+        }
+    }
+    """
+    When PM sends closePayment-v2 to nodo-dei-pagamenti
+    Then check outcome is OK 
+    And check errorCode is 200
+ 
+    # DB check_TRADUTTORE NB. noticeNumber = '002+#iuv#'
+    # SELECT s.* FROM NODO_ONLINE.POSITION_PAYMENT_STATUS s where s.NOTICE_ID = '#notice_number#' and s.PA_FISCAL_CODE= '#creditor_institution_code#' order by s.ID asc;
+    # SELECT s.* FROM NODO_ONLINE.POSITION_PAYMENT_STATUS_SNAPSHOT s where s.NOTICE_ID = '#notice_number#' and s.PA_FISCAL_CODE= '#creditor_institution_code#';
+    # SELECT s.* FROM NODO_ONLINE.POSITION_STATUS s where s.NOTICE_ID = '#notice_number#' and s.PA_FISCAL_CODE= '#creditor_institution_code#';
+    # SELECT s.* FROM NODO_ONLINE.POSITION_STATUS_SNAPSHOT s where s.NOTICE_ID = '#notice_number#' and s.PA_FISCAL_CODE= '#creditor_institution_code#';
+    # SELECT s.* FROM NODO_ONLINE.POSITION_PAYMENT s where s.NOTICE_ID = '#notice_number#' and s.PA_FISCAL_CODE= '#creditor_institution_code#';
+    # SELECT s.* FROM NODO_ONLINE.POSITION_SERVICE s where s.NOTICE_ID = '#notice_number#' and s.PA_FISCAL_CODE= '#creditor_institution_code#';
+    # SELECT s.* FROM NODO_ONLINE.PM_SESSION_DATA s where s.ID_SESSIONE = '$activateIOPaymentResponse.paymentToken';
+    # SELECT s.* FROM NODO_ONLINE.POSITION_SUBJECT s where s.FULL_NAME = 'IOname_#idempotency_key#';
+    # SELECT s.* FROM NODO_ONLINE.POSITION_ACTIVATE s where s.NOTICE_ID = '#notice_number#' and s.PA_FISCAL_CODE= '#creditor_institution_code#';
+    # SELECT s.* FROM NODO_ONLINE.PM_METADATA s where s.TRANSACTION_ID = '$closePayment-v2.transactionId' order by s.id asc;
+    # SELECT s.* FROM NODO_ONLINE.RPT s where s.IUV = '#iuv#' and s.IDENT_DOMINIO= '#creditor_institution_code#';
+    # SELECT s.* FROM NODO4_CFG_DEV.PA s where s.ID_DOMINIO= '#creditor_institution_code#';
+    # SELECT s.* FROM NODO_ONLINE.POSITION_PAYMENT_PLAN s where s.NOTICE_ID = '#notice_number#' and s.PA_FISCAL_CODE= '#creditor_institution_code#';
+    # SELECT s.* FROM NODO_ONLINE.POSITION_TRANSFER s where s.NOTICE_ID = '#notice_number#' and s.PA_FISCAL_CODE= '#creditor_institution_code#';
+    # SELECT s.* FROM NODO_ONLINE.RPT_VERSAMENTI s JOIN RPT r ON s.FK_RPT = r.ID AND r.IUV= '#iuv#';
+    # SELECT s.* FROM NODO_ONLINE.STATI_RPT s where s.IUV = '#iuv#' and s.ID_DOMINIO= '#creditor_institution_code#' order by s.id asc;
+    # SELECT s.* FROM NODO_ONLINE.STATI_RPT_SNAPSHOT s where s.IUV = '#iuv#' and s.ID_DOMINIO= '#creditor_institution_code#';
+        
+    # check
+    
+    # POSITION_ACTIVATE
+    # IDa != null
+    # PA_FISCAL_CODE == #creditor_institution_code#
+    # NOTICE_ID == #notice_number#
+    # CREDITOR_REFERENCE_ID == #iuv#
+    # psp == $closePayment-v2Request.identificativoPsp
+    # IDEMPOTENCY_KEY == null
+    # payTok == #ccp#
+    # TOKEN_VALID_FROM == null
+    # TOKEN_VALID_TO != null
+    # DUE_DATE == null
+    # AMOUNT == RPT.SOMMA_VERSAMENTI
+    # INSERTED_TIMESTAMP != null
+    # UPDATED_TIMESTAMP != null
+    # INSERTED_BY == 'closePayment-v2'
+    # UPDATED_BY == 'closePayment-v2'
+    
+    # POSITION_SERVICE
+    # ID != null
+    # PA_FISCAL_CODE == #creditor_institution_code#
+    # NOTICE_ID == #notice_number#
+    # DESCRIPTION == 'TPAY'
+    # COMPANY_NAME == PA.ragione_sociale
+    # OFFICE_NAME == null
+    # DEBTOR_ID != null
+    # INSERTED_TIMESTAMP != null
+    # UPDATED_TIMESTAMP != null
+    # INSERTED_BY == 'closePayment-v2'
+    # UPDATED_BY == 'closePayment-v2'
+
+    # POSITION_PAYMENT_PLAN
+    # ID != null
+    # PA_FISCAL_CODE == #creditor_institution_code#
+    # NOTICE_ID == #notice_number#
+    # CREDITOR_REFERENCE_ID == #iuv#
+    # DUE_DATE != null
+    # RETENTION_DATE == null
+    # AMOUNT == RPT.SOMMA_VERSAMENTI
+    # FLAG_FINAL_PAYMENT == 'Y'
+    # INSERTED_TIMESTAMP != null
+    # UPDATED_TIMESTAMP != null
+    # METADATA == null
+    # FK_POSITION_SERVICE == POSITION_SERVICE.id
+    # INSERTED_BY == 'closePayment-v2'
+    # UPDATED_BY == 'closePayment-v2'
+    
+    #POSITION_PAYMENT
+    # ID != null
+    # PA_FISCAL_CODE == '#creditor_institution_code#'
+    # NOTICE_ID == '#notice_number#'
+    # CREDITOR_REFERENCE_ID == #iuv#
+    # PAYMENT_TOKEN == #ccp#
+    # BROKER_PA_ID == '#creditor_institution_code#'
+    # STATION_ID == '#stazione#'
+    # STATION_VERSION != 2
+    # PSP_ID == $closePayment-v2Request.identificativoPSP
+    # BROKER_PSP_ID == $closePayment-v2Request.identificativoIntermediario
+    # CHANNEL_ID == $closePayment-v2Request.identificativoCanale
+    # IDEMPOTENCY_KEY == null
+    # AMOUNT == RPT.SOMMA_VERSAMENTI
+    # FEE == null
+    # OUTCOME == null
+    # PAYMENT_METHOD == 'TPAY'
+    # PAYMENT_CHANNEL == 'WISP'
+    # TRANSFER_DATE == null
+    # PAYER_ID == null
+    # APPLICATION_DATE == null
+    # INSERTED_TIMESTAMP != null
+    # UPDATED_TIMESTAMP != null
+    # FK_PAYMENT_PLAN == POSITION_PAYMENT_PLAN.ID
+    # RPT_ID == RPT.ID
+    # PAYMENT_TYPE == 'MOD3'
+    # CARRELLO_ID == null
+    # ORIGINAL_PAYMENT_TOKEN == null
+    # FLAG_IO == 'Y'
+    # RICEVUTA_PM == 'Y'
+    # FLAG_PAYPAL == 'N'
+    # TRANSACTION_ID == $closePayment-v2.transactionId
+    
+    # POSITION_TRANSFER
+    # ID != null
+    # NOTICE_ID == '#notice_number#'
+    # CREDITOR_REFERENCE_ID == #iuv#
+    # PA_FISCAL_CODE == '#creditor_institution_code#'
+    # PA_FISCAL_CODE_SECONDARY == '#creditor_institution_code#'
+    # IBAN == RPT_VERSAMENTI.iban
+    # AMOUNT == RPT.SOMMA_VERSAMENTI
+    # REMITTANCE_INFORMATION == RPT_VERSAMENTI.causale_versamento
+    # TRANSFER_CATEGORY == RPT_VERSAMENTI.DATI_SPECIFICI_RISCOSSIONE
+    # TRANSFER_IDENTIFIER == '1'
+    # VALID == 'Y'
+    # INSERTED_TIMESTAMP != null
+    # UPDATED_TIMESTAMP != null
+    # FK_PAYMENT_PLAN == POSITION_PAYMENT_PLAN.id[0]
+    # FK_POSITION_PAYMENT == POSITION_PAYMENT.id[0]
+    # INSERTED_BY == 'closePayment-v2'
+    # UPDATED_BY == 'closePayment-v2'
+    
+    
+
+    #POSITION_PAYMENT_STATUS
+    # ID != null
+    # PA_FISCAL_CODE == '#creditor_institution_code#'
+    # NOTICE_ID == '#notice_number#'
+    # STATUS == 'PAYMENT_RESERVED'
+    # INSERTED_TIMESTAMP != null
+    # CREDITOR_REFERENCE_ID == #iuv#
+    # PAYMENT_TOKEN == #ccp#
+
+    # STATUS1 == 'PAYMENT_SENT'
+    # STATUS2 == 'PAYMENT_ACCEPTED'
+    # STATUS3 == null
+    
+    #POSITION_PAYMENT_STATUS_SNAPSHOT
+    # ID != null
+    # PA_FISCAL_CODE == '#creditor_institution_code#'
+    # NOTICE_ID == '#notice_number#'
+    # CREDITOR_REFERENCE_ID == #iuv#
+    # PAYMENT_TOKEN == #ccp#
+    # STATUS == 'PAYMENT_ACCEPTED'
+    # INSERTED_TIMESTAMP != null
+    # UPDATED_TIMESTAMP != null
+    # FK_POSITION_PAYMENT == POSITION_PAYMENT.id
+
+    # ID1 == null
+    
+    #POSITION_STATUS
+    # ID != null
+    # PA_FISCAL_CODE == '#creditor_institution_code#'
+    # NOTICE_ID == '#notice_number#'
+    # STATUS2 == 'PAYING'
+    # INSERTED_TIMESTAMP != null
+
+    # ID1 == null
+    
+    #POSITION_STATUS_SNAPSHOT
+    # ID != null
+    # PA_FISCAL_CODE == '#creditor_institution_code#'
+    # NOTICE_ID == '#notice_number#'
+    # STATUS == 'PAYING'
+    # INSERTED_TIMESTAMP != null
+    # UPDATED_TIMESTAPM != null
+    # FK_POSITION_SERVICE == POSITION_SERVICE.id
+
+    # id1 == null
+    
+    
+     
+    #PM_METADATA
+    # ID != null
+    # TRANSACTION_ID == $closePayment-v2.transactionId
+    # KEY == 'Token'
+    # VALUE == #ccp#
+    # INSERTED_TIMESTAMP != null
+    # UPDATED_TIMESTAMP != null
+    # INSERTED_BY == 'closePayment-v2'
+    # UPDATED_BY == 'closePayment-v2'
+
+    # ID2 != null
+    # TRANSACTION_ID2 == $closePayment-v2.transactionId
+    # KEY2 == 'Tipo versamento'
+    # VALUE2 == 'TPAY'
+    # INSERTED_TIMESTAMP2 != null
+    # UPDATED_TIMESTAMP2 != null
+    # INSERTED_BY2 == 'closePayment-v2'
+    # UPDATED_BY2 == 'closePayment-v2'
+
+    # ID3 != null
+    # TRANSACTION_ID3 == $closePayment-v2Request.transactionId
+    # KEY3 == 'key'
+    # VALUE3 == $closePayment-v2Request.additionalPaymentInformations
+    # INSERTED_TIMESTAMP3 != null
+    # UPDATED_TIMESTAMP3 != null
+    # INSERTED_BY3 == 'closePayment-v2'
+    # UPDATED_BY3 == 'closePayment-v2'
+     
+    # STATI_RPT
+    # STATUS == 'RPT_RICEVUTA_NODO'
+    # STATUS1 == 'RPT_ACCETTATA_NODO'
+    # STATUS2 == 'RPT_PARCHEGGIATA_NODO'
+    # STATUS3 == 'RPT_ACCETTATA_PSP'
+    
+    # STATI_RPT_SNAPSHOT
+    # STATUS == 'RPT_ACCETTATA_PSP'
+    # STATUS1 == null
+     
+     
+     # sendPaymentOutcomeReq phase
+     Scenario: Execute sendPaymentOutcome request
+     Given the closePayment-v2 scenario executed successfully
+     Given initial XML sendPaymentOutcome
+     """
+     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+       <soapenv:Header/>
+       <soapenv:Body>
+          <nod:sendPaymentOutcomeReq>
+             <idPSP>70000000001</idPSP>
+             <idBrokerPSP>70000000001</idBrokerPSP>
+             <idChannel>70000000001_03</idChannel>
+             <password>pwdpwdpwd</password>
+             <paymentToken>#ccp#</paymentToken>
+             <outcome>OK</outcome>
+             <!--Optional:-->
+             <details>
+                <paymentMethod>creditCard</paymentMethod>
+                <!--Optional:-->
+                <paymentChannel>app</paymentChannel>
+                <fee>2.00</fee>
+                <!--Optional:-->
+                <payer>
+                   <uniqueIdentifier>
+                      <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
+                      <entityUniqueIdentifierValue>77777777777_01</entityUniqueIdentifierValue>
+                   </uniqueIdentifier>
+                   <fullName>SPOname_#ccp#</fullName>
+                   <!--Optional:-->
+                   <streetName>SPOstreet</streetName>
+                   <!--Optional:-->
+                   <civicNumber>SPOcivic</civicNumber>
+                   <!--Optional:-->
+                   <postalCode>SPOpostal</postalCode>
+                   <!--Optional:-->
+                   <city>SPOcity</city>
+                   <!--Optional:-->
+                   <stateProvinceRegion>SPOstate</stateProvinceRegion>
+                   <!--Optional:-->
+                   <country>IT</country>
+                   <!--Optional:-->
+                   <e-mail>SPOprova@test.it</e-mail>
+                </payer>
+                <applicationDate>2021-12-12</applicationDate>
+                <transferDate>2021-12-11</transferDate>
+             </details>
+          </nod:sendPaymentOutcomeReq>
+       </soapenv:Body>
+    </soapenv:Envelope>
+    """
+    When psp sends sendPaymentOutcome to nodo-dei-pagamenti
+    Then check outcome is OK
+    
+   
+    #DB check_01
+    # SELECT s.* FROM NODO_ONLINE.POSITION_PAYMENT_STATUS s where s.NOTICE_ID = '#notice_number#' and s.PA_FISCAL_CODE= '#creditor_institution_code#' order by s.ID asc;
+    # SELECT s.* FROM NODO_ONLINE.POSITION_PAYMENT_STATUS_SNAPSHOT s where s.NOTICE_ID = '#notice_number#' and s.PA_FISCAL_CODE= '#creditor_institution_code#';
+    # SELECT s.* FROM NODO_ONLINE.POSITION_STATUS s where s.NOTICE_ID = '#notice_number#' and s.PA_FISCAL_CODE= '#creditor_institution_code#' order by s.ID as;
+    # SELECT s.* FROM NODO_ONLINE.POSITION_STATUS_SNAPSHOT s where s.NOTICE_ID = '#notice_number#' and s.PA_FISCAL_CODE= '#creditor_institution_code#';
+    # SELECT s.* FROM NODO_ONLINE.POSITION_PAYMENT s where s.NOTICE_ID = '#notice_number#' and s.PA_FISCAL_CODE= '#creditor_institution_code#';
+    # SELECT s.* FROM NODO_ONLINE.POSITION_SERVICE s where s.NOTICE_ID = '#notice_number#' and s.PA_FISCAL_CODE= '#creditor_institution_code#';
+    # SELECT s.* FROM NODO_ONLINE.POSITION_SUBJECT s where s.FULL_NAME = 'IOname_${idempotenza}';
+    # SELECT s.* FROM NODO_ONLINE.STATI_RPT s WHERE s.IUV = '#iuv#' order by s.id asc;
+
+    # POSITION_PAYMENT_STATUS
+    # ID != null
+    # PA_FISCAL_CODE == '#creditor_institution_code#'
+    # NOTICE_ID == '#notice_number#'
+    # STATUS == 'PAYMENT_RESERVED'
+    # INSERTED_TIMESTAMP != null
+    # CREDITOR_REFERENCE_ID == #iuv#
+    # PAYMENT_TOKEN == #ccp#
+
+    # STATUS1 == 'PAYMENT_SENT'
+    # STATUS2 == 'PAYMENT_UNKNOWN'
+    # STATUS3 == 'PAID'
+    # STATUS4 == 'NOTICE_GENERATED'
+
+    # POSITION_PAYMENT_STATUS_SNAPSHOT
+    # ID != null
+    # PA_FISCAL_CODE == '#creditor_institution_code#'
+    # NOTICE_ID == '#notice_number#'
+    # CREDITOR_REFERENCE_ID == #iuv#
+    # PAYMENT_TOKEN == #ccp#
+    # STATUS == 'NOTICE_GENERATED'
+    # INSERTED_TIMESTAMP != null
+    # UPDATED_TIMESTAMP != null
+    # FK_POSITION_PAYMENT == POSITION_PAYMENT.id
+
+
+    # POSITION_STATUS
+    # ID != null
+    # PA_FISCAL_CODE == '#creditor_institution_code#'
+    # NOTICE_ID == '#notice_number#'
+    # STATUS == 'PAYING'
+    # INSERTED_TIMESTAMP != null
+
+    # STATUS2 == 'PAID'
+    
+    # POSITION_STATUS_SNAPSHOT
+    # ID != null
+    # PA_FISCAL_CODE == '#creditor_institution_code#'
+    # NOTICE_ID == '#notice_number#'
+    # STATUS == 'NOTICE_STORED'
+    # INSERTED_TIMESTAMP != null
+    # UPDATED_TIMESTAPM != null
+    # FK_POSITION_SERVICE == POSITION_SERVICE.id
+
+    # id1 == null
+
+
+    # POSITION_PAYMENT
+    # ID != null
+    # PA_FISCAL_CODE == '#creditor_institution_code#'
+    # NOTICE_ID == '#notice_number#'
+    # CREDITOR_REFERENCE_ID == #iuv#
+    # PAYMENT_TOKEN == #ccp#
+    # BROKER_PA_ID5 == '#creditor_institution_code#'
+    # STATION_ID == #stazione#
+    # STATION_VERSION == 1
+    # PSP_ID == $closePayment-v2Request.identificativoPSP
+    # BROKER_PSP_ID == $closePayment-v2Request.identificativoIntermediario
+    # CHANNEL_ID == $closePayment-v2Request.identificativoCanale
+    # IDEMPOTENCY_KEY == null
+    # AMOUNT == 10
+    # FEE == 2
+    # OUTCOME == null
+    # PAYMENT_METHOD == 'TPAY'
+    # PAYMENT_CHANNEL == 'WISP'
+    # TRANSFER_DATE == null
+    # PAYER_ID == null
+    # APPLICATION_DATE == null
+    # INSERTED_TIMESTAMP != null
+    # UPDATED_TIMESTAMP != null
+    # FK_PAYMENT_PLAN != null
+    # RPT_ID != null
+    # PAYMENT_TYPE == 'MOD3'
+    # CARRELLO_ID == null
+    # ORIGINAL_PAYMENT_TOKEN == null
+    # FLAG_IO == 'Y'
+    # RICEVUTA_PM == 'Y'
+
+
+    # STATI_RPT
+    # stato == 'RPT_RICEVUTA_NODO'
+    # stato1 == 'RPT_ACCETTATA_NODO'
+    # stato2 == 'RPT_PARCHEGGIATA_NODO'
+    # stato3 == 'RPT_RISOLTA_OK'
+    # stato4 == 'RT_GENERATA_NODO'
+    # stato5 == 'RT_INVIATA_PA'
+    # stato6 == 'RT_ACCETTATA_PA'
+    
+    # RT_VERSAMENTI
+    # id != null
+    # progressivo == 1
+    # importoRT == 10
+    # esito == 'ESEGUITO'
+    # causaleVersamento == RPT_VERSAMENTI.causale_versamento
+    # datiSpecificiRiscossione == RPT_VERSAMENTI.dati_specifici_riscossione
+    # commissione == 2
+    # fkRT == RT.ID
+    # insertedTimestamp != null
+    # updatedTimestamp != null
+    
+    
+    #POSITION_RECEIPT
+    # receiptID == $activateIOPaymentResponse.paymentToken
+    # noticeID == '#notice_number#'
+    # pa == '#creditor_institution_code#'
+    # creditor == #iuv#
+    # token == #ccp#
+    # outcome == POSITION_PAYMENT.outcome
+    # amount == POSITION_PAYMENT.amount
+    # description == POSITION_SERVICE.description
+    # company == POSITION_SERVICE.company_name
+    # office == POSITION_SERVICE.office_name
+    # debtor == POSITION_SERVICE.debtor_id
+    # psp == psp
+    # pspCompany == PSP.ragione_sociale
+    # pspFiscalCode == PSP.codice_fiscale
+    # pspVat == PSP.vat_number
+    # channel == POSITION_PAYMENT.channel_id
+    # channelDescription == POSITION_PAYMENT.payment_channel
+    # payer == POSITION_PAYMENT.payer_id
+    # paymentMethod == POSITION_PAYMENT.payment_method
+    # fee == POSITION_PAYMENT.fee
+    # paymentDateTime != null
+    # applicationDate == POSITION_PAYMENT.application_date
+    # transferDate != null
+    # metadata == POSITION_PAYMENT_PLAN.metadata
+    # rtID == RT.ID
+    # fkPayment == POSITION_PAYMENT.id
+    
+    
+    # RT_XML
+    # id != null
+    # ccp == #ccp#
+    # identDominio == '#creditor_institution_code#'
+    # iuv == #iuv#
+    # fkRT == RT.id
+    # tipoFirma == null
+    # xmlContent != null
+    # isertedTimestamp != null
+    # updatedTimestamp != null
+    # idSessione == RT.id_sessione
+    
+             
+    
+    #POSITION_RECEIPT_XML
+    #SELECT s.* FROM NODO_ONLINE.POSITION_RECEIPT_XML s where s.NOTICE_ID = '#notice_number#' and s.PAYMENT_TOKEN= '#ccp#';
+    #SELECT s.* FROM NODO_ONLINE.POSITION_PAYMENT s where s.NOTICE_ID = '#notice_number#' and s.PA_FISCAL_CODE= '#creditor_institution_code#';
+    #SELECT s.* FROM NODO_ONLINE.POSITION_RECEIPT s where s.NOTICE_ID = '#notice_number#' and s.PA_FISCAL_CODE= '#creditor_institution_code#';
+    #SELECT s.* FROM NODO_ONLINE.POSITION_RECEIPT_RECIPIENT s where s.NOTICE_ID = '#notice_number#' and s.PA_FISCAL_CODE= '#creditor_institution_code#';
+    
+    # pa1 == POSITION_PAYMENT.pa_fiscal_code
+    # noticeID == POSITION_PAYMENT.notice_id
+    # creditor == POSITION_PAYMENT.creditor_reference_id
+    # token == POSITION_PAYMENT.payment_token
+    # recipientPA == POSITION_RECEIPT_RECIPIENT.recipient_pa_fiscal_code
+    # recipientBroker == POSITION_RECEIPT_RECIPIENT.recipient_broker_pa_id
+    # recipientStation == POSITION_RECEIPT_RECIPIENT.recipient_station_id
+    # insertedTimestamp != null
+    # xml != null
+    # fkPositionReceipt == POSITION_RECEIPT.id
+    
+    
+    # closePayment-v2 request phase 1 
+    Scenario: Execute a closePayment-v2 request
+    Given initial json closePayment-v2
+    """
+    {"paymentTokens": [
+        "$idSessione"
+        ],
+    "outcome": "KO",
+    "idPSP": "70000000001",
+    "idBrokerPSP": "70000000001",
+    "idChannel": "70000000001_03",
+    "paymentMethod": "TPAY",
+    "transactionId": "18031665",
+    "totalAmount": 12.00,
+    "fee": 2.00,
+    "timestampOperation": "2033-04-23T18:25:43Z",
+    "additionalPaymentInformations": {
+          "key": "10365752"
+        }
+    }
+    """
+
+    When PM sends closePayment-v2 to nodo-dei-pagamenti twice
+    Then check outcome is KO 
+    And check description is 'Outcome already acquired'
+    And check errorCode is 422
