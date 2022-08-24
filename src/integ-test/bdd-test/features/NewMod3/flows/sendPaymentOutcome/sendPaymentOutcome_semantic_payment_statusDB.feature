@@ -53,7 +53,7 @@ Feature: Check semantic payment status
             """
 
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
-        Then check outcome is OK of activatePaymentNotice response
+        Then check outcome is KO of activatePaymentNotice response
 
 
     Scenario: Verify  in POSITION_STATUS table
