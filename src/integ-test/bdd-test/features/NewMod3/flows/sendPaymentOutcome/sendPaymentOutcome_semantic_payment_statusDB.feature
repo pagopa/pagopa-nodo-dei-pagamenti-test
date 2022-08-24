@@ -107,7 +107,5 @@ Feature: Check semantic payment status
             """
         #And RPT not recived
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-        Then check outcome is KO in sendPaymentOutcome response
-        And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro NewMod3
-        And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro NewMod3
-        And checks the value FAILED_NORTP of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro NewMod3
+        Then check outcome is OK of sendPaymentOutcome response
+        And checks the value PAYING, INSERTED, FAILED_NORTP of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro NewMod3
