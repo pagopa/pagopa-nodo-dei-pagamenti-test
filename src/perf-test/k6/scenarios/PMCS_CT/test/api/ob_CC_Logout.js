@@ -1,6 +1,11 @@
 import http from 'k6/http';
 import { check } from 'k6';
 import encoding from 'k6/encoding';
+import { Trend } from 'k6/metrics';
+
+
+export const ob_CC_Logout_Trend = new Trend('ob_CC_Logout');
+export const All_Trend = new Trend('ALL');
 
  
 export function ob_CC_Logout(baseUrl, idTr) {
@@ -18,7 +23,11 @@ export function ob_CC_Logout(baseUrl, idTr) {
 	}
   );
   
-  
+
+   All_Trend.add(res.timings.duration);
+   ob_CC_Logout_Trend.add(res.timings.duration);
+
+
   check(res, {
  	'ob_CC_Logout:over_sla300': (r) => r.timings.duration >300,
    },

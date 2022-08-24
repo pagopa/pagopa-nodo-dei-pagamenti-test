@@ -1,5 +1,11 @@
 import http from 'k6/http';
 import { check } from 'k6';
+import { Trend } from 'k6/metrics';
+
+
+export const ob_PP_Confirm_Call_Trend = new Trend('ob_PP_Confirm_Call');
+export const All_Trend = new Trend('ALL');
+
 
   
 
@@ -13,6 +19,10 @@ export function ob_PP_Confirm_Call(baseUrlPM, pp_id_back) {
 	tags: { ob_PP_Confirm_Call:'http_req_duration', ALL:'http_req_duration'}
 	}
   );
+
+
+  All_Trend.add(res.timings.duration);
+  ob_PP_Confirm_Call_Trend.add(res.timings.duration);
   
    check(res, {
  	'ob_PP_Confirm_Call:over_sla300': (r) => r.timings.duration >300,

@@ -1,18 +1,25 @@
 import http from 'k6/http';
 import { check } from 'k6';
 import { sleep } from 'k6';
+import { Trend } from 'k6/metrics';
+
+
+export const ob_CC_Check_3_Trend = new Trend('ob_CC_Check_3');
+export const All_Trend = new Trend('ALL');
 
  
 export function ob_CC_Check_3(baseUrl, idTr) {
  
-  console.log(Date.now());
+ // console.log(Date.now());
  const res = http.get(
     baseUrl+'/pp-restapi-CD/v3/webview/checkout/check?id='+idTr+'&_='+Date.now(),
 	{ headers: { 'Content-Type': 'application/x-www-form-urlencoded' } ,
 	tags: { ob_CC_Check_3: 'http_req_duration', ALL: 'http_req_duration'}
 	}
   );
-  
+
+  All_Trend.add(res.timings.duration);
+  ob_CC_Check_3_Trend.add(res.timings.duration);
   sleep(1-(res.timings.duration/1000));
   
   check(res, {

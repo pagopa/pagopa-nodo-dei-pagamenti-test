@@ -1,5 +1,10 @@
 import http from 'k6/http';
 import { check } from 'k6';
+import { Trend } from 'k6/metrics';
+
+
+export const getWallet_v3_Trend = new Trend('getWallet_v3');
+export const All_Trend = new Trend('ALL');
 
 export function getWallet_v3(baseUrl,token) {
  
@@ -8,9 +13,11 @@ export function getWallet_v3(baseUrl,token) {
     { headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer '+token } ,
 	tags: { getWallet_v3: 'http_req_duration', ALL: 'http_req_duration'}
 	}
-	
-	
   );
+
+  getWallet_v3_Trend.add(res.timings.duration);
+  All_Trend.add(res.timings.duration);
+
    check(res, {
  	'getWallet_v3:over_sla300': (r) => r.timings.duration >300,
    },

@@ -1,5 +1,10 @@
 import http from 'k6/http';
 import { check } from 'k6';
+import { Trend } from 'k6/metrics';
+
+
+export const pay_CC_CheckOut_Trend = new Trend('pay_CC_CheckOut');
+export const All_Trend = new Trend('ALL');
 
 export function pay_CC_CheckOut(baseUrl, RED_Path) {
  
@@ -10,7 +15,11 @@ export function pay_CC_CheckOut(baseUrl, RED_Path) {
   	tags: { pay_CC_CheckOut: 'http_req_duration', ALL: 'http_req_duration'}
 	}
 	);
-	
+
+
+	All_Trend.add(res.timings.duration);
+    pay_CC_CheckOut_Trend.add(res.timings.duration);
+
 	
 	check(res, {
  	'pay_CC_CheckOut:over_sla300': (r) => r.timings.duration >300,

@@ -1,5 +1,10 @@
 import http from 'k6/http';
 import { check } from 'k6';
+import { Trend } from 'k6/metrics';
+
+
+export const ob_CC_Verify_Trend = new Trend('ob_CC_Verify');
+export const All_Trend = new Trend('ALL');
 
 export function verifyReqBody(idWallet, token){
 
@@ -19,6 +24,11 @@ export function ob_CC_Verify(baseUrl, idWallet, token) {
   );
   /*console.log(res);
   console.log(res.body.toString().includes('DOCTYPE html'));*/
+
+  All_Trend.add(res.timings.duration);
+  ob_CC_Verify_Trend.add(res.timings.duration);
+
+
    check(res, {
  	'ob_CC_Verify:over_sla300': (r) => r.timings.duration >300,
    },

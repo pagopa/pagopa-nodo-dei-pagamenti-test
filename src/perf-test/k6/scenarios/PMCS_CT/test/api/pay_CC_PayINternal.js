@@ -1,5 +1,10 @@
 import http from 'k6/http';
 import { check } from 'k6';
+import { Trend } from 'k6/metrics';
+
+
+export const pay_CC_PayINternal_Trend = new Trend('pay_CC_PayINternal');
+export const All_Trend = new Trend('ALL');
 
 
 export function reqBody( rndSecCode){
@@ -20,7 +25,11 @@ export function pay_CC_PayINternal(baseUrl, rndSecCode) {
 	tags: { pay_CC_PayINternal: 'http_req_duration', ALL: 'http_req_duration'}
 	}
   );
-  
+
+
+  All_Trend.add(res.timings.duration);
+  pay_CC_PayINternal_Trend.add(res.timings.duration);
+
   check(res, {
  	'pay_CC_PayINternal:over_sla300': (r) => r.timings.duration >300,
    },

@@ -1,6 +1,11 @@
 import http from 'k6/http';
 import { check } from 'k6';
 import encoding from 'k6/encoding';
+import { Trend } from 'k6/metrics';
+
+
+export const pay_PP_Logout_Trend = new Trend('pay_PP_Logout');
+export const All_Trend = new Trend('ALL');
 
  
 export function pay_PP_Logout(baseUrl, idTr) {
@@ -19,7 +24,10 @@ export function pay_PP_Logout(baseUrl, idTr) {
 	tags: {pay_PP_Logout: 'http_req_duration', ALL: 'http_req_duration'}
 	}
   );
-  
+
+
+    pay_PP_Logout_Trend.add(res.timings.duration);
+    All_Trend.add(res.timings.duration);
   
   check(res, {
  	'pay_PP_Logout:over_sla300': (r) => r.timings.duration >300,

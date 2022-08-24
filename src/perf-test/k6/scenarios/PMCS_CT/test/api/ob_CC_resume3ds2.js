@@ -1,5 +1,10 @@
 import http from 'k6/http';
 import { check } from 'k6';
+import { Trend } from 'k6/metrics';
+
+
+export const ob_CC_resume3ds2_Trend = new Trend('ob_CC_resume3ds2');
+export const All_Trend = new Trend('ALL');
 
 export function resume3ds2ReqBody(rndCres){
 
@@ -19,7 +24,10 @@ export function ob_CC_resume3ds2(baseUrl, idTr, rndCres) {
 	tags: { ob_CC_resume3ds2: 'http_req_duration', ALL: 'http_req_duration'}
 	}
   );
-  
+
+  All_Trend.add(res.timings.duration);
+  ob_CC_resume3ds2_Trend.add(res.timings.duration);
+
   check(res, {
  	'ob_CC_resume3ds2:over_sla300': (r) => r.timings.duration >300,
    },

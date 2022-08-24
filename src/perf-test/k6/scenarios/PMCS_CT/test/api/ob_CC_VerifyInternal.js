@@ -2,6 +2,11 @@ import http from 'k6/http';
 import { SharedArray } from 'k6/data';
 import { check } from 'k6';
 import papaparse from 'https://jslib.k6.io/papaparse/5.1.1/index.js';
+import { Trend } from 'k6/metrics';
+
+
+export const ob_CC_VerifyInternal_Trend = new Trend('ob_CC_VerifyInternal');
+export const All_Trend = new Trend('ALL');
 
 
 export function verifyIntReqBody(){
@@ -23,7 +28,10 @@ export function ob_CC_VerifyInternal(baseUrl) {
 	tags: { ob_CC_VerifyInternal:'http_req_duration', ALL:'http_req_duration'}
 	}
   );
-  
+
+  All_Trend.add(res.timings.duration);
+  ob_CC_VerifyInternal_Trend.add(res.timings.duration);
+
    check(res, {
  	'ob_CC_VerifyInternal:over_sla300': (r) => r.timings.duration >300,
    },

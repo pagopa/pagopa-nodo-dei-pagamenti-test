@@ -1,6 +1,10 @@
 import http from 'k6/http';
 import { check } from 'k6';
+import { Trend } from 'k6/metrics';
 
+
+export const ob_PP_Confirm_Logout_Trend = new Trend('ob_PP_Confirm_Logout');
+export const All_Trend = new Trend('ALL');
   
 
 export function ob_PP_Confirm_Logout(baseUrl, RED_Path) {
@@ -14,7 +18,11 @@ export function ob_PP_Confirm_Logout(baseUrl, RED_Path) {
 	tags: { ob_PP_Confirm_Logout:'http_req_duration', ALL:'http_req_duration'}
 	}
   );
-  
+
+  All_Trend.add(res.timings.duration);
+  ob_PP_Confirm_Logout_Trend.add(res.timings.duration);
+
+
    check(res, {
  	'ob_PP_Confirm_Logout:over_sla300': (r) => r.timings.duration >300,
    },

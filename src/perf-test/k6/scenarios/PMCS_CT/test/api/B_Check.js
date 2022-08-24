@@ -1,11 +1,15 @@
 import http from 'k6/http';
 import { check } from 'k6';
 import { sleep } from 'k6';
+import { Trend } from 'k6/metrics';
 
 
+
+export const B_Check_Trend = new Trend('B_Check');
+export const All_Trend = new Trend('ALL');
 
 export function B_Check(baseUrl, idTr) {
- 
+
  //console.log("idTr Bcheck="+idTr);
  const res = http.get(
     baseUrl+'/pp-restapi-CD/v3/webview/checkout/check?id='+idTr+'&_='+Date.now(),
@@ -13,7 +17,8 @@ export function B_Check(baseUrl, idTr) {
 	tags: { B_Check: 'http_req_duration', ALL: 'http_req_duration'}
 	}
   );
-
+  B_Check_Trend.add(res.timings.duration);
+  All_Trend.add(res.timings.duration);
   sleep(1-(res.timings.duration/1000));
 
   check(res, {

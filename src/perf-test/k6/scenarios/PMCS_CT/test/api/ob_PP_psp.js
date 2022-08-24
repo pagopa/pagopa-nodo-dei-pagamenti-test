@@ -1,5 +1,10 @@
 import http from 'k6/http';
 import { check } from 'k6';
+import { Trend } from 'k6/metrics';
+
+
+export const ob_PP_psp_Trend = new Trend('ob_PP_psp');
+export const All_Trend = new Trend('ALL');
 
 
 
@@ -14,7 +19,10 @@ export function ob_PP_psp(baseUrl, token) {
 	tags: { ob_PP_psp: 'http_req_duration', ALL:'http_req_duration'}
 	}
   );
-  
+
+  All_Trend.add(res.timings.duration);
+  ob_PP_psp_Trend.add(res.timings.duration);
+
    check(res, {
  	'ob_PP_psp:over_sla300': (r) => r.timings.duration >300,
    },

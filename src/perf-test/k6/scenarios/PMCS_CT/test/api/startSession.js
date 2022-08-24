@@ -1,5 +1,12 @@
 import http from 'k6/http';
 import { check } from 'k6';
+import { Trend } from 'k6/metrics';
+
+
+export const startSession_Trend = new Trend('startSession');
+export const All_Trend = new Trend('ALL');
+
+
 
 export function startSession(baseUrl,tokenIO) {
  
@@ -10,7 +17,11 @@ export function startSession(baseUrl,tokenIO) {
 	tags: { startSession: 'http_req_duration', ALL: 'http_req_duration'}
 	}
   );
-  
+
+   startSession_Trend.add(res.timings.duration);
+   All_Trend.add(res.timings.duration);
+
+
    check(res, {
  	'startSession:over_sla300': (r) => r.timings.duration >300,
    },

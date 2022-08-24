@@ -1,5 +1,10 @@
 import http from 'k6/http';
 import { check } from 'k6';
+import { Trend } from 'k6/metrics';
+
+
+export const pay_PP_Check_Trend = new Trend('pay_PP_Check');
+export const All_Trend = new Trend('ALL');
 
 
 
@@ -12,7 +17,11 @@ export function pay_PP_Check(baseUrl, idPay, token) {
 	tags: { pay_PP_Check: 'http_req_duration', ALL: 'http_req_duration'}
 	}
   );
-  
+
+  pay_PP_Check_Trend.add(res.timings.duration);
+  All_Trend.add(res.timings.duration);
+
+
   check(res, {
  	'pay_PP_Check:over_sla300': (r) => r.timings.duration >300,
    },

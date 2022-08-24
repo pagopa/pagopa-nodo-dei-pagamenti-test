@@ -1,5 +1,11 @@
 import http from 'k6/http';
 import { check } from 'k6';
+import { Trend } from 'k6/metrics';
+
+
+export const ob_CC_continueToStep1_Trend = new Trend('ob_CC_continueToStep1');
+export const All_Trend = new Trend('ALL');
+
 
 
 export function ob_CC_continueToStep1(baseUrl, idTr, threeDSMethodData) {
@@ -14,6 +20,10 @@ export function ob_CC_continueToStep1(baseUrl, idTr, threeDSMethodData) {
     tags: { ob_CC_continueToStep1:'http_req_duration', ALL:'http_req_duration'}	
 	}
   );
+
+
+  All_Trend.add(res.timings.duration);
+  ob_CC_continueToStep1_Trend.add(res.timings.duration);
   
     check(res, {
  	'ob_CC_continueToStep1:over_sla300': (r) => r.timings.duration >300,
