@@ -331,7 +331,7 @@ def step_impl(context, attribute, value, elem, primitive):
 @step('{sender} sends soap {soap_primitive} to {receiver}')
 def step_impl(context, sender, soap_primitive, receiver):
     primitive = soap_primitive.split("_")[0]
-    headers = {'Content-Type': 'application/xml', "SOAPAction": primitive, 'X-Original-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it', 'X-Forwarded-For': '10.82.39.148'}  # set what your server accepts
+    headers = {'Content-Type': 'application/xml', "SOAPAction": primitive, 'X-Original-Forwarded-For': '10.82.39.148'}  # set what your server accepts
     url_nodo = utils.get_soap_url_nodo(context, primitive)
     print("url_nodo: ", url_nodo)
     print("nodo soap_request sent >>>", getattr(context, soap_primitive))
@@ -572,6 +572,7 @@ def step_impl(context, mock, destination, primitive):
 
     setattr(context, primitive, pa_verify_payment_notice_res)
     print(pa_verify_payment_notice_res)
+    print(utils.get_soap_mock_ec(context))
     response_status_code = utils.save_soap_action(utils.get_soap_mock_ec(context), primitive,
                                                   pa_verify_payment_notice_res, override=True)
 
