@@ -13,9 +13,9 @@ Feature: Semantic checks oon inoltroEsitoPaypal primitive for new EC
         <soapenv:Header/>
         <soapenv:Body>
         <nod:verifyPaymentNoticeReq>
-            <idPSP>AGID_01</idPSP>
-            <idBrokerPSP>97735020584</idBrokerPSP>
-            <idChannel>97735020584_03</idChannel>
+            <idPSP>#psp_AGID#</idPSP>
+            <idBrokerPSP>#broker_AGID#</idBrokerPSP>
+            <idChannel>#canale_AGID#</idChannel>
             <password>pwdpwdpwd</password>
             <qrCode>
                 <fiscalCode>#creditor_institution_code#</fiscalCode>
@@ -44,7 +44,7 @@ Scenario: Execute activateIOPayment (Phase 2)
                 <idempotencyKey>#idempotency_key#</idempotencyKey>
                 <qrCode>
                     <fiscalCode>#creditor_institution_code#</fiscalCode>
-                    <noticeNumber>#notice_number#</noticeNumber>
+                    <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
                 </qrCode>
                 <!--Optional:-->
                 <expirationTime>12345</expirationTime>
@@ -236,7 +236,7 @@ Scenario: Execute nodoInoltroEsitoPayPal (Phase 4) - KO (CONPSP)
         "idTransazionePsp":"$activateIOPayment.idempotencyKey",
         "idPagamento": "$activateIOPaymentResponse.paymentToken",
         "identificativoIntermediario": "irraggiungibile",
-        "identificativoPsp": "irraggiungibile",
+        "identificativoPsp": "#psp#",
         "identificativoCanale": "irraggiungibile",
         "importoTotalePagato": 10.00,
         "timestampOperazione": "2012-04-23T18:25:43Z"
@@ -250,7 +250,7 @@ Scenario: Execute nodoInoltroEsitoPayPal (Phase 4) - KO (CONPSP)
     And checks the value $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
     And checks the value $activateIOPaymentResponse.fiscalCodePA of the record at column BROKER_PA_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
     And checks the value 2 of the record at column STATION_VERSION of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
-    And checks the value irraggiungibile of the record at column PSP_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
+    And checks the value #psp# of the record at column PSP_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
     And checks the value irraggiungibile of the record at column BROKER_PSP_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
     And checks the value irraggiungibile of the record at column CHANNEL_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
     And checks the value $activateIOPayment.idempotencyKey of the record at column IDEMPOTENCY_KEY of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
@@ -789,9 +789,9 @@ Scenario: Execute nodoInoltroEsitoPayPal1 (Phase 5) [SEM_NIEPP_06]
         "idTransazione": "responseOK",
         "idTransazionePsp":"$activateIOPayment.idempotencyKey",
         "idPagamento": "$activateIOPaymentResponse.paymentToken",
-        "identificativoIntermediario": "40000000001",
-        "identificativoPsp": "40000000001",
-        "identificativoCanale": "40000000001_03",
+        "identificativoIntermediario": "#psp#",
+        "identificativoPsp": "#psp#",
+        "identificativoCanale": "#canale#",
         "importoTotalePagato": 10.00,
         "timestampOperazione": "2012-04-23T18:25:43Z"
     }

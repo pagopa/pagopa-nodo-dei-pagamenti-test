@@ -112,10 +112,10 @@ Feature: GT_05
         {
             "idPagamento": "$activateIOPaymentResponse.paymentToken",
             "RRN": 18865881,
-            "identificativoPsp": "40000000001",
+            "identificativoPsp": "#psp#",
             "tipoVersamento": "CP",
-            "identificativoIntermediario": "40000000001",
-            "identificativoCanale": "40000000001_06",
+            "identificativoIntermediario": "#psp#",
+            "identificativoCanale": "#canale#",
             "importoTotalePagato": 10,
             "timestampOperazione": "2021-07-09T17:06:03.100+01:00",
             "codiceAutorizzativo": "resOK",

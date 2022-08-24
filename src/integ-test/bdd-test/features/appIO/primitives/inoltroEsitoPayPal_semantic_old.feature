@@ -90,9 +90,9 @@ Feature: Semantic checks on inoltroEsitoPayPal primitive for old EC
         <soapenv:Header/>
         <soapenv:Body>
             <ws:nodoVerificaRPT>
-                <identificativoPSP>AGID_01</identificativoPSP>
-                <identificativoIntermediarioPSP>97735020584</identificativoIntermediarioPSP>
-                <identificativoCanale>97735020584_03</identificativoCanale>
+                <identificativoPSP>#psp_AGID#</identificativoPSP>
+                <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
+                <identificativoCanale>#canale_AGID#</identificativoCanale>
                 <password>pwdpwdpwd</password>
                 <codiceContestoPagamento>$ccp</codiceContestoPagamento>
                 <codificaInfrastrutturaPSP>QR-CODE</codificaInfrastrutturaPSP>
@@ -214,8 +214,8 @@ Feature: Semantic checks on inoltroEsitoPayPal primitive for old EC
             <soapenv:Body>
                 <ws:nodoInviaRPT>
                     <password>pwdpwdpwd</password>
-                    <identificativoPSP>AGID_01</identificativoPSP>
-                    <identificativoIntermediarioPSP>97735020584</identificativoIntermediarioPSP>
+                    <identificativoPSP>#psp_AGID#</identificativoPSP>
+                    <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
                     <identificativoCanale>97735020584_02</identificativoCanale>
                     <tipoFirma></tipoFirma>
                     <rpt>$rptAttachment</rpt>
@@ -382,7 +382,7 @@ Feature: Semantic checks on inoltroEsitoPayPal primitive for old EC
             "idTransazionePsp":"153016btAE",
             "idPagamento": "$sessionToken",
             "identificativoIntermediario": "irraggiungibile",
-            "identificativoPsp": "irraggiungibile",
+            "identificativoPsp": "#psp#",
             "identificativoCanale": "irraggiungibile",
             "importoTotalePagato": 10.00,
             "timestampOperazione": "2012-04-23T18:25:43Z"
@@ -396,7 +396,7 @@ Feature: Semantic checks on inoltroEsitoPayPal primitive for old EC
         And checks the value $nodoInviaRPT.codiceContestoPagamento of the record at column PAYMENT_TOKEN of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
         #And checks the value $activateIOPaymentResponse.fiscalCodePA of the record at column BROKER_PA_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value 1 of the record at column STATION_VERSION of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-        And checks the value irraggiungibile of the record at column PSP_ID of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+        And checks the value #psp# of the record at column PSP_ID of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
         And checks the value irraggiungibile of the record at column BROKER_PSP_ID of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
         And checks the value irraggiungibile of the record at column CHANNEL_ID of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
         #And checks the value $activateIOPayment.idempotencyKey of the record at column IDEMPOTENCY_KEY of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
