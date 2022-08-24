@@ -1,34 +1,34 @@
 Feature: Check semantic payment status
 
-  Background:
-    Given systems up
-    And EC old version
+    Background:
+        Given systems up
+        And EC old version
 
-  Scenario: Execute verifyPaymentNotice (Phase 1)
-    Given initial XML verifyPaymentNotice
-      """
-      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-        <soapenv:Header />
-        <soapenv:Body>
-          <nod:verifyPaymentNoticeReq>
+    Scenario: Execute verifyPaymentNotice
+        Given initial XML verifyPaymentNotice
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+            <soapenv:Header />
+            <soapenv:Body>
+            <nod:verifyPaymentNoticeReq>
             <idPSP>70000000001</idPSP>
             <idBrokerPSP>70000000001</idBrokerPSP>
             <idChannel>70000000001_01</idChannel>
             <password>pwdpwdpwd</password>
             <qrCode>
-              <fiscalCode>#creditor_institution_code#</fiscalCode>
-              <noticeNumber>#notice_number#</noticeNumber>
+            <fiscalCode>#creditor_institution_code#</fiscalCode>
+            <noticeNumber>#notice_number#</noticeNumber>
             </qrCode>
-          </nod:verifyPaymentNoticeReq>
-        </soapenv:Body>
-      </soapenv:Envelope>
-      """
-    When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
-    Then check outcome is OK of verifyPaymentNotice response
+            </nod:verifyPaymentNoticeReq>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
+        Then check outcome is OK of verifyPaymentNotice response
 
-  #activate phase
-  Scenario: Execute activatePaymentNotice (Phase 2)
-    Given the Execute verifyPaymentNotice (Phase 1) scenario executed successfully
+    #activate phase
+    Scenario: Execute activatePaymentNotice
+        Given the Execute verifyPaymentNotice scenario executed successfully
 
         And initial XML activatePaymentNotice
             """
@@ -48,17 +48,14 @@ Feature: Check semantic payment status
             </soapenv:Body>
             </soapenv:Envelope>
             """
-    #PHASE1
-    Scenario: Execute activatePaymentNotice request
+
         When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
 
 
-
-
     Scenario: Verify  in POSITION_STATUS table
         Given the Execute activatePaymentNotice request scenario executed successfully
-         And initial XML sendPaymentOutcome
+        And initial XML sendPaymentOutcome
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
             <soapenv:Header/>
