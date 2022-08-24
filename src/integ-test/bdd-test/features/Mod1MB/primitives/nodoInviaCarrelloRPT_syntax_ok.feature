@@ -95,7 +95,7 @@ Feature: check syntax OK for nodoCarrelloMultibeneficiarioRPT
                <ppt:intestazioneCarrelloPPT>
                   <identificativoIntermediarioPA>#codicePA#</identificativoIntermediarioPA>
                   <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
-                  <identificativoCarrello>CARRELLO</identificativoCarrello>
+                  <identificativoCarrello>#CARRELLO#</identificativoCarrello>
                </ppt:intestazioneCarrelloPPT>
             </soapenv:Header>
             <soapenv:Body>
