@@ -52,7 +52,7 @@ export const getScalini = new SharedArray('scalini', function () {
 
 export const options = {
 	
-   /*scenarios: {
+   scenarios: {
         	total: {
             timeUnit: '1s',
             preAllocatedVUs: 1, // how large the initial pool of VUs would be
@@ -85,20 +85,28 @@ export const options = {
             exec: 'total',
           }
 
-        }, */
+        },
   summaryTrendStats: ['avg', 'min', 'max', 'p(90)', 'p(95)', 'count'],
   discardResponseBodies: false,
   thresholds: {
     // we can set different thresholds for the different scenarios because
     // of the extra metric tags we set!
     'http_req_duration{getWallet_v3:http_req_duration}': [],
+    'getWallet_v3': [],
 	'http_req_duration{startSession:http_req_duration}': [],
+	'startSession': [],
 	'http_req_duration{pay_PP_Check:http_req_duration}': [],
+	'pay_PP_Check': [],
 	'http_req_duration{pay_PP_Pay:http_req_duration}': [],
+	'pay_PP_Pay': [],
 	'http_req_duration{B_Check:http_req_duration}': [],
+	'B_Check': [],
 	'http_req_duration{pay_PP_Logout:http_req_duration}': [],
+	'pay_PP_Logout': [],
 	'http_req_duration{pay_PP_bye:http_req_duration}': [],
+	'pay_PP_bye': [],
 	'http_req_duration{ALL:http_req_duration}': [],
+	'ALL': [],
 	'checks{getWallet_v3:over_sla300}': [],
 	'checks{getWallet_v3:over_sla400}': [],
 	'checks{getWallet_v3:over_sla500}': [],
@@ -237,16 +245,7 @@ export function total() {
   
   //RED_Path="/hfhfhfhfh?tyty=1"; //to comment
   res= pay_PP_bye(baseUrl, RED_Path);
-  let esitoTrEdt = 'NA';
-  try{
-  if (RED_Path!=="NA"){
-  esitoTrEdt = RED_Path.substr(RED_Path.indexOf("outcome=")+8);
-  }
-  }catch(error){}
-  commonChecks(res);
-  standardChecks(res, esitoTrEdt, 'matches', '0');  
-  
-  
+
 }
 
 
@@ -259,7 +258,7 @@ export function handleSummary(data) {
   console.log('Preparing the end-of-test summary...');
  
   var csv = outputUtil.extractData(data);
-     
+
    return {
     'stdout': textSummary(data, { indent: ' ', enableColors: true, expected_response: 'ALL' }), // Show the text summary to stdout...
 	'./scenarios/PMCS_CT/test/output/TC01.04.summary.json': JSON.stringify(data), // and a JSON with all the details...
@@ -273,132 +272,5 @@ export function handleSummary(data) {
 }
 
 
-export function commonChecks(res){
-	
-	check(res, {
- 	'ALL over_sla300': (r) => r.timings.duration >300,
-   },
-   { ALL: 'over_sla300' }
-   );
-   
-   check(res, {
- 	'ALL over_sla400': (r) => r.timings.duration >400,
-   },
-   { ALL: 'over_sla400' }
-   );
-   
-   check(res, {
- 	'ALL over_sla500': (r) => r.timings.duration >500,
-   },
-   { ALL: 'over_sla500' }
-   );
-   
-   check(res, {
- 	'ALL over_sla600': (r) => r.timings.duration >600,
-   },
-   { ALL: 'over_sla600' }
-   );
-   
-   check(res, {
- 	'ALL over_sla800': (r) => r.timings.duration >800,
-   },
-   { ALL: 'over_sla800' }
-   );
-   
-   check(res, {
- 	'ALL over_sla1000': (r) => r.timings.duration >1000,
-   },
-   { ALL: 'over_sla1000' }
-   );
-}
 
 
-
-export function standardChecks(res, outcome, rule, pattern) {
-	
-	
-   
-   if (rule !=='substring'){
-   check(
-    res,
-    {
-     'ALL OK status': (r) => outcome == pattern,
-    },
-    { ALL: 'ok_rate' }
-	);
-	
-	 check(
-    res,
-    {
-      'ALL KO status': (r) => outcome !== pattern,
-    },
-    { ALL: 'ko_rate' }
-  );
-   }else{
-  
-    check(
-    res,
-    {
-    
-	 'ALL:ok_rate': (r) => outcome.toString().includes(pattern),
-    },
-    { ALL: 'ok_rate' }
-	);
- 
-  check(
-    res,
-    {
-     
-	 'ALL:ko_rate': (r) => !outcome.toString().includes(pattern),
-    },
-    { ALL: 'ko_rate' }
-  );
-   }
-
-}
-
-
-
-
-export function invertedChecks(res, outcome, rule, pattern) {
-	
-	
-   
-   if (rule !=='substring'){
-   check(
-    res,
-    {
-     'ALL OK status': (r) => outcome !== pattern,
-    },
-    { ALL: 'ok_rate' }
-	);
-	
-	 check(
-    res,
-    {
-      'ALL KO status': (r) => outcome == pattern,
-    },
-    { ALL: 'ko_rate' }
-  );
-   }else{
-  
-    check(
-    res,
-    {
-    
-	 'ALL:ok_rate': (r) => !outcome.toString().includes(pattern),
-    },
-    { ALL: 'ok_rate' }
-	);
- 
-  check(
-    res,
-    {
-     
-	 'ALL:ko_rate': (r) => outcome.toString().includes(pattern),
-    },
-    { ALL: 'ko_rate' }
-  );
-   }
-
-}
