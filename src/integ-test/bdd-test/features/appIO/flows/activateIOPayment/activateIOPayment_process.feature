@@ -8,9 +8,9 @@ Feature: Process checks for activateIOPayment request
                 <soapenv:Header/>
                 <soapenv:Body>
                     <nod:activateIOPaymentReq>
-                        <idPSP>70000000001</idPSP>
-                        <idBrokerPSP>70000000001</idBrokerPSP>
-                        <idChannel>70000000001_01</idChannel>
+                        <idPSP>#psp_AGID#</idPSP>
+                        <idBrokerPSP>#broker_AGID#</idBrokerPSP>
+                        <idChannel>#canale_AGID#</idChannel>
                         <password>pwdpwdpwd</password>
                         <!--Optional:-->
                         <idempotencyKey>#idempotency_key#</idempotencyKey>
