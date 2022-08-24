@@ -120,5 +120,5 @@ Feature: check syntax OK for nodoCarrelloMultibeneficiarioRPT
          """
 
         And multiBeneficiario with None in nodoInviaCarrelloRPT
-        When psp sends soap nodoInviaCarrelloRPT to nodo-dei-pagamenti
-        Then check outcome is OK of nodoInviaCarrelloRPT response
+        When EC sends soap nodoInviaCarrelloRPT to nodo-dei-pagamenti
+        Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
