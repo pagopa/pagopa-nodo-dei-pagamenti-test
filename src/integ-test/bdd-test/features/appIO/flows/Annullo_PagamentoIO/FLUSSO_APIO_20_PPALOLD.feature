@@ -4,8 +4,7 @@ Feature: FLUSSO_APIO_20_PPALOLD
         Given systems up
 
     Scenario: Execute nodoVerificaRPT (Phase 1)
-        Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 2000
-        And RPT generation
+        Given RPT generation
         """
         <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
         <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
@@ -305,6 +304,7 @@ Feature: FLUSSO_APIO_20_PPALOLD
     Scenario: Execute nodoNotificaAnnullamentoPagamento (Phase 7)
         Given the Execute sendPaymentOutcome (Phase 6) scenario executed successfully
         When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken to nodo-dei-pagamenti
+        And job paInviaRt triggered after 20 seconds
         And wait 20 seconds for expiration
         Then verify the HTTP status code of notificaAnnullamento response is 404
         And check error is Il Pagamento indicato non esiste of notificaAnnullamento response
@@ -345,4 +345,3 @@ Feature: FLUSSO_APIO_20_PPALOLD
         And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO, RPT_INVIATA_A_PSP, RPT_ACCETTATA_PSP, RPT_ACCETTATA_PSP, RPT_RISOLTA_OK, RT_GENERATA_NODO, RT_INVIATA_PA, RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro AppIO
         #check correctness STATI_RPT_SNAPSHOT table
         And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro AppIO
-        And restore initial configurations

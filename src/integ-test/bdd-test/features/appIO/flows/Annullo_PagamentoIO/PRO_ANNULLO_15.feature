@@ -90,7 +90,7 @@ Feature: PRO_ANNULLO_15
         "RRN":10026669,
         "tipoVersamento":"CP",
         "identificativoIntermediario":"irraggiungibile",
-        "identificativoPsp":"irraggiungibile",
+        "identificativoPsp":"#psp#",
         "identificativoCanale":"irraggiungibile",
         "importoTotalePagato":10.00,
         "timestampOperazione":"2021-07-09T17:06:03.100+01:00",
