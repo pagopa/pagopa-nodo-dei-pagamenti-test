@@ -67,6 +67,7 @@ Feature: Check semantic payment status
                 </soapenv:Body>
             </soapenv:Envelope>
             """
+            And EC old Version
 
 
     #PHASE1
@@ -75,11 +76,12 @@ Feature: Check semantic payment status
         Then check outcome is OK of activatePaymentNotice response
 
 
-    Scenario: Verify PAID in POSITION_STATUS_SNAPSHOT table
+    Scenario: Verify  in POSITION_STATUS_SNAPSHOT table
         Given EC old Version
         And the Execute activateIOPaymentReq request scenario executed successfully
         And RPT not recived
-        And outcome with OK in sendPaymentOutcome
-        And execute the sql query1 on db nodo_online under macro NewMod3
+        And outcome with KO in sendPaymentOutcome
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-        Then checks the POSITION_ACTIVATE table is properly populated according to the query query1 and primitive
+        Then checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
+        And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
+        And checks the value FAILED_NORTP of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
