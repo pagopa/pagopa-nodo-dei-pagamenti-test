@@ -76,8 +76,8 @@ Feature: Check semantic payment status
         Then check outcome is OK of activatePaymentNotice response
 
 
-    Scenario: Verify  in POSITION_STATUS_SNAPSHOT table
-        And the Execute activatePaymentNotice request scenario executed successfully
+    Scenario: Verify  in POSITION_STATUS table
+        Given the Execute activatePaymentNotice request scenario executed successfully
         And RPT not recived
         And outcome with KO in sendPaymentOutcome
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
