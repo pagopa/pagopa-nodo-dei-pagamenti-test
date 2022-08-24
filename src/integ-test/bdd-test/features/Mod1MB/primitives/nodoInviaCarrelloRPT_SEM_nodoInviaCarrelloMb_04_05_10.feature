@@ -11,7 +11,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
          <pay_i:dominio>
          <pay_i:identificativoDominio>09871234560</pay_i:identificativoDominio>
-         <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
+         <pay_i:identificativoStazioneRichiedente>66666666666_03</pay_i:identificativoStazioneRichiedente>
          </pay_i:dominio>
          <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
          <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
@@ -91,7 +91,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          <soapenv:Header>
          <ppt:intestazioneCarrelloPPT>
          <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
-         <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
+         <identificativoStazioneIntermediarioPA>66666666666_03</identificativoStazioneIntermediarioPA>
          <identificativoCarrello>$carrello</identificativoCarrello>
          </ppt:intestazioneCarrelloPPT>
          </soapenv:Header>
