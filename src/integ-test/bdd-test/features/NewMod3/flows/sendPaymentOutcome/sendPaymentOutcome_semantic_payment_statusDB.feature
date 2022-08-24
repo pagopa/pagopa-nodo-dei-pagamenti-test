@@ -16,8 +16,8 @@ Feature: Check semantic payment status
             <idChannel>70000000001_01</idChannel>
             <password>pwdpwdpwd</password>
             <qrCode>
-            <fiscalCode>#creditor_institution_code#</fiscalCode>
-            <noticeNumber>#notice_number#</noticeNumber>
+            <fiscalCode>#creditor_institution_code_old#</fiscalCode>
+            <noticeNumber>#notice_number_old#</noticeNumber>
             </qrCode>
             </nod:verifyPaymentNoticeReq>
             </soapenv:Body>
@@ -52,7 +52,7 @@ Feature: Check semantic payment status
             </soapenv:Envelope>
             """
 
-        When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+        When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
 
 
