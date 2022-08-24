@@ -77,8 +77,7 @@ Feature: Check semantic payment status
 
 
     Scenario: Verify  in POSITION_STATUS_SNAPSHOT table
-        Given EC old Version
-        And the Execute activateIOPaymentReq request scenario executed successfully
+        And the Execute activatePaymentNotice request scenario executed successfully
         And RPT not recived
         And outcome with KO in sendPaymentOutcome
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
