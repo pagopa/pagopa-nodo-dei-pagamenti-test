@@ -35,16 +35,19 @@ Feature: Check semantic payment status
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
             <soapenv:Header/>
             <soapenv:Body>
-            <nod:verifyPaymentNoticeReq>
+            <nod:activatePaymentNoticeReq>
             <idPSP>${psp}</idPSP>
             <idBrokerPSP>${intermediarioPSP}</idBrokerPSP>
             <idChannel>${canale3}</idChannel>
             <password>${password}</password>
+            <idempotencyKey>${psp}_${#TestCase#idempotenza}</idempotencyKey>
             <qrCode>
             <fiscalCode>${qrCodeCF}</fiscalCode>
             <noticeNumber>002${#TestCase#iuv}</noticeNumber>
             </qrCode>
-            </nod:verifyPaymentNoticeReq>
+            <!--expirationTime>6000</expirationTime-->
+            <amount>10.00</amount>
+            </nod:activatePaymentNoticeReq>
             </soapenv:Body>
             </soapenv:Envelope>
             """
