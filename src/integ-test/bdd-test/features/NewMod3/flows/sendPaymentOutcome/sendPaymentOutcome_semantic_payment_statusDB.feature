@@ -57,7 +57,7 @@ Feature: Check semantic payment status
 
 
     Scenario: Verify  in POSITION_STATUS table
-        Given the Execute activatePaymentNotice request scenario executed successfully
+        Given the Execute activatePaymentNotice scenario executed successfully
         And initial XML sendPaymentOutcome
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -105,9 +105,9 @@ Feature: Check semantic payment status
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And RPT not recived
-        And check outcome is KO in sendPaymentOutcome response
+        #And RPT not recived
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+        And check outcome is KO in sendPaymentOutcome response
         Then checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
         And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
         And checks the value FAILED_NORTP of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
