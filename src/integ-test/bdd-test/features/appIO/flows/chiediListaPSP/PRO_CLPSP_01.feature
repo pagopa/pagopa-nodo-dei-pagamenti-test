@@ -11,9 +11,9 @@ Background:
         <soapenv:Header/>
         <soapenv:Body>
         <nod:verifyPaymentNoticeReq>
-            <idPSP>AGID_01</idPSP>
-            <idBrokerPSP>97735020584</idBrokerPSP>
-            <idChannel>97735020584_03</idChannel>
+            <idPSP>#psp_AGID#</idPSP>
+            <idBrokerPSP>#broker_AGID#</idBrokerPSP>
+            <idChannel>#canale_AGID#</idChannel>
             <password>pwdpwdpwd</password>
             <qrCode>
                 <fiscalCode>#creditor_institution_code#</fiscalCode>
@@ -34,15 +34,15 @@ Scenario: Execute activateIOPayment (Phase 2)
         <soapenv:Header/>
         <soapenv:Body>
             <nod:activateIOPaymentReq>
-                <idPSP>AGID_01</idPSP>
-                <idBrokerPSP>97735020584</idBrokerPSP>
-                <idChannel>97735020584_03</idChannel>
+                <idPSP>$verifyPaymentNotice.idPSP</idPSP>
+                <idBrokerPSP>$verifyPaymentNotice.idBrokerPSP</idBrokerPSP>
+                <idChannel>$verifyPaymentNotice.idChannel</idChannel>
                 <password>pwdpwdpwd</password>
                 <!--Optional:-->
                 <idempotencyKey>#idempotency_key#</idempotencyKey>
                 <qrCode>
                     <fiscalCode>#creditor_institution_code#</fiscalCode>
-                    <noticeNumber>#notice_number#</noticeNumber>
+                    <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
                 </qrCode>
                 <!--Optional:-->
                 <expirationTime>12345</expirationTime>

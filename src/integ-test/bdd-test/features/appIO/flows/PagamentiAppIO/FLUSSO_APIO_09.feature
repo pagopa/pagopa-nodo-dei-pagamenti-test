@@ -11,9 +11,9 @@ Background:
         <soapenv:Header/>
         <soapenv:Body>
         <nod:verifyPaymentNoticeReq>
-            <idPSP>AGID_01</idPSP>
-            <idBrokerPSP>97735020584</idBrokerPSP>
-            <idChannel>97735020584_03</idChannel>
+            <idPSP>#psp_AGID#</idPSP>
+            <idBrokerPSP>#broker_AGID#</idBrokerPSP>
+            <idChannel>#canale_AGID#</idChannel>
             <password>pwdpwdpwd</password>
             <qrCode>
                 <fiscalCode>#creditor_institution_code#</fiscalCode>
@@ -212,7 +212,7 @@ Scenario: Check sendPaymentOutcome response with sendPaymentOutcome KO and unrea
     And checks the value $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
     And checks the value $activateIOPaymentResponse.fiscalCodePA of the record at column BROKER_PA_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
     And checks the value 2 of the record at column STATION_VERSION of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
-    And checks the value #psp# of the record at column PSP_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
+    And checks the value $sendPaymentOutcome.idPSP of the record at column PSP_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
     And checks the value irraggiungibile of the record at column BROKER_PSP_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
     And checks the value irraggiungibile of the record at column CHANNEL_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
     And checks the value $activateIOPayment.idempotencyKey of the record at column IDEMPOTENCY_KEY of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
