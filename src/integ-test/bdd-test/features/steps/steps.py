@@ -229,8 +229,13 @@ def step_impl(context):
         payload = payload.replace('#idCarrello#', idCarrello)
         setattr(context,'idCarrello', idCarrello)
 
+    if '#CARRELLO#' in payload:
+        CARRELLO = "CARRELLO" + "-" + str(date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3])
+        payload = payload.replace('#CARRELLO#', CARRELLO)
+        setattr(context,'CARRELLO', CARRELLO)
+
     if '#carrello#' in payload:
-        carrello = "77777777777" + "311" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+        carrello = "66666666666" + "311" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
         payload = payload.replace('#carrello#', carrello)
         setattr(context,'carrello', carrello)
 
