@@ -188,13 +188,13 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
                         <identificativoDominio>#codicePA#</identificativoDominio>
                         <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
                         <codiceContestoPagamento>$carrello</codiceContestoPagamento>
-                        <rpt>rptAttachment</rpt>
+                        <rpt>$rptAttachment</rpt>
                      </elementoListaRPT>
                      <elementoListaRPT>
                         <identificativoDominio>#codicePA#</identificativoDominio>
                         <identificativoUnivocoVersamento>$IuV</identificativoUnivocoVersamento>
                         <codiceContestoPagamento>$carrello</codiceContestoPagamento>
-                        <rpt>rpt2Attachment</rpt>
+                        <rpt>$rpt2Attachment</rpt>
                      </elementoListaRPT>
                   </listaRPT>
                   <requireLightPayment>01</requireLightPayment>
