@@ -39,7 +39,7 @@ Feature: Check semantic payment status
             <password>pwdpwdpwd</password>
             <idempotencyKey>#idempotency_key#</idempotencyKey>
             <qrCode>
-            <fiscalCode>#creditor_institution_code_old#</fiscalCode>
+            <fiscalCode>#creditor_institution_code#</fiscalCode>
             <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
             </qrCode>
             <!--expirationTime>6000</expirationTime-->
