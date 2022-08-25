@@ -19,7 +19,7 @@ Feature: process tests for retry on a cancelled PAYING transaction [Activate_blo
             <fiscalCode>#creditor_institution_code_old#</fiscalCode>
             <noticeNumber>#notice_number_old#</noticeNumber>
             </qrCode>
-            <expirationTime>6000</expirationTime>
+            <expirationTime>2000</expirationTime>
             <amount>10.00</amount>
             </nod:activatePaymentNoticeReq>
             </soapenv:Body>
@@ -32,6 +32,13 @@ Feature: process tests for retry on a cancelled PAYING transaction [Activate_blo
         Then check outcome is OK of activatePaymentNotice response
         And save activatePaymentNotice response in activatePaymentNotice1
         And saving activatePaymentNotice request in activatePaymentNotice1
+
+
+    #pollerAnnulli phase
+    Scenario: Execute pollerAnnulli job
+        Given the Execute activatePaymentNotice1 request scenario executed successfully
+        When job mod3CancelV1 triggered after 6 seconds
+        And wait 10 seconds for expiration
 
 
     #activate phase2
@@ -51,9 +58,8 @@ Feature: process tests for retry on a cancelled PAYING transaction [Activate_blo
             <idempotencyKey>#idempotency_key#</idempotencyKey>
             <qrCode>
             <fiscalCode>#creditor_institution_code_old#</fiscalCode>
-            <noticeNumber>#notice_number_old#</noticeNumber>
+            <noticeNumber>$activatePaymentNotice.noticeNumber</noticeNumber>
             </qrCode>
-            <expirationTime>6000</expirationTime>
             <amount>10.00</amount>
             </nod:activatePaymentNoticeReq>
             </soapenv:Body>
