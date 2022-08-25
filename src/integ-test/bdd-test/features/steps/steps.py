@@ -293,13 +293,11 @@ def step_impl(context):
 def step_impl(context):
     payload = context.text or ""
     payload = utils.replace_context_variables(payload, context)
-    payload = utils.replace_local_variables(payload, context)
-    payload = utils.replace_global_variables(payload, context)
     date = datetime.date.today().strftime("%Y-%m-%d")
-    iuv2 = '0' + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + '00'
+    IuV = '0' + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + '00'
     timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
     setattr(context,'date', date)
-    setattr(context,'iuv2', iuv2)
+    setattr(context,'IuV', IuV)
     setattr(context,'timedate', timedate)
 
     if "#intermediarioPA#" in payload:     
@@ -371,9 +369,11 @@ def step_impl(context):
         payload = payload.replace('ccp',ccp )
         setattr(context, "ccp", ccp)
 
-    if '$iuv2' in payload:
-        payload = payload.replace('$iuv2', getattr(context, 'iuv2'))
+    # if '$IuV' in payload:
+    #     payload = payload.replace('$IuV', getattr(context, 'IuV'))
 
+    payload = utils.replace_local_variables(payload, context)
+    payload = utils.replace_global_variables(payload, context)
     setattr(context,'rpt2Attachment', payload)
 
 @given('REND generation')
