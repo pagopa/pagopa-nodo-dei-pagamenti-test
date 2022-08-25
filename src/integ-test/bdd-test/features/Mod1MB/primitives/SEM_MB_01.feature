@@ -62,7 +62,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          </pay_i:enteBeneficiario>
          <pay_i:datiVersamento>
          <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
-         <pay_i:importoTotaleDaVersare>1.5</pay_i:importoTotaleDaVersare>
+         <pay_i:importoTotaleDaVersare>1.50</pay_i:importoTotaleDaVersare>
          <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
          <pay_i:identificativoUnivocoVersamento>#iuv#</pay_i:identificativoUnivocoVersamento>
          <pay_i:codiceContestoPagamento>#carrello#</pay_i:codiceContestoPagamento>
@@ -70,7 +70,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
          <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
          <pay_i:datiSingoloVersamento>
-         <pay_i:importoSingoloVersamento>1.5</pay_i:importoSingoloVersamento>
+         <pay_i:importoSingoloVersamento>1.50</pay_i:importoSingoloVersamento>
          <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
          <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
          <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
@@ -142,7 +142,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          </pay_i:enteBeneficiario>
          <pay_i:datiVersamento>
          <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
-         <pay_i:importoTotaleDaVersare>1.5</pay_i:importoTotaleDaVersare>
+         <pay_i:importoTotaleDaVersare>1.50</pay_i:importoTotaleDaVersare>
          <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
          <pay_i:identificativoUnivocoVersamento>#IuV#</pay_i:identificativoUnivocoVersamento>
          <pay_i:codiceContestoPagamento>$carrello</pay_i:codiceContestoPagamento>
@@ -150,7 +150,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
          <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
          <pay_i:datiSingoloVersamento>
-         <pay_i:importoSingoloVersamento>1.5</pay_i:importoSingoloVersamento>
+         <pay_i:importoSingoloVersamento>1.50</pay_i:importoSingoloVersamento>
          <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
          <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
          <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
