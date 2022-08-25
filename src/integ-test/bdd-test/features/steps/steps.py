@@ -316,8 +316,8 @@ def step_impl(context):
     if '#date#' in payload:
         payload = payload.replace('#date#', date)
     
-    if '#iuv2#' in payload:
-        payload = payload.replace('#iuv2#', iuv2)
+    if '#IuV#' in payload:
+        payload = payload.replace('#IuV#', IuV)
 
     if '$carrello' in payload:
         payload = payload.replace('$carrello', getattr(context, 'carrello'))
