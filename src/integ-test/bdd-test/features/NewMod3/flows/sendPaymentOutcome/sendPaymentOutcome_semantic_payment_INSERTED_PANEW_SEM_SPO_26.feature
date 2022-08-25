@@ -42,7 +42,7 @@ Feature: Check semantic payment status
             <idPSP>#psp#</idPSP>
             <idBrokerPSP>#psp#</idBrokerPSP>
             <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
-            <password>pwdpwdpwd</password>
+            <password>${password}</password>
             <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
             <outcome>KO</outcome>
             <!--Optional:-->
@@ -50,12 +50,12 @@ Feature: Check semantic payment status
             <paymentMethod>creditCard</paymentMethod>
             <!--Optional:-->
             <paymentChannel>app</paymentChannel>
-            <fee>2.00</fee>
+            <fee>2.22</fee>
             <!--Optional:-->
             <payer>
             <uniqueIdentifier>
             <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-            <entityUniqueIdentifierValue>77777777777_01</entityUniqueIdentifierValue>
+            <entityUniqueIdentifierValue>44444444444_01</entityUniqueIdentifierValue>
             </uniqueIdentifier>
             <fullName>name</fullName>
             <!--Optional:-->
@@ -96,19 +96,19 @@ Feature: Check semantic payment status
             <idPSP>#psp#</idPSP>
             <idBrokerPSP>#psp#</idBrokerPSP>
             <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
-            <password>pwdpwdpwd</password>
+            <password>${password}</password>
             <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
             <outcome>OK</outcome>
             <!--Optional:-->
             <details>
-            <paymentMethod>creditCard</paymentMethod>
+            <paymentMethod>cash</paymentMethod>
             <!--Optional:-->
-            <paymentChannel>app</paymentChannel>
-            <fee>2.00</fee>
+            <paymentChannel>onLine</paymentChannel>
+            <fee>3.00</fee>
             <!--Optional:-->
             <payer>
             <uniqueIdentifier>
-            <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
+            <entityUniqueIdentifierType>F</entityUniqueIdentifierType>
             <entityUniqueIdentifierValue>77777777777_01</entityUniqueIdentifierValue>
             </uniqueIdentifier>
             <fullName>name</fullName>
@@ -127,7 +127,7 @@ Feature: Check semantic payment status
             <!--Optional:-->
             <e-mail>prova@test.it</e-mail>
             </payer>
-            <applicationDate>2021-12-12</applicationDate>
+            <applicationDate>2021-12-10</applicationDate>
             <transferDate>2021-12-11</transferDate>
             </details>
             </nod:sendPaymentOutcomeReq>
@@ -138,7 +138,7 @@ Feature: Check semantic payment status
         When PSP sends SOAP sendPaymentOutcome2 to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcome2 response
         And check faultCode is PPT_ESITO_GIA_ACQUISITO of sendPaymentOutcome2 response
-        #And check db con file json.
+#And check db con file json.
 
 
 
