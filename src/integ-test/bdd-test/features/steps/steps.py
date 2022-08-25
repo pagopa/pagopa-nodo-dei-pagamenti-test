@@ -291,8 +291,10 @@ def step_impl(context):
     payload = utils.replace_global_variables(payload, context)
     date = datetime.date.today().strftime("%Y-%m-%d")
     iuv2 = '0' + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + '00'
+    timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
     setattr(context,'date', date)
     setattr(context,'iuv2', iuv2)
+    setattr(context,'timedate', timedate)
 
     if "#intermediarioPA#" in payload:     
         intermediarioPA = "44444444444_05"
@@ -303,6 +305,9 @@ def step_impl(context):
         ccp = str(int(time() * 1000))
         payload = payload.replace('#ccp#', ccp)
         setattr(context,"ccp", ccp)
+
+    if "#timedate#" in payload:     
+        payload = payload.replace('#timedate#', timedate)
 
     if '#date#' in payload:
         payload = payload.replace('#date#', date)
