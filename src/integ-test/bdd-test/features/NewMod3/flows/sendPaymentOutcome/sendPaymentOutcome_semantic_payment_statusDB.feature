@@ -53,7 +53,7 @@ Feature: Check semantic payment status
             """
 
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
-        Then check outcome is KO of activatePaymentNotice response
+        Then check outcome is OK of activatePaymentNotice response
 
 
     Scenario: Verify  in POSITION_STATUS table
@@ -69,7 +69,7 @@ Feature: Check semantic payment status
             <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
             <password>pwdpwdpwd</password>
             <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
-            <outcome>OK</outcome>
+            <outcome>KO</outcome>
             <!--Optional:-->
             <details>
             <paymentMethod>creditCard</paymentMethod>
@@ -107,5 +107,5 @@ Feature: Check semantic payment status
             """
         #And RPT not recived
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-        Then check outcome is KO of sendPaymentOutcome response
+        Then check outcome is OK of sendPaymentOutcome response
         And checks the value PAYING, INSERTED, FAILED_NORPT of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
