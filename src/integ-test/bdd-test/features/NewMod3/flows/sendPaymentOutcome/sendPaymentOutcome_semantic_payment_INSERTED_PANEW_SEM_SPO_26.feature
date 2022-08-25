@@ -44,7 +44,7 @@ Feature: Check semantic payment status
             <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
             <password>${password}</password>
             <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
-            <outcome>KO</outcome>
+            <outcome>OK</outcome>
             <!--Optional:-->
             <details>
             <paymentMethod>creditCard</paymentMethod>
@@ -82,7 +82,7 @@ Feature: Check semantic payment status
             """
         #And RPT not recived
         When PSP sends SOAP sendPaymentOutcome1 to nodo-dei-pagamenti
-        Then check outcome is OK of sendPaymentOutcome1 response
+        Then check outcome is KO of sendPaymentOutcome1 response
 
 
     Scenario: Execute sendPaymentOutcome2
