@@ -251,5 +251,5 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          """
 
       And multiBeneficiario with true in nodoInviaCarrelloRPT
-      When EC sends SOAP nodoInviaCarrelloRPT1 to nodo-dei-pagamenti
+      When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
       Then check faultCode is PPT_ID_CARRELLO_DUPLICATO of nodoInviaCarrelloRPT response
