@@ -93,27 +93,27 @@ def step_impl(context, primitive):
         setattr(context,'carrello', carrello)
 
     if '#carrello_ordInvertito#' in payload:
-        carrello_ordInvertito = "302" + "77777777777" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+        carrello_ordInvertito = "311" + "77777777777" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
         payload = payload.replace('#carrello_ordInvertito#', carrello_ordInvertito)
         setattr(context,'carrello_ordInvertito', carrello_ordInvertito)
 
     if '#carrello_lungInferiore#' in payload:
-        carrello_lungInferiore = "7777777777" + "302" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+        carrello_lungInferiore = "7777777777" + "311" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
         payload = payload.replace('#carrello_lungInferiore#', carrello_lungInferiore)
         setattr(context,'carrello_lungInferiore', carrello_lungInferiore)
 
     if '#carrello_nessunaRPT#' in payload:
-        carrello_nessunaRPT = "22222222222" + "302" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+        carrello_nessunaRPT = "22222222222" + "311" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
         payload = payload.replace('#carrello_nessunaRPT#', carrello_nessunaRPT)
         setattr(context,'carrello_nessunaRPT', carrello_nessunaRPT)
 
     if '#carrello_PaIla#' in payload:
-        carrello_PaIla = "90000000001" + "302" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+        carrello_PaIla = "90000000001" + "311" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
         payload = payload.replace('#carrello_PaIla#', carrello_PaIla)
         setattr(context,'carrello_PaIla', carrello_PaIla)
 
     if '#carrello1#' in payload:
-        carrello1 = "77777777777" + "302" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + utils.random_s()
+        carrello1 = "77777777777" + "311" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + utils.random_s()
         payload = payload.replace('#carrello1#', carrello1)
         setattr(context,'carrello1', carrello1)
 
