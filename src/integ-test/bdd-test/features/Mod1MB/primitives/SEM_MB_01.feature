@@ -167,7 +167,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
 
    Scenario: Check PPT_MULTI_BENEFICIARIO error for nodoInviaCarrelloRPT_nessunTrattino primitive
          Given the RPT2 generation scenario executed successfully
-         And initial XML nodoInviaCarrelloRPT
+         And initial XML nodoInviaCarrelloRPT_nessunTrattino
          """
          <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
@@ -213,7 +213,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
 
    Scenario: Check PPT_MULTI_BENEFICIARIO error for nodoInviaCarrelloRPT_idDominioRPT2 primitive
          Given the Check PPT_MULTI_BENEFICIARIO error for nodoInviaCarrelloRPT_nessunTrattino primitive scenario executed successfully
-         And initial XML nodoInviaCarrelloRPT
+         And initial XML nodoInviaCarrelloRPT_idDominioRPT2
          """
          <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
@@ -259,7 +259,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
 
    Scenario: Check PPT_MULTI_BENEFICIARIO error for nodoInviaCarrelloRPT_idDominioNessunaRPT primitive
          Given the Check PPT_MULTI_BENEFICIARIO error for nodoInviaCarrelloRPT_idDominioRPT2 primitive scenario executed successfully
-         And initial XML nodoInviaCarrelloRPT
+         And initial XML nodoInviaCarrelloRPT_idDominioNessunaRPT
          """
          <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
@@ -304,7 +304,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
 
    Scenario: Check PPT_MULTI_BENEFICIARIO error for nodoInviaCarrelloRPT_lunghezzaInferiore primitive
          Given the Check PPT_MULTI_BENEFICIARIO error for nodoInviaCarrelloRPT_idDominioNessunaRPT primitive scenario executed successfully
-         And initial XML nodoInviaCarrelloRPT
+         And initial XML nodoInviaCarrelloRPT_lunghezzaInferiore
          """
          <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
@@ -350,7 +350,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
 
    Scenario: Check PPT_MULTI_BENEFICIARIO error for nodoInviaCarrelloRPT_lunghezzaInferiore primitive
          Given the Check PPT_MULTI_BENEFICIARIO error for nodoInviaCarrelloRPT_lunghezzaInferiore primitive scenario executed successfully
-         And initial XML nodoInviaCarrelloRPT
+         And initial XML nodoInviaCarrelloRPT_ordineInvertito
          """
          <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
