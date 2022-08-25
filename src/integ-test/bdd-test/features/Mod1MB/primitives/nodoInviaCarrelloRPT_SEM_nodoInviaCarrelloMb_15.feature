@@ -11,10 +11,10 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
          <pay_i:dominio>
          <pay_i:identificativoDominio>#codicePA#</pay_i:identificativoDominio>
-         <pay_i:identificativoStazioneRichiedente>#intermediarioPA#</pay_i:identificativoStazioneRichiedente>
+         <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
          </pay_i:dominio>
          <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
-         <pay_i:dataOraMessaggioRichiesta>2016-09-16T11:24:10</pay_i:dataOraMessaggioRichiesta>
+         <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
          <pay_i:autenticazioneSoggetto>CNS</pay_i:autenticazioneSoggetto>
          <pay_i:soggettoVersante>
          <pay_i:identificativoUnivocoVersante>
@@ -92,10 +92,10 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
          <pay_i:dominio>
          <pay_i:identificativoDominio>90000000001</pay_i:identificativoDominio>
-         <pay_i:identificativoStazioneRichiedente>#intermediarioPA#</pay_i:identificativoStazioneRichiedente>
+         <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
          </pay_i:dominio>
          <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
-         <pay_i:dataOraMessaggioRichiesta>2016-09-16T11:24:10</pay_i:dataOraMessaggioRichiesta>
+         <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
          <pay_i:autenticazioneSoggetto>CNS</pay_i:autenticazioneSoggetto>
          <pay_i:soggettoVersante>
          <pay_i:identificativoUnivocoVersante>
@@ -172,7 +172,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
          <soapenv:Header>
          <ppt:intestazioneCarrelloPPT>
-         <identificativoIntermediarioPA>#codicePA#</identificativoIntermediarioPA>
+         <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
          <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
          <identificativoCarrello>$carrello</identificativoCarrello>
          </ppt:intestazioneCarrelloPPT>
@@ -192,9 +192,9 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          </elementoListaRPT>
          <elementoListaRPT>
          <identificativoDominio>90000000001</identificativoDominio>
-         <identificativoUnivocoVersamento>$2iuv</identificativoUnivocoVersamento>
+         <identificativoUnivocoVersamento>$iuv2</identificativoUnivocoVersamento>
          <codiceContestoPagamento>$carrello</codiceContestoPagamento>
-         <rpt>$rptAttachment2</rpt>
+         <rpt>$rpt2Attachment</rpt>
          </elementoListaRPT>
          </listaRPT>
          <requireLightPayment>01</requireLightPayment>
