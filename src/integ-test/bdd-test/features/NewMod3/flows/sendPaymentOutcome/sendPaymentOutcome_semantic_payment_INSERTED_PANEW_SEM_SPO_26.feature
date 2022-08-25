@@ -135,9 +135,10 @@ Feature: Check semantic payment status
             </soapenv:Envelope>
             """
         #And RPT not recived
-        When PSP sends SOAP sendPaymentOutcome1 to nodo-dei-pagamenti
+        When PSP sends SOAP sendPaymentOutcome2 to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcome2 response
         And check faultCode is PPT_ESITO_GIA_ACQUISITO of sendPaymentOutcome2 response
+        #And check db con file json.
 
 
 
@@ -155,8 +156,3 @@ Feature: Check semantic payment status
 
 
 
-
-        And checks the value PAYING, PAID of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
-        And checks the value PAID of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro NewMod3
-        And checks the value PAYING, PAID, NOTICE_GENERATED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
-        And checks the value NOTICE_SENT of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro NewMod3
