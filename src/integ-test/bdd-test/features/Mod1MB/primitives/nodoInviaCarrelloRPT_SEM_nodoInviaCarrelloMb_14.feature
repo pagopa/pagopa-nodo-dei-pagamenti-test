@@ -95,7 +95,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
          </pay_i:dominio>
          <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
-         <pay_i:dataOraMessaggioRichiesta>$timedate</pay_i:dataOraMessaggioRichiesta>
+         <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
          <pay_i:autenticazioneSoggetto>CNS</pay_i:autenticazioneSoggetto>
          <pay_i:soggettoVersante>
          <pay_i:identificativoUnivocoVersante>
@@ -240,7 +240,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          <identificativoDominio>90000000001</identificativoDominio>
          <identificativoUnivocoVersamento>$iuv2</identificativoUnivocoVersamento>
          <codiceContestoPagamento>$carrello</codiceContestoPagamento>
-         <rpt>$rptAttachment2</rpt>
+         <rpt>$rpt2Attachment</rpt>
          </elementoListaRPT>
          </listaRPT>
          <requireLightPayment>01</requireLightPayment>
