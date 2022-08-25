@@ -143,6 +143,7 @@ def step_impl(context, primitive):
         rptAttachment_uni = b64.b64encode(rptAttachment_b)
         rptAttachment_uni = f"{rptAttachment_uni}".split("'")[1]
         payload = payload.replace('$rptAttachment', rptAttachment_uni)
+        print(rptAttachment_uni)
 
     if '$rpt2Attachment' in payload:
         rpt2Attachment = getattr(context, 'rpt2Attachment')
@@ -150,6 +151,7 @@ def step_impl(context, primitive):
         rpt2Attachment_uni = b64.b64encode(rpt2Attachment_b)
         rpt2Attachment_uni = f"{rpt2Attachment_uni}".split("'")[1]
         payload = payload.replace('$rpt2Attachment', rpt2Attachment_uni)
+        print(rpt2Attachment_uni)
 
     if '$intermediarioPA' in payload:
         payload = payload.replace('$intermediarioPA', getattr(context, 'intermediarioPA'))
@@ -314,6 +316,9 @@ def step_impl(context):
     
     if '#iuv2#' in payload:
         payload = payload.replace('#iuv2#', iuv2)
+
+    if '$carrello' in payload:
+        payload = payload.replace('$carrello', getattr(context, 'carrello'))
 
     if '#idCarrello#' in payload:
         idCarrello = "09812374659" + "311" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
