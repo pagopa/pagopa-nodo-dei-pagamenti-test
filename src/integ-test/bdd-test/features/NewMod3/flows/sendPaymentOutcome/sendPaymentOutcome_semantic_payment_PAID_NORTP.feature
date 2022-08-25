@@ -13,7 +13,7 @@ Feature: Check semantic payment status
             <nod:verifyPaymentNoticeReq>
             <idPSP>#psp#</idPSP>
             <idBrokerPSP>#psp#</idBrokerPSP>
-            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
+            <idChannel>#canale#</idChannel>
             <password>pwdpwdpwd</password>
             <qrCode>
             <fiscalCode>#creditor_institution_code_old#</fiscalCode>
