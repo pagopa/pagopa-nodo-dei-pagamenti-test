@@ -93,7 +93,7 @@ def step_impl(context, primitive):
         setattr(context,'carrello', carrello)
 
     if '#carrello_ordInvertito#' in payload:
-        carrello_ordInvertito = "302" + "66666666666" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+        carrello_ordInvertito = "311" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "77777777777" + "-" + utils.random_s()
         payload = payload.replace('#carrello_ordInvertito#', carrello_ordInvertito)
         setattr(context,'carrello_ordInvertito', carrello_ordInvertito)
 
