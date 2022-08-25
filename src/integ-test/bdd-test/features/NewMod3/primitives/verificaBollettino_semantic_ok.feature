@@ -46,7 +46,7 @@ Feature: Semantic checks for verificaBollettino - OK
     Then check outcome is KO of verificaBollettino response
     And check faultCode is PPT_SINTASSI_EXTRAXSD of verificaBollettino response
     Examples:
-      | elem  | value | soapUI test |
+      | elem  | value                                 | soapUI test |
       | idPSP | 123456789012345678901234567890123456  | SEM_VB_13   |
 
   #[SEM_VB_13] pt.2
