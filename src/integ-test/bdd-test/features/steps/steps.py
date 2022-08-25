@@ -235,7 +235,7 @@ def step_impl(context):
         setattr(context,'CARRELLO', CARRELLO)
 
     if '#carrello#' in payload:
-        carrello = "66666666666" + "311" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+        carrello = "66666666666" + "302" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
         payload = payload.replace('#carrello#', carrello)
         setattr(context,'carrello', carrello)
 
