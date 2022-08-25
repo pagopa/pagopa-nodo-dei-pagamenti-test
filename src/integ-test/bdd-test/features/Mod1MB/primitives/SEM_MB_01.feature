@@ -204,10 +204,10 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          </soapenv:Envelope>
          """
 
-      And multiBeneficiario with True in nodoInviaCarrelloRPT
-      When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
-      Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
-      And check faultCode is PPT_MULTI_BENEFICIARIO of nodoInviaCarrelloRPT response
+      And multiBeneficiario with True in nodoInviaCarrelloRPT_nessunTrattino
+      When EC sends SOAP nodoInviaCarrelloRPT_nessunTrattino to nodo-dei-pagamenti
+      Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT_nessunTrattino response
+      And check faultCode is PPT_MULTI_BENEFICIARIO of nodoInviaCarrelloRPT_nessunTrattino response
 
 
 
@@ -250,10 +250,10 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          </soapenv:Envelope>
          """
 
-      And multiBeneficiario with True in nodoInviaCarrelloRPT
-      When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
-      Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
-      And check faultCode is PPT_MULTI_BENEFICIARIO of nodoInviaCarrelloRPT response
+      And multiBeneficiario with True in nodoInviaCarrelloRPT_idDominioRPT2
+      When EC sends SOAP nodoInviaCarrelloRPT_idDominioRPT2 to nodo-dei-pagamenti
+      Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT_idDominioRPT2 response
+      And check faultCode is PPT_MULTI_BENEFICIARIO of nodoInviaCarrelloRPT_idDominioRPT2 response
 
 
 
@@ -296,10 +296,10 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          </soapenv:Envelope>
          """
 
-      And multiBeneficiario with True in nodoInviaCarrelloRPT
-      When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
-      Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
-      And check faultCode is PPT_MULTI_BENEFICIARIO of nodoInviaCarrelloRPT response
+      And multiBeneficiario with True in nodoInviaCarrelloRPT_idDominioNessunaRPT
+      When EC sends SOAP nodoInviaCarrelloRPT_idDominioNessunaRPT to nodo-dei-pagamenti
+      Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT_idDominioNessunaRPT response
+      And check faultCode is PPT_MULTI_BENEFICIARIO of nodoInviaCarrelloRPT_idDominioNessunaRPT response
 
 
    Scenario: Check PPT_MULTI_BENEFICIARIO error for nodoInviaCarrelloRPT_lunghezzaInferiore primitive
@@ -341,10 +341,10 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          </soapenv:Envelope>
          """
 
-      And multiBeneficiario with True in nodoInviaCarrelloRPT
-      When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
-      Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
-      And check faultCode is PPT_MULTI_BENEFICIARIO of nodoInviaCarrelloRPT response
+      And multiBeneficiario with True in nodoInviaCarrelloRPT_lunghezzaInferiore
+      When EC sends SOAP nodoInviaCarrelloRPT_lunghezzaInferiore to nodo-dei-pagamenti
+      Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT_lunghezzaInferiore response
+      And check faultCode is PPT_MULTI_BENEFICIARIO of nodoInviaCarrelloRPT_lunghezzaInferiore response
 
 
 
@@ -387,7 +387,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          </soapenv:Envelope>
          """
 
-      And multiBeneficiario with True in nodoInviaCarrelloRPT
-      When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
-      Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
-      And check faultCode is PPT_MULTI_BENEFICIARIO of nodoInviaCarrelloRPT response
+      And multiBeneficiario with True in nodoInviaCarrelloRPT_ordineInvertito
+      When EC sends SOAP nodoInviaCarrelloRPT_ordineInvertito to nodo-dei-pagamenti
+      Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT_ordineInvertito response
+      And check faultCode is PPT_MULTI_BENEFICIARIO of nodoInviaCarrelloRPT_ordineInvertito response
