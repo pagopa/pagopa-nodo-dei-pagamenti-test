@@ -208,4 +208,4 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
       When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
       Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
       And check faultCode is PPT_SEMANTICA of nodoInviaCarrelloRPT response
-      And check description is flagMultibeneficiario non disponibile per pagamenti diversi da WISP2 of nodoInviaCarrelloRPT response
+      And check description is Flag multibeneficiario non disponibile per pagamenti diversi da WISP2 of nodoInviaCarrelloRPT response
