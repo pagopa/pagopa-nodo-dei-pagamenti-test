@@ -55,6 +55,7 @@ def step_impl(context, version):
 def step_impl(context, primitive):
     payload = context.text or ""
     payload = utils.replace_local_variables(payload, context)
+
     if len(payload) > 0:
         my_document = parseString(payload)
         idBrokerPSP = "70000000001"
@@ -131,11 +132,11 @@ def step_impl(context, primitive):
         payload = payload.replace('#thrCarrello#', thrCarrello)
         setattr(context,'thrCarrello', thrCarrello)
     
-    if '$iuv' in payload:
-        payload = payload.replace('$iuv', getattr(context, 'iuv'))
+    # if '$iuv' in payload:
+    #     payload = payload.replace('$iuv', getattr(context, 'iuv'))
     
-    if '$iuv2' in payload:
-        payload = payload.replace('$iuv2', getattr(context, 'iuv2'))
+    # if '$iuv2' in payload:
+    #     payload = payload.replace('$iuv2', getattr(context, 'iuv2'))
 
     if '$rptAttachment' in payload:
         rptAttachment = getattr(context, 'rptAttachment')
@@ -152,36 +153,38 @@ def step_impl(context, primitive):
         rpt2Attachment_uni = f"{rpt2Attachment_uni}".split("'")[1]
         payload = payload.replace('$rpt2Attachment', rpt2Attachment_uni)
         print(rpt2Attachment_uni)
+    
 
-    if '$intermediarioPA' in payload:
-        payload = payload.replace('$intermediarioPA', getattr(context, 'intermediarioPA'))
 
-    if '$identificativoFlusso' in payload:
-        payload = payload.replace('$identificativoFlusso', getattr(context, 'identificativoFlusso'))
+    # if '$intermediarioPA' in payload:
+    #     payload = payload.replace('$intermediarioPA', getattr(context, 'intermediarioPA'))
 
-    if '$date' in payload:
-        payload = payload.replace('$date', getattr(context, 'date'))
+    # if '$identificativoFlusso' in payload:
+    #     payload = payload.replace('$identificativoFlusso', getattr(context, 'identificativoFlusso'))
 
-    if '$ccp' in payload:
-        payload = payload.replace('$ccp', getattr(context, 'ccp'))
+    # if '$date' in payload:
+    #     payload = payload.replace('$date', getattr(context, 'date'))
 
-    if '$timedate' in payload:
-        payload = payload.replace('$timedate', getattr(context, 'timedate'))
+    # if '$ccp' in payload:
+    #     payload = payload.replace('$ccp', getattr(context, 'ccp'))
 
-    if '$idCarrello' in payload:
-        payload = payload.replace('$idCarrello', getattr(context, 'idCarrello'))
+    # if '$timedate' in payload:
+    #     payload = payload.replace('$timedate', getattr(context, 'timedate'))
 
-    if '$carrello' in payload:
-        payload = payload.replace('$carrello', getattr(context, 'carrello'))
+    # if '$idCarrello' in payload:
+    #     payload = payload.replace('$idCarrello', getattr(context, 'idCarrello'))
 
-    if '$secCarrello' in payload:
-        payload = payload.replace('$secCarrello', getattr(context, 'secCarrello'))
+    # if '$carrello' in payload:
+    #     payload = payload.replace('$carrello', getattr(context, 'carrello'))
 
-    if '$thrCarrello' in payload:
-        payload = payload.replace('$thrCarrello', getattr(context, 'thrCarrello'))
+    # if '$secCarrello' in payload:
+    #     payload = payload.replace('$secCarrello', getattr(context, 'secCarrello'))
 
-    if '$carrNOTENABLED' in payload:
-        payload = payload.replace('$carrNOTENABLED', getattr(context, 'carrNOTENABLED'))
+    # if '$thrCarrello' in payload:
+    #     payload = payload.replace('$thrCarrello', getattr(context, 'thrCarrello'))
+
+    # if '$carrNOTENABLED' in payload:
+    #     payload = payload.replace('$carrNOTENABLED', getattr(context, 'carrNOTENABLED'))
 
     if '$rendAttachment' in payload:
         rendAttachment = getattr(context, 'rendAttachment')
@@ -190,6 +193,7 @@ def step_impl(context, primitive):
         rendAttachment_uni = f"{rendAttachment_uni}".split("'")[1]
         payload = payload.replace('$rendAttachment', rendAttachment_uni)
 
+    payload = utils.replace_context_variables(payload, context)
     payload = utils.replace_global_variables(payload, context)
 
     setattr(context, primitive, payload)
