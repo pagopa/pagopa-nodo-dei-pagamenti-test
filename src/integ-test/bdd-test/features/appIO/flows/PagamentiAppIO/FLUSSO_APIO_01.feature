@@ -229,7 +229,45 @@ Scenario: Check sendPaymentOutcome response after nodoInoltroEsitoCarta, and che
     And checks the value $activateIOPaymentResponse.officeName of the record at column OFFICE_NAME of the table POSITION_RECEIPT retrived by the query payment_status on db nodo_online under macro AppIO
     And checks the value #psp# of the record at column PSP_ID of the table POSITION_RECEIPT retrived by the query payment_status on db nodo_online under macro AppIO
     #And checks the value Cassa di Risparmio di Parma e Piacenza S.p.A. descrizione lunga of the record at column DESCRIZIONE of the table PSP retrived by the query psp on db nodo_cfg under macro AppIO 
-    # TODO: check correctness of POSITION_RECEIPT_RECIPIENT table
+    #check correctness of POSITION_ACTIVATE table
+    And checks the value $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
+    And checks the value #psp# of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
+    #check correctness of POSITION_RECEIPT_RECIPIENT table
+    And verify 1 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_1 on db nodo_online under macro AppIO
+    # extraction from POSITION_PAYMENT table
+    And execution query payment_status to get value on the table POSITION_PAYMENT, with the columns * under macro AppIO with db name nodo_online
+    And through the query payment_status retrieve param pa at position 1 and save it under the key pa
+    And through the query payment_status retrieve param noticeNumber at position 2 and save it under the key noticeNumber
+    And through the query payment_status retrieve param creditorReferenceId at position 3 and save it under the key creditorReferenceId
+    And through the query payment_status retrieve param paymentToken at position 4 and save it under the key paymentToken
+    And through the query payment_status retrieve param brokerPA at position 5 and save it under the key brokerPA
+    And through the query payment_status retrieve param stationPA at position 6 and save it under the key stationPA
+    And through the query payment_status retrieve param insertedTimestamp at position 20 and save it under the key insertedTimestamp
+    And through the query payment_status retrieve param updatedTimestamp at position 21 and save it under the key updatedTimestamp  
+    # check correctness of POSITION_RECEIPT_RECIPIENT table
+    And checks the value $pa of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_1 on db nodo_online under macro AppIO
+    And checks the value $noticeNumber of the record at column NOTICE_ID of the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_1 on db nodo_online under macro AppIO
+    And checks the value $creditorReferenceId of the record at column CREDITOR_REFERENCE_ID of the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_1 on db nodo_online under macro AppIO
+    And checks the value $paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_1 on db nodo_online under macro AppIO
+    And checks the value $pa of the record at column RECIPIENT_PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_1 on db nodo_online under macro AppIO
+    And checks the value $brokerPA of the record at column RECIPIENT_BROKER_PA_ID of the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_1 on db nodo_online under macro AppIO
+    And checks the value $stationPA of the record at column RECIPIENT_STATION_ID of the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_1 on db nodo_online under macro AppIO
+    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_1 on db nodo_online under macro AppIO
     # TODO: check correctness of POSITION_RECEIPT_RECIPIENT_STATUS table
-    # TODO: check correctness of POSITION_RECEIPT_XML table
+    #check correctness of POSITION_RECEIPT_XML table
+    # extraction from POSITION_RECEIPT_RECIPIENT table
+    And execution query payment_status to get value on the table POSITION_RECEIPT_RECIPIENT, with the columns * under macro AppIO with db name nodo_online
+    And through the query payment_status retrieve param recipientFiscalCode at position 5 and save it under the key recipientFiscalCode
+    And through the query payment_status retrieve param recipientBroker at position 6 and save it under the key recipientBroker
+    And through the query payment_status retrieve param recipientStation at position 7 and save it under the key recipientStation
+    # check correctness of POSITION_RECEIPT_XML table
+    And checks the value $pa of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT_XML retrived by the query payment_status_1 on db nodo_online under macro AppIO
+    And checks the value $noticeNumber of the record at column NOTICE_ID of the table POSITION_RECEIPT_XML retrived by the query payment_status_1 on db nodo_online under macro AppIO
+    And checks the value $creditorReferenceId of the record at column CREDITOR_REFERENCE_ID of the table POSITION_RECEIPT_XML retrived by the query payment_status_1 on db nodo_online under macro AppIO
+    And checks the value $paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_RECEIPT_XML retrived by the query payment_status_1 on db nodo_online under macro AppIO
+    And checks the value $recipientFiscalCode of the record at column RECIPIENT_PA_FISCAL_CODE of the table POSITION_RECEIPT_XML retrived by the query payment_status_1 on db nodo_online under macro AppIO
+    And checks the value $recipientBroker of the record at column RECIPIENT_BROKER_PA_ID of the table POSITION_RECEIPT_XML retrived by the query payment_status_1 on db nodo_online under macro AppIO
+    And checks the value $recipientStation of the record at column RECIPIENT_STATION_ID of the table POSITION_RECEIPT_XML retrived by the query payment_status_1 on db nodo_online under macro AppIO
+    And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RECEIPT_XML retrived by the query payment_status_1 on db nodo_online under macro AppIO
+    And checks the value NotNone of the record at column XML of the table POSITION_RECEIPT_XML retrived by the query payment_status_1 on db nodo_online under macro AppIO
     # TODO: check correctness of XML Receipt

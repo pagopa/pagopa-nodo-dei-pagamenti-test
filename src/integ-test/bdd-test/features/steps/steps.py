@@ -879,6 +879,14 @@ def step_impl(context, query_name, param, position, key):
     print(f'{param}: {selected_element}')
     setattr(context, key, selected_element)
 
+@step("through the query {query_name} retrieve param {param} at position {position:d} in the row {row_number:d} and save it under the key {key}")
+def step_impl(context, query_name, param, position, row_number, key):
+    result_query = getattr(context, query_name)
+    print(f'{query_name}: {result_query}')
+    selected_element = result_query[row_number][position]
+    print(f'{param}: {selected_element}')
+    setattr(context, key, selected_element)
+
 
 @step("with the query {query_name1} check assert beetwen elem {elem1} in position {position1:d} and elem {elem2} with position {position2:d} of the query {query_name2}")
 def stemp_impl(context, query_name1, elem1, position1, elem2, query_name2, position2):
