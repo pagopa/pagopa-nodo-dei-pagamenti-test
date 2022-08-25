@@ -348,7 +348,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
 
 
 
-   Scenario: Check PPT_MULTI_BENEFICIARIO error for nodoInviaCarrelloRPT_lunghezzaInferiore primitive
+   Scenario: Check PPT_MULTI_BENEFICIARIO error for nodoInviaCarrelloRPT_ordineInvertito primitive
          Given the Check PPT_MULTI_BENEFICIARIO error for nodoInviaCarrelloRPT_lunghezzaInferiore primitive scenario executed successfully
          And initial XML nodoInviaCarrelloRPT_ordineInvertito
          """
