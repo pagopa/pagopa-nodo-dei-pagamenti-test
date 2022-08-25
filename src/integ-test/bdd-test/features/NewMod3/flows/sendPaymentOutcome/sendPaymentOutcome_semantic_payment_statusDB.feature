@@ -11,9 +11,9 @@ Feature: Check semantic payment status
             <soapenv:Header />
             <soapenv:Body>
             <nod:verifyPaymentNoticeReq>
-            <idPSP>70000000001</idPSP>
-            <idBrokerPSP>70000000001</idBrokerPSP>
-            <idChannel>70000000001_01</idChannel>
+            <idPSP>#psp#</idPSP>
+            <idBrokerPSP>#psp#</idBrokerPSP>
+            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
             <password>pwdpwdpwd</password>
             <qrCode>
             <fiscalCode>#creditor_institution_code_old#</fiscalCode>
@@ -36,14 +36,14 @@ Feature: Check semantic payment status
             <soapenv:Header/>
             <soapenv:Body>
             <nod:activatePaymentNoticeReq>
-            <idPSP>${psp}</idPSP>
-            <idBrokerPSP>${intermediarioPSP}</idBrokerPSP>
-            <idChannel>${canale3}</idChannel>
-            <password>${password}</password>
-            <idempotencyKey>${psp}_${#TestCase#idempotenza}</idempotencyKey>
+            <idPSP>$verifyPaymentNotice.idPSP</idPSP>
+            <idBrokerPSP>$verifyPaymentNotice.idBrokerPSP</idBrokerPSP>
+            <idChannel>$verifyPaymentNotice.idChannel</idChannel>
+            <password>pwdpwdpwd</password>
+            <idempotencyKey>#idempotency_key#</idempotencyKey>
             <qrCode>
             <fiscalCode>#creditor_institution_code_old#</fiscalCode>
-            <noticeNumber>#notice_number_old#</noticeNumber>
+            <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
             </qrCode>
             <!--expirationTime>6000</expirationTime-->
             <amount>10.00</amount>
@@ -64,12 +64,12 @@ Feature: Check semantic payment status
             <soapenv:Header/>
             <soapenv:Body>
             <nod:sendPaymentOutcomeReq>
-            <idPSP>${psp}</idPSP>
-            <idBrokerPSP>${intermediarioPSP}</idBrokerPSP>
-            <idChannel>${canale3}</idChannel>
-            <password>${password}</password>
-            <paymentToken>8f4aa4d917404037bc3ba23130906c52</paymentToken>
-            <outcome>KO</outcome>
+            <idPSP>#psp#</idPSP>
+            <idBrokerPSP>#psp#</idBrokerPSP>
+            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
+            <password>pwdpwdpwd</password>
+            <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
+            <outcome>OK</outcome>
             <!--Optional:-->
             <details>
             <paymentMethod>creditCard</paymentMethod>
@@ -108,4 +108,4 @@ Feature: Check semantic payment status
         #And RPT not recived
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcome response
-        And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
+        And checks the value PAYING, INSERTED, FAILED_NORPT of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
