@@ -390,4 +390,4 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
       And multiBeneficiario with true in nodoInviaCarrelloRPT_ordineInvertito
       When EC sends SOAP nodoInviaCarrelloRPT_ordineInvertito to nodo-dei-pagamenti
       Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT_ordineInvertito response
-      And check faultCode is PPT_MULTI_BENEFICIARIO of nodoInviaCarrelloRPT_ordineInvertito response
+      And check faultCode is PPT_DOMINIO_SCONOSCIUTO of nodoInviaCarrelloRPT_ordineInvertito response
