@@ -8,9 +8,9 @@ Feature: Semantic checks for verificaBollettino - OK
         <soapenv:Header/>
         <soapenv:Body>
           <nod:verificaBollettinoReq>
-            <idPSP>POSTE3</idPSP>
-            <idBrokerPSP>BANCOPOSTA</idBrokerPSP>
-            <idChannel>POSTE3</idChannel>
+            <idPSP>#psp#</idPSP>
+            <idBrokerPSP>#psp#</idBrokerPSP>
+            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
             <password>pwdpwdpwd</password>
             <ccPost>#codicePA#</ccPost>
             <noticeNumber>#notice_number#</noticeNumber>
@@ -31,11 +31,6 @@ Feature: Semantic checks for verificaBollettino - OK
   #    Then check outcome is OK
 
 
-  #[SEM_VB_10]
-  Scenario: Check noticeNumber PA old
-    Given EC old version
-    When psp sends SOAP verificaBollettino to nodo-dei-pagamenti
-    Then check outcome is OK of verificaBollettino response
 
 
   #[SEM_VB_13] pt.1
@@ -53,6 +48,5 @@ Feature: Semantic checks for verificaBollettino - OK
   Scenario: Last call verificaBollettino
     Given the Execute verificaBollettino request scenario executed successfully
     And saving verificaBollettinoTmp request in verificaBollettino
-    And idPSP with POSTE3 in verificaBollettino
     When psp sends soap verificaBollettino to nodo-dei-pagamenti
     Then check outcome is OK of verificaBollettino response
