@@ -115,12 +115,12 @@ Feature: process tests for NotificaAnnullamento_RPT_CONPSP
 
     Scenario: Execution idPagamento
         Given the Execute nodoInviaRPT scenario executed successfully
-        When WISP sends rest GET /informazioniPagamento?idPagamento='?' to nodo-dei-pagamenti
+        When WISP sends rest GET /informazioniPagamento?idPagamento='ea512426-da76-463a-be46-80c5f37eda1c' to nodo-dei-pagamenti
 
     
     Scenario: Execute nodoNotificaAnnullamento
         Given the Execute idPagamento scenario executed successfully
-        When WISP sends rest GET /notificaAnnullamento?idPagamento='?'&motivoAnnullamento='CONPSP' to nodo-dei-pagamenti
+        When WISP sends rest GET /notificaAnnullamento?idPagamento='ea512426-da76-463a-be46-80c5f37eda1c'&motivoAnnullamento='CONPSP' to nodo-dei-pagamenti
         Then verify the HTTP status code of notificaAnnullamento response is 200
         And check outcome is OK of notificaAnnullamento response
 
