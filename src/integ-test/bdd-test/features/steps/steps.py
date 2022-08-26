@@ -1705,3 +1705,9 @@ def step_impl(context):
     """
 
     #campo METADATA opzionale da aggiungere
+
+@step('retrieve session token from {url}')
+
+def step_impl(context, url):
+    url = utils.replace_local_variables(url, context)
+    setattr(context, f'sessionToken', url.split('idSession=')[1])

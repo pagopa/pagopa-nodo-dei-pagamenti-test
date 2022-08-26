@@ -9,10 +9,10 @@ Feature: process tests for NotificaAnnullamento_RPT_CONPSP
       <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
       <pay_i:dominio>
       <pay_i:identificativoDominio>#codicePA#</pay_i:identificativoDominio>
-      <pay_i:identificativoStazioneRichiedente>#intermediarioPA#</pay_i:identificativoStazioneRichiedente>
+      <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
       </pay_i:dominio>
       <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
-      <pay_i:dataOraMessaggioRichiesta>2016-09-16T11:24:10</pay_i:dataOraMessaggioRichiesta>
+      <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
       <pay_i:autenticazioneSoggetto>CNS</pay_i:autenticazioneSoggetto>
       <pay_i:soggettoVersante>
       <pay_i:identificativoUnivocoVersante>
@@ -58,9 +58,9 @@ Feature: process tests for NotificaAnnullamento_RPT_CONPSP
       <pay_i:nazioneBeneficiario>IT</pay_i:nazioneBeneficiario>
       </pay_i:enteBeneficiario>
       <pay_i:datiVersamento>
-      <pay_i:dataEsecuzionePagamento>2016-09-16</pay_i:dataEsecuzionePagamento>
+      <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
       <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
-      <pay_i:tipoVersamento>PO</pay_i:tipoVersamento>
+      <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
       <pay_i:identificativoUnivocoVersamento>#iuv#</pay_i:identificativoUnivocoVersamento>
       <pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
       <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
@@ -89,7 +89,7 @@ Feature: process tests for NotificaAnnullamento_RPT_CONPSP
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
         <soapenv:Header>
             <ppt:intestazionePPT>
-                <identificativoIntermediarioPA>#codicePA#</identificativoIntermediarioPA>
+                <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
                 <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
                 <identificativoDominio>#codicePA#</identificativoDominio>
                 <identificativoUnivocoVersamento>#iuv#</identificativoUnivocoVersamento>
@@ -101,7 +101,7 @@ Feature: process tests for NotificaAnnullamento_RPT_CONPSP
                 <password>pwdpwdpwd</password>
                 <identificativoPSP>#psp#</identificativoPSP>
                 <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-                <identificativoCanale>#id_station#</identificativoCanale>
+                <identificativoCanale>#canale#</identificativoCanale>
                 <tipoFirma />
                 <rpt>$rptAttachment</rpt>
             </ws:nodoInviaRPT>
@@ -111,16 +111,17 @@ Feature: process tests for NotificaAnnullamento_RPT_CONPSP
 
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check outcome is OK of nodoInviaRPT response
+        And retrieve session token from $nodoInviaRPTResponse.url
 
 
     Scenario: Execution idPagamento
         Given the Execute nodoInviaRPT scenario executed successfully
-        When WISP sends rest GET /informazioniPagamento?idPagamento='ea512426-da76-463a-be46-80c5f37eda1c' to nodo-dei-pagamenti
+        When WISP sends rest GET /informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
 
     
     Scenario: Execute nodoNotificaAnnullamento
         Given the Execute idPagamento scenario executed successfully
-        When WISP sends rest GET /notificaAnnullamento?idPagamento='ea512426-da76-463a-be46-80c5f37eda1c'&motivoAnnullamento='CONPSP' to nodo-dei-pagamenti
+        When WISP sends rest GET /notificaAnnullamento?idPagamento=$sessionToken&motivoAnnullamento='CONPSP' to nodo-dei-pagamenti
         Then verify the HTTP status code of notificaAnnullamento response is 200
         And check outcome is OK of notificaAnnullamento response
 
@@ -133,5 +134,5 @@ Feature: process tests for NotificaAnnullamento_RPT_CONPSP
         And wait 5 seconds for expiration 
         Then checks the value Annullato per errore in connessione of the record at column ESITO of the table RT retrived by the query esito on db nodo_online under macro Mod1
         And checks the value RPT of the record at column MOTIVO_ANNULLAMENTO of the table PM_SESSION_DATA retrived by the query motivo_annullamento on db nodo_online under macro Mod1
-        And checks the value CONPSP of the record at column TIPO of the table PM_SESSION_DATA retrived by the query tipo on db nodo_online under macro Mod1
+        And checks the value CONPSP of the record at column TIPO of the table PM_SESSION_DATA retrived by the query motivo_annullamento on db nodo_online under macro Mod1
     
