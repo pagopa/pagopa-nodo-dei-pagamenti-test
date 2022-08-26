@@ -87,7 +87,7 @@ Feature: Check semantic payment status
 
     Scenario: Execute sendPaymentOutcome2
         Given the Execute sendPaymentOutcome1 scenario executed successfully
-        And outcome with value OK in sendPaymentOutcome
+        And outcome with OK in sendPaymentOutcome
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcome response
         And check faultCode is PPT_ESITO_GIA_ACQUISITO of sendPaymentOutcome response
