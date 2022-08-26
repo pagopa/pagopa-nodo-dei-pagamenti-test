@@ -43,7 +43,7 @@ Feature: Semantic checks for verificaBollettino - OK
 
   # TODO implement with api-config
   #  # ccPost associato a due PA - [SEM_VB_15]
-  Scenario: Check outcome OK if ccPost is associated with two EC
-    Given ccPost associated with two EC  #"INSERT INTO NODO4_CFG.CODIFICHE_PA (CODICE_PA, FK_CODIFICA, FK_PA) VALUES ('${codicePA}', 1, 6023)"
-    When PSP sends verificaBollettinoReq to nodo-dei-pagamenti
-    Then check outcome is OK of verificaBollettino response
+  #Scenario: Check outcome OK if ccPost is associated with two EC
+    #Given ccPost associated with two EC  #"INSERT INTO NODO4_CFG.CODIFICHE_PA (CODICE_PA, FK_CODIFICA, FK_PA) VALUES ('${codicePA}', 1, 6023)"
+    #When PSP sends verificaBollettinoReq to nodo-dei-pagamenti
+    #Then check outcome is OK of verificaBollettino response
