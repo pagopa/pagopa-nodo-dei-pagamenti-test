@@ -18,6 +18,8 @@ import { parseHTML } from "k6/html";
 import { idpay_setup} from './idpay_setup_SIT.js';
 import * as outputUtil from './util/output_util.js';
 import * as inputDataUtil from './util/input_data_util.js';
+//import exec from 'k6/execution';
+//import { getCurrentStageIndex } from 'https://jslib.k6.io/k6-utils/1.3.0/index.js';
 //import * as db from './db/db.js';
 
 
@@ -51,13 +53,39 @@ export const getScalini = new SharedArray('scalini', function () {
 
 
 export const options = {
-	
-   scenarios: {
+    //rps: 10,
+     /* stages: [
+                   { target: getScalini[0].Scalino_CT_1, rps: getScalini[0].Scalino_CT_1, duration: 0+'s' },
+                   { target: getScalini[0].Scalino_CT_1, rps: getScalini[0].Scalino_CT_1, duration: getScalini[0].Scalino_CT_TIME_1+'s' },
+                   { target: getScalini[0].Scalino_CT_2, rps: getScalini[0].Scalino_CT_1, duration: 0+'s' },
+                   { target: getScalini[0].Scalino_CT_2, rps: getScalini[0].Scalino_CT_1, duration: getScalini[0].Scalino_CT_TIME_2+'s' },
+                   { target: getScalini[0].Scalino_CT_3, rps: getScalini[0].Scalino_CT_1, duration: 0+'s' },
+                   { target: getScalini[0].Scalino_CT_3, rps: getScalini[0].Scalino_CT_1, duration: getScalini[0].Scalino_CT_TIME_3+'s' },
+                   { target: getScalini[0].Scalino_CT_4, rps: getScalini[0].Scalino_CT_1, duration: 0+'s' },
+           		  { target: getScalini[0].Scalino_CT_4, rps: getScalini[0].Scalino_CT_1, duration: getScalini[0].Scalino_CT_TIME_4+'s' },
+           		  { target: getScalini[0].Scalino_CT_5, rps: getScalini[0].Scalino_CT_1, duration: 0+'s' },
+                   { target: getScalini[0].Scalino_CT_5, rps: getScalini[0].Scalino_CT_1, duration: getScalini[0].Scalino_CT_TIME_5+'s' },
+                   { target: getScalini[0].Scalino_CT_6, rps: getScalini[0].Scalino_CT_1, duration: 0+'s' },
+                   { target: getScalini[0].Scalino_CT_6, rps: getScalini[0].Scalino_CT_1, duration: getScalini[0].Scalino_CT_TIME_6+'s' },
+                   { target: getScalini[0].Scalino_CT_7, rps: getScalini[0].Scalino_CT_1, duration: 0+'s' },
+           		  { target: getScalini[0].Scalino_CT_7, rps: getScalini[0].Scalino_CT_1, duration: getScalini[0].Scalino_CT_TIME_7+'s' },
+           		  { target: getScalini[0].Scalino_CT_8, rps: getScalini[0].Scalino_CT_1, duration: 0+'s' },
+           		  { target: getScalini[0].Scalino_CT_8, rps: getScalini[0].Scalino_CT_1, duration: getScalini[0].Scalino_CT_TIME_8+'s' },
+           		  { target: getScalini[0].Scalino_CT_9, rps: getScalini[0].Scalino_CT_1, duration: 0+'s' },
+                   { target: getScalini[0].Scalino_CT_9, rps: getScalini[0].Scalino_CT_1, duration: getScalini[0].Scalino_CT_TIME_9+'s' },
+                   { target: getScalini[0].Scalino_CT_10, rps: getScalini[0].Scalino_CT_1, duration: 0+'s' },
+                   { target: getScalini[0].Scalino_CT_10, rps: getScalini[0].Scalino_CT_1, duration: getScalini[0].Scalino_CT_TIME_10+'s' }, //to uncomment
+                  ],
+*/
+  //  gracefulStop: '0s',
+    scenarios: {
+
         	total: {
-            timeUnit: '1s',
+            timeUnit: '7s', //7s dev'essere uguale al n°di richieste per ogni iterazione --> n°di primitive
             preAllocatedVUs: 1, // how large the initial pool of VUs would be
             executor: 'ramping-arrival-rate',
             //executor: 'ramping-vus',
+            //gracefulStop: '0s',
             maxVUs: 500,
             stages: [
               { target: getScalini[0].Scalino_CT_1, duration: 0+'s' },
@@ -92,21 +120,13 @@ export const options = {
     // we can set different thresholds for the different scenarios because
     // of the extra metric tags we set!
     'http_req_duration{getWallet_v3:http_req_duration}': [],
-    'getWallet_v3': [],
-	'http_req_duration{startSession:http_req_duration}': [],
-	'startSession': [],
+    'http_req_duration{startSession:http_req_duration}': [],
 	'http_req_duration{pay_PP_Check:http_req_duration}': [],
-	'pay_PP_Check': [],
 	'http_req_duration{pay_PP_Pay:http_req_duration}': [],
-	'pay_PP_Pay': [],
 	'http_req_duration{B_Check:http_req_duration}': [],
-	'B_Check': [],
 	'http_req_duration{pay_PP_Logout:http_req_duration}': [],
-	'pay_PP_Logout': [],
 	'http_req_duration{pay_PP_bye:http_req_duration}': [],
-	'pay_PP_bye': [],
 	'http_req_duration{ALL:http_req_duration}': [],
-	'ALL': [],
 	'checks{getWallet_v3:over_sla300}': [],
 	'checks{getWallet_v3:over_sla400}': [],
 	'checks{getWallet_v3:over_sla500}': [],
@@ -182,6 +202,12 @@ export const options = {
 
 export function total() {
 
+  /*const targetRps = exec.instance.vusActive;
+  const before = new Date().getTime();
+  console.log('currentStageIndex='+getCurrentStageIndex());
+  options.rps = exec.test.options.scenarios.total.stages[getCurrentStageIndex()].target; */
+
+
   let baseUrl = "";
   let urls = csvBaseUrl;
   for (var key in urls){
@@ -218,7 +244,7 @@ export function total() {
   res = pay_PP_Check(baseUrl, idPay, token);
 
   
-  
+
   console.log('token='+token+'idWallet='+idWallet+'idPay'+idPay);
   res = pay_PP_Pay(baseUrl, token, idWallet, idPay);
   let idTr=res.idTr;
@@ -251,6 +277,7 @@ export function total() {
 
 export default function(){
 	total();
+
 }
 
 

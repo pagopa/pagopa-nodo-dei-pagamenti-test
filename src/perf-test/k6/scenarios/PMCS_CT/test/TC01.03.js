@@ -60,9 +60,9 @@ export const getScalini = new SharedArray('scalini', function () {
 
 export const options = {
 	
-  /*scenarios: {
+  scenarios: {
       	total: {
-          timeUnit: '1s',
+          timeUnit: '15s', //15 //dev'essere uguale al n°di richieste per ogni iterazione
           preAllocatedVUs: 1, // how large the initial pool of VUs would be
           executor: 'ramping-arrival-rate',
           //executor: 'ramping-vus',
@@ -93,14 +93,14 @@ export const options = {
           exec: 'total',
         }
 
-      },*/
+      },
   summaryTrendStats: ['avg', 'min', 'max', 'p(90)', 'p(95)', 'count'],
   discardResponseBodies: false,
   thresholds: {
     // we can set different thresholds for the different scenarios because
     // of the extra metric tags we set!
     'http_req_duration{pay_Check:http_req_duration}': [],
-	'http_req_duration{getWallet_v2:http_req_duration}': [],
+    'http_req_duration{getWallet_v2:http_req_duration}': [],
 	'http_req_duration{pay_CC_PayINternal:http_req_duration}': [],
 	'http_req_duration{pay_CC_Pay:http_req_duration}': [],
 	'http_req_duration{pay_CC_CheckOut:http_req_duration}': [],
@@ -115,8 +115,8 @@ export const options = {
 	'http_req_duration{ob_CC_Response:http_req_duration}': [],
 	'http_req_duration{ob_CC_resume3ds2:http_req_duration}': [],
 	'http_req_duration{startSession:http_req_duration}': [],
-	'http_req_duration{ALL:http_req_duration}': ['p(95)<200'], //95% of requests should be below 200ms
-	'checks{pay_Check:over_sla300}': ['rate<0.9'], //90% of requests of this api should be below 300ms
+	'http_req_duration{ALL:http_req_duration}': [], //95% of requests should be below 200ms
+	'checks{pay_Check:over_sla300}': [], //90% of requests of this api should be below 300ms
 	'checks{pay_Check:over_sla400}': [],
 	'checks{pay_Check:over_sla500}': [],
 	'checks{pay_Check:over_sla600}': [],
@@ -243,7 +243,7 @@ export const options = {
 	'checks{ALL:over_sla800}': [],
 	'checks{ALL:over_sla1000}': [],
 	'checks{ALL:ok_rate}': [],
-	'checks{ALL:ko_rate}': ['rate<0.01'], //http errors should be less than 0.01%
+	'checks{ALL:ko_rate}': [], //http errors should be less than 0.01%
 	},
    
   
@@ -293,11 +293,11 @@ export function total() {
   //to comment in perf
   /*res=idpay_setup();
   let idPay=res.json()[0].idPayment;
-  console.log("idPay="+idPay);
-  idPay='32e56479-8444-432b-9fb6-347d2f1e54a2';*/
+  //let idPay='3b090efa-df97-4da7-be70-c95f403792a2';
+  console.log("idPay="+idPay); */
   //-- fine comment in perf
   let idPay = inputDataUtil.getPay().idPay; //to uncomment in perf
-
+  //let idPay = 'e787f431-218d-49e6-a7a2-fc6754869b13';
 
 
   res = getWallet_v2(baseUrl,token);
@@ -323,7 +323,7 @@ export function total() {
 
   console.log("redPath dopo internal:"+RED_Path);
  
-  //RED_Path='/fgfgggg?op=1'
+
   res=pay_CC_CheckOut(baseUrl, RED_Path);
   idTr=res.idTr;
 
@@ -349,16 +349,18 @@ export function total() {
 
        let resCheck2 = '';
        let creq = '';
+       //let acsUrl=''; //in perf non si usa
        do {
              resCheck2 = ob_CC_Check_2(baseUrl, idTr);
              statusTr = resCheck2.statusTr;
              creq=resCheck2.creq;
+             //acsUrl=resCheck2.acsUrl; //in perf non si usa
            }
        while (statusTr !== 'In attesa della challenge 3ds2');
 
 
-
-       res= ob_CC_Challenge(baseUrl, creq); //baseUrlPM
+       res= ob_CC_Challenge(baseUrlPM, creq); //scommentare in perf
+       //res= ob_CC_Challenge(baseUrlPM, creq, acsUrl); //commentare in perf
        let threedstransId = res.threedstransId;
 
 
@@ -423,132 +425,4 @@ export function handleSummary(data) {
 }
 
 
-export function commonChecks(res){
-	
-	check(res, {
- 	'ALL over_sla300': (r) => r.timings.duration >300,
-   },
-   { ALL: 'over_sla300' }
-   );
-   
-   check(res, {
- 	'ALL over_sla400': (r) => r.timings.duration >400,
-   },
-   { ALL: 'over_sla400' }
-   );
-   
-   check(res, {
- 	'ALL over_sla500': (r) => r.timings.duration >500,
-   },
-   { ALL: 'over_sla500' }
-   );
-   
-   check(res, {
- 	'ALL over_sla600': (r) => r.timings.duration >600,
-   },
-   { ALL: 'over_sla600' }
-   );
-   
-   check(res, {
- 	'ALL over_sla800': (r) => r.timings.duration >800,
-   },
-   { ALL: 'over_sla800' }
-   );
-   
-   check(res, {
- 	'ALL over_sla1000': (r) => r.timings.duration >1000,
-   },
-   { ALL: 'over_sla1000' }
-   );
-}
 
-
-
-export function standardChecks(res, outcome, rule, pattern) {
-	
-	
-   
-   if (rule !=='substring'){
-   check(
-    res,
-    {
-     'ALL OK status': (r) => outcome == pattern,
-    },
-    { ALL: 'ok_rate' }
-	);
-	
-	 check(
-    res,
-    {
-      'ALL KO status': (r) => outcome !== pattern,
-    },
-    { ALL: 'ko_rate' }
-  );
-   }else{
-  
-    check(
-    res,
-    {
-    
-	 'ALL:ok_rate': (r) => outcome.toString().includes(pattern),
-    },
-    { ALL: 'ok_rate' }
-	);
- 
-  check(
-    res,
-    {
-     
-	 'ALL:ko_rate': (r) => !outcome.toString().includes(pattern),
-    },
-    { ALL: 'ko_rate' }
-  );
-   }
-
-}
-
-
-
-
-export function invertedChecks(res, outcome, rule, pattern) {
-	
-	
-   
-   if (rule !=='substring'){
-   check(
-    res,
-    {
-     'ALL OK status': (r) => outcome !== pattern,
-    },
-    { ALL: 'ok_rate' }
-	);
-	
-	 check(
-    res,
-    {
-      'ALL KO status': (r) => outcome == pattern,
-    },
-    { ALL: 'ko_rate' }
-  );
-   }else{
-  
-    check(
-    res,
-    {
-    
-	 'ALL:ok_rate': (r) => !outcome.toString().includes(pattern),
-    },
-    { ALL: 'ok_rate' }
-	);
- 
-  check(
-    res,
-    {
-     
-	 'ALL:ko_rate': (r) => outcome.toString().includes(pattern),
-    },
-    { ALL: 'ko_rate' }
-  );
-   }
-
-}

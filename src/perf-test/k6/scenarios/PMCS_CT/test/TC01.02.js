@@ -18,6 +18,8 @@ import { ob_PP_Confirm_bye } from './api/ob_PP_Confirm_bye.js';
 import { parseHTML } from "k6/html";
 import * as outputUtil from './util/output_util.js';
 import * as inputDataUtil from './util/input_data_util.js';
+//import exec from 'k6/execution';
+//import { getCurrentStageIndex } from 'https://jslib.k6.io/k6-utils/1.3.0/index.js';
 //import * as db from './db/db.js';
 
 
@@ -52,12 +54,13 @@ export const getScalini = new SharedArray('scalini', function () {
 
 export const options = {
 	
-    /*scenarios: {
+    scenarios: {
   	total: {
-      timeUnit: '1s',
+      timeUnit: '8s', //dev'essere uguale al n°di richieste per ogni iterazione
       preAllocatedVUs: 1, // how large the initial pool of VUs would be
       executor: 'ramping-arrival-rate',
       //executor: 'ramping-vus',
+      //gracefulStop: '0s',
       maxVUs: 500,
       stages: [
         { target: getScalini[0].Scalino_CT_1, duration: 0+'s' },
@@ -85,21 +88,30 @@ export const options = {
       exec: 'total', 
     }
 	
-  },*/
+  },
   summaryTrendStats: ['avg', 'min', 'max', 'p(90)', 'p(95)', 'count'],
   discardResponseBodies: false,
   thresholds: {
     // we can set different thresholds for the different scenarios because
     // of the extra metric tags we set!
 	'http_req_duration{startSession:http_req_duration}': [],
+	'startSession': [],
     'http_req_duration{ob_PP_psp:http_req_duration}': [],
+    'ob_PP_psp': [],
 	'http_req_duration{ob_PP_pspInternal:http_req_duration}': [],
+	'ob_PP_pspInternal': [],
 	'http_req_duration{ob_PP_Confirm_Call:http_req_duration}': [],
+	'ob_PP_Confirm_Call': [],
 	'http_req_duration{ob_PP_Confirm:http_req_duration}': [],
+	'ob_PP_Confirm': [],
 	'http_req_duration{ob_PP_Confirm_Continue:http_req_duration}': [],
+	'ob_PP_Confirm_Continue': [],
 	'http_req_duration{ob_PP_Confirm_Logout:http_req_duration}': [],
+	'ob_PP_Confirm_Logout': [],
 	'http_req_duration{ob_PP_Confirm_bye:http_req_duration}': [],
+	'ob_PP_Confirm_bye': [],
 	'http_req_duration{ALL:http_req_duration}': [],
+	'ALL': [],
 	'checks{ob_PP_psp:over_sla300}': [],
 	'checks{ob_PP_psp:over_sla400}': [],
 	'checks{ob_PP_psp:over_sla500}': [],
@@ -182,6 +194,11 @@ export const options = {
 
 
 export function total() {
+
+  //console.log("current stage index="+getCurrentStageIndex());
+  //console.log(exec.test.options.scenarios.total.stages[getCurrentStageIndex()].target);
+  //options.rps = exec.test.options.scenarios.total.stages[getCurrentStageIndex()].target;
+  //console.log(options.rps);
 
   let baseUrl = "";
   let baseUrlPP = "";
