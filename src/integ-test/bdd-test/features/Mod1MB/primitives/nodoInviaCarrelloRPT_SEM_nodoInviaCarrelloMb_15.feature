@@ -1,11 +1,11 @@
-Feature: checks semantic OK for nodoInviaCarrelloRPT
+Feature: Semantic checks for nodoInviaCarrelloRPT
 
    Background:
       Given systems up
 
-   # [SEM_MB_16]
+   # [SEM_MB_15]
    Scenario: Define RPT
-         Given RPT generation
+      Given RPT generation
          """
          <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
          <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
@@ -64,7 +64,7 @@ Feature: checks semantic OK for nodoInviaCarrelloRPT
          <pay_i:importoTotaleDaVersare>1.50</pay_i:importoTotaleDaVersare>
          <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
          <pay_i:identificativoUnivocoVersamento>#iuv#</pay_i:identificativoUnivocoVersamento>
-         <pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
+         <pay_i:codiceContestoPagamento>#carrello#</pay_i:codiceContestoPagamento>
          <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
          <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
          <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -85,14 +85,13 @@ Feature: checks semantic OK for nodoInviaCarrelloRPT
 
 
    Scenario: Define RPT2
-         Given the Define RPT scenario executed successfully
-         And RPT2 generation
-          
+      Given the Define RPT scenario executed successfully
+      And RPT2 generation
          """
          <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
          <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
          <pay_i:dominio>
-         <pay_i:identificativoDominio>#codicePA#</pay_i:identificativoDominio>
+         <pay_i:identificativoDominio>90000000001</pay_i:identificativoDominio>
          <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
          </pay_i:dominio>
          <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
@@ -145,8 +144,8 @@ Feature: checks semantic OK for nodoInviaCarrelloRPT
          <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
          <pay_i:importoTotaleDaVersare>1.50</pay_i:importoTotaleDaVersare>
          <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
-         <pay_i:identificativoUnivocoVersamento>#IuV#</pay_i:identificativoUnivocoVersamento>
-         <pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
+         <pay_i:identificativoUnivocoVersamento>$iuv</pay_i:identificativoUnivocoVersamento>
+         <pay_i:codiceContestoPagamento>$carrello</pay_i:codiceContestoPagamento>
          <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
          <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
          <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -166,46 +165,47 @@ Feature: checks semantic OK for nodoInviaCarrelloRPT
          """
 
 
-   Scenario: Check no error for nodoInviaCarrelloRPT
-         Given the Define RPT2 scenario executed successfully
-         And initial XML nodoInviaCarrelloRPT
-
+   Scenario: Check error for nodoInviaCarrelloRPT primitive
+      Given the Define RPT2 scenario executed successfully
+      And initial XML nodoInviaCarrelloRPT
          """
          <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header>
-               <ppt:intestazioneCarrelloPPT>
-                  <identificativoIntermediarioPA>#codicePA#</identificativoIntermediarioPA>
-                  <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
-                  <identificativoCarrello>#carrello#</identificativoCarrello>
-               </ppt:intestazioneCarrelloPPT>
-            </soapenv:Header>
-            <soapenv:Body>
-               <ws:nodoInviaCarrelloRPT>
-                  <password>pwdpwdpwd</password>
-                  <identificativoPSP>#psp#</identificativoPSP>
-                  <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-                  <identificativoCanale>#canale#</identificativoCanale>
-                  <listaRPT>
-                     <elementoListaRPT>
-                        <identificativoDominio>#codicePA#</identificativoDominio>
-                        <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
-                        <codiceContestoPagamento>CCD01</codiceContestoPagamento>
-                        <rpt>$rptAttachment</rpt>
-                     </elementoListaRPT>
-                     <elementoListaRPT>
-                        <identificativoDominio>#codicePA#</identificativoDominio>
-                        <identificativoUnivocoVersamento>$IuV</identificativoUnivocoVersamento>
-                        <codiceContestoPagamento>CCD01</codiceContestoPagamento>
-                        <rpt>$rpt2Attachment</rpt>
-                     </elementoListaRPT>
-                  </listaRPT>
-                  <requireLightPayment>01</requireLightPayment>
-                  <multiBeneficiario>1</multiBeneficiario>
-               </ws:nodoInviaCarrelloRPT>
-            </soapenv:Body>
+         <soapenv:Header>
+         <ppt:intestazioneCarrelloPPT>
+         <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
+         <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
+         <identificativoCarrello>$carrello</identificativoCarrello>
+         </ppt:intestazioneCarrelloPPT>
+         </soapenv:Header>
+         <soapenv:Body>
+         <ws:nodoInviaCarrelloRPT>
+         <password>pwdpwdpwd</password>
+         <identificativoPSP>#psp#</identificativoPSP>
+         <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+         <identificativoCanale>#canale#</identificativoCanale>
+         <listaRPT>
+         <elementoListaRPT>
+         <identificativoDominio>#codicePA#</identificativoDominio>
+         <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
+         <codiceContestoPagamento>$carrello</codiceContestoPagamento>
+         <rpt>$rptAttachment</rpt>
+         </elementoListaRPT>
+         <elementoListaRPT>
+         <identificativoDominio>90000000001</identificativoDominio>
+         <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
+         <codiceContestoPagamento>$carrello</codiceContestoPagamento>
+         <rpt>$rpt2Attachment</rpt>
+         </elementoListaRPT>
+         </listaRPT>
+         <requireLightPayment>01</requireLightPayment>
+         <multiBeneficiario>1</multiBeneficiario>
+         </ws:nodoInviaCarrelloRPT>
+         </soapenv:Body>
          </soapenv:Envelope>
          """
 
-      And multiBeneficiario with false in nodoInviaCarrelloRPT
+      And multiBeneficiario with true in nodoInviaCarrelloRPT
       When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
-      Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
+      Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
+      And check faultCode is PPT_SEMANTICA of nodoInviaCarrelloRPT response
+      And check description is Flag multibeneficiario non disponibile per pagamenti diversi da WISP2 of nodoInviaCarrelloRPT response
