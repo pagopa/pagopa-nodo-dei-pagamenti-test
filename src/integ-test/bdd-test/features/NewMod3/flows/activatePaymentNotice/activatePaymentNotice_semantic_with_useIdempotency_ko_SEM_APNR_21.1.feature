@@ -9,7 +9,7 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - use
             <soapenv:Body>
             <nod:activatePaymentNoticeReq>
             <idPSP>#psp#</idPSP>
-            <idBrokerPSP>#psp</idBrokerPSP>
+            <idBrokerPSP>#psp#</idBrokerPSP>
             <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
             <password>pwdpwdpwd</password>
             <idempotencyKey>#idempotency_key#</idempotencyKey>
