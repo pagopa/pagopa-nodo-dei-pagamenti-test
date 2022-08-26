@@ -39,7 +39,6 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - use
     Scenario: Execute again activatePaymentNotice request right after expirationTime has passed
         #Given nodo-dei-pagamenti has config parameter default_idempotency_key_validity_minutes set to 10
         Given the Execute activatePaymentNotice request scenario executed successfully
-        #And PSP waits expirationTime of activatePaymentNotice expires
         And wait 4 seconds for expiration
         And expirationTime with 9000 in activatePaymentNotice
         When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
