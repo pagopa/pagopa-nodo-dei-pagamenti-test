@@ -210,7 +210,7 @@ def step_impl(context):
     setattr(context,'iuv', iuv)
     setattr(context,'timedate', timedate)
 
-    pa = json.load(open(os.path.join(context.config.base_dir + "/../resources/config.json"))).get('global_configuration').get('codicePA')
+    pa = context.config.userdata.get('global_configuration').get('codicePA')
     print(f"############################ {pa}")
 
     if "#intermediarioPA#" in payload:     
