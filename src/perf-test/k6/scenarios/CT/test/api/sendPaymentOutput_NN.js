@@ -1,6 +1,12 @@
 import http from 'k6/http';
 import { check } from 'k6';
 import { parseHTML } from "k6/html";
+import { Trend } from 'k6/metrics';
+
+
+
+export const sendPaymentOutput_NN_Trend = new Trend('sendPaymentOutput_NN');
+export const All_Trend = new Trend('ALL');
 
 export function sendPaymentOutputReqBody(psp, intpsp, chpsp, paymentToken){
 	
@@ -53,7 +59,9 @@ export function sendPaymentOutput_NN(baseUrl,rndAnagPsp,paymentToken) {
 	}
   );
   
-   
+   sendPaymentOutput_NN_Trend.add(res.timings.duration);
+   All_Trend.add(res.timings.duration);
+
    check(res, {
  	'sendPaymentOutcome_NN:over_sla300': (r) => r.timings.duration >300,
    },

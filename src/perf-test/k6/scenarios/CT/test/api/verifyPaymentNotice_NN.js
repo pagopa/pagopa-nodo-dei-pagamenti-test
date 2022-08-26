@@ -1,6 +1,12 @@
 import http from 'k6/http';
 import { check } from 'k6';
 import { parseHTML } from "k6/html";
+import { Trend } from 'k6/metrics';
+
+
+
+export const verifyPaymentNotice_NN_Trend = new Trend('verifyPaymentNotice_NN');
+export const All_Trend = new Trend('ALL');
 
 //<password>password</password>
 export function verifyReqBody(psp, intpsp, chpsp, cfpa, noticeNmbr){
@@ -33,7 +39,11 @@ export function verifyPaymentNotice_NN(baseUrl,rndAnagPsp,rndAnagPa,noticeNmbr,i
 	tags: { verifyPaymentNotice_NN: 'http_req_duration', ALL: 'http_req_duration'}
 	}
   );
-  
+
+
+  verifyPaymentNotice_NN_Trend.add(res.timings.duration);
+  All_Trend.add(res.timings.duration);
+
    
    check(res, {
  	'verifyPaymentNotice_NN:over_sla300': (r) => r.timings.duration >300,

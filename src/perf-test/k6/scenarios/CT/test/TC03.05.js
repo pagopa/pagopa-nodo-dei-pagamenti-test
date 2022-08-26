@@ -14,6 +14,8 @@ import { verifyPaymentNotice_NN } from './api/verifyPaymentNotice_NN.js';
 import * as outputUtil from './util/output_util.js';
 import * as inputDataUtil from './util/input_data_util.js';
 import { parseHTML } from "k6/html";
+//import exec from 'k6/execution';
+//import { getCurrentStageIndex } from 'https://jslib.k6.io/k6-utils/1.3.0/index.js';
 //import * as test_selector from '../../test_selector.js';
 
 
@@ -55,10 +57,10 @@ export const getScalini = new SharedArray('scalini', function () {
 });
 
 export const options = {
-	
+  //rps: 5,
   scenarios: {
       	total: {
-          timeUnit: '1s',
+          timeUnit: '3s',
           preAllocatedVUs: 1, // how large the initial pool of VUs would be
           executor: 'ramping-arrival-rate',
           //executor: 'ramping-vus',
@@ -140,6 +142,11 @@ export const options = {
 
 
 export function total() {
+
+  /*console.log("current stage index="+getCurrentStageIndex());
+  console.log(exec.test.options.scenarios.total.stages[getCurrentStageIndex()].target);
+  options.rps = exec.test.options.scenarios.total.stages[getCurrentStageIndex()].target;
+  console.log(options.rps);*/
 
   let baseUrl = "";
   let urls = csvBaseUrl;

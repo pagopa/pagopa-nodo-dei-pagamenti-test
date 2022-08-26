@@ -1,6 +1,12 @@
 import http from 'k6/http';
 import { check } from 'k6';
 import { parseHTML } from "k6/html";
+import { Trend } from 'k6/metrics';
+
+
+
+export const activatePaymentNotice_NN_Trend = new Trend('activatePaymentNotice_NN');
+export const All_Trend = new Trend('ALL');
 
 export function activateReqBody (psp, pspint, chpsp, cfpa, noticeNmbr, idempotencyKey, paymentNote) {
   	
@@ -43,6 +49,10 @@ export function activatePaymentNotice_NN(baseUrl,rndAnagPsp,rndAnagPa,noticeNmbr
 	}
   );
   //console.log(res);
+  activatePaymentNotice_NN_Trend.add(res.timings.duration);
+  All_Trend.add(res.timings.duration);
+
+
    check(res, {
  	'activatePaymentNotice_NN:over_sla300': (r) => r.timings.duration >300,
    },
