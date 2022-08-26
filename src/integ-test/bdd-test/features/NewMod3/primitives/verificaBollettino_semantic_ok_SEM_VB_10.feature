@@ -3,7 +3,9 @@ Feature: Semantic checks for verificaBollettino - OK
     Background:
         Given systems up
         And EC old version
-        And initial XML verificaBollettino
+
+    Scenario: Execute verificaBollttino [SEM_VB_10]
+        Given initial XML verificaBollettino
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
             <soapenv:Header/>
