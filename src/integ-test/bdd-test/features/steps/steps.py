@@ -627,6 +627,7 @@ def step_impl(context, sender, method, service, receiver):
 
     body = utils.replace_local_variables(body, context)
     service = utils.replace_local_variables(service, context)
+    service = utils.replace_context_variables(service, context)
     print(f"{url_nodo}/{service}")
     if len(body) > 1:
         json_body = json.loads(body)
@@ -1710,4 +1711,5 @@ def step_impl(context):
 
 def step_impl(context, url):
     url = utils.replace_local_variables(url, context)
+    print(f"#################### {url.split('idSession=')[1]}")
     setattr(context, f'sessionToken', url.split('idSession=')[1])

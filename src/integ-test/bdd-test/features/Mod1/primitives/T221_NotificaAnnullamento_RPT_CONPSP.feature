@@ -99,9 +99,9 @@ Feature: process tests for NotificaAnnullamento_RPT_CONPSP
         <soapenv:Body>
             <ws:nodoInviaRPT>
                 <password>pwdpwdpwd</password>
-                <identificativoPSP>#psp#</identificativoPSP>
-                <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-                <identificativoCanale>#canale#</identificativoCanale>
+                <identificativoPSP>AGID_01</identificativoPSP>
+                <identificativoIntermediarioPSP>97735020584</identificativoIntermediarioPSP>
+                <identificativoCanale>97735020584_02</identificativoCanale>
                 <tipoFirma />
                 <rpt>$rptAttachment</rpt>
             </ws:nodoInviaRPT>
@@ -110,20 +110,21 @@ Feature: process tests for NotificaAnnullamento_RPT_CONPSP
         """
 
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-        Then check outcome is OK of nodoInviaRPT response
+        Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
 
 
     Scenario: Execution idPagamento
-        Given the Execute nodoInviaRPT scenario executed successfully
-        When WISP sends rest GET /informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
+        Given the Execute nodoInviaRPT request scenario executed successfully
+        When WISP sends rest GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
+        Then verify the HTTP status code of informazioniPagamento response is 200
 
     
     Scenario: Execute nodoNotificaAnnullamento
-        Given the Execute idPagamento scenario executed successfully
-        When WISP sends rest GET /notificaAnnullamento?idPagamento=$sessionToken&motivoAnnullamento='CONPSP' to nodo-dei-pagamenti
+        Given the Execution idPagamento scenario executed successfully
+        When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken&motivoAnnullamento=CONPSP to nodo-dei-pagamenti
         Then verify the HTTP status code of notificaAnnullamento response is 200
-        And check outcome is OK of notificaAnnullamento response
+        #And check outcome is OK of notificaAnnullamento response
 
 
     # refresh DB
