@@ -470,12 +470,12 @@ export function handleSummary(data) {
 	 
    return {
     'stdout': textSummary(data, { indent: ' ', enableColors: true, expected_response: 'ALL' }), // Show the text summary to stdout...
-	'./scenarios/PMCS_CT/test/output/TC01.01.summary.json': JSON.stringify(data), // and a JSON with all the details...
-	'./scenarios/PMCS_CT/test/output/TC01.01.summary.xml': jUnit(data), 
+	[`./scenarios/PMCS_CT/test/output/${(new Date).toISOString().substr(0,10)}_TC01.01.summary.json`]: JSON.stringify(data), // and a JSON with all the details...
+	//'./scenarios/PMCS_CT/test/output/TC01.01.summary.xml': jUnit(data),
 	//'./scenarios/CT/test/output/summary.html': htmlReport(data),
-	'./scenarios/PMCS_CT/test/output/TC01.01.summary.csv': csv[0],
-	'./scenarios/PMCS_CT/test/output/TC01.01.trOverSla.csv': csv[1],
-	'./scenarios/PMCS_CT/test/output/TC01.01.resultCodeSummary.csv': csv[2],
+	[`./scenarios/PMCS_CT/test/output/${(new Date).toISOString().substr(0,10)}_TC01.01.summary.csv`]: csv[0],
+	[`./scenarios/PMCS_CT/test/output/${(new Date).toISOString().substr(0,10)}_TC01.01.trOverSla.csv`]: csv[1],
+	[`./scenarios/PMCS_CT/test/output/${(new Date).toISOString().substr(0,10)}_TC01.01.resultCodeSummary.csv`]: csv[2],
 	 	
   };
   
