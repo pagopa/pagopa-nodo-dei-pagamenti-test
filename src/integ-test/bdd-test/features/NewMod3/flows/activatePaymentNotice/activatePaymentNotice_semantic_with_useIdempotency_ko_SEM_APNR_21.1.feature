@@ -25,7 +25,7 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - use
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        #And nodo-dei-pagamenti has config parameter idempotencyKey set to true
+        And nodo-dei-pagamenti has config parameter idempotencyKey set to true
 
     # Activate Phase 1
     Scenario: Execute activatePaymentNotice request
