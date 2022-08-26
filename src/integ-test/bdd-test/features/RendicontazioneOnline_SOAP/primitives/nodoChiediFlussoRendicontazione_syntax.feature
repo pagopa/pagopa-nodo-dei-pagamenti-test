@@ -135,7 +135,7 @@ Feature: Syntax checks for nodoChiediFlussoRendicontazione
          | password                              | Empty                                | CFRSIN13    |
          | password                              | Xlve3Jc                              | CFRSIN14    |
          | password                              | xxkV8x4phzRKyiuE                     | CFRSIN15    |
-         #| identificativoPSP                     | None                                 | CFRSIN20    |
+         | identificativoPSP                     | Empty                                | CFRSIN20    |
          | identificativoDominio                 | k91JETYVnE7grIIKbzWE6Di7XKM3ymJeawhf | CFRSIN18    |
          | identificativoPSP                     | k91JETYVnE7grIIKbzWE6Di7XKM3ymJeawhf | CFRSIN21    |
          | identificativoFlusso                  | None                                 | CFRSIN22    |
