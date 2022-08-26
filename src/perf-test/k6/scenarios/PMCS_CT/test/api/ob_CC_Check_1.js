@@ -2,6 +2,11 @@ import http from 'k6/http';
 import { URL } from 'https://jslib.k6.io/url/1.0.0/index.js';
 import { check } from 'k6';
 import { sleep } from 'k6';
+import { Trend } from 'k6/metrics';
+
+
+export const ob_CC_Check_1_Trend = new Trend('ob_CC_Check_1');
+export const All_Trend = new Trend('ALL');
 
  
 export function ob_CC_Check_1(baseUrl, idTr) {
@@ -19,6 +24,10 @@ export function ob_CC_Check_1(baseUrl, idTr) {
 	tags: { ob_CC_Check_1: 'http_req_duration', ALL: 'http_req_duration'}
 	}
   );
+
+
+  All_Trend.add(res.timings.duration);
+  ob_CC_Check_1_Trend.add(res.timings.duration);
   console.log(res.url);
    sleep(1-(res.timings.duration/1000));
    /*console.log("durInt="+res.timings.duration);
@@ -68,6 +77,9 @@ export function ob_CC_Check_1(baseUrl, idTr) {
    let subStMsg=res.body.substr(res.body.indexOf("statusMessage")+16);
    statusTr = subStMsg.split('"')[0];
    result.statusTr=statusTr;
+   let subPay=res.body.substr(res.body.indexOf("idPayment")+12);
+   let idPayment = subPay.split('"')[0];
+   result.idPayment=idPayment;
    }catch(error){result.statusTr=undefined}
 
    console.log("idTrans|"+idTr+"|");

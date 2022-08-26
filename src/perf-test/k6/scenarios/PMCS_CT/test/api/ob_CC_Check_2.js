@@ -1,6 +1,11 @@
 import http from 'k6/http';
 import { check } from 'k6';
 import { sleep } from 'k6';
+import { Trend } from 'k6/metrics';
+
+
+export const ob_CC_Check_2_Trend = new Trend('ob_CC_Check_2');
+export const All_Trend = new Trend('ALL');
  
 export function ob_CC_Check_2(baseUrl, idTr) {
 
@@ -11,7 +16,9 @@ export function ob_CC_Check_2(baseUrl, idTr) {
 	tags: { ob_CC_Check_2: 'http_req_duration', ALL: 'http_req_duration'}
 	}
   );
-  
+
+  All_Trend.add(res.timings.duration);
+  ob_CC_Check_2_Trend.add(res.timings.duration);
   sleep(1-(res.timings.duration/1000));
   
   check(res, {

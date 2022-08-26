@@ -30,7 +30,7 @@ export function ob_CC_update(baseUrl,token, rndCard, scdMese, scdAnno) {
   );
 
   All_Trend.add(res.timings.duration);
-  ob_CC_update.add(res.timings.duration);
+  ob_CC_update_Trend.add(res.timings.duration);
   
    check(res, {
  	'ob_CC_update:over_sla300': (r) => r.timings.duration >300,

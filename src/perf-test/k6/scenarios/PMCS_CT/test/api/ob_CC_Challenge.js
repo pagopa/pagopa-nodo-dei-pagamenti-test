@@ -1,5 +1,10 @@
 import http from 'k6/http';
 import { check } from 'k6';
+import { Trend } from 'k6/metrics';
+
+
+export const ob_CC_Challenge_Trend = new Trend('ob_CC_Challenge');
+export const All_Trend = new Trend('ALL');
 
 export function challengeReqBody(creq){
 
@@ -7,8 +12,8 @@ return 'creq='+creq
 };
 
   
-//export function ob_CC_Challenge(basePMUrl, creq) {
-export function ob_CC_Challenge(basePMUrl, creq) { //in sit aggiungere acsUrl
+export function ob_CC_Challenge(basePMUrl, creq) { //scommentare in perf
+//export function ob_CC_Challenge(basePMUrl, creq, acsUrl) { //in sit aggiungere acsUrl
  
 
  const res = http.post(
@@ -20,6 +25,10 @@ export function ob_CC_Challenge(basePMUrl, creq) { //in sit aggiungere acsUrl
 	tags: { ob_CC_Challenge: 'http_req_duration', ALL: 'http_req_duration'}
 	}
   );
+
+
+    All_Trend.add(res.timings.duration);
+    ob_CC_Challenge_Trend.add(res.timings.duration);
   
   check(res, {
  	'ob_CC_Challenge:over_sla300': (r) => r.timings.duration >300,

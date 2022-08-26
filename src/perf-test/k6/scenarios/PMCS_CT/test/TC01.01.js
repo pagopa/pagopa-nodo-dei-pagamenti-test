@@ -55,13 +55,12 @@ export const getScalini = new SharedArray('scalini', function () {
   return f; 
 }); 
 
-
-
+//const apisNumber = 15;
 export const options = {
-	
-        /*scenarios: {
+
+        scenarios: {
         	total: {
-            timeUnit: '1s',
+            timeUnit: '15s', //dev'essere uguale al n°di richieste per ogni iterazione
             preAllocatedVUs: 1, // how large the initial pool of VUs would be
             executor: 'ramping-arrival-rate',
             //executor: 'ramping-vus',
@@ -92,14 +91,14 @@ export const options = {
             exec: 'total',
           }
 
-        },*/
+        },
   summaryTrendStats: ['avg', 'min', 'max', 'p(90)', 'p(95)', 'count'],
   discardResponseBodies: false,
   thresholds: {
     // we can set different thresholds for the different scenarios because
     // of the extra metric tags we set!
     'http_req_duration{ob_CC_Onboard:http_req_duration}': [],
-	'http_req_duration{ob_CC_Verify:http_req_duration}': [],
+    'http_req_duration{ob_CC_Verify:http_req_duration}': [],
 	'http_req_duration{ob_CC_VerifyInternal:http_req_duration}': [],
 	'http_req_duration{ob_CC_continueToStep1:http_req_duration}': [],
 	'http_req_duration{ob_CC_CheckOut:http_req_duration}': [],
@@ -113,8 +112,8 @@ export const options = {
 	'http_req_duration{ob_CC_Response:http_req_duration}': [],
 	'http_req_duration{ob_CC_resume3ds2:http_req_duration}': [],
 	'http_req_duration{startSession:http_req_duration}': [],
-	'http_req_duration{ALL:http_req_duration}': ['p(95)<200'], //95% of requests should be below 200ms
-	'checks{ob_CC_Onboard:over_sla300}': ['rate<0.9'], //90% of requests of this api should be below 300ms
+	'http_req_duration{ALL:http_req_duration}': [], //'p(95)<200' 95% of requests should be below 200ms
+	'checks{ob_CC_Onboard:over_sla300}': [], //'rate<0.9' 90% of requests of this api should be below 300ms
 	'checks{ob_CC_Onboard:over_sla400}': [],
 	'checks{ob_CC_Onboard:over_sla500}': [],
 	'checks{ob_CC_Onboard:over_sla600}': [],
@@ -241,7 +240,7 @@ export const options = {
 	'checks{ALL:over_sla800}': [],
 	'checks{ALL:over_sla1000}': [],
 	'checks{ALL:ok_rate}': [],
-	'checks{ALL:ko_rate}': ['rate<0.01'], //http errors should be less than 0.01%
+	'checks{ALL:ko_rate}': [], //'rate<0.01' http errors should be less than 0.01%
 	},
    
   
@@ -340,10 +339,11 @@ export function total() {
   }
   while (!(statusTr == 'Confermato' || statusTr == 'In attesa del metodo 3ds2'))
   //console.log("dopo while");
- 
- 
- 
- 
+
+  console.log(token+";"+outcome+";"+resCheck1.idPayment+";");
+
+
+
     if(statusTr === 'In attesa del metodo 3ds2'){
     //if(statusTr === 'Confermato'){ //to comment
 		
@@ -387,8 +387,8 @@ export function total() {
 
 
 	  //console.log("dopo while 2");
-	  //res= ob_CC_Challenge(baseUrlPM, creq);
-	  res= ob_CC_Challenge(baseUrlPM, creq); //in perf acsUrl non si usa
+	  res= ob_CC_Challenge(baseUrlPM, creq);
+	  //res= ob_CC_Challenge(baseUrlPM, creq, acsUrl); //in perf acsUrl non si usa
 	  let threedstransId = res.threedstransId;
 
 	  //console.log('threedstransId='+threedstransId);
