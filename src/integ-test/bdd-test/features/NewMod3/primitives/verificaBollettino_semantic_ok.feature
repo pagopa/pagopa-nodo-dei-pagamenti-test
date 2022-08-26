@@ -35,7 +35,7 @@ Feature: Semantic checks for verificaBollettino - OK
 
   #[SEM_VB_13] pt.1
   Scenario Outline: Execute verificaBollettino request
-    Given saving verificaBollettino request in verificaBollettinoTmp
+    #Given saving verificaBollettino request in verificaBollettinoTmp
     Given <elem> with <value> in verificaBollettino
     When psp sends soap verificaBollettino to nodo-dei-pagamenti
     Then check outcome is KO of verificaBollettino response
@@ -47,6 +47,6 @@ Feature: Semantic checks for verificaBollettino - OK
   #[SEM_VB_13] pt.2
   Scenario: Last call verificaBollettino
     Given the Execute verificaBollettino request scenario executed successfully
-    And saving verificaBollettinoTmp request in verificaBollettino
+    #And saving verificaBollettinoTmp request in verificaBollettino
     When psp sends soap verificaBollettino to nodo-dei-pagamenti
     Then check outcome is OK of verificaBollettino response
