@@ -177,27 +177,27 @@ Feature: Semantic checks for nodoChiediFlussoRendicontazione
         Then check faultCode is PPT_AUTORIZZAZIONE of nodoChiediFlussoRendicontazione response
 
     # Send un nuovo flusso rendicontazione coretto
-    Scenario: Executed nodoInviaFlussoRendicontazione_1
-        Given initial XML nodoInviaFlussoRendicontazione
-          """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <ws:nodoInviaFlussoRendicontazione>
-            <identificativoPSP>#psp#</identificativoPSP>
-            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canale#</identificativoCanale>
-            <password>pwdpwdpwd</password>
-            <identificativoDominio>#codicePA#</identificativoDominio>
-            <identificativoFlusso>$identificativoFlusso</identificativoFlusso>
-            <dataOraFlusso>$timedate</dataOraFlusso>
-            <xmlRendicontazione>$rendAttachment</xmlRendicontazione>
-            </ws:nodoInviaFlussoRendicontazione>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        When PSP sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
-        Then check esito is OK of nodoInviaFlussoRendicontazione response
+    #Scenario: Executed nodoInviaFlussoRendicontazione_1
+        #Given initial XML nodoInviaFlussoRendicontazione
+          #"""
+            #<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            #<soapenv:Header/>
+            #<soapenv:Body>
+            #<ws:nodoInviaFlussoRendicontazione>
+            #<identificativoPSP>#psp#</identificativoPSP>
+            #<identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+            #<identificativoCanale>#canale#</identificativoCanale>
+            #<password>pwdpwdpwd</password>
+            #<identificativoDominio>#codicePA#</identificativoDominio>
+            #<identificativoFlusso>$identificativoFlusso</identificativoFlusso>
+            #<dataOraFlusso>$timedate</dataOraFlusso>
+            #<xmlRendicontazione>$rendAttachment</xmlRendicontazione>
+            #</ws:nodoInviaFlussoRendicontazione>
+            #</soapenv:Body>
+            #</soapenv:Envelope>
+            #"""
+        #When PSP sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
+        #Then check esito is OK of nodoInviaFlussoRendicontazione response
 
     # [CFRSEM8]
     Scenario: Aggiornamento DB_4
