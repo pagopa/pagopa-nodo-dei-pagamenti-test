@@ -17,7 +17,7 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - use
             <fiscalCode>#creditor_institution_code#</fiscalCode>
             <noticeNumber>#notice_number#</noticeNumber>
             </qrCode>
-            <expirationTime>120000</expirationTime>
+            <expirationTime>2000</expirationTime>
             <amount>10.00</amount>
             <dueDate>2021-12-31</dueDate>
             <paymentNote>causale</paymentNote>
@@ -28,7 +28,7 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - use
 
     # Activate Phase 1
     Scenario: Execute activatePaymentNotice request
-        And nodo-dei-pagamenti has config parameter idempotencyKey set to false
+        Given nodo-dei-pagamenti has config parameter useIdempotency set to false
         When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
 
