@@ -12,7 +12,7 @@ Feature: Semantic checks for verificaBollettino - OK
             <idBrokerPSP>#psp#</idBrokerPSP>
             <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
             <password>pwdpwdpwd</password>
-            <ccPost>#codicePA#</ccPost>
+            <ccPost>666666666666</ccPost>
             <noticeNumber>#notice_number#</noticeNumber>
           </nod:verificaBollettinoReq>
         </soapenv:Body>
