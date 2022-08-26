@@ -285,14 +285,14 @@ export function handleSummary(data) {
   console.log('Preparing the end-of-test summary...');
  
   var csv = outputUtil.extractData(data);
-  let d = new Date();
+  let d = (new Date).toISOString().substr(0,10);
    return {
     'stdout': textSummary(data, { indent: ' ', enableColors: true, expected_response: 'ALL' }), // Show the text summary to stdout...
-	 [`./scenarios/PMCS_CT/test/output/${(new Date).toISOString().substr(0,10)}_TC01.04.summary.json`]: JSON.stringify(data), // and a JSON with all the details...
+	 [`./scenarios/PMCS_CT/test/output/${d}_TC01.04.summary.json`]: JSON.stringify(data), // and a JSON with all the details...
 	//'./scenarios/CT/test/output/summary.html': htmlReport(data),
-	 [`./scenarios/PMCS_CT/test/output/${(new Date).toISOString().substr(0,10)}_TC01.04.summary.csv`]: csv[0],
-	 [`./scenarios/PMCS_CT/test/output/${(new Date).toISOString().substr(0,10)}_TC01.04.trOverSla.csv`]: csv[1],
-	 [`./scenarios/PMCS_CT/test/output/${(new Date).toISOString().substr(0,10)}_TC01.04.resultCodeSummary.csv`]: csv[2],
+	 [`./scenarios/PMCS_CT/test/output/${d}_TC01.04.summary.csv`]: csv[0],
+	 [`./scenarios/PMCS_CT/test/output/${d}_TC01.04.trOverSla.csv`]: csv[1],
+	 [`./scenarios/PMCS_CT/test/output/${d}_TC01.04.resultCodeSummary.csv`]: csv[2],
 	 	
   };
   
