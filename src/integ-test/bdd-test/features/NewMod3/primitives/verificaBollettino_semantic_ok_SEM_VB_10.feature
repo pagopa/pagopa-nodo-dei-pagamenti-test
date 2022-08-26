@@ -15,7 +15,7 @@ Feature: Semantic checks for verificaBollettino - OK
             <idBrokerPSP>#psp#</idBrokerPSP>
             <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
             <password>pwdpwdpwd</password>
-            <ccPost>66666666666</ccPost>
+            <ccPost>#codicePA#</ccPost>
             <noticeNumber>#notice_number_old#</noticeNumber>
             </nod:verificaBollettinoReq>
             </soapenv:Body>
@@ -23,4 +23,4 @@ Feature: Semantic checks for verificaBollettino - OK
             """
 
         When psp sends SOAP verificaBollettino to nodo-dei-pagamenti
-        Then check outcome is OK of verificaBollettino response
+        Then check outcome is KO of verificaBollettino response
