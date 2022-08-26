@@ -45,8 +45,9 @@ Feature: Semantic checks for verificaBollettino - OK
       | idPSP | 123456789012345678901234567890123456  | SEM_VB_13   |
 
   #[SEM_VB_13] pt.2
-  Scenario: Last call verificaBollettino
-    Given the Execute verificaBollettino request scenario executed successfully
+  Scenario: Excecute verificaBollettino2 request
+    #Given the Execute verificaBollettino request scenario executed successfully
+    Given ccPost with 6666666666666 in verificaBollettino
     #And saving verificaBollettinoTmp request in verificaBollettino
     When psp sends soap verificaBollettino to nodo-dei-pagamenti
     Then check outcome is OK of verificaBollettino response
