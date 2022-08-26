@@ -1,6 +1,6 @@
 active_scenario=CT
-active_test=TC01.03
-test_step=rampa_30_300_10
+active_test=TC03.05
+test_step=rampa_1_1_10
 env="pagoPA_DEV_apim"
 echo -----------------------------------------
 echo *** Main K6 Perf Test Script ***
