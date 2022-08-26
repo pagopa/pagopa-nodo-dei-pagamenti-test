@@ -89,9 +89,9 @@ Feature: PRO_ANNULLO_06_PPALOLD
         <soapenv:Header/>
         <soapenv:Body>
             <ws:nodoVerificaRPT>
-                <identificativoPSP>AGID_01</identificativoPSP>
-                <identificativoIntermediarioPSP>97735020584</identificativoIntermediarioPSP>
-                <identificativoCanale>97735020584_03</identificativoCanale>
+                <identificativoPSP>#psp_AGID#</identificativoPSP>
+                <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
+                <identificativoCanale>#canale_AGID#</identificativoCanale>
                 <password>pwdpwdpwd</password>
                 <codiceContestoPagamento>$ccp</codiceContestoPagamento>
                 <codificaInfrastrutturaPSP>QR-CODE</codificaInfrastrutturaPSP>
@@ -213,8 +213,8 @@ Feature: PRO_ANNULLO_06_PPALOLD
             <soapenv:Body>
                 <ws:nodoInviaRPT>
                     <password>pwdpwdpwd</password>
-                    <identificativoPSP>AGID_01</identificativoPSP>
-                    <identificativoIntermediarioPSP>97735020584</identificativoIntermediarioPSP>
+                    <identificativoPSP>#psp_AGID#</identificativoPSP>
+                    <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
                     <identificativoCanale>97735020584_02</identificativoCanale>
                     <tipoFirma></tipoFirma>
                     <rpt>$rptAttachment</rpt>
