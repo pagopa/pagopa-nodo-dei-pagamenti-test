@@ -210,6 +210,9 @@ def step_impl(context):
     setattr(context,'iuv', iuv)
     setattr(context,'timedate', timedate)
 
+    pa = json.load(open(os.path.join(context.config.base_dir + "/../resources/config.json"))).get('global_configuration').get('codicePA')
+    print(f"############################ {pa}")
+
     if "#intermediarioPA#" in payload:     
         intermediarioPA = "44444444444_05"
         payload = payload.replace('#intermediarioPA#', intermediarioPA)
@@ -240,22 +243,22 @@ def step_impl(context):
         setattr(context,'CARRELLO', CARRELLO)
 
     if '#carrello#' in payload:
-        carrello = "66666666666" + "302" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+        carrello = pa + "302" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
         payload = payload.replace('#carrello#', carrello)
         setattr(context,'carrello', carrello)
 
     if '#carrello1#' in payload:
-        carrello1 = "66666666666" + "311" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + utils.random_s()
+        carrello1 = pa + "311" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + utils.random_s()
         payload = payload.replace('#carrello1#', carrello1)
         setattr(context,'carrello1', carrello1)
 
     if '#secCarrello#' in payload:
-        secCarrello = "66666666666" + "301" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+        secCarrello = pa + "301" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
         payload = payload.replace('#secCarrello#', secCarrello)
         setattr(context,'secCarrello', secCarrello)
 
     if '#thrCarrello#' in payload:
-        thrCarrello = "66666666666" + "088" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+        thrCarrello = pa + "088" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
         payload = payload.replace('#thrCarrello#', thrCarrello)
         setattr(context,'thrCarrello', thrCarrello)
 
