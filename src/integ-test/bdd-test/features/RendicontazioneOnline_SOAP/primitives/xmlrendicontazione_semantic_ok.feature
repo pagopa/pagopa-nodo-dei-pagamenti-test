@@ -64,13 +64,13 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaFlussoRendicontazione response
         Examples:
-            | tag                             | tag_value                  | soapUI test |
-            | identificativoFlusso            | 2017-09-12IDPSPFNZ-ciao124 | SEM_NIFR_28 |
-            | dataOraFlusso                   | 2018-11-11T12:05:32.688    | SEM_NIFR_30 |
-            | dataOraFlusso                   | 2018-11-11T12:05:32.688    | SEM_NIFR_31 |
-            | dataRegolamento                 | 2019-05-22                 | SEM_NIFR_31 |
-            | codiceBicBancaDiRiversamento    | 2018-11-11T12:05:32.688    | SEM_NIFR_32 |
-            #| numeroTotalePagamenti           | 2018-11-11T12:05:32.688    | SEM_NIFR_33 |
-            #| importoTotalePagamenti          | 2018-11-11T12:05:32.688    | SEM_NIFR_34 |
-            #| identificativoUnivocoVersamento | 2018-11-11T12:05:32.688    | SEM_NIFR_35 |
+            | tag                          | tag_value                  | soapUI test |
+            | identificativoFlusso         | 2017-09-12IDPSPFNZ-ciao124 | SEM_NIFR_28 |
+            | dataOraFlusso                | 2018-11-11T12:05:32.688    | SEM_NIFR_30 |
+            | dataOraFlusso                | 2018-11-11T12:05:32.688    | SEM_NIFR_31 |
+            | dataRegolamento              | 2019-05-22                 | SEM_NIFR_31 |
+            | codiceBicBancaDiRiversamento | 6666666666666              | SEM_NIFR_32 |
+#| numeroTotalePagamenti           | 2018-11-11T12:05:32.688    | SEM_NIFR_33 |
+#| importoTotalePagamenti          | 2018-11-11T12:05:32.688    | SEM_NIFR_34 |
+#| identificativoUnivocoVersamento | 2018-11-11T12:05:32.688    | SEM_NIFR_35 |
 
