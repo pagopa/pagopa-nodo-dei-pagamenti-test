@@ -206,8 +206,10 @@ def step_impl(context):
     date = datetime.date.today().strftime("%Y-%m-%d")
     timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
     iuv = '0' + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + '00'
+    IUV = 'IUV' + str(random.randint(0, 10000)) + '-' + date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
     setattr(context,'date', date)
     setattr(context,'iuv', iuv)
+    setattr(context,'IUV', IUV)
     setattr(context,'timedate', timedate)
 
     pa = context.config.userdata.get('global_configuration').get('codicePA')
@@ -231,6 +233,9 @@ def step_impl(context):
     
     if '#iuv#' in payload:
         payload = payload.replace('#iuv#', iuv)
+
+    if '#IUV#' in payload:
+        payload = payload.replace('#IUV#', IUV)
 
     if '#idCarrello#' in payload:
         idCarrello = "09812374659" + "311" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
