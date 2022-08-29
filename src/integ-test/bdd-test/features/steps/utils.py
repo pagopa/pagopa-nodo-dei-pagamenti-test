@@ -18,6 +18,9 @@ def random_s():
         cont -=1
     return strNumRand 
 
+def current_milli_time():
+    return round(time.time() * 1000)
+
 def requests_retry_session(
         retries=3,
         backoff_factor=0.3,

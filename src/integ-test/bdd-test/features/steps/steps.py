@@ -302,9 +302,11 @@ def step_impl(context):
     payload = utils.replace_context_variables(payload, context)
     date = datetime.date.today().strftime("%Y-%m-%d")
     IuV = '0' + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + '00'
+    IUV2 = utils.current_milli_time() + '-' + str(random.randint(0, 10000))
     timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
     setattr(context,'date', date)
     setattr(context,'IuV', IuV)
+    setattr(context,'IUV2', IUV2)
     setattr(context,'timedate', timedate)
 
     if "#intermediarioPA#" in payload:     

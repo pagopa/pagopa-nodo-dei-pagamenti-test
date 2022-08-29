@@ -2,7 +2,9 @@ Feature: process tests for NotificaAnnullamento_RPT_CONPSP
 
     Background:
         Given systems up
-        And RPT generation
+
+    Scenario: RPT generation
+        Given RPT generation
 
         """
         <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
@@ -81,6 +83,8 @@ Feature: process tests for NotificaAnnullamento_RPT_CONPSP
         </pay_i:RPT>
         """
 
+    Scenario: RPT2 generation
+        Given the RPT generation scenario executed successfully
         And RPT2 generation
 
         """
@@ -161,7 +165,8 @@ Feature: process tests for NotificaAnnullamento_RPT_CONPSP
         """
 
     Scenario: Execute nodoInviaRPT request
-        Given initial XML nodoInviaRPT
+        Given the RPT2 generation scenario executed successfully
+        And initial XML nodoInviaRPT
 
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -202,15 +207,15 @@ Feature: process tests for NotificaAnnullamento_RPT_CONPSP
 
     
     Scenario: Execute nodoNotificaAnnullamento
-        Given the Execute nodoInviaRPT scenario executed successfully
-        When WISP sends rest GET notificaAnnullamento?idPagamento='?'&motivoAnnullamento='RIFPSP' to nodo-dei-pagamenti
+        Given the Execute nodoInviaRPT request scenario executed successfully
+        When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken&motivoAnnullamento=RIFPSP to nodo-dei-pagamenti
         Then verify the HTTP status code of notificaAnnullamento response is 200
-        And check outcome is OK of notificaAnnullamento response
+        #And check outcome is OK of notificaAnnullamento response
 
 
     Scenario: Execution test T221_notificaAnnullamento_carrello_2RPT_RIFPSP
         Given the Execute nodoNotificaAnnullamento scenario executed successfully
         And wait 6 seconds for expiration 
         Then checks the value Annullato per RPT rifiutata of the record at column ESITO of the table RT retrived by the query esito_2iuv on db nodo_online under macro Mod1
-        And checks the value RPT of the record at column MOTIVO_ANNULLAMENTO of the table PM_SESSION_DATA retrived by the query motivo_annullamento on db nodo_online under macro Mod1
-        And checks the value CONPSP of the record at column TIPO of the table PM_SESSION_DATA retrived by the query tipo on db nodo_online under macro Mod1
+        And checks the value CONPSP of the record at column MOTIVO_ANNULLAMENTO of the table PM_SESSION_DATA retrived by the query motivo_annullamento on db nodo_online under macro Mod1
+        And checks the value RPT of the record at column TIPO of the table PM_SESSION_DATA retrived by the query tipo on db nodo_online under macro Mod1
