@@ -175,7 +175,7 @@ Scenario: Execute activateIOPayment1 (Phase 4)
     Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
     #And PSP waits expirationTime of activateIOPayment expires
     # potrei usare anche elem with value in action
-    And random idempotencyKey having #psp# as idPSP in activateIOPayment
+    And random noticeNumber in activateIOPayment
     And initial XML paGetPayment
     """
     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
