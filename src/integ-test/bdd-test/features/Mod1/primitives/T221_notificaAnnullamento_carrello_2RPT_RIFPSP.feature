@@ -180,9 +180,9 @@ Feature: process tests for NotificaAnnullamento_RPT_CONPSP
         <soapenv:Body>
             <ws:nodoInviaCarrelloRPT>
                 <password>pwdpwdpwd</password>
-                <identificativoPSP>#psp#</identificativoPSP>
-                <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-                <identificativoCanale>#id_station#</identificativoCanale>
+                <identificativoPSP>AGID_01</identificativoPSP>
+                <identificativoIntermediarioPSP>97735020584</identificativoIntermediarioPSP>
+                <identificativoCanale>97735020584_02</identificativoCanale>
                 <listaRPT>
                     <elementoListaRPT>
                     <identificativoDominio>#codicePA#</identificativoDominio>
