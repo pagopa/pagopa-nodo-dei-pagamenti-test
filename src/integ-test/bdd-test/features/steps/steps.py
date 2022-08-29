@@ -225,6 +225,11 @@ def step_impl(context):
         payload = payload.replace('#ccp#', ccp)
         setattr(context,"ccp", ccp)
 
+    if "#ccp1#" in payload:     
+        ccp1 = str(utils.current_milli_time())
+        payload = payload.replace('#ccp1#', ccp1)
+        setattr(context,"ccp1", ccp1)
+
     if '#date#' in payload:
         payload = payload.replace('#date#', date)
 
@@ -307,7 +312,7 @@ def step_impl(context):
     payload = utils.replace_context_variables(payload, context)
     date = datetime.date.today().strftime("%Y-%m-%d")
     IuV = '0' + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + '00'
-    IUV2 = utils.current_milli_time() + '-' + str(random.randint(0, 10000))
+    IUV2 = str(utils.current_milli_time()) + '-' + str(random.randint(0, 10000))
     timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
     setattr(context,'date', date)
     setattr(context,'IuV', IuV)

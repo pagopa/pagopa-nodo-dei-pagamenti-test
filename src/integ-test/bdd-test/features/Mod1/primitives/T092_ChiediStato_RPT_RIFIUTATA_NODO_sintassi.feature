@@ -2,17 +2,19 @@ Feature: process tests for ChiediStato_RPT_RIFIUTATA_NODO_sintassi
 
     Background:
         Given systems up
-        And RPT generation
+
+    Scenario: RPT generation
+        Given RPT generation
 
         """
         <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
         <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
         <pay_i:dominio>
             <pay_i:identificativoDominio>#codicePA#</pay_i:identificativoDominio>
-            <pay_i:identificativoStazioneRichiedente>#intermediarioPA#</pay_i:identificativoStazioneRichiedente>
+            <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
         </pay_i:dominio>
         <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
-        <pay_i:dataOraMessaggioRichiesta>2016-09-16T11:24:10</pay_i:dataOraMessaggioRichiesta>
+        <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
         <pay_i:autenticazioneSoggetto>CNS</pay_i:autenticazioneSoggetto>
         <pay_i:soggettoVersante>
             <pay_i:identificativoUnivocoVersante>
@@ -58,23 +60,23 @@ Feature: process tests for ChiediStato_RPT_RIFIUTATA_NODO_sintassi
             <pay_i:nazioneBeneficiario>IT</pay_i:nazioneBeneficiario>
         </pay_i:enteBeneficiario>
         <pay_i:datiVersamento>
-            <pay_i:dataEsecuzionePagamento>2016-09-16</pay_i:dataEsecuzionePagamento>
-            <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
+            <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
+            <pay_i:importoTotaleDaVersare>10.f0</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
-            <pay_i:identificativoUnivocoVersamento>#iuv#</pay_i:identificativoUnivocoVersamento>
-            <pay_i:codiceContestoPagamento>#ccp#</pay_i:codiceContestoPagamento>
+            <pay_i:identificativoUnivocoVersamento>#IUV#</pay_i:identificativoUnivocoVersamento>
+            <pay_i:codiceContestoPagamento>#ccp1#</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
             <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
             <pay_i:datiSingoloVersamento>
-                <pay_i:importoSingoloVersamento>10.00</pay_i:importoSingoloVersamento>
+                <pay_i:importoSingoloVersamento>10.f0</pay_i:importoSingoloVersamento>
                 <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
                 <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
                 <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
                 <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio>
                 <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
                 <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
-                <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
+                <pay_i:causaleVersamento>pagamento fotocopie pratica RPT</pay_i:causaleVersamento>
                 <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
             </pay_i:datiSingoloVersamento>
         </pay_i:datiVersamento>
@@ -82,7 +84,8 @@ Feature: process tests for ChiediStato_RPT_RIFIUTATA_NODO_sintassi
         """
 
     Scenario: Execute nodoInviaRPT request
-        Given initial XML nodoInviaRPT
+        Given the RPT generation scenario executed successfully
+        And initial XML nodoInviaRPT
 
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -91,8 +94,8 @@ Feature: process tests for ChiediStato_RPT_RIFIUTATA_NODO_sintassi
                 <identificativoIntermediario>#intermediarioPA#</identificativoIntermediarioPA>
                 <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
                 <identificativoDominio>#codicePA#</identificativoDominio>
-                <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
-                <codiceContestoPagamento>$ccp</codiceContestoPagamento>
+                <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
+                <codiceContestoPagamento>$ccp1</codiceContestoPagamento>
             </ppt:intestazionePPT>
         </soapenv:Header>
         <soapenv:Body>
@@ -110,7 +113,7 @@ Feature: process tests for ChiediStato_RPT_RIFIUTATA_NODO_sintassi
 
         # And soapenv:Header with None in nonInviaRPT
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-        Then check outcome is KO of nodoInviaRPT response
+        Then check esito is KO of nodoInviaRPT response
         # And check faultCode is PPT_SINTASSI_XSD of nodoInviaRPT response
 
 
@@ -132,20 +135,21 @@ Feature: process tests for ChiediStato_RPT_RIFIUTATA_NODO_sintassi
                 <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
                 <password>pwdpwdpwd</password>
                 <identificativoDominio>#codicePA#</identificativoDominio>
-                <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
-                <codiceContestoPagamento>$ccp</codiceContestoPagamento>
+                <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
+                <codiceContestoPagamento>$ccp1</codiceContestoPagamento>
             </ws:nodoChiediStatoRPT>
         </soapenv:Body>
         </soapenv:Envelope>
         """
 
         When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
-        Then check outcome is KO of nodoChiediStatoRPT response
+        Then check esito is KO of nodoChiediStatoRPT response
         And check faultCode is PPT_RPT_SCONOSCIUTA of nodoInviaRPT
 
     
     Scenario: Execute nodoInviaRPT_duplicato request
-        Given initial XML nodoInviaRPT_duplicato
+        Given the Execute nodoChiediStatoRPT request scenario executed successfully
+        And initial XML nodoInviaRPT_duplicato
 
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -154,8 +158,8 @@ Feature: process tests for ChiediStato_RPT_RIFIUTATA_NODO_sintassi
                 <identificativoIntermediario>#intermediarioPA#</identificativoIntermediarioPA>
                 <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
                 <identificativoDominio>#codicePA#</identificativoDominio>
-                <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
-                <codiceContestoPagamento>$ccp</codiceContestoPagamento>
+                <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
+                <codiceContestoPagamento>$ccp1</codiceContestoPagamento>
             </ppt:intestazionePPT>
         </soapenv:Header>
         <soapenv:Body>
@@ -172,5 +176,5 @@ Feature: process tests for ChiediStato_RPT_RIFIUTATA_NODO_sintassi
         """
 
         When EC sends SOAP nodoInviaRPT_duplicato to nodo-dei-pagamenti
-        Then check outcome is KO of nodoInviaRPT_duplicato response
+        Then check esito is KO of nodoInviaRPT_duplicato response
         And check faultCode is PPT_SINTASSI_XSD of nodoInviaRPT_duplicato response
