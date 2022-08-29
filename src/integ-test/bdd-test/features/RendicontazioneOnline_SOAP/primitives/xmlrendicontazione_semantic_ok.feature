@@ -62,7 +62,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And identificativoFlusso with 2017-09-12IDPSPFNZ-ciao124 in nodoInviaFlussoRendicontazione
+        #And identificativoFlusso with 2017-09-12IDPSPFNZ-ciao124 in nodoInviaFlussoRendicontazione
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaFlussoRendicontazione response
 
