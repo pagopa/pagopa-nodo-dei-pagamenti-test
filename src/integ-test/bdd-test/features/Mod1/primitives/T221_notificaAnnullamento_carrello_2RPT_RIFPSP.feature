@@ -14,7 +14,7 @@ Feature: process tests for NotificaAnnullamento_RPT_CONPSP
         <pay_i:identificativoStazioneRichiedente>#intermediarioPA#</pay_i:identificativoStazioneRichiedente>
         </pay_i:dominio>
         <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
-        <pay_i:dataOraMessaggioRichiesta>2016-09-16T11:24:10</pay_i:dataOraMessaggioRichiesta>
+        <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
         <pay_i:autenticazioneSoggetto>CNS</pay_i:autenticazioneSoggetto>
         <pay_i:soggettoVersante>
         <pay_i:identificativoUnivocoVersante>
@@ -60,7 +60,7 @@ Feature: process tests for NotificaAnnullamento_RPT_CONPSP
         <pay_i:nazioneBeneficiario>IT</pay_i:nazioneBeneficiario>
         </pay_i:enteBeneficiario>
         <pay_i:datiVersamento>
-        <pay_i:dataEsecuzionePagamento>2016-09-16</pay_i:dataEsecuzionePagamento>
+        <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
         <pay_i:importoTotaleDaVersare>15.00</pay_i:importoTotaleDaVersare>
         <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
         <pay_i:identificativoUnivocoVersamento>#IUV#</pay_i:identificativoUnivocoVersamento>
@@ -76,7 +76,7 @@ Feature: process tests for NotificaAnnullamento_RPT_CONPSP
         <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio>
         <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
         <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
-        <pay_i:causaleVersamento>pagamento fotocopie pratica RPT</pay_i:causaleVersamento>
+        <pay_i:causaleVersamento>RPT1</pay_i:causaleVersamento>
         <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
         </pay_i:datiSingoloVersamento>
         </pay_i:datiVersamento>
@@ -92,10 +92,10 @@ Feature: process tests for NotificaAnnullamento_RPT_CONPSP
         <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
         <pay_i:dominio>
             <pay_i:identificativoDominio>#codicePA#</pay_i:identificativoDominio>
-            <pay_i:identificativoStazioneRichiedente>#intermediarioPA#</pay_i:identificativoStazioneRichiedente>
+            <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
         </pay_i:dominio>
         <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
-        <pay_i:dataOraMessaggioRichiesta>2016-09-16T11:24:10</pay_i:dataOraMessaggioRichiesta>
+        <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
         <pay_i:autenticazioneSoggetto>CNS</pay_i:autenticazioneSoggetto>
         <pay_i:soggettoVersante>
             <pay_i:identificativoUnivocoVersante>
@@ -141,7 +141,7 @@ Feature: process tests for NotificaAnnullamento_RPT_CONPSP
             <pay_i:nazioneBeneficiario>IT</pay_i:nazioneBeneficiario>
         </pay_i:enteBeneficiario>
         <pay_i:datiVersamento>
-            <pay_i:dataEsecuzionePagamento>2016-09-16</pay_i:dataEsecuzionePagamento>
+            <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
             <pay_i:importoTotaleDaVersare>15.00</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
             <pay_i:identificativoUnivocoVersamento>#IUV2#</pay_i:identificativoUnivocoVersamento>
@@ -157,7 +157,7 @@ Feature: process tests for NotificaAnnullamento_RPT_CONPSP
                 <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio>
                 <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
                 <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
-                <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
+                <pay_i:causaleVersamento>RPT2</pay_i:causaleVersamento>
                 <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
             </pay_i:datiSingoloVersamento>
         </pay_i:datiVersamento>
@@ -174,7 +174,7 @@ Feature: process tests for NotificaAnnullamento_RPT_CONPSP
             <ppt:intestazioneCarrelloPPT>
                 <identificativoIntermediarioPA>#codicePA#</identificativoIntermediarioPA>
                 <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
-                <identificativoCarrello>#idCarrello#</identificativoCarrello>
+                <identificativoCarrello>#CARRELLO1#</identificativoCarrello>
             </ppt:intestazioneCarrelloPPT>
         </soapenv:Header>
         <soapenv:Body>
@@ -203,19 +203,20 @@ Feature: process tests for NotificaAnnullamento_RPT_CONPSP
         """
 
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-        Then check outcome is OK of nodoInviaRPT response
+        Then check esito is OK of nodoInviaRPT response
 
     
     Scenario: Execute nodoNotificaAnnullamento
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken&motivoAnnullamento=RIFPSP to nodo-dei-pagamenti
         Then verify the HTTP status code of notificaAnnullamento response is 200
-        #And check outcome is OK of notificaAnnullamento response
+        #And check esito is OK of notificaAnnullamento response
 
 
     Scenario: Execution test T221_notificaAnnullamento_carrello_2RPT_RIFPSP
         Given the Execute nodoNotificaAnnullamento scenario executed successfully
-        And wait 6 seconds for expiration 
+        When job paInviaRt triggered after 5 seconds
+        And wait 10 seconds for expiration 
         Then checks the value Annullato per RPT rifiutata of the record at column ESITO of the table RT retrived by the query esito_2iuv on db nodo_online under macro Mod1
         And checks the value CONPSP of the record at column MOTIVO_ANNULLAMENTO of the table PM_SESSION_DATA retrived by the query motivo_annullamento on db nodo_online under macro Mod1
         And checks the value RPT of the record at column TIPO of the table PM_SESSION_DATA retrived by the query tipo on db nodo_online under macro Mod1
