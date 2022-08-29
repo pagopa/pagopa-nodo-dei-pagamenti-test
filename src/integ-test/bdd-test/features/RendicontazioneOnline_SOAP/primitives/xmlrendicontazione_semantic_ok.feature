@@ -69,7 +69,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             | dataOraFlusso                | 2018-11-11T12:05:32.688    | SEM_NIFR_30 |
             | dataOraFlusso                | 2018-11-11T12:05:32.688    | SEM_NIFR_31 |
             #| dataRegolamento              | 2019-05-22                 | SEM_NIFR_31 |
-            | codiceBicBancaDiRiversamento | 6666666666666              | SEM_NIFR_32 |
+            #| codiceBicBancaDiRiversamento | 6666666666666              | SEM_NIFR_32 |
 #| numeroTotalePagamenti           | 2018-11-11T12:05:32.688    | SEM_NIFR_33 |
 #| importoTotalePagamenti          | 2018-11-11T12:05:32.688    | SEM_NIFR_34 |
 #| identificativoUnivocoVersamento | 2018-11-11T12:05:32.688    | SEM_NIFR_35 |
