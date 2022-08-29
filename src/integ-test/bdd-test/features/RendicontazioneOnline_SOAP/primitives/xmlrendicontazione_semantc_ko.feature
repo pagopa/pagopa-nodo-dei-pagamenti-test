@@ -126,4 +126,5 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             </soapenv:Envelope>
             """
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
-        Then check faultCode is PPT_SEMANTICA of nodoInviaFlussoRendicontazione response
+        Then check esito is KO of nodoInviaFlussoRendicontazione response
+        And check faultCode is PPT_SEMANTICA of nodoInviaFlussoRendicontazione response
