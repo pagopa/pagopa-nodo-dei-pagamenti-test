@@ -42,7 +42,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             </pay_i:FlussoRiversamento>
             """
 
-    Scenario Outline: Check error for nodoInviaFlussoRendicontazione primitive
+    Scenario: Check error for nodoInviaFlussoRendicontazione primitive
         Given the Create REND scenario executed successfully
         And initial XML nodoInviaFlussoRendicontazione
             """
@@ -104,7 +104,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             </pay_i:FlussoRiversamento>
             """
 
-    Scenario Outline: Check error for nodoInviaFlussoRendicontazione primitive
+    Scenario: Check error for nodoInviaFlussoRendicontazione primitive
         Given the Create REND2 scenario executed successfully
         And initial XML nodoInviaFlussoRendicontazione
             """
@@ -167,7 +167,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             </pay_i:FlussoRiversamento>
             """
 
-    Scenario Outline: Check error for nodoInviaFlussoRendicontazione primitive
+    Scenario: Check error for nodoInviaFlussoRendicontazione primitive
         Given the Create REND3 scenario executed successfully
         And initial XML nodoInviaFlussoRendicontazione
             """
