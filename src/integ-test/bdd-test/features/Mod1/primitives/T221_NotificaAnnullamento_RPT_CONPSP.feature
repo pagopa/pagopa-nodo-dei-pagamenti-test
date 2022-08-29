@@ -134,6 +134,6 @@ Feature: process tests for NotificaAnnullamento_RPT_CONPSP
         Given the Execute nodoNotificaAnnullamento scenario executed successfully
         And wait 5 seconds for expiration 
         Then checks the value Annullato per errore in connessione of the record at column ESITO of the table RT retrived by the query esito on db nodo_online under macro Mod1
-        And checks the value RPT of the record at column MOTIVO_ANNULLAMENTO of the table PM_SESSION_DATA retrived by the query motivo_annullamento on db nodo_online under macro Mod1
-        And checks the value CONPSP of the record at column TIPO of the table PM_SESSION_DATA retrived by the query motivo_annullamento on db nodo_online under macro Mod1
+        And checks the value CONPSP of the record at column MOTIVO_ANNULLAMENTO of the table PM_SESSION_DATA retrived by the query motivo_annullamento on db nodo_online under macro Mod1
+        And checks the value RPT of the record at column TIPO of the table PM_SESSION_DATA retrived by the query motivo_annullamento on db nodo_online under macro Mod1
     
