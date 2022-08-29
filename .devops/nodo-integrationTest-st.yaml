@@ -116,7 +116,7 @@ stages:
 
              #behave --help #Run behave
              #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/NewMod3/flows/TestGenerazioneRicevute03/generazioneRicevute_flows_ko_PAnew.feature
-              behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/xmlrendicontazione_semantc_ko.feature
+              behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/RendicontazioneOnline_SOAP/primitives/xmlrendicontazione_semantc_ok.feature
              
             displayName: 'Run Behave Test Suite'
           - task: PublishTestResults@2
