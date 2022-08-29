@@ -1,5 +1,10 @@
 import http from 'k6/http';
 import { check } from 'k6';
+import { Trend } from 'k6/metrics';
+
+
+export const inoltraEsitoPagamentoPaypal_Trend = new Trend('inoltraEsitoPagamentoPaypal');
+export const All_Trend = new Trend('ALL');
 
 
 export function rptReqBody(psp, intpsp, chpsp_c, paymentToken){
@@ -96,7 +101,11 @@ export function inoltraEsitoPagamentoPaypal(baseUrl,rndAnagPsp,paymentToken,valu
 	tags: { inoltraEsitoPagamentoPaypal: 'http_req_duration', ALL: 'http_req_duration'}
 	}
   );
-  
+
+
+  inoltraEsitoPagamentoPaypal_Trend.add(res.timings.duration);
+  All_Trend.add(res.timings.duration);
+
    check(res, {
  	'inoltraEsitoPagamentoPaypal:over_sla300': (r) => r.timings.duration >300,
    },

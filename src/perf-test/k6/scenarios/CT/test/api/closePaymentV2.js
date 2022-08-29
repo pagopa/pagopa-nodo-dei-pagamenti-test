@@ -1,5 +1,10 @@
 import http from 'k6/http';
 import { check } from 'k6';
+import { Trend } from 'k6/metrics';
+
+
+export const closePayment_Trend = new Trend('closePayment');
+export const All_Trend = new Trend('ALL');
 
 
 export function closePaymentReqBody(psp, intpsp, chpsp_c, paymentToken, outcome, transactionId, additionalTransactionId){
@@ -109,7 +114,12 @@ export function closePayment(baseUrl,rndAnagPsp,paymentToken, outcome, transacti
 	tags: { closePayment: 'http_req_duration', ALL: 'http_req_duration'}
 	}
   );
-  
+
+
+  closePayment_Trend.add(res.timings.duration);
+  All_Trend.add(res.timings.duration);
+
+
    check(res, {
  	'closePayment:over_sla300': (r) => r.timings.duration >300,
    },

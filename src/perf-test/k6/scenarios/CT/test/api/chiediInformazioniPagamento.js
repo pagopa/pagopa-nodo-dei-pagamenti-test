@@ -1,6 +1,11 @@
 import http from 'k6/http';
 import { check } from 'k6';
 import { parseHTML } from "k6/html";
+import { Trend } from 'k6/metrics';
+
+
+export const chiediInformazioniPagamento_Trend = new Trend('chiediInformazioniPagamento');
+export const All_Trend = new Trend('ALL');
 
 
 export function chiediInformazioniPagamento(baseUrl,paymentToken, rndAnagPa) {
@@ -11,6 +16,9 @@ export function chiediInformazioniPagamento(baseUrl,paymentToken, rndAnagPa) {
 	}
   );
   //console.log(res);
+    chiediInformazioniPagamento_Trend.add(res.timings.duration);
+    All_Trend.add(res.timings.duration);
+
    check(res, {
  	'chiediInformazioniPagamento:over_sla300': (r) => r.timings.duration >300,
    },

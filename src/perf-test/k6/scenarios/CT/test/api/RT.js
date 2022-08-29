@@ -2,6 +2,11 @@ import http from 'k6/http';
 import { check } from 'k6';
 import { parseHTML } from "k6/html";
 import * as rptUtil from '../util/rpt.js';
+import { Trend } from 'k6/metrics';
+
+
+export const RT_Trend = new Trend('RT');
+export const All_Trend = new Trend('ALL');
 
 export function rtReqBody(psp, intpsp, chpsp_c, pa, iuv, rtEncoded){
 
@@ -41,7 +46,11 @@ export function RT(baseUrl,rndAnagPsp,rndAnagPa,iuv) {
 	tags: { RT: 'http_req_duration', ALL: 'http_req_duration'}
 	}
   );
-  
+
+
+   RT_Trend.add(res.timings.duration);
+   All_Trend.add(res.timings.duration);
+
    check(res, {
  	'RT:over_sla300': (r) => r.timings.duration >300,
    },

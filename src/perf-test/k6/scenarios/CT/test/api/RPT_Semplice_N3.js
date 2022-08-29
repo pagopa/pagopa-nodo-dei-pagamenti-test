@@ -2,6 +2,11 @@ import http from 'k6/http';
 import { check } from 'k6';
 import { parseHTML } from "k6/html";
 import * as rptUtil from '../util/rpt.js';
+import { Trend } from 'k6/metrics';
+
+
+export const RPT_Semplice_N3_Trend = new Trend('RPT_Semplice_N3');
+export const All_Trend = new Trend('ALL');
 
 export function rptSempliceN3ReqBody(pa, intpa, stazpa, paymentToken, creditorReferenceId, rptEncoded){
 
@@ -50,9 +55,11 @@ export function RPT_Semplice_N3(baseUrl,rndAnagPaNew,paymentToken, creditorRefer
 	}
   );
   
-   
+   RPT_Semplice_N3_Trend.add(res.timings.duration);
+   All_Trend.add(res.timings.duration);
+
    check(res, {
- 	'RPT_Semplice_N3:over_sla300': (r) => r.timings.duration >300,
+ 	':over_sla300': (r) => r.timings.duration >300,
    },
    { RPT_Semplice_N3: 'over_sla300', ALL:'over_sla300' }
    );

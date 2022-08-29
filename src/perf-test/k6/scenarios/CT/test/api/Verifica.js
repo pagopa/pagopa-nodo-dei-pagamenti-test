@@ -1,6 +1,12 @@
 import http from 'k6/http';
 import { check } from 'k6';
 import { parseHTML } from "k6/html";
+import { Trend } from 'k6/metrics';
+
+
+export const Verifica_Trend = new Trend('Verifica');
+export const All_Trend = new Trend('ALL');
+
 
 export function verificaReqBody(psp, intpsp, chpsp, cfpa, iuv, auxDigit){
 return `
@@ -37,7 +43,11 @@ export function Verifica(baseUrl,rndAnagPsp,rndAnagPa,iuv, auxDigit, valueToAsse
 	}
   );
   
-   
+
+   Verifica_Trend.add(res.timings.duration);
+   All_Trend.add(res.timings.duration);
+
+
    check(res, {
  	'Verifica:over_sla300': (r) => r.timings.duration >300,
    },

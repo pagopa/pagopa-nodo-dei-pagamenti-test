@@ -1,6 +1,11 @@
 import http from 'k6/http';
 import { check } from 'k6';
 import { parseHTML } from "k6/html";
+import { Trend } from 'k6/metrics';
+
+
+export const demandPaymentNotice_NN_Trend = new Trend('demandPaymentNotice_NN');
+export const All_Trend = new Trend('ALL');
 
 export function demandReqBody(psp, intpsp, chpsp, idSevizio){
 return `
@@ -38,7 +43,10 @@ export function demandPaymentNotice_NN(baseUrl,rndAnagPsp,rndAnagPa,noticeNmbr,i
 	}
   );
   
-   
+   demandPaymentNotice_NN_Trend.add(res.timings.duration);
+   All_Trend.add(res.timings.duration);
+
+
    check(res, {
  	'demandPaymentNotice_NN:over_sla300': (r) => r.timings.duration >300,
    },

@@ -1,6 +1,11 @@
 import http from 'k6/http';
 import { check } from 'k6';
 import { parseHTML } from "k6/html";
+import { Trend } from 'k6/metrics';
+
+
+export const nodoNotificaAnnullamento_Trend = new Trend('nodoNotificaAnnullamento');
+export const All_Trend = new Trend('ALL');
 
 
 export function nodoNotificaAnnullamento(baseUrl,paymentToken) {
@@ -11,6 +16,10 @@ export function nodoNotificaAnnullamento(baseUrl,paymentToken) {
 	}
   );
   //console.log(res);
+    nodoNotificaAnnullamento_Trend.add(res.timings.duration);
+    All_Trend.add(res.timings.duration);
+
+
    check(res, {
  	'nodoNotificaAnnullamento:over_sla300': (r) => r.timings.duration >300,
    },

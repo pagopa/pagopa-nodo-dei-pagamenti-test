@@ -1,6 +1,11 @@
 import http from 'k6/http';
 import { check } from 'k6';
 import { parseHTML } from "k6/html";
+import { Trend } from 'k6/metrics';
+
+
+export const Attiva_Trend = new Trend('Attiva');
+export const All_Trend = new Trend('ALL');
 
 export function AttivaReqBody(psp, intpsp, chpsp, cfpa, iuv,ccp){
 //<password>password</password>
@@ -75,7 +80,10 @@ export function Attiva(baseUrl,rndAnagPsp,rndAnagPa,iuv, ccp) {
 	tags: { Attiva: 'http_req_duration', ALL: 'http_req_duration'}
 	}
   );
-  
+
+  Attiva_Trend.add(res.timings.duration);
+  All_Trend.add(res.timings.duration);
+
    
    check(res, {
  	'Attiva:over_sla300': (r) => r.timings.duration >300,

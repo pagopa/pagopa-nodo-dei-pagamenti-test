@@ -64,7 +64,7 @@ export const options = {
 	
   scenarios: {
       	total: {
-          timeUnit: '1s',
+          timeUnit: '4.5s', //la media è 4,5 --> 10% da 8, 12.5% da 5, 77.5% da 4
           preAllocatedVUs: 1, // how large the initial pool of VUs would be
           executor: 'ramping-arrival-rate',
           //executor: 'ramping-vus',
@@ -534,15 +534,16 @@ export function handleSummary(data) {
   console.log('Preparing the end-of-test summary...');
  
   var csv = outputUtil.extractData(data);
+  let d = (new Date).toISOString().substr(0,10);
      
    return {
     'stdout': textSummary(data, { indent: ' ', enableColors: true, expected_response: 'ALL' }), // Show the text summary to stdout...
 	//'./junit.xml': jUnit(data), // but also transform it and save it as a JUnit XML...
-    './scenarios/CT/test/output/TC02.05.summary.json': JSON.stringify(data), // and a JSON with all the details...
+    [`./scenarios/CT/test/output/${d}_TC02.05.summary.json`]: JSON.stringify(data), // and a JSON with all the details...
 	//'./scenarios/CT/test/output/summary.html': htmlReport(data),
-	'./scenarios/CT/test/output/TC02.05.summary.csv': csv[0],
-	'./scenarios/CT/test/output/TC02.05.trOverSla.csv': csv[1],
-	'./scenarios/CT/test/output/TC02.05.resultCodeSummary.csv': csv[2],
+	[`./scenarios/CT/test/output/${d}_TC02.05.summary.csv`]: csv[0],
+	[`./scenarios/CT/test/output/${d}_TC02.05.trOverSla.csv`]: csv[1],
+	[`./scenarios/CT/test/output/${d}_TC02.05.resultCodeSummary.csv`]: csv[2],
 	//'./xrayJunit.xml': generateXrayJUnitXML(data, 'summary.json', encoding.b64encode(JSON.stringify(data))),
  	
   };

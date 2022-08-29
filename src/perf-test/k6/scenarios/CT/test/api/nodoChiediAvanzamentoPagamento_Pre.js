@@ -1,6 +1,11 @@
 import http from 'k6/http';
 import { check } from 'k6';
 import { parseHTML } from "k6/html";
+import { Trend } from 'k6/metrics';
+
+
+export const nodoChiediAvanzamentoPagamento_Pre_Trend = new Trend('nodoChiediAvanzamentoPagamento_Pre');
+export const All_Trend = new Trend('ALL');
 
 
 export function nodoChiediAvanzamentoPagamento_Pre(baseUrl,paymentToken) {
@@ -11,6 +16,10 @@ export function nodoChiediAvanzamentoPagamento_Pre(baseUrl,paymentToken) {
 	}
   );
   //console.log(res);
+    nodoChiediAvanzamentoPagamento_Pre_Trend.add(res.timings.duration);
+    All_Trend.add(res.timings.duration);
+
+
    check(res, {
  	'nodoChiediAvanzamentoPagamento_Pre:over_sla300': (r) => r.timings.duration >300,
    },

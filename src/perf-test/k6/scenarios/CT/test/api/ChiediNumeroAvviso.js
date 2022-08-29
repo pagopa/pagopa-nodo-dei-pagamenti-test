@@ -1,6 +1,11 @@
 import http from 'k6/http';
 import { check } from 'k6';
 import { parseHTML } from "k6/html";
+import { Trend } from 'k6/metrics';
+
+
+export const ChiediNumeroAvviso_Trend = new Trend('ChiediNumeroAvviso');
+export const All_Trend = new Trend('ALL');
 
 export function numAvvisoReqBody(psp, intpsp, chpsp, pa){
 //<password>password</password>
@@ -31,7 +36,9 @@ export function ChiediNumeroAvviso(baseUrl,rndAnagPsp,rndAnagPa) {
 	tags: { ChiediNumeroAvviso: 'http_req_duration', ALL: 'http_req_duration'}
 	}
   );
-  
+
+  ChiediNumeroAvviso_Trend.add(res.timings.duration);
+  All_Trend.add(res.timings.duration);
    
    check(res, {
  	'ChiediNumeroAvviso:over_sla300': (r) => r.timings.duration >300,

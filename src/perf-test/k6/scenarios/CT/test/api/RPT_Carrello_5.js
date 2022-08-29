@@ -2,6 +2,11 @@ import http from 'k6/http';
 import { check } from 'k6';
 import { parseHTML } from "k6/html";
 import * as rptUtil from '../util/rpt.js';
+import { Trend } from 'k6/metrics';
+
+
+export const RPT_Carrello_5_Trend = new Trend('RPT_Carrello_5');
+export const All_Trend = new Trend('ALL');
 
 export function rptReqBody(psp, intpsp, chpsp_c, pa, intpa, stazpa, iuvs, rptEncodeds){
 
@@ -76,7 +81,11 @@ export function RPT_Carrello_5(baseUrl,rndAnagPsp,rndAnagPa,iuvs) {
 	tags: { RPT_Carrello_5: 'http_req_duration', ALL: 'http_req_duration'}
 	}
   );
-  
+
+
+   RPT_Carrello_5_Trend.add(res.timings.duration);
+   All_Trend.add(res.timings.duration);
+
    check(res, {
  	'RPT_Carrello_5:over_sla300': (r) => r.timings.duration >300,
    },
