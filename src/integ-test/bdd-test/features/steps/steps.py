@@ -1693,10 +1693,12 @@ def step_impl(context, url):
 @step('check field in {primitive}')
 def step_impl(context, primitive):
     soap_response = getattr(context, primitive + RESPONSE)
-    if 'xml' in soap_response.headers['content-type']:
+    if 'xmlns' in soap_response.headers['content-type']:
         my_document = parseString(soap_response.content)
         if my_document.getElementsByTagName('description'):
             print("description: ", my_document.getElementsByTagName('description')[0].firstChild.data)
+
+        
 
 
 
