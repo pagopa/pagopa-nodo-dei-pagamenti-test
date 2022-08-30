@@ -293,7 +293,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             <pay_i:indiceDatiSingoloPagamento>1</pay_i:indiceDatiSingoloPagamento>
             <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
             <pay_i:codiceEsitoSingoloPagamento>0</pay_i:codiceEsitoSingoloPagamento>
-            <pay_i:dataEsitoSingoloPagamento>2019-11-11T12:05:32.688</pay_i:dataEsitoSingoloPagamento>
+            <pay_i:dataEsitoSingoloPagamento>2019-11-11</pay_i:dataEsitoSingoloPagamento>
             </pay_i:datiSingoliPagamenti>
             </pay_i:FlussoRiversamento>
             """
