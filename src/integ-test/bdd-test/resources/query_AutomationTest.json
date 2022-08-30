@@ -76,6 +76,11 @@
         "DB_INOLTRO_PAG_stati_carrello": "SELECT s.columns FROM table_name s WHERE s.IUV = '$nodoInoltraEsitoPagamentoCarte.noticenumber' and s.ID_DOMINIO = '$nodoInoltraEsitoPagamentoCarte.fiscalcode'",
         "DB_INOLTRO_PAG_stati_rpt_snapshot": "SELECT s.columns FROM table_name s WHERE s.IUV = '$nodoInoltraEsitoPagamentoCarte.noticenumber' and s.ID_DOMINIO = '$nodoInoltraEsitoPagamentoCarte.fiscalcode'"
     },
+    "Mod1": {
+        "rpt_stati": "SELECT columns FROM table_name s WHERE s.IUV = '$iuv' ORDER BY INSERTED_TIMESTAMP ASC",
+        "stati_carrello": "SELECT columns FROM table s WHERE s.ID_CARRELLO = '$nodoInviaCarrelloRPT.idCarrello' ORDER BY ID ASC",
+        "payment_status": "SELECT s.columns FROM table_name s WHERE s.NOTICE_ID ='$activateIOPayment.noticeNumber' AND s.PA_FISCAL_CODE = '$activateIOPayment.fiscalCode'"
+    },
     "constanti":{
     },
     "update_query":{
