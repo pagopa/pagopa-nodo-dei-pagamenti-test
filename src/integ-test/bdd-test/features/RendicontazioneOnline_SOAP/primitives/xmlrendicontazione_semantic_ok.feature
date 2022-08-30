@@ -13,7 +13,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             <pay_i:identificativoFlusso>2017-09-12IDPSPFNZ-ciao124</pay_i:identificativoFlusso>
             <pay_i:dataOraFlusso>#timedate#</pay_i:dataOraFlusso>
             <pay_i:identificativoUnivocoRegolamento>#iuv#</pay_i:identificativoUnivocoRegolamento>
-            <pay_i:dataRegolamento>#date#</pay_i:dataRegolamento>
+            <pay_i:dataRegolamento>2017-09-12</pay_i:dataRegolamento>
             <pay_i:istitutoMittente>
             <pay_i:identificativoUnivocoMittente>
             <pay_i:tipoIdentificativoUnivoco>G</pay_i:tipoIdentificativoUnivoco>
