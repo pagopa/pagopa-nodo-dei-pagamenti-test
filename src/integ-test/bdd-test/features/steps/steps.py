@@ -1698,6 +1698,9 @@ def step_impl(context, primitive):
         if my_document.getElementsByTagName('description'):
             print("description: ", my_document.getElementsByTagName('description')[0].firstChild.data)
 
+    result = json.loads(my_document) 
+    print(result)
+
         
 
 
