@@ -219,7 +219,7 @@ Scenario: Check sendPaymentOutcome response after nodoInoltroEsitoCarta, and che
     And checks the value Y of the record at column RICEVUTA_PM of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
     # check correctness of POSITION_SUBJECT table
     #And verify 0 record for the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro AppIO
-    # check correctness of POSITION_RECEIPT table (TO COMPLETE)
+    # TODO: check correctness of POSITION_RECEIPT table (TO COMPLETE)
     And checks the value $activateIOPaymentResponse.paymentToken of the record at column RECEIPT_ID of the table POSITION_RECEIPT retrived by the query payment_status on db nodo_online under macro AppIO
     And checks the value $activateIOPaymentResponse.creditorReferenceId of the record at column CREDITOR_REFERENCE_ID of the table POSITION_RECEIPT retrived by the query payment_status on db nodo_online UNDER macro AppIO
     And checks the value $sendPaymentOutcomeResponse.outcome of the record at column OUTCOME of the table POSITION_RECEIPT retrived by the query payment_status on db nodo_online under macro AppIO
@@ -270,4 +270,4 @@ Scenario: Check sendPaymentOutcome response after nodoInoltroEsitoCarta, and che
     And checks the value $recipientStation of the record at column RECIPIENT_STATION_ID of the table POSITION_RECEIPT_XML retrived by the query payment_status_1 on db nodo_online under macro AppIO
     And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RECEIPT_XML retrived by the query payment_status_1 on db nodo_online under macro AppIO
     And checks the value NotNone of the record at column XML of the table POSITION_RECEIPT_XML retrived by the query payment_status_1 on db nodo_online under macro AppIO
-    # TODO: check correctness of XML Receipt
+    # check correctness of XML Receipt
