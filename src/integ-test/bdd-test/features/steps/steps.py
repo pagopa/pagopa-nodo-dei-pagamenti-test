@@ -131,6 +131,11 @@ def step_impl(context, primitive):
         thrCarrello = "77777777777" + "088" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
         payload = payload.replace('#thrCarrello#', thrCarrello)
         setattr(context,'thrCarrello', thrCarrello)
+
+    if '#CARRELLO1#' in payload:
+        CARRELLO1 = "CARRELLO" + str(random.randint(0, 100000))
+        payload = payload.replace('#CARRELLO1#', CARRELLO1)
+        setattr(context,'CARRELLO1', CARRELLO1)
     
     # if '$iuv' in payload:
     #     payload = payload.replace('$iuv', getattr(context, 'iuv'))
@@ -252,11 +257,6 @@ def step_impl(context):
         payload = payload.replace('#CARRELLO#', CARRELLO)
         setattr(context,'CARRELLO', CARRELLO)
 
-    if '#CARRELLO1#' in payload:
-        CARRELLO1 = "CARRELLO1" + "-" + str(random.randint(0, 100000))
-        payload = payload.replace('#CARRELLO1#', CARRELLO1)
-        setattr(context,'CARRELLO1', CARRELLO1)
-
     if '#carrello#' in payload:
         carrello = pa + "302" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
         payload = payload.replace('#carrello#', carrello)
@@ -316,13 +316,16 @@ def step_impl(context):
     timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
     setattr(context,'date', date)
     setattr(context,'IuV', IuV)
-    setattr(context,'IUV2', IUV2)
     setattr(context,'timedate', timedate)
 
     if "#intermediarioPA#" in payload:     
         intermediarioPA = "44444444444_05"
         payload = payload.replace('#intermediarioPA#', intermediarioPA)
         setattr(context,"intermediarioPA", intermediarioPA)
+
+    if "#IUV2#" in payload:
+        payload = payload.replace('#IUV2#', IUV2)
+        setattr(context,'2IUV', IUV2)
 
     if "#ccp#" in payload:     
         ccp = str(int(time() * 1000))
@@ -1728,5 +1731,6 @@ def step_impl(context):
 
 def step_impl(context, url):
     url = utils.replace_local_variables(url, context)
+    print(url)
     print(f"#################### {url.split('idSession=')[1]}")
     setattr(context, f'sessionToken', url.split('idSession=')[1])

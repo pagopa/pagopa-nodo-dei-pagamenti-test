@@ -68,7 +68,7 @@
     },
     "Mod1":{
         "esito": "SELECT v.columns FROM table_name r JOIN RT_VERSAMENTI v ON v.FK_RT=r.ID WHERE r.IUV='$iuv' AND r.CCP= '$nodoInviaRPT.codiceContestoPagamento' AND r.IDENT_DOMINIO='$nodoInviaRPT.identificativoDominio'",
-        "esito_2iuv": "SELECT v.columns FROM table_name r JOIN RT_VERSAMENTI v ON v.FK_RT=r.ID WHERE r.IUV=('$IUV','$IUV2') AND r.CCP= '$nodoInviaRPT.codiceContestoPagamento' AND r.IDENT_DOMINIO='$nodoInviaRPT.identificativoDominio'",
+        "esito_2iuv": "SELECT v.columns FROM table_name r JOIN RT_VERSAMENTI v ON v.FK_RT=r.ID WHERE r.IUV IN ('$IUV','$2IUV') AND r.CCP= '$nodoInviaCarrelloRPT.codiceContestoPagamento' AND r.IDENT_DOMINIO='$nodoInviaCarrelloRPT.identificativoDominio'",
         "motivo_annullamento": "SELECT columns FROM table_name WHERE ID_SESSIONE = '$sessionToken'",
         "stati_RPT": "SELECT columns FROM table_name WHERE IUV='$iuv' AND CCP= '$nodoInviaRPT.codiceContestoPagamento' AND ID_DOMINIO='$nodoInviaRPT.identificativoDominio' ORDER BY INSERTED_TIMESTAMP"
     },

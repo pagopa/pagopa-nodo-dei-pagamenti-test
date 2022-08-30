@@ -11,7 +11,7 @@ Feature: process tests for NotificaAnnullamento_RPT_CONPSP
         <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
         <pay_i:dominio>
         <pay_i:identificativoDominio>#codicePA#</pay_i:identificativoDominio>
-        <pay_i:identificativoStazioneRichiedente>#intermediarioPA#</pay_i:identificativoStazioneRichiedente>
+        <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
         </pay_i:dominio>
         <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
         <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
@@ -164,9 +164,9 @@ Feature: process tests for NotificaAnnullamento_RPT_CONPSP
         </pay_i:RPT>
         """
 
-    Scenario: Execute nodoInviaRPT request
+    Scenario: Execute nodoInviaCarrelloRPT request
         Given the RPT2 generation scenario executed successfully
-        And initial XML nodoInviaRPT
+        And initial XML nodoInviaCarrelloRPT
 
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -192,7 +192,7 @@ Feature: process tests for NotificaAnnullamento_RPT_CONPSP
                     </elementoListaRPT>
                     <elementoListaRPT>
                     <identificativoDominio>#codicePA#</identificativoDominio>
-                    <identificativoUnivocoVersamento>$IUV2</identificativoUnivocoVersamento>
+                    <identificativoUnivocoVersamento>$2IUV</identificativoUnivocoVersamento>
                     <codiceContestoPagamento>CCD01</codiceContestoPagamento>
                     <rpt>$rpt2Attachment</rpt>
                     </elementoListaRPT>
@@ -202,12 +202,13 @@ Feature: process tests for NotificaAnnullamento_RPT_CONPSP
         </soapenv:Envelope>
         """
 
-        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-        Then check esito is OK of nodoInviaRPT response
+        When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
+        Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
+        And retrieve session token from $nodoInviaCarrelloRPTResponse.url
 
     
     Scenario: Execute nodoNotificaAnnullamento
-        Given the Execute nodoInviaRPT request scenario executed successfully
+        Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
         When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken&motivoAnnullamento=RIFPSP to nodo-dei-pagamenti
         Then verify the HTTP status code of notificaAnnullamento response is 200
         #And check esito is OK of notificaAnnullamento response
@@ -218,5 +219,5 @@ Feature: process tests for NotificaAnnullamento_RPT_CONPSP
         When job paInviaRt triggered after 5 seconds
         And wait 10 seconds for expiration 
         Then checks the value Annullato per RPT rifiutata of the record at column ESITO of the table RT retrived by the query esito_2iuv on db nodo_online under macro Mod1
-        And checks the value CONPSP of the record at column MOTIVO_ANNULLAMENTO of the table PM_SESSION_DATA retrived by the query motivo_annullamento on db nodo_online under macro Mod1
-        And checks the value RPT of the record at column TIPO of the table PM_SESSION_DATA retrived by the query tipo on db nodo_online under macro Mod1
+        And checks the value RIFPSP of the record at column MOTIVO_ANNULLAMENTO of the table PM_SESSION_DATA retrived by the query motivo_annullamento on db nodo_online under macro Mod1
+        And checks the value CARRELLO of the record at column TIPO of the table PM_SESSION_DATA retrived by the query motivo_annullamento on db nodo_online under macro Mod1
