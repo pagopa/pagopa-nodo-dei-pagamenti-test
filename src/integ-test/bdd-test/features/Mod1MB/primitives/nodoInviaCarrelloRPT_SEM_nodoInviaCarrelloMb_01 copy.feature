@@ -204,8 +204,8 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          </soapenv:Envelope>
          """
       And <elem> with <value> in nodoInviaCarrelloRPT
-      When EC sends SOAP nodoInviaCarrelloRPT_nessunTrattino to nodo-dei-pagamenti
-      Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT_nessunTrattino response
+      When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
+      Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
       And check faultCode is <error> of nodoInviaCarrelloRPT response
       Examples:
          | elem                   | value                               | error                   |
