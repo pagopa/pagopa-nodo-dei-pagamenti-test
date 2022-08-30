@@ -66,6 +66,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaFlussoRendicontazione response
 
+    # [SEM_NIFR_31]
 
     Scenario: Create REND2
         Given REND generation
