@@ -3,7 +3,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
     Background:
         Given systems up
 
-    # [SEM_NIFR_30]
+    # [SEM_NIFR_28]
 
     Scenario: Create REND 
         Given REND generation
