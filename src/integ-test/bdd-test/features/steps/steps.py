@@ -1690,7 +1690,7 @@ def step_impl(context, url):
 
 
 
-@step('check field in {primitive}')
+@step('check field in {primitive} response')
 def step_impl(context, primitive):
     soap_response = getattr(context, primitive + RESPONSE)
     if 'xmlns' in soap_response.headers['content-type']:

@@ -91,7 +91,7 @@ Feature: Check semantic payment status
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcome response
         And check faultCode is PPT_ESITO_GIA_ACQUISITO of sendPaymentOutcome response
-        And check field in sendPaymentOutcome
+        And check field in sendPaymentOutcome response
 
 
 
