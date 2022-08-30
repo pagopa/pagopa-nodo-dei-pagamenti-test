@@ -159,6 +159,7 @@ Feature: FLUSSO_APIO_29
                 </soapenv:Body>
             </soapenv:Envelope>
             """
+        And idempotencyKey with None in activateIOPayment
         And expirationTime with None in activateIOPayment
         And dueDate with None in activateIOPayment
         And payer with None in activateIOPayment
@@ -285,11 +286,12 @@ Feature: FLUSSO_APIO_29
         """
         And details with None in sendPaymentOutcome
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-        Then check outcoem is OK of sendPaymentOutcome response
+        Then check outcome is OK of sendPaymentOutcome response
+        And wait 5 seconds for expiration
         And checks the value PAYING, PAYMENT_SENT, PAYMENT_ACCEPTED, PAID, NOTICE_GENERATED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value PAYING, PAID of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
-        And checks the value PAID of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
+        And checks the value NOTIFIED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
         # check correctness of POSITION_PAYMENT table
         And checks the value $activateIOPaymentResponse.creditorReferenceId of the record at column CREDITOR_REFERENCE_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
