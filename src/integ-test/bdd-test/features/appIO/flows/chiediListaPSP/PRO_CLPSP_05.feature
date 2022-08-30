@@ -175,7 +175,8 @@ Scenario: Execute activateIOPayment1 (Phase 4)
     Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
     #And PSP waits expirationTime of activateIOPayment expires
     # potrei usare anche elem with value in action
-    And random noticeNumber in activateIOPayment
+    And random idempotencyKey having #psp# as idPSP in activateIOPayment
+    #And random noticeNumber in activateIOPayment
     And initial XML paGetPayment
     """
     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
@@ -262,7 +263,7 @@ Scenario: Execute activateIOPayment1 (Phase 4)
     Then check outcome is OK of activateIOPayment response
 
 Scenario: Check PSP list
-    Given the Execute activateIOPayment1 scenario executed successfully
+    Given the Execute activateIOPayment1 (Phase 4) scenario executed successfully
     When WISP sends rest GET listaPSP?idPagamento=$activateIOPaymentResponse.paymentToken&percorsoPagamento=CARTE to nodo-dei-pagamenti
     Then verify the HTTP status code of listaPSP response is 200
     And check totalRows is 39 of listaPSP response
