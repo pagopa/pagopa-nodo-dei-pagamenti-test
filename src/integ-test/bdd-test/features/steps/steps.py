@@ -910,7 +910,7 @@ def step_impl(context, param, value):
         print(f'executed query: {exec_query}')
 
     db.closeConnection(conn)
-    refresh_response = requests.get(utils.get_refresh_config_url(context))
+    refresh_response = requests.get(utils.get_refresh_config_url(context),verify=False)
     time.sleep(5)
     assert refresh_response.status_code == 200
 
@@ -920,7 +920,7 @@ def step_impl(context, job_name):
     url_nodo = utils.get_rest_url_nodo(context)
     nodo_response = requests.get(f"{url_nodo}/config/refresh/{job_name}", verify=False)
     setattr(context, job_name + RESPONSE, nodo_response)
-    refresh_response = requests.get(utils.get_refresh_config_url(context))
+    refresh_response = requests.get(utils.get_refresh_config_url(context), verify=False)
     time.sleep(10)
     assert refresh_response.status_code == 200
 
@@ -955,7 +955,7 @@ def step_impl(context):
         db.executeQuery(conn, selected_query)
 
     db.closeConnection(conn)
-    refresh_response = requests.get(utils.get_refresh_config_url(context))
+    refresh_response = requests.get(utils.get_refresh_config_url(context), verify=False)
     assert refresh_response.status_code == 200
 
 
