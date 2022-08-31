@@ -312,6 +312,11 @@ def step_impl(context):
         payload = payload.replace('#ccp#', ccp)
         setattr(context,"ccp", ccp)
 
+    if "#ccp2#" in payload:     
+        ccp2 = str(utils.current_milli_time()) + '1'
+        payload = payload.replace('#ccp2#', ccp2)
+        setattr(context,"ccp2", ccp2)
+
     if "#timedate#" in payload:     
         payload = payload.replace('#timedate#', timedate)
 
