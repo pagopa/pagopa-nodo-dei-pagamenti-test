@@ -37,7 +37,7 @@ def step_impl(context):
         print(f"calling: {row.get('name')} -> {row.get('url')}")
         url = row.get("url") + row.get("healthcheck")
         print(f"calling -> {url}")
-        resp = requests.get(url)
+        resp = requests.get(url, verify=False)
         print(f"response: {resp.status_code}")
         responses &= (resp.status_code == 200)
 
@@ -375,7 +375,7 @@ def step_impl(context, sender, soap_primitive, receiver):
     print("nodo soap_request sent >>>", getattr(context, soap_primitive))
     print("headers: ", headers)
     soap_response = requests.post(url_nodo, getattr(
-        context, soap_primitive), headers=headers)
+        context, soap_primitive), headers=headers, verify=False)
     print(soap_response.content)
     setattr(context, soap_primitive + RESPONSE, soap_response)
 
