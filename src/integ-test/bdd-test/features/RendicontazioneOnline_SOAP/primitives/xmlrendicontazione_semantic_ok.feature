@@ -514,9 +514,9 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
         Then check esito is OK of nodoInviaFlussoRendicontazione response
 
 
-    # [SEM_NIFR_34]
+    # [SEM_NIFR_36]
 
-    Scenario: Create REND7
+    Scenario: Create REND8
         Given REND generation
             """
             <pay_i:FlussoRiversamento xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ FlussoRendicontazione_v_1_0_1.xsd ">
@@ -543,7 +543,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             <pay_i:numeroTotalePagamenti>1</pay_i:numeroTotalePagamenti>
             <pay_i:importoTotalePagamenti>10.00</pay_i:importoTotalePagamenti>
             <pay_i:datiSingoliPagamenti>
-            <pay_i:identificativoUnivocoVersamento>#iuv#</pay_i:identificativoUnivocoVersamento>
+            <pay_i:identificativoUnivocoVersamento>01600019011391534</pay_i:identificativoUnivocoVersamento>
             <pay_i:identificativoUnivocoRiscossione>#iuv#</pay_i:identificativoUnivocoRiscossione>
             <pay_i:indiceDatiSingoloPagamento>1</pay_i:indiceDatiSingoloPagamento>
             <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
@@ -551,7 +551,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             <pay_i:dataEsitoSingoloPagamento>2019-11-11</pay_i:dataEsitoSingoloPagamento>
             </pay_i:datiSingoliPagamenti>
             <pay_i:datiSingoliPagamenti>
-            <pay_i:identificativoUnivocoVersamento>#iuv#</pay_i:identificativoUnivocoVersamento>
+            <pay_i:identificativoUnivocoVersamento>01600019011391534</pay_i:identificativoUnivocoVersamento>
             <pay_i:identificativoUnivocoRiscossione>#iuv#</pay_i:identificativoUnivocoRiscossione>
             <pay_i:indiceDatiSingoloPagamento>1</pay_i:indiceDatiSingoloPagamento>
             <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
@@ -563,7 +563,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
 
 
     Scenario: Check error for nodoInviaFlussoRendicontazione primitive
-        Given the Create REND7 scenario executed successfully
+        Given the Create REND8 scenario executed successfully
         And initial XML nodoInviaFlussoRendicontazione
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
