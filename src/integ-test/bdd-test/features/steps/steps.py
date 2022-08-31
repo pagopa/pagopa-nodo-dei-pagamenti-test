@@ -388,7 +388,7 @@ def step_impl(context, job_name, seconds):
     seconds = utils.replace_local_variables(seconds, context)
     time.sleep(int(seconds))
     url_nodo = utils.get_rest_url_nodo(context)
-    nodo_response = requests.get(f"{url_nodo}/jobs/trigger/{job_name}")
+    nodo_response = requests.get(f"{url_nodo}/jobs/trigger/{job_name}", verify=False)
     setattr(context, job_name + RESPONSE, nodo_response)
 
 
@@ -602,7 +602,7 @@ def step_impl(context, sender, method, service, receiver):
         json_body = None
 
     nodo_response = requests.request(method, f"{url_nodo}/{service}", headers=headers,
-                                     json=json_body)
+                                     json=json_body, verify=False)
 
     setattr(context, service.split('?')[0], json_body)
     setattr(context, service.split('?')[0] + RESPONSE, nodo_response)
@@ -918,7 +918,7 @@ def step_impl(context, param, value):
 @step("refresh job {job_name} triggered after 10 seconds")
 def step_impl(context, job_name):
     url_nodo = utils.get_rest_url_nodo(context)
-    nodo_response = requests.get(f"{url_nodo}/config/refresh/{job_name}")
+    nodo_response = requests.get(f"{url_nodo}/config/refresh/{job_name}", verify=False)
     setattr(context, job_name + RESPONSE, nodo_response)
     refresh_response = requests.get(utils.get_refresh_config_url(context))
     time.sleep(10)
