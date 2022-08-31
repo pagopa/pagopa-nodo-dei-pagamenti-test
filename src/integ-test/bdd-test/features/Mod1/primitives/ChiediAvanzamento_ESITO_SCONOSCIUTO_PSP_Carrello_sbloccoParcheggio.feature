@@ -186,13 +186,13 @@ Feature: process tests for ChiediAvanzamento_ESITO_SCONOSCIUTO_PSP_Carrello_sblo
                     <elementoListaRPT>
                     <identificativoDominio>#codicePA#</identificativoDominio>
                     <identificativoUnivocoVersamento>avanzaErrResponse</identificativoUnivocoVersamento>
-                    <codiceContestoPagamento>$ccp1</codiceContestoPagamento>
+                    <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
                     <rpt>$rptAttachment</rpt>
                     </elementoListaRPT>
                     <elementoListaRPT>
                     <identificativoDominio>90000000002</identificativoDominio>
                     <identificativoUnivocoVersamento>avanzaErrResponse2</identificativoUnivocoVersamento>
-                    <codiceContestoPagamento>$ccp2</codiceContestoPagamento>
+                    <codiceContestoPagamento>$2ccp</codiceContestoPagamento>
                     <rpt>$rpt2Attachment</rpt>
                     </elementoListaRPT>
                 </listaRPT>
@@ -240,7 +240,7 @@ Feature: process tests for ChiediAvanzamento_ESITO_SCONOSCIUTO_PSP_Carrello_sblo
         Given the Execution Esito Carta scenario executed successfully
         Then checks the value CART_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query stati_carr_snapshot on db nodo_online under macro Mod1
         And checks the value avanzaErrResponse,avanzaErrResponse2 of the record at column IUV of the table RETRY_RPT retrived by the query retry_rpt on db nodo_online under macro Mod1
-        And checks the value $ccp1,$ccp2 of the record at column CCP of the table RETRY_RPT retrived by the query retry_rpt on db nodo_online under macro Mod1
+        And checks the value $1ccp,$2ccp of the record at column CCP of the table RETRY_RPT retrived by the query retry_rpt on db nodo_online under macro Mod1
         And checks the value 66666666666,90000000002 of the record at column ID_DOMINIO of the table RETRY_RPT retrived by the query retry_rpt on db nodo_online under macro Mod1
         And verify 0 record for the table RETRY_RPT retrived by the query retry_rpt on db nodo_online under macro Mod1
         And verify 1 record for the table RETRY_RPT retrived by the query retry_rpt on db nodo_online under macro Mod1

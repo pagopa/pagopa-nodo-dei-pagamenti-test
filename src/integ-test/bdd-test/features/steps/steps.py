@@ -123,6 +123,12 @@ def step_impl(context, primitive):
     if '$IuV' in payload:
         payload = payload.replace('$IuV', getattr(context, 'IuV'))
 
+    if '$1ccp' in payload:
+        payload = payload.replace('$1ccp', getattr(context, 'ccp1'))
+
+    if '$2ccp' in payload:
+        payload = payload.replace('$2ccp', getattr(context, 'ccp2'))
+
     if '$rptAttachment' in payload:
         rptAttachment = getattr(context, 'rptAttachment')
         rptAttachment_b = bytes(rptAttachment, 'ascii')
