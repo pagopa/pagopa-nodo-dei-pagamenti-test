@@ -100,7 +100,7 @@ def get_rest_mock_psp(context):
 def save_soap_action(mock, primitive, soap_action, override=False):
     headers = {'Content-Type': 'application/xml'}  # set what your server accepts
     print(f'{mock}/response/{primitive}?override={override}')
-    response = requests.post(f"{mock}/response/{primitive}?override={override}", soap_action, headers=headers)
+    response = requests.post(f"{mock}/response/{primitive}?override={override}", soap_action, headers=headers, verify= False)
     print(response.content, response.status_code)
     return response.status_code
 
