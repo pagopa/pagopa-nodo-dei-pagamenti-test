@@ -668,7 +668,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             <pay_i:identificativoFlusso>2019-08-22SIGPITM1XXX-014603976</pay_i:identificativoFlusso>
             <pay_i:dataOraFlusso>#timedate#</pay_i:dataOraFlusso>
             <pay_i:identificativoUnivocoRegolamento>#iuv#</pay_i:identificativoUnivocoRegolamento>
-            <pay_i:dataRegolamento>#date#</pay_i:dataRegolamento>
+            <pay_i:dataRegolamento>2019-07-22</pay_i:dataRegolamento>
             <pay_i:istitutoMittente>
             <pay_i:identificativoUnivocoMittente>
             <pay_i:tipoIdentificativoUnivoco>G</pay_i:tipoIdentificativoUnivoco>
