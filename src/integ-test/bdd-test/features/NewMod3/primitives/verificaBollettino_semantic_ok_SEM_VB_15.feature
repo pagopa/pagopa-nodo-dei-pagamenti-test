@@ -1,4 +1,4 @@
-Feature: Semantic checks for verificaBollettino - OK
+Feature: Semantic checks for verificaBollettino - OK [SEM_VB_15]
 
   Background:
     Given systems up
@@ -19,6 +19,6 @@ Feature: Semantic checks for verificaBollettino - OK
       </soapenv:Envelope>
       """
 
-  Scenario: Check valid URL in WSDL namespace
+  Scenario: Check ccPost associates with two PA
     When PSP sends SOAP verificaBollettino to nodo-dei-pagamenti
     Then check outcome is OK of verificaBollettino response
