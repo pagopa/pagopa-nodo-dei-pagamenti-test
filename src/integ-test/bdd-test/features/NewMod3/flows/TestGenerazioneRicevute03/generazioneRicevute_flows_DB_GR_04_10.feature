@@ -2,50 +2,49 @@ Feature: process tests for generazioneRicevute
 
   Background:
     Given systems up
+
+  # Verify phase
+  Scenario: Execute verifyPaymentNotice (Phase 1)
+    Given update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with N, with where condition FK_PA and where value ('6','8') under macro update_query on db nodo_cfg
     And initial XML verifyPaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
       <soapenv:Header/>
       <soapenv:Body>
       <nod:verifyPaymentNoticeReq>
-      <idPSP>70000000001</idPSP>
-      <idBrokerPSP>70000000001</idBrokerPSP>
-      <idChannel>70000000001_01</idChannel>
+      <idPSP>#psp#</idPSP>
+      <idBrokerPSP>#psp#</idBrokerPSP>
+      <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
       <password>pwdpwdpwd</password>
       <qrCode>
-      <fiscalCode>#creditor_institution_code#</fiscalCode>
-      <noticeNumber>#notice_number#</noticeNumber>
+      <fiscalCode>#creditor_institution_code_old#</fiscalCode>
+      <noticeNumber>#notice_number_old#</noticeNumber>
       </qrCode>
       </nod:verifyPaymentNoticeReq>
       </soapenv:Body>
       </soapenv:Envelope>
       """
-    And EC new version
-    And nodo-dei-pagamenti has config parameter {param} set to {value}
-
-  # Verify phase
-  Scenario: Execute verifyPaymentNotice request
     When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of verifyPaymentNotice response
 
-  Scenario: Execute activatePaymentNotice request
-    Given the Execute verifyPaymentNotice request scenario executed successfully
+  Scenario: Execute activatePaymentNotice (Phase 2)
+    Given the Execute verifyPaymentNotice (Phase 1) scenario executed successfully
     And initial XML activatePaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
       <soapenv:Header />
       <soapenv:Body>
       <nod:activatePaymentNoticeReq>
-      <idPSP>70000000001</idPSP>
-      <idBrokerPSP>70000000001</idBrokerPSP>
-      <idChannel>70000000001_01</idChannel>
+      <idPSP>$verifyPaymentNotice.idPSP</idPSP>
+      <idBrokerPSP>$verifyPaymentNotice.idBrokerPSP</idBrokerPSP>
+      <idChannel>$verifyPaymentNotice.idChannel</idChannel>
       <password>pwdpwdpwd</password>
       <idempotencyKey>#idempotency_key#</idempotencyKey>
       <qrCode>
-      <fiscalCode>#creditor_institution_code#</fiscalCode>
-      <noticeNumber>#notice_number#</noticeNumber>
+      <fiscalCode>#creditor_institution_code_old#</fiscalCode>
+      <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
       </qrCode>
-      <expirationTime>120000</expirationTime>
+      <expirationTime>6000</expirationTime>
       <amount>70.00</amount>
       <dueDate>2021-12-31</dueDate>
       <paymentNote>causale</paymentNote>
@@ -125,17 +124,17 @@ Feature: process tests for generazioneRicevute
     Then check outcome is OK of activatePaymentNotice response
 
   # Payment Outcome Phase outcome OK with paymentchannel
-  Scenario: Execute sendPaymentOutcome request
-    Given the Execute activatePaymentNotice request scenario executed successfully
+  Scenario: Execute sendPaymentOutcome (Phase 1)
+    Given the Execute activatePaymentNotice (Phase 2) scenario executed successfully
     And initial XML sendPaymentOutcome
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
       <soapenv:Header/>
       <soapenv:Body>
       <nod:sendPaymentOutcomeReq>
-      <idPSP>70000000001</idPSP>
-      <idBrokerPSP>70000000001</idBrokerPSP>
-      <idChannel>70000000001_01</idChannel>
+      <idPSP>#psp#</idPSP>
+      <idBrokerPSP>#psp#</idBrokerPSP>
+      <idChannel>#canale#</idChannel>
       <password>pwdpwdpwd</password>
       <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
       <outcome>OK</outcome>
@@ -165,71 +164,10 @@ Feature: process tests for generazioneRicevute
       </soapenv:Envelope>
       """
 
-
   # test execution
   Scenario: Execution test DB_GR_01
-    Given the Execute sendPaymentOutcome request scenario executed successfully
+    Given the Execute sendPaymentOutcome (Phase 1) scenario executed successfully
     When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
     #db check1
     And check DB_GR_01
-
-
-
-  # Payment Outcome Phase outcome OK without paymentchannel
-  Scenario: Execute sendPaymentOutcome request
-    Given the Execute activatePaymentNotice request scenario executed successfully
-    And initial XML sendPaymentOutcome
-      """
-      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-      <soapenv:Header/>
-      <soapenv:Body>
-      <nod:sendPaymentOutcomeReq>
-      <idPSP>70000000001</idPSP>
-      <idBrokerPSP>70000000001</idBrokerPSP>
-      <idChannel>70000000001_01</idChannel>
-      <password>pwdpwdpwd</password>
-      <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
-      <outcome>OK</outcome>
-      <details>
-      <paymentMethod>creditCard</paymentMethod>
-      <fee>2.00</fee>
-      <payer>
-      <uniqueIdentifier>
-      <entityUniqueIdentifierType>F</entityUniqueIdentifierType>
-      <entityUniqueIdentifierValue>JHNDOE00A01F205N</entityUniqueIdentifierValue>
-      </uniqueIdentifier>
-      <fullName>John Doe</fullName>
-      <streetName>street</streetName>
-      <civicNumber>12</civicNumber>
-      <postalCode>89020</postalCode>
-      <city>city</city>
-      <stateProvinceRegion>MI</stateProvinceRegion>
-      <country>IT</country>
-      <e-mail>john.doe@test.it</e-mail>
-      </payer>
-      <applicationDate>2021-10-01</applicationDate>
-      <transferDate>2021-10-02</transferDate>
-      </details>
-      </nod:sendPaymentOutcomeReq>
-      </soapenv:Body>
-      </soapenv:Envelope>
-      """
-
-  # test execution
-  Scenario: Execution test DB_GR_01
-    Given the Execute sendPaymentOutcome request scenario executed successfully
-    When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-    Then check outcome is OK of sendPaymentOutcome response
-    #db check1
-    And check DB_GR_01
-
-
-
-
-
-
-
-
-
-
