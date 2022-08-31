@@ -116,8 +116,7 @@ stages:
 
              #behave --help #Run behave
              #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/NewMod3/flows/TestGenerazioneRicevute03/generazioneRicevute_flows_ko_PAnew.feature
-             #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/appIO/flows/chiediListaPSP/PRO_CLPSP_05.feature
-             curl -k -I -X GET --connect-to api.dev.platform.pagopa.it:443:10.230.8.5:443 https://api.dev.platform.pagopa.it/nodo-pagamenti/api/v1/monitor/health
+             behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/appIO/flows/chiediListaPSP/PRO_CLPSP_05.feature
              
             displayName: 'Run Behave Test Suite'
           - task: PublishTestResults@2
