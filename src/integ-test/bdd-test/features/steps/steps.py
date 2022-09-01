@@ -176,12 +176,6 @@ def step_impl(context):
 
 
 
-
-    
-
-
-
-
 @given('RPT generation')
 def step_impl(context):
     payload = context.text or ""
