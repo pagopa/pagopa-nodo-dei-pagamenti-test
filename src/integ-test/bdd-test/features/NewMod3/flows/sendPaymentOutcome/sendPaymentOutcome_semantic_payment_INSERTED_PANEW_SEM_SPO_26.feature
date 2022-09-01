@@ -91,13 +91,13 @@ Feature: Check semantic payment status
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcome response
         And check faultCode is PPT_ESITO_GIA_ACQUISITO of sendPaymentOutcome response
-        And paymentMethod with cash in sendPaymentOutcome
-        And paymentChannel with onLine in sendPaymentOutcome
-        And fee with 3.00 in sendPaymentOutcome
-        And entityUniqueIdentifierType with F in sendPaymentOutcome
-        And entityUniqueIdentifierValue with CR7 in sendPaymentOutcome
-        And applicationDate with 2021-12-10 in sendPaymentOutcome
-        And check description contains Esito concorde of sendPaymentOutcome response
+        And paymentMethod with cash in sendPaymentOutcome response
+        And paymentChannel with onLine in sendPaymentOutcome response
+        And fee with 3.00 in sendPaymentOutcome response
+        And entityUniqueIdentifierType with F in sendPaymentOutcome response
+        And entityUniqueIdentifierValue with CR7 in sendPaymentOutcome response
+        And applicationDate with 2021-12-10 in sendPaymentOutcome response
+        And check description with Esito concorde of sendPaymentOutcome response
 
 
 
