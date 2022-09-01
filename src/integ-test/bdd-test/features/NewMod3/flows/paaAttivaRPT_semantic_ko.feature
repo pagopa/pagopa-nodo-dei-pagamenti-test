@@ -39,7 +39,7 @@ Feature: process check for activatePaymentNotice - KO
       <esito>OK</esito>
       <datiPagamento>
       <importoSingoloVersamento>importo_singolo_versamento</importoSingoloVersamento>
-      <ibanAccredito>iban_accredito</ibanAccredito>
+      <ibanAccredito>123456789</ibanAccredito>
       <bicAccredito>bic_accredito</bicAccredito>
       <enteBeneficiario>ente_beneficiario</enteBeneficiario>
       <credenzialiPagatore>credenziali_pagatore</credenzialiPagatore>
