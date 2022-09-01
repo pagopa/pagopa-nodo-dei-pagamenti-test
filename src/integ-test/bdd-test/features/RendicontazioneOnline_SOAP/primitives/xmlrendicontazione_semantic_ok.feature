@@ -665,7 +665,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             """
             <pay_i:FlussoRiversamento xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ FlussoRendicontazione_v_1_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
-            <pay_i:identificativoFlusso>2019-08-22SIGPITM1XXX-014603976</pay_i:identificativoFlusso>
+            <pay_i:identificativoFlusso>#identificativoFlusso#</pay_i:identificativoFlusso>
             <pay_i:dataOraFlusso>#timedate#</pay_i:dataOraFlusso>
             <pay_i:identificativoUnivocoRegolamento>#iuv#</pay_i:identificativoUnivocoRegolamento>
             <pay_i:dataRegolamento>2019-08-22</pay_i:dataRegolamento>
@@ -711,7 +711,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             <identificativoCanale>#canale#</identificativoCanale>
             <password>pwdpwdpwd</password>
             <identificativoDominio>#codicePA#</identificativoDominio>
-            <identificativoFlusso>2019-08-22SIGPITM1XXX-014603976</identificativoFlusso>
+            <identificativoFlusso>$identificativoFlusso</identificativoFlusso>
             <dataOraFlusso>$timedate</dataOraFlusso>
             <xmlRendicontazione>$rendAttachment</xmlRendicontazione>
             </ws:nodoInviaFlussoRendicontazione>
