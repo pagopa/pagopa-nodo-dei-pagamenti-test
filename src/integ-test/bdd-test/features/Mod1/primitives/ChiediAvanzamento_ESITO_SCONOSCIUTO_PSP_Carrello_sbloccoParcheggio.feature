@@ -173,7 +173,7 @@ Feature: process tests for ChiediAvanzamento_ESITO_SCONOSCIUTO_PSP_Carrello_sblo
             <ppt:intestazioneCarrelloPPT>
                 <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
                 <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
-                <identificativoCarrello>$ccp</identificativoCarrello>
+                <identificativoCarrello>$1ccp</identificativoCarrello>
             </ppt:intestazioneCarrelloPPT>
         </soapenv:Header>
         <soapenv:Body>
