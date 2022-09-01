@@ -184,7 +184,7 @@ Feature: process tests for ChiediAvanzamento_ESITO_SCONOSCIUTO_PSP_Carrello_sblo
                 <identificativoCanale>97735020584_02</identificativoCanale>
                 <listaRPT>
                     <elementoListaRPT>
-                    <identificativoDominio>44444444444</identificativoDominio>
+                    <identificativoDominio>77777777777</identificativoDominio>
                     <identificativoUnivocoVersamento>avanzaErrResponse</identificativoUnivocoVersamento>
                     <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
                     <rpt>$rptAttachment</rpt>
