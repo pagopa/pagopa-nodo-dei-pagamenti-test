@@ -1073,6 +1073,7 @@ def step_impl(context, value, column, query_name, table_name, db_name, name_macr
             value = getattr(context, 'iuv')
         value = utils.replace_global_variables(value,context)
         value = utils.replace_local_variables(value, context)
+        value = utils.replace_context_variables(value, context)
         split_value = [status.strip() for status in value.split(',')]
         for i, elem in enumerate(query_result):
             if isinstance(elem, str) and elem.isdigit(): query_result[i] = float(elem)
