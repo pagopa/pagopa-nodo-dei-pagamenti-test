@@ -186,13 +186,13 @@ Feature: process tests for ChiediAvanzamento_ESITO_SCONOSCIUTO_PSP_Carrello_sblo
                     <elementoListaRPT>
                     <identificativoDominio>44444444444</identificativoDominio>
                     <identificativoUnivocoVersamento>avanzaErrResponse</identificativoUnivocoVersamento>
-                    <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
+                    <codiceContestoPagamento>$ccp1</codiceContestoPagamento>
                     <rpt>$rptAttachment</rpt>
                     </elementoListaRPT>
                     <elementoListaRPT>
                     <identificativoDominio>44444444445</identificativoDominio>
                     <identificativoUnivocoVersamento>avanzaErrResponse2</identificativoUnivocoVersamento>
-                    <codiceContestoPagamento>$2ccp</codiceContestoPagamento>
+                    <codiceContestoPagamento>$ccp2</codiceContestoPagamento>
                     <rpt>$rpt2Attachment</rpt>
                     </elementoListaRPT>
                 </listaRPT>
