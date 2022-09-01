@@ -166,7 +166,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             | tag                | tag_value | soapUI test |
             | xmlRendicontazione | 123456789 | SIN_NIFR_33 |
 
-    @tagtest
+    
     Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive
         Given the Generazione rendicontazione scenario executed successfully
         And <tag> with <tag_value> in rendAttachment
