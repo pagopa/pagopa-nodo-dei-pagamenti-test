@@ -34,16 +34,16 @@ def step_impl(context):
             - pagopa-api-config ( used in tests to set DB's nodo-dei-pagamenti correctly according to input test ))
     """
     responses = True
-    
+
     for row in context.table:
         print(f"calling: {row.get('name')} -> {row.get('url')}")
         url = row.get("url") + row.get("healthcheck")
         print(f"calling -> {url}")
         headers = {'Host': 'api.dev.platform.pagopa.it:443'}
-        resp = requests.get(url, headers=headers,verify=False)
+        resp = requests.get(url, headers=headers, verify=False)
         print(f"response: {resp.status_code}")
         responses &= (resp.status_code == 200)
-    
+
     assert responses
 
 
@@ -393,7 +393,8 @@ def step_impl(context, job_name, seconds):
     time.sleep(int(seconds))
     url_nodo = utils.get_rest_url_nodo(context)
     headers = {'Host': 'api.dev.platform.pagopa.it:443'}
-    nodo_response = requests.get(f"{url_nodo}/jobs/trigger/{job_name}",headers=headers ,verify=False)
+    nodo_response = requests.get(
+        f"{url_nodo}/jobs/trigger/{job_name}", headers=headers, verify=False)
     setattr(context, job_name + RESPONSE, nodo_response)
 
 
@@ -917,10 +918,11 @@ def step_impl(context, param, value):
     exec_query = db.executeQuery(conn, selected_query)
     if exec_query is not None:
         print(f'executed query: {exec_query}')
-   
+
     db.closeConnection(conn)
     headers = {'Host': 'api.dev.platform.pagopa.it:443'}
-    refresh_response = requests.get(utils.get_refresh_config_url(context),headers=headers,verify=False)
+    refresh_response = requests.get(utils.get_refresh_config_url(
+        context), headers=headers, verify=False)
     time.sleep(5)
     assert refresh_response.status_code == 200
 
@@ -929,9 +931,11 @@ def step_impl(context, param, value):
 def step_impl(context, job_name):
     url_nodo = utils.get_rest_url_nodo(context)
     headers = {'Host': 'api.dev.platform.pagopa.it:443'}
-    nodo_response = requests.get(f"{url_nodo}/config/refresh/{job_name}", headers=headers ,verify=False)
+    nodo_response = requests.get(
+        f"{url_nodo}/config/refresh/{job_name}", headers=headers, verify=False)
     setattr(context, job_name + RESPONSE, nodo_response)
-    refresh_response = requests.get(utils.get_refresh_config_url(context),headers=headers ,verify=False)
+    refresh_response = requests.get(utils.get_refresh_config_url(
+        context), headers=headers, verify=False)
     time.sleep(10)
     assert refresh_response.status_code == 200
 
@@ -967,7 +971,8 @@ def step_impl(context):
 
     db.closeConnection(conn)
     headers = {'Host': 'api.dev.platform.pagopa.it:443'}
-    refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False)
+    refresh_response = requests.get(utils.get_refresh_config_url(
+        context), headers=headers, verify=False)
     assert refresh_response.status_code == 200
 
 
