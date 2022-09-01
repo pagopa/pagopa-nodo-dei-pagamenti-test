@@ -218,7 +218,21 @@ Feature: process tests for ChiediAvanzamento_ESITO_SCONOSCIUTO_PSP_Carrello_sblo
 
     Scenario: Execution Esito Carta
         Given the Execute check DB-RPT scenario executed successfully
+        And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
+        """
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:psp="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+                <psp:pspNotifyPaymentRes>
+                <outcome>OK</outcome>
+                <!--Optional:-->
+                <wait>20</wait>
+                </psp:pspNotifyPaymentRes>
+            </soapenv:Body>
+        </soapenv:Envelope>
+        """
         When WISP sends REST POST inoltroEsito/carta to nodo-dei-pagamenti
+
         """
         {
             "idPagamento": "$sessionToken",
@@ -234,7 +248,7 @@ Feature: process tests for ChiediAvanzamento_ESITO_SCONOSCIUTO_PSP_Carrello_sblo
         }
         """
         Then verify the HTTP status code of inoltroEsito/carta response is 408
-        And check error is timeout of inoltroEsito/carta response
+        And check error is Operazione in timeout of inoltroEsito/carta response
 
     Scenario: Execute check DB-RPT
         Given the Execution Esito Carta scenario executed successfully
