@@ -378,6 +378,7 @@ def step_impl(context, sender, soap_primitive, receiver):
     soap_response = requests.post(url_nodo, getattr(
         context, soap_primitive), headers=headers, verify=False)
     print(soap_response.content)
+    print(soap_response.status_code)
     setattr(context, soap_primitive + RESPONSE, soap_response)
 
     assert (soap_response.status_code ==
