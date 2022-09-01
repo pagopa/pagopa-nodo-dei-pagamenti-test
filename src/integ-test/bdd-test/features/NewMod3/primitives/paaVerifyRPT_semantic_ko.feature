@@ -55,5 +55,5 @@ Feature: check semantic paaVerifyRPT - KO
         Then check outcome is KO of verifyPaymentNotice response
         And check faultCode is PPT_IBAN_NON_CENSITO of verifyPaymentNotice response
         Examples:
-            | tag           | tag_value | soapUI test   |
-            | ibanAccredito | unknown   | SEM_PVRPTR_01 |
+            | tag           | tag_value        | soapUI test   |
+            | ibanAccredito | 12365874654641   | SEM_PVRPTR_01 |
