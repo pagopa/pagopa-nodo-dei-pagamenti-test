@@ -639,6 +639,7 @@ def step_impl(context, sender, method, service, receiver):
     body = utils.replace_local_variables(body, context)
     body = utils.replace_context_variables(body, context)
     body = utils.replace_global_variables(body, context)
+    print(body)
     service = utils.replace_local_variables(service, context)
     service = utils.replace_context_variables(service, context)
     print(f"{url_nodo}/{service}")
