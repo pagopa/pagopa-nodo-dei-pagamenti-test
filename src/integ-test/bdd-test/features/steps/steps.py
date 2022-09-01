@@ -134,7 +134,52 @@ def step_impl(context, primitive):
     payload = utils.replace_global_variables(payload, context)
 
     setattr(context, primitive, payload)
+
+
+@given ('RT generation')
+def step_impl(context):
+    payload = context.text or ""
+    payload = utils.replace_local_variables(payload, context)
+    date = datetime.time.today().strftime("%Y-%m-%d")
+
+
+    if "#iuv#" in payload:
+        iuv = f"14{str(random.randint(1000000000000, 9999999999999))}" 
+        setattr(context,'iuv', iuv)
+        payload = payload.replace('#iuv#', iuv)
+        setattr(context, 'date', date)
+
+    if '#intermediarioPA#' in payload:
+        intermediarioPA = "44444444444_05"
+        payload = payload.replace('#intermediarioPA#', intermediarioPA)
+        setattr(context,"intermediarioPA", intermediarioPA)
     
+    if "#ccp#" in payload:     
+        ccp = str(random.randint(100000000000000, 999999999999999))
+        payload = payload.replace('#ccp#', ccp)
+        setattr(context,"ccp", ccp)
+
+    if '#date#' in payload:
+        payload = payload.replace('#date#', date)
+
+    if "#codicePA#" in payload:     
+        codicePA = "77777777777"
+        payload = payload.replace('#codicePA#', codicePA)
+        setattr(context,"codicePA", codicePA)
+
+
+
+    print("RT generata: ", payload)
+    setattr(context,'rendAttachment', payload)
+
+
+
+
+    
+
+
+
+
 @given('RPT generation')
 def step_impl(context):
     payload = context.text or ""
