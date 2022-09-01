@@ -69,7 +69,7 @@ Feature: Check semantic payment status
             <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
             <password>pwdpwdpwd</password>
             <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
-            <outcome>KO</outcome>
+            <outcome>OK</outcome>
             <!--Optional:-->
             <details>
             <paymentMethod>creditCard</paymentMethod>
