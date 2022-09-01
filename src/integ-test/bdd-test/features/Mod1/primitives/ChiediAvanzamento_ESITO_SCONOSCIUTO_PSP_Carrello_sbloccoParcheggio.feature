@@ -171,8 +171,8 @@ Feature: process tests for ChiediAvanzamento_ESITO_SCONOSCIUTO_PSP_Carrello_sblo
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
         <soapenv:Header>
             <ppt:intestazioneCarrelloPPT>
-                <identificativoIntermediarioPA>77777777777</identificativoIntermediarioPA>
-                <identificativoStazioneIntermediarioPA>77777777777_03</identificativoStazioneIntermediarioPA>
+                <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
+                <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
                 <identificativoCarrello>$1ccp</identificativoCarrello>
             </ppt:intestazioneCarrelloPPT>
         </soapenv:Header>
