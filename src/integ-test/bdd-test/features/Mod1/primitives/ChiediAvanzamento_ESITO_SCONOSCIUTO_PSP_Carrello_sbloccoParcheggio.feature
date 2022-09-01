@@ -171,8 +171,8 @@ Feature: process tests for ChiediAvanzamento_ESITO_SCONOSCIUTO_PSP_Carrello_sblo
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
         <soapenv:Header>
             <ppt:intestazioneCarrelloPPT>
-                <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
-                <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
+                <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
+                <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
                 <identificativoCarrello>$1ccp</identificativoCarrello>
             </ppt:intestazioneCarrelloPPT>
         </soapenv:Header>
@@ -242,5 +242,6 @@ Feature: process tests for ChiediAvanzamento_ESITO_SCONOSCIUTO_PSP_Carrello_sblo
         And checks the value avanzaErrResponse,avanzaErrResponse2 of the record at column IUV of the table RETRY_RPT retrived by the query retry_rpt on db nodo_online under macro Mod1
         And checks the value $1ccp,$2ccp of the record at column CCP of the table RETRY_RPT retrived by the query retry_rpt on db nodo_online under macro Mod1
         And checks the value 66666666666,90000000002 of the record at column ID_DOMINIO of the table RETRY_RPT retrived by the query retry_rpt on db nodo_online under macro Mod1
-        And verify 0 record for the table RETRY_RPT retrived by the query retry_rpt on db nodo_online under macro Mod1
+        And checks the value 0 of the record at column RETRY of the table RETRY_RPT retrived by the query retry_rpt on db nodo_online under macro Mod1
+        # And verify 0 record for the table RETRY_RPT retrived by the query retry_rpt on db nodo_online under macro Mod1
         And verify 1 record for the table RETRY_RPT retrived by the query retry_rpt on db nodo_online under macro Mod1
