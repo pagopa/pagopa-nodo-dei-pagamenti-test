@@ -98,10 +98,9 @@ def get_soap_mock_ec(context):
 
 
 def get_rest_mock_psp(context):
-    # TODO fix service
     if context.config.userdata.get("services").get("mock-ec").get("rest_service") is not None:
-        return context.config.userdata.get("services").get("mock-ec").get("url") \
-            + context.config.userdata.get("services").get("mock-ec").get("rest_service")
+        return context.config.userdata.get("services").get("mock-psp").get("url") \
+            + context.config.userdata.get("services").get("mock-psp").get("rest_service")
     else:
         return ""
 

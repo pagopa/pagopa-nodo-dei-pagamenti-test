@@ -640,9 +640,14 @@ def step_impl(context, mock, destination, primitive):
 
     setattr(context, primitive, pa_verify_payment_notice_res)
     print(pa_verify_payment_notice_res)
-    print(utils.get_soap_mock_ec(context))
-    response_status_code = utils.save_soap_action(utils.get_soap_mock_ec(context), primitive,
-                                                  pa_verify_payment_notice_res, override=True)
+    if mock == 'EC':
+        print(utils.get_soap_mock_ec(context))
+        response_status_code = utils.save_soap_action(utils.get_soap_mock_ec(context), primitive,
+                                                    pa_verify_payment_notice_res, override=True)
+    else:
+        print(utils.get_soap_mock_psp(context))
+        response_status_code = utils.save_soap_action(utils.get_soap_mock_psp(context), primitive,
+                                                    pa_verify_payment_notice_res, override=True)
 
     assert response_status_code == 200
 
