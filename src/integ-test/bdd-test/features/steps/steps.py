@@ -37,7 +37,8 @@ def step_impl(context):
         print(f"calling: {row.get('name')} -> {row.get('url')}")
         url = row.get("url") + row.get("healthcheck")
         print(f"calling -> {url}")
-        resp = requests.get(url, verify=False)
+        headers = {'Host': 'api.dev.platform.pagopa.it:443'}
+        resp = requests.get(url, headers=headers,verify=False)
         print(f"response: {resp.status_code}")
         responses &= (resp.status_code == 200)
     
@@ -369,7 +370,7 @@ def step_impl(context, attribute, value, elem, primitive):
 def step_impl(context, sender, soap_primitive, receiver):
     primitive = soap_primitive.split("_")[0]
     headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive,
-               'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it'}  # set what your server accepts
+               'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}  # set what your server accepts
     url_nodo = utils.get_soap_url_nodo(context, primitive)
     print("url_nodo: ", url_nodo)
     print("nodo soap_request sent >>>", getattr(context, soap_primitive))
