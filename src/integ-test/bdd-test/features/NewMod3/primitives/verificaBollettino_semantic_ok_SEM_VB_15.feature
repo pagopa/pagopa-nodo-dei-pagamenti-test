@@ -15,7 +15,7 @@ Feature: Semantic checks for verificaBollettino - OK [SEM_VB_15]
       <idBrokerPSP>#brokerPspPoste#</idBrokerPSP>
       <idChannel>#channelPoste#</idChannel>
       <password>pwdpwdpwd</password>
-      <ccPost>61666666666</ccPost>
+      <ccPost>ccPoste_noIBAN</ccPost>
       <noticeNumber>#notice_number#</noticeNumber>
       </nod:verificaBollettinoReq>
       </soapenv:Body>
