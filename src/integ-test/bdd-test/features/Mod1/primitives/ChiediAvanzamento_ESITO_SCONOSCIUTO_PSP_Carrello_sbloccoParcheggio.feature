@@ -217,8 +217,9 @@ Feature: process tests for ChiediAvanzamento_ESITO_SCONOSCIUTO_PSP_Carrello_sblo
 
 
     Scenario: Execution Esito Carta
-        Given the Execute check DB-RPT scenario executed successfully
-        And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
+        Given the Execute check DB-RPT scenario executed successfull
+        # successivamente sostituire pspinviacarrellorptcarte al posto di pspNotifyPayment
+        And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment 
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:psp="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
             <soapenv:Header/>
@@ -252,10 +253,10 @@ Feature: process tests for ChiediAvanzamento_ESITO_SCONOSCIUTO_PSP_Carrello_sblo
 
     Scenario: Execute check DB-RPT
         Given the Execution Esito Carta scenario executed successfully
-        Then checks the value CART_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query stati_carr_snapshot on db nodo_online under macro Mod1
+        Then checks the value CART_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query retry_rpt on db nodo_online under macro Mod1
         And checks the value avanzaErrResponse,avanzaErrResponse2 of the record at column IUV of the table RETRY_RPT retrived by the query retry_rpt on db nodo_online under macro Mod1
-        And checks the value $1ccp,$2ccp of the record at column CCP of the table RETRY_RPT retrived by the query retry_rpt on db nodo_online under macro Mod1
-        And checks the value 66666666666,90000000002 of the record at column ID_DOMINIO of the table RETRY_RPT retrived by the query retry_rpt on db nodo_online under macro Mod1
+        And checks the value $ccp1,$ccp2 of the record at column CCP of the table RETRY_RPT retrived by the query retry_rpt on db nodo_online under macro Mod1
+        And checks the value 44444444444,44444444445 of the record at column ID_DOMINIO of the table RETRY_RPT retrived by the query retry_rpt on db nodo_online under macro Mod1
         And checks the value 0 of the record at column RETRY of the table RETRY_RPT retrived by the query retry_rpt on db nodo_online under macro Mod1
         # And verify 0 record for the table RETRY_RPT retrived by the query retry_rpt on db nodo_online under macro Mod1
         And verify 1 record for the table RETRY_RPT retrived by the query retry_rpt on db nodo_online under macro Mod1
