@@ -1,4 +1,6 @@
 import datetime
+from email import header
+from email.headerregistry import HeaderRegistry
 from email.policy import default
 import json
 import os
@@ -390,7 +392,8 @@ def step_impl(context, job_name, seconds):
     seconds = utils.replace_local_variables(seconds, context)
     time.sleep(int(seconds))
     url_nodo = utils.get_rest_url_nodo(context)
-    nodo_response = requests.get(f"{url_nodo}/jobs/trigger/{job_name}", verify=False)
+    headers = {'Host': 'api.dev.platform.pagopa.it:443'}
+    nodo_response = requests.get(f"{url_nodo}/jobs/trigger/{job_name}",headers=headers ,verify=False)
     setattr(context, job_name + RESPONSE, nodo_response)
 
 
@@ -588,7 +591,7 @@ def step_impl(context, sender, method, service, receiver):
     url_nodo = utils.get_rest_url_nodo(context)
 
     headers = {'Content-Type': 'application/json',
-               'Host': 'api.dev.platform.pagopa.it'}
+               'Host': 'api.dev.platform.pagopa.it:443'}
     body = context.text or ""
     print(body)
 
@@ -674,10 +677,12 @@ def step_impl(context):
     activateIOPaymentResponseXml = parseString(
         activateIOPaymentResponse.content)
 
+    headers = {'Host': 'api.dev.platform.pagopa.it:443'}
+
     paGetPaymentJson = requests.get(
-        f"{utils.get_rest_mock_ec(context)}/history/{notice_number}/paGetPayment")
+        f"{utils.get_rest_mock_ec(context)}/history/{notice_number}/paGetPayment", headers=headers)
     pspNotifyPaymentJson = requests.get(
-        f"{utils.get_rest_mock_ec(context)}/history/{notice_number}/pspNotifyPayment")
+        f"{utils.get_rest_mock_ec(context)}/history/{notice_number}/pspNotifyPayment", headers=headers)
 
     paGetPayment = paGetPaymentJson.json()
     pspNotifyPayment = pspNotifyPaymentJson.json()
@@ -795,10 +800,12 @@ def step_impl(context):
     activateIOPaymentResponseXml = parseString(
         activateIOPaymentResponse.content)
 
+    headers = {'Host': 'api.dev.platform.pagopa.it:443'}
+
     paGetPaymentJson = requests.get(
-        f"{utils.get_rest_mock_ec(context)}/history/{notice_number}/paGetPayment")
+        f"{utils.get_rest_mock_ec(context)}/history/{notice_number}/paGetPayment", headers=headers)
     pspNotifyPaymentJson = requests.get(
-        f"{utils.get_rest_mock_ec(context)}/history/{notice_number}/pspNotifyPayment")
+        f"{utils.get_rest_mock_ec(context)}/history/{notice_number}/pspNotifyPayment", headers=headers)
 
     paGetPayment = paGetPaymentJson.json()
     pspNotifyPayment = pspNotifyPaymentJson.json()
@@ -910,9 +917,10 @@ def step_impl(context, param, value):
     exec_query = db.executeQuery(conn, selected_query)
     if exec_query is not None:
         print(f'executed query: {exec_query}')
-
+   
     db.closeConnection(conn)
-    refresh_response = requests.get(utils.get_refresh_config_url(context),verify=False)
+    headers = {'Host': 'api.dev.platform.pagopa.it:443'}
+    refresh_response = requests.get(utils.get_refresh_config_url(context),headers=headers,verify=False)
     time.sleep(5)
     assert refresh_response.status_code == 200
 
@@ -920,9 +928,10 @@ def step_impl(context, param, value):
 @step("refresh job {job_name} triggered after 10 seconds")
 def step_impl(context, job_name):
     url_nodo = utils.get_rest_url_nodo(context)
-    nodo_response = requests.get(f"{url_nodo}/config/refresh/{job_name}", verify=False)
+    headers = {'Host': 'api.dev.platform.pagopa.it:443'}
+    nodo_response = requests.get(f"{url_nodo}/config/refresh/{job_name}", headers=headers ,verify=False)
     setattr(context, job_name + RESPONSE, nodo_response)
-    refresh_response = requests.get(utils.get_refresh_config_url(context), verify=False)
+    refresh_response = requests.get(utils.get_refresh_config_url(context),headers=headers ,verify=False)
     time.sleep(10)
     assert refresh_response.status_code == 200
 
@@ -957,7 +966,8 @@ def step_impl(context):
         db.executeQuery(conn, selected_query)
 
     db.closeConnection(conn)
-    refresh_response = requests.get(utils.get_refresh_config_url(context), verify=False)
+    headers = {'Host': 'api.dev.platform.pagopa.it:443'}
+    refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False)
     assert refresh_response.status_code == 200
 
 
