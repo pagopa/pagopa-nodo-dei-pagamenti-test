@@ -1,1 +1,1 @@
-java -Xmx500m -Dlog4j.configurationFile=log4j2.xml -DLog4jContextSelector=org.apache.logging.log4j.core.async.AsyncLoggerContextSelector -jar XXX.jar --address=http://10.6.189.194:8484/servizio
+java -Xmx500m -Dlog4j.configurationFile=log4j2.xml -DLog4jContextSelector=org.apache.logging.log4j.core.async.AsyncLoggerContextSelector -jar PA_Mock-1.1.1.jar --address=http://localhost:8484/servizio
