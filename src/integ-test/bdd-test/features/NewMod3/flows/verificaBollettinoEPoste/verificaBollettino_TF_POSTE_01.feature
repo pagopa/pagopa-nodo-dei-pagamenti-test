@@ -187,7 +187,7 @@ Feature: flow checks for verificaBollettino - EC old [TF_POSTE_01]
                     <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
                     <password>pwdpwdpwd</password>
                     <qrCode>
-                        <fiscalCode>#creditor_institution_code#</fiscalCode>
+                        <fiscalCode>#creditor_institution_code_old#</fiscalCode>
                         <noticeNumber>$verificaBollettino.noticeNumber</noticeNumber>
                     </qrCode>
                     <amount>10.00</amount>
