@@ -60,6 +60,10 @@ export function total() {
   let baseUrl = "";
   let baseUrlPM = "";
   let urls = csvBaseUrl;
+
+  /*export const get_idPay_Trend = new Trend('get_idPay');
+  export const All_Trend = new Trend('ALL');*/
+
   for (var key in urls){
 	   if (urls[key].ENV == `${__ENV.env}`){
      
@@ -68,7 +72,7 @@ export function total() {
       }
   }
 
-  let users = ["aPPantani@nft.it", "gPPgiuggiole@nft.it", "pPPpagliaccio@nft.it", "zPPzabalai@nft.it","sPPsacs@nft.it"];
+  let users = ["aPPantani@nft.it", "gPPgironi@nft.it", "pPPpalisti@nft.it", "zPPzabalai@nft.it","sPPsacs@nft.it"];
 
   let numbs = '123456789';
   let chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -108,19 +112,75 @@ export function total() {
 
 
     const res = http.put(
-    'https://api.dev.platform.pagopa.it/pmmockserviceapi/pa/send/rpt',
+    baseUrl+'/pmmockserviceapi/pa/send/rpt',
     JSON.stringify(body),
-    { headers: { 'Content-Type': 'application/json'} ,
-	tags: { idpayInjection: 'http_req_duration'}
+    { headers: { 'Content-Type': 'application/json'}
+	//, tags: { get_idPay: 'http_req_duration', ALL: 'http_req_duration'}
 	}
   ); 
 
-  let idPay=res.json()[0].idPayment;
+  /*All_Trend.add(res.timings.duration);
+  get_idPay_Trend.add(res.timings.duration); */
+  //let idPay=res.json()[0].idPayment;
 
-  console.log(";"+res.status+";"+idPay);
-    //console.log(res.status);
-	//console.log(res.body);
-	
+  //console.log(";"+res.status+";"+idPay);
+
+  /*check(res, {
+   	'get_idPay:over_sla300': (r) => r.timings.duration >300,
+     },
+     { get_idPay: 'over_sla300' , ALL: 'over_sla300' }
+     );
+
+     check(res, {
+   	'get_idPay:over_sla400': (r) => r.timings.duration >400,
+     },
+     { get_idPay: 'over_sla400' , ALL: 'over_sla400' }
+     );
+
+     check(res, {
+   	'get_idPay:over_sla500 ': (r) => r.timings.duration >500,
+     },
+     { get_idPay: 'over_sla500' , ALL: 'over_sla500' }
+     );
+
+     check(res, {
+   	'get_idPay:over_sla600': (r) => r.timings.duration >600,
+     },
+     { get_idPay: 'over_sla600' , ALL: 'over_sla600' }
+     );
+
+     check(res, {
+   	'get_idPay:over_sla800': (r) => r.timings.duration >800,
+     },
+     { get_idPay: 'over_sla800', ALL: 'over_sla800'  }
+     );
+
+     check(res, {
+   	'get_idPay:over_sla1000': (r) => r.timings.duration >1000,
+     },
+     { get_idPay: 'over_sla1000', ALL: 'over_sla1000' }
+     );
+
+
+     check(
+      res,
+      {
+
+  	 'get_idPay:ok_rate': (r) =>  statusTr !== undefined,
+      },
+      { get_idPay: 'ok_rate', ALL: 'ok_rate' }
+  	);
+
+    check(
+      res,
+      {
+
+  	 'get_idPay:ko_rate': (r) => statusTr == undefined,
+      },
+      { get_idPay: 'ko_rate', ALL: 'ko_rate' }
+    );  */
+
+    return res;
 	
 }
 

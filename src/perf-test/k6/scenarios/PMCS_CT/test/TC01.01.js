@@ -60,7 +60,7 @@ export const options = {
 
         scenarios: {
         	total: {
-            timeUnit: '15s', //dev'essere uguale al n°di richieste per ogni iterazione
+            timeUnit: '21s', //dev'essere uguale al n°di richieste per ogni iterazione + stima n°ripetizioni check (2/3)
             preAllocatedVUs: 1, // how large the initial pool of VUs would be
             executor: 'ramping-arrival-rate',
             //executor: 'ramping-vus',
@@ -287,7 +287,8 @@ export function total() {
 
 
 	
-  let rndCard = inputDataUtil.getCards().cardNumber;
+  //let rndCard = inputDataUtil.getCards().cardNumber;
+  let rndCard = inputDataUtil.getTokenIO_CC().card;
   let rndM = Math.floor(Math.random() * myListMese.length);
   let scdMese = myListMese[rndM];
   let rndY = Math.floor(Math.random() * myListAnno.length);
@@ -308,6 +309,7 @@ export function total() {
   console.log(res.status+";"+tokenIO+";"+res.json().data.idWallet+";"+rndCard)*/
   let outcome=res.outcome;
   console.log("idWallet="+outcome);
+  console.log(";"+tokenIO+";"+outcome);
   
   
   res = ob_CC_Verify(baseUrl,outcome,token);

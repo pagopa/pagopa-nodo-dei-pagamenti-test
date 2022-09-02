@@ -81,7 +81,7 @@ export const options = {
     scenarios: {
 
         	total: {
-            timeUnit: '7s', //7s dev'essere uguale al n°di richieste per ogni iterazione --> n°di primitive
+            timeUnit: '9s', //7s dev'essere uguale al n°di richieste per ogni iterazione --> n°di primitive (inclusa getIdPay) + stima check ripetute 2/3
             preAllocatedVUs: 1, // how large the initial pool of VUs would be
             executor: 'ramping-arrival-rate',
             //executor: 'ramping-vus',
@@ -123,6 +123,7 @@ export const options = {
     'http_req_duration{startSession:http_req_duration}': [],
 	'http_req_duration{pay_PP_Check:http_req_duration}': [],
 	'http_req_duration{pay_PP_Pay:http_req_duration}': [],
+	//'http_req_duration{get_idPay:http_req_duration}': [],
 	'http_req_duration{B_Check:http_req_duration}': [],
 	'http_req_duration{pay_PP_Logout:http_req_duration}': [],
 	'http_req_duration{pay_PP_bye:http_req_duration}': [],
@@ -135,6 +136,14 @@ export const options = {
 	'checks{getWallet_v3:over_sla1000}': [],
 	'checks{getWallet_v3:ok_rate}': [],
 	'checks{getWallet_v3:ko_rate}': [],
+	/*'checks{get_idPay:over_sla300}': [],
+    'checks{get_idPay:over_sla400}': [],
+    'checks{get_idPay:over_sla500}': [],
+    'checks{get_idPay:over_sla600}': [],
+    'checks{get_idPay:over_sla800}': [],
+    'checks{get_idPay:over_sla1000}': [],
+    'checks{get_idPay:ok_rate}': [],
+    'checks{get_idPay:ko_rate}': [], */
 	'checks{startSession:over_sla300}': [],
 	'checks{startSession:over_sla400}': [],
 	'checks{startSession:over_sla500}': [],
@@ -233,12 +242,11 @@ export function total() {
 
 
 
-  //to comment in perf
-   /* res=idpay_setup();
-    let idPay=res.json()[0].idPayment;
-    console.log("idPay="+idPay);*/
-    //-- fine comment in perf
-  let idPay = inputDataUtil.getPay().idPay; //to uncomment in perf
+  res=idpay_setup();
+  let idPay=res.json()[0].idPayment;
+  //console.log("idPay="+idPay);
+
+  //let idPay = inputDataUtil.getPay().idPay; //to uncomment in perf --> in realtà riccardi consiglia la generazione dinamica
   
   
   res = pay_PP_Check(baseUrl, idPay, token);

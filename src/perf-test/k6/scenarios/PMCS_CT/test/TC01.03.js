@@ -59,10 +59,10 @@ export const getScalini = new SharedArray('scalini', function () {
 
 
 export const options = {
-	
+
   scenarios: {
       	total: {
-          timeUnit: '15s', //15 //dev'essere uguale al n°di richieste per ogni iterazione
+          timeUnit: '21s', //15 //dev'essere uguale al n°di richieste per ogni iterazione(inclusa getIdPay) + stima ripetizioni check (2/3)
           preAllocatedVUs: 1, // how large the initial pool of VUs would be
           executor: 'ramping-arrival-rate',
           //executor: 'ramping-vus',
@@ -110,7 +110,7 @@ export const options = {
 	'http_req_duration{ob_CC_continueToStep1:http_req_duration}': [],
 	'http_req_duration{ob_CC_Logout:http_req_duration}': [],
 	'http_req_duration{ob_CC_bye:http_req_duration}': [],
-
+    //'http_req_duration{get_idPay:http_req_duration}': [],
 	'http_req_duration{ob_CC_Challenge:http_req_duration}': [],
 	'http_req_duration{ob_CC_Response:http_req_duration}': [],
 	'http_req_duration{ob_CC_resume3ds2:http_req_duration}': [],
@@ -124,6 +124,14 @@ export const options = {
 	'checks{pay_Check:over_sla1000}': [],
 	'checks{pay_Check:ok_rate}': [],
 	'checks{pay_Check:ko_rate}': [],
+	/*'checks{get_idPay:over_sla300}': [],
+    'checks{get_idPay:over_sla400}': [],
+    'checks{get_idPay:over_sla500}': [],
+    'checks{get_idPay:over_sla600}': [],
+    'checks{get_idPay:over_sla800}': [],
+    'checks{get_idPay:over_sla1000}': [],
+    'checks{get_idPay:ok_rate}': [],
+    'checks{get_idPay:ko_rate}': [], */
 	'checks{getWallet_v2:over_sla300}': [],
 	'checks{getWallet_v2:over_sla400}': [],
 	'checks{getWallet_v2:over_sla500}': [],
@@ -291,12 +299,12 @@ export function total() {
 
 
   //to comment in perf
-  /*res=idpay_setup();
+  res=idpay_setup();
   let idPay=res.json()[0].idPayment;
   //let idPay='3b090efa-df97-4da7-be70-c95f403792a2';
-  console.log("idPay="+idPay); */
+  //console.log("idPay="+idPay);
   //-- fine comment in perf
-  let idPay = inputDataUtil.getPay().idPay; //to uncomment in perf
+  //let idPay = inputDataUtil.getPay().idPay; //to uncomment in perf--> in realtà riccardi consiglia la generazione dinamica
   //let idPay = 'e787f431-218d-49e6-a7a2-fc6754869b13';
 
 
