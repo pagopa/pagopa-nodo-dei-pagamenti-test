@@ -150,6 +150,32 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
          </soapenv:Envelope>
          """
 
+   Scenario: nodoInviaRPT
+      Given initial XML nodoInviaRPT
+         """
+         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+         <soapenv:Header>
+         <ppt:intestazionePPT>
+         <identificativoIntermediarioPA>77777777777</identificativoIntermediarioPA>
+         <identificativoStazioneIntermediarioPA>77777777777_05</identificativoStazioneIntermediarioPA>
+         <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+         <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
+         <codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken</codiceContestoPagamento>
+         </ppt:intestazionePPT>
+         </soapenv:Header>
+         <soapenv:Body>
+         <ws:nodoInviaRPT>
+         <password>pwdpwdpwd</password>
+         <identificativoPSP>15376371009</identificativoPSP>
+         <identificativoIntermediarioPSP>15376371009</identificativoIntermediarioPSP>
+         <identificativoCanale>15376371009_01</identificativoCanale>
+         <tipoFirma></tipoFirma>
+         <rpt>$rptAttachment</rpt>
+         </ws:nodoInviaRPT>
+         </soapenv:Body>
+         </soapenv:Envelope>
+         """
+
    # SEM_SPO_7.1
 
    Scenario: SEM_SPO_7.1 (part 1)
@@ -237,10 +263,10 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
       And the sendPaymentOutcomeV2 scenario executed successfully
       When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
       Then check outcome is OK of sendPaymentOutcomeV2 response
-      And checks the value PAYING,PAID,NOTIFIED of the record at column STATUS of the table POSITION_STATUS retrived by the query noticeid_pa on db nodo_online under macro NewMod1
-      And checks the value NOTIFIED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query noticeid_pa on db nodo_online under macro NewMod1
-      And checks the value PAYING,PAID,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query noticeid_pa on db nodo_online under macro NewMod1
-      And checks the value NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query noticeid_pa on db nodo_online under macro NewMod1
+      And checks the value PAYING,PAID of the record at column STATUS of the table POSITION_STATUS retrived by the query noticeid_pa on db nodo_online under macro NewMod1
+      And checks the value PAID of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query noticeid_pa on db nodo_online under macro NewMod1
+      And checks the value PAYING,PAID_NORPT of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query noticeid_pa on db nodo_online under macro NewMod1
+      And checks the value PAID_NORPT of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query noticeid_pa on db nodo_online under macro NewMod1
 
    # SEM_SPO_23
 
@@ -330,19 +356,25 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
 
    Scenario: SEM_SPO_32 (part 2)
       Given the SEM_SPO_32 (part 1) scenario executed successfully
-      When job mod3CancelV1 triggered after 3 seconds
-      Then wait 10 seconds for expiration
+      And the nodoInviaRPT scenario executed successfully
+      When PSP sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+      Then check outcome is OK of nodoInviaRPT response
 
    Scenario: SEM_SPO_32 (part 3)
       Given the SEM_SPO_32 (part 2) scenario executed successfully
+      When job mod3CancelV1 triggered after 3 seconds
+      Then wait 10 seconds for expiration
+
+   Scenario: SEM_SPO_32 (part 4)
+      Given the SEM_SPO_32 (part 3) scenario executed successfully
       And the sendPaymentOutcomeV2 scenario executed successfully
       When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
       Then check outcome is KO of sendPaymentOutcomeV2 response
       And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcomeV2 response
       And checks the value PAYING,INSERTED of the record at column STATUS of the table POSITION_STATUS retrived by the query noticeid_pa on db nodo_online under macro NewMod1
       And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query noticeid_pa on db nodo_online under macro NewMod1
-      And checks the value PAYING,CANCELLED,FAILED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query noticeid_pa on db nodo_online under macro NewMod1
-      And checks the value FAILED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query noticeid_pa on db nodo_online under macro NewMod1
+      And checks the value PAYING,PAYING_RPT,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query noticeid_pa on db nodo_online under macro NewMod1
+      And checks the value CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query noticeid_pa on db nodo_online under macro NewMod1
 
    # SEM_SPO_35.1
 
