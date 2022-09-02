@@ -49,11 +49,11 @@ Feature: flow checks for verificaBollettino - EC old [TF_POSTE_01]
             <soapenv:Header/>
             <soapenv:Body>
                 <nod:verificaBollettinoReq>
-                    <idPSP>#pspPoste#</idPSP>
-                    <idBrokerPSP>#brokerPspPoste#</idBrokerPSP>
-                    <idChannel>#channelPoste#</idChannel>
+                    <idPSP>#psp#</idPSP>
+                    <idBrokerPSP>#psp#</idBrokerPSP>
+                    <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
                     <password>pwdpwdpwd</password>
-                    <ccPost>#ccPoste#</ccPost>
+                    <ccPost>666666666666</ccPost>
                     <noticeNumber>#notice_number_old#</noticeNumber>
                 </nod:verificaBollettinoReq>
             </soapenv:Body>
