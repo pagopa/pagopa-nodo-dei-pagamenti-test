@@ -297,7 +297,7 @@ def step_impl(context):
     setattr(context,'rptAttachment', payload)
 
 
-@given('RPT{number} generation')
+@given('RPT{number:d} generation')
 def step_impl(context):
     payload = context.text or ""
     payload = utils.replace_context_variables(payload, context)
@@ -306,25 +306,25 @@ def step_impl(context):
     setattr(context,'date', date) 
     setattr(context,'timedate', timedate)
 
-    if "#intermediarioPA{number}#" in payload:     
+    if "#intermediarioPA{number:d}#" in payload:     
         intermediarioPA = "44444444444_05"
-        payload = payload.replace('#intermediarioPA{number}#', intermediarioPA)
-        setattr(context,"intermediarioPA{number}", intermediarioPA)
+        payload = payload.replace('#intermediarioPA{number:d}#', intermediarioPA)
+        setattr(context,"intermediarioPA{number:d}", intermediarioPA)
 
-    if "#IUV{number}#" in payload:
+    if "#IUV{number:d}#" in payload:
         IUV = str(utils.current_milli_time()) + '-' + str(random.randint(0, 10000))
-        payload = payload.replace('#IUV{number}#', IUV)
-        setattr(context,'{number}IUV', IUV)
+        payload = payload.replace('#IUV{number:d}#', IUV)
+        setattr(context,'{number:d}IUV', IUV)
 
-    if "#ccp{number}#" in payload:     
+    if "#ccp{number:d}#" in payload:     
         ccp = str(int(time() * 1000))
-        payload = payload.replace('#ccp{number}#', ccp)
-        setattr(context,"ccp{number}", ccp)
+        payload = payload.replace('#ccp{number:d}#', ccp)
+        setattr(context,"ccp{number:d}", ccp)
 
-    if "#CCP{number}#" in payload:     
+    if "#CCP{number:d}#" in payload:     
         ccp2 = str(utils.current_milli_time()) + '1'
-        payload = payload.replace('#CCP{number}#', ccp2)
-        setattr(context,"CCP{number}", ccp2)
+        payload = payload.replace('#CCP{number:d}#', ccp2)
+        setattr(context,"CCP{number:d}", ccp2)
 
     if "#timedate#" in payload:     
         payload = payload.replace('#timedate#', timedate)
@@ -332,10 +332,10 @@ def step_impl(context):
     if '#date#' in payload:
         payload = payload.replace('#date#', date)
     
-    if '#IuV{number}#' in payload:
+    if '#IuV{number:d}#' in payload:
         IuV = '0' + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + '00'
-        payload = payload.replace('#IuV{number}#', IuV)
-        setattr(context,'IuV{number}', IuV)
+        payload = payload.replace('#IuV{number:d}#', IuV)
+        setattr(context,'IuV{number:d}', IuV)
 
     if '$carrello' in payload:
         payload = payload.replace('$carrello', getattr(context, 'carrello'))
@@ -392,7 +392,7 @@ def step_impl(context):
 
     payload = utils.replace_local_variables(payload, context)
     payload = utils.replace_global_variables(payload, context)
-    setattr(context,'rpt{number}Attachment', payload)
+    setattr(context,'rpt{number:d}Attachment', payload)
 
 @given('REND generation')
 def step_impl(context):
