@@ -187,7 +187,7 @@ Feature: flow checks for verificaBollettino - EC old [TF_POSTE_01]
                     <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
                     <password>pwdpwdpwd</password>
                     <qrCode>
-                        <fiscalCode>$verificaBollettino.fiscalCode</fiscalCode>
+                        <fiscalCode>#creditor_institution_code_old#</fiscalCode>
                         <noticeNumber>$verificaBollettino.noticeNumber</noticeNumber>
                     </qrCode>
                     <amount>10.00</amount>
@@ -197,7 +197,7 @@ Feature: flow checks for verificaBollettino - EC old [TF_POSTE_01]
             """
         When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-        And checks the value IT45R0760103200#ccPoste# of the record at column IBAN of the table POSITION_TRANSFER retrived by the query position_transfer on db nodo_online under macro NewMod3
+        And checks the value IT45R0760103200666666666666 of the record at column IBAN of the table POSITION_TRANSFER retrived by the query position_transfer on db nodo_online under macro NewMod3
 
 
     # nodoInviaRPT phase
