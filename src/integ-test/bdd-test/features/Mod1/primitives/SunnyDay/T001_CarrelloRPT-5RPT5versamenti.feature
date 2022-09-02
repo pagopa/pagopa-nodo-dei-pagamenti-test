@@ -374,34 +374,16 @@ Feature: process tests for 5 RPT 5 Versamenti
         <identificativoCanale>#canale#</identificativoCanale>
         <listaRPT>
             <elementoListaRPT>
-            <identificativoDominio>#codicePA#</identificativoDominio>
-            <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>CCD01</codiceContestoPagamento>
-            <rpt>$rptAttachment</rpt>
+                <identificativoDominio>#codicePA#</identificativoDominio>
+                <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
+                <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+                <rpt>$rptAttachment</rpt>
             </elementoListaRPT>
             <elementoListaRPT>
-            <identificativoDominio>#codicePA#</identificativoDominio>
-            <identificativoUnivocoVersamento>$2IUV</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>CCD01</codiceContestoPagamento>
-            <rpt>$rpt2Attachment</rpt>
-            </elementoListaRPT>
-            <elementoListaRPT>
-            <identificativoDominio>#codicePA#</identificativoDominio>
-            <identificativoUnivocoVersamento>$3IUV</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>CCD01</codiceContestoPagamento>
-            <rpt>$rpt3Attachment</rpt>
-            </elementoListaRPT>
-            <elementoListaRPT>
-            <identificativoDominio>#codicePA#</identificativoDominio>
-            <identificativoUnivocoVersamento>$4IUV</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>CCD01</codiceContestoPagamento>
-            <rpt>$rpt4Attachment</rpt>
-            </elementoListaRPT>
-            <elementoListaRPT>
-            <identificativoDominio>#codicePA#</identificativoDominio>
-            <identificativoUnivocoVersamento>$5IUV</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>CCD01</codiceContestoPagamento>
-            <rpt>$rpt5Attachment</rpt>
+                <identificativoDominio>#codicePA#</identificativoDominio>
+                <identificativoUnivocoVersamento>$2IUV</identificativoUnivocoVersamento>
+                <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+                <rpt>$rpt2Attachment</rpt>
             </elementoListaRPT>
         </listaRPT>
         </ws:nodoInviaCarrelloRPT>
