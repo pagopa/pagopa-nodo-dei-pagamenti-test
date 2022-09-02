@@ -166,7 +166,7 @@ Feature:  block checks for verifyPaymentReq - position status in PAID [Verify_bl
          </soapenv:Envelope>
          """
       #  When psp sends SOAP nodoInviaRPT to nodo-dei-pagamenti using the token of the activate phase, and with request field <outcome> = PAID
-      When psp sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+      When ec sends SOAP nodoInviaRPT to nodo-dei-pagamenti
       Then check esito is OK of nodoInviaRPT response
 
    # Payment Outcome Phase
