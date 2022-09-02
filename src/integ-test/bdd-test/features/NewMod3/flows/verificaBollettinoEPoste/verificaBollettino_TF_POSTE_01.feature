@@ -53,7 +53,7 @@ Feature: flow checks for verificaBollettino - EC old [TF_POSTE_01]
                     <idBrokerPSP>#psp#</idBrokerPSP>
                     <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
                     <password>pwdpwdpwd</password>
-                    <ccPost>444444444444</ccPost>
+                    <ccPost>666666666666</ccPost>
                     <noticeNumber>#notice_number_old#</noticeNumber>
                 </nod:verificaBollettinoReq>
             </soapenv:Body>
