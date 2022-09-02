@@ -25,7 +25,7 @@ Feature: process tests for nodoInviaRPT [REV_NIRPT_08]
     # Verify phase
     Scenario: Execute verifyPaymentNotice request
         When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
-        Then check outcome is KO of verifyPaymentNotice response
+        Then check outcome is OK of verifyPaymentNotice response
 
     Scenario: Execute activatePaymentNotice request
         Given the Execute verifyPaymentNotice request scenario executed successfully
@@ -214,7 +214,7 @@ Feature: process tests for nodoInviaRPT [REV_NIRPT_08]
 
     Scenario: Excecuted activatePaymentNotice1
         Given the Excecute nodoInviaRPT scenario executed successfully
-        And initial XML
+        And initial XML activatePaymentNotice
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
             <soapenv:Header/>
@@ -242,7 +242,7 @@ Feature: process tests for nodoInviaRPT [REV_NIRPT_08]
 
     Scenario: Execute sendPaymentOutcome1
         Given the Excecute activatePaymentNotice1 scenario executed successfully
-        And initial XML
+        And initial XML sendPaymentOutcome
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
             <soapenv:Header/>
