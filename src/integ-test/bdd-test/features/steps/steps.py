@@ -149,38 +149,31 @@ def step_impl(context, primitive):
         rpt2Attachment_uni = f"{rpt2Attachment_uni}".split("'")[1]
         payload = payload.replace('$rpt2Attachment', rpt2Attachment_uni)
         print(rpt2Attachment_uni)
+
+    if '$rpt3Attachment' in payload:
+        rpt2Attachment = getattr(context, 'rpt3Attachment')
+        rpt2Attachment_b = bytes(rpt2Attachment, 'ascii')
+        rpt2Attachment_uni = b64.b64encode(rpt2Attachment_b)
+        rpt2Attachment_uni = f"{rpt2Attachment_uni}".split("'")[1]
+        payload = payload.replace('$rpt3Attachment', rpt2Attachment_uni)
+        print(rpt2Attachment_uni)
+
+    if '$rpt4Attachment' in payload:
+        rpt2Attachment = getattr(context, 'rpt4Attachment')
+        rpt2Attachment_b = bytes(rpt2Attachment, 'ascii')
+        rpt2Attachment_uni = b64.b64encode(rpt2Attachment_b)
+        rpt2Attachment_uni = f"{rpt2Attachment_uni}".split("'")[1]
+        payload = payload.replace('$rpt4Attachment', rpt2Attachment_uni)
+        print(rpt2Attachment_uni)
+
+    if '$rpt5Attachment' in payload:
+        rpt2Attachment = getattr(context, 'rpt5Attachment')
+        rpt2Attachment_b = bytes(rpt2Attachment, 'ascii')
+        rpt2Attachment_uni = b64.b64encode(rpt2Attachment_b)
+        rpt2Attachment_uni = f"{rpt2Attachment_uni}".split("'")[1]
+        payload = payload.replace('$rpt5Attachment', rpt2Attachment_uni)
+        print(rpt2Attachment_uni)
     
-
-
-    # if '$intermediarioPA' in payload:
-    #     payload = payload.replace('$intermediarioPA', getattr(context, 'intermediarioPA'))
-
-    # if '$identificativoFlusso' in payload:
-    #     payload = payload.replace('$identificativoFlusso', getattr(context, 'identificativoFlusso'))
-
-    # if '$date' in payload:
-    #     payload = payload.replace('$date', getattr(context, 'date'))
-
-    # if '$ccp' in payload:
-    #     payload = payload.replace('$ccp', getattr(context, 'ccp'))
-
-    # if '$timedate' in payload:
-    #     payload = payload.replace('$timedate', getattr(context, 'timedate'))
-
-    # if '$idCarrello' in payload:
-    #     payload = payload.replace('$idCarrello', getattr(context, 'idCarrello'))
-
-    # if '$carrello' in payload:
-    #     payload = payload.replace('$carrello', getattr(context, 'carrello'))
-
-    # if '$secCarrello' in payload:
-    #     payload = payload.replace('$secCarrello', getattr(context, 'secCarrello'))
-
-    # if '$thrCarrello' in payload:
-    #     payload = payload.replace('$thrCarrello', getattr(context, 'thrCarrello'))
-
-    # if '$carrNOTENABLED' in payload:
-    #     payload = payload.replace('$carrNOTENABLED', getattr(context, 'carrNOTENABLED'))
 
     if '$rendAttachment' in payload:
         rendAttachment = getattr(context, 'rendAttachment')
