@@ -113,7 +113,7 @@ def step_impl(context, primitive):
         setattr(context,'thrCarrello', thrCarrello)
 
     if '#CARRELLO#' in payload:
-        CARRELLO = "CARRELLO" + "-" + str(date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3])
+        CARRELLO = "CARRELLO" + "-" + str(getattr(context, 'date') + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3])
         payload = payload.replace('#CARRELLO#', CARRELLO)
         setattr(context,'CARRELLO', CARRELLO)
 
