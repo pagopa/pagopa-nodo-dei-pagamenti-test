@@ -39,7 +39,7 @@ Feature: process check for activatePaymentNotice - KO
       <esito>OK</esito>
       <datiPagamento>
       <importoSingoloVersamento>importo_singolo_versamento</importoSingoloVersamento>
-      <ibanAccredito>123456789</ibanAccredito>
+      <ibanAccredito>iban_accredito</ibanAccredito>
       <bicAccredito>bic_accredito</bicAccredito>
       <enteBeneficiario>ente_beneficiario</enteBeneficiario>
       <credenzialiPagatore>credenziali_pagatore</credenzialiPagatore>
@@ -62,5 +62,5 @@ Feature: process check for activatePaymentNotice - KO
     Then check outcome is KO of activatePaymentNotice response
     And check faultCode is PPT_IBAN_NON_CENSITO of activatePaymentNotice response
     Examples:
-      | elem          | value   | soapUI test   |
-      | ibanAccredito | Unknown | SEM_PARPTR_01 |
+      | elem          | value       | soapUI test   |
+      | ibanAccredito | 10000000000 | SEM_PARPTR_01 |
