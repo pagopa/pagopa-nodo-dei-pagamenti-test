@@ -182,9 +182,9 @@ Feature: flow checks for verificaBollettino - EC old [TF_POSTE_01]
             <soapenv:Header/>
             <soapenv:Body>
                 <nod:activatePaymentNoticeReq>
-                    <idPSP>#pspPoste#</idPSP>
-                    <idBrokerPSP>#brokerPspPoste#</idBrokerPSP>
-                    <idChannel>#channelPoste#</idChannel>
+                    <idPSP>#psp#</idPSP>
+                    <idBrokerPSP>#psp#</idBrokerPSP>
+                    <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
                     <password>pwdpwdpwd</password>
                     <qrCode>
                         <fiscalCode>#creditor_institution_code#</fiscalCode>
