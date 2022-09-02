@@ -133,46 +133,6 @@ def step_impl(context, primitive):
 
     if '$2ccp' in payload:
         payload = payload.replace('$2ccp', getattr(context, 'ccp2'))
-
-    if '$rptAttachment' in payload:
-        rptAttachment = getattr(context, 'rptAttachment')
-        rptAttachment_b = bytes(rptAttachment, 'ascii')
-        rptAttachment_uni = b64.b64encode(rptAttachment_b)
-        rptAttachment_uni = f"{rptAttachment_uni}".split("'")[1]
-        payload = payload.replace('$rptAttachment', rptAttachment_uni)
-        print(rptAttachment_uni)
-
-    if '$rpt2Attachment' in payload:
-        rpt2Attachment = getattr(context, 'rpt2Attachment')
-        rpt2Attachment_b = bytes(rpt2Attachment, 'ascii')
-        rpt2Attachment_uni = b64.b64encode(rpt2Attachment_b)
-        rpt2Attachment_uni = f"{rpt2Attachment_uni}".split("'")[1]
-        payload = payload.replace('$rpt2Attachment', rpt2Attachment_uni)
-        print(rpt2Attachment_uni)
-
-    if '$rpt3Attachment' in payload:
-        rpt2Attachment = getattr(context, 'rpt3Attachment')
-        rpt2Attachment_b = bytes(rpt2Attachment, 'ascii')
-        rpt2Attachment_uni = b64.b64encode(rpt2Attachment_b)
-        rpt2Attachment_uni = f"{rpt2Attachment_uni}".split("'")[1]
-        payload = payload.replace('$rpt3Attachment', rpt2Attachment_uni)
-        print(rpt2Attachment_uni)
-
-    if '$rpt4Attachment' in payload:
-        rpt2Attachment = getattr(context, 'rpt4Attachment')
-        rpt2Attachment_b = bytes(rpt2Attachment, 'ascii')
-        rpt2Attachment_uni = b64.b64encode(rpt2Attachment_b)
-        rpt2Attachment_uni = f"{rpt2Attachment_uni}".split("'")[1]
-        payload = payload.replace('$rpt4Attachment', rpt2Attachment_uni)
-        print(rpt2Attachment_uni)
-
-    if '$rpt5Attachment' in payload:
-        rpt2Attachment = getattr(context, 'rpt5Attachment')
-        rpt2Attachment_b = bytes(rpt2Attachment, 'ascii')
-        rpt2Attachment_uni = b64.b64encode(rpt2Attachment_b)
-        rpt2Attachment_uni = f"{rpt2Attachment_uni}".split("'")[1]
-        payload = payload.replace('$rpt5Attachment', rpt2Attachment_uni)
-        print(rpt2Attachment_uni)
     
 
     if '$rendAttachment' in payload:
@@ -285,6 +245,12 @@ def step_impl(context):
 
     if '$iuv' in payload:
         payload = payload.replace('$iuv', getattr(context, 'iuv'))
+
+        
+    payload_b = bytes(payload, 'ascii')
+    payload_uni = b64.b64encode(payload_b)
+    payload = f"{payload_uni}".split("'")[1]
+    print(payload)
     
     print("RPT generato: ", payload)
     setattr(context,'rptAttachment', payload)
@@ -380,8 +346,10 @@ def step_impl(context, number):
         payload = payload.replace('ccp',ccp )
         setattr(context, "ccp", ccp)
 
-    # if '$IuV' in payload:
-    #     payload = payload.replace('$IuV', getattr(context, 'IuV'))
+    payload_b = bytes(payload, 'ascii')
+    payload_uni = b64.b64encode(payload_b)
+    payload = f"{payload_uni}".split("'")[1]
+    print(payload)
 
     payload = utils.replace_local_variables(payload, context)
     payload = utils.replace_global_variables(payload, context)
