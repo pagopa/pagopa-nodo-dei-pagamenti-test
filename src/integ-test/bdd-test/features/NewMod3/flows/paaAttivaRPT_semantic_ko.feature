@@ -10,7 +10,7 @@ Feature: process check for activatePaymentNotice - KO
       <nod:activatePaymentNoticeReq>
       <idPSP>#psp#</idPSP>
       <idBrokerPSP>#psp#</idBrokerPSP>
-      <idChannel>canale_ATTIVATO_PRESSO_PSP</idChannel>
+      <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
       <password>pwdpwdpwd</password>
       <idempotencyKey>#idempotency_key#</idempotencyKey>
       <qrCode>
