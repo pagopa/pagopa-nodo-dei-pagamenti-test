@@ -297,7 +297,7 @@ def step_impl(context):
     setattr(context,'rptAttachment', payload)
 
 
-@given('RPT{nuumber} generation')
+@given('RPT{number} generation')
 def step_impl(context):
     payload = context.text or ""
     payload = utils.replace_context_variables(payload, context)
