@@ -175,6 +175,11 @@ def step_impl(context):
         payload = payload.replace('#ccp1#', ccp1)
         setattr(context,"ccp1", ccp1)
 
+    if "#CCP#" in payload:     
+        CCP = 'CCP' + '-' + str(date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3])
+        payload = payload.replace('#CCP#', CCP)
+        setattr(context,"CCP", CCP)
+
     if '#date#' in payload:
         payload = payload.replace('#date#', date)
 
