@@ -203,7 +203,7 @@ Feature: process tests for nodoInviaRT_PAA_RT_DUPLICATA
             """
 
     Scenario: Execute nodoInviaRT request
-        Given the RT generation scenario executed successfully
+        Given the RT2 generation scenario executed successfully
         And initial XML nodoInviaRT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -226,8 +226,12 @@ Feature: process tests for nodoInviaRT_PAA_RT_DUPLICATA
             """
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
+
+    Scenario: Execute second nodoInviaRT request
+        Given the Execute nodoInviaRT request scenario executed successfully
+        When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
+        Then check esito is KO of nodoInviaRT response
+        And check faultCode is PAA_RT_DUPLICATA of nodoInviaRT response
         And wait 5 seconds for expiration
         And checks the value RICEVUTA,CAMBIO_STATO,CAMBIO_STATO,INVIATA,CAMBIO_STATO,INVIATA,RICEVUTA,CAMBIO_STATO of the record at column ESITO of the table RE retrived by the query Re on db re under macro Mod1
         And checks the value RT_RICEVUTA_NODO,RT_ACCETTATA_NODO,RT_INVIATA_PA,RT_RIFIUTATA_PA of the record at column STATUS of the table RE retrived by the query Re on db re under macro Mod1
-
-    
