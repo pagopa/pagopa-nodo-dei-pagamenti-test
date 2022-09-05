@@ -9,9 +9,9 @@ Feature: process tests for nodoInviaRPT [REV_NIRPT_08]
          <soapenv:Header/>
          <soapenv:Body>
          <nod:verifyPaymentNoticeReq>
-         <idPSP>70000000001</idPSP>
-         <idBrokerPSP>70000000001</idBrokerPSP>
-         <idChannel>70000000001_01</idChannel>
+         <idPSP>40000000001</idPSP>
+         <idBrokerPSP>40000000001</idBrokerPSP>
+         <idChannel>40000000001_01</idChannel>
          <password>pwdpwdpwd</password>
          <qrCode>
          <fiscalCode>#creditor_institution_code_old#</fiscalCode>
@@ -36,9 +36,9 @@ Feature: process tests for nodoInviaRPT [REV_NIRPT_08]
          <soapenv:Header/>
          <soapenv:Body>
          <nod:activatePaymentNoticeReq>
-         <idPSP>#psp#</idPSP>
-         <idBrokerPSP>#psp#</idBrokerPSP>
-         <idChannel>70000000001_01</idChannel>
+         <idPSP>40000000001</idPSP>
+         <idBrokerPSP>40000000001</idBrokerPSP>
+         <idChannel>40000000001_01</idChannel>
          <password>pwdpwdpwd</password>
          <idempotencyKey>#idempotency_key#</idempotencyKey>
          <qrCode>
@@ -64,9 +64,9 @@ Feature: process tests for nodoInviaRPT [REV_NIRPT_08]
          <soapenv:Header/>
          <soapenv:Body>
          <nod:sendPaymentOutcomeReq>
-         <idPSP>#psp#</idPSP>
-         <idBrokerPSP>#psp#</idBrokerPSP>
-         <idChannel>70000000001_01</idChannel>
+         <idPSP>40000000001</idPSP>
+         <idBrokerPSP>40000000001</idBrokerPSP>
+         <idChannel>40000000001_01</idChannel>
          <password>pwdpwdpwd</password>
          <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
          <outcome>KO</outcome>
@@ -118,8 +118,8 @@ Feature: process tests for nodoInviaRPT [REV_NIRPT_08]
          <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
          <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
          <pay_i:dominio>
-         <pay_i:identificativoDominio>#codicePA#</pay_i:identificativoDominio>
-         <pay_i:identificativoStazioneRichiedente>#intermediarioPA#</pay_i:identificativoStazioneRichiedente>
+         <pay_i:identificativoDominio>#codicePA_old#</pay_i:identificativoDominio>
+         <pay_i:identificativoStazioneRichiedente>#intermediarioPA_old#</pay_i:identificativoStazioneRichiedente>
          </pay_i:dominio>
          <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
          <pay_i:dataOraMessaggioRichiesta>2016-09-16T11:24:10</pay_i:dataOraMessaggioRichiesta>
@@ -168,11 +168,11 @@ Feature: process tests for nodoInviaRPT [REV_NIRPT_08]
          <pay_i:nazioneBeneficiario>IT</pay_i:nazioneBeneficiario>
          </pay_i:enteBeneficiario>
          <pay_i:datiVersamento>
-         <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
+         <pay_i:dataEsecuzionePagamento>2016-09-16</pay_i:dataEsecuzionePagamento>
          <pay_i:importoTotaleDaVersare>1.50</pay_i:importoTotaleDaVersare>
-         <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
-         <pay_i:identificativoUnivocoVersamento>#iuv#</pay_i:identificativoUnivocoVersamento>
-         <pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
+         <pay_i:tipoVersamento>PO</pay_i:tipoVersamento>
+         <pay_i:identificativoUnivocoVersamento>018641511120100</pay_i:identificativoUnivocoVersamento>
+         <pay_i:codiceContestoPagamento>2e9d00713b8f452a8e810982d3b1dbd1</pay_i:codiceContestoPagamento>
          <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
          <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
          <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -191,26 +191,26 @@ Feature: process tests for nodoInviaRPT [REV_NIRPT_08]
          </pay_i:RPT>
          """
 
-   Scenario: Excecute nodoInviaRPT
+   Scenario: Execute nodoInviaRPT request
       Given the Define RPT scenario executed successfully
       And initial XML nodoInviaRPT
          """
          <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
          <soapenv:Header>
          <ppt:intestazionePPT>
-         <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
-         <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
-         <identificativoDominio>#codicePA#</identificativoDominio>
-         <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
-         <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+         <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
+         <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
+         <identificativoDominio>44444444444</identificativoDominio>
+         <identificativoUnivocoVersamento>018641511120100</identificativoUnivocoVersamento>
+         <codiceContestoPagamento>2e9d00713b8f452a8e810982d3b1dbd1</codiceContestoPagamento>
          </ppt:intestazionePPT>
          </soapenv:Header>
          <soapenv:Body>
          <ws:nodoInviaRPT>
          <password>pwdpwdpwd</password>
-         <identificativoPSP>AGID_01</identificativoPSP>
-         <identificativoIntermediarioPSP>97735020584</identificativoIntermediarioPSP>
-         <identificativoCanale>97735020584_02</identificativoCanale>
+         <identificativoPSP>15376371009</identificativoPSP>
+         <identificativoIntermediarioPSP>15376371009</identificativoIntermediarioPSP>
+         <identificativoCanale>15376371009_01</identificativoCanale>
          <tipoFirma />
          <rpt>$rptAttachment</rpt>
          </ws:nodoInviaRPT>
@@ -219,29 +219,38 @@ Feature: process tests for nodoInviaRPT [REV_NIRPT_08]
          """
       When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
       Then check esito is OK of nodoInviaRPT response
-      And checks the value $activatePaymentNotice.notice_number_old of the record at column  of the table POSITION_SERVICE retrived by the query position_status on db nodo_online under macro NewMod3
+      #And checks the value $activatePaymentNotice.id of the record at column ID of the table POSITION_SERVICE retrived by the query payment_status on db nodo_online under macro NewMod3
+      #And checks the value $activatePaymentNotice.noticeNumber of the record at column NOTICE_ID of the table POSITION_SERVICE retrived by the query payment_status on db nodo_online under macro NewMod3
+      #And checks the value pagamento multibeneficiario of the record at column DESCRIPTION of the table POSITION_SERVICE retrived by the query payment_status on db nodo_online under macro NewMod3
+      #And checks the value $paaAttivaRPT.companyName of the record at column COMPANY_NAME of the table POSITION_SERVICE retrived by the query payment_status on db nodo_online under macro NewMod3
+      #And checks the value $activatePaymentNotice.officeName of the record at column OFFICE_NAME of the table POSITION_SERVICE retrived by the query payment_status on db nodo_online under macro NewMod3
+      #And checks the value $activatePaymentNotice.debtorIDiniziale of the record at column DEBTOR_ID of the table POSITION_SERVICE retrived by the query payment_status on db nodo_online under macro NewMod3
+      #And checks the value $activatePaymentNotice.insertedTimestamp of the record at column INSERTED_TIMESTAMP of the table POSITION_SERVICE retrived by the query payment_status on db nodo_online under macro NewMod3
+      #And checks the value $activatePaymentNotice.updatedTimestamp of the record at column UPDATED_TIMESTAMP of the table POSITION_SERVICE retrived by the query payment_status on db nodo_online under macro NewMod3
+      #And checks the value $activatePaymentNotice.id1 of the record at column ID of the table POSITION_SERVICE retrived by the query payment_status on db nodo_online under macro NewMod3
+      And verify 1 record for the table POSITION_SERVICE retrived by the query payment_status on db nodo_online under macro NewMod3
 
-   Scenario: Excecuted activatePaymentNotice1
-      Given the Excecute nodoInviaRPT scenario executed successfully
+
+
+   Scenario: Execute activatePaymentNotice1 request
+      Given the Execute nodoInviaRPT request scenario executed successfully
       And initial XML activatePaymentNotice
          """
-         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
          <soapenv:Header/>
          <soapenv:Body>
          <nod:activatePaymentNoticeReq>
-         <idPSP>70000000001</idPSP>
-         <idBrokerPSP>70000000001</idBrokerPSP>
-         <idChannel>70000000001_01</idChannel>
+         <idPSP>40000000001</idPSP>
+         <idBrokerPSP>40000000001</idBrokerPSP>
+         <idChannel>40000000001_01</idChannel>
          <password>pwdpwdpwd</password>
          <idempotencyKey>#idempotency_key#</idempotencyKey>
          <qrCode>
-         <fiscalCode>#creditor_institution_code#</fiscalCode>
-         <noticeNumber>#notice_number#</noticeNumber>
+         <fiscalCode>#creditor_institution_code_old#</fiscalCode>
+         <noticeNumber>#notice_number_old#</noticeNumber>
          </qrCode>
-         <expirationTime>120000</expirationTime>
+         <expirationTime>4000</expirationTime>
          <amount>10.00</amount>
-         <dueDate>2021-12-31</dueDate>
-         <paymentNote>causale</paymentNote>
          </nod:activatePaymentNoticeReq>
          </soapenv:Body>
          </soapenv:Envelope>
@@ -249,40 +258,50 @@ Feature: process tests for nodoInviaRPT [REV_NIRPT_08]
       When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
       Then check outcome is OK of activatePaymentNotice response
 
-   Scenario: Execute sendPaymentOutcome1
-      Given the Excecute activatePaymentNotice1 scenario executed successfully
+   Scenario: Execute sendPaymentOutcome1 request
+      Given the Execute activatePaymentNotice1 request scenario executed successfully
       And initial XML sendPaymentOutcome
          """
          <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
          <soapenv:Header/>
          <soapenv:Body>
          <nod:sendPaymentOutcomeReq>
-         <idPSP>70000000001</idPSP>
-         <idBrokerPSP>70000000001</idBrokerPSP>
-         <idChannel>70000000001_01</idChannel>
+         <idPSP>40000000001_01</idPSP>
+         <idBrokerPSP>40000000001</idBrokerPSP>
+         <idChannel>40000000001_01</idChannel>
          <password>pwdpwdpwd</password>
          <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
-         <outcome>KO</outcome>
+         <outcome>OK</outcome>
+         <!--Optional:-->
          <details>
          <paymentMethod>creditCard</paymentMethod>
+         <!--Optional:-->
          <paymentChannel>app</paymentChannel>
          <fee>2.00</fee>
+         <!--Optional:-->
          <payer>
          <uniqueIdentifier>
-         <entityUniqueIdentifierType>F</entityUniqueIdentifierType>
-         <entityUniqueIdentifierValue>JHNDOE00A01F205N</entityUniqueIdentifierValue>
+         <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
+         <entityUniqueIdentifierValue>77777777777_01</entityUniqueIdentifierValue>
          </uniqueIdentifier>
-         <fullName>John Doe</fullName>
+         <fullName>name</fullName>
+         <!--Optional:-->
          <streetName>street</streetName>
-         <civicNumber>12</civicNumber>
-         <postalCode>89020</postalCode>
+         <!--Optional:-->
+         <civicNumber>civic</civicNumber>
+         <!--Optional:-->
+         <postalCode>postal</postalCode>
+         <!--Optional:-->
          <city>city</city>
-         <stateProvinceRegion>MI</stateProvinceRegion>
+         <!--Optional:-->
+         <stateProvinceRegion>state</stateProvinceRegion>
+         <!--Optional:-->
          <country>IT</country>
-         <e-mail>john.doe@test.it</e-mail>
+         <!--Optional:-->
+         <e-mail>prova@test.it</e-mail>
          </payer>
-         <applicationDate>2021-10-01</applicationDate>
-         <transferDate>2021-10-02</transferDate>
+         <applicationDate>2021-12-12</applicationDate>
+         <transferDate>2021-12-11</transferDate>
          </details>
          </nod:sendPaymentOutcomeReq>
          </soapenv:Body>
@@ -294,15 +313,15 @@ Feature: process tests for nodoInviaRPT [REV_NIRPT_08]
 
    # test execution
    Scenario: Define RPT1
-      Given the Execute sendPaymentOutcome request scenario executed successfully
+      Given the Execute sendPaymentOutcome1 request scenario executed successfully
       And RPT generation
 
          """
          <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
          <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
          <pay_i:dominio>
-         <pay_i:identificativoDominio>#codicePA#</pay_i:identificativoDominio>
-         <pay_i:identificativoStazioneRichiedente>#intermediarioPA#</pay_i:identificativoStazioneRichiedente>
+         <pay_i:identificativoDominio>#codicePA_old#</pay_i:identificativoDominio>
+         <pay_i:identificativoStazioneRichiedente>#intermediarioPA_old#</pay_i:identificativoStazioneRichiedente>
          </pay_i:dominio>
          <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
          <pay_i:dataOraMessaggioRichiesta>2016-09-16T11:24:10</pay_i:dataOraMessaggioRichiesta>
@@ -351,11 +370,11 @@ Feature: process tests for nodoInviaRPT [REV_NIRPT_08]
          <pay_i:nazioneBeneficiario>IT</pay_i:nazioneBeneficiario>
          </pay_i:enteBeneficiario>
          <pay_i:datiVersamento>
-         <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
+         <pay_i:dataEsecuzionePagamento>2016-09-16</pay_i:dataEsecuzionePagamento>
          <pay_i:importoTotaleDaVersare>1.50</pay_i:importoTotaleDaVersare>
-         <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
-         <pay_i:identificativoUnivocoVersamento>#iuv#</pay_i:identificativoUnivocoVersamento>
-         <pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
+         <pay_i:tipoVersamento>PO</pay_i:tipoVersamento>
+         <pay_i:identificativoUnivocoVersamento>018641511120100</pay_i:identificativoUnivocoVersamento>
+         <pay_i:codiceContestoPagamento>2e9d00713b8f452a8e810982d3b1dbd1</pay_i:codiceContestoPagamento>
          <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
          <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
          <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -374,26 +393,26 @@ Feature: process tests for nodoInviaRPT [REV_NIRPT_08]
          </pay_i:RPT>
          """
 
-   Scenario: Excecute nodoInviaRPT2
+   Scenario: Execute nodoInviaRPT2
       Given the Define RPT1 scenario executed successfully
       And initial XML nodoInviaRPT
          """
          <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
          <soapenv:Header>
          <ppt:intestazionePPT>
-         <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
-         <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
-         <identificativoDominio>#codicePA#</identificativoDominio>
-         <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
-         <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+         <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
+         <identificativoStazioneIntermediarioPA>44444444444</identificativoStazioneIntermediarioPA>
+         <identificativoDominio44444444444</identificativoDominio>
+         <identificativoUnivocoVersamento>018641511120100</identificativoUnivocoVersamento>
+         <codiceContestoPagamento>2e9d00713b8f452a8e810982d3b1dbd1</codiceContestoPagamento>
          </ppt:intestazionePPT>
          </soapenv:Header>
          <soapenv:Body>
          <ws:nodoInviaRPT>
          <password>pwdpwdpwd</password>
-         <identificativoPSP>AGID_01</identificativoPSP>
-         <identificativoIntermediarioPSP>97735020584</identificativoIntermediarioPSP>
-         <identificativoCanale>97735020584_02</identificativoCanale>
+         <identificativoPSP>15376371009</identificativoPSP>
+         <identificativoIntermediarioPSP>15376371009</identificativoIntermediarioPSP>
+         <identificativoCanale>15376371009_01</identificativoCanale>
          <tipoFirma />
          <rpt>$rptAttachment</rpt>
          </ws:nodoInviaRPT>
@@ -402,10 +421,40 @@ Feature: process tests for nodoInviaRPT [REV_NIRPT_08]
          """
       When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
       Then check esito is OK of nodoInviaRPT response
-      And checks the value NotNone of the record at column ID of the table POSITION_SERVICE retrived by the query position_status on db nodo_online under macro NewMod3
+      #POSITION_SERVICE
+      And checks the value NotNone of the record at column ID of the table POSITION_SERVICE retrived by the query payment_status on db nodo_online under macro NewMod3
+      And checks the value $activatePaymentNotice.fiscalCode of the record at column PA_FISCAL_CODE of the table POSITION_SERVICE retrived by the query payment_status on db nodo_online under macro NewMod3
+      And checks the value $activatePaymentNotice.noticeNumber of the record at column NOTICE_ID of the table POSITION_SERVICE retrived by the query payment_status on db nodo_online under macro NewMod3
+      And checks the value pagamento multibeneficiario of the record at column DESCRIPTION of the table POSITION_SERVICE retrived by the query payment_status on db nodo_online under macro NewMod3
+      And checks the value None of the record at column OFFICE_NAME of the table POSITION_SERVICE retrived by the query payment_status on db nodo_online under macro NewMod3
+      And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_SERVICE retrived by the query payment_status on db nodo_online under macro NewMod3
+      And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_SERVICE retrived by the query payment_status on db nodo_online under macro NewMod3
+      #And checks the value None of the record at column ID of the table POSITION_SERVICE retrived by the query payment_status on db nodo_online under macro NewMod3
 
 
+      #POSITION_SUBJECT
+      And execution query payment_status to get value on the table POSITION_SERVICE, with the columns DEBTOR_ID under macro NewMod3 with db name nodo_online
+      And through the query payment_status retrieve param DEBTOR_ID at position 0 and save it under the key DEBTOR_ID
+      #And checks the value NotNone of the record at column ID of the table POSITION_SUBJECT retrived by the query position_status on db nodo_online under macro NewMod3
+      And checks the value DEBTOR of the record at column SUBJECT_TYPE of the table POSITION_SUBJECT retrived by the query position_subject_2 on db nodo_online under macro NewMod3
+      #And checks the value F of the record at column ENTITY_UNIQUE_IDENTIFIER_TYPE of the table POSITION_SUBJECT retrived by the query position_subject_2 on db nodo_online under macro NewMod3
 
 
+      #POSITION_PAYMENT_PLAN
+      And checks the value $activatePaymentNotice.fiscalCode of the record at column PA_FISCAL_CODE of the table POSITION_PAYMENT_PLAN retrived by the query payment_status on db nodo_online under macro NewMod3
+      And checks the value $activatePaymentNotice.noticeNumber of the record at column NOTICE_ID of the table POSITION_PAYMENT_PLAN retrived by the query payment_status on db nodo_online under macro NewMod3
+      #And checks the value $activatePaymentNotice.noticeNumber of the record at column CREDITOR_REFERENCE_ID of the table POSITION_PAYMENT_PLAN retrived by the query payment_status on db nodo_online under macro NewMod3
+      And checks the value NotNone of the record at column DUE_DATE of the table POSITION_PAYMENT_PLAN retrived by the query payment_status on db nodo_online under macro NewMod3
+      And checks the value None of the record at column RETENTION_DATE of the table POSITION_PAYMENT_PLAN retrived by the query payment_status on db nodo_online under macro NewMod3
+      And checks the value 10 of the record at column AMOUNT of the table POSITION_PAYMENT_PLAN retrived by the query payment_status on db nodo_online under macro NewMod3
+      And checks the value Y of the record at column FLAG_FINAL_PAYMENT of the table POSITION_PAYMENT_PLAN retrived by the query payment_status on db nodo_online under macro NewMod3
+      And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_PAYMENT_PLAN retrived by the query payment_status on db nodo_online under macro NewMod3
+      And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_PAYMENT_PLAN retrived by the query payment_status on db nodo_online under macro NewMod3
+      And checks the value None of the record at column METADATA of the table POSITION_PAYMENT_PLAN retrived by the query payment_status on db nodo_online under macro NewMod3
 
 
+      #POSITION_RECEIPT_XML
+      And checks the value $activatePaymentNotice.fiscalCode of the record at column PA_FISCAL_CODE of the table POSITION_PAYMENT retrived by the query payment_status_orderby on db nodo_online under macro NewMod3
+      And checks the value $activatePaymentNotice.noticeNumber of the record at column NOTICE_ID of the table POSITION_PAYMENT retrived by the query payment_status_orderby on db nodo_online under macro NewMod3
+      And checks the value $sendPaymentOutcome.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_PAYMENT retrived by the query payment_status_orderby on db nodo_online under macro NewMod3
+      And checks the value NotNone of the record at column XML of the table POSITION_RECEIPT_XML retrived by the query payment_status_orderby on db nodo_online under macro NewMod3
