@@ -65,18 +65,18 @@
       "port" : "1522"
     },
     "re" : {
-      "host" : "localhost",
-      "database" : "ORCLCDB.localdomain",
+      "host" : "10.70.67.18",
+      "database" : "NDPARET_RE",
       "user" : "RE",
       "password": "RE",
-      "port" : "1521"
+      "port" : "1522"
     },
     "wfesp" : {
-      "host" : "localhost",
-      "database" : "ORCLCDB.localdomain",
+      "host" : "10.70.67.18",
+      "database" : "NDPSPCT_WFESP",
       "user" : "WFESP",
       "password": "WEFSP",
-      "port" : "1521"
+      "port" : "1522"
     }
   }  
 }
