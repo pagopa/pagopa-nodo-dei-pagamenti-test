@@ -33,8 +33,8 @@ stages:
 
 
           - script: |
-              kubectl get pods -o wide -n mock-ec-prf
-              kubectl get services  -o wide -n mock-ec-prf
-              kubectl get ing -o json | jq -r '.items[].spec.rules[].http.paths[] -n mock-ec-prf
+              kubectl get pods -o wide -n prf
+              kubectl get services  -o wide -n prf
+              kubectl get ing -o json | jq -r '.items[].spec.rules[].http.paths[] -n prf
             displayName: "Retrieve Info in namespace"
 
