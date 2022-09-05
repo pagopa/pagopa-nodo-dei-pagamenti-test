@@ -82,9 +82,9 @@ Feature: process tests for nodoInviaRT_PAA_RT_DUPLICATA
             </pay_i:RPT>
             """
 
-    Scenario: Execute nodoInviaCarrelloRPT request
+    Scenario: Execute nodoInviaRPT request
         Given the RPT generation scenario executed successfully
-        And initial XML nodoInviaCarrelloRPT
+        And initial XML nodoInviaRPT
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
         <soapenv:Header>
