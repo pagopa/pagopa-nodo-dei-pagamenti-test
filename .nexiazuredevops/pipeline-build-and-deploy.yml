@@ -128,5 +128,5 @@ stages:
             inputs:
               action: 'deploy'
               kubernetesServiceConnection:  $(kubernetes-service-connection-${{ parameters.env }})
-              namespace: mock-ec-${{ parameters.env }}
+              namespace: ${{ parameters.env }}
               manifests: $(Pipeline.Workspace)/$(appVersion)-${{ parameters.env }}-manifest-app/*.yaml
