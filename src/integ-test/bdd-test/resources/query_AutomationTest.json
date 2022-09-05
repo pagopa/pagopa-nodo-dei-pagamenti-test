@@ -72,7 +72,8 @@
         "motivo_annullamento": "SELECT columns FROM table_name WHERE ID_SESSIONE = '$sessionToken'",
         "stati_RPT": "SELECT columns FROM table_name WHERE IUV='avanzaErrResponse' AND CCP= '$ccp1' AND ID_DOMINIO='44444444444' ORDER BY INSERTED_TIMESTAMP",
         "stati_RPT2": "SELECT columns FROM table_name WHERE IUV='avanzaErrResponse2' AND CCP= '$ccp2' AND ID_DOMINIO='44444444445' ORDER BY INSERTED_TIMESTAMP",
-        "retry_rpt": "SELECT columns FROM table_name WHERE ID_SESSIONE='$sessionToken' ORDER BY INSERTED_TIMESTAMP"
+        "retry_rpt": "SELECT columns FROM table_name WHERE ID_SESSIONE='$sessionToken' ORDER BY INSERTED_TIMESTAMP",
+        "Re": "SELECT columns FROM table_name WHERE ID_SESSIONE ='$sessionToken' AND INSERTED_TIMESTAMP > ROUND(SYSDATE-1) ORDER BY DATA_ORA_EVENTO"
     },
     "constanti":{
     },
