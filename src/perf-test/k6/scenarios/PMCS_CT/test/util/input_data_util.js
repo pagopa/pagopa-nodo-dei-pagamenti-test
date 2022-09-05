@@ -5,7 +5,7 @@ import { SharedArray } from 'k6/data';
 
 const csvTokenIO_CC = new SharedArray('tokenIO_CC_data', function () {
     
-  return papaparse.parse(open('../../../../data/tokenIOList.csv'), { header: true }).data;
+  return papaparse.parse(open('../../../../data/tokenCC_OB.csv'), { header: true }).data;
 });
 
 

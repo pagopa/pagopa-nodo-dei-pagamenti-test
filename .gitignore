@@ -120,3 +120,8 @@ __pycache__
 /.idea
 environment.py
 reports.html
+/.classpath
+/.project
+/.settings
+/target
+/src/perf-test/k6/scenarios/*/test/output
