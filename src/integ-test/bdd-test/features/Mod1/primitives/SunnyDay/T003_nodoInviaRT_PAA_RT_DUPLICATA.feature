@@ -203,7 +203,7 @@ Feature: process tests for nodoInviaRT_PAA_RT_DUPLICATA
             """
 
     Scenario: Execute nodoInviaRT request
-        Given the RT2 generation scenario executed successfully
+        Given the RT generation scenario executed successfully
         And initial XML nodoInviaRT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
