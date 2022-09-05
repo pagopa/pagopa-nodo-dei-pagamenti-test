@@ -108,5 +108,5 @@ Feature: process tests for nodoInviaRT_PAA_RT_DUPLICATA
         </soapenv:Body>
         </soapenv:Envelope>
         """
-        When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
-        Then check esito is OK of nodoInviaCarrelloRPT response
+        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        Then check esito is OK of nodoInviaRPT response
