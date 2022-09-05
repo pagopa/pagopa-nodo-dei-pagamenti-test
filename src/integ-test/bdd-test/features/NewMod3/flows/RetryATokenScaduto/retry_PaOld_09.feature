@@ -232,7 +232,6 @@ Feature: process tests for generazioneRicevute
     And Select and Update RT for Test retry_PAold with causale versamento timeout
     And nodo-dei-pagamenti has config parameter scheduler.jobName_paInviaRt.enabled set to true
 
-  @prova
   Scenario: Execute paInviaRT
     Given the check position_payment_status scenario executed successfully
     When job paInviaRt triggered after 5 seconds
@@ -242,5 +241,3 @@ Feature: process tests for generazioneRicevute
     And checks the value N of the record at column NODOINVIARPTREQ of the table RPT_ACTIVATIONS retrived by the query rpt_activision-v2 on db nodo_online under macro NewMod3
     And checks the value N of the record at column PAAATTIVARPTRESP of the table RPT_ACTIVATIONS retrived by the query rpt_activision-v2 on db nodo_online under macro NewMod3
     And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RPT_ACTIVATIONS retrived by the query rpt_activision-v2 on db nodo_online under macro NewMod3
-    And wait 70 seconds for expiration
-    And checks the value NotNone of the record at column retry of the table RETRY_PA_INVIA_RT retrived by the query stati_rpt on db nodo_online under macro NewMod3

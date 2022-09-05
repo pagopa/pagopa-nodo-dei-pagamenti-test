@@ -130,7 +130,7 @@ Feature: process tests for generazioneRicevute
       <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio>
       <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
       <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
-      <pay_i:causaleVersamento>respIrr</pay_i:causaleVersamento>
+      <pay_i:causaleVersamento>pagamento</pay_i:causaleVersamento>
       <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
       </pay_i:datiSingoloVersamento>
       </pay_i:datiVersamento>
@@ -229,8 +229,8 @@ Feature: process tests for generazioneRicevute
     And checks the value N of the record at column NODOINVIARPTREQ of the table RPT_ACTIVATIONS retrived by the query rpt_activision-v2 on db nodo_online under macro NewMod3
     And checks the value N of the record at column PAAATTIVARPTRESP of the table RPT_ACTIVATIONS retrived by the query rpt_activision-v2 on db nodo_online under macro NewMod3
     And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RPT_ACTIVATIONS retrived by the query rpt_activision-v2 on db nodo_online under macro NewMod3
-    And Select and Update RT for Test retry_PAold with causale versamento respIrr
     And nodo-dei-pagamenti has config parameter scheduler.jobName_paInviaRt.enabled set to true
+    And generic update through the query param_update_generic_where_condition of the table POSITION_ACTIVATE the parameter AMOUNT = '3', with where condition PA_FISCAL_CODE='$activatePaymentNotice.fiscalCode' AND NOTICE_ID='$activatePaymentNotice.noticeNumber' AND PAYMENT_TOKEN='$activatePaymentNoticeResponse.paymentToken-v2' under macro update_query on db nodo_online
 
   Scenario: Execute paInviaRT
     Given the check position_payment_status scenario executed successfully
