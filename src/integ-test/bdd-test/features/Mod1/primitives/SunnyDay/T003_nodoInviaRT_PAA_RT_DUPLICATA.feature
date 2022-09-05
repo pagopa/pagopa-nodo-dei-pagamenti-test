@@ -109,4 +109,4 @@ Feature: process tests for nodoInviaRT_PAA_RT_DUPLICATA
         </soapenv:Envelope>
         """
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
-        Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
+        Then check esito is OK of nodoInviaCarrelloRPT response
