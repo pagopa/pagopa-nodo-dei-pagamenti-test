@@ -631,7 +631,7 @@ Feature: process tests for 5 RPT 5 Versamenti
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
         <soapenv:Header>
         <ppt:intestazioneCarrelloPPT>
-        <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
+        <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
         <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
         <identificativoCarrello>#CARRELLO#</identificativoCarrello>
         </ppt:intestazioneCarrelloPPT>
