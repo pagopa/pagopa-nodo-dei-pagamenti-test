@@ -224,5 +224,5 @@ Feature: process tests for nodoInviaRT_PAA_RT_DUPLICATA
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        When PSP sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-        Then check esito is OK of nodoInviaRPT response
+        When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
+        Then check esito is OK of nodoInviaRT response
