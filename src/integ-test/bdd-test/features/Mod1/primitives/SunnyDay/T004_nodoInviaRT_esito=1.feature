@@ -186,7 +186,7 @@ Feature: process tests for nodoInviaRT_esito=1
             <pay_i:datiPagamento>
                 <pay_i:codiceEsitoPagamento>1</pay_i:codiceEsitoPagamento>
                 <pay_i:importoTotalePagato>0.00</pay_i:importoTotalePagato>
-                <pay_i:identificativoUnivocoVersamento>#iuv2#</pay_i:identificativoUnivocoVersamento>
+                <pay_i:identificativoUnivocoVersamento>$2iuv</pay_i:identificativoUnivocoVersamento>
                 <pay_i:CodiceContestoPagamento>CCD01</pay_i:CodiceContestoPagamento>
                 <pay_i:datiSingoloPagamento>
                     <pay_i:singoloImportoPagato>0.00</pay_i:singoloImportoPagato>
