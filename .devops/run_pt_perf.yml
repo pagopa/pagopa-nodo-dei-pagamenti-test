@@ -1,27 +1,24 @@
+pr: none
+trigger: none
+
 pool:
+  vmImage: 'ubuntu-latest'
 
-  name: pagopa-agent-pool-uat
+  
 
-steps:
-- checkout: none
-- script: |
-   echo pwd
-   pwd
-   
-   echo ls -lrt
-   ls -lrt
-   
-   echo hostname:
-   hostname
-   
-   echo whereis k6
-   whereis k6
-   
-   echo whereis git
-   whereis git
-   
-   echo k6 version
-   k6 version
-   
+stages:
+           
+            
+  - stage: K6 Installation Check
+    displayName: "K6 Installation Check"
 
-  displayName: 'Command Line Script'
+    jobs:
+      - job: k6_version_check
+        displayName: "k6_version_check"
+        pool: pagopa-agent-pool-uat
+        steps:
+          - checkout: none    
+          - script: |
+             hostname
+             whereis k6
+             k6 version
