@@ -110,4 +110,4 @@ Feature: process tests for nodoInviaRT_Mod1_BBT
             """
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
-        And retrieve url from $nodoInviaRTResponse.url
+        And retrieve url from $nodoInviaRPTResponse.url
