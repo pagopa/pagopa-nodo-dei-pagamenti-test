@@ -1,6 +1,5 @@
 import datetime
-from email import header
-from email.headerregistry import HeaderRegistry
+
 from email.policy import default
 import json
 import os
@@ -176,13 +175,13 @@ def step_impl(context, primitive):
 @given('RPT generation')
 def step_impl(context):
     payload = context.text or ""
-    payload = utils.replace_context_variables(payload, context)
-    payload = utils.replace_local_variables(payload, context)
-    payload = utils.replace_global_variables(payload, context)
     date = datetime.date.today().strftime("%Y-%m-%d")
     timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
     setattr(context, 'date', date)
     setattr(context, 'timedate', timedate)
+    payload = utils.replace_local_variables(payload, context)
+    payload = utils.replace_context_variables(payload, context)
+    
 
     pa = context.config.userdata.get('global_configuration').get('codicePA')
 
@@ -191,11 +190,6 @@ def step_impl(context):
         setattr(context, 'iuv', iuv)
         payload = payload.replace('#iuv#', iuv)
         setattr(context, 'date', date)
-
-    if '#intermediarioPA#' in payload:
-        intermediarioPA = "44444444444_05"
-        payload = payload.replace('#intermediarioPA#', intermediarioPA)
-        setattr(context, "intermediarioPA", intermediarioPA)
 
     if "#ccp#" in payload:
         ccp = str(int(time() * 1000))
@@ -283,17 +277,13 @@ def step_impl(context):
     if '#date#' in payload:
         payload = payload.replace('#date#', date)
 
-    if "#codicePA#" in payload:
-        codicePA = "77777777777"
-        payload = payload.replace('#codicePA#', codicePA)
-        setattr(context, "codicePA", codicePA)
+    payload = utils.replace_global_variables(payload, context)
 
+    print('payload RPT: ', payload)
     payload_b = bytes(payload, 'ascii')
     payload_uni = b64.b64encode(payload_b)
     payload = f"{payload_uni}".split("'")[1]
-    print(payload)
 
-    print("RPT generata: ", payload)
     setattr(context, 'rptAttachment', payload)
 
 @given('RT{number:d} generation')

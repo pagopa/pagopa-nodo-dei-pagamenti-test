@@ -27,6 +27,7 @@
     "psp":"70000000001",
     "codicePA": "77777777777",
     "intermediarioPA":"77777777777",
+    "intermediarioPAOld":"44444444444_05",
     "codicePA_old" :"44444444444",
     "fiscalCodePA": "12345678901",
     "id_station": "77777777777_01",

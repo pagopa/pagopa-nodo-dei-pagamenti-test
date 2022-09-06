@@ -1,4 +1,4 @@
-Feature: process tests for generazioneRicevute
+Feature: process tests for retryAtokenScaduto
 
   Background:
     Given systems up
@@ -65,7 +65,7 @@ Feature: process tests for generazioneRicevute
       <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
       <pay_i:dominio>
       <pay_i:identificativoDominio>$activatePaymentNotice.fiscalCode</pay_i:identificativoDominio>
-      <pay_i:identificativoStazioneRichiedente>#intermediarioPA#</pay_i:identificativoStazioneRichiedente>
+      <pay_i:identificativoStazioneRichiedente>#id_station_old#</pay_i:identificativoStazioneRichiedente>
       </pay_i:dominio>
       <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
       <pay_i:dataOraMessaggioRichiesta>2016-09-16T11:24:10</pay_i:dataOraMessaggioRichiesta>
@@ -145,7 +145,7 @@ Feature: process tests for generazioneRicevute
       <soapenv:Header>
       <ppt:intestazionePPT>
       <identificativoIntermediarioPA>$activatePaymentNotice.fiscalCode</identificativoIntermediarioPA>
-      <identificativoStazioneIntermediarioPA>$intermediarioPA</identificativoStazioneIntermediarioPA>
+      <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
       <identificativoDominio>$activatePaymentNotice.fiscalCode</identificativoDominio>
       <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
       <codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken</codiceContestoPagamento>
@@ -252,12 +252,20 @@ Feature: process tests for generazioneRicevute
     And checks the value N of the record at column NODOINVIARPTREQ of the table RPT_ACTIVATIONS retrived by the query rpt_activision-v2 on db nodo_online under macro NewMod3
     And checks the value N of the record at column PAAATTIVARPTRESP of the table RPT_ACTIVATIONS retrived by the query rpt_activision-v2 on db nodo_online under macro NewMod3
     And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RPT_ACTIVATIONS retrived by the query rpt_activision-v2 on db nodo_online under macro NewMod3
+
+
+  Scenario: Execute paRetryAttivaRpt
+    Given the check Execute paInviaRT scenario executed successfully
+    When job paRetryAttivaRpt triggered after 5 seconds
+    Then verify the HTTP status code of paRetryAttivaRpt response is 200
     #RETRY_PA_ATTIVA_RPT
     And checks the value $activatePaymentNotice.fiscalCode of the record at column pa_fiscal_code of the table RETRY_PA_ATTIVA_RPT retrived by the query retry_pa_invia_rpt on db nodo_online under macro NewMod3
     And checks the value $activatePaymentNoticeResponse.paymentToken-v2 of the record at column token of the table RETRY_PA_ATTIVA_RPT retrived by the query retry_pa_invia_rpt on db nodo_online under macro NewMod3
+    And checks the value NotNone of the record at column retry of the table RETRY_PA_ATTIVA_RPT retrived by the query retry_pa_invia_rpt on db nodo_online under macro NewMod3
     And checks the value NotNone of the record at column inserted_timestamp of the table RETRY_PA_ATTIVA_RPT retrived by the query retry_pa_invia_rpt on db nodo_online under macro NewMod3
     And checks the value NotNone of the record at column updated_timestamp of the table RETRY_PA_ATTIVA_RPT retrived by the query retry_pa_invia_rpt on db nodo_online under macro NewMod3
     And checks the value $iuv of the record at column iuv of the table RETRY_PA_ATTIVA_RPT retrived by the query retry_pa_invia_rpt on db nodo_online under macro NewMod3
+    And checks the value Y of the record at column ready of the table RETRY_PA_ATTIVA_RPT retrived by the query retry_pa_invia_rpt on db nodo_online under macro NewMod3
     And verify 0 record for the table RETRY_PA_INVIA_RT retrived by the query retry_pa_invia_rt on db nodo_online under macro NewMod3
     And generic update through the query param_update_generic_where_condition of the table POSITION_ACTIVATE the parameter AMOUNT = '10', with where condition PA_FISCAL_CODE='$activatePaymentNotice.fiscalCode' AND NOTICE_ID='$activatePaymentNotice.noticeNumber' AND PAYMENT_TOKEN='$activatePaymentNoticeResponse.paymentToken-v2' under macro update_query on db nodo_online
     #RETRY_PA_ATTIVA_RPT
