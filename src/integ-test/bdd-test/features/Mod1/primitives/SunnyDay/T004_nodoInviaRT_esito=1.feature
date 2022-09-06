@@ -229,4 +229,4 @@ Feature: process tests for nodoInviaRT_esito=1
         Given the Execute nodoInviaRT request scenario executed successfully
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is KO of nodoInviaRT response
-        And check faultCode is PPT_RT_DUPLICATA of nodoInviaCarrelloRPT response
+        And check faultCode is PPT_RT_DUPLICATA of nodoInviaRT response
