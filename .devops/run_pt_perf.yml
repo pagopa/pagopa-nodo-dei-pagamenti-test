@@ -9,7 +9,7 @@ pool:
 stages:
            
             
-  - stage: K6 Installation Check
+  - stage: k6_installation_check
     displayName: "K6 Installation Check"
 
     jobs:
