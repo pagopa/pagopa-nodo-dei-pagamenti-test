@@ -1,5 +1,0 @@
-api,avgEl,maxEl,minEl,percOK,trNum,trOK,trOverSla300,
-ALL,154,821,36,0.00,315,0,49,
-ActivateIOPayment,236,821,48,0.00,105,0,36,
-closePayment,116,404,36,0.00,105,0,9,
-chiediInformazioniPagamento,112,365,36,0.00,105,0,4,

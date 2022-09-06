@@ -484,7 +484,7 @@ export function handleSummary(data) {
   
 }
 
-
+/*
 export function commonChecks(res){
 	
 	check(res, {
@@ -612,5 +612,5 @@ export function invertedChecks(res, outcome, rule, pattern) {
     { ALL: 'ko_rate' }
   );
    }
-
 }
+*/

@@ -1,8 +1,0 @@
-api,avgEl,maxEl,minEl,percOK,trNum,trOK,trOverSla300,
-chiediInformazioniPagamento,133,572,25,0.00,51,0,2,
-nodoChiediAvanzamentoPagamento_Pre,191,799,30,0.00,51,0,13,
-ActivateIOPayment,210,732,44,0.00,51,0,8,
-nodoChiediAvanzamentoPagamento_Post,129,805,30,0.00,51,0,2,
-ALL,171,942,25,0.00,306,0,41,
-sendPaymentOutcome,167,615,42,0.00,51,0,6,
-inoltraEsitoPagamentoPaypal,197,942,27,0.00,51,0,10,
