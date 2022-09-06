@@ -2,48 +2,23 @@ Feature: Check semantic payment status
 
     Background:
         Given systems up
-        And EC old version
-
-    Scenario: Execute verifyPaymentNotice
-        Given initial XML verifyPaymentNotice
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-            <soapenv:Header />
-            <soapenv:Body>
-            <nod:verifyPaymentNoticeReq>
-            <idPSP>#psp#</idPSP>
-            <idBrokerPSP>#psp#</idBrokerPSP>
-            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
-            <password>pwdpwdpwd</password>
-            <qrCode>
-            <fiscalCode>#creditor_institution_code_old#</fiscalCode>
-            <noticeNumber>#notice_number_old#</noticeNumber>
-            </qrCode>
-            </nod:verifyPaymentNoticeReq>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
-        Then check outcome is OK of verifyPaymentNotice response
 
     #activate phase
     Scenario: Execute activatePaymentNotice
-        Given the Execute verifyPaymentNotice scenario executed successfully
-
-        And initial XML activatePaymentNotice
+        Given initial XML activatePaymentNotice
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
             <soapenv:Header/>
             <soapenv:Body>
             <nod:activatePaymentNoticeReq>
-            <idPSP>$verifyPaymentNotice.idPSP</idPSP>
-            <idBrokerPSP>$verifyPaymentNotice.idBrokerPSP</idBrokerPSP>
-            <idChannel>$verifyPaymentNotice.idChannel</idChannel>
+            <idPSP>#psp#</idPSP>
+            <idBrokerPSP>#psp#</idBrokerPSP>
+            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
             <password>pwdpwdpwd</password>
             <idempotencyKey>#idempotency_key#</idempotencyKey>
             <qrCode>
-            <fiscalCode>#creditor_institution_code_old#</fiscalCode>
-            <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
+            <fiscalCode>#creditor_institution_code#</fiscalCode>
+            <noticeNumber>#notice_number#</noticeNumber>
             </qrCode>
             <!--expirationTime>6000</expirationTime-->
             <amount>10.00</amount>
@@ -56,7 +31,7 @@ Feature: Check semantic payment status
         Then check outcome is OK of activatePaymentNotice response
 
 
-    Scenario: Verify  in POSITION_STATUS table
+    Scenario: Execute sendPaymentOutcome1
         Given the Execute activatePaymentNotice scenario executed successfully
         And initial XML sendPaymentOutcome
             """
@@ -75,12 +50,12 @@ Feature: Check semantic payment status
             <paymentMethod>creditCard</paymentMethod>
             <!--Optional:-->
             <paymentChannel>app</paymentChannel>
-            <fee>2.00</fee>
+            <fee>2.22</fee>
             <!--Optional:-->
             <payer>
             <uniqueIdentifier>
             <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-            <entityUniqueIdentifierValue>77777777777_01</entityUniqueIdentifierValue>
+            <entityUniqueIdentifierValue>44444444444_01</entityUniqueIdentifierValue>
             </uniqueIdentifier>
             <fullName>name</fullName>
             <!--Optional:-->
@@ -108,7 +83,35 @@ Feature: Check semantic payment status
         #And RPT not recived
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
-        And checks the value PAYING, INSERTED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
-        And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro NewMod3
-        And checks the value PAYING, FAILED_NORPT of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
-        And checks the value FAILED_NORPT of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro NewMod3
+
+
+    Scenario: Execute sendPaymentOutcome2
+        Given the Execute sendPaymentOutcome1 scenario executed successfully
+        And outcome with OK in sendPaymentOutcome
+        When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+        Then check outcome is KO of sendPaymentOutcome response
+        And check faultCode is PPT_ESITO_GIA_ACQUISITO of sendPaymentOutcome response
+        And paymentMethod with cash in sendPaymentOutcome response
+        And paymentChannel with onLine in sendPaymentOutcome response
+        And fee with 3.00 in sendPaymentOutcome response
+        And entityUniqueIdentifierType with F in sendPaymentOutcome response
+        And entityUniqueIdentifierValue with CR7 in sendPaymentOutcome response
+        And applicationDate with 2021-12-10 in sendPaymentOutcome response
+        And check description with Esito concorde of sendPaymentOutcome response
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

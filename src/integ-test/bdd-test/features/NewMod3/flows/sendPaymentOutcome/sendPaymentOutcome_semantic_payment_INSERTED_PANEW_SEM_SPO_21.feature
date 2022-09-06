@@ -2,13 +2,12 @@ Feature: Check semantic payment status
 
     Background:
         Given systems up
-        And EC old version
-
+    
     Scenario: Execute verifyPaymentNotice
         Given initial XML verifyPaymentNotice
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-            <soapenv:Header />
+            <soapenv:Header/>
             <soapenv:Body>
             <nod:verifyPaymentNoticeReq>
             <idPSP>#psp#</idPSP>
@@ -16,8 +15,8 @@ Feature: Check semantic payment status
             <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
             <password>pwdpwdpwd</password>
             <qrCode>
-            <fiscalCode>#creditor_institution_code_old#</fiscalCode>
-            <noticeNumber>#notice_number_old#</noticeNumber>
+            <fiscalCode>#creditor_institution_code#</fiscalCode>
+            <noticeNumber>#notice_number#</noticeNumber>
             </qrCode>
             </nod:verifyPaymentNoticeReq>
             </soapenv:Body>
@@ -42,7 +41,7 @@ Feature: Check semantic payment status
             <password>pwdpwdpwd</password>
             <idempotencyKey>#idempotency_key#</idempotencyKey>
             <qrCode>
-            <fiscalCode>#creditor_institution_code_old#</fiscalCode>
+            <fiscalCode>#creditor_institution_code#</fiscalCode>
             <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
             </qrCode>
             <!--expirationTime>6000</expirationTime-->
@@ -69,7 +68,7 @@ Feature: Check semantic payment status
             <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
             <password>pwdpwdpwd</password>
             <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
-            <outcome>KO</outcome>
+            <outcome>OK</outcome>
             <!--Optional:-->
             <details>
             <paymentMethod>creditCard</paymentMethod>
@@ -108,7 +107,7 @@ Feature: Check semantic payment status
         #And RPT not recived
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
-        And checks the value PAYING, INSERTED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
-        And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro NewMod3
-        And checks the value PAYING, FAILED_NORPT of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
-        And checks the value FAILED_NORPT of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro NewMod3
+        And checks the value PAYING, PAID of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
+        And checks the value NOTIFIED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro NewMod3
+        And checks the value PAYING, PAID, NOTICE_GENERATED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
+        And checks the value NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro NewMod3

@@ -145,6 +145,49 @@ def step_impl(context, primitive):
     setattr(context, primitive, payload)
 
 
+<<<<<<< HEAD
+@given ('RT generation')
+def step_impl(context):
+    payload = context.text or ""
+    payload = utils.replace_context_variables(payload, context)
+    payload = utils.replace_local_variables(payload, context)
+    payload = utils.replace_global_variables(payload, context)
+    date = datetime.date.today().strftime("%Y-%m-%d")
+
+
+    if "#iuv#" in payload:
+        iuv = f"14{str(random.randint(1000000000000, 9999999999999))}" 
+        setattr(context,'iuv', iuv)
+        payload = payload.replace('#iuv#', iuv)
+        setattr(context, 'date', date)
+
+    if '#intermediarioPA#' in payload:
+        intermediarioPA = "44444444444_05"
+        payload = payload.replace('#intermediarioPA#', intermediarioPA)
+        setattr(context,"intermediarioPA", intermediarioPA)
+    
+    if "#ccp#" in payload:     
+        ccp = str(random.randint(100000000000000, 999999999999999))
+        payload = payload.replace('#ccp#', ccp)
+        setattr(context,"ccp", ccp)
+
+    if '#date#' in payload:
+        payload = payload.replace('#date#', date)
+
+    if "#codicePA#" in payload:     
+        codicePA = "77777777777"
+        payload = payload.replace('#codicePA#', codicePA)
+        setattr(context,"codicePA", codicePA)
+
+
+
+    print("RT generata: ", payload)
+    setattr(context,'rendAttachment', payload)
+
+
+
+=======
+>>>>>>> test-accenture
 @given('RPT generation')
 def step_impl(context):
     payload = context.text or ""
@@ -1923,6 +1966,26 @@ def step_impl(context, url):
     setattr(context, f'sessionToken', url.split('idSession=')[1])
 
 
+<<<<<<< HEAD
+
+@step('check field in {primitive} response')
+def step_impl(context, primitive):
+    soap_response = getattr(context, primitive + RESPONSE)
+    if 'xmlns' in soap_response.headers['content-type']:
+        my_document = parseString(soap_response.content)
+        if my_document.getElementsByTagName('description'):
+            print("description: ", my_document.getElementsByTagName('description')[0].firstChild.data)
+
+    result = json.loads(my_document) 
+    print(result)
+
+        
+
+
+
+
+
+=======
 @step('Select and Update RT for Test retry_PAold with causale versamento {causaleVers}')
 def step_impl(context, causaleVers):
     db_config = context.config.userdata.get(
@@ -1954,3 +2017,4 @@ def step_impl(context, causaleVers):
     db.executeQuery(conn, query_update)
 
     db.closeConnection(conn)
+>>>>>>> test-accenture

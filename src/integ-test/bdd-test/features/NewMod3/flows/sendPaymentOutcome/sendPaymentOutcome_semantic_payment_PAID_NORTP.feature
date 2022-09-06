@@ -109,6 +109,58 @@ Feature: Check semantic payment status
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
         And checks the value PAYING, INSERTED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
-        And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro NewMod3
+        And checks the value PAYING, INSERTED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
         And checks the value PAYING, FAILED_NORPT of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
         And checks the value FAILED_NORPT of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro NewMod3
+
+    # UNA VOLTA OTTIMIZZATO SI Pùò FARE UNO SCENARIO OUTLINE
+
+    # [SEM_SPO_14]
+    #Scenario: Verify PAID in POSITION_STATUS_SNAPSHOT table
+        #Given the Initialize sendPaymentOutcome (Phase 2) scenario executed successfully
+        #And outcome with OK in sendPaymentOutcome
+        #And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro NewMod3
+        #When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+        #And checks the value PAID of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro NewMod3
+        # TODO: QUALI SONO I CAMPI DA CONTROLLARE?
+        # And checks the value {values} of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
+
+    # [SEM_SPO_15]
+    #Scenario: Verify FAILED in POSITION_STATUS_SNAPSHOT table
+        #Given the Execute activatePaymentNotice (Phase 1) scenario executed successfully
+        #And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro NewMod3
+        #And outcome with KO in sendPaymentOutcome
+        #When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+        #And checks the value FAILED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro NewMod3
+        # TODO: QUALI SONO I CAMPI DA CONTROLLARE?
+        # And checks the value {values} of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
+
+
+    # [SEM_SPO_20 PT1]
+    #Scenario: SEM_SPO_20_PT1
+        #Given EC new version
+        #And initial XML paGetPayment
+            #"""
+
+            #"""
+        #When nodo-dei-pagamenti sends paGetPayment to EC
+        #Then check outcome is OK of paGetPayment response
+
+    # [SEM_SPO_20 PT2]
+    #Scenario: Verify INSERTED in POSITION_STATUS_SNAPSHOT table with PA new version
+        #Given the SEM_SPO_20_PT1 request scenario executed successfully
+        #And api-config executes the sql QUERY_DA_INSERIRE (controlla se è PAYING)
+        #And outcome with KO in sendPaymentOutcome
+        #When PSP sends sendPaymentOutcome request to nodo-dei-pagamenti
+        #Then check lastPayment is true of paGetPayment response
+        #And api-config executes the sql QUERY_DA_INSERIRE (controlla se è INSERTED)
+        #And TODO: SCRIVERE PARTE TANTI RECORD PER OGNI CAMBIO DI STATO
+
+    # [SEM_SPO_21]
+    #Scenario: Verify NOTIFIED in POSITION_STATUS_SNAPSHOT table
+        #Given the SEM_SPO_20_PT1 request scenario executed successfully
+        #And api-config executes the sql QUERY_DA_INSERIRE (controlla se è PAYING)
+        #And outcome with OK in sendPaymentOutcome
+        #When PSP sends sendPaymentOutcome request to nodo-dei-pagamenti
+        #Then api-config executes the sql QUERY_DA_INSERIRE (controlla se è NOTIFIED)
+        #And TODO: SCRIVERE PARTE TANTI RECORD PER OGNI CAMBIO DI STATO
