@@ -13,7 +13,7 @@ Feature: process tests for nodoInviaRT_esito=1
                 <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
-            <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
+            <pay_i:dataOraMessaggioRichiesta>2016-09-16T11:24:10</pay_i:dataOraMessaggioRichiesta>
             <pay_i:autenticazioneSoggetto>CNS</pay_i:autenticazioneSoggetto>
             <pay_i:soggettoVersante>
                 <pay_i:identificativoUnivocoVersante>
@@ -59,7 +59,7 @@ Feature: process tests for nodoInviaRT_esito=1
                 <pay_i:nazioneBeneficiario>IT</pay_i:nazioneBeneficiario>
             </pay_i:enteBeneficiario>
             <pay_i:datiVersamento>
-                <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
+                <pay_i:dataEsecuzionePagamento>2016-09-16</pay_i:dataEsecuzionePagamento>
                 <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
                 <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
                 <pay_i:identificativoUnivocoVersamento>#iuv2#</pay_i:identificativoUnivocoVersamento>
