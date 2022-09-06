@@ -1,20 +1,20 @@
 Feature: Semantic checks for nodoInviaCarrelloRPT
 
    Background:
-<<<<<<< HEAD
+
       Given systems up
-=======
+
          Given systems up
->>>>>>> test-accenture
+
 
 
    # [SEM_MB_01]
    Scenario: RPT generation
-<<<<<<< HEAD
+
       Given RPT generation
-=======
+
          Given RPT generation
->>>>>>> test-accenture
+
          """
          <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
          <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
@@ -93,13 +93,13 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          """
 
    Scenario: RPT2 generation
-<<<<<<< HEAD
+
       Given the RPT generation scenario executed successfully
       And RPT2 generation
-=======
+
          Given the RPT generation scenario executed successfully
          And RPT2 generation
->>>>>>> test-accenture
+
          """
          <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
          <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
@@ -178,7 +178,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          """
 
 
-<<<<<<< HEAD
+
    Scenario Outline: Check PPT_MULTI_BENEFICIARIO error for nodoInviaCarrelloRPT_nessunTrattino primitive
       Given the RPT2 generation scenario executed successfully
       And initial XML nodoInviaCarrelloRPT
@@ -229,7 +229,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          | identificativoCarrello | 7777777777311015321688135500-14816  | PPT_MULTI_BENEFICIARIO  |
          | identificativoCarrello | 31101473154911720077777777777-23596 | PPT_DOMINIO_SCONOSCIUTO |
 
-=======
+
    Scenario: Check PPT_MULTI_BENEFICIARIO error for nodoInviaCarrelloRPT_nessunTrattino primitive
          Given the RPT2 generation scenario executed successfully
          And initial XML nodoInviaCarrelloRPT_nessunTrattino
@@ -456,4 +456,4 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
       When EC sends SOAP nodoInviaCarrelloRPT_ordineInvertito to nodo-dei-pagamenti
       Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT_ordineInvertito response
       And check faultCode is PPT_DOMINIO_SCONOSCIUTO of nodoInviaCarrelloRPT_ordineInvertito response
->>>>>>> test-accenture
+
