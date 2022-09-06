@@ -17,6 +17,9 @@
   },
   "global_configuration": {
 <<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> test-accenture
     "canale":"60000000001_07",
     "id_station_old" : "66666666666_05",
     "creditor_institution_code": "66666666666",	    
@@ -28,6 +31,11 @@
     "fiscalCodePA": "12345678901",	
     "id_station": "66666666666_01",	   
     "id_broker": "66666666666",	    
+<<<<<<< HEAD
+	  "canale_ATTIVATO_PRESSO_PSP": "60000000001_01",
+	  "intermediarioPSP2": "60000000002",
+	  "canale32": "60000000002_01",
+=======
     "id_broker_old": "66666666666",
     "canale_ATTIVATO_PRESSO_PSP": "60000000001_01"
 =======
@@ -45,6 +53,7 @@
 	  "intermediarioPSP2": "60000000002",
 	  "canale32": "60000000002_01",
 	  "id_station_old" : "66666666666_05",
+>>>>>>> test-accenture
     "id_broker_old": "66666666666",
 	  "cod_segr": "02",
 	  "ccPoste": "666666666666",
@@ -55,6 +64,10 @@
     "psp_AGID": "AGID_01",
     "broker_AGID": "97735020584",
     "canale_AGID": "97735020584_03"
+<<<<<<< HEAD
+
+=======
+>>>>>>> test-accenture
 >>>>>>> test-accenture
   },
   "db_configuration": {
@@ -80,18 +93,18 @@
       "port" : "1522"
     },
     "re" : {
-      "host" : "localhost",
-      "database" : "ORCLCDB.localdomain",
+      "host" : "10.70.67.18",
+      "database" : "NDPARET_RE",
       "user" : "RE",
       "password": "RE",
-      "port" : "1521"
+      "port" : "1522"
     },
     "wfesp" : {
-      "host" : "localhost",
-      "database" : "ORCLCDB.localdomain",
+      "host" : "10.70.67.18",
+      "database" : "NDPSPCT_WFESP",
       "user" : "WFESP",
       "password": "WEFSP",
-      "port" : "1521"
+      "port" : "1522"
     }
   }  
 }
