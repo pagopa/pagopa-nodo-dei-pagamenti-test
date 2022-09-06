@@ -8,6 +8,7 @@ import cx_Oracle
 import requests
 import steps.utils as utils
 
+
 def before_all(context):
     print('Global settings...')
     lib_dir = os.path.abspath(os.path.join(__file__, os.pardir, os.pardir,
@@ -32,6 +33,7 @@ def before_all(context):
         config_dict[config_key] = config_value
     setattr(context, 'configurations', config_dict)
 
+
 def before_feature(context, feature):
     services = context.config.userdata.get("services")
     # add heading
@@ -50,6 +52,7 @@ def before_feature(context, feature):
     #     if tag == 'config-ec':
     #         config_ec(context)
 
+
 def after_feature(context, feature):
     global_configuration = context.config.userdata.get("global_configuration")
     # DISABLE see @config-ec too
@@ -57,6 +60,7 @@ def after_feature(context, feature):
     #     if tag == 'config-ec':
     #         # reset apiconfig
     #         context.apiconfig.delete_creditor_institution(global_configuration.get("creditor_institution_code"))
+
 
 def after_all(context):
     db_selected = context.config.userdata.get(
@@ -73,7 +77,8 @@ def after_all(context):
     headers = {'Host': 'api.dev.platform.pagopa.it:443'}
     requests.get(utils.get_refresh_config_url(
         context), headers=headers, verify=False)
-        
+
+
 def config_ec(context):
     global_configuration = context.config.userdata.get("global_configuration")
     with open(context.config.base_dir + '/../resources/creditorinstitutions.json', 'r') as reader:

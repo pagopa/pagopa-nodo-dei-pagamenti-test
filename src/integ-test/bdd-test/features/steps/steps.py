@@ -52,34 +52,6 @@ def step_impl(context, version):
     # TODO implement with api-config
     pass
 
-@given ('RT generation')
-def step_impl(context):
-    payload = context.text or ""
-    payload = utils.replace_context_variables(payload, context)
-    payload = utils.replace_local_variables(payload, context)
-    payload = utils.replace_global_variables(payload, context)
-    date = datetime.date.today().strftime("%Y-%m-%d")
-    if "#iuv#" in payload:
-        iuv = f"14{str(random.randint(1000000000000, 9999999999999))}" 
-        setattr(context,'iuv', iuv)
-        payload = payload.replace('#iuv#', iuv)
-        setattr(context, 'date', date)
-    if '#intermediarioPA#' in payload:
-        intermediarioPA = "44444444444_05"
-        payload = payload.replace('#intermediarioPA#', intermediarioPA)
-        setattr(context,"intermediarioPA", intermediarioPA)
-    if "#ccp#" in payload:     
-        ccp = str(random.randint(100000000000000, 999999999999999))
-        payload = payload.replace('#ccp#', ccp)
-        setattr(context,"ccp", ccp)
-    if '#date#' in payload:
-        payload = payload.replace('#date#', date)
-    if "#codicePA#" in payload:     
-        codicePA = "77777777777"
-        payload = payload.replace('#codicePA#', codicePA)
-        setattr(context,"codicePA", codicePA)
-    print("RT generata: ", payload)
-    setattr(context,'rendAttachment', payload)
 
 @given('initial XML {primitive}')
 def step_impl(context, primitive):
@@ -117,9 +89,11 @@ def step_impl(context, primitive):
 
     if '#identificativoFlusso#' in payload:
         date = datetime.date.today().strftime("%Y-%m-%d")
-        identificativoFlusso = date + context.config.userdata.get("global_configuration").get("psp") + "-" + str(random.randint(0, 10000))
-        setattr(context,'identificativoFlusso', identificativoFlusso)
-        payload = payload.replace('#identificativoFlusso#', identificativoFlusso)
+        identificativoFlusso = date + context.config.userdata.get(
+            "global_configuration").get("psp") + "-" + str(random.randint(0, 10000))
+        setattr(context, 'identificativoFlusso', identificativoFlusso)
+        payload = payload.replace(
+            '#identificativoFlusso#', identificativoFlusso)
     """
     if '$timedate+1' in payload:
         timedate = getattr(context, 'timedate')
@@ -130,41 +104,47 @@ def step_impl(context, primitive):
     """
 
     if '#carrello#' in payload:
-        carrello = "77777777777" + "311" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+        carrello = "77777777777" + "311" + "0" + str(random.randint(1000, 2000)) + str(
+            random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
         payload = payload.replace('#carrello#', carrello)
-        setattr(context,'carrello', carrello)
+        setattr(context, 'carrello', carrello)
 
     if '#carrello1#' in payload:
-        carrello1 = "77777777777" + "311" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + utils.random_s()
+        carrello1 = "77777777777" + "311" + "0" + str(random.randint(1000, 2000)) + str(
+            random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + utils.random_s()
         payload = payload.replace('#carrello1#', carrello1)
-        setattr(context,'carrello1', carrello1)
+        setattr(context, 'carrello1', carrello1)
 
     if '#secCarrello#' in payload:
-        secCarrello = "77777777777" + "301" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+        secCarrello = "77777777777" + "301" + "0" + str(random.randint(1000, 2000)) + str(
+            random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
         payload = payload.replace('#secCarrello#', secCarrello)
-        setattr(context,'secCarrello', secCarrello)
+        setattr(context, 'secCarrello', secCarrello)
 
     if '#carrNOTENABLED#' in payload:
-        carrNOTENABLED = "11111122223" + "311" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+        carrNOTENABLED = "11111122223" + "311" + "0" + str(random.randint(1000, 2000)) + str(
+            random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
         payload = payload.replace('#carrNOTENABLED#', carrNOTENABLED)
-        setattr(context,'carrNOTENABLED', carrNOTENABLED)
+        setattr(context, 'carrNOTENABLED', carrNOTENABLED)
 
     if '#thrCarrello#' in payload:
-        thrCarrello = "77777777777" + "088" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+        thrCarrello = "77777777777" + "088" + "0" + str(random.randint(1000, 2000)) + str(
+            random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
         payload = payload.replace('#thrCarrello#', thrCarrello)
-        setattr(context,'thrCarrello', thrCarrello)
+        setattr(context, 'thrCarrello', thrCarrello)
 
     if '#CARRELLO#' in payload:
-        CARRELLO = "CARRELLO" + "-" + str(getattr(context, 'date') + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3])
+        CARRELLO = "CARRELLO" + "-" + \
+            str(getattr(context, 'date') +
+                datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3])
         payload = payload.replace('#CARRELLO#', CARRELLO)
-        setattr(context,'CARRELLO', CARRELLO)
+        setattr(context, 'CARRELLO', CARRELLO)
 
     if '#CARRELLO1#' in payload:
         CARRELLO1 = "CARRELLO" + str(random.randint(0, 100000))
         payload = payload.replace('#CARRELLO1#', CARRELLO1)
-        setattr(context,'CARRELLO1', CARRELLO1)
-    
-    
+        setattr(context, 'CARRELLO1', CARRELLO1)
+
     if '$IuV' in payload:
         payload = payload.replace('$IuV', getattr(context, 'IuV'))
         identificativoFlusso = date + context.config.userdata.get(
@@ -203,7 +183,6 @@ def step_impl(context, primitive):
 
     if '$2ccp' in payload:
         payload = payload.replace('$2ccp', getattr(context, 'ccp2'))
-    
 
     if '$rendAttachment' in payload:
         rendAttachment = getattr(context, 'rendAttachment')
@@ -222,121 +201,132 @@ def step_impl(context, primitive):
     payload = utils.replace_global_variables(payload, context)
     setattr(context, primitive, payload)
 
-@given ('RT generation')
+
+@given('RT generation')
 def step_impl(context):
     payload = context.text or ""
     payload = utils.replace_context_variables(payload, context)
     payload = utils.replace_local_variables(payload, context)
     payload = utils.replace_global_variables(payload, context)
     date = datetime.date.today().strftime("%Y-%m-%d")
-    timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3] 
-    setattr(context,'date', date) 
-    setattr(context,'timedate', timedate)
+    timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
+    setattr(context, 'date', date)
+    setattr(context, 'timedate', timedate)
 
     pa = context.config.userdata.get('global_configuration').get('codicePA')
     print(f"############################ {pa}")
 
-
     if "#iuv#" in payload:
-        iuv = f"14{str(random.randint(1000000000000, 9999999999999))}" 
-        setattr(context,'iuv', iuv)
+        iuv = f"14{str(random.randint(1000000000000, 9999999999999))}"
+        setattr(context, 'iuv', iuv)
         payload = payload.replace('#iuv#', iuv)
         setattr(context, 'date', date)
 
     if '#intermediarioPA#' in payload:
         intermediarioPA = "44444444444_05"
         payload = payload.replace('#intermediarioPA#', intermediarioPA)
-        setattr(context,"intermediarioPA", intermediarioPA)
+        setattr(context, "intermediarioPA", intermediarioPA)
 
-    if "#ccp#" in payload:     
+    if "#ccp#" in payload:
         ccp = str(int(time() * 1000))
         payload = payload.replace('#ccp#', ccp)
-        setattr(context,"ccp", ccp)
+        setattr(context, "ccp", ccp)
 
-    if "#ccp1#" in payload:     
+    if "#ccp1#" in payload:
         ccp1 = str(utils.current_milli_time())
         payload = payload.replace('#ccp1#', ccp1)
-        setattr(context,"ccp1", ccp1)
+        setattr(context, "ccp1", ccp1)
 
-    if "#CCP#" in payload:     
-        CCP = 'CCP' + '-' + str(date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3])
+    if "#CCP#" in payload:
+        CCP = 'CCP' + '-' + \
+            str(date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3])
         payload = payload.replace('#CCP#', CCP)
-        setattr(context,"CCP", CCP)
+        setattr(context, "CCP", CCP)
 
     if '#date#' in payload:
         payload = payload.replace('#date#', date)
 
-    if "#timedate#" in payload:     
+    if "#timedate#" in payload:
         payload = payload.replace('#timedate#', timedate)
-    
+
     if '#iuv#' in payload:
-        iuv = '0' + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + '00'
+        iuv = '0' + str(random.randint(1000, 2000)) + str(random.randint(1000,
+                                                                         2000)) + str(random.randint(1000, 2000)) + '00'
         payload = payload.replace('#iuv#', iuv)
-        setattr(context,'iuv', iuv)
+        setattr(context, 'iuv', iuv)
 
     if '#iuv2#' in payload:
-        iuv = 'IUV' + '-' + str(date + '-' + datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3])
+        iuv = 'IUV' + '-' + \
+            str(date + '-' +
+                datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3])
         payload = payload.replace('#iuv2#', iuv)
         print()
-        setattr(context,'2iuv', iuv)
+        setattr(context, '2iuv', iuv)
 
     if '#IUV#' in payload:
-        IUV = 'IUV' + str(random.randint(0, 10000)) + '-' + date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
+        IUV = 'IUV' + str(random.randint(0, 10000)) + '-' + date + \
+            datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
         payload = payload.replace('#IUV#', IUV)
-        setattr(context,'IUV', IUV)
+        setattr(context, 'IUV', IUV)
 
     if '#idCarrello#' in payload:
-        idCarrello = "09812374659" + "311" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+        idCarrello = "09812374659" + "311" + "0" + str(random.randint(1000, 2000)) + str(
+            random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
         payload = payload.replace('#idCarrello#', idCarrello)
-        setattr(context,'idCarrello', idCarrello)
+        setattr(context, 'idCarrello', idCarrello)
 
     if '#CARRELLO#' in payload:
-        CARRELLO = "CARRELLO" + "-" + str(date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3])
+        CARRELLO = "CARRELLO" + "-" + \
+            str(date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3])
         payload = payload.replace('#CARRELLO#', CARRELLO)
-        setattr(context,'CARRELLO', CARRELLO)
+        setattr(context, 'CARRELLO', CARRELLO)
 
     if '#carrello#' in payload:
-        carrello = pa + "302" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+        carrello = pa + "302" + "0" + str(random.randint(1000, 2000)) + str(random.randint(
+            1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
         payload = payload.replace('#carrello#', carrello)
-        setattr(context,'carrello', carrello)
+        setattr(context, 'carrello', carrello)
 
     if '#carrello1#' in payload:
-        carrello1 = pa + "311" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + utils.random_s()
+        carrello1 = pa + "311" + "0" + str(random.randint(1000, 2000)) + str(random.randint(
+            1000, 2000)) + str(random.randint(1000, 2000)) + "00" + utils.random_s()
         payload = payload.replace('#carrello1#', carrello1)
-        setattr(context,'carrello1', carrello1)
+        setattr(context, 'carrello1', carrello1)
 
     if '#secCarrello#' in payload:
-        secCarrello = pa + "301" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+        secCarrello = pa + "301" + "0" + str(random.randint(1000, 2000)) + str(random.randint(
+            1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
         payload = payload.replace('#secCarrello#', secCarrello)
-        setattr(context,'secCarrello', secCarrello)
+        setattr(context, 'secCarrello', secCarrello)
 
     if '#thrCarrello#' in payload:
-        thrCarrello = pa + "088" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+        thrCarrello = pa + "088" + "0" + str(random.randint(1000, 2000)) + str(random.randint(
+            1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
         payload = payload.replace('#thrCarrello#', thrCarrello)
-        setattr(context,'thrCarrello', thrCarrello)
+        setattr(context, 'thrCarrello', thrCarrello)
 
     if '#carrNOTENABLED#' in payload:
-        carrNOTENABLED = "11111122223" + "311" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+        carrNOTENABLED = "11111122223" + "311" + "0" + str(random.randint(1000, 2000)) + str(
+            random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
         payload = payload.replace('#carrNOTENABLED#', carrNOTENABLED)
-        setattr(context,'carrNOTENABLED', carrNOTENABLED)
-    
-    if "#ccp#" in payload:     
+        setattr(context, 'carrNOTENABLED', carrNOTENABLED)
+
+    if "#ccp#" in payload:
         ccp = str(random.randint(100000000000000, 999999999999999))
         payload = payload.replace('#ccp#', ccp)
-        setattr(context,"ccp", ccp)
+        setattr(context, "ccp", ccp)
 
     if '#date#' in payload:
         payload = payload.replace('#date#', date)
 
-    if "#codicePA#" in payload:     
+    if "#codicePA#" in payload:
         codicePA = "77777777777"
         payload = payload.replace('#codicePA#', codicePA)
-        setattr(context,"codicePA", codicePA)
-
-
+        setattr(context, "codicePA", codicePA)
 
     print("RT generata: ", payload)
-    setattr(context,'rendAttachment', payload)
+    setattr(context, 'rendAttachment', payload)
+
 
 @given('RPT generation')
 def step_impl(context):
@@ -425,7 +415,7 @@ def step_impl(context):
     payload = f"{payload_uni}".split("'")[1]
     print(payload)
     """
-    
+
     print("RPT generato: ", payload)
     setattr(context, 'rptAttachment', payload)
 
@@ -509,16 +499,17 @@ def step_impl(context):
         payload = payload.replace('$iuv2', getattr(context, 'iuv2'))
     setattr(context, 'rpt2Attachment', payload)
 
+
 @given('RT{number:d} generation')
 def step_impl(context, number):
     payload = context.text or ""
     payload = utils.replace_context_variables(payload, context)
     date = datetime.date.today().strftime("%Y-%m-%d")
     timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
-    setattr(context,'date', date) 
-    setattr(context,'timedate', timedate)
+    setattr(context, 'date', date)
+    setattr(context, 'timedate', timedate)
 
-    if "#timedate#" in payload:     
+    if "#timedate#" in payload:
         payload = payload.replace('#timedate#', timedate)
 
     if '#date#' in payload:
@@ -531,7 +522,7 @@ def step_impl(context, number):
 
     payload = utils.replace_local_variables(payload, context)
     payload = utils.replace_global_variables(payload, context)
-    setattr(context,f'rpt{number}Attachment', payload)
+    setattr(context, f'rpt{number}Attachment', payload)
 
 
 @given('RPT{number:d} generation')
@@ -540,88 +531,101 @@ def step_impl(context, number):
     payload = utils.replace_context_variables(payload, context)
     date = datetime.date.today().strftime("%Y-%m-%d")
     timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
-    setattr(context,'date', date) 
-    setattr(context,'timedate', timedate)
+    setattr(context, 'date', date)
+    setattr(context, 'timedate', timedate)
 
-    if f"#intermediarioPA {number}#" in payload:     
+    if f"#intermediarioPA {number}#" in payload:
         intermediarioPA = "44444444444_05"
-        payload = payload.replace(f'#intermediarioPA{number}#', intermediarioPA)
-        setattr(context,f"intermediarioPA{number}", intermediarioPA)
+        payload = payload.replace(
+            f'#intermediarioPA{number}#', intermediarioPA)
+        setattr(context, f"intermediarioPA{number}", intermediarioPA)
 
     if f"#IUV{number}#" in payload:
-        IUV = str(utils.current_milli_time()) + '-' + str(random.randint(0, 10000))
+        IUV = str(utils.current_milli_time()) + \
+            '-' + str(random.randint(0, 10000))
         payload = payload.replace(f'#IUV{number}#', IUV)
-        setattr(context,f'{number}IUV', IUV)
+        setattr(context, f'{number}IUV', IUV)
 
-    if f"#ccp{number}#" in payload:     
+    if f"#ccp{number}#" in payload:
         ccp = str(int(time() * 1000))
         payload = payload.replace(f'#ccp{number}#', ccp)
-        setattr(context,f"ccp{number}", ccp)
+        setattr(context, f"ccp{number}", ccp)
 
-    if f"#CCP{number}#" in payload:     
+    if f"#CCP{number}#" in payload:
         ccp2 = str(utils.current_milli_time()) + '1'
         payload = payload.replace(f'#CCP{number}#', ccp2)
-        setattr(context,f"CCP{number}", ccp2)
+        setattr(context, f"CCP{number}", ccp2)
 
-    if "#timedate#" in payload:     
+    if "#timedate#" in payload:
         payload = payload.replace('#timedate#', timedate)
 
     if '#date#' in payload:
         payload = payload.replace('#date#', date)
-    
+
     if f'#IuV{number}#' in payload:
-        IuV = '0' + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + '00'
+        IuV = '0' + str(random.randint(1000, 2000)) + str(random.randint(1000,
+                                                                         2000)) + str(random.randint(1000, 2000)) + '00'
         payload = payload.replace(f'#IuV{number}#', IuV)
-        setattr(context,f'IuV{number}', IuV)
+        setattr(context, f'IuV{number}', IuV)
 
     if '$carrello' in payload:
         payload = payload.replace('$carrello', getattr(context, 'carrello'))
 
     if '#idCarrello#' in payload:
-        idCarrello = "09812374659" + "311" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+        idCarrello = "09812374659" + "311" + "0" + str(random.randint(1000, 2000)) + str(
+            random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
         payload = payload.replace('#idCarrello#', idCarrello)
-        setattr(context,'idCarrello', idCarrello)
+        setattr(context, 'idCarrello', idCarrello)
 
     if '#carrello#' in payload:
-        carrello = "77777777777" + "311" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+        carrello = "77777777777" + "311" + "0" + str(random.randint(1000, 2000)) + str(
+            random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
         payload = payload.replace('#carrello#', carrello)
-        setattr(context,'carrello', carrello)
+        setattr(context, 'carrello', carrello)
 
     if '#carrello1#' in payload:
-        carrello1 = "77777777777" + "311" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + utils.random_s()
+        carrello1 = "77777777777" + "311" + "0" + str(random.randint(1000, 2000)) + str(
+            random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + utils.random_s()
         payload = payload.replace('#carrello1#', carrello1)
-        setattr(context,'carrello1', carrello1)
+        setattr(context, 'carrello1', carrello1)
 
     if '#secCarrello#' in payload:
-        secCarrello = "77777777777" + "301" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+        secCarrello = "77777777777" + "301" + "0" + str(random.randint(1000, 2000)) + str(
+            random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
         payload = payload.replace('#secCarrello#', secCarrello)
-        setattr(context,'secCarrello', secCarrello)
+        setattr(context, 'secCarrello', secCarrello)
 
     if '#thrCarrello#' in payload:
-        thrCarrello = "77777777777" + "088" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+        thrCarrello = "77777777777" + "088" + "0" + str(random.randint(1000, 2000)) + str(
+            random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
         payload = payload.replace('#thrCarrello#', thrCarrello)
-        setattr(context,'thrCarrello', thrCarrello)
+        setattr(context, 'thrCarrello', thrCarrello)
 
     if '#carrNOTENABLED#' in payload:
-        carrNOTENABLED = "11111122223" + "311" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+        carrNOTENABLED = "11111122223" + "311" + "0" + str(random.randint(1000, 2000)) + str(
+            random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
         payload = payload.replace('#carrNOTENABLED#', carrNOTENABLED)
-        setattr(context,'carrNOTENABLED', carrNOTENABLED)
-    
+        setattr(context, 'carrNOTENABLED', carrNOTENABLED)
+
     if "nodoVerificaRPT_IUV" in payload:
         nodoVerificaRPT = getattr(context, 'nodoVerificaRPT')
         my_document = parseString(nodoVerificaRPT.content)
         aux_digit = my_document.getElementsByTagName('AuxDigit')
         if aux_digit == '0' or aux_digit == '1' or aux_digit == '2':
-             iuv = ''+random.randint(10000, 20000)+random.randint(10000, 20000)+random.randint(10000, 20000)
+            iuv = ''+random.randint(10000, 20000)+random.randint(10000,
+                                                                 20000)+random.randint(10000, 20000)
         elif aux_digit == '3':
-            #per pa_old
-             iuv = '11' + (int)(random.randint(10000, 20000))+(int)(random.randint(10000, 20000))+(int)(random.randint(10000, 20000))
+            # per pa_old
+            iuv = '11' + (int)(random.randint(10000, 20000)) + \
+                (int)(random.randint(10000, 20000)) + \
+                (int)(random.randint(10000, 20000))
         payload = payload.replace('iuv', iuv)
-        setattr(context,'iuv', iuv)
+        setattr(context, 'iuv', iuv)
 
     if "$ccp" in payload:
-        ccp = ''+random.randint(10000, 20000)+random.randint(10000, 20000)+random.randint(10000, 20000)
-        payload = payload.replace('ccp',ccp )
+        ccp = ''+random.randint(10000, 20000)+random.randint(10000,
+                                                             20000)+random.randint(10000, 20000)
+        payload = payload.replace('ccp', ccp)
         setattr(context, "ccp", ccp)
 
     payload_b = bytes(payload, 'ascii')
@@ -631,7 +635,8 @@ def step_impl(context, number):
 
     payload = utils.replace_local_variables(payload, context)
     payload = utils.replace_global_variables(payload, context)
-    setattr(context,f'rpt{number}Attachment', payload)
+    setattr(context, f'rpt{number}Attachment', payload)
+
 
 @given('REND generation')
 def step_impl(context):
@@ -968,11 +973,11 @@ def step_impl(context, mock, destination, primitive):
     if mock == 'EC':
         print(utils.get_soap_mock_ec(context))
         response_status_code = utils.save_soap_action(utils.get_soap_mock_ec(context), primitive,
-                                                    pa_verify_payment_notice_res, override=True)
+                                                      pa_verify_payment_notice_res, override=True)
     else:
         print(utils.get_soap_mock_psp(context))
         response_status_code = utils.save_soap_action(utils.get_soap_mock_psp(context), primitive,
-                                                    pa_verify_payment_notice_res, override=True)
+                                                      pa_verify_payment_notice_res, override=True)
 
     assert response_status_code == 200
 
@@ -2239,7 +2244,8 @@ def step_impl(context):
         assert xml_rpt.getElementsByTagName("transferDate")[0].firstChild.data == appDateString 
     """
 
-    #campo METADATA opzionale da aggiungere
+    # campo METADATA opzionale da aggiungere
+
 
 @step('retrieve session token from {url}')
 def step_impl(context, url):
@@ -2247,6 +2253,7 @@ def step_impl(context, url):
     print(url)
     print(f"#################### {url.split('idSession=')[1]}")
     setattr(context, f'sessionToken', url.split('idSession=')[1])
+
 
 @step('retrieve url from {url}')
 def step_impl(context, url):
@@ -2261,10 +2268,12 @@ def step_impl(context, primitive):
     if 'xmlns' in soap_response.headers['content-type']:
         my_document = parseString(soap_response.content)
         if my_document.getElementsByTagName('description'):
-            print("description: ", my_document.getElementsByTagName('description')[0].firstChild.data)
+            print("description: ", my_document.getElementsByTagName(
+                'description')[0].firstChild.data)
 
-    result = json.loads(my_document) 
+    result = json.loads(my_document)
     print(result)
+
 
 @step('Select and Update RT for Test retry_PAold with causale versamento {causaleVers}')
 def step_impl(context, causaleVers):
@@ -2297,4 +2306,3 @@ def step_impl(context, causaleVers):
     db.executeQuery(conn, query_update)
 
     db.closeConnection(conn)
-
