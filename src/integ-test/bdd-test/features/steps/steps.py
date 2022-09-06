@@ -52,6 +52,34 @@ def step_impl(context, version):
     # TODO implement with api-config
     pass
 
+@given ('RT generation')
+def step_impl(context):
+    payload = context.text or ""
+    payload = utils.replace_context_variables(payload, context)
+    payload = utils.replace_local_variables(payload, context)
+    payload = utils.replace_global_variables(payload, context)
+    date = datetime.date.today().strftime("%Y-%m-%d")
+    if "#iuv#" in payload:
+        iuv = f"14{str(random.randint(1000000000000, 9999999999999))}" 
+        setattr(context,'iuv', iuv)
+        payload = payload.replace('#iuv#', iuv)
+        setattr(context, 'date', date)
+    if '#intermediarioPA#' in payload:
+        intermediarioPA = "44444444444_05"
+        payload = payload.replace('#intermediarioPA#', intermediarioPA)
+        setattr(context,"intermediarioPA", intermediarioPA)
+    if "#ccp#" in payload:     
+        ccp = str(random.randint(100000000000000, 999999999999999))
+        payload = payload.replace('#ccp#', ccp)
+        setattr(context,"ccp", ccp)
+    if '#date#' in payload:
+        payload = payload.replace('#date#', date)
+    if "#codicePA#" in payload:     
+        codicePA = "77777777777"
+        payload = payload.replace('#codicePA#', codicePA)
+        setattr(context,"codicePA", codicePA)
+    print("RT generata: ", payload)
+    setattr(context,'rendAttachment', payload)
 
 @given('initial XML {primitive}')
 def step_impl(context, primitive):
@@ -2237,7 +2265,7 @@ def step_impl(context, primitive):
 
     result = json.loads(my_document) 
     print(result)
-    
+
 @step('Select and Update RT for Test retry_PAold with causale versamento {causaleVers}')
 def step_impl(context, causaleVers):
     db_config = context.config.userdata.get(
