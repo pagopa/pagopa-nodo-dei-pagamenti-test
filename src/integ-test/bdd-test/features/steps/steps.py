@@ -87,13 +87,6 @@ def step_impl(context, primitive):
         payload = payload.replace('#notice_number_old#', notice_number)
         setattr(context, "iuv", notice_number[1:])
 
-    if '#identificativoFlusso#' in payload:
-        date = datetime.date.today().strftime("%Y-%m-%d")
-        identificativoFlusso = date + context.config.userdata.get(
-            "global_configuration").get("psp") + "-" + str(random.randint(0, 10000))
-        setattr(context, 'identificativoFlusso', identificativoFlusso)
-        payload = payload.replace(
-            '#identificativoFlusso#', identificativoFlusso)
     """
     if '$timedate+1' in payload:
         timedate = getattr(context, 'timedate')
@@ -145,30 +138,8 @@ def step_impl(context, primitive):
         payload = payload.replace('#CARRELLO1#', CARRELLO1)
         setattr(context, 'CARRELLO1', CARRELLO1)
 
-    if '$IuV' in payload:
-        payload = payload.replace('$IuV', getattr(context, 'IuV'))
-        identificativoFlusso = date + context.config.userdata.get(
-            "global_configuration").get("psp") + "-" + str(random.randint(0, 10000))
-        setattr(context, 'identificativoFlusso', identificativoFlusso)
-        payload = payload.replace(
-            '#identificativoFlusso#', identificativoFlusso)
-
     if '$iuv' in payload:
         payload = payload.replace('$iuv', getattr(context, 'iuv'))
-
-    if '$rptAttachment' in payload:
-        rptAttachment = getattr(context, 'rptAttachment')
-        rptAttachment_b = bytes(rptAttachment, 'ascii')
-        rptAttachment_uni = b64.b64encode(rptAttachment_b)
-        rptAttachment_uni = f"{rptAttachment_uni}".split("'")[1]
-        payload = payload.replace('$rptAttachment', rptAttachment_uni)
-
-    if '$rpt2Attachment' in payload:
-        rpt2Attachment = getattr(context, 'rpt2Attachment')
-        rpt2Attachment_b = bytes(rpt2Attachment, 'ascii')
-        rpt2Attachment_uni = b64.b64encode(rpt2Attachment_b)
-        rpt2Attachment_uni = f"{rpt2Attachment_uni}".split("'")[1]
-        payload = payload.replace('$rpt2Attachment', rpt2Attachment_uni)
 
     if '$intermediarioPA' in payload:
         payload = payload.replace(
@@ -214,7 +185,7 @@ def step_impl(context):
     setattr(context, 'timedate', timedate)
 
     pa = context.config.userdata.get('global_configuration').get('codicePA')
-    print(f"############################ {pa}")
+    #print(f"############################ {pa}")
 
     if "#iuv#" in payload:
         iuv = f"14{str(random.randint(1000000000000, 9999999999999))}"
@@ -409,12 +380,10 @@ def step_impl(context):
     if '$iuv' in payload:
         payload = payload.replace('$iuv', getattr(context, 'iuv'))
 
-    """
     payload_b = bytes(payload, 'ascii')
     payload_uni = b64.b64encode(payload_b)
     payload = f"{payload_uni}".split("'")[1]
     print(payload)
-    """
 
     print("RPT generato: ", payload)
     setattr(context, 'rptAttachment', payload)
