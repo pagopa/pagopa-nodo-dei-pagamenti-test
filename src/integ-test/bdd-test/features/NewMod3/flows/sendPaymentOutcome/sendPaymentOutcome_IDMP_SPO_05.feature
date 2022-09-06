@@ -1,4 +1,4 @@
-Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - not use idempotency [IDMP_SPO_22]
+Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - not use idempotency [IDMP_SPO_05]
 
   Background:
     Given systems up
@@ -31,7 +31,6 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - not us
   Scenario: Execute activatePaymentNotice request
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
-
 
   # Send payment outcome Phase
   Scenario: Execute sendPaymentOutcome request
@@ -120,7 +119,6 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - not us
       """
     When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
-
 
   Scenario: DB check
     Given the Execute sendPaymentOutcome request 1 scenario executed successfully

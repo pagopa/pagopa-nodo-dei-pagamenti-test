@@ -13,6 +13,12 @@
       "healthcheck": "servizi/PagamentiTelematiciRPT/info",
       "soap_service": "servizi/PagamentiTelematiciRPT",
       "rest_service": ""
+    },
+    "mock-psp": {
+      "url": "http://localhost:8090/",
+      "healthcheck": "servizi/MockPSP/info",
+      "soap_service": "servizi/MockPSP",
+      "rest_service": ""
     }
   },
   "global_configuration": {

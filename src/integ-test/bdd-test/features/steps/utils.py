@@ -1,6 +1,7 @@
-from concurrent.futures import thread
-import math
-import re, json, os, datetime
+import re
+import json
+import os
+import datetime
 from xml.dom.minidom import parseString
 
 import time
@@ -47,17 +48,21 @@ def get_soap_url_nodo(context, primitive=-1):
     }
     if "soap_service" in context.config.userdata.get("services").get("nodo-dei-pagamenti"):
         return context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url") \
-               + context.config.userdata.get("services").get("nodo-dei-pagamenti").get("soap_service")
+            + context.config.userdata.get("services").get(
+                "nodo-dei-pagamenti").get("soap_service")
     else:
         return context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url") \
-               + base_path + primitive_mapping.get(primitive)
+            + base_path + primitive_mapping.get(primitive)
+
 
 def get_rest_url_nodo(context):
     if context.config.userdata.get("services").get("nodo-dei-pagamenti").get("rest_service") is not None:
         return context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url") \
-               + context.config.userdata.get("services").get("nodo-dei-pagamenti").get("rest_service")
+            + context.config.userdata.get("services").get(
+                "nodo-dei-pagamenti").get("rest_service")
     else:
         return ""
+
 
 def get_soap_mock_ec(context):
     if context.config.userdata.get('services').get('mock-ec').get('soap_service') is not None:
@@ -66,47 +71,52 @@ def get_soap_mock_ec(context):
     else:
         return ""
 
+
+def get_soap_mock_psp(context):
+    if context.config.userdata.get('services').get('mock-psp').get('soap_service') is not None:
+        return context.config.userdata.get('services').get('mock-psp').get('url') \
+            + context.config.userdata.get('services').get('mock-psp').get('soap_service')
+    else:
+        return ""
+
+
 def get_refresh_config_url(context):
     if context.config.userdata.get('services').get('nodo-dei-pagamenti').get('refresh_config_service') is not None:
         return context.config.userdata.get('services').get('nodo-dei-pagamenti').get('url') \
-            + context.config.userdata.get('services').get('nodo-dei-pagamenti').get('refresh_config_service')
+            + context.config.userdata.get('services').get(
+                'nodo-dei-pagamenti').get('refresh_config_service')
     else:
-        return "" 
+        return ""
+
 
 def get_rest_mock_ec(context):
     if context.config.userdata.get("services").get("mock-ec").get("rest_service") is not None:
         return context.config.userdata.get("services").get("mock-ec").get("url") \
-               + context.config.userdata.get("services").get("mock-ec").get("rest_service")
-    else:
-        return ""
-
-def get_soap_mock_ec(context):
-    if context.config.userdata.get("services").get("mock-ec").get("soap_service") is not None:
-        return context.config.userdata.get("services").get("mock-ec").get("url") \
-               + context.config.userdata.get("services").get("mock-ec").get("soap_service")
+            + context.config.userdata.get("services").get("mock-ec").get("rest_service")
     else:
         return ""
 
 
 def get_rest_mock_psp(context):
-    # TODO fix service
-    if context.config.userdata.get("services").get("mock-ec").get("rest_service") is not None:
-        return context.config.userdata.get("services").get("mock-ec").get("url") \
-               + context.config.userdata.get("services").get("mock-ec").get("rest_service")
+    if context.config.userdata.get("services").get("mock-psp").get("rest_service") is not None:
+        return context.config.userdata.get("services").get("mock-psp").get("url") \
+            + context.config.userdata.get("services").get("mock-psp").get("rest_service")
     else:
         return ""
 
 
 def save_soap_action(mock, primitive, soap_action, override=False):
-    headers = {'Content-Type': 'application/xml'}  # set what your server accepts
+    # set what your server accepts
+    headers = {'Content-Type': 'application/xml'}
     print(f'{mock}/response/{primitive}?override={override}')
-    response = requests.post(f"{mock}/response/{primitive}?override={override}", soap_action, headers=headers)
+    response = requests.post(
+        f"{mock}/response/{primitive}?override={override}", soap_action, headers=headers, verify=False)
     print(response.content, response.status_code)
     return response.status_code
 
 
 def manipulate_soap_action(soap_action, elem, value):
-    TYPE_ELEMENT = 1 # dom element
+    TYPE_ELEMENT = 1  # dom element
     # TYPE_VALUE = 3 # dom value
     my_document = parseString(soap_action)
     if value == "None":
@@ -126,7 +136,7 @@ def manipulate_soap_action(soap_action, elem, value):
         parent.removeChild(element)
         for child in list(children):
             if child.nodeType == TYPE_ELEMENT:
-                parent.appendChild(child) 
+                parent.appendChild(child)
     elif str(value).startswith("Occurrences"):
         occurrences = int(value.split(",")[1])
         original_node = my_document.getElementsByTagName(elem)[0]
@@ -136,7 +146,8 @@ def manipulate_soap_action(soap_action, elem, value):
             original_node = cloned_node
             cloned_node = original_node.cloneNode(2)
     else:
-        node = my_document.getElementsByTagName(elem)[0] if my_document.getElementsByTagName(elem) else None
+        node = my_document.getElementsByTagName(
+            elem)[0] if my_document.getElementsByTagName(elem) else None
 
         if node is None:
             # create
@@ -154,6 +165,7 @@ def manipulate_soap_action(soap_action, elem, value):
             node.appendChild(element)
 
     return my_document.toxml()
+
 
 def replace_context_variables(body, context):
     pattern = re.compile('\\$\\w+')
@@ -189,18 +201,21 @@ def replace_global_variables(payload, context):
     for elem in match:
         replaced_sharp = elem.replace("#", "")
         if replaced_sharp in context.config.userdata.get("global_configuration"):
-            payload = payload.replace(elem, context.config.userdata.get("global_configuration").get(replaced_sharp))
+            payload = payload.replace(elem, context.config.userdata.get(
+                "global_configuration").get(replaced_sharp))
     return payload
 
 
 def get_history(rest_mock, notice_number, primitive):
     s = requests.Session()
-    response = requests_retry_session(session=s).get(f"{rest_mock}/history/{notice_number}/{primitive}")
+    response = requests_retry_session(session=s).get(
+        f"{rest_mock}/history/{notice_number}/{primitive}")
     return response.json(), response.status_code
 
 
 def query_json(context, name_query, name_macro):
-    query = json.load(open(os.path.join(context.config.base_dir + "/../resources/query_AutomationTest.json")))
+    query = json.load(open(os.path.join(
+        context.config.base_dir + "/../resources/query_AutomationTest.json")))
     selected_query = query.get(name_macro).get(name_query)
     if '$' in selected_query:
         selected_query = replace_local_variables(selected_query, context)
@@ -212,11 +227,13 @@ def isFloat(string: str) -> bool:
     value = string.split('.')
     return len(value) == 2 and value[0].isdigit() and value[1].isdigit()
 
+
 def isDate(string: str):
     try:
         return string == datetime.datetime.strptime(string, '%Y-%m-%d')
     except ValueError:
         return False
+
 
 def single_thread(context, soap_primitive):
     print("single_thread")
@@ -224,31 +241,34 @@ def single_thread(context, soap_primitive):
     print(soap_primitive.split("_")[1])
     headers = {'Content-Type': 'application/xml', "SOAPAction": primitive}
     url_nodo = get_soap_url_nodo(context, primitive)
-    print("nodo soap_request sent >>>", getattr(context, soap_primitive.split("_")[1]))
-    soap_response = requests.post(url_nodo, getattr(context, soap_primitive.split("_")[1]), headers=headers)
+    print("nodo soap_request sent >>>", getattr(
+        context, soap_primitive.split("_")[1]))
+    soap_response = requests.post(url_nodo, getattr(
+        context, soap_primitive.split("_")[1]), headers=headers)
     print("nodo soap_response: ", soap_response.content)
     print(soap_primitive.split("_")[1] + "Response")
-    setattr(context, soap_primitive.split("_")[1] + "Response", soap_response.content)
-    
-  
+    setattr(context, soap_primitive.split("_")[
+            1] + "Response", soap_response.content)
+
+
 def threading(context, primitive_list):
     i = 0
     threads = list()
-    while i<len(primitive_list):
+    while i < len(primitive_list):
         t = Thread(target=single_thread, args=(context, primitive_list[i]))
         threads.append(t)
-        t.start() 
-        i+=1
+        t.start()
+        i += 1
 
     for thread in threads:
         thread.join()
+
 
 def random_s():
     import random
     cont = 5
     strNumRand = ''
-    while cont !=0:
-        strNumRand += str(random.randint(0,9))
-        cont -=1
-        return strNumRand 
-
+    while cont != 0:
+        strNumRand += str(random.randint(0, 9))
+        cont -= 1
+        return strNumRand

@@ -75,7 +75,6 @@ Feature: check syntax KO for paaVerificaRPTRes
             | esito                                 | None                                                                                                                                          | SIN_PVRPTR_07 |
             | esito                                 | Empty                                                                                                                                         | SIN_PVRPTR_08 |
             | esito                                 | prova                                                                                                                                         | SIN_PVRPTR_09 |
-            | fault                                 | None                                                                                                                                          | SIN_PVRPTR_10 |
             | datiPagamentoPA                       | None                                                                                                                                          | SIN_PVRPTR_11 |
             | datiPagamentoPA                       | RemoveParent                                                                                                                                  | SIN_PVRPTR_12 |
             | datiPagamentoPA                       | Empty                                                                                                                                         | SIN_PVRPTR_13 |
@@ -130,3 +129,23 @@ Feature: check syntax KO for paaVerificaRPTRes
             | causaleVersamento                     | None                                                                                                                                          | SIN_PVRPTR_68 |
             | causaleVersamento                     | Empty                                                                                                                                         | SIN_PVRPTR_69 |
             | causaleVersamento                     | CXYFD9jxEWpaefYPBMGaWHbDBIeU01JMraSQJ7VKHnfWT75DaLXvAPEcV7TDFfThv4u56iGvFT86Ui0ma9EVs1kRk5ETNjGc281weayrfiiHauaJfSNTDxqMONb7tN3PkkgBcn1gJxr6Y | SIN_PVRPTR_70 |
+
+
+    Scenario: missing faultBean for esito KO [SIN_PVRPTR_10]
+        Given initial XML paaVerificaRPT
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/"   xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <ws:paaVerificaRPTRisposta>
+                <paaVerificaRPTRisposta>       
+                    <esito>KO</esito>
+                </paaVerificaRPTRisposta>
+            </ws:paaVerificaRPTRisposta>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And EC replies to nodo-dei-pagamenti with the paaVerificaRPT
+        When psp sends soap verifyPaymentNotice to nodo-dei-pagamenti
+        Then check outcome is KO of verifyPaymentNotice response
+        And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of verifyPaymentNotice response
