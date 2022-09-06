@@ -193,11 +193,6 @@ def step_impl(context):
         payload = payload.replace('#iuv#', iuv)
         setattr(context, 'date', date)
 
-    if '#intermediarioPA#' in payload:
-        intermediarioPA = "44444444444_05"
-        payload = payload.replace('#intermediarioPA#', intermediarioPA)
-        setattr(context, "intermediarioPA", intermediarioPA)
-
     if "#ccp#" in payload:
         ccp = str(int(time() * 1000))
         payload = payload.replace('#ccp#', ccp)
@@ -284,13 +279,8 @@ def step_impl(context):
     if '#date#' in payload:
         payload = payload.replace('#date#', date)
 
-    if "#codicePA#" in payload:
-        codicePA = "77777777777"
-        payload = payload.replace('#codicePA#', codicePA)
-        setattr(context, "codicePA", codicePA)
-
     payload = utils.replace_global_variables(payload, context)
-    
+
     print('payload RPT: ', payload)
     payload_b = bytes(payload, 'ascii')
     payload_uni = b64.b64encode(payload_b)
