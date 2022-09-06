@@ -192,7 +192,7 @@ def step_impl(context):
         setattr(context,'iuv', iuv)
 
     if '#iuv2#' in payload:
-        iuv = 'IUV' + '-' + str(date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3])
+        iuv = 'IUV' + '-' + str(date + '-' + datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3])
         payload = payload.replace('#iuv#', iuv)
         setattr(context,'2iuv', iuv)
 
@@ -267,7 +267,7 @@ def step_impl(context):
 
 @given('RT generation')
 def step_impl(context):
-    
+
     payload = context.text or ""
     payload = utils.replace_global_variables(payload, context)
     payload = utils.replace_local_variables(payload, context)
