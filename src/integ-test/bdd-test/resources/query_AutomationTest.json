@@ -82,10 +82,21 @@
         "DB_INOLTRO_PAG_stati_carrello": "SELECT s.columns FROM table_name s WHERE s.IUV = '$nodoInoltraEsitoPagamentoCarte.noticenumber' and s.ID_DOMINIO = '$nodoInoltraEsitoPagamentoCarte.fiscalcode'",
         "DB_INOLTRO_PAG_stati_rpt_snapshot": "SELECT s.columns FROM table_name s WHERE s.IUV = '$nodoInoltraEsitoPagamentoCarte.noticenumber' and s.ID_DOMINIO = '$nodoInoltraEsitoPagamentoCarte.fiscalcode'"
     },
+<<<<<<< HEAD
+    "Mod1":{
+        "esito": "SELECT v.columns FROM table_name r JOIN RT_VERSAMENTI v ON v.FK_RT=r.ID WHERE r.IUV='$iuv' AND r.CCP= '$nodoInviaRPT.codiceContestoPagamento' AND r.IDENT_DOMINIO='$nodoInviaRPT.identificativoDominio'",
+        "esito_2iuv": "SELECT v.columns FROM table_name r JOIN RT_VERSAMENTI v ON v.FK_RT=r.ID WHERE r.IUV=('$IUV','$IUV2') AND r.CCP= '$nodoInviaRPT.codiceContestoPagamento' AND r.IDENT_DOMINIO='$nodoInviaRPT.identificativoDominio'",
+        "motivo_annullamento": "SELECT columns FROM table_name WHERE ID_SESSIONE = '$sessionToken'",
+        "stati_RPT": "SELECT columns FROM table_name WHERE IUV='avanzaErrResponse' AND CCP= '$ccp1' AND ID_DOMINIO='44444444444' ORDER BY INSERTED_TIMESTAMP",
+        "stati_RPT2": "SELECT columns FROM table_name WHERE IUV='avanzaErrResponse2' AND CCP= '$ccp2' AND ID_DOMINIO='44444444445' ORDER BY INSERTED_TIMESTAMP",
+        "retry_rpt": "SELECT columns FROM table_name WHERE ID_SESSIONE='$sessionToken' ORDER BY INSERTED_TIMESTAMP",
+        "Re": "SELECT columns FROM table_name WHERE ID_SESSIONE ='$sessionId' AND INSERTED_TIMESTAMP > ROUND(SYSDATE-1) ORDER BY DATA_ORA_EVENTO"
+=======
     "Mod1": {
         "rpt_stati": "SELECT columns FROM table_name s WHERE s.IUV = '$iuv' ORDER BY INSERTED_TIMESTAMP ASC",
         "stati_carrello": "SELECT columns FROM table s WHERE s.ID_CARRELLO = '$nodoInviaCarrelloRPT.idCarrello' ORDER BY ID ASC",
         "payment_status": "SELECT s.columns FROM table_name s WHERE s.NOTICE_ID ='$activateIOPayment.noticeNumber' AND s.PA_FISCAL_CODE = '$activateIOPayment.fiscalCode'"
+>>>>>>> test-accenture
     },
     "constanti":{
     },

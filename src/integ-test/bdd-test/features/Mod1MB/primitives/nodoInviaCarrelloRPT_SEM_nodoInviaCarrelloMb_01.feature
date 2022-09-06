@@ -1,12 +1,20 @@
 Feature: Semantic checks for nodoInviaCarrelloRPT
 
    Background:
+<<<<<<< HEAD
+      Given systems up
+=======
          Given systems up
+>>>>>>> test-accenture
 
 
    # [SEM_MB_01]
    Scenario: RPT generation
+<<<<<<< HEAD
+      Given RPT generation
+=======
          Given RPT generation
+>>>>>>> test-accenture
          """
          <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
          <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
@@ -85,8 +93,13 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          """
 
    Scenario: RPT2 generation
+<<<<<<< HEAD
+      Given the RPT generation scenario executed successfully
+      And RPT2 generation
+=======
          Given the RPT generation scenario executed successfully
          And RPT2 generation
+>>>>>>> test-accenture
          """
          <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
          <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
@@ -165,6 +178,58 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          """
 
 
+<<<<<<< HEAD
+   Scenario Outline: Check PPT_MULTI_BENEFICIARIO error for nodoInviaCarrelloRPT_nessunTrattino primitive
+      Given the RPT2 generation scenario executed successfully
+      And initial XML nodoInviaCarrelloRPT
+         """
+         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+         <soapenv:Header>
+         <ppt:intestazioneCarrelloPPT>
+         <identificativoIntermediarioPA>#codicePA#</identificativoIntermediarioPA>
+         <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
+         <identificativoCarrello>#carrello1#</identificativoCarrello>
+         </ppt:intestazioneCarrelloPPT>
+         </soapenv:Header>
+         <soapenv:Body>
+         <ws:nodoInviaCarrelloRPT>
+         <password>pwdpwdpwd</password>
+         <identificativoPSP>AGID_01</identificativoPSP>
+         <identificativoIntermediarioPSP>97735020584</identificativoIntermediarioPSP>
+         <identificativoCanale>97735020584_02</identificativoCanale>
+         <listaRPT>
+         <elementoListaRPT>
+         <identificativoDominio>#codicePA#</identificativoDominio>
+         <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
+         <codiceContestoPagamento>$carrello</codiceContestoPagamento>
+         <rpt>$rptAttachment</rpt>
+         </elementoListaRPT>
+         <elementoListaRPT>
+         <identificativoDominio>#codicePA#</identificativoDominio>
+         <identificativoUnivocoVersamento>$IuV</identificativoUnivocoVersamento>
+         <codiceContestoPagamento>$carrello</codiceContestoPagamento>
+         <rpt>$rpt2Attachment</rpt>
+         </elementoListaRPT>
+         </listaRPT>
+         <requireLightPayment>01</requireLightPayment>
+         <multiBeneficiario>1</multiBeneficiario>
+         </ws:nodoInviaCarrelloRPT>
+         </soapenv:Body>
+         </soapenv:Envelope>
+         """
+      And <elem> with <value> in nodoInviaCarrelloRPT
+      When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
+      Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
+      And check faultCode is <error> of nodoInviaCarrelloRPT response
+      Examples:
+         | elem                   | value                               | error                   |
+         | identificativoCarrello | 7777777777731101905117516600059410  | PPT_MULTI_BENEFICIARIO  |
+         | identificativoCarrello | 90000000001311017011570102700-48595 | PPT_MULTI_BENEFICIARIO  |
+         | identificativoCarrello | 44444444444311017141190124500-07607 | PPT_MULTI_BENEFICIARIO  |
+         | identificativoCarrello | 7777777777311015321688135500-14816  | PPT_MULTI_BENEFICIARIO  |
+         | identificativoCarrello | 31101473154911720077777777777-23596 | PPT_DOMINIO_SCONOSCIUTO |
+
+=======
    Scenario: Check PPT_MULTI_BENEFICIARIO error for nodoInviaCarrelloRPT_nessunTrattino primitive
          Given the RPT2 generation scenario executed successfully
          And initial XML nodoInviaCarrelloRPT_nessunTrattino
@@ -391,3 +456,4 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
       When EC sends SOAP nodoInviaCarrelloRPT_ordineInvertito to nodo-dei-pagamenti
       Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT_ordineInvertito response
       And check faultCode is PPT_DOMINIO_SCONOSCIUTO of nodoInviaCarrelloRPT_ordineInvertito response
+>>>>>>> test-accenture

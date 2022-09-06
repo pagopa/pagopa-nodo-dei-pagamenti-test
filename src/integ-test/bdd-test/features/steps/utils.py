@@ -10,6 +10,17 @@ import requests
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
 
+def random_s():
+    import random
+    cont = 5
+    strNumRand = ''
+    while cont !=0:
+        strNumRand += str(random.randint(0,9))
+        cont -=1
+    return strNumRand 
+
+def current_milli_time():
+    return round(time.time() * 1000)
 
 def requests_retry_session(
         retries=3,
