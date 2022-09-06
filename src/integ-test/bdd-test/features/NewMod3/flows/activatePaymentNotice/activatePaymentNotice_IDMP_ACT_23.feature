@@ -1,0 +1,71 @@
+Feature: semantic check for activatePaymentNotice regarding idempotency
+
+  Background:
+    Given systems up
+    And nodo-dei-pagamenti has config parameter useIdempotency set to true
+    And nodo-dei-pagamenti has config parameter scheduler.jobName_idempotencyCacheClean.enabled set to true
+
+  Scenario: Execute activatePaymentNotice request
+    Given initial XML activatePaymentNotice
+      """
+      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+      <soapenv:Header/>
+      <soapenv:Body>
+      <nod:activatePaymentNoticeReq>
+      <idPSP>70000000001</idPSP>
+      <idBrokerPSP>70000000001</idBrokerPSP>
+      <idChannel>70000000001_01</idChannel>
+      <password>pwdpwdpwd</password>
+      <idempotencyKey>#idempotency_key#</idempotencyKey>
+      <qrCode>
+      <fiscalCode>#creditor_institution_code_old#</fiscalCode>
+      <noticeNumber>#notice_number_old#</noticeNumber>
+      </qrCode>
+      <expirationTime>6000</expirationTime>
+      <amount>10.00</amount>
+      <paymentNote>causale</paymentNote>
+      </nod:activatePaymentNoticeReq>
+      </soapenv:Body>
+      </soapenv:Envelope>
+      """
+    When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+    Then check outcome is OK of activatePaymentNotice response
+    And save activatePaymentNotice response in activatePaymentNotice1
+    And saving activatePaymentNotice request in activatePaymentNotice1
+  
+  Scenario: Execute activatePaymentNotice2 request
+    Given the Execute activatePaymentNotice request scenario executed successfully
+    And initial XML activatePaymentNotice
+      """
+      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+      <soapenv:Header/>
+      <soapenv:Body>
+      <nod:activatePaymentNoticeReq>
+      <idPSP>70000000001</idPSP>
+      <idBrokerPSP>70000000001</idBrokerPSP>
+      <idChannel>70000000001_01</idChannel>
+      <password>pwdpwdpwd</password>
+      <idempotencyKey>#idempotency_key#</idempotencyKey>
+      <qrCode>
+      <fiscalCode>#creditor_institution_code#</fiscalCode>
+      <noticeNumber>#notice_number#</noticeNumber>
+      </qrCode>
+      <expirationTime>6000</expirationTime>
+      <amount>10.00</amount>
+      <paymentNote>causale</paymentNote>
+      </nod:activatePaymentNoticeReq>
+      </soapenv:Body>
+      </soapenv:Envelope>
+      """
+    When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+    Then check outcome is OK of activatePaymentNotice response
+    And save activatePaymentNotice response in activatePaymentNotice2
+    And saving activatePaymentNotice request in activatePaymentNotice2
+
+  #DB check
+  Scenario: DB check + idempotencyCacheClean
+    Given the Execute activatePaymentNotice2 request scenario executed successfully
+    When job idempotencyCacheClean triggered after 7 seconds
+    Then verify the HTTP status code of idempotencyCacheClean response is 200
+    And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache_paymentToken1 on db nodo_online under macro NewMod3
+    And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache_paymentToken2 on db nodo_online under macro NewMod3

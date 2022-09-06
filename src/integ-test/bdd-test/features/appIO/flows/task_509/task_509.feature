@@ -2,6 +2,7 @@ Feature: task_509
 
     Background:
         Given systems up
+        And EC new version
 
     Scenario: Execute verifyPaymentNotice (Phase 1)
         Given initial XML verifyPaymentNotice
@@ -10,13 +11,13 @@ Feature: task_509
             <soapenv:Header/>
             <soapenv:Body>
                 <nod:verifyPaymentNoticeReq>
-                    <idPSP>AGID_01</idPSP>
-                    <idBrokerPSP>97735020584</idBrokerPSP>
-                    <idChannel>97735020584_03</idChannel>
+                    <idPSP>#psp_AGID#</idPSP>
+                    <idBrokerPSP>#broker_AGID#</idBrokerPSP>
+                    <idChannel>#canale_AGID#</idChannel>
                     <password>pwdpwdpwd</password>
                     <qrCode>
                         <fiscalCode>#creditor_institution_code#</fiscalCode>
-                        <noticeNumber>302094719472095710</noticeNumber>
+                        <noticeNumber>#notice_number#</noticeNumber>
                     </qrCode>
                 </nod:verifyPaymentNoticeReq>
             </soapenv:Body>
@@ -40,8 +41,8 @@ Feature: task_509
                     <!--Optional:-->
                     <idempotencyKey>#idempotency_key#</idempotencyKey>
                     <qrCode>
-                        <fiscalCode>#creditor_institution_code#</fiscalCode>
-                        <noticeNumber>#notice_number#</noticeNumber>
+                        <fiscalCode>$verifyPaymentNotice.fiscalCode</fiscalCode>
+                        <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
                     </qrCode>
                     <!--Optional:-->
                     <expirationTime>12345</expirationTime>
@@ -78,6 +79,8 @@ Feature: task_509
         """
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
+        And execution query token_validity to get value on the table POSITION_ACTIVATE, with the columns TOKEN_VALID_FROM under macro AppIO with db name nodo_online
+        And through the query token_validity retrieve param token_valid_from_activate at position 0 and save it under the key token_valid_from_activate
     
     # [TASK_509_01]
     Scenario: Execute nodoChiediInformazioniPagamento (Phase 3)
@@ -93,9 +96,9 @@ Feature: task_509
         "idPagamento":"$activateIOPaymentResponse.paymentToken",
         "RRN":10026669,
         "tipoVersamento":"CP",
-        "identificativoIntermediario":"40000000001",
-        "identificativoPsp":"40000000001",
-        "identificativoCanale":"40000000001_06",
+        "identificativoIntermediario":"#psp#",
+        "identificativoPsp":"#psp#",
+        "identificativoCanale":"#canale#",
         "importoTotalePagato":10.00,
         "timestampOperazione":"2021-07-09T17:06:03.100+01:00",
         "codiceAutorizzativo":"resOK",
@@ -114,9 +117,9 @@ Feature: task_509
         "idPagamento":"$activateIOPaymentResponse.paymentToken",
         "RRN":10026669,
         "tipoVersamento":"CP",
-        "identificativoIntermediario":"40000000001",
-        "identificativoPsp":"40000000001",
-        "identificativoCanale":"40000000001_06",
+        "identificativoIntermediario":"#psp#",
+        "identificativoPsp":"#psp#",
+        "identificativoCanale":"#canale#",
         "importoTotalePagato":10.00,
         "timestampOperazione":"2021-07-09T17:06:03.100+01:00",
         "codiceAutorizzativo":"resOK",
@@ -132,7 +135,6 @@ Feature: task_509
         When WISP sends rest GET listaPSP?idPagamento=$activateIOPaymentResponse.paymentToken&percorsoPagamento=CARTE to nodo-dei-pagamenti
         Then verify the HTTP status code of listaPSP response is 200
 
-
     # [TASK_509_04]
     Scenario: Execute nodoNotificaAnnullamento (Phase 4)
         Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
@@ -147,10 +149,27 @@ Feature: task_509
         Then verify the HTTP status code of avanzamentoPagamento response is 200
         And check esito is OK of avanzamentoPagamento response
 
+    # [TASK_509_06]
+    Scenario: Check TOKEN_VALID_FROM (Phase 5)
+        Given the Execute nodoInoltroEsitoCarta (Phase 4) scenario executed successfully
+        Then checks the value NotNone of the record at column TOKEN_VALID_FROM of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
+        And execution query token_validity to get value on the table POSITION_ACTIVATE, with the columns TOKEN_VALID_FROM under macro AppIO with db name nodo_online
+        And through the query token_validity retrieve param token_valid_from_inoltro at position 0 and save it under the key token_valid_from_inoltro
+        And check value $token_valid_from_activate is equal to value $token_valid_from_inoltro
+        
+    # [TASK_509_07]
+    Scenario: Check TOKEN_VALID_TO + 1h (Phase 5)
+        Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 3600000
+        And wait 5 seconds for expiration
+        And the Execute nodoInoltroEsitoCarta (Phase 4) scenario executed successfully
+        Then check token_valid_to is greater than token_valid_from plus default_durata_estensione_token_IO
+        And restore initial configurations
+
     # [TASK_509_08]
-    Scenario: Check debtor position
-        Given nodo-dei-pagamenti has config parameter scheduler.cancelIOPaymentActorMinutesToBack set to 1
+    Scenario: Check debtor position (Phase 3)
+        Given nodo-dei-pagamenti has config parameter scheduler.annullamentoRptMaiRichiesteDaPmPollerMinutesToBack set to 1
         And the Execute activateIOPayment (Phase 2) scenario executed successfully
-        When job annullamentoRptMaiRichiesteDaPm triggered after 15 seconds
+        When job annullamentoRptMaiRichiesteDaPm triggered after 65 seconds
+        And wait 10 seconds for expiration
         Then checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
         And restore initial configurations

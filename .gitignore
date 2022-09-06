@@ -120,3 +120,6 @@ __pycache__
 /.idea
 environment.py
 reports.html
+
+/venv
+venv

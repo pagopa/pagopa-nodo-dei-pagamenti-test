@@ -29,6 +29,7 @@
         "position_status_n" :"SELECT s.columns FROM table_name s WHERE s.NOTICE_ID ='$activatePaymentNotice.noticeNumber' AND s.PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode'",
         "position_status_2" :"SELECT s.columns FROM table_name s WHERE s.NOTICE_ID ='$activatePaymentNotice2.noticeNumber' AND s.PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode'",
         "rpt_activision": "SELECT s.columns FROM table_name s where s.NOTICE_ID = '$activatePaymentNotice.noticeNumber' and s.PA_FISCAL_CODE= '$activatePaymentNotice.fiscalCode'",
+        "rpt_activision-v2": "SELECT columns FROM table_name  where PAYMENT_TOKEN = '$activatePaymentNoticeResponse.paymentToken-v2'",
         "rt": "SELECT columns FROM table_name WHERE IUV = '$iuv' AND CCP= '$activatePaymentNoticeResponse.paymentToken' AND IDENT_DOMINIO= '$activatePaymentNotice.fiscalCode'",
         "rpt": "SELECT columns FROM table_name WHERE IUV = '$iuv' AND CCP= '$activatePaymentNoticeResponse.paymentToken' AND IDENT_DOMINIO= '$activatePaymentNotice.fiscalCode'",
         "rt_versamenti": "SELECT columns FROM table_name s JOIN RT r on s.FK_RT=r.ID  WHERE r.IUV = '$iuv' AND r.CCP= '$activatePaymentNoticeResponse.paymentToken' AND r.IDENT_DOMINIO= '$activatePaymentNotice.fiscalCode'",
@@ -44,21 +45,36 @@
         "idempotency_cache":"SELECT columns FROM table_name WHERE IDEMPOTENCY_KEY = '$sendPaymentOutcome.idempotencyKey'",
         "idempotency_act":"SELECT columns FROM table_name WHERE IDEMPOTENCY_KEY = '$activatePaymentNotice.idempotencyKey'",
         "idempotency_cache_act":"SELECT columns FROM table_name WHERE IDEMPOTENCY_KEY = '$activatePaymentNotice.idempotencyKey' AND PSP_ID = '$activatePaymentNotice.idPSP'",
+        "idempotency_cache_act_orderby":"SELECT columns FROM table_name WHERE IDEMPOTENCY_KEY = '$activatePaymentNotice.idempotencyKey' AND PSP_ID = '$activatePaymentNotice.idPSP' ORDER BY ID ASC",
         "idempotency_key":"SELECT * FROM IDEMPOTENCY_CACHE WHERE IDEMPOTENCY_KEY = '$sendPaymentOutcome.idempotencyKey' AND PSP_ID = '$activatePaymentNotice.idPSP'",
         "idempotency_cache_psp":"SELECT columns FROM table_name WHERE IDEMPOTENCY_KEY = '$activatePaymentNotice.idempotencyKey' AND PSP_ID = '$activatePaymentNotice.idPSP'",
         "idempotency_cache_psp_1" : "SELECT columns FROM table_name WHERE IDEMPOTENCY_KEY = '$activatePaymentNotice1.idempotencyKey' AND PSP_ID = '$activatePaymentNotice1.idPSP'",
         "idempotency_cache_psp_2" : "SELECT columns FROM table_name WHERE IDEMPOTENCY_KEY = '$activatePaymentNotice2.idempotencyKey' AND PSP_ID = '$activatePaymentNotice2.idPSP'",
-        "idempotency_cache_paymentToken1" : "SELECT columns FROM table_name WHERE IDEMPOTENCY_KEY = '$activatePaymentNotice1.idempotencyKey' AND PSP_ID = '$activatePaymentNotice1.idPSP' AND TOKEN = '$activatePaymentNotice1.paymentToken'",
-        "idempotency_cache_paymentToken2" : "SELECT columns FROM table_name WHERE IDEMPOTENCY_KEY = '$activatePaymentNotice2.idempotencyKey' AND PSP_ID = '$activatePaymentNotice2.idPSP' AND TOKEN = '$activatePaymentNotice2.paymentToken'"
+        "idempotency_cache_paymentToken" : "SELECT columns FROM table_name WHERE IDEMPOTENCY_KEY = '$activatePaymentNotice.idempotencyKey' AND PSP_ID = '$activatePaymentNotice.idPSP' AND TOKEN = '$activatePaymentNoticeResponse.paymentToken'",
+        "idempotency_cache_paymentToken1" : "SELECT columns FROM table_name WHERE IDEMPOTENCY_KEY = '$activatePaymentNotice1.idempotencyKey' AND PSP_ID = '$activatePaymentNotice1.idPSP' AND TOKEN = '$activatePaymentNotice1Response.paymentToken'",
+        "idempotency_cache_paymentToken2" : "SELECT columns FROM table_name WHERE IDEMPOTENCY_KEY = '$activatePaymentNotice2.idempotencyKey' AND PSP_ID = '$activatePaymentNotice2.idPSP' AND TOKEN = '$activatePaymentNotice2Response.paymentToken'",
+        "idempotency_paymentToken" : "SELECT columns FROM table_name WHERE TOKEN = '$activatePaymentNoticeResponse.paymentToken'",
+        "verifica_bollettino":"SELECT columns FROM table_name WHERE NOTICE_ID ='$verificaBollettino.noticeNumber' AND CCPOST = '$verificaBollettino.ccPost'",
+<<<<<<< HEAD
+        "position_subject_2":"SELECT columns FROM POSITION_SUBJECT s JOIN POSITION_SERVICE pp ON pp.DEBTOR_ID = $DEBTOR_ID where pp.notice_id = '$activatePaymentNotice.noticeNumber' and pp.pa_fiscal_code= '$activatePaymentNotice.fiscalCode'"
+=======
+        "retry_pa_invia_rt": "SELECT columns FROM table_name WHERE IUV = '$iuv' AND ID_DOMINIO= '$activatePaymentNotice.fiscalCode' ORDER BY ID ASC",
+        "retry_pa_invia_rpt": "SELECT columns FROM table_name WHERE IUV = '$iuv' AND PA_FISCAL_CODE= '$activatePaymentNotice.fiscalCode' ORDER BY ID ASC"
+>>>>>>> test-accenture
     },
     "AppIO":{
         "payment_status":"SELECT s.columns FROM table_name s WHERE s.NOTICE_ID ='$activateIOPayment.noticeNumber' AND s.PA_FISCAL_CODE = '$activateIOPayment.fiscalCode'",
+        "payment_status_old":"SELECT s.columns FROM table_name s WHERE s.NOTICE_ID ='002$iuv' AND s.PA_FISCAL_CODE = '$nodoInviaRPT.identificativoDominio'",
         "position_subject": "SELECT columns FROM POSITION_SERVICE ps RIGHT JOIN table_name ps2 ON ps.DEBTOR_ID = ps2.ID WHERE ps.PA_FISCAL_CODE = '$activateIOPayment.fiscalCode' AND  ps.NOTICE_ID = '$activateIOPayment.noticeNumber'",
+        "position_subject2": "SELECT s.columns FROM table_name s WHERE s.FULL_NAME = 'SPOname_$activateIOPaymentResponse.paymentToken'",
         "deny_list": "SELECT d.columns FROM DENYLIST d, PSP p, CANALI c, PA p2 WHERE d.FK_PSP = p.OBJ_ID AND d.FK_CANALE = c.OBJ_ID AND d.FK_PA = p2.OBJ_ID AND p.ID_PSP = '$activateIOPayment.idPSP' AND c.ID_CANALE = '$activateIOPayment.idChannel' AND p2.ID_DOMINIO = '$activateIOPayment.fiscalCode'",
         "pm_session": "SELECT columns FROM PM_SESSION_DATA WHERE ID_SESSIONE = '$activateIOPaymentResponse.paymentToken'",
+        "pm_session_old": "SELECT columns FROM PM_SESSION_DATA WHERE ID_SESSIONE = '$sessionToken'",
         "token_validity": "SELECT TOKEN_VALID_FROM, TOKEN_VALID_TO FROM POSITION_ACTIVATE WHERE CREDITOR_REFERENCE_ID  = '$activateIOPaymentResponse.creditorReferenceId' AND PA_FISCAL_CODE = '$activateIOPaymentResponse.fiscalCodePA' AND PAYMENT_TOKEN = '$activateIOPaymentResponse.paymentToken'",
         "psp": "SELECT columns FROM table_name where ID_PSP = '$sendPaymentOutcome.idPSP'",
-        "payment_status_1": "SELECT columns FROM table_name s where s.NOTICE_ID = $activateIOPayment.noticeNumber and s.PAYMENT_TOKEN= '$activateIOPaymentResponse.paymentToken'"
+        "payment_status_1": "SELECT columns FROM table_name s where s.NOTICE_ID = $activateIOPayment.noticeNumber and s.PAYMENT_TOKEN= '$activateIOPaymentResponse.paymentToken'",
+        "info_pagamento": "SELECT columns FROM CD_INFO_PAGAMENTO WHERE ID_SESSIONE='$sessionToken'",
+        "rpt_stati": "SELECT columns FROM table_name s WHERE s.IUV = '$iuv' ORDER BY INSERTED_TIMESTAMP ASC"
     },
     "Mod1Mb":{
         "DB_INOLTRO_PAG_stati_carrello_napshot": "SELECT s.columns FROM table_name s WHERE s.IUV = '$nodoInoltraEsitoPagamentoCarte.noticenumber' and s.ID_DOMINIO = '$nodoInoltraEsitoPagamentoCarte.fiscalcode'",
@@ -66,6 +82,7 @@
         "DB_INOLTRO_PAG_stati_carrello": "SELECT s.columns FROM table_name s WHERE s.IUV = '$nodoInoltraEsitoPagamentoCarte.noticenumber' and s.ID_DOMINIO = '$nodoInoltraEsitoPagamentoCarte.fiscalcode'",
         "DB_INOLTRO_PAG_stati_rpt_snapshot": "SELECT s.columns FROM table_name s WHERE s.IUV = '$nodoInoltraEsitoPagamentoCarte.noticenumber' and s.ID_DOMINIO = '$nodoInoltraEsitoPagamentoCarte.fiscalcode'"
     },
+<<<<<<< HEAD
     "Mod1":{
         "esito": "SELECT v.columns FROM table_name r JOIN RT_VERSAMENTI v ON v.FK_RT=r.ID WHERE r.IUV='$iuv' AND r.CCP= '$nodoInviaRPT.codiceContestoPagamento' AND r.IDENT_DOMINIO='$nodoInviaRPT.identificativoDominio'",
         "esito_2iuv": "SELECT v.columns FROM table_name r JOIN RT_VERSAMENTI v ON v.FK_RT=r.ID WHERE r.IUV=('$IUV','$IUV2') AND r.CCP= '$nodoInviaRPT.codiceContestoPagamento' AND r.IDENT_DOMINIO='$nodoInviaRPT.identificativoDominio'",
@@ -74,11 +91,19 @@
         "stati_RPT2": "SELECT columns FROM table_name WHERE IUV='avanzaErrResponse2' AND CCP= '$ccp2' AND ID_DOMINIO='44444444445' ORDER BY INSERTED_TIMESTAMP",
         "retry_rpt": "SELECT columns FROM table_name WHERE ID_SESSIONE='$sessionToken' ORDER BY INSERTED_TIMESTAMP",
         "Re": "SELECT columns FROM table_name WHERE ID_SESSIONE ='$sessionId' AND INSERTED_TIMESTAMP > ROUND(SYSDATE-1) ORDER BY DATA_ORA_EVENTO"
+=======
+    "Mod1": {
+        "rpt_stati": "SELECT columns FROM table_name s WHERE s.IUV = '$iuv' ORDER BY INSERTED_TIMESTAMP ASC",
+        "stati_carrello": "SELECT columns FROM table s WHERE s.ID_CARRELLO = '$nodoInviaCarrelloRPT.idCarrello' ORDER BY ID ASC",
+        "payment_status": "SELECT s.columns FROM table_name s WHERE s.NOTICE_ID ='$activateIOPayment.noticeNumber' AND s.PA_FISCAL_CODE = '$activateIOPayment.fiscalCode'"
+>>>>>>> test-accenture
     },
     "constanti":{
     },
     "update_query":{
         "idempotency_update":"UPDATE IDEMPOTENCY_CACHE SET VALID_TO = TO_DATE('date', 'YYYY-MM-DD HH24:MI:SS') WHERE IDEMPOTENCY_KEY = '$sendPaymentOutcome.idempotencyKey' AND PSP_ID = '$sendPaymentOutcome.idPSP'",
-        "param_update": "UPDATE table_name SET param = 'value' WHERE where_condition = 'valore'"
+        "param_update": "UPDATE table_name SET param = 'value' WHERE where_condition = 'valore'",
+        "param_update_in": "UPDATE table_name SET param = 'value' WHERE where_condition IN valore",
+        "param_update_generic_where_condition" : "UPDATE table_name SET param WHERE where_condition"
     }
 }

@@ -15,7 +15,7 @@ Feature: check semantic paaVerifyRPT - KO
                         <password>pwdpwdpwd</password>
                         <qrCode>
                             <fiscalCode>#creditor_institution_code#</fiscalCode>
-                            <noticeNumber>302094719472095710</noticeNumber>
+                            <noticeNumber>#notice_number#</noticeNumber>
                         </qrCode>
                     </nod:verifyPaymentNoticeReq>
                 </soapenv:Body>
@@ -55,5 +55,5 @@ Feature: check semantic paaVerifyRPT - KO
         Then check outcome is KO of verifyPaymentNotice response
         And check faultCode is PPT_IBAN_NON_CENSITO of verifyPaymentNotice response
         Examples:
-            | tag           | tag_value | soapUI test   |
-            | ibanAccredito | unknown   | SEM_PVRPTR_01 |
+            | tag           | tag_value        | soapUI test   |
+            | ibanAccredito | 12365874654641   | SEM_PVRPTR_01 |

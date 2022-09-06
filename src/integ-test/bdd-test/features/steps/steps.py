@@ -1,4 +1,6 @@
 import datetime
+from email import header
+from email.headerregistry import HeaderRegistry
 from email.policy import default
 import json
 import os
@@ -11,7 +13,6 @@ import base64 as b64
 import requests
 from behave import *
 from requests.exceptions import RetryError
-
 
 
 import utils as utils
@@ -33,12 +34,13 @@ def step_impl(context):
             - pagopa-api-config ( used in tests to set DB's nodo-dei-pagamenti correctly according to input test ))
     """
     responses = True
-    
+
     for row in context.table:
         print(f"calling: {row.get('name')} -> {row.get('url')}")
         url = row.get("url") + row.get("healthcheck")
         print(f"calling -> {url}")
-        resp = requests.get(url)
+        headers = {'Host': 'api.dev.platform.pagopa.it:443'}
+        resp = requests.get(url, headers=headers, verify=False)
         print(f"response: {resp.status_code}")
         responses &= (resp.status_code == 200)
 
@@ -60,14 +62,26 @@ def step_impl(context, primitive):
         my_document = parseString(payload)
         idBrokerPSP = "70000000001"
         if len(my_document.getElementsByTagName('idBrokerPSP')) > 0:
-            idBrokerPSP = my_document.getElementsByTagName('idBrokerPSP')[0].firstChild.data
-        payload = payload.replace('#idempotency_key#', f"{idBrokerPSP}_{str(random.randint(1000000000, 9999999999))}")
+            idBrokerPSP = my_document.getElementsByTagName('idBrokerPSP')[
+                0].firstChild.data
+        payload = payload.replace(
+            '#idempotency_key#', f"{idBrokerPSP}_{str(random.randint(1000000000, 9999999999))}")
+
+    if "#ccp#" in payload:
+        ccp = str(random.randint(100000000000000, 999999999999999))
+        payload = payload.replace('#ccp#', ccp)
+        setattr(context, "ccp", ccp)
+
+    if "#iuv#" in payload:
+        iuv = str(random.randint(100000000000000, 999999999999999))
+        payload = payload.replace('#iuv#', iuv)
+        setattr(context, "iuv", iuv)
 
     if '#notice_number#' in payload:
         notice_number = f"30211{str(random.randint(1000000000000, 9999999999999))}"
         payload = payload.replace('#notice_number#', notice_number)
         setattr(context, "iuv", notice_number[1:])
-    
+
     if '#notice_number_old#' in payload:
         notice_number = f"31211{str(random.randint(1000000000000, 9999999999999))}"
         payload = payload.replace('#notice_number_old#', notice_number)
@@ -75,6 +89,7 @@ def step_impl(context, primitive):
 
     if '#identificativoFlusso#' in payload:
         date = datetime.date.today().strftime("%Y-%m-%d")
+<<<<<<< HEAD
         identificativoFlusso = date + context.config.userdata.get("global_configuration").get("psp") + "-" + str(random.randint(0, 10000))
         setattr(context,'identificativoFlusso', identificativoFlusso)
         payload = payload.replace('#identificativoFlusso#', identificativoFlusso)
@@ -127,6 +142,38 @@ def step_impl(context, primitive):
     
     if '$IuV' in payload:
         payload = payload.replace('$IuV', getattr(context, 'IuV'))
+=======
+        identificativoFlusso = date + context.config.userdata.get(
+            "global_configuration").get("psp") + "-" + str(random.randint(0, 10000))
+        setattr(context, 'identificativoFlusso', identificativoFlusso)
+        payload = payload.replace(
+            '#identificativoFlusso#', identificativoFlusso)
+
+    if '$iuv' in payload:
+        payload = payload.replace('$iuv', getattr(context, 'iuv'))
+
+    if '$rptAttachment' in payload:
+        rptAttachment = getattr(context, 'rptAttachment')
+        rptAttachment_b = bytes(rptAttachment, 'ascii')
+        rptAttachment_uni = b64.b64encode(rptAttachment_b)
+        rptAttachment_uni = f"{rptAttachment_uni}".split("'")[1]
+        payload = payload.replace('$rptAttachment', rptAttachment_uni)
+
+    if '$rpt2Attachment' in payload:
+        rpt2Attachment = getattr(context, 'rpt2Attachment')
+        rpt2Attachment_b = bytes(rpt2Attachment, 'ascii')
+        rpt2Attachment_uni = b64.b64encode(rpt2Attachment_b)
+        rpt2Attachment_uni = f"{rpt2Attachment_uni}".split("'")[1]
+        payload = payload.replace('$rpt2Attachment', rpt2Attachment_uni)
+
+    if '$intermediarioPA' in payload:
+        payload = payload.replace(
+            '$intermediarioPA', getattr(context, 'intermediarioPA'))
+
+    if '$identificativoFlusso' in payload:
+        payload = payload.replace('$identificativoFlusso', getattr(
+            context, 'identificativoFlusso'))
+>>>>>>> test-accenture
 
     if '$1ccp' in payload:
         payload = payload.replace('$1ccp', getattr(context, 'ccp1'))
@@ -142,25 +189,46 @@ def step_impl(context, primitive):
         rendAttachment_uni = f"{rendAttachment_uni}".split("'")[1]
         payload = payload.replace('$rendAttachment', rendAttachment_uni)
 
+<<<<<<< HEAD
+=======
+    if '#carrello#' in payload:
+        carrello = "77777777777" + "311" + "0" + str(random.randint(1000, 2000)) + str(
+            random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+        payload = payload.replace('#carrello#', carrello)
+        setattr(context, 'carrello', carrello)
+
+>>>>>>> test-accenture
     payload = utils.replace_context_variables(payload, context)
     payload = utils.replace_global_variables(payload, context)
     setattr(context, primitive, payload)
-    
-@given('RPT generation')
+
+
+<<<<<<< HEAD
+@given ('RT generation')
 def step_impl(context):
     payload = context.text or ""
     payload = utils.replace_context_variables(payload, context)
     payload = utils.replace_local_variables(payload, context)
     payload = utils.replace_global_variables(payload, context)
     date = datetime.date.today().strftime("%Y-%m-%d")
+<<<<<<< HEAD
     timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3] 
     setattr(context,'date', date) 
     setattr(context,'timedate', timedate)
 
     pa = context.config.userdata.get('global_configuration').get('codicePA')
     print(f"############################ {pa}")
+=======
+>>>>>>> test-accenture
 
-    if "#intermediarioPA#" in payload:     
+
+    if "#iuv#" in payload:
+        iuv = f"14{str(random.randint(1000000000000, 9999999999999))}" 
+        setattr(context,'iuv', iuv)
+        payload = payload.replace('#iuv#', iuv)
+        setattr(context, 'date', date)
+
+    if '#intermediarioPA#' in payload:
         intermediarioPA = "44444444444_05"
         payload = payload.replace('#intermediarioPA#', intermediarioPA)
         setattr(context,"intermediarioPA", intermediarioPA)
@@ -237,25 +305,109 @@ def step_impl(context):
         payload = payload.replace('#carrNOTENABLED#', carrNOTENABLED)
         setattr(context,'carrNOTENABLED', carrNOTENABLED)
     
+    if "#ccp#" in payload:     
+        ccp = str(random.randint(100000000000000, 999999999999999))
+        payload = payload.replace('#ccp#', ccp)
+        setattr(context,"ccp", ccp)
+
+    if '#date#' in payload:
+        payload = payload.replace('#date#', date)
+
+    if "#codicePA#" in payload:     
+        codicePA = "77777777777"
+        payload = payload.replace('#codicePA#', codicePA)
+        setattr(context,"codicePA", codicePA)
+
+
+
+    print("RT generata: ", payload)
+    setattr(context,'rendAttachment', payload)
+
+
+
+=======
+>>>>>>> test-accenture
+@given('RPT generation')
+def step_impl(context):
+    payload = context.text or ""
+    payload = utils.replace_local_variables(payload, context)
+    #payload = utils.replace_context_variables(payload, context)
+    date = datetime.date.today().strftime("%Y-%m-%d")
+
+    if "#iuv#" in payload:
+        iuv = f"14{str(random.randint(1000000000000, 9999999999999))}"
+        setattr(context, 'iuv', iuv)
+        payload = payload.replace('#iuv#', iuv)
+
+    setattr(context, 'date', date)
+    if "#intermediarioPA#" in payload:
+        intermediarioPA = "44444444444_05"
+        payload = payload.replace('#intermediarioPA#', intermediarioPA)
+        setattr(context, "intermediarioPA", intermediarioPA)
+    if "#ccp#" in payload:
+        ccp = str(random.randint(100000000000000, 999999999999999))
+        payload = payload.replace('#ccp#', ccp)
+        setattr(context, "ccp", ccp)
+    if '#date#' in payload:
+        payload = payload.replace('#date#', date)
+    if "#codicePA#" in payload:
+        codicePA = "77777777777"
+        payload = payload.replace('#codicePA#', codicePA)
+        setattr(context, "codicePA", codicePA)
+
+    if '#idCarrello#' in payload:
+        carrello = "09812374659" + "311" + "0" + str(random.randint(1000, 2000)) + str(
+            random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + utils.random_s()
+        payload = payload.replace('#carrello#', carrello)
+        setattr(context, 'carrello', carrello)
+    if '#carrello#' in payload:
+        carrello = "77777777777" + "311" + "0" + str(random.randint(1000, 2000)) + str(
+            random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+        payload = payload.replace('#carrello#', carrello)
+        setattr(context, 'carrello', carrello)
+    if '#carrello1#' in payload:
+        carrello1 = "77777777777" + "311" + "0" + str(random.randint(1000, 2000)) + str(
+            random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + utils.random_s()
+        payload = payload.replace('#carrello1#', carrello1)
+        setattr(context, 'carrello1', carrello1)
+    if '#carrello2#' in payload:
+        carrello2 = "77777777777" + "301" + "0" + str(random.randint(1000, 2000)) + str(
+            random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+        payload = payload.replace('#carrello2#', carrello2)
+        setattr(context, 'carrello2', carrello2)
+    if '#carrello3#' in payload:
+        carrello3 = "77777777777" + "088" + "0" + str(random.randint(1000, 2000)) + str(
+            random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+        payload = payload.replace('#carrello3#', carrello3)
+        setattr(context, 'carrello3', carrello3)
+    if '#carrello_NOT_ENABLED#' in payload:
+        carrello_NOT_ENABLED = "11111122223" + "311" + "0" + str(random.randint(1000, 2000)) + str(
+            random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+        payload = payload.replace(
+            '#carrello_NOT_ENABLED#', carrello_NOT_ENABLED)
+        setattr(context, 'carrello_NOT_ENABLED', carrello_NOT_ENABLED)
     if "nodoVerificaRPT_IUV" in payload:
         nodoVerificaRPT = getattr(context, 'nodoVerificaRPT')
         my_document = parseString(nodoVerificaRPT.content)
         aux_digit = my_document.getElementsByTagName('AuxDigit')
         if aux_digit == '0' or aux_digit == '1' or aux_digit == '2':
-             iuv = ''+random.randint(10000, 20000)+random.randint(10000, 20000)+random.randint(10000, 20000)
+            iuv = ''+random.randint(10000, 20000)+random.randint(10000,
+                                                                 20000)+random.randint(10000, 20000)
         elif aux_digit == '3':
-            #per pa_old
-             iuv = '11' + (int)(random.randint(10000, 20000))+(int)(random.randint(10000, 20000))+(int)(random.randint(10000, 20000))
+            # per pa_old
+            iuv = '11' + (int)(random.randint(10000, 20000)) + \
+                (int)(random.randint(10000, 20000)) + \
+                (int)(random.randint(10000, 20000))
         payload = payload.replace('iuv', iuv)
-        setattr(context,'iuv', iuv)
-
+        setattr(context, 'iuv', iuv)
     if "$ccp" in payload:
-        ccp = ''+random.randint(10000, 20000)+random.randint(10000, 20000)+random.randint(10000, 20000)
-        payload = payload.replace('ccp',ccp )
+        ccp = ''+random.randint(10000, 20000)+random.randint(10000,
+                                                             20000)+random.randint(10000, 20000)
+        payload = payload.replace('ccp', ccp)
         setattr(context, "ccp", ccp)
-
     if '$iuv' in payload:
         payload = payload.replace('$iuv', getattr(context, 'iuv'))
+<<<<<<< HEAD
 
         
     payload_b = bytes(payload, 'ascii')
@@ -263,8 +415,91 @@ def step_impl(context):
     payload = f"{payload_uni}".split("'")[1]
     print(payload)
     
+=======
+>>>>>>> test-accenture
     print("RPT generato: ", payload)
-    setattr(context,'rptAttachment', payload)
+    setattr(context, 'rptAttachment', payload)
+
+
+@given('RPT2 generation')
+def step_impl(context):
+    payload = context.text or ""
+    payload = utils.replace_local_variables(payload, context)
+    date = datetime.date.today().strftime("%Y-%m-%d")
+    iuv2 = "IUV" + str(random.randint(0, 10000)) + "-" + \
+        datetime.datetime.now().strftime("%Y-%m-%d-%H:%M:%S.%f")[:-3]
+    setattr(context, 'date', date)
+    setattr(context, 'iuv2', iuv2)
+    if "#intermediarioPA#" in payload:
+        intermediarioPA = "44444444444_05"
+        payload = payload.replace('#intermediarioPA#', intermediarioPA)
+        setattr(context, "intermediarioPA", intermediarioPA)
+    if "#ccp#" in payload:
+        ccp = str(int(time() * 1000))
+        payload = payload.replace('#ccp#', ccp)
+        setattr(context, "ccp", ccp)
+    if '#date#' in payload:
+        payload = payload.replace('#date#', date)
+    if "#codicePA#" in payload:
+        codicePA = "77777777777"
+        payload = payload.replace('#codicePA#', codicePA)
+        setattr(context, "codicePA", codicePA)
+    if '#iuv2#' in payload:
+        payload = payload.replace('#iuv2#', iuv2)
+    if '#idCarrello#' in payload:
+        carrello = "09812374659" + "311" + "0" + str(random.randint(1000, 2000)) + str(
+            random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + utils.random_s()
+        payload = payload.replace('#carrello#', carrello)
+        setattr(context, 'carrello', carrello)
+    if '#carrello#' in payload:
+        carrello = "77777777777" + "311" + "0" + str(random.randint(1000, 2000)) + str(
+            random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+        payload = payload.replace('#carrello#', carrello)
+        setattr(context, 'carrello', carrello)
+    if '#carrello1#' in payload:
+        carrello1 = "77777777777" + "311" + "0" + str(random.randint(1000, 2000)) + str(
+            random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + utils.random_s()
+        payload = payload.replace('#carrello1#', carrello1)
+        setattr(context, 'carrello1', carrello1)
+    if '#carrello2#' in payload:
+        carrello2 = "77777777777" + "301" + "0" + str(random.randint(1000, 2000)) + str(
+            random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+        payload = payload.replace('#carrello2#', carrello2)
+        setattr(context, 'carrello2', carrello2)
+    if '#carrello3#' in payload:
+        carrello3 = "77777777777" + "088" + "0" + str(random.randint(1000, 2000)) + str(
+            random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+        payload = payload.replace('#carrello3#', carrello3)
+        setattr(context, 'carrello3', carrello3)
+    if '#carrello_NOT_ENABLED#' in payload:
+        carrello_NOT_ENABLED = "11111122223" + "311" + "0" + str(random.randint(1000, 2000)) + str(
+            random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+        payload = payload.replace(
+            '#carrello_NOT_ENABLED#', carrello_NOT_ENABLED)
+        setattr(context, 'carrello_NOT_ENABLED', carrello_NOT_ENABLED)
+    if "nodoVerificaRPT_IUV" in payload:
+        nodoVerificaRPT = getattr(context, 'nodoVerificaRPT')
+        my_document = parseString(nodoVerificaRPT.content)
+        aux_digit = my_document.getElementsByTagName('AuxDigit')
+        if aux_digit == '0' or aux_digit == '1' or aux_digit == '2':
+            iuv = ''+random.randint(10000, 20000)+random.randint(10000,
+                                                                 20000)+random.randint(10000, 20000)
+        elif aux_digit == '3':
+            # per pa_old
+            iuv = '11' + (int)(random.randint(10000, 20000)) + \
+                (int)(random.randint(10000, 20000)) + \
+                (int)(random.randint(10000, 20000))
+        payload = payload.replace('iuv', iuv)
+        setattr(context, 'iuv', iuv)
+    if "$ccp" in payload:
+        ccp = ''+random.randint(10000, 20000)+random.randint(10000,
+                                                             20000)+random.randint(10000, 20000)
+        payload = payload.replace('ccp', ccp)
+        setattr(context, "ccp", ccp)
+    if '$iuv2' in payload:
+        payload = payload.replace('$iuv2', getattr(context, 'iuv2'))
+    setattr(context, 'rpt2Attachment', payload)
+
 
 @given('RT generation')
 def step_impl(context):
@@ -425,33 +660,37 @@ def step_impl(context):
     payload = utils.replace_global_variables(payload, context)
     date = datetime.date.today().strftime("%Y-%m-%d")
     timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
-    identificativoFlusso = date + context.config.userdata.get("global_configuration").get("psp") + "-" + str(random.randint(0, 10000))
-    iuv = "IUV" + str(random.randint(0, 10000)) + "-" + datetime.datetime.now().strftime("%Y-%m-%d-%H:%M:%S.%f")[:-3]
-    setattr(context,'date', date)
-    setattr(context,'timedate', timedate)
-    setattr(context,'identificativoFlusso', identificativoFlusso)
-    setattr(context,'iuv', iuv)
+    identificativoFlusso = date + context.config.userdata.get(
+        "global_configuration").get("psp") + "-" + str(random.randint(0, 10000))
+    iuv = "IUV" + str(random.randint(0, 10000)) + "-" + \
+        datetime.datetime.now().strftime("%Y-%m-%d-%H:%M:%S.%f")[:-3]
+    setattr(context, 'date', date)
+    setattr(context, 'timedate', timedate)
+    setattr(context, 'identificativoFlusso', identificativoFlusso)
+    setattr(context, 'iuv', iuv)
 
     if '#date#' in payload:
         payload = payload.replace('#date#', date)
-    
+
     if '#timedate+1#' in payload:
         date = datetime.date.today() + datetime.timedelta(hours=1)
         date = date.strftime("%Y-%m-%d")
         timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
         payload = payload.replace('#timedate+1#', timedate)
 
-    if "#timedate#" in payload:     
+    if "#timedate#" in payload:
         payload = payload.replace('#timedate#', timedate)
 
     if '#identificativoFlusso#' in payload:
-        payload = payload.replace('#identificativoFlusso#', identificativoFlusso)
+        payload = payload.replace(
+            '#identificativoFlusso#', identificativoFlusso)
 
     if '#iuv#' in payload:
         payload = payload.replace('#iuv#', iuv)
 
     print("REND generata: ", payload)
-    setattr(context,'rendAttachment', payload)
+    setattr(context, 'rendAttachment', payload)
+
 
 @given('{elem} with {value} in {action}')
 def step_impl(context, elem, value, action):
@@ -459,7 +698,8 @@ def step_impl(context, elem, value, action):
     if elem != "-":
         value = utils.replace_local_variables(value, context)
         value = utils.replace_global_variables(value, context)
-        xml = utils.manipulate_soap_action(getattr(context, action), elem, value)
+        xml = utils.manipulate_soap_action(
+            getattr(context, action), elem, value)
         setattr(context, action, xml)
 
 
@@ -474,6 +714,7 @@ def step_impl(context, attribute, value, elem, primitive):
 @step('{sender} sends soap {soap_primitive} to {receiver}')
 def step_impl(context, sender, soap_primitive, receiver):
     primitive = soap_primitive.split("_")[0]
+<<<<<<< HEAD
     headers = {'Content-Type': 'application/xml', "SOAPAction": primitive, "X-Original-Forwarded-For": '10.82.39.148'}  # set what your server accepts
     url_nodo = utils.get_soap_url_nodo(context, primitive)
     print("url_nodo: ", url_nodo)
@@ -482,19 +723,34 @@ def step_impl(context, sender, soap_primitive, receiver):
     soap_response = requests.post(url_nodo, getattr(context, soap_primitive), headers=headers)
     print(soap_response.content, soap_response.headers)
     setattr(context, "sessionId", soap_response.headers.get("sessionId"))
+=======
+    headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive,
+               'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}  # set what your server accepts
+    url_nodo = utils.get_soap_url_nodo(context, primitive)
+    print("url_nodo: ", url_nodo)
+    print("nodo soap_request sent >>>", getattr(context, soap_primitive))
+    print("headers: ", headers)
+    soap_response = requests.post(url_nodo, getattr(
+        context, soap_primitive), headers=headers, verify=False)
+    print(soap_response.content)
+    print(soap_response.status_code)
+>>>>>>> test-accenture
     setattr(context, soap_primitive + RESPONSE, soap_response)
 
-    assert (soap_response.status_code == 200), f"status_code {soap_response.status_code}"
+    assert (soap_response.status_code ==
+            200), f"status_code {soap_response.status_code}"
 
 
 @when('job {job_name} triggered after {seconds} seconds')
 def step_impl(context, job_name, seconds):
-    print(seconds)
     seconds = utils.replace_local_variables(seconds, context)
     time.sleep(int(seconds))
     url_nodo = utils.get_rest_url_nodo(context)
-    nodo_response = requests.get(f"{url_nodo}/jobs/trigger/{job_name}")
+    headers = {'Host': 'api.dev.platform.pagopa.it:443'}
+    nodo_response = requests.get(
+        f"{url_nodo}/jobs/trigger/{job_name}", headers=headers, verify=False)
     setattr(context, job_name + RESPONSE, nodo_response)
+
 
 @then('check {tag} is {value} of {primitive} response')
 def step_impl(context, tag, value, primitive):
@@ -502,10 +758,13 @@ def step_impl(context, tag, value, primitive):
     if 'xml' in soap_response.headers['content-type']:
         my_document = parseString(soap_response.content)
         if len(my_document.getElementsByTagName('faultCode')) > 0:
-            print("fault code: ", my_document.getElementsByTagName('faultCode')[0].firstChild.data)
-            print("fault string: ", my_document.getElementsByTagName('faultString')[0].firstChild.data)
+            print("fault code: ", my_document.getElementsByTagName(
+                'faultCode')[0].firstChild.data)
+            print("fault string: ", my_document.getElementsByTagName(
+                'faultString')[0].firstChild.data)
             if my_document.getElementsByTagName('description'):
-                print("description: ", my_document.getElementsByTagName('description')[0].firstChild.data)
+                print("description: ", my_document.getElementsByTagName(
+                    'description')[0].firstChild.data)
         data = my_document.getElementsByTagName(tag)[0].firstChild.data
         value = utils.replace_local_variables(value, context)
         value = utils.replace_global_variables(value, context)
@@ -514,7 +773,8 @@ def step_impl(context, tag, value, primitive):
     else:
         node_response = getattr(context, primitive + RESPONSE)
         json_response = node_response.json()
-        print(f'check tag "{tag}" - expected: {value}, obtained: {json_response.get(tag)}')
+        print(
+            f'check tag "{tag}" - expected: {value}, obtained: {json_response.get(tag)}')
         assert str(json_response.get(tag)) == value
 
 
@@ -524,10 +784,13 @@ def step_impl(context, tag, value, primitive):
     if 'xml' in soap_response.headers['content-type']:
         my_document = parseString(soap_response.content)
         if len(my_document.getElementsByTagName('faultCode')) > 0:
-            print("fault code: ", my_document.getElementsByTagName('faultCode')[0].firstChild.data)
-            print("fault string: ", my_document.getElementsByTagName('faultString')[0].firstChild.data)
+            print("fault code: ", my_document.getElementsByTagName(
+                'faultCode')[0].firstChild.data)
+            print("fault string: ", my_document.getElementsByTagName(
+                'faultString')[0].firstChild.data)
             if my_document.getElementsByTagName('description'):
-                print("description: ", my_document.getElementsByTagName('description')[0].firstChild.data)
+                print("description: ", my_document.getElementsByTagName(
+                    'description')[0].firstChild.data)
         data = my_document.getElementsByTagName(tag)[0].firstChild.data
         print(f'check tag "{tag}" - expected: {value}, obtained: {data}')
         assert value in data
@@ -537,17 +800,20 @@ def step_impl(context, tag, value, primitive):
         assert value in json_response.get(tag)
 
 
-# TODO tag.sort in xml response 
+# TODO tag.sort in xml response
 @then('check {tag} containsList {value} of {primitive} response')
 def step_impl(context, tag, value, primitive):
     soap_response = getattr(context, primitive + RESPONSE)
     if 'xml' in soap_response.headers['content-type']:
         my_document = parseString(soap_response.content)
         if len(my_document.getElementsByTagName('faultCode')) > 0:
-            print("fault code: ", my_document.getElementsByTagName('faultCode')[0].firstChild.data)
-            print("fault string: ", my_document.getElementsByTagName('faultString')[0].firstChild.data)
+            print("fault code: ", my_document.getElementsByTagName(
+                'faultCode')[0].firstChild.data)
+            print("fault string: ", my_document.getElementsByTagName(
+                'faultString')[0].firstChild.data)
             if my_document.getElementsByTagName('description'):
-                print("description: ", my_document.getElementsByTagName('description')[0].firstChild.data)
+                print("description: ", my_document.getElementsByTagName(
+                    'description')[0].firstChild.data)
         data = my_document.getElementsByTagName(tag)[0].firstChild.data
         print(f'check tag "{tag}" - expected: {value}, obtained: {data}')
         assert value in data
@@ -566,6 +832,16 @@ def step_impl(context, tag, primitive):
     if 'xml' in soap_response.headers['content-type']:
         my_document = parseString(soap_response.content)
         assert len(my_document.getElementsByTagName(tag)) > 0
+    else:
+        assert False
+
+
+@then('check {tag} field not exists in {primitive} response')
+def step_impl(context, tag, primitive):
+    soap_response = getattr(context, primitive + RESPONSE)
+    if 'xml' in soap_response.headers['content-type']:
+        my_document = parseString(soap_response.content)
+        assert len(my_document.getElementsByTagName(tag)) == 0
     else:
         assert False
 
@@ -589,9 +865,11 @@ def step_impl(context, tag, primitive):
 
 @then(u'check {mock:EcPsp} receives {primitive} properly')
 def step_impl(context, mock, primitive):
-    rest_mock = utils.get_rest_mock_ec(context) if mock == "EC" else utils.get_rest_mock_psp(context)
+    rest_mock = utils.get_rest_mock_ec(
+        context) if mock == "EC" else utils.get_rest_mock_psp(context)
 
-    notice_number = utils.replace_local_variables(context.text, context).strip()
+    notice_number = utils.replace_local_variables(
+        context.text, context).strip()
 
     s = requests.Session()
     responseJson = utils.requests_retry_session(session=s).get(
@@ -602,17 +880,20 @@ def step_impl(context, mock, primitive):
 
 @then(u'check {mock:EcPsp} receives {primitive} {status:ProperlyNotProperly} with noticeNumber {notice_number}')
 def step_impl(context, mock, primitive, status, notice_number):
-    rest_mock = utils.get_rest_mock_ec(context) if mock == "EC" else utils.get_rest_mock_psp(context)
+    rest_mock = utils.get_rest_mock_ec(
+        context) if mock == "EC" else utils.get_rest_mock_psp(context)
     if "$" in notice_number:
         notice_number = utils.replace_local_variables(notice_number, context)
 
     if status == "properly":
-        json, status_code = utils.get_history(rest_mock, notice_number, primitive)
+        json, status_code = utils.get_history(
+            rest_mock, notice_number, primitive)
         setattr(context, primitive, json)
         assert "request" in json and len(json.get("request").keys()) > 0
     else:
         try:
-            json, status_code = utils.get_history(rest_mock, notice_number, primitive)
+            json, status_code = utils.get_history(
+                rest_mock, notice_number, primitive)
             assert status_code != 200
         except RetryError:
             assert True
@@ -636,7 +917,8 @@ def step_impl(context, mock, primitive, idTransfer, elem, other_primitive):
     map = {}
     for transfer in my_document.getElementsByTagName("transfer"):
         if transfer.getElementsByTagName("idTransfer")[0].firstChild.nodeValue == idTransfer:
-            map[idTransfer] = transfer.getElementsByTagName(elem)[0].firstChild.nodeValue
+            map[idTransfer] = transfer.getElementsByTagName(
+                elem)[0].firstChild.nodeValue
 
     json = getattr(context, primitive)
     body = json.get("request").get("soapenv:envelope").get("soapenv:body")[0]
@@ -651,7 +933,8 @@ def step_impl(context, mock, primitive, idTransfer, elem, other_primitive):
 
 @step('the {name} scenario executed successfully')
 def step_impl(context, name):
-    phase = ([phase for phase in context.feature.scenarios if name in phase.name] or [None])[0]
+    phase = (
+        [phase for phase in context.feature.scenarios if name in phase.name] or [None])[0]
     text_step = ''.join(
         [step.keyword + " " + step.name + "\n\"\"\"\n" + (step.text or '') + "\n\"\"\"\n" for step in phase.steps])
     context.execute_steps(text_step)
@@ -662,13 +945,18 @@ def step_impl(context, sender, method, service, receiver):
     # TODO get url according to receiver
     url_nodo = utils.get_rest_url_nodo(context)
 
-    headers = {'Content-Type': 'application/json'}
+    headers = {'Content-Type': 'application/json',
+               'Host': 'api.dev.platform.pagopa.it:443'}
     body = context.text or ""
+    print(body)
 
     body = utils.replace_local_variables(body, context)
     body = utils.replace_context_variables(body, context)
     body = utils.replace_global_variables(body, context)
+<<<<<<< HEAD
     print(body)
+=======
+>>>>>>> test-accenture
     service = utils.replace_local_variables(service, context)
     service = utils.replace_context_variables(service, context)
     print(f"{url_nodo}/{service}")
@@ -678,7 +966,7 @@ def step_impl(context, sender, method, service, receiver):
         json_body = None
 
     nodo_response = requests.request(method, f"{url_nodo}/{service}", headers=headers,
-                                     json=json_body)
+                                     json=json_body, verify=False)
 
     setattr(context, service.split('?')[0], json_body)
     setattr(context, service.split('?')[0] + RESPONSE, nodo_response)
@@ -688,8 +976,10 @@ def step_impl(context, sender, method, service, receiver):
 
 @then('verify the HTTP status code of {action} response is {value}')
 def step_impl(context, action, value):
-    print(f'HTTP status expected: {value} - obtained:{getattr(context, action + RESPONSE).status_code}')
+    print(
+        f'HTTP status expected: {value} - obtained:{getattr(context, action + RESPONSE).status_code}')
     assert int(value) == getattr(context, action + RESPONSE).status_code
+
 
 @given('{mock} replies to {destination} with the {primitive}')
 def step_impl(context, mock, destination, primitive):
@@ -701,16 +991,24 @@ def step_impl(context, mock, destination, primitive):
                                                                              context.config.userdata.get(
                                                                                  "global_configuration").get(
                                                                                  "creditor_institution_code"))
-    
+
     if '$iuv' in pa_verify_payment_notice_res:
-        pa_verify_payment_notice_res = pa_verify_payment_notice_res.replace('$iuv', getattr(context, 'iuv'))
+        pa_verify_payment_notice_res = pa_verify_payment_notice_res.replace(
+            '$iuv', getattr(context, 'iuv'))
 
     setattr(context, primitive, pa_verify_payment_notice_res)
     print(pa_verify_payment_notice_res)
-    response_status_code = utils.save_soap_action(utils.get_soap_mock_ec(context), primitive,
-                                                  pa_verify_payment_notice_res, override=True)
+    if mock == 'EC':
+        print(utils.get_soap_mock_ec(context))
+        response_status_code = utils.save_soap_action(utils.get_soap_mock_ec(context), primitive,
+                                                    pa_verify_payment_notice_res, override=True)
+    else:
+        print(utils.get_soap_mock_psp(context))
+        response_status_code = utils.save_soap_action(utils.get_soap_mock_psp(context), primitive,
+                                                    pa_verify_payment_notice_res, override=True)
 
     assert response_status_code == 200
+
 
 @given('{mock} wait for {sec} seconds at {action}')
 def step_impl(context, mock, sec, action):
@@ -733,16 +1031,22 @@ def step_impl(context):
     # retrieve info from soap request of background step
     soap_request = getattr(context, "activateIOPayment")
     my_document = parseString(soap_request)
-    notice_number = my_document.getElementsByTagName('noticeNumber')[0].firstChild.data
+    notice_number = my_document.getElementsByTagName('noticeNumber')[
+        0].firstChild.data
 
     inoltroEsito = getattr(context, "inoltroEsito/carta")
 
-    activateIOPaymentResponse = getattr(context, "activateIOPayment" + RESPONSE)
-    activateIOPaymentResponseXml = parseString(activateIOPaymentResponse.content)
+    activateIOPaymentResponse = getattr(
+        context, "activateIOPayment" + RESPONSE)
+    activateIOPaymentResponseXml = parseString(
+        activateIOPaymentResponse.content)
 
-    paGetPaymentJson = requests.get(f"{utils.get_rest_mock_ec(context)}/history/{notice_number}/paGetPayment")
+    headers = {'Host': 'api.dev.platform.pagopa.it:443'}
+
+    paGetPaymentJson = requests.get(
+        f"{utils.get_rest_mock_ec(context)}/history/{notice_number}/paGetPayment", headers=headers)
     pspNotifyPaymentJson = requests.get(
-        f"{utils.get_rest_mock_ec(context)}/history/{notice_number}/pspNotifyPayment")
+        f"{utils.get_rest_mock_ec(context)}/history/{notice_number}/pspNotifyPayment", headers=headers)
 
     paGetPayment = paGetPaymentJson.json()
     pspNotifyPayment = pspNotifyPaymentJson.json()
@@ -760,12 +1064,17 @@ def step_impl(context):
     pspNotifyPaymentReq_transferList_sorted = sorted(pspNotifyPaymentReq_transferList, key=lambda transfer: int(
         transfer.get("transfer")[0].get("idtransfer")[0]))
 
-    mixed_list = zip(paGetPaymentRes_transferList_sorted, pspNotifyPaymentReq_transferList_sorted)
+    mixed_list = zip(paGetPaymentRes_transferList_sorted,
+                     pspNotifyPaymentReq_transferList_sorted)
     for x in mixed_list:
-        assert x[0].get("transfer")[0].get("idTransfer")[0] == x[1].get("transfer")[0].get("idtransfer")[0]
-        assert x[0].get("transfer")[0].get("transferAmount")[0] == x[1].get("transfer")[0].get("transferamount")[0]
-        assert x[0].get("transfer")[0].get("fiscalCodePA")[0] == x[1].get("transfer")[0].get("fiscalcodepa")[0]
-        assert x[0].get("transfer")[0].get("IBAN")[0] == x[1].get("transfer")[0].get("iban")[0]
+        assert x[0].get("transfer")[0].get("idTransfer")[
+            0] == x[1].get("transfer")[0].get("idtransfer")[0]
+        assert x[0].get("transfer")[0].get("transferAmount")[
+            0] == x[1].get("transfer")[0].get("transferamount")[0]
+        assert x[0].get("transfer")[0].get("fiscalCodePA")[
+            0] == x[1].get("transfer")[0].get("fiscalcodepa")[0]
+        assert x[0].get("transfer")[0].get("IBAN")[
+            0] == x[1].get("transfer")[0].get("iban")[0]
 
     pspNotifyPaymentBody = \
         pspNotifyPayment.get("request").get("soapenv:envelope").get("soapenv:body")[0].get("pspfn:pspnotifypaymentreq")[
@@ -774,12 +1083,16 @@ def step_impl(context):
     data = \
         paGetPayment.get("response").get("soapenv:Envelope").get("soapenv:Body")[0].get("paf:paGetPaymentRes")[0].get(
             "data")[0]
-    assert pspNotifyPaymentBody.get("idpsp")[0] == inoltroEsito["identificativoPsp"]
-    assert pspNotifyPaymentBody.get("idbrokerpsp")[0] == inoltroEsito["identificativoIntermediario"]
-    assert pspNotifyPaymentBody.get("idchannel")[0] == inoltroEsito["identificativoCanale"]
+    assert pspNotifyPaymentBody.get(
+        "idpsp")[0] == inoltroEsito["identificativoPsp"]
+    assert pspNotifyPaymentBody.get("idbrokerpsp")[
+        0] == inoltroEsito["identificativoIntermediario"]
+    assert pspNotifyPaymentBody.get(
+        "idchannel")[0] == inoltroEsito["identificativoCanale"]
     assert float(pspNotifyPaymentBody.get("creditcardpayment")[0].get("fee")[0]) == float(
         inoltroEsito["importoTotalePagato"]) - float(data["paymentAmount"][0])
-    assert pspNotifyPaymentBody.get("creditcardpayment")[0].get("rrn")[0] == str(inoltroEsito["RRN"])
+    assert pspNotifyPaymentBody.get("creditcardpayment")[0].get("rrn")[
+        0] == str(inoltroEsito["RRN"])
     assert pspNotifyPaymentBody.get("creditcardpayment")[0].get("outcomepaymentgateway")[0] == str(
         inoltroEsito["esitoTransazioneCarta"])
     assert pspNotifyPaymentBody.get("creditcardpayment")[0].get("totalamount")[0] == str(
@@ -790,32 +1103,35 @@ def step_impl(context):
         inoltroEsito["codiceAutorizzativo"])
 
     assert pspNotifyPaymentBody.get("paymentdescription")[0] == \
-           paGetPayment.get("response").get("soapenv:Envelope").get("soapenv:Body")[0].get("paf:paGetPaymentRes")[
-               0].get(
-               "data")[0].get("description")[0]
+        paGetPayment.get("response").get("soapenv:Envelope").get("soapenv:Body")[0].get("paf:paGetPaymentRes")[
+        0].get(
+        "data")[0].get("description")[0]
     assert pspNotifyPaymentBody.get("companyname")[0] == \
-           paGetPayment.get("response").get("soapenv:Envelope").get("soapenv:Body")[0].get("paf:paGetPaymentRes")[
-               0].get(
-               "data")[0].get("companyName")[0]
+        paGetPayment.get("response").get("soapenv:Envelope").get("soapenv:Body")[0].get("paf:paGetPaymentRes")[
+        0].get(
+        "data")[0].get("companyName")[0]
 
     assert pspNotifyPaymentBody.get("paymenttoken")[0] == \
-           activateIOPaymentResponseXml.getElementsByTagName("paymentToken")[0].firstChild.data
+        activateIOPaymentResponseXml.getElementsByTagName("paymentToken")[
+        0].firstChild.data
     assert pspNotifyPaymentBody.get("fiscalcodepa")[0] == my_document.getElementsByTagName('fiscalCode')[
         0].firstChild.data
     assert pspNotifyPaymentBody.get("debtamount")[0] == \
-           paGetPayment.get("response").get("soapenv:Envelope").get("soapenv:Body")[0].get("paf:paGetPaymentRes")[
-               0].get(
-               "data")[0].get("paymentAmount")[0]
+        paGetPayment.get("response").get("soapenv:Envelope").get("soapenv:Body")[0].get("paf:paGetPaymentRes")[
+        0].get(
+        "data")[0].get("paymentAmount")[0]
     assert pspNotifyPaymentBody.get("creditorreferenceid")[0] == \
-           paGetPayment.get("response").get("soapenv:Envelope").get("soapenv:Body")[0].get("paf:paGetPaymentRes")[
-               0].get(
-               "data")[0].get("creditorReferenceId")[0]
+        paGetPayment.get("response").get("soapenv:Envelope").get("soapenv:Body")[0].get("paf:paGetPaymentRes")[
+        0].get(
+        "data")[0].get("creditorReferenceId")[0]
+
 
 @step('save {primitive} response in {new_primitive}')
 def step_impl(context, primitive, new_primitive):
     soap_response = getattr(context, primitive + RESPONSE)
     print(new_primitive + RESPONSE)
     setattr(context, new_primitive + RESPONSE, soap_response)
+
 
 @step('saving {primitive} request in {new_primitive}')
 def step_impl(context, primitive, new_primitive):
@@ -825,9 +1141,11 @@ def step_impl(context, primitive, new_primitive):
 
 @then('{response} response is equal to {response_1} response')
 def step_impl(context, response, response_1):
-    soap_response = getattr(context, response + RESPONSE).content.decode('utf-8')
-    soap_response_1 = getattr(context, response_1 + RESPONSE).content.decode('utf-8')
-    
+    soap_response = getattr(
+        context, response + RESPONSE).content.decode('utf-8')
+    soap_response_1 = getattr(context, response_1 +
+                              RESPONSE).content.decode('utf-8')
+
     assert soap_response == soap_response_1
 
 
@@ -836,16 +1154,22 @@ def step_impl(context):
     # retrieve info from soap request of background step
     soap_request = getattr(context, "activateIOPayment")
     my_document = parseString(soap_request)
-    notice_number = my_document.getElementsByTagName('noticeNumber')[0].firstChild.data
+    notice_number = my_document.getElementsByTagName('noticeNumber')[
+        0].firstChild.data
 
     inoltroEsito = getattr(context, "inoltroEsito/paypal")
 
-    activateIOPaymentResponse = getattr(context, "activateIOPayment" + RESPONSE)
-    activateIOPaymentResponseXml = parseString(activateIOPaymentResponse.content)
+    activateIOPaymentResponse = getattr(
+        context, "activateIOPayment" + RESPONSE)
+    activateIOPaymentResponseXml = parseString(
+        activateIOPaymentResponse.content)
 
-    paGetPaymentJson = requests.get(f"{utils.get_rest_mock_ec(context)}/history/{notice_number}/paGetPayment")
+    headers = {'Host': 'api.dev.platform.pagopa.it:443'}
+
+    paGetPaymentJson = requests.get(
+        f"{utils.get_rest_mock_ec(context)}/history/{notice_number}/paGetPayment", headers=headers)
     pspNotifyPaymentJson = requests.get(
-        f"{utils.get_rest_mock_ec(context)}/history/{notice_number}/pspNotifyPayment")
+        f"{utils.get_rest_mock_ec(context)}/history/{notice_number}/pspNotifyPayment", headers=headers)
 
     paGetPayment = paGetPaymentJson.json()
     pspNotifyPayment = pspNotifyPaymentJson.json()
@@ -863,12 +1187,17 @@ def step_impl(context):
     pspNotifyPaymentReq_transferList_sorted = sorted(pspNotifyPaymentReq_transferList, key=lambda transfer: int(
         transfer.get("transfer")[0].get("idtransfer")[0]))
 
-    mixed_list = zip(paGetPaymentRes_transferList_sorted, pspNotifyPaymentReq_transferList_sorted)
+    mixed_list = zip(paGetPaymentRes_transferList_sorted,
+                     pspNotifyPaymentReq_transferList_sorted)
     for x in mixed_list:
-        assert x[0].get("transfer")[0].get("idTransfer")[0] == x[1].get("transfer")[0].get("idtransfer")[0]
-        assert x[0].get("transfer")[0].get("transferAmount")[0] == x[1].get("transfer")[0].get("transferamount")[0]
-        assert x[0].get("transfer")[0].get("fiscalCodePA")[0] == x[1].get("transfer")[0].get("fiscalcodepa")[0]
-        assert x[0].get("transfer")[0].get("IBAN")[0] == x[1].get("transfer")[0].get("iban")[0]
+        assert x[0].get("transfer")[0].get("idTransfer")[
+            0] == x[1].get("transfer")[0].get("idtransfer")[0]
+        assert x[0].get("transfer")[0].get("transferAmount")[
+            0] == x[1].get("transfer")[0].get("transferamount")[0]
+        assert x[0].get("transfer")[0].get("fiscalCodePA")[
+            0] == x[1].get("transfer")[0].get("fiscalcodepa")[0]
+        assert x[0].get("transfer")[0].get("IBAN")[
+            0] == x[1].get("transfer")[0].get("iban")[0]
 
     pspNotifyPaymentBody = \
         pspNotifyPayment.get("request").get("soapenv:envelope").get("soapenv:body")[0].get("pspfn:pspnotifypaymentreq")[
@@ -877,31 +1206,37 @@ def step_impl(context):
     data = \
         paGetPayment.get("response").get("soapenv:Envelope").get("soapenv:Body")[0].get("paf:paGetPaymentRes")[0].get(
             "data")[0]
-    assert pspNotifyPaymentBody.get("idpsp")[0] == inoltroEsito["identificativoPsp"]
-    assert pspNotifyPaymentBody.get("idbrokerpsp")[0] == inoltroEsito["identificativoIntermediario"]
-    assert pspNotifyPaymentBody.get("idchannel")[0] == inoltroEsito["identificativoCanale"]
+    assert pspNotifyPaymentBody.get(
+        "idpsp")[0] == inoltroEsito["identificativoPsp"]
+    assert pspNotifyPaymentBody.get("idbrokerpsp")[
+        0] == inoltroEsito["identificativoIntermediario"]
+    assert pspNotifyPaymentBody.get(
+        "idchannel")[0] == inoltroEsito["identificativoCanale"]
     assert pspNotifyPaymentBody.get("paymenttoken")[0] == \
-           activateIOPaymentResponseXml.getElementsByTagName("paymentToken")[0].firstChild.data
+        activateIOPaymentResponseXml.getElementsByTagName("paymentToken")[
+        0].firstChild.data
     assert pspNotifyPaymentBody.get("paymentdescription")[0] == \
-           paGetPayment.get("response").get("soapenv:Envelope").get("soapenv:Body")[0].get("paf:paGetPaymentRes")[
-               0].get(
-               "data")[0].get("description")[0]
+        paGetPayment.get("response").get("soapenv:Envelope").get("soapenv:Body")[0].get("paf:paGetPaymentRes")[
+        0].get(
+        "data")[0].get("description")[0]
     assert pspNotifyPaymentBody.get("fiscalcodepa")[0] == my_document.getElementsByTagName('fiscalCode')[
         0].firstChild.data
     assert pspNotifyPaymentBody.get("companyname")[0] == \
-           paGetPayment.get("response").get("soapenv:Envelope").get("soapenv:Body")[0].get("paf:paGetPaymentRes")[
-               0].get(
-               "data")[0].get("companyName")[0]
+        paGetPayment.get("response").get("soapenv:Envelope").get("soapenv:Body")[0].get("paf:paGetPaymentRes")[
+        0].get(
+        "data")[0].get("companyName")[0]
     assert pspNotifyPaymentBody.get("creditorreferenceid")[0] == \
-           paGetPayment.get("response").get("soapenv:Envelope").get("soapenv:Body")[0].get("paf:paGetPaymentRes")[
-               0].get(
-               "data")[0].get("creditorReferenceId")[0]
+        paGetPayment.get("response").get("soapenv:Envelope").get("soapenv:Body")[0].get("paf:paGetPaymentRes")[
+        0].get(
+        "data")[0].get("creditorReferenceId")[0]
     assert pspNotifyPaymentBody.get("debtamount")[0] == \
-           paGetPayment.get("response").get("soapenv:Envelope").get("soapenv:Body")[0].get("paf:paGetPaymentRes")[
-               0].get(
-               "data")[0].get("paymentAmount")[0]
-    assert pspNotifyPaymentBody.get("paypalpayment")[0].get("transactionid")[0] == inoltroEsito["idTransazione"]
-    assert pspNotifyPaymentBody.get("paypalpayment")[0].get("psptransactionid")[0] == inoltroEsito["idTransazionePsp"]
+        paGetPayment.get("response").get("soapenv:Envelope").get("soapenv:Body")[0].get("paf:paGetPaymentRes")[
+        0].get(
+        "data")[0].get("paymentAmount")[0]
+    assert pspNotifyPaymentBody.get("paypalpayment")[0].get(
+        "transactionid")[0] == inoltroEsito["idTransazione"]
+    assert pspNotifyPaymentBody.get("paypalpayment")[0].get(
+        "psptransactionid")[0] == inoltroEsito["idTransazionePsp"]
     assert float(pspNotifyPaymentBody.get("paypalpayment")[0].get("fee")[0]) == float(
         inoltroEsito["importoTotalePagato"]) - float(data["paymentAmount"][0])
     assert pspNotifyPaymentBody.get("paypalpayment")[0].get("timestampoperation")[0] in str(
@@ -917,6 +1252,9 @@ def step_impl(context):
 @step("random idempotencyKey having {value} as idPSP in {primitive}")
 def step_impl(context, value, primitive):
     value = utils.replace_local_variables(value, context)
+    value = utils.replace_context_variables(value, context)
+    value = utils.replace_global_variables(value, context)
+
     xml = utils.manipulate_soap_action(getattr(context, primitive), "idempotencyKey",
                                        f"{value}_{str(random.randint(1000000000, 9999999999))}")
     setattr(context, primitive, xml)
@@ -928,68 +1266,114 @@ def step_impl(context, primitive):
                                        f"30211{str(random.randint(1000000000000, 9999999999999))}")
     setattr(context, primitive, xml)
 
+
 @step("nodo-dei-pagamenti has config parameter {param} set to {value}")
 def step_impl(context, param, value):
-    db_selected = context.config.userdata.get("db_configuration").get('nodo_cfg')
-    selected_query = utils.query_json(context, 'update_config', 'configurations').replace('value', value).replace('key', param)
-    conn = db.getConnection(db_selected.get('host'), db_selected.get('database'),db_selected.get('user'),db_selected.get('password'),db_selected.get('port'))
+    db_selected = context.config.userdata.get(
+        "db_configuration").get('nodo_cfg')
+    selected_query = utils.query_json(context, 'update_config', 'configurations').replace(
+        'value', value).replace('key', param)
+    conn = db.getConnection(db_selected.get('host'), db_selected.get(
+        'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
 
-    setattr(context,param, value)
+    setattr(context, param, value)
 
     exec_query = db.executeQuery(conn, selected_query)
     if exec_query is not None:
         print(f'executed query: {exec_query}')
 
     db.closeConnection(conn)
-    refresh_response = requests.get(utils.get_refresh_config_url(context))
+    headers = {'Host': 'api.dev.platform.pagopa.it:443'}
+    refresh_response = requests.get(utils.get_refresh_config_url(
+        context), headers=headers, verify=False)
     time.sleep(5)
+    assert refresh_response.status_code == 200
+
+
+@step("refresh job {job_name} triggered after 10 seconds")
+def step_impl(context, job_name):
+    url_nodo = utils.get_rest_url_nodo(context)
+    headers = {'Host': 'api.dev.platform.pagopa.it:443'}
+    nodo_response = requests.get(
+        f"{url_nodo}/config/refresh/{job_name}", headers=headers, verify=False)
+    setattr(context, job_name + RESPONSE, nodo_response)
+    refresh_response = requests.get(utils.get_refresh_config_url(
+        context), headers=headers, verify=False)
+    time.sleep(10)
     assert refresh_response.status_code == 200
 
 
 @step("update through the query {query_name} with date {date} under macro {macro} on db {db_name}")
 def step_impl(context, query_name, date, macro, db_name):
     db_selected = context.config.userdata.get("db_configuration").get(db_name)
-    
+
     if date == 'Today':
         date = str(datetime.datetime.today())
 
-    selected_query = utils.query_json(context, query_name, macro).replace('date', date)
-    conn = db.getConnection(db_selected.get('host'), db_selected.get('database'),db_selected.get('user'),db_selected.get('password'),db_selected.get('port'))
+    selected_query = utils.query_json(
+        context, query_name, macro).replace('date', date)
+    conn = db.getConnection(db_selected.get('host'), db_selected.get(
+        'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
 
     exec_query = db.executeQuery(conn, selected_query)
     db.closeConnection(conn)
 
 
-
 @then("restore initial configurations")
 def step_impl(context):
-    db_selected = context.config.userdata.get("db_configuration").get('nodo_cfg')
-    conn = db.getConnection(db_selected.get('host'), db_selected.get('database'), db_selected.get('user'), db_selected.get('password'),db_selected.get('port'))
+    db_selected = context.config.userdata.get(
+        "db_configuration").get('nodo_cfg')
+    conn = db.getConnection(db_selected.get('host'), db_selected.get(
+        'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
 
     config_dict = getattr(context, 'configurations')
     for key, value in config_dict.items():
-        selected_query = utils.query_json(context, 'update_config', 'configurations').replace('value', value).replace('key', key)
+        selected_query = utils.query_json(context, 'update_config', 'configurations').replace(
+            'value', value).replace('key', key)
         db.executeQuery(conn, selected_query)
 
     db.closeConnection(conn)
-    refresh_response = requests.get(utils.get_refresh_config_url(context))
+    headers = {'Host': 'api.dev.platform.pagopa.it:443'}
+    refresh_response = requests.get(utils.get_refresh_config_url(
+        context), headers=headers, verify=False)
     assert refresh_response.status_code == 200
 
 
 @step("execution query {query_name} to get value on the table {table_name}, with the columns {columns} under macro {macro} with db name {db_name}")
-def step_impl(context, query_name, macro, db_name,table_name,columns):
+def step_impl(context, query_name, macro, db_name, table_name, columns):
     db_config = context.config.userdata.get("db_configuration")
     db_selected = db_config.get(db_name)
-    
-    selected_query = utils.query_json(context, query_name, macro).replace("columns", columns).replace("table_name", table_name)
+
+    selected_query = utils.query_json(context, query_name, macro).replace(
+        "columns", columns).replace("table_name", table_name)
     selected_query = utils.replace_local_variables(selected_query, context)
 
-    conn = db.getConnection(db_selected.get('host'), db_selected.get('database'),db_selected.get('user'),db_selected.get('password'),db_selected.get('port'))
+    conn = db.getConnection(db_selected.get('host'), db_selected.get(
+        'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
 
     exec_query = db.executeQuery(conn, selected_query)
     if exec_query is not None:
         print(f'executed query: {exec_query}')
     setattr(context, query_name, exec_query)
+
+
+# step per salvare nel context una variabile key recuperata dal db tramite query query_name
+@step("through the query {query_name} retrieve param {param} at position {position:d} and save it under the key {key}")
+def step_impl(context, query_name, param, position, key):
+    result_query = getattr(context, query_name)
+    print(f'{query_name}: {result_query}')
+    selected_element = result_query[0][position]
+    print(f'{param}: {selected_element}')
+    setattr(context, key, selected_element)
+
+
+@step("through the query {query_name} retrieve param {param} at position {position:d} in the row {row_number:d} and save it under the key {key}")
+def step_impl(context, query_name, param, position, row_number, key):
+    result_query = getattr(context, query_name)
+    print(f'{query_name}: {result_query}')
+    selected_element = result_query[row_number][position]
+    print(f'{param}: {selected_element}')
+    setattr(context, key, selected_element)
 
 
 @step("with the query {query_name1} check assert beetwen elem {elem1} in position {position1:d} and elem {elem2} with position {position2:d} of the query {query_name2}")
@@ -1000,7 +1384,6 @@ def stemp_impl(context, query_name1, elem1, position1, elem2, query_name2, posit
     print("elem2: ", result_query2[0][position2])
 
     assert result_query1[0][position1] == result_query2[0][position2]
-
 
 
 @Step("call the {elem} of {primitive} response as {name}")
@@ -1021,7 +1404,8 @@ def step_impl(context, elem, primitive, name):
     if len(my_document.getElementsByTagName(elem)) > 0:
         elem_value = my_document.getElementsByTagName(elem)[0].firstChild.data
         target = getattr(context, name)
-        print(f'check tag "{elem}" - expected: {target}, obtained: {elem_value}')
+        print(
+            f'check tag "{elem}" - expected: {target}, obtained: {elem_value}')
         assert elem_value == target
     else:
         assert False
@@ -1034,7 +1418,8 @@ def step_impl(context, elem, primitive, name):
     if len(my_document.getElementsByTagName(elem)) > 0:
         elem_value = my_document.getElementsByTagName(elem)[0].firstChild.data
         target = getattr(context, name)
-        print(f'check tag "{elem}" - expected: {target}, obtained: {elem_value}')
+        print(
+            f'check tag "{elem}" - expected: {target}, obtained: {elem_value}')
         assert elem_value != target
     else:
         assert False
@@ -1059,9 +1444,10 @@ def step_impl(context, mock, number):
     print(f"wait for: {seconds} seconds")
     time.sleep(seconds)
 
+
 @step("wait {number} seconds for expiration")
 def step_impl(context, number):
-    seconds = float(number) 
+    seconds = float(number)
     print(f"wait for: {seconds} seconds")
     time.sleep(seconds)
 
@@ -1080,20 +1466,23 @@ def step_impl(context, seconds):
     #  sendPaymentOutcome record
     pass
 
+
 @step(u"checks the value {value} of the record at column {column} of the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
 def step_impl(context, value, column, query_name, table_name, db_name, name_macro):
     db_config = context.config.userdata.get("db_configuration")
     db_selected = db_config.get(db_name)
 
-    conn = db.getConnection(db_selected.get('host'), db_selected.get('database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+    conn = db.getConnection(db_selected.get('host'), db_selected.get(
+        'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
 
-    selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
-   
+    selected_query = utils.query_json(context, query_name, name_macro).replace(
+        "columns", column).replace("table_name", table_name)
+    print(selected_query)
     exec_query = db.executeQuery(conn, selected_query)
-    
+
     query_result = [t[0] for t in exec_query]
     print('query_result: ', query_result)
-    
+
     if value == 'None':
         print('None')
         assert query_result[0] == None
@@ -1103,14 +1492,16 @@ def step_impl(context, value, column, query_name, table_name, db_name, name_macr
     else:
         if 'iuv' in value:
             value = getattr(context, 'iuv')
-        value = utils.replace_global_variables(value,context)
+        value = utils.replace_global_variables(value, context)
         value = utils.replace_local_variables(value, context)
         value = utils.replace_context_variables(value, context)
         split_value = [status.strip() for status in value.split(',')]
         for i, elem in enumerate(query_result):
-            if isinstance(elem, str) and elem.isdigit(): query_result[i] = float(elem)
-            elif isinstance(elem, datetime.date): query_result[i] = elem.strftime('%Y-%m-%d')
-        
+            if isinstance(elem, str) and elem.isdigit():
+                query_result[i] = float(elem)
+            elif isinstance(elem, datetime.date):
+                query_result[i] = elem.strftime('%Y-%m-%d')
+
         for i, elem in enumerate(split_value):
             if utils.isFloat(elem) or elem.isdigit():
                 split_value[i] = float(elem)
@@ -1121,155 +1512,245 @@ def step_impl(context, value, column, query_name, table_name, db_name, name_macr
 
     db.closeConnection(conn)
 
+
 @step("update through the query {query_name} of the table {table_name} the parameter {param} with {value}, with where condition {where_condition} and where value {valore} under macro {macro} on db {db_name}")
 def step_impl(context, query_name, table_name, param, value, where_condition, valore, macro, db_name):
     db_selected = context.config.userdata.get("db_configuration").get(db_name)
-    selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('param', param).replace('value', value).replace('where_condition', where_condition).replace('valore', valore)
-    selected_query = utils.replace_context_variables(selected_query, context)
+    selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace(
+        'param', param).replace('value', value).replace('where_condition', where_condition).replace('valore', valore)
     selected_query = utils.replace_local_variables(selected_query, context)
-    conn = db.getConnection(db_selected.get('host'), db_selected.get('database'),db_selected.get('user'),db_selected.get('password'),db_selected.get('port'))
+    selected_query = utils.replace_context_variables(selected_query, context)
+    conn = db.getConnection(db_selected.get('host'), db_selected.get(
+        'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
     exec_query = db.executeQuery(conn, selected_query)
     db.closeConnection(conn)
+
+
+@step("generic update through the query {query_name} of the table {table_name} the parameter {param}, with where condition {where_condition} under macro {macro} on db {db_name}")
+def step_impl(context, query_name, table_name, param, where_condition, macro, db_name):
+    db_selected = context.config.userdata.get("db_configuration").get(db_name)
+    selected_query = utils.query_json(context, query_name, macro).replace(
+        'table_name', table_name).replace('param', param).replace('where_condition', where_condition)
+    selected_query = utils.replace_local_variables(selected_query, context)
+    selected_query = utils.replace_context_variables(selected_query, context)
+    conn = db.getConnection(db_selected.get('host'), db_selected.get(
+        'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+    exec_query = db.executeQuery(conn, selected_query)
+    db.closeConnection(conn)
+
 
 @step(u"check datetime plus number of date {number} of the record at column {column} of the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
 def step_impl(context, column, query_name, table_name, db_name, name_macro, number):
     db_config = context.config.userdata.get("db_configuration")
     db_selected = db_config.get(db_name)
-    conn = db.getConnection(db_selected.get('host'), db_selected.get('database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+    conn = db.getConnection(db_selected.get('host'), db_selected.get(
+        'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
 
     if number == 'default_token_duration_validity_millis':
-        default = int(getattr(context, 'default_token_duration_validity_millis')) / 60000
-        value = (datetime.datetime.today()+datetime.timedelta(minutes= default)).strftime('%Y-%m-%d %H:%M')    
-        selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
+        default = int(
+            getattr(context, 'default_token_duration_validity_millis')) / 60000
+        value = (datetime.datetime.today() +
+                 datetime.timedelta(minutes=default)).strftime('%Y-%m-%d %H:%M')
+        selected_query = utils.query_json(context, query_name, name_macro).replace(
+            "columns", column).replace("table_name", table_name)
         exec_query = db.executeQuery(conn, selected_query)
         query_result = [t[0] for t in exec_query]
         print('query_result: ', query_result)
         elem = query_result[0].strftime('%Y-%m-%d %H:%M')
     elif number == 'default_idempotency_key_validity_minutes':
-        default = int(getattr(context, 'default_idempotency_key_validity_minutes'))
-        value = (datetime.datetime.today()+datetime.timedelta(minutes= default)).strftime('%Y-%m-%d %H:%M')    
-        selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
+        default = int(
+            getattr(context, 'default_idempotency_key_validity_minutes'))
+        value = (datetime.datetime.today() +
+                 datetime.timedelta(minutes=default)).strftime('%Y-%m-%d %H:%M')
+        selected_query = utils.query_json(context, query_name, name_macro).replace(
+            "columns", column).replace("table_name", table_name)
         exec_query = db.executeQuery(conn, selected_query)
         query_result = [t[0] for t in exec_query]
         print('query_result: ', query_result)
         elem = query_result[0].strftime('%Y-%m-%d %H:%M')
-    elif number=='Today':
+    elif number == 'Today':
         value = (datetime.datetime.today()).strftime('%Y-%m-%d')
-        selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
+        selected_query = utils.query_json(context, query_name, name_macro).replace(
+            "columns", column).replace("table_name", table_name)
         exec_query = db.executeQuery(conn, selected_query)
         query_result = [t[0] for t in exec_query]
         print('query_result: ', query_result)
         elem = query_result[0].strftime('%Y-%m-%d')
+    elif 'minutes:' in number:
+        min = int(number.split(':')[1]) / 60000
+        value = (datetime.datetime.today() +
+                 datetime.timedelta(minutes=min)).strftime('%Y-%m-%d %H:%M')
+        selected_query = utils.query_json(context, query_name, name_macro).replace(
+            "columns", column).replace("table_name", table_name)
+        exec_query = db.executeQuery(conn, selected_query)
+        query_result = [t[0] for t in exec_query]
+        print('query_result: ', query_result)
+        elem = query_result[0].strftime('%Y-%m-%d %H:%M')
     else:
         number = int(number)
-        value = (datetime.datetime.today()+datetime.timedelta(days= number)).strftime('%Y-%m-%d')
-        selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
+        value = (datetime.datetime.today() +
+                 datetime.timedelta(days=number)).strftime('%Y-%m-%d')
+        selected_query = utils.query_json(context, query_name, name_macro).replace(
+            "columns", column).replace("table_name", table_name)
         exec_query = db.executeQuery(conn, selected_query)
         query_result = [t[0] for t in exec_query]
         print('query_result: ', query_result)
         elem = query_result[0].strftime('%Y-%m-%d')
-         
+
     db.closeConnection(conn)
-    
+
     print(f"check expected element: {value}, obtained: {elem}")
     assert elem == value
+
 
 @step(u"verify datetime plus number of minutes {number} of the record at column {column} of the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
 def step_impl(context, column, query_name, table_name, db_name, name_macro, number):
     db_config = context.config.userdata.get("db_configuration")
     db_selected = db_config.get(db_name)
-    conn = db.getConnection(db_selected.get('host'), db_selected.get('database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+    conn = db.getConnection(db_selected.get('host'), db_selected.get(
+        'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
 
     number = int(number) / 60000
-    value = (datetime.datetime.today()+datetime.timedelta(minutes= number)).strftime('%Y-%m-%d %H:%M')
-    selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
+    value = (datetime.datetime.today() +
+             datetime.timedelta(minutes=number)).strftime('%Y-%m-%d %H:%M')
+    selected_query = utils.query_json(context, query_name, name_macro).replace(
+        "columns", column).replace("table_name", table_name)
     exec_query = db.executeQuery(conn, selected_query)
     query_result = [t[0] for t in exec_query]
     print('query_result: ', query_result)
     elem = query_result[0].strftime('%Y-%m-%d %H:%M')
 
-         
     db.closeConnection(conn)
-    
+
     print(f"check expected element: {value}, obtained: {elem}")
     assert elem == value
+
 
 @step(u"verify {number:d} record for the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
 def step_impl(context, query_name, table_name, db_name, name_macro, number):
     db_config = context.config.userdata.get("db_configuration")
     db_selected = db_config.get(db_name)
-    conn = db.getConnection(db_selected.get('host'), db_selected.get('database'),db_selected.get('user'),db_selected.get('password'),db_selected.get('port'))
+    conn = db.getConnection(db_selected.get('host'), db_selected.get(
+        'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
 
-    selected_query = utils.query_json(context, query_name, name_macro).replace("columns", '*').replace("table_name", table_name)
-   
+    selected_query = utils.query_json(context, query_name, name_macro).replace(
+        "columns", '*').replace("table_name", table_name)
+
     exec_query = db.executeQuery(conn, selected_query)
 
     assert len(exec_query) == number, f"{len(exec_query)}"
 
 
-@step('check token validity')
-def step_impl(context):
-    nodo_online_db = context.config.userdata.get("db_configuration").get('nodo_online')
-    nodo_online_conn = db.getConnection(nodo_online_db.get('host'), nodo_online_db.get('database'), nodo_online_db.get('user'), nodo_online_db.get('password'), nodo_online_db.get('port'))
+@step('check token_valid_to is {condition} token_valid_from plus {param}')
+def step_impl(context, condition, param):
+    nodo_online_db = context.config.userdata.get(
+        "db_configuration").get('nodo_online')
+    nodo_online_conn = db.getConnection(nodo_online_db.get('host'), nodo_online_db.get(
+        'database'), nodo_online_db.get('user'), nodo_online_db.get('password'), nodo_online_db.get('port'))
 
-    token_validity_query = utils.query_json(context, 'token_validity', 'AppIO')
-    token_valid_from, token_valid_to = db.executeQuery(nodo_online_conn, token_validity_query)[0]
+    token_validity_query = utils.query_json(context, 'token_validity', 'AppIO').replace(
+        'columns', 'TOKEN_VALID_FROM, TOKEN_VALID_TO').replace('table_name', 'POSITION_ACTIVATE')
+    token_valid_from, token_valid_to = db.executeQuery(
+        nodo_online_conn, token_validity_query)[0]
     db.closeConnection(nodo_online_conn)
-    
-    default_validity_token = int(getattr(context, 'configurations').get('default_durata_token_IO'))
 
-    assert token_valid_from + datetime.timedelta(milliseconds=default_validity_token) == token_valid_to
+    if not param.isdigit():
+        param = getattr(context, 'configurations').get(param)
+
+    if condition == 'equal to':
+        assert token_valid_to == token_valid_from + datetime.timedelta(milliseconds=int(
+            param)), f"{token_valid_to} != {token_valid_from + datetime.timedelta(milliseconds=int(param))}"
+    elif condition == 'greater than':
+        assert token_valid_to > token_valid_from + datetime.timedelta(milliseconds=int(
+            param)), f"{token_valid_to} <= {token_valid_from + datetime.timedelta(milliseconds=int(param))}"
+    elif condition == 'smaller than':
+        assert token_valid_to < token_valid_from + datetime.timedelta(milliseconds=int(
+            param)), f"{token_valid_to} >= {token_valid_from + datetime.timedelta(milliseconds=int(param))}"
+    else:
+        assert False
+
+
+@step('check value {value1} is {condition} value {value2}')
+def step_impl(context, value1, condition, value2):
+
+    value1 = utils.replace_local_variables(value1, context)
+    value1 = utils.replace_context_variables(value1, context)
+    value1 = utils.replace_global_variables(value1, context)
+    value2 = utils.replace_local_variables(value2, context)
+    value2 = utils.replace_context_variables(value2, context)
+    value2 = utils.replace_global_variables(value2, context)
+
+    if condition == 'equal to':
+        assert value1 == value2, f"{value1} != {value2}"
+    elif condition == 'greater than':
+        assert value1 > value2, f"{value1} <= {value2}"
+    elif condition == 'smaller than':
+        assert value1 < value2, f"{value1} >= {value2}"
+    else:
+        assert False
+
 
 @step("calling primitive {primitive1} and {primitive2} in parallel")
 def step_impl(context, primitive1, primitive2):
-    list_of_primitive=[primitive1, primitive2]
-    utils.threading(context,list_of_primitive)
+    list_of_primitive = [primitive1, primitive2]
+    utils.threading(context, list_of_primitive)
 
 
 @then("check primitive response {primitive1} and primitive response {primitive2}")
 def step_impl(context, primitive1, primitive2):
     response_primitive1 = parseString(getattr(context, primitive1))
     response_primitive2 = parseString(getattr(context, primitive2))
-    
 
-    outcome1 = response_primitive1.getElementsByTagName('outcome')[0].firstChild.data
-    outcome2 = response_primitive2.getElementsByTagName('outcome')[0].firstChild.data
+    outcome1 = response_primitive1.getElementsByTagName('outcome')[
+        0].firstChild.data
+    outcome2 = response_primitive2.getElementsByTagName('outcome')[
+        0].firstChild.data
 
     if outcome1 == 'KO':
-        faultCode1 = response_primitive1.getElementsByTagName('faultCode')[0].firstChild.data
-        faultString1 = response_primitive1.getElementsByTagName('faultString')[0].firstChild.data
-        description1 = response_primitive1.getElementsByTagName('description')[0].firstChild.data
+        faultCode1 = response_primitive1.getElementsByTagName('faultCode')[
+            0].firstChild.data
+        faultString1 = response_primitive1.getElementsByTagName('faultString')[
+            0].firstChild.data
+        description1 = response_primitive1.getElementsByTagName('description')[
+            0].firstChild.data
     if outcome2 == 'KO':
-        faultCode2 = response_primitive2.getElementsByTagName('faultCode')[0].firstChild.data
-        faultString2 = response_primitive2.getElementsByTagName('faultString')[0].firstChild.data
-        description2 = response_primitive2.getElementsByTagName('description')[0].firstChild.data
+        faultCode2 = response_primitive2.getElementsByTagName('faultCode')[
+            0].firstChild.data
+        faultString2 = response_primitive2.getElementsByTagName('faultString')[
+            0].firstChild.data
+        description2 = response_primitive2.getElementsByTagName('description')[
+            0].firstChild.data
 
     if outcome1 == 'OK' and faultCode2 == 'PPT_PAGAMENTO_IN_CORSO' and faultString2 == 'Pagamento in attesa risulta in corso al sistema pagoPA' \
             and description2 == 'Pagamento in attesa risulta in corso al sistema pagoPA':
-            assert True
+        assert True
     elif outcome2 == 'OK' and faultCode1 == 'PPT_PAGAMENTO_IN_CORSO' and faultString1 == 'Pagamento in attesa risulta in corso al sistema pagoPA' \
             and description1 == 'Pagamento in attesa risulta in corso al sistema pagoPA':
-            assert True
+        assert True
     else:
         assert False
 
+
 @then("check db PAG-590_01")
 def step_impl(context):
-    
-    #from activatePaymentNotice2 = activatePaymentNotice1
-    activatePaymentNotice2 = parseString(getattr(context, 'activatePaymentNotice2'))
-    pa = activatePaymentNotice2.getElementsByTagName('fiscalCode')[0].firstChild.data
-    psp = activatePaymentNotice2.getElementsByTagName('idPSP')[0].firstChild.data
-    numavv = activatePaymentNotice2.getElementsByTagName('noticeNumber')[0].firstChild.data
+
+    # from activatePaymentNotice2 = activatePaymentNotice1
+    activatePaymentNotice2 = parseString(
+        getattr(context, 'activatePaymentNotice2'))
+    pa = activatePaymentNotice2.getElementsByTagName('fiscalCode')[
+        0].firstChild.data
+    psp = activatePaymentNotice2.getElementsByTagName('idPSP')[
+        0].firstChild.data
+    numavv = activatePaymentNotice2.getElementsByTagName('noticeNumber')[
+        0].firstChild.data
     iuv = numavv[1:]
     print("iuv: ", iuv)
 
-
-    config = json.load(open(os.path.join(context.config.base_dir + "/../resources/config.json")))
+    config = json.load(
+        open(os.path.join(context.config.base_dir + "/../resources/config.json")))
     intermediarioPA = config.get('global_configuration').get('id_broker')
     stazione = config.get('global_configuration').get('id_station')
 
-    
     query_payment = "SELECT * FROM POSITION_PAYMENT WHERE NOTICE_ID = '$activatePaymentNotice1.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNotice1.fiscalCode'"
     query_service = "SELECT * FROM POSITION_SERVICE WHERE NOTICE_ID = '$activatePaymentNotice1.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNotice1.fiscalCode'"
     query_transfer = "SELECT * FROM POSITION_TRANSFER WHERE NOTICE_ID = '$activatePaymentNotice1.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNotice1.fiscalCode'"
@@ -1277,39 +1758,41 @@ def step_impl(context):
     query2 = "SELECT * FROM POSITION_PAYMENT_PLAN WHERE NOTICE_ID = '$activatePaymentNotice1.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNotice1.fiscalCode'"
     query3 = "SELECT * FROM POSITION_ACTIVATE WHERE NOTICE_ID = '$activatePaymentNotice1.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNotice1.fiscalCode'"
     query4 = f"SELECT * FROM RPT_VERSAMENTI v JOIN RPT r ON v.FK_RPT = r.ID WHERE r.IUV = '{iuv}' AND r.IDENT_DOMINIO = '$activatePaymentNotice1.fiscalCode'"
-    
 
     db_config = context.config.userdata.get("db_configuration")
     db_selected = db_config.get("nodo_online")
 
+    conn = db.getConnection(db_selected.get('host'), db_selected.get(
+        'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
 
-    conn = db.getConnection(db_selected.get('host'), db_selected.get('database'),db_selected.get('user'),db_selected.get('password'),db_selected.get('port'))
-
-    query_payment_replaced = utils.replace_local_variables(query_payment, context)
-    query_service_replaced = utils.replace_local_variables(query_service, context)
-    query_transfer_replaced = utils.replace_local_variables(query_transfer, context)
+    query_payment_replaced = utils.replace_local_variables(
+        query_payment, context)
+    query_service_replaced = utils.replace_local_variables(
+        query_service, context)
+    query_transfer_replaced = utils.replace_local_variables(
+        query_transfer, context)
     query1_replaced = utils.replace_local_variables(query1, context)
     query2_replaced = utils.replace_local_variables(query2, context)
     query3_replaced = utils.replace_local_variables(query3, context)
     query4_replaced = utils.replace_local_variables(query4, context)
-    
+
     rpt_id_row = db.executeQuery(conn, query_payment_replaced)
     service_row = db.executeQuery(conn, query_service_replaced)
     transfer_row = db.executeQuery(conn, query_transfer_replaced)
     rpt = db.executeQuery(conn, query1_replaced)
     plan = db.executeQuery(conn, query2_replaced)
-    act  = db.executeQuery(conn, query3_replaced)
-    vers  = db.executeQuery(conn, query4_replaced)
+    act = db.executeQuery(conn, query3_replaced)
+    vers = db.executeQuery(conn, query4_replaced)
 
     debtor_id = service_row[0][0]
     print(debtor_id)
 
     query_debtor = f"SELECT ID, ENTITY_UNIQUE_IDENTIFIER_VALUE FROM POSITION_SUBJECT WHERE ID = '{debtor_id}'"
-    debtor_row  = db.executeQuery(conn, query_debtor)
+    debtor_row = db.executeQuery(conn, query_debtor)
 
     db.closeConnection(conn)
-    
-    #POSITION_ACTIVATE
+
+    # POSITION_ACTIVATE
     ID2 = act[0][0]
     PA_FISCAL_CODE2 = act[0][1]
     NOTICE_ID2 = act[0][2]
@@ -1349,7 +1832,6 @@ def step_impl(context):
         assert TOKEN_VALID_FROM21 == None
         assert TOKEN_VALID_TO21 == None
         assert CREDITOR_REFERENCE_ID2 == iuv
-    
 
     assert ID2 != None
     assert PA_FISCAL_CODE2 == pa
@@ -1369,8 +1851,7 @@ def step_impl(context):
     assert DUE_DATE21 == None
     assert AMOUNT21 == 10
 
-
-    #POSITION_PAYMENT
+    # POSITION_PAYMENT
     ID = rpt_id_row[0][0]
     PA_FISCAL_CODE = rpt_id_row[0][1]
     NOTICE_ID = rpt_id_row[0][2]
@@ -1433,8 +1914,7 @@ def step_impl(context):
 
     assert ID1 == None
 
-
-    #POSITION_PAYMENT_PLAN
+    # POSITION_PAYMENT_PLAN
     ID4 = plan[0][0]
     PA_FISCAL_CODE4 = plan[0][1]
     NOTICE_ID4 = plan[0][2]
@@ -1465,8 +1945,7 @@ def step_impl(context):
 
     assert ID41 == None
 
-
-    #POSITION_SERVICE
+    # POSITION_SERVICE
     ID5 = service_row[0][0]
     PA_FISCAL_CODE5 = service_row[0][1]
     NOTICE_ID5 = service_row[0][2]
@@ -1491,16 +1970,21 @@ def step_impl(context):
 
     assert ID51 == None
 
+
 @then("check DB_GR_01")
 def step_impl(context):
-    #from activatePaymentNotice
-    activatePaymentNotice = parseString(getattr(context, 'activatePaymentNotice'))
-    pa = activatePaymentNotice.getElementsByTagName('fiscalCode')[0].firstChild.data
-    psp = activatePaymentNotice.getElementsByTagName('idPSP')[0].firstChild.data
-    noticeNumber = activatePaymentNotice.getElementsByTagName('noticeNumber')[0].firstChild.data
+    # from activatePaymentNotice
+    activatePaymentNotice = parseString(
+        getattr(context, 'activatePaymentNotice'))
+    pa = activatePaymentNotice.getElementsByTagName('fiscalCode')[
+        0].firstChild.data
+    psp = activatePaymentNotice.getElementsByTagName('idPSP')[
+        0].firstChild.data
+    noticeNumber = activatePaymentNotice.getElementsByTagName('noticeNumber')[
+        0].firstChild.data
 
-
-    config = json.load(open(os.path.join(context.config.base_dir + "/../resources/config.json")))
+    config = json.load(
+        open(os.path.join(context.config.base_dir + "/../resources/config.json")))
     intermediarioPA = config.get('global_configuration').get('id_broker')
     stazione = config.get('global_configuration').get('id_station')
 
@@ -1510,10 +1994,12 @@ def step_impl(context):
     query3 = f"SELECT s.* FROM PSP s where s.ID_PSP = '{psp}'"
     query4 = f"SELECT s.METADATA FROM POSITION_PAYMENT_PLAN s where s.NOTICE_ID = '{noticeNumber}' and s.PA_FISCAL_CODE= '{pa}'"
 
-    db_config = context.config.userdata.get("db_configuration").get("nodo_online")
+    db_config = context.config.userdata.get(
+        "db_configuration").get("nodo_online")
 
-    conn = db.getConnection(db_config.get('host'), db_config.get('database'),db_config.get('user'),db_config.get('password'),db_config.get('port'))
-    
+    conn = db.getConnection(db_config.get('host'), db_config.get(
+        'database'), db_config.get('user'), db_config.get('password'), db_config.get('port'))
+
     rows = db.executeQuery(conn, query)
     rows1 = db.executeQuery(conn, query1)
     rows2 = db.executeQuery(conn, query2)
@@ -1523,10 +2009,11 @@ def step_impl(context):
 
     db_config = context.config.userdata.get("db_configuration").get("nodo_cfg")
 
-    conn = db.getConnection(db_config.get('host'), db_config.get('database'),db_config.get('user'),db_config.get('password'),db_config.get('port'))
+    conn = db.getConnection(db_config.get('host'), db_config.get(
+        'database'), db_config.get('user'), db_config.get('password'), db_config.get('port'))
 
     rows3 = db.executeQuery(conn, query3)
-    
+
     db.closeConnection(conn)
 
     assert rows[0][1] == rows1[0][0]
@@ -1554,7 +2041,7 @@ def step_impl(context):
     assert rows[0][23] != None
     assert rows[0][24] == rows4[0][0]
     assert rows[0][25] == None
-    assert rows[0][26] == rows1[0][11] #id
+    assert rows[0][26] == rows1[0][11]  # id
     assert len(rows) == 1
 
 
@@ -1568,9 +2055,11 @@ def step_impl(context):
     query3 = "SELECT su.ENTITY_UNIQUE_IDENTIFIER_TYPE, su.ENTITY_UNIQUE_IDENTIFIER_VALUE, su.FULL_NAME, su.STREET_NAME, su.CIVIC_NUMBER, su.POSTAL_CODE, su.CITY, su.STATE_PROVINCE_REGION, su.COUNTRY, su.EMAIL  FROM POSITION_SUBJECT su JOIN POSITION_RECEIPT sr ON su.ID = sr.PAYER_ID WHERE sr.PA_FISCAL_CODE='$activatePaymentNotice.fiscalCode' and sr.NOTICE_ID='$activatePaymentNotice.noticeNumber' and su.SUBJECT_TYPE='PAYER'"
     query4 = "SELECT TRANSFER_IDENTIFIER, AMOUNT, PA_FISCAL_CODE_SECONDARY, IBAN, REMITTANCE_INFORMATION, TRANSFER_CATEGORY  FROM POSITION_TRANSFER WHERE PA_FISCAL_CODE='$activatePaymentNotice.fiscalCode' and NOTICE_ID='$activatePaymentNotice.noticeNumber'"
 
-    db_config = context.config.userdata.get("db_configuration").get("nodo_online")
+    db_config = context.config.userdata.get(
+        "db_configuration").get("nodo_online")
 
-    conn = db.getConnection(db_config.get('host'), db_config.get('database'),db_config.get('user'),db_config.get('password'),db_config.get('port'))
+    conn = db.getConnection(db_config.get('host'), db_config.get(
+        'database'), db_config.get('user'), db_config.get('password'), db_config.get('port'))
 
     XML = utils.replace_local_variables(XML, context)
     xml_rows = db.executeQuery(conn, XML)
@@ -1585,7 +2074,6 @@ def step_impl(context):
     query4 = utils.replace_local_variables(query4, context)
     rows4 = db.executeQuery(conn, query4)
 
-    
     xml_rpt = parseString(xml_rows[0][0].read())
 
     brokerPaId = rows[0][0]
@@ -1609,7 +2097,7 @@ def step_impl(context):
     debCountry = rows2[0][8]
     debEmail = rows2[0][9]
 
-    #TBD
+    # TBD
     transTransferId = rows4[0][0]
     transAmount = rows4[0][1]
     transPaFiscalCodeSecondary = rows4[0][2]
@@ -1623,74 +2111,103 @@ def step_impl(context):
 
     query5 = "SELECT CODICE_FISCALE, RAGIONE_SOCIALE  FROM PSP WHERE ID_PSP='$activatePaymentNotice.idPSP'"
     db_config = context.config.userdata.get("db_configuration").get("nodo_cfg")
-    conn = db.getConnection(db_config.get('host'), db_config.get('database'),db_config.get('user'),db_config.get('password'),db_config.get('port'))
-    
+    conn = db.getConnection(db_config.get('host'), db_config.get(
+        'database'), db_config.get('user'), db_config.get('password'), db_config.get('port'))
+
     query5 = utils.replace_local_variables(query5, context)
     rows5 = db.executeQuery(conn, query5)
 
     db.closeConnection(conn)
 
     pspCodiceFiscale = rows5[0][0]
-    #campo pspPartitaIVA mancante nella tabella PSP
+    # campo pspPartitaIVA mancante nella tabella PSP
     pspRagioneSociale = rows5[0][1]
     channelId = rows[0][9]
     payChannel = rows[0][10]
 
-  
-    assert xml_rpt.getElementsByTagName("idPA")[0].firstChild.data == paFiscalCode
-    assert xml_rpt.getElementsByTagName("idBrokerPA")[0].firstChild.data == brokerPaId 
-    assert xml_rpt.getElementsByTagName("idStation")[0].firstChild.data == stationId 
-    assert xml_rpt.getElementsByTagName("receiptId")[0].firstChild.data == payToken 
-    assert xml_rpt.getElementsByTagName("noticeNumber")[0].firstChild.data == noticeId 
-    assert xml_rpt.getElementsByTagName("fiscalCode")[0].firstChild.data == paFiscalCode 
-    assert xml_rpt.getElementsByTagName("outcome")[0].firstChild.data == outcome 
-    assert xml_rpt.getElementsByTagName("creditorReferenceId")[0].firstChild.data == credRefId 
-    
-    paymentAmount = xml_rpt.getElementsByTagName("paymentAmount")[0].firstChild.data
-    if isinstance(paymentAmount, str) and paymentAmount.isdigit(): 
+    assert xml_rpt.getElementsByTagName(
+        "idPA")[0].firstChild.data == paFiscalCode
+    assert xml_rpt.getElementsByTagName(
+        "idBrokerPA")[0].firstChild.data == brokerPaId
+    assert xml_rpt.getElementsByTagName(
+        "idStation")[0].firstChild.data == stationId
+    assert xml_rpt.getElementsByTagName(
+        "receiptId")[0].firstChild.data == payToken
+    assert xml_rpt.getElementsByTagName(
+        "noticeNumber")[0].firstChild.data == noticeId
+    assert xml_rpt.getElementsByTagName(
+        "fiscalCode")[0].firstChild.data == paFiscalCode
+    assert xml_rpt.getElementsByTagName(
+        "outcome")[0].firstChild.data == outcome
+    assert xml_rpt.getElementsByTagName("creditorReferenceId")[
+        0].firstChild.data == credRefId
+
+    paymentAmount = xml_rpt.getElementsByTagName("paymentAmount")[
+        0].firstChild.data
+    if isinstance(paymentAmount, str) and paymentAmount.isdigit():
         paymentAmount = float(paymentAmount)
-        assert paymentAmount == amount 
-    
-    assert xml_rpt.getElementsByTagName("companyName")[0].firstChild.data == companyName 
-    assert xml_rpt.getElementsByTagName("description")[0].firstChild.data == description 
-    assert xml_rpt.getElementsByTagName("entityUniqueIdentifierType")[0].firstChild.data == debIdentifierType 
-    assert xml_rpt.getElementsByTagName("entityUniqueIdentifierValue")[0].firstChild.data == debIdentifierValue 
-    assert xml_rpt.getElementsByTagName("fullName")[0].firstChild.data == debName 
-    assert xml_rpt.getElementsByTagName("streetName")[0].firstChild.data == debStreet 
-    assert xml_rpt.getElementsByTagName("civicNumber")[0].firstChild.data == debCivic 
-    assert xml_rpt.getElementsByTagName("postalCode")[0].firstChild.data == debCode 
-    assert xml_rpt.getElementsByTagName("city")[0].firstChild.data == debCity 
-    assert xml_rpt.getElementsByTagName("stateProvinceRegion")[0].firstChild.data == debRegion 
-    assert xml_rpt.getElementsByTagName("country")[0].firstChild.data == debCountry 
-    assert xml_rpt.getElementsByTagName("e-mail")[0].firstChild.data == debEmail 
-    assert xml_rpt.getElementsByTagName("idTransfer")[0].firstChild.data == transTransferId 
-   
-    transferAmount = xml_rpt.getElementsByTagName("transferAmount")[0].firstChild.data
-    if isinstance(transferAmount, str) and transferAmount.isdigit(): 
+        assert paymentAmount == amount
+
+    assert xml_rpt.getElementsByTagName(
+        "companyName")[0].firstChild.data == companyName
+    assert xml_rpt.getElementsByTagName(
+        "description")[0].firstChild.data == description
+    assert xml_rpt.getElementsByTagName("entityUniqueIdentifierType")[
+        0].firstChild.data == debIdentifierType
+    assert xml_rpt.getElementsByTagName("entityUniqueIdentifierValue")[
+        0].firstChild.data == debIdentifierValue
+    assert xml_rpt.getElementsByTagName(
+        "fullName")[0].firstChild.data == debName
+    assert xml_rpt.getElementsByTagName(
+        "streetName")[0].firstChild.data == debStreet
+    assert xml_rpt.getElementsByTagName(
+        "civicNumber")[0].firstChild.data == debCivic
+    assert xml_rpt.getElementsByTagName(
+        "postalCode")[0].firstChild.data == debCode
+    assert xml_rpt.getElementsByTagName("city")[0].firstChild.data == debCity
+    assert xml_rpt.getElementsByTagName("stateProvinceRegion")[
+        0].firstChild.data == debRegion
+    assert xml_rpt.getElementsByTagName(
+        "country")[0].firstChild.data == debCountry
+    assert xml_rpt.getElementsByTagName(
+        "e-mail")[0].firstChild.data == debEmail
+    assert xml_rpt.getElementsByTagName(
+        "idTransfer")[0].firstChild.data == transTransferId
+
+    transferAmount = xml_rpt.getElementsByTagName("transferAmount")[
+        0].firstChild.data
+    if isinstance(transferAmount, str) and transferAmount.isdigit():
         transferAmount = float(transferAmount)
-        assert transferAmount == transAmount 
+        assert transferAmount == transAmount
 
-    assert xml_rpt.getElementsByTagName("fiscalCodePA")[0].firstChild.data == transPaFiscalCodeSecondary 
-    assert xml_rpt.getElementsByTagName("IBAN")[0].firstChild.data == transIban 
-    assert xml_rpt.getElementsByTagName("remittanceInformation")[0].firstChild.data == transRemittanceInformation 
-    assert xml_rpt.getElementsByTagName("transferCategory")[0].firstChild.data == transTransferCategory 
+    assert xml_rpt.getElementsByTagName(
+        "fiscalCodePA")[0].firstChild.data == transPaFiscalCodeSecondary
+    assert xml_rpt.getElementsByTagName("IBAN")[0].firstChild.data == transIban
+    assert xml_rpt.getElementsByTagName("remittanceInformation")[
+        0].firstChild.data == transRemittanceInformation
+    assert xml_rpt.getElementsByTagName("transferCategory")[
+        0].firstChild.data == transTransferCategory
 
-    assert xml_rpt.getElementsByTagName("idPSP")[0].firstChild.data == pspId 
-    assert xml_rpt.getElementsByTagName("pspFiscalCode")[0].firstChild.data == pspCodiceFiscale 
-    assert xml_rpt.getElementsByTagName("PSPCompanyName")[0].firstChild.data == pspRagioneSociale 
-    assert xml_rpt.getElementsByTagName("idChannel")[0].firstChild.data == channelId 
-  
+    assert xml_rpt.getElementsByTagName("idPSP")[0].firstChild.data == pspId
+    assert xml_rpt.getElementsByTagName("pspFiscalCode")[
+        0].firstChild.data == pspCodiceFiscale
+    assert xml_rpt.getElementsByTagName("PSPCompanyName")[
+        0].firstChild.data == pspRagioneSociale
+    assert xml_rpt.getElementsByTagName(
+        "idChannel")[0].firstChild.data == channelId
 
     if payChannel == None:
-        assert xml_rpt.getElementsByTagName("channelDescription")[0].firstChild.data == 'NA' 
+        assert xml_rpt.getElementsByTagName("channelDescription")[
+            0].firstChild.data == 'NA'
     else:
-        assert xml_rpt.getElementsByTagName("channelDescription")[0].firstChild.data == payChannel
-    
+        assert xml_rpt.getElementsByTagName("channelDescription")[
+            0].firstChild.data == payChannel
+
     if len(xml_rpt.getElementsByTagName("officeName")) > 0:
         officeName = rows1[0][2]
-        assert xml_rpt.getElementsByTagName("officeName")[0].firstChild.data == officeName
-    
-    
+        assert xml_rpt.getElementsByTagName(
+            "officeName")[0].firstChild.data == officeName
+
     if len(xml_rpt.getElementsByTagName("payer")) > 0:
         payIdentifierType = rows3[0][0]
         payIdentifierValue = rows3[0][1]
@@ -1702,25 +2219,31 @@ def step_impl(context):
         payRegion = rows3[0][7]
         payCountry = rows3[0][8]
         payEmail = rows3[0][9]
-    
-    
-    
-    assert xml_rpt.getElementsByTagName("entityUniqueIdentifierType")[0].firstChild.data == payIdentifierType
-    assert xml_rpt.getElementsByTagName("entityUniqueIdentifierValue")[0].firstChild.data == payIdentifierValue
-    assert xml_rpt.getElementsByTagName("fullName")[0].firstChild.data == payName
-    assert xml_rpt.getElementsByTagName("streetName")[0].firstChild.data == payStreet
-    assert xml_rpt.getElementsByTagName("civicNumber")[0].firstChild.data == payCivic
-    assert xml_rpt.getElementsByTagName("postalCode")[0].firstChild.data == payCode
-    assert xml_rpt.getElementsByTagName("city")[0].firstChild.data == payCity
-    assert xml_rpt.getElementsByTagName("stateProvinceRegion")[0].firstChild.data == payRegion
-    assert xml_rpt.getElementsByTagName("country")[0].firstChild.data == payCountry
-    assert xml_rpt.getElementsByTagName("e-mail")[0].firstChild.data == payEmail
-    
 
-    
+    assert xml_rpt.getElementsByTagName("entityUniqueIdentifierType")[
+        0].firstChild.data == payIdentifierType
+    assert xml_rpt.getElementsByTagName("entityUniqueIdentifierValue")[
+        0].firstChild.data == payIdentifierValue
+    assert xml_rpt.getElementsByTagName(
+        "fullName")[0].firstChild.data == payName
+    assert xml_rpt.getElementsByTagName(
+        "streetName")[0].firstChild.data == payStreet
+    assert xml_rpt.getElementsByTagName(
+        "civicNumber")[0].firstChild.data == payCivic
+    assert xml_rpt.getElementsByTagName(
+        "postalCode")[0].firstChild.data == payCode
+    assert xml_rpt.getElementsByTagName("city")[0].firstChild.data == payCity
+    assert xml_rpt.getElementsByTagName("stateProvinceRegion")[
+        0].firstChild.data == payRegion
+    assert xml_rpt.getElementsByTagName(
+        "country")[0].firstChild.data == payCountry
+    assert xml_rpt.getElementsByTagName(
+        "e-mail")[0].firstChild.data == payEmail
+
     if len(xml_rpt.getElementsByTagName("paymentMethod")) > 0:
         payMethod = rows[0][11]
-        assert xml_rpt.getElementsByTagName("paymentMethod")[0].firstChild.data == payMethod
+        assert xml_rpt.getElementsByTagName("paymentMethod")[
+            0].firstChild.data == payMethod
 
     """    
     if len(xml_rpt.getElementsByTagName("fee")) > 0:
@@ -1749,6 +2272,7 @@ def step_impl(context):
         assert xml_rpt.getElementsByTagName("transferDate")[0].firstChild.data == appDateString 
     """
 
+<<<<<<< HEAD
     #campo METADATA opzionale da aggiungere
 
 @step('retrieve session token from {url}')
@@ -1767,3 +2291,66 @@ def step_impl(context, url):
     url = utils.replace_local_variables(url, context)
     print(url)
     setattr(context, 'url', url)
+=======
+    # campo METADATA opzionale da aggiungere
+
+
+@step('retrieve session token from {url}')
+def step_impl(context, url):
+    url = utils.replace_local_variables(url, context)
+    setattr(context, f'sessionToken', url.split('idSession=')[1])
+
+
+<<<<<<< HEAD
+
+@step('check field in {primitive} response')
+def step_impl(context, primitive):
+    soap_response = getattr(context, primitive + RESPONSE)
+    if 'xmlns' in soap_response.headers['content-type']:
+        my_document = parseString(soap_response.content)
+        if my_document.getElementsByTagName('description'):
+            print("description: ", my_document.getElementsByTagName('description')[0].firstChild.data)
+
+    result = json.loads(my_document) 
+    print(result)
+
+        
+
+
+
+
+
+=======
+@step('Select and Update RT for Test retry_PAold with causale versamento {causaleVers}')
+def step_impl(context, causaleVers):
+    db_config = context.config.userdata.get(
+        "db_configuration").get("nodo_online")
+
+    conn = db.getConnection(db_config.get('host'), db_config.get(
+        'database'), db_config.get('user'), db_config.get('password'), db_config.get('port'))
+
+    # select clob
+    xml_content_query = "SELECT XML_CONTENT as clob FROM RT_XML WHERE IDENT_DOMINIO='$activatePaymentNotice.fiscalCode' AND IUV='$iuv'"
+
+    xml_content_query = utils.replace_local_variables(
+        xml_content_query, context)
+    xml_content_query = utils.replace_context_variables(
+        xml_content_query, context)
+    xml_content_row = db.executeQuery(conn, xml_content_query)
+
+    xml_rt = parseString(xml_content_row[0][0].read())
+    node = xml_rt.getElementsByTagName('causaleVersamento')[0]
+    node.firstChild.replaceWholeText(f'{causaleVers}')
+    xml_rt_string = xml_rt.toxml()
+    print(xml_rt_string)
+
+    query_update = f"UPDATE RT_XML SET XML_CONTENT = TO_CLOB('{xml_rt_string}')WHERE IDENT_DOMINIO='$activatePaymentNotice.fiscalCode' AND IUV='$iuv'"
+    print(query_update)
+    query_update = utils.replace_local_variables(query_update, context)
+    query_update = utils.replace_context_variables(query_update, context)
+
+    db.executeQuery(conn, query_update)
+
+    db.closeConnection(conn)
+>>>>>>> test-accenture
+>>>>>>> test-accenture

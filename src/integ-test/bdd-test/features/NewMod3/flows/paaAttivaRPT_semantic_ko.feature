@@ -8,9 +8,9 @@ Feature: process check for activatePaymentNotice - KO
       <soapenv:Header/>
       <soapenv:Body>
       <nod:activatePaymentNoticeReq>
-      <idPSP>70000000001</idPSP>
-      <idBrokerPSP>70000000001</idBrokerPSP>
-      <idChannel>70000000001_01</idChannel>
+      <idPSP>#psp#</idPSP>
+      <idBrokerPSP>#psp#</idBrokerPSP>
+      <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
       <password>pwdpwdpwd</password>
       <idempotencyKey>#idempotency_key#</idempotencyKey>
       <qrCode>
@@ -31,28 +31,36 @@ Feature: process check for activatePaymentNotice - KO
     Given initial XML paaAttivaRPT
       # MODIFICARE IL TIPO DI RISPOSTA (https://pagopa.atlassian.net/wiki/spaces/PAG/pages/493617751/Analisi+paaAttivaRPT)
       """
-      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-      xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">
       <soapenv:Header/>
       <soapenv:Body>
-      <nod:paaAttivaRPTRisposta>
+      <ws:paaAttivaRPTRisposta>
+      <paaAttivaRPTRisposta>
       <esito>OK</esito>
-      <datiPagamento>
-      <importoSingoloVersamento>importo_singolo_versamento</importoSingoloVersamento>
-      <ibanAccredito>iban_accredito</ibanAccredito>
-      <bicAccredito>bic_accredito</bicAccredito>
-      <enteBeneficiario>ente_beneficiario</enteBeneficiario>
-      <credenzialiPagatore>credenziali_pagatore</credenzialiPagatore>
-      <causaleVersamento>causale_versamento</causaleVersamento>
-      <spezzoniCausaleVersamento>
-      <spezzoneCausaleVersamento>spezzone_causale_versamento</spezzoneCausaleVersamento>
-      <spezzoneStrutturaCausaleVersamento>
-      <causaleSpezzone>causale_spezzone</causaleSpezzone>
-      <importoSpezzone>importo_spezzone</importoSpezzone>
-      </spezzoneStrutturaCausaleVersamento>
-      </spezzoniCausaleVersamento>
-      </datiPagamento>
-      </nod:paaAttivaRPTRisposta>
+      <datiPagamentoPA>
+      <importoSingoloVersamento>2.00</importoSingoloVersamento>
+      <ibanAccredito>${iban}</ibanAccredito>
+      <bicAccredito>BSCTCH22</bicAccredito>
+      <enteBeneficiario>
+      <pag:identificativoUnivocoBeneficiario>
+      <pag:tipoIdentificativoUnivoco>G</pag:tipoIdentificativoUnivoco>
+      <pag:codiceIdentificativoUnivoco>${stz}</pag:codiceIdentificativoUnivoco>
+      </pag:identificativoUnivocoBeneficiario>
+      <pag:denominazioneBeneficiario>${intermPsp}</pag:denominazioneBeneficiario>
+      <pag:codiceUnitOperBeneficiario>${can}</pag:codiceUnitOperBeneficiario>
+      <pag:denomUnitOperBeneficiario>uj</pag:denomUnitOperBeneficiario>
+      <pag:indirizzoBeneficiario>y</pag:indirizzoBeneficiario>
+      <pag:civicoBeneficiario>j</pag:civicoBeneficiario>
+      <pag:capBeneficiario>gt</pag:capBeneficiario>
+      <pag:localitaBeneficiario>gw</pag:localitaBeneficiario>
+      <pag:provinciaBeneficiario>ds</pag:provinciaBeneficiario>
+      <pag:nazioneBeneficiario>UK</pag:nazioneBeneficiario>
+      </enteBeneficiario>
+      <credenzialiPagatore>i</credenzialiPagatore>
+      <causaleVersamento>${causale}</causaleVersamento>
+      </datiPagamentoPA>
+      </paaAttivaRPTRisposta>
+      </ws:paaAttivaRPTRisposta>
       </soapenv:Body>
       </soapenv:Envelope>
       """
@@ -62,5 +70,5 @@ Feature: process check for activatePaymentNotice - KO
     Then check outcome is KO of activatePaymentNotice response
     And check faultCode is PPT_IBAN_NON_CENSITO of activatePaymentNotice response
     Examples:
-      | elem          | value   | soapUI test   |
-      | ibanAccredito | Unknown | SEM_PARPTR_01 |
+      | elem          | value       | soapUI test   |
+      | ibanAccredito | 10000000000 | SEM_PARPTR_01 |

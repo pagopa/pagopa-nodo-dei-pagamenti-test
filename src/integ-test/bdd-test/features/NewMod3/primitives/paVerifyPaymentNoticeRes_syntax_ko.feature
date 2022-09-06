@@ -3,44 +3,44 @@ Feature: syntax checks for paVerifyPaymentNoticeRes - KO
    Background:
       Given systems up
       And initial XML verifyPaymentNotice
-      """
-      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+         """
+         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
          <soapenv:Header/>
          <soapenv:Body>
-            <nod:verifyPaymentNoticeReq>
-               <idPSP>70000000001</idPSP>
-               <idBrokerPSP>70000000001</idBrokerPSP>
-               <idChannel>70000000001_01</idChannel>
-               <password>pwdpwdpwd</password>
-               <qrCode>
-                  <fiscalCode>#creditor_institution_code#</fiscalCode>
-                  <noticeNumber>302094719472095710</noticeNumber>
-               </qrCode>
-               </nod:verifyPaymentNoticeReq>
-               </soapenv:Body>
-               </soapenv:Envelope>
-      """
+         <nod:verifyPaymentNoticeReq>
+         <idPSP>70000000001</idPSP>
+         <idBrokerPSP>70000000001</idBrokerPSP>
+         <idChannel>70000000001_01</idChannel>
+         <password>pwdpwdpwd</password>
+         <qrCode>
+         <fiscalCode>#creditor_institution_code#</fiscalCode>
+         <noticeNumber>302094719472095710</noticeNumber>
+         </qrCode>
+         </nod:verifyPaymentNoticeReq>
+         </soapenv:Body>
+         </soapenv:Envelope>
+         """
       And EC new version
 
    # element value check
    Scenario Outline: Check PPT_STAZIONE_INT_PA_ERRORE_RESPONSE error on invalid body element value
       Given initial XML paVerifyPaymentNotice
-      """
-      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
+         """
+         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
          <soapenv:Header/>
          <soapenv:Body>
-            <paf:paVerifyPaymentNoticeRes>
-               <outcome>#outcome#</outcome>
-               <fault>
-                  <faultCode>#faultCode#</faultCode>
-                  <faultString>#faultString#</faultString>
-                  <id>#id#</id>
-                  <description>#description#</description>
-               </fault>
-            </paf:paVerifyPaymentNoticeRes>
+         <paf:paVerifyPaymentNoticeRes>
+         <outcome>#outcome#</outcome>
+         <fault>
+         <faultCode>#faultCode#</faultCode>
+         <faultString>#faultString#</faultString>
+         <id>#id#</id>
+         <description>#description#</description>
+         </fault>
+         </paf:paVerifyPaymentNoticeRes>
          </soapenv:Body>
-      </soapenv:Envelope>
-      """
+         </soapenv:Envelope>
+         """
       And <elem> with <value> in paVerifyPaymentNotice
       And if outcome is KO set fault to None in paVerifyPaymentNotice
       And EC replies to nodo-dei-pagamenti with the paVerifyPaymentNotice
@@ -64,33 +64,33 @@ Feature: syntax checks for paVerifyPaymentNoticeRes - KO
       Given initial XML paVerifyPaymentNotice
          """
          <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
-            <soapenv:Header/>
-            <soapenv:Body>
-               <paf:paVerifyPaymentNoticeRes>
-                  <outcome>OK</outcome>
-                  <paymentList>
-                     <!--1 to 5 repetitions:-->
-                     <paymentOptionDescription>
-                        <amount>10.00</amount>
-                        <options>EQ</options>
-                        <!--Optional:-->
-                        <dueDate>2021-12-31</dueDate>
-                        <!--Optional:-->
-                        <detailDescription>test</detailDescription>
-                        <!--Optional:-->
-                        <allCCP>1</allCCP>
-                     </paymentOptionDescription>
-                  </paymentList>
-                  <!--Optional:-->
-                  <paymentDescription>test</paymentDescription>
-                  <!--Optional:-->
-                  <fiscalCodePA>#fiscalCodePA#</fiscalCodePA>
-                  <!--Optional:-->
-                  <companyName>company</companyName>
-                  <!--Optional:-->
-                  <officeName>office</officeName>
-               </paf:paVerifyPaymentNoticeRes>
-            </soapenv:Body>
+         <soapenv:Header/>
+         <soapenv:Body>
+         <paf:paVerifyPaymentNoticeRes>
+         <outcome>OK</outcome>
+         <paymentList>
+         <!--1 to 5 repetitions:-->
+         <paymentOptionDescription>
+         <amount>10.00</amount>
+         <options>EQ</options>
+         <!--Optional:-->
+         <dueDate>2021-12-31</dueDate>
+         <!--Optional:-->
+         <detailDescription>test</detailDescription>
+         <!--Optional:-->
+         <allCCP>1</allCCP>
+         </paymentOptionDescription>
+         </paymentList>
+         <!--Optional:-->
+         <paymentDescription>test</paymentDescription>
+         <!--Optional:-->
+         <fiscalCodePA>#fiscalCodePA#</fiscalCodePA>
+         <!--Optional:-->
+         <companyName>company</companyName>
+         <!--Optional:-->
+         <officeName>office</officeName>
+         </paf:paVerifyPaymentNoticeRes>
+         </soapenv:Body>
          </soapenv:Envelope>
          """
       And <tag> with <value> in paVerifyPaymentNotice
