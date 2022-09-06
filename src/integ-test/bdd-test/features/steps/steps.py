@@ -1758,3 +1758,11 @@ def step_impl(context, url):
     print(url)
     print(f"#################### {url.split('idSession=')[1]}")
     setattr(context, f'sessionToken', url.split('idSession=')[1])
+
+    
+
+@step('retrieve url from {url}')
+
+def step_impl(context, url):
+    url = utils.replace_local_variables(url, context)
+    print(url)
