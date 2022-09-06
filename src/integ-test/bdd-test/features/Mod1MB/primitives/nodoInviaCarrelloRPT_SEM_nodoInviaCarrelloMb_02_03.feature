@@ -212,11 +212,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
 
     # [SEM_nodoInviaCarrelloMb_03]
    Scenario: Define RPT3
-
-      Given RPT generation
-
       Given RPT3 generation
-
          """
          <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
          <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
@@ -295,11 +291,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          """
    Scenario: Define RPT4
       Given the Define RPT3 scenario executed successfully
-
-      And RPT2 generation
-
       And RPT4 generation
-
          """
          <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
          <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
