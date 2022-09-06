@@ -193,7 +193,8 @@ def step_impl(context):
 
     if '#iuv2#' in payload:
         iuv = 'IUV' + '-' + str(date + '-' + datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3])
-        payload = payload.replace('#iuv#', iuv)
+        payload = payload.replace('#iuv2#', iuv)
+        print()
         setattr(context,'2iuv', iuv)
 
     if '#IUV#' in payload:
