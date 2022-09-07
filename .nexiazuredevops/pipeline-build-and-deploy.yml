@@ -72,7 +72,7 @@ stages:
       - retrieve_info
       - build
     variables:
-      - group: nodo-${{ parameters.env }}
+      - group: nodo-mock-perf
       - name: appVersion
         value: $[ stageDependencies.retrieve_info.retrieve_info.outputs['getVar.APP_VERSION'] ]
     jobs:
