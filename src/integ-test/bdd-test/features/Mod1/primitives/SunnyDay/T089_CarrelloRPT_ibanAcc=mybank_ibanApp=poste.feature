@@ -1,8 +1,6 @@
 Feature: process tests for nodoInviaRT_ibanAccr_ibanAdd
-
     Background:
         Given systems up
-
     Scenario: RPT generation
         Given RPT generation
             """
@@ -81,7 +79,6 @@ Feature: process tests for nodoInviaRT_ibanAccr_ibanAdd
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-
     Scenario: Execute nodoInviaCarrelloRPT request
         Given the RPT generation scenario executed successfully
         And initial XML nodoInviaCarrelloRPT
@@ -113,6 +110,22 @@ Feature: process tests for nodoInviaRT_ibanAccr_ibanAdd
             </soapenv:Body>
             </soapenv:Envelope>
             """
+        And initial XML pspInviaCarrelloRPT
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <ws:pspInviaCarrelloRPTResponse>
+            <pspInviaCarrelloRPTResponse>
+            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+            <identificativoCarrello>$nodoInviaCarrelloRPT.identificativoCarrello</identificativoCarrello>
+            <parametriPagamentoImmediato>idBruciatura=$nodoInviaCarrelloRPT.identificativoCarrello</parametriPagamentoImmediato>
+            </pspInviaCarrelloRPTResponse>
+            </ws:pspInviaCarrelloRPTResponse>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
-        Then check esito is OK of nodoInviaCarrelloRPT response
+        Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
         And check url field exists in nodoInviaCarrelloRPT response

@@ -60,10 +60,11 @@ def step_impl(context, primitive):
     payload = utils.replace_local_variables(payload, context)
     date = datetime.date.today().strftime("%Y-%m-%d")
     timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
-    yesterday_date = datetime.date.today() - timedelta(days=1)
+    yesterday_date = datetime.date.today() - datetime.timedelta(days=1)
 
     setattr(context, 'date', date)
     setattr(context, 'timedate', timedate)
+    setattr(context, 'yesterday_date', yesterday_date)
 
     if len(payload) > 0:
         my_document = parseString(payload)
@@ -81,8 +82,8 @@ def step_impl(context, primitive):
     if '#date#' in payload:
         payload = payload.replace('#date#', date)
 
-    if '#yesterday#' in payload:
-        payload = payload.replace('#yesterday#', yesterday_date)
+    if '#yesterday_date#' in payload:
+        payload = payload.replace('#yesterday_date#', yesterday_date)
 
     if "#ccp#" in payload:
         ccp = str(random.randint(100000000000000, 999999999999999))
@@ -515,8 +516,7 @@ def step_impl(context):
         payload = payload.replace('#timedate#', timedate)
 
     if '#identificativoFlusso#' in payload:
-        payload = payload.replace(
-            '#identificativoFlusso#', identificativoFlusso)
+        payload = payload.replace('#identificativoFlusso#', identificativoFlusso)
 
     if '#iuv#' in payload:
         payload = payload.replace('#iuv#', iuv)

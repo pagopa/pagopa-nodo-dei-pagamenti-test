@@ -1,8 +1,6 @@
 Feature: process tests for nodoChiediListaPendentiRPT
-
     Background:
         Given systems up
-
     Scenario: Execute nodoChiediListaPendentiRPT request
         Given initial XML nodoChiediListaPendentiRPT
         """
@@ -14,7 +12,7 @@ Feature: process tests for nodoChiediListaPendentiRPT
                 <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
                 <password>pwdpwdpwd</password>
                 <identificativoDominio>44444444444</identificativoDominio>
-                <rangeDa>#yesterday#</rangeDa>
+                <rangeDa>#yesterday_date#</rangeDa>
                 <rangeA>#timedate#</rangeA>
                 <dimensioneLista>5</dimensioneLista>
             </ws:nodoChiediListaPendentiRPT>
@@ -22,4 +20,6 @@ Feature: process tests for nodoChiediListaPendentiRPT
         </soapenv:Envelope>
         """
         When EC sends SOAP nodoChiediListaPendentiRPT to nodo-dei-pagamenti
-        Then check esito is OK of nodoChiediListaPendentiRPT response
+        Then check totRestituiti field exists in nodoChiediListaPendentiRPT response
+        And check listaRPTPendenti field exists in nodoChiediListaPendentiRPT response
+        And check identificativoUnivocoVersamento field exists in nodoChiediListaPendentiRPT response
