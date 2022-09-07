@@ -57,6 +57,11 @@ def step_impl(context, version):
 def step_impl(context, primitive):
     payload = context.text or ""
     payload = utils.replace_local_variables(payload, context)
+    date = datetime.date.today().strftime("%Y-%m-%d")
+    timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
+
+    setattr(context, 'date', date)
+    setattr(context, 'timedate', timedate)
 
     if len(payload) > 0:
         my_document = parseString(payload)
@@ -66,6 +71,13 @@ def step_impl(context, primitive):
                 0].firstChild.data
         payload = payload.replace(
             '#idempotency_key#', f"{idBrokerPSP}_{str(random.randint(1000000000, 9999999999))}")
+
+
+    if "#timedate#" in payload:
+        payload = payload.replace('#timedate#', timedate)
+
+    if '#date#' in payload:
+        payload = payload.replace('#date#', date)
 
     if "#ccp#" in payload:
         ccp = str(random.randint(100000000000000, 999999999999999))
