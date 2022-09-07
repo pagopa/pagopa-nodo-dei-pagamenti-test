@@ -14,7 +14,10 @@ def before_all(context):
     #lib_dir = os.path.abspath(os.path.join(__file__, os.pardir, os.pardir, os.pardir, os.pardir, os.pardir, 'oracle', 'instantclient_21_6'))
     cx_Oracle.init_oracle_client(os.environ['LD_LIBRARY_PATH'])
     more_userdata = json.load(open(os.path.join(context.config.base_dir + "/../resources/config.json")))
-
+    
+    if(os.environ['NODO_CLOUD_ENV'] == "dev"):
+        more_userdata["services"]["url"] = "https://10.230.8.5:443/nodo-pagamenti-dev/api/v1"
+    
     context.config.update_userdata(more_userdata)
     #services = context.config.userdata.get("services")
     #db_config = context.config.userdata.get("db_configuration")
