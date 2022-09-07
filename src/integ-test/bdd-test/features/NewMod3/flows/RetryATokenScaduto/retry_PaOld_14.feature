@@ -2,7 +2,7 @@ Feature: process tests for retryAtokenScaduto
 
   Background:
     Given systems up
-    And nodo-dei-pagamenti has config parameter scheduler.jobName_paInviaRt.enabled set to false
+    And nodo-dei-pagamenti has config parameter scheduler.jobName_paInviaRt.enabled set to true
     And initial XML verifyPaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -219,21 +219,12 @@ Feature: process tests for retryAtokenScaduto
     When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is KO of sendPaymentOutcome response
     And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcome response
-    And nodo-dei-pagamenti has config parameter scheduler.jobName_paInviaRt.enabled set to true
-
-  @prova
-  Scenario: check stati_rpt
+   
+  Scenario: check position_payment_status
     Given the Execute sendPaymentOutcome request scenario executed successfully
     And wait 5 seconds for expiration
-    When job paInviaRt triggered after 5 seconds
-    Then verify the HTTP status code of paInviaRt response is 200
-    And wait 5 seconds for expiration
-    And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO_MOD3,RPT_ANNULLATA_NODO,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query stati_rpt on db nodo_online under macro NewMod3
-
-  Scenario: check position_payment_status
-    Given the check stati_rpt scenario executed successfully
-    And wait 5 seconds for expiration
     Then checks the value PAYING,PAYING_RPT,CANCELLED,PAID_NORPT of the record at column status of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
+    And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO_MOD3,RPT_ANNULLATA_NODO,RT_GENERATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query stati_rpt on db nodo_online under macro NewMod3
     And checks the value $iuv of the record at column CREDITOR_REFERENCE_ID of the table RPT_ACTIVATIONS retrived by the query rpt_activision-v2 on db nodo_online under macro NewMod3
     And checks the value $activatePaymentNoticeResponse.paymentToken-v2 of the record at column PAYMENT_TOKEN of the table RPT_ACTIVATIONS retrived by the query rpt_activision-v2 on db nodo_online under macro NewMod3
     And checks the value N of the record at column NODOINVIARPTREQ of the table RPT_ACTIVATIONS retrived by the query rpt_activision-v2 on db nodo_online under macro NewMod3
@@ -249,7 +240,7 @@ Feature: process tests for retryAtokenScaduto
     And checks the value N of the record at column ready of the table RETRY_PA_ATTIVA_RPT retrived by the query retry_pa_invia_rpt on db nodo_online under macro NewMod3
     #RETRY_PA_INVIA_RT
     And verify 0 record for the table RETRY_PA_INVIA_RT retrived by the query retry_pa_invia_rt on db nodo_online under macro NewMod3
-    And nodo-dei-pagamenti has config parameter scheduler.jobName_paInviaRt.enabled set to true
+    #And nodo-dei-pagamenti has config parameter scheduler.jobName_paInviaRt.enabled set to true
     And generic update through the query param_update_generic_where_condition of the table POSITION_ACTIVATE the parameter AMOUNT = '3', with where condition PA_FISCAL_CODE='$activatePaymentNotice.fiscalCode' AND NOTICE_ID='$activatePaymentNotice.noticeNumber' AND PAYMENT_TOKEN='$activatePaymentNoticeResponse.paymentToken-v2' under macro update_query on db nodo_online
 
   Scenario: Execute paInviaRT
@@ -257,6 +248,7 @@ Feature: process tests for retryAtokenScaduto
     When job paInviaRt triggered after 5 seconds
     Then verify the HTTP status code of paInviaRt response is 200
     And wait 70 seconds for expiration
+    And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO_MOD3,RPT_ANNULLATA_NODO,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA  of the record at column STATO of the table STATI_RPT retrived by the query stati_rpt on db nodo_online under macro NewMod3
     And checks the value $iuv of the record at column CREDITOR_REFERENCE_ID of the table RPT_ACTIVATIONS retrived by the query rpt_activision-v2 on db nodo_online under macro NewMod3
     And checks the value $activatePaymentNoticeResponse.paymentToken-v2 of the record at column PAYMENT_TOKEN of the table RPT_ACTIVATIONS retrived by the query rpt_activision-v2 on db nodo_online under macro NewMod3
     And checks the value N of the record at column NODOINVIARPTREQ of the table RPT_ACTIVATIONS retrived by the query rpt_activision-v2 on db nodo_online under macro NewMod3
