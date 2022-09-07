@@ -192,7 +192,7 @@ def step_impl(context):
         setattr(context, 'date', date)
 
     if "#ccp#" in payload:
-        ccp = str(int(time() * 1000))
+        ccp = str(int(time.time() * 1000))
         payload = payload.replace('#ccp#', ccp)
         setattr(context, "ccp", ccp)
 
