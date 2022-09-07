@@ -257,53 +257,9 @@ Feature: process tests for retryAtokenScaduto
 
   Scenario: Execute paRetryAttivaRpt
     Given the Execute paInviaRT scenario executed successfully
-    And initial XML paaAttivaRPT
-      """
-      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">
-      <soapenv:Header/>
-      <soapenv:Body>
-      <ws:paaAttivaRPTRisposta>
-      <paaAttivaRPTRisposta>
-      <esito>OK</esito>
-      <datiPagamentoPA>
-      <importoSingoloVersamento>10.00</importoSingoloVersamento>
-      <ibanAccredito>IT45R0760103200000000001016</ibanAccredito>
-      <bicAccredito>BSCTCH22</bicAccredito>
-      <enteBeneficiario>
-      <pag:identificativoUnivocoBeneficiario>
-      <pag:tipoIdentificativoUnivoco>G</pag:tipoIdentificativoUnivoco>
-      <pag:codiceIdentificativoUnivoco>44444444444_05</pag:codiceIdentificativoUnivoco>
-      </pag:identificativoUnivocoBeneficiario>
-      <pag:denominazioneBeneficiario>15376371009</pag:denominazioneBeneficiario>
-      <pag:codiceUnitOperBeneficiario>15376371009_01</pag:codiceUnitOperBeneficiario>
-      <pag:denomUnitOperBeneficiario>uj</pag:denomUnitOperBeneficiario>
-      <pag:indirizzoBeneficiario>\"paaAttivaRPT\"</pag:indirizzoBeneficiario>
-      <pag:civicoBeneficiario>j</pag:civicoBeneficiario>
-      <pag:capBeneficiario>gt</pag:capBeneficiario>
-      <pag:localitaBeneficiario>gw</pag:localitaBeneficiario>
-      <pag:provinciaBeneficiario>ds</pag:provinciaBeneficiario>
-      <pag:nazioneBeneficiario>UK</pag:nazioneBeneficiario>
-      </enteBeneficiario>
-      <credenzialiPagatore>i</credenzialiPagatore>
-      <causaleVersamento>prova/RFDB/018701385178400/TXT/causale $activatePaymentNoticeResponse.paymentToken</causaleVersamento>
-      </datiPagamentoPA>
-      </paaAttivaRPTRisposta>
-      </ws:paaAttivaRPTRisposta>
-      </soapenv:Body>
-      </soapenv:Envelope>
-      """
-    And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
     When job paRetryAttivaRpt triggered after 5 seconds
     Then verify the HTTP status code of paRetryAttivaRpt response is 200
     And wait 10 seconds for expiration
-    #RETRY_PA_ATTIVA_RPT
-    And checks the value $activatePaymentNotice.fiscalCode of the record at column pa_fiscal_code of the table RETRY_PA_ATTIVA_RPT retrived by the query retry_pa_invia_rpt on db nodo_online under macro NewMod3
-    And checks the value $activatePaymentNoticeResponse.paymentToken-v2 of the record at column token of the table RETRY_PA_ATTIVA_RPT retrived by the query retry_pa_invia_rpt on db nodo_online under macro NewMod3
-    And checks the value NotNone of the record at column retry of the table RETRY_PA_ATTIVA_RPT retrived by the query retry_pa_invia_rpt on db nodo_online under macro NewMod3
-    And checks the value NotNone of the record at column inserted_timestamp of the table RETRY_PA_ATTIVA_RPT retrived by the query retry_pa_invia_rpt on db nodo_online under macro NewMod3
-    And checks the value NotNone of the record at column updated_timestamp of the table RETRY_PA_ATTIVA_RPT retrived by the query retry_pa_invia_rpt on db nodo_online under macro NewMod3
-    And checks the value $iuv of the record at column iuv of the table RETRY_PA_ATTIVA_RPT retrived by the query retry_pa_invia_rpt on db nodo_online under macro NewMod3
-    #And checks the value Y of the record at column ready of the table RETRY_PA_ATTIVA_RPT retrived by the query retry_pa_invia_rpt on db nodo_online under macro NewMod3
     And generic update through the query param_update_generic_where_condition of the table POSITION_ACTIVATE the parameter AMOUNT = '10', with where condition PA_FISCAL_CODE='$activatePaymentNotice.fiscalCode' AND NOTICE_ID='$activatePaymentNotice.noticeNumber' AND PAYMENT_TOKEN='$activatePaymentNoticeResponse.paymentToken-v2' under macro update_query on db nodo_online
     #RETRY_PA_ATTIVA_RPT
     And verify 0 record for the table RETRY_PA_ATTIVA_RPT retrived by the query retry_pa_invia_rpt on db nodo_online under macro NewMod3
