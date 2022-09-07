@@ -13,6 +13,7 @@ parameters:
 
 variables:
   artifactName: TestPT
+  activeScenario: PMCS_CT
 
 stages:
   
@@ -25,14 +26,7 @@ stages:
           - checkout: self
             clean: true
             persistCredentials: true
-          
-          - script: |
-             echo pwd:
-             pwd
-             echo list:
-             ls -lrt
-            displayName: 'show list'
-            
+                      
           - task: ArchiveFiles@2
             displayName: 'Archive files'
             inputs:
@@ -51,52 +45,27 @@ stages:
     displayName: "K6 Installation Check"
 
     jobs:
-      - job: k6_version_check
-        displayName: "k6_version_check"
+      - job: k6_run_scripts
+        displayName: "k6 run scripts"
         pool: pagopa-agent-pool-uat
         
         steps:
           - checkout: none    
-          - script: |
-             hostname
-             whereis k6
-             k6 version
-             echo pwd
-             pwd
-             echo list:
-             ls -lrt
-             
+                       
           - task: DownloadPipelineArtifact@2
             inputs:
               artifact: $(artifactName)
               source: current
           
-          - script: |
-             echo pwd:
-             pwd
-             echo list:
-             ls -lrt
-             echo list -1:
-             ls -lrt ../
-            displayName: 'show list'
           - task: ExtractFiles@1
             inputs:
               archiveFilePatterns: $(Pipeline.Workspace)/pagopa-nodo-dei-pagamenti-test.zip
               destinationFolder: $(Pipeline.Workspace)
               cleanDestinationFolder: false
               overwriteExistingFiles: true
-              
+                        
           - script: |
-             echo pwd:
-             pwd
-             echo list:
-             ls -lrt
-             echo list -1:
-             ls -lrt ../
-            displayName: 'show list'
-          
-          - script: |
-              active_scenario=PMCS_CT
+              active_scenario=$(activeScenario)
               active_test=TC01.01
               test_step=rampa_1_1_10
    
@@ -115,4 +84,18 @@ stages:
              
               sh './scenarios/'$active_scenario'/test_selector.sh' $active_scenario $active_test $test_step $env
             displayName: 'Command Line Script - Run CT - TC03.05 - rampa_1_1_10'
+          
+          - script: |
+             echo pwd:
+             pwd
+             cd src/perf-test/k6/scenarios/$(activeScenario)/test/output
+             echo pwd after changing dir:
+             pwd
+             echo list:
+             ls -lrt
+             
+             echo start
+             cat *
+             echo end
+            displayName: 'show results'
             
