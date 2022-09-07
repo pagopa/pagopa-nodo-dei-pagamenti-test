@@ -138,6 +138,11 @@ def step_impl(context, primitive):
         payload = payload.replace('#CARRELLO1#', CARRELLO1)
         setattr(context, 'CARRELLO1', CARRELLO1)
 
+    if '#carrelloMills#' in payload:
+        carrello = str(utils.current_milli_time())
+        payload = payload.replace('#carrelloMills#', carrello)
+        setattr(context, 'carrelloMills', carrello)
+
     if '$iuv' in payload:
         payload = payload.replace('$iuv', getattr(context, 'iuv'))
 
