@@ -46,7 +46,8 @@ stages:
               file=$(Build.SourcesDirectory)/src/integ-test/bdd-test/resources/config.json
 
               
-              replace $file ".services.\"nodo-dei-pagamenti\".url"           "https://10.230.8.5:443/nodo-pagamenti/api/v1"
+              # replace $file ".services.\"nodo-dei-pagamenti\".url"           "https://10.230.8.5:443/nodo-pagamenti/api/v1"
+              if [ ${{ parameters.env }} = "dev" ]; then replace $file ".services.\"nodo-dei-pagamenti\".url"           "https://api.dev.platform.pagopa.it/nodo-pagamenti-dev/api/v1" else replace $file ".services.\"nodo-dei-pagamenti\".url"           "https://api.dev.platform.pagopa.it/nodo-pagamenti/api/v1" fi
               replace $file ".services.\"nodo-dei-pagamenti\".healthcheck"   "/monitor/health"
               replace $file ".services.\"nodo-dei-pagamenti\".soap_service"  "/webservices/input"
               replace $file ".services.\"nodo-dei-pagamenti\".rest_service"  ""
@@ -88,6 +89,7 @@ stages:
               replace $file ".db_configuration.wfesp.port"      $(db-wfesp-port-${{ parameters.env }})
 
               jq . $file
+              cat $file
             displayName: 'Configure DB'
           
           - task: ArchiveFiles@2
@@ -151,7 +153,7 @@ stages:
             displayName: 'Append /usr/local/bin at PATH and install beahve'
 
           - script: |
-              behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/test-pipeline
+              behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/NewMod3/primitives/activatePaymentNotice_syntax_ko.feature
             displayName: 'Run integration test'
         
           - task: PublishTestResults@2
