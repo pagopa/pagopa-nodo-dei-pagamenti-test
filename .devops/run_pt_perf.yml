@@ -88,14 +88,17 @@ stages:
           - script: |
              echo pwd:
              pwd
+             echo list:
+             ls -lrt
+             echo changind dir to go in output...
              cd src/perf-test/k6/scenarios/$(activeScenario)/test/output
              echo pwd after changing dir:
              pwd
              echo list:
              ls -lrt
              
-             echo start
+             echo start cat
              cat *
-             echo end
+             echo end cat
             displayName: 'show results'
             
