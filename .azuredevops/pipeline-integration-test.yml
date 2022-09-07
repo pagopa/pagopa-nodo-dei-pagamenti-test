@@ -57,7 +57,7 @@ stages:
 
 
 
-   - condition: succeeded()
+    condition: succeeded()
     jobs:
       - job: test_execute
         displayName: "execute test suite (${{ parameters.env }})"
