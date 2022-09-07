@@ -41,8 +41,8 @@ stages:
             artifact: $(artifactName)
             
             
-  - stage: k6_installation_check
-    displayName: "K6 Installation Check"
+  - stage: k6_run_tests
+    displayName: "K6 Run Tests"
 
     jobs:
       - job: k6_run_scripts
