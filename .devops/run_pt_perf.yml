@@ -36,7 +36,7 @@ stages:
           - task: ArchiveFiles@2
             displayName: 'Archive files'
             inputs:
-              rootFolderOrFile: $(Agent.BuildDirectory)/s/
+              rootFolderOrFile: $(Agent.BuildDirectory)/
               includeRootFolder: false
               archiveType: zip
               archiveFile: $(Build.ArtifactStagingDirectory)/pagopa-nodo-dei-pagamenti-test.zip
