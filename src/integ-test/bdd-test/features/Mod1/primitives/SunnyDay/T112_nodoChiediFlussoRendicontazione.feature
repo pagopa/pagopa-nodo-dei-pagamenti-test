@@ -21,14 +21,14 @@ Feature: process tests for nodoChiediElencoFlussiRendicontazione
             """
         When EC sends SOAP nodoChiediElencoFlussiRendicontazione to nodo-dei-pagamenti
         Then check totRestituiti field exists in nodoChiediElencoFlussiRendicontazione response
-        And check elencoFlussiRendicontazione field exists in nodoChiediListaPendentiRPT response
-        And check nodoChiediElencoFlussiRendicontazioneRisposta field exists in nodoChiediListaPendentiRPT response
-        And retrieve session token from $nodoChiediElencoFlussiRendicontazioneResponse.url
+        And check elencoFlussiRendicontazione field exists in nodoChiediElencoFlussiRendicontazione response
+        And check ppt:nodoChiediElencoFlussiRendicontazioneRisposta field exists in nodoChiediElencoFlussiRendicontazione response
+        #And retrieve session token from $nodoChiediElencoFlussiRendicontazioneResponse.url
 
 
     Scenario: Send nodoChiediFlussiRendicontazione
         Given the Send nodoChiediElencoFlussiRendicontazione scenario executed successfully
-        And initial XML nodoChiediFlussiRendicontazione
+        And initial XML nodoChiediFlussoRendicontazione
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header/>
@@ -39,13 +39,14 @@ Feature: process tests for nodoChiediElencoFlussiRendicontazione
                     <password>pwdpwdpwd</password>
                     <identificativoDominio>44444444444</identificativoDominio>
                     <identificativoPSP>40000000001</identificativoPSP>
-                    <identificativoFlusso>#identificativoFlusso#</identificativoFlusso>
+                    <identificativoFlusso>2022-03-23IDPSPFNZ-1824</identificativoFlusso>
                 </ws:nodoChiediFlussoRendicontazione>
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        Then check xmlRendicontazione field exists in nodoChiediFlussiRendicontazioneRisposta response
-        And check nodoChiediFlussiRendicontazioneRisposta field exists in nodoChiediListaPendentiRPT response
+        When EC sends SOAP nodoChiediFlussoRendicontazione to nodo-dei-pagamenti
+        Then check xmlRendicontazione field exists in nodoChiediFlussoRendicontazione response
+        And check nodoChiediFlussoRendicontazioneRisposta field exists in nodoChiediFlussoRendicontazione response
 
 
             
