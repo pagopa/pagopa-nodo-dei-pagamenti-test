@@ -76,6 +76,8 @@ stages:
              pwd
              echo list:
              ls -lrt
+             echo list -1:
+             ls -lrt ../
             displayName: 'show list'
           - task: ExtractFiles@1
             inputs:
@@ -89,6 +91,8 @@ stages:
              pwd
              echo list:
              ls -lrt
+             echo list -1:
+             ls -lrt ../
             displayName: 'show list'
           
           - script: |
