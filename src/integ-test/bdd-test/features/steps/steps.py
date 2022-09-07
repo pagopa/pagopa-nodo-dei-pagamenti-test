@@ -1433,7 +1433,7 @@ def step_impl(context, query_name, table_name, db_name, name_macro, number):
         "columns", '*').replace("table_name", table_name)
 
     exec_query = db.executeQuery(conn, selected_query)
-
+    print("record query: ", exec_query)
     assert len(exec_query) == number, f"{len(exec_query)}"
 
 
