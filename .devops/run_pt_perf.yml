@@ -79,8 +79,8 @@ stages:
             displayName: 'show list'
           - task: ExtractFiles@1
             inputs:
-              archiveFilePatterns: $(Pipeline.Workspace)/nodo-dei-pagamenti-NRT.zip
-              destinationFolder: $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)
+              archiveFilePatterns: $(Pipeline.Workspace)/pagopa-nodo-dei-pagamenti-test.zip
+              destinationFolder: $(Pipeline.Workspace)
               cleanDestinationFolder: true
               overwriteExistingFiles: false
               
