@@ -17,8 +17,10 @@ stages:
         displayName: "k6_version_check"
         pool: pagopa-agent-pool-uat
         steps:
-          - checkout: none    
+          #- checkout: none    
           - script: |
              hostname
              whereis k6
              k6 version
+             whereis git
+             ls -lrt
