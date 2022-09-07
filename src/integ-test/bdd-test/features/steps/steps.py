@@ -1,4 +1,5 @@
 import datetime
+from datetime import timedelta
 from email import header
 from email.headerregistry import HeaderRegistry
 from email.policy import default
@@ -59,6 +60,7 @@ def step_impl(context, primitive):
     payload = utils.replace_local_variables(payload, context)
     date = datetime.date.today().strftime("%Y-%m-%d")
     timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
+    yesterday_date = datetime.date.today() - timedelta(days=1)
 
     setattr(context, 'date', date)
     setattr(context, 'timedate', timedate)
@@ -78,6 +80,9 @@ def step_impl(context, primitive):
 
     if '#date#' in payload:
         payload = payload.replace('#date#', date)
+
+    if '#yesterday#' in payload:
+        payload = payload.replace('#yesterday#', yesterday_date)
 
     if "#ccp#" in payload:
         ccp = str(random.randint(100000000000000, 999999999999999))
