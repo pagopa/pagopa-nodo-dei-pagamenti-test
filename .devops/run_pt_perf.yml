@@ -27,6 +27,9 @@ stages:
             persistCredentials: true
           
           - script: |
+             echo pwd:
+             pwd
+             echo list:
              ls -lrt
             displayName: 'show list'
             
@@ -71,6 +74,9 @@ stages:
               overwriteExistingFiles: false
               
           - script: |
+             echo pwd:
+             pwd
+             echo list:
              ls -lrt
             displayName: 'show list'
           
