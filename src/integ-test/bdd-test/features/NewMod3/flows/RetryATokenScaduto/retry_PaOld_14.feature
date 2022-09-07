@@ -2,7 +2,7 @@ Feature: process tests for retryAtokenScaduto
 
   Background:
     Given systems up
-    And nodo-dei-pagamenti has config parameter scheduler.jobName_paInviaRt.enabled set to true
+    #And nodo-dei-pagamenti has config parameter scheduler.jobName_paInviaRt.enabled set to true
     And initial XML verifyPaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -219,7 +219,7 @@ Feature: process tests for retryAtokenScaduto
     When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is KO of sendPaymentOutcome response
     And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcome response
-   
+
   Scenario: check position_payment_status
     Given the Execute sendPaymentOutcome request scenario executed successfully
     And wait 5 seconds for expiration
@@ -257,6 +257,42 @@ Feature: process tests for retryAtokenScaduto
 
   Scenario: Execute paRetryAttivaRpt
     Given the Execute paInviaRT scenario executed successfully
+    And initial XML paaAttivaRPT
+      """
+      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">
+      <soapenv:Header/>
+      <soapenv:Body>
+      <ws:paaAttivaRPTRisposta>
+      <paaAttivaRPTRisposta>
+      <esito>OK</esito>
+      <datiPagamentoPA>
+      <importoSingoloVersamento>10.00</importoSingoloVersamento>
+      <ibanAccredito>IT45R0760103200000000001016</ibanAccredito>
+      <bicAccredito>BSCTCH22</bicAccredito>
+      <enteBeneficiario>
+      <pag:identificativoUnivocoBeneficiario>
+      <pag:tipoIdentificativoUnivoco>G</pag:tipoIdentificativoUnivoco>
+      <pag:codiceIdentificativoUnivoco>44444444444_05</pag:codiceIdentificativoUnivoco>
+      </pag:identificativoUnivocoBeneficiario>
+      <pag:denominazioneBeneficiario>15376371009</pag:denominazioneBeneficiario>
+      <pag:codiceUnitOperBeneficiario>15376371009_01</pag:codiceUnitOperBeneficiario>
+      <pag:denomUnitOperBeneficiario>uj</pag:denomUnitOperBeneficiario>
+      <pag:indirizzoBeneficiario>\"paaAttivaRPT\"</pag:indirizzoBeneficiario>
+      <pag:civicoBeneficiario>j</pag:civicoBeneficiario>
+      <pag:capBeneficiario>gt</pag:capBeneficiario>
+      <pag:localitaBeneficiario>gw</pag:localitaBeneficiario>
+      <pag:provinciaBeneficiario>ds</pag:provinciaBeneficiario>
+      <pag:nazioneBeneficiario>UK</pag:nazioneBeneficiario>
+      </enteBeneficiario>
+      <credenzialiPagatore>i</credenzialiPagatore>
+      <causaleVersamento>prova/RFDB/018701385178400/TXT/causale $activatePaymentNoticeResponse.paymentToken</causaleVersamento>
+      </datiPagamentoPA>
+      </paaAttivaRPTRisposta>
+      </ws:paaAttivaRPTRisposta>
+      </soapenv:Body>
+      </soapenv:Envelope>
+      """
+    And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
     When job paRetryAttivaRpt triggered after 5 seconds
     Then verify the HTTP status code of paRetryAttivaRpt response is 200
     And wait 10 seconds for expiration

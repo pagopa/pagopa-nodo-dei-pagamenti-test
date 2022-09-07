@@ -1083,6 +1083,7 @@ def step_impl(context, param, value):
     refresh_response = requests.get(utils.get_refresh_config_url(
         context), headers=headers, verify=False)
     time.sleep(5)
+    print('refresh_response: ',refresh_response)
     assert refresh_response.status_code == 200
 
 
