@@ -61,11 +61,22 @@ stages:
              hostname
              whereis k6
              k6 version
+             echo pwd
+             pwd
+             echo list:
+             ls -lrt
              
           - task: DownloadPipelineArtifact@2
             inputs:
               artifact: $(artifactName)
               source: current
+          
+          - script: |
+             echo pwd:
+             pwd
+             echo list:
+             ls -lrt
+            displayName: 'show list'
           - task: ExtractFiles@1
             inputs:
               archiveFilePatterns: $(Pipeline.Workspace)/nodo-dei-pagamenti-NRT.zip
