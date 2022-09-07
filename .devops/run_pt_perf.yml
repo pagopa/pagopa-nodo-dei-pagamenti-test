@@ -13,6 +13,7 @@ parameters:
 
 variables:
   artifactName: TestPT
+  activeScenario: PMCS_CT
 
 stages:
   
@@ -64,7 +65,7 @@ stages:
               overwriteExistingFiles: true
                         
           - script: |
-              active_scenario=PMCS_CT
+              active_scenario=$(activeScenario)
               active_test=TC01.01
               test_step=rampa_1_1_10
    
@@ -87,7 +88,9 @@ stages:
           - script: |
              echo pwd:
              pwd
-             cd scenarios/'$active_scenario'/test/output
+             cd src/perf-test/k6/scenarios/$(activeScenario)/test/output
+             echo pwd after changing dir:
+             pwd
              echo list:
              ls -lrt
              
