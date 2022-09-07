@@ -119,7 +119,7 @@ Feature: process tests for nodoInviaRPT [REV_NIRPT_08]
          <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
          <pay_i:dominio>
          <pay_i:identificativoDominio>#codicePA_old#</pay_i:identificativoDominio>
-         <pay_i:identificativoStazioneRichiedente>#intermediarioPA_old#</pay_i:identificativoStazioneRichiedente>
+         <pay_i:identificativoStazioneRichiedente>#id_station_old#</pay_i:identificativoStazioneRichiedente>
          </pay_i:dominio>
          <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
          <pay_i:dataOraMessaggioRichiesta>2016-09-16T11:24:10</pay_i:dataOraMessaggioRichiesta>
@@ -171,8 +171,8 @@ Feature: process tests for nodoInviaRPT [REV_NIRPT_08]
          <pay_i:dataEsecuzionePagamento>2016-09-16</pay_i:dataEsecuzionePagamento>
          <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
          <pay_i:tipoVersamento>PO</pay_i:tipoVersamento>
-         <pay_i:identificativoUnivocoVersamento>pspCarrello1_006</pay_i:identificativoUnivocoVersamento>
-         <pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
+         <pay_i:identificativoUnivocoVersamento>018641511120100</pay_i:identificativoUnivocoVersamento>
+         <pay_i:codiceContestoPagamento>2e9d00713b8f452a8e810982d3b1dbd1</pay_i:codiceContestoPagamento>
          <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
          <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
          <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -195,6 +195,7 @@ Feature: process tests for nodoInviaRPT [REV_NIRPT_08]
       Given the Define RPT scenario executed successfully
       And initial XML nodoInviaRPT
          """
+
          <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
          <soapenv:Header>
          <ppt:intestazionePPT>
@@ -211,7 +212,7 @@ Feature: process tests for nodoInviaRPT [REV_NIRPT_08]
          <identificativoPSP>15376371009</identificativoPSP>
          <identificativoIntermediarioPSP>15376371009</identificativoIntermediarioPSP>
          <identificativoCanale>15376371009_01</identificativoCanale>
-         <tipoFirma />
+         <tipoFirma></tipoFirma>
          <rpt>$rptAttachment</rpt>
          </ws:nodoInviaRPT>
          </soapenv:Body>
