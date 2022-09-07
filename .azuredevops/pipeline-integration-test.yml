@@ -153,6 +153,7 @@ stages:
             displayName: 'Append /usr/local/bin at PATH and install beahve'
 
           - script: |
+              echo "##vso[task.setvariable variable=NODO_CLOUD_ENV;isOutput=false]${{ parameters.env }}"
               behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/NewMod3/primitives/activatePaymentNotice_syntax_ko.feature
             displayName: 'Run integration test'
         
