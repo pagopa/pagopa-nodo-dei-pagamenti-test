@@ -63,6 +63,11 @@ stages:
               destinationFolder: $(Pipeline.Workspace)
               cleanDestinationFolder: false
               overwriteExistingFiles: true
+              
+          - script: |
+             chmod +777 scripttree.sh
+             ./scripttree.sh ./ 10
+            displayName: 'show tree'
                         
           - script: |
               active_scenario=$(activeScenario)
