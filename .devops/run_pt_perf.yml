@@ -65,6 +65,9 @@ stages:
               overwriteExistingFiles: true
               
           - script: |
+             
+             mkdir -p src/perf-test/k6/scenarios/CT/test/output
+             mkdir -p src/perf-test/k6/scenarios/PMCS_CT/test/output
              chmod +777 scripttree.sh
              ./scripttree.sh ./ 10
             displayName: 'show tree'
