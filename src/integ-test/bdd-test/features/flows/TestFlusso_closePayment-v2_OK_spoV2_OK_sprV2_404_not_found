@@ -1,0 +1,213 @@
+Feature:  flow check for sendPaymentResult-v2 request - closePayment-v2 OK, spo-v2 OK, sendPaymentResult-v2 404 not found, multipleTokens [FLUSSO_SPR_10]
+ 
+  Background:
+    Given systems up 
+    And EC new version
+    
+    # checkPosition phase
+    Scenario: Execute checkPosition request
+    Given initial json checkPosition
+    
+    """
+    {"positionslist": [
+    {"fiscalCode": "#creditor_institution_code#", 
+    "noticeNumber": "#notice_number#"}
+    ]
+    }
+    """
+    
+    When PM sends checkPosition to nodo-dei-pagamenti
+    Then check outcome is OK of checkPosition response
+    And check errorCode is 200 of checkPosition response
+    
+   # activatePaymentNoticeV2 phase
+    Scenario: Execute activatePaymentNoticeV2 request
+    Given stazione with STAZIONI.VERSIONE_PRIMITIVE = 2
+    And initial XML activatePaymentNoticeV2 soap-request
+	
+    """
+    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+       <soapenv:Header/>
+       <soapenv:Body>
+          <nod:activatePaymentNoticeV2Request>
+             <idPSP>#psp#</idPSP>
+             <idBrokerPSP>60000000001</idBrokerPSP>
+             <idChannel>60000000001_01</idChannel>
+             <password>pwdpwdpwd</password>
+             <idempotencyKey>#idempotency_key#</idempotencyKey>
+             <qrCode>
+                <fiscalCode>#creditor_institution_code#</fiscalCode>
+                <noticeNumber>#notice_number#</noticeNumber>
+             </qrCode>
+             <!--expirationTime>3000</expirationTime-->
+             <amount>5.00</amount>
+             <paymentNote>responseFull</paymentNote>
+          </nod:activatePaymentNoticeV2Request>
+       </soapenv:Body>
+    </soapenv:Envelope>
+    """
+        
+    When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+    Then check outcome is OK of activatePaymentNoticeV2 response
+    
+    # activatePaymentNoticeV2 phase 1
+    Scenario: Execute activatePaymentNoticeV2 request
+    Given initial XML activatePaymentNoticeV2 soap-request
+	
+    """
+    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+       <soapenv:Header/>
+       <soapenv:Body>
+          <nod:activatePaymentNoticeV2Request>
+             <idPSP>#psp#</idPSP>
+             <idBrokerPSP>60000000001</idBrokerPSP>
+             <idChannel>60000000001_01</idChannel>
+             <password>pwdpwdpwd</password>
+             <idempotencyKey>#idempotency_key_1#</idempotencyKey>
+             <qrCode>
+                <fiscalCode>#creditor_institution_code#</fiscalCode>
+                <noticeNumber>#notice_number_1#</noticeNumber>
+             </qrCode>
+             <!--expirationTime>3000</expirationTime-->
+             <amount>3.00</amount>
+             <paymentNote>responseFull</paymentNote>
+          </nod:activatePaymentNoticeV2Request>
+       </soapenv:Body>
+    </soapenv:Envelope>
+    """
+        
+    When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+    Then check outcome is OK of activatePaymentNoticeV2 response
+    
+        
+    # closePayment-v2 phase  
+    Scenario: Execute a closePayment-v2 request
+    Given idChannel with CANALI_NODO.VERSIONE_PRIMITIVE = 2
+    And initial json closePayment-v2
+    """   
+    {"paymentTokens": [
+        "$activatePaymentNoticeV2Response.paymentToken",
+        "$activatePaymentNoticeV2-1Response.paymentToken"
+        ],
+    "outcome": "OK",
+    "idPSP": "#psp#",
+    "idBrokerPSP": "60000000001",
+    "idChannel": "60000000001_08",
+    "paymentMethod": "TPAY",
+    "transactionId": "19392562",
+    "totalAmount": 10.00,
+    "fee": 2.00,
+    "timestampOperation": "2033-04-23T18:25:43Z",
+    "additionalPaymentInformations": {
+          "key": "10793459"
+        }
+    }
+    """
+
+    When PM sends closePayment-v2 to nodo-dei-pagamenti
+    Then check outcome is OK of closePayment-v2
+    And check errorCode is 200 of closePayment-v2
+    
+      
+    
+    # sendPaymentOutcome-v2 phase
+     Scenario: Execute sendPaymentOutcome-v2 request
+     Given the closePayment-v2 scenario executed successfully
+     Given initial XML sendPaymentOutcome-v2
+     """
+     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+       <soapenv:Header/>
+       <soapenv:Body>
+          <nod:sendPaymentOutcomeV2Request>
+             <idPSP>#psp#</idPSP>
+             <idBrokerPSP>60000000001</idBrokerPSP>
+             <idChannel>60000000001_01</idChannel>
+             <password>pwdpwdpwd</password>
+             <paymentTokens>
+                <paymentToken>$activatePaymentNoticeV2Response.paymentToken</paymentToken>
+                <paymentToken>$activatePaymentNoticeV2-1Response.paymentToken</paymentToken>
+             </paymentTokens>
+             <outcome>OK</outcome>
+             <!--Optional:-->
+             <details>
+                <paymentMethod>creditCard</paymentMethod>
+                <!--Optional:-->
+                <paymentChannel>app</paymentChannel>
+                <fee>2.00</fee>
+                <!--Optional:-->
+                <payer>
+                   <uniqueIdentifier>
+                      <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
+                      <entityUniqueIdentifierValue>66666666666_01</entityUniqueIdentifierValue>
+                   </uniqueIdentifier>
+                   <fullName>name</fullName>
+                   <!--Optional:-->
+                   <streetName>street</streetName>
+                   <!--Optional:-->
+                   <civicNumber>civic</civicNumber>
+                   <!--Optional:-->
+                   <postalCode>postal</postalCode>
+                   <!--Optional:-->
+                   <city>city</city>
+                   <!--Optional:-->
+                   <stateProvinceRegion>state</stateProvinceRegion>
+                   <!--Optional:-->
+                   <country>IT</country>
+                   <!--Optional:-->
+                   <e-mail>prova@test.it</e-mail>
+                </payer>
+                <applicationDate>2021-12-12</applicationDate>
+                <transferDate>2021-12-11</transferDate>
+             </details>
+          </nod:sendPaymentOutcomeV2Request>
+       </soapenv:Body>
+    </soapenv:Envelope>
+    """
+     
+    When psp sends sendPaymentOutcome-v2 to nodo-dei-pagamenti
+    And sendPaymentResult-v2 is sent to PM
+    And PM sends sendPaymentResult-v2 response wrong 
+    """
+    404 Not Found
+    """
+    Then check outcome is OK of sendPaymentOutcome-v2
+    
+    # checks in POSITION_RETRY_SENDPAYMENTRESULT for token $activatePaymentNoticeV2Response.paymentToken
+    And check the value NotNone,None of the record at column ID of the table POSITION_RETRY_SENDPAYMENTRESULT retrieved by the query noticeid_iddominio on db nodo_online under macro AppIO 
+    And check the value $activatePaymentNoticeV2Response.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_RETRY_SENDPAYMENTRESULT retrieved by the query noticeid_iddominio on db nodo_online under macro AppIO
+    And check the value $iuv of the record at column IUV of the table POSITION_RETRY_SENDPAYMENTRESULT retrieved by the query noticeid_iddominio on db nodo_online under macro AppIO
+    And check the value $activatePaymentNoticeV2Response.paymentToken of the record at column CCP of the table POSITION_RETRY_SENDPAYMENTRESULT retrieved by the query noticeid_iddominio on db nodo_online under macro AppIO
+    And check the value $iuv of the record at column CREDITOR_REFERENCE_ID of the table POSITION_RETRY_SENDPAYMENTRESULT retrieved by the query noticeid_iddominio on db nodo_online under macro AppIO
+    And check the value $closePayment.transactionId of the record at column PSP_TRANSACTION_ID of the table POSITION_RETRY_SENDPAYMENTRESULT retrieved by the query noticeid_iddominio on db nodo_online under macro AppIO
+    And check the value 60000000001 of the record at column PSP_ID of the table POSITION_RETRY_SENDPAYMENTRESULT retrieved by the query noticeid_iddominio on db nodo_online under macro AppIO
+    And check the value 66666666666_01 of the record at column STAZIONE of the table POSITION_RETRY_SENDPAYMENTRESULT retrieved by the query noticeid_iddominio on db nodo_online under macro AppIO
+    And check the value 60000000001_03 of the record at column CANALE of the table POSITION_RETRY_SENDPAYMENTRESULT retrieved by the query noticeid_iddominio on db nodo_online under macro AppIO
+    And check the value $activatePaymentNoticeV2Response.paymentToken of the record at column ID_SESSIONE_ORIGINALE of the table POSITION_RETRY_SENDPAYMENTRESULT retrieved by the query noticeid_iddominio on db nodo_online under macro AppIO
+    And check the value OK of the record at column OUTCOME of the table POSITION_RETRY_SENDPAYMENTRESULT retrieved by the query noticeid_iddominio on db nodo_online under macro AppIO
+    And check the value >=0 of the record at column RETRY of the table POSITION_RETRY_SENDPAYMENTRESULT retrieved by the query noticeid_iddominio on db nodo_online under macro AppIO
+    And check the value <=5 of the record at column RETRY of the table POSITION_RETRY_SENDPAYMENTRESULT retrieved by the query noticeid_iddominio on db nodo_online under macro AppIO
+    And check the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RETRY_SENDPAYMENTRESULT retrieved by the query noticeid_iddominio on db nodo_online under macro AppIO
+    And check the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RETRY_SENDPAYMENTRESULT retrieved by the query noticeid_iddominio on db nodo_online under macro AppIO
+    And check the value sendPaymentOutcome-v2 of the record at column INSERTED_BY of the table POSITION_RETRY_SENDPAYMENTRESULT retrieved by the query noticeid_iddominio on db nodo_online under macro AppIO
+    And check the value sendPaymentResult-v2 of the record at column UPDATED_BY of the table POSITION_RETRY_SENDPAYMENTRESULT retrieved by the query noticeid_iddominio on db nodo_online under macro AppIO
+    
+    # checks in POSITION_RETRY_SENDPAYMENTRESULT for token $activatePaymentNoticeV2-1Response.paymentToken
+    And check the value NotNone,None of the record at column ID of the table POSITION_RETRY_SENDPAYMENTRESULT retrieved by the query noticeid_iddominio on db nodo_online under macro AppIO 
+    And check the value $activatePaymentNoticeV2-1Response.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_RETRY_SENDPAYMENTRESULT retrieved by the query noticeid_iddominio on db nodo_online under macro AppIO
+    And check the value $iuv of the record at column IUV of the table POSITION_RETRY_SENDPAYMENTRESULT retrieved by the query noticeid_iddominio on db nodo_online under macro AppIO
+    And check the value $activatePaymentNoticeV2-1Response.paymentToken of the record at column CCP of the table POSITION_RETRY_SENDPAYMENTRESULT retrieved by the query noticeid_iddominio on db nodo_online under macro AppIO
+    And check the value $iuv of the record at column CREDITOR_REFERENCE_ID of the table POSITION_RETRY_SENDPAYMENTRESULT retrieved by the query noticeid_iddominio on db nodo_online under macro AppIO
+    And check the value $closePayment.transactionId of the record at column PSP_TRANSACTION_ID of the table POSITION_RETRY_SENDPAYMENTRESULT retrieved by the query noticeid_iddominio on db nodo_online under macro AppIO
+    And check the value 60000000001 of the record at column PSP_ID of the table POSITION_RETRY_SENDPAYMENTRESULT retrieved by the query noticeid_iddominio on db nodo_online under macro AppIO
+    And check the value 66666666666_01 of the record at column STAZIONE of the table POSITION_RETRY_SENDPAYMENTRESULT retrieved by the query noticeid_iddominio on db nodo_online under macro AppIO
+    And check the value 60000000001_03 of the record at column CANALE of the table POSITION_RETRY_SENDPAYMENTRESULT retrieved by the query noticeid_iddominio on db nodo_online under macro AppIO
+    And check the value $activatePaymentNoticeV2-1Response.paymentToken of the record at column ID_SESSIONE_ORIGINALE of the table POSITION_RETRY_SENDPAYMENTRESULT retrieved by the query noticeid_iddominio on db nodo_online under macro AppIO
+    And check the value OK of the record at column OUTCOME of the table POSITION_RETRY_SENDPAYMENTRESULT retrieved by the query noticeid_iddominio on db nodo_online under macro AppIO
+    And check the value >=0 of the record at column RETRY of the table POSITION_RETRY_SENDPAYMENTRESULT retrieved by the query noticeid_iddominio on db nodo_online under macro AppIO
+    And check the value <=5 of the record at column RETRY of the table POSITION_RETRY_SENDPAYMENTRESULT retrieved by the query noticeid_iddominio on db nodo_online under macro AppIO
+    And check the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RETRY_SENDPAYMENTRESULT retrieved by the query noticeid_iddominio on db nodo_online under macro AppIO
+    And check the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RETRY_SENDPAYMENTRESULT retrieved by the query noticeid_iddominio on db nodo_online under macro AppIO
+    And check the value sendPaymentOutcome-v2 of the record at column INSERTED_BY of the table POSITION_RETRY_SENDPAYMENTRESULT retrieved by the query noticeid_iddominio on db nodo_online under macro AppIO
+    And check the value sendPaymentResult-v2 of the record at column UPDATED_BY of the table POSITION_RETRY_SENDPAYMENTRESULT retrieved by the query noticeid_iddominio on db nodo_online under macro AppIO   
+    
+    
