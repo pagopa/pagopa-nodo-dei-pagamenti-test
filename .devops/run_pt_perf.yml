@@ -83,7 +83,7 @@ stages:
             inputs:
               archiveFilePatterns: $(Pipeline.Workspace)/pagopa-nodo-dei-pagamenti-test.zip
               destinationFolder: $(Pipeline.Workspace)
-              cleanDestinationFolder: true
+              cleanDestinationFolder: false
               overwriteExistingFiles: false
               
           - script: |
