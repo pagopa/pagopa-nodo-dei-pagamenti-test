@@ -84,7 +84,7 @@ stages:
               archiveFilePatterns: $(Pipeline.Workspace)/pagopa-nodo-dei-pagamenti-test.zip
               destinationFolder: $(Pipeline.Workspace)
               cleanDestinationFolder: false
-              overwriteExistingFiles: false
+              overwriteExistingFiles: true
               
           - script: |
              echo pwd:
@@ -111,7 +111,7 @@ stages:
               echo configured test_step= $test_step
               echo configured env= $env
              
-              cd pagopa-nodo-dei-pagamenti-test/src/perf-test/k6
+              cd src/perf-test/k6
              
               sh './scenarios/'$active_scenario'/test_selector.sh' $active_scenario $active_test $test_step $env
             displayName: 'Command Line Script - Run CT - TC03.05 - rampa_1_1_10'
