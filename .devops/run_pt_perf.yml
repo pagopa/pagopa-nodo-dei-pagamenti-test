@@ -4,10 +4,45 @@ trigger: none
 pool:
   vmImage: 'ubuntu-latest'
 
-  
+parameters:
+  - name: env
+    displayName: Environment to Run Test
+    type: string
+    values:
+      - prf
+
+variables:
+  artifactName: TestPT
 
 stages:
-           
+  
+  - stage: publish_artifact
+    displayName: "Publish artifact env (${{ parameters.env }})"
+    jobs:
+      - job: 
+        displayName: "publish artifact on env (${{ parameters.env }})"
+        steps:
+          - checkout: self
+            clean: true
+            persistCredentials: true
+          
+          - script: |
+             ls -lrt
+            displayName: 'show list'
+            
+          - task: ArchiveFiles@2
+            displayName: 'Archive files'
+            inputs:
+              rootFolderOrFile: $(Agent.BuildDirectory)/s/
+              includeRootFolder: false
+              archiveType: zip
+              archiveFile: $(Build.ArtifactStagingDirectory)/pagopa-nodo-dei-pagamenti-test.zip
+              replaceExistingArchive: true
+            
+          - publish: $(Build.ArtifactStagingDirectory)/pagopa-nodo-dei-pagamenti-test.zip
+            displayName: "Publish Artifact"
+            artifact: $(artifactName)
+            
             
   - stage: k6_installation_check
     displayName: "K6 Installation Check"
@@ -16,11 +51,47 @@ stages:
       - job: k6_version_check
         displayName: "k6_version_check"
         pool: pagopa-agent-pool-uat
+        
         steps:
-          #- checkout: none    
+          - checkout: none    
           - script: |
              hostname
              whereis k6
              k6 version
-             whereis git
+             
+          - task: DownloadPipelineArtifact@2
+            inputs:
+              artifact: $(artifactName)
+              source: current
+          - task: ExtractFiles@1
+            inputs:
+              archiveFilePatterns: $(Pipeline.Workspace)/nodo-dei-pagamenti-NRT.zip
+              destinationFolder: $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)
+              cleanDestinationFolder: true
+              overwriteExistingFiles: false
+              
+          - script: |
              ls -lrt
+            displayName: 'show list'
+          
+          - script: |
+              active_scenario=PMCS_CT
+              active_test=TC01.01
+              test_step=rampa_1_1_10
+   
+              env="pagoPA_PERF_apim"
+          
+              echo -----------------------------------------
+              echo *** Main K6 Perf Test Script ***
+              echo -----------------------------------------
+             
+              echo configured active_scenario = $active_scenario
+              echo configured active_test = $active_test
+              echo configured test_step= $test_step
+              echo configured env= $env
+             
+              cd pagopa-nodo-dei-pagamenti-test/src/perf-test/k6
+             
+              sh './scenarios/'$active_scenario'/test_selector.sh' $active_scenario $active_test $test_step $env
+            displayName: 'Command Line Script - Run CT - TC03.05 - rampa_1_1_10'
+            
