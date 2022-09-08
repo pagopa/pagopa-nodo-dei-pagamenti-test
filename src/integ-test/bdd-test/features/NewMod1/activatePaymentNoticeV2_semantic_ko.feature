@@ -71,7 +71,7 @@ Feature: semantic checks KO for activatePaymentNoticeV2Request
 
     # [SEM_APNV2_07]
     Scenario: Check PPT_AUTORIZZAZIONE error on psp channel not enabled for payment model 3
-        Given idChannel with canale_IMMEDIATO_MULTIBENEFICIARIO in activatePaymentNoticeV2
+        Given idChannel with 60000000001_03 in activatePaymentNoticeV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check faultCode is PPT_AUTORIZZAZIONE of activatePaymentNoticeV2 response
@@ -85,14 +85,14 @@ Feature: semantic checks KO for activatePaymentNoticeV2Request
 
     # [SEM_APNV2_09]
     Scenario: Check PPT_DOMINIO_SCONOSCIUTO error on non-existent pa
-        Given fiscalCode with 1230984759 in activatePaymentNoticeV2
+        Given fiscalCode with 12309847591 in activatePaymentNoticeV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check faultCode is PPT_DOMINIO_SCONOSCIUTO of activatePaymentNoticeV2 response
 
     # [SEM_APNV2_10]
     Scenario: Check PPT_DOMINIO_DISABILITATO error on disabled pa
-        Given fiscalCode with NOT_ENABLED in activatePaymentNoticeV2
+        Given fiscalCode with 11111122222 in activatePaymentNoticeV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check faultCode is PPT_DOMINIO_DISABILITATO of activatePaymentNoticeV2 response
@@ -134,7 +134,8 @@ Feature: semantic checks KO for activatePaymentNoticeV2Request
 
     # [SEM_APNV2_15]
     Scenario: Check PPT_INTERMEDIARIO_PA_DISABILITATO error on disabled pa broker
-        Given noticeNumber with 088456789012345678 in activatePaymentNoticeV2
+        Given fiscalCode with 55555555555 in activatePaymentNoticeV2
+        And noticeNumber with 088456789012345678 in activatePaymentNoticeV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check faultCode is PPT_INTERMEDIARIO_PA_DISABILITATO of activatePaymentNoticeV2 response
