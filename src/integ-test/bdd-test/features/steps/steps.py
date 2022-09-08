@@ -366,6 +366,54 @@ def step_impl(context):
     print("RT generato: ", payload)
     setattr(context, 'rtAttachment', payload)
 
+@given('RR generation')
+def step_impl(context):
+    payload = context.text or ""
+    payload = utils.replace_global_variables(payload, context)
+    payload = utils.replace_local_variables(payload, context)
+    payload = utils.replace_context_variables(payload, context)
+    date = datetime.date.today().strftime("%Y-%m-%d")
+    timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
+    setattr(context, 'date', date)
+    setattr(context, 'timedate', timedate)
+
+    if '#date#' in payload:
+        payload = payload.replace('#date#', date)
+    if "#timedate#" in payload:
+        payload = payload.replace('#timedate#', timedate)
+    
+    payload_b = bytes(payload, 'ascii')
+    payload_uni = b64.b64encode(payload_b)
+    payload = f"{payload_uni}".split("'")[1]
+    print(payload)
+    
+    print("RT generato: ", payload)
+    setattr(context, 'rrAttachment', payload)
+
+@given('ER generation')
+def step_impl(context):
+    payload = context.text or ""
+    payload = utils.replace_global_variables(payload, context)
+    payload = utils.replace_local_variables(payload, context)
+    payload = utils.replace_context_variables(payload, context)
+    date = datetime.date.today().strftime("%Y-%m-%d")
+    timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
+    setattr(context, 'date', date)
+    setattr(context, 'timedate', timedate)
+
+    if '#date#' in payload:
+        payload = payload.replace('#date#', date)
+    if "#timedate#" in payload:
+        payload = payload.replace('#timedate#', timedate)
+    
+    payload_b = bytes(payload, 'ascii')
+    payload_uni = b64.b64encode(payload_b)
+    payload = f"{payload_uni}".split("'")[1]
+    print(payload)
+    
+    print("RT generato: ", payload)
+    setattr(context, 'erAttachment', payload)
+
 
 @given('RPT{number:d} generation')
 def step_impl(context, number):
