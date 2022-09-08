@@ -5,6 +5,7 @@ import json
 import os
 import random
 from sre_constants import ASSERT
+from textwrap import indent
 import time
 from xml.dom.minidom import parseString
 import base64 as b64
@@ -512,6 +513,15 @@ def step_impl(context, elem, value, action):
         xml = utils.manipulate_soap_action(
             getattr(context, action), elem, value)
         setattr(context, action, xml)
+
+@given('replace {old_tag} tag in {action} with {new_tag}')
+def step_impl(context, old_tag, new_tag, action):
+    if old_tag != '-':
+        my_document = parseString(getattr(context, action))
+        tag = my_document.getElementsByTagName(old_tag)[0]
+        tag.tagName = new_tag
+        print("####################################", my_document.toprettyxml(), type(my_document))
+        setattr(context, action, my_document.toprettyxml())
 
 
 @given('{attribute} set {value} for {elem} in {primitive}')
