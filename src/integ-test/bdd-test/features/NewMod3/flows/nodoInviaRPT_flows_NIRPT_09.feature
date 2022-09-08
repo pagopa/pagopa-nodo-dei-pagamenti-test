@@ -36,14 +36,14 @@ Feature: process tests for nodoInviaRPT [REV_NIRPT_09]
          <soapenv:Header/>
          <soapenv:Body>
          <nod:activatePaymentNoticeReq>
-         <idPSP>#psp#</idPSP>
-         <idBrokerPSP>#psp#</idBrokerPSP>
-         <idChannel>70000000001_01</idChannel>
+         <idPSP>40000000001</idPSP>
+         <idBrokerPSP>40000000001</idBrokerPSP>
+         <idChannel>40000000001_01</idChannel>
          <password>pwdpwdpwd</password>
          <idempotencyKey>#idempotency_key#</idempotencyKey>
          <qrCode>
          <fiscalCode>#creditor_institution_code_old#</fiscalCode>
-         <noticeNumber>#notice_number_old#</noticeNumber>
+         <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
          </qrCode>
          <expirationTime>4000</expirationTime>
          <amount>10.00</amount>
@@ -53,7 +53,7 @@ Feature: process tests for nodoInviaRPT [REV_NIRPT_09]
          """
       When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
       Then check outcome is OK of activatePaymentNotice response
-      And wait 4 seconds for expiration 
+      And wait 4 seconds for expiration
 
 
 
@@ -66,8 +66,8 @@ Feature: process tests for nodoInviaRPT [REV_NIRPT_09]
          <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
          <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
          <pay_i:dominio>
-         <pay_i:identificativoDominio>#codicePA#</pay_i:identificativoDominio>
-         <pay_i:identificativoStazioneRichiedente>#intermediarioPA#</pay_i:identificativoStazioneRichiedente>
+         <pay_i:identificativoDominio>#codicePA_old#</pay_i:identificativoDominio>
+         <pay_i:identificativoStazioneRichiedente>#id_station_old#</pay_i:identificativoStazioneRichiedente>
          </pay_i:dominio>
          <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
          <pay_i:dataOraMessaggioRichiesta>2016-09-16T11:24:10</pay_i:dataOraMessaggioRichiesta>
@@ -117,15 +117,15 @@ Feature: process tests for nodoInviaRPT [REV_NIRPT_09]
          </pay_i:enteBeneficiario>
          <pay_i:datiVersamento>
          <pay_i:dataEsecuzionePagamento>2016-09-16</pay_i:dataEsecuzionePagamento>
-         <pay_i:importoTotaleDaVersare>1.50</pay_i:importoTotaleDaVersare>
-         <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
-         <pay_i:identificativoUnivocoVersamento>#iuv#</pay_i:identificativoUnivocoVersamento>
-         <pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
-         <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
+         <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
+         <pay_i:tipoVersamento>PO</pay_i:tipoVersamento>
+         <pay_i:identificativoUnivocoVersamento>$iuv</pay_i:identificativoUnivocoVersamento>
+         <pay_i:codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken</pay_i:codiceContestoPagamento>
+         <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
          <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
          <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
          <pay_i:datiSingoloVersamento>
-         <pay_i:importoSingoloVersamento>1.50</pay_i:importoSingoloVersamento>
+         <pay_i:importoSingoloVersamento>10.00</pay_i:importoSingoloVersamento>
          <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
          <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
          <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
@@ -146,20 +146,20 @@ Feature: process tests for nodoInviaRPT [REV_NIRPT_09]
          <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
          <soapenv:Header>
          <ppt:intestazionePPT>
-         <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
-         <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
-         <identificativoDominio>#codicePA#</identificativoDominio>
+         <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
+         <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
+         <identificativoDominio>44444444444</identificativoDominio>
          <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
-         <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+         <codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken</codiceContestoPagamento>
          </ppt:intestazionePPT>
          </soapenv:Header>
          <soapenv:Body>
          <ws:nodoInviaRPT>
          <password>pwdpwdpwd</password>
-         <identificativoPSP>AGID_01</identificativoPSP>
-         <identificativoIntermediarioPSP>97735020584</identificativoIntermediarioPSP>
-         <identificativoCanale>97735020584_02</identificativoCanale>
-         <tipoFirma />
+         <identificativoPSP>15376371009</identificativoPSP>
+         <identificativoIntermediarioPSP>15376371009</identificativoIntermediarioPSP>
+         <identificativoCanale>15376371009_01</identificativoCanale>
+         <tipoFirma></tipoFirma>
          <rpt>$rptAttachment</rpt>
          </ws:nodoInviaRPT>
          </soapenv:Body>
@@ -167,6 +167,67 @@ Feature: process tests for nodoInviaRPT [REV_NIRPT_09]
          """
       When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
       Then check esito is OK of nodoInviaRPT response
-      And checks the value PAYING of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
-      And checks the value PAYING_RPT of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
 
+      #DB CHECK-POSITION_PAYMENT_STATUS
+      And checks the value PAYING, PAYING_RPT of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
+
+      #DB CHECK-POSITION_PAYMENT_STATUS_SNAPSHOT
+      And checks the value PAYING_RPT of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro NewMod3
+
+      #DB CHECK-STATI_RPT
+      And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO_MOD3 of the record at column STATO of the table STATI_RPT retrived by the query nodo_invia_rpt_rpt_stati on db nodo_online under macro NewMod3
+
+      #DB CHECK-STATI_RPT_SNAPSHOT
+      And checks the value RPT_PARCHEGGIATA_NODO_MOD3 of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query nodo_invia_rpt_rpt_stati on db nodo_online under macro NewMod3
+
+      #DB CHECK-POSITION_SUBJECT
+      And execution query payment_status to get value on the table POSITION_SERVICE, with the columns DEBTOR_ID under macro NewMod3 with db name nodo_online
+      And through the query payment_status retrieve param DEBTOR_ID at position 0 and save it under the key DEBTOR_ID
+      And checks the value DEBTOR of the record at column SUBJECT_TYPE of the table POSITION_SUBJECT retrived by the query position_subject_2 on db nodo_online under macro NewMod3
+      And checks the value F of the record at column ENTITY_UNIQUE_IDENTIFIER_TYPE of the table POSITION_SUBJECT retrived by the query position_subject_2 on db nodo_online under macro NewMod3
+      And checks the value RCCGLD09P09H501E of the record at column ENTITY_UNIQUE_IDENTIFIER_VALUE of the table POSITION_SUBJECT retrived by the query position_subject_2 on db nodo_online under macro NewMod3
+      And checks the value Gesualdo;Riccitelli of the record at column FULL_NAME of the table POSITION_SUBJECT retrived by the query position_subject_2 on db nodo_online under macro NewMod3
+      And checks the value via del gesu of the record at column STREET_NAME of the table POSITION_SUBJECT retrived by the query position_subject_2 on db nodo_online under macro NewMod3
+      And checks the value 11 of the record at column CIVIC_NUMBER of the table POSITION_SUBJECT retrived by the query position_subject_2 on db nodo_online under macro NewMod3
+      And checks the value 00186 of the record at column POSTAL_CODE of the table POSITION_SUBJECT retrived by the query position_subject_2 on db nodo_online under macro NewMod3
+      And checks the value Roma of the record at column CITY of the table POSITION_SUBJECT retrived by the query position_subject_2 on db nodo_online under macro NewMod3
+      And checks the value RM of the record at column STATE_PROVINCE_REGION of the table POSITION_SUBJECT retrived by the query position_subject_2 on db nodo_online under macro NewMod3
+      And checks the value IT of the record at column COUNTRY of the table POSITION_SUBJECT retrived by the query position_subject_2 on db nodo_online under macro NewMod3
+      And checks the value gesualdo.riccitelli@poste.it of the record at column EMAIL of the table POSITION_SUBJECT retrived by the query position_subject_2 on db nodo_online under macro NewMod3
+      And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_SUBJECT retrived by the query position_subject_2 on db nodo_online under macro NewMod3
+      And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_SUBJECT retrived by the query position_subject_2 on db nodo_online under macro NewMod3
+
+
+      #DB CHECK-POSITION_SERVICE
+      And execution query payment_status to get value on the table POSITION_SERVICE, with the columns DEBTOR_ID under macro NewMod3 with db name nodo_online
+      And through the query payment_status retrieve param DEBTOR_ID at position 0 and save it under the key DEBTOR_ID
+      And checks the value $DEBTOR_ID of the record at column ID of the table POSITION_SERVICE retrived by the query position_subject_2 on db nodo_online under macro NewMod3
+
+
+      #DB CHECK-POSITION_PAYMENT
+      And execution query payment_status to get value on the table POSITION_PAYMENT, with the columns RPT_ID under macro NewMod3 with db name nodo_online
+      And through the query payment_status retrieve param ID at position 0 and save it under the key RPT_ID
+      And checks the value $RPT_ID of the record at column ID of the table RPT retrived by the query rpt on db nodo_online under macro NewMod3
+
+      #DB CHECK-POSITION_TRANSFER
+      And execution query payment_status to get value on the table POSITION_TRANSFER, with the columns TRANSFER_CATEGORY under macro NewMod3 with db name nodo_online
+      And through the query payment_status retrieve param TRANSFER_CATEGORY at position 0 and save it under the key TRANSFER_CATEGORY
+      And checks the value $TRANSFER_CATEGORY of the record at column DATI_SPECIFICI_RISCOSSIONE of the table RPT_VERSAMENTI retrived by the query rpt_versamenti on db nodo_online under macro NewMod3
+
+      #DB CHECK-RT
+      And verify 0 record for the table RT retrived by the query rpt on db nodo_online under macro NewMod3
+
+      #DB CHECK-RT_VERSAMENTI
+      And verify 0 record for the table RT_VERSAMENTI retrived by the query rt_versamenti on db nodo_online under macro NewMod3
+
+      #DB CHECK-POSITION_RECEIPT
+      And verify 0 record for the table POSITION_RECEIPT retrived by the query payment_status on db nodo_online under macro NewMod3
+
+      #DB CHECK-POSITION_RECEIPT_RECIPIENT
+      And verify 0 record for the table POSITION_RECEIPT_RECIPIENT  retrived by the query payment_status on db nodo_online under macro NewMod3
+
+      #DB CHECK-RT_XML
+      And verify 0 record for the table RT_XML retrived by the query rpt on db nodo_online under macro NewMod3
+
+      #DB CHECK-POSITION_RECEIPT_XML
+      And verify 0 record for the table POSITION_RECEIPT_XML retrived by the query payment_status on db nodo_online under macro NewMod3
