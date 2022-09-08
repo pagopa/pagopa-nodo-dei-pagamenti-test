@@ -104,10 +104,14 @@ stages:
                 echo ***** k6 run --out csv=src/perf-test/k6/scenarios/$active_scenario/test/output/$test.csv -e scenario=$scenario -e test=$active_test -e steps=$test_step -e env=$envTest src/perf-test/k6/scenarios/$active_scenario/test/$active_test.js****               
                 k6 run --out csv=src/perf-test/k6/scenarios/$active_scenario/test/output/$test.csv -e scenario=$scenario -e test=$active_test -e steps=$test_step -e env=$envTest src/perf-test/k6/scenarios/$active_scenario/test/$active_test.js
               }
+              echo env selected:
+              echo ${{ parameters.env }}
               echo rampa selected:
-              echo ${rampaSel}
+              echo ${{ parameters.rampaSel }}
+              rampaSel=${{ parameters.rampaSel }}
               echo scenario selected:
-              echo ${scenarioToRun}
+              echo ${{ parameters.scenarioToRun }}
+              scenarioToRun=${{ parameters.scenarioToRun }}
               #create output directory if not exists (both scen)
               mkdir -p src/perf-test/k6/scenarios/CT/test/output
               mkdir -p src/perf-test/k6/scenarios/PMCS_CT/test/output
@@ -120,7 +124,7 @@ stages:
                       echo all scenario to run
                       scenArray=("CT")
               else
-                       echo all scenario to run
+                       echo DEFAULT is PCM_CT
                        scenArray=("PMCS_CT")
               fi
               
