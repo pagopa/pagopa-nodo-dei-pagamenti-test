@@ -1105,7 +1105,7 @@ def step_impl(context, param, value):
     headers = {'Host': 'api.dev.platform.pagopa.it:443'}
     refresh_response = requests.get(utils.get_refresh_config_url(
         context), headers=headers, verify=False)
-    time.sleep(10)
+    time.sleep(5)
     assert refresh_response.status_code == 200
 
 @step("refresh job {job_name} triggered after 10 seconds")
@@ -1117,7 +1117,7 @@ def step_impl(context, job_name):
     setattr(context, job_name + RESPONSE, nodo_response)
     refresh_response = requests.get(utils.get_refresh_config_url(
         context), headers=headers, verify=False)
-    time.sleep(10)
+    time.sleep(5)
     assert refresh_response.status_code == 200
 
 
