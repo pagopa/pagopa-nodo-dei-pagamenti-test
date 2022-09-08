@@ -74,7 +74,8 @@ def after_all(context):
         db.executeQuery(conn, selected_query)
 
     db.closeConnection(conn)
-    requests.get(utils.get_refresh_config_url(context))
+    headers = {'Host': 'api.dev.platform.pagopa.it:443'}
+    requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False)
 
 
 def config_ec(context):
