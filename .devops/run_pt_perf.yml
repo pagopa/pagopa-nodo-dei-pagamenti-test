@@ -88,7 +88,7 @@ stages:
               {
                 active_scenario=$1
                 active_test=$2
-                test_step=${{ parameters.rampaSel }}
+                test_step=${rampaSel}
      
                 envTest="pagoPA_PERF_apim"
             
@@ -105,11 +105,9 @@ stages:
                 k6 run --out csv=src/perf-test/k6/scenarios/$active_scenario/test/output/$test.csv -e scenario=$scenario -e test=$active_test -e steps=$test_step -e env=$envTest src/perf-test/k6/scenarios/$active_scenario/test/$active_test.js
               }
               echo rampa selected:
-              echo ${{ parameter.rampaSel }}
-              echo current directory:
-              pwd
-              echo file list into current directory:
-              ls -lrt
+              echo ${rampaSel}
+              echo scenario selected:
+              echo ${scenarioToRun}
               #create output directory if not exists (both scen)
               mkdir -p src/perf-test/k6/scenarios/CT/test/output
               mkdir -p src/perf-test/k6/scenarios/PMCS_CT/test/output
