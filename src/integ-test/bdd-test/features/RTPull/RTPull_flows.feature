@@ -312,7 +312,7 @@ Feature: RTPull flows
 
     @test
     Scenario: Execute nodoInviaRPT - RT_RIFIUTATA_NODO (pspChiediRT_ KO_TAG_RT_errato) [T004]
-        Given replace rt tag in pspChiediRT with tagErrato
+        Given replace dominio tag in rtAttachment with tagErrato
         And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
         And PSP replies to nodo-dei-pagamenti with the pspChiediListaRT
         And PSP replies to nodo-dei-pagamenti with the pspChiediRT
@@ -325,21 +325,7 @@ Feature: RTPull flows
         And verify 0 record for the table RETRY_PA_INVIA_RT retrived by the query rpt_stati on db nodo_online under macro RTPull
 
     Scenario: Execute nodoInviaRPT - RT_RIFIUTATA_NODO (pspChiediRT_Response_KO) [T005]
-        Given initial XML pspChiediRT
-        """
-        <soapenv:Envelope
-        xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-        xmlns:ws="http://ws.pagamenti.telematici.gov/">
-        <soapenv:Header/>
-        <soapenv:Body>
-            <ws:pspChiediRTResponse>
-                <pspChiediRTResponse>
-                    <responseMalformata>$rtAttachment</responseMalformata>
-                </pspChiediRTResponse>
-            </ws:pspChiediRTResponse>
-        </soapenv:Body>
-        </soapenv:Envelope>
-        """
+        Given replace rt tag in pspChiediRT with responseMalformata
         And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
         And PSP replies to nodo-dei-pagamenti with the pspChiediListaRT
         And PSP replies to nodo-dei-pagamenti with the pspChiediRT

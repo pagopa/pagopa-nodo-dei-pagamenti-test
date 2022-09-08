@@ -516,11 +516,12 @@ def step_impl(context, elem, value, action):
 @given('replace {old_tag} tag in {action} with {new_tag}')
 def step_impl(context, old_tag, new_tag, action):
     if old_tag != '-':
+        print('provaprovaprova', getattr(context, action))
         my_document = parseString(getattr(context, action))
         tag = my_document.getElementsByTagName(old_tag)[0]
         tag.tagName = new_tag
-        print("####################################", my_document.toprettyxml(), type(my_document))
-        setattr(context, action, my_document.toprettyxml())
+        #print("####################################", my_document.toxml('UTF-8'), type(my_document))
+        setattr(context, action, my_document.toxml('UTF-8'))
 
 
 @given('{attribute} set {value} for {elem} in {primitive}')
