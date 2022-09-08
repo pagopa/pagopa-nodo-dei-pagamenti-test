@@ -10,10 +10,29 @@ parameters:
     type: string
     values:
       - prf
+  - name: scenarioToRun
+    displayName: Scenarios to run
+    type: string
+    default: ALL
+    values:
+      - ALL
+      - CT
+      -  PMCS_CT
+  - name: rampa
+    displayName: Rampa to Use
+    type: string
+    default: rampa_1_1_1
+    values:
+      - rampa_1_1_1
+      - rampa_1_1_10
+      - rampa_1_10_10
+      - rampa_4_40_10
+      - rampa_10_100_10
+      - rampa_30_300_10
+      - rampa_50_500_10
 
 variables:
   artifactName: TestPT
-  activeScenario: PMCS_CT
 
 stages:
   
@@ -63,34 +82,84 @@ stages:
               destinationFolder: $(Pipeline.Workspace)
               cleanDestinationFolder: false
               overwriteExistingFiles: true
+                                      
+          - script: |
               
-          - script: |
-             
-             mkdir -p src/perf-test/k6/scenarios/CT/test/output
-             mkdir -p src/perf-test/k6/scenarios/PMCS_CT/test/output
-             chmod +777 scripttree.sh
-             ./scripttree.sh ./ 10
-            displayName: 'show tree'
-                        
-          - script: |
-              active_scenario=$(activeScenario)
-              active_test=TC01.01
-              test_step=rampa_1_1_10
-   
-              env="pagoPA_PERF_apim"
-          
-              echo -----------------------------------------
-              echo *** Main K6 Perf Test Script ***
-              echo -----------------------------------------
-             
-              echo configured active_scenario = $active_scenario
-              echo configured active_test = $active_test
-              echo configured test_step= $test_step
-              echo configured env= $env
-             
-              cd src/perf-test/k6
-             
-              sh './scenarios/'$active_scenario'/test_selector.sh' $active_scenario $active_test $test_step $env
+              executeScript()
+              {
+                active_scenario=$1
+                active_test=$2
+                test_step=$rampa
+     
+                envTest="pagoPA_PERF_apim"
+            
+                echo -----------------------------------------
+                echo *** Main K6 Perf Test Script ***
+                echo -----------------------------------------
+               
+                echo configured active_scenario = $active_scenario
+                echo configured active_test = $active_test
+                echo configured test_step= $test_step
+                echo configured envTest= $envTest
+               
+                cd src/perf-test/k6
+               
+                sh './scenarios/'$active_scenario'/test_selector.sh' $active_scenario $active_test $test_step $envTest
+              }
+              
+              #create output directory if not exists (both scen)
+              mkdir -p src/perf-test/k6/scenarios/CT/test/output
+              mkdir -p src/perf-test/k6/scenarios/PMCS_CT/test/output
+              
+              scenArray=()
+              if [[ "$scenarioToRun" == "ALL" ]]; then
+                      echo all scenario to run
+                      scenArray=("CT" "PMCS_CT")
+              elif [[ "$scenarioToRun" == "CT" ]]; then
+                      echo all scenario to run
+                      scenArray=("CT")
+              else
+                       echo all scenario to run
+                       scenArray=("PMCS_CT")
+              fi
+              
+              blacklistCT=("VA" "TC01.03" "TC03.07")
+              blacklistPMCS=("idpay_setup" "idpay_setup_SIT" "user_setup")
+              
+              #for each scenario
+              for i in "${scenArray[@]}"; do
+                      echo current scenario is $i
+                      #for each script
+                      for d in src/perf-test/k6/scenarios/$i/test/*.js; do
+              
+                              #removing prefix path: removing prefix ending with slash
+                              active_test=${d#src/perf-test/k6/scenarios/$i/test/*}
+              
+                              #removing suffix js
+                              active_test=${active_test%.js}
+              
+                              #choosing the right blacklist to use
+                              if [[ "$i" == "CT" ]]; then
+                                      if [[ " ${blacklistCT[*]} " =~ " ${active_test} " ]]; then
+                                              #skip script if it is blacklisted for CT
+                                              echo $active_test blacklisted
+                                      else
+                                              #call function to execute the script
+                                              executescript $i ${active_test}
+                                      fi
+                              elif [[ "$i" == "PMCS_CT" ]]; then
+                                      if [[ " ${blacklistPMCS[*]} " =~ " ${active_test} " ]]; then
+                                              #skip script if it is blacklisted for PCMCS
+                                              echo $active_test blacklisted
+                                      else
+                                              #call function to execute the script
+                                              executescript $i ${active_test}
+                                      fi
+                              fi
+              
+                      done
+              
+              done
             displayName: 'Command Line Script - Run CT - TC03.05 - rampa_1_1_10'
           
           - script: |
