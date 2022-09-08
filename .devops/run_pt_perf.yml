@@ -101,8 +101,9 @@ stages:
                 echo configured active_test = $active_test
                 echo configured test_step= $test_step
                 echo configured envTest= $envTest
-               
-                sh 'src/perf-test/k6/scenarios/'$active_scenario'/test_selector.sh' $active_scenario $active_test $test_step $envTest
+                
+                echo ***** k6 run --out csv=src/perf-test/k6/scenarios/$active_scenario/test/output/$test.csv -e scenario=$scenario -e test=$active_test -e steps=$test_step -e env=$envTest src/perf-test/k6/scenarios/$active_scenario/test/$active_test.js****               
+                k6 run --out csv=src/perf-test/k6/scenarios/$active_scenario/test/output/$test.csv -e scenario=$scenario -e test=$active_test -e steps=$test_step -e env=$envTest src/perf-test/k6/scenarios/$active_scenario/test/$active_test.js
               }
               echo rampa selected:
               echo $rampa
