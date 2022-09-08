@@ -231,6 +231,7 @@ def query_json(context, name_query, name_macro):
     if '$' in selected_query:
         selected_query = replace_local_variables(selected_query, context)
         selected_query = replace_context_variables(selected_query, context)
+        selected_query = replace_global_variables(selected_query, context)
     return selected_query
 
 
@@ -250,12 +251,12 @@ def single_thread(context, soap_primitive):
     print("single_thread")
     primitive = soap_primitive.split("_")[0]
     print(soap_primitive.split("_")[1])
-    headers = {'Content-Type': 'application/xml', "SOAPAction": primitive}
+    headers = {'Content-Type': 'application/xml', "SOAPAction": primitive, 'Host': 'api.dev.platform.pagopa.it:443'}
     url_nodo = get_soap_url_nodo(context, primitive)
     print("nodo soap_request sent >>>", getattr(
         context, soap_primitive.split("_")[1]))
     soap_response = requests.post(url_nodo, getattr(
-        context, soap_primitive.split("_")[1]), headers=headers)
+        context, soap_primitive.split("_")[1]), headers=headers, verify=False)
     print("nodo soap_response: ", soap_response.content)
     print(soap_primitive.split("_")[1] + "Response")
     setattr(context, soap_primitive.split("_")[

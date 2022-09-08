@@ -189,7 +189,6 @@ def step_impl(context):
         iuv = f"14{str(random.randint(1000000000000, 9999999999999))}"
         setattr(context, 'iuv', iuv)
         payload = payload.replace('#iuv#', iuv)
-        setattr(context, 'date', date)
 
     if "#ccp#" in payload:
         ccp = str(int(time.time() * 1000))
@@ -280,6 +279,7 @@ def step_impl(context):
     payload = utils.replace_global_variables(payload, context)
 
     print('payload RPT: ', payload)
+    setattr(context, 'rpt', payload)
     payload_b = bytes(payload, 'ascii')
     payload_uni = b64.b64encode(payload_b)
     payload = f"{payload_uni}".split("'")[1]
@@ -452,6 +452,7 @@ def step_impl(context, number):
         payload = payload.replace('ccp', ccp)
         setattr(context, "ccp", ccp)
 
+    setattr(context, f'rpt{number}', payload)
     payload_b = bytes(payload, 'ascii')
     payload_uni = b64.b64encode(payload_b)
     payload = f"{payload_uni}".split("'")[1]
