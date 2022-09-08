@@ -111,3 +111,26 @@ Feature: process tests for Gestione Accessi Concorrenziali
   Scenario: DB check
     Given the Execute nodoInviaRPT request scenario executed successfully
     Then checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query stati_rpt_2iuv_codpaold on db nodo_online under macro NewMod3
+
+  Scenario: Execute nodoInoltraEsitoMod1
+    Given the DB check scenario executed successfully
+    When PM sends rest POST inoltroEsito/mod1 to nodo-dei-pagamenti
+      """
+      {
+        "idPagamento": "ea403cbd-f7a5-45a5-a6eb-65c4fc64d19c",
+        "identificativoPsp": "40000000001",
+        "tipoVersamento": "BBT",
+        "identificativoIntermediario": "40000000001",
+        "identificativoCanale": "#canale_BBT#",
+        "tipoOperazione": "mobile",
+        "mobileToken": "sleepOK"
+      }
+      """
+  #Then
+
+
+  Scenario: Execute nodoNotificaAnnullamento
+    Given the Execute nodoInoltraEsitoMod1 scenario executed successfully
+    And wait 2 seconds for expiration
+    When PM sends rest GET notificaAnnullamento?idPagamento=ea403cbd-f7a5-45a5-a6eb-65c4fc64d19c&motivoAnnullamento=RIFPSP to nodo-dei-pagamenti
+    Then check error is Il Pagamento indicato non esiste of notificaAnnullamento response
