@@ -48,9 +48,9 @@ Feature: process test for nodoInviaFlussoRendicontazione
             <soapenv:Header/>
             <soapenv:Body>
             <ws:nodoInviaFlussoRendicontazione>
-            <identificativoPSP>40000000001</identificativoPSP>
-            <identificativoIntermediarioPSP>40000000001</identificativoIntermediarioPSP>
-            <identificativoCanale>40000000001_03</identificativoCanale>
+            <identificativoPSP>#psp#</identificativoPSP>
+            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canale#</identificativoCanale>
             <password>pwdpwdpwd</password>
             <identificativoDominio>44444444444</identificativoDominio>
             <identificativoFlusso>$identificativoFlusso</identificativoFlusso>
@@ -62,4 +62,3 @@ Feature: process test for nodoInviaFlussoRendicontazione
             """
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaFlussoRendicontazione response
-        And check OK field exists in nodoInviaFlussoRendicontazione response
