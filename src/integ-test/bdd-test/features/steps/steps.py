@@ -77,14 +77,14 @@ def step_impl(context, primitive):
         setattr(context, "iuv", iuv)
 
     if '#notice_number#' in payload:
-        notice_number = f"31111{str(random.randint(1000000000000, 9999999999999))}"
+        notice_number = f"311{str(random.randint(100000000000000, 999999999999999))}"
         payload = payload.replace('#notice_number#', notice_number)
-        setattr(context, "iuv", notice_number[1:])
+        setattr(context, "iuv", notice_number[3:])
 
     if '#notice_number_old#' in payload:
-        notice_number = f"31211{str(random.randint(1000000000000, 9999999999999))}"
+        notice_number = f"002{str(random.randint(100000000000000, 999999999999999))}"
         payload = payload.replace('#notice_number_old#', notice_number)
-        setattr(context, "iuv", notice_number[1:])
+        setattr(context, "iuv", notice_number[3:])
 
     """
     if '$timedate+1' in payload:
