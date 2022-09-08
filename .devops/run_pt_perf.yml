@@ -148,7 +148,7 @@ stages:
                                               echo $active_test blacklisted
                                       else
                                               #call function to execute the script
-                                              executeScript $i ${active_test} $(rampa)
+                                              executeScript $i ${active_test} $rampa
                                       fi
                               elif [[ "$i" == "PMCS_CT" ]]; then
                                       if [[ " ${blacklistPMCS[*]} " =~ " ${active_test} " ]]; then
@@ -156,7 +156,7 @@ stages:
                                               echo $active_test blacklisted
                                       else
                                               #call function to execute the script
-                                              executeScript $i ${active_test} $(rampa)
+                                              executeScript $i ${active_test} $rampa
                                       fi
                               fi
               
