@@ -403,7 +403,7 @@ Feature: process tests for nodoInviaRT
             </soapenv:Envelope>
             """
         When EC sends SOAP nodoInviaRR to nodo-dei-pagamenti
-        Then verify the HTTP status code of nodoInviaRR response is 200
+        Then check esito is OK of nodoInviaRR response
 
     Scenario: Execute nodoInviaER request
         Given the Execute nodoInviaRR request scenario executed successfully
@@ -425,6 +425,6 @@ Feature: process tests for nodoInviaRT
             </soapenv:Envelope>
             """
         When EC sends SOAP nodoInviaER to nodo-dei-pagamenti
-        Then verify the HTTP status code of nodoInviaER response is 200
+        Then check esito is OK of nodoInviaER response
 
     
