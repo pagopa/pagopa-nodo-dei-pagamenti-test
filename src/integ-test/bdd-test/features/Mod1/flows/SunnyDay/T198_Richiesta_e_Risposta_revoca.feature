@@ -232,7 +232,7 @@ Feature: process tests for nodoInviaRT
                 <pay_i:tipoRevoca>1</pay_i:tipoRevoca>
                 <pay_i:datiSingolaRevoca>
                     <pay_i:singoloImportoRevocato>10.00</pay_i:singoloImportoRevocato>
-                    <pay_i:identificativoUnivocoRiscossione>idRiscossioneRR</pay_i:identificativoUnivocoRiscossione>
+                    <pay_i:identificativoUnivocoRiscossione>$IUV</pay_i:identificativoUnivocoRiscossione>
                     <pay_i:causaleRevoca>revoca fotocopie pratica</pay_i:causaleRevoca>
                     <pay_i:datiAggiuntiviRevoca>datiAggiuntiviRevoca</pay_i:datiAggiuntiviRevoca>
                 </pay_i:datiSingolaRevoca>
@@ -303,7 +303,7 @@ Feature: process tests for nodoInviaRT
                 <pay_i:codiceContestoPagamento>$ccp1</pay_i:codiceContestoPagamento>
                 <pay_i:datiSingolaRevoca>
                     <pay_i:singoloImportoRevocato>10.00</pay_i:singoloImportoRevocato>
-                    <pay_i:identificativoUnivocoRiscossione>idRiscossioneER</pay_i:identificativoUnivocoRiscossione>
+                    <pay_i:identificativoUnivocoRiscossione>$IUV</pay_i:identificativoUnivocoRiscossione>
                     <pay_i:causaleEsito>esito revoca fotocopie pratica</pay_i:causaleEsito>
                     <pay_i:datiAggiuntiviEsito>datiAggiuntiviEsito</pay_i:datiAggiuntiviEsito>
                 </pay_i:datiSingolaRevoca>
@@ -384,7 +384,7 @@ Feature: process tests for nodoInviaRT
 
     Scenario: Execute nodoInviaRR request
         Given the Execute nodoInviaRT request scenario executed successfully
-        And initial XML nodoInviaRR
+        And initial XML nodoInviaRichiestaRevoca
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header/>
@@ -402,12 +402,12 @@ Feature: process tests for nodoInviaRT
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        When EC sends SOAP nodoInviaRR to nodo-dei-pagamenti
-        Then check esito is OK of nodoInviaRR response
+        When EC sends SOAP nodoInviaRichiestaRevoca to nodo-dei-pagamenti
+        Then check esito is OK of nodoInviaRichiestaRevoca response
 
     Scenario: Execute nodoInviaER request
         Given the Execute nodoInviaRR request scenario executed successfully
-        And initial XML nodoInviaER
+        And initial XML nodoInviaRispostaRevoca
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header/>
@@ -424,7 +424,7 @@ Feature: process tests for nodoInviaRT
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        When EC sends SOAP nodoInviaER to nodo-dei-pagamenti
-        Then check esito is OK of nodoInviaER response
+        When EC sends SOAP nodoInviaRispostaRevoca to nodo-dei-pagamenti
+        Then check esito is OK of nodoInviaRispostaRevoca response
 
     
