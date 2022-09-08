@@ -13,12 +13,12 @@ parameters:
   - name: scenarioToRun
     displayName: Scenarios to run
     type: string
-    default: ALL
+    default: PMCS_CT
     values:
       - ALL
       - CT
       - PMCS_CT
-  - name: rampa
+  - name: rampaSel
     displayName: Rampa to Use
     type: string
     default: rampa_1_1_10
@@ -30,7 +30,6 @@ parameters:
       - rampa_10_100_10
       - rampa_30_300_10
       - rampa_50_500_10
-
 variables:
   artifactName: TestPT
 
@@ -89,7 +88,7 @@ stages:
               {
                 active_scenario=$1
                 active_test=$2
-                test_step=rampa_1_1_10
+                test_step=$rampaSel
      
                 envTest="pagoPA_PERF_apim"
             
@@ -106,7 +105,7 @@ stages:
                 k6 run --out csv=src/perf-test/k6/scenarios/$active_scenario/test/output/$test.csv -e scenario=$scenario -e test=$active_test -e steps=$test_step -e env=$envTest src/perf-test/k6/scenarios/$active_scenario/test/$active_test.js
               }
               echo rampa selected:
-              echo $rampa
+              echo $rampaSel
               echo current directory:
               pwd
               echo file list into current directory:
