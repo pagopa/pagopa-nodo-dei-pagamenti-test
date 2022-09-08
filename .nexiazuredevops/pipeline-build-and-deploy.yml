@@ -127,6 +127,6 @@ stages:
             displayName: "Deploy manifest for app"
             inputs:
               action: 'deploy'
-              kubernetesServiceConnection:  nodo_srvendpoint_kubernetes_sa_uat
+              kubernetesServiceConnection: u87-aks-pci-uat-self-connection-nodo
               namespace: ${{ parameters.env }}
               manifests: $(Pipeline.Workspace)/$(appVersion)-${{ parameters.env }}-manifest-app/*.yaml
