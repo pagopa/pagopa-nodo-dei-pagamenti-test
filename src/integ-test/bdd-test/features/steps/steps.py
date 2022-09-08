@@ -335,6 +335,7 @@ def step_impl(context):
     if "#timedate#" in payload:
         payload = payload.replace('#timedate#', timedate)
     
+    setattr(context, 'rt', payload)
     payload_b = bytes(payload, 'ascii')
     payload_uni = b64.b64encode(payload_b)
     payload = f"{payload_uni}".split("'")[1]
@@ -517,12 +518,11 @@ def step_impl(context, elem, value, action):
 @given('replace {old_tag} tag in {action} with {new_tag}')
 def step_impl(context, old_tag, new_tag, action):
     if old_tag != '-':
-        print('provaprovaprova', getattr(context, action))
         my_document = parseString(getattr(context, action))
         tag = my_document.getElementsByTagName(old_tag)[0]
         tag.tagName = new_tag
-        #print("####################################", my_document.toxml('UTF-8'), type(my_document))
-        setattr(context, action, my_document.toxml('UTF-8'))
+        #print("provaprovaprova", my_document.toxml('UTF-8'), type(my_document))
+        setattr(context, action, my_document.toxml())
 
 
 @given('{attribute} set {value} for {elem} in {primitive}')

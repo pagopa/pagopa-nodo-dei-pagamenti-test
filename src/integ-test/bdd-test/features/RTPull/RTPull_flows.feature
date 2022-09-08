@@ -278,10 +278,28 @@ Feature: RTPull flows
         And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro RTPull
         And verify 0 record for the table RETRY_PA_INVIA_RT retrived by the query rpt_stati on db nodo_online under macro RTPull
 
-    @failed
+    @ok
     Scenario: Execute nodoInviaRPT - RT_RIFIUTATA_PA [T002]
-        Given esito with None in pspInviaAckRT
-        And esito with KO in paaInviaRT
+        Given initial XML paaInviaRT
+        """
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+        <soapenv:Header/>
+        <soapenv:Body>
+            <ws:paaInviaRTRisposta>
+                <paaInviaRTRisposta>
+                    <fault>
+                    <faultCode>PAA_SINTASSI_XSD</faultCode>
+                    <faultString>RT non valida rispetto XSD</faultString>
+                    <id>mockPa</id>
+                    <!--Optional:-->
+                    <description>test</description>
+                    </fault>
+                    <esito>KO</esito>
+                </paaInviaRTRisposta>
+            </ws:paaInviaRTRisposta>
+        </soapenv:Body>
+        </soapenv:Envelope>
+        """
         And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
         And PSP replies to nodo-dei-pagamenti with the pspChiediListaRT
         And PSP replies to nodo-dei-pagamenti with the pspChiediRT
@@ -296,9 +314,21 @@ Feature: RTPull flows
         And checks the value RT_RIFIUTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro RTPull
         And verify 0 record for the table RETRY_PA_INVIA_RT retrived by the query rpt_stati on db nodo_online under macro RTPull
     
-    
+    @ok
     Scenario: Execute nodoInviaRPT - RT_RIFIUTATA_NODO (pspChiediRT_KO_RT_errata) [T003]
-        Given rt with InvalidFormat in pspChiediRT
+        Given initial XML pspChiediRT
+        """
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+        <soapenv:Header/>
+        <soapenv:Body>
+            <ws:pspChiediRTResponse>
+                <pspChiediRTResponse>
+                    <rt>e3J0QXR0YWNobWVudH0=</rt>
+                </pspChiediRTResponse>
+            </ws:pspChiediRTResponse>
+        </soapenv:Body>
+        </soapenv:Envelope>
+        """
         And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
         And PSP replies to nodo-dei-pagamenti with the pspChiediListaRT
         And PSP replies to nodo-dei-pagamenti with the pspChiediRT
@@ -310,9 +340,9 @@ Feature: RTPull flows
         And checks the value RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro RTPull
         And verify 0 record for the table RETRY_PA_INVIA_RT retrived by the query rpt_stati on db nodo_online under macro RTPull
 
-    @test
+    @ok
     Scenario: Execute nodoInviaRPT - RT_RIFIUTATA_NODO (pspChiediRT_ KO_TAG_RT_errato) [T004]
-        Given replace dominio tag in rtAttachment with tagErrato
+        Given replace rt tag in pspChiediRT with tagErrato
         And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
         And PSP replies to nodo-dei-pagamenti with the pspChiediListaRT
         And PSP replies to nodo-dei-pagamenti with the pspChiediRT
@@ -324,26 +354,21 @@ Feature: RTPull flows
         And checks the value RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro RTPull
         And verify 0 record for the table RETRY_PA_INVIA_RT retrived by the query rpt_stati on db nodo_online under macro RTPull
 
-    Scenario: Execute nodoInviaRPT - RT_RIFIUTATA_NODO (pspChiediRT_Response_KO) [T005]
-        Given replace rt tag in pspChiediRT with responseMalformata
+    
+    Scenario: Execute nodoInviaRPT - RT_ESITO_SCONOSCIUTO_PA [T006]
+        Given esito with None in paaInviaRT
         And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
         And PSP replies to nodo-dei-pagamenti with the pspChiediListaRT
         And PSP replies to nodo-dei-pagamenti with the pspChiediRT
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         And job pspChiediListaAndChiediRt triggered after 5 seconds
-        And wait 100 seconds for expiration
-        Then check esito is OK of nodoInviaRPT response
-        And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_INVIATA_A_PSP, RPT_ACCETTATA_PSP, RT_RICEVUTA_NODO, RT_RIFIUTATA_NODO, RT_INVIATA_PA, RT_RIFIUTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro RTPull
-        And checks the value RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro RTPull
-        And verify 0 record for the table RETRY_PA_INVIA_RT retrived by the query rpt_stati on db nodo_online under macro RTPull
-
-    Scenario: Execute nodoInviaRPT - RT_ESITO_SCONOSCIUTO_PA [T006]
-        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        And job paInviaRt triggered after 50 seconds
+        And wait 50 seconds for expiration
         Then check esito is OK of nodoInviaRPT response
         And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_INVIATA_A_PSP, RPT_ACCETTATA_PSP, RT_RICEVUTA_NODO, RT_ACCETTATA_NODO, RT_INVIATA_PA, RT_ESITO_SCONOSCIUTO_PA of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro RTPull
         And checks the value RT_ESITO_SCONOSCIUTO_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro RTPull
         And verify 1 record for the table RETRY_PA_INVIA_RT retrived by the query rpt_stati on db nodo_online under macro RTPull
-        And checks the value NotNone of the record at column RETRY_PA_INVIA_RT retrived by the query rpt_stati on db nodo_online under macro RTPull
+        And checks the value NotNone of the record at column RETRY of the table RETRY_PA_INVIA_RT retrived by the query rpt_stati on db nodo_online under macro RTPull
     
     Scenario: Execute nodoInviaRPT - RPT-RT Marca da bollo [T008]
         Given RT generation
@@ -355,13 +380,24 @@ Feature: RTPull flows
         And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro RTPull
         And verify 0 record for the table RETRY_PA_INVIA_RT retrived by the query rpt_stati on db nodo_online under macro RTPull
     
+    @ok
     Scenario: Execute nodoInviaRPT - RT_ERRORE_INVIO_A_PA [T009]
+        Given identificativoIntermediarioPA with irraggiungibile in nodoInviaRPT
+        And identificativoStazioneIntermediarioPA with irraggiungibile in nodoInviaRPT
+        And pay_i:identificativoStazioneRichiedente with irraggiungibile in rpt
+        And pay_i:identificativoStazioneRichiedente with irraggiungibile in rt
+        And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
+        And PSP replies to nodo-dei-pagamenti with the pspChiediListaRT
+        And PSP replies to nodo-dei-pagamenti with the pspChiediRT
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        And job pspChiediListaAndChiediRt triggered after 5 seconds
+        And job paInviaRt triggered after 50 seconds
+        And wait 50 seconds for expiration
         Then check esito is OK of nodoInviaRPT response
-        And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_INVIATA_A_PSP, RPT_ACCETTATA_PSP, RT_RICEVUTA_NODO, RT_ACCETATA_NODO, RT_INVIATA_PA, RT_ERRORE_INVIO_A_PA of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro RTPull
+        And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_INVIATA_A_PSP, RPT_ACCETTATA_PSP, RT_RICEVUTA_NODO, RT_ACCETTATA_NODO, RT_INVIATA_PA, RT_ERRORE_INVIO_A_PA of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro RTPull
         And checks the value RT_ERRORE_INVIO_A_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro RTPull
         And verify 1 record for the table RETRY_PA_INVIA_RT retrived by the query rpt_stati on db nodo_online under macro RTPull
-        And checks the value NotNone of the record at column RETRY_PA_INVIA_RT retrived by the query rpt_stati on db nodo_online under macro RTPull
+        And checks the value NotNone of the record at column RETRY of the table RETRY_PA_INVIA_RT retrived by the query rpt_stati on db nodo_online under macro RTPull
     
     Scenario: Execute nodoInviaRPT - MOD2 [T0XX]
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
