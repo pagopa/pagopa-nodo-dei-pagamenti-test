@@ -18,7 +18,8 @@ def before_all(context):
     #services = context.config.userdata.get("services")
     #db_config = context.config.userdata.get("db_configuration")
     db_selected = context.config.userdata.get("db_configuration").get('nodo_cfg')
-    selected_query = utils.query_json(context, 'select_config', 'configurations')
+    # selected_query = utils.query_json(context, 'select_config', 'configurations')
+    selected_query = utils.query_json(context, 'select_devconfig', 'configurations')
     conn = db.getConnection(db_selected.get('host'), db_selected.get('database'),db_selected.get('user'),db_selected.get('password'),db_selected.get('port'))
 
     exec_query = db.executeQuery(conn, selected_query)
@@ -68,7 +69,8 @@ def after_all(context):
     config_dict = getattr(context, 'configurations')
     for key, value in config_dict.items():
         #print(key, value)
-        selected_query = utils.query_json(context, 'update_config', 'configurations').replace('value', value).replace('key', key)
+        # selected_query = utils.query_json(context, 'update_config', 'configurations').replace('value', value).replace('key', key)
+        selected_query = utils.query_json(context, 'update_devconfig', 'configurations').replace('value', value).replace('key', key)
         db.executeQuery(conn, selected_query)
 
     db.closeConnection(conn)
