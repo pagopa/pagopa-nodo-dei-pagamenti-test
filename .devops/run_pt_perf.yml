@@ -89,7 +89,7 @@ stages:
               {
                 active_scenario=$1
                 active_test=$2
-                test_step=$3
+                test_step=rampa_1_1_10
      
                 envTest="pagoPA_PERF_apim"
             
@@ -102,9 +102,7 @@ stages:
                 echo configured test_step= $test_step
                 echo configured envTest= $envTest
                
-                cd src/perf-test/k6
-               
-                sh './scenarios/'$active_scenario'/test_selector.sh' $active_scenario $active_test $test_step $envTest
+                sh 'src/perf-test/k6/scenarios/'$active_scenario'/test_selector.sh' $active_scenario $active_test $test_step $envTest
               }
               echo rampa selected:
               echo $rampa
