@@ -21,6 +21,7 @@
     "creditor_institution_code": "66666666666",	    
     "creditor_institution_code_old": "66666666666",	    
     "psp":"60000000001",	    
+    "id_broker_psp":"60000000001",
     "codicePA": "66666666666",	    
     "intermediarioPA":"66666666666",	   
     "codicePA_old" :"66666666666",	    
@@ -39,7 +40,8 @@
     "channelPoste": "POSTE3",
     "psp_AGID": "AGID_01",
     "broker_AGID": "97735020584",
-    "canale_AGID": "97735020584_03"
+    "canale_AGID": "97735020584_03",
+    "password": "pwdpwdpwd"
   },
   
   "db_configuration": {
