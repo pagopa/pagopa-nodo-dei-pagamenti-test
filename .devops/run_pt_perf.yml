@@ -88,7 +88,7 @@ stages:
               {
                 active_scenario=$1
                 active_test=$2
-                test_step=${{ parameter.rampaSel }}
+                test_step=${{ parameters.rampaSel }}
      
                 envTest="pagoPA_PERF_apim"
             
