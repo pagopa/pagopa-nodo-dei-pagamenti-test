@@ -141,8 +141,11 @@ Feature: semantic checks KO for activatePaymentNoticeV2Request
         And check faultCode is PPT_INTERMEDIARIO_PA_DISABILITATO of activatePaymentNoticeV2 response
 
     # [SEM_APNV2_25]
-    # Scenario: Check PPT_AUTORIZZAZIONE error if expirationTime > default_token_duration_validity_millis
-    #     Given expirationTime with 10000 in activatePaymentNoticeV2
-    #     When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-    #     Then check outcome is KO of activatePaymentNoticeV2 response
-    #     And check faultCode is PPT_AUTORIZZAZIONE of activatePaymentNoticeV2 response
+    Scenario: Check PPT_AUTORIZZAZIONE error if expirationTime > default_token_duration_validity_millis
+        Given nodo-dei-pagamenti DEV has config parameter default_durata_token_IO set to 15000
+        And nodo-dei-pagamenti DEV has config parameter default_token_duration_validity_millis set to 7000
+        And expirationTime with 10000 in activatePaymentNoticeV2
+        When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is KO of activatePaymentNoticeV2 response
+        And check faultCode is PPT_AUTORIZZAZIONE of activatePaymentNoticeV2 response
+        And restore initial DEV configurations

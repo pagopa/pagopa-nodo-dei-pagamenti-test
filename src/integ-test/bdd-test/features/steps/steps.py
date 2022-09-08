@@ -77,14 +77,14 @@ def step_impl(context, primitive):
         setattr(context, "iuv", iuv)
 
     if '#notice_number#' in payload:
-        notice_number = f"311{str(random.randint(100000000000000, 999999999999999))}"
+        notice_number = f"30211{str(random.randint(1000000000000, 9999999999999))}"
         payload = payload.replace('#notice_number#', notice_number)
-        setattr(context, "iuv", notice_number[3:])
+        setattr(context, "iuv", notice_number[1:])
 
     if '#notice_number_old#' in payload:
-        notice_number = f"002{str(random.randint(100000000000000, 999999999999999))}"
+        notice_number = f"31211{str(random.randint(1000000000000, 9999999999999))}"
         payload = payload.replace('#notice_number_old#', notice_number)
-        setattr(context, "iuv", notice_number[3:])
+        setattr(context, "iuv", notice_number[1:])
 
     """
     if '$timedate+1' in payload:
@@ -1086,6 +1086,28 @@ def step_impl(context, param, value):
     assert refresh_response.status_code == 200
 
 
+@step("nodo-dei-pagamenti DEV has config parameter {param} set to {value}")
+def step_impl(context, param, value):
+    db_selected = context.config.userdata.get(
+        "db_configuration").get('nodo_cfg')
+    selected_query = utils.query_json(context, 'update_devconfig', 'configurations').replace(
+        'value', value).replace('key', param)
+    conn = db.getConnection(db_selected.get('host'), db_selected.get(
+        'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+
+    setattr(context, param, value)
+
+    exec_query = db.executeQuery(conn, selected_query)
+    if exec_query is not None:
+        print(f'executed query: {exec_query}')
+
+    db.closeConnection(conn)
+    headers = {'Host': 'api.dev.platform.pagopa.it:443'}
+    refresh_response = requests.get(utils.get_refresh_config_url(
+        context), headers=headers, verify=False)
+    time.sleep(10)
+    assert refresh_response.status_code == 200
+
 @step("refresh job {job_name} triggered after 10 seconds")
 def step_impl(context, job_name):
     url_nodo = utils.get_rest_url_nodo(context)
@@ -1134,6 +1156,25 @@ def step_impl(context):
         context), headers=headers, verify=False)
     assert refresh_response.status_code == 200
 
+
+@then("restore initial DEV configurations")
+def step_impl(context):
+    db_selected = context.config.userdata.get(
+        "db_configuration").get('nodo_cfg')
+    conn = db.getConnection(db_selected.get('host'), db_selected.get(
+        'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+
+    config_dict = getattr(context, 'configurations')
+    for key, value in config_dict.items():
+        selected_query = utils.query_json(context, 'update_devconfig', 'configurations').replace(
+            'value', value).replace('key', key)
+        db.executeQuery(conn, selected_query)
+
+    db.closeConnection(conn)
+    headers = {'Host': 'api.dev.platform.pagopa.it:443'}
+    refresh_response = requests.get(utils.get_refresh_config_url(
+        context), headers=headers, verify=False)
+    assert refresh_response.status_code == 200
 
 @step("execution query {query_name} to get value on the table {table_name}, with the columns {columns} under macro {macro} with db name {db_name}")
 def step_impl(context, query_name, macro, db_name, table_name, columns):
