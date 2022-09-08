@@ -88,7 +88,7 @@ stages:
               {
                 active_scenario=$1
                 active_test=$2
-                test_step=$rampaSel
+                test_step=${{ parameter.rampaSel }}
      
                 envTest="pagoPA_PERF_apim"
             
@@ -105,7 +105,7 @@ stages:
                 k6 run --out csv=src/perf-test/k6/scenarios/$active_scenario/test/output/$test.csv -e scenario=$scenario -e test=$active_test -e steps=$test_step -e env=$envTest src/perf-test/k6/scenarios/$active_scenario/test/$active_test.js
               }
               echo rampa selected:
-              echo $rampaSel
+              echo ${{ parameter.rampaSel }}
               echo current directory:
               pwd
               echo file list into current directory:
@@ -148,7 +148,7 @@ stages:
                                               echo $active_test blacklisted
                                       else
                                               #call function to execute the script
-                                              executeScript $i ${active_test} $rampa
+                                              executeScript $i ${active_test}
                                       fi
                               elif [[ "$i" == "PMCS_CT" ]]; then
                                       if [[ " ${blacklistPMCS[*]} " =~ " ${active_test} " ]]; then
@@ -156,7 +156,7 @@ stages:
                                               echo $active_test blacklisted
                                       else
                                               #call function to execute the script
-                                              executeScript $i ${active_test} $rampa
+                                              executeScript $i ${active_test}
                                       fi
                               fi
               
