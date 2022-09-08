@@ -21,7 +21,7 @@ parameters:
   - name: rampa
     displayName: Rampa to Use
     type: string
-    default: rampa_1_1_1
+    default: rampa_1_1_10
     values:
       - rampa_1_1_1
       - rampa_1_1_10
@@ -106,9 +106,11 @@ stages:
                
                 sh './scenarios/'$active_scenario'/test_selector.sh' $active_scenario $active_test $test_step $envTest
               }
+              echo rampa selected:
+              echo $rampa
               echo current directory:
               pwd
-              echo filest into current directory:
+              echo file list into current directory:
               ls -lrt
               #create output directory if not exists (both scen)
               mkdir -p src/perf-test/k6/scenarios/CT/test/output
@@ -163,7 +165,7 @@ stages:
                       done
               
               done
-            displayName: 'Command Line Script - Run CT - TC03.05 - rampa_1_1_10'
+            displayName: 'Command Line Script -  Run $scenarioToRun K6 scripts'
           
           - script: |
              echo pwd:
