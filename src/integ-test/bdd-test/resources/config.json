@@ -29,6 +29,7 @@
     "id_station": "66666666666_01",	   
     "id_broker": "66666666666",	    
 	  "canale_ATTIVATO_PRESSO_PSP": "60000000001_01",
+    "canale_IMMEDIATO_MULTIBENEFICIARIO": "60000000001_03",
 	  "intermediarioPSP2": "60000000002",
 	  "canale32": "60000000002_01",
     "id_broker_old": "66666666666",
