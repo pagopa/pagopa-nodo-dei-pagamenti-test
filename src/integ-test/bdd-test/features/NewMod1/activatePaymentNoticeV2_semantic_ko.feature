@@ -148,4 +148,5 @@ Feature: semantic checks KO for activatePaymentNoticeV2Request
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check faultCode is PPT_AUTORIZZAZIONE of activatePaymentNoticeV2 response
-        And restore initial DEV configurations
+        And nodo-dei-pagamenti DEV has config parameter default_durata_token_IO set to 3600000
+        And nodo-dei-pagamenti DEV has config parameter default_token_duration_validity_millis set to 1800000
