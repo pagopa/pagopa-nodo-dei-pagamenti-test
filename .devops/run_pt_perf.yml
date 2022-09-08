@@ -118,13 +118,16 @@ stages:
               
               scenArray=()
               if [[ "$scenarioToRun" == "ALL" ]]; then
-                      echo all scenario to run
+                      echo ALL scenario to run
                       scenArray=("CT" "PMCS_CT")
               elif [[ "$scenarioToRun" == "CT" ]]; then
-                      echo all scenario to run
+                      echo CT scenario to run
+                      scenArray=("CT")
+              elif [[ "$scenarioToRun" == "PCM_CT" ]]; then
+                      echo PCM_CT scenario to run
                       scenArray=("CT")
               else
-                       echo DEFAULT is PCM_CT
+                       echo no scenario selected, DEFAULT is PCM_CT
                        scenArray=("PMCS_CT")
               fi
               
