@@ -89,7 +89,7 @@ stages:
               {
                 active_scenario=$1
                 active_test=$2
-                test_step=$rampa
+                test_step=$3
      
                 envTest="pagoPA_PERF_apim"
             
@@ -106,7 +106,10 @@ stages:
                
                 sh './scenarios/'$active_scenario'/test_selector.sh' $active_scenario $active_test $test_step $envTest
               }
-              
+              echo current directory:
+              pwd
+              echo filest into current directory:
+              ls -lrt
               #create output directory if not exists (both scen)
               mkdir -p src/perf-test/k6/scenarios/CT/test/output
               mkdir -p src/perf-test/k6/scenarios/PMCS_CT/test/output
@@ -145,7 +148,7 @@ stages:
                                               echo $active_test blacklisted
                                       else
                                               #call function to execute the script
-                                              executeScript $i ${active_test}
+                                              executeScript $i ${active_test} $(rampa)
                                       fi
                               elif [[ "$i" == "PMCS_CT" ]]; then
                                       if [[ " ${blacklistPMCS[*]} " =~ " ${active_test} " ]]; then
@@ -153,7 +156,7 @@ stages:
                                               echo $active_test blacklisted
                                       else
                                               #call function to execute the script
-                                              executeScript $i ${active_test}
+                                              executeScript $i ${active_test} $(rampa)
                                       fi
                               fi
               
