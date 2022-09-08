@@ -17,7 +17,7 @@ parameters:
     values:
       - ALL
       - CT
-      -  PMCS_CT
+      - PMCS_CT
   - name: rampa
     displayName: Rampa to Use
     type: string
