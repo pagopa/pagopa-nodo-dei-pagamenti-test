@@ -62,7 +62,7 @@ Feature: process tests for nodoInviaRT_PAA_RT_DUPLICATA
             <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
             <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
-            <pay_i:identificativoUnivocoVersamento>rtDuplicata</pay_i:identificativoUnivocoVersamento>
+            <pay_i:identificativoUnivocoVersamento>#IUV#</pay_i:identificativoUnivocoVersamento>
             <pay_i:codiceContestoPagamento>#CCP#</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT45R0760103200000000001016</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
@@ -92,7 +92,7 @@ Feature: process tests for nodoInviaRT_PAA_RT_DUPLICATA
             <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
             <identificativoDominio>44444444444</identificativoDominio>
-            <identificativoUnivocoVersamento>rtDuplicata</identificativoUnivocoVersamento>
+            <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$CCP</codiceContestoPagamento>
             </ppt:intestazionePPT>
             </soapenv:Header>
@@ -108,6 +108,22 @@ Feature: process tests for nodoInviaRT_PAA_RT_DUPLICATA
             </soapenv:Body>
             </soapenv:Envelope>
             """
+        And initial XML pspInviaRPT
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <ws:pspInviaRPTResponse>
+            <pspInviaRPTResponse>
+            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+            <identificativoCarrello>$nodoInviaRPT.identificativoUnivocoVersamento</identificativoCarrello>
+            <parametriPagamentoImmediato>idBruciatura=$nodoInviaRPT.identificativoUnivocoVersamento</parametriPagamentoImmediato>
+            </pspInviaRPTResponse>
+            </ws:pspInviaRPTResponse>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
 
@@ -187,13 +203,13 @@ Feature: process tests for nodoInviaRT_PAA_RT_DUPLICATA
             <pay_i:datiPagamento>
             <pay_i:codiceEsitoPagamento>0</pay_i:codiceEsitoPagamento>
             <pay_i:importoTotalePagato>10.00</pay_i:importoTotalePagato>
-            <pay_i:identificativoUnivocoVersamento>rtDuplicata</pay_i:identificativoUnivocoVersamento>
+            <pay_i:identificativoUnivocoVersamento>$IUV</pay_i:identificativoUnivocoVersamento>
             <pay_i:CodiceContestoPagamento>$CCP</pay_i:CodiceContestoPagamento>
             <pay_i:datiSingoloPagamento>
             <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
             <pay_i:esitoSingoloPagamento>TUTTO_OK</pay_i:esitoSingoloPagamento>
             <pay_i:dataEsitoSingoloPagamento>#date#</pay_i:dataEsitoSingoloPagamento>
-            <pay_i:identificativoUnivocoRiscossione>rtDuplicata</pay_i:identificativoUnivocoRiscossione>
+            <pay_i:identificativoUnivocoRiscossione>$IUV</pay_i:identificativoUnivocoRiscossione>
             <pay_i:causaleVersamento>pagamento fotocopie pratica RT</pay_i:causaleVersamento>
             <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
             <pay_i:commissioniApplicatePSP>0.12</pay_i:commissioniApplicatePSP>
@@ -215,7 +231,7 @@ Feature: process tests for nodoInviaRT_PAA_RT_DUPLICATA
             <password>pwdpwdpwd</password>
             <identificativoPSP>40000000001</identificativoPSP>
             <identificativoDominio>44444444444</identificativoDominio>
-            <identificativoUnivocoVersamento>rtDuplicata</identificativoUnivocoVersamento>
+            <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$CCP</codiceContestoPagamento>
             <tipoFirma></tipoFirma>
             <forzaControlloSegno>1</forzaControlloSegno>
@@ -224,9 +240,30 @@ Feature: process tests for nodoInviaRT_PAA_RT_DUPLICATA
             </soapenv:Body>
             </soapenv:Envelope>
             """
+        And initial XML paaInviaRT
+        """
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+        <soapenv:Header/>
+        <soapenv:Body>
+            <ws:paaInviaRTRisposta>
+                <paaInviaRTRisposta>
+                    <fault>
+                    <faultCode>PAA_RT_DUPLICATA</faultCode>
+                    <faultString>tegba</faultString>
+                    <id>44444444444</id>
+                    </fault>
+                    <esito>KO</esito>
+                </paaInviaRTRisposta>
+            </ws:paaInviaRTRisposta>
+        </soapenv:Body>
+        </soapenv:Envelope>
+        """
+        And EC replies to nodo-dei-pagamenti with the paaInviaRT
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
         And wait 5 seconds for expiration
+        And execution query rt_stati to get value on the table RT, with the columns ID_SESSIONE under macro Mod1 with db name nodo_online
+        And through the query rt_stati retrieve param idSessione at position 0 and save it under the key idSessione
         And checks the value RICEVUTA,CAMBIO_STATO,CAMBIO_STATO,INVIATA,CAMBIO_STATO,INVIATA,RICEVUTA,CAMBIO_STATO of the record at column ESITO of the table RE retrived by the query Re on db re under macro Mod1
         And checks the value RT_RICEVUTA_NODO,RT_ACCETTATA_NODO,RT_INVIATA_PA,RT_RIFIUTATA_PA of the record at column STATUS of the table RE retrived by the query Re on db re under macro Mod1
 
