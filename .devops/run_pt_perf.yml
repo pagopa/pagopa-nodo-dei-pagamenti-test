@@ -196,7 +196,7 @@ stages:
           - task: ArchiveFiles@2
             displayName: 'Archive test results'
             inputs:
-              rootFolderOrFile: $(Agent.BuildDirectory)/output
+              rootFolderOrFile: $(Agent.BuildDirectory)/s/output
               includeRootFolder: false
               archiveType: zip
               archiveFile: $(Build.ArtifactStagingDirectory)/output.zip
