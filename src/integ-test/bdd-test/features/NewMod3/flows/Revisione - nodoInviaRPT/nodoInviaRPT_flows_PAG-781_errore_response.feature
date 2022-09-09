@@ -1,4 +1,4 @@
-Feature: process tests for nodoInviaRPT [REV_NIRPT_01]
+Feature: process tests for nodoInviaRPT [PAG-781_errore_response]
 
     Background:
         Given systems up
@@ -46,71 +46,61 @@ Feature: process tests for nodoInviaRPT [REV_NIRPT_01]
             <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
             </qrCode>
             <!--expirationTime>60000</expirationTime-->
-            <amount>10.00</amount>
+            <amount>7.00</amount>
             </nod:activatePaymentNoticeReq>
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
-        Then check outcome is OK of activatePaymentNotice response
 
-    # Payment Outcome Phase outcome OK
-    Scenario: Execute sendPaymentOutcome request
-        Given the Execute activatePaymentNotice request Scenario executed successfully
-        And initial XML sendPaymentOutcome
+        And initial XML paaAttivaRPT
             """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">
             <soapenv:Header/>
             <soapenv:Body>
-            <nod:sendPaymentOutcomeReq>
-            <idPSP>40000000001</idPSP>
-            <idBrokerPSP>40000000001</idBrokerPSP>
-            <idChannel>40000000001_01</idChannel>
-            <password>pwdpwdpwd</password>
-            <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
-            <outcome>OK</outcome>
-            <!--Optional:-->
-            <details>
-            <paymentMethod>creditCard</paymentMethod>
-            <!--Optional:-->
-            <paymentChannel>app</paymentChannel>
-            <fee>2.00</fee>
-            <!--Optional:-->
-            <payer>
-            <uniqueIdentifier>
-            <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-            <entityUniqueIdentifierValue>77777777777_01</entityUniqueIdentifierValue>
-            </uniqueIdentifier>
-            <fullName>name</fullName>
-            <!--Optional:-->
-            <streetName>street</streetName>
-            <!--Optional:-->
-            <civicNumber>civic</civicNumber>
-            <!--Optional:-->
-            <postalCode>postal</postalCode>
-            <!--Optional:-->
-            <city>city</city>
-            <!--Optional:-->
-            <stateProvinceRegion>state</stateProvinceRegion>
-            <!--Optional:-->
-            <country>IT</country>
-            <!--Optional:-->
-            <e-mail>prova@test.it</e-mail>
-            </payer>
-            <applicationDate>2021-12-12</applicationDate>
-            <transferDate>2021-12-11</transferDate>
-            </details>
-            </nod:sendPaymentOutcomeReq>
+            <ws:paaAttivaRPTRisposta>
+            <paaAttivaRPTRisposta>
+            <esito>OK</esito>
+            <datiPagamentoPA>
+            <ibanAccredito>IT45R0760103200000000001016</ibanAccredito>
+            <bicAccredito>BSCTCH22</bicAccredito>
+            <enteBeneficiario>
+            <pag:identificativoUnivocoBeneficiario>
+            <pag:tipoIdentificativoUnivoco>G</pag:tipoIdentificativoUnivoco>
+            <pag:codiceIdentificativoUnivoco>${stz}</pag:codiceIdentificativoUnivoco>
+            </pag:identificativoUnivocoBeneficiario>
+            <pag:denominazioneBeneficiario>${intermPsp}</pag:denominazioneBeneficiario>
+            <pag:codiceUnitOperBeneficiario>${can}</pag:codiceUnitOperBeneficiario>
+            <pag:denomUnitOperBeneficiario>uj</pag:denomUnitOperBeneficiario>
+            <pag:indirizzoBeneficiario>y</pag:indirizzoBeneficiario>
+            <pag:civicoBeneficiario>j</pag:civicoBeneficiario>
+            <pag:capBeneficiario>gt</pag:capBeneficiario>
+            <pag:localitaBeneficiario>gw</pag:localitaBeneficiario>
+            <pag:provinciaBeneficiario>ds</pag:provinciaBeneficiario>
+            <pag:nazioneBeneficiario>UK</pag:nazioneBeneficiario>
+            </enteBeneficiario>
+            <credenzialiPagatore>i</credenzialiPagatore>
+            <causaleVersamento>${causale}</causaleVersamento>
+            </datiPagamentoPA>
+            </paaAttivaRPTRisposta>
+            </ws:paaAttivaRPTRisposta>
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        #  When psp sends sendPaymentOutcomeReq to nodo-dei-pagamenti check field <outcome> = OK
-        When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-        Then check outcome is OK of sendPaymentOutcome response
+        And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
+        When psp sends soap activatePaymentNotice to nodo-dei-pagamenti
+        Then check outcome is KO of activatePaymentNotice response
+        And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of activatePaymentNotice response
+
+        #CHECK ATTIVAZIONE E CHACHE DI IDEMPOTENZA
+        And checks the value Y of the record at column PAAATTIVARPTRESP of the table RPT_ACTIVATIONS retrived by the query payment_status on db nodo_online under macro NewMod3
+        And checks the value N of the record at column NODOINVIARPTREQ of the table RPT_ACTIVATIONS retrived by the query payment_status on db nodo_online under macro NewMod3
+        And checks the value Y of the record at column PAAATTIVARPTERROR of the table RPT_ACTIVATIONS retrived by the query payment_status on db nodo_online under macro NewMod3
+
+        And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro NewMod3
 
     # test execution
     Scenario: Define RPT
-        Given the Execute sendPaymentOutcome request Scenario executed successfully
+        Given the Execute activatePaymentNotice request scenario executed successfully
         And RPT generation
 
             """
@@ -218,7 +208,7 @@ Feature: process tests for nodoInviaRPT [REV_NIRPT_01]
             """
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
-        
-        #DB CHECK-POSITION_PAYMENT_STATUS
-        And checks the value PAYING, PAID_NORPT, PAID, NOTICE_GENERATED, NOTICE_STORED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
+        And wait 6 seconds for expiration
 
+        #CHECK2-RPT ACTIVATIONS
+        And verify 0 record for the table RPT_ACTIVATIONS retrived by the query payment_status on db nodo_online under macro NewMod3
