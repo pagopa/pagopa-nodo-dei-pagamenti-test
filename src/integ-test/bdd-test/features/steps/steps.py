@@ -204,10 +204,6 @@ def step_impl(context):
     setattr(context, 'timedate', timedate)
     payload = utils.replace_local_variables(payload, context)
     payload = utils.replace_context_variables(payload, context)
-    
-
-    payload = utils.replace_local_variables(payload, context)
-    payload = utils.replace_context_variables(payload, context)
 
     pa = context.config.userdata.get('global_configuration').get('codicePA')
 
@@ -312,6 +308,28 @@ def step_impl(context):
     payload = f"{payload_uni}".split("'")[1]
 
     setattr(context, 'rptAttachment', payload)
+
+
+@given ('MB generation')
+def step_impl(context):
+    payload = context.text or ""
+
+    payload = utils.replace_local_variables(payload, context)
+    payload = utils.replace_context_variables(payload, context)
+
+    if '#iubd#' in payload:
+        iubd = ''+ str(random.randint(10000000, 20000000)) + str(random.randint(10000000, 20000000))
+        payload = payload.replace('#iubd#', iubd)
+        setattr(context, 'iubd', iubd)
+
+    payload = utils.replace_global_variables(payload, context)
+
+    payload_b = bytes(payload, 'ascii')
+    payload_uni = b64.b64encode(payload_b)
+    payload = f"{payload_uni}".split("'")[1]
+
+    setattr(context, 'bollo', payload)
+
 
 @given('RT{number:d} generation')
 def step_impl(context, number):
