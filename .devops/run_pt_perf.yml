@@ -15,7 +15,7 @@ parameters:
   - name: blacklistCTStr
     displayName: Blacklist for CT
     type: string
-    default: ""
+    default: "none"
   - name: scenarioToRun
     displayName: Scenarios to run
     type: string
@@ -143,9 +143,9 @@ stages:
                        scenArray=("PMCS_CT")
               fi
               
-              blacklistCT=(${blacklistCTStr})
-              blacklistPMCS=(${blacklistPMCSStr})
-              
+              blacklistCT=(${{ parameters.blacklistCTStr }})
+              blacklistPMCS=(${{ parameters.blacklistPMCSStr }})
+                            
               #for each scenario
               for i in "${scenArray[@]}"; do
                       echo current scenario is $i
