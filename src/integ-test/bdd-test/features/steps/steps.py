@@ -1,12 +1,11 @@
 import datetime
+
 from datetime import timedelta
-from email import header
-from email.headerregistry import HeaderRegistry
-from email.policy import default
 import json
 import os
 import random
 from sre_constants import ASSERT
+from textwrap import indent
 import time
 from xml.dom.minidom import parseString
 import base64 as b64
@@ -204,6 +203,9 @@ def step_impl(context):
 
     setattr(context, 'date', date)
     setattr(context, 'timedate', timedate)
+    payload = utils.replace_local_variables(payload, context)
+    payload = utils.replace_context_variables(payload, context)
+    
 
     payload = utils.replace_local_variables(payload, context)
     payload = utils.replace_context_variables(payload, context)
@@ -214,10 +216,9 @@ def step_impl(context):
         iuv = f"14{str(random.randint(1000000000000, 9999999999999))}"
         setattr(context, 'iuv', iuv)
         payload = payload.replace('#iuv#', iuv)
-        setattr(context, 'date', date)
 
     if "#ccp#" in payload:
-        ccp = str(int(time() * 1000))
+        ccp = str(int(time.time() * 1000))
         payload = payload.replace('#ccp#', ccp)
         setattr(context, "ccp", ccp)
 
@@ -305,9 +306,12 @@ def step_impl(context):
     payload = utils.replace_global_variables(payload, context)
 
     print('payload RPT: ', payload)
+
+    setattr(context, 'rpt', payload)
     payload_b = bytes(payload, 'ascii')
     payload_uni = b64.b64encode(payload_b)
     payload = f"{payload_uni}".split("'")[1]
+
     setattr(context, 'rptAttachment', payload)
 
 @given('RT{number:d} generation')
@@ -358,6 +362,7 @@ def step_impl(context):
     if "#timedate#" in payload:
         payload = payload.replace('#timedate#', timedate)
     
+    setattr(context, 'rt', payload)
     payload_b = bytes(payload, 'ascii')
     payload_uni = b64.b64encode(payload_b)
     payload = f"{payload_uni}".split("'")[1]
@@ -524,6 +529,7 @@ def step_impl(context, number):
         payload = payload.replace('ccp', ccp)
         setattr(context, "ccp", ccp)
 
+    setattr(context, f'rpt{number}', payload)
     payload_b = bytes(payload, 'ascii')
     payload_uni = b64.b64encode(payload_b)
     payload = f"{payload_uni}".split("'")[1]
@@ -582,6 +588,15 @@ def step_impl(context, elem, value, action):
         xml = utils.manipulate_soap_action(
             getattr(context, action), elem, value)
         setattr(context, action, xml)
+
+@given('replace {old_tag} tag in {action} with {new_tag}')
+def step_impl(context, old_tag, new_tag, action):
+    if old_tag != '-':
+        my_document = parseString(getattr(context, action))
+        tag = my_document.getElementsByTagName(old_tag)[0]
+        tag.tagName = new_tag
+        #print("provaprovaprova", my_document.toxml('UTF-8'), type(my_document))
+        setattr(context, action, my_document.toxml())
 
 
 @given('{attribute} set {value} for {elem} in {primitive}')
@@ -1154,6 +1169,7 @@ def step_impl(context, param, value):
     refresh_response = requests.get(utils.get_refresh_config_url(
         context), headers=headers, verify=False)
     time.sleep(5)
+    print('refresh_response: ',refresh_response)
     assert refresh_response.status_code == 200
 
 
@@ -1504,7 +1520,7 @@ def step_impl(context, query_name, table_name, db_name, name_macro, number):
         "columns", '*').replace("table_name", table_name)
 
     exec_query = db.executeQuery(conn, selected_query)
-
+    print("record query: ", exec_query)
     assert len(exec_query) == number, f"{len(exec_query)}"
 
 

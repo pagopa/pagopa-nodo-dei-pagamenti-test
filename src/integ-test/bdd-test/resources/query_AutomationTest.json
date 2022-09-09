@@ -39,6 +39,7 @@
         "position_payment_plan":"SELECT columns FROM table_name WHERE NOTICE_ID ='$activatePaymentNotice.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode'",
         "rt_xml": "SELECT columns FROM table_name where IUV = '$iuv' and IDENT_DOMINIO= '$activatePaymentNotice.fiscalCode' and CCP = '$activatePaymentNoticeResponse.paymentToken'",
         "stati_rpt": "SELECT s.columns FROM table_name s where s.IUV = '$iuv' and s.ID_DOMINIO= '$activatePaymentNotice.fiscalCode'",
+        "stati_rpt_2iuv_codpaold": "SELECT s.columns FROM table_name s where s.IUV = '$2iuv' and s.ID_DOMINIO= '#codicePA_old#'",
         "rpt_id":"SELECT columns FROM table_name  where IUV = '$iuv' and IDENT_DOMINIO= '$activatePaymentNotice.fiscalCode'",
         "payment_token_v2":"SELECT columns FROM table_name where PAYMENT_TOKEN = '$activatePaymentNoticeResponse.paymentToken-v2'",
         "rt_stati":"SELECT columns FROM table_name  where IUV = '$iuv' and IDENT_DOMINIO= '$activatePaymentNotice.fiscalCode'",
@@ -91,6 +92,9 @@
         "rt_stati": "SELECT columns FROM table_name s WHERE s.IUV = '$IUV' ORDER BY INSERTED_TIMESTAMP ASC",
         "stati_carrello": "SELECT columns FROM table s WHERE s.ID_CARRELLO = '$nodoInviaCarrelloRPT.idCarrello' ORDER BY ID ASC",
         "payment_status": "SELECT s.columns FROM table_name s WHERE s.NOTICE_ID ='$activateIOPayment.noticeNumber' AND s.PA_FISCAL_CODE = '$activateIOPayment.fiscalCode'"
+    },
+    "RTPull" : {
+        "rpt_stati": "SELECT columns FROM table_name s WHERE s.IUV = '$iuv' ORDER BY INSERTED_TIMESTAMP ASC"
     },
     "constanti":{
     },

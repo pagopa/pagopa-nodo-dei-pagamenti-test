@@ -1,66 +1,41 @@
-Feature:  block checks for verifyPaymentReq - position status in INSERTED (mod3Cancel poller) [Verify_blocco_05]
+Feature: process tests for retry on a PAYING_RPT transaction with different token [Activate_blocco_09]
 
-  Background:
-    Given systems up
-    And initial XML verifyPaymentNotice
-      """
-      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-         <soapenv:Header/>
-         <soapenv:Body>
-            <nod:verifyPaymentNoticeReq>
-               <idPSP>#psp#</idPSP>
-               <idBrokerPSP>#psp#</idBrokerPSP>
-               <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
-               <password>pwdpwdpwd</password>
-               <qrCode>
-                  <fiscalCode>#creditor_institution_code_old#</fiscalCode>
-                  <noticeNumber>#notice_number_old#</noticeNumber>
-               </qrCode>
-            </nod:verifyPaymentNoticeReq>
-         </soapenv:Body>
-      </soapenv:Envelope>
-      """
-	 And EC old version
-
-
-  # Verify Phase 1
-  Scenario: Execute verifyPaymentNotice request
-    When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
-    Then check outcome is OK of verifyPaymentNotice response
-    
-
-  # Activate Phase with expirationTime set to 2000
-  Scenario: Execute activatePaymentNotice request
-    Given the Execute verifyPaymentNotice request scenario executed successfully
-    And initial XML activatePaymentNotice
-      """
-      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-         <soapenv:Header/>
-         <soapenv:Body>
+    Background:
+        Given systems up
+        And EC old version
+        And initial XML activatePaymentNotice
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+            xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
             <nod:activatePaymentNoticeReq>
-               <idPSP>#psp#</idPSP>
-               <idBrokerPSP>#psp#</idBrokerPSP>
-               <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
-               <password>pwdpwdpwd</password>
-               <idempotencyKey>#idempotency_key#</idempotencyKey>
-               <qrCode>
-                  <fiscalCode>#creditor_institution_code_old#</fiscalCode>
-                  <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
-               </qrCode>
-               <expirationTime>2000</expirationTime>
-               <amount>120.00</amount>
+            <idPSP>#psp#</idPSP>
+            <idBrokerPSP>#psp#</idBrokerPSP>
+            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
+            <password>pwdpwdpwd</password>
+            <idempotencyKey>#idempotency_key#</idempotencyKey>
+            <qrCode>
+            <fiscalCode>#creditor_institution_code_old#</fiscalCode>
+            <noticeNumber>#notice_number_old#</noticeNumber>
+            </qrCode>
+            <expirationTime>6000</expirationTime>
+            <amount>10.00</amount>
             </nod:activatePaymentNoticeReq>
-         </soapenv:Body>
-      </soapenv:Envelope>
-      """
-    When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
-    Then check outcome is OK of activatePaymentNotice response
-    And paymentToken exists of activatePaymentNotice response
-    And paymentToken length is less than 36 of activatePaymentNotice response
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+
+    #activate phase1
+    Scenario: Execute activatePaymentNotice1 request
+        When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNotice response
+        And save activatePaymentNotice response in activatePaymentNotice1
+        And saving activatePaymentNotice request in activatePaymentNotice1
 
 
   Scenario: Define RPT
-    Given the Execute activatePaymentNotice request scenario executed successfully
+    Given the Execute activatePaymentNotice1 request scenario executed successfully
     And RPT generation
       """
       <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
@@ -157,9 +132,9 @@ Feature:  block checks for verifyPaymentReq - position status in INSERTED (mod3C
          <soapenv:Body>
          <ws:nodoInviaRPT>
          <password>pwdpwdpwd</password>
-         <identificativoPSP>#psp#</identificativoPSP>
-         <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-         <identificativoCanale>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanale>
+         <identificativoPSP>15376371009</identificativoPSP>
+         <identificativoIntermediarioPSP>15376371009</identificativoIntermediarioPSP>
+         <identificativoCanale>15376371009_01</identificativoCanale>
          <tipoFirma></tipoFirma>
          <rpt>$rptAttachment</rpt>
          </ws:nodoInviaRPT>
@@ -170,16 +145,38 @@ Feature:  block checks for verifyPaymentReq - position status in INSERTED (mod3C
       Then check esito is OK of nodoInviaRPT response
 
 
-  # Mod3Cancel Phase
-  Scenario: Execute mod3CancelV1 poller
-    Given the Execute nodoInviaRPT request scenario executed successfully
-    When job mod3CancelV1 triggered after 10 seconds
-    And wait 20 seconds for expiration
-    Then verify the HTTP status code of mod3CancelV1 response is 200
-
-	
-  # Verify Phase 2
-  Scenario: Execute verifyPaymentNotice request with the same request as Verify Phase 1
-    Given the Execute mod3CancelV1 poller scenario executed successfully
-    When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
-    Then check outcome is OK of verifyPaymentNotice response
+    #activate phase2
+    Scenario: Execute activatePaymentNotice2 request
+        Given the Execute nodoInviaRPT request scenario executed successfully
+        And initial XML activatePaymentNotice
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+            xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <nod:activatePaymentNoticeReq>
+            <idPSP>#psp#</idPSP>
+            <idBrokerPSP>#psp#</idBrokerPSP>
+            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
+            <password>pwdpwdpwd</password>
+            <idempotencyKey>#idempotency_key#</idempotencyKey>
+            <qrCode>
+            <fiscalCode>#creditor_institution_code_old#</fiscalCode>
+            <noticeNumber>$activatePaymentNotice.noticeNumber</noticeNumber>
+            </qrCode>
+            <expirationTime>6000</expirationTime>
+            <amount>6.00</amount>
+            </nod:activatePaymentNoticeReq>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+        Then check outcome is KO of activatePaymentNotice response
+        And check faultCode is PPT_PAGAMENTO_IN_CORSO of activatePaymentNotice response
+        And save activatePaymentNotice response in activatePaymentNotice2
+        And saving activatePaymentNotice request in activatePaymentNotice2
+        And checks the value PAYING, PAYING_RPT of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query position_payment_status_1 on db nodo_online under macro NewMod3
+        And checks the value PAYING_RPT of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query position_payment_status_1 on db nodo_online under macro NewMod3
+        And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query position_status_1 on db nodo_online under macro NewMod3
+        And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query position_status_1 on db nodo_online under macro NewMod3
+        
