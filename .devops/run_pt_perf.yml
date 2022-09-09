@@ -171,8 +171,13 @@ stages:
               
               done
               
+              #remove old data
+              rm -rf output
+              
+              #create output folder structure
               mkdir -p output/CT
               mkdir -p output/PMCS_CT
+              #copy out
               cp -r src/perf-test/k6/scenarios/CT/test/output output/CT
               cp -r src/perf-test/k6/scenarios/PMCS_CT/test/output output/PCMS_CT 
               #remove empty folder
