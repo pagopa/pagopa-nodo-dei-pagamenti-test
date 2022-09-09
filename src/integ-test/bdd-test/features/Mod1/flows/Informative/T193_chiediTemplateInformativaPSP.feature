@@ -10,7 +10,7 @@ Feature: process tests for nodoChiediTemplateInformativaPSP
             <soapenv:Header/>
             <soapenv:Body>
                 <ws:nodoChiediTemplateInformativaPSP>
-                    <identificativoPSP>idPsp1</identificativoPSP>
+                    <identificativoPSP>IdPSP1</identificativoPSP>
                     <identificativoIntermediarioPSP>40000000001</identificativoIntermediarioPSP>
                     <identificativoCanale>40000000001_03</identificativoCanale>
                     <password>pwdpwdpwd</password>
