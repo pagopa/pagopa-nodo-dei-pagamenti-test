@@ -1,3 +1,5 @@
+import * as outputUtil from './util/output_util.js';
+import { jUnit, textSummary } from 'https://jslib.k6.io/k6-summary/0.0.1/index.js';
 export function handleSummary(data, path) {
   console.log('Preparing the end-of-test summary...');
   console.log('out path is '+ path);
