@@ -168,7 +168,7 @@ Feature: process tests for nodoInviaRPT [REV_NIRPT_06]
         And wait 10 seconds for expiration
 
     # Activate phase
-    Scenario: Trigger mod3Cancel Scenario
+    Scenario: Trigger mod3Cancel
         Given the Excecute nodoInviaRPT scenario executed successfully
         When job mod3CancelV1 triggered after 3 seconds
         Then verify the HTTP status code of mod3CancelV1 response is 200

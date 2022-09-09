@@ -1,4 +1,4 @@
-Feature: process tests for nodoInviaRPT [REV_NIRPT_05]
+Feature: process tests for nodoInviaRPT [REV_NIRPT_10]
 
     Background:
         Given systems up
@@ -56,15 +56,14 @@ Feature: process tests for nodoInviaRPT [REV_NIRPT_05]
         And wait 10 seconds for expiration
 
     # Activate phase
-    Scenario: Execute Trigger mod3Cancel
-        Given the Execute activatePaymentNotice request Scenario executed successfully
+    Scenario: Trigger mod3Cancel
+        Given the Execute activatePaymentNotice request scenario executed successfully
         When job mod3CancelV1 triggered after 5 seconds
         Then verify the HTTP status code of mod3CancelV1 response is 200
 
-
     # test execution
     Scenario: Define RPT
-        Given the Execute Trigger mod3Cancel Scenario executed successfully
+        Given the Trigger mod3Cancel scenario executed successfully
         And RPT generation
 
             """
@@ -225,7 +224,6 @@ Feature: process tests for nodoInviaRPT [REV_NIRPT_05]
         And through the query payment_status retrieve param TRANSFER_CATEGORY at position 0 and save it under the key TRANSFER_CATEGORY
         And checks the value $TRANSFER_CATEGORY of the record at column DATI_SPECIFICI_RISCOSSIONE of the table RPT_VERSAMENTI retrived by the query rpt_versamenti on db nodo_online under macro NewMod3
 
-
         #DB CHECK-RT
         And checks the value NotNone of the record at column ID_SESSIONE of the table RT retrived by the query rt on db nodo_online under macro NewMod3
         And checks the value $activatePaymentNoticeResponse.paymentToken of the record at column CCP of the table RT retrived by the query rt on db nodo_online under macro NewMod3
@@ -252,7 +250,6 @@ Feature: process tests for nodoInviaRPT [REV_NIRPT_05]
         And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table RT_VERSAMENTI retrived by the query rt_versamenti on db nodo_online under macro NewMod3
         And checks the value BATCH_ANNULLAMENTO:TOKEN_SCADUTO of the record at column ESITO of the table RT_VERSAMENTI retrived by the query rt_versamenti on db nodo_online under macro NewMod3
 
-
         #DB CHECK-POSITION_RECEIPT
         And verify 0 record for the table POSITION_RECEIPT retrived by the query payment_status on db nodo_online under macro NewMod3
 
@@ -266,3 +263,43 @@ Feature: process tests for nodoInviaRPT [REV_NIRPT_05]
 
         #DB CHECK-POSITION_RECEIPT_XML
         And verify 0 record for the table POSITION_RECEIPT_XML retrived by the query payment_status on db nodo_online under macro NewMod3
+
+
+    Scenario: Execute activatePaymentNotice1 request
+        Given the Excecute nodoInviaRPT scenario executed successfully
+        And initial XML activatePaymentNotice
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <nod:activatePaymentNoticeReq>
+            <idPSP>40000000001</idPSP>
+            <idBrokerPSP>40000000001</idBrokerPSP>
+            <idChannel>40000000001_01</idChannel>
+            <password>pwdpwdpwd</password>
+            <idempotencyKey>#idempotency_key#</idempotencyKey>
+            <qrCode>
+            <fiscalCode>#creditor_institution_code_old#</fiscalCode>
+            <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
+            </qrCode>
+            <expirationTime>6000</expirationTime>
+            <amount>10.00</amount>
+            </nod:activatePaymentNoticeReq>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNotice response
+
+        #DB CHECK-POSITION_PAYMENT_STATUS
+        And checks the value PAYING, CANCELLED_NORPT, CANCELLED, PAYING of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
+
+        #DB CHECK-POSITION_STATUS
+        And checks the value PAYING, INSERTED, PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
+
+        #DB CHECK-POSITION_STATUS_SNAPSHOT
+        And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro NewMod3
+
+        #DB CHECK-POSITION_PAYMENT_STATUS_SNAPSHOT
+        And checks the value CANCELLED, PAYING of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro NewMod3
+
