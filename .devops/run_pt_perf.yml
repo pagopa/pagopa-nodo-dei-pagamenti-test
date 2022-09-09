@@ -18,8 +18,8 @@ parameters:
       - ALL
       - CT
       - PMCS_CT
-  - name: rampaSel
-    displayName: Rampa to Use
+  - name: rampingSel
+    displayName: Ramping rate to use
     type: string
     default: rampa_1_1_10
     values:
@@ -88,7 +88,7 @@ stages:
               {
                 active_scenario=$1
                 active_test=$2
-                test_step=${rampaSel}
+                test_step=${rampingSel}
      
                 envTest="pagoPA_PERF_apim"
             
@@ -106,9 +106,9 @@ stages:
               }
               echo env selected:
               echo ${{ parameters.env }}
-              echo rampa selected:
-              echo ${{ parameters.rampaSel }}
-              rampaSel=${{ parameters.rampaSel }}
+              echo ramping selected:
+              echo ${{ parameters.rampingSel }}
+              rampingSel=${{ parameters.rampingSel }}
               echo scenario selected:
               echo ${{ parameters.scenarioToRun }}
               scenarioToRun=${{ parameters.scenarioToRun }}
@@ -168,6 +168,10 @@ stages:
                       done
               
               done
+              
+              cp -f src/perf-test/k6/scenarios/CT/test/output output/CT
+              cp -f src/perf-test/k6/scenarios/PMCS_CT/test/output output/PCMS_CT 
+              
             displayName: 'Command Line Script -  Run $scenarioToRun K6 scripts'
           
           - script: |
@@ -186,4 +190,17 @@ stages:
              cat *
              echo end cat
             displayName: 'show results'
+          
+          - task: ArchiveFiles@2
+            displayName: 'Archive test results'
+            inputs:
+              rootFolderOrFile: $(Agent.BuildDirectory)/output
+              includeRootFolder: false
+              archiveType: zip
+              archiveFile: $(Build.ArtifactStagingDirectory)/output.zip
+              replaceExistingArchive: true
+            
+          - publish: $(Build.ArtifactStagingDirectory)/output.zip
+            displayName: "Publish Artifact results"
+            artifact: testResult
             
