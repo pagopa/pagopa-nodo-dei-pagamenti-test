@@ -1,10 +1,5 @@
 import http from 'k6/http';
-import { Trend } from "k6/metrics";
-import { check } from 'k6';
-import { scenario } from 'k6/execution';
 import { SharedArray } from 'k6/data';
-import * as outputUtil from './util/output_util.js';
-import * as inputDataUtil from './util/input_data_util.js';
 import papaparse from 'https://jslib.k6.io/papaparse/5.1.1/index.js';
 
 

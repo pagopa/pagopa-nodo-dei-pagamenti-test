@@ -1,19 +1,12 @@
-import http from 'k6/http';
-import { sleep } from 'k6';
-import { Trend } from "k6/metrics";
-import { check } from 'k6';
-import encoding from 'k6/encoding';
 //import { htmlReport } from "https://raw.githubusercontent.com/benc-uk/k6-reporter/main/dist/bundle.js";
-import { scenario } from 'k6/execution';
 import { SharedArray } from 'k6/data';
 import papaparse from 'https://jslib.k6.io/papaparse/5.1.1/index.js';
 import { jUnit, textSummary } from 'https://jslib.k6.io/k6-summary/0.0.1/index.js';
 import { sendPaymentOutput_NN } from './api/sendPaymentOutput_NN.js';
 import { activatePaymentNotice_NN } from './api/activatePaymentNotice_NN.js';
 import { verifyPaymentNotice_NN } from './api/verifyPaymentNotice_NN.js';
-import * as outputUtil from './util/output_util.js';
+import * as common from '../../CommonScript.js';
 import * as inputDataUtil from './util/input_data_util.js';
-import { parseHTML } from "k6/html";
 //import exec from 'k6/execution';
 //import { getCurrentStageIndex } from 'https://jslib.k6.io/k6-utils/1.3.0/index.js';
 //import * as test_selector from '../../test_selector.js';
@@ -186,20 +179,7 @@ export default function(){
 export function handleSummary(data) {
   console.log('Preparing the end-of-test summary...');
  
-  var csv = outputUtil.extractData(data);
-  let d = (new Date).toISOString().substr(0,10);
-
-   return {
-    'stdout': textSummary(data, { indent: ' ', enableColors: true, expected_response: 'ALL' }), // Show the text summary to stdout...
-	//'./junit.xml': jUnit(data), // but also transform it and save it as a JUnit XML...
-    [`./scenarios/CT/test/output/${d}_TC03.05.summary.json`]: JSON.stringify(data), // and a JSON with all the details...
-	//'./scenarios/CT/test/output/summary.html': htmlReport(data),
-	[`./scenarios/CT/test/output/${d}_TC03.05.summary.csv`]: csv[0],
-	[`./scenarios/CT/test/output/${d}_TC03.05.trOverSla.csv`]: csv[1],
-	[`./scenarios/CT/test/output/${d}_TC03.05.resultCodeSummary.csv`]: csv[2],
-	//'./xrayJunit.xml': generateXrayJUnitXML(data, 'summary.json', encoding.b64encode(JSON.stringify(data))),
- 	
-  };
+  return common.handleSummary(data, `${__ENV.outdir}`, `${__ENV.test}`)
   
 }
 

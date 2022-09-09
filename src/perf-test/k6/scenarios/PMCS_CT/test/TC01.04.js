@@ -1,9 +1,3 @@
-import http from 'k6/http';
-import { sleep } from 'k6';
-import { Trend } from "k6/metrics";
-import { check } from 'k6';
-import encoding from 'k6/encoding';
-import { scenario } from 'k6/execution';
 import { SharedArray } from 'k6/data';
 import papaparse from 'https://jslib.k6.io/papaparse/5.1.1/index.js';
 import { jUnit, textSummary } from 'https://jslib.k6.io/k6-summary/0.0.1/index.js';
@@ -14,9 +8,8 @@ import { pay_PP_Pay } from './api/pay_PP_Pay.js';
 import { B_Check } from './api/B_Check.js';
 import { pay_PP_Logout } from './api/pay_PP_Logout.js';
 import { pay_PP_bye } from './api/pay_PP_bye.js';
-import { parseHTML } from "k6/html";
 import { idpay_setup} from './idpay_setup_SIT.js';
-import * as outputUtil from './util/output_util.js';
+import * as common from '../../CommonScript.js';
 import * as inputDataUtil from './util/input_data_util.js';
 //import exec from 'k6/execution';
 //import { getCurrentStageIndex } from 'https://jslib.k6.io/k6-utils/1.3.0/index.js';
@@ -292,17 +285,7 @@ export default function(){
 export function handleSummary(data) {
   console.log('Preparing the end-of-test summary...');
  
-  var csv = outputUtil.extractData(data);
-  let d = (new Date).toISOString().substr(0,10);
-   return {
-    'stdout': textSummary(data, { indent: ' ', enableColors: true, expected_response: 'ALL' }), // Show the text summary to stdout...
-	 [`./scenarios/PMCS_CT/test/output/${d}_TC01.04.summary.json`]: JSON.stringify(data), // and a JSON with all the details...
-	//'./scenarios/CT/test/output/summary.html': htmlReport(data),
-	 [`./scenarios/PMCS_CT/test/output/${d}_TC01.04.summary.csv`]: csv[0],
-	 [`./scenarios/PMCS_CT/test/output/${d}_TC01.04.trOverSla.csv`]: csv[1],
-	 [`./scenarios/PMCS_CT/test/output/${d}_TC01.04.resultCodeSummary.csv`]: csv[2],
-	 	
-  };
+  return common.handleSummary(data, `${__ENV.outdir}`, `${__ENV.test}`)
   
 }
 

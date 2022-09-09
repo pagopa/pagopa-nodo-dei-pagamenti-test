@@ -1,9 +1,3 @@
-import http from 'k6/http';
-import { sleep } from 'k6';
-import { Trend } from "k6/metrics";
-import { check } from 'k6';
-import encoding from 'k6/encoding';
-import { scenario } from 'k6/execution';
 import { SharedArray } from 'k6/data';
 import papaparse from 'https://jslib.k6.io/papaparse/5.1.1/index.js';
 import { jUnit, textSummary } from 'https://jslib.k6.io/k6-summary/0.0.1/index.js';
@@ -23,8 +17,7 @@ import { ob_CC_Response} from './api/ob_CC_Response.js';
 import { ob_CC_bye} from './api/ob_CC_bye.js';
 import { ob_CC_resume3ds2} from './api/ob_CC_resume3ds2.js';
 import { idpay_setup} from './idpay_setup_SIT.js';
-import { parseHTML } from "k6/html";
-import * as outputUtil from './util/output_util.js';
+import * as common from '../../CommonScript.js';
 import * as inputDataUtil from './util/input_data_util.js';
 //import * as db from './db/db.js';
 
@@ -417,19 +410,7 @@ export default function(){
 export function handleSummary(data) {
   console.log('Preparing the end-of-test summary...');
  
-  var csv = outputUtil.extractData(data);
-  let d = (new Date).toISOString().substr(0,10);
-
-   return {
-    'stdout': textSummary(data, { indent: ' ', enableColors: true, expected_response: 'ALL' }), // Show the text summary to stdout...
-	[`./scenarios/PMCS_CT/test/output/${d}_TC01.03.summary.json`]: JSON.stringify(data), // and a JSON with all the details...
-	//'./scenarios/PMCS_CT/test/output/TC01.03.summary.xml': jUnit(data),
-	//'./scenarios/CT/test/output/summary.html': htmlReport(data),
-	[`./scenarios/PMCS_CT/test/output/${d}_TC01.03.summary.csv`]: csv[0],
-	[`./scenarios/PMCS_CT/test/output/${d}_TC01.03.trOverSla.csv`]: csv[1],
-	[`./scenarios/PMCS_CT/test/output/${d}_TC01.03.resultCodeSummary.csv`]: csv[2],
-	 	
-  };
+  return common.handleSummary(data, `${__ENV.outdir}`, `${__ENV.test}`)
   
 }
 

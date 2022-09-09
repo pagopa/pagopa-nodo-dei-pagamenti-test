@@ -1,5 +1,4 @@
 import http from 'k6/http';
-import { scenario } from 'k6/execution';
 import { SharedArray } from 'k6/data';
 import * as inputDataUtil from './util/input_data_util.js';
 import { startSession } from './api/startSession.js';
