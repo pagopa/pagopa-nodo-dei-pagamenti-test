@@ -114,7 +114,11 @@ stages:
               echo scenario selected:
               echo ${{ parameters.scenarioToRun }}
               scenarioToRun=${{ parameters.scenarioToRun }}
-              #create output directory if not exists (both scen)
+              
+              #clean and create output directory
+              rm -rf src/perf-test/k6/scenarios/CT/test/output
+              rm -rf src/perf-test/k6/scenarios/PMCS_CT/test/output
+              
               mkdir -p src/perf-test/k6/scenarios/CT/test/output
               mkdir -p src/perf-test/k6/scenarios/PMCS_CT/test/output
               
