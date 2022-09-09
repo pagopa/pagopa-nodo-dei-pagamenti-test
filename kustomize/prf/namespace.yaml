@@ -3,4 +3,4 @@ kind: Namespace
 metadata:
   labels:
     kubernetes.io/metadata.name: mock-ec-prf
-  name: prf
+  name: nodo-prf
