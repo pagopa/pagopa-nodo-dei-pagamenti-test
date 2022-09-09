@@ -113,13 +113,13 @@ Feature: semantic checks OK for activatePaymentNoticeV2Request
 
     # [SEM_APNV2_18]
     Scenario: Check outcome OK on disabled psp in idempotencyKey
-        Given idempotencyKey with 80000000001_151101ApDu as idPSP in activatePaymentNoticeV2
+        Given idempotencyKey with 80000000001_151101ApDu in activatePaymentNoticeV2
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
 
     # [SEM_APNV2_18.1]
     # Scenario: Check outcome OK on disabled psp in idempotencyKey
-    #     Given idempotencyKey with 80000000001_151101ApDu as idPSP in activatePaymentNoticeV2
+    #     Given idempotencyKey with 80000000001_151101ApDu in activatePaymentNoticeV2
     #     And noticeNumber with 310$iuv in activatePaymentNoticeV2
     #     When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
     #     Then check outcome is OK of activatePaymentNoticeV2 response
