@@ -316,19 +316,7 @@ Feature: RTPull flows
     
     @ok
     Scenario: Execute nodoInviaRPT - RT_RIFIUTATA_NODO (pspChiediRT_KO_RT_errata) [T003]
-        Given initial XML pspChiediRT
-        """
-        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-        <soapenv:Header/>
-        <soapenv:Body>
-            <ws:pspChiediRTResponse>
-                <pspChiediRTResponse>
-                    <rt>e3J0QXR0YWNobWVudH0=</rt>
-                </pspChiediRTResponse>
-            </ws:pspChiediRTResponse>
-        </soapenv:Body>
-        </soapenv:Envelope>
-        """
+        Given rt with e3J0QXR0YWNobWVudH0= in pspChiediRT
         And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
         And PSP replies to nodo-dei-pagamenti with the pspChiediListaRT
         And PSP replies to nodo-dei-pagamenti with the pspChiediRT
