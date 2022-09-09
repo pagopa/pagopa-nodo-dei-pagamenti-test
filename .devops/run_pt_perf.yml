@@ -169,6 +169,8 @@ stages:
               
               done
               
+              mkdir -p output/CT
+              mkdir -p output/PMCS_CT
               cp -r src/perf-test/k6/scenarios/CT/test/output output/CT
               cp -r src/perf-test/k6/scenarios/PMCS_CT/test/output output/PCMS_CT 
               
