@@ -17,7 +17,9 @@ spec:
             nodeSelectorTerms:
             - matchExpressions:
               - key: nodo-prf
-                operator: Exists
+                operator: In
+                values:
+                - "***"
 
       restartPolicy: Always
       containers:
