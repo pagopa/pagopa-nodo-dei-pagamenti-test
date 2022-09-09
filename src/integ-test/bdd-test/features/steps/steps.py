@@ -5,7 +5,6 @@ import json
 import os
 import random
 from sre_constants import ASSERT
-from textwrap import indent
 import time
 from xml.dom.minidom import parseString
 import base64 as b64
