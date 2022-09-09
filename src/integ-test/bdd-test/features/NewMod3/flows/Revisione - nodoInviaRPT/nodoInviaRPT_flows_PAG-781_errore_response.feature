@@ -61,25 +61,25 @@ Feature: process tests for nodoInviaRPT [PAG-781_errore_response]
             <paaAttivaRPTRisposta>
             <esito>OK</esito>
             <datiPagamentoPA>
-            <ibanAccredito>IT45R0760103200000000001016</ibanAccredito>
+            <importoSingoloVersamento>2.00</importoSingoloVersamento>
+            <ibanAccredito>${iban}</ibanAccredito>
             <bicAccredito>BSCTCH22</bicAccredito>
             <enteBeneficiario>
             <pag:identificativoUnivocoBeneficiario>
             <pag:tipoIdentificativoUnivoco>G</pag:tipoIdentificativoUnivoco>
             <pag:codiceIdentificativoUnivoco>${stz}</pag:codiceIdentificativoUnivoco>
             </pag:identificativoUnivocoBeneficiario>
-            <pag:denominazioneBeneficiario>${intermPsp}</pag:denominazioneBeneficiario>
-            <pag:codiceUnitOperBeneficiario>${can}</pag:codiceUnitOperBeneficiario>
-            <pag:denomUnitOperBeneficiario>uj</pag:denomUnitOperBeneficiario>
-            <pag:indirizzoBeneficiario>y</pag:indirizzoBeneficiario>
-            <pag:civicoBeneficiario>j</pag:civicoBeneficiario>
-            <pag:capBeneficiario>gt</pag:capBeneficiario>
-            <pag:localitaBeneficiario>gw</pag:localitaBeneficiario>
-            <pag:provinciaBeneficiario>ds</pag:provinciaBeneficiario>
-            <pag:nazioneBeneficiario>UK</pag:nazioneBeneficiario>
+            <pag:denominazioneBeneficiario>AZIENDA XXX</pag:denominazioneBeneficiario>
+            <pag:codiceUnitOperBeneficiario>123</pag:codiceUnitOperBeneficiario>
+            <pag:denomUnitOperBeneficiario>XXX</pag:denomUnitOperBeneficiario>
+            <pag:indirizzoBeneficiario>IndirizzoBeneficiario</pag:indirizzoBeneficiario>
+            <pag:capBeneficiario>22222</pag:capBeneficiario>
+            <pag:localitaBeneficiario>Roma</pag:localitaBeneficiario>
+            <pag:provinciaBeneficiario>RM</pag:provinciaBeneficiario>
+            <pag:nazioneBeneficiario>IT</pag:nazioneBeneficiario>
             </enteBeneficiario>
-            <credenzialiPagatore>i</credenzialiPagatore>
-            <causaleVersamento>${causale}</causaleVersamento>
+            <credenzialiPagatore>CP1.1</credenzialiPagatore>
+            <causaleVersamento>pagamento fotocopie pratica RPT</causaleVersamento>
             </datiPagamentoPA>
             </paaAttivaRPTRisposta>
             </ws:paaAttivaRPTRisposta>
