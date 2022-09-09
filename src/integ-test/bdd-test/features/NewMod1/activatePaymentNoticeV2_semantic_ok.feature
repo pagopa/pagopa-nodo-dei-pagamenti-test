@@ -104,6 +104,7 @@ Feature: semantic checks OK for activatePaymentNoticeV2Request
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
 
+    # per questo test è necessaria la paGetPaymentV2, attualmente non disponibile sul mock pa
     # [SEM_APNV2_17.1]
     # Scenario: Check outcome OK on non-existent psp in idempotencyKey
     #     Given idempotencyKey with 00088877799_151059xbLJ in activatePaymentNoticeV2
@@ -117,6 +118,7 @@ Feature: semantic checks OK for activatePaymentNoticeV2Request
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
 
+    # per questo test è necessaria la paGetPaymentV2, attualmente non disponibile sul mock pa
     # [SEM_APNV2_18.1]
     # Scenario: Check outcome OK on disabled psp in idempotencyKey
     #     Given idempotencyKey with 80000000001_151101ApDu in activatePaymentNoticeV2
@@ -131,10 +133,11 @@ Feature: semantic checks OK for activatePaymentNoticeV2Request
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
 
-    # [SEM_APNV2_24.1]
-    # Scenario: Check outcome OK if combination psp-channel-pa in denylist
-    #     Given idBrokerPSP with 60000000002 in activatePaymentNoticeV2
-    #     And idChannel with 60000000002_01 in activatePaymentNoticeV2
-    #     And noticeNumber with 310$iuv in activatePaymentNoticeV2
-    #     When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-    #     Then check outcome is OK of activatePaymentNoticeV2 response
+# per questo test è necessaria la paGetPaymentV2, attualmente non disponibile sul mock pa
+# [SEM_APNV2_24.1]
+# Scenario: Check outcome OK if combination psp-channel-pa in denylist
+#     Given idBrokerPSP with 60000000002 in activatePaymentNoticeV2
+#     And idChannel with 60000000002_01 in activatePaymentNoticeV2
+#     And noticeNumber with 310$iuv in activatePaymentNoticeV2
+#     When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+#     Then check outcome is OK of activatePaymentNoticeV2 response
