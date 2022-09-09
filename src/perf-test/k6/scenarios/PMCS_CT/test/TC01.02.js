@@ -18,6 +18,7 @@ import { ob_PP_Confirm_bye } from './api/ob_PP_Confirm_bye.js';
 import { parseHTML } from "k6/html";
 import * as outputUtil from './util/output_util.js';
 import * as inputDataUtil from './util/input_data_util.js';
+import * as common from '../../CommonScript.js';
 //import exec from 'k6/execution';
 //import { getCurrentStageIndex } from 'https://jslib.k6.io/k6-utils/1.3.0/index.js';
 //import * as db from './db/db.js';
@@ -343,18 +344,7 @@ export default function(){
 export function handleSummary(data) {
   console.log('Preparing the end-of-test summary...');
  
-  var csv = outputUtil.extractData(data);
-  let d = (new Date).toISOString().substr(0,10);
-     
-   return {
-    'stdout': textSummary(data, { indent: ' ', enableColors: true, expected_response: 'ALL' }), // Show the text summary to stdout...
-	[`./scenarios/PMCS_CT/test/output/${d}_TC01.02.summary.json`]: JSON.stringify(data), // and a JSON with all the details...
-	//'./scenarios/CT/test/output/summary.html': htmlReport(data),
-	[`./scenarios/PMCS_CT/test/output/${d}_TC01.02.summary.csv`]: csv[0],
-	[`./scenarios/PMCS_CT/test/output/${d}_TC01.02.trOverSla.csv`]: csv[1],
-	[`./scenarios/PMCS_CT/test/output/${d}_TC01.02.resultCodeSummary.csv`]: csv[2],
-	 	
-  };
+  return common.handleSummary(data, `${__ENV.outdir}`)
   
 }
 
