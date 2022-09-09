@@ -19,4 +19,4 @@ Feature: process tests for nodoPAChiediInformativaPA
             </soapenv:Envelope>
             """
         When PSP sends SOAP nodoPAChiediInformativaPA to nodo-dei-pagamenti
-        Then check xmlinformativa field exists in nodoPAChiediInformativaPA response
+        Then check xmlInformativa field exists in nodoPAChiediInformativaPA response

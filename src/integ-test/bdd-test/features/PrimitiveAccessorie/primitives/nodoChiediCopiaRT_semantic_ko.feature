@@ -8,16 +8,17 @@ Feature: Semantic checks for nodoChiediCopiaRT - KO
                 <soapenv:Header/>
                 <soapenv:Body>
                     <ws:nodoChiediCopiaRT>
-                        <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
-                        <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
+                        <identificativoIntermediarioPA>#id_broker_old#</identificativoIntermediarioPA>
+                        <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
                         <password>pwdpwdpwd</password>
-                        <identificativoDominio>44444444444</identificativoDominio>
+                        <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
                         <identificativoUnivocoVersamento>IUV846</identificativoUnivocoVersamento>
                         <codiceContestoPagamento>codiceContestoPagamento</codiceContestoPagamento>
                     </ws:nodoChiediCopiaRT>
                 </soapenv:Body>
             </soapenv:Envelope>
             """
+
 
     Scenario Outline: Check semantic errors for nodoChiediCopiaRT primitive
         Given <tag> with <tag_value> in nodoChiediCopiaRT
@@ -28,7 +29,7 @@ Feature: Semantic checks for nodoChiediCopiaRT - KO
             | identificativoIntermediarioPA         | 12345678901             | PPT_INTERMEDIARIO_PA_SCONOSCIUTO  | CCRTSEM1    |
             | identificativoIntermediarioPA         | INT_NOT_ENABLED         | PPT_INTERMEDIARIO_PA_DISABILITATO | CCRTSEM2    |
             | identificativoStazioneIntermediarioPA | unknownStation          | PPT_STAZIONE_INT_PA_SCONOSCIUTA   | CCRTSEM3    |
-            | identificativoStazioneIntermediarioPA | STAZIONE_NOT_ENABLED    | PPT_STAZIONE_INT_PA_DISABILITATA  | CCRTSEM4    |
+            | identificativoStazioneIntermediarioPA | #id_station_disabled#   | PPT_STAZIONE_INT_PA_DISABILITATA  | CCRTSEM4    |
             | password                              | wrongPassword           | PPT_AUTENTICAZIONE                | CCRTSEM5    |
             | identificativoDominio                 | 12345678902             | PPT_DOMINIO_SCONOSCIUTO           | CCRTSEM6    |
             | identificativoDominio                 | NOT_ENABLED             | PPT_DOMINIO_DISABILITATO          | CCRTSEM7    |
@@ -36,13 +37,13 @@ Feature: Semantic checks for nodoChiediCopiaRT - KO
             | codiceContestoPagamento               | wrongPaymentContextCode | PPT_RT_SCONOSCIUTA                | CCRTSEM9    |
             | identificativoIntermediarioPA         | 77777777777             | PPT_AUTORIZZAZIONE                | CCRTSEM12   |
 
-    # TODO: COMPLETARE CON VALORI ESATTI
+
     Scenario Outline: Check semantic errors for nodoChiediCopiaRT primitive
         Given identificativoUnivocoVersamento with <iuv_value> in nodoChiediCopiaRT
         And codiceContestoPagamento with <ccp_value> in nodoChiediCopiaRT
         When EC sends SOAP nodoChiediCopiaRT to nodo-dei-pagamenti
         Then check faultCode is <error> of nodoChiediCopiaRT response
         Examples:
-            | iuv_value         | ccp_value         | error                 | soapUI test |
-            | iuv_value_in_db_1 | ccp_value_in_db_1 | PPT_RT_SCONOSCIUTA    | CCRTSEM10   |
-            | iuv_value_in_db_2 | ccp_value_in_db_2 | PPT_RT_NONDISPONIBILE | CCRTSEM11   |
+            | iuv_value                       | ccp_value         | error                 | soapUI test |
+            | 11000679416493210               | 59050             | PPT_RT_SCONOSCIUTA    | CCRTSEM10   |
+            | IUV-2022-09-07-14:58:47.285     | 40972             | PPT_RT_NONDISPONIBILE | CCRTSEM11   | 
