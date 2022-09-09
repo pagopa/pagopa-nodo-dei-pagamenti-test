@@ -169,8 +169,8 @@ stages:
               
               done
               
-              cp -f src/perf-test/k6/scenarios/CT/test/output output/CT
-              cp -f src/perf-test/k6/scenarios/PMCS_CT/test/output output/PCMS_CT 
+              cp -r src/perf-test/k6/scenarios/CT/test/output output/CT
+              cp -r src/perf-test/k6/scenarios/PMCS_CT/test/output output/PCMS_CT 
               
             displayName: 'Command Line Script -  Run $scenarioToRun K6 scripts'
           
