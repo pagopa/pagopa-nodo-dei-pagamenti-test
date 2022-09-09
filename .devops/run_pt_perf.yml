@@ -101,8 +101,8 @@ stages:
                 echo configured test_step= $test_step
                 echo configured envTest= $envTest
                 
-                echo ***** k6 run --out csv=src/perf-test/k6/scenarios/$active_scenario/test/output/$test.csv -e scenario=$scenario -e test=$active_test -e steps=$test_step -e env=$envTest src/perf-test/k6/scenarios/$active_scenario/test/$active_test.js****               
-                k6 run --out csv=src/perf-test/k6/scenarios/$active_scenario/test/output/$test.csv -e scenario=$scenario -e test=$active_test -e steps=$test_step -e env=$envTest src/perf-test/k6/scenarios/$active_scenario/test/$active_test.js
+                echo ***** k6 run --out csv=src/perf-test/k6/scenarios/$active_scenario/test/output/$active_test.csv -e scenario=$scenario -e test=$active_test -e steps=$test_step -e env=$envTest src/perf-test/k6/scenarios/$active_scenario/test/$active_test.js****               
+                k6 run --out csv=src/perf-test/k6/scenarios/$active_scenario/test/output/$active_test.csv -e scenario=$scenario -e test=$active_test -e steps=$test_step -e env=$envTest src/perf-test/k6/scenarios/$active_scenario/test/$active_test.js
               }
               echo env selected:
               echo ${{ parameters.env }}
@@ -175,24 +175,7 @@ stages:
               cp -r src/perf-test/k6/scenarios/PMCS_CT/test/output output/PCMS_CT 
               
             displayName: 'Command Line Script -  Run $scenarioToRun K6 scripts'
-          
-          - script: |
-             echo pwd:
-             pwd
-             echo list:
-             ls -lrt
-             echo changind dir to go in output...
-             cd $(pwd)/src/perf-test/k6/scenarios/$(activeScenario)/test/output
-             echo pwd after changing dir:
-             pwd
-             echo list:
-             ls -lrt
-             
-             echo start cat
-             cat *
-             echo end cat
-            displayName: 'show results'
-          
+                    
           - task: ArchiveFiles@2
             displayName: 'Archive test results'
             inputs:
@@ -205,4 +188,13 @@ stages:
           - publish: $(Build.ArtifactStagingDirectory)/output.zip
             displayName: "Publish Artifact results"
             artifact: testResult
+            
+          - script: |
+             echo pwd:
+             pwd
+             echo output tree:
+             chmod +777 scripttree.sh
+             ./scripttree.sh output/ 3
+             
+            displayName: 'show results'
             
