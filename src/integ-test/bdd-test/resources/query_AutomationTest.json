@@ -32,7 +32,7 @@
         "rpt_activision-v2": "SELECT columns FROM table_name  where PAYMENT_TOKEN = '$activatePaymentNoticeResponse.paymentToken-v2'",
         "rt": "SELECT columns FROM table_name WHERE IUV = '$iuv' AND CCP= '$activatePaymentNoticeResponse.paymentToken' AND IDENT_DOMINIO= '$activatePaymentNotice.fiscalCode'",
         "rpt": "SELECT columns FROM table_name WHERE IUV = '$iuv' AND CCP= '$activatePaymentNoticeResponse.paymentToken' AND IDENT_DOMINIO= '$activatePaymentNotice.fiscalCode'",
-        "rt_versamenti": "SELECT columns FROM table_name s JOIN RT r on s.FK_RT=r.ID  WHERE r.IUV = '$iuv' AND r.CCP= '$activatePaymentNoticeResponse.paymentToken' AND r.IDENT_DOMINIO= '$activatePaymentNotice.fiscalCode'",
+        "rt_versamenti": "SELECT s.columns FROM table_name s JOIN RT r on s.FK_RT=r.ID  WHERE r.IUV = '$iuv' AND r.CCP= '$activatePaymentNoticeResponse.paymentToken' AND r.IDENT_DOMINIO= '$activatePaymentNotice.fiscalCode'",
         "rpt_versamenti" : "SELECT columns FROM table_name s join RPT r on s.fk_rpt=r.id where r.IUV = '$iuv' AND r.CCP= '$activatePaymentNoticeResponse.paymentToken' AND r.IDENT_DOMINIO= '$activatePaymentNotice.fiscalCode'",
         "psp": "SELECT columns FROM table_name where ID_PSP = '$activatePaymentNotice.idPSP'",
         "position_service":"SELECT columns FROM table_name WHERE NOTICE_ID ='$activatePaymentNotice.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode'",
@@ -56,9 +56,10 @@
         "idempotency_cache_paymentToken2" : "SELECT columns FROM table_name WHERE IDEMPOTENCY_KEY = '$activatePaymentNotice2.idempotencyKey' AND PSP_ID = '$activatePaymentNotice2.idPSP' AND TOKEN = '$activatePaymentNotice2Response.paymentToken'",
         "idempotency_paymentToken" : "SELECT columns FROM table_name WHERE TOKEN = '$activatePaymentNoticeResponse.paymentToken'",
         "verifica_bollettino":"SELECT columns FROM table_name WHERE NOTICE_ID ='$verificaBollettino.noticeNumber' AND CCPOST = '$verificaBollettino.ccPost'",
-        "position_subject_2":"SELECT columns FROM POSITION_SUBJECT s JOIN POSITION_SERVICE pp ON pp.DEBTOR_ID = $DEBTOR_ID where pp.notice_id = '$activatePaymentNotice.noticeNumber' and pp.pa_fiscal_code= '$activatePaymentNotice.fiscalCode'",
+        "position_subject_2":"SELECT s.columns FROM POSITION_SUBJECT s JOIN POSITION_SERVICE pp ON pp.DEBTOR_ID = $DEBTOR_ID where pp.notice_id = '$activatePaymentNotice.noticeNumber' and pp.pa_fiscal_code= '$activatePaymentNotice.fiscalCode'",
         "retry_pa_invia_rt": "SELECT columns FROM table_name WHERE IUV = '$iuv' AND ID_DOMINIO= '$activatePaymentNotice.fiscalCode' ORDER BY ID ASC",
-        "retry_pa_invia_rpt": "SELECT columns FROM table_name WHERE IUV = '$iuv' AND PA_FISCAL_CODE= '$activatePaymentNotice.fiscalCode' ORDER BY ID ASC"
+        "retry_pa_invia_rpt": "SELECT columns FROM table_name WHERE IUV = '$iuv' AND PA_FISCAL_CODE= '$activatePaymentNotice.fiscalCode' ORDER BY ID ASC",
+        "nodo_invia_rpt_rpt_stati":"SELECT columns FROM table_name WHERE IUV = '$iuv' AND CCP= '$activatePaymentNoticeResponse.paymentToken' AND ID_DOMINIO= '$activatePaymentNotice.fiscalCode'"
     },
     "AppIO":{
         "payment_status":"SELECT s.columns FROM table_name s WHERE s.NOTICE_ID ='$activateIOPayment.noticeNumber' AND s.PA_FISCAL_CODE = '$activateIOPayment.fiscalCode'",
@@ -87,8 +88,9 @@
         "stati_RPT": "SELECT columns FROM table_name WHERE IUV='avanzaErrResponse' AND CCP= '$ccp1' AND ID_DOMINIO='44444444444' ORDER BY INSERTED_TIMESTAMP",
         "stati_RPT2": "SELECT columns FROM table_name WHERE IUV='avanzaErrResponse2' AND CCP= '$ccp2' AND ID_DOMINIO='44444444445' ORDER BY INSERTED_TIMESTAMP",
         "retry_rpt": "SELECT columns FROM table_name WHERE ID_SESSIONE='$sessionToken' ORDER BY INSERTED_TIMESTAMP",
-        "Re": "SELECT columns FROM table_name WHERE ID_SESSIONE ='$sessionId' AND INSERTED_TIMESTAMP > ROUND(SYSDATE-1) ORDER BY DATA_ORA_EVENTO",
+        "Re": "SELECT columns FROM table_name WHERE ID_SESSIONE ='$idSessione' AND INSERTED_TIMESTAMP > ROUND(SYSDATE-1) ORDER BY DATA_ORA_EVENTO",
         "rpt_stati": "SELECT columns FROM table_name s WHERE s.IUV = '$iuv' ORDER BY INSERTED_TIMESTAMP ASC",
+        "rt_stati": "SELECT columns FROM table_name s WHERE s.IUV = '$IUV' ORDER BY INSERTED_TIMESTAMP ASC",
         "stati_carrello": "SELECT columns FROM table s WHERE s.ID_CARRELLO = '$nodoInviaCarrelloRPT.idCarrello' ORDER BY ID ASC",
         "payment_status": "SELECT s.columns FROM table_name s WHERE s.NOTICE_ID ='$activateIOPayment.noticeNumber' AND s.PA_FISCAL_CODE = '$activateIOPayment.fiscalCode'"
     },

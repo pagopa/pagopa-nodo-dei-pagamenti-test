@@ -101,7 +101,7 @@ Feature: process tests for nodoInviaRT_Mod2_AD
             <password>pwdpwdpwd</password>
             <identificativoPSP>40000000001</identificativoPSP>
             <identificativoIntermediarioPSP>40000000001</identificativoIntermediarioPSP>
-            <identificativoCanale>40000000001_03</identificativoCanale>
+            <identificativoCanale>40000000001_04</identificativoCanale>
             <tipoFirma></tipoFirma>
             <rpt>$rptAttachment</rpt>
             </ws:nodoInviaRPT>
@@ -110,3 +110,4 @@ Feature: process tests for nodoInviaRT_Mod2_AD
             """
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
+        And check url field not exists in nodoInviaRPT response
