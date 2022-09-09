@@ -317,6 +317,11 @@ def step_impl(context):
     payload = utils.replace_local_variables(payload, context)
     payload = utils.replace_context_variables(payload, context)
 
+    if '#iubd#' in payload:
+        iubd = ''+ str(random.randint(10000000, 20000000)) + str(random.randint(10000000, 20000000))
+        payload = payload.replace('#iubd#', iubd)
+        setattr(context, 'iubd', iubd)
+
     payload = utils.replace_global_variables(payload, context)
 
     payload_b = bytes(payload, 'ascii')
