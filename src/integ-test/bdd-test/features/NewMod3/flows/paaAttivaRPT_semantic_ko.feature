@@ -37,6 +37,7 @@ Feature: process check for activatePaymentNotice - KO
       <ws:paaAttivaRPTRisposta>
       <paaAttivaRPTRisposta>
       <esito>OK</esito>
+      <delay>60000</delay>
       <datiPagamentoPA>
       <importoSingoloVersamento>2.00</importoSingoloVersamento>
       <ibanAccredito>${iban}</ibanAccredito>
