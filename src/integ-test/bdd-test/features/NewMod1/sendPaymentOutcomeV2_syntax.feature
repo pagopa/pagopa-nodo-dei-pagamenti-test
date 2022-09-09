@@ -62,7 +62,7 @@ Feature: syntax checks for sendPaymentOutcomeV2
         And idempotencyKey with None in sendPaymentOutcomeV2
         And details with None in sendPaymentOutcomeV2
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
-        Then check outcome is OK of sendPaymentOutcomeV2 response
+        Then check outcome is PPT_TOKEN_SCONOSCIUTO of sendPaymentOutcomeV2 response
 
     # attribute value check
     Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error on invalid wsdl namespace
@@ -175,9 +175,9 @@ Feature: syntax checks for sendPaymentOutcomeV2
 
     Scenario Outline: OK syntax checks
         Given the sendPaymentOutcomeV2 scenario executed successfully
-        And <elem> with <value> in sendPaymentOutcome
-        When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-        Then check outcome is OK of sendPaymentOutcome response
+        And <elem> with <value> in sendPaymentOutcomeV2
+        When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of sendPaymentOutcomeV2 response
 
         Examples:
             | elem                | value       | soapUI test |
