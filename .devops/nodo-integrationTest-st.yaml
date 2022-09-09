@@ -16,7 +16,7 @@ variables:
   artifactName: TestSuite
   artifactDownloadedPath: /agent/_work/nrt
   destinationFolderExtractArtifact: nodo/extracted
-  deploy-pool: nodopagamenti-agent-pool
+  deploy-pool: nodopagamenti-agent-pool-sit
 
 
   
@@ -74,7 +74,7 @@ stages:
     jobs:
       - job: test_execute
         displayName: "execute test suite (${{ parameters.env }})"
-        pool: $(deploy-pool)-${{ parameters.env }}
+        pool: $(deploy-pool)
         steps:
           - checkout: none          
 
