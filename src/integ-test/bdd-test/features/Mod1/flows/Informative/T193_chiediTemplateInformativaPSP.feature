@@ -21,6 +21,7 @@ Feature: process tests for nodoChiediTemplateInformativaPSP
         When PSP sends SOAP nodoChiediTemplateInformativaPSP to nodo-dei-pagamenti
         Then check xmlTemplateInformativa field exists in nodoChiediTemplateInformativaPSP response
         And check ppt:nodoChiediTemplateInformativaPSPRisposta field exists in nodoChiediTemplateInformativaPSP response
+        And decode xmlTemplateInformativa content in response of nodoChiediTemplateInformativaPSP
 
         Scenario: Send second nodoChiediTemplateInformativaPSP
         Given initial XML nodoChiediTemplateInformativaPSP
