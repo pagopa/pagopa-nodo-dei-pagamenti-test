@@ -162,66 +162,8 @@ Feature: flux tests for activatePaymentNoticeV2Request
     When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
     Then check outcome is KO of activatePaymentNoticeV2 response
     And check faultCode is PPT_PAGAMENTO_IN_CORSO of activatePaymentNoticeV2 response
-    And checks the value 'PAYING',None of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query position_activate on db nodo_online under macro NewMod1
-    And checks the value 'PAYING',None of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query position_activate on db nodo_online under macro NewMod1
-
-  # [Activate_blocco_05]
-  Scenario: Activate_blocco_05 (parte 1)
-    Given initial XML activatePaymentNoticeV2
-      """
-      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-      xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-      <soapenv:Header/>
-      <soapenv:Body>
-      <nod:activatePaymentNoticeV2Request>
-      <idPSP>70000000001</idPSP>
-      <idBrokerPSP>70000000001</idBrokerPSP>
-      <idChannel>70000000001_01</idChannel>
-      <password>pwdpwdpwd</password>
-      <idempotencyKey>#idempotency_key#</idempotencyKey>
-      <qrCode>
-      <fiscalCode>#creditor_institution_code#</fiscalCode>
-      <noticeNumber>310$iuv</noticeNumber>
-      </qrCode>
-      <amount>10.00</amount>
-      <paymentNote>causale</paymentNote>
-      </nod:activatePaymentNoticeV2Request>
-      </soapenv:Body>
-      </soapenv:Envelope>
-      """
-    When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-    Then check outcome is OK of activatePaymentNoticeV2 response
-    And checks the value 'PAYING',None of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query position_activate on db nodo_online under macro NewMod1
-    And checks the value 'PAYING',None of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query position_activate on db nodo_online under macro NewMod1
-
-  Scenario: Activate_blocco_05 (parte 2)
-    Given the Activate_blocco_05 (parte 1) scenario executed successfully
-    And initial xml activatePaymentNoticeV2
-      """
-      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-      xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-      <soapenv:Header/>
-      <soapenv:Body>
-      <nod:activatePaymentNoticeV2Request>
-      <idPSP>70000000001</idPSP>
-      <idBrokerPSP>70000000001</idBrokerPSP>
-      <idChannel>70000000001_01</idChannel>
-      <password>pwdpwdpwd</password>
-      <idempotencyKey>#idempotency_key_1#</idempotencyKey>
-      <qrCode>
-      <fiscalCode>#creditor_institution_code#</fiscalCode>
-      <noticeNumber>310$iuv1</noticeNumber>
-      </qrCode>
-      <amount>10.00</amount>
-      <paymentNote>causale</paymentNote>
-      </nod:activatePaymentNoticeV2Request>
-      </soapenv:Body>
-      </soapenv:Envelope>
-      """
-    When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-    Then check outcome is OK of activatePaymentNoticeV2 response
-    And checks the value 'PAYING',None of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query position_activate on db nodo_online under macro NewMod1
-    And checks the value 'PAYING',None of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query position_activate on db nodo_online under macro NewMod1
+    And checks the value PAYING,None of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query position_activate on db nodo_online under macro NewMod1
+    And checks the value PAYING,None of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query position_activate on db nodo_online under macro NewMod1
 
   # [Activate_blocco_02]
 
@@ -255,12 +197,12 @@ Feature: flux tests for activatePaymentNoticeV2Request
     Then check outcome is KO of activatePaymentNoticeV2 response
     And check faultCode is PPT_PAGAMENTO_DUPLICATO of activatePaymentNoticeV2 response
     And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response1
-    And checks the value 'PAYING','PAYMENT_RESERVED','PAYMENT_SENT','PAYMENT_ACCEPTED','PAID','NOTIFIED',None of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query notice_id_pa_token on db nodo_online under macro NewMod1
+    And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED,PAID,NOTIFIED,None of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query notice_id_pa_token on db nodo_online under macro NewMod1
     And checks the value None of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query notice_id_pa_token_1 on db nodo_online under macro NewMod1
-    And checks the value 'NOTIFIED',None of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query notice_id_pa_token on db nodo_online under macro NewMod1
+    And checks the value NOTIFIED,None of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query notice_id_pa_token on db nodo_online under macro NewMod1
     And checks the value None of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query notice_id_pa_token_1 on db nodo_online under macro NewMod1
-    And checks the value 'PAYING','PAID','NOTIFIED',None of the record at column STATUS of the table POSITION_STATUS retrived by the query position_activate on db nodo_online under macro NewMod1
-    And checks the value 'NOTIFIED',None of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query position_activate on db nodo_online under macro NewMod1
+    And checks the value PAYING,PAID,NOTIFIED,None of the record at column STATUS of the table POSITION_STATUS retrived by the query position_activate on db nodo_online under macro NewMod1
+    And checks the value NOTIFIED,None of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query position_activate on db nodo_online under macro NewMod1
 
   # [Activate_blocco_03]
 
@@ -295,14 +237,140 @@ Feature: flux tests for activatePaymentNoticeV2Request
     Then check outcome is KO of activatePaymentNoticeV2 response
     And check faultCode is PPT_PAGAMENTO_DUPLICATO of activatePaymentNoticeV2 response
     And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response1
-    And checks the value 'PAYING','PAYMENT_RESERVED','PAYMENT_SENT','PAYMENT_ACCEPTED','PAID','NOTIFIED',None of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query notice_id_pa_token on db nodo_online under macro NewMod1
+    And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED,PAID,NOTIFIED,None of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query notice_id_pa_token on db nodo_online under macro NewMod1
     And checks the value None of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query notice_id_pa_token_1 on db nodo_online under macro NewMod1
-    And checks the value 'NOTIFIED',None of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query notice_id_pa_token on db nodo_online under macro NewMod1
+    And checks the value NOTIFIED,None of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query notice_id_pa_token on db nodo_online under macro NewMod1
     And checks the value None of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query notice_id_pa_token_1 on db nodo_online under macro NewMod1
-    And checks the value 'PAYING','PAID','NOTIFIED',None of the record at column STATUS of the table POSITION_STATUS retrived by the query position_activate on db nodo_online under macro NewMod1
-    And checks the value 'NOTIFIED',None of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query position_activate on db nodo_online under macro NewMod1
+    And checks the value PAYING,PAID,NOTIFIED,None of the record at column STATUS of the table POSITION_STATUS retrived by the query position_activate on db nodo_online under macro NewMod1
+    And checks the value NOTIFIED,None of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query position_activate on db nodo_online under macro NewMod1
+
+  # [Activate_blocco_05]
+  Scenario: Activate_blocco_05 (parte 1)
+    Given initial XML activatePaymentNoticeV2
+      """
+      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+      xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+      <soapenv:Header/>
+      <soapenv:Body>
+      <nod:activatePaymentNoticeV2Request>
+      <idPSP>70000000001</idPSP>
+      <idBrokerPSP>70000000001</idBrokerPSP>
+      <idChannel>70000000001_01</idChannel>
+      <password>pwdpwdpwd</password>
+      <idempotencyKey>#idempotency_key#</idempotencyKey>
+      <qrCode>
+      <fiscalCode>#creditor_institution_code#</fiscalCode>
+      <noticeNumber>310$iuv</noticeNumber>
+      </qrCode>
+      <amount>10.00</amount>
+      <paymentNote>causale</paymentNote>
+      </nod:activatePaymentNoticeV2Request>
+      </soapenv:Body>
+      </soapenv:Envelope>
+      """
+    When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+    Then check outcome is OK of activatePaymentNoticeV2 response
+    And checks the value PAYING,None of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query position_activate on db nodo_online under macro NewMod1
+    And checks the value PAYING,None of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query position_activate on db nodo_online under macro NewMod1
+
+  Scenario: Activate_blocco_05 (parte 2)
+    Given the Activate_blocco_05 (parte 1) scenario executed successfully
+    And initial xml activatePaymentNoticeV2
+      """
+      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+      xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+      <soapenv:Header/>
+      <soapenv:Body>
+      <nod:activatePaymentNoticeV2Request>
+      <idPSP>70000000001</idPSP>
+      <idBrokerPSP>70000000001</idBrokerPSP>
+      <idChannel>70000000001_01</idChannel>
+      <password>pwdpwdpwd</password>
+      <idempotencyKey>#idempotency_key_1#</idempotencyKey>
+      <qrCode>
+      <fiscalCode>#creditor_institution_code#</fiscalCode>
+      <noticeNumber>310$iuv1</noticeNumber>
+      </qrCode>
+      <amount>10.00</amount>
+      <paymentNote>causale</paymentNote>
+      </nod:activatePaymentNoticeV2Request>
+      </soapenv:Body>
+      </soapenv:Envelope>
+      """
+    When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+    Then check outcome is OK of activatePaymentNoticeV2 response
+    And checks the value PAYING,None of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query position_activate on db nodo_online under macro NewMod1
+    And checks the value PAYING,None of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query position_activate on db nodo_online under macro NewMod1
+
+  # [Activate_blocco_06]
+  Scenario: Activate_blocco_06 (parte 1)
+    Given initial XML activatePaymentNoticeV2
+      """
+      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+      xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+      <soapenv:Header/>
+      <soapenv:Body>
+      <nod:activatePaymentNoticeV2Request>
+      <idPSP>70000000001</idPSP>
+      <idBrokerPSP>70000000001</idBrokerPSP>
+      <idChannel>70000000001_01</idChannel>
+      <password>pwdpwdpwd</password>
+      <idempotencyKey>#idempotency_key#</idempotencyKey>
+      <qrCode>
+      <fiscalCode>#creditor_institution_code#</fiscalCode>
+      <noticeNumber>310$iuv</noticeNumber>
+      </qrCode>
+      <expirationTime>2000</expirationTime>
+      <amount>10.00</amount>
+      <paymentNote>causale</paymentNote>
+      </nod:activatePaymentNoticeV2Request>
+      </soapenv:Body>
+      </soapenv:Envelope>
+      """
+    When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+    Then check outcome is OK of activatePaymentNoticeV2 response
+    And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response
+
+  Scenario: Activate_blocco_06 (parte 2)
+    Given the Activate_blocco_06 (parte 1) scenario executed successfully
+    When job mod3CancelV2 triggered after 3 seconds
+    Then wait 0 seconds for expiration
+
+  Scenario: Activate_blocco_06 (parte 3)
+    Given the Activate_blocco_06 (parte 2) scenario executed successfully
+    And initial XML activatePaymentNoticeV2
+      """
+      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+      xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+      <soapenv:Header/>
+      <soapenv:Body>
+      <nod:activatePaymentNoticeV2Request>
+      <idPSP>70000000001</idPSP>
+      <idBrokerPSP>70000000001</idBrokerPSP>
+      <idChannel>70000000001_01</idChannel>
+      <password>pwdpwdpwd</password>
+      <idempotencyKey>#idempotency_key#</idempotencyKey>
+      <qrCode>
+      <fiscalCode>#creditor_institution_code#</fiscalCode>
+      <noticeNumber>310$iuv</noticeNumber>
+      </qrCode>
+      <amount>10.00</amount>
+      <paymentNote>causale</paymentNote>
+      </nod:activatePaymentNoticeV2Request>
+      </soapenv:Body>
+      </soapenv:Envelope>
+      """
+    When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+    Then check outcome is OK of activatePaymentNoticeV2 response
+    And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response1
+    And checks the value PAYING,CANCELLED,None of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query notice_id_pa_token on db nodo_online under macro NewMod1
+    And checks the value PAYING,None of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query notice_id_pa_token_1 on db nodo_online under macro NewMod1
+    And checks the value CANCELLED,None of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query notice_id_pa_token on db nodo_online under macro NewMod1
+    And checks the value PAYING,None of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query notice_id_pa_token_1 on db nodo_online under macro NewMod1
+    And checks the value PAYING,INSERTED,PAYING,None of the record at column STATUS of the table POSITION_STATUS retrived by the query position_activate on db nodo_online under macro NewMod1
+    And checks the value PAYING,None of the record at column STATUS of the table POSITION_STATUS retrived by the query position_activate on db nodo_online under macro NewMod1
 
 # da implementare in query_AutomationTest.json:
-# "NewMod1" : {"position_activate" : "SELECT columns FROM table_name WHERE NOTICE_ID = '$activatePaymentNoticeV2Request.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNoticeV2Request.fiscalCode'",
-#              "notice_id_pa_token" : "SELECT columns FROM table_name WHERE NOTICE_ID = '$activatePaymentNoticeV2Request.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNoticeV2Request.fiscalCode' AND PAYMENT_TOKEN = 'activatePaymentNoticeV2Response.paymentToken'",
-#              "notice_id_pa_token_1" : "SELECT columns FROM table_name WHERE NOTICE_ID = '$activatePaymentNoticeV2Request.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNoticeV2Request.fiscalCode' AND PAYMENT_TOKEN = 'activatePaymentNoticeV2Response1.paymentToken'"}
+# "NewMod1" : {"position_activate" : "SELECT columns FROM table_name WHERE NOTICE_ID = '$activatePaymentNoticeV2.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNoticeV2.fiscalCode'",
+#              "notice_id_pa_token" : "SELECT columns FROM table_name WHERE NOTICE_ID = '$activatePaymentNoticeV2.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNoticeV2.fiscalCode' AND PAYMENT_TOKEN = 'activatePaymentNoticeV2Response.paymentToken'",
+#              "notice_id_pa_token_1" : "SELECT columns FROM table_name WHERE NOTICE_ID = '$activatePaymentNoticeV2.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNoticeV2.fiscalCode' AND PAYMENT_TOKEN = 'activatePaymentNoticeV2Response1.paymentToken'"}
