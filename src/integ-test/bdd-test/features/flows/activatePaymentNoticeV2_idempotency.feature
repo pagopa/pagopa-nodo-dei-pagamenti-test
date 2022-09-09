@@ -1072,6 +1072,41 @@ Feature: flux tests for activatePaymentNoticeV2Request
     And restore initial configurations
     And wait 10 seconds for expiration
 
+  # [IDMP_APNV2_20]
+  Scenario: IDMP_APNV2_20 (parte 1)
+    Given initial XML activatePaymentNoticeV2
+      """
+      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+      xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+      <soapenv:Header/>
+      <soapenv:Body>
+      <nod:activatePaymentNoticeV2Request>
+      <idPSP>70000000001</idPSP>
+      <idBrokerPSP>70000000001</idBrokerPSP>
+      <idChannel>70000000001_01</idChannel>
+      <password>pwdpwdpwd</password>
+      <idempotencyKey>#idempotency_key#</idempotencyKey>
+      <qrCode>
+      <fiscalCode>#creditor_institution_code#</fiscalCode>
+      <noticeNumber>310$iuv</noticeNumber>
+      </qrCode>
+      <expirationTime>6000</expirationTime>
+      <amount>10.00</amount>
+      <paymentNote>causale</paymentNote>
+      </nod:activatePaymentNoticeV2Request>
+      </soapenv:Body>
+      </soapenv:Envelope>
+      """
+    When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+    Then check outcome is OK of activatePaymentNoticeV2 response
+    And checks the value NotNone of the record at column ID of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
+
+  Scenario: IDMP_APNV2_20 (parte 2)
+    Given the IDMP_APNV2_20 (parte 1) executed succesfully
+    When job mod3CancelV2 triggered after 6.5 seconds
+    And job idempotencyCacheClean triggered after 0 seconds
+    Then checks the value None of the record at column ID of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
+
   # [IDMP_APNV2_22]
   Scenario: IDMP_APNV2_22 (parte 1)
     Given nodo-dei-pagamenti has config parameter useIdempotency set to false
@@ -1161,6 +1196,6 @@ Feature: flux tests for activatePaymentNoticeV2Request
     And checks the value None of the record at column ID of the table IDEMPOTENCY_CACHE retrived by the query payment_token on db nodo_online under macro NewMod1
 
 # da implementare in query_AutomationTest.json:
-# "NewMod1" : {"idempotency_cache": "SELECT columns FROM table_name WHERE IDEMPOTENCY_KEY = '$activatePaymentNoticeV2Request.idempotencyKey'",
-#              "position_activate" : "SELECT columns FROM table_name WHERE NOTICE_ID = '$activatePaymentNoticeV2Request.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNoticeV2Request.fiscalCode'",
+# "NewMod1" : {"idempotency_cache": "SELECT columns FROM table_name WHERE IDEMPOTENCY_KEY = '$activatePaymentNoticeV2.idempotencyKey'",
+#              "position_activate" : "SELECT columns FROM table_name WHERE NOTICE_ID = '$activatePaymentNoticeV2.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNoticeV2.fiscalCode'",
 #              "payment_token" : "SELECT columns FROM table_name WHERE TOKEN = 'token"}
