@@ -1,4 +1,4 @@
-Feature: process tests for chiediInformazioniPagamento [T122]
+Feature: process tests for chiediInformazioniPagamento
 
     Background:
         Given systems up

@@ -729,15 +729,6 @@ def step_impl(context, tag, primitive):
     else:
         assert False
 
-@then('decode {tag} content in response of {primitive}')
-def step_impl(context, tag, primitive):
-    soap_response = getattr(context, primitive + RESPONSE)
-    my_document = parseString(soap_response.content)
-    encoded_content = my_document.getElementsByTagName(tag)[0].firstChild.data
-    decoded_content = b64.b64decode(encoded_content)
-    print("##########################################", decoded_content)
-
-
 
 # TODO improve with greater/equals than options
 @then('{tag} length is less than {value} of {primitive} response')
