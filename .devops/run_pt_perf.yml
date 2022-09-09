@@ -101,8 +101,10 @@ stages:
                 echo configured test_step= $test_step
                 echo configured envTest= $envTest
                 
+                filename=$(date +%m_%d_%y)$active_test.csv
+                
                 echo ***** k6 run --out csv=src/perf-test/k6/scenarios/$active_scenario/test/output/$active_test.csv -e scenario=$scenario -e test=$active_test -e steps=$test_step -e env=$envTest src/perf-test/k6/scenarios/$active_scenario/test/$active_test.js****               
-                k6 run --out csv=src/perf-test/k6/scenarios/$active_scenario/test/output/$active_test.csv -e scenario=$scenario -e test=$active_test -e steps=$test_step -e env=$envTest src/perf-test/k6/scenarios/$active_scenario/test/$active_test.js
+                k6 run --out csv=src/perf-test/k6/scenarios/$active_scenario/test/output/$filename -e scenario=$scenario -e test=$active_test -e steps=$test_step -e env=$envTest src/perf-test/k6/scenarios/$active_scenario/test/$active_test.js
               }
               echo env selected:
               echo ${{ parameters.env }}
@@ -173,6 +175,8 @@ stages:
               mkdir -p output/PMCS_CT
               cp -r src/perf-test/k6/scenarios/CT/test/output output/CT
               cp -r src/perf-test/k6/scenarios/PMCS_CT/test/output output/PCMS_CT 
+              #remove empty folder
+              find output -type d -empty -delete
               
             displayName: 'Command Line Script -  Run $scenarioToRun K6 scripts'
                     
