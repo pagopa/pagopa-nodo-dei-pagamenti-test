@@ -138,7 +138,7 @@ stages:
               fi
               
               blacklistCT=("VA" "TC01.03" "TC03.07")
-              blacklistPMCS=("idpay_setup" "idpay_setup_SIT" "user_setup", "TC01.01" "TC01.03" "TC01.04")
+              blacklistPMCS=("idpay_setup" "idpay_setup_SIT" "user_setup" "TC01.01" "TC01.03" "TC01.04")
               
               #for each scenario
               for i in "${scenArray[@]}"; do
