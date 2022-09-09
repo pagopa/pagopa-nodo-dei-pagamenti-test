@@ -1,6 +1,6 @@
 import datetime
 
-from email.policy import default
+from datetime import timedelta
 import json
 import os
 import random
@@ -57,6 +57,13 @@ def step_impl(context, version):
 def step_impl(context, primitive):
     payload = context.text or ""
     payload = utils.replace_local_variables(payload, context)
+    date = datetime.date.today().strftime("%Y-%m-%d")
+    timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
+    yesterday_date = datetime.date.today() - datetime.timedelta(days=1)
+
+    setattr(context, 'date', date)
+    setattr(context, 'timedate', timedate)
+    setattr(context, 'yesterday_date', yesterday_date)
 
     if len(payload) > 0:
         my_document = parseString(payload)
@@ -66,6 +73,16 @@ def step_impl(context, primitive):
                 0].firstChild.data
         payload = payload.replace(
             '#idempotency_key#', f"{idBrokerPSP}_{str(random.randint(1000000000, 9999999999))}")
+
+
+    if "#timedate#" in payload:
+        payload = payload.replace('#timedate#', timedate)
+
+    if '#date#' in payload:
+        payload = payload.replace('#date#', date)
+
+    if '#yesterday_date#' in payload:
+        payload = payload.replace('#yesterday_date#', yesterday_date)
 
     if "#ccp#" in payload:
         ccp = str(random.randint(100000000000000, 999999999999999))
@@ -138,6 +155,11 @@ def step_impl(context, primitive):
         payload = payload.replace('#CARRELLO1#', CARRELLO1)
         setattr(context, 'CARRELLO1', CARRELLO1)
 
+    if '#carrelloMills#' in payload:
+        carrello = str(utils.current_milli_time())
+        payload = payload.replace('#carrelloMills#', carrello)
+        setattr(context, 'carrelloMills', carrello)
+
     if '$iuv' in payload:
         payload = payload.replace('$iuv', getattr(context, 'iuv'))
 
@@ -178,11 +200,15 @@ def step_impl(context):
     payload = context.text or ""
     date = datetime.date.today().strftime("%Y-%m-%d")
     timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
+
     setattr(context, 'date', date)
     setattr(context, 'timedate', timedate)
     payload = utils.replace_local_variables(payload, context)
     payload = utils.replace_context_variables(payload, context)
     
+
+    payload = utils.replace_local_variables(payload, context)
+    payload = utils.replace_context_variables(payload, context)
 
     pa = context.config.userdata.get('global_configuration').get('codicePA')
 
@@ -280,6 +306,7 @@ def step_impl(context):
     payload = utils.replace_global_variables(payload, context)
 
     print('payload RPT: ', payload)
+
     setattr(context, 'rpt', payload)
     payload_b = bytes(payload, 'ascii')
     payload_uni = b64.b64encode(payload_b)
@@ -343,6 +370,54 @@ def step_impl(context):
     
     print("RT generato: ", payload)
     setattr(context, 'rtAttachment', payload)
+
+@given('RR generation')
+def step_impl(context):
+    payload = context.text or ""
+    payload = utils.replace_global_variables(payload, context)
+    payload = utils.replace_local_variables(payload, context)
+    payload = utils.replace_context_variables(payload, context)
+    date = datetime.date.today().strftime("%Y-%m-%d")
+    timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
+    setattr(context, 'date', date)
+    setattr(context, 'timedate', timedate)
+
+    if '#date#' in payload:
+        payload = payload.replace('#date#', date)
+    if "#timedate#" in payload:
+        payload = payload.replace('#timedate#', timedate)
+    
+    payload_b = bytes(payload, 'ascii')
+    payload_uni = b64.b64encode(payload_b)
+    payload = f"{payload_uni}".split("'")[1]
+    print(payload)
+    
+    print("RT generato: ", payload)
+    setattr(context, 'rrAttachment', payload)
+
+@given('ER generation')
+def step_impl(context):
+    payload = context.text or ""
+    payload = utils.replace_global_variables(payload, context)
+    payload = utils.replace_local_variables(payload, context)
+    payload = utils.replace_context_variables(payload, context)
+    date = datetime.date.today().strftime("%Y-%m-%d")
+    timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
+    setattr(context, 'date', date)
+    setattr(context, 'timedate', timedate)
+
+    if '#date#' in payload:
+        payload = payload.replace('#date#', date)
+    if "#timedate#" in payload:
+        payload = payload.replace('#timedate#', timedate)
+    
+    payload_b = bytes(payload, 'ascii')
+    payload_uni = b64.b64encode(payload_b)
+    payload = f"{payload_uni}".split("'")[1]
+    print(payload)
+    
+    print("RT generato: ", payload)
+    setattr(context, 'erAttachment', payload)
 
 
 @given('RPT{number:d} generation')
@@ -495,8 +570,7 @@ def step_impl(context):
         payload = payload.replace('#timedate#', timedate)
 
     if '#identificativoFlusso#' in payload:
-        payload = payload.replace(
-            '#identificativoFlusso#', identificativoFlusso)
+        payload = payload.replace('#identificativoFlusso#', identificativoFlusso)
 
     if '#iuv#' in payload:
         payload = payload.replace('#iuv#', iuv)
