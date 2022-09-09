@@ -70,9 +70,10 @@ def after_all(context):
         #print(key, value)
         selected_query = utils.query_json(context, 'update_config', 'configurations').replace('value', value).replace('key', key)
         db.executeQuery(conn, selected_query)
+    headers = {'Content-Type': 'application/xml', 'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}
 
     db.closeConnection(conn)
-    requests.get(utils.get_refresh_config_url(context))
+    requests.get(utils.get_refresh_config_url(context), headers = headers)
 
 
 def config_ec(context):
