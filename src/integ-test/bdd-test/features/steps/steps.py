@@ -1349,9 +1349,6 @@ def step_impl(context, value, column, query_name, table_name, db_name, name_macr
 
     db.closeConnection(conn)
 
-
-##inizio prova
-
 @step(u"checking the value {value} of the record at column {column} of the table {table_name} retrived by the query {query_name} with where condition {where_condition} on db {db_name} under macro {name_macro}")
 def step_impl(context, value, column, query_name, table_name, where_condition, db_name, name_macro):
     db_config = context.config.userdata.get("db_configuration")
@@ -1395,8 +1392,6 @@ def step_impl(context, value, column, query_name, table_name, where_condition, d
 
     db.closeConnection(conn)
 
-##fine prova
-
 @step("update through the query {query_name} of the table {table_name} the parameter {param} with {value}, with where condition {where_condition} and where value {valore} under macro {macro} on db {db_name}")
 def step_impl(context, query_name, table_name, param, value, where_condition, valore, macro, db_name):
     db_selected = context.config.userdata.get("db_configuration").get(db_name)
@@ -1409,9 +1404,6 @@ def step_impl(context, query_name, table_name, param, value, where_condition, va
     exec_query = db.executeQuery(conn, selected_query)
     db.closeConnection(conn)
 
-
-##inizio prova
-
 @step("updating through the query {query_name} of the table {table_name} the parameter {param} with {value} with where condition {where_condition} under macro {macro} on db {db_name}")
 def step_impl(context, query_name, table_name, param, value, where_condition, macro, db_name):
     db_selected = context.config.userdata.get("db_configuration").get(db_name)
@@ -1421,8 +1413,6 @@ def step_impl(context, query_name, table_name, param, value, where_condition, ma
     conn = db.getConnection(db_selected.get('host'), db_selected.get('database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
     exec_query = db.executeQuery(conn, selected_query)
     db.closeConnection(conn)
-
-##fine prova
 
 @step("generic update through the query {query_name} of the table {table_name} the parameter {param}, with where condition {where_condition} under macro {macro} on db {db_name}")
 def step_impl(context, query_name, table_name, param, where_condition, macro, db_name):
