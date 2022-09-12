@@ -39,6 +39,7 @@
     "intermediarioPSP2":"70000000002",
     "canale32":"70000000002_01",
     "id_station_old" : "44444444444_05",
+    "id_broker":"70000000001",
     "id_broker_old": "44444444444",
     "cod_segr":"02",
     "ccPoste": "777777777777",
