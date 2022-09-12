@@ -12,7 +12,7 @@ Feature:  semantic checks for demandPaymentNoticeReq
             <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
             <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
             <password>#password#</password>
-            <idSoggettoServizio>00003</idSoggettoServizio>
+            <idSoggettoServizio>00005</idSoggettoServizio>
             <datiSpecificiServizio>PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHRhOnRhc3NhQXV0byB4bWxuczp0YT0iaHR0cDovL1B1bnRvQWNjZXNzb1BTUC5zcGNvb3AuZ292Lml0L1Rhc3NhQXV0byIgeG1sbnM6eHNpPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYS1pbnN0YW5jZSIgeHNpOnNjaGVtYUxvY2F0aW9uPSJodHRwOi8vUHVudG9BY2Nlc3NvUFNQLnNwY29vcC5nb3YuaXQvVGFzc2FBdXRvIFRhc3NhQXV0b21vYmlsaXN0aWNhXzFfMF8wLnhzZCAiPgo8dGE6dmVpY29sb0NvblRhcmdhPgo8dGE6dGlwb1ZlaWNvbG9UYXJnYT4xPC90YTp0aXBvVmVpY29sb1RhcmdhPgo8dGE6dmVpY29sb1RhcmdhPkFCMzQ1Q0Q8L3RhOnZlaWNvbG9UYXJnYT4KPC90YTp2ZWljb2xvQ29uVGFyZ2E+CjwvdGE6dGFzc2FBdXRvPg==</datiSpecificiServizio>
             </nod:demandPaymentNoticeRequest>
             </soapenv:Body>
@@ -111,19 +111,19 @@ Feature:  semantic checks for demandPaymentNoticeReq
         Then check outcome is KO of demandPaymentNotice response
         And check faultCode is PPT_DOMINIO_DISABILITATO of demandPaymentNotice response
 
-    # idBrokerPA value check: idBrokerPA not enabled [SEM_DPNR_15] - l'idBrokerPA ricavato è disabilitato
-    # Scenario: Check PPT_INTERMEDIARIO_PA_DISABILITATO error on not enabled idBrokerPA
-    #     Given idSoggettoServizio with ... in demandPaymentNotice
-    #     When PSP sends SOAP demandPaymentNotice to nodo-dei-pagamenti
-    #     Then check outcome is KO of demandPaymentNotice response
-    #     And check faultCode is PPT_INTERMEDIARIO_PA_DISABILITATO of demandPaymentNotice response
+# idBrokerPA value check: idBrokerPA not enabled [SEM_DPNR_15] - l'idBrokerPA ricavato è disabilitato
+# Scenario: Check PPT_INTERMEDIARIO_PA_DISABILITATO error on not enabled idBrokerPA
+#     Given idSoggettoServizio with ... in demandPaymentNotice
+#     When PSP sends SOAP demandPaymentNotice to nodo-dei-pagamenti
+#     Then check outcome is KO of demandPaymentNotice response
+#     And check faultCode is PPT_INTERMEDIARIO_PA_DISABILITATO of demandPaymentNotice response
 
-    # idStation value check: idStation not enabled to 4 model [SEM_DPNR_16] - l'idStation ricavata non è abilitata al quarto modello
-    Scenario: Check PPT_STAZIONE_INT_PA_SCONOSCIUTA error on idStation not enabled to 4 model
-        Given idSoggettoServizio with 00006 demandPaymentNotice
-        When PSP sends SOAP demandPaymentNotice to nodo-dei-pagamenti
-        Then check outcome is KO of demandPaymentNotice response
-        And check faultCode is PPT_STAZIONE_INT_PA_SCONOSCIUTA of demandPaymentNotice response
+# idStation value check: idStation not enabled to 4 model [SEM_DPNR_16] - l'idStation ricavata non è abilitata al quarto modello
+# Scenario: Check PPT_STAZIONE_INT_PA_SCONOSCIUTA error on idStation not enabled to 4 model
+#     Given idSoggettoServizio with 00006 demandPaymentNotice
+#     When PSP sends SOAP demandPaymentNotice to nodo-dei-pagamenti
+#     Then check outcome is KO of demandPaymentNotice response
+#     And check faultCode is PPT_STAZIONE_INT_PA_SCONOSCIUTA of demandPaymentNotice response
 
 # idStation value check: idStation not enabled [SEM_DPNR_17] - l'idStation ricavata è disabilitata
 # Scenario: Check PPT_STAZIONE_INT_PA_DISABILITATA error on idStation not enabled
