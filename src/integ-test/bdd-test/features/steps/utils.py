@@ -298,6 +298,22 @@ def search_tag(json_file: dict, tag: str) -> bool:
                 for element in value:
                     if isinstance(element, dict):
                        find = search_tag(element, tag)
+            if find: break
+    return find
+
+def search_value(json_file: dict, tag: str) -> bool:
+    find = False
+    for value in json_file.values():
+        if value == tag:
+            return True
+        else:
+            if isinstance(value, dict):
+                find = search_value(value, tag)
+            elif isinstance(value, list):
+                for element in value:
+                    if isinstance(element, dict):
+                       find = search_value(element, tag)
+            if find: break
     return find
 
 def search_value(json_file: dict, value: str) -> bool:
