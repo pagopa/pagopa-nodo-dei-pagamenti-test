@@ -166,7 +166,11 @@ Feature: process tests for nodoInviaRPT [PAG-781_errore_response]
             <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>PO</pay_i:tipoVersamento>
             <pay_i:identificativoUnivocoVersamento>$iuv</pay_i:identificativoUnivocoVersamento>
+<<<<<<< HEAD
             <pay_i:codiceContestoPagamento>$paymentToken</pay_i:codiceContestoPagamento>
+=======
+            <pay_i:codiceContestoPagamento>417a59c839544a03bc1dcebcc2c37e1f</pay_i:codiceContestoPagamento>
+>>>>>>> db7baba659a52198ac2f77ff41d365a116082b03
             <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
             <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -197,7 +201,11 @@ Feature: process tests for nodoInviaRPT [PAG-781_errore_response]
             <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
             <identificativoDominio>44444444444</identificativoDominio>
             <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
+<<<<<<< HEAD
             <codiceContestoPagamento>$paymentToken</codiceContestoPagamento>
+=======
+            <codiceContestoPagamento>417a59c839544a03bc1dcebcc2c37e1f</codiceContestoPagamento>
+>>>>>>> db7baba659a52198ac2f77ff41d365a116082b03
             </ppt:intestazionePPT>
             </soapenv:Header>
             <soapenv:Body>

@@ -16,6 +16,7 @@ variables:
   artifactName: TestSuite
   artifactDownloadedPath: /agent/_work/nrt
   destinationFolderExtractArtifact: nodo/extracted
+  deploy-pool: nodopagamenti-agent-pool-sit
 
 
   
@@ -69,13 +70,11 @@ stages:
     displayName: "Execute Test Suite (${{ parameters.env }})"
     dependsOn:
       - python_env
-    variables:
-      - group: nodo-${{ parameters.env }}
     condition: succeeded()
     jobs:
       - job: test_execute
         displayName: "execute test suite (${{ parameters.env }})"
-        pool: $(deploy-pool-${{ parameters.env }})
+        pool: $(deploy-pool)
         steps:
           - checkout: none          
 
@@ -115,7 +114,7 @@ stages:
 
              #behave --help #Run behave
              #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/NewMod3/flows/TestGenerazioneRicevute03/generazioneRicevute_flows_ko_PAnew.feature
-             behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/Mod1/primitives/SunnyDay/T016_nodoInviaRPT_Mod1_BBT.feature
+             behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/Mod1/flows/Wallet/T122_ChiediInformazioniPagamento.feature
 
             displayName: 'Run Behave Test Suite'
           - task: PublishTestResults@2

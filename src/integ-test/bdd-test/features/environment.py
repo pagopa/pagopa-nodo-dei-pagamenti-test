@@ -1,6 +1,8 @@
+from email import header
 import json
 import random
 import time
+from wsgiref import headers
 
 import steps.db_operation as db
 from behave.model import Table
@@ -69,10 +71,11 @@ def after_all(context):
     for key, value in config_dict.items():
         #print(key, value)
         selected_query = utils.query_json(context, 'update_config', 'configurations').replace('value', value).replace('key', key)
-        db.executeQuery(conn, selected_query)
-
+        db.executeQuery(conn, selected_query)  
+    
     db.closeConnection(conn)
-    requests.get(utils.get_refresh_config_url(context))
+    headers = {'Host': 'api.dev.platform.pagopa.it:443'}  
+    requests.get(utils.get_refresh_config_url(context),verify=False,headers=headers)
 
 
 def config_ec(context):

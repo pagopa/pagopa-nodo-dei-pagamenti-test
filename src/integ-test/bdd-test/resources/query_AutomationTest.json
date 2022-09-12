@@ -61,7 +61,8 @@
         "retry_pa_invia_rpt": "SELECT columns FROM table_name WHERE IUV = '$iuv' AND PA_FISCAL_CODE= '$activatePaymentNotice.fiscalCode' ORDER BY ID ASC",
         "nodo_invia_rpt_rpt_stati":"SELECT columns FROM table_name WHERE IUV = '$iuv' AND CCP= '$activatePaymentNoticeResponse.paymentToken' AND ID_DOMINIO= '$activatePaymentNotice.fiscalCode'",
         "by_context_payment_token":"SELECT columns FROM table_name WHERE IUV = '$iuv' AND CCP= '$paymentToken' AND ID_DOMINIO= '$activatePaymentNotice.fiscalCode'",
-        "by_context_num_avv":"SELECT columns FROM table_name WHERE NOTICE_ID = '$verifyPaymentNotice.noticeNumber'"
+        "by_context_num_avv":"SELECT columns FROM table_name WHERE NOTICE_ID = '$verifyPaymentNotice.noticeNumber'",
+        "re_paSendRT": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN = '$activatePaymentNoticeResponse.paymentToken' AND TIPO_EVENTO= 'paSendRT' AND INSERTED_TIMESTAMP > ROUND(SYSDATE-1) ORDER BY DATA_ORA_EVENTO"
     },
     "AppIO":{
         "payment_status":"SELECT s.columns FROM table_name s WHERE s.NOTICE_ID ='$activateIOPayment.noticeNumber' AND s.PA_FISCAL_CODE = '$activateIOPayment.fiscalCode'",

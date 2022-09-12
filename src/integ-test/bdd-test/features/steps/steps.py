@@ -145,8 +145,7 @@ def step_impl(context, primitive):
 
     if '#CARRELLO#' in payload:
         CARRELLO = "CARRELLO" + "-" + \
-            str(getattr(context, 'date') +
-                datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3])
+            str(getattr(context, 'date') + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3])
         payload = payload.replace('#CARRELLO#', CARRELLO)
         setattr(context, 'CARRELLO', CARRELLO)
 
@@ -203,10 +202,6 @@ def step_impl(context):
 
     setattr(context, 'date', date)
     setattr(context, 'timedate', timedate)
-    payload = utils.replace_local_variables(payload, context)
-    payload = utils.replace_context_variables(payload, context)
-    
-
     payload = utils.replace_local_variables(payload, context)
     payload = utils.replace_context_variables(payload, context)
 
@@ -313,6 +308,28 @@ def step_impl(context):
     payload = f"{payload_uni}".split("'")[1]
 
     setattr(context, 'rptAttachment', payload)
+
+
+@given ('MB generation')
+def step_impl(context):
+    payload = context.text or ""
+
+    payload = utils.replace_local_variables(payload, context)
+    payload = utils.replace_context_variables(payload, context)
+
+    if '#iubd#' in payload:
+        iubd = ''+ str(random.randint(10000000, 20000000)) + str(random.randint(10000000, 20000000))
+        payload = payload.replace('#iubd#', iubd)
+        setattr(context, 'iubd', iubd)
+
+    payload = utils.replace_global_variables(payload, context)
+
+    payload_b = bytes(payload, 'ascii')
+    payload_uni = b64.b64encode(payload_b)
+    payload = f"{payload_uni}".split("'")[1]
+
+    setattr(context, 'bollo', payload)
+
 
 @given('RT{number:d} generation')
 def step_impl(context, number):
@@ -640,6 +657,8 @@ def step_impl(context, job_name, seconds):
 @then('check {tag} is {value} of {primitive} response')
 def step_impl(context, tag, value, primitive):
     soap_response = getattr(context, primitive + RESPONSE)
+    value = utils.replace_local_variables(value, context)
+    value = utils.replace_global_variables(value, context)
     if 'xml' in soap_response.headers['content-type']:
         my_document = parseString(soap_response.content)
         if len(my_document.getElementsByTagName('faultCode')) > 0:
@@ -651,16 +670,15 @@ def step_impl(context, tag, value, primitive):
                 print("description: ", my_document.getElementsByTagName(
                     'description')[0].firstChild.data)
         data = my_document.getElementsByTagName(tag)[0].firstChild.data
-        value = utils.replace_local_variables(value, context)
-        value = utils.replace_global_variables(value, context)
         print(f'check tag "{tag}" - expected: {value}, obtained: {data}')
         assert value == data
     else:
         node_response = getattr(context, primitive + RESPONSE)
         json_response = node_response.json()
+        founded_value = utils.get_value_from_key(json_response, tag)
         print(
             f'check tag "{tag}" - expected: {value}, obtained: {json_response.get(tag)}')
-        assert str(json_response.get(tag)) == value
+        assert str(founded_value) == value
 
 
 @step('checks {tag} contains {value} of {primitive} response')
@@ -727,11 +745,16 @@ def step_impl(context, tag, value, primitive):
 @then('check {tag} field exists in {primitive} response')
 def step_impl(context, tag, primitive):
     soap_response = getattr(context, primitive + RESPONSE)
+
     if 'xml' in soap_response.headers['content-type']:
         my_document = parseString(soap_response.content)
         assert len(my_document.getElementsByTagName(tag)) > 0
+
     else:
-        assert False
+        node_response = getattr(context, primitive + RESPONSE)
+        json_response = node_response.json()
+        find = utils.search_tag(json_response, tag)
+        assert find
 
 
 @then('check {tag} field not exists in {primitive} response')
