@@ -100,5 +100,11 @@
         "param_update": "UPDATE table_name SET param = 'value' WHERE where_condition = 'valore'",
         "param_update_in": "UPDATE table_name SET param = 'value' WHERE where_condition IN valore",
         "param_update_generic_where_condition" : "UPDATE table_name SET param WHERE where_condition"
+    },
+
+    "generic_queries": {
+        "generic_select": "SELECT columns FROM table_name WHERE where_condition",
+        "generic_select_id_asc": "SELECT columns FROM table_name WHERE where_condition ORDER BY ID ASC",
+        "generic_update": "UPDATE table_name SET param = 'value' WHERE where_condition"
     }
 }

@@ -181,7 +181,6 @@ def step_impl(context):
     setattr(context, 'timedate', timedate)
     payload = utils.replace_local_variables(payload, context)
     payload = utils.replace_context_variables(payload, context)
-    
 
     pa = context.config.userdata.get('global_configuration').get('codicePA')
 
@@ -286,6 +285,7 @@ def step_impl(context):
 
     setattr(context, 'rptAttachment', payload)
 
+
 @given('RT{number:d} generation')
 def step_impl(context, number):
     payload = context.text or ""
@@ -333,12 +333,12 @@ def step_impl(context):
         payload = payload.replace('#date#', date)
     if "#timedate#" in payload:
         payload = payload.replace('#timedate#', timedate)
-    
+
     payload_b = bytes(payload, 'ascii')
     payload_uni = b64.b64encode(payload_b)
     payload = f"{payload_uni}".split("'")[1]
     print(payload)
-    
+
     print("RT generato: ", payload)
     setattr(context, 'rtAttachment', payload)
 
@@ -2129,4 +2129,55 @@ def step_impl(context, causaleVers):
 
     db.executeQuery(conn, query_update)
 
+    db.closeConnection(conn)
+
+    @step(u"checking the value {value} of the record at column {column} of the table {table_name} retrived by the query {query_name} with where condition {where_condition} on db {db_name} under macro {name_macro}")
+    def step_impl(context, value, column, query_name, table_name, where_condition, db_name, name_macro):
+        db_config = context.config.userdata.get("db_configuration")
+        db_selected = db_config.get(db_name)
+    conn = db.getConnection(db_selected.get('host'), db_selected.get(
+        'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+    selected_query = utils.query_json(context, query_name, name_macro).replace(
+        "columns", column).replace("table_name", table_name).replace('where_condition', where_condition)
+    print(selected_query)
+    exec_query = db.executeQuery(conn, selected_query)
+    query_result = [t[0] for t in exec_query]
+    print('query_result: ', query_result)
+    if value == 'None':
+        print('None')
+        assert query_result[0] == None
+    elif value == 'NotNone':
+        print('NotNone')
+        assert query_result[0] != None
+    else:
+        if 'iuv' in value:
+            value = getattr(context, 'iuv')
+        value = utils.replace_global_variables(value, context)
+        value = utils.replace_local_variables(value, context)
+        value = utils.replace_context_variables(value, context)
+        split_value = [status.strip() for status in value.split(',')]
+        for i, elem in enumerate(query_result):
+            if isinstance(elem, str) and elem.isdigit():
+                query_result[i] = float(elem)
+            elif isinstance(elem, datetime.date):
+                query_result[i] = elem.strftime('%Y-%m-%d')
+        for i, elem in enumerate(split_value):
+            if utils.isFloat(elem) or elem.isdigit():
+                split_value[i] = float(elem)
+        print("value: ", split_value)
+        for elem in split_value:
+            assert elem in query_result, f"check expected element: {value}, obtained: {query_result}"
+    db.closeConnection(conn)
+
+
+@step("updating through the query {query_name} of the table {table_name} the parameter {param} with {value} with where condition {where_condition} under macro {macro} on db {db_name}")
+def step_impl(context, query_name, table_name, param, value, where_condition, macro, db_name):
+    db_selected = context.config.userdata.get("db_configuration").get(db_name)
+    selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace(
+        'param', param).replace('value', value).replace('where_condition', where_condition)
+    selected_query = utils.replace_local_variables(selected_query, context)
+    selected_query = utils.replace_context_variables(selected_query, context)
+    conn = db.getConnection(db_selected.get('host'), db_selected.get(
+        'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+    exec_query = db.executeQuery(conn, selected_query)
     db.closeConnection(conn)
