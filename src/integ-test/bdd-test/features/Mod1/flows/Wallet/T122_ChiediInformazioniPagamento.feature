@@ -138,10 +138,10 @@ Feature: process tests for chiediInformazioniPagamento
         And check ragioneSociale field exists in informazioniPagamento response
         And check oggettoPagamento field exists in informazioniPagamento response
         And check urlRedirectEC field exists in informazioniPagamento response
-        And check bolloDigitale is False of informazioniPagamento response
         And check email is gesualdo.riccitelli@poste.it of informazioniPagamento response
         And check dettagli field exists in informazioniPagamento response
         And check IUV is $nodoInviaRPT.identificativoUnivocoVersamento of informazioniPagamento response
+        # And check bolloDigitale is False of informazioniPagamento response
 
 
     Scenario: Execute nodoChiediAvanzamentoPagamento

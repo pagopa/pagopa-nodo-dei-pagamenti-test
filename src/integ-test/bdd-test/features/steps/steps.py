@@ -739,9 +739,8 @@ def step_impl(context, tag, primitive):
     else:
         node_response = getattr(context, primitive + RESPONSE)
         json_response = node_response.json()
-        #assert len(json_response.get(tag)) > 0
-        str_json_response = json.dumps(json_response)
-        assert tag in str_json_response
+        find = utils.search_tag(json_response, tag)
+        assert find
 
 
 @then('check {tag} field not exists in {primitive} response')
