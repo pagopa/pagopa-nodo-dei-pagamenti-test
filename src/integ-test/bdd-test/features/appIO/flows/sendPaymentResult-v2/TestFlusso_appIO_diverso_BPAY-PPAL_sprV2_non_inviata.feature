@@ -19,7 +19,7 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
              <password>pwdpwdpwd</password>
              <qrCode>
                 <fiscalCode>#creditor_institution_code#</fiscalCode>
-                <noticeNumber>#notice_number#</noticeNumber>
+                <noticeNumber>311#iuv#</noticeNumber>
              </qrCode>
           </nod:verifyPaymentNoticeReq>
        </soapenv:Body>
@@ -46,7 +46,7 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
              <idempotencyKey>#idempotency_key#</idempotencyKey>
              <qrCode>
                 <fiscalCode>#creditor_institution_code#</fiscalCode>
-                <noticeNumber>#notice_number#</noticeNumber>
+                <noticeNumber>311#iuv#</noticeNumber>
              </qrCode>
              <!--Optional:-->
              <expirationTime>60000</expirationTime>
