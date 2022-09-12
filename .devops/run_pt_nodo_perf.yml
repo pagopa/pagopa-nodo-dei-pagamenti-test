@@ -169,8 +169,8 @@ stages:
              echo pwd:
              pwd
              echo output tree:
-             chmod +777 scripttree.sh
-             ./scripttree.sh CT/ 3
+             chmod +777 src/perf-test/k6/scripttree.sh
+             ./src/perf-test/k6/scripttree.sh CT/ 3
              
             displayName: 'show results'
             
