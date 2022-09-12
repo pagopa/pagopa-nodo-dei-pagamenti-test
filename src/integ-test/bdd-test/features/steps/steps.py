@@ -579,7 +579,7 @@ def step_impl(context, tag, value, primitive):
 
 ### inizio prova
 
-@then('check {tag} is not {value} of {primitive} response')
+@then('checks {tag} is not {value} of {primitive} response')
 def step_impl(context, tag, value, primitive):
     soap_response = getattr(context, primitive + RESPONSE)
     if 'xml' in soap_response.headers['content-type']:

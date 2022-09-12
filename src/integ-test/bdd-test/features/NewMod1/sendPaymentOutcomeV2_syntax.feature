@@ -63,8 +63,8 @@ Feature: syntax checks for sendPaymentOutcomeV2
         And details with None in sendPaymentOutcomeV2
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcomeV2 response
-        And check faultCode is not PPT_SINTASSI_EXTRAXSD of sendPaymentOutcomeV2 response
-        And check faultCode is not PPT_SYSTEM_ERROR of sendPaymentOutcomeV2 response
+        And checks faultCode is not PPT_SINTASSI_EXTRAXSD of sendPaymentOutcomeV2 response
+        And checks faultCode is not PPT_SYSTEM_ERROR of sendPaymentOutcomeV2 response
 
     # attribute value check
     Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error on invalid wsdl namespace
@@ -180,7 +180,7 @@ Feature: syntax checks for sendPaymentOutcomeV2
         And <elem> with <value> in sendPaymentOutcomeV2
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcomeV2 response
-        And check faultCode is not PPT_SINTASSI_EXTRAXSD of sendPaymentOutcomeV2 response
+        And checks faultCode is not PPT_SINTASSI_EXTRAXSD of sendPaymentOutcomeV2 response
 
         Examples:
             | elem                | value       | soapUI test |
