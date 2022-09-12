@@ -2,7 +2,7 @@ Feature:  semantic checks for demandPaymentNoticeReq
 
     Background:
         Given systems up
-        And initial demandPaymentNotice
+        And initial XML demandPaymentNotice
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
             <soapenv:Header/>
