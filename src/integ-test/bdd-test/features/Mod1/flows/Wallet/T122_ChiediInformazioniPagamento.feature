@@ -134,17 +134,16 @@ Feature: process tests for chiediInformazioniPagamento
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200
-        And check importo field exists in nodoInviaRPT response
-        And check ragioneSociale field exists in nodoInviaRPT response
-        And check oggettoPagamento field exists in nodoInviaRPT response
-        And check redirectEC field exists in nodoInviaRPT response
-        And check false field exists in nodoInviaRPT response
-        And check e-mailPagatore is riccitelli.gesualdo@poste.it of nodoInviaRPT response
-        And check http://siapagopa.rf.gd/ec?qrstr=prova&idSession field exists in nodoInviaRPT response
-        And check dettagli field exists in nodoInviaRPT response
+        And check importo field exists in informazioniPagamento response
+        And check ragioneSociale field exists in informazioniPagamento response
+        And check oggettoPagamento field exists in informazioniPagamento response
+        And check urlRedirectEC field exists in informazioniPagamento response
+        And check bolloDigitale is false of informazioniPagamento response
+        And check email is gesualdo.riccitelli@poste.it of informazioniPagamento response
+        And check dettagli field exists in informazioniPagamento response
+        And check IUV is $nodoInviaRPT.identificativoUnivocoVersamento of informazioniPagamento response
 
 
-    
     Scenario: Execute nodoChiediAvanzamentoPagamento
         Given the Execution idPagamento scenario executed successfully
         When WISP sends rest GET avanzamentoPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
