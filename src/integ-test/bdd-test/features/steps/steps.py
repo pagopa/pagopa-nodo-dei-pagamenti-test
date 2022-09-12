@@ -577,6 +577,35 @@ def step_impl(context, tag, value, primitive):
         assert str(json_response.get(tag)) == value
 
 
+### inizio prova
+
+@then('check {tag} is not {value} of {primitive} response')
+def step_impl(context, tag, value, primitive):
+    soap_response = getattr(context, primitive + RESPONSE)
+    if 'xml' in soap_response.headers['content-type']:
+        my_document = parseString(soap_response.content)
+        if len(my_document.getElementsByTagName('faultCode')) > 0:
+            print("fault code: ", my_document.getElementsByTagName(
+                'faultCode')[0].firstChild.data)
+            print("fault string: ", my_document.getElementsByTagName(
+                'faultString')[0].firstChild.data)
+            if my_document.getElementsByTagName('description'):
+                print("description: ", my_document.getElementsByTagName(
+                    'description')[0].firstChild.data)
+        data = my_document.getElementsByTagName(tag)[0].firstChild.data
+        value = utils.replace_local_variables(value, context)
+        value = utils.replace_global_variables(value, context)
+        print(f'check tag "{tag}" - expected: {value}, obtained: {data}')
+        assert value != data
+    else:
+        node_response = getattr(context, primitive + RESPONSE)
+        json_response = node_response.json()
+        print(
+            f'check tag "{tag}" - expected: {value}, obtained: {json_response.get(tag)}')
+        assert str(json_response.get(tag)) != value
+
+### fine prova
+
 @then('check {tag} contains {value} of {primitive} response')
 def step_impl(context, tag, value, primitive):
     soap_response = getattr(context, primitive + RESPONSE)
