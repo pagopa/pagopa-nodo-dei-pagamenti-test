@@ -4,7 +4,7 @@ Feature: syntax checks for demandPaymentNotice - KO
         Given systems up
 
     Scenario: demandPaymentNotice
-        Given initial demandPaymentNotice
+        Given initial XML demandPaymentNotice
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
             <soapenv:Header/>
@@ -22,7 +22,7 @@ Feature: syntax checks for demandPaymentNotice - KO
             """
 
     Scenario: demandPaymentNotice with two occurrences of idSoggettoServizio
-        Given initial demandPaymentNotice
+        Given initial XML demandPaymentNotice
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
             <soapenv:Header/>
@@ -41,7 +41,7 @@ Feature: syntax checks for demandPaymentNotice - KO
             """
 
     Scenario: demandPaymentNotice with two occurrences of datiSpecificiServizio
-        Given initial demandPaymentNotice
+        Given initial XML demandPaymentNotice
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
             <soapenv:Header/>
