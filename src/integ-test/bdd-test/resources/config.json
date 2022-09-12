@@ -35,6 +35,7 @@
     "canale":"70000000001_07",
     "canale_BBT":"40000000001_04",
     "canale_ATTIVATO_PRESSO_PSP":"70000000001_01",
+    "canale_DIFFERITO_MOD2": "70000000001_04",
     "intermediarioPSP2":"70000000002",
     "canale32":"70000000002_01",
     "id_station_old" : "44444444444_05",

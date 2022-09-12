@@ -284,3 +284,21 @@ def random_s():
         strNumRand += str(random.randint(0, 9))
         cont -= 1
         return strNumRand
+
+
+def search_tag(json_file: dict, tag: str) -> bool:
+    find = False
+    for key, value in json_file.items():
+        if key == tag:
+            return True
+        else:
+            if isinstance(value, dict):
+                find = search_tag(value, tag)
+            elif isinstance(value, list):
+                for element in value:
+                    if isinstance(element, dict):
+                       find = search_tag(element, tag)
+    return find
+
+def search_value(json_file: dict, value: str) -> bool:
+    pass
