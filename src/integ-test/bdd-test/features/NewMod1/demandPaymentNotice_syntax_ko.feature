@@ -1,6 +1,7 @@
 Feature: syntax checks for demandPaymentNotice - KO
 
-    Background: Given systems up
+    Background:
+        Given systems up
 
     Scenario: demandPaymentNotice
         Given initial demandPaymentNotice
