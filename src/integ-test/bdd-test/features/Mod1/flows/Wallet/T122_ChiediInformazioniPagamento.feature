@@ -122,15 +122,16 @@ Feature: process tests for chiediInformazioniPagamento
         And check ragioneSociale field exists in informazioniPagamento response
         And check oggettoPagamento field exists in informazioniPagamento response
         And check urlRedirectEC field exists in informazioniPagamento response
+        And check bolloDigitale is False of informazioniPagamento response
         And check email is gesualdo.riccitelli@poste.it of informazioniPagamento response
         And check dettagli field exists in informazioniPagamento response
         And check IUV is $nodoInviaRPT.identificativoUnivocoVersamento of informazioniPagamento response
-        # And check bolloDigitale is False of informazioniPagamento response
-
+        And check CCP is CCD01 of informazioniPagamento response
+        And check idDominio is #creditor_institution_code_old# of informazioniPagamento response
+        And check enteBeneficiario is AZIENDA XXX of informazioniPagamento response
 
     Scenario: Execute nodoChiediAvanzamentoPagamento
         Given the Execution idPagamento scenario executed successfully
         When WISP sends rest GET avanzamentoPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-        Then verify the HTTP status code of notificaAnnullamento response is 200
-        And check esito field exists in nodoInviaRPT response
-        And check PARKED field exists in nodoInviaRPT response
+        Then verify the HTTP status code of avanzamentoPagamento response is 200
+        And check esito is PARKED of avanzamentoPagamento response
