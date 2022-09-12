@@ -59,7 +59,9 @@
         "position_subject_2":"SELECT s.columns FROM POSITION_SUBJECT s JOIN POSITION_SERVICE pp ON pp.DEBTOR_ID = $DEBTOR_ID where pp.notice_id = '$activatePaymentNotice.noticeNumber' and pp.pa_fiscal_code= '$activatePaymentNotice.fiscalCode'",
         "retry_pa_invia_rt": "SELECT columns FROM table_name WHERE IUV = '$iuv' AND ID_DOMINIO= '$activatePaymentNotice.fiscalCode' ORDER BY ID ASC",
         "retry_pa_invia_rpt": "SELECT columns FROM table_name WHERE IUV = '$iuv' AND PA_FISCAL_CODE= '$activatePaymentNotice.fiscalCode' ORDER BY ID ASC",
-        "nodo_invia_rpt_rpt_stati":"SELECT columns FROM table_name WHERE IUV = '$iuv' AND CCP= '$activatePaymentNoticeResponse.paymentToken' AND ID_DOMINIO= '$activatePaymentNotice.fiscalCode'"
+        "nodo_invia_rpt_rpt_stati":"SELECT columns FROM table_name WHERE IUV = '$iuv' AND CCP= '$activatePaymentNoticeResponse.paymentToken' AND ID_DOMINIO= '$activatePaymentNotice.fiscalCode'",
+        "by_context_payment_token":"SELECT columns FROM table_name WHERE IUV = '$iuv' AND CCP= '$paymentToken' AND ID_DOMINIO= '$activatePaymentNotice.fiscalCode'",
+        "by_context_num_avv":"SELECT columns FROM table_name WHERE NOTICE_ID = '$verifyPaymentNotice.noticeNumber'"
     },
     "AppIO":{
         "payment_status":"SELECT s.columns FROM table_name s WHERE s.NOTICE_ID ='$activateIOPayment.noticeNumber' AND s.PA_FISCAL_CODE = '$activateIOPayment.fiscalCode'",

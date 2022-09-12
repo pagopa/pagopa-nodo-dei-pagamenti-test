@@ -6,6 +6,7 @@ import os
 import random
 from sre_constants import ASSERT
 import time
+from xml.dom.minicompat import NodeList
 from xml.dom.minidom import parseString
 import base64 as b64
 
@@ -660,6 +661,19 @@ def step_impl(context, tag, value, primitive):
         print(
             f'check tag "{tag}" - expected: {value}, obtained: {json_response.get(tag)}')
         assert str(json_response.get(tag)) == value
+
+
+@step('checks {tag} contains {value} of {primitive} response')
+def step_impl(context, tag, value, primitive):
+    soap_response = getattr(context, primitive + RESPONSE)
+    if 'xml' in soap_response.headers['content-type']:
+        my_document = parseString(soap_response.content)
+        nodeList= my_document.getElementsByTagName(tag)
+        print(nodeList)
+        values = [node.childNodes[0].nodeValue for node in nodeList]
+        print(values)
+        assert value in values
+
 
 
 @then('check {tag} contains {value} of {primitive} response')
