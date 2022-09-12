@@ -8,6 +8,7 @@ parameters:
   - name: env
     displayName: Environment to Run Test
     type: string
+    default: prf
   - name: blacklistPMCSStr
     displayName: Blacklist for PCM_CS
     type: string
