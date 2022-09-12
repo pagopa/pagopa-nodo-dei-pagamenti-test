@@ -111,23 +111,29 @@ Feature:  semantic checks for demandPaymentNoticeReq
         Then check outcome is KO of demandPaymentNotice response
         And check faultCode is PPT_DOMINIO_DISABILITATO of demandPaymentNotice response
 
-# idBrokerPA value check: idBrokerPA not enabled [SEM_DPNR_15] - l'idBrokerPA ricavato è disabilitato
-# Scenario: Check PPT_INTERMEDIARIO_PA_DISABILITATO error on not enabled idBrokerPA
-#     Given idSoggettoServizio with ... in demandPaymentNotice
-#     When PSP sends SOAP demandPaymentNotice to nodo-dei-pagamenti
-#     Then check outcome is KO of demandPaymentNotice response
-#     And check faultCode is PPT_INTERMEDIARIO_PA_DISABILITATO of demandPaymentNotice response
+    # idBrokerPA value check: idBrokerPA not enabled [SEM_DPNR_15] - l'idBrokerPA ricavato è disabilitato
+    Scenario: Check PPT_INTERMEDIARIO_PA_DISABILITATO error on not enabled idBrokerPA
+        Given updating through the query generic_update of the table INTERMEDIARI_PA the parameter ENABLED with N with where condition ID_INTERMEDIARIO_PA = '77777777777' under macro generic_queries on db nodo_cfg
+        And refresh job PA triggered after 10 seconds
+        When PSP sends SOAP demandPaymentNotice to nodo-dei-pagamenti
+        Then check outcome is KO of demandPaymentNotice response
+        And check faultCode is PPT_INTERMEDIARIO_PA_DISABILITATO of demandPaymentNotice response
+        And updating through the query generic_update of the table INTERMEDIARI_PA the parameter ENABLED with Y with where condition ID_INTERMEDIARIO_PA = '77777777777' under macro generic_queries on db nodo_cfg
+        And refresh job PA triggered after 10 seconds
 
-# idStation value check: idStation not enabled to 4 model [SEM_DPNR_16] - l'idStation ricavata non è abilitata al quarto modello
-# Scenario: Check PPT_STAZIONE_INT_PA_SCONOSCIUTA error on idStation not enabled to 4 model
-#     Given idSoggettoServizio with 00006 demandPaymentNotice
-#     When PSP sends SOAP demandPaymentNotice to nodo-dei-pagamenti
-#     Then check outcome is KO of demandPaymentNotice response
-#     And check faultCode is PPT_STAZIONE_INT_PA_SCONOSCIUTA of demandPaymentNotice response
+    # idStation value check: idStation not enabled to 4 model [SEM_DPNR_16] - l'idStation ricavata non è abilitata al quarto modello
+    Scenario: Check PPT_STAZIONE_INT_PA_SCONOSCIUTA error on idStation not enabled to 4 model
+        Given idSoggettoServizio with 80003 demandPaymentNotice
+        When PSP sends SOAP demandPaymentNotice to nodo-dei-pagamenti
+        Then check outcome is KO of demandPaymentNotice response
+        And check faultCode is PPT_STAZIONE_INT_PA_SCONOSCIUTA of demandPaymentNotice response
 
-# idStation value check: idStation not enabled [SEM_DPNR_17] - l'idStation ricavata è disabilitata
-# Scenario: Check PPT_STAZIONE_INT_PA_DISABILITATA error on idStation not enabled
-#     Given idSoggettoServizio with ... in demandPaymentNotice
-#     When PSP sends SOAP demandPaymentNotice to nodo-dei-pagamenti
-#     Then check outcome is KO of demandPaymentNotice response
-#     And check faultCode is PPT_STAZIONE_INT_PA_DISABILITATA of demandPaymentNotice response
+    # idStation value check: idStation not enabled [SEM_DPNR_17] - l'idStation ricavata è disabilitata
+    Scenario: Check PPT_STAZIONE_INT_PA_DISABILITATA error on idStation not enabled
+        Given updating through the query generic_update of the table STAZIONI the parameter ENABLED with N with where condition ID_STAZIONE = '77777777777_01' under macro generic_queries on db nodo_cfg
+        And refresh job PA triggered after 10 seconds
+        When PSP sends SOAP demandPaymentNotice to nodo-dei-pagamenti
+        Then check outcome is KO of demandPaymentNotice response
+        And check faultCode is PPT_STAZIONE_INT_PA_DISABILITATA of demandPaymentNotice response
+        And updating through the query generic_update of the table STAZIONI the parameter ENABLED with Y with where condition ID_STAZIONE = '77777777777_01' under macro generic_queries on db nodo_cfg
+        And refresh job PA triggered after 10 seconds
