@@ -78,31 +78,31 @@ Feature: syntax checks for demandPaymentNotice - KO
         Then check outcome is KO of demandPaymentNotice response
         And check faultCode is PPT_SINTASSI_EXTRAXSD of demandPaymentNotice response
         Examples:
-            | elem                       | value                                | soapUI test   |
-            | soapenv:Body               | None                                 | SIN_DPNR_02   |
-            | soapenv:Body               | Empty                                | SIN_DPNR_03   |
-            | ns3:demandPaymentNoticeReq | Empty                                | SIN_DPNR_04   |
-            | idPSP                      | None                                 | SIN_DPNR_05   |
-            | idPSP                      | Empty                                | SIN_DPNR_06   |
-            | idPSP                      | 123456789012345678901234567890123456 | SIN_DPNR_07   |
-            | idBrokerPSP                | None                                 | SIN_DPNR_08   |
-            | idBrokerPSP                | Empty                                | SIN_DPNR_09   |
-            | idBrokerPSP                | 123456789012345678901234567890123456 | SIN_DPNR_10   |
-            | idChannel                  | None                                 | SIN_DPNR_11   |
-            | idChannel                  | Empty                                | SIN_DPNR_12   |
-            | idChannel                  | 123456789012345678901234567890123456 | SIN_DPNR_13   |
-            | password                   | None                                 | SIN_DPNR_14   |
-            | password                   | Empty                                | SIN_DPNR_15   |
-            | password                   | 1234567                              | SIN_DPNR_16   |
-            | password                   | 123456789012345678901234567890123456 | SIN_DPNR_17   |
-            | idSoggettoServizio         | None                                 | SIN_DPNR_18   |
-            | idSoggettoServizio         | Empty                                | SIN_DPNR_19   |
-            | idSoggettoServizio         | 123456                               | SIN_DPNR_20   |
-            | idSoggettoServizio         | 1234                                 | SIN_DPNR_20.1 |
-            | datiSpecificiServizio      | None                                 | SIN_DPNR_22   |
-            | datiSpecificiServizio      | Empty                                | SIN_DPNR_23   |
-            | datiSpecificiServizio      | cia                                  | SIN_DPNR_24   |
-            | datiSpecificiServizio      | cia$                                 | SIN_DPNR_25   |
+            | elem                           | value                                | soapUI test   |
+            | soapenv:Body                   | None                                 | SIN_DPNR_02   |
+            | soapenv:Body                   | Empty                                | SIN_DPNR_03   |
+            | nod:demandPaymentNoticeRequest | Empty                                | SIN_DPNR_04   |
+            | idPSP                          | None                                 | SIN_DPNR_05   |
+            | idPSP                          | Empty                                | SIN_DPNR_06   |
+            | idPSP                          | 123456789012345678901234567890123456 | SIN_DPNR_07   |
+            | idBrokerPSP                    | None                                 | SIN_DPNR_08   |
+            | idBrokerPSP                    | Empty                                | SIN_DPNR_09   |
+            | idBrokerPSP                    | 123456789012345678901234567890123456 | SIN_DPNR_10   |
+            | idChannel                      | None                                 | SIN_DPNR_11   |
+            | idChannel                      | Empty                                | SIN_DPNR_12   |
+            | idChannel                      | 123456789012345678901234567890123456 | SIN_DPNR_13   |
+            | password                       | None                                 | SIN_DPNR_14   |
+            | password                       | Empty                                | SIN_DPNR_15   |
+            | password                       | 1234567                              | SIN_DPNR_16   |
+            | password                       | 123456789012345678901234567890123456 | SIN_DPNR_17   |
+            | idSoggettoServizio             | None                                 | SIN_DPNR_18   |
+            | idSoggettoServizio             | Empty                                | SIN_DPNR_19   |
+            | idSoggettoServizio             | 123456                               | SIN_DPNR_20   |
+            | idSoggettoServizio             | 1234                                 | SIN_DPNR_20.1 |
+            | datiSpecificiServizio          | None                                 | SIN_DPNR_22   |
+            | datiSpecificiServizio          | Empty                                | SIN_DPNR_23   |
+            | datiSpecificiServizio          | cia                                  | SIN_DPNR_24   |
+            | datiSpecificiServizio          | cia$                                 | SIN_DPNR_25   |
 
     # two occurrences of idSoggettoServizio - SIN_DPNR_21.1
     Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error on invalid demandPaymentNotice
