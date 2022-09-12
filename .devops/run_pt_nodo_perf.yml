@@ -148,10 +148,7 @@ stages:
               
               echo current directory:
               pwd
-              
-              chmod +777 scripttree.sh
-             ./scripttree.sh CT/ 3
-              
+                            
             displayName: 'Command Line Script -  Run $scenarioToRun K6 scripts'
                     
           - task: ArchiveFiles@2
