@@ -736,13 +736,12 @@ def step_impl(context, tag, primitive):
         my_document = parseString(soap_response.content)
         assert len(my_document.getElementsByTagName(tag)) > 0
 
-    elif:
+    else:
         node_response = getattr(context, primitive + RESPONSE)
         json_response = node_response.json()
-        assert str(json_response.getElementsByTagName(tag)) > 0
-
-    else:
-        assert False
+        #assert len(json_response.get(tag)) > 0
+        str_json_response = json.dumps(json_response)
+        assert tag in str_json_response
 
 
 @then('check {tag} field not exists in {primitive} response')
