@@ -576,9 +576,6 @@ def step_impl(context, tag, value, primitive):
             f'check tag "{tag}" - expected: {value}, obtained: {json_response.get(tag)}')
         assert str(json_response.get(tag)) == value
 
-
-### inizio prova
-
 @then('checks {tag} is not {value} of {primitive} response')
 def step_impl(context, tag, value, primitive):
     soap_response = getattr(context, primitive + RESPONSE)
@@ -603,8 +600,6 @@ def step_impl(context, tag, value, primitive):
         print(
             f'check tag "{tag}" - expected: {value}, obtained: {json_response.get(tag)}')
         assert str(json_response.get(tag)) != value
-
-### fine prova
 
 @then('check {tag} contains {value} of {primitive} response')
 def step_impl(context, tag, value, primitive):
