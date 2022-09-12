@@ -111,6 +111,7 @@ Feature: process tests for chiediInformazioniPagamento
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
         And check url field exists in nodoInviaRPT response
+        And retrieve session token from $nodoInviaRPTResponse.url
 
 
     Scenario: Execution idPagamento
