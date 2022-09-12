@@ -137,27 +137,27 @@ stages:
               done
                             
               #remove old data
-              rm -rf output
+              rm -rf PMCS_CT
               
               #create output folder structure
-              mkdir -p output/PMCS_CT
+              mkdir -p PMCS_CT
               #copy out
-              cp -r src/perf-test/k6/scenarios/PMCS_CT/test/output output/PCMS_CT 
+              cp -r src/perf-test/k6/scenarios/PMCS_CT/test/output PCMS_CT 
               #remove empty folder
-              find output -type d -empty -delete
+              #find output -type d -empty -delete
               
             displayName: 'Command Line Script -  Run $scenarioToRun K6 scripts'
                     
           - task: ArchiveFiles@2
             displayName: 'Archive test results'
             inputs:
-              rootFolderOrFile: $(Agent.BuildDirectory)/s/output
+              rootFolderOrFile: $(Agent.BuildDirectory)/s/PMCS_CT
               includeRootFolder: false
               archiveType: zip
-              archiveFile: $(Build.ArtifactStagingDirectory)/output.zip
+              archiveFile: $(Build.ArtifactStagingDirectory)/PMCS_CT.zip
               replaceExistingArchive: true
             
-          - publish: $(Build.ArtifactStagingDirectory)/output.zip
+          - publish: $(Build.ArtifactStagingDirectory)/PMCS_CT.zip
             displayName: "Publish Artifact results"
             artifact: testResult
             

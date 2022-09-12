@@ -136,27 +136,34 @@ stages:
               done
               
               #remove old data
-              rm -rf output
+              rm -rf CT
               
               #create output folder structure
-              mkdir -p output/CT
+              mkdir -p CT
               #copy out
-              cp -r src/perf-test/k6/scenarios/CT/test/output output/CT
+              cp -r src/perf-test/k6/scenarios/CT/test/output CT
+              
               #remove empty folder
-              find output -type d -empty -delete
+              #find output -type d -empty -delete
+              
+              echo current directory:
+              pwd
+              
+              chmod +777 scripttree.sh
+             ./scripttree.sh CT/ 3
               
             displayName: 'Command Line Script -  Run $scenarioToRun K6 scripts'
                     
           - task: ArchiveFiles@2
             displayName: 'Archive test results'
             inputs:
-              rootFolderOrFile: $(Agent.BuildDirectory)/s/output
+              rootFolderOrFile: $(Agent.BuildDirectory)/s/CT
               includeRootFolder: false
               archiveType: zip
-              archiveFile: $(Build.ArtifactStagingDirectory)/output.zip
+              archiveFile: $(Build.ArtifactStagingDirectory)/CT.zip
               replaceExistingArchive: true
             
-          - publish: $(Build.ArtifactStagingDirectory)/output.zip
+          - publish: $(Build.ArtifactStagingDirectory)/CT.zip
             displayName: "Publish Artifact results"
             artifact: testResult
             
