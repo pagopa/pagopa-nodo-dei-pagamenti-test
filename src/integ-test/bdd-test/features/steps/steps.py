@@ -144,8 +144,7 @@ def step_impl(context, primitive):
 
     if '#CARRELLO#' in payload:
         CARRELLO = "CARRELLO" + "-" + \
-            str(getattr(context, 'date') +
-                datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3])
+            str(getattr(context, 'date') + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3])
         payload = payload.replace('#CARRELLO#', CARRELLO)
         setattr(context, 'CARRELLO', CARRELLO)
 
