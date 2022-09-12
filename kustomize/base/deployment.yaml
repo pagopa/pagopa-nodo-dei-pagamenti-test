@@ -17,10 +17,7 @@ spec:
             nodeSelectorTerms:
             - matchExpressions:
               - key: nodo-prf
-                operator: In
-                values:
-                - "***"
-
+                operator: Exists
       restartPolicy: Always
       containers:
         - name: mock-ec-prf
