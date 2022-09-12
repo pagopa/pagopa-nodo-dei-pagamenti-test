@@ -316,5 +316,17 @@ def search_value(json_file: dict, tag: str) -> bool:
             if find: break
     return find
 
-def search_value(json_file: dict, value: str) -> bool:
-    pass
+def get_value_from_key(json_file: dict, tag:str) -> bool:
+    find_value = None
+    for key, value in json_file.items():
+        if key == tag:
+            return value
+        else:
+            if isinstance(value, dict):
+                find_value = get_value_from_key(value, tag)
+            elif isinstance(value, list):
+                for element in value:
+                    if isinstance(element, dict):
+                        find_value = get_value_from_key(element, tag)
+            if find_value: break
+    return find_value
