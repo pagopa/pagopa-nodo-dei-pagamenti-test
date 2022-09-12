@@ -123,7 +123,7 @@ Feature:  semantic checks for demandPaymentNoticeReq
 
     # idStation value check: idStation not enabled to 4 model [SEM_DPNR_16] - l'idStation ricavata non è abilitata al quarto modello
     Scenario: Check PPT_STAZIONE_INT_PA_SCONOSCIUTA error on idStation not enabled to 4 model
-        Given idSoggettoServizio with 80003 demandPaymentNotice
+        Given idSoggettoServizio with 80003 in demandPaymentNotice
         When PSP sends SOAP demandPaymentNotice to nodo-dei-pagamenti
         Then check outcome is KO of demandPaymentNotice response
         And check faultCode is PPT_STAZIONE_INT_PA_SCONOSCIUTA of demandPaymentNotice response
