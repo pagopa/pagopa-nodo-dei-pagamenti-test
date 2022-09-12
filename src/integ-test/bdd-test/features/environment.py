@@ -1,6 +1,8 @@
+from email import header
 import json
 import random
 import time
+from wsgiref import headers
 
 import steps.db_operation as db
 from behave.model import Table
@@ -11,9 +13,9 @@ import steps.utils as utils
 def before_all(context):
     print('Global settings...')
 
-    lib_dir = os.path.abspath(os.path.join(__file__, os.pardir, os.pardir, os.pardir, os.pardir, os.pardir, 'oracle', 'instantclient_21_6'))
+    lib_dir = os.path.abspath(os.path.join(__file__, os.pardir, os.pardir, os.pardir, os.pardir, os.pardir, 'instantclient_21_6'))
     cx_Oracle.init_oracle_client(lib_dir=lib_dir)
-    more_userdata = json.load(open(os.path.join(context.config.base_dir + "/../resources/pipeline_config.json")))
+    more_userdata = json.load(open(os.path.join(context.config.base_dir + "/../resources/config.json")))
     context.config.update_userdata(more_userdata)
     #services = context.config.userdata.get("services")
     #db_config = context.config.userdata.get("db_configuration")
@@ -69,10 +71,10 @@ def after_all(context):
     for key, value in config_dict.items():
         #print(key, value)
         selected_query = utils.query_json(context, 'update_config', 'configurations').replace('value', value).replace('key', key)
-        db.executeQuery(conn, selected_query)
-    headers = {'Host': 'api.dev.platform.pagopa.it:443'}  
+        db.executeQuery(conn, selected_query)  
     
     db.closeConnection(conn)
+    headers = {'Host': 'api.dev.platform.pagopa.it:443'}  
     requests.get(utils.get_refresh_config_url(context),verify=False,headers=headers)
 
 
