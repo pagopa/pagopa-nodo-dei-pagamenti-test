@@ -120,7 +120,7 @@ stages:
               for d in src/perf-test/k6/scenarios/CT/test/*.js; do
       
                       #removing prefix path: removing prefix ending with slash
-                      active_test=${d}
+                      active_test=${d#src/perf-test/k6/scenarios/CT/test/*}
       
                       #removing suffix js
                       active_test=${active_test%.js}
