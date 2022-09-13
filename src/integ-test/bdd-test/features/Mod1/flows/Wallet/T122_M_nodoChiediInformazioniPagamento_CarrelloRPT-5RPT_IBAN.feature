@@ -695,24 +695,22 @@ Feature: process tests for 5 RPT 5 Versamenti
         And check dettagli field exists in informazioniPagamento response
         And check codiceFiscale field exists in informazioniPagamento response
         And check oggettoPagamento contains Causali multiple di versamento of informazioniPagamento response
-        And check importoTot is 37.5 of nodoInviaCarrelloRPT response
-        And check idCarrello is $nodoInviaCarrelloRPT.identificativoCarrello of informazioniPagamento response
-        And check iuv is $IUV of informazioniPagamento response
-        And check iuv2 is $2IUV of informazioniPagamento response
-        And check iuv3 is $3IUV of informazioniPagamento response
-        And check iuv4 is $4IUV of informazioniPagamento response
-        And check iuv5 is $5IUV of informazioniPagamento response
-        And check ccp is CCD01 of informazioniPagamento response
-        And check ccp2 is CCD02 of informazioniPagamento response
-        And check ccp3 is CCD03 of informazioniPagamento response
-        And check ccp4 is CCD04 of informazioniPagamento response
-        And check ccp5 is CCD05 of informazioniPagamento response
-        And check identificativoDominio is $nodoInviaRPT.identificativoUnivocoVersamento of informazioniPagamento response
-        And check enteBeneficiario field exists in informazioniPagamento response
-        And check azienda 1 is AZIENDA XXX field exists in informazioniPagamento response
-        And check azienda 2 is AZIENDA YYY field exists in informazioniPagamento response
-        And check dettagli field exists in informazioniPagamento response
-        And check IBAN is IT96R0123451234512345678904 of informazioniPagamento response
+        And check importoTot contains 37.5 of informazioniPagamento response
+        And check idCarrello contains $nodoInviaCarrelloRPT.identificativoCarrello of informazioniPagamento response
+        And check IUV contains $IUV of informazioniPagamento response
+        And check IUV contains $2IUV of informazioniPagamento response
+        And check IUV contains $3IUV of informazioniPagamento response
+        And check IUV contains $4IUV of informazioniPagamento response
+        And check IUV contains $5IUV of informazioniPagamento response
+        And check CCP contains CCD01 of informazioniPagamento response
+        And check CCP contains CCD02 of informazioniPagamento response
+        And check CCP contains CCD03 of informazioniPagamento response
+        And check CCP contains CCD04 of informazioniPagamento response
+        And check CCP contains CCD05 of informazioniPagamento response
+        And check idDominio contains $nodoInviaRPT.identificativoUnivocoVersamento of informazioniPagamento response
+        And check enteBeneficiario contains AZIENDA XXX of informazioniPagamento response
+        And check enteBeneficiario contains AZIENDA YYY of informazioniPagamento response
+        And check IBAN contains IT96R0123451234512345678904 of informazioniPagamento response
 
 
 
