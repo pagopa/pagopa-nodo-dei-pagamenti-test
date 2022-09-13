@@ -297,6 +297,7 @@ def search_tag(json_file: dict, tag: str) -> bool:
                 #check for completeness
                 if isinstance(element, dict):
                     find = search_tag(element, tag)
+                    if find: break
         if find: break
     return find
 
@@ -311,6 +312,7 @@ def search_value(json_file: dict, tag: str) -> bool:
                 #check for completeness
                 if isinstance(element, dict):
                     find = search_value(element, tag)
+                    if find: break
         if find: break
     return find
 
@@ -325,5 +327,6 @@ def get_value_from_key(json_file: dict, tag:str) -> bool:
                 #check for completeness
                 if isinstance(element, dict):
                     find_value = get_value_from_key(element, tag)
+                    if find_value: break
         if find_value: break
     return find_value
