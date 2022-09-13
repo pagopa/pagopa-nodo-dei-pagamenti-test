@@ -25,7 +25,7 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
          </soapenv:Body>
          </soapenv:Envelope>
          """
-      And initial xml paVerifyPaymentNoticeRes
+      And initial xml paVerifyPaymentNotice
          """"
          <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
          <soapenv:Header/>
@@ -56,7 +56,7 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
          </soapenv:Body>
          </soapenv:Envelope>
          """
-      And EC replies to nodo-dei-pagamenti with the paVerifyPaymentNoticeRes
+      And EC replies to nodo-dei-pagamenti with the paVerifyPaymentNotice
       When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
       Then check outcome is OK of verifyPaymentNotice response
 
@@ -113,7 +113,7 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
          </soapenv:Envelope>
          """
       
-      And initial xml paGetPaymentRes
+      And initial xml paGetPayment
          """
          <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
          <soapenv:Header/>
@@ -180,7 +180,7 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
          </soapenv:Envelope>
          """
 
-      And EC replies to nodo-dei-pagamenti with the paGetPaymentRes
+      And EC replies to nodo-dei-pagamenti with the paGetPayment
       When psp sends SOAP activateIOPayment to nodo-dei-pagamenti          
       Then check outcome is OK of activateIOPayment response
       And save activateIOPayment response in activateIOPaymentResponse
