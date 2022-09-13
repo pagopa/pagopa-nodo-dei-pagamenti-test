@@ -122,6 +122,11 @@ Feature: process tests for chiediInformazioniPagamento
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200
+        And check importo field exists in informazioniPagamento response
+        And check email field exists in informazioniPagamento response
+        And check ragioneSociale field exists in informazioniPagamento response
+        And check oggettoPagamento field exists in informazioniPagamento response
+        And check urlRedirectEC field exists in informazioniPagamento response
 
     Scenario: Execution Esito Carta
         Given the Execution idPagamento scenario executed successfully
