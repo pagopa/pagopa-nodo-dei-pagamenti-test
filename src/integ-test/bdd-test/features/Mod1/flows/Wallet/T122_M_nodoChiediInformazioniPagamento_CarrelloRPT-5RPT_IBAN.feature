@@ -681,7 +681,7 @@ Feature: process tests for 5 RPT 5 Versamenti
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
         And check url contains acardste of nodoInviaCarrelloRPT response
-        And retrieve session token from $nodoInviaRPTResponse.url
+        And retrieve session token from $nodoInviaCarrelloRPTResponse.url
 
     Scenario: Execution idPagamento
         Given the Execute nodoInviaRPT request scenario executed successfully
