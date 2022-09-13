@@ -12,7 +12,7 @@ Feature: Semantic checks KO for nodoAttivaRPT
             <identificativoCanale>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanale>
             <password>pwdpwdpwd</password>
             <codiceContestoPagamento>#ccp#</codiceContestoPagamento>
-            <identificativoIntermediarioPSPPagamento>97735020584</identificativoIntermediarioPSPPagamento>
+            <identificativoIntermediarioPSPPagamento>#psp#</identificativoIntermediarioPSPPagamento>
             <identificativoCanalePagamento>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanalePagamento>
             <codificaInfrastrutturaPSP>QR-CODE</codificaInfrastrutturaPSP>
             <codiceIdRPT><bc:BarCode><bc:Gln>1234567890122</bc:Gln><bc:CodStazPA>01</bc:CodStazPA><bc:AuxDigit>0</bc:AuxDigit><bc:CodIUV>112222222222222</bc:CodIUV></bc:BarCode></codiceIdRPT>
@@ -142,7 +142,7 @@ Feature: Semantic checks KO for nodoAttivaRPT
     Then check faultCode is PPT_CANALE_DISABILITATO of nodoAttivaRPT response
 
    # identificativoCanalePagamento value check: identificativoCanalePagamento disabled [ARPTSEM12]
-  Scenario: Check PPT_PSP_DISABILITATO error on disabled psp channel
-    Given codificaInfrastrutturaPSP with BARCODE-128-AIM in nodoAttivaRPT
+  Scenario: Check PPT_CODIFICA_PSP_SCONOSCIUTA error on wrong codificaInfrastrutturaPSP
+    Given codificaInfrastrutturaPSP with infrastrutturaPSP in nodoAttivaRPT
     When psp sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-    Then check faultCode is PPT_CANALE_DISABILITATO of nodoAttivaRPT response
+    Then check faultCode is PPT_CODIFICA_PSP_SCONOSCIUTA of nodoAttivaRPT response
