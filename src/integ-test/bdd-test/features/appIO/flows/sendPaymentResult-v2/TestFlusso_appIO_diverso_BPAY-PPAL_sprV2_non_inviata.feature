@@ -27,6 +27,37 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
     """
     
     When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
+    And psp sends paVerifyPaymentNoticeRes with outcome OK
+    """"
+    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
+      <soapenv:Header/>
+      <soapenv:Body>
+         <paf:paVerifyPaymentNoticeRes>
+            <outcome>OK</outcome>
+            <paymentList>
+               <paymentOptionDescription>
+                  <amount>1.00</amount>
+                  <options>EQ</options>
+                  <!--Optional:-->
+                  <dueDate>2022-09-13</dueDate>
+                  <!--Optional:-->
+                  <detailDescription>descrizione dettagliata lato PA</detailDescription>
+                  <!--Optional:-->
+                  <allCCP>false</allCCP>
+               </paymentOptionDescription>
+            </paymentList>
+            <!--Optional:-->
+            <paymentDescription>/RFB/00202200000217527/5.00/TXT/</paymentDescription>
+            <!--Optional:-->
+            <fiscalCodePA>77777777777</fiscalCodePA>
+            <!--Optional:-->
+            <companyName>company PA</companyName>
+            <!--Optional:-->
+            <officeName>office PA</officeName>
+         </paf:paVerifyPaymentNoticeRes>
+      </soapenv:Body>
+   </soapenv:Envelope>
+   """
     Then check outcome is OK of verifyPaymentNotice response
     
    # activateIOPaymentReq phase
