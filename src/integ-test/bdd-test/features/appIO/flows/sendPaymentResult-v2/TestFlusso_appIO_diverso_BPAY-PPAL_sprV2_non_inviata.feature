@@ -188,8 +188,8 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
 
       Scenario: DB check
       Given the Execute activateIOPayment request scenario executed successfully
-      Then checking the value $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query generic_select with where condition NOTICE_ID = '311$iuv' and PA_FISCAL_CODE= '#creditor_institution_code#' on db nodo_online under macro generic_queries
-      And checking the value $activateIOPaymentRequest.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query generic_select with where condition NOTICE_ID = '311$iuv' and PA_FISCAL_CODE= '#creditor_institution_code#' on db nodo_online under macro generic_queries
+      Then checks the value $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro NewMod3
+      And checks the value $activateIOPaymentRequest.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro NewMod3
    
 
    # nodoChiediInformazioniPagamento phase
