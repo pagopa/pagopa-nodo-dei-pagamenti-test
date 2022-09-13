@@ -290,7 +290,8 @@ def manipulate_json(json, elem, value):
     # TYPE_VALUE = 3 # dom value
     my_document = json.load(json)
     if value == "None":
-        del my_document.get(elem)
+        my_document.remove(elem)
+
     """
     elif value == "Empty":
         element = my_document.getElementsByTagName(elem)[0].childNodes[0]
