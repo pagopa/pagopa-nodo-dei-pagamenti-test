@@ -713,7 +713,8 @@ def step_impl(context, tag, value, primitive):
     else:
         node_response = getattr(context, primitive + RESPONSE)
         json_response = node_response.json()
-        assert value in json_response.get(tag)
+        find = utils.search_value(json_response, tag)
+        assert find
 
 
 # TODO tag.sort in xml response
