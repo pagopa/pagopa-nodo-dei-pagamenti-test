@@ -9,6 +9,7 @@ import time
 from xml.dom.minicompat import NodeList
 from xml.dom.minidom import parseString
 import base64 as b64
+import json_operations as jo
 
 import requests
 from behave import *
@@ -712,10 +713,7 @@ def step_impl(context, tag, value, primitive):
     else:
         node_response = getattr(context, primitive + RESPONSE)
         json_response = node_response.json()
-        # if value.isdigit():
-        #     value = int(value)
-        # elif utils.isFloat(value):
-        #     value = float(value)
+        json_response = jo.convert_json_values_toString(json_response)
         print('>>>>>>>>>>>>>>', json_response)
         find = utils.search_value(json_response, tag, value)
         print(tag)
