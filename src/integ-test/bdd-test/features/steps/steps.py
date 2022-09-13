@@ -59,7 +59,6 @@ def step_impl(context, primitive):
 
     if len(payload) > 0:
         my_document = parseString(payload)
-        idBrokerPSP = "70000000001"
         if len(my_document.getElementsByTagName('idBrokerPSP')) > 0:
             idBrokerPSP = my_document.getElementsByTagName('idBrokerPSP')[
                 0].firstChild.data
@@ -2166,7 +2165,7 @@ def step_impl(context, value, column, query_name, table_name, where_condition, d
         for elem in split_value:
             assert elem in query_result, f"check expected element: {value}, obtained: {query_result}"
     db.closeConnection(conn)
-    
+
 @step("updating through the query {query_name} of the table {table_name} the parameter {param} with {value} with where condition {where_condition} under macro {macro} on db {db_name}")
 def step_impl(context, query_name, table_name, param, value, where_condition, macro, db_name):
     db_selected = context.config.userdata.get("db_configuration").get(db_name)
@@ -2176,3 +2175,65 @@ def step_impl(context, query_name, table_name, param, value, where_condition, ma
     conn = db.getConnection(db_selected.get('host'), db_selected.get('database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
     exec_query = db.executeQuery(conn, selected_query)
     db.closeConnection(conn)
+
+@then('checks {tag} is not {value} of {primitive} response')
+def step_impl(context, tag, value, primitive):
+    soap_response = getattr(context, primitive + RESPONSE)
+    if 'xml' in soap_response.headers['content-type']:
+        my_document = parseString(soap_response.content)
+        if len(my_document.getElementsByTagName('faultCode')) > 0:
+            print("fault code: ", my_document.getElementsByTagName(
+                'faultCode')[0].firstChild.data)
+            print("fault string: ", my_document.getElementsByTagName(
+                'faultString')[0].firstChild.data)
+            if my_document.getElementsByTagName('description'):
+                print("description: ", my_document.getElementsByTagName(
+                    'description')[0].firstChild.data)
+        data = my_document.getElementsByTagName(tag)[0].firstChild.data
+        value = utils.replace_local_variables(value, context)
+        value = utils.replace_global_variables(value, context)
+        print(f'check tag "{tag}" - expected: {value}, obtained: {data}')
+        assert value != data
+    else:
+        node_response = getattr(context, primitive + RESPONSE)
+        json_response = node_response.json()
+        print(
+            f'check tag "{tag}" - expected: {value}, obtained: {json_response.get(tag)}')
+        assert str(json_response.get(tag)) != value
+
+@given('initial JSON {primitive}')
+def step_impl(context, primitive):
+    payload = context.text or ""
+    payload = utils.replace_local_variables(payload, context)
+
+    if len(payload) > 0:
+        my_document = json.load(payload)
+
+
+    if "#iuv#" in payload:
+        iuv = str(random.randint(100000000000000, 999999999999999))
+        payload = payload.replace('#iuv#', iuv)
+        setattr(context, "iuv", iuv)
+
+    if '#transaction_id#' in payload:
+        transaction_id = str(random.randint(10000000, 99999999))
+        payload = payload.replace('#transaction_id#', transaction_id)
+        setattr(context, 'transaction_id', transaction_id)
+
+    if '#psp_transaction_id#' in payload:
+        psp_transaction_id = str(random.randint(10000000, 99999999))
+        payload = payload.replace('#psp_transaction_id#', psp_transaction_id)
+        setattr(context, 'psp_transaction_id', psp_transaction_id)
+        
+    if '$iuv' in payload:
+        payload = payload.replace('$iuv', getattr(context, 'iuv'))
+        
+    if '$transaction_id' in payload:
+        payload = payload.replace('$transaction_id', getattr(context, 'transaction_id'))
+
+    if '$psp_transaction_id' in payload:
+        payload = payload.replace('$psp_transaction_id', getattr(context, 'psp_transaction_id'))
+
+    payload = utils.replace_context_variables(payload, context)
+    payload = utils.replace_global_variables(payload, context)
+    setattr(context, primitive, payload)
