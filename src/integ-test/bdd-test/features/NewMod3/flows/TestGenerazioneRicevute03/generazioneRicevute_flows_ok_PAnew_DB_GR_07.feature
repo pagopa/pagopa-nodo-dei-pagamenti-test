@@ -202,7 +202,8 @@ Feature: process tests for generazioneRicevute [DB_GR_07]
     And check value $fk_position_receipt is equal to value $pr_id
 
     #POSITION_RECEIPT_RECIPIENT_STATUS query
-    #POSITION_RECEIPT_RECIPIENT query
+    And checks the value NOTICE_GENERATED, NOTICE_SENT, NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
+
     #POSITION_RECEIPT_XML query
     #POSITION_PAYMENT query
     #POSITION_RECEIPT query
