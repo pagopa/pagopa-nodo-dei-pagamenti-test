@@ -114,7 +114,7 @@ Feature: process tests for chiediInformazioniPagamento
         And retrieve session token from $nodoInviaRPTResponse.url
 
     Scenario: Execution Esito Carta
-        Given the Execute nodoInviaRPT request scenario executed successfull
+        Given the Execute nodoInviaRPT request scenario executed successfully
         And PSP replies to nodo-dei-pagamenti with the pspInviaRPT 
             """
             <soapenv:Header/>
