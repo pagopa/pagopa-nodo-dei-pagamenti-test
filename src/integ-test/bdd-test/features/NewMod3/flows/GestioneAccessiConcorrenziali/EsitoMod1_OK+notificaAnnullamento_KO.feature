@@ -128,7 +128,6 @@ Feature: process tests for Gestione Accessi Concorrenziali
       """
   #Then
 
-
   Scenario: Execute nodoNotificaAnnullamento
     Given the Execute nodoInoltraEsitoMod1 scenario executed successfully
     And wait 2 seconds for expiration

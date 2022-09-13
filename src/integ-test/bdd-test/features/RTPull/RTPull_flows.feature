@@ -307,7 +307,7 @@ Feature: RTPull flows
             </soapenv:Body>
             </soapenv:Envelope>
             """
-    @ok-1
+    @ok
     Scenario: Execute nodoInviaRPT - RT_ACCETTATA_PA [T001]
         Given PSP replies to nodo-dei-pagamenti with the pspInviaRPT
         And PSP replies to nodo-dei-pagamenti with the pspChiediListaRT
@@ -321,7 +321,7 @@ Feature: RTPull flows
         And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro RTPull
         And verify 0 record for the table RETRY_PA_INVIA_RT retrived by the query rpt_stati on db nodo_online under macro RTPull
 
-    @ok-1
+    @ok
     Scenario: Execute nodoInviaRPT - RT_RIFIUTATA_PA [T002]
         Given initial XML paaInviaRT
             """
@@ -371,7 +371,7 @@ Feature: RTPull flows
         And checks the value RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro RTPull
         And verify 0 record for the table RETRY_PA_INVIA_RT retrived by the query rpt_stati on db nodo_online under macro RTPull
 
-    @ok-1
+    @ok
     Scenario: Execute nodoInviaRPT - RT_RIFIUTATA_NODO (pspChiediRT_ KO_TAG_RT_errato) [T004]
         Given replace rt tag in pspChiediRT with tagErrato
         And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
@@ -401,7 +401,7 @@ Feature: RTPull flows
         And verify 1 record for the table RETRY_PA_INVIA_RT retrived by the query rpt_stati on db nodo_online under macro RTPull
         And checks the value NotNone of the record at column RETRY of the table RETRY_PA_INVIA_RT retrived by the query rpt_stati on db nodo_online under macro RTPull
 
-    @ok-1
+    @ok
     Scenario: Execute nodoInviaRPT - RPT-RT Marca da bollo [T008]
         Given PSP replies to nodo-dei-pagamenti with the pspInviaRPT
         And PSP replies to nodo-dei-pagamenti with the pspChiediListaRT
@@ -415,7 +415,7 @@ Feature: RTPull flows
         And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro RTPull
         And verify 0 record for the table RETRY_PA_INVIA_RT retrived by the query rpt_stati on db nodo_online under macro RTPull
 
-    @ok-1
+    @ok
     Scenario: Execute nodoInviaRPT - RT_ERRORE_INVIO_A_PA [T009]
         Given identificativoIntermediarioPA with irraggiungibile in nodoInviaRPT
         And identificativoStazioneIntermediarioPA with irraggiungibile in nodoInviaRPT
