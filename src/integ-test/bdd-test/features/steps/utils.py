@@ -289,44 +289,41 @@ def random_s():
 def search_tag(json_file: dict, tag: str) -> bool:
     find = False
     for key, value in json_file.items():
-        if key == tag:
-            return True
-        else:
-            if isinstance(value, dict):
-                find = search_tag(value, tag)
-            elif isinstance(value, list):
-                for element in value:
-                    if isinstance(element, dict):
-                       find = search_tag(element, tag)
-            if find: break
+        if key == tag: return True
+        if isinstance(value, dict):
+            find = search_tag(value, tag)
+        elif isinstance(value, list):
+            for element in value:
+                #check for completeness
+                if isinstance(element, dict):
+                    find = search_tag(element, tag)
+        if find: break
     return find
 
 def search_value(json_file: dict, tag: str) -> bool:
     find = False
     for value in json_file.values():
-        if value == tag:
-            return True
-        else:
-            if isinstance(value, dict):
-                find = search_value(value, tag)
-            elif isinstance(value, list):
-                for element in value:
-                    if isinstance(element, dict):
-                       find = search_value(element, tag)
-            if find: break
+        if value == tag: return True
+        if isinstance(value, dict):
+            find = search_value(value, tag)
+        elif isinstance(value, list):
+            for element in value:
+                #check for completeness
+                if isinstance(element, dict):
+                    find = search_value(element, tag)
+        if find: break
     return find
 
 def get_value_from_key(json_file: dict, tag:str) -> bool:
     find_value = None
     for key, value in json_file.items():
-        if key == tag:
-            return value
-        else:
-            if isinstance(value, dict):
-                find_value = get_value_from_key(value, tag)
-            elif isinstance(value, list):
-                for element in value:
-                    if isinstance(element, dict):
-                        find_value = get_value_from_key(element, tag)
-            if find_value: break
+        if key == tag: return value
+        if isinstance(value, dict):
+            find_value = get_value_from_key(value, tag)
+        elif isinstance(value, list):
+            for element in value:
+                #check for completeness
+                if isinstance(element, dict):
+                    find_value = get_value_from_key(element, tag)
+        if find_value: break
     return find_value
