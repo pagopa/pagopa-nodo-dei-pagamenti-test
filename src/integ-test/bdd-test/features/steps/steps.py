@@ -2201,6 +2201,7 @@ def step_impl(context, tag, value, primitive):
             f'check tag "{tag}" - expected: {value}, obtained: {json_response.get(tag)}')
         assert str(json_response.get(tag)) != value
 
+
 @given('initial JSON {primitive}')
 def step_impl(context, primitive):
     payload = context.text or ""
@@ -2237,3 +2238,14 @@ def step_impl(context, primitive):
     payload = utils.replace_context_variables(payload, context)
     payload = utils.replace_global_variables(payload, context)
     setattr(context, primitive, payload)
+
+
+@given('{elem} with {value} in json {action}')
+def step_impl(context, elem, value, action):
+    # use - to skip
+    if elem != "-":
+        value = utils.replace_local_variables(value, context)
+        value = utils.replace_global_variables(value, context)
+        json = utils.manipulate_json(
+            getattr(context, action), elem, value)
+        setattr(context, action, json)

@@ -283,3 +283,56 @@ def random_s():
         strNumRand += str(random.randint(0, 9))
         cont -= 1
         return strNumRand
+
+
+def manipulate_json(json, elem, value):
+    TYPE_ELEMENT = 1  # dom element
+    # TYPE_VALUE = 3 # dom value
+    my_document = json.load(json)
+    if value == "None":
+        del my_document.get(elem)
+    """
+    elif value == "Empty":
+        element = my_document.getElementsByTagName(elem)[0].childNodes[0]
+        element.nodeValue = ''
+        childs = my_document.getElementsByTagName(elem)[0].childNodes
+        for child in childs:
+            if child.nodeType == TYPE_ELEMENT:
+                child.parentNode.removeChild(child)
+    elif value == 'RemoveParent':
+        element = my_document.getElementsByTagName(elem)[0]
+        parent = element.parentNode
+        children = element.childNodes
+        parent.removeChild(element)
+        for child in list(children):
+            if child.nodeType == TYPE_ELEMENT:
+                parent.appendChild(child)
+    elif str(value).startswith("Occurrences"):
+        occurrences = int(value.split(",")[1])
+        original_node = my_document.getElementsByTagName(elem)[0]
+        cloned_node = original_node.cloneNode(2)
+        for i in range(0, occurrences - 1):
+            original_node.parentNode.insertBefore(cloned_node, original_node)
+            original_node = cloned_node
+            cloned_node = original_node.cloneNode(2)
+    else:
+        node = my_document.getElementsByTagName(
+            elem)[0] if my_document.getElementsByTagName(elem) else None
+
+        if node is None:
+            # create
+            element = my_document.createTextNode(value)
+            my_document.getElementsByTagName(elem)[0].appendChild(element)
+        elif len(node.childNodes) > 1:
+            # replace object
+            object = parseString(value)
+            node.parentNode.replaceChild(object.childNodes[0], node)
+        else:
+            # leaf -> single value
+            while node.hasChildNodes():
+                node.removeChild(node.firstChild)
+            element = my_document.createTextNode(value)
+            node.appendChild(element)
+    """
+
+    return json.dumps(my_document)
