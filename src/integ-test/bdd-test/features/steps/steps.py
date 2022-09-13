@@ -696,19 +696,16 @@ def step_impl(context, tag, value, primitive):
 
 @then('check {tag} contains {value} of {primitive} response')
 def step_impl(context, tag, value, primitive):
-    payload = utils.replace_local_variables(payload, context)
-    payload = utils.replace_context_variables(payload, context)
+    value = utils.replace_local_variables(value, context)
+    value = utils.replace_context_variables(value, context)
     soap_response = getattr(context, primitive + RESPONSE)
     if 'xml' in soap_response.headers['content-type']:
         my_document = parseString(soap_response.content)
         if len(my_document.getElementsByTagName('faultCode')) > 0:
-            print("fault code: ", my_document.getElementsByTagName(
-                'faultCode')[0].firstChild.data)
-            print("fault string: ", my_document.getElementsByTagName(
-                'faultString')[0].firstChild.data)
+            print("fault code: ", my_document.getElementsByTagName('faultCode')[0].firstChild.data)
+            print("fault string: ", my_document.getElementsByTagName('faultString')[0].firstChild.data)
             if my_document.getElementsByTagName('description'):
-                print("description: ", my_document.getElementsByTagName(
-                    'description')[0].firstChild.data)
+                print("description: ", my_document.getElementsByTagName('description')[0].firstChild.data)
         data = my_document.getElementsByTagName(tag)[0].firstChild.data
         print(f'check tag "{tag}" - expected: {value}, obtained: {data}')
         assert value in data
