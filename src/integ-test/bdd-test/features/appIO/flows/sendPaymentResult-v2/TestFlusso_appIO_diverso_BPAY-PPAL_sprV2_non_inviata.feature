@@ -56,8 +56,8 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
          </soapenv:Body>
          </soapenv:Envelope>
          """
-      When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
       And EC replies to nodo-dei-pagamenti with the paVerifyPaymentNoticeRes
+      When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
       Then check outcome is OK of verifyPaymentNotice response
 
    # activateIOPaymentReq phase
