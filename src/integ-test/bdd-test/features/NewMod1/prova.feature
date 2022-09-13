@@ -5,7 +5,7 @@ Feature: prova
 
     Scenario: Assert
         Given checking the value NotNone of the record at column ID of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query generic_select_id_asc with where condition NOTICE_ID = '311794281577753938' AND PA_FISCAL_CODE = '66666666666' on db nodo_online under macro generic_queries
-        And updating through the query generic_update of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with CANCELLED with where condition NOTICE_ID = '311794281577753938' AND PA_FISCAL_CODE = '66666666666' under macro NewMod1 on db nodo_online
+        # And updating through the query generic_update of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with CANCELLED with where condition NOTICE_ID = '311794281577753938' AND PA_FISCAL_CODE = '66666666666' under macro NewMod1 on db nodo_online
         And checking the value CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query generic_select_id_asc with where condition NOTICE_ID = '311794281577753938' AND PA_FISCAL_CODE = '66666666666' on db nodo_online under macro generic_queries
 
     Scenario: activatePaymentNoticeV2 + paGetPayment
@@ -33,8 +33,7 @@ Feature: prova
             </soapenv:Body>
             </soapenv:Envelope>
             """
-    Scenario: paGetPayment
-        Given initial XML paGetPayment
+        And initial XML paGetPayment
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
             <soapenv:Header />
