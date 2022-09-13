@@ -1340,7 +1340,7 @@ def step_impl(context, value, column, query_name, table_name, db_name, name_macr
     print(selected_query)
     exec_query = db.executeQuery(conn, selected_query)
 
-    query_result = [t for t in exec_query] # precedente: query_result = [t[0] for t in exec_query]
+    query_result = [t[0] for t in exec_query]
     print('query_result: ', query_result)
 
     if value == 'None':
