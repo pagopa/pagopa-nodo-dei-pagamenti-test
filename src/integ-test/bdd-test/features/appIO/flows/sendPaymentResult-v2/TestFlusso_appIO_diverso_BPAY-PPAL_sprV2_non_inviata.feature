@@ -62,7 +62,8 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
 
    # activateIOPaymentReq phase
    Scenario: Execute activateIOPayment request
-      Given initial xml activateIOPayment
+      Given the Execute verifyPaymentNotice request scenario executed successfully
+      And initial xml activateIOPayment
 
          """
          <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd">
@@ -193,19 +194,15 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
 
    # nodoChiediInformazioniPagamento phase
    Scenario: Execute a nodoChiediInformazioniPagamento request
-      Given initial json nodoChiediInformazioniPagamento
-         """
-         {
-            "idPagamento": "$activateIOPaymentResponse.paymentToken"
-         }
-         """
-      When PM sends nodoChiediInformazioniPagamento to nodo-dei-pagamenti
-      Then verify the HTTP status code of nodoChiediInformazioniPagamento response is 200
+      Given the Execute activateIOPayment request scenario executed successfully
+      When WISP sends rest GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
+      Then verify the HTTP status code of informazioniPagamento response is 200
 
 
    # closePayment-v2 phase
    Scenario: Execute a closePayment-v2 request
-      Given idChannel with CANALI_NODO.VERSIONE_PRIMITIVE = 1
+      Given the Execute a nodoChiediInformazioniPagamento request scenario executed successfully
+      And idChannel with CANALI_NODO.VERSIONE_PRIMITIVE = 1
       And initial json closePayment-v2
          """
          {
