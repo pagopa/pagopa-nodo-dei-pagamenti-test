@@ -99,9 +99,9 @@ Feature: process tests for chiediInformazioniPagamento
             <soapenv:Body>
             <ws:nodoInviaRPT>
             <password>pwdpwdpwd</password>
-            <identificativoPSP>AGID_01</identificativoPSP>
-            <identificativoIntermediarioPSP>97735020584</identificativoIntermediarioPSP>
-            <identificativoCanale>97735020584_02</identificativoCanale>
+            <identificativoPSP>#psp_AGID#</identificativoPSP>
+            <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
             <tipoFirma></tipoFirma>
             <rpt>$rptAttachment</rpt>
             </ws:nodoInviaRPT>
@@ -135,10 +135,10 @@ Feature: process tests for chiediInformazioniPagamento
             {
             "idPagamento":"$sessionToken",
             "RRN":10026669,
-            "identificativoPsp":"#psp_AGID#",
+            "identificativoPsp":"#psp#",
             "tipoVersamento":"CP",
-            "identificativoIntermediario":"97735020584",
-            "identificativoCanale":"97735020584_02",
+            "identificativoIntermediario":"#psp#",
+            "identificativoCanale":"#canale#",
             "importoTotalePagato":12.31,
             "timestampOperazione":"2018-02-08T17:06:03.100+01:00",
             "codiceAutorizzativo":"123456",
