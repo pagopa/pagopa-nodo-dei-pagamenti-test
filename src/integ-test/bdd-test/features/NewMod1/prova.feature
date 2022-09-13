@@ -3,7 +3,7 @@ Feature: prova
     Background:
         Given systems up
 
-    Scenario: activatePaymentNoticeV2
+    Scenario: activatePaymentNoticeV2 + paGetPayment
         Given initial XML activatePaymentNoticeV2
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
@@ -28,9 +28,7 @@ Feature: prova
             </soapenv:Body>
             </soapenv:Envelope>
             """
-
-    Scenario: paGetPayment
-        Given initial XML paGetPayment
+        And initial XML paGetPayment
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
             <soapenv:Header />
@@ -99,8 +97,7 @@ Feature: prova
         And EC replies to nodo-dei-pagamenti with the paGetPayment
 
     Scenario: Assert
-        Given the activatePaymentNoticeV2 scenario executed successfully
-        And the paGetPayment scenario executed successfully
+        Given the activatePaymentNoticeV2 + paGetPayment scenario executed successfully
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         And checking the value NotNone,None of the record at column ID of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query generic_select_id_asc with where condition NOTICE_ID = '$activatePaymentNoticeV2.noticeNumber' AND PA_FISCAl_CODE = '$activatePaymentNoticeV2.fiscalCode' on db nodo_online under macro generic_queries
