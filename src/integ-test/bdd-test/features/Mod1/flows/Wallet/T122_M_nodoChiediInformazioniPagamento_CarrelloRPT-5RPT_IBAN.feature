@@ -711,7 +711,6 @@ Feature: process tests for 5 RPT 5 Versamenti
         And check enteBeneficiario contains AZIENDA XXX of informazioniPagamento response
         And check enteBeneficiario contains AZIENDA YYY of informazioniPagamento response
         And check IBAN contains IT96R0123451234512345678904 of informazioniPagamento response
-        And check importo contains 7.5 of informazioniPagamento response
 
 
 

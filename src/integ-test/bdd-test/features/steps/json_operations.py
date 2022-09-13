@@ -43,13 +43,13 @@ def get_value_from_key(json_file: dict, tag:str) -> bool:
         if find_value: break
     return find_value
 
-def convert(json_file: dict) -> dict:
+def convert_json_values_toString(json_file: dict) -> dict:
   for key, value in json_file.items():
     if isinstance(value, int) or isinstance(value, float): json_file[key] = str(value)
-    elif isinstance(value, dict): convert(value)
+    elif isinstance(value, dict): convert_json_values_toString(value)
     elif isinstance(value, list):
       for element in value:
         #check for completeness
         if isinstance(element, dict):
-          convert(element)  
+          convert_json_values_toString(element)  
   return json_file
