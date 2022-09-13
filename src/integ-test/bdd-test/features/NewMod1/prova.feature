@@ -3,11 +3,6 @@ Feature: prova
     Background:
         Given systems up
 
-    Scenario: Assert
-        Given checking the value NotNone of the record at column ID of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query generic_select_id_asc with where condition NOTICE_ID = '311794281577753938' AND PA_FISCAL_CODE = '66666666666' on db nodo_online under macro generic_queries
-        And updating through the query generic_update of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with CANCELLED with where condition NOTICE_ID = '311794281577753938' AND PA_FISCAL_CODE = '66666666666' under macro generic_queries on db nodo_online
-        And checking the value CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query generic_select_id_asc with where condition NOTICE_ID = '311794281577753938' AND PA_FISCAL_CODE = '66666666666' on db nodo_online under macro generic_queries
-
     Scenario: activatePaymentNoticeV2 + paGetPayment
         Given initial XML activatePaymentNoticeV2
             """
@@ -102,5 +97,7 @@ Feature: prova
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        And checking the value NotNone of the record at column ID of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query generic_select_id_asc with where condition NOTICE_ID = '$activatePaymentNoticeV2.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNoticeV2.fiscalCode' on db nodo_online under macro generic_queries
-        And checking the value PAYING of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query generic_select_id_asc with where condition NOTICE_ID = '$activatePaymentNoticeV2.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNoticeV2.fiscalCode' on db nodo_online under macro generic_queries
+        And checks the value NotNone,None of the record at column ID of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query activatev2_noticeid_pafiscalcode on db nodo_online under macro NewMod1
+        And checks the value PAYING,None of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query activatev2_noticeid_pafiscalcode on db nodo_online under macro NewMod1
+        And updates through the query update_activatev2 of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with CANCELLED under macro NewMod1 on db nodo_online
+        And checks the value CANCELLED,None of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query activatev2_noticeid_pafiscalcode on db nodo_online under macro NewMod1
