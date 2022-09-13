@@ -47,7 +47,7 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
          <!--Optional:-->
          <paymentDescription>/RFB/00202200000217527/5.00/TXT/</paymentDescription>
          <!--Optional:-->
-         <fiscalCodePA>77777777777</fiscalCodePA>
+         <fiscalCodePA>$verifyPaymentNotice.fiscalCode</fiscalCodePA>
          <!--Optional:-->
          <companyName>company PA</companyName>
          <!--Optional:-->
@@ -77,7 +77,7 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
          <idempotencyKey>#idempotency_key#</idempotencyKey>
          <qrCode>
          <fiscalCode>#creditor_institution_code#</fiscalCode>
-         <noticeNumber>311#iuv#</noticeNumber>
+         <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
          </qrCode>
          <!--Optional:-->
          <expirationTime>60000</expirationTime>
@@ -121,7 +121,7 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
          <paf:paGetPaymentRes>
          <outcome>OK</outcome>
          <data>
-         <creditorReferenceId>#iuv#</creditorReferenceId>
+         <creditorReferenceId>11$iuv</creditorReferenceId>
          <paymentAmount>10.00</paymentAmount>
          <dueDate>2021-12-30</dueDate>
          <!--Optional:-->
@@ -180,9 +180,10 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
          </soapenv:Envelope>
          """
 
-      When psp sends SOAP activateIOPayment to nodo-dei-pagamenti  
-      And EC replies to nodo-dei-pagamenti with the paGetPaymentRes  
+      And EC replies to nodo-dei-pagamenti with the paGetPaymentRes
+      When psp sends SOAP activateIOPayment to nodo-dei-pagamenti          
       Then check outcome is OK of activateIOPayment response
+      And save activateIOPayment response in activateIOPaymentResponse
 
      
    # DB check_00
