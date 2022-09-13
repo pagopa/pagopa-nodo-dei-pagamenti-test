@@ -2240,12 +2240,12 @@ def step_impl(context, primitive):
     setattr(context, primitive, payload)
 
 
-@given('json {elem} with {value} in {action}')
-def step_impl(context, elem, value, action):
+@given('{key} and {value} in json {primitive}')
+def step_impl(context, key, value, primitive):
     # use - to skip
-    if elem != "-":
+    if key != "-":
         value = utils.replace_local_variables(value, context)
         value = utils.replace_global_variables(value, context)
         json = utils.manipulate_json(
-            getattr(context, action), elem, value)
-        setattr(context, action, json)
+            getattr(context, primitive), key, value)
+        setattr(context, primitive, json)

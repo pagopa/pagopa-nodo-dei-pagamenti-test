@@ -285,12 +285,12 @@ def random_s():
         return strNumRand
 
 
-def manipulate_json(json, elem, value):
+def manipulate_json(json, key, value):
     TYPE_ELEMENT = 1  # dom element
     # TYPE_VALUE = 3 # dom value
     my_document = json.load(json)
     if value == "None":
-        my_document.remove(elem)
+        my_document.remove(key)
 
     """
     elif value == "Empty":
