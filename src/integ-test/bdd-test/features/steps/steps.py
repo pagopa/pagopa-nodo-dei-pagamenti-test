@@ -347,6 +347,11 @@ def step_impl(context, number):
     if '#date#' in payload:
         payload = payload.replace('#date#', date)
 
+    if f"#IUV{number}#" in payload:
+        IUV = str(utils.current_milli_time()) + '-' + str(random.randint(0, 100000))
+        payload = payload.replace(f'#IUV{number}#', IUV)
+        setattr(context, f'{number}IUV', IUV)
+
     """
     if "#ccp#" in payload:
         ccp = str(random.randint(100000000000000, 999999999999999))
@@ -602,6 +607,7 @@ def step_impl(context, elem, value, action):
     # use - to skip
     if elem != "-":
         value = utils.replace_local_variables(value, context)
+        value = utils.replace_context_variables(value, context)
         value = utils.replace_global_variables(value, context)
         xml = utils.manipulate_soap_action(
             getattr(context, action), elem, value)
@@ -759,7 +765,7 @@ def step_impl(context, tag, primitive):
     else:
         node_response = getattr(context, primitive + RESPONSE)
         json_response = node_response.json()
-        find = utils.search_tag(json_response, tag)
+        find = jo.search_tag(json_response, tag)
         assert find
 
 
