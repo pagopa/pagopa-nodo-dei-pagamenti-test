@@ -691,7 +691,7 @@ Feature: process tests for 5 RPT 5 Versamenti
         And check ragioneSociale field exists in informazioniPagamento response
         And check oggettoPagamento field exists in informazioniPagamento response
         And check urlRedirectEC field exists in informazioniPagamento response
-        And check email is 'gesualdo.riccitelli@poste.it' of informazioniPagamento response
+        And check email is gesualdo.riccitelli@poste.it of informazioniPagamento response
         And check dettagli field exists in informazioniPagamento response
         And check codiceFiscale field exists in informazioniPagamento response
         And check Causali multiple di versamento field exists in informazioniPagamento response
