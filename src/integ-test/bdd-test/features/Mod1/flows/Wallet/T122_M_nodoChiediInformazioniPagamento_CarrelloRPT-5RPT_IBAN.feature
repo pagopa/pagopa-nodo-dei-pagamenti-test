@@ -684,7 +684,7 @@ Feature: process tests for 5 RPT 5 Versamenti
         And retrieve session token from $nodoInviaCarrelloRPTResponse.url
 
     Scenario: Execution idPagamento
-        Given the Execute nodoInviaRPT request scenario executed successfully
+        Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
         When WISP sends rest GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200
         And check importo field exists in informazioniPagamento response
@@ -696,7 +696,7 @@ Feature: process tests for 5 RPT 5 Versamenti
         And check codiceFiscale field exists in informazioniPagamento response
         And check Causali multiple di versamento field exists in informazioniPagamento response
         And check importoTot is 37.5 of nodoInviaCarrelloRPT response
-        And check idCarrello is $nodoInviaRPT.identificativoCarrello of informazioniPagamento response
+        And check idCarrello is $nodoInviaCarrelloRPT.identificativoCarrello of informazioniPagamento response
         And check iuv is $IUV of informazioniPagamento response
         And check iuv2 is $2IUV of informazioniPagamento response
         And check iuv3 is $3IUV of informazioniPagamento response
