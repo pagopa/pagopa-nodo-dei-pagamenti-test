@@ -707,7 +707,7 @@ Feature: process tests for 5 RPT 5 Versamenti
         And check CCP contains CCD03 of informazioniPagamento response
         And check CCP contains CCD04 of informazioniPagamento response
         And check CCP contains CCD05 of informazioniPagamento response
-        And check idDominio contains $nodoInviaRPT.identificativoUnivocoVersamento of informazioniPagamento response
+        And check idDominio contains $nodoInviaCarrelloRPT.identificativoUnivocoVersamento of informazioniPagamento response
         And check enteBeneficiario contains AZIENDA XXX of informazioniPagamento response
         And check enteBeneficiario contains AZIENDA YYY of informazioniPagamento response
         And check IBAN contains IT96R0123451234512345678904 of informazioniPagamento response
