@@ -718,6 +718,8 @@ def step_impl(context, tag, value, primitive):
         #     value = float(value)
         print('>>>>>>>>>>>>>>', json_response)
         find = utils.search_value(json_response, tag, value)
+        print(tag)
+        print(value)
         print(find)
         assert find
 
