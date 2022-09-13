@@ -639,7 +639,7 @@ Feature: process tests for 5 RPT 5 Versamenti
         <soapenv:Body>
         <ws:nodoInviaCarrelloRPT>
         <password>pwdpwdpwd</password>
-        <identificativoPSP>AGID_01</identificativoPSP>
+        <identificativoPSP>#psp_AGID#</identificativoPSP>
         <identificativoIntermediarioPSP>97735020584</identificativoIntermediarioPSP>
         <identificativoCanale>97735020584_02</identificativoCanale>
         <listaRPT>
@@ -680,7 +680,7 @@ Feature: process tests for 5 RPT 5 Versamenti
         """
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
-        And check acardste field exists in nodoInviaCarrelloRPT response
+        And check url contains acardste of nodoInviaCarrelloRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
 
     Scenario: Execution idPagamento

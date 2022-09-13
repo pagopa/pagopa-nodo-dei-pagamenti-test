@@ -95,7 +95,8 @@
         "rpt_stati": "SELECT columns FROM table_name s WHERE s.IUV = '$iuv' ORDER BY INSERTED_TIMESTAMP ASC",
         "rt_stati": "SELECT columns FROM table_name s WHERE s.IUV = '$IUV' ORDER BY INSERTED_TIMESTAMP ASC",
         "stati_carrello": "SELECT columns FROM table s WHERE s.ID_CARRELLO = '$nodoInviaCarrelloRPT.idCarrello' ORDER BY ID ASC",
-        "payment_status": "SELECT s.columns FROM table_name s WHERE s.NOTICE_ID ='$activateIOPayment.noticeNumber' AND s.PA_FISCAL_CODE = '$activateIOPayment.fiscalCode'"
+        "payment_status": "SELECT s.columns FROM table_name s WHERE s.NOTICE_ID ='$activateIOPayment.noticeNumber' AND s.PA_FISCAL_CODE = '$activateIOPayment.fiscalCode'",
+        "getPspCarte": "SELECT columns FROM table_name ELENCO_SERVIZI_PSP where FK_SNAPSHOT_VERSION = ${version} " + notPoste + carte + cheLingua + "AND IMPORTO_MINIMO < ${importoTot} AND IMPORTO_MASSIMO >= ${importoTot} AND CODICE_CONVENZIONE is null  order by ID"
     },
     "RTPull" : {
         "rpt_stati": "SELECT columns FROM table_name s WHERE s.IUV = '$iuv' ORDER BY INSERTED_TIMESTAMP ASC"
