@@ -60,7 +60,7 @@ Feature: process tests for chiediInformazioniPagamento
             </pay_i:enteBeneficiario>
             <pay_i:datiVersamento>
                 <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
-                <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
+                <pay_i:importoTotaleDaVersare>6.20</pay_i:importoTotaleDaVersare>
                 <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
                 <pay_i:identificativoUnivocoVersamento>#IUV#</pay_i:identificativoUnivocoVersamento>
                 <pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
@@ -68,14 +68,14 @@ Feature: process tests for chiediInformazioniPagamento
                 <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
                 <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
                 <pay_i:datiSingoloVersamento>
-                    <pay_i:importoSingoloVersamento>10.00</pay_i:importoSingoloVersamento>
+                    <pay_i:importoSingoloVersamento>6.20</pay_i:importoSingoloVersamento>
                     <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
-                    <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
+                    <pay_i:ibanAccredito>IT45R0760103200000000001016</pay_i:ibanAccredito>
                     <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
                     <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio>
                     <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
                     <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
-                    <pay_i:causaleVersamento>pagamentò fotocopie pratica</pay_i:causaleVersamento>
+                    <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
                     <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
                 </pay_i:datiSingoloVersamento>
             </pay_i:datiVersamento>
@@ -121,7 +121,7 @@ Feature: process tests for chiediInformazioniPagamento
                 <soapenv:Body>
                     <ws:pspInviaRPTResponse>
                         <pspInviaRPTResponse>
-                            <esito>OK</esito>
+                            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
                             <identificativoCarrello>$nodoInviaRPT.identificativoUnivocoVersamento</identificativoCarrello>
                             <parametriPagamentoImmediato>idBruciatura=$nodoInviaRPT.identificativoUnivocoVersamento</parametriPagamentoImmediato>
                         </pspInviaRPTResponse>
