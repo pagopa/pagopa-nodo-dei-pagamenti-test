@@ -2240,7 +2240,7 @@ def step_impl(context, primitive):
     setattr(context, primitive, payload)
 
 
-@given('{elem} with {value} in json {action}')
+@given('json {elem} with {value} in {action}')
 def step_impl(context, elem, value, action):
     # use - to skip
     if elem != "-":
