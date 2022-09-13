@@ -62,7 +62,7 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
 
    # activateIOPaymentReq phase
    Scenario: Execute activateIOPayment request
-      Given initial XML activateIOPayment soap-request
+      Given initial xml activateIOPayment
 
          """
          <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd">
@@ -114,6 +114,72 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
          """
 
       When psp sends SOAP activateIOPayment to nodo-dei-pagamenti
+      And psp sends paGetPaymentRes with outcome OK
+         """
+         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
+         <soapenv:Header/>
+         <soapenv:Body>
+         <paf:paGetPaymentRes>
+         <outcome>OK</outcome>
+         <data>
+         <creditorReferenceId>#iuv#</creditorReferenceId>
+         <paymentAmount>10.00</paymentAmount>
+         <dueDate>2021-12-30</dueDate>
+         <!--Optional:-->
+         <retentionDate>2021-12-30T12:12:12</retentionDate>
+         <!--Optional:-->
+         <lastPayment>1</lastPayment>
+         <description>test</description>
+         <!--Optional:-->
+         <companyName>company</companyName>
+         <!--Optional:-->
+         <officeName>office</officeName>
+         <debtor>
+         <uniqueIdentifier>
+         <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
+         <entityUniqueIdentifierValue>44444444444</entityUniqueIdentifierValue>
+         </uniqueIdentifier>
+         <fullName>paGetPaymentName</fullName>
+         <!--Optional:-->
+         <streetName>paGetPaymentStreet</streetName>
+         <!--Optional:-->
+         <civicNumber>paGetPayment99</civicNumber>
+         <!--Optional:-->
+         <postalCode>20155</postalCode>
+         <!--Optional:-->
+         <city>paGetPaymentCity</city>
+         <!--Optional:-->
+         <stateProvinceRegion>paGetPaymentState</stateProvinceRegion>
+         <!--Optional:-->
+         <country>DE</country>
+         <!--Optional:-->
+         <e-mail>paGetPayment@test.it</e-mail>
+         </debtor>
+         <!--Optional:-->
+         <transferList>
+         <!--1 to 5 repetitions:-->
+         <transfer>
+         <idTransfer>1</idTransfer>
+         <transferAmount>10.00</transferAmount>
+         <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
+         <IBAN>IT45R0760103200000000001016</IBAN>
+         <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
+         <transferCategory>paGetPaymentTest</transferCategory>
+         </transfer>
+         </transferList>
+         <!--Optional:-->
+         <metadata>
+         <!--1 to 10 repetitions:-->
+         <mapEntry>
+         <key>1</key>
+         <value>22</value>
+         </mapEntry>
+         </metadata>
+         </data>
+         </paf:paGetPaymentRes>
+         </soapenv:Body>
+         </soapenv:Envelope>
+         """
       Then check outcome is OK of activateIOPayment response
 
    # DB check_00
@@ -130,7 +196,7 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
          }
          """
       When PM sends nodoChiediInformazioniPagamento to nodo-dei-pagamenti
-      Then check errorCode is 200
+      Then verify the HTTP status code of nodoChiediInformazioniPagamento response is 200
 
 
    # closePayment-v2 phase
@@ -159,7 +225,7 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
 
       When PM sends closePayment-v2 to nodo-dei-pagamenti
       Then check outcome is OK of closePayment-v2
-      And check errorCode is 200 of closePayment-v2
+      And verify the HTTP status code of closePayment-v2 response is 200
       And check no sendPaymentResult-v2 is sent
 
 # SELECT ID FROM RE WHERE NOTICE_ID = '#notice_number#' AND TIPO_EVENTO = 'sendPaymentResult-v2';
