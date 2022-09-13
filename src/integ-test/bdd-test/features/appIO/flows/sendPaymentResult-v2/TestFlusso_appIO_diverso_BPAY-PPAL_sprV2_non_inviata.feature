@@ -25,9 +25,7 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
          </soapenv:Body>
          </soapenv:Envelope>
          """
-
-      When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
-      And psp sends paVerifyPaymentNoticeRes with outcome OK
+      And initial xml paVerifyPaymentNoticeRes
          """"
          <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
          <soapenv:Header/>
@@ -58,6 +56,8 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
          </soapenv:Body>
          </soapenv:Envelope>
          """
+      When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
+      And EC replies to nodo-dei-pagamenti with the paVerifyPaymentNoticeRes
       Then check outcome is OK of verifyPaymentNotice response
 
    # activateIOPaymentReq phase
@@ -112,9 +112,8 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
          </soapenv:Body>
          </soapenv:Envelope>
          """
-
-      When psp sends SOAP activateIOPayment to nodo-dei-pagamenti
-      And psp sends paGetPaymentRes with outcome OK
+      
+      And initial xml paGetPaymentRes
          """
          <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
          <soapenv:Header/>
@@ -180,8 +179,12 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
          </soapenv:Body>
          </soapenv:Envelope>
          """
+
+      When psp sends SOAP activateIOPayment to nodo-dei-pagamenti  
+      And EC replies to nodo-dei-pagamenti with the paGetPaymentRes  
       Then check outcome is OK of activateIOPayment response
 
+     
    # DB check_00
    # SELECT * FROM NODO_ONLINE.POSITION_ACTIVATE s where s.NOTICE_ID = '#notice_number#' and s.PA_FISCAL_CODE= '#creditor_institution_code#';
    # check POSITION_ACTIVATE.PAYMENT_TOKEN == $activateIOPaymentResponse.paymentToken and
