@@ -465,6 +465,13 @@ Feature: semantic checking new for activatePaymentNoticeV2Request
 
 
 
+
+
+
+
+
+
+
     # SEM_APNV2_22
     Scenario: semantic check 22 (part 1)
         Given nodo-dei-pagamenti has config parameter default_idempotency_key_validity_minutes set to 1

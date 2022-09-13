@@ -1396,8 +1396,6 @@ def step_impl(context, query_name, table_name, param, where_condition, macro, db
     exec_query = db.executeQuery(conn, selected_query)
     db.closeConnection(conn)
 
-### prova
-
 @step("updates through the query {query_name} of the table {table_name} the parameter {param} with {value} under macro {macro} on db {db_name}")
 def step_impl(context, query_name, table_name, param, value, macro, db_name):
     db_selected = context.config.userdata.get("db_configuration").get(db_name)
@@ -1407,8 +1405,6 @@ def step_impl(context, query_name, table_name, param, value, macro, db_name):
     conn = db.getConnection(db_selected.get('host'), db_selected.get('database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
     exec_query = db.executeQuery(conn, selected_query)
     db.closeConnection(conn)
-
-### prova
 
 @step(u"check datetime plus number of date {number} of the record at column {column} of the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
 def step_impl(context, column, query_name, table_name, db_name, name_macro, number):
