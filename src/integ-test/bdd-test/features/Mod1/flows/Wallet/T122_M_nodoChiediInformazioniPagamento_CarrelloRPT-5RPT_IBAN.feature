@@ -695,7 +695,7 @@ Feature: process tests for 5 RPT 5 Versamenti
         And check dettagli field exists in informazioniPagamento response
         And check codiceFiscale field exists in informazioniPagamento response
         And check oggettoPagamento contains Causali multiple di versamento of informazioniPagamento response
-        #And check importoTotale contains 37.5 of informazioniPagamento response
+        And check importoTotale contains 37.5 of informazioniPagamento response
         And check idCarrello contains $nodoInviaCarrelloRPT.identificativoCarrello of informazioniPagamento response
         And check IUV contains $IUV of informazioniPagamento response
         And check IUV contains $2IUV of informazioniPagamento response
@@ -711,6 +711,7 @@ Feature: process tests for 5 RPT 5 Versamenti
         And check enteBeneficiario contains AZIENDA XXX of informazioniPagamento response
         And check enteBeneficiario contains AZIENDA YYY of informazioniPagamento response
         And check IBAN contains IT96R0123451234512345678904 of informazioniPagamento response
+        And check importo contains 7.5 of informazioniPagamento response
 
 
 
