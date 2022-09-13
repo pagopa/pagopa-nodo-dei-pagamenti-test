@@ -2206,8 +2206,8 @@ def step_impl(context, primitive):
     payload = context.text or ""
     payload = utils.replace_local_variables(payload, context)
 
-    if len(payload) > 0:
-        my_document = json.load(payload)
+#    if len(payload) > 0:
+#        my_document = json.load(payload)
 
 
     if "#iuv#" in payload:
