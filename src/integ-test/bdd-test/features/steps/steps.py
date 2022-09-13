@@ -713,7 +713,9 @@ def step_impl(context, tag, value, primitive):
     else:
         node_response = getattr(context, primitive + RESPONSE)
         json_response = node_response.json()
+        print('>>>>>>>>>>>>>>', json_response)
         find = utils.search_value(json_response, tag)
+        print(find)
         assert find
 
 
