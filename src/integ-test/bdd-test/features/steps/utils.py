@@ -301,10 +301,10 @@ def search_tag(json_file: dict, tag: str) -> bool:
         if find: break
     return find
 
-def search_value(json_file: dict, tag: str) -> bool:
+def search_value(json_file: dict, tag: str, value: str|int|dict) -> bool:
     find = False
-    for value in json_file.values():
-        if value == tag: return True
+    for dict_key, dict_value in json_file.items():
+        if dict_key == tag and dict_value == value: return True
         if isinstance(value, dict):
             find = search_value(value, tag)
         elif isinstance(value, list):

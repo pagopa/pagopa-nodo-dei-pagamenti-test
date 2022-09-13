@@ -321,7 +321,7 @@ Feature: RTPull flows
         And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro RTPull
         And verify 0 record for the table RETRY_PA_INVIA_RT retrived by the query rpt_stati on db nodo_online under macro RTPull
 
-    @ok
+    @ok-1
     Scenario: Execute nodoInviaRPT - RT_RIFIUTATA_PA [T002]
         Given initial XML paaInviaRT
             """
@@ -357,7 +357,7 @@ Feature: RTPull flows
         And checks the value RT_RIFIUTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro RTPull
         And verify 0 record for the table RETRY_PA_INVIA_RT retrived by the query rpt_stati on db nodo_online under macro RTPull
 
-    @ok-1
+    @ok
     Scenario: Execute nodoInviaRPT - RT_RIFIUTATA_NODO (pspChiediRT_KO_RT_errata) [T003]
         Given rt with e3J0QXR0YWNobWVudH0= in pspChiediRT
         And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
