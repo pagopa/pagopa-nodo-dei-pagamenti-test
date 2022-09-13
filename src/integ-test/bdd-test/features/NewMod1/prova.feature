@@ -100,5 +100,5 @@ Feature: prova
         Given the activatePaymentNoticeV2 + paGetPayment scenario executed successfully
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        And checking the value NotNone,None of the record at column ID of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query generic_select_id_asc with where condition NOTICE_ID = '311$iuv' AND PA_FISCAL_CODE = '#creditor_institution_code#' on db nodo_online under macro generic_queries
-        And checking the value PAYING,None of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query generic_select_id_asc with where condition NOTICE_ID = '311$iuv' AND PA_FISCAL_CODE = '#creditor_institution_code#' on db nodo_online under macro generic_queries
+        And checking the value NotNone,None of the record at column ID of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query generic_select_id_asc with where condition NOTICE_ID = '$activatePaymentNoticeV2.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNoticeV2.fiscalCode' on db nodo_online under macro generic_queries
+        And checking the value PAYING,None of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query generic_select_id_asc with where condition NOTICE_ID = '$activatePaymentNoticeV2.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNoticeV2.fiscalCode' on db nodo_online under macro generic_queries
