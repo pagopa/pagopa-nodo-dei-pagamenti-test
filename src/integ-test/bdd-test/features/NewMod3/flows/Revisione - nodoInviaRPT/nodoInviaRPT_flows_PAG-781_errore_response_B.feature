@@ -1,36 +1,11 @@
-Feature: process tests for nodoInviaRPT [PAG-781_errore_response]
+Feature: process tests for nodoInviaRPT [PAG-1192_RPT_errore_response_B]
 
     Background:
         Given systems up
         And EC old version
-        And initial XML verifyPaymentNotice
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <nod:verifyPaymentNoticeReq>
-            <idPSP>40000000001</idPSP>
-            <idBrokerPSP>40000000001</idBrokerPSP>
-            <idChannel>40000000001_01</idChannel>
-            <password>pwdpwdpwd</password>
-            <qrCode>
-            <fiscalCode>#creditor_institution_code_old#</fiscalCode>
-            <noticeNumber>#notice_number_old#</noticeNumber>
-            </qrCode>
-            </nod:verifyPaymentNoticeReq>
-            </soapenv:Body>
-            </soapenv:Envelope>
-
-            """
-
-    # Verify phase
-    Scenario: Execute verifyPaymentNotice request
-        When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
-        Then check outcome is OK of verifyPaymentNotice response
 
     Scenario: Execute activatePaymentNotice request
-        Given the Execute verifyPaymentNotice request scenario executed successfully
-        And initial XML activatePaymentNotice
+        Given initial XML activatePaymentNotice
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
             <soapenv:Header/>
@@ -52,45 +27,8 @@ Feature: process tests for nodoInviaRPT [PAG-781_errore_response]
             </soapenv:Envelope>
             """
 
-        And initial XML paaAttivaRPT
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <ws:paaAttivaRPTRisposta>
-            <paaAttivaRPTRisposta>
-            <esito>KO</esito>
-            <datiPagamentoPA>
-            <importoSingoloVersamento>2.00</importoSingoloVersamento>
-            <ibanAccredito>IT96R0123454321000000012345</ibanAccredito>
-            <bicAccredito>BSCTCH22</bicAccredito>
-            <enteBeneficiario>
-            <pag:identificativoUnivocoBeneficiario>
-            <pag:tipoIdentificativoUnivoco>G</pag:tipoIdentificativoUnivoco>
-            <pag:codiceIdentificativoUnivoco>11111111117</pag:codiceIdentificativoUnivoco>
-            </pag:identificativoUnivocoBeneficiario>
-            <pag:denominazioneBeneficiario>AZIENDA XXX</pag:denominazioneBeneficiario>
-            <pag:codiceUnitOperBeneficiario>123</pag:codiceUnitOperBeneficiario>
-            <pag:denomUnitOperBeneficiario>uj</pag:denomUnitOperBeneficiario>
-            <pag:indirizzoBeneficiario>y</pag:indirizzoBeneficiario>
-            <pag:civicoBeneficiario>j</pag:civicoBeneficiario>
-            <pag:capBeneficiario>gt</pag:capBeneficiario>
-            <pag:localitaBeneficiario>gw</pag:localitaBeneficiario>
-            <pag:provinciaBeneficiario>ds</pag:provinciaBeneficiario>
-            <pag:nazioneBeneficiario>UK</pag:nazioneBeneficiario>
-            </enteBeneficiario>
-            <credenzialiPagatore>i</credenzialiPagatore>
-            <causaleVersamento>pagamento fotocopie pratica RPT</causaleVersamento>
-            </datiPagamentoPA>
-            </paaAttivaRPTRisposta>
-            </ws:paaAttivaRPTRisposta>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
         When psp sends soap activatePaymentNotice to nodo-dei-pagamenti
-        Then check outcome is KO of activatePaymentNotice response
-        And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of activatePaymentNotice response
+        Then check outcome is OK of activatePaymentNotice response
 
         #CHECK ATTIVAZIONE E CHACHE DI IDEMPOTENZA
         And checks the value Y of the record at column PAAATTIVARPTRESP of the table RPT_ACTIVATIONS retrived by the query payment_status on db nodo_online under macro NewMod3

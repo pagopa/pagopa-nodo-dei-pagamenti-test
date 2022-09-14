@@ -2209,19 +2209,6 @@ def step_impl(context, url):
     setattr(context, 'url', url)
 
 
-@step('check field in {primitive} response')
-def step_impl(context, primitive):
-    soap_response = getattr(context, primitive + RESPONSE)
-    if 'xmlns' in soap_response.headers['content-type']:
-        my_document = parseString(soap_response.content)
-        if my_document.getElementsByTagName('description'):
-            print("description: ", my_document.getElementsByTagName(
-                'description')[0].firstChild.data)
-
-    result = json.loads(my_document)
-    print(result)
-
-
 @step('Select and Update RT for Test retry_PAold with causale versamento {causaleVers}')
 def step_impl(context, causaleVers):
     db_config = context.config.userdata.get(

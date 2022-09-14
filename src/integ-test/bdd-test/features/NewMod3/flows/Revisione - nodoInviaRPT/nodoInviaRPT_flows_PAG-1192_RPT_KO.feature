@@ -1,4 +1,4 @@
-Feature: process tests for nodoInviaRPT [PAG-1192_OK_RPT]
+Feature: process tests for nodoInviaRPT [PAG-1192_KO_RPT]
 
     Background:
         Given systems up
@@ -168,7 +168,7 @@ Feature: process tests for nodoInviaRPT [PAG-1192_OK_RPT]
             <soapenv:Body>
             <ws:paaAttivaRPTRisposta>
             <paaAttivaRPTRisposta>
-            <esito>OK</esito>
+            <esito>KO</esito>
             <datiPagamentoPA>
             <importoSingoloVersamento>2.00</importoSingoloVersamento>
             <ibanAccredito>IT96R0123454321000000012345</ibanAccredito>
@@ -198,7 +198,7 @@ Feature: process tests for nodoInviaRPT [PAG-1192_OK_RPT]
             """
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
         When psp sends soap activatePaymentNotice to nodo-dei-pagamenti
-        Then check outcome is OK of activatePaymentNotice response
+        Then check outcome is KO of activatePaymentNotice response
 
         And execution query payment_status to get value on the table POSITION_ACTIVATE, with the columns PAYMENT_TOKEN under macro NewMod3 with db name nodo_online
         And through the query payment_status retrieve param paymentToken at position 0 and save it under the key paymentToken
@@ -314,7 +314,9 @@ Feature: process tests for nodoInviaRPT [PAG-1192_OK_RPT]
             </soapenv:Envelope>
             """
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-        Then check esito is OK of nodoInviaRPT response
+        Then check esito is KO of nodoInviaRPT response
+        And check faultCode is PPT_SEMANTICA of nodoInviaRPT response
+        And check faultString is PPT_SEMANTICA of nodoInviaRPT response
 
         #DB-CHECK-RPT_ACTIVATIONS
         And verify 0 record for the table RPT_ACTIVATIONS retrived by the query payment_status on db nodo_online under macro NewMod3

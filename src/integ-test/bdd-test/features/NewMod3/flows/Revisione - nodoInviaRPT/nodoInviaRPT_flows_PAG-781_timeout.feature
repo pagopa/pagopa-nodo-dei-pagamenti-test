@@ -1,4 +1,4 @@
-Feature: process tests for nodoInviaRPT [PAG-781_errore_response]
+Feature: process tests for nodoInviaRPT [PAG-781_timeout]
 
     Background:
         Given systems up
@@ -46,7 +46,7 @@ Feature: process tests for nodoInviaRPT [PAG-781_errore_response]
             <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
             </qrCode>
             <!--expirationTime>60000</expirationTime-->
-            <amount>7.00</amount>
+            <amount>3.00</amount>
             </nod:activatePaymentNoticeReq>
             </soapenv:Body>
             </soapenv:Envelope>
@@ -90,7 +90,7 @@ Feature: process tests for nodoInviaRPT [PAG-781_errore_response]
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
         When psp sends soap activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNotice response
-        And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of activatePaymentNotice response
+        And check faultCode is PPT_STAZIONE_INT_PA_TIMEOUT of activatePaymentNotice response
 
         #CHECK ATTIVAZIONE E CHACHE DI IDEMPOTENZA
         And checks the value Y of the record at column PAAATTIVARPTRESP of the table RPT_ACTIVATIONS retrived by the query payment_status on db nodo_online under macro NewMod3
