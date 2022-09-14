@@ -275,9 +275,9 @@ Feature: process tests for chiediInformazioniPagamento
             <soapenv:Body>
                 <ws:nodoInviaCarrelloRPT>
                     <password>pwdpwdpwd</password>
-                    <identificativoPSP>40000000001</identificativoPSP>
-                    <identificativoIntermediarioPSP>40000000001</identificativoIntermediarioPSP>
-                    <identificativoCanale>40000000001_03</identificativoCanale>
+                    <identificativoPSP>#psp_AGID#</identificativoPSP>
+                    <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
+                    <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
                     <listaRPT>
                         <elementoListaRPT>
                         <identificativoDominio>44444444444</identificativoDominio>
@@ -291,13 +291,29 @@ Feature: process tests for chiediInformazioniPagamento
             </soapenv:Body>
             </soapenv:Envelope>
             """
+        And initial XML pspInviaCarrelloRPT
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <ws:pspInviaCarrelloRPTResponse>
+            <pspInviaCarrelloRPTResponse>
+            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+            <identificativoCarrello>$nodoInviaCarrelloRPT.identificativoCarrello</identificativoCarrello>
+            <parametriPagamentoImmediato>idBruciatura=$nodoInviaCarrelloRPT.identificativoCarrello</parametriPagamentoImmediato>
+            </pspInviaCarrelloRPTResponse>
+            </ws:pspInviaCarrelloRPTResponse>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
-        Then check esito is OK of nodoInviaCarrelloRPT response
+        Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
         And check url contains acardste of nodoInviaCarrelloRPT response
         And retrieve session token from $nodoInviaCarrelloRPTResponse.url
 
     Scenario: Execution idPagamento
-        Given the Execute nodoInviaRPT request scenario executed successfully
+        Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
         When WISP sends rest GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200
         And check importo field exists in informazioniPagamento response
@@ -329,10 +345,10 @@ Feature: process tests for chiediInformazioniPagamento
             {
             "idPagamento": "$sessionToken",
             "RRN":10026669,
-            "identificativoPsp": "#psp_AGID#",
+            "identificativoPsp": "#psp#",
             "tipoVersamento": "CP",
-            "identificativoIntermediario": "97735020584",
-            "identificativoCanale": "97735020584_02",
+            "identificativoIntermediario": "#psp#",
+            "identificativoCanale": "#canale#",
             "esitoTransazioneCarta": "123456", 
             "importoTotalePagato": 11.11,
             "timestampOperazione": "2012-04-23T18:25:43.001Z",
@@ -363,15 +379,14 @@ Feature: process tests for chiediInformazioniPagamento
         """
 
         When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
-        Then check esito is KO of nodoChiediStatoRPT response
-        And checks stato contains RPT_ACCETTATA_PSP of nodoChiediStatoRPT response
+        Then checks stato contains RPT_ACCETTATA_PSP of nodoChiediStatoRPT response
         And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
 
     Scenario: Execute nodoChiediAvanzamentoPagamento
         Given the Execute nodoChiediStatoRPT request scenario executed successfully
         When WISP sends REST GET avanzamentoPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-        Then verify the HTTP status code of avanzamentoPagamento is 200
+        Then verify the HTTP status code of avanzamentoPagamento response is 200
     
     Scenario: Execution second rest Esito Carta
         Given the Execute nodoChiediAvanzamentoPagamento scenario executed successfully
@@ -396,10 +411,10 @@ Feature: process tests for chiediInformazioniPagamento
             {
             "idPagamento": "$sessionToken",
             "RRN":10026669,
-            "identificativoPsp": "#psp_AGID#",
+            "identificativoPsp": "#psp#",
             "tipoVersamento": "CP",
-            "identificativoIntermediario": "97735020584",
-            "identificativoCanale": "97735020584_02",
+            "identificativoIntermediario": "#psp#",
+            "identificativoCanale": "#canale#",
             "esitoTransazioneCarta": "123456", 
             "importoTotalePagato": 11.11,
             "timestampOperazione": "2012-04-23T18:25:43.001Z",
@@ -408,7 +423,7 @@ Feature: process tests for chiediInformazioniPagamento
              """
         Then verify the HTTP status code of inoltroEsito/carta response is 200
         And check esito is OK of inoltroEsito/carta response
-        And check url field not exists in inoltroEsito/carta response
+        #And check url field not exists in inoltroEsito/carta response
 
     Scenario: Execute nodoInviaRT request
         Given the Execution second rest Esito Carta scenario executed successfully
@@ -418,10 +433,10 @@ Feature: process tests for chiediInformazioniPagamento
             <soapenv:Header/>
             <soapenv:Body>
             <ws:nodoInviaRT>
-            <identificativoIntermediarioPSP>40000000001</identificativoIntermediarioPSP>
-            <identificativoCanale>40000000001_03</identificativoCanale>
+            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canale#</identificativoCanale>
             <password>pwdpwdpwd</password>
-            <identificativoPSP>40000000001</identificativoPSP>
+            <identificativoPSP>#psp#</identificativoPSP>
             <identificativoDominio>44444444444</identificativoDominio>
             <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
             <codiceContestoPagamento>CCD01</codiceContestoPagamento>
