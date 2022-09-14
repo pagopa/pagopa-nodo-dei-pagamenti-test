@@ -94,11 +94,11 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And EC replies to nodo-dei-pagamenti with the paGetPayment
 
     # SEM_APNV2_19
     Scenario: semantic check 19 (part 1)
         Given the activatePaymentNoticeV2 + paGetPayment scenario executed successfully
+        And EC replies to nodo-dei-pagamenti with the paGetPayment
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2Request
@@ -110,6 +110,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         And noticeNumber with $activatePaymentNoticeV2Request.noticeNumber in activatePaymentNoticeV2
         And idempotencyKey with $activatePaymentNoticeV2Request.idempotencyKey in activatePaymentNoticeV2
         And creditorReferenceId with $paGetPaymentResponse.creditorReferenceId in paGetPayment
+        And EC replies to nodo-dei-pagamenti with the paGetPayment
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
 
