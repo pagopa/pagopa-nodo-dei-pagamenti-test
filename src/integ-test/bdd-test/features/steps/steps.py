@@ -507,9 +507,7 @@ def step_impl(context, elem, value, action):
     if elem != "-":
         value = utils.replace_local_variables(value, context)
         value = utils.replace_global_variables(value, context)
-        # prova
         value = utils.replace_context_variables(value, context)
-        # prova
         xml = utils.manipulate_soap_action(
             getattr(context, action), elem, value)
         setattr(context, action, xml)
@@ -1088,14 +1086,10 @@ def step_impl(context, primitive):
                                        f"30211{str(random.randint(1000000000000, 9999999999999))}")
     setattr(context, primitive, xml)
 
-# prova step
-
 @step('random iuv in context')
 def step_impl(context):
     iuv = str(random.randint(100000000000000, 999999999999999))
     setattr(context, "iuv", iuv)
-
-# prova step
 
 @step("nodo-dei-pagamenti has config parameter {param} set to {value}")
 def step_impl(context, param, value):
