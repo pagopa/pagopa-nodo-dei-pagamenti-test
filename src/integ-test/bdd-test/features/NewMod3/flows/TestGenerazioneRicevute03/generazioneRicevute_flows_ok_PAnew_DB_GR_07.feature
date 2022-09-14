@@ -231,3 +231,8 @@ Feature: process tests for generazioneRicevute [DB_GR_07]
     And through the query payment_status_pay retrieve xml prx_xml at position 0 and save it under the key prx_xml
     #And check value $prx_xml.idPA is equal to value $recipient_station_id
 
+    #POSITION_PAYMENT query
+    And execution query payment_status_pay to get value on the table POSITION_PAYMENT, with the columns * under macro NewMod3 with db name nodo_online
+    And through the query payment_status_pay retrieve param pp1_broker_pa_id at position 0 and save it under the key pp1_broker_pa_id
+    And through the query payment_status_pay retrieve param pp1_station_id at position 0 and save it under the key pp1_station_id
+

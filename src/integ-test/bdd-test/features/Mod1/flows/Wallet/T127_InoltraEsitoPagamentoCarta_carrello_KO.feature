@@ -401,23 +401,25 @@ Feature: process tests for InoltroEsitoCartaCarrello_KO
 
     Scenario: Execution Esito Carta
         Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
-        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT 
+        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte 
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <ws:pspInviaCarrelloRPTResponse>
-            <pspInviaCarrelloRPTResponse>
-            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-            <identificativoCarrello>$nodoInviaCarrelloRPT.identificativoCarrello</identificativoCarrello>
-            <parametriPagamentoImmediato>idBruciatura=$nodoInviaCarrelloRPT.identificativoCarrello</parametriPagamentoImmediato>
-            </pspInviaCarrelloRPTResponse>
-            </ws:pspInviaCarrelloRPTResponse>
-            </soapenv:Body>
+                <soapenv:Header/>
+                <soapenv:Body>
+                    <ws:pspInviaCarrelloRPTCarteResponse>
+                        <pspInviaCarrelloRPTResponse>
+                            <fault>
+                            <faultCode>CANALE_RPT_DUPLICATA</faultCode>
+                            <faultString>bgdhbazhyt</faultString>
+                            <id>idPsp1</id>
+                            </fault>
+                            <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
+                        </pspInviaCarrelloRPTResponse>
+                    </ws:pspInviaCarrelloRPTCarteResponse>
+                </soapenv:Body>
             </soapenv:Envelope>
             """
         When WISP sends REST POST inoltroEsito/carta to nodo-dei-pagamenti
-
             """
             {
             "idPagamento": "$sessionToken",
@@ -433,10 +435,10 @@ Feature: process tests for InoltroEsitoCartaCarrello_KO
             }
              """
         Then verify the HTTP status code of inoltroEsito/carta response is 200
-        And check esito is OK of inoltroEsito/carta response
+        And check esito is KO of inoltroEsito/carta response
         And check url field not exists in inoltroEsito/carta response
-        And check email is Risposta negativa del Canale of informazioniPagamento response 
-        And check motivo is RIFPSP of informazioniPagamento response
+        And check descrizione is Risposta negativa del Canale of inoltroEsito/carta response 
+        And check errorCode is RIFPSP of inoltroEsito/carta response
 
     # Scenario: Execute nodoChiediStatoRPT request
     #     Given the Execution Esito Carta scenario executed successfully
