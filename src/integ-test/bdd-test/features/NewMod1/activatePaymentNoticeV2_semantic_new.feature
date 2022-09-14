@@ -106,11 +106,11 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
 
     Scenario: semantic check 19 (part 2)
         Given the semantic check 19 (part 1) scenario executed successfully
-        And the activatePaymentNoticeV2 + paGetPayment scenario executed successfully
-        And noticeNumber with $activatePaymentNoticeV2Request.noticeNumber in activatePaymentNoticeV2
-        And idempotencyKey with $activatePaymentNoticeV2Request.idempotencyKey in activatePaymentNoticeV2
-        And creditorReferenceId with $activatePaymentNoticeV2Response.creditorReferenceId in paGetPayment
-        And EC replies to nodo-dei-pagamenti with the paGetPayment
+        # And the activatePaymentNoticeV2 + paGetPayment scenario executed successfully
+        # And noticeNumber with $activatePaymentNoticeV2Request.noticeNumber in activatePaymentNoticeV2
+        # And idempotencyKey with $activatePaymentNoticeV2Request.idempotencyKey in activatePaymentNoticeV2
+        # And creditorReferenceId with $activatePaymentNoticeV2Response.creditorReferenceId in paGetPayment
+        # And EC replies to nodo-dei-pagamenti with the paGetPayment
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
 
