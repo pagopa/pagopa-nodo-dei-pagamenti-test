@@ -440,120 +440,127 @@ Feature: process tests for InoltroEsitoCartaCarrello_KO
         And check descrizione is Risposta negativa del Canale of inoltroEsito/carta response 
         And check errorCode is RIFPSP of inoltroEsito/carta response
 
-    # Scenario: Execute nodoChiediStatoRPT request
-    #     Given the Execution Esito Carta scenario executed successfully
-    #     And initial XML nodoChiediStatoRPT
+    Scenario: Execute nodoChiediStatoRPT request
+        Given the Execution Esito Carta scenario executed successfully
+        And initial XML nodoChiediStatoRPT
 
-    #     """
-    #     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-    #     <soapenv:Header/>
-    #     <soapenv:Body>
-    #         <ws:nodoChiediStatoRPT>
-    #             <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
-    #             <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
-    #             <password>pwdpwdpwd</password>
-    #             <identificativoDominio>44444444444</identificativoDominio>
-    #             <identificativoUnivocoVersamento>RPTdaRifSintassiPsp</identificativoUnivocoVersamento>
-    #             <codiceContestoPagamento>CCD01</codiceContestoPagamento>
-    #         </ws:nodoChiediStatoRPT>
-    #     </soapenv:Body>
-    #     </soapenv:Envelope>
-    #     """
+        """
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+        <soapenv:Header/>
+        <soapenv:Body>
+            <ws:nodoChiediStatoRPT>
+                <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
+                <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
+                <password>pwdpwdpwd</password>
+                <identificativoDominio>44444444444</identificativoDominio>
+                <identificativoUnivocoVersamento>RPTdaRifSintassiPsp</identificativoUnivocoVersamento>
+                <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
+            </ws:nodoChiediStatoRPT>
+        </soapenv:Body>
+        </soapenv:Envelope>
+        """
 
-    #     When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
-    #     Then checks stato contains RPT_ACCETTATA_PSP of nodoChiediStatoRPT response
-    #     And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
-    #     And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
+        When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
+        Then check stato field exists in nodoChiediStatoRPT response
+        And checks stato contains RPT_RIFIUTATA_PSP of nodoChiediStatoRPT response
+        And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
+        And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
+        And check url field not exists in nodoChiediStatoRPT response
 
-    # Scenario: Execute nodoChiediAvanzamentoPagamento
-    #     Given the Execute nodoChiediStatoRPT request scenario executed successfully
-    #     When WISP sends REST GET avanzamentoPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-    #     Then verify the HTTP status code of avanzamentoPagamento response is 200
+    Scenario: Execute nodoChiediAvanzamentoPagamento
+        Given the Execute nodoChiediStatoRPT request scenario executed successfully
+        When WISP sends REST GET avanzamentoPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
+        Then verify the HTTP status code of avanzamentoPagamento response is 200
+        And check esito is KO of avanzamentoPagamento response
 
-    # Scenario: Execute nodoInviaRT request
-    #     Given the Execute nodoChiediAvanzamentoPagamento scenario executed successfully
-    #     And initial XML nodoInviaRT
-    #         """
-    #         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-    #         <soapenv:Header/>
-    #         <soapenv:Body>
-    #         <ws:nodoInviaRT>
-    #         <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-    #         <identificativoCanale>#canale#</identificativoCanale>
-    #         <password>pwdpwdpwd</password>
-    #         <identificativoPSP>#psp#</identificativoPSP>
-    #         <identificativoDominio>44444444444</identificativoDominio>
-    #         <identificativoUnivocoVersamento>RPTdaRifSintassiPsp</identificativoUnivocoVersamento>
-    #         <codiceContestoPagamento>CCD01</codiceContestoPagamento>
-    #         <tipoFirma></tipoFirma>
-    #         <forzaControlloSegno>1</forzaControlloSegno>
-    #         <rt>$rtAttachment</rt>
-    #         </ws:nodoInviaRT>
-    #         </soapenv:Body>
-    #         </soapenv:Envelope>
-    #         """
-    #     When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
-    #     Then check esito is OK of nodoInviaRT response
 
-    # Scenario: Execute nodoInviaRT2 request
-    #     Given the Execute nodoInviaRT request scenario executed successfully
-    #     And initial XML nodoInviaRT
-    #         """
-    #                 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-    #         <soapenv:Header/>
-    #         <soapenv:Body>
-    #             <ws:nodoInviaRT>
-    #                 <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-    #                 <identificativoCanale>#canale#</identificativoCanale>
-    #                 <password>pwdpwdpwd</password>
-    #                 <identificativoPSP>#psp#</identificativoPSP>
-    #                 <identificativoDominio>44444444444</identificativoDominio>
-    #                 <identificativoUnivocoVersamento>RPTdaRifPsp</identificativoUnivocoVersamento>
-    #                 <codiceContestoPagamento>CCD01</codiceContestoPagamento>
-    #                 <tipoFirma></tipoFirma>
-    #                 <forzaControlloSegno>1</forzaControlloSegno>
-    #                 <rt>$rt2Attachment</rt>
-    #             </ws:nodoInviaRT>
-    #         </soapenv:Body>
-    #         </soapenv:Envelope>
-    #         """
-    #     Given the Execute nodoInviaRT request scenario executed successfully
-    #     When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
-    #     Then check esito is OK of nodoInviaRT response
+    Scenario: Execute nodoInviaRT request
+        Given the Execute nodoChiediAvanzamentoPagamento scenario executed successfully
+        And initial XML nodoInviaRT
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <ws:nodoInviaRT>
+            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canale#</identificativoCanale>
+            <password>pwdpwdpwd</password>
+            <identificativoPSP>#psp#</identificativoPSP>
+            <identificativoDominio>44444444444</identificativoDominio>
+            <identificativoUnivocoVersamento>RPTdaRifSintassiPsp</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
+            <tipoFirma></tipoFirma>
+            <forzaControlloSegno>1</forzaControlloSegno>
+            <rt>$rtAttachment</rt>
+            </ws:nodoInviaRT>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
+        Then check esito is KO of nodoInviaRT response
 
-    # Scenario: Execution second rest Esito Carta
-    #     Given the Execute nodoInviaRT2 request scenario executed successfully
-    #     And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT 
-    #         """
-    #         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-    #         <soapenv:Header/>
-    #         <soapenv:Body>
-    #         <ws:pspInviaCarrelloRPTResponse>
-    #         <pspInviaCarrelloRPTResponse>
-    #         <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-    #         <identificativoCarrello>$nodoInviaCarrelloRPT.identificativoCarrello</identificativoCarrello>
-    #         <parametriPagamentoImmediato>idBruciatura=$nodoInviaCarrelloRPT.identificativoCarrello</parametriPagamentoImmediato>
-    #         </pspInviaCarrelloRPTResponse>
-    #         </ws:pspInviaCarrelloRPTResponse>
-    #         </soapenv:Body>
-    #         </soapenv:Envelope>
-    #         """
-    #     When WISP sends REST POST inoltroEsito/carta to nodo-dei-pagamenti
+    Scenario: Execute nodoInviaRT2 request
+        Given the Execute nodoInviaRT request scenario executed successfully
+        And initial XML nodoInviaRT
+            """
+                    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+                <ws:nodoInviaRT>
+                    <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+                    <identificativoCanale>#canale#</identificativoCanale>
+                    <password>pwdpwdpwd</password>
+                    <identificativoPSP>#psp#</identificativoPSP>
+                    <identificativoDominio>44444444444</identificativoDominio>
+                    <identificativoUnivocoVersamento>RPTdaRifPsp</identificativoUnivocoVersamento>
+                    <codiceContestoPagamento>$2CCP</codiceContestoPagamento>
+                    <tipoFirma></tipoFirma>
+                    <forzaControlloSegno>1</forzaControlloSegno>
+                    <rt>$rt2Attachment</rt>
+                </ws:nodoInviaRT>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
+        Then check esito is KO of nodoInviaRT response
 
-    #         """
-    #         {
-    #         "idPagamento": "$sessionToken",
-    #         "RRN":10026669,
-    #         "identificativoPsp": "#psp#",
-    #         "tipoVersamento": "CP",
-    #         "identificativoIntermediario": "#psp#",
-    #         "identificativoCanale": "#canale#",
-    #         "esitoTransazioneCarta": "123456", 
-    #         "importoTotalePagato": 11.11,
-    #         "timestampOperazione": "2012-04-23T18:25:43.001Z",
-    #         "codiceAutorizzativo": "123212"
-    #         }
-    #          """
-    #     Then verify the HTTP status code of inoltroEsito/carta response is 200
-    #     And check esito is OK of inoltroEsito/carta response
-    #     And check url field not exists in inoltroEsito/carta response
+    Scenario: Execution second rest Esito Carta
+        Given the Execute nodoInviaRT2 request scenario executed successfully
+        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte 
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+                <soapenv:Header/>
+                <soapenv:Body>
+                    <ws:pspInviaCarrelloRPTCarteResponse>
+                        <pspInviaCarrelloRPTResponse>
+                            <fault>
+                            <faultCode>CANALE_RPT_DUPLICATA</faultCode>
+                            <faultString>bgdhbazhyt</faultString>
+                            <id>idPsp1</id>
+                            </fault>
+                            <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
+                        </pspInviaCarrelloRPTResponse>
+                    </ws:pspInviaCarrelloRPTCarteResponse>
+                </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        When WISP sends REST POST inoltroEsito/carta to nodo-dei-pagamenti
+
+            """
+            {
+            "idPagamento": "$sessionToken",
+            "RRN":10026669,
+            "identificativoPsp": "#psp#",
+            "tipoVersamento": "CP",
+            "identificativoIntermediario": "#psp#",
+            "identificativoCanale": "#canale#",
+            "esitoTransazioneCarta": "123456", 
+            "importoTotalePagato": 11.11,
+            "timestampOperazione": "2012-04-23T18:25:43.001Z",
+            "codiceAutorizzativo": "123212"
+            }
+             """
+        Then verify the HTTP status code of inoltroEsito/carta response is 200
+        And check esito is KO of inoltroEsito/carta response
+        And check url field not exists in inoltroEsito/carta response
+        And check esito is KO1 of inoltroEsito/carta response
