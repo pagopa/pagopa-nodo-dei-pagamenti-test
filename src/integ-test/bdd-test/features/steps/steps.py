@@ -682,7 +682,7 @@ def step_impl(context, tag, value, primitive):
     else:
         node_response = getattr(context, primitive + RESPONSE)
         json_response = node_response.json()
-        founded_value = utils.get_value_from_key(json_response, tag)
+        founded_value = jo.get_value_from_key(json_response, tag)
         print(
             f'check tag "{tag}" - expected: {value}, obtained: {json_response.get(tag)}')
         assert str(founded_value) == value
@@ -721,7 +721,7 @@ def step_impl(context, tag, value, primitive):
         json_response = node_response.json()
         json_response = jo.convert_json_values_toString(json_response)
         print('>>>>>>>>>>>>>>', json_response)
-        find = utils.search_value(json_response, tag, value)
+        find = jo.search_value(json_response, tag, value)
         print(tag)
         print(value)
         print(find)
