@@ -540,7 +540,7 @@ Feature: process tests for InoltroEsitoCartaCarrello
         Given the Execute nodoInviaRT request scenario executed successfully
         And initial XML nodoInviaRT
             """
-                    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header/>
             <soapenv:Body>
                 <ws:nodoInviaRT>
@@ -558,6 +558,5 @@ Feature: process tests for InoltroEsitoCartaCarrello
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        Given the Execute nodoInviaRT request scenario executed successfully
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
