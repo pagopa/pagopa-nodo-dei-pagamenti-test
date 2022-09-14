@@ -103,6 +103,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         Then check outcome is OK of activatePaymentNoticeV2 response
 
     Scenario: semantic check 19 (part 2)
+        Given the semantic check 19 (part 1) scenario executed successfully
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
 
@@ -115,6 +116,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         And wait 1 seconds for expiration
 
     Scenario: semantic check 19.1 (part 2)
+        Given the semantic check 19.1 (part 1) scenario executed successfully
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check faultCode is PPT_PAGAMENTO_IN_CORSO of activatePaymentNoticeV2 response
@@ -129,7 +131,8 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         And wait 1 seconds for expiration
 
     Scenario: semantic check 20 (part 2)
-        Given noticeNumber with 311019801089138300 in activatePaymentNoticeV2
+        Given the semantic check 20 (part 1) scenario executed successfully
+        And noticeNumber with 311019801089138300 in activatePaymentNoticeV2
         And creditorReferenceId with 11019801089138300 in paGetPayment
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
@@ -201,6 +204,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         And wait 1 seconds for expiration
 
     Scenario: semantic check 20.1 (part 2)
+        Given the semantic check 20.1 (part 1) scenario executed successfully
         And noticeNumber with 311019801089138300 in activatePaymentNoticeV2
         And creditorReferenceId with 11019801089138300 in paGetPayment
         And EC replies to nodo-dei-pagamenti with the paGetPayment
@@ -274,6 +278,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         And wait 8 seconds for expiration
 
     Scenario: semantic check 21 (part 2)
+        Given the semantic check 21 (part 1) scenario executed successfully
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check faultCode is PPT_PAGAMENTO_IN_CORSO of activatePaymentNoticeV2 response
@@ -287,7 +292,8 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         And wait 8 seconds for expiration
 
     Scenario: semantic check 21.1 (part 2)
-        Given expirationTime with 1000 in activatePaymentNoticeV2
+        Given the semantic check 21.1 (part 1) scenario executed successfully
+        And expirationTime with 1000 in activatePaymentNoticeV2
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check faultCode is PPT_PAGAMENTO_IN_CORSO of activatePaymentNoticeV2 response
@@ -302,7 +308,8 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         And wait 4 seconds for expiration
 
     Scenario: semantic check 21.2 (part 2)
-        Given expirationTime with 6000 in activatePaymentNoticeV2
+        Given the semantic check 21.2 (part 1) scenario executed successfully
+        And expirationTime with 6000 in activatePaymentNoticeV2
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check faultCode is PPT_PAGAMENTO_IN_CORSO of activatePaymentNoticeV2 response
@@ -319,7 +326,8 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         And wait 4 seconds for expiration
 
     Scenario: semantic check 21.3 (part 2)
-        Given expirationTime with 9000 in activatePaymentNoticeV2
+        Given the semantic check 21.3 (part 1) scenario executed successfully
+        And expirationTime with 9000 in activatePaymentNoticeV2
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check faultCode is PPT_PAGAMENTO_IN_CORSO of activatePaymentNoticeV2 response
@@ -336,7 +344,8 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         And wait 70 seconds for expiration
 
     Scenario: semantic check 22 (part 2)
-        Given expirationTime with 1000 in activatePaymentNoticeV2
+        Given the semantic check 22 (part 1) scenario executed successfully
+        And expirationTime with 1000 in activatePaymentNoticeV2
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check faultCode is PPT_PAGAMENTO_IN_CORSO of activatePaymentNoticeV2 response
@@ -353,7 +362,8 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         And wait 70 seconds for expiration
 
     Scenario: semantic check 22.1 (part 2)
-        Given expirationTime with 1000 in activatePaymentNoticeV2
+        Given the semantic check 22.1 (part 1) scenario executed successfully
+        And expirationTime with 1000 in activatePaymentNoticeV2
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check faultCode is PPT_PAGAMENTO_IN_CORSO of activatePaymentNoticeV2 response
@@ -368,7 +378,8 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         Then check outcome is OK of activatePaymentNoticeV2 response
 
     Scenario: semantic check 23 (part 2)
-        Given idempotencyKey with 60000000001_185806YNxw in activatePaymentNoticeV2
+        Given the semantic check 23 (part 1) scenario executed successfully
+        And idempotencyKey with 60000000001_185806YNxw in activatePaymentNoticeV2
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check faultCode is PPT_PAGAMENTO_IN_CORSO of activatePaymentNoticeV2 response
@@ -382,7 +393,8 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2Request
 
     Scenario: semantic check 23.1 (part 2)
-        Given idempotencyKey with None in activatePaymentNoticeV2
+        Given the semantic check 23.1 (part 1) scenario executed successfully
+        And idempotencyKey with None in activatePaymentNoticeV2
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check faultCode is PPT_PAGAMENTO_IN_CORSO of activatePaymentNoticeV2 response
