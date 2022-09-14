@@ -288,7 +288,7 @@ def random_s():
 def manipulate_json(primitive, key, value):
     TYPE_ELEMENT = 1  # dom element
     # TYPE_VALUE = 3 # dom value
-    my_document = json.load(primitive)
+    my_document = json.loads(primitive)
     if value == "None":
         my_document.remove(key)
 
