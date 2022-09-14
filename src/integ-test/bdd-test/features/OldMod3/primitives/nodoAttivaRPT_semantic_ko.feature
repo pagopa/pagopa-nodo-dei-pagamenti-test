@@ -14,8 +14,8 @@ Feature: Semantic checks KO for nodoAttivaRPT
             <codiceContestoPagamento>#ccp#</codiceContestoPagamento>
             <identificativoIntermediarioPSPPagamento>#psp#</identificativoIntermediarioPSPPagamento>
             <identificativoCanalePagamento>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanalePagamento>
-            <codificaInfrastrutturaPSP>QR-CODE</codificaInfrastrutturaPSP>
-            <codiceIdRPT><bc:BarCode><bc:Gln>1234567890122</bc:Gln><bc:CodStazPA>01</bc:CodStazPA><bc:AuxDigit>0</bc:AuxDigit><bc:CodIUV>112222222222222</bc:CodIUV></bc:BarCode></codiceIdRPT>
+            <codificaInfrastrutturaPSP>BARCODE-128-AIM</codificaInfrastrutturaPSP>
+            <codiceIdRPT><aim:aim128> <aim:CCPost>#ccPoste#</aim:CCPost> <aim:CodStazPA>#cod_segr#</aim:CodStazPA> <aim:AuxDigit>0</aim:AuxDigit>  <aim:CodIUV>#iuv#</aim:CodIUV></aim:aim128></codiceIdRPT>
             <datiPagamentoPSP>
             <importoSingoloVersamento>10.00</importoSingoloVersamento>
             <!--Optional:-->
@@ -141,8 +141,93 @@ Feature: Semantic checks KO for nodoAttivaRPT
     When psp sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
     Then check faultCode is PPT_CANALE_DISABILITATO of nodoAttivaRPT response
 
-   # identificativoCanalePagamento value check: identificativoCanalePagamento disabled [ARPTSEM12]
+  # codificaInfrastrutturaPSP value check: codificaInfrastrutturaPSP not in configuration [ARPTSEM12]
   Scenario: Check PPT_CODIFICA_PSP_SCONOSCIUTA error on wrong codificaInfrastrutturaPSP
     Given codificaInfrastrutturaPSP with infrastrutturaPSP in nodoAttivaRPT
     When psp sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
     Then check faultCode is PPT_CODIFICA_PSP_SCONOSCIUTA of nodoAttivaRPT response
+
+
+####################### 14/09/2022 #######################
+
+  # # IUV value check: IUV dimension check  [ARPTSEM13]
+  # Scenario: Check PPT_SEMANTICA error on wrong IUV dimension
+  #   Given bc:AuxDigit with 0 in nodoAttivaRPT
+  #   And bc:CodIUV with abeft54bd8opr321 in nodoAttivaRPT 
+  #   When psp sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
+  #   Then check faultCode is PPT_SEMANTICA of nodoAttivaRPT response
+
+  # # IUV value check: IUV dimension check  [ARPTSEM14]
+  # Scenario: Check PPT_SEMANTICA error on wrong IUV dimension
+  #   Given bc:AuxDigit with 2 in nodoAttivaRPT
+  #   And bc:CodIUV with abeft54bd8opr32114 in nodoAttivaRPT 
+  #   When psp sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
+  #   Then check faultCode is PPT_SEMANTICA of nodoAttivaRPT response
+
+
+  # IUV value check: IUV dimension check 
+  Scenario Outline: Check PPT_SEMANTICA error on wrong IUV dimension
+    Given <elem> with <value> in nodoAttivaRPT
+    And <tag> with <tag_value> in nodoAttivaRPT
+    When psp sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
+    Then check faultCode is PPT_SEMANTICA of nodoAttivaRPT response
+    Examples:
+      | elem         | value | tag        | tag_value          | SoapUI     |
+      | aim:AuxDigit | 0     | aim:CodIUV | abeft54bd8opr321   | ARPTSEM13  |
+      | aim:AuxDigit | 2     | aim:CodIUV | abeft54bd8opr32114 | ARPTSEM14  |
+  
+  # codiceIdRPT value check: segregation code check  [ARPTSEM15]
+  Scenario: Check PPT_STAZIONE_INT_PA_SCONOSCIUTA error on segregation code not in configuration
+    Given aim:AuxDigit with 3 in nodoAttivaRPT
+    And aim:CodIUV with 00 in nodoAttivaRPT 
+    When psp sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
+    Then check faultCode is PPT_STAZIONE_INT_PA_SCONOSCIUTA of nodoAttivaRPT response
+
+  # importoSingoloVersamento KO value check  [ARPTSEM16]
+  Scenario: Check PPT_STAZIONE_INT_PA_ERRORE_RESPONSE error on importoSingoloVersamento not in configuration
+    Given importoSingoloVersamento with 0.00 in nodoAttivaRPT
+    When psp sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
+    Then check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of nodoAttivaRPT response    
+
+  # identificativoStazioneIntermediarioPA value check [ARPTSEM24]
+  Scenario: Check PPT_STAZIONE_INT_PA_SCONOSCIUTA error on identificativoStazioneIntermediarioPA not in configuration
+    Given aim:AuxDigit with 1 in nodoAttivaRPT
+    And aim:CodIUV with abeft54bd8opr3210 in nodoAttivaRPT
+    And identificativoStazioneIntermediarioPA with 34 in nodoAttivaRPT
+    When psp sends SOAP nodoAttivaRPT to nodo-dei-pagamenti 
+    Then check faultCode is PPT_STAZIONE_INT_PA_SCONOSCIUTA of nodoAttivaRPT response
+
+  # identificativoStazioneIntermediarioPA value check: identificativoStazioneIntermediarioPA disabled [ARPTSEM25]
+  Scenario: Check PPT_STAZIONE_INT_PA_DISABILITATA error on identificativoStazioneIntermediarioPA disabled
+    Given identificativoStazioneIntermediarioPA with NOT_ENABLED in nodoAttivaRPT
+    When psp sends SOAP nodoAttivaRPT to nodo-dei-pagamenti 
+    Then check faultCode is PPT_STAZIONE_INT_PA_DISABILITATA of nodoAttivaRPT response
+  
+  # identificativoDominio value check: identificativoDominio not in configuration [ARPTSEM26]
+  Scenario: Check PPT_DOMINIO_SCONOSCIUTO error on identificativoDominio not in configuration
+    Given identificativoDominio with NULL in nodoAttivaRPT
+    When psp sends SOAP nodoAttivaRPT to nodo-dei-pagamenti 
+    Then check faultCode is PPT_DOMINIO_SCONOSCIUTO of nodoAttivaRPT response
+  
+  # identificativoDominio value check: identificativoDominio disabled [ARPTSEM27]
+  Scenario: Check PPT_DOMINIO_SCONOSCIUTO error on identificativoDominio disabled
+    Given identificativoDominio with NOT_ENABLED in nodoAttivaRPT
+    When psp sends SOAP nodoAttivaRPT to nodo-dei-pagamenti 
+    Then check faultCode is PPT_DOMINIO_SCONOSCIUTO of nodoAttivaRPT response
+    
+  # identificativoCanale value check: identificativoCanale not in configuration [ARPTSEM28]
+  Scenario: Check PPT_AUTORIZZAZIONE error on identificativoCanale not in psp configuration
+    Given identificativoCanale with canale3 nodoAttivaRPT
+    When psp sends SOAP nodoAttivaRPT to nodo-dei-pagamenti 
+    Then check faultCode is PPT_AUTORIZZAZIONE of nodoAttivaRPT response
+  
+  Scenario Outline: Check PPT_SEMANTICA error 
+    Given <elem> with <value> in nodoAttivaRPT
+    And <tag> with <tag_value> in nodoAttivaRPT 
+    And <tag1> with <tag_value1> in nodoAttivaRPT 
+    When psp sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
+    Then check faultCode is PPT_SEMANTICA of nodoAttivaRPT response
+    Examples:
+      | elem        | value             | tag         | tag_value   | tag1           | tag_value1             | SoapUI    |
+      | bc:Gln      | 9000000000111     | bc:AuxDigit | 2           | bc:CodIUV      | 123456789012345        | ARPTSEM29 |
+      | bc:Gln      | 9000000000111     | bc:AuxDigit | 0           | bc:CodStazPA   | None                   | ARPTSEM30 |
