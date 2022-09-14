@@ -452,7 +452,26 @@ Feature: process tests for chiediInformazioniPagamento
 
     Scenario: Execute nodoInviaRT2 request
         Given the Execute nodoInviaRT request scenario executed successfully
-        And rt with $rt2Attachment in nodoInviaRT
-        And identificativoUnivocoVersamento with $2IUV in nodoInviaRT
+        And initial XML nodoInviaRT
+            """
+                    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+                <ws:nodoInviaRT>
+                    <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+                    <identificativoCanale>#canale#</identificativoCanale>
+                    <password>pwdpwdpwd</password>
+                    <identificativoPSP>#psp#</identificativoPSP>
+                    <identificativoDominio>44444444444</identificativoDominio>
+                    <identificativoUnivocoVersamento>$2IUV</identificativoUnivocoVersamento>
+                    <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+                    <tipoFirma></tipoFirma>
+                    <forzaControlloSegno>1</forzaControlloSegno>
+                    <rt>$rt2Attachment</rt>
+                </ws:nodoInviaRT>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        Given the Execute nodoInviaRT request scenario executed successfully
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
