@@ -133,6 +133,8 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
     Scenario: semantic check 20 (part 2)
         Given the semantic check 20 (part 1) scenario executed successfully
         And noticeNumber with 311019801089138300 in activatePaymentNoticeV2
+        And creditorReferenceId with 11019801089138300 in paGetPayment
+        And EC replies to nodo-dei-pagamenti with the paGetPayment
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check faultCode is PPT_ERRORE_IDEMPOTENZA of activatePaymentNoticeV2 response
@@ -204,6 +206,8 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
     Scenario: semantic check 20.1 (part 2)
         Given the semantic check 20.1 (part 1) scenario executed successfully
         And noticeNumber with 311019801089138300 in activatePaymentNoticeV2
+        And creditorReferenceId with 11019801089138300 in paGetPayment
+        And EC replies to nodo-dei-pagamenti with the paGetPayment
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         And wait 1 seconds for expiration
