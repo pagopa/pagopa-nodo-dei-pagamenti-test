@@ -698,7 +698,7 @@ def step_impl(context, tag, value, primitive):
 
 
 # controlla che il valore value sia una sottostringa del contentuo del tag
-@then('check {value} is a substring of {tag} content of {primitive} response')
+@then('check substring {value} in {tag} content of {primitive} response')
 def step_impl(context, tag, value, primitive):
     soap_response = getattr(context, primitive + RESPONSE)
     value = utils.replace_local_variables(value, context)

@@ -563,4 +563,4 @@ Feature: process tests for InoltroEsitoCartaCarrello_KO
         Then verify the HTTP status code of inoltroEsito/carta response is 200
         And check esito is KO of inoltroEsito/carta response
         And check url field not exists in inoltroEsito/carta response
-        And check KO1 is a substring of inoltroEsito/carta content of inoltroEsito/carta response
+        And check substring KO1 in descrizione content of inoltroEsito/carta response
