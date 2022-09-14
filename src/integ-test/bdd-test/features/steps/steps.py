@@ -221,7 +221,7 @@ def step_impl(context):
     if "#ccp1#" in payload:
         ccp1 = str(utils.current_milli_time())
         payload = payload.replace('#ccp1#', ccp1)
-        setattr(context, "ccp1", ccp1)
+        setattr(context, "1ccp", ccp1)
 
     if "#CCP#" in payload:
         CCP = 'CCP' + '-' + \
@@ -352,6 +352,11 @@ def step_impl(context, number):
         payload = payload.replace(f'#IUV{number}#', IUV)
         setattr(context, f'{number}IUV', IUV)
 
+    if f"#ccp{number}#" in payload:
+        ccp = str(utils.current_milli_time() + '1')
+        payload = payload.replace(f'#ccp{number}#', ccp)
+        setattr(context, f"{number}ccp", ccp)
+
     """
     if "#ccp#" in payload:
         ccp = str(random.randint(100000000000000, 999999999999999))
@@ -382,8 +387,14 @@ def step_impl(context):
 
     if '#date#' in payload:
         payload = payload.replace('#date#', date)
+
     if "#timedate#" in payload:
         payload = payload.replace('#timedate#', timedate)
+
+    if "#ccp#" in payload:
+        ccp = str(utils.current_milli_time())
+        payload = payload.replace('#ccp#', ccp)
+        setattr(context, "ccp", ccp)
     
     setattr(context, 'rt', payload)
     payload_b = bytes(payload, 'ascii')
