@@ -4,7 +4,7 @@ Feature: syntax checks for closePayment outcome OK
  Given systems up
 
  Scenario: closePayment
-    Given initial JSON closePayment
+    Given initial JSON /v1/closepayment
     """
         {"paymentTokens": [
         "a3738f8bff1f4a32998fc197bd0a6b05"
@@ -19,11 +19,11 @@ Feature: syntax checks for closePayment outcome OK
         "fee": 2.00,
         "timestampOperation": "2033-04-23T18:25:43Z",
         "additionalPaymentInformations": {
-        "transactionId": "#transaction_id#",
-        "outcomePaymentGateway": "EFF",
-        "authorizationCode": "resOK"
+          "transactionId": "#transaction_id#",
+          "outcomePaymentGateway": "EFF",
+          "authorizationCode": "resOK"
         }
-        }    
+        }
     """
 
 
@@ -31,11 +31,11 @@ Feature: syntax checks for closePayment outcome OK
 # element value check
 Scenario Outline: Check syntax error on invalid body element value
     Given the closePayment scenario executed successfully
-    And <key> and <value> in json closePayment
-    When WISP sends rest POST closePayment to nodo-dei-pagamenti
-    Then verify the HTTP status code of closePayment response is 400
-    And check esito is KO of closePayment response
-    And check descrizione is "<elem> invalido" of closePayment response 
+    And <key> and <value> in rest /v1/closepayment
+    When WISP sends rest POST /v1/closepayment to nodo-dei-pagamenti
+    Then verify the HTTP status code of /v1/closepayment response is 400
+    And check esito is KO of /v1/closepayment response
+    And check descrizione is "<elem> invalido" of /v1/closepayment response 
 
 Examples:       
       | elem                           | value                                 | soapUI test |

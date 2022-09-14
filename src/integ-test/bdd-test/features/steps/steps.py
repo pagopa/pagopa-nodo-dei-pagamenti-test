@@ -2240,7 +2240,7 @@ def step_impl(context, primitive):
     setattr(context, primitive, payload)
 
 
-@given('{key} and {value} in json {primitive}')
+@given('{key} and {value} in rest {primitive}')
 def step_impl(context, key, value, primitive):
     # use - to skip
     if key != "-":
