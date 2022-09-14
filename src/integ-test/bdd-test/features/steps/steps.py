@@ -171,9 +171,6 @@ def step_impl(context, primitive):
         payload = payload.replace('$identificativoFlusso', getattr(
             context, 'identificativoFlusso'))
 
-    if '$1ccp' in payload:
-        payload = payload.replace('$1ccp', getattr(context, 'ccp1'))
-
     if '$2ccp' in payload:
         payload = payload.replace('$2ccp', getattr(context, 'ccp2'))
 
