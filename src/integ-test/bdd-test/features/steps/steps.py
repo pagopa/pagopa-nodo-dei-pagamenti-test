@@ -776,7 +776,10 @@ def step_impl(context, tag, primitive):
         my_document = parseString(soap_response.content)
         assert len(my_document.getElementsByTagName(tag)) == 0
     else:
-        assert False
+        node_response = getattr(context, primitive + RESPONSE)
+        json_response = node_response.json()
+        find = jo.search_tag(json_response, tag)
+        assert find
 
 
 # TODO improve with greater/equals than options
