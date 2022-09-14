@@ -222,7 +222,7 @@ Feature: process tests for notificaAnnullamento_Carrello_2RPT-T139B
             </soapenv:Envelope>
             """
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
-        Then check esito is OK of nodoInviaCarrelloRPT response
+        Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
         And check url contains acardste of nodoInviaCarrelloRPT response
         And retrieve session token from $nodoInviaCarrelloRPTResponse.url
 
