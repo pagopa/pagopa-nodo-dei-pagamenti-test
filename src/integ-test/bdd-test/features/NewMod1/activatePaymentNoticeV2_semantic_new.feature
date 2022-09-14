@@ -2,8 +2,8 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
 
     Background:
         Given systems up
-
-    Scenario: activatePaymentNoticeV2
+    @wip
+    Scenario: activatePaymentNoticeV2 + paGetPayment
         Given initial XML activatePaymentNoticeV2
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
@@ -95,26 +95,28 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
             </soapenv:Envelope>
             """
         And EC replies to nodo-dei-pagamenti with the paGetPayment
-
+    @wip
     # SEM_APNV2_19
     Scenario: semantic check 19 (part 1)
-        Given the activatePaymentNoticeV2 scenario executed successfully
+        Given the activatePaymentNoticeV2 + paGetPayment scenario executed successfully
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2Request
-
+        And saving paGetPayment request in paGetPaymentResponse
+    @wip
     Scenario: semantic check 19 (part 2)
         Given the semantic check 19 (part 1) scenario executed successfully
-        And the activatePaymentNoticeV2 scenario executed successfully
+        And the activatePaymentNoticeV2 + paGetPayment scenario executed successfully
         And noticeNumber with $activatePaymentNoticeV2Request.noticeNumber in activatePaymentNoticeV2
         And idempotencyKey with $activatePaymentNoticeV2Request.idempotencyKey in activatePaymentNoticeV2
+        And creditorReferenceId with $paGetPaymentResponse.creditorReferenceId in paGetPayment
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
 
     # SEM_APNV2_19.1
     Scenario: semantic check 19.1 (part 1)
         Given nodo-dei-pagamenti DEV has config parameter useIdempotency set to false
-        And the activatePaymentNoticeV2 scenario executed successfully
+        And the activatePaymentNoticeV2 + paGetPayment scenario executed successfully
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2Request
@@ -122,28 +124,18 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
 
     Scenario: semantic check 19.1 (part 2)
         Given the semantic check 19.1 (part 1) scenario executed successfully
-        And the activatePaymentNoticeV2 scenario executed successfully
+        And the activatePaymentNoticeV2 + paGetPayment scenario executed successfully
         And noticeNumber with $activatePaymentNoticeV2Request.noticeNumber in activatePaymentNoticeV2
         And idempotencyKey with $activatePaymentNoticeV2Request.idempotencyKey in activatePaymentNoticeV2
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check faultCode is PPT_PAGAMENTO_IN_CORSO of activatePaymentNoticeV2 response
         And nodo-dei-pagamenti DEV has config parameter useIdempotency set to true
-        And checks the value None of the record at column ID of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
-        And checks the value None of the record at column PRIMITIVA of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
-        And checks the value None of the record at column PSP_ID of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
-        And checks the value None of the record at column PA_FISCAL_CODE of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
-        And checks the value None of the record at column NOTICE_ID of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
-        And checks the value None of the record at column IDEMPOTENCY_KEY of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
-        And checks the value None of the record at column TOKEN of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
-        And checks the value None of the record at column VALID_TO of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
-        And checks the value None of the record at column HASH_REQUEST of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
-        And checks the value None of the record at column RESPONSE of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
-        And checks the value None of the record at column INSERTED_TIMESTAMP of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
+        And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
 
     # SEM_APNV2_20
     Scenario: semantic check 20 (part 1)
-        Given the activatePaymentNoticeV2 scenario executed successfully
+        Given the activatePaymentNoticeV2 + paGetPayment scenario executed successfully
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2Request
@@ -151,7 +143,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
 
     Scenario: semantic check 20 (part 2)
         Given the semantic check 20 (part 1) scenario executed successfully
-        And the activatePaymentNoticeV2 scenario executed successfully
+        And the activatePaymentNoticeV2 + paGetPayment scenario executed successfully
         And idempotencyKey with $activatePaymentNoticeV2Request.idempotencyKey in activatePaymentNoticeV2
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNoticeV2 response
@@ -160,7 +152,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
 
     Scenario: semantic check 20 (part 3)
         Given the semantic check 20 (part 1) scenario executed successfully
-        And the activatePaymentNoticeV2 scenario executed successfully
+        And the activatePaymentNoticeV2 + paGetPayment scenario executed successfully
         And idempotencyKey with $activatePaymentNoticeV2Request.idempotencyKey in activatePaymentNoticeV2
         And noticeNumber with $activatePaymentNoticeV2Request.noticeNumber in activatePaymentNoticeV2
         And fiscalCode with 77777777777 in activatePaymentNoticeV2
@@ -171,7 +163,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
 
     Scenario: semantic check 20 (part 4)
         Given the semantic check 20 (part 1) scenario executed successfully
-        And the activatePaymentNoticeV2 scenario executed successfully
+        And the activatePaymentNoticeV2 + paGetPayment scenario executed successfully
         And idempotencyKey with $activatePaymentNoticeV2Request.idempotencyKey in activatePaymentNoticeV2
         And noticeNumber with $activatePaymentNoticeV2Request.noticeNumber in activatePaymentNoticeV2
         And amount with 6.00 in activatePaymentNoticeV2
@@ -182,7 +174,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
 
     Scenario: semantic check 20 (part 5)
         Given the semantic check 20 (part 1) scenario executed successfully
-        And the activatePaymentNoticeV2 scenario executed successfully
+        And the activatePaymentNoticeV2 + paGetPayment scenario executed successfully
         And idempotencyKey with $activatePaymentNoticeV2Request.idempotencyKey in activatePaymentNoticeV2
         And noticeNumber with $activatePaymentNoticeV2Request.noticeNumber in activatePaymentNoticeV2
         And dueDate with 2021-12-16 in activatePaymentNoticeV2
@@ -193,7 +185,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
 
     Scenario: semantic check 20 (part 6)
         Given the semantic check 20 (part 1) scenario executed successfully
-        And the activatePaymentNoticeV2 scenario executed successfully
+        And the activatePaymentNoticeV2 + paGetPayment scenario executed successfully
         And idempotencyKey with $activatePaymentNoticeV2Request.idempotencyKey in activatePaymentNoticeV2
         And noticeNumber with $activatePaymentNoticeV2Request.noticeNumber in activatePaymentNoticeV2
         And paymentNote with medatati in activatePaymentNoticeV2
@@ -204,7 +196,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
 
     Scenario: semantic check 20 (part 7)
         Given the semantic check 20 (part 1) scenario executed successfully
-        And the activatePaymentNoticeV2 scenario executed successfully
+        And the activatePaymentNoticeV2 + paGetPayment scenario executed successfully
         And idempotencyKey with $activatePaymentNoticeV2Request.idempotencyKey in activatePaymentNoticeV2
         And noticeNumber with $activatePaymentNoticeV2Request.noticeNumber in activatePaymentNoticeV2
         And dueDate with None in activatePaymentNoticeV2
@@ -215,7 +207,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
 
     Scenario: semantic check 20 (part 8)
         Given the semantic check 20 (part 1) scenario executed successfully
-        And the activatePaymentNoticeV2 scenario executed successfully
+        And the activatePaymentNoticeV2 + paGetPayment scenario executed successfully
         And idempotencyKey with $activatePaymentNoticeV2Request.idempotencyKey in activatePaymentNoticeV2
         And noticeNumber with $activatePaymentNoticeV2Request.noticeNumber in activatePaymentNoticeV2
         And expirationTime with None in activatePaymentNoticeV2
@@ -226,7 +218,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
 
     Scenario: semantic check 20 (part 9)
         Given the semantic check 20 (part 1) scenario executed successfully
-        And the activatePaymentNoticeV2 scenario executed successfully
+        And the activatePaymentNoticeV2 + paGetPayment scenario executed successfully
         And idempotencyKey with $activatePaymentNoticeV2Request.idempotencyKey in activatePaymentNoticeV2
         And noticeNumber with $activatePaymentNoticeV2Request.noticeNumber in activatePaymentNoticeV2
         And paymentNote with None in activatePaymentNoticeV2
@@ -237,7 +229,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
     # SEM_APNV2_20.1
     Scenario: semantic check 20.1 (part 1)
         Given nodo-dei-pagamenti DEV has config parameter useIdempotency set to false
-        And the activatePaymentNoticeV2 scenario executed successfully
+        And the activatePaymentNoticeV2 + paGetPayment scenario executed successfully
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2Request
@@ -245,7 +237,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
 
     Scenario: semantic check 20.1 (part 2)
         Given the semantic check 20.1 (part 1) scenario executed successfully
-        And the activatePaymentNoticeV2 scenario executed successfully
+        And the activatePaymentNoticeV2 + paGetPayment scenario executed successfully
         And idempotencyKey with $activatePaymentNoticeV2Request.idempotencyKey in activatePaymentNoticeV2
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
@@ -253,7 +245,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
 
     Scenario: semantic check 20.1 (part 3)
         Given the semantic check 20.1 (part 1) scenario executed successfully
-        And the activatePaymentNoticeV2 scenario executed successfully
+        And the activatePaymentNoticeV2 + paGetPayment scenario executed successfully
         And idempotencyKey with $activatePaymentNoticeV2Request.idempotencyKey in activatePaymentNoticeV2
         And noticeNumber with $activatePaymentNoticeV2Request.noticeNumber in activatePaymentNoticeV2
         And fiscalCode with 77777777777 in activatePaymentNoticeV2
@@ -263,7 +255,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
 
     Scenario: semantic check 20.1 (part 4)
         Given the semantic check 20.1 (part 1) scenario executed successfully
-        And the activatePaymentNoticeV2 scenario executed successfully
+        And the activatePaymentNoticeV2 + paGetPayment scenario executed successfully
         And idempotencyKey with $activatePaymentNoticeV2Request.idempotencyKey in activatePaymentNoticeV2
         And noticeNumber with $activatePaymentNoticeV2Request.noticeNumber in activatePaymentNoticeV2
         And amount with 6.00 in activatePaymentNoticeV2
@@ -274,7 +266,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
 
     Scenario: semantic check 20.1 (part 5)
         Given the semantic check 20.1 (part 1) scenario executed successfully
-        And the activatePaymentNoticeV2 scenario executed successfully
+        And the activatePaymentNoticeV2 + paGetPayment scenario executed successfully
         And idempotencyKey with $activatePaymentNoticeV2Request.idempotencyKey in activatePaymentNoticeV2
         And noticeNumber with $activatePaymentNoticeV2Request.noticeNumber in activatePaymentNoticeV2
         And dueDate with 2021-12-16 in activatePaymentNoticeV2
@@ -295,7 +287,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
 
     Scenario: semantic check 20.1 (part 7)
         Given the semantic check 20.1 (part 1) scenario executed successfully
-        And the activatePaymentNoticeV2 scenario executed successfully
+        And the activatePaymentNoticeV2 + paGetPayment scenario executed successfully
         And idempotencyKey with $activatePaymentNoticeV2Request.idempotencyKey in activatePaymentNoticeV2
         And noticeNumber with $activatePaymentNoticeV2Request.noticeNumber in activatePaymentNoticeV2
         And dueDate with None in activatePaymentNoticeV2
@@ -306,7 +298,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
 
     Scenario: semantic check 20.1 (part 8)
         Given the semantic check 20.1 (part 1) scenario executed successfully
-        And the activatePaymentNoticeV2 scenario executed successfully
+        And the activatePaymentNoticeV2 + paGetPayment scenario executed successfully
         And idempotencyKey with $activatePaymentNoticeV2Request.idempotencyKey in activatePaymentNoticeV2
         And noticeNumber with $activatePaymentNoticeV2Request.noticeNumber in activatePaymentNoticeV2
         And expirationTime with None in activatePaymentNoticeV2
@@ -317,7 +309,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
 
     Scenario: semantic check 20.1 (part 9)
         Given the semantic check 20.1 (part 1) scenario executed successfully
-        And the activatePaymentNoticeV2 scenario executed successfully
+        And the activatePaymentNoticeV2 + paGetPayment scenario executed successfully
         And idempotencyKey with $activatePaymentNoticeV2Request.idempotencyKey in activatePaymentNoticeV2
         And noticeNumber with $activatePaymentNoticeV2Request.noticeNumber in activatePaymentNoticeV2
         And paymentNote with None in activatePaymentNoticeV2
@@ -326,21 +318,11 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         And check faultCode is PPT_PAGAMENTO_IN_CORSO of activatePaymentNoticeV2 response
         And wait 1 seconds for expiration
         And nodo-dei-pagamenti DEV has config parameter useIdempotency set to true
-        And checks the value None of the record at column ID of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
-        And checks the value None of the record at column PRIMITIVA of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
-        And checks the value None of the record at column PSP_ID of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
-        And checks the value None of the record at column PA_FISCAL_CODE of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
-        And checks the value None of the record at column NOTICE_ID of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
-        And checks the value None of the record at column IDEMPOTENCY_KEY of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
-        And checks the value None of the record at column TOKEN of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
-        And checks the value None of the record at column VALID_TO of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
-        And checks the value None of the record at column HASH_REQUEST of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
-        And checks the value None of the record at column RESPONSE of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
-        And checks the value None of the record at column INSERTED_TIMESTAMP of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
+        And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
 
     # SEM_APNV2_21
     Scenario: semantic check 21 (part 1)
-        Given the activatePaymentNoticeV2 scenario executed successfully
+        Given the activatePaymentNoticeV2 + paGetPayment scenario executed successfully
         And expirationTime with 6000 in activatePaymentNoticeV2
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
@@ -349,7 +331,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
 
     Scenario: semantic check 21 (part 2)
         Given the semantic check 21 (part 1) scenario executed successfully
-        And the activatePaymentNoticeV2 scenario executed successfully
+        And the activatePaymentNoticeV2 + paGetPayment scenario executed successfully
         And idempotencyKey with $activatePaymentNoticeV2Request.idempotencyKey in activatePaymentNoticeV2
         And noticeNumber with $activatePaymentNoticeV2Request.noticeNumber in activatePaymentNoticeV2
         And expirationTime with 6000 in activatePaymentNoticeV2
@@ -359,7 +341,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
 
     # SEM_APNV2_21.1
     Scenario: semantic check 21.1 (part 1)
-        Given the activatePaymentNoticeV2 scenario executed successfully
+        Given the activatePaymentNoticeV2 + paGetPayment scenario executed successfully
         And expirationTime with 6000 in activatePaymentNoticeV2
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
@@ -368,7 +350,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
 
     Scenario: semantic check 21.1 (part 2)
         Given the semantic check 21.1 (part 1) scenario executed successfully
-        And the activatePaymentNoticeV2 scenario executed successfully
+        And the activatePaymentNoticeV2 + paGetPayment scenario executed successfully
         And idempotencyKey with $activatePaymentNoticeV2Request.idempotencyKey in activatePaymentNoticeV2
         And noticeNumber with $activatePaymentNoticeV2Request.noticeNumber in activatePaymentNoticeV2
         And expirationTime with 1000 in activatePaymentNoticeV2
@@ -379,7 +361,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
     # SEM_APNV2_21.2
     Scenario: semantic check 21.2 (part 1)
         Given nodo-dei-pagamenti DEV has config parameter useIdempotency set to false
-        And the activatePaymentNoticeV2 scenario executed successfully
+        And the activatePaymentNoticeV2 + paGetPayment scenario executed successfully
         And expirationTime with 2000 in activatePaymentNoticeV2
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
@@ -388,7 +370,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
 
     Scenario: semantic check 21.2 (part 2)
         Given the semantic check 21.2 (part 1) scenario executed successfully
-        And the activatePaymentNoticeV2 scenario executed successfully
+        And the activatePaymentNoticeV2 + paGetPayment scenario executed successfully
         And idempotencyKey with $activatePaymentNoticeV2Request.idempotencyKey in activatePaymentNoticeV2
         And noticeNumber with $activatePaymentNoticeV2Request.noticeNumber in activatePaymentNoticeV2
         And expirationTime with 6000 in activatePaymentNoticeV2
@@ -396,22 +378,12 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check faultCode is PPT_PAGAMENTO_IN_CORSO of activatePaymentNoticeV2 response
         And nodo-dei-pagamenti DEV has config parameter useIdempotency set to true
-        And checks the value None of the record at column ID of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
-        And checks the value None of the record at column PRIMITIVA of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
-        And checks the value None of the record at column PSP_ID of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
-        And checks the value None of the record at column PA_FISCAL_CODE of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
-        And checks the value None of the record at column NOTICE_ID of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
-        And checks the value None of the record at column IDEMPOTENCY_KEY of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
-        And checks the value None of the record at column TOKEN of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
-        And checks the value None of the record at column VALID_TO of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
-        And checks the value None of the record at column HASH_REQUEST of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
-        And checks the value None of the record at column RESPONSE of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
-        And checks the value None of the record at column INSERTED_TIMESTAMP of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
+        And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
 
     # SEM_APNV2_21.3
     Scenario: semantic check 21.3 (part 1)
         Given nodo-dei-pagamenti DEV has config parameter useIdempotency set to false
-        And the activatePaymentNoticeV2 scenario executed successfully
+        And the activatePaymentNoticeV2 + paGetPayment scenario executed successfully
         And expirationTime with 2000 in activatePaymentNoticeV2
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
@@ -420,7 +392,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
 
     Scenario: semantic check 21.3 (part 2)
         Given the semantic check 21.3 (part 1) scenario executed successfully
-        And the activatePaymentNoticeV2 scenario executed successfully
+        And the activatePaymentNoticeV2 + paGetPayment scenario executed successfully
         And idempotencyKey with $activatePaymentNoticeV2Request.idempotencyKey in activatePaymentNoticeV2
         And noticeNumber with $activatePaymentNoticeV2Request.noticeNumber in activatePaymentNoticeV2
         And expirationTime with 9000 in activatePaymentNoticeV2
@@ -428,22 +400,12 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check faultCode is PPT_PAGAMENTO_IN_CORSO of activatePaymentNoticeV2 response
         And nodo-dei-pagamenti DEV has config parameter useIdempotency set to true
-        And checks the value None of the record at column ID of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
-        And checks the value None of the record at column PRIMITIVA of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
-        And checks the value None of the record at column PSP_ID of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
-        And checks the value None of the record at column PA_FISCAL_CODE of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
-        And checks the value None of the record at column NOTICE_ID of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
-        And checks the value None of the record at column IDEMPOTENCY_KEY of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
-        And checks the value None of the record at column TOKEN of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
-        And checks the value None of the record at column VALID_TO of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
-        And checks the value None of the record at column HASH_REQUEST of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
-        And checks the value None of the record at column RESPONSE of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
-        And checks the value None of the record at column INSERTED_TIMESTAMP of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
+        And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
 
     # SEM_APNV2_22
     Scenario: semantic check 22 (part 1)
         Given nodo-dei-pagamenti DEV has config parameter default_idempotency_key_validity_minutes set to 1
-        And the activatePaymentNoticeV2 scenario executed successfully
+        And the activatePaymentNoticeV2 + paGetPayment scenario executed successfully
         And expirationTime with 120000 in activatePaymentNoticeV2
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
@@ -452,7 +414,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
 
     Scenario: semantic check 22 (part 2)
         Given the semantic check 22 (part 1) scenario executed successfully
-        And the activatePaymentNoticeV2 scenario executed successfully
+        And the activatePaymentNoticeV2 + paGetPayment scenario executed successfully
         And idempotencyKey with $activatePaymentNoticeV2Request.idempotencyKey in activatePaymentNoticeV2
         And noticeNumber with $activatePaymentNoticeV2Request.noticeNumber in activatePaymentNoticeV2
         And expirationTime with 1000 in activatePaymentNoticeV2
@@ -465,7 +427,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
     Scenario: semantic check 22.1 (part 1)
         Given nodo-dei-pagamenti DEV has config parameter default_idempotency_key_validity_minutes set to 1
         And nodo-dei-pagamenti DEV has config parameter useIdempotency set to false
-        And the activatePaymentNoticeV2 scenario executed successfully
+        And the activatePaymentNoticeV2 + paGetPayment scenario executed successfully
         And expirationTime with 120000 in activatePaymentNoticeV2
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
@@ -474,7 +436,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
 
     Scenario: semantic check 22.1 (part 2)
         Given the semantic check 22.1 (part 1) scenario executed successfully
-        And the activatePaymentNoticeV2 scenario executed successfully
+        And the activatePaymentNoticeV2 + paGetPayment scenario executed successfully
         And idempotencyKey with $activatePaymentNoticeV2Request.idempotencyKey in activatePaymentNoticeV2
         And noticeNumber with $activatePaymentNoticeV2Request.noticeNumber in activatePaymentNoticeV2
         And expirationTime with 1000 in activatePaymentNoticeV2
@@ -483,27 +445,17 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         And check faultCode is PPT_PAGAMENTO_IN_CORSO of activatePaymentNoticeV2 response
         And nodo-dei-pagamenti DEV has config parameter default_idempotency_key_validity_minutes set to 10
         And nodo-dei-pagamenti DEV has config parameter useIdempotency set to true
-        And checks the value None of the record at column ID of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
-        And checks the value None of the record at column PRIMITIVA of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
-        And checks the value None of the record at column PSP_ID of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
-        And checks the value None of the record at column PA_FISCAL_CODE of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
-        And checks the value None of the record at column NOTICE_ID of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
-        And checks the value None of the record at column IDEMPOTENCY_KEY of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
-        And checks the value None of the record at column TOKEN of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
-        And checks the value None of the record at column VALID_TO of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
-        And checks the value None of the record at column HASH_REQUEST of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
-        And checks the value None of the record at column RESPONSE of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
-        And checks the value None of the record at column INSERTED_TIMESTAMP of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
+        And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
 
     # SEM_APNV2_23
     Scenario: semantic check 23 (part 1)
-        Given the activatePaymentNoticeV2 scenario executed successfully
+        Given the activatePaymentNoticeV2 + paGetPayment scenario executed successfully
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
 
     Scenario: semantic check 23 (part 2)
         Given the semantic check 23 (part 1) scenario executed successfully
-        And the activatePaymentNoticeV2 scenario executed successfully
+        And the activatePaymentNoticeV2 + paGetPayment scenario executed successfully
         And noticeNumber with $activatePaymentNoticeV2Request.noticeNumber in activatePaymentNoticeV2
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNoticeV2 response
@@ -512,29 +464,19 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
     # SEM_APNV2_23.1
     Scenario: semantic check 23.1 (part 1)
         Given nodo-dei-pagamenti DEV has config parameter useIdempotency set to false
-        And the activatePaymentNoticeV2 scenario executed successfully
+        And the activatePaymentNoticeV2 + paGetPayment scenario executed successfully
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
 
     Scenario: semantic check 23.1 (part 2)
         Given the semantic check 23.1 (part 1) scenario executed successfully
-        And the activatePaymentNoticeV2 scenario executed successfully
+        And the activatePaymentNoticeV2 + paGetPayment scenario executed successfully
         And idempotencyKey with None in activatePaymentNoticeV2
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check faultCode is PPT_PAGAMENTO_IN_CORSO of activatePaymentNoticeV2 response
         And nodo-dei-pagamenti DEV has config parameter useIdempotency set to true
-        And checks the value None of the record at column ID of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
-        And checks the value None of the record at column PRIMITIVA of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
-        And checks the value None of the record at column PSP_ID of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
-        And checks the value None of the record at column PA_FISCAL_CODE of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
-        And checks the value None of the record at column NOTICE_ID of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
-        And checks the value None of the record at column IDEMPOTENCY_KEY of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
-        And checks the value None of the record at column TOKEN of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
-        And checks the value None of the record at column VALID_TO of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
-        And checks the value None of the record at column HASH_REQUEST of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
-        And checks the value None of the record at column RESPONSE of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
-        And checks the value None of the record at column INSERTED_TIMESTAMP of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
+        And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
 
 # per questo test è necessaria la paGetPaymentV2, attualmente non disponibile sul mock pa
 # SEM_APNV2_26
