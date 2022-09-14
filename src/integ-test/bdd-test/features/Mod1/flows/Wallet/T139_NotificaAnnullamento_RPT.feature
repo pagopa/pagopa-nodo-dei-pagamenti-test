@@ -115,7 +115,7 @@ Feature: process tests for notificaAnnullamento_RPT-T139
     Scenario: Execute nodoNotificaAnnullamento
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-        Then verify the HTTP status code of nodoNotificaAnnullamento response is 200
-        And check esito is OK of nodoNotificaAnnullamento response
+        Then verify the HTTP status code of NotificaAnnullamento response is 200
+        And check esito is OK of NotificaAnnullamento response
 
 
