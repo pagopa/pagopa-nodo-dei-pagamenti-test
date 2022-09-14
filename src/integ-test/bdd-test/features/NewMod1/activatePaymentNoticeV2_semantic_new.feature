@@ -102,7 +102,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2Request
-        And saving paGetPayment request in paGetPaymentResponse
+        And save paGetPayment response in paGetPaymentResponse
     @wip
     Scenario: semantic check 19 (part 2)
         Given the semantic check 19 (part 1) scenario executed successfully
