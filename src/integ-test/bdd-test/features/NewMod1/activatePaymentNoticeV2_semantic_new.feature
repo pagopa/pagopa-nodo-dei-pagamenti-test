@@ -194,7 +194,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check faultCode is PPT_ERRORE_IDEMPOTENZA of activatePaymentNoticeV2 response
-
+@wip
     # SEM_APNV2_20.1
     Scenario: semantic check 20.1 (part 1)
         Given nodo-dei-pagamenti DEV has config parameter useIdempotency set to false
@@ -202,11 +202,12 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         And wait 1 seconds for expiration
-
+@wip
     Scenario: semantic check 20.1 (part 2)
         Given the semantic check 20.1 (part 1) scenario executed successfully
-        And noticeNumber with 311019801089138300 in activatePaymentNoticeV2
-        And creditorReferenceId with 11019801089138300 in paGetPayment
+        And random iuv in context
+        And noticeNumber with 311$iuv in activatePaymentNoticeV2
+        And creditorReferenceId with 11$iuv in paGetPayment
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
@@ -370,16 +371,16 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         And nodo-dei-pagamenti DEV has config parameter default_idempotency_key_validity_minutes set to 10
         And nodo-dei-pagamenti DEV has config parameter useIdempotency set to true
         And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
-
+@wip
     # SEM_APNV2_23
     Scenario: semantic check 23 (part 1)
         Given the activatePaymentNoticeV2 + paGetPayment scenario executed successfully
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-
+@wip
     Scenario: semantic check 23 (part 2)
         Given the semantic check 23 (part 1) scenario executed successfully
-        And idempotencyKey with 60000000001_185806YNxw in activatePaymentNoticeV2
+        And random idempotencyKey having $activatePaymentNoticeV2.idPSP as idPSP in activatePaymentNoticeV2
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check faultCode is PPT_PAGAMENTO_IN_CORSO of activatePaymentNoticeV2 response

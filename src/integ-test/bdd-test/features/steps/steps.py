@@ -501,7 +501,6 @@ def step_impl(context):
     print("REND generata: ", payload)
     setattr(context, 'rendAttachment', payload)
 
-
 @given('{elem} with {value} in {action}')
 def step_impl(context, elem, value, action):
     # use - to skip
@@ -1086,6 +1085,14 @@ def step_impl(context, primitive):
                                        f"30211{str(random.randint(1000000000000, 9999999999999))}")
     setattr(context, primitive, xml)
 
+# prova step
+
+@step('random iuv in context')
+def step_impl(context):
+    iuv = str(random.randint(100000000000000, 999999999999999))
+    setattr(context, "iuv", iuv)
+
+# prova step
 
 @step("nodo-dei-pagamenti has config parameter {param} set to {value}")
 def step_impl(context, param, value):
