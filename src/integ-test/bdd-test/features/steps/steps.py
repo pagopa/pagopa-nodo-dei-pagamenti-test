@@ -695,11 +695,11 @@ def step_impl(context, tag, value, primitive):
         print(
             f'check tag "{tag}" - expected: {value}, obtained: {json_response.get(tag)}')
         assert str(founded_value) == value
-        
+
 
 # controlla che il valore value sia una sottostringa del contentuo del tag
-@then('check {value} is a substring of {tag_content} of {primitive} response')
-def step_impl(context, tag_content, value, primitive):
+@then('check {value} is a substring of {tag} content of {primitive} response')
+def step_impl(context, tag, value, primitive):
     soap_response = getattr(context, primitive + RESPONSE)
     value = utils.replace_local_variables(value, context)
     value = utils.replace_global_variables(value, context)
@@ -714,14 +714,14 @@ def step_impl(context, tag_content, value, primitive):
                 print("description: ", my_document.getElementsByTagName(
                     'description')[0].firstChild.data)
         data = my_document.getElementsByTagName(tag)[0].firstChild.data
-        print(f'check tag "{tag_content}" - expected: {value}, obtained: {data}')
+        print(f'check tag "{tag}" - expected: {value}, obtained: {data}')
         assert value in data 
     else:
         node_response = getattr(context, primitive + RESPONSE)
         json_response = node_response.json()
-        founded_value = jo.get_value_from_key(json_response, tag_content)
+        founded_value = jo.get_value_from_key(json_response, tag)
         print(
-            f'check tag "{tag_content}" - expected: {value}, obtained: {json_response.get(tag_content)}')
+            f'check tag "{tag}" - expected: {value}, obtained: {json_response.get(tag)}')
         assert value in str(founded_value)
 
 
