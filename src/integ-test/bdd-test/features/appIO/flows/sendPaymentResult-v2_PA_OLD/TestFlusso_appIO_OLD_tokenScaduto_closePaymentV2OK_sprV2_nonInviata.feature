@@ -236,7 +236,7 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
 
     # closePayment-v2 phase
     Scenario: Execute a closePayment-v2 request
-        Given the Execute mod3CancelV2 scenario executed successfully
+        Given the Execute annullamentoRptMaiRichiesteDaPm scenario executed successfully
         And initial json closePayment-v2
             """
             {
