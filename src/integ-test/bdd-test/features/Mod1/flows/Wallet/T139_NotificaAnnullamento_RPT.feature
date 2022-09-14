@@ -109,11 +109,13 @@ Feature: process tests for notificaAnnullamento_RPT-T139
             </soapenv:Envelope>
             """
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        Then retrieve session token from $nodoInviaRPTResponse.url
 
 
     Scenario: Execute nodoNotificaAnnullamento
-        Given the Execute nodoInviaRPT scenario executed successfully
-        When WISP sends rest GET notificaAnnullamento?idPagamento=$nodoInviaRPTResponse.id to nodo-dei-pagamenti
-        Then verify the HTTP status code of notificaAnnullamento response is 503
+        Given the Execute nodoInviaRPT request scenario executed successfully
+        When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken to nodo-dei-pagamenti
+        Then verify the HTTP status code of nodoNotificaAnnullamento response is 200
+        And check outcome is OK of nodoNotificaAnnullamento response
 
 
