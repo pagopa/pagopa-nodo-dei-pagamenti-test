@@ -190,7 +190,7 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
       Given the Execute activateIOPayment request scenario executed successfully
       Then verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
       And checks the value $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
-      And checks the value $activateIOPaymentRequest.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
+      And checks the value $activateIOPayment.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
    
 
    # nodoChiediInformazioniPagamento phase
