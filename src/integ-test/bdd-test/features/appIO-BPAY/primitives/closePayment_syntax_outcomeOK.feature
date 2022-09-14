@@ -30,7 +30,7 @@ Feature: syntax checks for closePayment outcome OK
 
 # element value check
 Scenario Outline: Check syntax error on invalid body element value
-    Given the v1/closePayment scenario executed successfully
+    Given the closePayment scenario executed successfully
     And <key> and <value> in rest v1/closepayment
     When WISP sends rest POST v1/closepayment to nodo-dei-pagamenti
     Then verify the HTTP status code of v1/closepayment response is 400
