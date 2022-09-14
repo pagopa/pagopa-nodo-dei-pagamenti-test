@@ -399,8 +399,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check faultCode is PPT_PAGAMENTO_IN_CORSO of activatePaymentNoticeV2 response
         And nodo-dei-pagamenti DEV has config parameter useIdempotency set to true
-        And idempotencyKey with $activatePaymentNoticeV2Request.idempotencyKey in activatePaymentNoticeV2
-        And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
+        And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
 # per questo test è necessaria la paGetPaymentV2, attualmente non disponibile sul mock pa
 # SEM_APNV2_26
