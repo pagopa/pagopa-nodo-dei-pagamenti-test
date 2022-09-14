@@ -2,7 +2,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
 
     Background:
         Given systems up
-
+    @wip
     Scenario: activatePaymentNoticeV2 + paGetPayment
         Given initial XML activatePaymentNoticeV2
             """
@@ -194,7 +194,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check faultCode is PPT_ERRORE_IDEMPOTENZA of activatePaymentNoticeV2 response
-@wip
+    @wip
     # SEM_APNV2_20.1
     Scenario: semantic check 20.1 (part 1)
         Given nodo-dei-pagamenti DEV has config parameter useIdempotency set to false
@@ -202,7 +202,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         And wait 1 seconds for expiration
-@wip
+    @wip
     Scenario: semantic check 20.1 (part 2)
         Given the semantic check 20.1 (part 1) scenario executed successfully
         And random iuv in context
@@ -371,13 +371,13 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         And nodo-dei-pagamenti DEV has config parameter default_idempotency_key_validity_minutes set to 10
         And nodo-dei-pagamenti DEV has config parameter useIdempotency set to true
         And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
-@wip
+    @wip
     # SEM_APNV2_23
     Scenario: semantic check 23 (part 1)
         Given the activatePaymentNoticeV2 + paGetPayment scenario executed successfully
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-@wip
+    @wip
     Scenario: semantic check 23 (part 2)
         Given the semantic check 23 (part 1) scenario executed successfully
         And random idempotencyKey having $activatePaymentNoticeV2.idPSP as idPSP in activatePaymentNoticeV2
