@@ -423,7 +423,7 @@ Feature: process tests for chiediInformazioniPagamento
              """
         Then verify the HTTP status code of inoltroEsito/carta response is 200
         And check esito is OK of inoltroEsito/carta response
-        #And check url field not exists in inoltroEsito/carta response
+        And check url field not exists in inoltroEsito/carta response
 
     Scenario: Execute nodoInviaRT request
         Given the Execution second rest Esito Carta scenario executed successfully
