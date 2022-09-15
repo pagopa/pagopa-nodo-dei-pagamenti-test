@@ -744,18 +744,21 @@ def step_impl(context, name):
 def step_impl(context, sender, method, service, receiver):
     # TODO get url according to receiver
 
-    if '_json' in service:
-        service = getattr(context, service)
-        service = xmltodict.parse(service)
-        service = service["root"]
-        service["paymentTokens"] = service["paymentTokens"]["paymentToken"]
-        print(json.dumps(service))
-
     url_nodo = utils.get_rest_url_nodo(context)
 
     headers = {'Content-Type': 'application/json',
                'Host': 'api.dev.platform.pagopa.it:443'}
     body = context.text or ""
+    
+    if '_json' in service:
+        service_json = service.split('_')[0]
+        service_json = service_json[0]
+        body = getattr(context, service_json)
+        body = xmltodict.parse(body)
+        body = body["root"]
+        body["paymentTokens"] = body["paymentTokens"]["paymentToken"]
+        print(json.dumps(body))
+    
     print(body)
     
     body = utils.replace_local_variables(body, context)
