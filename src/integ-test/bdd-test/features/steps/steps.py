@@ -752,7 +752,6 @@ def step_impl(context, sender, method, service, receiver):
     
     if '_json' in service:
         service_json = service.split('_')[0]
-        service_json = service_json[0]
         body = getattr(context, service_json)
         body = xmltodict.parse(body)
         body = body["root"]
