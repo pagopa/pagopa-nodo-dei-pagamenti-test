@@ -522,14 +522,14 @@ Feature: idempotency tests for activatePaymentNoticeV2Request
         Then check outcome is OK of activatePaymentNoticeV2 response
         And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2Request
         And saving paGetPayment request in paGetPaymentRequest
-@wip
+
     Scenario: IDMP_APNV2_16.4 (part 2)
         Given the IDMP_APNV2_16.4 (part 1) scenario executed successfully
         And the activatePaymentNoticeV2 scenario executed successfully
         And expirationTime with 6000 in activatePaymentNoticeV2
         And noticeNumber with $activatePaymentNoticeV2Request.noticeNumber in activatePaymentNoticeV2
         And creditorReferenceId with $paGetPaymentRequest.creditorReferenceId in paGetPayment
-        # And EC replies to nodo-dei-pagamenti with the paGetPayment
+        And EC replies to nodo-dei-pagamenti with the paGetPayment
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check faultCode is PPT_ERRORE_IDEMPOTENZA of activatePaymentNoticeV2 response
@@ -585,6 +585,7 @@ Feature: idempotency tests for activatePaymentNoticeV2Request
         Then check outcome is OK of activatePaymentNoticeV2 response
         And checks the value NotNone of the record at column ID of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
         And checks the value $activatePaymentNoticeV2.fiscalCode of the record at column PA_FISCAL_CODE of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
+        And verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
         And wait 70 seconds for expiration
 
     Scenario: IDMP_APNV2_17 (part 2)
@@ -596,6 +597,7 @@ Feature: idempotency tests for activatePaymentNoticeV2Request
         Then check outcome is OK of activatePaymentNoticeV2 response
         And checks the value NotNone of the record at column ID of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
         And checks the value 44444444444 of the record at column PA_FISCAL_CODE of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
+        And verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
         And nodo-dei-pagamenti DEV has config parameter default_idempotency_key_validity_minutes set to 10
 
     # [IDMP_APNV2_18]
@@ -612,14 +614,14 @@ Feature: idempotency tests for activatePaymentNoticeV2Request
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check faultCode is PPT_PAGAMENTO_IN_CORSO of activatePaymentNoticeV2 response
-        And checks the value NotNone of the record at column ID of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
+        And checks the value NotNone,NotNone of the record at column ID of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
         And checks the value activatePaymentNoticeV2,activatePaymentNoticeV2 of the record at column PRIMITIVA of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
         And checks the value $activatePaymentNoticeV2.idPSP,$activatePaymentNoticeV2.idPSP of the record at column PSP_ID of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
         And checks the value $activatePaymentNoticeV2.fiscalCode,$activatePaymentNoticeV2.fiscalCode of the record at column PA_FISCAL_CODE of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
         And checks the value $activatePaymentNoticeV2.noticeNumber,$activatePaymentNoticeV2.noticeNumber of the record at column NOTICE_ID of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
         And checks the value $activatePaymentNoticeV2.idempotencyKey,$activatePaymentNoticeV2.idempotencyKey of the record at column IDEMPOTENCY_KEY of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column TOKEN of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
-        And checks the value NotNone,NotNone of the record at column VALID_TO of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column VALID_TO of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column HASH_REQUEST of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column RESPONSE of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
