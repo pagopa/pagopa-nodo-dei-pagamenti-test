@@ -756,6 +756,7 @@ def step_impl(context, sender, method, service, receiver):
         body = xmltodict.parse(body)
         body = body["root"]
         body["paymentTokens"] = body["paymentTokens"]["paymentToken"]
+        body = str(body)
         print(json.dumps(body))
     
     print(body)
