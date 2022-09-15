@@ -103,7 +103,7 @@
     "NewMod1": {
         "select_activatev2": "SELECT columns FROM table_name WHERE NOTICE_ID = '$activatePaymentNoticeV2.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNoticeV2.fiscalCode'",
         "update_activatev2": "UPDATE table_name SET param = 'value' WHERE NOTICE_ID = '$activatePaymentNoticeV2.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNoticeV2.fiscalCode'",
-        "idempotency_cache": "SELECT columns FROM table_name WHERE IDEMPOTENCY_KEY = '$activatePaymentNoticeV2.idempotencyKey'",
+        "idempotency_cache": "SELECT columns FROM table_name WHERE IDEMPOTENCY_KEY = '$activatePaymentNoticeV2.idempotencyKey' ORDER BY ID ASC",
         "metadata": "SELECT columns FROM table_name WHERE POSITION_SERVICE.PA_FISCAL_CODE='$activatePaymentNoticeV2.fiscalCode' AND POSITION_SERVICE.NOTICE_ID='$activatePaymentNoticeV2.noticeNumber' AND POSITION_PAYMENT_PLAN.AMOUNT='$activatePaymentNoticeV2.amount'",
         "position_service" : "SELECT columns FROM table_name WHERE POSITION_SERVICE.PA_FISCAL_CODE = '$activatePaymentNoticeV2.fiscalCode' AND POSITION_SERVICE.NOTICE_ID = '$activatePaymentNoticeV2.noticeNumber'",
         "position_payment_plan" : "SELECT columns FROM table_name WHERE POSITION_SERVICE.PA_FISCAL_CODE='$activatePaymentNoticeV2.fiscalCode' AND POSITION_SERVICE.NOTICE_ID='$activatePaymentNoticeV2.noticeNumber' AND POSITION_PAYMENT_PLAN.AMOUNT='$activatePaymentNoticeV2.amount'",
