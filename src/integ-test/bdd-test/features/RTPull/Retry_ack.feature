@@ -223,9 +223,9 @@ Feature: RTPull flows
             <soapenv:Body>
             <ws:nodoInviaRPT>
             <password>pwdpwdpwd</password>
-            <identificativoPSP>40000000001</identificativoPSP>
-            <identificativoIntermediarioPSP>40000000001</identificativoIntermediarioPSP>
-            <identificativoCanale>40000000001_06</identificativoCanale>
+            <identificativoPSP>#psp#</identificativoPSP>
+            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canale#</identificativoCanale>
             <tipoFirma></tipoFirma>
             <rpt>$rptAttachment</rpt>
             </ws:nodoInviaRPT>
@@ -307,7 +307,8 @@ Feature: RTPull flows
             </soapenv:Body>
             </soapenv:Envelope>
             """
-    
+
+    @not_valid
     Scenario: Execute nodoInviaRPT - Retry ack timeout
         Given esito with Timeout in pspInviaAckRT
         And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
@@ -323,15 +324,25 @@ Feature: RTPull flows
         And check value $schedulerPspRetryAckNegativePollerMaxRetry is equal to value $retry
 
     Scenario: Execute nodoInviaRPT - Retry ack system error
+        Given esito with KO in pspInviaAckRT
+        And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
+        And PSP replies to nodo-dei-pagamenti with the pspChiediListaRT
+        And PSP replies to nodo-dei-pagamenti with the pspChiediRT
+        And PSP replies to nodo-dei-pagamenti with the pspInviaAckRT
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
         And execution query getSchedulerPspRetryAckNegativePollerMaxRetry to get value on the table CONFIGURATION_KEYS, with the columns CONFIG_VALUE under macro RTPull with db name nodo_cfg
         And through the query getSchedulerPspRetryAckNegativePollerMaxRetry retrieve param schedulerPspRetryAckNegativePollerMaxRetry at position 0 and save it under the key schedulerPspRetryAckNegativePollerMaxRetry
-        And execution query by_iuv_and_ccp to get value on the table RETRY_PSP_ACK, with the columns RETRY under macro RTPull with db name nodo_online
-        And through the query by_iuv_and_ccp retrieve param retry at position 0 and save it under the key retry
+        And execution query by_iuv to get value on the table RETRY_PSP_ACK, with the columns RETRY under macro RTPull with db name nodo_online
+        And through the query by_iuv retrieve param retry at position 0 and save it under the key retry
         And check value $schedulerPspRetryAckNegativePollerMaxRetry is equal to value $retry
 
     Scenario: Execute nodoInviaRPT - Retry ack errore response
+        Given esito with error response in pspInviaAckRT
+        And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
+        And PSP replies to nodo-dei-pagamenti with the pspChiediListaRT
+        And PSP replies to nodo-dei-pagamenti with the pspChiediRT
+        And PSP replies to nodo-dei-pagamenti with the pspInviaAckRT
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
         And execution query getSchedulerPspRetryAckNegativePollerMaxRetry to get value on the table CONFIGURATION_KEYS, with the columns CONFIG_VALUE under macro RTPull with db name nodo_cfg
@@ -340,11 +351,20 @@ Feature: RTPull flows
         And through the query by_iuv_and_ccp retrieve param retry at position 0 and save it under the key retry
         And check value $schedulerPspRetryAckNegativePollerMaxRetry is equal to value $retry
 
+    @test
     Scenario: Execute nodoInviaRPT - Retry ack response KO
+        Given esito with KO in pspInviaAckRT
+        And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
+        And PSP replies to nodo-dei-pagamenti with the pspChiediListaRT
+        And PSP replies to nodo-dei-pagamenti with the pspChiediRT
+        And PSP replies to nodo-dei-pagamenti with the pspInviaAckRT
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        And job pspChiediListaAndChiediRt triggered after 5 seconds
+        And job paInviaRt triggered after 50 seconds
+        And wait 50 seconds for expiration
         Then check esito is OK of nodoInviaRPT response
         And execution query getSchedulerPspRetryAckNegativePollerMaxRetry to get value on the table CONFIGURATION_KEYS, with the columns CONFIG_VALUE under macro RTPull with db name nodo_cfg
         And through the query getSchedulerPspRetryAckNegativePollerMaxRetry retrieve param schedulerPspRetryAckNegativePollerMaxRetry at position 0 and save it under the key schedulerPspRetryAckNegativePollerMaxRetry
-        And execution query by_iuv_and_ccp to get value on the table RETRY_PSP_ACK, with the columns RETRY under macro RTPull with db name nodo_online
-        And through the query by_iuv_and_ccp retrieve param retry at position 0 and save it under the key retry
+        And execution query by_iuv to get value on the table RETRY_PSP_ACK, with the columns RETRY under macro RTPull with db name nodo_online
+        And through the query by_iuv retrieve param retry at position 0 and save it under the key retry
         And check value $schedulerPspRetryAckNegativePollerMaxRetry is equal to value $retry
