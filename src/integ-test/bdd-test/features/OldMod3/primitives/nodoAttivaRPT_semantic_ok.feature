@@ -1,4 +1,4 @@
-Feature: Semantic checks KO for nodoAttivaRPT
+Feature: Semantic checks OK for nodoAttivaRPT
     Background:
         Given systems up
         And initial XML nodoAttivaRPT

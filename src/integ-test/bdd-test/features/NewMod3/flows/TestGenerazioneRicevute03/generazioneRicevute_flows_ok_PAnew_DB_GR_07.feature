@@ -255,7 +255,7 @@ Feature: process tests for generazioneRicevute [DB_GR_07]
     And through the query position_subject_service retrieve param pss_postal_code at position 5 and save it under the key pss_postal_code
     And through the query position_subject_service retrieve param pss_city at position 6 and save it under the key pss_city
     And through the query position_subject_service retrieve param pss_state_province_region at position 7 and save it under the key pss_state_province_region
-    And through the query position_subject_service retrieve param pss_country at position 8 and save it under the key country
+    And through the query position_subject_service retrieve param pss_country at position 8 and save it under the key pss_country
     And through the query position_subject_service retrieve param pss_email at position 9 and save it under the key pss_email
     
     #POSITION_TRANSFER query
@@ -287,7 +287,7 @@ Feature: process tests for generazioneRicevute [DB_GR_07]
     And check value $prx_xml.postalCode is equal to value $pss_postal_code
     And check value $prx_xml.city is equal to value $pss_city
     And check value $prx_xml.stateProvinceRegion is equal to value $pss_state_province_region
-    #And check value $prx_xml.country is equal to value $pss_country
+    And check value $prx_xml.country is equal to value $pss_country
     #And check value $prx_xml.e-mail is equal to value $pss_email
     And check value $prx_xml.idTransfer is equal to value $pt_transfer_identifier
     #And check value $prx_xml.transferAmount is equal to value $pt_amount
