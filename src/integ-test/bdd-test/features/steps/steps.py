@@ -744,7 +744,11 @@ def step_impl(context, name):
 def step_impl(context, sender, method, service, receiver):
     # TODO get url according to receiver
 
-    if service.startswith('<'):
+    service = service.split('_')[0]
+    service_json = service.split('_')[1]
+
+    if service_json:
+        service = getattr(context, service)
         service = xmltodict.parse(service)
         service = service["root"]
         service["paymentTokens"] = service["paymentTokens"]["paymentToken"]
@@ -756,7 +760,7 @@ def step_impl(context, sender, method, service, receiver):
                'Host': 'api.dev.platform.pagopa.it:443'}
     body = context.text or ""
     print(body)
-
+    
     body = utils.replace_local_variables(body, context)
     body = utils.replace_context_variables(body, context)
     body = utils.replace_global_variables(body, context)
