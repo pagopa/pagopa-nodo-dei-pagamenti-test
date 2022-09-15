@@ -325,7 +325,7 @@ Feature: process tests for InoltroEsitoCartaCarrello_CANALE_IRRAGGIUNGIBILE Mod2
             <pay_i:datiPagamento>
                 <pay_i:codiceEsitoPagamento>0</pay_i:codiceEsitoPagamento>
                 <pay_i:importoTotalePagato>10.00</pay_i:importoTotalePagato>
-                <pay_i:identificativoUnivocoVersamento>$2IUV</pay_i:identificativoUnivocoVersamento>
+                <pay_i:identificativoUnivocoVersamento>esitoSconosciutoPsp</pay_i:identificativoUnivocoVersamento>
                 <pay_i:CodiceContestoPagamento>$2CCP</pay_i:CodiceContestoPagamento>
                 <pay_i:datiSingoloPagamento>
                     <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
