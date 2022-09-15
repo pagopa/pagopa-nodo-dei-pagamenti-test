@@ -522,7 +522,7 @@ Feature: idempotency tests for activatePaymentNoticeV2Request
         Then check outcome is OK of activatePaymentNoticeV2 response
         And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2Request
         And saving paGetPayment request in paGetPaymentRequest
-
+@wip
     Scenario: IDMP_APNV2_16.4 (part 2)
         Given the IDMP_APNV2_16.4 (part 1) scenario executed successfully
         And the activatePaymentNoticeV2 scenario executed successfully
@@ -665,7 +665,7 @@ Feature: idempotency tests for activatePaymentNoticeV2Request
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         And checks the value NotNone of the record at column ID of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
-@wip
+
     Scenario: IDMP_APNV2_20 (part 2)
         Given the IDMP_APNV2_20 (part 1) scenario executed successfully
         When job mod3CancelV2 triggered after 7 seconds
