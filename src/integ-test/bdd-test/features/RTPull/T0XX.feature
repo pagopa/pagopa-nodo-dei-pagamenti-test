@@ -1,7 +1,7 @@
 Feature: Execute nodoInviaRPT - MOD2 [T0XX]
 
     Background:
-        Given system up
+        Given systems up
 
     Scenario: Execute nodoInviaRPT - MOD2 [T0XX]
         Given MB generation
@@ -225,9 +225,9 @@ Feature: Execute nodoInviaRPT - MOD2 [T0XX]
             <soapenv:Body>
             <ws:nodoInviaRPT>
             <password>pwdpwdpwd</password>
-            <identificativoPSP>40000000001</identificativoPSP>
-            <identificativoIntermediarioPSP>40000000001</identificativoIntermediarioPSP>
-            <identificativoCanale>40000000001_06</identificativoCanale>
+            <identificativoPSP>#psp#</identificativoPSP>
+            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canale#</identificativoCanale>
             <tipoFirma></tipoFirma>
             <rpt>$rptAttachment</rpt>
             </ws:nodoInviaRPT>
@@ -310,7 +310,7 @@ Feature: Execute nodoInviaRPT - MOD2 [T0XX]
             </soapenv:Envelope>
             """
     
-        Given identificativoCanale with 40000000001_04 in nodoInviaRPT
+        Given identificativoCanale with #canale_DIFFERITO_MOD2# in nodoInviaRPT
         And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
         And PSP replies to nodo-dei-pagamenti with the pspChiediListaRT
         And PSP replies to nodo-dei-pagamenti with the pspChiediRT
@@ -320,6 +320,6 @@ Feature: Execute nodoInviaRPT - MOD2 [T0XX]
         And job paInviaRt triggered after 50 seconds
         And wait 50 seconds for expiration
         Then check esito is OK of nodoInviaRPT response
-        And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_INVIATA_A_PSP, RPT_ACCETTATA_PSP, RT_RICEVUTA_NODO, RT_ACCETATA_NODO, RT_INVIATA_PA, RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro RTPull
+        And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_INVIATA_A_PSP, RPT_ACCETTATA_PSP, RT_RICEVUTA_NODO, RT_ACCETTATA_NODO, RT_INVIATA_PA, RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro RTPull
         And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro RTPull
         And verify 0 record for the table RETRY_PA_INVIA_RT retrived by the query rpt_stati on db nodo_online under macro RTPull

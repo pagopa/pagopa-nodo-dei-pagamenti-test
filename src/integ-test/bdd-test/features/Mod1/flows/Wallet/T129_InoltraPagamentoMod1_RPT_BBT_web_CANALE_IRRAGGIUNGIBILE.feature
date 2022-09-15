@@ -1,4 +1,4 @@
-Feature: process tests for chiediInformazioniPagamento
+Feature: process tests for InoltroEsitoCartaCarrello_CANALE_IRRAGGIUNGIBILE
 
     Background:
         Given systems up
@@ -202,38 +202,21 @@ Feature: process tests for chiediInformazioniPagamento
 
     Scenario: Execution Esito Mod1
         Given the Execute nodoInviaRPT request scenario executed successfully
-        And initial XML pspInviaRPT 
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header/>
-                <soapenv:Body>
-                    <ws:pspInviaRPTResponse>
-                        <pspInviaRPTResponse>
-                            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-                            <identificativoCarrello>$nodoInviaRPT.identificativoUnivocoVersamento</identificativoCarrello>
-                            <parametriPagamentoImmediato>idBruciatura=$nodoInviaRPT.identificativoUnivocoVersamento</parametriPagamentoImmediato>
-                        </pspInviaRPTResponse>
-                    </ws:pspInviaRPTResponse>
-                </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
         When WISP sends REST POST inoltroEsito/mod1 to nodo-dei-pagamenti
-
             """
             {
             "idPagamento":"$sessionToken",
-            "identificativoPsp":"40000000001",
-            "tipoVersamento":"BBT", 
-            "identificativoIntermediario":"40000000001",
-            "identificativoCanale":"40000000001_03",
+            "identificativoPsp":"irraggiungibile",
+            "tipoVersamento":"BBT",
+            "identificativoIntermediario":"irraggiungibile",
+            "identificativoCanale":"irraggiungibile",
             "tipoOperazione":"web"
             }
-
              """
         Then verify the HTTP status code of inoltroEsito/mod1 response is 200
-        And check esito is OK of inoltroEsito/mod1 response
-        And check url field not exists in inoltroEsito/mod1 response
+        And check esito is KO of inoltroEsito/mod1 response
+        And check descrizione is Canale non raggiungibile of inoltroEsito/mod1 response 
+        And check errorCode is CONPSP of inoltroEsito/mod1 response
 
     Scenario: Execute nodoChiediStatoRPT request
         Given the Execution Esito Mod1 scenario executed successfully
@@ -257,16 +240,17 @@ Feature: process tests for chiediInformazioniPagamento
 
         When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
         Then check stato field exists in nodoChiediStatoRPT response
-        And checks stato contains RPT_ACCETTATA_PSP of nodoChiediStatoRPT response
+        And checks stato contains RPT_ERRORE_INVIO_A_PSP of nodoChiediStatoRPT response
         And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
+        And check url field not exists in nodoChiediStatoRPT response
 
 
     Scenario: Execute nodoChiediAvanzamentoPagamento
         Given the Execute nodoChiediStatoRPT request scenario executed successfully
         When WISP sends REST GET avanzamentoPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of avanzamentoPagamento response is 200
-        And check esito is OK of avanzamentoPagamento response
+        And check esito is KO of avanzamentoPagamento response
 
 
     Scenario: Execute nodoInviaRT request
@@ -292,4 +276,4 @@ Feature: process tests for chiediInformazioniPagamento
             </soapenv:Envelope>
             """
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
-        Then check esito is OK of nodoInviaRT response
+        Then check esito is KO of nodoInviaRT response

@@ -114,7 +114,7 @@ stages:
 
              #behave --help #Run behave
              #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/RTPull/RTPull_flows.feature --tags=ok
-             behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/Mod1/flows/Wallet/T127_InoltraEsitoPagamentoCarta_carrello_KO.feature
+             behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/Mod1/flows/Wallet/T137A_InoltraPagamentoMod2_carrello_AD_CANALE_IRRAGGIUNGIBILE.feature
 
             displayName: 'Run Behave Test Suite'
           - task: PublishTestResults@2

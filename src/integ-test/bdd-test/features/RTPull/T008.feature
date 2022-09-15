@@ -225,9 +225,9 @@ Feature: Execute nodoInviaRPT - RPT-RT Marca da bollo [T008]
             <soapenv:Body>
             <ws:nodoInviaRPT>
             <password>pwdpwdpwd</password>
-            <identificativoPSP>40000000001</identificativoPSP>
-            <identificativoIntermediarioPSP>40000000001</identificativoIntermediarioPSP>
-            <identificativoCanale>40000000001_06</identificativoCanale>
+            <identificativoPSP>#psp#</identificativoPSP>
+            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canale#</identificativoCanale>
             <tipoFirma></tipoFirma>
             <rpt>$rptAttachment</rpt>
             </ws:nodoInviaRPT>
