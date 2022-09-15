@@ -17,6 +17,8 @@ from requests.exceptions import RetryError
 import utils as utils
 import db_operation as db
 
+import xmltodict
+
 
 # Constants
 RESPONSE = "Response"
@@ -741,6 +743,13 @@ def step_impl(context, name):
 @when(u'{sender} sends rest {method:Method} {service} to {receiver}')
 def step_impl(context, sender, method, service, receiver):
     # TODO get url according to receiver
+
+    if service.startswith('<'):
+        service = xmltodict.parse(service)
+        service = service["Envelope"]["Body"]["data"]
+        service["paymentTokens"] = service["paymentTokens"]["paymentToken"]
+        print(json.dumps(service))
+
     url_nodo = utils.get_rest_url_nodo(context)
 
     headers = {'Content-Type': 'application/json',
@@ -2206,6 +2215,10 @@ def step_impl(context, tag, value, primitive):
 def step_impl(context, primitive):
     payload = context.text or ""
     payload = utils.replace_local_variables(payload, context)
+
+    jsonDict = json.loads(payload)
+    payload = utils.json2xml(jsonDict)
+    payload = '<Envelope><Body><data>' + payload + '</Envelope></Body></data>'
 
 #    if len(payload) > 0:
 #        my_document = json.load(payload)
