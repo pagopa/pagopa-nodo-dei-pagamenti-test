@@ -267,8 +267,7 @@ Feature: process tests for chiediInformazioniPagamento CANALE ERRORE RESPONSE
         Given the Execute nodoChiediStatoRPT request scenario executed successfully
         When WISP sends REST GET avanzamentoPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of avanzamentoPagamento response is 200
-        And check esito is OK of avanzamentoPagamento response
-        And checks stato contains ACK_UNKNOWN of avanzamentoPagamento response
+        And checks esito contains ACK_UNKNOWN of avanzamentoPagamento response
 
 
     Scenario: Execute nodoInviaRT request
