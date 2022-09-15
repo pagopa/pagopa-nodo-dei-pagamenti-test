@@ -64,8 +64,8 @@
         "by_context_num_avv":"SELECT columns FROM table_name WHERE NOTICE_ID = '$iuv'",
         "re_paSendRT": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN = '$activatePaymentNoticeResponse.paymentToken' AND TIPO_EVENTO= 'paSendRT' AND INSERTED_TIMESTAMP > ROUND(SYSDATE-1) ORDER BY DATA_ORA_EVENTO",
         "by_context_payment_token_2": "SELECT columns FROM table_name WHERE NOTICE_ID ='$activatePaymentNotice.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode' AND PAYMENT_TOKEN ='$paymentToken'",
-        "position_subject_3":"SELECT s.columns FROM POSITION_SUBJECT s JOIN POSITION_SERVICE pp ON pp.DEBTOR_ID = s.ID where pp.notice_id = '$activatePaymentNotice.noticeNumber' and pp.pa_fiscal_code= '$activatePaymentNotice.fiscalCode'"
-
+        "position_subject_3":"SELECT s.columns FROM POSITION_SUBJECT s JOIN POSITION_SERVICE pp ON pp.DEBTOR_ID = s.ID where pp.notice_id = '$activatePaymentNotice.noticeNumber' and pp.pa_fiscal_code= '$activatePaymentNotice.fiscalCode'",
+        "position_subject_service": "SELECT columns FROM table_name su JOIN POSITION_SERVICE se ON su.ID = se.DEBTOR_ID WHERE se.PA_FISCAL_CODE='$activatePaymentNotice.fiscalCode' and se.NOTICE_ID='$activatePaymentNotice.noticeNumber' and su.SUBJECT_TYPE='DEBTOR'"
     },
     "AppIO":{
         "payment_status":"SELECT s.columns FROM table_name s WHERE s.NOTICE_ID ='$activateIOPayment.noticeNumber' AND s.PA_FISCAL_CODE = '$activateIOPayment.fiscalCode'",
