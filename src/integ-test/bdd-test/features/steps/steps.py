@@ -205,6 +205,7 @@ def step_impl(context):
 
     pa = context.config.userdata.get('global_configuration').get('codicePA')
 
+
     if "#iuv#" in payload:
         iuv = f"14{str(random.randint(1000000000000, 9999999999999))}"
         setattr(context, 'iuv', iuv)
@@ -233,10 +234,10 @@ def step_impl(context):
         payload = payload.replace('#timedate#', timedate)
 
     if '#IuV#' in payload:
-        iuv = '0' + str(random.randint(1000, 2000)) + str(random.randint(1000,
-                                                                         2000)) + str(random.randint(1000, 2000)) + '00'
+        iuv = '0' + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + '00'
         payload = payload.replace('#IuV#', iuv)
         setattr(context, 'IuV', iuv)
+
 
     if '#iuv2#' in payload:
         iuv = 'IUV' + '-' + \
@@ -456,7 +457,9 @@ def step_impl(context):
 @given('RPT{number:d} generation')
 def step_impl(context, number):
     payload = context.text or ""
+    payload = utils.replace_local_variables(payload, context)
     payload = utils.replace_context_variables(payload, context)
+    payload = utils.replace_global_variables(payload, context)
     date = datetime.date.today().strftime("%Y-%m-%d")
     timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
     setattr(context, 'date', date)
@@ -494,7 +497,7 @@ def step_impl(context, number):
         IuV = '0' + str(random.randint(1000, 2000)) + str(random.randint(1000,
                                                                          2000)) + str(random.randint(1000, 2000)) + '00'
         payload = payload.replace(f'#IuV{number}#', IuV)
-        setattr(context, f'IuV{number}', IuV)
+        setattr(context, f'{number}IuV', IuV)
 
     if '$carrello' in payload:
         payload = payload.replace('$carrello', getattr(context, 'carrello'))
@@ -568,8 +571,6 @@ def step_impl(context, number):
     payload = f"{payload_uni}".split("'")[1]
     print(payload)
 
-    payload = utils.replace_local_variables(payload, context)
-    payload = utils.replace_global_variables(payload, context)
     setattr(context, f'rpt{number}Attachment', payload)
 
 

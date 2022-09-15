@@ -11,8 +11,8 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_01]
          <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
          <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
          <pay_i:dominio>
-         <pay_i:identificativoDominio>#codicePA_old#</pay_i:identificativoDominio>
-         <pay_i:identificativoStazioneRichiedente>44444444444_01</pay_i:identificativoStazioneRichiedente>
+         <pay_i:identificativoDominio>#codicePA#</pay_i:identificativoDominio>
+         <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
          </pay_i:dominio>
          <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
          <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
@@ -90,7 +90,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_01]
          <pay_i:versioneOggetto>1.1</pay_i:versioneOggetto>
          <pay_i:dominio>
          <pay_i:identificativoDominio>90000000001</pay_i:identificativoDominio>
-         <pay_i:identificativoStazioneRichiedente>44444444444_01</pay_i:identificativoStazioneRichiedente>
+         <pay_i:identificativoStazioneRichiedente>90000000001_01</pay_i:identificativoStazioneRichiedente>
          </pay_i:dominio>
          <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
          <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
@@ -140,10 +140,10 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_01]
          </pay_i:enteBeneficiario>
          <pay_i:datiVersamento>
          <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
-         <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
-         <pay_i:tipoVersamento>PO</pay_i:tipoVersamento>
-         <pay_i:identificativoUnivocoVersamento>#IuV#</pay_i:identificativoUnivocoVersamento>
-         <pay_i:codiceContestoPagamento>#carrello#</pay_i:codiceContestoPagamento>
+         <pay_i:importoTotaleDaVersare>1.50</pay_i:importoTotaleDaVersare>
+         <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
+         <pay_i:identificativoUnivocoVersamento>$IuV</pay_i:identificativoUnivocoVersamento>
+         <pay_i:codiceContestoPagamento>$carrello</pay_i:codiceContestoPagamento>
          <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
          <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
          <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -162,15 +162,31 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_01]
          </pay_i:RPT>
          """
 
+
    Scenario: Execute nodoInviaCarrelloRPT request
       Given the RPT generation scenario executed successfully
+      And initial XML paaInviaRT
+         """
+         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+         <soapenv:Header/>
+         <soapenv:Body>
+         <ws:paaInviaRTRisposta>
+         <paaInviaRTRisposta>
+         <esito>OK</esito>
+         </paaInviaRTRisposta>
+         </ws:paaInviaRTRisposta>
+         </soapenv:Body>
+         </soapenv:Envelope>
+         """
+      And EC replies to nodo-dei-pagamenti with the paaInviaRT
+
       And initial XML nodoInviaCarrelloRPT
          """
          <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
          <soapenv:Header>
          <ppt:intestazioneCarrelloPPT>
-         <identificativoIntermediarioPA>#codicePA_old#</identificativoIntermediarioPA>
-         <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
+         <identificativoIntermediarioPA>#codicePA#</identificativoIntermediarioPA>
+         <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
          <identificativoCarrello>$carrello</identificativoCarrello>
          </ppt:intestazioneCarrelloPPT>
          </soapenv:Header>
@@ -182,7 +198,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_01]
          <identificativoCanale>97735020584_02</identificativoCanale>
          <listaRPT>
          <elementoListaRPT>
-         <identificativoDominio>#codicePA_old#</identificativoDominio>
+         <identificativoDominio>#codicePA#</identificativoDominio>
          <identificativoUnivocoVersamento>$IuV</identificativoUnivocoVersamento>
          <codiceContestoPagamento>$carrello</codiceContestoPagamento>
          <rpt>$rptAttachment</rpt>
@@ -204,11 +220,28 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_01]
       Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
       Then retrieve session token from $nodoInviaCarrelloRPTResponse.url
 
-   Scenario: Execution nodoChiediInformazioniPagamento
+   Scenario: Execute nodoChiediInformazioniPagamento
       Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
       When WISP sends rest GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
       Then verify the HTTP status code of informazioniPagamento response is 200
       And check importo field exists in informazioniPagamento response
       And check email field exists in informazioniPagamento response
       And check ragioneSociale field exists in informazioniPagamento response
-      And check oggettoPagamento contains Causali multiple di versamento of informazioniPagamento response
+      And check oggettoPagamento field exists in informazioniPagamento response
+      And check urlRedirectEC field exists in informazioniPagamento response
+
+   Scenario: Execute nodoNotificaAnnullamento
+      Given the Execute nodoChiediInformazioniPagamento scenario executed successfully
+      When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken to nodo-dei-pagamenti
+      And job paInviaRt triggered after 20 seconds
+      And wait 20 seconds for expiration
+      Then verify the HTTP status code of notificaAnnullamento response is 200
+
+      And wait 10 seconds for expiration
+
+
+      #DB-CHECK-STATI_RPT
+      And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO, RPT_ANNULLATA_WISP, RT_GENERATA_NODO, RT_INVIATA_PA, RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query DB_GEST_ANN_stati_rpt on db nodo_online under macro Mod1Mb
+
+
+

@@ -1,4 +1,4 @@
-Feature: process tests for InoltroEsitoCartaCarrello_CANALE_IRRAGGIUNGIBILE
+Feature: process tests for chiediInformazioniPagamento CANALE ERRORE RESPONSE
 
     Background:
         Given systems up
@@ -62,8 +62,8 @@ Feature: process tests for InoltroEsitoCartaCarrello_CANALE_IRRAGGIUNGIBILE
                 <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
                 <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
                 <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
-                <pay_i:identificativoUnivocoVersamento>#IUV#</pay_i:identificativoUnivocoVersamento>
-                <pay_i:codiceContestoPagamento>CCD02</pay_i:codiceContestoPagamento>
+                <pay_i:identificativoUnivocoVersamento>avanzaErrResponse</pay_i:identificativoUnivocoVersamento>
+                <pay_i:codiceContestoPagamento>#ccp1#</pay_i:codiceContestoPagamento>
                 <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
                 <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
                 <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -157,13 +157,13 @@ Feature: process tests for InoltroEsitoCartaCarrello_CANALE_IRRAGGIUNGIBILE
             <pay_i:datiPagamento>
                 <pay_i:codiceEsitoPagamento>0</pay_i:codiceEsitoPagamento>
                 <pay_i:importoTotalePagato>10.00</pay_i:importoTotalePagato>
-                <pay_i:identificativoUnivocoVersamento>$IUV</pay_i:identificativoUnivocoVersamento>
-                <pay_i:CodiceContestoPagamento>CCD02</pay_i:CodiceContestoPagamento>
+                <pay_i:identificativoUnivocoVersamento>avanzaErrResponse</pay_i:identificativoUnivocoVersamento>
+                <pay_i:CodiceContestoPagamento>$1ccp</pay_i:CodiceContestoPagamento>
                 <pay_i:datiSingoloPagamento>
                     <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
                     <pay_i:esitoSingoloPagamento>REJECT</pay_i:esitoSingoloPagamento>
                     <pay_i:dataEsitoSingoloPagamento>#date#</pay_i:dataEsitoSingoloPagamento>
-                    <pay_i:identificativoUnivocoRiscossione>$IUV</pay_i:identificativoUnivocoRiscossione>
+                    <pay_i:identificativoUnivocoRiscossione>avanzaErrResponse</pay_i:identificativoUnivocoRiscossione>
                     <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
                     <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
                 </pay_i:datiSingoloPagamento>
@@ -181,16 +181,16 @@ Feature: process tests for InoltroEsitoCartaCarrello_CANALE_IRRAGGIUNGIBILE
             <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
             <identificativoDominio>44444444444</identificativoDominio>
-            <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>CCD02</codiceContestoPagamento>
+            <identificativoUnivocoVersamento>avanzaErrResponse</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
             </ppt:intestazionePPT>
             </soapenv:Header>
             <soapenv:Body>
             <ws:nodoInviaRPT>
             <password>pwdpwdpwd</password>
-            <identificativoPSP>#psp_AGID#</identificativoPSP>
-            <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
+            <identificativoPSP>AGID_01</identificativoPSP>
+            <identificativoIntermediarioPSP>97735020584</identificativoIntermediarioPSP>
+            <identificativoCanale>97735020584_02</identificativoCanale>
             <tipoFirma></tipoFirma>
             <rpt>$rptAttachment</rpt>
             </ws:nodoInviaRPT>
@@ -200,26 +200,43 @@ Feature: process tests for InoltroEsitoCartaCarrello_CANALE_IRRAGGIUNGIBILE
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then retrieve session token from $nodoInviaRPTResponse.url
 
-    Scenario: Execution Esito Mod1
+    Scenario: Execution Esito mod2
         Given the Execute nodoInviaRPT request scenario executed successfully
-        When WISP sends REST POST inoltroEsito/mod1 to nodo-dei-pagamenti
+        And initial XML pspInviaRPT 
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+                <soapenv:Body>
+                    <ws:pspInviaRPTResponse>
+                        <pspInviaRPTResponse>
+                            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+                            <wait>timeout</wait>
+                            <identificativoCarrello>$nodoInviaRPT.identificativoUnivocoVersamento</identificativoCarrello>
+                            <parametriPagamentoImmediato>idBruciatura=$nodoInviaRPT.identificativoUnivocoVersamento</parametriPagamentoImmediato>
+                        </pspInviaRPTResponse>
+                    </ws:pspInviaRPTResponse>
+                </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
+        When WISP sends REST POST inoltroEsito/mod2 to nodo-dei-pagamenti
+
             """
             {
-            "idPagamento":"$sessionToken",
-            "identificativoPsp":"irraggiungibile",
-            "tipoVersamento":"BBT",
-            "identificativoIntermediario":"irraggiungibile",
-            "identificativoCanale":"irraggiungibile",
-            "tipoOperazione":"web"
+            "idPagamento": "$sessionToken",
+            "identificativoPsp": "40000000001",
+            "tipoVersamento": "BP",
+            "identificativoIntermediario": "40000000001",
+            "identificativoCanale": "40000000001_04"
             }
+
              """
-        Then verify the HTTP status code of inoltroEsito/mod1 response is 200
-        And check esito is KO of inoltroEsito/mod1 response
-        And check descrizione is Canale non raggiungibile of inoltroEsito/mod1 response 
-        And check errorCode is CONPSP of inoltroEsito/mod1 response
+        Then verify the HTTP status code of inoltroEsito/mod2 response is 408
+        And check url field not exists in inoltroEsito/mod2 response
+        And check error is timeout of inoltroEsito/mod2 response
 
     Scenario: Execute nodoChiediStatoRPT request
-        Given the Execution Esito Mod1 scenario executed successfully
+        Given the Execution Esito mod2 scenario executed successfully
         And initial XML nodoChiediStatoRPT
 
         """
@@ -231,8 +248,8 @@ Feature: process tests for InoltroEsitoCartaCarrello_CANALE_IRRAGGIUNGIBILE
                 <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
                 <password>pwdpwdpwd</password>
                 <identificativoDominio>44444444444</identificativoDominio>
-                <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
-                <codiceContestoPagamento>CCD02</codiceContestoPagamento>
+                <identificativoUnivocoVersamento>avanzaErrResponse</identificativoUnivocoVersamento>
+                <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
             </ws:nodoChiediStatoRPT>
         </soapenv:Body>
         </soapenv:Envelope>
@@ -240,7 +257,7 @@ Feature: process tests for InoltroEsitoCartaCarrello_CANALE_IRRAGGIUNGIBILE
 
         When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
         Then check stato field exists in nodoChiediStatoRPT response
-        And checks stato contains RPT_ERRORE_INVIO_A_PSP of nodoChiediStatoRPT response
+        And checks stato contains RPT_ESITO_SCONOSCIUTO_PSP of nodoChiediStatoRPT response
         And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
         And check url field not exists in nodoChiediStatoRPT response
@@ -250,7 +267,7 @@ Feature: process tests for InoltroEsitoCartaCarrello_CANALE_IRRAGGIUNGIBILE
         Given the Execute nodoChiediStatoRPT request scenario executed successfully
         When WISP sends REST GET avanzamentoPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of avanzamentoPagamento response is 200
-        And check esito is KO of avanzamentoPagamento response
+        And checks esito contains ACK_UNKNOWN of avanzamentoPagamento response
 
 
     Scenario: Execute nodoInviaRT request
@@ -261,13 +278,13 @@ Feature: process tests for InoltroEsitoCartaCarrello_CANALE_IRRAGGIUNGIBILE
             <soapenv:Header/>
             <soapenv:Body>
             <ws:nodoInviaRT>
-            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canale#</identificativoCanale>
+            <identificativoIntermediarioPSP>40000000001</identificativoIntermediarioPSP>
+            <identificativoCanale>40000000001_03</identificativoCanale>
             <password>pwdpwdpwd</password>
-            <identificativoPSP>#psp#</identificativoPSP>
+            <identificativoPSP>40000000001</identificativoPSP>
             <identificativoDominio>44444444444</identificativoDominio>
-            <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>CCD02</codiceContestoPagamento>
+            <identificativoUnivocoVersamento>avanzaErrResponse</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
             <tipoFirma></tipoFirma>
             <forzaControlloSegno>1</forzaControlloSegno>
             <rt>$rtAttachment</rt>
@@ -276,4 +293,4 @@ Feature: process tests for InoltroEsitoCartaCarrello_CANALE_IRRAGGIUNGIBILE
             </soapenv:Envelope>
             """
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
-        Then check esito is KO of nodoInviaRT response
+        Then check esito is OK of nodoInviaRT response
