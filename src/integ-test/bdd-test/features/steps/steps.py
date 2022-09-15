@@ -2220,6 +2220,10 @@ def step_impl(context, url):
     print(url)
     setattr(context, 'url', url)
 
+@step('replace {old_attribute} content with {new_attribute} content')
+def step_impl(context, old_attribute, new_attribute):
+    setattr(context, old_attribute, getattr(context, new_attribute))
+
 
 @step('check field in {primitive} response')
 def step_impl(context, primitive):

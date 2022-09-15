@@ -100,7 +100,7 @@
     },
     "RTPull" : {
         "rpt_stati": "SELECT columns FROM table_name s WHERE s.IUV = '$iuv' ORDER BY INSERTED_TIMESTAMP ASC",
-        "by_iuv_and_ccp": "SELECT columns FROM table_name s WHERE s.IUV = '$iuv' AND s.CCP = $ccp",
+        "by_iuv": "SELECT columns FROM table_name s WHERE s.IUV = '$iuv'",
         "getSchedulerPspRetryAckNegativePollerMaxRetry": "SELECT columns FROM table_name s WHERE s.CONFIG_KEY='scheduler.pspRetryAckNegativePollerMaxRetry'"
     },
     "constanti":{
