@@ -100,7 +100,8 @@ Feature: semantic checks OK for activatePaymentNoticeV2Request
 
     # [SEM_APNV2_17]
     Scenario: Check outcome OK on non-existent psp in idempotencyKey
-        Given idempotencyKey with 00088877799_151059xbLJ in activatePaymentNoticeV2
+        # Given idempotencyKey with 00088877799_151059xbLJ in activatePaymentNoticeV2
+        Given random idempotencyKey having 00088877799 as idPSP in activatePaymentNoticeV2
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
 
@@ -114,7 +115,8 @@ Feature: semantic checks OK for activatePaymentNoticeV2Request
 
     # [SEM_APNV2_18]
     Scenario: Check outcome OK on disabled psp in idempotencyKey
-        Given idempotencyKey with 80000000001_151101ApDu in activatePaymentNoticeV2
+        # Given idempotencyKey with 80000000001_151101ApDu in activatePaymentNoticeV2
+        Given random idempotencyKey having 80000000001 as idPSP in activatePaymentNoticeV2
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
 
