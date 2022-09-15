@@ -744,8 +744,8 @@ def step_impl(context, name):
 def step_impl(context, sender, method, service, receiver):
     # TODO get url according to receiver
 
-    service = service.split('_')[0]
     service_json = service.split('_')[1]
+    service = service.split('_')[0]
 
     if service_json:
         service = getattr(context, service)
