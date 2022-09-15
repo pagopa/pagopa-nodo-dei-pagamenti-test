@@ -85,7 +85,8 @@
         "DB_INOLTRO_PAG_stati_carrello_napshot": "SELECT s.columns FROM table_name s WHERE s.IUV = '$nodoInoltraEsitoPagamentoCarte.noticenumber' and s.ID_DOMINIO = '$nodoInoltraEsitoPagamentoCarte.fiscalcode'",
         "DB_INOLTRO_PAG_stati_rpt": "SELECT s.columns FROM table_name s WHERE s.IUV = '$nodoInoltraEsitoPagamentoCarte.noticenumber' and s.ID_DOMINIO = '$nodoInoltraEsitoPagamentoCarte.fiscalcode'",
         "DB_INOLTRO_PAG_stati_carrello": "SELECT s.columns FROM table_name s WHERE s.IUV = '$nodoInoltraEsitoPagamentoCarte.noticenumber' and s.ID_DOMINIO = '$nodoInoltraEsitoPagamentoCarte.fiscalcode'",
-        "DB_INOLTRO_PAG_stati_rpt_snapshot": "SELECT s.columns FROM table_name s WHERE s.IUV = '$nodoInoltraEsitoPagamentoCarte.noticenumber' and s.ID_DOMINIO = '$nodoInoltraEsitoPagamentoCarte.fiscalcode'"
+        "DB_INOLTRO_PAG_stati_rpt_snapshot": "SELECT s.columns FROM table_name s WHERE s.IUV = '$nodoInoltraEsitoPagamentoCarte.noticenumber' and s.ID_DOMINIO = '$nodoInoltraEsitoPagamentoCarte.fiscalcode'",
+        "DB_GEST_ANN_stati_rpt": "SELECT s.columns FROM table_name s WHERE s.IUV = '$IuV' and s.ID_DOMINIO = '$nodoInviaCarrelloRPT.identificativoDominio' ORDER BY ID ASC"
     },
     "Mod1":{
         "esito": "SELECT v.columns FROM table_name r JOIN RT_VERSAMENTI v ON v.FK_RT=r.ID WHERE r.IUV='$iuv' AND r.CCP= '$nodoInviaRPT.codiceContestoPagamento' AND r.IDENT_DOMINIO='$nodoInviaRPT.identificativoDominio'",

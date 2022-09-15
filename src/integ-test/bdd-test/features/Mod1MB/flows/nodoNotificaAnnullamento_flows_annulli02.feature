@@ -1,166 +1,232 @@
-Feature: process tests for annulli_02
+Feature: Flows checks for nodoInviaCarrelloRPT [annulli_02]
 
   Background:
     Given systems up
-    And initial XML nodoInviaCarrelloRPT
-      """
-      <xsd:complexType name="nodoInviaCarrelloRPT">
-      <xsd:sequence>
-      <xsd:element name="password" type="ppt:stPassword" />
-      <xsd:element name="identificativoPSP" type="ppt:stText35" />
-      <xsd:element name="identificativoIntermediarioPSP" type="ppt:stText35" />
-      <xsd:element name="identificativoCanale" type="ppt:stText35" />
-      <xsd:element name="listaRPT" type="ppt:tipoListaRPT" />
-      <xsd:element name="requireLightPayment" type="ppt:stZeroUno" minOccurs="0" />
-      <xsd:element name="codiceConvenzione" type="ppt:stConvenzione" minOccurs="0" />
-      <xsd:element name="multiBeneficiario" type="xsd:0" minOccurs="0" />
-      </xsd:sequence>
-      </xsd:complexType>"
-      }
-      """
-    And EC new version
 
-  # Verify phase
+
+  # [annulli_02]
+  Scenario: RPT generation
+    Given RPT generation
+      """
+      <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
+      <pay_i:versioneOggetto>1.1</pay_i:versioneOggetto>
+      <pay_i:dominio>
+      <pay_i:identificativoDominio>#codicePA#</pay_i:identificativoDominio>
+      <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
+      </pay_i:dominio>
+      <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
+      <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
+      <pay_i:autenticazioneSoggetto>CNS</pay_i:autenticazioneSoggetto>
+      <pay_i:soggettoVersante>
+      <pay_i:identificativoUnivocoVersante>
+      <pay_i:tipoIdentificativoUnivoco>F</pay_i:tipoIdentificativoUnivoco>
+      <pay_i:codiceIdentificativoUnivoco>RCCGLD09P09H502E</pay_i:codiceIdentificativoUnivoco>
+      </pay_i:identificativoUnivocoVersante>
+      <pay_i:anagraficaVersante>Gesualdo;Riccitelli</pay_i:anagraficaVersante>
+      <pay_i:indirizzoVersante>via del gesu</pay_i:indirizzoVersante>
+      <pay_i:civicoVersante>11</pay_i:civicoVersante>
+      <pay_i:capVersante>00186</pay_i:capVersante>
+      <pay_i:localitaVersante>Roma</pay_i:localitaVersante>
+      <pay_i:provinciaVersante>RM</pay_i:provinciaVersante>
+      <pay_i:nazioneVersante>IT</pay_i:nazioneVersante>
+      <pay_i:e-mailVersante>gesualdo.riccitelli@poste.it</pay_i:e-mailVersante>
+      </pay_i:soggettoVersante>
+      <pay_i:soggettoPagatore>
+      <pay_i:identificativoUnivocoPagatore>
+      <pay_i:tipoIdentificativoUnivoco>F</pay_i:tipoIdentificativoUnivoco>
+      <pay_i:codiceIdentificativoUnivoco>RCCGLD09P09H501E</pay_i:codiceIdentificativoUnivoco>
+      </pay_i:identificativoUnivocoPagatore>
+      <pay_i:anagraficaPagatore>Gesualdo;Riccitelli</pay_i:anagraficaPagatore>
+      <pay_i:indirizzoPagatore>via del gesu</pay_i:indirizzoPagatore>
+      <pay_i:civicoPagatore>11</pay_i:civicoPagatore>
+      <pay_i:capPagatore>00186</pay_i:capPagatore>
+      <pay_i:localitaPagatore>Roma</pay_i:localitaPagatore>
+      <pay_i:provinciaPagatore>RM</pay_i:provinciaPagatore>
+      <pay_i:nazionePagatore>IT</pay_i:nazionePagatore>
+      <pay_i:e-mailPagatore>gesualdo.riccitelli@poste.it</pay_i:e-mailPagatore>
+      </pay_i:soggettoPagatore>
+      <pay_i:enteBeneficiario>
+      <pay_i:identificativoUnivocoBeneficiario>
+      <pay_i:tipoIdentificativoUnivoco>G</pay_i:tipoIdentificativoUnivoco>
+      <pay_i:codiceIdentificativoUnivoco>11111111117</pay_i:codiceIdentificativoUnivoco>
+      </pay_i:identificativoUnivocoBeneficiario>
+      <pay_i:denominazioneBeneficiario>AZIENDA XXX</pay_i:denominazioneBeneficiario>
+      <pay_i:codiceUnitOperBeneficiario>123</pay_i:codiceUnitOperBeneficiario>
+      <pay_i:denomUnitOperBeneficiario>XXX</pay_i:denomUnitOperBeneficiario>
+      <pay_i:indirizzoBeneficiario>IndirizzoBeneficiario</pay_i:indirizzoBeneficiario>
+      <pay_i:civicoBeneficiario>123</pay_i:civicoBeneficiario>
+      <pay_i:capBeneficiario>22222</pay_i:capBeneficiario>
+      <pay_i:localitaBeneficiario>Roma</pay_i:localitaBeneficiario>
+      <pay_i:provinciaBeneficiario>RM</pay_i:provinciaBeneficiario>
+      <pay_i:nazioneBeneficiario>IT</pay_i:nazioneBeneficiario>
+      </pay_i:enteBeneficiario>
+      <pay_i:datiVersamento>
+      <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
+      <pay_i:importoTotaleDaVersare>1.50</pay_i:importoTotaleDaVersare>
+      <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
+      <pay_i:identificativoUnivocoVersamento>#IuV#</pay_i:identificativoUnivocoVersamento>
+      <pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
+      <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
+      <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
+      <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
+      <pay_i:datiSingoloVersamento>
+      <pay_i:importoSingoloVersamento>1.50</pay_i:importoSingoloVersamento>
+      <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
+      <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
+      <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
+      <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio>
+      <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
+      <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
+      <pay_i:causaleVersamento>pagamento fotocopie pratica RPT</pay_i:causaleVersamento>
+      <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
+      </pay_i:datiSingoloVersamento>
+      </pay_i:datiVersamento>
+      </pay_i:RPT>
+      """
+
+    And RPT2 generation
+      """
+      <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
+      <pay_i:versioneOggetto>1.1</pay_i:versioneOggetto>
+      <pay_i:dominio>
+      <pay_i:identificativoDominio>#codicePA#</pay_i:identificativoDominio>
+      <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
+      </pay_i:dominio>
+      <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
+      <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
+      <pay_i:autenticazioneSoggetto>CNS</pay_i:autenticazioneSoggetto>
+      <pay_i:soggettoVersante>
+      <pay_i:identificativoUnivocoVersante>
+      <pay_i:tipoIdentificativoUnivoco>F</pay_i:tipoIdentificativoUnivoco>
+      <pay_i:codiceIdentificativoUnivoco>RCCGLD09P09H502E</pay_i:codiceIdentificativoUnivoco>
+      </pay_i:identificativoUnivocoVersante>
+      <pay_i:anagraficaVersante>Gesualdo;Riccitelli</pay_i:anagraficaVersante>
+      <pay_i:indirizzoVersante>via del gesu</pay_i:indirizzoVersante>
+      <pay_i:civicoVersante>11</pay_i:civicoVersante>
+      <pay_i:capVersante>00186</pay_i:capVersante>
+      <pay_i:localitaVersante>Roma</pay_i:localitaVersante>
+      <pay_i:provinciaVersante>RM</pay_i:provinciaVersante>
+      <pay_i:nazioneVersante>IT</pay_i:nazioneVersante>
+      <pay_i:e-mailVersante>gesualdo.riccitelli@poste.it</pay_i:e-mailVersante>
+      </pay_i:soggettoVersante>
+      <pay_i:soggettoPagatore>
+      <pay_i:identificativoUnivocoPagatore>
+      <pay_i:tipoIdentificativoUnivoco>F</pay_i:tipoIdentificativoUnivoco>
+      <pay_i:codiceIdentificativoUnivoco>RCCGLD09P09H501E</pay_i:codiceIdentificativoUnivoco>
+      </pay_i:identificativoUnivocoPagatore>
+      <pay_i:anagraficaPagatore>Gesualdo;Riccitelli</pay_i:anagraficaPagatore>
+      <pay_i:indirizzoPagatore>via del gesu</pay_i:indirizzoPagatore>
+      <pay_i:civicoPagatore>11</pay_i:civicoPagatore>
+      <pay_i:capPagatore>00186</pay_i:capPagatore>
+      <pay_i:localitaPagatore>Roma</pay_i:localitaPagatore>
+      <pay_i:provinciaPagatore>RM</pay_i:provinciaPagatore>
+      <pay_i:nazionePagatore>IT</pay_i:nazionePagatore>
+      <pay_i:e-mailPagatore>gesualdo.riccitelli@poste.it</pay_i:e-mailPagatore>
+      </pay_i:soggettoPagatore>
+      <pay_i:enteBeneficiario>
+      <pay_i:identificativoUnivocoBeneficiario>
+      <pay_i:tipoIdentificativoUnivoco>G</pay_i:tipoIdentificativoUnivoco>
+      <pay_i:codiceIdentificativoUnivoco>11111111117</pay_i:codiceIdentificativoUnivoco>
+      </pay_i:identificativoUnivocoBeneficiario>
+      <pay_i:denominazioneBeneficiario>AZIENDA XXX</pay_i:denominazioneBeneficiario>
+      <pay_i:codiceUnitOperBeneficiario>123</pay_i:codiceUnitOperBeneficiario>
+      <pay_i:denomUnitOperBeneficiario>XXX</pay_i:denomUnitOperBeneficiario>
+      <pay_i:indirizzoBeneficiario>IndirizzoBeneficiario</pay_i:indirizzoBeneficiario>
+      <pay_i:civicoBeneficiario>123</pay_i:civicoBeneficiario>
+      <pay_i:capBeneficiario>22222</pay_i:capBeneficiario>
+      <pay_i:localitaBeneficiario>Roma</pay_i:localitaBeneficiario>
+      <pay_i:provinciaBeneficiario>RM</pay_i:provinciaBeneficiario>
+      <pay_i:nazioneBeneficiario>IT</pay_i:nazioneBeneficiario>
+      </pay_i:enteBeneficiario>
+      <pay_i:datiVersamento>
+      <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
+      <pay_i:importoTotaleDaVersare>1.50</pay_i:importoTotaleDaVersare>
+      <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
+      <pay_i:identificativoUnivocoVersamento>#IuV2#</pay_i:identificativoUnivocoVersamento>
+      <pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
+      <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
+      <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
+      <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
+      <pay_i:datiSingoloVersamento>
+      <pay_i:importoSingoloVersamento>1.50</pay_i:importoSingoloVersamento>
+      <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
+      <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
+      <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
+      <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio>
+      <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
+      <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
+      <pay_i:causaleVersamento>pagamento fotocopie pratica RPT</pay_i:causaleVersamento>
+      <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
+      </pay_i:datiSingoloVersamento>
+      </pay_i:datiVersamento>
+      </pay_i:RPT>
+      """
+
+
   Scenario: Execute nodoInviaCarrelloRPT request
-    When PSP sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
-    Then check outcome is OK of nodoInviaCarrelloRPT response
-
-
-  # Payment/PSP choice phase
-  Scenario: Execute nodoChiediInformazioniPagamento request
-    Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
-    And initial XML nodoChiediInformazioniPagamento
-      """
-      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-      <soapenv:Header/>
-      <soapenv:Body>
-      <nod:nodoChiediInformazioniPagamenti>
-      <idPSP>70000000001</idPSP>
-      <idBrokerPSP>70000000001</idBrokerPSP>
-      <idChannel>70000000001_01</idChannel>
-      <password>pwdpwdpwd</password>
-      <idempotencyKey>#idempotency_key#</idempotencyKey>
-      <qrCode>
-      <fiscalCode>#creditor_institution_code#</fiscalCode>
-      <noticeNumber>#notice_number#</noticeNumber>
-      </qrCode>
-      <expirationTime>120000</expirationTime>
-      <amount>10.00</amount>
-      <dueDate>2021-12-31</dueDate>
-      <paymentNote>causale</paymentNote>
-      </nod:activatePaymentNoticeReq>
-      </soapenv:Body>
-      </soapenv:Envelope>
-      """
-    When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
-    Then check outcome is OK of activatePaymentNotice response
-  # And db check 1 rt_activision
-
-
-  Scenario: Execute nodoInviaRPT request
-    Given the Execute activatePaymentNotice request scenario executed successfully
-    And initial XML nodoInviaRPT
+    Given the RPT generation scenario executed successfully
+    And initial XML nodoInviaCarrelloRPT
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
       <soapenv:Header>
-      <ppt:intestazionePPT>
-      <identificativoIntermediarioPA>${intermediarioPA}</identificativoIntermediarioPA>
-      <identificativoStazioneIntermediarioPA>${stazioneAux03}</identificativoStazioneIntermediarioPA>
-      <identificativoDominio>${pa}</identificativoDominio>
-      <identificativoUnivocoVersamento>${#TestCase#iuv}</identificativoUnivocoVersamento>
-      <codiceContestoPagamento>${#TestCase#token}</codiceContestoPagamento>
-      </ppt:intestazionePPT>
+      <ppt:intestazioneCarrelloPPT>
+      <identificativoIntermediarioPA>#codicePA#</identificativoIntermediarioPA>
+      <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
+      <identificativoCarrello>#carrello#</identificativoCarrello>
+      </ppt:intestazioneCarrelloPPT>
       </soapenv:Header>
       <soapenv:Body>
-      <ws:nodoInviaRPT>
-      <password>${password}</password>
-      <identificativoPSP>${pspFittizio}</identificativoPSP>
-      <identificativoIntermediarioPSP>${intermediarioPSPFittizio}</identificativoIntermediarioPSP>
-      <identificativoCanale>${canaleFittizio}</identificativoCanale>
-      <tipoFirma></tipoFirma>
-      <rpt>${#TestCase#rptAttachment}</rpt>
-      </ws:nodoInviaRPT>
-      </soapenv:Body>
-      </soapenv:Envelope>
-      """
-    #  When psp sends SOAP nodoInviaRPT to nodo-dei-pagamenti using the token of the activate phase
-    When psp sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-    Then check outcome is OK of nodoInviaRPT response
-
-  # Verify presence of lock Phase
-  Scenario: Execute nodoNotificaAnnullamento request
-    Given the nodoInviaRPT request scenario executed successfully
-    And initial XML nodoNotificaAnnullamento
-      """
-      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-      <soapenv:Header/>
-      <soapenv:Body>
-      <nod:sendPaymentOutcomeReq>
-      <idPSP>70000000001</idPSP>
-      <idBrokerPSP>70000000001</idBrokerPSP>
-      <idChannel>70000000001_01</idChannel>
+      <ws:nodoInviaCarrelloRPT>
       <password>pwdpwdpwd</password>
-      <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
-      <outcome>OK</outcome>
-      <details>
-      <paymentMethod>creditCard</paymentMethod>
-      <paymentChannel>app</paymentChannel>
-      <fee>2.00</fee>
-      <payer>
-      <uniqueIdentifier>
-      <entityUniqueIdentifierType>F</entityUniqueIdentifierType>
-      <entityUniqueIdentifierValue>JHNDOE00A01F205N</entityUniqueIdentifierValue>
-      </uniqueIdentifier>
-      <fullName>John Doe</fullName>
-      <streetName>street</streetName>
-      <civicNumber>12</civicNumber>
-      <postalCode>89020</postalCode>
-      <city>city</city>
-      <stateProvinceRegion>MI</stateProvinceRegion>
-      <country>IT</country>
-      <e-mail>john.doe@test.it</e-mail>
-      </payer>
-      <applicationDate>2021-10-01</applicationDate>
-      <transferDate>2021-10-02</transferDate>
-      </details>
-      </nod:sendPaymentOutcomeReq>
+      <identificativoPSP>AGID_01</identificativoPSP>
+      <identificativoIntermediarioPSP>97735020584</identificativoIntermediarioPSP>
+      <identificativoCanale>97735020584_02</identificativoCanale>
+      <listaRPT>
+      <elementoListaRPT>
+      <identificativoDominio>#codicePA#</identificativoDominio>
+      <identificativoUnivocoVersamento>$IuV</identificativoUnivocoVersamento>
+      <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+      <rpt>$rptAttachment</rpt>
+      </elementoListaRPT>
+      <elementoListaRPT>
+      <identificativoDominio>#codicePA#</identificativoDominio>
+      <identificativoUnivocoVersamento>$2IuV</identificativoUnivocoVersamento>
+      <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+      <rpt>$rpt2Attachment</rpt>
+      </elementoListaRPT>
+      </listaRPT>
+      <requireLightPayment>01</requireLightPayment>
+      <multiBeneficiario>0</multiBeneficiario>
+      </ws:nodoInviaCarrelloRPT>
       </soapenv:Body>
       </soapenv:Envelope>
       """
+    When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
+    Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
+    Then retrieve session token from $nodoInviaCarrelloRPTResponse.url
+
+  Scenario: Execute nodoChiediInformazioniPagamento
+    Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
+    When WISP sends rest GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
+    Then verify the HTTP status code of informazioniPagamento response is 200
+    And check importo field exists in informazioniPagamento response
+    And check email field exists in informazioniPagamento response
+    And check ragioneSociale field exists in informazioniPagamento response
+    And check oggettoPagamento field exists in informazioniPagamento response
+    And check urlRedirectEC field exists in informazioniPagamento response
+
+  Scenario: Execute nodoNotificaAnnullamento
+    Given the Execute nodoChiediInformazioniPagamento scenario executed successfully
+    When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken to nodo-dei-pagamenti
+    And job paInviaRt triggered after 20 seconds
+    #And wait 20 seconds for expiration
+    Then verify the HTTP status code of notificaAnnullamento response is 200
+
+    And wait 10 seconds for expiration
+
+
+    #DB-CHECK-STATI_RPT
+    And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO, RPT_ANNULLATA_WISP, RT_GENERATA_NODO, RT_INVIATA_PA, RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query DB_GEST_ANN_stati_rpt on db nodo_online under macro Mod1Mb
 
 
 
-  # test execution part1
-  Scenario Outline: Execution test [annulli_01]
-    Given the nodoInviaRPT request scenario executed successfully
-    When psp sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-    Then check outcome is KO of nodoInviaRPT response
-    #And db check
-    #La tabella <nameX> è opportunamente popolata con i <record>
-    Examples:
-      | <nameX>                          | <record>               | test_SOAPUI |
-      | STATI_RPT                        | RPT_RICEVUTA_NODO      | annulli_02  |
-      | STATI_RPT                        | RPT_ACCETTATA_NODO     | annulli_02  |
-      | STATI_RPT                        | RPT_PARCHEGGIATA_NODO  | annulli_02  |
-      | STATI_RPT                        | RPT_ANNULLATA_WISP     | annulli_02  |
-      | STATI_CARRELLO                   | CART_RICEVUTO_NODO     | annulli_02  |
-      | STATI_CARRELLO                   | CART_ACCETTATO_NODO    | annulli_02  |
-      | STATI_CARRELLO                   | CART_PARCHEGGIATO_NODO | annulli_02  |
-      | STATI_CARRELLO                   | CART_ANNULLATO_WISP    | annulli_02  |
-      | POSITION_PAYMENT_STATUS          | None                   | annulli_02  |
-      | POSITION_PAYMENT_STATUS_SNAPSHOT | None                   | annulli_02  |
-      | POSITION_PAYMENT_STATUS          | None                   | annulli_02  |
-      | POSITION_PAYMENT_STATUS_SNAPSHOT | None                   | annulli_02  |
-
-
-  # test execution part2
-  Scenario Outline: Execution test [annulli_01]
-    Given the nodoInviaRPT request scenario executed successfully
-    When psp sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-    Then check outcome is KO of nodoInviaRPT response
-    #And db check
-    #La tabella <nameY> è opportunamente popolata con gli <status>
-    Examples:
-      | <nameY>                 | <status>            | test_SOAPUI |
-      | STATI_RPT_SNAPSHOT      | RPT_ANNULLATA_WISP  | annulli_02  |
-      | STATI_CARRELLO_SNAPSHOT | CART_ANNULLATO_WISP | annulli_02  |

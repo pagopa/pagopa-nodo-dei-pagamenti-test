@@ -205,6 +205,7 @@ def step_impl(context):
 
     pa = context.config.userdata.get('global_configuration').get('codicePA')
 
+
     if "#iuv#" in payload:
         iuv = f"14{str(random.randint(1000000000000, 9999999999999))}"
         setattr(context, 'iuv', iuv)
@@ -233,10 +234,10 @@ def step_impl(context):
         payload = payload.replace('#timedate#', timedate)
 
     if '#IuV#' in payload:
-        iuv = '0' + str(random.randint(1000, 2000)) + str(random.randint(1000,
-                                                                         2000)) + str(random.randint(1000, 2000)) + '00'
+        iuv = '0' + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + '00'
         payload = payload.replace('#IuV#', iuv)
         setattr(context, 'IuV', iuv)
+
 
     if '#iuv2#' in payload:
         iuv = 'IUV' + '-' + \
@@ -494,7 +495,7 @@ def step_impl(context, number):
         IuV = '0' + str(random.randint(1000, 2000)) + str(random.randint(1000,
                                                                          2000)) + str(random.randint(1000, 2000)) + '00'
         payload = payload.replace(f'#IuV{number}#', IuV)
-        setattr(context, f'IuV{number}', IuV)
+        setattr(context, f'{number}IuV', IuV)
 
     if '$carrello' in payload:
         payload = payload.replace('$carrello', getattr(context, 'carrello'))
