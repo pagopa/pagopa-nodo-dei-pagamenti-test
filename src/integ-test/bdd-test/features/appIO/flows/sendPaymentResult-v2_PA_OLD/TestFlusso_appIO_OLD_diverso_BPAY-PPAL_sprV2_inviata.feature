@@ -6,7 +6,7 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
 
     # nodoVerificaRPT phase
     Scenario: Execute nodoVerificaRPT request
-        Given initial XML nodoVerificaRPTreq soap-request
+        Given initial XML nodoVerificaRPT
 
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:bc="http://PuntoAccessoPSP.spcoop.gov.it/BarCode_GS1_128_Modified" xmlns:aim="http://PuntoAccessoPSP.spcoop.gov.it/Code_128_AIM_USS-128_tipo_C" xmlns:qrc="http://PuntoAccessoPSP.spcoop.gov.it/QrCode">
@@ -61,8 +61,8 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
             </soapenv:Envelope>
             """
         And EC replies to nodo-dei-pagamenti with the paaVerificaRPT
-        When psp sends SOAP nodoVerificaRPTreq to nodo-dei-pagamenti
-        Then check esito is OK of nodoVerificaRPTreq response
+        When psp sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
+        Then check esito is OK of nodoVerificaRPT response
 
     # nodoAttivaRPT phase
     Scenario: Execute nodoAttivaRPT request
