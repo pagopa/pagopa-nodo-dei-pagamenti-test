@@ -202,33 +202,16 @@ Feature: process tests for InoltroEsitoCartaCarrello_CANALE_IRRAGGIUNGIBILE
 
     Scenario: Execution Esito Mod1
         Given the Execute nodoInviaRPT request scenario executed successfully
-        And initial XML nodoInviaRPT
-            """
-            <soapenv:Header/>
-                <soapenv:Body>
-                    <ws:pspInviaRPTResponse>
-                        <pspInviaRPTResponse>
-                            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-                            <identificativoCarrello>$nodoInviaRPT.identificativoUnivocoVersamento</identificativoCarrello>
-                            <parametriPagamentoImmediato>idBruciatura=$nodoInviaRPT.identificativoUnivocoVersamento</parametriPagamentoImmediato>
-                        </pspInviaRPTResponse>
-                    </ws:pspInviaRPTResponse>
-                </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        And PSP replies to nodo-dei-pagamenti with the pspInviaRPT 
         When WISP sends REST POST inoltroEsito/mod1 to nodo-dei-pagamenti
-
             """
             {
             "idPagamento":"$sessionToken",
-            "identificativoPsp":"40000000001",
-            "tipoVersamento":"BBT", 
-            "identificativoIntermediario":"40000000001",
-            "identificativoCanale":"40000000001_03",
+            "identificativoPsp":"irraggiungibile",
+            "tipoVersamento":"BBT",
+            "identificativoIntermediario":"irraggiungibile",
+            "identificativoCanale":"irraggiungibile",
             "tipoOperazione":"web"
             }
-
              """
         Then verify the HTTP status code of inoltroEsito/mod1 response is 200
         And check esito is KO of inoltroEsito/mod1 response

@@ -115,20 +115,6 @@ Feature: process tests for chiediInformazioniPagamento
 
     Scenario: Execution Esito Carta
         Given the Execute nodoInviaRPT request scenario executed successfully
-        And PSP replies to nodo-dei-pagamenti with the pspInviaRPT 
-            """
-            <soapenv:Header/>
-                <soapenv:Body>
-                    <ws:pspInviaRPTResponse>
-                        <pspInviaRPTResponse>
-                            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-                            <identificativoCarrello>$nodoInviaRPT.identificativoUnivocoVersamento</identificativoCarrello>
-                            <parametriPagamentoImmediato>idBruciatura=$nodoInviaRPT.identificativoUnivocoVersamento</parametriPagamentoImmediato>
-                        </pspInviaRPTResponse>
-                    </ws:pspInviaRPTResponse>
-                </soapenv:Body>
-            </soapenv:Envelope>
-            """
         When WISP sends REST POST inoltroEsito/carta to nodo-dei-pagamenti
 
             """

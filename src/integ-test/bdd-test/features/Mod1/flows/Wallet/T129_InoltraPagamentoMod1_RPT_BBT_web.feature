@@ -59,7 +59,7 @@ Feature: process tests for chiediInformazioniPagamento
                 <pay_i:nazioneBeneficiario>IT</pay_i:nazioneBeneficiario>
             </pay_i:enteBeneficiario>
             <pay_i:datiVersamento>
-                <pay_i:dataEsecuzionePagamento>2016-09-16</pay_i:dataEsecuzionePagamento>
+                <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
                 <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
                 <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
                 <pay_i:identificativoUnivocoVersamento>#IUV#</pay_i:identificativoUnivocoVersamento>
@@ -202,8 +202,9 @@ Feature: process tests for chiediInformazioniPagamento
 
     Scenario: Execution Esito Mod1
         Given the Execute nodoInviaRPT request scenario executed successfully
-        And PSP replies to nodo-dei-pagamenti with the pspInviaRPT 
+        And initial XML pspInviaRPT 
             """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header/>
                 <soapenv:Body>
                     <ws:pspInviaRPTResponse>
@@ -216,6 +217,7 @@ Feature: process tests for chiediInformazioniPagamento
                 </soapenv:Body>
             </soapenv:Envelope>
             """
+        And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
         When WISP sends REST POST inoltroEsito/mod1 to nodo-dei-pagamenti
 
             """
@@ -229,7 +231,7 @@ Feature: process tests for chiediInformazioniPagamento
             }
 
              """
-        Then verify the HTTP status code of inoltroEsito/carta response is 200
+        Then verify the HTTP status code of inoltroEsito/mod1 response is 200
         And check esito is OK of inoltroEsito/mod1 response
         And check url field not exists in inoltroEsito/mod1 response
 
