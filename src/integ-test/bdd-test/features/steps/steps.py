@@ -171,9 +171,6 @@ def step_impl(context, primitive):
         payload = payload.replace('$identificativoFlusso', getattr(
             context, 'identificativoFlusso'))
 
-    if '$1ccp' in payload:
-        payload = payload.replace('$1ccp', getattr(context, 'ccp1'))
-
     if '$2ccp' in payload:
         payload = payload.replace('$2ccp', getattr(context, 'ccp2'))
 
@@ -221,7 +218,7 @@ def step_impl(context):
     if "#ccp1#" in payload:
         ccp1 = str(utils.current_milli_time())
         payload = payload.replace('#ccp1#', ccp1)
-        setattr(context, "ccp1", ccp1)
+        setattr(context, "1ccp", ccp1)
 
     if "#CCP#" in payload:
         CCP = 'CCP' + '-' + \
@@ -267,8 +264,10 @@ def step_impl(context):
         setattr(context, 'CARRELLO', CARRELLO)
 
     if '#carrello#' in payload:
-        carrello = pa + "302" + "0" + str(random.randint(1000, 2000)) + str(random.randint(
-            1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+        prova = utils.random_s()
+        print('############', prova)
+        carrello = pa + "302" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + prova
+        print(carrello)
         payload = payload.replace('#carrello#', carrello)
         setattr(context, 'carrello', carrello)
 
@@ -352,6 +351,11 @@ def step_impl(context, number):
         payload = payload.replace(f'#IUV{number}#', IUV)
         setattr(context, f'{number}IUV', IUV)
 
+    if f"#ccp{number}#" in payload:
+        ccp = str(utils.current_milli_time() + '1')
+        payload = payload.replace(f'#ccp{number}#', ccp)
+        setattr(context, f"{number}ccp", ccp)
+
     """
     if "#ccp#" in payload:
         ccp = str(random.randint(100000000000000, 999999999999999))
@@ -382,8 +386,14 @@ def step_impl(context):
 
     if '#date#' in payload:
         payload = payload.replace('#date#', date)
+
     if "#timedate#" in payload:
         payload = payload.replace('#timedate#', timedate)
+
+    if "#ccp#" in payload:
+        ccp = str(utils.current_milli_time())
+        payload = payload.replace('#ccp#', ccp)
+        setattr(context, "ccp", ccp)
     
     setattr(context, 'rt', payload)
     payload_b = bytes(payload, 'ascii')
@@ -467,12 +477,12 @@ def step_impl(context, number):
     if f"#ccp{number}#" in payload:
         ccp = str(int(time() * 1000))
         payload = payload.replace(f'#ccp{number}#', ccp)
-        setattr(context, f"ccp{number}", ccp)
+        setattr(context, f"{number}ccp", ccp)
 
     if f"#CCP{number}#" in payload:
         ccp2 = str(utils.current_milli_time()) + '1'
         payload = payload.replace(f'#CCP{number}#', ccp2)
-        setattr(context, f"CCP{number}", ccp2)
+        setattr(context, f"{number}CCP", ccp2)
 
     if "#timedate#" in payload:
         payload = payload.replace('#timedate#', timedate)
@@ -661,6 +671,7 @@ def step_impl(context, job_name, seconds):
     setattr(context, job_name + RESPONSE, nodo_response)
 
 
+# verifica che il valore cercato corrisponda all'intera sottostringa del tag
 @then('check {tag} is {value} of {primitive} response')
 def step_impl(context, tag, value, primitive):
     soap_response = getattr(context, primitive + RESPONSE)
@@ -686,6 +697,34 @@ def step_impl(context, tag, value, primitive):
         print(
             f'check tag "{tag}" - expected: {value}, obtained: {json_response.get(tag)}')
         assert str(founded_value) == value
+
+
+# controlla che il valore value sia una sottostringa del contentuo del tag
+@then('check substring {value} in {tag} content of {primitive} response')
+def step_impl(context, tag, value, primitive):
+    soap_response = getattr(context, primitive + RESPONSE)
+    value = utils.replace_local_variables(value, context)
+    value = utils.replace_global_variables(value, context)
+    if 'xml' in soap_response.headers['content-type']:
+        my_document = parseString(soap_response.content)
+        if len(my_document.getElementsByTagName('faultCode')) > 0:
+            print("fault code: ", my_document.getElementsByTagName(
+                'faultCode')[0].firstChild.data)
+            print("fault string: ", my_document.getElementsByTagName(
+                'faultString')[0].firstChild.data)
+            if my_document.getElementsByTagName('description'):
+                print("description: ", my_document.getElementsByTagName(
+                    'description')[0].firstChild.data)
+        data = my_document.getElementsByTagName(tag)[0].firstChild.data
+        print(f'check tag "{tag}" - expected: {value}, obtained: {data}')
+        assert value in data 
+    else:
+        node_response = getattr(context, primitive + RESPONSE)
+        json_response = node_response.json()
+        founded_value = jo.get_value_from_key(json_response, tag)
+        print(
+            f'check tag "{tag}" - expected: {value}, obtained: {json_response.get(tag)}')
+        assert value in str(founded_value)
 
 
 @step('checks {tag} contains {value} of {primitive} response')
@@ -776,7 +815,10 @@ def step_impl(context, tag, primitive):
         my_document = parseString(soap_response.content)
         assert len(my_document.getElementsByTagName(tag)) == 0
     else:
-        assert False
+        node_response = getattr(context, primitive + RESPONSE)
+        json_response = node_response.json()
+        find = jo.search_tag(json_response, tag)
+        assert not find
 
 
 # TODO improve with greater/equals than options
@@ -1306,6 +1348,17 @@ def step_impl(context, query_name, param, position, row_number, key):
     print(f'{param}: {selected_element}')
     setattr(context, key, selected_element)
 
+
+@step("through the query {query_name} retrieve xml {xml} at position {position:d} and save it under the key {key}")
+def step_impl(context, query_name, xml, position, key):
+    result_query = getattr(context, query_name)
+    print(f'{query_name}: {result_query}')
+    selected_element = result_query[0][position]
+    selected_element = selected_element.read()
+    selected_element = selected_element.decode("utf-8")
+    print(f'{xml}: {selected_element}')
+    setattr(context, key, selected_element)
+    
 
 @step("with the query {query_name1} check assert beetwen elem {elem1} in position {position1:d} and elem {elem2} with position {position2:d} of the query {query_name2}")
 def stemp_impl(context, query_name1, elem1, position1, elem2, query_name2, position2):
@@ -2223,19 +2276,6 @@ def step_impl(context, url):
 @step('replace {old_attribute} content with {new_attribute} content')
 def step_impl(context, old_attribute, new_attribute):
     setattr(context, old_attribute, getattr(context, new_attribute))
-
-
-@step('check field in {primitive} response')
-def step_impl(context, primitive):
-    soap_response = getattr(context, primitive + RESPONSE)
-    if 'xmlns' in soap_response.headers['content-type']:
-        my_document = parseString(soap_response.content)
-        if my_document.getElementsByTagName('description'):
-            print("description: ", my_document.getElementsByTagName(
-                'description')[0].firstChild.data)
-
-    result = json.loads(my_document)
-    print(result)
 
 
 @step('Select and Update RT for Test retry_PAold with causale versamento {causaleVers}')
