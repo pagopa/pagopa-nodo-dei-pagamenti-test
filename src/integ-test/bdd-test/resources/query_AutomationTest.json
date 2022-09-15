@@ -86,7 +86,12 @@
         "DB_INOLTRO_PAG_stati_rpt": "SELECT s.columns FROM table_name s WHERE s.IUV = '$nodoInoltraEsitoPagamentoCarte.noticenumber' and s.ID_DOMINIO = '$nodoInoltraEsitoPagamentoCarte.fiscalcode'",
         "DB_INOLTRO_PAG_stati_carrello": "SELECT s.columns FROM table_name s WHERE s.IUV = '$nodoInoltraEsitoPagamentoCarte.noticenumber' and s.ID_DOMINIO = '$nodoInoltraEsitoPagamentoCarte.fiscalcode'",
         "DB_INOLTRO_PAG_stati_rpt_snapshot": "SELECT s.columns FROM table_name s WHERE s.IUV = '$nodoInoltraEsitoPagamentoCarte.noticenumber' and s.ID_DOMINIO = '$nodoInoltraEsitoPagamentoCarte.fiscalcode'",
-        "DB_GEST_ANN_stati_rpt": "SELECT s.columns FROM table_name s WHERE s.IUV = '$IuV' and s.ID_DOMINIO = '$nodoInviaCarrelloRPT.identificativoDominio' ORDER BY ID ASC"
+        "DB_GEST_ANN_stati_rpt": "SELECT s.columns FROM table_name s WHERE s.IUV = '$IuV' and s.ID_DOMINIO = '$nodoInviaCarrelloRPT.identificativoDominio'",
+        "DB_GEST_ANN_stati_rpt_pa1": "SELECT s.columns FROM table_name s WHERE s.IUV = '$IuV' and s.ID_DOMINIO = '90000000001'",
+        "DB_GEST_ANN_stati_payment_token": "SELECT s.columns FROM table_name s WHERE s.ID_CARRELLO = '$nodoInviaCarrelloRPT.identificativoCarrello'",
+        "DB_GEST_ANN_stati_position_payment_status": "SELECT s.columns FROM table_name s WHERE s.NOTICE_ID = '311$nodoInviaCarrelloRPT.identificativoUnivocoVersamento' and s.pa_fiscal_code= '$nodoInviaCarrelloRPT.identificativoDominio'"
+
+
     },
     "Mod1":{
         "esito": "SELECT v.columns FROM table_name r JOIN RT_VERSAMENTI v ON v.FK_RT=r.ID WHERE r.IUV='$iuv' AND r.CCP= '$nodoInviaRPT.codiceContestoPagamento' AND r.IDENT_DOMINIO='$nodoInviaRPT.identificativoDominio'",
