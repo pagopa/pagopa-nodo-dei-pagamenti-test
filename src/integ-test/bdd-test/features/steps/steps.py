@@ -746,7 +746,7 @@ def step_impl(context, sender, method, service, receiver):
 
     if service.startswith('<'):
         service = xmltodict.parse(service)
-        service = service["Envelope"]["Body"]["data"]
+        service = service["root"]
         service["paymentTokens"] = service["paymentTokens"]["paymentToken"]
         print(json.dumps(service))
 
@@ -2218,7 +2218,7 @@ def step_impl(context, primitive):
 
     jsonDict = json.loads(payload)
     payload = utils.json2xml(jsonDict)
-    payload = '<Envelope><Body><data>' + payload + '</Envelope></Body></data>'
+    payload = '<root>' + payload + '</root>'
 
 #    if len(payload) > 0:
 #        my_document = json.load(payload)
