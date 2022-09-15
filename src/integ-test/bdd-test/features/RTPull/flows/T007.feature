@@ -1,9 +1,9 @@
-Feature: Execute nodoInviaRPT - [T007]
+Feature: Execute nodoInviaCarrelloRPT - [T007]
 
     Background:
         Given systems up
 
-    Scenario: Execute nodoInviaRPT - [T007]
+    Scenario: Execute nodoInviaCarrelloRPT - [T007]
         Given RPT generation
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_2_0.xsd ">
