@@ -757,8 +757,14 @@ def step_impl(context, sender, method, service, receiver):
         body = xmltodict.parse(bodyXml)
         body = body["root"]
         body["paymentTokens"] = body["paymentTokens"]["paymentToken"]
+        token = body["paymentTokens"]
         body = json.dumps(body, indent=4)
-        body = str(body)
+        
+        l_tok_string = body.index('"paymentTokens": ') + len('"paymentTokens": ')
+
+        if body[l_tok_string:l_tok_string + 1] is not '[':
+            body = utils.insert_bracket(body, l_tok_string,'[')
+            body = utils.insert_bracket(body, body.index(token)+ len(token) + 1,']')
 
     
     print(body)
@@ -2259,12 +2265,12 @@ def step_impl(context, primitive):
     setattr(context, primitive, payload)
 
 
-@given('{key} and {value} in rest {primitive}')
-def step_impl(context, key, value, primitive):
-    # use - to skip
-    if key != "-":
-        value = utils.replace_local_variables(value, context)
-        value = utils.replace_global_variables(value, context)
-        json = utils.manipulate_json(
-            getattr(context, primitive), key, value)
-        setattr(context, primitive, json)
+# @given('{key} and {value} in rest {primitive}')
+# def step_impl(context, key, value, primitive):
+#     # use - to skip
+#     if key != "-":
+#         value = utils.replace_local_variables(value, context)
+#         value = utils.replace_global_variables(value, context)
+#         json = utils.manipulate_json(
+#             getattr(context, primitive), key, value)
+#         setattr(context, primitive, json)
