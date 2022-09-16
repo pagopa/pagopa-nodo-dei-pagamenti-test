@@ -751,9 +751,9 @@ def step_impl(context, sender, method, service, receiver):
     body = context.text or ""
     
     if '_json' in service:
-        service_json = service.split('_')[0]
-        print(service_json)
-        bodyXml = getattr(context, service_json)
+        service = service.split('_')[0]
+        print(service)
+        bodyXml = getattr(context, service)
         body = xmltodict.parse(bodyXml)
         body = body["root"]
         body["paymentTokens"] = body["paymentTokens"]["paymentToken"]
