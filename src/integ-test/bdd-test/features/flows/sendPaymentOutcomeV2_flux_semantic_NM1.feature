@@ -69,8 +69,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
          """
 
    Scenario: sendPaymentOutcomeV2
-      Given the scenario executed successfully
-      And initial XML sendPaymentOutcomeV2
+      Given initial XML sendPaymentOutcomeV2
          """
          <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
          <soapenv:Header/>
@@ -120,6 +119,13 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
          </soapenv:Body>
          </soapenv:Envelope>
          """
+
+   # SEM_SPO_7.1
+   
+   Scenario: SEM_SPO_7.1
+      Given idChannel with 70000000001_08 in sendPaymentOutcomeV2
+      When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
+      Then check outcome is OK of sendPaymentOutcomeV2 response
 
    # SEM_SPO_9.1
 
