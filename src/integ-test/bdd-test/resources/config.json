@@ -33,6 +33,7 @@
     "id_station": "77777777777_01",
     "id_station_disabled": "77777777777_06",
     "canale":"70000000001_07",
+    "canaleRtPull":"70000000001_06",
     "canale_BBT":"40000000001_04",
     "canale_ATTIVATO_PRESSO_PSP":"70000000001_01",
     "canale_DIFFERITO_MOD2": "70000000001_04",
