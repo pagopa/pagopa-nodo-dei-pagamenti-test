@@ -213,8 +213,7 @@ Feature: process tests for RPT-RT bollo
             """
 
     Scenario: Execute nodoInviaRPT request
-        Given the RPT generation scenario executed successfully
-        And initial XML nodoInviaRPT
+        Given initial XML nodoInviaRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
