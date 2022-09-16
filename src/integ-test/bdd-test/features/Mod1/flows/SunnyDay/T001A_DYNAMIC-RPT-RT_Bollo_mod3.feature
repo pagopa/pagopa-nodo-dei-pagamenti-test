@@ -100,14 +100,14 @@ Feature: process tests for RPT-RT bollo
          <pay_i:tipoVersamento>PO</pay_i:tipoVersamento>
          <pay_i:identificativoUnivocoVersamento>#IUV#</pay_i:identificativoUnivocoVersamento>
          <pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
-         <pay_i:ibanAddebito>'+context.expand('${ibanPoste}')+'</pay_i:ibanAddebito>
+         <pay_i:ibanAddebito>IT45R0760103200000000001016</pay_i:ibanAddebito>
          <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
          <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
          <pay_i:datiSingoloVersamento>
          <pay_i:importoSingoloVersamento>10.00</pay_i:importoSingoloVersamento>
          <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
          <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
-         <pay_i:ibanAppoggio>'+context.expand('${ibanPoste}')+'</pay_i:ibanAppoggio>
+         <pay_i:ibanAppoggio>IT45R0760103200000000001016</pay_i:ibanAppoggio>
          <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
          <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
          <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
