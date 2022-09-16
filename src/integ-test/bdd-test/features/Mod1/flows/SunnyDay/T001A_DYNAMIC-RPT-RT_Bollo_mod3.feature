@@ -227,9 +227,9 @@ Feature: process tests for RPT-RT bollo
             <soapenv:Body>
             <ws:nodoInviaRPT>
             <password>pwdpwdpwd</password>
-            <identificativoPSP>40000000001</identificativoPSP>
-            <identificativoIntermediarioPSP>40000000001</identificativoIntermediarioPSP>
-            <identificativoCanale>40000000001_04</identificativoCanale>
+            <identificativoPSP>#psp#</identificativoPSP>
+            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canale#</identificativoCanale>
             <tipoFirma></tipoFirma>
             <rpt>$rptAttachment</rpt>
             </ws:nodoInviaRPT>
@@ -237,7 +237,7 @@ Feature: process tests for RPT-RT bollo
             </soapenv:Envelope>
             """
       When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-      Then check error is SERVIZIO_NONATTIVO of nodoInviaRPT response
+      Then check faultCode is PPT_CANALE_SERVIZIO_NONATTIVO of nodoInviaRPT response
 
    Scenario: Execute nodoInviaRT
       Given the MB generation scenario executed successfully
@@ -247,10 +247,10 @@ Feature: process tests for RPT-RT bollo
             <soapenv:Header/>
             <soapenv:Body>
                <ws:nodoInviaRT>
-                  <identificativoIntermediarioPSP>40000000001</identificativoIntermediarioPSP>
-                  <identificativoCanale>40000000001_04</identificativoCanale>
+                  <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+                  <identificativoCanale>#canale#</identificativoCanale>
                   <password>pwdpwdpwd</password>
-                  <identificativoPSP>40000000001</identificativoPSP>
+                  <identificativoPSP>#psp#</identificativoPSP>
                   <identificativoDominio>#codicePA#</identificativoDominio>
                   <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
                   <codiceContestoPagamento>CCD01</codiceContestoPagamento>
