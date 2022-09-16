@@ -3,86 +3,8 @@ Feature: T0XX_N_RPT
     Background:
         Given systems up
 
-    Scenario: Initialize all mock responses
-        Given initial XML pspInviaRPT
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <ws:pspInviaRPTResponse>
-            <pspInviaRPTResponse>
-            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-            <identificativoCarrello>$nodoInviaCarrelloRPT.identificativoCarrello</identificativoCarrello>
-            <parametriPagamentoImmediato>idBruciatura=$nodoInviaCarrelloRPT.identificativoCarrello</parametriPagamentoImmediato>
-            </pspInviaRPTResponse>
-            </ws:pspInviaRPTResponse>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        And initial XML pspChiediListaRT
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <ws:pspChiediListaRTResponse>
-            <pspChiediListaRTResponse>
-            <elementoListaRTResponse>
-            <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
-            <identificativoUnivocoVersamento>iuv</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>CCD01</codiceContestoPagamento>
-            </elementoListaRTResponse>
-            </pspChiediListaRTResponse>
-            </ws:pspChiediListaRTResponse>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        And initial XML pspChiediRT
-            """
-            <soapenv:Envelope
-            xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-            xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <ws:pspChiediRTResponse>
-            <pspChiediRTResponse>
-            <rt>$rtAttachment</rt>
-            </pspChiediRTResponse>
-            </ws:pspChiediRTResponse>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        And initial XML pspInviaAckRT
-            """
-            <soapenv:Envelope
-            xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-            xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <ws:pspInviaAckRTResponse>
-            <pspInviaAckRTResponse>
-            <esito>OK</esito>
-            </pspInviaAckRTResponse>
-            </ws:pspInviaAckRTResponse>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        And initial XML paaInviaRT
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <ws:paaInviaRTRisposta>
-            <paaInviaRTRisposta>
-            <esito>OK</esito>
-            </paaInviaRTRisposta>
-            </ws:paaInviaRTRisposta>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-
     Scenario: Execute nodoInviaRPT1 (Phase 1)
-        Given the Initialize all mock responses scenario executed successfully
-        And RPT generation
+        Given RPT generation
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_2_0.xsd ">
             <pay_i:versioneOggetto>6.0</pay_i:versioneOggetto>
@@ -146,6 +68,7 @@ Feature: T0XX_N_RPT
             <pay_i:datiSingoloVersamento>
             <pay_i:importoSingoloVersamento>10.00</pay_i:importoSingoloVersamento>
             <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
+            <pay_i:ibanAccredito>IT45R0760103200000000001016</pay_i:ibanAccredito>
             <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
             <pay_i:ibanAppoggio>IT45R0760103200000000001016</pay_i:ibanAppoggio>
             <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
@@ -237,10 +160,6 @@ Feature: T0XX_N_RPT
             <pay_i:identificativoUnivocoRiscossione>$iuv</pay_i:identificativoUnivocoRiscossione>
             <pay_i:causaleVersamento>pagamento fotocopie pratica RT</pay_i:causaleVersamento>
             <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
-            <pay_i:allegatoRicevuta>
-            <pay_i:tipoAllegatoRicevuta>BD</pay_i:tipoAllegatoRicevuta>
-            <pay_i:testoAllegato>$bollo</pay_i:testoAllegato>
-            </pay_i:allegatoRicevuta>
             </pay_i:datiSingoloPagamento>
             </pay_i:datiPagamento>
             </pay_i:RT>
@@ -262,7 +181,7 @@ Feature: T0XX_N_RPT
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canale#</identificativoCanale>
+            <identificativoCanale>#canaleRtPull#</identificativoCanale>
             <tipoFirma></tipoFirma>
             <rpt>$rptAttachment</rpt>
             </ws:nodoInviaRPT>
@@ -285,16 +204,60 @@ Feature: T0XX_N_RPT
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And identificativoUnivocoVersamento with $iuv in pspChiediRT
+        And initial XML pspInviaRPT
+        """
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+                <ws:pspInviaRPTResponse>
+                    <pspInviaRPTResponse>
+                        <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+                        <identificativoCarrello>$nodoInviaRPT.identificativoUnivocoVersamento</identificativoCarrello>
+                        <parametriPagamentoImmediato>idBruciatura=$nodoInviaRPT.identificativoUnivocoVersamento</parametriPagamentoImmediato>
+                    </pspInviaRPTResponse>
+                </ws:pspInviaRPTResponse>
+            </soapenv:Body>
+        </soapenv:Envelope>
+        """
         And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
+        And initial XML pspChiediListaRT
+        """
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+                <ws:pspChiediListaRTResponse>
+                    <pspChiediListaRTResponse>
+                        <elementoListaRTResponse>
+                            <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
+                            <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
+                            <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+                        </elementoListaRTResponse>
+                    </pspChiediListaRTResponse>
+                </ws:pspChiediListaRTResponse>
+            </soapenv:Body>
+        </soapenv:Envelope>
+        """
         And PSP replies to nodo-dei-pagamenti with the pspChiediListaRT
+        And initial XML pspChiediRT
+        """
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+                <ws:pspChiediRTResponse>
+                    <pspChiediRTResponse>
+                        <rt>$rtAttachment</rt>
+                    </pspChiediRTResponse>
+                </ws:pspChiediRTResponse>
+            </soapenv:Body>
+        </soapenv:Envelope>
+        """
         And PSP replies to nodo-dei-pagamenti with the pspChiediRT
-        And wait 10 seconds for expiration
+        And wait 5 seconds for expiration
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         And EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
         And job pspChiediListaAndChiediRt triggered after 5 seconds
-        And job paInviaRt triggered after 50 seconds
-        And wait 50 seconds for expiration
+        And job paInviaRt triggered after 10 seconds
+        And wait 5 seconds for expiration
         Then check esito is OK of nodoInviaRPT response
         And check stato is RPT_ACCETTATA_PSP of nodoChiediStatoRPT response
         
@@ -364,6 +327,7 @@ Feature: T0XX_N_RPT
             <pay_i:datiSingoloVersamento>
             <pay_i:importoSingoloVersamento>10.00</pay_i:importoSingoloVersamento>
             <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
+            <pay_i:ibanAccredito>IT45R0760103200000000001016</pay_i:ibanAccredito>
             <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
             <pay_i:ibanAppoggio>IT45R0760103200000000001016</pay_i:ibanAppoggio>
             <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
@@ -455,22 +419,21 @@ Feature: T0XX_N_RPT
             <pay_i:identificativoUnivocoRiscossione>$2iuv</pay_i:identificativoUnivocoRiscossione>
             <pay_i:causaleVersamento>pagamento fotocopie pratica RT</pay_i:causaleVersamento>
             <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
-            <pay_i:allegatoRicevuta>
-            <pay_i:tipoAllegatoRicevuta>BD</pay_i:tipoAllegatoRicevuta>
-            <pay_i:testoAllegato>$bollo</pay_i:testoAllegato>
-            </pay_i:allegatoRicevuta>
             </pay_i:datiSingoloPagamento>
             </pay_i:datiPagamento>
             </pay_i:RT>
             """
         And identificativoUnivocoVersamento with $2iuv in nodoInviaRPT
-        And identificativoUnivocoVersamento with $2iuv in pspChiediRT
         And rpt with $rpt2Attachment in nodoInviaRPT
         And identificativoUnivocoVersamento with $2iuv in nodoChiediStatoRPT
+        And identificativoCarrello with $nodoInviaRPT.identificativoUnivocoVersamento in pspInviaRPT
+        And parametriPagamentoImmediato with idBruciatura=$nodoInviaRPT.identificativoUnivocoVersamento in pspInviaRPT
+        And identificativoUnivocoVersamento with $2iuv in pspChiediListaRT
+        And rt with $rt2Attachment in pspChiediRT
         And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
         And PSP replies to nodo-dei-pagamenti with the pspChiediListaRT
         And PSP replies to nodo-dei-pagamenti with the pspChiediRT
-        And wait 10 seconds for expiration
+        And wait 5 seconds for expiration
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         And EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
         And job pspChiediListaAndChiediRt triggered after 5 seconds
@@ -545,6 +508,7 @@ Feature: T0XX_N_RPT
             <pay_i:datiSingoloVersamento>
             <pay_i:importoSingoloVersamento>10.00</pay_i:importoSingoloVersamento>
             <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
+            <pay_i:ibanAccredito>IT45R0760103200000000001016</pay_i:ibanAccredito>
             <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
             <pay_i:ibanAppoggio>IT45R0760103200000000001016</pay_i:ibanAppoggio>
             <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
@@ -636,10 +600,6 @@ Feature: T0XX_N_RPT
             <pay_i:identificativoUnivocoRiscossione>$3iuv</pay_i:identificativoUnivocoRiscossione>
             <pay_i:causaleVersamento>pagamento fotocopie pratica RT</pay_i:causaleVersamento>
             <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
-            <pay_i:allegatoRicevuta>
-            <pay_i:tipoAllegatoRicevuta>BD</pay_i:tipoAllegatoRicevuta>
-            <pay_i:testoAllegato>$bollo</pay_i:testoAllegato>
-            </pay_i:allegatoRicevuta>
             </pay_i:datiSingoloPagamento>
             </pay_i:datiPagamento>
             </pay_i:RT>
@@ -647,7 +607,14 @@ Feature: T0XX_N_RPT
         And identificativoUnivocoVersamento with $3iuv in nodoInviaRPT
         And rpt with $rpt3Attachment in nodoInviaRPT
         And identificativoUnivocoVersamento with $3iuv in nodoChiediStatoRPT
-        And identificativoUnivocoVersamento with $3iuv in pspChiediRT
+        And identificativoCarrello with $nodoInviaRPT.identificativoUnivocoVersamento in pspInviaRPT
+        And parametriPagamentoImmediato with idBruciatura=$nodoInviaRPT.identificativoUnivocoVersamento in pspInviaRPT
+        And identificativoUnivocoVersamento with $3iuv in pspChiediListaRT
+        And rt with $rt3Attachment in pspChiediRT
+        And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
+        And PSP replies to nodo-dei-pagamenti with the pspChiediListaRT
+        And PSP replies to nodo-dei-pagamenti with the pspChiediRT
+        And wait 5 seconds for expiration
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         And EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
         And job pspChiediListaAndChiediRt triggered after 5 seconds

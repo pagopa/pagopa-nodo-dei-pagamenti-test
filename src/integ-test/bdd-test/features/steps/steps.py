@@ -115,7 +115,7 @@ def step_impl(context, primitive):
     """
 
     if '#carrello#' in payload:
-        carrello = "77777777777" + "311" + "0" + str(random.randint(1000, 2000)) + str(
+        carrello = "77777777777" + "302" + "0" + str(random.randint(1000, 2000)) + str(
             random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
         payload = payload.replace('#carrello#', carrello)
         setattr(context, 'carrello', carrello)
@@ -154,6 +154,11 @@ def step_impl(context, primitive):
         CARRELLO1 = "CARRELLO" + str(random.randint(0, 100000))
         payload = payload.replace('#CARRELLO1#', CARRELLO1)
         setattr(context, 'CARRELLO1', CARRELLO1)
+
+    if '#CARRELLO2#' in payload:
+        CARRELLO2 = "CARRELLO" + str(random.randint(0, 10000))
+        payload = payload.replace('#CARRELLO2#', CARRELLO2)
+        setattr(context, 'CARRELLO2', CARRELLO2)
 
     if '#carrelloMills#' in payload:
         carrello = str(utils.current_milli_time())
@@ -311,149 +316,6 @@ def step_impl(context):
     setattr(context, 'rptAttachment', payload)
 
 
-@given ('MB generation')
-def step_impl(context):
-    payload = context.text or ""
-
-    payload = utils.replace_local_variables(payload, context)
-    payload = utils.replace_context_variables(payload, context)
-
-    if '#iubd#' in payload:
-        iubd = ''+ str(random.randint(10000000, 20000000)) + str(random.randint(10000000, 20000000))
-        payload = payload.replace('#iubd#', iubd)
-        setattr(context, 'iubd', iubd)
-
-    payload = utils.replace_global_variables(payload, context)
-
-    payload_b = bytes(payload, 'ascii')
-    payload_uni = b64.b64encode(payload_b)
-    payload = f"{payload_uni}".split("'")[1]
-
-    setattr(context, 'bollo', payload)
-
-
-@given('RT{number:d} generation')
-def step_impl(context, number):
-    payload = context.text or ""
-    payload = utils.replace_context_variables(payload, context)
-    date = datetime.date.today().strftime("%Y-%m-%d")
-    timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
-    setattr(context, 'date', date)
-    setattr(context, 'timedate', timedate)
-
-    if "#timedate#" in payload:
-        payload = payload.replace('#timedate#', timedate)
-
-    if '#date#' in payload:
-        payload = payload.replace('#date#', date)
-
-    if f"#IUV{number}#" in payload:
-        IUV = str(utils.current_milli_time()) + '-' + str(random.randint(0, 100000))
-        payload = payload.replace(f'#IUV{number}#', IUV)
-        setattr(context, f'{number}IUV', IUV)
-
-    if f"#ccp{number}#" in payload:
-        ccp = str(utils.current_milli_time() + '1')
-        payload = payload.replace(f'#ccp{number}#', ccp)
-        setattr(context, f"{number}ccp", ccp)
-
-    """
-    if "#ccp#" in payload:
-        ccp = str(random.randint(100000000000000, 999999999999999))
-        payload = payload.replace('#ccp#', ccp)
-        setattr(context, "ccp", ccp)
-    """
-
-    payload_b = bytes(payload, 'ascii')
-    payload_uni = b64.b64encode(payload_b)
-    payload = f"{payload_uni}".split("'")[1]
-    print(payload)
-
-    payload = utils.replace_local_variables(payload, context)
-    payload = utils.replace_global_variables(payload, context)
-    setattr(context, f'rt{number}Attachment', payload)
-
-
-@given('RT generation')
-def step_impl(context):
-    payload = context.text or ""
-    payload = utils.replace_global_variables(payload, context)
-    payload = utils.replace_local_variables(payload, context)
-    payload = utils.replace_context_variables(payload, context)
-    date = datetime.date.today().strftime("%Y-%m-%d")
-    timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
-    setattr(context, 'date', date)
-    setattr(context, 'timedate', timedate)
-
-    if '#date#' in payload:
-        payload = payload.replace('#date#', date)
-
-    if "#timedate#" in payload:
-        payload = payload.replace('#timedate#', timedate)
-
-    if "#ccp#" in payload:
-        ccp = str(utils.current_milli_time())
-        payload = payload.replace('#ccp#', ccp)
-        setattr(context, "ccp", ccp)
-    
-    setattr(context, 'rt', payload)
-    payload_b = bytes(payload, 'ascii')
-    payload_uni = b64.b64encode(payload_b)
-    payload = f"{payload_uni}".split("'")[1]
-    print(payload)
-    
-    print("RT generato: ", payload)
-    setattr(context, 'rtAttachment', payload)
-
-@given('RR generation')
-def step_impl(context):
-    payload = context.text or ""
-    payload = utils.replace_global_variables(payload, context)
-    payload = utils.replace_local_variables(payload, context)
-    payload = utils.replace_context_variables(payload, context)
-    date = datetime.date.today().strftime("%Y-%m-%d")
-    timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
-    setattr(context, 'date', date)
-    setattr(context, 'timedate', timedate)
-
-    if '#date#' in payload:
-        payload = payload.replace('#date#', date)
-    if "#timedate#" in payload:
-        payload = payload.replace('#timedate#', timedate)
-    
-    payload_b = bytes(payload, 'ascii')
-    payload_uni = b64.b64encode(payload_b)
-    payload = f"{payload_uni}".split("'")[1]
-    print(payload)
-    
-    print("RT generato: ", payload)
-    setattr(context, 'rrAttachment', payload)
-
-@given('ER generation')
-def step_impl(context):
-    payload = context.text or ""
-    payload = utils.replace_global_variables(payload, context)
-    payload = utils.replace_local_variables(payload, context)
-    payload = utils.replace_context_variables(payload, context)
-    date = datetime.date.today().strftime("%Y-%m-%d")
-    timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
-    setattr(context, 'date', date)
-    setattr(context, 'timedate', timedate)
-
-    if '#date#' in payload:
-        payload = payload.replace('#date#', date)
-    if "#timedate#" in payload:
-        payload = payload.replace('#timedate#', timedate)
-    
-    payload_b = bytes(payload, 'ascii')
-    payload_uni = b64.b64encode(payload_b)
-    payload = f"{payload_uni}".split("'")[1]
-    print(payload)
-    
-    print("RT generato: ", payload)
-    setattr(context, 'erAttachment', payload)
-
-
 @given('RPT{number:d} generation')
 def step_impl(context, number):
     payload = context.text or ""
@@ -572,6 +434,171 @@ def step_impl(context, number):
     print(payload)
 
     setattr(context, f'rpt{number}Attachment', payload)
+
+
+@given ('MB generation')
+def step_impl(context):
+    payload = context.text or ""
+
+    payload = utils.replace_local_variables(payload, context)
+    payload = utils.replace_context_variables(payload, context)
+
+    if '#iubd#' in payload:
+        iubd = ''+ str(random.randint(10000000, 20000000)) + str(random.randint(10000000, 20000000))
+        payload = payload.replace('#iubd#', iubd)
+        setattr(context, 'iubd', iubd)
+
+    payload = utils.replace_global_variables(payload, context)
+
+    payload_b = bytes(payload, 'ascii')
+    payload_uni = b64.b64encode(payload_b)
+    payload = f"{payload_uni}".split("'")[1]
+
+    setattr(context, 'bollo', payload)
+
+
+@given ('MB{number:d} generation')
+def step_impl(context, number):
+    payload = context.text or ""
+
+    payload = utils.replace_local_variables(payload, context)
+    payload = utils.replace_context_variables(payload, context)
+
+    if f'#iubd{number}#' in payload:
+        iubd = ''+ str(random.randint(10000000, 20000000)) + str(random.randint(10000000, 20000000))
+        payload = payload.replace(f'#iubd{number}#', iubd)
+        setattr(context, f'{number}iubd', iubd)
+
+    payload = utils.replace_global_variables(payload, context)
+
+    payload_b = bytes(payload, 'ascii')
+    payload_uni = b64.b64encode(payload_b)
+    payload = f"{payload_uni}".split("'")[1]
+
+    setattr(context, f'{number}bollo', payload)
+
+
+@given('RT{number:d} generation')
+def step_impl(context, number):
+    payload = context.text or ""
+    payload = utils.replace_local_variables(payload, context)
+    payload = utils.replace_context_variables(payload, context)
+    payload = utils.replace_global_variables(payload, context)
+    date = datetime.date.today().strftime("%Y-%m-%d")
+    timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
+    setattr(context, 'date', date)
+    setattr(context, 'timedate', timedate)
+
+    if "#timedate#" in payload:
+        payload = payload.replace('#timedate#', timedate)
+
+    if '#date#' in payload:
+        payload = payload.replace('#date#', date)
+
+    if f"#IUV{number}#" in payload:
+        IUV = str(utils.current_milli_time()) + '-' + str(random.randint(0, 100000))
+        payload = payload.replace(f'#IUV{number}#', IUV)
+        setattr(context, f'{number}IUV', IUV)
+
+    if f"#ccp{number}#" in payload:
+        ccp = str(utils.current_milli_time() + '1')
+        payload = payload.replace(f'#ccp{number}#', ccp)
+        setattr(context, f"{number}ccp", ccp)
+
+    """
+    if "#ccp#" in payload:
+        ccp = str(random.randint(100000000000000, 999999999999999))
+        payload = payload.replace('#ccp#', ccp)
+        setattr(context, "ccp", ccp)
+    """
+
+    payload_b = bytes(payload, 'ascii')
+    payload_uni = b64.b64encode(payload_b)
+    payload = f"{payload_uni}".split("'")[1]
+    print(payload)
+
+    
+    setattr(context, f'rt{number}Attachment', payload)
+
+
+@given('RT generation')
+def step_impl(context):
+    payload = context.text or ""
+    payload = utils.replace_global_variables(payload, context)
+    payload = utils.replace_local_variables(payload, context)
+    payload = utils.replace_context_variables(payload, context)
+    date = datetime.date.today().strftime("%Y-%m-%d")
+    timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
+    setattr(context, 'date', date)
+    setattr(context, 'timedate', timedate)
+
+    if '#date#' in payload:
+        payload = payload.replace('#date#', date)
+
+    if "#timedate#" in payload:
+        payload = payload.replace('#timedate#', timedate)
+
+    if "#ccp#" in payload:
+        ccp = str(utils.current_milli_time())
+        payload = payload.replace('#ccp#', ccp)
+        setattr(context, "ccp", ccp)
+    
+    setattr(context, 'rt', payload)
+    payload_b = bytes(payload, 'ascii')
+    payload_uni = b64.b64encode(payload_b)
+    payload = f"{payload_uni}".split("'")[1]
+    print(payload)
+    
+    print("RT generato: ", payload)
+    setattr(context, 'rtAttachment', payload)
+
+@given('RR generation')
+def step_impl(context):
+    payload = context.text or ""
+    payload = utils.replace_global_variables(payload, context)
+    payload = utils.replace_local_variables(payload, context)
+    payload = utils.replace_context_variables(payload, context)
+    date = datetime.date.today().strftime("%Y-%m-%d")
+    timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
+    setattr(context, 'date', date)
+    setattr(context, 'timedate', timedate)
+
+    if '#date#' in payload:
+        payload = payload.replace('#date#', date)
+    if "#timedate#" in payload:
+        payload = payload.replace('#timedate#', timedate)
+    
+    payload_b = bytes(payload, 'ascii')
+    payload_uni = b64.b64encode(payload_b)
+    payload = f"{payload_uni}".split("'")[1]
+    print(payload)
+    
+    print("RT generato: ", payload)
+    setattr(context, 'rrAttachment', payload)
+
+@given('ER generation')
+def step_impl(context):
+    payload = context.text or ""
+    payload = utils.replace_global_variables(payload, context)
+    payload = utils.replace_local_variables(payload, context)
+    payload = utils.replace_context_variables(payload, context)
+    date = datetime.date.today().strftime("%Y-%m-%d")
+    timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
+    setattr(context, 'date', date)
+    setattr(context, 'timedate', timedate)
+
+    if '#date#' in payload:
+        payload = payload.replace('#date#', date)
+    if "#timedate#" in payload:
+        payload = payload.replace('#timedate#', timedate)
+    
+    payload_b = bytes(payload, 'ascii')
+    payload_uni = b64.b64encode(payload_b)
+    payload = f"{payload_uni}".split("'")[1]
+    print(payload)
+    
+    print("RT generato: ", payload)
+    setattr(context, 'erAttachment', payload)
 
 
 @given('REND generation')
