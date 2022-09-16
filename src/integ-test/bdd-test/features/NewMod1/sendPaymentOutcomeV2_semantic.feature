@@ -94,13 +94,6 @@ Feature:  semantic checks for sendPaymentOutcomeV2
         Then check outcome is KO of sendPaymentOutcomeV2 response
         And check faultCode is PPT_CANALE_DISABILITATO of sendPaymentOutcomeV2 response
 
-    # test spostato in sendPaymentOutcomeV2_flux_semantic_NM1.feature
-    # SEM_SPO_7.1
-    # Scenario: SEM_SPO_7.1
-    #     Given idChannel with 70000000001_08 in sendPaymentOutcomeV2
-    #     When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
-    #     Then check outcome is OK of sendPaymentOutcomeV2 response
-
     # password value check: wrong password for an idChannel [SEM_SPO_08]
     Scenario: Check PPT_AUTENTICAZIONE error on password not associated to psp channel
         Given password with password in sendPaymentOutcomeV2
