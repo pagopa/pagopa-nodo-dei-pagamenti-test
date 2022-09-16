@@ -68,6 +68,7 @@ Feature: Execute nodoInviaRPT - RT_ACCETTATA_PA [T001]
             <pay_i:datiSingoloVersamento>
             <pay_i:importoSingoloVersamento>10.00</pay_i:importoSingoloVersamento>
             <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
+            <pay_i:ibanAccredito>IT45R0760103200000000001016</pay_i:ibanAccredito>
             <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
             <pay_i:ibanAppoggio>IT45R0760103200000000001016</pay_i:ibanAppoggio>
             <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
@@ -159,10 +160,6 @@ Feature: Execute nodoInviaRPT - RT_ACCETTATA_PA [T001]
             <pay_i:identificativoUnivocoRiscossione>$iuv</pay_i:identificativoUnivocoRiscossione>
             <pay_i:causaleVersamento>pagamento fotocopie pratica RT</pay_i:causaleVersamento>
             <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
-            <pay_i:allegatoRicevuta>
-            <pay_i:tipoAllegatoRicevuta>BD</pay_i:tipoAllegatoRicevuta>
-            <pay_i:testoAllegato>$bollo</pay_i:testoAllegato>
-            </pay_i:allegatoRicevuta>
             </pay_i:datiSingoloPagamento>
             </pay_i:datiPagamento>
             </pay_i:RT>
@@ -271,8 +268,8 @@ Feature: Execute nodoInviaRPT - RT_ACCETTATA_PA [T001]
         And PSP replies to nodo-dei-pagamenti with the pspChiediRT
         When EC sends soap nodoInviaRPT to nodo-dei-pagamenti
         And job pspChiediListaAndChiediRt triggered after 5 seconds
-        And job paInviaRt triggered after 50 seconds
-        And wait 50 seconds for expiration
+        And job paInviaRt triggered after 20 seconds
+        And wait 20 seconds for expiration
         Then check esito is OK of nodoInviaRPT response
         And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_INVIATA_A_PSP, RPT_ACCETTATA_PSP, RT_RICEVUTA_NODO, RT_ACCETTATA_NODO, RT_INVIATA_PA, RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro RTPull
         And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro RTPull

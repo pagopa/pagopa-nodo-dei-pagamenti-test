@@ -335,7 +335,9 @@ def step_impl(context):
 @given('RT{number:d} generation')
 def step_impl(context, number):
     payload = context.text or ""
+    payload = utils.replace_local_variables(payload, context)
     payload = utils.replace_context_variables(payload, context)
+    payload = utils.replace_global_variables(payload, context)
     date = datetime.date.today().strftime("%Y-%m-%d")
     timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
     setattr(context, 'date', date)
@@ -369,8 +371,7 @@ def step_impl(context, number):
     payload = f"{payload_uni}".split("'")[1]
     print(payload)
 
-    payload = utils.replace_local_variables(payload, context)
-    payload = utils.replace_global_variables(payload, context)
+    
     setattr(context, f'rt{number}Attachment', payload)
 
 
