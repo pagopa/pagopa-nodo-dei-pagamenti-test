@@ -47,7 +47,7 @@ Feature: process tests for RPT-RT bollo
          <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_2_0.xsd ">
          <pay_i:versioneOggetto>6.0</pay_i:versioneOggetto>
          <pay_i:dominio>
-         <pay_i:identificativoDominio>#codicePA#</pay_i:identificativoDominio>
+         <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
          <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
          </pay_i:dominio>
          <pay_i:identificativoMessaggioRichiesta>idMsgRichiesta</pay_i:identificativoMessaggioRichiesta>
@@ -127,7 +127,7 @@ Feature: process tests for RPT-RT bollo
             <pay_i:RT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0.xsd ">
             <pay_i:versioneOggetto>6.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-            <pay_i:identificativoDominio>#codicePA#</pay_i:identificativoDominio>
+            <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
             <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRicevuta>TR0001_20120302-10:37:52.0264-F098</pay_i:identificativoMessaggioRicevuta>
@@ -212,7 +212,7 @@ Feature: process tests for RPT-RT bollo
             </pay_i:RT>
             """
 
-        And initial XML nodoInviaRPT
+      And initial XML nodoInviaRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
@@ -227,14 +227,39 @@ Feature: process tests for RPT-RT bollo
             <soapenv:Body>
             <ws:nodoInviaRPT>
             <password>pwdpwdpwd</password>
-            <identificativoPSP>#psp#</identificativoPSP>
-            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>60000000001_06</identificativoCanale>
+            <identificativoPSP>40000000001</identificativoPSP>
+            <identificativoIntermediarioPSP>40000000001</identificativoIntermediarioPSP>
+            <identificativoCanale>40000000001_04</identificativoCanale>
             <tipoFirma></tipoFirma>
             <rpt>$rptAttachment</rpt>
             </ws:nodoInviaRPT>
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-        Then check error is SERVIZIO_NONATTIVO of nodoInviaRPT response
+      When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+      Then check error is SERVIZIO_NONATTIVO of nodoInviaRPT response
+
+   Scenario: Execute nodoInviaRT
+      Given the MB generation scenario executed successfully
+      And initial XML nodoInviaRT
+         """
+         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+               <ws:nodoInviaRT>
+                  <identificativoIntermediarioPSP>40000000001</identificativoIntermediarioPSP>
+                  <identificativoCanale>40000000001_04</identificativoCanale>
+                  <password>pwdpwdpwd</password>
+                  <identificativoPSP>40000000001</identificativoPSP>
+                  <identificativoDominio>#codicePA#</identificativoDominio>
+                  <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
+                  <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+                  <tipoFirma></tipoFirma>
+                  <forzaControlloSegno>1</forzaControlloSegno>
+               <rt>$rtAttachment</rt>
+               </ws:nodoInviaRT>
+            </soapenv:Body>
+         </soapenv:Envelope>
+         """
+      When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
+      Then check faultCode is PPT_RPT_SCONOSCIUTA of nodoInviaRT response
