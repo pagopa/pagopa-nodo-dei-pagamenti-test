@@ -423,11 +423,10 @@ Feature: process tests for RPT-RT bollo
                     <pay_i:identificativoUnivocoRiscossione>$IUV</pay_i:identificativoUnivocoRiscossione>
                     <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
                     <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
-                    <pay_i:datiMarcaBolloDigitale>
-                    <pay_i:tipoBollo>01</pay_i:tipoBollo>
-                    <pay_i:hashDocumento>1HpFSLCGZjIvNSXxqtGbxg7275t446DRTk5ZrsdUQ6E=</pay_i:hashDocumento>
-                    <pay_i:provinciaResidenza>MI</pay_i:provinciaResidenza>
-                    </pay_i:datiMarcaBolloDigitale>
+                    <pay_i:allegatoRicevuta>
+                        <pay_i:tipoAllegatoRicevuta>BD</pay_i:tipoAllegatoRicevuta>
+                        <pay_i:testoAllegato>$bollo</pay_i:testoAllegato>
+                    </pay_i:allegatoRicevuta>
                 </pay_i:datiSingoloPagamento>
                 <pay_i:datiSingoloPagamento>
                     <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
@@ -530,11 +529,10 @@ Feature: process tests for RPT-RT bollo
                     <pay_i:identificativoUnivocoRiscossione>$2IUV</pay_i:identificativoUnivocoRiscossione>
                     <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
                     <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
-                    <pay_i:datiMarcaBolloDigitale>
-                    <pay_i:tipoBollo>01</pay_i:tipoBollo>
-                    <pay_i:hashDocumento>4HpFSLCGZjIvNSXxqtGbxg7275t446DRTk5ZrsdUQ6E=</pay_i:hashDocumento>
-                    <pay_i:provinciaResidenza>MI</pay_i:provinciaResidenza>
-                    </pay_i:datiMarcaBolloDigitale>
+                    <pay_i:allegatoRicevuta>
+                        <pay_i:tipoAllegatoRicevuta>BD</pay_i:tipoAllegatoRicevuta>
+                        <pay_i:testoAllegato>$4bollo</pay_i:testoAllegato>
+                    </pay_i:allegatoRicevuta>
                 </pay_i:datiSingoloPagamento>
             </pay_i:datiPagamento>
             </pay_i:RT>
