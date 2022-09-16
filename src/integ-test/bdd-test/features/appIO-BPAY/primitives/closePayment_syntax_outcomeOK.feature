@@ -27,7 +27,7 @@ Feature: syntax checks for closePayment outcome OK
       }
       """
 
-  Scenario: closePayment without [] in paymentTokens
+  Scenario: closePayment without braces in paymentTokens
     Given initial JSON v1/closepayment
       """
       {
@@ -98,8 +98,8 @@ Feature: syntax checks for closePayment outcome OK
       | authorizationCode           | abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fgh | SIN_CP_45   |
 
 
-  Scenario: check closePayment without [] in paymentTokens
-    Given the closePayment without [] in paymentTokens scenario executed successfully
+  Scenario: check closePayment without braces in paymentTokens
+    Given the closePayment without braces in paymentTokens scenario executed successfully
     When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
     Then verify the HTTP status code of v1/closepayment response is 400
     And check esito is KO of v1/closepayment response
