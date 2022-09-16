@@ -211,3 +211,32 @@ Feature: process tests for RPT-RT bollo
             </pay_i:datiPagamento>
             </pay_i:RT>
             """
+
+    Scenario: Execute nodoInviaRPT request
+        Given the RPT generation scenario executed successfully
+        And initial XML nodoInviaRPT
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header>
+            <ppt:intestazionePPT>
+            <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
+            <identificativoDominio>44444444444</identificativoDominio>
+            <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+            </ppt:intestazionePPT>
+            </soapenv:Header>
+            <soapenv:Body>
+            <ws:nodoInviaRPT>
+            <password>pwdpwdpwd</password>
+            <identificativoPSP>40000000001</identificativoPSP>
+            <identificativoIntermediarioPSP>40000000001</identificativoIntermediarioPSP>
+            <identificativoCanale>40000000001_01</identificativoCanale>
+            <tipoFirma></tipoFirma>
+            <rpt>$rptAttachment</rpt>
+            </ws:nodoInviaRPT>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        Then check error is SERVIZIO_NONATTIVO of nodoInviaRPT response
