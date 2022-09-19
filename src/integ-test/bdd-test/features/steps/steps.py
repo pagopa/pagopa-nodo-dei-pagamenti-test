@@ -315,8 +315,9 @@ def step_impl(context):
 
     setattr(context, 'rptAttachment', payload)
 
-@given('generate notice number with {aux_digit}, {segregazione}, {application_code}')
+@given('generate notice number with {aux_digit:d}, {segregazione}, {application_code}')
 def step_impl(context, aux_digit, segregazione, application_code):
+    segregazione = utils.replace_global_variables(segregazione, context)
     if aux_digit == 0:
         iuv = random.randint(1000000000000, 9999999999999)
         notice_number = f"{aux_digit}{application_code}{iuv}00"
@@ -328,11 +329,11 @@ def step_impl(context, aux_digit, segregazione, application_code):
         notice_number = f"{aux_digit}{iuv}"
     elif aux_digit == 3:
         iuv = random.randint(1000000000000, 9999999999999)
-        notice_number = f"{aux_digit}{segregazione}{iuv}"
+        notice_number = f"{aux_digit}{segregazione}{iuv}00"
     else:
         assert False
     
-    setattr(context, 'iuv', iuv)
+    setattr(context, 'iuv', str(iuv))
     setattr(context, 'noticeNumber', notice_number)
 
 
