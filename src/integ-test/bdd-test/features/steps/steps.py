@@ -756,7 +756,7 @@ def step_impl(context, sender, method, service, receiver):
         bodyXml = getattr(context, service)
         body = xmltodict.parse(bodyXml)
         body = body["root"]
-        if ('paymentTokens' in body.keys()) and ('paymentToken' in body["paymentTokens"].keys()):
+        if ('paymentTokens' in body.keys()) and (body["paymentTokens"] != None):
             body["paymentTokens"] = body["paymentTokens"]["paymentToken"]
             if type(body["paymentTokens"]) != list:
                 l = list()
