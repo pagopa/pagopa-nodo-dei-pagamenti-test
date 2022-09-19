@@ -286,7 +286,7 @@ Feature: flux tests for activatePaymentNoticeV2Request
         And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query the select_activatev2 on db nodo_online under macro NewMod1
-        And verify 1 record for the table POSITION_STATUS retrived by the querythe select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query the select_activatev2 on db nodo_online under macro NewMod1
 
     Scenario: Activate_blocco_05 (parte 2)
@@ -317,7 +317,7 @@ Feature: flux tests for activatePaymentNoticeV2Request
     Scenario: Activate_blocco_06 (parte 2)
         Given the Activate_blocco_06 (parte 1) scenario executed successfully
         When job mod3CancelV2 triggered after 3 seconds
-        Then wait 0 seconds for expiration
+        Then wait 10 seconds for expiration
 
     Scenario: Activate_blocco_06 (parte 3)
         Given the Activate_blocco_06 (parte 2) scenario executed successfully
