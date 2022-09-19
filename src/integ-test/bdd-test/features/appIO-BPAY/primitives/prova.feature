@@ -1,3 +1,9 @@
+Feature: prova activateIOPayment
+    
+    Background:
+        Given systems up
+
+
     Scenario: activateIOPayment
         Given initial XML activateIOPayment
             """
