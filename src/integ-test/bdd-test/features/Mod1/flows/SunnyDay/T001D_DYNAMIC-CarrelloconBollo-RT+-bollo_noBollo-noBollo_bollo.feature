@@ -213,9 +213,9 @@ Feature: process tests for RPT-RT bollo
                 <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
                 <pay_i:importoTotaleDaVersare>20.00</pay_i:importoTotaleDaVersare>
                 <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
-                <pay_i:identificativoUnivocoVersamento>TR0001_20120116-11:24:10.0521-7EF6</pay_i:identificativoUnivocoVersamento>
+                <pay_i:identificativoUnivocoVersamento>#IUV#</pay_i:identificativoUnivocoVersamento>
                 <pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
-                <pay_i:ibanAddebito>IT45R0760103200000000001016</pay_i:ibanAddebito>
+                <pay_i:ibanAddebito>IT96R0123454321000000012346</pay_i:ibanAddebito>
                 <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
                 <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
                 <pay_i:datiSingoloVersamento>
@@ -306,15 +306,15 @@ Feature: process tests for RPT-RT bollo
                 <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
                 <pay_i:importoTotaleDaVersare>20.00</pay_i:importoTotaleDaVersare>
                 <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
-                <pay_i:identificativoUnivocoVersamento>TR0001_20120116-11:24:10.0521-7EF6</pay_i:identificativoUnivocoVersamento>
+                <pay_i:identificativoUnivocoVersamento>#IUV2#</pay_i:identificativoUnivocoVersamento>
                 <pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
-                <pay_i:ibanAddebito>IT45R0760103200000000001016</pay_i:ibanAddebito>
+                <pay_i:ibanAddebito>IT96R0123454321000000012346</pay_i:ibanAddebito>
                 <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
                 <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
                 <pay_i:datiSingoloVersamento>
                     <pay_i:importoSingoloVersamento>10.00</pay_i:importoSingoloVersamento>
                     <pay_i:commissioneCaricoPA>10.00</pay_i:commissioneCaricoPA>
-                    <pay_i:ibanAccredito>IT96R0123454321000000012346</pay_i:ibanAccredito>
+                    <pay_i:ibanAccredito>IT45R0760103200000000001016</pay_i:ibanAccredito>
                     <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
                     <pay_i:ibanAppoggio>IT45R0760103200000000001016</pay_i:ibanAppoggio>
                     <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
@@ -550,7 +550,7 @@ Feature: process tests for RPT-RT bollo
             </soapenv:Header>
             <soapenv:Body>
                 <ws:nodoInviaCarrelloRPT>
-                    <password>pwdpwdpwdp</password>
+                    <password>pwdpwdpwd</password>
                     <identificativoPSP>#psp_AGID#</identificativoPSP>
                     <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
                     <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
@@ -613,8 +613,8 @@ Feature: process tests for RPT-RT bollo
                     <ws:pspInviaRPTResponse>
                         <pspInviaRPTResponse>
                             <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-                            <identificativoCarrello>$nodoInviaRPT.identificativoUnivocoVersamento</identificativoCarrello>
-                            <parametriPagamentoImmediato>idBruciatura=$nodoInviaRPT.identificativoUnivocoVersamento</parametriPagamentoImmediato>
+                            <identificativoCarrello>$nodoInviaCarrelloRPT.identificativoCarrello</identificativoCarrello>
+                            <parametriPagamentoImmediato>idBruciatura=$nodoInviaCarrelloRPT.identificativoCarrello</parametriPagamentoImmediato>
                         </pspInviaRPTResponse>
                     </ws:pspInviaRPTResponse>
                 </soapenv:Body>
