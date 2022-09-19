@@ -113,23 +113,52 @@ Feature: syntax checks for closePayment outcome OK
     And check descrizione is paymentTokens invalido of v1/closepayment response
 
 
-  Scenario: activateIOPayment
+Scenario: activateIOPayment
     Given initial XML activateIOPayment
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd">
       <soapenv:Header/>
       <soapenv:Body>
       <nod:activateIOPaymentReq>
-      <idPSP>#psp#</idPSP>
-      <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
-      <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
+      <idPSP>#psp_AGID#</idPSP>
+      <idBrokerPSP>#broker_AGID#</idBrokerPSP>
+      <idChannel>#canale_AGID#</idChannel>
       <password>#password#</password>
+      <!--Optional:-->
+      <idempotencyKey>#idempotency_key#</idempotencyKey>
       <qrCode>
       <fiscalCode>#creditor_institution_code#</fiscalCode>
       <noticeNumber>311#iuv#</noticeNumber>
       </qrCode>
+      <!--Optional:-->
+      <expirationTime>60000</expirationTime>
       <amount>10.00</amount>
+      <!--Optional:-->
       <dueDate>2021-12-31</dueDate>
+      <!--Optional:-->
+      <paymentNote>responseFull</paymentNote>
+      <!--Optional:-->
+      <payer>
+      <uniqueIdentifier>
+      <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
+      <entityUniqueIdentifierValue>77777777777</entityUniqueIdentifierValue>
+      </uniqueIdentifier>
+      <fullName>name</fullName>
+      <!--Optional:-->
+      <streetName>street</streetName>
+      <!--Optional:-->
+      <civicNumber>civic</civicNumber>
+      <!--Optional:-->
+      <postalCode>code</postalCode>
+      <!--Optional:-->
+      <city>city</city>
+      <!--Optional:-->
+      <stateProvinceRegion>state</stateProvinceRegion>
+      <!--Optional:-->
+      <country>IT</country>
+      <!--Optional:-->
+      <e-mail>test.prova@gmail.com</e-mail>
+      </payer>
       </nod:activateIOPaymentReq>
       </soapenv:Body>
       </soapenv:Envelope>
