@@ -192,9 +192,9 @@ Feature: flux tests for activatePaymentNoticeV2Request
         And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the select_activatev2 on db nodo_online under macro NewMod1
-        And verify 1 record for the table POSITION_STATUS retrived by the select_activatev2 on db nodo_online under macro NewMod1
-        And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
     # [Activate_blocco_02]
 
@@ -228,10 +228,10 @@ Feature: flux tests for activatePaymentNoticeV2Request
     #     Then check outcome is KO of activatePaymentNoticeV2 response
     #     And check faultCode is PPT_PAGAMENTO_DUPLICATO of activatePaymentNoticeV2 response
     #     And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response1
-    #     And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED,PAID,NOTIFIED,None of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_token on db nodo_online under macro NewMod1
-    #     And checks the value None of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_token_1 on db nodo_online under macro NewMod1
-    #     And checks the value NOTIFIED,None of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_token on db nodo_online under macro NewMod1
-    #     And checks the value None of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_token_1 on db nodo_online under macro NewMod1
+    #     And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED,PAID,NOTIFIED,None of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query PAYMENT_TOKEN on db nodo_online under macro NewMod1
+    #     And checks the value None of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query PAYMENT_TOKEN_1 on db nodo_online under macro NewMod1
+    #     And checks the value NOTIFIED,None of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query PAYMENT_TOKEN on db nodo_online under macro NewMod1
+    #     And checks the value None of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query PAYMENT_TOKEN_1 on db nodo_online under macro NewMod1
     #     And checks the value PAYING,PAID,NOTIFIED,None of the record at column STATUS of the table POSITION_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
     #     And checks the value NOTIFIED,None of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
@@ -268,10 +268,10 @@ Feature: flux tests for activatePaymentNoticeV2Request
     #     Then check outcome is KO of activatePaymentNoticeV2 response
     #     And check faultCode is PPT_PAGAMENTO_DUPLICATO of activatePaymentNoticeV2 response
     #     And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response1
-    #     And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED,PAID,NOTIFIED,None of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_token on db nodo_online under macro NewMod1
-    #     And checks the value None of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_token_1 on db nodo_online under macro NewMod1
-    #     And checks the value NOTIFIED,None of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_token on db nodo_online under macro NewMod1
-    #     And checks the value None of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_token_1 on db nodo_online under macro NewMod1
+    #     And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED,PAID,NOTIFIED,None of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query PAYMENT_TOKEN on db nodo_online under macro NewMod1
+    #     And checks the value None of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query PAYMENT_TOKEN_1 on db nodo_online under macro NewMod1
+    #     And checks the value NOTIFIED,None of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query PAYMENT_TOKEN on db nodo_online under macro NewMod1
+    #     And checks the value None of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query PAYMENT_TOKEN_1 on db nodo_online under macro NewMod1
     #     And checks the value PAYING,PAID,NOTIFIED,None of the record at column STATUS of the table POSITION_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
     #     And checks the value NOTIFIED,None of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
@@ -326,15 +326,15 @@ Feature: flux tests for activatePaymentNoticeV2Request
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response1
-        And checks the value PAYING,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_token on db nodo_online under macro NewMod1
-        And checks the value PAYING of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_token_1 on db nodo_online under macro NewMod1
-        And checks the value CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_token on db nodo_online under macro NewMod1
-        And checks the value PAYING of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_token_1 on db nodo_online under macro NewMod1
+        And checks the value PAYING,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query PAYMENT_TOKEN on db nodo_online under macro NewMod1
+        And checks the value PAYING of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query PAYMENT_TOKEN_1 on db nodo_online under macro NewMod1
+        And checks the value CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query PAYMENT_TOKEN on db nodo_online under macro NewMod1
+        And checks the value PAYING of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query PAYMENT_TOKEN_1 on db nodo_online under macro NewMod1
         And checks the value PAYING,INSERTED,PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And verify 2 record for the table POSITION_PAYMENT_STATUS retrived by the query payment_token on db nodo_online under macro NewMod1
-        And verify 1 record for the table POSITION_PAYMENT_STATUS retrived by the query payment_token_1 on db nodo_online under macro NewMod1
-        And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_token on db nodo_online under macro NewMod1
-        And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_token_1 on db nodo_online under macro NewMod1
+        And verify 2 record for the table POSITION_PAYMENT_STATUS retrived by the query PAYMENT_TOKEN on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_PAYMENT_STATUS retrived by the query PAYMENT_TOKEN_1 on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query PAYMENT_TOKEN on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query PAYMENT_TOKEN_1 on db nodo_online under macro NewMod1
         And verify 3 record for the table POSITION_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
