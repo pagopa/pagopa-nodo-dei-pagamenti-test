@@ -78,7 +78,7 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
             <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
             <identificativoCanale>#canale_AGID#</identificativoCanale>
             <password>pwdpwdpwd</password>
-            <codiceContestoPagamento>$nodoVerificaRPT.codiceContestoPagamento/codiceContestoPagamento>
+            <codiceContestoPagamento>$nodoVerificaRPT.codiceContestoPagamento</codiceContestoPagamento>
             <identificativoIntermediarioPSPPagamento>#broker_AGID#</identificativoIntermediarioPSPPagamento>
             <identificativoCanalePagamento>97735020584_02</identificativoCanalePagamento>
             <codificaInfrastrutturaPSP>BARCODE-128-AIM</codificaInfrastrutturaPSP>
