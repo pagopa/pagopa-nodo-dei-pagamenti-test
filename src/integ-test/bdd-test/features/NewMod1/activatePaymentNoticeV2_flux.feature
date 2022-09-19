@@ -294,6 +294,7 @@ Feature: flux tests for activatePaymentNoticeV2Request
         And random iuv in context
         And noticeNumber with 311$iuv in activatePaymentNoticeV2
         And creditorReferenceId with 11$iuv in paGetPayment
+        And EC replies to nodo-dei-pagamenti with the paGetPayment
         And random idempotencyKey having $activatePaymentNoticeV2.idPSP as idPSP in activatePaymentNoticeV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
