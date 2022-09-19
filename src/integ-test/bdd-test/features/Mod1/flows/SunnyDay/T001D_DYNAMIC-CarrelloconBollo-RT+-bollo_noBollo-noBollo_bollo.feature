@@ -4,7 +4,9 @@ Feature: process tests for RPT-RT bollo
       Given systems up
 
    Scenario: MB generation
-        Given MB generation
+        Given generate 1 notice number and iuv with aux digit 3, segregation code 02 and application code NA
+        And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
+        And MB generation
             """
             <marcaDaBollo xmlns="http://www.agenziaentrate.gov.it/2014/MarcaDaBollo" xmlns:ns2="http://www.w3.org/2000/09/xmldsig#">
             <PSP>
@@ -86,7 +88,7 @@ Feature: process tests for RPT-RT bollo
                 <CodiceFiscale>12345678901</CodiceFiscale>
                 <Denominazione>40000000001</Denominazione>
             </PSP>
-            <IUBD>#iudb3#</IUBD>
+            <IUBD>#iubd3#</IUBD>
             <OraAcquisto>2015-02-06T15:00:44.659+01:00</OraAcquisto>
             <Importo>10.00</Importo>
             <TipoBollo>01</TipoBollo>
@@ -124,7 +126,7 @@ Feature: process tests for RPT-RT bollo
                 <CodiceFiscale>12345678901</CodiceFiscale>
                 <Denominazione>40000000001</Denominazione>
             </PSP>
-            <IUBD>#iudb4#</IUBD>
+            <IUBD>#iubd4#</IUBD>
             <OraAcquisto>2015-02-06T15:00:44.659+01:00</OraAcquisto>
             <Importo>10.00</Importo>
             <TipoBollo>01</TipoBollo>
@@ -213,7 +215,7 @@ Feature: process tests for RPT-RT bollo
                 <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
                 <pay_i:importoTotaleDaVersare>20.00</pay_i:importoTotaleDaVersare>
                 <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
-                <pay_i:identificativoUnivocoVersamento>#IUV#</pay_i:identificativoUnivocoVersamento>
+                <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
                 <pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
                 <pay_i:ibanAddebito>IT96R0123454321000000012346</pay_i:ibanAddebito>
                 <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
@@ -414,13 +416,13 @@ Feature: process tests for RPT-RT bollo
             <pay_i:datiPagamento>
                 <pay_i:codiceEsitoPagamento>0</pay_i:codiceEsitoPagamento>
                 <pay_i:importoTotalePagato>20.00</pay_i:importoTotalePagato>
-                <pay_i:identificativoUnivocoVersamento>$IUV</pay_i:identificativoUnivocoVersamento>
+                <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
                 <pay_i:CodiceContestoPagamento>CCD01</pay_i:CodiceContestoPagamento>
                 <pay_i:datiSingoloPagamento>
                     <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
                     <pay_i:esitoSingoloPagamento>Pagamento effettuato</pay_i:esitoSingoloPagamento>
                     <pay_i:dataEsitoSingoloPagamento>2012-03-02</pay_i:dataEsitoSingoloPagamento>
-                    <pay_i:identificativoUnivocoRiscossione>$IUV</pay_i:identificativoUnivocoRiscossione>
+                    <pay_i:identificativoUnivocoRiscossione>$1iuv</pay_i:identificativoUnivocoRiscossione>
                     <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
                     <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
                     <pay_i:allegatoRicevuta>
@@ -432,7 +434,7 @@ Feature: process tests for RPT-RT bollo
                     <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
                     <pay_i:esitoSingoloPagamento>Pagamento effettuato</pay_i:esitoSingoloPagamento>
                     <pay_i:dataEsitoSingoloPagamento>2012-03-02</pay_i:dataEsitoSingoloPagamento>
-                    <pay_i:identificativoUnivocoRiscossione>$IUV</pay_i:identificativoUnivocoRiscossione>
+                    <pay_i:identificativoUnivocoRiscossione>$1iuv</pay_i:identificativoUnivocoRiscossione>
                     <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
                     <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
                 </pay_i:datiSingoloPagamento>
@@ -545,7 +547,7 @@ Feature: process tests for RPT-RT bollo
                 <ppt:intestazioneCarrelloPPT>
                     <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
                     <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
-                    <identificativoCarrello>#CARRELLO2#</identificativoCarrello>
+                    <identificativoCarrello>$1carrello</identificativoCarrello>
                 </ppt:intestazioneCarrelloPPT>
             </soapenv:Header>
             <soapenv:Body>
@@ -557,7 +559,7 @@ Feature: process tests for RPT-RT bollo
                     <listaRPT>
                         <elementoListaRPT>
                         <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-                        <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
+                        <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
                         <codiceContestoPagamento>CCD01</codiceContestoPagamento>
                         <rpt>$rptAttachment</rpt>
                         </elementoListaRPT>
@@ -629,7 +631,7 @@ Feature: process tests for RPT-RT bollo
             "identificativoPsp":"idPsp1",
             "tipoVersamento":"BP", 
             "identificativoIntermediario":"#psp#",
-            "identificativoCanale":"#canale#",
+            "identificativoCanale":"#canaleRtPush#",
             "tipoOperazione":"web", 
             "mobileToken":"123ABC456"
             }
@@ -647,11 +649,11 @@ Feature: process tests for RPT-RT bollo
                 <soapenv:Body>
                 <ws:nodoInviaRT>
                     <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-                    <identificativoCanale>#canale#</identificativoCanale>
+                    <identificativoCanale>#canaleRtPush#</identificativoCanale>
                     <password>pwdpwdpwd</password>
                     <identificativoPSP>idPsp1</identificativoPSP>
                     <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-                    <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
+                    <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
                     <codiceContestoPagamento>CCD01</codiceContestoPagamento>
                     <tipoFirma></tipoFirma>
                     <forzaControlloSegno>1</forzaControlloSegno>
@@ -672,7 +674,7 @@ Feature: process tests for RPT-RT bollo
             <soapenv:Body>
                 <ws:nodoInviaRT>
                     <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-                    <identificativoCanale>#canale#</identificativoCanale>
+                    <identificativoCanale>#canaleRtPush#</identificativoCanale>
                     <password>pwdpwdpwd</password>
                     <identificativoPSP>idPsp1</identificativoPSP>
                     <identificativoDominio>#creditor_institution_code#</identificativoDominio>
