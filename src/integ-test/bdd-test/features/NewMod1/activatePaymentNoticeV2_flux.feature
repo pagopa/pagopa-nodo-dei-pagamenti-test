@@ -285,9 +285,9 @@ Feature: flux tests for activatePaymentNoticeV2Request
         And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the select_activatev2 on db nodo_online under macro NewMod1
-        And verify 1 record for the table POSITION_STATUS retrived by the select_activatev2 on db nodo_online under macro NewMod1
-        And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query the select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_STATUS retrived by the querythe select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query the select_activatev2 on db nodo_online under macro NewMod1
 
     Scenario: Activate_blocco_05 (parte 2)
         Given the Activate_blocco_05 (parte 1) scenario executed successfully
@@ -302,9 +302,9 @@ Feature: flux tests for activatePaymentNoticeV2Request
         And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the select_activatev2 on db nodo_online under macro NewMod1
-        And verify 1 record for the table POSITION_STATUS retrived by the select_activatev2 on db nodo_online under macro NewMod1
-        And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
     # [Activate_blocco_06]
     Scenario: Activate_blocco_06 (parte 1)
@@ -322,6 +322,7 @@ Feature: flux tests for activatePaymentNoticeV2Request
     Scenario: Activate_blocco_06 (parte 3)
         Given the Activate_blocco_06 (parte 2) scenario executed successfully
         And expirationTime with None in activatePaymentNoticeV2
+        And EC replies to nodo-dei-pagamenti with the paGetPayment
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response1
