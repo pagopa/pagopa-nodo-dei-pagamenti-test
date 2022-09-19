@@ -2323,7 +2323,10 @@ def step_impl(context, url):
 
 @step('replace {old_attribute} content with {new_attribute} content')
 def step_impl(context, old_attribute, new_attribute):
-    setattr(context, old_attribute, getattr(context, new_attribute))
+    new_attribute = utils.replace_local_variables(new_attribute, context)
+    new_attribute = utils.replace_context_variables(new_attribute, context)
+    new_attribute = utils.replace_global_variables(new_attribute, context)
+    setattr(context, old_attribute, new_attribute)
 
 
 @step('Select and Update RT for Test retry_PAold with causale versamento {causaleVers}')
