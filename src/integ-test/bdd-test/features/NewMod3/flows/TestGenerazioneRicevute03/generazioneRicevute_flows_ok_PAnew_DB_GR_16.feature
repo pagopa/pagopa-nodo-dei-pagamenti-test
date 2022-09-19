@@ -1,8 +1,13 @@
-Feature: process tests for generazioneRicevute [DB_GR_07]
+Feature: process tests for generazioneRicevute [DB_GR_16]
 
   Background:
     Given systems up
-    And initial XML verifyPaymentNotice
+    And EC new version
+
+
+  # Verify phase
+  Scenario: Execute verifyPaymentNotice request
+      Given initial XML verifyPaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
       <soapenv:Header/>
@@ -21,9 +26,15 @@ Feature: process tests for generazioneRicevute [DB_GR_07]
       </soapenv:Envelope>
       """
     And EC new version
-
-  # Verify phase
-  Scenario: Execute verifyPaymentNotice request
+    # get broadcast value pa
+    #And execution query get_broadcast to get value on the table PA_STAZIONE_PA, with the columns psp.OBJ_ID, psp.BROADCAST under macro costanti with db name nodo_cfg
+    #And through the query get_broadcast retrieve param broadcast_id at position 0 and save it under the key broadcast_id
+    #And through the query get_broadcast retrieve param broadcast_value at position 1 and save it under the key broadcast_value
+    # set broadcast=true
+    #And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '$broadcast_id' under macro update_query on db nodo_cfg
+    And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID IN ('11993','1201') under macro update_query on db nodo_cfg
+    When refresh job PA triggered after 10 seconds
+    And wait 15 seconds for expiration
     When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of verifyPaymentNotice response
 
@@ -99,8 +110,16 @@ Feature: process tests for generazioneRicevute [DB_GR_07]
       <!--1 to 5 repetitions:-->
       <transfer>
       <idTransfer>1</idTransfer>
-      <transferAmount>10.00</transferAmount>
+      <transferAmount>5.00</transferAmount>
       <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
+      <IBAN>IT45R0760103200000000001016</IBAN>
+      <remittanceInformation>testPaGetPayment</remittanceInformation>
+      <transferCategory>paGetPaymentTest</transferCategory>
+      </transfer>
+      <transfer>
+      <idTransfer>2</idTransfer>
+      <transferAmount>5.00</transferAmount>
+      <fiscalCodePA>90000000001</fiscalCodePA>
       <IBAN>IT45R0760103200000000001016</IBAN>
       <remittanceInformation>testPaGetPayment</remittanceInformation>
       <transferCategory>paGetPaymentTest</transferCategory>
@@ -165,7 +184,13 @@ Feature: process tests for generazioneRicevute [DB_GR_07]
       """
     When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
-    And wait 5 seconds for expiration
+
+    # set broadcast=false
+    #And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'N', with where condition OBJ_ID = '$broadcast_id' under macro update_query on db nodo_cfg
+    And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'N', with where condition OBJ_ID IN ('11993','1201') under macro update_query on db nodo_cfg
+    And refresh job PA triggered after 10 seconds
+
+    And wait 10 seconds for expiration
     #POSITION_RECEIPT_RECIPIENT query
     And checks the value NotNone of the record at column ID of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient on db nodo_online under macro NewMod3
     And execution query position_receipt_recipient to get value on the table POSITION_RECEIPT_RECIPIENT, with the columns * under macro NewMod3 with db name nodo_online
