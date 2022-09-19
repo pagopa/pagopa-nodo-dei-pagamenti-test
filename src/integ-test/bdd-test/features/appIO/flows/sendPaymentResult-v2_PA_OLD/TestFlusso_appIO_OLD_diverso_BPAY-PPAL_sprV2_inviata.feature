@@ -182,7 +182,6 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
         When psp sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoAttivaRPT response
-        And save nodoAttivaRPT response in nodoAttivaRPTResponse
 
     # nodoInviaRPT phase
     Scenario: Define RPT
