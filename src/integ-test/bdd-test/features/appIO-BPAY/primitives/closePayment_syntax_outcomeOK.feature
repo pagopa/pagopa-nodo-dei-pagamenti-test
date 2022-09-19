@@ -121,8 +121,8 @@ Scenario: activateIOPayment
       <soapenv:Body>
       <nod:activateIOPaymentReq>
       <idPSP>#psp_AGID#</idPSP>
-      <idBrokerPSP>#broker_AGID#</idBrokerPSP>
-      <idChannel>#canale_AGID#</idChannel>
+      <idBrokerPSP>97735020584</idBrokerPSP>
+      <idChannel>97735020584_03</idChannel>
       <password>#password#</password>
       <qrCode>
       <fiscalCode>#creditor_institution_code#</fiscalCode>
