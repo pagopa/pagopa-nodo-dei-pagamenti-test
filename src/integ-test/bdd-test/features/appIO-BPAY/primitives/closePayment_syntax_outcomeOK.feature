@@ -27,29 +27,29 @@ Feature: syntax checks for closePayment outcome OK
       }
       """
 
-  # Scenario: closePayment without braces in paymentTokens
-  #   Given initial JSON v1/closepayment
-  #     """
-  #     {
-  #       "paymentTokens": 
-  #         "a3738f8bff1f4a32998fc197bd0a6b05"
-  #       ,
-  #       "outcome": "OK",
-  #       "identificativoPsp": "#psp#",
-  #       "tipoVersamento": "BPAY",
-  #       "identificativoIntermediario": "#id_broker_psp#",
-  #       "identificativoCanale": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
-  #       "pspTransactionId": "#psp_transaction_id#",
-  #       "totalAmount": 12,
-  #       "fee": 2,
-  #       "timestampOperation": "2033-04-23T18:25:43Z",
-  #       "additionalPaymentInformations": {
-  #         "transactionId": "#transaction_id#",
-  #         "outcomePaymentGateway": "EFF",
-  #         "authorizationCode": "resOK"
-  #       }
-  #     }
-  #     """
+  Scenario: closePayment without braces in paymentTokens
+    Given initial JSON v1/closepayment
+      """
+      {
+        "paymentTokens":
+          "a3738f8bff1f4a32998fc197bd0a6b05"
+        ,
+        "outcome": "OK",
+        "identificativoPsp": "#psp#",
+        "tipoVersamento": "BPAY",
+        "identificativoIntermediario": "#id_broker_psp#",
+        "identificativoCanale": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
+        "pspTransactionId": "#psp_transaction_id#",
+        "totalAmount": 12,
+        "fee": 2,
+        "timestampOperation": "2033-04-23T18:25:43Z",
+        "additionalPaymentInformations": {
+          "transactionId": "#transaction_id#",
+          "outcomePaymentGateway": "EFF",
+          "authorizationCode": "resOK"
+        }
+      }
+      """
 
   # element value check
   Scenario Outline: Check syntax error on invalid body element value
@@ -62,9 +62,9 @@ Feature: syntax checks for closePayment outcome OK
 
     Examples:
       | elem                        | value                                                                                                                                                                                                                                                            | soapUI test |
-      # | paymentTokens               | None                                                                                                                                                                                                                                                             | SIN_CP_01   |
-      # | paymentTokens               | Empty                                                                                                                                                                                                                                                            | SIN_CP_02   |
-      # | paymentTokens               | 87cacaf799cadf9vs9s7vasdvs676cavv4574                                                                                                                                                                                                                            | SIN_CP_03   |
+      | paymentTokens               | None                                                                                                                                                                                                                                                             | SIN_CP_01   |
+      | paymentTokens               | Empty                                                                                                                                                                                                                                                            | SIN_CP_02   |
+      | paymentTokens               | 87cacaf799cadf9vs9s7vasdvs676cavv4574                                                                                                                                                                                                                            | SIN_CP_03   |
       #  | paymentTokens                  | No []                                 | SIN_CP_03.1 |
       | outcome                     | None                                                                                                                                                                                                                                                             | SIN_CP_04   |
       | outcome                     | Empty                                                                                                                                                                                                                                                            | SIN_CP_05   |
@@ -98,15 +98,93 @@ Feature: syntax checks for closePayment outcome OK
       | authorizationCode           | abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fgh | SIN_CP_45   |
 
 
-  # Scenario: check closePayment without braces in paymentTokens
-  #   Given the closePayment without braces in paymentTokens scenario executed successfully
-  #   When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
-  #   Then verify the HTTP status code of v1/closepayment response is 400
-  #   And check esito is KO of v1/closepayment response
-  #   And check descrizione is paymentTokens invalido of v1/closepayment response
+  Scenario: check closePayment without braces in paymentTokens
+    Given the closePayment without braces in paymentTokens scenario executed successfully
+    When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
+    Then verify the HTTP status code of v1/closepayment response is 400
+    And check esito is KO of v1/closepayment response
+    And check descrizione is paymentTokens invalido of v1/closepayment response
+
+
+  Scenario: activateIOPayment
+    Given initial XML activateIOPayment
+      """
+      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd">
+      <soapenv:Header/>
+      <soapenv:Body>
+      <nod:activateIOPaymentReq>
+      <idPSP>#psp#</idPSP>
+      <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
+      <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
+      <password>#password#</password>
+      <qrCode>
+      <fiscalCode>#creditor_institution_code#</fiscalCode>
+      <noticeNumber>311#iuv#</noticeNumber>
+      </qrCode>
+      <amount>10.00</amount>
+      </nod:activateIOPaymentReq>
+      </soapenv:Body>
+      </soapenv:Envelope>
+      """
+    And initial XML paGetPayment
+      """
+      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
+      <soapenv:Header />
+      <soapenv:Body>
+      <paf:paGetPaymentRes>
+      <outcome>OK</outcome>
+      <data>
+      <creditorReferenceId>11$iuv</creditorReferenceId>
+      <paymentAmount>10.00</paymentAmount>
+      <dueDate>2021-12-31</dueDate>
+      <description>description</description>
+      <debtor>
+      <uniqueIdentifier>
+      <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
+      <entityUniqueIdentifierValue>77777777777</entityUniqueIdentifierValue>
+      </uniqueIdentifier>
+      <fullName>paGetPaymentName</fullName>
+      <!--Optional:-->
+      <transferList>
+      <!--1 to 5 repetitions:-->
+      <transfer>
+      <idTransfer>1</idTransfer>
+      <transferAmount>10.00</transferAmount>
+      <fiscalCodePA>$activatePaymentNoticeV2.fiscalCode</fiscalCodePA>
+      <IBAN>IT45R0760103200000000001016</IBAN>
+      <remittanceInformation>testPaGetPayment</remittanceInformation>
+      <transferCategory>paGetPaymentTest</transferCategory>
+      </transfer>
+      </transferList>
+      <!--Optional:-->
+      <metadata>
+      <!--1 to 10 repetitions:-->
+      <mapEntry>
+      <key>1</key>
+      <value>22</value>
+      </mapEntry>
+      </metadata>
+      </data>
+      </paf:paGetPaymentRes>
+      </soapenv:Body>
+      </soapenv:Envelope>
+      """
+    And EC replies to nodo-dei-pagamenti with the paGetPayment
+
+  Scenario: check activateIOPayment OK
+    Given the activateIOPayment scenario executed successfully
+    When PSP send SOAP activateIOPayment to nodo-dei-pagamenti
+    Then check outcome is OK of activateIOPayment response
+    And save activateIOPayment response in activateIOPaymentResponse
+
+  Scenario: nodoChiediInformazioniPagamento
+    Given the check activateIOPayment OK scenario executed successfully
+    When WISP sends REST GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
+    Then verify the HTTP status code of informazioniPagamento response is 200
 
   Scenario: check closePayment OK
     Given the closePayment scenario executed successfully
+    And the nodoChiediInformazioniPagamento scenario executed successfully
     When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
     Then verify the HTTP status code of v1/closepayment response is 200
     And check esito is OK of v1/closepayment response
