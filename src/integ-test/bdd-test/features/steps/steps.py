@@ -315,30 +315,28 @@ def step_impl(context):
 
     setattr(context, 'rptAttachment', payload)
 
-@given('generate notice number with {aux_digit:d}, {segregazione}, {application_code}')
-def step_impl(context, aux_digit, segregazione, application_code):
-    segregazione = utils.replace_global_variables(segregazione, context)
-    if aux_digit == 0:
+@given('generate {number:d} notice number and iuv with aux digit {aux_digit:d}, segregation code {segregation_code} and application code {application_code}')
+def step_impl(context, number, aux_digit, segregation_code, application_code):
+    segregation_code = utils.replace_global_variables(segregation_code, context)
+    if aux_digit == 0 or aux_digit == 3:
         iuv = random.randint(1000000000000, 9999999999999)
-        notice_number = f"{aux_digit}{application_code}{iuv}00"
+        reference_code = application_code if aux_digit == 0 else segregation_code
+        notice_number = f"{aux_digit}{reference_code}{iuv}00"
     elif aux_digit == 1:
         iuv = random.randint(10000000000000000, 99999999999999999)
         notice_number = f"{aux_digit}{iuv}"
     elif aux_digit == 2:
         iuv = random.randint(100000000000000, 999999999999999)
-        notice_number = f"{aux_digit}{iuv}"
-    elif aux_digit == 3:
-        iuv = random.randint(1000000000000, 9999999999999)
-        notice_number = f"{aux_digit}{segregazione}{iuv}00"
+        notice_number = f"{aux_digit}{iuv}00"
     else:
         assert False
     
-    setattr(context, 'iuv', str(iuv))
-    setattr(context, 'noticeNumber', notice_number)
+    setattr(context, f"{number}iuv", str(iuv))
+    setattr(context, f'{number}noticeNumber', notice_number)
 
 
-@given('generate carrello with {pa}, {notice_number}')
-def step_impl(context, pa, notice_number):
+@given('generate {number:d} cart with PA {pa} and notice number {notice_number}')
+def step_impl(context, number, pa, notice_number):
     pa = utils.replace_local_variables(pa, context)
     pa = utils.replace_context_variables(pa, context)
     pa = utils.replace_global_variables(pa, context)
@@ -347,16 +345,19 @@ def step_impl(context, pa, notice_number):
     notice_number = utils.replace_context_variables(notice_number, context)
 
     carrello = f"{pa}{notice_number}-{utils.random_s()}"
-    setattr(context, 'carrello', carrello)
+    setattr(context, f'{number}carrello', carrello)
 
 @given('RPT{number:d} generation')
 def step_impl(context, number):
     payload = context.text or ""
+    
     payload = utils.replace_local_variables(payload, context)
     payload = utils.replace_context_variables(payload, context)
     payload = utils.replace_global_variables(payload, context)
+    
     date = datetime.date.today().strftime("%Y-%m-%d")
     timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
+    
     setattr(context, 'date', date)
     setattr(context, 'timedate', timedate)
 
