@@ -31,9 +31,7 @@ Feature: syntax checks for closePayment outcome OK
     Given initial JSON v1/closepayment
       """
       {
-        "paymentTokens":
-          "a3738f8bff1f4a32998fc197bd0a6b05"
-        ,
+        "paymentTokens": "a3738f8bff1f4a32998fc197bd0a6b05",
         "outcome": "OK",
         "identificativoPsp": "#psp#",
         "tipoVersamento": "BPAY",
@@ -59,12 +57,9 @@ Feature: syntax checks for closePayment outcome OK
     Then verify the HTTP status code of v1/closepayment response is 400
     And check esito is KO of v1/closepayment response
     And check descrizione is <elem> invalido of v1/closepayment response
-
     Examples:
       | elem                        | value                                                                                                                                                                                                                                                            | soapUI test |
       | paymentTokens               | None                                                                                                                                                                                                                                                             | SIN_CP_01   |
-      | paymentTokens               | Empty                                                                                                                                                                                                                                                            | SIN_CP_02   |
-      | paymentTokens               | 87cacaf799cadf9vs9s7vasdvs676cavv4574                                                                                                                                                                                                                            | SIN_CP_03   |
       #  | paymentTokens                  | No []                                 | SIN_CP_03.1 |
       | outcome                     | None                                                                                                                                                                                                                                                             | SIN_CP_04   |
       | outcome                     | Empty                                                                                                                                                                                                                                                            | SIN_CP_05   |
@@ -97,6 +92,18 @@ Feature: syntax checks for closePayment outcome OK
       | authorizationCode           | None                                                                                                                                                                                                                                                             | SIN_CP_43   |
       | authorizationCode           | abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fgh | SIN_CP_45   |
 
+
+  Scenario Outline: Check syntax error on invalid body element value
+    Given the closePayment scenario executed successfully
+    And <elem> with <value> in v1/closepayment
+    When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
+    Then verify the HTTP status code of v1/closepayment response is 400
+    And check esito is KO of v1/closepayment response
+    And check descrizione is paymentTokens invalido of v1/closepayment response
+    Examples:
+      | elem         | value                                 | soapUI test |
+      | paymentToken | None                                  | SIN_CP_02   |
+      | paymentToken | 87cacaf799cadf9vs9s7vasdvs676cavv4574 | SIN_CP_03   |
 
   Scenario: check closePayment without braces in paymentTokens
     Given the closePayment without braces in paymentTokens scenario executed successfully
@@ -150,7 +157,7 @@ Feature: syntax checks for closePayment outcome OK
       <transfer>
       <idTransfer>1</idTransfer>
       <transferAmount>10.00</transferAmount>
-      <fiscalCodePA>$activatePaymentNoticeV2.fiscalCode</fiscalCodePA>
+      <fiscalCodePA>$activateIOPayment.fiscalCode</fiscalCodePA>
       <IBAN>IT45R0760103200000000001016</IBAN>
       <remittanceInformation>testPaGetPayment</remittanceInformation>
       <transferCategory>paGetPaymentTest</transferCategory>
