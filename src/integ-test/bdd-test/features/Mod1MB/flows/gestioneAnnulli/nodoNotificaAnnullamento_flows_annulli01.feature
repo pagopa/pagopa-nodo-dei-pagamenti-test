@@ -3,10 +3,11 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_01]
    Background:
       Given systems up
 
-
    # [annulli_01]
    Scenario: RPT generation
-      Given RPT generation
+      Given generate notice number with 3, #cod_segr#, NA
+      And generate carrello with #codicePA#, $noticeNumber
+      And RPT1 generation
          """
          <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
          <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
@@ -64,8 +65,8 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_01]
          <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
          <pay_i:importoTotaleDaVersare>1.50</pay_i:importoTotaleDaVersare>
          <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
-         <pay_i:identificativoUnivocoVersamento>#IuV#</pay_i:identificativoUnivocoVersamento>
-         <pay_i:codiceContestoPagamento>#carrello#</pay_i:codiceContestoPagamento>
+         <pay_i:identificativoUnivocoVersamento>$iuv</pay_i:identificativoUnivocoVersamento>
+         <pay_i:codiceContestoPagamento>$carrello</pay_i:codiceContestoPagamento>
          <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
          <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
          <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -142,7 +143,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_01]
          <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
          <pay_i:importoTotaleDaVersare>1.50</pay_i:importoTotaleDaVersare>
          <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
-         <pay_i:identificativoUnivocoVersamento>$IuV</pay_i:identificativoUnivocoVersamento>
+         <pay_i:identificativoUnivocoVersamento>$iuv</pay_i:identificativoUnivocoVersamento>
          <pay_i:codiceContestoPagamento>$carrello</pay_i:codiceContestoPagamento>
          <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
          <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
@@ -199,13 +200,13 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_01]
          <listaRPT>
          <elementoListaRPT>
          <identificativoDominio>#codicePA#</identificativoDominio>
-         <identificativoUnivocoVersamento>$IuV</identificativoUnivocoVersamento>
+         <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
          <codiceContestoPagamento>$carrello</codiceContestoPagamento>
-         <rpt>$rptAttachment</rpt>
+         <rpt>$rpt1Attachment</rpt>
          </elementoListaRPT>
          <elementoListaRPT>
          <identificativoDominio>90000000001</identificativoDominio>
-         <identificativoUnivocoVersamento>$IuV</identificativoUnivocoVersamento>
+         <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
          <codiceContestoPagamento>$carrello</codiceContestoPagamento>
          <rpt>$rpt2Attachment</rpt>
          </elementoListaRPT>
