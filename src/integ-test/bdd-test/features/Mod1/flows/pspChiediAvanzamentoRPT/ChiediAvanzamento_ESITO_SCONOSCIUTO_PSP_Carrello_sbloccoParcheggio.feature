@@ -145,7 +145,7 @@ Feature: process tests for ChiediAvanzamento_ESITO_SCONOSCIUTO_PSP_Carrello_sblo
             <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
             <pay_i:identificativoUnivocoVersamento>avanzaErrResponse2</pay_i:identificativoUnivocoVersamento>
-            <pay_i:codiceContestoPagamento>#ccp2#</pay_i:codiceContestoPagamento>
+            <pay_i:codiceContestoPagamento>#CCP2#</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
             <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -192,7 +192,7 @@ Feature: process tests for ChiediAvanzamento_ESITO_SCONOSCIUTO_PSP_Carrello_sblo
                     <elementoListaRPT>
                     <identificativoDominio>44444444445</identificativoDominio>
                     <identificativoUnivocoVersamento>avanzaErrResponse2</identificativoUnivocoVersamento>
-                    <codiceContestoPagamento>$2ccp</codiceContestoPagamento>
+                    <codiceContestoPagamento>$2CCP</codiceContestoPagamento>
                     <rpt>$rpt2Attachment</rpt>
                     </elementoListaRPT>
                 </listaRPT>
@@ -256,7 +256,7 @@ Feature: process tests for ChiediAvanzamento_ESITO_SCONOSCIUTO_PSP_Carrello_sblo
         Given the Execution Esito Carta scenario executed successfully
         Then checks the value CART_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query retry_rpt on db nodo_online under macro Mod1
         And checks the value avanzaErrResponse,avanzaErrResponse2 of the record at column IUV of the table RETRY_RPT retrived by the query retry_rpt on db nodo_online under macro Mod1
-        And checks the value $ccp1,$ccp2 of the record at column CCP of the table RETRY_RPT retrived by the query retry_rpt on db nodo_online under macro Mod1
+        And checks the value $1ccp,$2CCP of the record at column CCP of the table RETRY_RPT retrived by the query retry_rpt on db nodo_online under macro Mod1
         And checks the value 44444444444,44444444445 of the record at column ID_DOMINIO of the table RETRY_RPT retrived by the query retry_rpt on db nodo_online under macro Mod1
         And checks the value 0 of the record at column RETRY of the table RETRY_RPT retrived by the query retry_rpt on db nodo_online under macro Mod1
         And verify 1 record for the table RETRY_RPT retrived by the query retry_rpt on db nodo_online under macro Mod1
@@ -309,6 +309,6 @@ Feature: process tests for ChiediAvanzamento_ESITO_SCONOSCIUTO_PSP_Carrello_sblo
         And checks the value 44444444444 of the record at column ID_DOMINIO of the table RETRY_RPT retrived by the query motivo_annullamento_originale on db nodo_online under macro Mod1
         And checks the value avanzaErrResponse of the record at column IUV of the table RETRY_RPT retrived by the query motivo_annullamento_originale on db nodo_online under macro Mod1
         And checks the value $1ccp of the record at column CCP of the table RETRY_RPT retrived by the query motivo_annullamento_originale on db nodo_online under macro Mod1
-
+        And verify if the records for the table RETRY retrived by the query motivo_annullamento_originale on db nodo_online under macro Mod1 are not null
         And verify 1 record for the table RETRY retrived by the query motivo_annullamento_originale on db nodo_online under macro Mod1
         
