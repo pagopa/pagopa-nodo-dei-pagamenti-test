@@ -78,11 +78,11 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
             <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
             <identificativoCanale>#canale_AGID#</identificativoCanale>
             <password>pwdpwdpwd</password>
-            <codiceContestoPagamento>$nodoVerificaRPT.ccp</codiceContestoPagamento>
+            <codiceContestoPagamento>$nodoVerificaRPT.codiceContestoPagamento/codiceContestoPagamento>
             <identificativoIntermediarioPSPPagamento>#broker_AGID#</identificativoIntermediarioPSPPagamento>
             <identificativoCanalePagamento>97735020584_02</identificativoCanalePagamento>
             <codificaInfrastrutturaPSP>BARCODE-128-AIM</codificaInfrastrutturaPSP>
-            <codiceIdRPT><aim:aim128> <aim:CCPost>#ccPoste#</aim:CCPost> <aim:CodStazPA>02</aim:CodStazPA> <aim:AuxDigit>0</aim:AuxDigit>  <aim:CodIUV>$nodoVerificaRPT.iuv</aim:CodIUV></aim:aim128></codiceIdRPT>
+            <codiceIdRPT><aim:aim128> <aim:CCPost>#ccPoste#</aim:CCPost> <aim:CodStazPA>02</aim:CodStazPA> <aim:AuxDigit>0</aim:AuxDigit>  <aim:CodIUV>$iuv</aim:CodIUV></aim:aim128></codiceIdRPT>
             <datiPagamentoPSP>
             <importoSingoloVersamento>10.00</importoSingoloVersamento>
             <!--Optional:-->
@@ -158,7 +158,7 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
             <enteBeneficiario>
             <pag:identificativoUnivocoBeneficiario>
             <pag:tipoIdentificativoUnivoco>G</pag:tipoIdentificativoUnivoco>
-            <pag:codiceIdentificativoUnivoco>77777777777_05</pag:codiceIdentificativoUnivoco>
+            <pag:codiceIdentificativoUnivoco>66666666666_05</pag:codiceIdentificativoUnivoco>
             </pag:identificativoUnivocoBeneficiario>
             <pag:denominazioneBeneficiario>97735020584</pag:denominazioneBeneficiario>
             <pag:codiceUnitOperBeneficiario>97735020584_02</pag:codiceUnitOperBeneficiario>
@@ -171,7 +171,7 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
             <pag:nazioneBeneficiario>UK</pag:nazioneBeneficiario>
             </enteBeneficiario>
             <credenzialiPagatore>i</credenzialiPagatore>
-            <causaleVersamento>prova/RFDB/018431538193400/TXT/causale 109611630410955</causaleVersamento>
+            <causaleVersamento>prova/RFDB/018431538193400/TXT/causale $iuv</causaleVersamento>
             </datiPagamentoPA>
             </paaAttivaRPTRisposta>
             </ws:paaAttivaRPTRisposta>
@@ -246,8 +246,8 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
             <pay_i:dataEsecuzionePagamento>2016-09-16</pay_i:dataEsecuzionePagamento>
             <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>PO</pay_i:tipoVersamento>
-            <pay_i:identificativoUnivocoVersamento>$nodoVerificaRPT.iuv</pay_i:identificativoUnivocoVersamento>
-            <pay_i:codiceContestoPagamento>$nodoVerificaRPT.ccp</pay_i:codiceContestoPagamento>
+            <pay_i:identificativoUnivocoVersamento>$iuv</pay_i:identificativoUnivocoVersamento>
+            <pay_i:codiceContestoPagamento>$nodoVerificaRPT.codiceContestoPagamento</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
             <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -276,8 +276,8 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
             <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>#creditor_institution_code#_05</identificativoStazioneIntermediarioPA>
             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-            <identificativoUnivocoVersamento>$nodoVerificaRPT.iuv</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>$nodoVerificaRPT.ccp</codiceContestoPagamento>
+            <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>$nodoVerificaRPT.codiceContestoPagamento</codiceContestoPagamento>
             </ppt:intestazionePPT>
             </soapenv:Header>
             <soapenv:Body>
