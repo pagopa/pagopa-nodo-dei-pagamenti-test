@@ -2,6 +2,7 @@ import datetime
 
 from email.policy import default
 import json
+from operator import contains
 import os
 import random
 from sre_constants import ASSERT
@@ -52,26 +53,38 @@ def json2xml(json_obj, line_padding=""):
     return "%s%s" % (line_padding, json_obj)
 
 
-s='{"paymentTokens": ["a3738f8bff1f4a32998fc197bd0a6b05","b3738f8bff1f4a32998fc197bd0a6b05"],"outcome": "OK","identificativoPsp": "#psp#","tipoVersamento": "BPAY","identificativoIntermediario": "#id_broker_psp#","identificativoCanale": "#canale_IMMEDIATO_MULTIBENEFICIARIO#","pspTransactionId": "#psp_transaction_id#","totalAmount": 12.00,"fee": 2.00,"timestampOperation": "2033-04-23T18:25:43Z","additionalPaymentInformations": {"transactionId": "#transaction_id#","outcomePaymentGateway": "EFF","authorizationCode": "resOK"}}'
+s='{"paymentTokens": ["a3738f8bff1f4a32998fc197bd0a6b05"],"outcome": "OK","identificativoPsp": "#psp#","tipoVersamento": "BPAY","identificativoIntermediario": "#id_broker_psp#","identificativoCanale": "#canale_IMMEDIATO_MULTIBENEFICIARIO#","pspTransactionId": "#psp_transaction_id#","totalAmount": 12,"fee": 2,"timestampOperation": "2033-04-23T18:25:43Z","additionalPaymentInformations": {"transactionId": "#transaction_id#","outcomePaymentGateway": "EFF","authorizationCode": "resOK"}}'
+# s='{"paymentTokens": ["a3738f8bff1f4a32998fc197bd0a6b05"],"outcome": "OK","identificativoPsp": "#psp#","tipoVersamento": "BPAY","identificativoIntermediario": "#id_broker_psp#","identificativoCanale": "#canale_IMMEDIATO_MULTIBENEFICIARIO#","pspTransactionId": "#psp_transaction_id#","totalAmount": 12,"fee": 2,"timestampOperation": "2033-04-23T18:25:43Z","additionalPaymentInformations": {"transactionId": "#transaction_id#","outcomePaymentGateway": "EFF","authorizationCode": "resOK"}}'
 j = json.loads(s)
 # print(json2xml(j))
 
 xmlFields = json2xml(j)
 xml = '<root>' + xmlFields + '</root>'
 
-# my_document = parseString(xml)
-# print(my_document.getElementsByTagName('outcome')[0].firstChild.data)
+print(xml)
 
 jsonNew = xmltodict.parse(xml)
+
 jsonNew = jsonNew["root"]
-jsonNew["paymentTokens"] = jsonNew["paymentTokens"]["paymentToken"]
-jsonNew = str(jsonNew)
-print(json.dumps(jsonNew))
+if 'paymentTokens' in jsonNew.keys():
+    jsonNew["paymentTokens"] = jsonNew["paymentTokens"]["paymentToken"]
+    if type(jsonNew["paymentTokens"]) != list:
+        l = list()
+        l.append(jsonNew["paymentTokens"])
+        jsonNew["paymentTokens"] = l
+if 'totalAmount' in jsonNew.keys():
+    jsonNew["totalAmount"] = float(jsonNew["totalAmount"])
+if 'fee' in jsonNew.keys():
+    jsonNew["fee"] = float(jsonNew["fee"])
+jsonNew = json.dumps(jsonNew, indent=4)
 
-service = 'v1/closePayment_json'
-service_json = service.split('_')[0]
-print(service_json)
-print(service_json)
+def insert_bracket(string, index, addString):
+     return string[:index] + addString + string[index:]
 
+# l_tok_string = jsonNew.index('"paymentTokens": ') + len('"paymentTokens": ')
 
+# if jsonNew[l_tok_string:l_tok_string + 1] != '[':
+#     jsonNew = insert_bracket(jsonNew, l_tok_string,'[')
+#     jsonNew = insert_bracket(jsonNew, jsonNew.index(token)+ len(token) + 1,']')
 
+print(jsonNew)

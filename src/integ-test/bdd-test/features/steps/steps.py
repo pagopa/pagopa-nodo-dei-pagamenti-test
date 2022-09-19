@@ -756,18 +756,17 @@ def step_impl(context, sender, method, service, receiver):
         bodyXml = getattr(context, service)
         body = xmltodict.parse(bodyXml)
         body = body["root"]
-        body["paymentTokens"] = body["paymentTokens"]["paymentToken"]
-        token = body["paymentTokens"]
-        body["totalAmount"] = float(body["totalAmount"])
-        body["fee"] = float(body["fee"])
+        if 'paymentTokens' in body.keys():
+            body["paymentTokens"] = body["paymentTokens"]["paymentToken"]
+            if type(body["paymentTokens"]) != list:
+                l = list()
+                l.append(body["paymentTokens"])
+                body["paymentTokens"] = l
+        if 'totalAmount' in body.keys():
+             body["totalAmount"] = float(body["totalAmount"])
+        if 'fee' in body.keys():
+            body["fee"] = float(body["fee"])
         body = json.dumps(body, indent=4)
-        
-        l_tok_string = body.index('"paymentTokens": ') + len('"paymentTokens": ')
-
-        if body[l_tok_string:l_tok_string + 1] != '[':
-            body = utils.insert_bracket(body, l_tok_string,'[')
-            body = utils.insert_bracket(body, body.index(token)+ len(token) + 1,']')
-
     
     print(body)
     

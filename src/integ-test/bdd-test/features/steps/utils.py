@@ -334,7 +334,3 @@ def json2xml(json_obj, line_padding=""):
         return "\n".join(result_list)
 
     return "%s%s" % (line_padding, json_obj)
-
-
-def insert_bracket(string, index, addString):
-     return string[:index] + addString + string[index:]
