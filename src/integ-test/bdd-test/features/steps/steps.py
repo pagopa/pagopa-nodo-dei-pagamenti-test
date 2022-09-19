@@ -17,8 +17,6 @@ from requests.exceptions import RetryError
 import utils as utils
 import db_operation as db
 
-import xmltodict
-
 
 # Constants
 RESPONSE = "Response"
@@ -61,6 +59,7 @@ def step_impl(context, primitive):
 
     if len(payload) > 0:
         my_document = parseString(payload)
+        idBrokerPSP = "70000000001"
         if len(my_document.getElementsByTagName('idBrokerPSP')) > 0:
             idBrokerPSP = my_document.getElementsByTagName('idBrokerPSP')[
                 0].firstChild.data
@@ -502,13 +501,13 @@ def step_impl(context):
     print("REND generata: ", payload)
     setattr(context, 'rendAttachment', payload)
 
-
 @given('{elem} with {value} in {action}')
 def step_impl(context, elem, value, action):
     # use - to skip
     if elem != "-":
         value = utils.replace_local_variables(value, context)
         value = utils.replace_global_variables(value, context)
+        value = utils.replace_context_variables(value, context)
         xml = utils.manipulate_soap_action(
             getattr(context, action), elem, value)
         setattr(context, action, xml)
@@ -577,6 +576,30 @@ def step_impl(context, tag, value, primitive):
             f'check tag "{tag}" - expected: {value}, obtained: {json_response.get(tag)}')
         assert str(json_response.get(tag)) == value
 
+@then('checks {tag} is not {value} of {primitive} response')
+def step_impl(context, tag, value, primitive):
+    soap_response = getattr(context, primitive + RESPONSE)
+    if 'xml' in soap_response.headers['content-type']:
+        my_document = parseString(soap_response.content)
+        if len(my_document.getElementsByTagName('faultCode')) > 0:
+            print("fault code: ", my_document.getElementsByTagName(
+                'faultCode')[0].firstChild.data)
+            print("fault string: ", my_document.getElementsByTagName(
+                'faultString')[0].firstChild.data)
+            if my_document.getElementsByTagName('description'):
+                print("description: ", my_document.getElementsByTagName(
+                    'description')[0].firstChild.data)
+        data = my_document.getElementsByTagName(tag)[0].firstChild.data
+        value = utils.replace_local_variables(value, context)
+        value = utils.replace_global_variables(value, context)
+        print(f'check tag "{tag}" - expected: {value}, obtained: {data}')
+        assert value != data
+    else:
+        node_response = getattr(context, primitive + RESPONSE)
+        json_response = node_response.json()
+        print(
+            f'check tag "{tag}" - expected: {value}, obtained: {json_response.get(tag)}')
+        assert str(json_response.get(tag)) != value
 
 @then('check {tag} contains {value} of {primitive} response')
 def step_impl(context, tag, value, primitive):
@@ -743,33 +766,13 @@ def step_impl(context, name):
 @when(u'{sender} sends rest {method:Method} {service} to {receiver}')
 def step_impl(context, sender, method, service, receiver):
     # TODO get url according to receiver
-
     url_nodo = utils.get_rest_url_nodo(context)
 
     headers = {'Content-Type': 'application/json',
                'Host': 'api.dev.platform.pagopa.it:443'}
     body = context.text or ""
-    
-    if '_json' in service:
-        service = service.split('_')[0]
-        print(service)
-        bodyXml = getattr(context, service)
-        body = xmltodict.parse(bodyXml)
-        body = body["root"]
-        if ('paymentTokens' in body.keys()) and (body["paymentTokens"] != None):
-            body["paymentTokens"] = body["paymentTokens"]["paymentToken"]
-            if type(body["paymentTokens"]) != list:
-                l = list()
-                l.append(body["paymentTokens"])
-                body["paymentTokens"] = l
-        if 'totalAmount' in body.keys():
-             body["totalAmount"] = float(body["totalAmount"])
-        if 'fee' in body.keys():
-            body["fee"] = float(body["fee"])
-        body = json.dumps(body, indent=4)
-    
     print(body)
-    
+
     body = utils.replace_local_variables(body, context)
     body = utils.replace_context_variables(body, context)
     body = utils.replace_global_variables(body, context)
@@ -1083,6 +1086,10 @@ def step_impl(context, primitive):
                                        f"30211{str(random.randint(1000000000000, 9999999999999))}")
     setattr(context, primitive, xml)
 
+@step('random iuv in context')
+def step_impl(context):
+    iuv = str(random.randint(100000000000000, 999999999999999))
+    setattr(context, "iuv", iuv)
 
 @step("nodo-dei-pagamenti has config parameter {param} set to {value}")
 def step_impl(context, param, value):
@@ -1107,6 +1114,28 @@ def step_impl(context, param, value):
     assert refresh_response.status_code == 200
 
 
+@step("nodo-dei-pagamenti DEV has config parameter {param} set to {value}")
+def step_impl(context, param, value):
+    db_selected = context.config.userdata.get(
+        "db_configuration").get('nodo_cfg')
+    selected_query = utils.query_json(context, 'update_devconfig', 'configurations').replace(
+        'value', value).replace('key', param)
+    conn = db.getConnection(db_selected.get('host'), db_selected.get(
+        'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+
+    setattr(context, param, value)
+
+    exec_query = db.executeQuery(conn, selected_query)
+    if exec_query is not None:
+        print(f'executed query: {exec_query}')
+
+    db.closeConnection(conn)
+    headers = {'Host': 'api.dev.platform.pagopa.it:443'}
+    refresh_response = requests.get(utils.get_refresh_config_url(
+        context), headers=headers, verify=False)
+    time.sleep(5)
+    assert refresh_response.status_code == 200
+
 @step("refresh job {job_name} triggered after 10 seconds")
 def step_impl(context, job_name):
     url_nodo = utils.get_rest_url_nodo(context)
@@ -1116,7 +1145,7 @@ def step_impl(context, job_name):
     setattr(context, job_name + RESPONSE, nodo_response)
     refresh_response = requests.get(utils.get_refresh_config_url(
         context), headers=headers, verify=False)
-    time.sleep(10)
+    time.sleep(5)
     assert refresh_response.status_code == 200
 
 
@@ -1134,7 +1163,6 @@ def step_impl(context, query_name, date, macro, db_name):
 
     exec_query = db.executeQuery(conn, selected_query)
     db.closeConnection(conn)
-
 
 @then("restore initial configurations")
 def step_impl(context):
@@ -1155,6 +1183,25 @@ def step_impl(context):
         context), headers=headers, verify=False)
     assert refresh_response.status_code == 200
 
+
+@then("restore initial DEV configurations")
+def step_impl(context):
+    db_selected = context.config.userdata.get(
+        "db_configuration").get('nodo_cfg')
+    conn = db.getConnection(db_selected.get('host'), db_selected.get(
+        'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+
+    config_dict = getattr(context, 'configurations')
+    for key, value in config_dict.items():
+        selected_query = utils.query_json(context, 'update_devconfig', 'configurations').replace(
+            'value', value).replace('key', key)
+        db.executeQuery(conn, selected_query)
+
+    db.closeConnection(conn)
+    headers = {'Host': 'api.dev.platform.pagopa.it:443'}
+    refresh_response = requests.get(utils.get_refresh_config_url(
+        context), headers=headers, verify=False)
+    assert refresh_response.status_code == 200
 
 @step("execution query {query_name} to get value on the table {table_name}, with the columns {columns} under macro {macro} with db name {db_name}")
 def step_impl(context, query_name, macro, db_name, table_name, columns):
@@ -1329,7 +1376,6 @@ def step_impl(context, value, column, query_name, table_name, db_name, name_macr
 
     db.closeConnection(conn)
 
-
 @step("update through the query {query_name} of the table {table_name} the parameter {param} with {value}, with where condition {where_condition} and where value {valore} under macro {macro} on db {db_name}")
 def step_impl(context, query_name, table_name, param, value, where_condition, valore, macro, db_name):
     db_selected = context.config.userdata.get("db_configuration").get(db_name)
@@ -1341,7 +1387,6 @@ def step_impl(context, query_name, table_name, param, value, where_condition, va
         'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
     exec_query = db.executeQuery(conn, selected_query)
     db.closeConnection(conn)
-
 
 @step("generic update through the query {query_name} of the table {table_name} the parameter {param}, with where condition {where_condition} under macro {macro} on db {db_name}")
 def step_impl(context, query_name, table_name, param, where_condition, macro, db_name):
@@ -1355,6 +1400,15 @@ def step_impl(context, query_name, table_name, param, where_condition, macro, db
     exec_query = db.executeQuery(conn, selected_query)
     db.closeConnection(conn)
 
+@step("updates through the query {query_name} of the table {table_name} the parameter {param} with {value} under macro {macro} on db {db_name}")
+def step_impl(context, query_name, table_name, param, value, macro, db_name):
+    db_selected = context.config.userdata.get("db_configuration").get(db_name)
+    selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('param', param).replace('value', value)
+    selected_query = utils.replace_local_variables(selected_query, context)
+    selected_query = utils.replace_context_variables(selected_query, context)
+    conn = db.getConnection(db_selected.get('host'), db_selected.get('database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+    exec_query = db.executeQuery(conn, selected_query)
+    db.closeConnection(conn)
 
 @step(u"check datetime plus number of date {number} of the record at column {column} of the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
 def step_impl(context, column, query_name, table_name, db_name, name_macro, number):
@@ -2151,127 +2205,3 @@ def step_impl(context, causaleVers):
     db.executeQuery(conn, query_update)
 
     db.closeConnection(conn)
-
-@step(u"checking the value {value} of the record at column {column} of the table {table_name} retrived by the query {query_name} with where condition {where_condition} on db {db_name} under macro {name_macro}")
-def step_impl(context, value, column, query_name, table_name, where_condition, db_name, name_macro):
-    db_config = context.config.userdata.get("db_configuration")
-    db_selected = db_config.get(db_name)
-    conn = db.getConnection(db_selected.get('host'), db_selected.get('database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
-    selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name).replace('where_condition', where_condition)
-    print(selected_query)
-    exec_query = db.executeQuery(conn, selected_query)
-    query_result = [t[0] for t in exec_query]
-    print('query_result: ', query_result)
-    if value == 'None':
-        print('None')
-        assert query_result[0] == None
-    elif value == 'NotNone':
-        print('NotNone')
-        assert query_result[0] != None
-    else:
-        if 'iuv' in value:
-            value = getattr(context, 'iuv')
-        value = utils.replace_global_variables(value, context)
-        value = utils.replace_local_variables(value, context)
-        value = utils.replace_context_variables(value, context)
-        split_value = [status.strip() for status in value.split(',')]
-        for i, elem in enumerate(query_result):
-            if isinstance(elem, str) and elem.isdigit():
-                query_result[i] = float(elem)
-            elif isinstance(elem, datetime.date):
-                query_result[i] = elem.strftime('%Y-%m-%d')
-        for i, elem in enumerate(split_value):
-            if utils.isFloat(elem) or elem.isdigit():
-                split_value[i] = float(elem)
-        print("value: ", split_value)
-        for elem in split_value:
-            assert elem in query_result, f"check expected element: {value}, obtained: {query_result}"
-    db.closeConnection(conn)
-
-@step("updating through the query {query_name} of the table {table_name} the parameter {param} with {value} with where condition {where_condition} under macro {macro} on db {db_name}")
-def step_impl(context, query_name, table_name, param, value, where_condition, macro, db_name):
-    db_selected = context.config.userdata.get("db_configuration").get(db_name)
-    selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('param', param).replace('value', value).replace('where_condition', where_condition)
-    selected_query = utils.replace_local_variables(selected_query, context)
-    selected_query = utils.replace_context_variables(selected_query, context)
-    conn = db.getConnection(db_selected.get('host'), db_selected.get('database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
-    exec_query = db.executeQuery(conn, selected_query)
-    db.closeConnection(conn)
-
-@then('checks {tag} is not {value} of {primitive} response')
-def step_impl(context, tag, value, primitive):
-    soap_response = getattr(context, primitive + RESPONSE)
-    if 'xml' in soap_response.headers['content-type']:
-        my_document = parseString(soap_response.content)
-        if len(my_document.getElementsByTagName('faultCode')) > 0:
-            print("fault code: ", my_document.getElementsByTagName(
-                'faultCode')[0].firstChild.data)
-            print("fault string: ", my_document.getElementsByTagName(
-                'faultString')[0].firstChild.data)
-            if my_document.getElementsByTagName('description'):
-                print("description: ", my_document.getElementsByTagName(
-                    'description')[0].firstChild.data)
-        data = my_document.getElementsByTagName(tag)[0].firstChild.data
-        value = utils.replace_local_variables(value, context)
-        value = utils.replace_global_variables(value, context)
-        print(f'check tag "{tag}" - expected: {value}, obtained: {data}')
-        assert value != data
-    else:
-        node_response = getattr(context, primitive + RESPONSE)
-        json_response = node_response.json()
-        print(
-            f'check tag "{tag}" - expected: {value}, obtained: {json_response.get(tag)}')
-        assert str(json_response.get(tag)) != value
-
-
-@given('initial JSON {primitive}')
-def step_impl(context, primitive):
-    payload = context.text or ""
-    payload = utils.replace_local_variables(payload, context)
-
-    jsonDict = json.loads(payload)
-    payload = utils.json2xml(jsonDict)
-    payload = '<root>' + payload + '</root>'
-
-#    if len(payload) > 0:
-#        my_document = json.load(payload)
-
-
-    if "#iuv#" in payload:
-        iuv = str(random.randint(100000000000000, 999999999999999))
-        payload = payload.replace('#iuv#', iuv)
-        setattr(context, "iuv", iuv)
-
-    if '#transaction_id#' in payload:
-        transaction_id = str(random.randint(10000000, 99999999))
-        payload = payload.replace('#transaction_id#', transaction_id)
-        setattr(context, 'transaction_id', transaction_id)
-
-    if '#psp_transaction_id#' in payload:
-        psp_transaction_id = str(random.randint(10000000, 99999999))
-        payload = payload.replace('#psp_transaction_id#', psp_transaction_id)
-        setattr(context, 'psp_transaction_id', psp_transaction_id)
-        
-    if '$iuv' in payload:
-        payload = payload.replace('$iuv', getattr(context, 'iuv'))
-        
-    if '$transaction_id' in payload:
-        payload = payload.replace('$transaction_id', getattr(context, 'transaction_id'))
-
-    if '$psp_transaction_id' in payload:
-        payload = payload.replace('$psp_transaction_id', getattr(context, 'psp_transaction_id'))
-
-    payload = utils.replace_context_variables(payload, context)
-    payload = utils.replace_global_variables(payload, context)
-    setattr(context, primitive, payload)
-
-
-# @given('{key} and {value} in rest {primitive}')
-# def step_impl(context, key, value, primitive):
-#     # use - to skip
-#     if key != "-":
-#         value = utils.replace_local_variables(value, context)
-#         value = utils.replace_global_variables(value, context)
-#         json = utils.manipulate_json(
-#             getattr(context, primitive), key, value)
-#         setattr(context, primitive, json)
