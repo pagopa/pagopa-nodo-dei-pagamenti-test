@@ -299,8 +299,8 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
 
     # nodoChiediInformazioniPagamento phase
     Scenario: Execute a nodoChiediInformazioniPagamento request
-        Given the Execute nodoInviaRPT request scenario executed successfully
-        When WISP sends rest GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
+        Given the Execute nodoInviaRPT scenario executed successfully
+        When WISP sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200
 
 
