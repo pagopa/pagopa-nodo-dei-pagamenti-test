@@ -220,24 +220,18 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_05]
       Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
       Then retrieve session token from $nodoInviaCarrelloRPTResponse.url
 
-   Scenario: Execute nodoChiediInformazioniPagamento
+   Scenario: update column valid_to UPDATED_TIMESTAMP
       Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
-      When WISP sends rest GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-      Then verify the HTTP status code of informazioniPagamento response is 200
-      And check importo field exists in informazioniPagamento response
-      And check email field exists in informazioniPagamento response
-      And check ragioneSociale field exists in informazioniPagamento response
-      And check oggettoPagamento field exists in informazioniPagamento response
-      And check urlRedirectEC field exists in informazioniPagamento response
-
-   Scenario: Execute nodoNotificaAnnullamento
-      Given the Execute nodoChiediInformazioniPagamento scenario executed successfully
-      When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-      And job paInviaRt triggered after 20 seconds
-      And wait 20 seconds for expiration
-      Then verify the HTTP status code of notificaAnnullamento response is 200
-
+      Then update through the query DB_GEST_ANN_update1 with date Today under macro Mod1Mb on db nodo_online
+      And update through the query DB_GEST_ANN_update2 with date Today under macro Mod1Mb on db nodo_online
       And wait 10 seconds for expiration
+
+
+   Scenario: Trigger annullamentoRptMaiRichiesteDaPm
+      Given the update column valid_to UPDATED_TIMESTAMP scenario executed successfully
+      When job annullamentoRptMaiRichiesteDaPm triggered after 10 seconds
+      Then verify the HTTP status code of annullamentoRptMaiRichiesteDaPm response is 200
+
 
 
       #DB-CHECK-STATI_RPT
@@ -332,7 +326,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_05]
          <pay_i:importoTotaleDaVersare>1.50</pay_i:importoTotaleDaVersare>
          <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
          <pay_i:identificativoUnivocoVersamento>#IuV3#</pay_i:identificativoUnivocoVersamento>
-         <pay_i:codiceContestoPagamento>#carrello#</pay_i:codiceContestoPagamento>
+         <pay_i:codiceContestoPagamento>#carrello1#</pay_i:codiceContestoPagamento>
          <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
          <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
          <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -356,7 +350,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_05]
          <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
          <pay_i:versioneOggetto>1.1</pay_i:versioneOggetto>
          <pay_i:dominio>
-         <pay_i:identificativoDominio>90000000001</pay_i:identificativoDominio>
+         <pay_i:identificativoDominio>#codicePA#</pay_i:identificativoDominio>
          <pay_i:identificativoStazioneRichiedente>90000000001_01</pay_i:identificativoStazioneRichiedente>
          </pay_i:dominio>
          <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
@@ -410,7 +404,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_05]
          <pay_i:importoTotaleDaVersare>1.50</pay_i:importoTotaleDaVersare>
          <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
          <pay_i:identificativoUnivocoVersamento>$3IuV</pay_i:identificativoUnivocoVersamento>
-         <pay_i:codiceContestoPagamento>$carrello</pay_i:codiceContestoPagamento>
+         <pay_i:codiceContestoPagamento>$carrello1</pay_i:codiceContestoPagamento>
          <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
          <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
          <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -454,7 +448,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_05]
          <ppt:intestazioneCarrelloPPT>
          <identificativoIntermediarioPA>#codicePA#</identificativoIntermediarioPA>
          <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
-         <identificativoCarrello>$carrello</identificativoCarrello>
+         <identificativoCarrello>$carrello1</identificativoCarrello>
          </ppt:intestazioneCarrelloPPT>
          </soapenv:Header>
          <soapenv:Body>
@@ -467,13 +461,13 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_05]
          <elementoListaRPT>
          <identificativoDominio>#codicePA#</identificativoDominio>
          <identificativoUnivocoVersamento>$3IuV</identificativoUnivocoVersamento>
-         <codiceContestoPagamento>$carrello</codiceContestoPagamento>
+         <codiceContestoPagamento>$carrello1</codiceContestoPagamento>
          <rpt>$rpt3Attachment</rpt>
          </elementoListaRPT>
          <elementoListaRPT>
          <identificativoDominio>90000000001</identificativoDominio>
          <identificativoUnivocoVersamento>$3IuV</identificativoUnivocoVersamento>
-         <codiceContestoPagamento>$carrello</codiceContestoPagamento>
+         <codiceContestoPagamento>$carrello1</codiceContestoPagamento>
          <rpt>$rpt4Attachment</rpt>
          </elementoListaRPT>
          </listaRPT>
