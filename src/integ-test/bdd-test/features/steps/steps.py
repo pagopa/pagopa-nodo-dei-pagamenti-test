@@ -758,11 +758,13 @@ def step_impl(context, sender, method, service, receiver):
         body = body["root"]
         body["paymentTokens"] = body["paymentTokens"]["paymentToken"]
         token = body["paymentTokens"]
+        body["totalAmount"] = float(body["totalAmount"])
+        body["fee"] = float(body["fee"])
         body = json.dumps(body, indent=4)
         
         l_tok_string = body.index('"paymentTokens": ') + len('"paymentTokens": ')
 
-        if body[l_tok_string:l_tok_string + 1] is not '[':
+        if body[l_tok_string:l_tok_string + 1] != '[':
             body = utils.insert_bracket(body, l_tok_string,'[')
             body = utils.insert_bracket(body, body.index(token)+ len(token) + 1,']')
 

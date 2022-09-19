@@ -105,3 +105,9 @@ Feature: syntax checks for closePayment outcome OK
   #   And check esito is KO of v1/closepayment response
   #   And check descrizione is paymentTokens invalido of v1/closepayment response
 
+  Scenario: check closePayment OK
+    Given the closePayment scenario executed successfully
+    When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
+    Then verify the HTTP status code of v1/closepayment response is 200
+    And check esito is OK of v1/closepayment response
+
