@@ -315,7 +315,7 @@ def step_impl(context):
 
     setattr(context, 'rptAttachment', payload)
 
-@given('generate {number:d} notice number and iuv with aux digit {aux_digit:d}, segregation code {segregazione} and application code {application_code}')
+@given('generate {number:d} notice number and iuv with aux digit {aux_digit:d}, segregation code {segregation_code} and application code {application_code}')
 def step_impl(context, number, aux_digit, segregation_code, application_code):
     segregation_code = utils.replace_global_variables(segregation_code, context)
     if aux_digit == 0 or aux_digit == 3:
@@ -331,8 +331,8 @@ def step_impl(context, number, aux_digit, segregation_code, application_code):
     else:
         assert False
     
-    setattr(context, f"iuv{number}", str(iuv))
-    setattr(context, f'noticeNumber{number}', notice_number)
+    setattr(context, f"{number}iuv", str(iuv))
+    setattr(context, f'{number}noticeNumber', notice_number)
 
 
 @given('generate {number:d} cart with PA {pa} and notice number {notice_number}')
@@ -345,7 +345,7 @@ def step_impl(context, number, pa, notice_number):
     notice_number = utils.replace_context_variables(notice_number, context)
 
     carrello = f"{pa}{notice_number}-{utils.random_s()}"
-    setattr(context, f'carrello{number}', carrello)
+    setattr(context, f'{number}carrello', carrello)
 
 @given('RPT{number:d} generation')
 def step_impl(context, number):
