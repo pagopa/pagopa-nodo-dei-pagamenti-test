@@ -259,7 +259,6 @@ Feature: process tests for ChiediAvanzamento_ESITO_SCONOSCIUTO_PSP_Carrello_sblo
         And checks the value $ccp1,$ccp2 of the record at column CCP of the table RETRY_RPT retrived by the query retry_rpt on db nodo_online under macro Mod1
         And checks the value 44444444444,44444444445 of the record at column ID_DOMINIO of the table RETRY_RPT retrived by the query retry_rpt on db nodo_online under macro Mod1
         And checks the value 0 of the record at column RETRY of the table RETRY_RPT retrived by the query retry_rpt on db nodo_online under macro Mod1
-        # And verify 0 record for the table RETRY_RPT retrived by the query retry_rpt on db nodo_online under macro Mod1
         And verify 1 record for the table RETRY_RPT retrived by the query retry_rpt on db nodo_online under macro Mod1
         And wait 5 seconds for expiration
         And job pspChiediAvanzamentoRPT triggered after 5 seconds
