@@ -265,7 +265,7 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
             </pay_i:RPT>
             """
 
-    Scenario: Excecute nodoInviaRPT
+    Scenario: Execute nodoInviaRPT
         Given the Define RPT scenario executed successfully
         And initial XML nodoInviaRPT
             """
