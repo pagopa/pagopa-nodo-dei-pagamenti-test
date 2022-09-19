@@ -120,26 +120,28 @@ Feature: syntax checks for closePayment outcome OK
       <soapenv:Header/>
       <soapenv:Body>
       <nod:activateIOPaymentReq>
-      <idPSP>#psp#</idPSP>
-      <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
-      <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
-      <password>#password#</password>
+      <idPSP>#psp_AGID#</idPSP>
+      <idBrokerPSP>#broker_AGID#</idBrokerPSP>
+      <idChannel>#canale_AGID#</idChannel>
+      <password>pwdpwdpwd</password>
+      <!--Optional:-->
+      <idempotencyKey>#idempotency_key#</idempotencyKey>
       <qrCode>
       <fiscalCode>#creditor_institution_code#</fiscalCode>
       <noticeNumber>311#iuv#</noticeNumber>
       </qrCode>
       <!--Optional:-->
-      <expirationTime>60000</expirationTime>
-      <amount>10.00</amount>
+      <expirationTime>12345</expirationTime>
+      <amount>70.00</amount>
       <!--Optional:-->
-      <dueDate>2021-12-31</dueDate>
+      <dueDate>2021-12-12</dueDate>
       <!--Optional:-->
-      <paymentNote>responseFull</paymentNote>
+      <paymentNote>test</paymentNote>
       <!--Optional:-->
       <payer>
       <uniqueIdentifier>
       <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-      <entityUniqueIdentifierValue>66666666666</entityUniqueIdentifierValue>
+      <entityUniqueIdentifierValue>44444444444</entityUniqueIdentifierValue>
       </uniqueIdentifier>
       <fullName>name</fullName>
       <!--Optional:-->
@@ -164,7 +166,7 @@ Feature: syntax checks for closePayment outcome OK
     And initial XML paGetPayment
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
-      <soapenv:Header/>
+      <soapenv:Header />
       <soapenv:Body>
       <paf:paGetPaymentRes>
       <outcome>OK</outcome>
@@ -207,8 +209,24 @@ Feature: syntax checks for closePayment outcome OK
       <!--1 to 5 repetitions:-->
       <transfer>
       <idTransfer>1</idTransfer>
-      <transferAmount>10.00</transferAmount>
-      <fiscalCodePA>$activateIOPayment.fiscalCode</fiscalCodePA>
+      <transferAmount>3.00</transferAmount>
+      <fiscalCodePA>66666666666</fiscalCodePA>
+      <IBAN>IT45R0760103200000000001016</IBAN>
+      <remittanceInformation>testPaGetPayment</remittanceInformation>
+      <transferCategory>paGetPaymentTest</transferCategory>
+      </transfer>
+      <transfer>
+      <idTransfer>2</idTransfer>
+      <transferAmount>3.00</transferAmount>
+      <fiscalCodePA>66666666666</fiscalCodePA>
+      <IBAN>IT45R0760103200000000001016</IBAN>
+      <remittanceInformation>testPaGetPayment</remittanceInformation>
+      <transferCategory>paGetPaymentTest</transferCategory>
+      </transfer>
+      <transfer>
+      <idTransfer>3</idTransfer>
+      <transferAmount>4.00</transferAmount>
+      <fiscalCodePA>66666666666</fiscalCodePA>
       <IBAN>IT45R0760103200000000001016</IBAN>
       <remittanceInformation>testPaGetPayment</remittanceInformation>
       <transferCategory>paGetPaymentTest</transferCategory>
@@ -229,9 +247,10 @@ Feature: syntax checks for closePayment outcome OK
       """
     And EC replies to nodo-dei-pagamenti with the paGetPayment
 
+
   Scenario: check activateIOPayment OK
     Given the activateIOPayment scenario executed successfully
-    When PSP send SOAP activateIOPayment to nodo-dei-pagamenti
+    When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is OK of activateIOPayment response
     And save activateIOPayment response in activateIOPaymentResponse
 
