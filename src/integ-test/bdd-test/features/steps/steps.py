@@ -17,6 +17,7 @@ from requests.exceptions import RetryError
 import utils as utils
 import db_operation as db
 
+import xmltodict
 
 # Constants
 RESPONSE = "Response"
@@ -771,6 +772,25 @@ def step_impl(context, sender, method, service, receiver):
     headers = {'Content-Type': 'application/json',
                'Host': 'api.dev.platform.pagopa.it:443'}
     body = context.text or ""
+
+    if '_json' in service:
+        service = service.split('_')[0]
+        print(service)
+        bodyXml = getattr(context, service)
+        body = xmltodict.parse(bodyXml)
+        body = body["root"]
+        if ('paymentTokens' in body.keys()) and (body["paymentTokens"] != None):
+            body["paymentTokens"] = body["paymentTokens"]["paymentToken"]
+            if type(body["paymentTokens"]) != list:
+                l = list()
+                l.append(body["paymentTokens"])
+                body["paymentTokens"] = l
+        if 'totalAmount' in body.keys():
+             body["totalAmount"] = float(body["totalAmount"])
+        if 'fee' in body.keys():
+            body["fee"] = float(body["fee"])
+        body = json.dumps(body, indent=4)
+
     print(body)
 
     body = utils.replace_local_variables(body, context)
@@ -2205,3 +2225,34 @@ def step_impl(context, causaleVers):
     db.executeQuery(conn, query_update)
 
     db.closeConnection(conn)
+
+
+@given('initial JSON {primitive}')
+def step_impl(context, primitive):
+    payload = context.text or ""
+    payload = utils.replace_local_variables(payload, context)
+    jsonDict = json.loads(payload)
+    payload = utils.json2xml(jsonDict)
+    payload = '<root>' + payload + '</root>'
+
+    if "#iuv#" in payload:
+        iuv = str(random.randint(100000000000000, 999999999999999))
+        payload = payload.replace('#iuv#', iuv)
+        setattr(context, "iuv", iuv)
+    if '#transaction_id#' in payload:
+        transaction_id = str(random.randint(10000000, 99999999))
+        payload = payload.replace('#transaction_id#', transaction_id)
+        setattr(context, 'transaction_id', transaction_id)
+    if '#psp_transaction_id#' in payload:
+        psp_transaction_id = str(random.randint(10000000, 99999999))
+        payload = payload.replace('#psp_transaction_id#', psp_transaction_id)
+        setattr(context, 'psp_transaction_id', psp_transaction_id)
+    if '$iuv' in payload:
+        payload = payload.replace('$iuv', getattr(context, 'iuv'))
+    if '$transaction_id' in payload:
+        payload = payload.replace('$transaction_id', getattr(context, 'transaction_id'))
+    if '$psp_transaction_id' in payload:
+        payload = payload.replace('$psp_transaction_id', getattr(context, 'psp_transaction_id'))
+    payload = utils.replace_context_variables(payload, context)
+    payload = utils.replace_global_variables(payload, context)
+    setattr(context, primitive, payload)

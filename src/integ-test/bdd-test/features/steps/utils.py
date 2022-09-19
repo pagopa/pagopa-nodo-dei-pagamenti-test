@@ -283,3 +283,36 @@ def random_s():
         strNumRand += str(random.randint(0, 9))
         cont -= 1
         return strNumRand
+
+
+def json2xml(json_obj, line_padding=""):
+    result_list = list()
+    json_obj_type = type(json_obj)
+    if json_obj_type is list:
+        for sub_elem in json_obj:
+            result_list.append(json2xml(sub_elem, line_padding))
+        return "\n".join(result_list)
+    if json_obj_type is dict:
+        for tag_name in json_obj:
+            sub_obj = json_obj[tag_name]
+            if type(sub_obj) is dict:
+                result_list.append("%s<%s>" % (line_padding, tag_name))
+                for key in sub_obj:
+                    sub_sub_obj = sub_obj[key]
+                    result_list.append("%s<%s>" % (line_padding, key))
+                    result_list.append(json2xml(sub_sub_obj, "\t" + line_padding))
+                    result_list.append("%s</%s>" % (line_padding, key))
+                result_list.append("%s</%s>" % (line_padding, tag_name))
+            elif type(sub_obj) is list:
+                result_list.append("%s<%s>" % (line_padding, tag_name))
+                for sub_elem in sub_obj:
+                    result_list.append("%s<%s>" % (line_padding, "paymentToken"))
+                    result_list.append(json2xml(sub_elem, line_padding))
+                    result_list.append("%s</%s>" % (line_padding, "paymentToken"))
+                result_list.append("%s</%s>" % (line_padding, tag_name))
+            else:
+                result_list.append("%s<%s>" % (line_padding, tag_name))
+                result_list.append(json2xml(sub_obj, "\t" + line_padding))
+                result_list.append("%s</%s>" % (line_padding, tag_name))
+        return "\n".join(result_list)
+    return "%s%s" % (line_padding, json_obj)
