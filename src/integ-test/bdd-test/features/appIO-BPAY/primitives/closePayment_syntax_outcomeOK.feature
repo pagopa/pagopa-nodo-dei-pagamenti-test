@@ -113,16 +113,16 @@ Feature: syntax checks for closePayment outcome OK
   #   And check descrizione is paymentTokens invalido of v1/closepayment response
 
 
-Scenario: activateIOPayment
+  Scenario: activateIOPayment
     Given initial XML activateIOPayment
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd">
       <soapenv:Header/>
       <soapenv:Body>
       <nod:activateIOPaymentReq>
-      <idPSP>#psp_AGID#</idPSP>
-      <idBrokerPSP>97735020584</idBrokerPSP>
-      <idChannel>97735020584_03</idChannel>
+      <idPSP>#psp#</idPSP>
+      <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
+      <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
       <password>#password#</password>
       <qrCode>
       <fiscalCode>#creditor_institution_code#</fiscalCode>
@@ -139,7 +139,7 @@ Scenario: activateIOPayment
       <payer>
       <uniqueIdentifier>
       <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-      <entityUniqueIdentifierValue>77777777777</entityUniqueIdentifierValue>
+      <entityUniqueIdentifierValue>66666666666</entityUniqueIdentifierValue>
       </uniqueIdentifier>
       <fullName>name</fullName>
       <!--Optional:-->
@@ -164,7 +164,7 @@ Scenario: activateIOPayment
     And initial XML paGetPayment
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
-      <soapenv:Header />
+      <soapenv:Header/>
       <soapenv:Body>
       <paf:paGetPaymentRes>
       <outcome>OK</outcome>
