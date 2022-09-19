@@ -3,8 +3,8 @@ Feature: process tests for ChiediAvanzamento_ESITO_SCONOSCIUTO_PSP_Carrello_sblo
     Background:
         Given systems up
 
-    Scenario: RPT1 generation
-        Given RPT1 generation
+    Scenario: RPT generation
+        Given RPT generation
 
         """
         <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
@@ -84,7 +84,7 @@ Feature: process tests for ChiediAvanzamento_ESITO_SCONOSCIUTO_PSP_Carrello_sblo
         """
 
     Scenario: RPT2 generation
-        Given the RPT1 generation scenario executed successfully
+        Given the RPT generation scenario executed successfully
         And RPT2 generation
 
         """
@@ -187,7 +187,7 @@ Feature: process tests for ChiediAvanzamento_ESITO_SCONOSCIUTO_PSP_Carrello_sblo
                     <identificativoDominio>44444444444</identificativoDominio>
                     <identificativoUnivocoVersamento>avanzaErrResponse</identificativoUnivocoVersamento>
                     <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
-                    <rpt>$rpt1Attachment</rpt>
+                    <rpt>$rptAttachment</rpt>
                     </elementoListaRPT>
                     <elementoListaRPT>
                     <identificativoDominio>44444444445</identificativoDominio>
