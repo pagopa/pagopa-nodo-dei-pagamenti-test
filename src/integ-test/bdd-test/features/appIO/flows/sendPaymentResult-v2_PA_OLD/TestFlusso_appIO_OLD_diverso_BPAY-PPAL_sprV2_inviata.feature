@@ -21,7 +21,6 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
             <codificaInfrastrutturaPSP>BARCODE-128-AIM</codificaInfrastrutturaPSP>
             <codiceIdRPT><aim:aim128> <aim:CCPost>#ccPoste#</aim:CCPost> <aim:CodStazPA>02</aim:CodStazPA> <aim:AuxDigit>0</aim:AuxDigit>  <aim:CodIUV>#iuv#</aim:CodIUV></aim:aim128></codiceIdRPT>
             </ws:nodoVerificaRPT>
-            </ws:nodoVerificaRPT>
             </soapenv:Body>
             </soapenv:Envelope>
             """
@@ -41,7 +40,7 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
             <enteBeneficiario>
             <pag:identificativoUnivocoBeneficiario>
             <pag:tipoIdentificativoUnivoco>G</pag:tipoIdentificativoUnivoco>
-            <pag:codiceIdentificativoUnivoco>77777777777_05</pag:codiceIdentificativoUnivoco>
+            <pag:codiceIdentificativoUnivoco>66666666666_05</pag:codiceIdentificativoUnivoco>
             </pag:identificativoUnivocoBeneficiario>
             <pag:denominazioneBeneficiario>f6</pag:denominazioneBeneficiario>
             <pag:codiceUnitOperBeneficiario>r6</pag:codiceUnitOperBeneficiario>
@@ -295,12 +294,14 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
             """
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
+        And retrieve session token from $nodoInviaRPTResponse.url
+        And verify 1 record for the table CD_INFO_PAGAMENTO retrived by the query info_pagamento on db nodo_online under macro AppIO
 
 
     # nodoChiediInformazioniPagamento phase
     Scenario: Execute a nodoChiediInformazioniPagamento request
         Given the Execute nodoInviaRPT request scenario executed successfully
-        When WISP sends rest GET informazioniPagamento?idPagamento=$idSessione to nodo-dei-pagamenti
+        When WISP sends rest GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200
 
 
@@ -311,7 +312,7 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
             """
             {
                 "paymentTokens": [
-                    "$idSessione"
+                    "$sessionToken"
                 ],
                 "outcome": "OK",
                 "idPSP": "#psp#",
