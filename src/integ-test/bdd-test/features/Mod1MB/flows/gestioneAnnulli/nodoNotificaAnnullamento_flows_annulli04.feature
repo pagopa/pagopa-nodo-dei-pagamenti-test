@@ -253,7 +253,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_04]
     And verify 0 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query DB_GEST_ANN_stati_position_payment_status on db nodo_online under macro Mod1Mb
 
     #DB-CHECK-POSITION_STATUS
-    And verify 0 record for the table POSITION_STATUS retrived by the query DB_GEST_ANN_stati_position_payment_status on db nodo_online under macro Mod1Mb
+    And verify 0 record for the table POSITION_STATUS retrived by the query DB_GEST_ANN_stati_position_status on db nodo_online under macro Mod1Mb
 
     #DB-CHECK-POSITION_STATUS_SNAPSHOT
-    And verify 0 record for the table POSITION_STATUS_SNAPSHOT retrived by the query DB_GEST_ANN_stati_position_payment_status on db nodo_online under macro Mod1Mb
+    And verify 0 record for the table POSITION_STATUS_SNAPSHOT retrived by the query DB_GEST_ANN_stati_position_status on db nodo_online under macro Mod1Mb

@@ -315,6 +315,39 @@ def step_impl(context):
 
     setattr(context, 'rptAttachment', payload)
 
+@given('generate notice number with {aux_digit:d}, {segregazione}, {application_code}')
+def step_impl(context, aux_digit, segregazione, application_code):
+    segregazione = utils.replace_global_variables(segregazione, context)
+    if aux_digit == 0:
+        iuv = random.randint(1000000000000, 9999999999999)
+        notice_number = f"{aux_digit}{application_code}{iuv}00"
+    elif aux_digit == 1:
+        iuv = random.randint(10000000000000000, 99999999999999999)
+        notice_number = f"{aux_digit}{iuv}"
+    elif aux_digit == 2:
+        iuv = random.randint(100000000000000, 999999999999999)
+        notice_number = f"{aux_digit}{iuv}"
+    elif aux_digit == 3:
+        iuv = random.randint(1000000000000, 9999999999999)
+        notice_number = f"{aux_digit}{segregazione}{iuv}00"
+    else:
+        assert False
+    
+    setattr(context, 'iuv', str(iuv))
+    setattr(context, 'noticeNumber', notice_number)
+
+
+@given('generate carrello with {pa}, {notice_number}')
+def step_impl(context, pa, notice_number):
+    pa = utils.replace_local_variables(pa, context)
+    pa = utils.replace_context_variables(pa, context)
+    pa = utils.replace_global_variables(pa, context)
+
+    notice_number = utils.replace_local_variables(notice_number, context)
+    notice_number = utils.replace_context_variables(notice_number, context)
+
+    carrello = f"{pa}{notice_number}-{utils.random_s()}"
+    setattr(context, 'carrello', carrello)
 
 @given('RPT{number:d} generation')
 def step_impl(context, number):
@@ -326,12 +359,6 @@ def step_impl(context, number):
     timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
     setattr(context, 'date', date)
     setattr(context, 'timedate', timedate)
-
-    if f"#intermediarioPA {number}#" in payload:
-        intermediarioPA = "44444444444_05"
-        payload = payload.replace(
-            f'#intermediarioPA{number}#', intermediarioPA)
-        setattr(context, f"intermediarioPA{number}", intermediarioPA)
 
     if f"#IUV{number}#" in payload:
         IUV = str(utils.current_milli_time()) + \
@@ -361,8 +388,6 @@ def step_impl(context, number):
         payload = payload.replace(f'#IuV{number}#', IuV)
         setattr(context, f'{number}IuV', IuV)
 
-    if '$carrello' in payload:
-        payload = payload.replace('$carrello', getattr(context, 'carrello'))
 
     if f'#iuv{number}#' in payload:
         iuv = "IUV" + str(random.randint(0, 10000)) + "-" + \
@@ -370,62 +395,56 @@ def step_impl(context, number):
         payload = payload.replace(f'#iuv{number}#', iuv)
         setattr(context, f'{number}iuv', iuv)
 
-    if '#idCarrello#' in payload:
-        idCarrello = "09812374659" + "311" + "0" + str(random.randint(1000, 2000)) + str(
-            random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
-        payload = payload.replace('#idCarrello#', idCarrello)
-        setattr(context, 'idCarrello', idCarrello)
+    # if '#idCarrello#' in payload:
+    #     idCarrello = "09812374659" + "311" + "0" + str(random.randint(1000, 2000)) + str(
+    #         random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+    #     payload = payload.replace('#idCarrello#', idCarrello)
+    #     setattr(context, 'idCarrello', idCarrello)
 
-    if '#carrello#' in payload:
-        carrello = "77777777777" + "311" + "0" + str(random.randint(1000, 2000)) + str(
-            random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
-        payload = payload.replace('#carrello#', carrello)
-        setattr(context, 'carrello', carrello)
+    # if '#carrello#' in payload:
+    #     carrello = "77777777777" + "311" + "0" + str(random.randint(1000, 2000)) + str(
+    #         random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+    #     payload = payload.replace('#carrello#', carrello)
+    #     setattr(context, 'carrello', carrello)
 
-    if '#carrello1#' in payload:
-        carrello1 = "77777777777" + "311" + "0" + str(random.randint(1000, 2000)) + str(
-            random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + utils.random_s()
-        payload = payload.replace('#carrello1#', carrello1)
-        setattr(context, 'carrello1', carrello1)
+    # if '#carrello1#' in payload:
+    #     carrello1 = "77777777777" + "311" + "0" + str(random.randint(1000, 2000)) + str(
+    #         random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + utils.random_s()
+    #     payload = payload.replace('#carrello1#', carrello1)
+    #     setattr(context, 'carrello1', carrello1)
 
-    if '#secCarrello#' in payload:
-        secCarrello = "77777777777" + "301" + "0" + str(random.randint(1000, 2000)) + str(
-            random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
-        payload = payload.replace('#secCarrello#', secCarrello)
-        setattr(context, 'secCarrello', secCarrello)
+    # if '#secCarrello#' in payload:
+    #     secCarrello = "77777777777" + "301" + "0" + str(random.randint(1000, 2000)) + str(
+    #         random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+    #     payload = payload.replace('#secCarrello#', secCarrello)
+    #     setattr(context, 'secCarrello', secCarrello)
 
-    if '#thrCarrello#' in payload:
-        thrCarrello = "77777777777" + "088" + "0" + str(random.randint(1000, 2000)) + str(
-            random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
-        payload = payload.replace('#thrCarrello#', thrCarrello)
-        setattr(context, 'thrCarrello', thrCarrello)
+    # if '#thrCarrello#' in payload:
+    #     thrCarrello = "77777777777" + "088" + "0" + str(random.randint(1000, 2000)) + str(
+    #         random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+    #     payload = payload.replace('#thrCarrello#', thrCarrello)
+    #     setattr(context, 'thrCarrello', thrCarrello)
 
-    if '#carrNOTENABLED#' in payload:
-        carrNOTENABLED = "11111122223" + "311" + "0" + str(random.randint(1000, 2000)) + str(
-            random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
-        payload = payload.replace('#carrNOTENABLED#', carrNOTENABLED)
-        setattr(context, 'carrNOTENABLED', carrNOTENABLED)
+    # if '#carrNOTENABLED#' in payload:
+    #     carrNOTENABLED = "11111122223" + "311" + "0" + str(random.randint(1000, 2000)) + str(
+    #         random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+    #     payload = payload.replace('#carrNOTENABLED#', carrNOTENABLED)
+    #     setattr(context, 'carrNOTENABLED', carrNOTENABLED)
 
-    if "nodoVerificaRPT_IUV" in payload:
-        nodoVerificaRPT = getattr(context, 'nodoVerificaRPT')
-        my_document = parseString(nodoVerificaRPT.content)
-        aux_digit = my_document.getElementsByTagName('AuxDigit')
-        if aux_digit == '0' or aux_digit == '1' or aux_digit == '2':
-            iuv = ''+random.randint(10000, 20000)+random.randint(10000,
-                                                                 20000)+random.randint(10000, 20000)
-        elif aux_digit == '3':
-            # per pa_old
-            iuv = '11' + (int)(random.randint(10000, 20000)) + \
-                (int)(random.randint(10000, 20000)) + \
-                (int)(random.randint(10000, 20000))
-        payload = payload.replace('iuv', iuv)
-        setattr(context, 'iuv', iuv)
-
-    if "$ccp" in payload:
-        ccp = ''+random.randint(10000, 20000)+random.randint(10000,
-                                                             20000)+random.randint(10000, 20000)
-        payload = payload.replace('ccp', ccp)
-        setattr(context, "ccp", ccp)
+    #if "nodoVerificaRPT_IUV" in payload:
+        # nodoVerificaRPT = getattr(context, 'nodoVerificaRPT')
+        # my_document = parseString(nodoVerificaRPT.content)
+        # aux_digit = my_document.getElementsByTagName('AuxDigit')
+        # if aux_digit == '0' or aux_digit == '1' or aux_digit == '2':
+        #     iuv = ''+random.randint(10000, 20000)+random.randint(10000,
+        #                                                          20000)+random.randint(10000, 20000)
+        # elif aux_digit == '3':
+        #     # per pa_old
+        #     iuv = '11' + (int)(random.randint(10000, 20000)) + \
+        #         (int)(random.randint(10000, 20000)) + \
+        #         (int)(random.randint(10000, 20000))
+        # payload = payload.replace('iuv', iuv)
+        # setattr(context, 'iuv', iuv)
 
     setattr(context, f'rpt{number}', payload)
     payload_b = bytes(payload, 'ascii')

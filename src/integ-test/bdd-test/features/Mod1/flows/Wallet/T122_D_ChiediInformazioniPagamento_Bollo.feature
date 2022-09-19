@@ -215,7 +215,7 @@ Feature: process tests for chiediInformazioniPagamento_Bollo
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
                 <ppt:intestazionePPT>
-                    <identificativoIntermediarioPA>#intermediarioPA</identificativoIntermediarioPA>
+                    <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
                     <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
                     <identificativoDominio>#codicePA#</identificativoDominio>
                     <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
@@ -247,6 +247,6 @@ Feature: process tests for chiediInformazioniPagamento_Bollo
         And check ragioneSociale field exists in informazioniPagamento response
         And check oggettoPagamento field exists in informazioniPagamento response
         And check urlRedirectEC field exists in informazioniPagamento response
-        And check importoTotale contains 10 of informazioniPagamento response
-        And check importoTotale contains True of informazioniPagamento response
-        And check importoTotale contains pagamento fotocopie pratica of informazioniPagamento response
+        And check importoTotale contains 10.0 of informazioniPagamento response
+        And check bolloDigitale contains True of informazioniPagamento response
+        And check oggettoPagamento contains pagamento fotocopie pratica of informazioniPagamento response

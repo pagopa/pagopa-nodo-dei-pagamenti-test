@@ -116,10 +116,10 @@ function Collapsible_expandAllFailed()
         <div id="summary">
           <p id="totals">
             <p id="feature_totals">Features: failed: 1</p>
-            <p id="scenario_totals">Scenarios: failed: 12</p>
-            <p id="step_totals">Steps: skipped: 36</p>
+            <p id="scenario_totals">Scenarios: failed: 1</p>
+            <p id="step_totals">Steps: untested: 6</p>
           </p>
-          <p id="duration">Finished in 55.0 seconds</p>
+          <p id="duration">Finished in 16.9 seconds</p>
           <div id="expand-collapse">
             <a id="expander" href="#" onclick="Collapsible_expandAll('scenario_steps')">Expand All</a>
             <span> | </span>
@@ -131,7 +131,7 @@ function Collapsible_expandAllFailed()
       </div>
       <div class="feature">
         <h2>
-          <span class="val">Feature: Semantic checks KO for nodoAttivaRPT</span>
+          <span class="val">Feature: process check for activatePaymentNotice - KO</span>
         </h2>
         <span/>
       </div>
@@ -143,1501 +143,340 @@ function Collapsible_expandAllFailed()
         <span/>
       </div>
       <div class="scenario">
-        <span class="scenario_file">src/integ-test/bdd-test/features/OldMod3/primitives/nodoAttivaRPT_semantic_ko.feature:79</span>
+        <span class="scenario_file">src/integ-test/bdd-test/features/NewMod3/flows/paaAttivaRPT_semantic_ko.feature:75</span>
         <h3 onclick="Collapsible_toggle('scenario_0')" class="failed">
-          <span class="val">Scenario: Check PPT_PSP_SCONOSCIUTO error on non-existent psp</span>
+          <span class="val">Scenario Outline: semantic check on paaAttivaRPTRes -- @1.1 </span>
         </h3>
         <ol class="scenario_steps" id="scenario_0">
-          <li class="step failed">
+          <li class="step passed">
             <div class="step_name">
               <span class="keyword">Given </span>
               <span class="step val">systems up</span>
-              <small class="step_duration">(4.495s)</small>
+              <small class="step_duration">(0.103s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:28</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:29</span>
+            </div>
+            <span class="embed"/>
+            <table>
+              <tr>
+                <th>name</th>
+                <th>url</th>
+                <th>healthcheck</th>
+                <th>soap_service</th>
+                <th>rest_service</th>
+              </tr>
+              <tr>
+                <td>nodo-dei-pagamenti</td>
+                <td>http://localhost:9080/</td>
+                <td>nodo-dev-health/ready</td>
+                <td>nodo-dev/webservices/input</td>
+                <td>nodo-dev</td>
+              </tr>
+              <tr>
+                <td>mock-ec</td>
+                <td>http://localhost:8089/</td>
+                <td>servizi/PagamentiTelematiciRPT/info</td>
+                <td>servizi/PagamentiTelematiciRPT</td>
+                <td/>
+              </tr>
+              <tr>
+                <td>mock-psp</td>
+                <td>http://localhost:8090/</td>
+                <td>servizi/MockPSP/info</td>
+                <td>servizi/MockPSP</td>
+                <td/>
+              </tr>
+            </table>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>initial XML </span>
+                <b>activatePaymentNotice</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.012s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:57</span>
+            </div>
+            <span class="embed"/>
+            <div class="message">
+              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd&quot;&gt;
+&lt;soapenv:Header/&gt;
+&lt;soapenv:Body&gt;
+&lt;nod:activatePaymentNoticeReq&gt;
+&lt;idPSP&gt;#psp#&lt;/idPSP&gt;
+&lt;idBrokerPSP&gt;#psp#&lt;/idBrokerPSP&gt;
+&lt;idChannel&gt;#canale_ATTIVATO_PRESSO_PSP#&lt;/idChannel&gt;
+&lt;password&gt;pwdpwdpwd&lt;/password&gt;
+&lt;idempotencyKey&gt;#idempotency_key#&lt;/idempotencyKey&gt;
+&lt;qrCode&gt;
+&lt;fiscalCode&gt;#creditor_institution_code_old#&lt;/fiscalCode&gt;
+&lt;noticeNumber&gt;#notice_number_old#&lt;/noticeNumber&gt;
+&lt;/qrCode&gt;
+&lt;expirationTime&gt;4000&lt;/expirationTime&gt;
+&lt;amount&gt;10.00&lt;/amount&gt;
+&lt;dueDate&gt;2021-12-31&lt;/dueDate&gt;
+&lt;paymentNote&gt;causale&lt;/paymentNote&gt;
+&lt;/nod:activatePaymentNoticeReq&gt;
+&lt;/soapenv:Body&gt;
+&lt;/soapenv:Envelope&gt;
+</pre>
+            </div>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>EC </span>
+                <b>old</b>
+                <span> version</span>
+              </span>
+              <small class="step_duration">(0.000s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:51</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">Given </span>
+              <span class="step val">
+                <span>initial XML </span>
+                <b>paaAttivaRPT</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.003s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:57</span>
+            </div>
+            <span class="embed"/>
+            <div class="message">
+              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:ws=&quot;http://ws.pagamenti.telematici.gov/&quot; xmlns:pag=&quot;http://www.digitpa.gov.it/schemas/2011/Pagamenti/&quot;&gt;
+&lt;soapenv:Header/&gt;
+&lt;soapenv:Body&gt;
+&lt;ws:paaAttivaRPTRisposta&gt;
+&lt;paaAttivaRPTRisposta&gt;
+&lt;esito&gt;OK&lt;/esito&gt;
+&lt;delay&gt;60000&lt;/delay&gt;
+&lt;datiPagamentoPA&gt;
+&lt;importoSingoloVersamento&gt;2.00&lt;/importoSingoloVersamento&gt;
+&lt;ibanAccredito&gt;${iban}&lt;/ibanAccredito&gt;
+&lt;bicAccredito&gt;BSCTCH22&lt;/bicAccredito&gt;
+&lt;enteBeneficiario&gt;
+&lt;pag:identificativoUnivocoBeneficiario&gt;
+&lt;pag:tipoIdentificativoUnivoco&gt;G&lt;/pag:tipoIdentificativoUnivoco&gt;
+&lt;pag:codiceIdentificativoUnivoco&gt;${stz}&lt;/pag:codiceIdentificativoUnivoco&gt;
+&lt;/pag:identificativoUnivocoBeneficiario&gt;
+&lt;pag:denominazioneBeneficiario&gt;${intermPsp}&lt;/pag:denominazioneBeneficiario&gt;
+&lt;pag:codiceUnitOperBeneficiario&gt;${can}&lt;/pag:codiceUnitOperBeneficiario&gt;
+&lt;pag:denomUnitOperBeneficiario&gt;uj&lt;/pag:denomUnitOperBeneficiario&gt;
+&lt;pag:indirizzoBeneficiario&gt;y&lt;/pag:indirizzoBeneficiario&gt;
+&lt;pag:civicoBeneficiario&gt;j&lt;/pag:civicoBeneficiario&gt;
+&lt;pag:capBeneficiario&gt;gt&lt;/pag:capBeneficiario&gt;
+&lt;pag:localitaBeneficiario&gt;gw&lt;/pag:localitaBeneficiario&gt;
+&lt;pag:provinciaBeneficiario&gt;ds&lt;/pag:provinciaBeneficiario&gt;
+&lt;pag:nazioneBeneficiario&gt;UK&lt;/pag:nazioneBeneficiario&gt;
+&lt;/enteBeneficiario&gt;
+&lt;credenzialiPagatore&gt;i&lt;/credenzialiPagatore&gt;
+&lt;causaleVersamento&gt;${causale}&lt;/causaleVersamento&gt;
+&lt;/datiPagamentoPA&gt;
+&lt;/paaAttivaRPTRisposta&gt;
+&lt;/ws:paaAttivaRPTRisposta&gt;
+&lt;/soapenv:Body&gt;
+&lt;/soapenv:Envelope&gt;
+</pre>
+            </div>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span/>
+                <b>ibanAccredito</b>
+                <span> with </span>
+                <b>10000000000</b>
+                <span> in </span>
+                <b>paaAttivaRPT</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.002s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:617</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span/>
+                <b>EC</b>
+                <span> replies to </span>
+                <b>nodo-dei-pagamenti</b>
+                <span> with the </span>
+                <b>paaAttivaRPT</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.026s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:958</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">When </span>
+              <span class="step val">
+                <span/>
+                <b>psp</b>
+                <span> sends soap </span>
+                <b>activatePaymentNotice</b>
+                <span> to </span>
+                <b>nodo-dei-pagamenti</b>
+                <span/>
+              </span>
+              <small class="step_duration">(16.729s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:646</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">Then </span>
+              <span class="step val">
+                <span>check </span>
+                <b>outcome</b>
+                <span> is </span>
+                <b>KO</b>
+                <span> of </span>
+                <b>activatePaymentNotice</b>
+                <span> response</span>
+              </span>
+              <small class="step_duration">(0.002s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:677</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step failed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>check </span>
+                <b>faultCode</b>
+                <span> is </span>
+                <b>PPT_IBAN_NON_CENSITO</b>
+                <span> of </span>
+                <b>activatePaymentNotice</b>
+                <span> response</span>
+              </span>
+              <small class="step_duration">(0.005s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:677</span>
             </div>
             <span class="embed">
               <a onclick="Collapsible_toggle('embed_1')">Error Message</a>
               <pre id="embed_1" style="display: none">Traceback (most recent call last):
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connection.py&quot;, line 174, in _new_conn
-    conn = connection.create_connection(
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\util\connection.py&quot;, line 95, in create_connection
-    raise err
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\util\connection.py&quot;, line 85, in create_connection
-    sock.connect(sa)
-ConnectionRefusedError: [WinError 10061] Impossibile stabilire la connessione. Rifiuto persistente del computer di destinazione
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connectionpool.py&quot;, line 703, in urlopen
-    httplib_response = self._make_request(
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connectionpool.py&quot;, line 398, in _make_request
-    conn.request(method, url, **httplib_request_kw)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connection.py&quot;, line 239, in request
-    super(HTTPConnection, self).request(method, url, body=body, headers=headers)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\http\client.py&quot;, line 1282, in request
-    self._send_request(method, url, body, headers, encode_chunked)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\http\client.py&quot;, line 1328, in _send_request
-    self.endheaders(body, encode_chunked=encode_chunked)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\http\client.py&quot;, line 1277, in endheaders
-    self._send_output(message_body, encode_chunked=encode_chunked)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\http\client.py&quot;, line 1037, in _send_output
-    self.send(msg)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\http\client.py&quot;, line 975, in send
-    self.connect()
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connection.py&quot;, line 205, in connect
-    conn = self._new_conn()
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connection.py&quot;, line 186, in _new_conn
-    raise NewConnectionError(
-urllib3.exceptions.NewConnectionError: &lt;urllib3.connection.HTTPConnection object at 0x000001C0319696C0&gt;: Failed to establish a new connection: [WinError 10061] Impossibile stabilire la connessione. Rifiuto persistente del computer di destinazione
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\requests\adapters.py&quot;, line 439, in send
-    resp = conn.urlopen(
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connectionpool.py&quot;, line 785, in urlopen
-    retries = retries.increment(
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\util\retry.py&quot;, line 592, in increment
-    raise MaxRetryError(_pool, url, error or ResponseError(cause))
-urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='localhost', port=8089): Max retries exceeded with url: /servizi/PagamentiTelematiciRPT/info (Caused by NewConnectionError('&lt;urllib3.connection.HTTPConnection object at 0x000001C0319696C0&gt;: Failed to establish a new connection: [WinError 10061] Impossibile stabilire la connessione. Rifiuto persistente del computer di destinazione'))
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
   File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\behave\model.py&quot;, line 1329, in run
     match.run(runner.context)
   File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\behave\matchers.py&quot;, line 98, in run
     self.func(context, *args, **kwargs)
-  File &quot;src\integ-test\bdd-test\features\steps\steps.py&quot;, line 43, in step_impl
-    resp = requests.get(url, headers=headers, verify=False)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\requests\api.py&quot;, line 75, in get
-    return request('get', url, params=params, **kwargs)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\requests\api.py&quot;, line 61, in request
-    return session.request(method=method, url=url, **kwargs)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\requests\sessions.py&quot;, line 542, in request
-    resp = self.send(prep, **send_kwargs)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\requests\sessions.py&quot;, line 655, in send
-    r = adapter.send(request, **kwargs)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\requests\adapters.py&quot;, line 516, in send
-    raise ConnectionError(e, request=request)
-requests.exceptions.ConnectionError: HTTPConnectionPool(host='localhost', port=8089): Max retries exceeded with url: /servizi/PagamentiTelematiciRPT/info (Caused by NewConnectionError('&lt;urllib3.connection.HTTPConnection object at 0x000001C0319696C0&gt;: Failed to establish a new connection: [WinError 10061] Impossibile stabilire la connessione. Rifiuto persistente del computer di destinazione'))
+  File &quot;src\integ-test\bdd-test\features\steps\steps.py&quot;, line 694, in step_impl
+    assert value == data
+AssertionError
 
 Captured stdout:
 calling: nodo-dei-pagamenti -&gt; http://localhost:9080/
 calling -&gt; http://localhost:9080/nodo-dev-health/ready
 response: 200
 calling: mock-ec -&gt; http://localhost:8089/
-calling -&gt; http://localhost:8089/servizi/PagamentiTelematiciRPT/info</pre>
-                  
-            </span>
-            <table>
-              <tr>
-                <th>name</th>
-                <th>url</th>
-                <th>healthcheck</th>
-                <th>soap_service</th>
-                <th>rest_service</th>
-              </tr>
-              <tr>
-                <td>nodo-dei-pagamenti</td>
-                <td>http://localhost:9080/</td>
-                <td>nodo-dev-health/ready</td>
-                <td>nodo-dev/webservices/input</td>
-                <td>nodo-dev</td>
-              </tr>
-              <tr>
-                <td>mock-ec</td>
-                <td>http://localhost:8089/</td>
-                <td>servizi/PagamentiTelematiciRPT/info</td>
-                <td>servizi/PagamentiTelematiciRPT</td>
-                <td/>
-              </tr>
-              <tr>
-                <td>mock-psp</td>
-                <td>http://localhost:8090/</td>
-                <td>servizi/MockPSP/info</td>
-                <td>servizi/MockPSP</td>
-                <td/>
-              </tr>
-            </table>
-          </li>
-        </ol>
-        <span/>
-      </div>
-      <div class="scenario">
-        <span class="scenario_file">src/integ-test/bdd-test/features/OldMod3/primitives/nodoAttivaRPT_semantic_ko.feature:85</span>
-        <h3 onclick="Collapsible_toggle('scenario_1')" class="failed">
-          <span class="val">Scenario: Check PPT_PSP_DISABILITATO error on disabled</span>
-        </h3>
-        <ol class="scenario_steps" id="scenario_1">
-          <li class="step failed">
-            <div class="step_name">
-              <span class="keyword">Given </span>
-              <span class="step val">systems up</span>
-              <small class="step_duration">(4.487s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:28</span>
-            </div>
-            <span class="embed">
-              <a onclick="Collapsible_toggle('embed_2')">Error Message</a>
-              <pre id="embed_2" style="display: none">Traceback (most recent call last):
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connection.py&quot;, line 174, in _new_conn
-    conn = connection.create_connection(
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\util\connection.py&quot;, line 95, in create_connection
-    raise err
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\util\connection.py&quot;, line 85, in create_connection
-    sock.connect(sa)
-ConnectionRefusedError: [WinError 10061] Impossibile stabilire la connessione. Rifiuto persistente del computer di destinazione
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connectionpool.py&quot;, line 703, in urlopen
-    httplib_response = self._make_request(
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connectionpool.py&quot;, line 398, in _make_request
-    conn.request(method, url, **httplib_request_kw)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connection.py&quot;, line 239, in request
-    super(HTTPConnection, self).request(method, url, body=body, headers=headers)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\http\client.py&quot;, line 1282, in request
-    self._send_request(method, url, body, headers, encode_chunked)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\http\client.py&quot;, line 1328, in _send_request
-    self.endheaders(body, encode_chunked=encode_chunked)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\http\client.py&quot;, line 1277, in endheaders
-    self._send_output(message_body, encode_chunked=encode_chunked)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\http\client.py&quot;, line 1037, in _send_output
-    self.send(msg)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\http\client.py&quot;, line 975, in send
-    self.connect()
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connection.py&quot;, line 205, in connect
-    conn = self._new_conn()
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connection.py&quot;, line 186, in _new_conn
-    raise NewConnectionError(
-urllib3.exceptions.NewConnectionError: &lt;urllib3.connection.HTTPConnection object at 0x000001C03196A5C0&gt;: Failed to establish a new connection: [WinError 10061] Impossibile stabilire la connessione. Rifiuto persistente del computer di destinazione
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\requests\adapters.py&quot;, line 439, in send
-    resp = conn.urlopen(
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connectionpool.py&quot;, line 785, in urlopen
-    retries = retries.increment(
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\util\retry.py&quot;, line 592, in increment
-    raise MaxRetryError(_pool, url, error or ResponseError(cause))
-urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='localhost', port=8089): Max retries exceeded with url: /servizi/PagamentiTelematiciRPT/info (Caused by NewConnectionError('&lt;urllib3.connection.HTTPConnection object at 0x000001C03196A5C0&gt;: Failed to establish a new connection: [WinError 10061] Impossibile stabilire la connessione. Rifiuto persistente del computer di destinazione'))
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\behave\model.py&quot;, line 1329, in run
-    match.run(runner.context)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\behave\matchers.py&quot;, line 98, in run
-    self.func(context, *args, **kwargs)
-  File &quot;src\integ-test\bdd-test\features\steps\steps.py&quot;, line 43, in step_impl
-    resp = requests.get(url, headers=headers, verify=False)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\requests\api.py&quot;, line 75, in get
-    return request('get', url, params=params, **kwargs)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\requests\api.py&quot;, line 61, in request
-    return session.request(method=method, url=url, **kwargs)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\requests\sessions.py&quot;, line 542, in request
-    resp = self.send(prep, **send_kwargs)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\requests\sessions.py&quot;, line 655, in send
-    r = adapter.send(request, **kwargs)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\requests\adapters.py&quot;, line 516, in send
-    raise ConnectionError(e, request=request)
-requests.exceptions.ConnectionError: HTTPConnectionPool(host='localhost', port=8089): Max retries exceeded with url: /servizi/PagamentiTelematiciRPT/info (Caused by NewConnectionError('&lt;urllib3.connection.HTTPConnection object at 0x000001C03196A5C0&gt;: Failed to establish a new connection: [WinError 10061] Impossibile stabilire la connessione. Rifiuto persistente del computer di destinazione'))
-
-Captured stdout:
-calling: nodo-dei-pagamenti -&gt; http://localhost:9080/
-calling -&gt; http://localhost:9080/nodo-dev-health/ready
+calling -&gt; http://localhost:8089/servizi/PagamentiTelematiciRPT/info
 response: 200
-calling: mock-ec -&gt; http://localhost:8089/
-calling -&gt; http://localhost:8089/servizi/PagamentiTelematiciRPT/info</pre>
-                  
-            </span>
-            <table>
-              <tr>
-                <th>name</th>
-                <th>url</th>
-                <th>healthcheck</th>
-                <th>soap_service</th>
-                <th>rest_service</th>
-              </tr>
-              <tr>
-                <td>nodo-dei-pagamenti</td>
-                <td>http://localhost:9080/</td>
-                <td>nodo-dev-health/ready</td>
-                <td>nodo-dev/webservices/input</td>
-                <td>nodo-dev</td>
-              </tr>
-              <tr>
-                <td>mock-ec</td>
-                <td>http://localhost:8089/</td>
-                <td>servizi/PagamentiTelematiciRPT/info</td>
-                <td>servizi/PagamentiTelematiciRPT</td>
-                <td/>
-              </tr>
-              <tr>
-                <td>mock-psp</td>
-                <td>http://localhost:8090/</td>
-                <td>servizi/MockPSP/info</td>
-                <td>servizi/MockPSP</td>
-                <td/>
-              </tr>
-            </table>
-          </li>
-        </ol>
-        <span/>
-      </div>
-      <div class="scenario">
-        <span class="scenario_file">src/integ-test/bdd-test/features/OldMod3/primitives/nodoAttivaRPT_semantic_ko.feature:91</span>
-        <h3 onclick="Collapsible_toggle('scenario_2')" class="failed">
-          <span class="val">Scenario: Check PPT_INTERMEDIARIO_PSP_SCONOSCIUTO error on non-existent psp</span>
-        </h3>
-        <ol class="scenario_steps" id="scenario_2">
-          <li class="step failed">
-            <div class="step_name">
-              <span class="keyword">Given </span>
-              <span class="step val">systems up</span>
-              <small class="step_duration">(4.607s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:28</span>
-            </div>
-            <span class="embed">
-              <a onclick="Collapsible_toggle('embed_3')">Error Message</a>
-              <pre id="embed_3" style="display: none">Traceback (most recent call last):
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connection.py&quot;, line 174, in _new_conn
-    conn = connection.create_connection(
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\util\connection.py&quot;, line 95, in create_connection
-    raise err
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\util\connection.py&quot;, line 85, in create_connection
-    sock.connect(sa)
-ConnectionRefusedError: [WinError 10061] Impossibile stabilire la connessione. Rifiuto persistente del computer di destinazione
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connectionpool.py&quot;, line 703, in urlopen
-    httplib_response = self._make_request(
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connectionpool.py&quot;, line 398, in _make_request
-    conn.request(method, url, **httplib_request_kw)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connection.py&quot;, line 239, in request
-    super(HTTPConnection, self).request(method, url, body=body, headers=headers)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\http\client.py&quot;, line 1282, in request
-    self._send_request(method, url, body, headers, encode_chunked)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\http\client.py&quot;, line 1328, in _send_request
-    self.endheaders(body, encode_chunked=encode_chunked)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\http\client.py&quot;, line 1277, in endheaders
-    self._send_output(message_body, encode_chunked=encode_chunked)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\http\client.py&quot;, line 1037, in _send_output
-    self.send(msg)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\http\client.py&quot;, line 975, in send
-    self.connect()
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connection.py&quot;, line 205, in connect
-    conn = self._new_conn()
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connection.py&quot;, line 186, in _new_conn
-    raise NewConnectionError(
-urllib3.exceptions.NewConnectionError: &lt;urllib3.connection.HTTPConnection object at 0x000001C03196B7C0&gt;: Failed to establish a new connection: [WinError 10061] Impossibile stabilire la connessione. Rifiuto persistente del computer di destinazione
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\requests\adapters.py&quot;, line 439, in send
-    resp = conn.urlopen(
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connectionpool.py&quot;, line 785, in urlopen
-    retries = retries.increment(
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\util\retry.py&quot;, line 592, in increment
-    raise MaxRetryError(_pool, url, error or ResponseError(cause))
-urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='localhost', port=8089): Max retries exceeded with url: /servizi/PagamentiTelematiciRPT/info (Caused by NewConnectionError('&lt;urllib3.connection.HTTPConnection object at 0x000001C03196B7C0&gt;: Failed to establish a new connection: [WinError 10061] Impossibile stabilire la connessione. Rifiuto persistente del computer di destinazione'))
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\behave\model.py&quot;, line 1329, in run
-    match.run(runner.context)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\behave\matchers.py&quot;, line 98, in run
-    self.func(context, *args, **kwargs)
-  File &quot;src\integ-test\bdd-test\features\steps\steps.py&quot;, line 43, in step_impl
-    resp = requests.get(url, headers=headers, verify=False)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\requests\api.py&quot;, line 75, in get
-    return request('get', url, params=params, **kwargs)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\requests\api.py&quot;, line 61, in request
-    return session.request(method=method, url=url, **kwargs)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\requests\sessions.py&quot;, line 542, in request
-    resp = self.send(prep, **send_kwargs)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\requests\sessions.py&quot;, line 655, in send
-    r = adapter.send(request, **kwargs)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\requests\adapters.py&quot;, line 516, in send
-    raise ConnectionError(e, request=request)
-requests.exceptions.ConnectionError: HTTPConnectionPool(host='localhost', port=8089): Max retries exceeded with url: /servizi/PagamentiTelematiciRPT/info (Caused by NewConnectionError('&lt;urllib3.connection.HTTPConnection object at 0x000001C03196B7C0&gt;: Failed to establish a new connection: [WinError 10061] Impossibile stabilire la connessione. Rifiuto persistente del computer di destinazione'))
-
-Captured stdout:
-calling: nodo-dei-pagamenti -&gt; http://localhost:9080/
-calling -&gt; http://localhost:9080/nodo-dev-health/ready
+calling: mock-psp -&gt; http://localhost:8090/
+calling -&gt; http://localhost:8090/servizi/MockPSP/info
 response: 200
-calling: mock-ec -&gt; http://localhost:8089/
-calling -&gt; http://localhost:8089/servizi/PagamentiTelematiciRPT/info</pre>
+&lt;?xml version=&quot;1.0&quot; ?&gt;&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:ws=&quot;http://ws.pagamenti.telematici.gov/&quot; xmlns:pag=&quot;http://www.digitpa.gov.it/schemas/2011/Pagamenti/&quot;&gt;
+&lt;soapenv:Header/&gt;
+&lt;soapenv:Body&gt;
+&lt;ws:paaAttivaRPTRisposta&gt;
+&lt;paaAttivaRPTRisposta&gt;
+&lt;esito&gt;OK&lt;/esito&gt;
+&lt;delay&gt;60000&lt;/delay&gt;
+&lt;datiPagamentoPA&gt;
+&lt;importoSingoloVersamento&gt;2.00&lt;/importoSingoloVersamento&gt;
+&lt;ibanAccredito&gt;10000000000&lt;/ibanAccredito&gt;
+&lt;bicAccredito&gt;BSCTCH22&lt;/bicAccredito&gt;
+&lt;enteBeneficiario&gt;
+&lt;pag:identificativoUnivocoBeneficiario&gt;
+&lt;pag:tipoIdentificativoUnivoco&gt;G&lt;/pag:tipoIdentificativoUnivoco&gt;
+&lt;pag:codiceIdentificativoUnivoco&gt;${stz}&lt;/pag:codiceIdentificativoUnivoco&gt;
+&lt;/pag:identificativoUnivocoBeneficiario&gt;
+&lt;pag:denominazioneBeneficiario&gt;${intermPsp}&lt;/pag:denominazioneBeneficiario&gt;
+&lt;pag:codiceUnitOperBeneficiario&gt;${can}&lt;/pag:codiceUnitOperBeneficiario&gt;
+&lt;pag:denomUnitOperBeneficiario&gt;uj&lt;/pag:denomUnitOperBeneficiario&gt;
+&lt;pag:indirizzoBeneficiario&gt;y&lt;/pag:indirizzoBeneficiario&gt;
+&lt;pag:civicoBeneficiario&gt;j&lt;/pag:civicoBeneficiario&gt;
+&lt;pag:capBeneficiario&gt;gt&lt;/pag:capBeneficiario&gt;
+&lt;pag:localitaBeneficiario&gt;gw&lt;/pag:localitaBeneficiario&gt;
+&lt;pag:provinciaBeneficiario&gt;ds&lt;/pag:provinciaBeneficiario&gt;
+&lt;pag:nazioneBeneficiario&gt;UK&lt;/pag:nazioneBeneficiario&gt;
+&lt;/enteBeneficiario&gt;
+&lt;credenzialiPagatore&gt;i&lt;/credenzialiPagatore&gt;
+&lt;causaleVersamento&gt;${causale}&lt;/causaleVersamento&gt;
+&lt;/datiPagamentoPA&gt;
+&lt;/paaAttivaRPTRisposta&gt;
+&lt;/ws:paaAttivaRPTRisposta&gt;
+&lt;/soapenv:Body&gt;
+&lt;/soapenv:Envelope&gt;
+http://localhost:8089/servizi/PagamentiTelematiciRPT
+http://localhost:8089/servizi/PagamentiTelematiciRPT/response/paaAttivaRPT?override=True
+b'paaAttivaRPT updated' 200
+url_nodo:  http://localhost:9080/nodo-dev/webservices/input
+nodo soap_request sent &gt;&gt;&gt; &lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd&quot;&gt;
+&lt;soapenv:Header/&gt;
+&lt;soapenv:Body&gt;
+&lt;nod:activatePaymentNoticeReq&gt;
+&lt;idPSP&gt;70000000001&lt;/idPSP&gt;
+&lt;idBrokerPSP&gt;70000000001&lt;/idBrokerPSP&gt;
+&lt;idChannel&gt;70000000001_01&lt;/idChannel&gt;
+&lt;password&gt;pwdpwdpwd&lt;/password&gt;
+&lt;idempotencyKey&gt;70000000001_4849304669&lt;/idempotencyKey&gt;
+&lt;qrCode&gt;
+&lt;fiscalCode&gt;44444444444&lt;/fiscalCode&gt;
+&lt;noticeNumber&gt;312111823186573917&lt;/noticeNumber&gt;
+&lt;/qrCode&gt;
+&lt;expirationTime&gt;4000&lt;/expirationTime&gt;
+&lt;amount&gt;10.00&lt;/amount&gt;
+&lt;dueDate&gt;2021-12-31&lt;/dueDate&gt;
+&lt;paymentNote&gt;causale&lt;/paymentNote&gt;
+&lt;/nod:activatePaymentNoticeReq&gt;
+&lt;/soapenv:Body&gt;
+&lt;/soapenv:Envelope&gt;
+headers:  {'Content-Type': 'application/xml', 'SOAPAction': 'activatePaymentNotice', 'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}
+b'&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot; ?&gt;&lt;soapenv:Envelope xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nfpsp=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd&quot; xmlns:tns=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForPsp.wsdl&quot;&gt;&lt;soapenv:Body&gt;&lt;nfpsp:activatePaymentNoticeRes&gt;&lt;outcome&gt;KO&lt;/outcome&gt;&lt;fault&gt;&lt;faultCode&gt;PPT_STAZIONE_INT_PA_TIMEOUT&lt;/faultCode&gt;&lt;faultString&gt;Timeout risposta dalla Stazione.&lt;/faultString&gt;&lt;id&gt;NodoDeiPagamentiSPC&lt;/id&gt;&lt;description&gt;Timeout risposta dalla Stazione.&lt;/description&gt;&lt;/fault&gt;&lt;/nfpsp:activatePaymentNoticeRes&gt;&lt;/soapenv:Body&gt;&lt;/soapenv:Envelope&gt;'
+200
+fault code:  PPT_STAZIONE_INT_PA_TIMEOUT
+fault string:  Timeout risposta dalla Stazione.
+description:  Timeout risposta dalla Stazione.
+check tag &quot;outcome&quot; - expected: KO, obtained: KO
+fault code:  PPT_STAZIONE_INT_PA_TIMEOUT
+fault string:  Timeout risposta dalla Stazione.
+description:  Timeout risposta dalla Stazione.
+check tag &quot;faultCode&quot; - expected: PPT_IBAN_NON_CENSITO, obtained: PPT_STAZIONE_INT_PA_TIMEOUT</pre>
                   
             </span>
-            <table>
-              <tr>
-                <th>name</th>
-                <th>url</th>
-                <th>healthcheck</th>
-                <th>soap_service</th>
-                <th>rest_service</th>
-              </tr>
-              <tr>
-                <td>nodo-dei-pagamenti</td>
-                <td>http://localhost:9080/</td>
-                <td>nodo-dev-health/ready</td>
-                <td>nodo-dev/webservices/input</td>
-                <td>nodo-dev</td>
-              </tr>
-              <tr>
-                <td>mock-ec</td>
-                <td>http://localhost:8089/</td>
-                <td>servizi/PagamentiTelematiciRPT/info</td>
-                <td>servizi/PagamentiTelematiciRPT</td>
-                <td/>
-              </tr>
-              <tr>
-                <td>mock-psp</td>
-                <td>http://localhost:8090/</td>
-                <td>servizi/MockPSP/info</td>
-                <td>servizi/MockPSP</td>
-                <td/>
-              </tr>
-            </table>
-          </li>
-        </ol>
-        <span/>
-      </div>
-      <div class="scenario">
-        <span class="scenario_file">src/integ-test/bdd-test/features/OldMod3/primitives/nodoAttivaRPT_semantic_ko.feature:97</span>
-        <h3 onclick="Collapsible_toggle('scenario_3')" class="failed">
-          <span class="val">Scenario: Check PPT_INTERMEDIARIO_PSP_DISABILITATO error on disabled psp broker</span>
-        </h3>
-        <ol class="scenario_steps" id="scenario_3">
-          <li class="step failed">
-            <div class="step_name">
-              <span class="keyword">Given </span>
-              <span class="step val">systems up</span>
-              <small class="step_duration">(4.671s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:28</span>
-            </div>
-            <span class="embed">
-              <a onclick="Collapsible_toggle('embed_4')">Error Message</a>
-              <pre id="embed_4" style="display: none">Traceback (most recent call last):
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connection.py&quot;, line 174, in _new_conn
-    conn = connection.create_connection(
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\util\connection.py&quot;, line 95, in create_connection
-    raise err
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\util\connection.py&quot;, line 85, in create_connection
-    sock.connect(sa)
-ConnectionRefusedError: [WinError 10061] Impossibile stabilire la connessione. Rifiuto persistente del computer di destinazione
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connectionpool.py&quot;, line 703, in urlopen
-    httplib_response = self._make_request(
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connectionpool.py&quot;, line 398, in _make_request
-    conn.request(method, url, **httplib_request_kw)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connection.py&quot;, line 239, in request
-    super(HTTPConnection, self).request(method, url, body=body, headers=headers)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\http\client.py&quot;, line 1282, in request
-    self._send_request(method, url, body, headers, encode_chunked)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\http\client.py&quot;, line 1328, in _send_request
-    self.endheaders(body, encode_chunked=encode_chunked)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\http\client.py&quot;, line 1277, in endheaders
-    self._send_output(message_body, encode_chunked=encode_chunked)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\http\client.py&quot;, line 1037, in _send_output
-    self.send(msg)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\http\client.py&quot;, line 975, in send
-    self.connect()
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connection.py&quot;, line 205, in connect
-    conn = self._new_conn()
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connection.py&quot;, line 186, in _new_conn
-    raise NewConnectionError(
-urllib3.exceptions.NewConnectionError: &lt;urllib3.connection.HTTPConnection object at 0x000001C031969000&gt;: Failed to establish a new connection: [WinError 10061] Impossibile stabilire la connessione. Rifiuto persistente del computer di destinazione
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\requests\adapters.py&quot;, line 439, in send
-    resp = conn.urlopen(
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connectionpool.py&quot;, line 785, in urlopen
-    retries = retries.increment(
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\util\retry.py&quot;, line 592, in increment
-    raise MaxRetryError(_pool, url, error or ResponseError(cause))
-urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='localhost', port=8089): Max retries exceeded with url: /servizi/PagamentiTelematiciRPT/info (Caused by NewConnectionError('&lt;urllib3.connection.HTTPConnection object at 0x000001C031969000&gt;: Failed to establish a new connection: [WinError 10061] Impossibile stabilire la connessione. Rifiuto persistente del computer di destinazione'))
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\behave\model.py&quot;, line 1329, in run
-    match.run(runner.context)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\behave\matchers.py&quot;, line 98, in run
-    self.func(context, *args, **kwargs)
-  File &quot;src\integ-test\bdd-test\features\steps\steps.py&quot;, line 43, in step_impl
-    resp = requests.get(url, headers=headers, verify=False)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\requests\api.py&quot;, line 75, in get
-    return request('get', url, params=params, **kwargs)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\requests\api.py&quot;, line 61, in request
-    return session.request(method=method, url=url, **kwargs)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\requests\sessions.py&quot;, line 542, in request
-    resp = self.send(prep, **send_kwargs)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\requests\sessions.py&quot;, line 655, in send
-    r = adapter.send(request, **kwargs)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\requests\adapters.py&quot;, line 516, in send
-    raise ConnectionError(e, request=request)
-requests.exceptions.ConnectionError: HTTPConnectionPool(host='localhost', port=8089): Max retries exceeded with url: /servizi/PagamentiTelematiciRPT/info (Caused by NewConnectionError('&lt;urllib3.connection.HTTPConnection object at 0x000001C031969000&gt;: Failed to establish a new connection: [WinError 10061] Impossibile stabilire la connessione. Rifiuto persistente del computer di destinazione'))
-
-Captured stdout:
-calling: nodo-dei-pagamenti -&gt; http://localhost:9080/
-calling -&gt; http://localhost:9080/nodo-dev-health/ready
-response: 200
-calling: mock-ec -&gt; http://localhost:8089/
-calling -&gt; http://localhost:8089/servizi/PagamentiTelematiciRPT/info</pre>
-                  
-            </span>
-            <table>
-              <tr>
-                <th>name</th>
-                <th>url</th>
-                <th>healthcheck</th>
-                <th>soap_service</th>
-                <th>rest_service</th>
-              </tr>
-              <tr>
-                <td>nodo-dei-pagamenti</td>
-                <td>http://localhost:9080/</td>
-                <td>nodo-dev-health/ready</td>
-                <td>nodo-dev/webservices/input</td>
-                <td>nodo-dev</td>
-              </tr>
-              <tr>
-                <td>mock-ec</td>
-                <td>http://localhost:8089/</td>
-                <td>servizi/PagamentiTelematiciRPT/info</td>
-                <td>servizi/PagamentiTelematiciRPT</td>
-                <td/>
-              </tr>
-              <tr>
-                <td>mock-psp</td>
-                <td>http://localhost:8090/</td>
-                <td>servizi/MockPSP/info</td>
-                <td>servizi/MockPSP</td>
-                <td/>
-              </tr>
-            </table>
-          </li>
-        </ol>
-        <span/>
-      </div>
-      <div class="scenario">
-        <span class="scenario_file">src/integ-test/bdd-test/features/OldMod3/primitives/nodoAttivaRPT_semantic_ko.feature:103</span>
-        <h3 onclick="Collapsible_toggle('scenario_4')" class="failed">
-          <span class="val">Scenario: Check PPT_CANALE_SCONOSCIUTO error on non-existent psp channel</span>
-        </h3>
-        <ol class="scenario_steps" id="scenario_4">
-          <li class="step failed">
-            <div class="step_name">
-              <span class="keyword">Given </span>
-              <span class="step val">systems up</span>
-              <small class="step_duration">(4.712s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:28</span>
-            </div>
-            <span class="embed">
-              <a onclick="Collapsible_toggle('embed_5')">Error Message</a>
-              <pre id="embed_5" style="display: none">Traceback (most recent call last):
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connection.py&quot;, line 174, in _new_conn
-    conn = connection.create_connection(
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\util\connection.py&quot;, line 95, in create_connection
-    raise err
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\util\connection.py&quot;, line 85, in create_connection
-    sock.connect(sa)
-ConnectionRefusedError: [WinError 10061] Impossibile stabilire la connessione. Rifiuto persistente del computer di destinazione
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connectionpool.py&quot;, line 703, in urlopen
-    httplib_response = self._make_request(
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connectionpool.py&quot;, line 398, in _make_request
-    conn.request(method, url, **httplib_request_kw)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connection.py&quot;, line 239, in request
-    super(HTTPConnection, self).request(method, url, body=body, headers=headers)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\http\client.py&quot;, line 1282, in request
-    self._send_request(method, url, body, headers, encode_chunked)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\http\client.py&quot;, line 1328, in _send_request
-    self.endheaders(body, encode_chunked=encode_chunked)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\http\client.py&quot;, line 1277, in endheaders
-    self._send_output(message_body, encode_chunked=encode_chunked)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\http\client.py&quot;, line 1037, in _send_output
-    self.send(msg)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\http\client.py&quot;, line 975, in send
-    self.connect()
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connection.py&quot;, line 205, in connect
-    conn = self._new_conn()
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connection.py&quot;, line 186, in _new_conn
-    raise NewConnectionError(
-urllib3.exceptions.NewConnectionError: &lt;urllib3.connection.HTTPConnection object at 0x000001C031973550&gt;: Failed to establish a new connection: [WinError 10061] Impossibile stabilire la connessione. Rifiuto persistente del computer di destinazione
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\requests\adapters.py&quot;, line 439, in send
-    resp = conn.urlopen(
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connectionpool.py&quot;, line 785, in urlopen
-    retries = retries.increment(
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\util\retry.py&quot;, line 592, in increment
-    raise MaxRetryError(_pool, url, error or ResponseError(cause))
-urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='localhost', port=8089): Max retries exceeded with url: /servizi/PagamentiTelematiciRPT/info (Caused by NewConnectionError('&lt;urllib3.connection.HTTPConnection object at 0x000001C031973550&gt;: Failed to establish a new connection: [WinError 10061] Impossibile stabilire la connessione. Rifiuto persistente del computer di destinazione'))
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\behave\model.py&quot;, line 1329, in run
-    match.run(runner.context)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\behave\matchers.py&quot;, line 98, in run
-    self.func(context, *args, **kwargs)
-  File &quot;src\integ-test\bdd-test\features\steps\steps.py&quot;, line 43, in step_impl
-    resp = requests.get(url, headers=headers, verify=False)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\requests\api.py&quot;, line 75, in get
-    return request('get', url, params=params, **kwargs)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\requests\api.py&quot;, line 61, in request
-    return session.request(method=method, url=url, **kwargs)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\requests\sessions.py&quot;, line 542, in request
-    resp = self.send(prep, **send_kwargs)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\requests\sessions.py&quot;, line 655, in send
-    r = adapter.send(request, **kwargs)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\requests\adapters.py&quot;, line 516, in send
-    raise ConnectionError(e, request=request)
-requests.exceptions.ConnectionError: HTTPConnectionPool(host='localhost', port=8089): Max retries exceeded with url: /servizi/PagamentiTelematiciRPT/info (Caused by NewConnectionError('&lt;urllib3.connection.HTTPConnection object at 0x000001C031973550&gt;: Failed to establish a new connection: [WinError 10061] Impossibile stabilire la connessione. Rifiuto persistente del computer di destinazione'))
-
-Captured stdout:
-calling: nodo-dei-pagamenti -&gt; http://localhost:9080/
-calling -&gt; http://localhost:9080/nodo-dev-health/ready
-response: 200
-calling: mock-ec -&gt; http://localhost:8089/
-calling -&gt; http://localhost:8089/servizi/PagamentiTelematiciRPT/info</pre>
-                  
-            </span>
-            <table>
-              <tr>
-                <th>name</th>
-                <th>url</th>
-                <th>healthcheck</th>
-                <th>soap_service</th>
-                <th>rest_service</th>
-              </tr>
-              <tr>
-                <td>nodo-dei-pagamenti</td>
-                <td>http://localhost:9080/</td>
-                <td>nodo-dev-health/ready</td>
-                <td>nodo-dev/webservices/input</td>
-                <td>nodo-dev</td>
-              </tr>
-              <tr>
-                <td>mock-ec</td>
-                <td>http://localhost:8089/</td>
-                <td>servizi/PagamentiTelematiciRPT/info</td>
-                <td>servizi/PagamentiTelematiciRPT</td>
-                <td/>
-              </tr>
-              <tr>
-                <td>mock-psp</td>
-                <td>http://localhost:8090/</td>
-                <td>servizi/MockPSP/info</td>
-                <td>servizi/MockPSP</td>
-                <td/>
-              </tr>
-            </table>
-          </li>
-        </ol>
-        <span/>
-      </div>
-      <div class="scenario">
-        <span class="scenario_file">src/integ-test/bdd-test/features/OldMod3/primitives/nodoAttivaRPT_semantic_ko.feature:109</span>
-        <h3 onclick="Collapsible_toggle('scenario_5')" class="failed">
-          <span class="val">Scenario: Check PPT_PSP_DISABILITATO error on disabled psp channel</span>
-        </h3>
-        <ol class="scenario_steps" id="scenario_5">
-          <li class="step failed">
-            <div class="step_name">
-              <span class="keyword">Given </span>
-              <span class="step val">systems up</span>
-              <small class="step_duration">(4.411s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:28</span>
-            </div>
-            <span class="embed">
-              <a onclick="Collapsible_toggle('embed_6')">Error Message</a>
-              <pre id="embed_6" style="display: none">Traceback (most recent call last):
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connection.py&quot;, line 174, in _new_conn
-    conn = connection.create_connection(
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\util\connection.py&quot;, line 95, in create_connection
-    raise err
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\util\connection.py&quot;, line 85, in create_connection
-    sock.connect(sa)
-ConnectionRefusedError: [WinError 10061] Impossibile stabilire la connessione. Rifiuto persistente del computer di destinazione
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connectionpool.py&quot;, line 703, in urlopen
-    httplib_response = self._make_request(
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connectionpool.py&quot;, line 398, in _make_request
-    conn.request(method, url, **httplib_request_kw)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connection.py&quot;, line 239, in request
-    super(HTTPConnection, self).request(method, url, body=body, headers=headers)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\http\client.py&quot;, line 1282, in request
-    self._send_request(method, url, body, headers, encode_chunked)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\http\client.py&quot;, line 1328, in _send_request
-    self.endheaders(body, encode_chunked=encode_chunked)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\http\client.py&quot;, line 1277, in endheaders
-    self._send_output(message_body, encode_chunked=encode_chunked)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\http\client.py&quot;, line 1037, in _send_output
-    self.send(msg)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\http\client.py&quot;, line 975, in send
-    self.connect()
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connection.py&quot;, line 205, in connect
-    conn = self._new_conn()
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connection.py&quot;, line 186, in _new_conn
-    raise NewConnectionError(
-urllib3.exceptions.NewConnectionError: &lt;urllib3.connection.HTTPConnection object at 0x000001C031972470&gt;: Failed to establish a new connection: [WinError 10061] Impossibile stabilire la connessione. Rifiuto persistente del computer di destinazione
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\requests\adapters.py&quot;, line 439, in send
-    resp = conn.urlopen(
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connectionpool.py&quot;, line 785, in urlopen
-    retries = retries.increment(
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\util\retry.py&quot;, line 592, in increment
-    raise MaxRetryError(_pool, url, error or ResponseError(cause))
-urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='localhost', port=8089): Max retries exceeded with url: /servizi/PagamentiTelematiciRPT/info (Caused by NewConnectionError('&lt;urllib3.connection.HTTPConnection object at 0x000001C031972470&gt;: Failed to establish a new connection: [WinError 10061] Impossibile stabilire la connessione. Rifiuto persistente del computer di destinazione'))
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\behave\model.py&quot;, line 1329, in run
-    match.run(runner.context)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\behave\matchers.py&quot;, line 98, in run
-    self.func(context, *args, **kwargs)
-  File &quot;src\integ-test\bdd-test\features\steps\steps.py&quot;, line 43, in step_impl
-    resp = requests.get(url, headers=headers, verify=False)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\requests\api.py&quot;, line 75, in get
-    return request('get', url, params=params, **kwargs)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\requests\api.py&quot;, line 61, in request
-    return session.request(method=method, url=url, **kwargs)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\requests\sessions.py&quot;, line 542, in request
-    resp = self.send(prep, **send_kwargs)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\requests\sessions.py&quot;, line 655, in send
-    r = adapter.send(request, **kwargs)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\requests\adapters.py&quot;, line 516, in send
-    raise ConnectionError(e, request=request)
-requests.exceptions.ConnectionError: HTTPConnectionPool(host='localhost', port=8089): Max retries exceeded with url: /servizi/PagamentiTelematiciRPT/info (Caused by NewConnectionError('&lt;urllib3.connection.HTTPConnection object at 0x000001C031972470&gt;: Failed to establish a new connection: [WinError 10061] Impossibile stabilire la connessione. Rifiuto persistente del computer di destinazione'))
-
-Captured stdout:
-calling: nodo-dei-pagamenti -&gt; http://localhost:9080/
-calling -&gt; http://localhost:9080/nodo-dev-health/ready
-response: 200
-calling: mock-ec -&gt; http://localhost:8089/
-calling -&gt; http://localhost:8089/servizi/PagamentiTelematiciRPT/info</pre>
-                  
-            </span>
-            <table>
-              <tr>
-                <th>name</th>
-                <th>url</th>
-                <th>healthcheck</th>
-                <th>soap_service</th>
-                <th>rest_service</th>
-              </tr>
-              <tr>
-                <td>nodo-dei-pagamenti</td>
-                <td>http://localhost:9080/</td>
-                <td>nodo-dev-health/ready</td>
-                <td>nodo-dev/webservices/input</td>
-                <td>nodo-dev</td>
-              </tr>
-              <tr>
-                <td>mock-ec</td>
-                <td>http://localhost:8089/</td>
-                <td>servizi/PagamentiTelematiciRPT/info</td>
-                <td>servizi/PagamentiTelematiciRPT</td>
-                <td/>
-              </tr>
-              <tr>
-                <td>mock-psp</td>
-                <td>http://localhost:8090/</td>
-                <td>servizi/MockPSP/info</td>
-                <td>servizi/MockPSP</td>
-                <td/>
-              </tr>
-            </table>
-          </li>
-        </ol>
-        <span/>
-      </div>
-      <div class="scenario">
-        <span class="scenario_file">src/integ-test/bdd-test/features/OldMod3/primitives/nodoAttivaRPT_semantic_ko.feature:115</span>
-        <h3 onclick="Collapsible_toggle('scenario_6')" class="failed">
-          <span class="val">Scenario: Check PPT_AUTENTICAZIONE error on wrong password</span>
-        </h3>
-        <ol class="scenario_steps" id="scenario_6">
-          <li class="step failed">
-            <div class="step_name">
-              <span class="keyword">Given </span>
-              <span class="step val">systems up</span>
-              <small class="step_duration">(4.630s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:28</span>
-            </div>
-            <span class="embed">
-              <a onclick="Collapsible_toggle('embed_7')">Error Message</a>
-              <pre id="embed_7" style="display: none">Traceback (most recent call last):
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connection.py&quot;, line 174, in _new_conn
-    conn = connection.create_connection(
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\util\connection.py&quot;, line 95, in create_connection
-    raise err
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\util\connection.py&quot;, line 85, in create_connection
-    sock.connect(sa)
-ConnectionRefusedError: [WinError 10061] Impossibile stabilire la connessione. Rifiuto persistente del computer di destinazione
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connectionpool.py&quot;, line 703, in urlopen
-    httplib_response = self._make_request(
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connectionpool.py&quot;, line 398, in _make_request
-    conn.request(method, url, **httplib_request_kw)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connection.py&quot;, line 239, in request
-    super(HTTPConnection, self).request(method, url, body=body, headers=headers)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\http\client.py&quot;, line 1282, in request
-    self._send_request(method, url, body, headers, encode_chunked)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\http\client.py&quot;, line 1328, in _send_request
-    self.endheaders(body, encode_chunked=encode_chunked)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\http\client.py&quot;, line 1277, in endheaders
-    self._send_output(message_body, encode_chunked=encode_chunked)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\http\client.py&quot;, line 1037, in _send_output
-    self.send(msg)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\http\client.py&quot;, line 975, in send
-    self.connect()
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connection.py&quot;, line 205, in connect
-    conn = self._new_conn()
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connection.py&quot;, line 186, in _new_conn
-    raise NewConnectionError(
-urllib3.exceptions.NewConnectionError: &lt;urllib3.connection.HTTPConnection object at 0x000001C031970EE0&gt;: Failed to establish a new connection: [WinError 10061] Impossibile stabilire la connessione. Rifiuto persistente del computer di destinazione
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\requests\adapters.py&quot;, line 439, in send
-    resp = conn.urlopen(
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connectionpool.py&quot;, line 785, in urlopen
-    retries = retries.increment(
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\util\retry.py&quot;, line 592, in increment
-    raise MaxRetryError(_pool, url, error or ResponseError(cause))
-urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='localhost', port=8089): Max retries exceeded with url: /servizi/PagamentiTelematiciRPT/info (Caused by NewConnectionError('&lt;urllib3.connection.HTTPConnection object at 0x000001C031970EE0&gt;: Failed to establish a new connection: [WinError 10061] Impossibile stabilire la connessione. Rifiuto persistente del computer di destinazione'))
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\behave\model.py&quot;, line 1329, in run
-    match.run(runner.context)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\behave\matchers.py&quot;, line 98, in run
-    self.func(context, *args, **kwargs)
-  File &quot;src\integ-test\bdd-test\features\steps\steps.py&quot;, line 43, in step_impl
-    resp = requests.get(url, headers=headers, verify=False)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\requests\api.py&quot;, line 75, in get
-    return request('get', url, params=params, **kwargs)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\requests\api.py&quot;, line 61, in request
-    return session.request(method=method, url=url, **kwargs)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\requests\sessions.py&quot;, line 542, in request
-    resp = self.send(prep, **send_kwargs)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\requests\sessions.py&quot;, line 655, in send
-    r = adapter.send(request, **kwargs)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\requests\adapters.py&quot;, line 516, in send
-    raise ConnectionError(e, request=request)
-requests.exceptions.ConnectionError: HTTPConnectionPool(host='localhost', port=8089): Max retries exceeded with url: /servizi/PagamentiTelematiciRPT/info (Caused by NewConnectionError('&lt;urllib3.connection.HTTPConnection object at 0x000001C031970EE0&gt;: Failed to establish a new connection: [WinError 10061] Impossibile stabilire la connessione. Rifiuto persistente del computer di destinazione'))
-
-Captured stdout:
-calling: nodo-dei-pagamenti -&gt; http://localhost:9080/
-calling -&gt; http://localhost:9080/nodo-dev-health/ready
-response: 200
-calling: mock-ec -&gt; http://localhost:8089/
-calling -&gt; http://localhost:8089/servizi/PagamentiTelematiciRPT/info</pre>
-                  
-            </span>
-            <table>
-              <tr>
-                <th>name</th>
-                <th>url</th>
-                <th>healthcheck</th>
-                <th>soap_service</th>
-                <th>rest_service</th>
-              </tr>
-              <tr>
-                <td>nodo-dei-pagamenti</td>
-                <td>http://localhost:9080/</td>
-                <td>nodo-dev-health/ready</td>
-                <td>nodo-dev/webservices/input</td>
-                <td>nodo-dev</td>
-              </tr>
-              <tr>
-                <td>mock-ec</td>
-                <td>http://localhost:8089/</td>
-                <td>servizi/PagamentiTelematiciRPT/info</td>
-                <td>servizi/PagamentiTelematiciRPT</td>
-                <td/>
-              </tr>
-              <tr>
-                <td>mock-psp</td>
-                <td>http://localhost:8090/</td>
-                <td>servizi/MockPSP/info</td>
-                <td>servizi/MockPSP</td>
-                <td/>
-              </tr>
-            </table>
-          </li>
-        </ol>
-        <span/>
-      </div>
-      <div class="scenario">
-        <span class="scenario_file">src/integ-test/bdd-test/features/OldMod3/primitives/nodoAttivaRPT_semantic_ko.feature:121</span>
-        <h3 onclick="Collapsible_toggle('scenario_7')" class="failed">
-          <span class="val">Scenario: Check PPT_INTERMEDIARIO_PSP_SCONOSCIUTO error on non-existent psp</span>
-        </h3>
-        <ol class="scenario_steps" id="scenario_7">
-          <li class="step failed">
-            <div class="step_name">
-              <span class="keyword">Given </span>
-              <span class="step val">systems up</span>
-              <small class="step_duration">(4.635s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:28</span>
-            </div>
-            <span class="embed">
-              <a onclick="Collapsible_toggle('embed_8')">Error Message</a>
-              <pre id="embed_8" style="display: none">Traceback (most recent call last):
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connection.py&quot;, line 174, in _new_conn
-    conn = connection.create_connection(
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\util\connection.py&quot;, line 95, in create_connection
-    raise err
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\util\connection.py&quot;, line 85, in create_connection
-    sock.connect(sa)
-ConnectionRefusedError: [WinError 10061] Impossibile stabilire la connessione. Rifiuto persistente del computer di destinazione
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connectionpool.py&quot;, line 703, in urlopen
-    httplib_response = self._make_request(
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connectionpool.py&quot;, line 398, in _make_request
-    conn.request(method, url, **httplib_request_kw)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connection.py&quot;, line 239, in request
-    super(HTTPConnection, self).request(method, url, body=body, headers=headers)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\http\client.py&quot;, line 1282, in request
-    self._send_request(method, url, body, headers, encode_chunked)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\http\client.py&quot;, line 1328, in _send_request
-    self.endheaders(body, encode_chunked=encode_chunked)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\http\client.py&quot;, line 1277, in endheaders
-    self._send_output(message_body, encode_chunked=encode_chunked)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\http\client.py&quot;, line 1037, in _send_output
-    self.send(msg)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\http\client.py&quot;, line 975, in send
-    self.connect()
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connection.py&quot;, line 205, in connect
-    conn = self._new_conn()
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connection.py&quot;, line 186, in _new_conn
-    raise NewConnectionError(
-urllib3.exceptions.NewConnectionError: &lt;urllib3.connection.HTTPConnection object at 0x000001C031970520&gt;: Failed to establish a new connection: [WinError 10061] Impossibile stabilire la connessione. Rifiuto persistente del computer di destinazione
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\requests\adapters.py&quot;, line 439, in send
-    resp = conn.urlopen(
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connectionpool.py&quot;, line 785, in urlopen
-    retries = retries.increment(
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\util\retry.py&quot;, line 592, in increment
-    raise MaxRetryError(_pool, url, error or ResponseError(cause))
-urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='localhost', port=8089): Max retries exceeded with url: /servizi/PagamentiTelematiciRPT/info (Caused by NewConnectionError('&lt;urllib3.connection.HTTPConnection object at 0x000001C031970520&gt;: Failed to establish a new connection: [WinError 10061] Impossibile stabilire la connessione. Rifiuto persistente del computer di destinazione'))
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\behave\model.py&quot;, line 1329, in run
-    match.run(runner.context)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\behave\matchers.py&quot;, line 98, in run
-    self.func(context, *args, **kwargs)
-  File &quot;src\integ-test\bdd-test\features\steps\steps.py&quot;, line 43, in step_impl
-    resp = requests.get(url, headers=headers, verify=False)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\requests\api.py&quot;, line 75, in get
-    return request('get', url, params=params, **kwargs)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\requests\api.py&quot;, line 61, in request
-    return session.request(method=method, url=url, **kwargs)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\requests\sessions.py&quot;, line 542, in request
-    resp = self.send(prep, **send_kwargs)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\requests\sessions.py&quot;, line 655, in send
-    r = adapter.send(request, **kwargs)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\requests\adapters.py&quot;, line 516, in send
-    raise ConnectionError(e, request=request)
-requests.exceptions.ConnectionError: HTTPConnectionPool(host='localhost', port=8089): Max retries exceeded with url: /servizi/PagamentiTelematiciRPT/info (Caused by NewConnectionError('&lt;urllib3.connection.HTTPConnection object at 0x000001C031970520&gt;: Failed to establish a new connection: [WinError 10061] Impossibile stabilire la connessione. Rifiuto persistente del computer di destinazione'))
-
-Captured stdout:
-calling: nodo-dei-pagamenti -&gt; http://localhost:9080/
-calling -&gt; http://localhost:9080/nodo-dev-health/ready
-response: 200
-calling: mock-ec -&gt; http://localhost:8089/
-calling -&gt; http://localhost:8089/servizi/PagamentiTelematiciRPT/info</pre>
-                  
-            </span>
-            <table>
-              <tr>
-                <th>name</th>
-                <th>url</th>
-                <th>healthcheck</th>
-                <th>soap_service</th>
-                <th>rest_service</th>
-              </tr>
-              <tr>
-                <td>nodo-dei-pagamenti</td>
-                <td>http://localhost:9080/</td>
-                <td>nodo-dev-health/ready</td>
-                <td>nodo-dev/webservices/input</td>
-                <td>nodo-dev</td>
-              </tr>
-              <tr>
-                <td>mock-ec</td>
-                <td>http://localhost:8089/</td>
-                <td>servizi/PagamentiTelematiciRPT/info</td>
-                <td>servizi/PagamentiTelematiciRPT</td>
-                <td/>
-              </tr>
-              <tr>
-                <td>mock-psp</td>
-                <td>http://localhost:8090/</td>
-                <td>servizi/MockPSP/info</td>
-                <td>servizi/MockPSP</td>
-                <td/>
-              </tr>
-            </table>
-          </li>
-        </ol>
-        <span/>
-      </div>
-      <div class="scenario">
-        <span class="scenario_file">src/integ-test/bdd-test/features/OldMod3/primitives/nodoAttivaRPT_semantic_ko.feature:127</span>
-        <h3 onclick="Collapsible_toggle('scenario_8')" class="failed">
-          <span class="val">Scenario: Check PPT_INTERMEDIARIO_PSP_DISABILITATO error on disabled psp broker</span>
-        </h3>
-        <ol class="scenario_steps" id="scenario_8">
-          <li class="step failed">
-            <div class="step_name">
-              <span class="keyword">Given </span>
-              <span class="step val">systems up</span>
-              <small class="step_duration">(4.678s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:28</span>
-            </div>
-            <span class="embed">
-              <a onclick="Collapsible_toggle('embed_9')">Error Message</a>
-              <pre id="embed_9" style="display: none">Traceback (most recent call last):
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connection.py&quot;, line 174, in _new_conn
-    conn = connection.create_connection(
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\util\connection.py&quot;, line 95, in create_connection
-    raise err
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\util\connection.py&quot;, line 85, in create_connection
-    sock.connect(sa)
-ConnectionRefusedError: [WinError 10061] Impossibile stabilire la connessione. Rifiuto persistente del computer di destinazione
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connectionpool.py&quot;, line 703, in urlopen
-    httplib_response = self._make_request(
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connectionpool.py&quot;, line 398, in _make_request
-    conn.request(method, url, **httplib_request_kw)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connection.py&quot;, line 239, in request
-    super(HTTPConnection, self).request(method, url, body=body, headers=headers)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\http\client.py&quot;, line 1282, in request
-    self._send_request(method, url, body, headers, encode_chunked)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\http\client.py&quot;, line 1328, in _send_request
-    self.endheaders(body, encode_chunked=encode_chunked)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\http\client.py&quot;, line 1277, in endheaders
-    self._send_output(message_body, encode_chunked=encode_chunked)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\http\client.py&quot;, line 1037, in _send_output
-    self.send(msg)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\http\client.py&quot;, line 975, in send
-    self.connect()
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connection.py&quot;, line 205, in connect
-    conn = self._new_conn()
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connection.py&quot;, line 186, in _new_conn
-    raise NewConnectionError(
-urllib3.exceptions.NewConnectionError: &lt;urllib3.connection.HTTPConnection object at 0x000001C031C110C0&gt;: Failed to establish a new connection: [WinError 10061] Impossibile stabilire la connessione. Rifiuto persistente del computer di destinazione
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\requests\adapters.py&quot;, line 439, in send
-    resp = conn.urlopen(
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connectionpool.py&quot;, line 785, in urlopen
-    retries = retries.increment(
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\util\retry.py&quot;, line 592, in increment
-    raise MaxRetryError(_pool, url, error or ResponseError(cause))
-urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='localhost', port=8089): Max retries exceeded with url: /servizi/PagamentiTelematiciRPT/info (Caused by NewConnectionError('&lt;urllib3.connection.HTTPConnection object at 0x000001C031C110C0&gt;: Failed to establish a new connection: [WinError 10061] Impossibile stabilire la connessione. Rifiuto persistente del computer di destinazione'))
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\behave\model.py&quot;, line 1329, in run
-    match.run(runner.context)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\behave\matchers.py&quot;, line 98, in run
-    self.func(context, *args, **kwargs)
-  File &quot;src\integ-test\bdd-test\features\steps\steps.py&quot;, line 43, in step_impl
-    resp = requests.get(url, headers=headers, verify=False)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\requests\api.py&quot;, line 75, in get
-    return request('get', url, params=params, **kwargs)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\requests\api.py&quot;, line 61, in request
-    return session.request(method=method, url=url, **kwargs)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\requests\sessions.py&quot;, line 542, in request
-    resp = self.send(prep, **send_kwargs)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\requests\sessions.py&quot;, line 655, in send
-    r = adapter.send(request, **kwargs)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\requests\adapters.py&quot;, line 516, in send
-    raise ConnectionError(e, request=request)
-requests.exceptions.ConnectionError: HTTPConnectionPool(host='localhost', port=8089): Max retries exceeded with url: /servizi/PagamentiTelematiciRPT/info (Caused by NewConnectionError('&lt;urllib3.connection.HTTPConnection object at 0x000001C031C110C0&gt;: Failed to establish a new connection: [WinError 10061] Impossibile stabilire la connessione. Rifiuto persistente del computer di destinazione'))
-
-Captured stdout:
-calling: nodo-dei-pagamenti -&gt; http://localhost:9080/
-calling -&gt; http://localhost:9080/nodo-dev-health/ready
-response: 200
-calling: mock-ec -&gt; http://localhost:8089/
-calling -&gt; http://localhost:8089/servizi/PagamentiTelematiciRPT/info</pre>
-                  
-            </span>
-            <table>
-              <tr>
-                <th>name</th>
-                <th>url</th>
-                <th>healthcheck</th>
-                <th>soap_service</th>
-                <th>rest_service</th>
-              </tr>
-              <tr>
-                <td>nodo-dei-pagamenti</td>
-                <td>http://localhost:9080/</td>
-                <td>nodo-dev-health/ready</td>
-                <td>nodo-dev/webservices/input</td>
-                <td>nodo-dev</td>
-              </tr>
-              <tr>
-                <td>mock-ec</td>
-                <td>http://localhost:8089/</td>
-                <td>servizi/PagamentiTelematiciRPT/info</td>
-                <td>servizi/PagamentiTelematiciRPT</td>
-                <td/>
-              </tr>
-              <tr>
-                <td>mock-psp</td>
-                <td>http://localhost:8090/</td>
-                <td>servizi/MockPSP/info</td>
-                <td>servizi/MockPSP</td>
-                <td/>
-              </tr>
-            </table>
-          </li>
-        </ol>
-        <span/>
-      </div>
-      <div class="scenario">
-        <span class="scenario_file">src/integ-test/bdd-test/features/OldMod3/primitives/nodoAttivaRPT_semantic_ko.feature:133</span>
-        <h3 onclick="Collapsible_toggle('scenario_9')" class="failed">
-          <span class="val">Scenario: Check PPT_CANALE_SCONOSCIUTO error on non-existent psp channel</span>
-        </h3>
-        <ol class="scenario_steps" id="scenario_9">
-          <li class="step failed">
-            <div class="step_name">
-              <span class="keyword">Given </span>
-              <span class="step val">systems up</span>
-              <small class="step_duration">(4.708s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:28</span>
-            </div>
-            <span class="embed">
-              <a onclick="Collapsible_toggle('embed_10')">Error Message</a>
-              <pre id="embed_10" style="display: none">Traceback (most recent call last):
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connection.py&quot;, line 174, in _new_conn
-    conn = connection.create_connection(
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\util\connection.py&quot;, line 95, in create_connection
-    raise err
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\util\connection.py&quot;, line 85, in create_connection
-    sock.connect(sa)
-ConnectionRefusedError: [WinError 10061] Impossibile stabilire la connessione. Rifiuto persistente del computer di destinazione
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connectionpool.py&quot;, line 703, in urlopen
-    httplib_response = self._make_request(
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connectionpool.py&quot;, line 398, in _make_request
-    conn.request(method, url, **httplib_request_kw)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connection.py&quot;, line 239, in request
-    super(HTTPConnection, self).request(method, url, body=body, headers=headers)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\http\client.py&quot;, line 1282, in request
-    self._send_request(method, url, body, headers, encode_chunked)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\http\client.py&quot;, line 1328, in _send_request
-    self.endheaders(body, encode_chunked=encode_chunked)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\http\client.py&quot;, line 1277, in endheaders
-    self._send_output(message_body, encode_chunked=encode_chunked)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\http\client.py&quot;, line 1037, in _send_output
-    self.send(msg)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\http\client.py&quot;, line 975, in send
-    self.connect()
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connection.py&quot;, line 205, in connect
-    conn = self._new_conn()
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connection.py&quot;, line 186, in _new_conn
-    raise NewConnectionError(
-urllib3.exceptions.NewConnectionError: &lt;urllib3.connection.HTTPConnection object at 0x000001C031C12EF0&gt;: Failed to establish a new connection: [WinError 10061] Impossibile stabilire la connessione. Rifiuto persistente del computer di destinazione
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\requests\adapters.py&quot;, line 439, in send
-    resp = conn.urlopen(
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connectionpool.py&quot;, line 785, in urlopen
-    retries = retries.increment(
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\util\retry.py&quot;, line 592, in increment
-    raise MaxRetryError(_pool, url, error or ResponseError(cause))
-urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='localhost', port=8089): Max retries exceeded with url: /servizi/PagamentiTelematiciRPT/info (Caused by NewConnectionError('&lt;urllib3.connection.HTTPConnection object at 0x000001C031C12EF0&gt;: Failed to establish a new connection: [WinError 10061] Impossibile stabilire la connessione. Rifiuto persistente del computer di destinazione'))
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\behave\model.py&quot;, line 1329, in run
-    match.run(runner.context)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\behave\matchers.py&quot;, line 98, in run
-    self.func(context, *args, **kwargs)
-  File &quot;src\integ-test\bdd-test\features\steps\steps.py&quot;, line 43, in step_impl
-    resp = requests.get(url, headers=headers, verify=False)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\requests\api.py&quot;, line 75, in get
-    return request('get', url, params=params, **kwargs)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\requests\api.py&quot;, line 61, in request
-    return session.request(method=method, url=url, **kwargs)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\requests\sessions.py&quot;, line 542, in request
-    resp = self.send(prep, **send_kwargs)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\requests\sessions.py&quot;, line 655, in send
-    r = adapter.send(request, **kwargs)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\requests\adapters.py&quot;, line 516, in send
-    raise ConnectionError(e, request=request)
-requests.exceptions.ConnectionError: HTTPConnectionPool(host='localhost', port=8089): Max retries exceeded with url: /servizi/PagamentiTelematiciRPT/info (Caused by NewConnectionError('&lt;urllib3.connection.HTTPConnection object at 0x000001C031C12EF0&gt;: Failed to establish a new connection: [WinError 10061] Impossibile stabilire la connessione. Rifiuto persistente del computer di destinazione'))
-
-Captured stdout:
-calling: nodo-dei-pagamenti -&gt; http://localhost:9080/
-calling -&gt; http://localhost:9080/nodo-dev-health/ready
-response: 200
-calling: mock-ec -&gt; http://localhost:8089/
-calling -&gt; http://localhost:8089/servizi/PagamentiTelematiciRPT/info</pre>
-                  
-            </span>
-            <table>
-              <tr>
-                <th>name</th>
-                <th>url</th>
-                <th>healthcheck</th>
-                <th>soap_service</th>
-                <th>rest_service</th>
-              </tr>
-              <tr>
-                <td>nodo-dei-pagamenti</td>
-                <td>http://localhost:9080/</td>
-                <td>nodo-dev-health/ready</td>
-                <td>nodo-dev/webservices/input</td>
-                <td>nodo-dev</td>
-              </tr>
-              <tr>
-                <td>mock-ec</td>
-                <td>http://localhost:8089/</td>
-                <td>servizi/PagamentiTelematiciRPT/info</td>
-                <td>servizi/PagamentiTelematiciRPT</td>
-                <td/>
-              </tr>
-              <tr>
-                <td>mock-psp</td>
-                <td>http://localhost:8090/</td>
-                <td>servizi/MockPSP/info</td>
-                <td>servizi/MockPSP</td>
-                <td/>
-              </tr>
-            </table>
-          </li>
-        </ol>
-        <span/>
-      </div>
-      <div class="scenario">
-        <span class="scenario_file">src/integ-test/bdd-test/features/OldMod3/primitives/nodoAttivaRPT_semantic_ko.feature:139</span>
-        <h3 onclick="Collapsible_toggle('scenario_10')" class="failed">
-          <span class="val">Scenario: Check PPT_PSP_DISABILITATO error on disabled psp channel</span>
-        </h3>
-        <ol class="scenario_steps" id="scenario_10">
-          <li class="step failed">
-            <div class="step_name">
-              <span class="keyword">Given </span>
-              <span class="step val">systems up</span>
-              <small class="step_duration">(4.837s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:28</span>
-            </div>
-            <span class="embed">
-              <a onclick="Collapsible_toggle('embed_11')">Error Message</a>
-              <pre id="embed_11" style="display: none">Traceback (most recent call last):
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connection.py&quot;, line 174, in _new_conn
-    conn = connection.create_connection(
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\util\connection.py&quot;, line 95, in create_connection
-    raise err
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\util\connection.py&quot;, line 85, in create_connection
-    sock.connect(sa)
-ConnectionRefusedError: [WinError 10061] Impossibile stabilire la connessione. Rifiuto persistente del computer di destinazione
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connectionpool.py&quot;, line 703, in urlopen
-    httplib_response = self._make_request(
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connectionpool.py&quot;, line 398, in _make_request
-    conn.request(method, url, **httplib_request_kw)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connection.py&quot;, line 239, in request
-    super(HTTPConnection, self).request(method, url, body=body, headers=headers)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\http\client.py&quot;, line 1282, in request
-    self._send_request(method, url, body, headers, encode_chunked)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\http\client.py&quot;, line 1328, in _send_request
-    self.endheaders(body, encode_chunked=encode_chunked)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\http\client.py&quot;, line 1277, in endheaders
-    self._send_output(message_body, encode_chunked=encode_chunked)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\http\client.py&quot;, line 1037, in _send_output
-    self.send(msg)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\http\client.py&quot;, line 975, in send
-    self.connect()
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connection.py&quot;, line 205, in connect
-    conn = self._new_conn()
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connection.py&quot;, line 186, in _new_conn
-    raise NewConnectionError(
-urllib3.exceptions.NewConnectionError: &lt;urllib3.connection.HTTPConnection object at 0x000001C031C11D80&gt;: Failed to establish a new connection: [WinError 10061] Impossibile stabilire la connessione. Rifiuto persistente del computer di destinazione
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\requests\adapters.py&quot;, line 439, in send
-    resp = conn.urlopen(
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connectionpool.py&quot;, line 785, in urlopen
-    retries = retries.increment(
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\util\retry.py&quot;, line 592, in increment
-    raise MaxRetryError(_pool, url, error or ResponseError(cause))
-urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='localhost', port=8089): Max retries exceeded with url: /servizi/PagamentiTelematiciRPT/info (Caused by NewConnectionError('&lt;urllib3.connection.HTTPConnection object at 0x000001C031C11D80&gt;: Failed to establish a new connection: [WinError 10061] Impossibile stabilire la connessione. Rifiuto persistente del computer di destinazione'))
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\behave\model.py&quot;, line 1329, in run
-    match.run(runner.context)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\behave\matchers.py&quot;, line 98, in run
-    self.func(context, *args, **kwargs)
-  File &quot;src\integ-test\bdd-test\features\steps\steps.py&quot;, line 43, in step_impl
-    resp = requests.get(url, headers=headers, verify=False)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\requests\api.py&quot;, line 75, in get
-    return request('get', url, params=params, **kwargs)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\requests\api.py&quot;, line 61, in request
-    return session.request(method=method, url=url, **kwargs)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\requests\sessions.py&quot;, line 542, in request
-    resp = self.send(prep, **send_kwargs)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\requests\sessions.py&quot;, line 655, in send
-    r = adapter.send(request, **kwargs)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\requests\adapters.py&quot;, line 516, in send
-    raise ConnectionError(e, request=request)
-requests.exceptions.ConnectionError: HTTPConnectionPool(host='localhost', port=8089): Max retries exceeded with url: /servizi/PagamentiTelematiciRPT/info (Caused by NewConnectionError('&lt;urllib3.connection.HTTPConnection object at 0x000001C031C11D80&gt;: Failed to establish a new connection: [WinError 10061] Impossibile stabilire la connessione. Rifiuto persistente del computer di destinazione'))
-
-Captured stdout:
-calling: nodo-dei-pagamenti -&gt; http://localhost:9080/
-calling -&gt; http://localhost:9080/nodo-dev-health/ready
-response: 200
-calling: mock-ec -&gt; http://localhost:8089/
-calling -&gt; http://localhost:8089/servizi/PagamentiTelematiciRPT/info</pre>
-                  
-            </span>
-            <table>
-              <tr>
-                <th>name</th>
-                <th>url</th>
-                <th>healthcheck</th>
-                <th>soap_service</th>
-                <th>rest_service</th>
-              </tr>
-              <tr>
-                <td>nodo-dei-pagamenti</td>
-                <td>http://localhost:9080/</td>
-                <td>nodo-dev-health/ready</td>
-                <td>nodo-dev/webservices/input</td>
-                <td>nodo-dev</td>
-              </tr>
-              <tr>
-                <td>mock-ec</td>
-                <td>http://localhost:8089/</td>
-                <td>servizi/PagamentiTelematiciRPT/info</td>
-                <td>servizi/PagamentiTelematiciRPT</td>
-                <td/>
-              </tr>
-              <tr>
-                <td>mock-psp</td>
-                <td>http://localhost:8090/</td>
-                <td>servizi/MockPSP/info</td>
-                <td>servizi/MockPSP</td>
-                <td/>
-              </tr>
-            </table>
-          </li>
-        </ol>
-        <span/>
-      </div>
-      <div class="scenario">
-        <span class="scenario_file">src/integ-test/bdd-test/features/OldMod3/primitives/nodoAttivaRPT_semantic_ko.feature:145</span>
-        <h3 onclick="Collapsible_toggle('scenario_11')" class="failed">
-          <span class="val">Scenario: Check PPT_PSP_DISABILITATO error on disabled psp channel</span>
-        </h3>
-        <ol class="scenario_steps" id="scenario_11">
-          <li class="step failed">
-            <div class="step_name">
-              <span class="keyword">Given </span>
-              <span class="step val">systems up</span>
-              <small class="step_duration">(4.088s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:28</span>
-            </div>
-            <span class="embed">
-              <a onclick="Collapsible_toggle('embed_12')">Error Message</a>
-              <pre id="embed_12" style="display: none">Traceback (most recent call last):
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connection.py&quot;, line 174, in _new_conn
-    conn = connection.create_connection(
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\util\connection.py&quot;, line 95, in create_connection
-    raise err
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\util\connection.py&quot;, line 85, in create_connection
-    sock.connect(sa)
-ConnectionRefusedError: [WinError 10061] Impossibile stabilire la connessione. Rifiuto persistente del computer di destinazione
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connectionpool.py&quot;, line 703, in urlopen
-    httplib_response = self._make_request(
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connectionpool.py&quot;, line 398, in _make_request
-    conn.request(method, url, **httplib_request_kw)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connection.py&quot;, line 239, in request
-    super(HTTPConnection, self).request(method, url, body=body, headers=headers)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\http\client.py&quot;, line 1282, in request
-    self._send_request(method, url, body, headers, encode_chunked)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\http\client.py&quot;, line 1328, in _send_request
-    self.endheaders(body, encode_chunked=encode_chunked)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\http\client.py&quot;, line 1277, in endheaders
-    self._send_output(message_body, encode_chunked=encode_chunked)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\http\client.py&quot;, line 1037, in _send_output
-    self.send(msg)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\http\client.py&quot;, line 975, in send
-    self.connect()
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connection.py&quot;, line 205, in connect
-    conn = self._new_conn()
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connection.py&quot;, line 186, in _new_conn
-    raise NewConnectionError(
-urllib3.exceptions.NewConnectionError: &lt;urllib3.connection.HTTPConnection object at 0x000001C0325B5300&gt;: Failed to establish a new connection: [WinError 10061] Impossibile stabilire la connessione. Rifiuto persistente del computer di destinazione
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\requests\adapters.py&quot;, line 439, in send
-    resp = conn.urlopen(
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connectionpool.py&quot;, line 785, in urlopen
-    retries = retries.increment(
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\util\retry.py&quot;, line 592, in increment
-    raise MaxRetryError(_pool, url, error or ResponseError(cause))
-urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='localhost', port=8089): Max retries exceeded with url: /servizi/PagamentiTelematiciRPT/info (Caused by NewConnectionError('&lt;urllib3.connection.HTTPConnection object at 0x000001C0325B5300&gt;: Failed to establish a new connection: [WinError 10061] Impossibile stabilire la connessione. Rifiuto persistente del computer di destinazione'))
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\behave\model.py&quot;, line 1329, in run
-    match.run(runner.context)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\behave\matchers.py&quot;, line 98, in run
-    self.func(context, *args, **kwargs)
-  File &quot;src\integ-test\bdd-test\features\steps\steps.py&quot;, line 43, in step_impl
-    resp = requests.get(url, headers=headers, verify=False)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\requests\api.py&quot;, line 75, in get
-    return request('get', url, params=params, **kwargs)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\requests\api.py&quot;, line 61, in request
-    return session.request(method=method, url=url, **kwargs)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\requests\sessions.py&quot;, line 542, in request
-    resp = self.send(prep, **send_kwargs)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\requests\sessions.py&quot;, line 655, in send
-    r = adapter.send(request, **kwargs)
-  File &quot;C:\Users\damiano.dorelli\AppData\Local\Programs\Python\Python310\lib\site-packages\requests\adapters.py&quot;, line 516, in send
-    raise ConnectionError(e, request=request)
-requests.exceptions.ConnectionError: HTTPConnectionPool(host='localhost', port=8089): Max retries exceeded with url: /servizi/PagamentiTelematiciRPT/info (Caused by NewConnectionError('&lt;urllib3.connection.HTTPConnection object at 0x000001C0325B5300&gt;: Failed to establish a new connection: [WinError 10061] Impossibile stabilire la connessione. Rifiuto persistente del computer di destinazione'))
-
-Captured stdout:
-calling: nodo-dei-pagamenti -&gt; http://localhost:9080/
-calling -&gt; http://localhost:9080/nodo-dev-health/ready
-response: 200
-calling: mock-ec -&gt; http://localhost:8089/
-calling -&gt; http://localhost:8089/servizi/PagamentiTelematiciRPT/info</pre>
-                  
-            </span>
-            <table>
-              <tr>
-                <th>name</th>
-                <th>url</th>
-                <th>healthcheck</th>
-                <th>soap_service</th>
-                <th>rest_service</th>
-              </tr>
-              <tr>
-                <td>nodo-dei-pagamenti</td>
-                <td>http://localhost:9080/</td>
-                <td>nodo-dev-health/ready</td>
-                <td>nodo-dev/webservices/input</td>
-                <td>nodo-dev</td>
-              </tr>
-              <tr>
-                <td>mock-ec</td>
-                <td>http://localhost:8089/</td>
-                <td>servizi/PagamentiTelematiciRPT/info</td>
-                <td>servizi/PagamentiTelematiciRPT</td>
-                <td/>
-              </tr>
-              <tr>
-                <td>mock-psp</td>
-                <td>http://localhost:8090/</td>
-                <td>servizi/MockPSP/info</td>
-                <td>servizi/MockPSP</td>
-                <td/>
-              </tr>
-            </table>
           </li>
         </ol>
         <span/>
