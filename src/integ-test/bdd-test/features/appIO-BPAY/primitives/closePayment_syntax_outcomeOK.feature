@@ -129,6 +129,7 @@ Feature: syntax checks for closePayment outcome OK
       <noticeNumber>311#iuv#</noticeNumber>
       </qrCode>
       <amount>10.00</amount>
+      <dueDate>2021-12-31</dueDate>
       </nod:activateIOPaymentReq>
       </soapenv:Body>
       </soapenv:Envelope>
@@ -144,13 +145,36 @@ Feature: syntax checks for closePayment outcome OK
       <creditorReferenceId>11$iuv</creditorReferenceId>
       <paymentAmount>10.00</paymentAmount>
       <dueDate>2021-12-31</dueDate>
+      <!--Optional:-->
+      <retentionDate>2021-12-31T12:12:12</retentionDate>
+      <!--Optional:-->
+      <lastPayment>1</lastPayment>
       <description>description</description>
+      <!--Optional:-->
+      <companyName>company</companyName>
+      <!--Optional:-->
+      <officeName>office</officeName>
       <debtor>
       <uniqueIdentifier>
       <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
       <entityUniqueIdentifierValue>77777777777</entityUniqueIdentifierValue>
       </uniqueIdentifier>
       <fullName>paGetPaymentName</fullName>
+      <!--Optional:-->
+      <streetName>paGetPaymentStreet</streetName>
+      <!--Optional:-->
+      <civicNumber>paGetPayment99</civicNumber>
+      <!--Optional:-->
+      <postalCode>20155</postalCode>
+      <!--Optional:-->
+      <city>paGetPaymentCity</city>
+      <!--Optional:-->
+      <stateProvinceRegion>paGetPaymentState</stateProvinceRegion>
+      <!--Optional:-->
+      <country>IT</country>
+      <!--Optional:-->
+      <e-mail>paGetPayment@test.it</e-mail>
+      </debtor>
       <!--Optional:-->
       <transferList>
       <!--1 to 5 repetitions:-->
