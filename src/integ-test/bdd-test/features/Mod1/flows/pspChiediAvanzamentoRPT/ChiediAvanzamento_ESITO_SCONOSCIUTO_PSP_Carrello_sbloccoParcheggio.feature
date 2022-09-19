@@ -3,8 +3,8 @@ Feature: process tests for ChiediAvanzamento_ESITO_SCONOSCIUTO_PSP_Carrello_sblo
     Background:
         Given systems up
 
-    Scenario: RPT generation
-        Given RPT generation
+    Scenario: RPT1 generation
+        Given RPT1 generation
 
         """
         <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
@@ -84,7 +84,7 @@ Feature: process tests for ChiediAvanzamento_ESITO_SCONOSCIUTO_PSP_Carrello_sblo
         """
 
     Scenario: RPT2 generation
-        Given the RPT generation scenario executed successfully
+        Given the RPT1 generation scenario executed successfully
         And RPT2 generation
 
         """
@@ -186,13 +186,13 @@ Feature: process tests for ChiediAvanzamento_ESITO_SCONOSCIUTO_PSP_Carrello_sblo
                     <elementoListaRPT>
                     <identificativoDominio>44444444444</identificativoDominio>
                     <identificativoUnivocoVersamento>avanzaErrResponse</identificativoUnivocoVersamento>
-                    <codiceContestoPagamento>$ccp1</codiceContestoPagamento>
-                    <rpt>$rptAttachment</rpt>
+                    <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
+                    <rpt>$rpt1Attachment</rpt>
                     </elementoListaRPT>
                     <elementoListaRPT>
                     <identificativoDominio>44444444445</identificativoDominio>
                     <identificativoUnivocoVersamento>avanzaErrResponse2</identificativoUnivocoVersamento>
-                    <codiceContestoPagamento>$ccp2</codiceContestoPagamento>
+                    <codiceContestoPagamento>$2ccp</codiceContestoPagamento>
                     <rpt>$rpt2Attachment</rpt>
                     </elementoListaRPT>
                 </listaRPT>
@@ -202,6 +202,7 @@ Feature: process tests for ChiediAvanzamento_ESITO_SCONOSCIUTO_PSP_Carrello_sblo
         """
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
+        And check url contains acardste of nodoInviaCarrelloRPT response
         And retrieve session token from $nodoInviaCarrelloRPTResponse.url
 
 
@@ -218,30 +219,29 @@ Feature: process tests for ChiediAvanzamento_ESITO_SCONOSCIUTO_PSP_Carrello_sblo
 
     Scenario: Execution Esito Carta
         Given the Execute check DB-RPT scenario executed successfull
-        # successivamente sostituire pspinviacarrellorptcarte al posto di pspNotifyPayment
-        And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment 
-        """
-        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:psp="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
-            <soapenv:Header/>
-            <soapenv:Body>
-                <psp:pspNotifyPaymentRes>
-                <outcome>OK</outcome>
-                <!--Optional:-->
-                <wait>20</wait>
-                </psp:pspNotifyPaymentRes>
-            </soapenv:Body>
-        </soapenv:Envelope>
-        """
+        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte 
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+                <soapenv:Header/>
+                <soapenv:Body>
+                    <ws:pspInviaCarrelloRPTCarteResponse>
+                        <pspInviaCarrelloRPTResponse>
+                            <esitoComplessivoOperazione>timeout</esitoComplessivoOperazione>
+                        </pspInviaCarrelloRPTResponse>
+                    </ws:pspInviaCarrelloRPTCarteResponse>
+                </soapenv:Body>
+            </soapenv:Envelope>
+            """
         When WISP sends REST POST inoltroEsito/carta to nodo-dei-pagamenti
 
         """
         {
             "idPagamento": "$sessionToken",
             "RRN":123456789,
-            "identificativoPsp": "#psp#",
+            "identificativoPsp": "40000000001",
             "tipoVersamento": "CP",
-            "identificativoIntermediario": "#psp#",
-            "identificativoCanale": "#canale#",
+            "identificativoIntermediario": "40000000001",
+            "identificativoCanale": "40000000001_03",
             "esitoTransazioneCarta": "123456", 
             "importoTotalePagato": 11.11,
             "timestampOperazione": "2012-04-23T18:25:43.001Z",
@@ -250,8 +250,9 @@ Feature: process tests for ChiediAvanzamento_ESITO_SCONOSCIUTO_PSP_Carrello_sblo
         """
         Then verify the HTTP status code of inoltroEsito/carta response is 408
         And check error is Operazione in timeout of inoltroEsito/carta response
+        And check url field not exists in inoltroEsito/carta response
 
-    Scenario: Execute check DB-RPT
+    Scenario: Execute second check DB-RPT 
         Given the Execution Esito Carta scenario executed successfully
         Then checks the value CART_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query retry_rpt on db nodo_online under macro Mod1
         And checks the value avanzaErrResponse,avanzaErrResponse2 of the record at column IUV of the table RETRY_RPT retrived by the query retry_rpt on db nodo_online under macro Mod1
@@ -260,3 +261,55 @@ Feature: process tests for ChiediAvanzamento_ESITO_SCONOSCIUTO_PSP_Carrello_sblo
         And checks the value 0 of the record at column RETRY of the table RETRY_RPT retrived by the query retry_rpt on db nodo_online under macro Mod1
         # And verify 0 record for the table RETRY_RPT retrived by the query retry_rpt on db nodo_online under macro Mod1
         And verify 1 record for the table RETRY_RPT retrived by the query retry_rpt on db nodo_online under macro Mod1
+        And wait 5 seconds for expiration
+        And job pspChiediAvanzamentoRPT triggered after 5 seconds
+        And wait 10 seconds for expiration
+        And checks the value CART_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query motivo_annullamento on db nodo_online under macro Mod1
+
+    Scenario: Execution Esito Carta retry
+        Given the Execute second check DB-RPT scenario executed successfull
+        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte 
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+                <soapenv:Header/>
+                <soapenv:Body>
+                    <ws:pspInviaCarrelloRPTCarteResponse>
+                        <pspInviaCarrelloRPTResponse>
+                            <esitoComplessivoOperazione>timeout</esitoComplessivoOperazione>
+                        </pspInviaCarrelloRPTResponse>
+                    </ws:pspInviaCarrelloRPTCarteResponse>
+                </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        When WISP sends REST POST inoltroEsito/carta to nodo-dei-pagamenti
+
+        """
+        {
+            "idPagamento": "$sessionToken",
+            "RRN":123456789,
+            "identificativoPsp": "40000000001",
+            "tipoVersamento": "CP",
+            "identificativoIntermediario": "40000000001",
+            "identificativoCanale": "40000000001_03",
+            "esitoTransazioneCarta": "123456", 
+            "importoTotalePagato": 11.11,
+            "timestampOperazione": "2012-04-23T18:25:43.001Z",
+            "codiceAutorizzativo": "123212"
+        }
+        """
+        Then verify the HTTP status code of inoltroEsito/carta response is 408
+        And check error is Operazione in timeout of inoltroEsito/carta response
+        And check url field not exists in inoltroEsito/carta response
+
+
+    Scenario: Execute third check DB-RPT 
+        Given the Execution Esito Carta scenario executed successfully
+        Then checks the value RPT_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query stati_RPT_noOrder on db nodo_online under macro Mod1
+        And checks the value RPT_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query stati_RPT2_noOrder on db nodo_online under macro Mod1
+        And checks the value CART_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query motivo_annullamento on db nodo_online under macro Mod1
+        And checks the value 44444444444 of the record at column ID_DOMINIO of the table RETRY_RPT retrived by the query motivo_annullamento_originale on db nodo_online under macro Mod1
+        And checks the value avanzaErrResponse of the record at column IUV of the table RETRY_RPT retrived by the query motivo_annullamento_originale on db nodo_online under macro Mod1
+        And checks the value $1ccp of the record at column CCP of the table RETRY_RPT retrived by the query motivo_annullamento_originale on db nodo_online under macro Mod1
+
+        And verify 1 record for the table RETRY retrived by the query motivo_annullamento_originale on db nodo_online under macro Mod1
+        
