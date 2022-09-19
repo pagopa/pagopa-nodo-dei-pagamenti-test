@@ -21,7 +21,7 @@ Feature: syntax checks for closePayment outcome OK
             </qrCode>
             <!--Optional:-->
             <expirationTime>12345</expirationTime>
-            <amount>70.00</amount>
+            <amount>10.00</amount>
             <!--Optional:-->
             <dueDate>2021-12-12</dueDate>
             <!--Optional:-->
@@ -98,24 +98,8 @@ Feature: syntax checks for closePayment outcome OK
             <!--1 to 5 repetitions:-->
             <transfer>
             <idTransfer>1</idTransfer>
-            <transferAmount>3.00</transferAmount>
-            <fiscalCodePA>66666666666</fiscalCodePA>
-            <IBAN>IT45R0760103200000000001016</IBAN>
-            <remittanceInformation>testPaGetPayment</remittanceInformation>
-            <transferCategory>paGetPaymentTest</transferCategory>
-            </transfer>
-            <transfer>
-            <idTransfer>2</idTransfer>
-            <transferAmount>3.00</transferAmount>
-            <fiscalCodePA>66666666666</fiscalCodePA>
-            <IBAN>IT45R0760103200000000001016</IBAN>
-            <remittanceInformation>testPaGetPayment</remittanceInformation>
-            <transferCategory>paGetPaymentTest</transferCategory>
-            </transfer>
-            <transfer>
-            <idTransfer>3</idTransfer>
-            <transferAmount>4.00</transferAmount>
-            <fiscalCodePA>66666666666</fiscalCodePA>
+            <transferAmount>10.00</transferAmount>
+            <fiscalCodePA>$activateIOPayment.fiscalCode</fiscalCodePA>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>testPaGetPayment</remittanceInformation>
             <transferCategory>paGetPaymentTest</transferCategory>
