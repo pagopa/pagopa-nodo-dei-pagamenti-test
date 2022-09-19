@@ -1672,6 +1672,20 @@ def step_impl(context, query_name, table_name, db_name, name_macro, number):
     print("record query: ", exec_query)
     assert len(exec_query) == number, f"{len(exec_query)}"
 
+@step(u"verify if the records for the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro} are not null")
+def step_impl(context, query_name, table_name, db_name, name_macro):
+    db_config = context.config.userdata.get("db_configuration")
+    db_selected = db_config.get(db_name)
+    conn = db.getConnection(db_selected.get('host'), db_selected.get(
+        'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+
+    selected_query = utils.query_json(context, query_name, name_macro).replace(
+        "columns", '*').replace("table_name", table_name)
+
+    exec_query = db.executeQuery(conn, selected_query)
+    print("record query: ", exec_query)
+    assert len(exec_query) > 0, f"{len(exec_query)}"
+
 
 @step('check token_valid_to is {condition} token_valid_from plus {param}')
 def step_impl(context, condition, param):
