@@ -319,7 +319,7 @@ def step_impl(context):
 def step_impl(context, number, aux_digit, segregation_code, application_code):
     segregation_code = utils.replace_global_variables(segregation_code, context)
     if aux_digit == 0 or aux_digit == 3:
-        iuv = random.randint(1000000000000, 9999999999999)
+        iuv = f"11{random.randint(10000000000, 99999999999)}"
         reference_code = application_code if aux_digit == 0 else segregation_code
         notice_number = f"{aux_digit}{reference_code}{iuv}00"
     elif aux_digit == 1:
@@ -462,13 +462,12 @@ def step_impl(context):
 
     payload = utils.replace_local_variables(payload, context)
     payload = utils.replace_context_variables(payload, context)
+    payload = utils.replace_global_variables(payload, context)
 
     if '#iubd#' in payload:
         iubd = ''+ str(random.randint(10000000, 20000000)) + str(random.randint(10000000, 20000000))
         payload = payload.replace('#iubd#', iubd)
         setattr(context, 'iubd', iubd)
-
-    payload = utils.replace_global_variables(payload, context)
 
     payload_b = bytes(payload, 'ascii')
     payload_uni = b64.b64encode(payload_b)
@@ -483,13 +482,12 @@ def step_impl(context, number):
 
     payload = utils.replace_local_variables(payload, context)
     payload = utils.replace_context_variables(payload, context)
+    payload = utils.replace_global_variables(payload, context)
 
     if f'#iubd{number}#' in payload:
         iubd = ''+ str(random.randint(10000000, 20000000)) + str(random.randint(10000000, 20000000))
         payload = payload.replace(f'#iubd{number}#', iubd)
         setattr(context, f'{number}iubd', iubd)
-
-    payload = utils.replace_global_variables(payload, context)
 
     payload_b = bytes(payload, 'ascii')
     payload_uni = b64.b64encode(payload_b)
@@ -809,9 +807,6 @@ def step_impl(context, tag, value, primitive):
         json_response = jo.convert_json_values_toString(json_response)
         print('>>>>>>>>>>>>>>', json_response)
         find = jo.search_value(json_response, tag, value)
-        print(tag)
-        print(value)
-        print(find)
         assert find
 
 

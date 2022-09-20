@@ -4,9 +4,9 @@ Feature: T001_CARRELLO_5_RPT
         Given systems up
 
     Scenario: Execute nodoInviaCarrelloRPT - [T001_CARRELLO_5_RPT]
-        Given RPT generation
+        Given RPT1 generation
         """"""
-        And RT generation
+        And RT1 generation
         """"""
         And RPT2 generation
         """"""
@@ -25,7 +25,57 @@ Feature: T001_CARRELLO_5_RPT
         And RT5 generation
         """"""
         And initial XML nodoInviaCarrelloRPT
-        """"""
+        """
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header>
+                <ppt:intestazioneCarrelloPPT>
+                    <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
+                    <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
+                    <identificativoCarrello>$carrello</identificativoCarrello>
+                </ppt:intestazioneCarrelloPPT>
+            </soapenv:Header>
+            <soapenv:Body>
+                <ws:nodoInviaCarrelloRPT>
+                    <password>pwdpwdpwd</password>
+                    <identificativoPSP>#psp#</identificativoPSP>
+                    <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+                    <identificativoCanale>#canale#</identificativoCanale>
+                    <listaRPT>
+                        <elementoListaRPT>
+                            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+                            <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
+                            <codiceContestoPagamento>$carrello</codiceContestoPagamento>
+                            <rpt>$rpt1Attachment</rpt>
+                        </elementoListaRPT>
+                        <elementoListaRPT>
+                            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+                            <identificativoUnivocoVersamento>$2IUV</identificativoUnivocoVersamento>
+                            <codiceContestoPagamento>$carrello</codiceContestoPagamento>
+                            <rpt>$rpt2Attachment</rpt>
+                        </elementoListaRPT>
+                        <elementoListaRPT>
+                            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+                            <identificativoUnivocoVersamento>$3IUV</identificativoUnivocoVersamento>
+                            <codiceContestoPagamento>$carrello</codiceContestoPagamento>
+                            <rpt>$rpt3Attachment</rpt>
+                        </elementoListaRPT>
+                        <elementoListaRPT>
+                            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+                            <identificativoUnivocoVersamento>$4IUV</identificativoUnivocoVersamento>
+                            <codiceContestoPagamento>$carrello</codiceContestoPagamento>
+                            <rpt>$rpt4Attachment</rpt>
+                        </elementoListaRPT>
+                        <elementoListaRPT>
+                            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+                            <identificativoUnivocoVersamento>$5IUV</identificativoUnivocoVersamento>
+                            <codiceContestoPagamento>$carrello</codiceContestoPagamento>
+                            <rpt>$rpt5Attachment</rpt>
+                        </elementoListaRPT>
+                    </listaRPT>
+        </ws:nodoInviaCarrelloRPT>
+        </soapenv:Body>
+        </soapenv:Envelope>
+        """
         And initial XML pspChiediListaRT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -52,7 +102,7 @@ Feature: T001_CARRELLO_5_RPT
             <soapenv:Body>
             <ws:pspChiediRTResponse>
             <pspChiediRTResponse>
-            <rt>$rtAttachment</rt>
+            <rt>$rt1Attachment</rt>
             </pspChiediRTResponse>
             </ws:pspChiediRTResponse>
             </soapenv:Body>
