@@ -1,8 +1,13 @@
-Feature: process tests for generazioneRicevute [DB_GR_07]
+Feature: process tests for generazioneRicevute [DB_GR_16]
 
   Background:
     Given systems up
-    And initial XML verifyPaymentNotice
+    And EC new version
+
+
+  # Verify phase
+  Scenario: Execute verifyPaymentNotice request
+      Given initial XML verifyPaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
       <soapenv:Header/>
@@ -21,9 +26,16 @@ Feature: process tests for generazioneRicevute [DB_GR_07]
       </soapenv:Envelope>
       """
     And EC new version
-
-  # Verify phase
-  Scenario: Execute verifyPaymentNotice request
+    # get broadcast value pa
+    #And execution query get_broadcast to get value on the table PA_STAZIONE_PA, with the columns psp.OBJ_ID, psp.BROADCAST under macro costanti with db name nodo_cfg
+    #And through the query get_broadcast retrieve param broadcast_id at position 0 and save it under the key broadcast_id
+    #And through the query get_broadcast retrieve param broadcast_value at position 1 and save it under the key broadcast_value
+    # set broadcast=true
+    #And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '$broadcast_id' under macro update_query on db nodo_cfg
+    And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '11993' under macro update_query on db nodo_cfg
+    And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1201' under macro update_query on db nodo_cfg
+    When refresh job PA triggered after 10 seconds
+    And wait 15 seconds for expiration
     When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of verifyPaymentNotice response
 
@@ -99,8 +111,16 @@ Feature: process tests for generazioneRicevute [DB_GR_07]
       <!--1 to 5 repetitions:-->
       <transfer>
       <idTransfer>1</idTransfer>
-      <transferAmount>10.00</transferAmount>
+      <transferAmount>5.00</transferAmount>
       <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
+      <IBAN>IT45R0760103200000000001016</IBAN>
+      <remittanceInformation>testPaGetPayment</remittanceInformation>
+      <transferCategory>paGetPaymentTest</transferCategory>
+      </transfer>
+      <transfer>
+      <idTransfer>2</idTransfer>
+      <transferAmount>5.00</transferAmount>
+      <fiscalCodePA>90000000001</fiscalCodePA>
       <IBAN>IT45R0760103200000000001016</IBAN>
       <remittanceInformation>testPaGetPayment</remittanceInformation>
       <transferCategory>paGetPaymentTest</transferCategory>
@@ -165,7 +185,14 @@ Feature: process tests for generazioneRicevute [DB_GR_07]
       """
     When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
-    And wait 5 seconds for expiration
+
+    # set broadcast=false
+    #And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'N', with where condition OBJ_ID = '$broadcast_id' under macro update_query on db nodo_cfg
+    And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'N', with where condition OBJ_ID = '11993' under macro update_query on db nodo_cfg
+    And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'N', with where condition OBJ_ID = '1201' under macro update_query on db nodo_cfg
+    And refresh job PA triggered after 10 seconds
+
+    And wait 10 seconds for expiration
     #POSITION_RECEIPT_RECIPIENT query
     And checks the value NotNone of the record at column ID of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient on db nodo_online under macro NewMod3
     And execution query position_receipt_recipient to get value on the table POSITION_RECEIPT_RECIPIENT, with the columns * under macro NewMod3 with db name nodo_online
@@ -299,4 +326,71 @@ Feature: process tests for generazioneRicevute [DB_GR_07]
     And check value $prx_xml.idChannel is equal to value $pp1_channel_id
 
 
+    #POSITION_RECEIPT_XML 1 query
+    And execution query get_receipt1 to get value on the table POSITION_RECEIPT_XML, with the columns XML under macro NewMod3 with db name nodo_online
+    And through the query get_receipt1 retrieve xml prx_1xml at position 0 and save it under the key prx_1xml
+    #checks on XML
+    And check value $prx_1xml.idPA is equal to value 90000000001
+    And check value $prx_1xml.idBrokerPA is equal to value 90000000001
+    And check value $prx_1xml.idStation is equal to value 90000000001_06
+    And check value $prx_1xml.receiptId is equal to value $pp1_payment_token
+    And check value $prx_1xml.noticeNumber is equal to value $pp1_notice_id
+    And check value $prx_1xml.fiscalCode is equal to value $pp1_pa_fiscal_code
+    And check value $prx_1xml.outcome is equal to value $pp1_outcome
+    And check value $prx_1xml.creditorReferenceId is equal to value $pp1_creditor_reference_id
+    #And check value $prx_1xml.paymentAmount is equal to value $pp1_amount
+    And check value $prx_1xml.description is equal to value $ps_description
+    And check value $prx_1xml.companyName is equal to value $ps_company_name
+    And check value $prx_1xml.entityUniqueIdentifierType is equal to value $pss_entity_unique_identifier_type
+    And check value $prx_1xml.entityUniqueIdentifierValue is equal to value $pss_entity_unique_identifier_value
+    And check value $prx_1xml.fullName is equal to value $pss_full_name
+    And check value $prx_1xml.streetName is equal to value $pss_street_name
+    And check value $prx_1xml.civicNumber is equal to value $pss_civic_number
+    And check value $prx_1xml.postalCode is equal to value $pss_postal_code
+    And check value $prx_1xml.city is equal to value $pss_city
+    And check value $prx_1xml.stateProvinceRegion is equal to value $pss_state_province_region
+    And check value $prx_1xml.country is equal to value $pss_country
+    #And check value $prx_1xml.e-mail is equal to value $pss_email
+    And check value $prx_1xml.idTransfer is equal to value $pt_transfer_identifier
+    #And check value $prx_1xml.transferAmount is equal to value $pt_amount
+    And check value $prx_1xml.fiscalCodePA is equal to value $pt_pa_fiscal_code_secondary
+    And check value $prx_1xml.IBAN is equal to value $pt_iban
+    And check value $prx_1xml.remittanceInformation is equal to value $pt_remittance_information
+    And check value $prx_1xml.transferCategory is equal to value $pt_transfer_category
+    And check value $prx_1xml.idPSP is equal to value $pp1_psp_id
+    And check value $prx_1xml.idChannel is equal to value $pp1_channel_id
 
+
+    #POSITION_RECEIPT_XML 2 query
+    And execution query get_receipt2 to get value on the table POSITION_RECEIPT_XML, with the columns XML under macro NewMod3 with db name nodo_online
+    And through the query get_receipt2 retrieve xml prx_2xml at position 0 and save it under the key prx_2xml
+    #checks on XML
+    And check value $prx_2xml.idPA is equal to value 90000000001
+    And check value $prx_2xml.idBrokerPA is equal to value 90000000001
+    And check value $prx_2xml.idStation is equal to value 90000000001_09
+    And check value $prx_2xml.receiptId is equal to value $pp1_payment_token
+    And check value $prx_2xml.noticeNumber is equal to value $pp1_notice_id
+    And check value $prx_2xml.fiscalCode is equal to value $pp1_pa_fiscal_code
+    And check value $prx_2xml.outcome is equal to value $pp1_outcome
+    And check value $prx_2xml.creditorReferenceId is equal to value $pp1_creditor_reference_id
+    #And check value $prx_2xml.paymentAmount is equal to value $pp1_amount
+    And check value $prx_2xml.description is equal to value $ps_description
+    And check value $prx_2xml.companyName is equal to value $ps_company_name
+    And check value $prx_2xml.entityUniqueIdentifierType is equal to value $pss_entity_unique_identifier_type
+    And check value $prx_2xml.entityUniqueIdentifierValue is equal to value $pss_entity_unique_identifier_value
+    And check value $prx_2xml.fullName is equal to value $pss_full_name
+    And check value $prx_2xml.streetName is equal to value $pss_street_name
+    And check value $prx_2xml.civicNumber is equal to value $pss_civic_number
+    And check value $prx_2xml.postalCode is equal to value $pss_postal_code
+    And check value $prx_2xml.city is equal to value $pss_city
+    And check value $prx_2xml.stateProvinceRegion is equal to value $pss_state_province_region
+    And check value $prx_2xml.country is equal to value $pss_country
+    #And check value $prx_2xml.e-mail is equal to value $pss_email
+    And check value $prx_2xml.idTransfer is equal to value $pt_transfer_identifier
+    #And check value $prx_2xml.transferAmount is equal to value $pt_amount
+    And check value $prx_2xml.fiscalCodePA is equal to value $pt_pa_fiscal_code_secondary
+    And check value $prx_2xml.IBAN is equal to value $pt_iban
+    And check value $prx_2xml.remittanceInformation is equal to value $pt_remittance_information
+    And check value $prx_2xml.transferCategory is equal to value $pt_transfer_category
+    And check value $prx_2xml.idPSP is equal to value $pp1_psp_id
+    And check value $prx_2xml.idChannel is equal to value $pp1_channel_id
