@@ -231,6 +231,3 @@ Feature: semantic checks for checkPosition outcome OK
         Then verify the HTTP status code of checkPosition response is 400
         And check outcome is KO of checkPosition response
         And check description is Wrong configuration of checkPosition response
-
-# da implementare in query_AutomationTest.json:
-# "NewMod1" : {"notice_number": "SELECT columns FROM table_name WHERE NOTICE_ID = '$activatePaymentNoticeV2Request.noticeNumber'",
