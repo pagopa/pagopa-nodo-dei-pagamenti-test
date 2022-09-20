@@ -117,19 +117,19 @@ Feature: semantic checks for checkPosition outcome OK
         And check outcome is OK of checkPosition response
 
     # SEM_CPO_02
-    # Scenario: Code 200 OK 2 (part 1)
-    #     Given the activatePaymentNoticeV2 scenario executed successfully
-    #     When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-    #     Then check outcome is OK of activatePaymentNoticeV2 response
-    # And update through the query notice_number of the table POSITION_STATUS_SNAPSHOT the parameter STATUS with INSERTED under macro NewMod1 on db nodo_online
+    Scenario: Code 200 OK 2 (part 1)
+        Given the activatePaymentNoticeV2 scenario executed successfully
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And updates through the query select_activatev2 of the table POSITION_STATUS_SNAPSHOT the parameter STATUS with INSERTED under macro NewMod1 on db nodo_online
 
-    # Scenario: Code 200 OK 2 (part 2)
-    #     Given the Code 200 OK 2 (part 1) scenario executed successfully
-    #     And the checkPosition scenario executed successfully
-    #     And noticeNumber with 311$iuv in checkPosition
-    #     When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
-    #     Then verify the HTTP status code of checkPosition response is 200
-    #     And check outcome is OK of checkPosition response
+    Scenario: Code 200 OK 2 (part 2)
+        Given the Code 200 OK 2 (part 1) scenario executed successfully
+        And the checkPosition scenario executed successfully
+        And noticeNumber with 311$iuv in checkPosition
+        When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of checkPosition response is 200
+        And check outcome is OK of checkPosition response
 
     # SEM_CPO_03
     # Scenario: Code 200 KO (part 1)
@@ -147,7 +147,7 @@ Feature: semantic checks for checkPosition outcome OK
     #     When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
     #     Then check outcome is OK of activatePaymentNoticeV2 response
     #     And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2Request1
-    # And update through the query notice_number of the table POSITION_STATUS_SNAPSHOT the parameter STATUS with PAID under macro NewMod1 on db nodo_online
+    #     And updates through the query select_activatev2 of the table POSITION_STATUS_SNAPSHOT the parameter STATUS with PAID under macro NewMod1 on db nodo_online
 
     # Scenario: Code 200 KO (part 3)
     #     Given the Code 200 KO (part 2) scenario executed successfully
@@ -158,7 +158,7 @@ Feature: semantic checks for checkPosition outcome OK
     #     When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
     #     Then check outcome is OK of activatePaymentNoticeV2 response
     #     And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2Request2
-    # And update through the query notice_number of the table POSITION_STATUS_SNAPSHOT the parameter STATUS with NOTIFIED under macro NewMod1 on db nodo_online
+    #     And updates through the query select_activatev2 of the table POSITION_STATUS_SNAPSHOT the parameter STATUS with NOTIFIED under macro NewMod1 on db nodo_online
 
     # Scenario: Code 200 KO (part 4)
     #     Given the Code 200 KO (part 3) scenario executed successfully
@@ -184,9 +184,9 @@ Feature: semantic checks for checkPosition outcome OK
     #     When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
     #     Then verify the HTTP status code of checkPosition response is 200
     #     And check outcome is KO of checkPosition response
-    # And check PAID is contained in checkPosition response
-    # And check NOTIFIED is contained in checkPosition response
-    # And check PAYING is contained in checkPosition response
+    #     And check PAID is contained in checkPosition response
+    #     And check NOTIFIED is contained in checkPosition response
+    #     And check PAYING is contained in checkPosition response
 
     # SEM_CPO_04
     Scenario: Wrong configuration 1
