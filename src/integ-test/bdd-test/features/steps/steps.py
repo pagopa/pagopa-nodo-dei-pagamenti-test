@@ -775,27 +775,45 @@ def step_impl(context, sender, method, service, receiver):
 
     if '_json' in service:
         service = service.split('_')[0]
-        print(service)
         bodyXml = getattr(context, service)
         body = xmltodict.parse(bodyXml)
         body = body["root"]
+        amount_comma=0
+        amount_empty=0
+
         if ('paymentTokens' in body.keys()) and (body["paymentTokens"] != None):
             body["paymentTokens"] = body["paymentTokens"]["paymentToken"]
             if type(body["paymentTokens"]) != list:
                 l = list()
                 l.append(body["paymentTokens"])
                 body["paymentTokens"] = l
-        if ('totalAmount' in body.keys()) and (body["totalAmount"] != None):
-             body["totalAmount"] = float(body["totalAmount"].replace(',','.'))
+
+        if 'totalAmount' in jsonNew.keys():
+            if jsonNew["totalAmount"] != None:
+                if ',' in jsonNew["totalAmount"]:
+                    amount_comma=1
+                    amount = jsonNew["totalAmount"]
+                jsonNew["totalAmount"] = float(jsonNew["totalAmount"].replace(',','.'))
+            else:
+                amount_empty=1
+
         if 'fee' in body.keys():
             body["fee"] = float(body["fee"])
+
         if ('positionslist' in body.keys()) and (body["positionslist"] != None):
             body["positionslist"] = body["positionslist"]["position"]
             if type(body["positionslist"]) != list:
                 l = list()
                 l.append(body["positionslist"])
                 body["positionslist"] = l
+
         body = json.dumps(body, indent=4)
+
+        l_amount_string = jsonNew.index('"totalAmount": ') + len('"totalAmount": ')
+        if amount_comma == 1:
+            jsonNew = jsonNew.replace(jsonNew[l_amount_string:l_amount_string + len(amount)],amount)
+        if amount_empty == 1:
+            jsonNew = jsonNew.replace(jsonNew[l_amount_string:l_amount_string + len('null')],'')
 
     print(body)
 
