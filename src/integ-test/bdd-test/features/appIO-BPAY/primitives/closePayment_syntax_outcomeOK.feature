@@ -95,8 +95,10 @@ Feature: syntax checks for closePayment outcome OK
       | transactionId               | Empty                                                                                                                                                                                                                                                            | SIN_CP_38   |
       | transactionId               | abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fgh | SIN_CP_39   |
       | outcomePaymentGateway       | None                                                                                                                                                                                                                                                             | SIN_CP_40   |
+      | outcomePaymentGateway       | Empty                                                                                                                                                                                                                                                            | SIN_CP_41   |
       | outcomePaymentGateway       | abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fgh | SIN_CP_42   |
       | authorizationCode           | None                                                                                                                                                                                                                                                             | SIN_CP_43   |
+      | authorizationCode           | Empty                                                                                                                                                                                                                                                            | SIN_CP_44   |
       | authorizationCode           | abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fgh | SIN_CP_45   |
 
 
@@ -121,7 +123,7 @@ Feature: syntax checks for closePayment outcome OK
 
 
 
-  # syntax check - No error
+  # syntax check - No error [SIN_CP_31.2]
   Scenario: activateIOPayment
     Given initial XML activateIOPayment
       """
@@ -133,8 +135,6 @@ Feature: syntax checks for closePayment outcome OK
       <idBrokerPSP>#broker_AGID#</idBrokerPSP>
       <idChannel>#canale_AGID#</idChannel>
       <password>pwdpwdpwd</password>
-      <!--Optional:-->
-      <idempotencyKey>#idempotency_key#</idempotencyKey>
       <qrCode>
       <fiscalCode>#creditor_institution_code#</fiscalCode>
       <noticeNumber>311#iuv#</noticeNumber>
@@ -262,30 +262,25 @@ Feature: syntax checks for closePayment outcome OK
     Then check outcome is OK of activateIOPayment response
     And save activateIOPayment response in activateIOPaymentResponse
 
-  Scenario Outline: check closePayment OK
+  Scenario: check closePayment OK 
     Given the check activateIOPayment OK scenario executed successfully
     And the closePayment scenario executed successfully
     And paymentToken with $activateIOPaymentResponse.paymentToken in v1/closepayment
-    And <elem> with <value> in v1/closepayment
+    And fee with 0 in v1/closepayment
     When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
     Then verify the HTTP status code of v1/closepayment response is 200
     And check esito is OK of v1/closepayment response
-    Examples:
-      | elem                  | value | soapUI test |
-      | fee                   | 0.00  | SIN_CP_31.2 |
-      | outcomePaymentGateway | Empty | SIN_CP_41   |
-      | authorizationCode     | Empty | SIN_CP_44   |
 
 
   # syntax check - No error [SIN_CP_03.2]
-  Scenario: check activateIOPayment OK
+  Scenario: check activateIOPayment OK 2 tokens
     Given the activateIOPayment scenario executed successfully
     When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is OK of activateIOPayment response
     And save activateIOPayment response in activateIOPaymentResponse
 
   Scenario: check activateIOPayment2 OK
-    Given the check activateIOPayment OK scenario executed successfully
+    Given the check activateIOPayment OK 2 tokens scenario executed successfully
     And random iuv in context
     And noticeNumber with 311$iuv in activateIOPayment
     And creditorReferenceId with 11$iuv in paGetPayment
