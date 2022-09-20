@@ -240,11 +240,8 @@ Feature: flux tests for activatePaymentNoticeV2Request
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check faultCode is PPT_PAGAMENTO_DUPLICATO of activatePaymentNoticeV2 response
-        And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response
         And checks the value PAYING,PAID,NOTIFIED of the record at column STATUS of the table POSITION_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value NOTIFIED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And verify 0 record for the table POSITION_PAYMENT_STATUS retrived by the query PAYMENT_TOKEN on db nodo_online under macro NewMod1
-        And verify 0 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query PAYMENT_TOKEN on db nodo_online under macro NewMod1
         And verify 3 record for the table POSITION_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
@@ -290,11 +287,8 @@ Feature: flux tests for activatePaymentNoticeV2Request
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check faultCode is PPT_PAGAMENTO_DUPLICATO of activatePaymentNoticeV2 response
-        And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response
         And checks the value PAYING,PAID,NOTIFIED of the record at column STATUS of the table POSITION_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value NOTIFIED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And verify 0 record for the table POSITION_PAYMENT_STATUS retrived by the query PAYMENT_TOKEN on db nodo_online under macro NewMod1
-        And verify 0 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query PAYMENT_TOKEN on db nodo_online under macro NewMod1
         And verify 3 record for the table POSITION_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
