@@ -114,66 +114,68 @@ Feature: flux tests for activatePaymentNoticeV2Request
             """
         And EC replies to nodo-dei-pagamenti with the paGetPayment
 
-    #   Scenario: closePaymentV2
-    #     Given initial json closePaymentV2
-    #       """
-    #       {
-    #         "paymentTokens": [
-    #           "$activatePaymentNoticeV2Response.paymentToken"
-    #         ],
-    #         "outcome": "OK",
-    #         "idPSP": "70000000001",
-    #         "paymentMethod": "TPAY",
-    #         "idBrokerPSP": "70000000001",
-    #         "idChannel": "70000000001_08",
-    #         "transactionId": "#transaction_id#",
-    #         "totalAmount": 12,
-    #         "fee": 0,
-    #         "timestampOperation": "2012-04-23T18:25:43Z",
-    #         "additionalPaymentInformations": {}
-    #       }
-    #       """
+    Scenario: closePaymentV2
+        Given initial json v2/closepayment
+            """
+            {
+                "paymentTokens": [
+                    "$activatePaymentNoticeV2Response.paymentToken"
+                ],
+                "outcome": "OK",
+                "idPSP": "#psp#",
+                "paymentMethod": "TPAY",
+                "idBrokerPSP": "#id_broker_psp#",
+                "idChannel": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
+                "transactionId": "#transaction_id#",
+                "totalAmount": 12,
+                "fee": 0,
+                "timestampOperation": "2012-04-23T18:25:43Z",
+                "additionalPaymentInformations": {
+                    "key": "12345678"
+                }
+            }
+            """
 
-    #   Scenario: sendPaymentOutcomeV2
-    #     Given initial XML sendPaymentOutcomeV2
-    #       """
-    #       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-    #       <soapenv:Header/>
-    #       <soapenv:Body>
-    #       <nod:sendPaymentOutcomeV2Request>
-    #       <idPSP>70000000001</idPSP>
-    #       <idBrokerPSP>70000000001</idBrokerPSP>
-    #       <idChannel>70000000001_01</idChannel>
-    #       <password>pwdpwdpwd</password>
-    #       <paymentTokens>
-    #       <paymentToken>$activatePaymentNoticeV2Response.paymentToken</paymentToken>
-    #       </paymentTokens>
-    #       <outcome>OK</outcome>
-    #       <details>
-    #       <paymentMethod>creditCard</paymentMethod>
-    #       <paymentChannel>app</paymentChannel>
-    #       <fee>2.00</fee>
-    #       <payer>
-    #       <uniqueIdentifier>
-    #       <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-    #       <entityUniqueIdentifierValue>77777777777_01</entityUniqueIdentifierValue>
-    #       </uniqueIdentifier>
-    #       <fullName>name</fullName>
-    #       <streetName>street</streetName>
-    #       <civicNumber>civic</civicNumber>
-    #       <postalCode>postal</postalCode>
-    #       <city>city</city>
-    #       <stateProvinceRegion>state</stateProvinceRegion>
-    #       <country>IT</country>
-    #       <e-mail>prova@test.it</e-mail>
-    #       </payer>
-    #       <applicationDate>2021-12-12</applicationDate>
-    #       <transferDate>2021-12-11</transferDate>
-    #       </details>
-    #       </nod:sendPaymentOutcomeV2Request>
-    #       </soapenv:Body>
-    #       </soapenv:Envelope>
-    #       """
+    Scenario: sendPaymentOutcomeV2
+        Given initial XML sendPaymentOutcomeV2
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <nod:sendPaymentOutcomeV2Request>
+            <idPSP>#psp#</idPSP>
+            <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
+            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
+            <password>#password#</password>
+            <paymentTokens>
+            <paymentToken>$activatePaymentNoticeV2Response.paymentToken</paymentToken>
+            </paymentTokens>
+            <outcome>OK</outcome>
+            <details>
+            <paymentMethod>creditCard</paymentMethod>
+            <paymentChannel>app</paymentChannel>
+            <fee>2.00</fee>
+            <payer>
+            <uniqueIdentifier>
+            <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
+            <entityUniqueIdentifierValue>77777777777_01</entityUniqueIdentifierValue>
+            </uniqueIdentifier>
+            <fullName>name</fullName>
+            <streetName>street</streetName>
+            <civicNumber>civic</civicNumber>
+            <postalCode>postal</postalCode>
+            <city>city</city>
+            <stateProvinceRegion>state</stateProvinceRegion>
+            <country>IT</country>
+            <e-mail>prova@test.it</e-mail>
+            </payer>
+            <applicationDate>2021-12-12</applicationDate>
+            <transferDate>2021-12-11</transferDate>
+            </details>
+            </nod:sendPaymentOutcomeV2Request>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
 
     # [Activate_blocco_01]
     Scenario: Activate_blocco_01 (parte 1)
@@ -198,82 +200,98 @@ Feature: flux tests for activatePaymentNoticeV2Request
 
     # [Activate_blocco_02]
 
-    # Scenario: [Activate_blocco_02] (part 1)
-    #     Given the checkPosition scenario executed successfully
-    #     And the activatePaymentNoticeV2 scenario executed successfully
-    #     When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-    #     Then check outcome is OK of activatePaymentNoticeV2 response
-    #     And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response
+    Scenario: [Activate_blocco_02] (part 1)
+        # Given the checkPosition scenario executed successfully
+        # And the activatePaymentNoticeV2 scenario executed successfully
+        Given the activatePaymentNoticeV2 scenario executed successfully
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response
+        And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED,PAID,NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query PAYMENT_TOKEN on db nodo_online under macro NewMod1
+        And checks the value NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query PAYMENT_TOKEN on db nodo_online under macro NewMod1
+        And checks the value PAYING,PAID,NOTIFIED of the record at column STATUS of the table POSITION_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NOTIFIED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 6 record for the table POSITION_PAYMENT_STATUS retrived by the query PAYMENT_TOKEN on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query PAYMENT_TOKEN on db nodo_online under macro NewMod1
+        And verify 3 record for the table POSITION_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
-    # Scenario: [Activate_blocco_02] (part 2)
-    #     Given the [Activate_blocco_02] (part 1) scenario executed successfully
-    #     And the closePaymentV2 scenario executed successfully
-    #     When PM sends closePaymentV2 to nodo-dei-pagamenti
-    #     Then check outcome is OK of closePaymentV2 response
-    #     And check faultCode is 200 of closePaymentV2 response
-    #     And wait 5 seconds for expiration
+        # Scenario: [Activate_blocco_02] (part 2)
+        Given the [Activate_blocco_02] (part 1) scenario executed successfully
+        And the closePaymentV2 scenario executed successfully
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 200
+        And check esito is OK of v2/closepayment response
+        And wait 5 seconds for expiration
 
-    # Scenario: [Activate_blocco_02] (part 3)
-    #     Given the [Activate_blocco_02] (part 2) scenario executed successfully
-    #     And the sendPaymentOutcomeV2 scenario executed successfully
-    #     When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
-    #     Then check outcome is OK of sendPaymentOutcomeV2 response
+        # Scenario: [Activate_blocco_02] (part 3)
+        Given the [Activate_blocco_02] (part 2) scenario executed successfully
+        And the sendPaymentOutcomeV2 scenario executed successfully
+        When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of sendPaymentOutcomeV2 response
 
-    # Scenario: [Activate_blocco_02] (part 4)
-    #     Given the [Activate_blocco_02] (part 3) scenario executed successfully
-    #     And the activatePaymentNoticeV2 scenario executed successfully
-    #     And idempotencyKey with idempotency_key_1 in activatePaymentNoticeV2
-    #     And expirationTime with None in activatePaymentNoticeV2
-    #     When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-    #     Then check outcome is KO of activatePaymentNoticeV2 response
-    #     And check faultCode is PPT_PAGAMENTO_DUPLICATO of activatePaymentNoticeV2 response
-    #     And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response1
-    #     And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED,PAID,NOTIFIED,None of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query PAYMENT_TOKEN on db nodo_online under macro NewMod1
-    #     And checks the value None of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query PAYMENT_TOKEN_1 on db nodo_online under macro NewMod1
-    #     And checks the value NOTIFIED,None of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query PAYMENT_TOKEN on db nodo_online under macro NewMod1
-    #     And checks the value None of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query PAYMENT_TOKEN_1 on db nodo_online under macro NewMod1
-    #     And checks the value PAYING,PAID,NOTIFIED,None of the record at column STATUS of the table POSITION_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    #     And checks the value NOTIFIED,None of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        # Scenario: [Activate_blocco_02] (part 4)
+        Given the [Activate_blocco_02] (part 3) scenario executed successfully
+        And random idempotencyKey having $activatePaymentNoticeV2.idPSP as idPSP in activatePaymentNoticeV2
+        And expirationTime with None in activatePaymentNoticeV2
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is KO of activatePaymentNoticeV2 response
+        And check faultCode is PPT_PAGAMENTO_DUPLICATO of activatePaymentNoticeV2 response
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response
+        And checks the value PAYING,PAID,NOTIFIED of the record at column STATUS of the table POSITION_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NOTIFIED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 0 record for the table POSITION_PAYMENT_STATUS retrived by the query PAYMENT_TOKEN on db nodo_online under macro NewMod1
+        And verify 0 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query PAYMENT_TOKEN on db nodo_online under macro NewMod1
+        And verify 3 record for the table POSITION_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
     # [Activate_blocco_03]
 
-    # Scenario: [Activate_blocco_03] (part 1)
-    #     Given the checkPosition scenario executed successfully
-    #     And the activatePaymentNoticeV2 scenario executed successfully
-    #     When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-    #     Then check outcome is OK of activatePaymentNoticeV2 response
-    #     And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response
+    Scenario: [Activate_blocco_03] (part 1)
+        # Given the checkPosition scenario executed successfully
+        # And the activatePaymentNoticeV2 scenario executed successfully
+        Given the activatePaymentNoticeV2 scenario executed successfully
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response
+        And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED,PAID,NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query PAYMENT_TOKEN on db nodo_online under macro NewMod1
+        And checks the value NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query PAYMENT_TOKEN on db nodo_online under macro NewMod1
+        And checks the value PAYING,PAID,NOTIFIED of the record at column STATUS of the table POSITION_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NOTIFIED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 6 record for the table POSITION_PAYMENT_STATUS retrived by the query PAYMENT_TOKEN on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query PAYMENT_TOKEN on db nodo_online under macro NewMod1
+        And verify 3 record for the table POSITION_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
-    # Scenario: [Activate_blocco_03] (part 2)
-    #     Given the [Activate_blocco_03] (part 1) scenario executed successfully
-    #     And the closePaymentV2 scenario executed successfully
-    #     When PM sends closePaymentV2 to nodo-dei-pagamenti
-    #     Then check outcome is OK of closePaymentV2 response
-    #     And check faultCode is 200 of closePaymentV2 response
-    #     And wait 5 seconds for expiration
+        # Scenario: [Activate_blocco_03] (part 2)
+        Given the [Activate_blocco_03] (part 1) scenario executed successfully
+        And the closePaymentV2 scenario executed successfully
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 200
+        And check esito is OK of v2/closepayment response
+        And wait 5 seconds for expiration
 
-    # Scenario: [Activate_blocco_03] (part 3)
-    #     Given the [Activate_blocco_03] (part 2) scenario executed successfully
-    #     And the sendPaymentOutcomeV2 scenario executed successfully
-    #     When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
-    #     Then check outcome is OK of sendPaymentOutcomeV2 response
-    #     And wait 20 seconds for expiration
+        # Scenario: [Activate_blocco_03] (part 3)
+        Given the [Activate_blocco_03] (part 2) scenario executed successfully
+        And the sendPaymentOutcomeV2 scenario executed successfully
+        When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of sendPaymentOutcomeV2 response
+        And wait 20 seconds for expiration
 
-    # Scenario: [Activate_blocco_03] (part 4)
-    #     Given the [Activate_blocco_03] (part 3) scenario executed successfully
-    #     And the activatePaymentNoticeV2 scenario executed successfully
-    #     And idempotencyKey with idempotency_key_1 in activatePaymentNoticeV2
-    #     And expirationTime with None in activatePaymentNoticeV2
-    #     When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-    #     Then check outcome is KO of activatePaymentNoticeV2 response
-    #     And check faultCode is PPT_PAGAMENTO_DUPLICATO of activatePaymentNoticeV2 response
-    #     And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response1
-    #     And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED,PAID,NOTIFIED,None of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query PAYMENT_TOKEN on db nodo_online under macro NewMod1
-    #     And checks the value None of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query PAYMENT_TOKEN_1 on db nodo_online under macro NewMod1
-    #     And checks the value NOTIFIED,None of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query PAYMENT_TOKEN on db nodo_online under macro NewMod1
-    #     And checks the value None of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query PAYMENT_TOKEN_1 on db nodo_online under macro NewMod1
-    #     And checks the value PAYING,PAID,NOTIFIED,None of the record at column STATUS of the table POSITION_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    #     And checks the value NOTIFIED,None of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        # Scenario: [Activate_blocco_03] (part 4)
+        Given the [Activate_blocco_03] (part 3) scenario executed successfully
+        And random idempotencyKey having $activatePaymentNoticeV2.idPSP as idPSP in activatePaymentNoticeV2
+        And expirationTime with None in activatePaymentNoticeV2
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is KO of activatePaymentNoticeV2 response
+        And check faultCode is PPT_PAGAMENTO_DUPLICATO of activatePaymentNoticeV2 response
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response
+        And checks the value PAYING,PAID,NOTIFIED of the record at column STATUS of the table POSITION_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NOTIFIED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 0 record for the table POSITION_PAYMENT_STATUS retrived by the query PAYMENT_TOKEN on db nodo_online under macro NewMod1
+        And verify 0 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query PAYMENT_TOKEN on db nodo_online under macro NewMod1
+        And verify 3 record for the table POSITION_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
     # [Activate_blocco_05]
     Scenario: Activate_blocco_05 (parte 1)
