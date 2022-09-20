@@ -16,6 +16,27 @@ Feature: semantic checks for checkPosition outcome OK
             }
             """
 
+    Scenario: checkPosition with 3 positions
+        Given initial json checkPosition
+            """
+            {
+                "positionslist": [
+                    {
+                        "fiscalCode": "#creditor_institution_code#",
+                        "noticeNumber": "311123456789012345"
+                    },
+                    {
+                        "fiscalCode": "#creditor_institution_code#",
+                        "noticeNumber": "002123456789012345"
+                    },
+                    {
+                        "fiscalCode": "#creditor_institution_code#",
+                        "noticeNumber": "310123456789012345"
+                    }
+                ]
+            }
+            """
+
     Scenario: activatePaymentNoticeV2
         Given initial XML activatePaymentNoticeV2
             """
@@ -208,25 +229,7 @@ Feature: semantic checks for checkPosition outcome OK
 
     # SEM_CPO_06
     Scenario: Wrong configuration 3
-        Given initial json checkPosition
-            """
-            {
-                "positionslist": [
-                    {
-                        "fiscalCode": "#creditor_institution_code#",
-                        "noticeNumber": "311#iuv#"
-                    },
-                    {
-                        "fiscalCode": "#creditor_institution_code#",
-                        "noticeNumber": "002$iuv"
-                    },
-                    {
-                        "fiscalCode": "#creditor_institution_code#",
-                        "noticeNumber": "310$iuv"
-                    }
-                ]
-            }
-            """
+        Given the checkPosition with 3 positions scenario executed successfully
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
         Then verify the HTTP status code of checkPosition response is 400
         And check outcome is KO of checkPosition response
