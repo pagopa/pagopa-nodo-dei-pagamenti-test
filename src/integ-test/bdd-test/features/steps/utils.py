@@ -304,10 +304,16 @@ def json2xml(json_obj, line_padding=""):
                 result_list.append("%s</%s>" % (line_padding, tag_name))
             elif type(sub_obj) is list:
                 result_list.append("%s<%s>" % (line_padding, tag_name))
-                for sub_elem in sub_obj:
-                    result_list.append("%s<%s>" % (line_padding, "paymentToken"))
-                    result_list.append(json2xml(sub_elem, line_padding))
-                    result_list.append("%s</%s>" % (line_padding, "paymentToken"))
+                if tag_name == 'paymentTokens':
+                    for sub_elem in sub_obj:
+                        result_list.append("%s<%s>" % (line_padding, "paymentToken"))
+                        result_list.append(json2xml(sub_elem, line_padding))
+                        result_list.append("%s</%s>" % (line_padding, "paymentToken"))
+                if tag_name == 'positionslist':
+                    for sub_elem in sub_obj:
+                        result_list.append("%s<%s>" % (line_padding, "position"))
+                        result_list.append(json2xml(sub_elem, line_padding))
+                        result_list.append("%s</%s>" % (line_padding, "position"))
                 result_list.append("%s</%s>" % (line_padding, tag_name))
             else:
                 result_list.append("%s<%s>" % (line_padding, tag_name))

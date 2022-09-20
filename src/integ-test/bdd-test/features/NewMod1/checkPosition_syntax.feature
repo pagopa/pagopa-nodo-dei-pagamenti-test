@@ -15,12 +15,12 @@ Feature: syntax checks for checkPosition
             """
 
     # SIN_CPO_01
-    Scenario: Invalid positionslist 1
-        Given positionslist with None in checkPosition
-        When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
-        Then verify the HTTP status code of checkPosition response is 400
-        And check outcome is KO of checkPosition response
-        And check description is Invalid positionslist of checkPosition response
+    # Scenario: Invalid positionslist 1
+    #     Given positionslist with None in checkPosition
+    #     When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
+    #     Then verify the HTTP status code of checkPosition response is 400
+    #     And check outcome is KO of checkPosition response
+    #     And check description is Invalid positionslist of checkPosition response
 
     # SIN_CPO_02
     Scenario: Invalid positionslist 2
