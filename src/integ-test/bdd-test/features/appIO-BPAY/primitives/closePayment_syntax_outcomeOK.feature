@@ -362,3 +362,4 @@ Feature: syntax checks for closePayment outcome OK
     Then verify the HTTP status code of v1/closepayment response is 404
     And check esito is KO of v1/closepayment response
     And check descrizione is Il Pagamento indicato non esiste of v1/closepayment response
+    
