@@ -788,12 +788,12 @@ def step_impl(context, sender, method, service, receiver):
                 l.append(body["paymentTokens"])
                 body["paymentTokens"] = l
 
-        if 'totalAmount' in jsonNew.keys():
-            if jsonNew["totalAmount"] != None:
-                if ',' in jsonNew["totalAmount"]:
+        if 'totalAmount' in body.keys():
+            if body["totalAmount"] != None:
+                if ',' in body["totalAmount"]:
                     amount_comma=1
-                    amount = jsonNew["totalAmount"]
-                jsonNew["totalAmount"] = float(jsonNew["totalAmount"].replace(',','.'))
+                    amount = body["totalAmount"]
+                body["totalAmount"] = float(body["totalAmount"].replace(',','.'))
             else:
                 amount_empty=1
 
@@ -809,11 +809,11 @@ def step_impl(context, sender, method, service, receiver):
 
         body = json.dumps(body, indent=4)
 
-        l_amount_string = jsonNew.index('"totalAmount": ') + len('"totalAmount": ')
+        l_amount_string = body.index('"totalAmount": ') + len('"totalAmount": ')
         if amount_comma == 1:
-            jsonNew = jsonNew.replace(jsonNew[l_amount_string:l_amount_string + len(amount)],amount)
+            body = body.replace(body[l_amount_string:l_amount_string + len(amount)],amount)
         if amount_empty == 1:
-            jsonNew = jsonNew.replace(jsonNew[l_amount_string:l_amount_string + len('null')],'')
+            body = body.replace(body[l_amount_string:l_amount_string + len('null')],'')
 
     print(body)
 
