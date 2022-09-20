@@ -200,7 +200,7 @@ Feature: flux tests for activatePaymentNoticeV2Request
 
     # [Activate_blocco_02]
 
-    Scenario: [Activate_blocco_02] (part 1)
+    Scenario: Activate_blocco_02 (part 1)
         # Given the checkPosition scenario executed successfully
         # And the activatePaymentNoticeV2 scenario executed successfully
         Given the activatePaymentNoticeV2 scenario executed successfully
@@ -208,8 +208,8 @@ Feature: flux tests for activatePaymentNoticeV2Request
         Then check outcome is OK of activatePaymentNoticeV2 response
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response
 
-        # Scenario: [Activate_blocco_02] (part 2)
-        Given the [Activate_blocco_02] (part 1) scenario executed successfully
+    Scenario: Activate_blocco_02 (part 2)
+        Given the Activate_blocco_02 (part 1) scenario executed successfully
         And the closePaymentV2 scenario executed successfully
         And paymentToken with $activatePaymentNoticeV2Response.paymentToken in v2/closepayment
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
@@ -217,15 +217,15 @@ Feature: flux tests for activatePaymentNoticeV2Request
         And check esito is OK of v2/closepayment response
         And wait 5 seconds for expiration
 
-        # Scenario: [Activate_blocco_02] (part 3)
-        Given the [Activate_blocco_02] (part 2) scenario executed successfully
+    Scenario: Activate_blocco_02 (part 3)
+        Given the Activate_blocco_02 (part 2) scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
         And paymentToken with $activatePaymentNoticeV2Response.paymentToken in sendPaymentOutcomeV2
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
 
-        # Scenario: [Activate_blocco_02] (part 4)
-        Given the [Activate_blocco_02] (part 3) scenario executed successfully
+    Scenario: Activate_blocco_02 (part 4)
+        Given the Activate_blocco_02 (part 3) scenario executed successfully
         And random idempotencyKey having $activatePaymentNoticeV2.idPSP as idPSP in activatePaymentNoticeV2
         And expirationTime with None in activatePaymentNoticeV2
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
@@ -245,16 +245,16 @@ Feature: flux tests for activatePaymentNoticeV2Request
 
     # [Activate_blocco_03]
 
-    Scenario: [Activate_blocco_03] (part 1)
+    Scenario: Activate_blocco_03 (part 1)
         # Given the checkPosition scenario executed successfully
         # And the activatePaymentNoticeV2 scenario executed successfully
         Given the activatePaymentNoticeV2 scenario executed successfully
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response
-        
-        # Scenario: [Activate_blocco_03] (part 2)
-        Given the [Activate_blocco_03] (part 1) scenario executed successfully
+
+    Scenario: Activate_blocco_03 (part 2)
+        Given the Activate_blocco_03 (part 1) scenario executed successfully
         And the closePaymentV2 scenario executed successfully
         And paymentToken with $activatePaymentNoticeV2Response.paymentToken in v2/closepayment
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
@@ -262,16 +262,16 @@ Feature: flux tests for activatePaymentNoticeV2Request
         And check esito is OK of v2/closepayment response
         And wait 5 seconds for expiration
 
-        # Scenario: [Activate_blocco_03] (part 3)
-        Given the [Activate_blocco_03] (part 2) scenario executed successfully
+    Scenario: Activate_blocco_03 (part 3)
+        Given the Activate_blocco_03 (part 2) scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
         And paymentToken with $activatePaymentNoticeV2Response.paymentToken in sendPaymentOutcomeV2
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
         And wait 20 seconds for expiration
 
-        # Scenario: [Activate_blocco_03] (part 4)
-        Given the [Activate_blocco_03] (part 3) scenario executed successfully
+    Scenario: Activate_blocco_03 (part 4)
+        Given the Activate_blocco_03 (part 3) scenario executed successfully
         And random idempotencyKey having $activatePaymentNoticeV2.idPSP as idPSP in activatePaymentNoticeV2
         And expirationTime with None in activatePaymentNoticeV2
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
