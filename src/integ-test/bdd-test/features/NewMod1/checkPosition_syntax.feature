@@ -109,27 +109,3 @@ Feature: syntax checks for checkPosition
         Then verify the HTTP status code of checkPosition response is 400
         And check outcome is KO of checkPosition response
         And check description is Invalid noticeNumber of checkPosition response
-
-    # prove da cancellare in seguito
-
-    Scenario: checkposition ok 2 position
-        Given initial json checkPosition
-            """
-            {
-                "positionslist": [
-                    {
-                        "fiscalCode": "#creditor_institution_code#",
-                        "noticeNumber": "311#iuv#"
-                    },
-                    {
-                        "fiscalCode": "#creditor_institution_code#",
-                        "noticeNumber": "311278742743410156"
-                    }
-                ]
-            }
-            """
-        When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
-        Then verify the HTTP status code of checkPosition response is 200
-        And check outcome is OK of checkPosition response
-
-# prove da cancellare in seguito
