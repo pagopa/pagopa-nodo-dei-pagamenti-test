@@ -2,26 +2,17 @@ Feature: flux tests for activatePaymentNoticeV2Request
 
     Background:
         Given systems up
-
-    #   Scenario: checkPosition
-    #     Given initial json checkPosition
-    #       """
-    #       {
-    #         "positionslist": [
-    #           {
-    #             "fiscalCode": "#creditor_institution_code#",
-    #             "noticeNumber": "310#iuv#"
-    #           },
-    #           {
-    #             "fiscalCode": "#creditor_institution_code#",
-    #             "noticeNumber": "310#iuv1#"
-    #           }
-    #         ]
-    #       }
-    #       """
-    #     When PM sends checkPosition to nodo-dei-pagamenti
-    #     Then check outcome is OK of checkPosition response
-    #     And check faultCode is 200 of checkPosition response
+        And initial json checkPosition
+            """
+            {
+                "positionslist": [
+                    {
+                        "fiscalCode": "#creditor_institution_code#",
+                        "noticeNumber": "311#iuv#"
+                    }
+                ]
+            }
+            """
 
     Scenario: activatePaymentNoticeV2
         Given initial XML activatePaymentNoticeV2
@@ -37,7 +28,7 @@ Feature: flux tests for activatePaymentNoticeV2Request
             <idempotencyKey>#idempotency_key#</idempotencyKey>
             <qrCode>
             <fiscalCode>#creditor_institution_code#</fiscalCode>
-            <noticeNumber>311#iuv#</noticeNumber>
+            <noticeNumber>311$iuv</noticeNumber>
             </qrCode>
             <expirationTime>6000</expirationTime>
             <amount>10.00</amount>
@@ -178,13 +169,20 @@ Feature: flux tests for activatePaymentNoticeV2Request
             """
 
     # [Activate_blocco_01]
+
     Scenario: Activate_blocco_01 (parte 1)
-        Given the activatePaymentNoticeV2 scenario executed successfully
-        When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-        Then check outcome is OK of activatePaymentNoticeV2 response
+        When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of checkPosition response is 200
+        And check outcome is OK of checkPosition response
 
     Scenario: Activate_blocco_01 (parte 2)
         Given the Activate_blocco_01 (parte 1) scenario executed successfully
+        And the activatePaymentNoticeV2 scenario executed successfully
+        When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+
+    Scenario: Activate_blocco_01 (parte 3)
+        Given the Activate_blocco_01 (parte 2) scenario executed successfully
         And random idempotencyKey having $activatePaymentNoticeV2.idPSP as idPSP in activatePaymentNoticeV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNoticeV2 response
@@ -201,15 +199,19 @@ Feature: flux tests for activatePaymentNoticeV2Request
     # [Activate_blocco_02]
 
     Scenario: Activate_blocco_02 (part 1)
-        # Given the checkPosition scenario executed successfully
-        # And the activatePaymentNoticeV2 scenario executed successfully
-        Given the activatePaymentNoticeV2 scenario executed successfully
+        When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of checkPosition response is 200
+        And check outcome is OK of checkPosition response
+
+    Scenario: Activate_blocco_02 (part 2)
+        Given the Activate_blocco_02 (part 1) scenario executed successfully
+        And the activatePaymentNoticeV2 scenario executed successfully
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response
 
-    Scenario: Activate_blocco_02 (part 2)
-        Given the Activate_blocco_02 (part 1) scenario executed successfully
+    Scenario: Activate_blocco_02 (part 3)
+        Given the Activate_blocco_02 (part 2) scenario executed successfully
         And the closePaymentV2 scenario executed successfully
         And paymentToken with $activatePaymentNoticeV2Response.paymentToken in v2/closepayment
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
@@ -217,8 +219,8 @@ Feature: flux tests for activatePaymentNoticeV2Request
         And check outcome is OK of v2/closepayment response
         And wait 5 seconds for expiration
 
-    Scenario: Activate_blocco_02 (part 3)
-        Given the Activate_blocco_02 (part 2) scenario executed successfully
+    Scenario: Activate_blocco_02 (part 4)
+        Given the Activate_blocco_02 (part 3) scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
         And paymentToken with $activatePaymentNoticeV2Response.paymentToken in sendPaymentOutcomeV2
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -233,8 +235,8 @@ Feature: flux tests for activatePaymentNoticeV2Request
         And verify 3 record for the table POSITION_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
-    Scenario: Activate_blocco_02 (part 4)
-        Given the Activate_blocco_02 (part 3) scenario executed successfully
+    Scenario: Activate_blocco_02 (part 5)
+        Given the Activate_blocco_02 (part 4) scenario executed successfully
         And random idempotencyKey having $activatePaymentNoticeV2.idPSP as idPSP in activatePaymentNoticeV2
         And expirationTime with None in activatePaymentNoticeV2
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
@@ -248,15 +250,19 @@ Feature: flux tests for activatePaymentNoticeV2Request
     # [Activate_blocco_03]
 
     Scenario: Activate_blocco_03 (part 1)
-        # Given the checkPosition scenario executed successfully
-        # And the activatePaymentNoticeV2 scenario executed successfully
-        Given the activatePaymentNoticeV2 scenario executed successfully
+        When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of checkPosition response is 200
+        And check outcome is OK of checkPosition response
+
+    Scenario: Activate_blocco_03 (part 2)
+        Given the Activate_blocco_03 (part 1) scenario executed successfully
+        And the activatePaymentNoticeV2 scenario executed successfully
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response
 
-    Scenario: Activate_blocco_03 (part 2)
-        Given the Activate_blocco_03 (part 1) scenario executed successfully
+    Scenario: Activate_blocco_03 (part 3)
+        Given the Activate_blocco_03 (part 2) scenario executed successfully
         And the closePaymentV2 scenario executed successfully
         And paymentToken with $activatePaymentNoticeV2Response.paymentToken in v2/closepayment
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
@@ -264,8 +270,8 @@ Feature: flux tests for activatePaymentNoticeV2Request
         And check outcome is OK of v2/closepayment response
         And wait 5 seconds for expiration
 
-    Scenario: Activate_blocco_03 (part 3)
-        Given the Activate_blocco_03 (part 2) scenario executed successfully
+    Scenario: Activate_blocco_03 (part 4)
+        Given the Activate_blocco_03 (part 3) scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
         And paymentToken with $activatePaymentNoticeV2Response.paymentToken in sendPaymentOutcomeV2
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -280,8 +286,8 @@ Feature: flux tests for activatePaymentNoticeV2Request
         And verify 3 record for the table POSITION_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
-    Scenario: Activate_blocco_03 (part 4)
-        Given the Activate_blocco_03 (part 3) scenario executed successfully
+    Scenario: Activate_blocco_03 (part 5)
+        Given the Activate_blocco_03 (part 4) scenario executed successfully
         And random idempotencyKey having $activatePaymentNoticeV2.idPSP as idPSP in activatePaymentNoticeV2
         And expirationTime with None in activatePaymentNoticeV2
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
@@ -293,8 +299,15 @@ Feature: flux tests for activatePaymentNoticeV2Request
         And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
     # [Activate_blocco_05]
+
     Scenario: Activate_blocco_05 (parte 1)
-        Given the activatePaymentNoticeV2 scenario executed successfully
+        When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of checkPosition response is 200
+        And check outcome is OK of checkPosition response
+
+    Scenario: Activate_blocco_05 (parte 2)
+        Given the Activate_blocco_05 (parte 1) scenario executed successfully
+        And the activatePaymentNoticeV2 scenario executed successfully
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         And checks the value PAYING of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
@@ -306,8 +319,8 @@ Feature: flux tests for activatePaymentNoticeV2Request
         And verify 1 record for the table POSITION_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
-    Scenario: Activate_blocco_05 (parte 2)
-        Given the Activate_blocco_05 (parte 1) scenario executed successfully
+    Scenario: Activate_blocco_05 (parte 3)
+        Given the Activate_blocco_05 (parte 2) scenario executed successfully
         And random iuv in context
         And noticeNumber with 311$iuv in activatePaymentNoticeV2
         And creditorReferenceId with 11$iuv in paGetPayment
@@ -325,15 +338,22 @@ Feature: flux tests for activatePaymentNoticeV2Request
         And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
     # [Activate_blocco_06]
+
     Scenario: Activate_blocco_06 (parte 1)
-        Given the activatePaymentNoticeV2 scenario executed successfully
+        When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of checkPosition response is 200
+        And check outcome is OK of checkPosition response
+
+    Scenario: Activate_blocco_06 (parte 2)
+        Given the Activate_blocco_06 (parte 1) scenario executed successfully
+        And the activatePaymentNoticeV2 scenario executed successfully
         And expirationTime with 2000 in activatePaymentNoticeV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response
 
-    Scenario: Activate_blocco_06 (parte 2)
-        Given the Activate_blocco_06 (parte 1) scenario executed successfully
+    Scenario: Activate_blocco_06 (parte 3)
+        Given the Activate_blocco_06 (parte 2) scenario executed successfully
         When job mod3CancelV2 triggered after 3 seconds
         Then wait 0 seconds for expiration
         And checks the value PAYING,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query PAYMENT_TOKEN on db nodo_online under macro NewMod1
@@ -345,8 +365,8 @@ Feature: flux tests for activatePaymentNoticeV2Request
         And verify 2 record for the table POSITION_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
-    Scenario: Activate_blocco_06 (parte 3)
-        Given the Activate_blocco_06 (parte 2) scenario executed successfully
+    Scenario: Activate_blocco_06 (parte 4)
+        Given the Activate_blocco_06 (parte 3) scenario executed successfully
         And expirationTime with None in activatePaymentNoticeV2
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
