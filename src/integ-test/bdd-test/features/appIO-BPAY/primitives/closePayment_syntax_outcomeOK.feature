@@ -265,6 +265,7 @@ Feature: syntax checks for closePayment outcome OK
   Scenario Outline: check closePayment OK
     Given the check activateIOPayment OK scenario executed successfully
     And the closePayment scenario executed successfully
+    And paymentToken with $activateIOPaymentResponse.paymentToken in v1/closepayment
     And <elem> with <value> in v1/closepayment
     When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
     Then verify the HTTP status code of v1/closepayment response is 200
@@ -285,8 +286,10 @@ Feature: syntax checks for closePayment outcome OK
 
   Scenario: check activateIOPayment2 OK
     Given the check activateIOPayment OK scenario executed successfully
-    And the activateIOPayment scenario executed successfully
-    And noticeNumber with 311#iuv# in activateIOPayment
+    And random iuv in context
+    And noticeNumber with 311$iuv in activateIOPayment
+    And creditorReferenceId with 11$iuv in paGetPayment
+    And EC replies to nodo-dei-pagamenti with the paGetPayment
     When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is OK of activateIOPayment response
     And save activateIOPayment response in activateIOPayment2Response
