@@ -4,15 +4,10 @@ Feature: Flows checks for nodoInviaCarrelloRPT [PAG-1642_01]
         Given systems up
 
 
-    # [PAG-1642_01]
-    #Scenario: DB Update-Disable job paInviaRt
-        #Given update through the query {query_name} of the table {table_name} the parameter {param} with {value}, with where condition {where_condition} and where value {valore} under macro {macro} on db {db_name}
-
-
 
     Scenario: RPT generation
-        #Given the DB Update-Disable job paInviaRt Scenario executed successfully
-        Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
+        Given nodo-dei-pagamenti has config parameter CONFIG_VALUE set to false
+        And generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
         And generate 1 cart with PA #codicePA# and notice number $1noticeNumber
         And RPT1 generation
             """
@@ -241,9 +236,8 @@ Feature: Flows checks for nodoInviaCarrelloRPT [PAG-1642_01]
     Scenario: Execute nodoNotificaAnnullamento
         Given the Execute nodoChiediInformazioniPagamento scenario executed successfully
         When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-        And job paInviaRt triggered after 20 seconds
-        And wait 20 seconds for expiration
         Then verify the HTTP status code of notificaAnnullamento response is 200
+        And wait 5 seconds for expiration
 
         #DB-CHECK-STATI_RPT
         And replace iuv content with $1iuv content
@@ -271,7 +265,6 @@ Feature: Flows checks for nodoInviaCarrelloRPT [PAG-1642_01]
         And through the query DB_GEST_ANN_stati_position_payment_status retrieve param NOTICE_ID at position 0 and save it under the key NOTICE_ID
         And checks the value PAYING, INSERTED of the record at column STATUS of the table POSITION_STATUS retrived by the query DB_GEST_ANN_notice_number on db nodo_online under macro Mod1Mb
 
-
         #DB-CHECK-POSITION_STATUS_SNAPSHOT
         And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query DB_GEST_ANN_notice_number on db nodo_online under macro Mod1Mb
 
@@ -290,8 +283,8 @@ Feature: Flows checks for nodoInviaCarrelloRPT [PAG-1642_01]
             <password>pwdpwdpwd</password>
             <!--Optional:-->
             <qrCode>
-            <fiscalCode>${qrCodeCF}</fiscalCode>
-            <noticeNumber>311${#TestCase#iuv}</noticeNumber>
+            <fiscalCode>$nodoInviaCarrelloRPT.identificativoDominio</fiscalCode>
+            <noticeNumber>$1noticeNumber</noticeNumber>
             </qrCode>
             <!--Optional:-->
             <!--expirationTime>60000</expirationTime-->
@@ -325,8 +318,122 @@ Feature: Flows checks for nodoInviaCarrelloRPT [PAG-1642_01]
             </nod:activateIOPaymentReq>
             </soapenv:Body>
             </soapenv:Envelope>
-
             """
-        
-      When EC sends SOAP activateIOPayment to nodo-dei-pagamenti
-      Then check outcome is OK of activateIOPayment response
+
+        When EC sends SOAP activateIOPayment to nodo-dei-pagamenti
+        Then check outcome is OK of activateIOPayment response
+        And restore initial configurations
+
+
+    Scenario: Trigger paaInviaRt
+        Given the Execute activateIOPayment scenario executed successfully
+        When job paaInviaRt triggered after 5 seconds
+        Then verify the HTTP status code of paInviaRt response is 200
+
+        #DB-CHECK-STATI_RPT_SNAPSHOT
+        And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query DB_GEST_ANN_stati_rpt on db nodo_online under macro Mod1Mb
+        And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query DB_GEST_ANN_stati_rpt_pa1 on db nodo_online under macro Mod1Mb
+
+    Scenario: Execute nodoChiediInformazioniPagamento1
+        Given the Trigger paInviaRt scenario executed successfully
+        When WISP sends rest GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
+        Then verify the HTTP status code of informazioniPagamento response is 200
+        And check importo field exists in informazioniPagamento response
+        And check email field exists in informazioniPagamento response
+        And check ragioneSociale field exists in informazioniPagamento response
+        And check oggettoPagamento field exists in informazioniPagamento response
+        And check urlRedirectEC field exists in informazioniPagamento response
+        And check enteBeneficiario field exists in informazioniPagamento response
+        And check $1iuv field exists in informazioniPagamento response
+        And check #codicePA# field exists in informazioniPagamento response
+
+    Scenario: Execute nodoNotificaAnnullamento1
+        Given the Execute nodoChiediInformazioniPagamento1 scenario executed successfully
+        When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken to nodo-dei-pagamenti
+        And job paInviaRt triggered after 20 seconds
+        And wait 20 seconds for expiration
+        Then verify the HTTP status code of notificaAnnullamento response is 200
+
+    Scenario: Execute sendPaymentOutcome request
+        Given the activatePaymentNotice1 request scenario executed successfully
+        And initial XML sendPaymentOutcome
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <nod:sendPaymentOutcomeReq>
+            <idPSP>70000000001</idPSP>
+            <idBrokerPSP>70000000001</idBrokerPSP>
+            <idChannel>70000000001_01</idChannel>
+            <password>pwdpwdpwd</password>
+            <paymentToken>$nodoInviaCarrelloRPT.identificativoCarrello</paymentToken>
+            <outcome>OK</outcome>
+            <!--Optional:-->
+            <details>
+            <paymentMethod>creditCard</paymentMethod>
+            <!--Optional:-->
+            <paymentChannel>app</paymentChannel>
+            <fee>2.00</fee>
+            <!--Optional:-->
+            <payer>
+            <uniqueIdentifier>
+            <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
+            <entityUniqueIdentifierValue>77777777777_01</entityUniqueIdentifierValue>
+            </uniqueIdentifier>
+            <fullName>name</fullName>
+            <!--Optional:-->
+            <streetName>street</streetName>
+            <!--Optional:-->
+            <civicNumber>civic</civicNumber>
+            <!--Optional:-->
+            <postalCode>postal</postalCode>
+            <!--Optional:-->
+            <city>city</city>
+            <!--Optional:-->
+            <stateProvinceRegion>state</stateProvinceRegion>
+            <!--Optional:-->
+            <country>IT</country>
+            <!--Optional:-->
+            <e-mail>prova@test.it</e-mail>
+            </payer>
+            <applicationDate>2021-12-12</applicationDate>
+            <transferDate>2021-12-11</transferDate>
+            </details>
+            </nod:sendPaymentOutcomeReq>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+        Then check outcome is OK of sendPaymentOutcome response
+
+        #DB-CHECK-STATI_RPT
+        And replace iuv content with $1iuv content
+        And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO, RPT_ANNULLATA_WISP, RT_GENERATA_NODO, RT_INVIATA_PA, RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query DB_GEST_ANN_stati_rpt on db nodo_online under macro Mod1Mb
+        And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO, RPT_ANNULLATA_WISP, RT_GENERATA_NODO, RT_INVIATA_PA, RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query DB_GEST_ANN_stati_rpt_pa1 on db nodo_online under macro Mod1Mb
+
+        #DB-CHECK-STATI_RPT_SNAPSHOT
+        And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query DB_GEST_ANN_stati_rpt on db nodo_online under macro Mod1Mb
+        And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query DB_GEST_ANN_stati_rpt_pa1 on db nodo_online under macro Mod1Mb
+
+        #DB-CHECK-STATI_CARRELLO
+        And checks the value CART_RICEVUTO_NODO, CART_ACCETTATO_NODO, CART_PARCHEGGIATO_NODO, CART_ANNULLATO_WISP of the record at column STATO of the table STATI_CARRELLO retrived by the query DB_GEST_ANN_stati_payment_token on db nodo_online under macro Mod1Mb
+
+        #DB-CHECK-STATI_CARRELLO_SNAPSHOT
+        And checks the value CART_ANNULLATO_WISP of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query DB_GEST_ANN_stati_payment_token on db nodo_online under macro Mod1Mb
+
+        #DB-CHECK-POSITION_PAYMENT_STATUS_SNAPSHOT
+        And checks the value PAYING, CANCELLED, PAYMENT_SENT, PAYMENT_ACCEPTED, PAID, NOTICE_GENERATED, NOTICE_SENT, NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query DB_GEST_ANN_stati_position_payment_status on db nodo_online under macro Mod1Mb
+        And checks the value PAYING, CANCELLED, PAYMENT_SENT, PAYMENT_ACCEPTED, PAID, NOTICE_GENERATED, NOTICE_SENT, NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query DB_GEST_ANN_stati_position_payment_status on db nodo_online under macro Mod1Mb
+        And checks the value $nodoInviaCarrelloRPT.identificativoCarrello, nodoNotificaAnnullamento, activateIOPayment, nodoInoltraEsitoPagamentoCarta, nodoInoltraEsitoPagamentoCarta, sendPaymentOutcome, sendPaymentOutcome, sendPaymentOutcome, sendPaymentOutcome of the record at column INSERTED_BY of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query DB_GEST_ANN_stati_position_payment_status on db nodo_online under macro Mod1Mb
+
+        #DB-CHECK-POSITION_PAYMENT_STATUS_SNAPSHOT
+        And checks the value CANCELLED, NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query DB_GEST_ANN_stati_position_payment_status on db nodo_online under macro Mod1Mb
+
+        #DB-CHECK-POSITION_STATUS
+        And execution query DB_GEST_ANN_stati_position_payment_status to get value on the table POSITION_PAYMENT_STATUS, with the columns NOTICE_ID under macro Mod1Mb with db name nodo_online
+        And through the query DB_GEST_ANN_stati_position_payment_status retrieve param NOTICE_ID at position 0 and save it under the key NOTICE_ID
+        And checks the value PAYING, INSERTED, PAID, NOTIFIED of the record at column STATUS of the table POSITION_STATUS retrived by the query DB_GEST_ANN_notice_number on db nodo_online under macro Mod1Mb
+
+        #DB-CHECK-POSITION_STATUS_SNAPSHOT
+        And checks the value NOTIFIED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query DB_GEST_ANN_notice_number on db nodo_online under macro Mod1Mb
+

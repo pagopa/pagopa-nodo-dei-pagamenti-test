@@ -1,0 +1,798 @@
+<!DOCTYPE HTML><html><head><title>Behave Test Report</title><meta content="text/html;charset=utf-8" http-equiv="content-type" /><style type="text/css"><!--
+@charset "utf-8"; .passed{}.failed{}.error{}.skipped{}.undefined{}.summary{}.failed_scenarios{}.footer{}body{font-size:0;color:white;margin:0;padding:0}.behave,td,th{font:normal 11px "Lucida Grande",Helvetica,sans-serif;background:white;color:black}.behave #behave-header,td #behave-header,th #behave-header{background:#65c400;color:white;height:8em}.behave #behave-header #expand-collapse p,td #behave-header #expand-collapse p,th #behave-header #expand-collapse p{float:right;margin:0 0 0 10px}.behave .scenario h3,td .scenario h3,th .scenario h3,.background h3{font-size:11px;padding:3px;margin:0;background:#65c400;color:white;font-weight:bold}.background h3{font-size:1.2em;background:#666}.behave h1,td h1,th h1{margin:0 10px 0 10px;padding:10px;font-family:"Lucida Grande",Helvetica,sans-serif;font-size:2em;position:absolute}.behave h4,td h4,th h4{margin-bottom:2px}.behave div.feature,td div.feature,th div.feature{padding:2px;margin:0 10px 5px 10px}.behave div.examples,td div.examples,th div.examples{padding:0 0 0 1em}.behave .stats,td .stats,th .stats{margin:2em}.behave .summary ul.features li,td .summary ul.features li,th .summary ul.features li{display:inline}.behave .step_name,td .step_name,th .step_name{float:left}.behave .step_file,td .step_file,th .step_file{text-align:right;color:#999}.behave .step_file a,td .step_file a,th .step_file a{color:#999}.behave .scenario_file,td .scenario_file,th .scenario_file{float:right;color:#999}.behave .step_duration{padding-left:1em}.behave .tag,td .tag,th .tag{font-weight:bold;color:#246ac1}.behave .backtrace,td .backtrace,th .backtrace{margin-top:0;margin-bottom:0;margin-left:1em;color:black}.behave a,td a,th a{color:#be5c00;margin-right:.5em}.behave a:hover,td a:hover,th a:hover{text-decoration:none}.behave a:visited,td a:visited,th a:visited{font-weight:normal}.behave a div.examples,td a div.examples,th a div.examples{margin:5px 0 5px 15px;color:black}.behave .outline table,td .outline table,th .outline table{margin:0 0 5px 10px}.behave table,td table,th table{border-collapse:collapse}.behave table td,td table td,th table td{padding:3px 3px 3px 5px}.behave table td.failed,.behave table td.passed,.behave table td.skipped,.behave table td.pending,.behave table td.undefined,td table td.failed,td table td.passed,td table td.skipped,td table td.pending{padding-left:18px;padding-right:10px}.behave table td.failed,td table td.failed,th table td.failed{border-left:5px solid #c20000;border-bottom:1px solid #c20000;background:#fffbd3;color:#c20000}.behave table td.passed,td table td.passed,th table td.passed{border-left:5px solid #65c400;border-bottom:1px solid #65c400;background:#dbffb4;color:#3d7700}.behave table td.skipped,td table td.skipped,th table td.skipped{border-left:5px solid aqua;border-bottom:1px solid aqua;background:#e0ffff;color:#011}.behave table td.pending,td table td.pending,th table td.pending{border-left:5px solid #faf834;border-bottom:1px solid #faf834;background:#fcfb98;color:#131313}.behave table td.undefined,td table td.undefined,th table td.undefined{border-left:5px solid #faf834;border-bottom:1px solid #faf834;background:#fcfb98;color:#131313}.behave table td.message,td table td.message,th table td.message{border-left:5px solid aqua;border-bottom:1px solid aqua;background:#e0ffff;color:#011}.behave ol,td ol,th ol{list-style:none;margin:0;padding:0}.behave ol li.step,td ol li.step,th ol li.step{padding:3px 3px 3px 18px;margin:5px 0 5px 5px}.behave ol li,td ol li,th ol li{margin:0 0 0 1em;padding:0 0 0 .2em}.behave ol li span.param,td ol li span.param,th ol li span.param{font-weight:bold}.behave ol li.failed,td ol li.failed,th ol li.failed{border-left:5px solid #c20000;border-bottom:1px solid #c20000;background:#fffbd3;color:#c20000}.behave ol li.passed,td ol li.passed,th ol li.passed{border-left:5px solid #65c400;border-bottom:1px solid #65c400;background:#dbffb4;color:#3d7700}.behave ol li.skipped,td ol li.skipped,th ol li.skipped{border-left:5px solid aqua;border-bottom:1px solid aqua;background:#e0ffff;color:#011}.behave ol li.pending,td ol li.pending,th ol li.pending{border-left:5px solid #faf834;border-bottom:1px solid #faf834;background:#fcfb98;color:#131313}.behave ol li.undefined,td ol li.undefined,th ol li.undefined{border-left:5px solid #faf834;border-bottom:1px solid #faf834;background:#fcfb98;color:#131313}.behave ol li.message,td ol li.message,th ol li.message{border-left:5px solid aqua;border-bottom:1px solid aqua;background:#e0ffff;color:#011;margin-left:10px}.behave #summary,td #summary,th #summary{margin:0;padding:5px 10px;text-align:right;top:0;right:0;float:right}.behave #summary p,td #summary p,th #summary p{margin:0 0 0 2px}.behave #summary #totals,td #summary #totals,th #summary #totals{font-size:1.2em}.behave .scenario h3.failed,td .scenario h3.failed,th .scenario h3.failed,.background h3.failed{background:#c20000}.behave #behave-header.failed,td #behave-header.failed,th #behave-header.failed{background:#c20000}.behave .scenario h3.undefined,td .scenario h3.undefined,th .scenario h3.undefined,.background h3.undefined{background:#faf834;color:black}.behave #behave-header.undefined,td #behave-header.undefined,th #behave-header.undefined{background:#faf834;color:black}#behave-header.failed a{color:white}pre{white-space:pre-wrap}
+--></style><script type="text/javascript"><!--
+function Collapsible_toggle(id){var elem=document.getElementById(id);elem.style.display=(elem.style.display=='none'?'block':'none');return false;};function Collapsible_expandAll(className){var elems=document.getElementsByClassName(className);for(var i=0;i<elems.length;i++){elems[i].style.display='block';}};function Collapsible_collapseAll(className){var elems=document.getElementsByClassName(className);for(var i=0;i<elems.length;i++){elems[i].style.display='none';}};function Collapsible_expandAllFailed(){var elems=document.getElementsByClassName('failed');for(var i=0;i<elems.length;i++){var elem=elems[i];if(elem.nodeName=='H3'){elem.parentElement.getElementsByTagName('ol')[0].style.display='block';}}}
+--></script></head><body><div class="behave"><div id="behave-header" class="failed"><div id="label"><h1>Behave Test Report</h1></div><div id="summary"><p id="totals"><p id="feature_totals">Features: failed: 1</p><p id="scenario_totals">Scenarios: passed: 4, failed: 5</p><p id="step_totals">Steps: passed: 40, failed: 5, skipped: 37</p></p><p id="duration">Finished in 65.6 seconds</p><div id="expand-collapse"><a id="expander" href="#" onclick="Collapsible_expandAll('scenario_steps')">Expand All</a><span> | </span><a id="collapser" href="#" onclick="Collapsible_collapseAll('scenario_steps')">Collapse All</a><span> | </span><a id="failed_expander" href="#" onclick="Collapsible_expandAllFailed()">Expand All Failed</a></div></div></div><div class="feature"><h2><span class="val">Feature: Flows checks for nodoInviaCarrelloRPT [PAG-1642_01]</span></h2><span /></div><div class="background"><h3><span class="val">Background: </span></h3><ol /><span /></div><div class="scenario"><span class="scenario_file">src/integ-test/bdd-test/features/Mod1MB/flows/gestioneAnnulli/nodoNotificaAnnullamento_flows_PAG-1642_01.feature:8</span><h3 onclick="Collapsible_toggle('scenario_0')"><span class="val">Scenario: RPT generation</span></h3><ol class="scenario_steps" id="scenario_0"><li class="step passed"><div class="step_name"><span class="keyword">Given </span><span class="step val">systems up</span><small class="step_duration">(0.092s)</small></div><div class="step_file"><span>src/integ-test/bdd-test/features/steps/steps.py:29</span></div><table><tr><th>name</th><th>url</th><th>healthcheck</th><th>soap_service</th><th>rest_service</th></tr><tr><td>nodo-dei-pagamenti</td><td>http://localhost:9080/</td><td>nodo-dev-health/ready</td><td>nodo-dev/webservices/input</td><td>nodo-dev</td></tr><tr><td>mock-ec</td><td>http://localhost:8089/</td><td>servizi/PagamentiTelematiciRPT/info</td><td>servizi/PagamentiTelematiciRPT</td><td /></tr><tr><td>mock-psp</td><td>http://localhost:8090/</td><td>servizi/MockPSP/info</td><td>servizi/MockPSP</td><td /></tr></table><span class="embed" /></li><li class="step passed"><div class="step_name"><span class="keyword">Given </span><span class="step val"><span>nodo-dei-pagamenti has config parameter </span><b>CONFIG_VALUE</b><span> set to </span><b>false</b><span /></span><small class="step_duration">(5.304s)</small></div><div class="step_file"><span>src/integ-test/bdd-test/features/steps/steps.py:1290</span></div><span class="embed" /></li><li class="step passed"><div class="step_name"><span class="keyword">And </span><span class="step val"><span>generate </span><b>1</b><span> notice number and iuv with aux digit </span><b>3</b><span>, segregation code </span><b>#cod_segr#</b><span> and application code </span><b>NA</b><span /></span><small class="step_duration">(0.004s)</small></div><div class="step_file"><span>src/integ-test/bdd-test/features/steps/steps.py:318</span></div><span class="embed" /></li><li class="step passed"><div class="step_name"><span class="keyword">And </span><span class="step val"><span>generate </span><b>1</b><span> cart with PA </span><b>#codicePA#</b><span> and notice number </span><b>$1noticeNumber</b><span /></span><small class="step_duration">(0.002s)</small></div><div class="step_file"><span>src/integ-test/bdd-test/features/steps/steps.py:338</span></div><span class="embed" /></li><li class="step passed"><div class="step_name"><span class="keyword">And </span><span class="step val"><span>RPT</span><b>1</b><span> generation</span></span><small class="step_duration">(0.004s)</small></div><div class="step_file"><span>src/integ-test/bdd-test/features/steps/steps.py:350</span></div><div class="message"><pre>&lt;pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd "&gt;
+&lt;pay_i:versioneOggetto&gt;1.0&lt;/pay_i:versioneOggetto&gt;
+&lt;pay_i:dominio&gt;
+&lt;pay_i:identificativoDominio&gt;#codicePA#&lt;/pay_i:identificativoDominio&gt;
+&lt;pay_i:identificativoStazioneRichiedente&gt;#id_station#&lt;/pay_i:identificativoStazioneRichiedente&gt;
+&lt;/pay_i:dominio&gt;
+&lt;pay_i:identificativoMessaggioRichiesta&gt;MSGRICHIESTA01&lt;/pay_i:identificativoMessaggioRichiesta&gt;
+&lt;pay_i:dataOraMessaggioRichiesta&gt;#timedate#&lt;/pay_i:dataOraMessaggioRichiesta&gt;
+&lt;pay_i:autenticazioneSoggetto&gt;CNS&lt;/pay_i:autenticazioneSoggetto&gt;
+&lt;pay_i:soggettoVersante&gt;
+&lt;pay_i:identificativoUnivocoVersante&gt;
+&lt;pay_i:tipoIdentificativoUnivoco&gt;F&lt;/pay_i:tipoIdentificativoUnivoco&gt;
+&lt;pay_i:codiceIdentificativoUnivoco&gt;RCCGLD09P09H502E&lt;/pay_i:codiceIdentificativoUnivoco&gt;
+&lt;/pay_i:identificativoUnivocoVersante&gt;
+&lt;pay_i:anagraficaVersante&gt;Gesualdo;Riccitelli&lt;/pay_i:anagraficaVersante&gt;
+&lt;pay_i:indirizzoVersante&gt;via del gesu&lt;/pay_i:indirizzoVersante&gt;
+&lt;pay_i:civicoVersante&gt;11&lt;/pay_i:civicoVersante&gt;
+&lt;pay_i:capVersante&gt;00186&lt;/pay_i:capVersante&gt;
+&lt;pay_i:localitaVersante&gt;Roma&lt;/pay_i:localitaVersante&gt;
+&lt;pay_i:provinciaVersante&gt;RM&lt;/pay_i:provinciaVersante&gt;
+&lt;pay_i:nazioneVersante&gt;IT&lt;/pay_i:nazioneVersante&gt;
+&lt;pay_i:e-mailVersante&gt;gesualdo.riccitelli@poste.it&lt;/pay_i:e-mailVersante&gt;
+&lt;/pay_i:soggettoVersante&gt;
+&lt;pay_i:soggettoPagatore&gt;
+&lt;pay_i:identificativoUnivocoPagatore&gt;
+&lt;pay_i:tipoIdentificativoUnivoco&gt;F&lt;/pay_i:tipoIdentificativoUnivoco&gt;
+&lt;pay_i:codiceIdentificativoUnivoco&gt;RCCGLD09P09H501E&lt;/pay_i:codiceIdentificativoUnivoco&gt;
+&lt;/pay_i:identificativoUnivocoPagatore&gt;
+&lt;pay_i:anagraficaPagatore&gt;Gesualdo;Riccitelli&lt;/pay_i:anagraficaPagatore&gt;
+&lt;pay_i:indirizzoPagatore&gt;via del gesu&lt;/pay_i:indirizzoPagatore&gt;
+&lt;pay_i:civicoPagatore&gt;11&lt;/pay_i:civicoPagatore&gt;
+&lt;pay_i:capPagatore&gt;00186&lt;/pay_i:capPagatore&gt;
+&lt;pay_i:localitaPagatore&gt;Roma&lt;/pay_i:localitaPagatore&gt;
+&lt;pay_i:provinciaPagatore&gt;RM&lt;/pay_i:provinciaPagatore&gt;
+&lt;pay_i:nazionePagatore&gt;IT&lt;/pay_i:nazionePagatore&gt;
+&lt;pay_i:e-mailPagatore&gt;gesualdo.riccitelli@poste.it&lt;/pay_i:e-mailPagatore&gt;
+&lt;/pay_i:soggettoPagatore&gt;
+&lt;pay_i:enteBeneficiario&gt;
+&lt;pay_i:identificativoUnivocoBeneficiario&gt;
+&lt;pay_i:tipoIdentificativoUnivoco&gt;G&lt;/pay_i:tipoIdentificativoUnivoco&gt;
+&lt;pay_i:codiceIdentificativoUnivoco&gt;11111111117&lt;/pay_i:codiceIdentificativoUnivoco&gt;
+&lt;/pay_i:identificativoUnivocoBeneficiario&gt;
+&lt;pay_i:denominazioneBeneficiario&gt;AZIENDA XXX&lt;/pay_i:denominazioneBeneficiario&gt;
+&lt;pay_i:codiceUnitOperBeneficiario&gt;123&lt;/pay_i:codiceUnitOperBeneficiario&gt;
+&lt;pay_i:denomUnitOperBeneficiario&gt;XXX&lt;/pay_i:denomUnitOperBeneficiario&gt;
+&lt;pay_i:indirizzoBeneficiario&gt;IndirizzoBeneficiario&lt;/pay_i:indirizzoBeneficiario&gt;
+&lt;pay_i:civicoBeneficiario&gt;123&lt;/pay_i:civicoBeneficiario&gt;
+&lt;pay_i:capBeneficiario&gt;22222&lt;/pay_i:capBeneficiario&gt;
+&lt;pay_i:localitaBeneficiario&gt;Roma&lt;/pay_i:localitaBeneficiario&gt;
+&lt;pay_i:provinciaBeneficiario&gt;RM&lt;/pay_i:provinciaBeneficiario&gt;
+&lt;pay_i:nazioneBeneficiario&gt;IT&lt;/pay_i:nazioneBeneficiario&gt;
+&lt;/pay_i:enteBeneficiario&gt;
+&lt;pay_i:datiVersamento&gt;
+&lt;pay_i:dataEsecuzionePagamento&gt;#date#&lt;/pay_i:dataEsecuzionePagamento&gt;
+&lt;pay_i:importoTotaleDaVersare&gt;1.50&lt;/pay_i:importoTotaleDaVersare&gt;
+&lt;pay_i:tipoVersamento&gt;BBT&lt;/pay_i:tipoVersamento&gt;
+&lt;pay_i:identificativoUnivocoVersamento&gt;$1iuv&lt;/pay_i:identificativoUnivocoVersamento&gt;
+&lt;pay_i:codiceContestoPagamento&gt;$1carrello&lt;/pay_i:codiceContestoPagamento&gt;
+&lt;pay_i:ibanAddebito&gt;IT96R0123451234512345678904&lt;/pay_i:ibanAddebito&gt;
+&lt;pay_i:bicAddebito&gt;ARTIITM1045&lt;/pay_i:bicAddebito&gt;
+&lt;pay_i:firmaRicevuta&gt;0&lt;/pay_i:firmaRicevuta&gt;
+&lt;pay_i:datiSingoloVersamento&gt;
+&lt;pay_i:importoSingoloVersamento&gt;1.50&lt;/pay_i:importoSingoloVersamento&gt;
+&lt;pay_i:commissioneCaricoPA&gt;1.00&lt;/pay_i:commissioneCaricoPA&gt;
+&lt;pay_i:ibanAccredito&gt;IT96R0123454321000000012345&lt;/pay_i:ibanAccredito&gt;
+&lt;pay_i:bicAccredito&gt;ARTIITM1050&lt;/pay_i:bicAccredito&gt;
+&lt;pay_i:ibanAppoggio&gt;IT96R0123454321000000012345&lt;/pay_i:ibanAppoggio&gt;
+&lt;pay_i:bicAppoggio&gt;ARTIITM1050&lt;/pay_i:bicAppoggio&gt;
+&lt;pay_i:credenzialiPagatore&gt;CP1.1&lt;/pay_i:credenzialiPagatore&gt;
+&lt;pay_i:causaleVersamento&gt;pagamento fotocopie pratica RPT&lt;/pay_i:causaleVersamento&gt;
+&lt;pay_i:datiSpecificiRiscossione&gt;1/abc&lt;/pay_i:datiSpecificiRiscossione&gt;
+&lt;/pay_i:datiSingoloVersamento&gt;
+&lt;/pay_i:datiVersamento&gt;
+&lt;/pay_i:RPT&gt;</pre></div><span class="embed" /></li><li class="step passed"><div class="step_name"><span class="keyword">And </span><span class="step val"><span>RPT</span><b>2</b><span> generation</span></span><small class="step_duration">(0.006s)</small></div><div class="step_file"><span>src/integ-test/bdd-test/features/steps/steps.py:350</span></div><div class="message"><pre>&lt;pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd "&gt;
+&lt;pay_i:versioneOggetto&gt;1.1&lt;/pay_i:versioneOggetto&gt;
+&lt;pay_i:dominio&gt;
+&lt;pay_i:identificativoDominio&gt;90000000001&lt;/pay_i:identificativoDominio&gt;
+&lt;pay_i:identificativoStazioneRichiedente&gt;90000000001_01&lt;/pay_i:identificativoStazioneRichiedente&gt;
+&lt;/pay_i:dominio&gt;
+&lt;pay_i:identificativoMessaggioRichiesta&gt;MSGRICHIESTA01&lt;/pay_i:identificativoMessaggioRichiesta&gt;
+&lt;pay_i:dataOraMessaggioRichiesta&gt;#timedate#&lt;/pay_i:dataOraMessaggioRichiesta&gt;
+&lt;pay_i:autenticazioneSoggetto&gt;CNS&lt;/pay_i:autenticazioneSoggetto&gt;
+&lt;pay_i:soggettoVersante&gt;
+&lt;pay_i:identificativoUnivocoVersante&gt;
+&lt;pay_i:tipoIdentificativoUnivoco&gt;F&lt;/pay_i:tipoIdentificativoUnivoco&gt;
+&lt;pay_i:codiceIdentificativoUnivoco&gt;RCCGLD09P09H502E&lt;/pay_i:codiceIdentificativoUnivoco&gt;
+&lt;/pay_i:identificativoUnivocoVersante&gt;
+&lt;pay_i:anagraficaVersante&gt;Gesualdo;Riccitelli&lt;/pay_i:anagraficaVersante&gt;
+&lt;pay_i:indirizzoVersante&gt;via del gesu&lt;/pay_i:indirizzoVersante&gt;
+&lt;pay_i:civicoVersante&gt;11&lt;/pay_i:civicoVersante&gt;
+&lt;pay_i:capVersante&gt;00186&lt;/pay_i:capVersante&gt;
+&lt;pay_i:localitaVersante&gt;Roma&lt;/pay_i:localitaVersante&gt;
+&lt;pay_i:provinciaVersante&gt;RM&lt;/pay_i:provinciaVersante&gt;
+&lt;pay_i:nazioneVersante&gt;IT&lt;/pay_i:nazioneVersante&gt;
+&lt;pay_i:e-mailVersante&gt;gesualdo.riccitelli@poste.it&lt;/pay_i:e-mailVersante&gt;
+&lt;/pay_i:soggettoVersante&gt;
+&lt;pay_i:soggettoPagatore&gt;
+&lt;pay_i:identificativoUnivocoPagatore&gt;
+&lt;pay_i:tipoIdentificativoUnivoco&gt;F&lt;/pay_i:tipoIdentificativoUnivoco&gt;
+&lt;pay_i:codiceIdentificativoUnivoco&gt;RCCGLD09P09H501E&lt;/pay_i:codiceIdentificativoUnivoco&gt;
+&lt;/pay_i:identificativoUnivocoPagatore&gt;
+&lt;pay_i:anagraficaPagatore&gt;Gesualdo;Riccitelli&lt;/pay_i:anagraficaPagatore&gt;
+&lt;pay_i:indirizzoPagatore&gt;via del gesu&lt;/pay_i:indirizzoPagatore&gt;
+&lt;pay_i:civicoPagatore&gt;11&lt;/pay_i:civicoPagatore&gt;
+&lt;pay_i:capPagatore&gt;00186&lt;/pay_i:capPagatore&gt;
+&lt;pay_i:localitaPagatore&gt;Roma&lt;/pay_i:localitaPagatore&gt;
+&lt;pay_i:provinciaPagatore&gt;RM&lt;/pay_i:provinciaPagatore&gt;
+&lt;pay_i:nazionePagatore&gt;IT&lt;/pay_i:nazionePagatore&gt;
+&lt;pay_i:e-mailPagatore&gt;gesualdo.riccitelli@poste.it&lt;/pay_i:e-mailPagatore&gt;
+&lt;/pay_i:soggettoPagatore&gt;
+&lt;pay_i:enteBeneficiario&gt;
+&lt;pay_i:identificativoUnivocoBeneficiario&gt;
+&lt;pay_i:tipoIdentificativoUnivoco&gt;G&lt;/pay_i:tipoIdentificativoUnivoco&gt;
+&lt;pay_i:codiceIdentificativoUnivoco&gt;11111111117&lt;/pay_i:codiceIdentificativoUnivoco&gt;
+&lt;/pay_i:identificativoUnivocoBeneficiario&gt;
+&lt;pay_i:denominazioneBeneficiario&gt;AZIENDA XXX&lt;/pay_i:denominazioneBeneficiario&gt;
+&lt;pay_i:codiceUnitOperBeneficiario&gt;123&lt;/pay_i:codiceUnitOperBeneficiario&gt;
+&lt;pay_i:denomUnitOperBeneficiario&gt;XXX&lt;/pay_i:denomUnitOperBeneficiario&gt;
+&lt;pay_i:indirizzoBeneficiario&gt;IndirizzoBeneficiario&lt;/pay_i:indirizzoBeneficiario&gt;
+&lt;pay_i:civicoBeneficiario&gt;123&lt;/pay_i:civicoBeneficiario&gt;
+&lt;pay_i:capBeneficiario&gt;22222&lt;/pay_i:capBeneficiario&gt;
+&lt;pay_i:localitaBeneficiario&gt;Roma&lt;/pay_i:localitaBeneficiario&gt;
+&lt;pay_i:provinciaBeneficiario&gt;RM&lt;/pay_i:provinciaBeneficiario&gt;
+&lt;pay_i:nazioneBeneficiario&gt;IT&lt;/pay_i:nazioneBeneficiario&gt;
+&lt;/pay_i:enteBeneficiario&gt;
+&lt;pay_i:datiVersamento&gt;
+&lt;pay_i:dataEsecuzionePagamento&gt;#date#&lt;/pay_i:dataEsecuzionePagamento&gt;
+&lt;pay_i:importoTotaleDaVersare&gt;1.50&lt;/pay_i:importoTotaleDaVersare&gt;
+&lt;pay_i:tipoVersamento&gt;BBT&lt;/pay_i:tipoVersamento&gt;
+&lt;pay_i:identificativoUnivocoVersamento&gt;$1iuv&lt;/pay_i:identificativoUnivocoVersamento&gt;
+&lt;pay_i:codiceContestoPagamento&gt;$1carrello&lt;/pay_i:codiceContestoPagamento&gt;
+&lt;pay_i:ibanAddebito&gt;IT96R0123454321000000012345&lt;/pay_i:ibanAddebito&gt;
+&lt;pay_i:bicAddebito&gt;ARTIITM1045&lt;/pay_i:bicAddebito&gt;
+&lt;pay_i:firmaRicevuta&gt;0&lt;/pay_i:firmaRicevuta&gt;
+&lt;pay_i:datiSingoloVersamento&gt;
+&lt;pay_i:importoSingoloVersamento&gt;1.50&lt;/pay_i:importoSingoloVersamento&gt;
+&lt;pay_i:commissioneCaricoPA&gt;1.00&lt;/pay_i:commissioneCaricoPA&gt;
+&lt;pay_i:ibanAccredito&gt;IT45R0760103200000000001016&lt;/pay_i:ibanAccredito&gt;
+&lt;pay_i:bicAccredito&gt;ARTIITM1050&lt;/pay_i:bicAccredito&gt;
+&lt;pay_i:ibanAppoggio&gt;IT45R0760103200000000001016&lt;/pay_i:ibanAppoggio&gt;
+&lt;pay_i:bicAppoggio&gt;ARTIITM1050&lt;/pay_i:bicAppoggio&gt;
+&lt;pay_i:credenzialiPagatore&gt;CP1.1&lt;/pay_i:credenzialiPagatore&gt;
+&lt;pay_i:causaleVersamento&gt;pagamento fotocopie pratica&lt;/pay_i:causaleVersamento&gt;
+&lt;pay_i:datiSpecificiRiscossione&gt;1/abc&lt;/pay_i:datiSpecificiRiscossione&gt;
+&lt;/pay_i:datiSingoloVersamento&gt;
+&lt;/pay_i:datiVersamento&gt;
+&lt;/pay_i:RPT&gt;</pre></div><span class="embed" /></li></ol><span /></div><div class="scenario"><span class="scenario_file">src/integ-test/bdd-test/features/Mod1MB/flows/gestioneAnnulli/nodoNotificaAnnullamento_flows_PAG-1642_01.feature:169</span><h3 onclick="Collapsible_toggle('scenario_1')"><span class="val">Scenario: Execute nodoInviaCarrelloRPT request</span></h3><ol class="scenario_steps" id="scenario_1"><li class="step passed"><div class="step_name"><span class="keyword">Given </span><span class="step val">systems up</span><small class="step_duration">(0.087s)</small></div><div class="step_file"><span>src/integ-test/bdd-test/features/steps/steps.py:29</span></div><table><tr><th>name</th><th>url</th><th>healthcheck</th><th>soap_service</th><th>rest_service</th></tr><tr><td>nodo-dei-pagamenti</td><td>http://localhost:9080/</td><td>nodo-dev-health/ready</td><td>nodo-dev/webservices/input</td><td>nodo-dev</td></tr><tr><td>mock-ec</td><td>http://localhost:8089/</td><td>servizi/PagamentiTelematiciRPT/info</td><td>servizi/PagamentiTelematiciRPT</td><td /></tr><tr><td>mock-psp</td><td>http://localhost:8090/</td><td>servizi/MockPSP/info</td><td>servizi/MockPSP</td><td /></tr></table><span class="embed" /></li><li class="step passed"><div class="step_name"><span class="keyword">Given </span><span class="step val"><span>the </span><b>RPT generation</b><span> scenario executed successfully</span></span><small class="step_duration">(5.258s)</small></div><div class="step_file"><span>src/integ-test/bdd-test/features/steps/steps.py:957</span></div><span class="embed" /></li><li class="step passed"><div class="step_name"><span class="keyword">And </span><span class="step val"><span>initial XML </span><b>paaInviaRT</b><span /></span><small class="step_duration">(0.015s)</small></div><div class="step_file"><span>src/integ-test/bdd-test/features/steps/steps.py:57</span></div><div class="message"><pre>&lt;soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/"&gt;
+&lt;soapenv:Header/&gt;
+&lt;soapenv:Body&gt;
+&lt;ws:paaInviaRTRisposta&gt;
+&lt;paaInviaRTRisposta&gt;
+&lt;esito&gt;OK&lt;/esito&gt;
+&lt;/paaInviaRTRisposta&gt;
+&lt;/ws:paaInviaRTRisposta&gt;
+&lt;/soapenv:Body&gt;
+&lt;/soapenv:Envelope&gt;</pre></div><span class="embed" /></li><li class="step passed"><div class="step_name"><span class="keyword">And </span><span class="step val"><span /><b>EC</b><span> replies to </span><b>nodo-dei-pagamenti</b><span> with the </span><b>paaInviaRT</b><span /></span><small class="step_duration">(0.036s)</small></div><div class="step_file"><span>src/integ-test/bdd-test/features/steps/steps.py:1004</span></div><span class="embed" /></li><li class="step passed"><div class="step_name"><span class="keyword">And </span><span class="step val"><span>initial XML </span><b>nodoInviaCarrelloRPT</b><span /></span><small class="step_duration">(0.006s)</small></div><div class="step_file"><span>src/integ-test/bdd-test/features/steps/steps.py:57</span></div><div class="message"><pre>&lt;soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/"&gt;
+&lt;soapenv:Header&gt;
+&lt;ppt:intestazioneCarrelloPPT&gt;
+&lt;identificativoIntermediarioPA&gt;#codicePA#&lt;/identificativoIntermediarioPA&gt;
+&lt;identificativoStazioneIntermediarioPA&gt;#id_station#&lt;/identificativoStazioneIntermediarioPA&gt;
+&lt;identificativoCarrello&gt;$1carrello&lt;/identificativoCarrello&gt;
+&lt;/ppt:intestazioneCarrelloPPT&gt;
+&lt;/soapenv:Header&gt;
+&lt;soapenv:Body&gt;
+&lt;ws:nodoInviaCarrelloRPT&gt;
+&lt;password&gt;pwdpwdpwd&lt;/password&gt;
+&lt;identificativoPSP&gt;AGID_01&lt;/identificativoPSP&gt;
+&lt;identificativoIntermediarioPSP&gt;97735020584&lt;/identificativoIntermediarioPSP&gt;
+&lt;identificativoCanale&gt;97735020584_02&lt;/identificativoCanale&gt;
+&lt;listaRPT&gt;
+&lt;elementoListaRPT&gt;
+&lt;identificativoDominio&gt;#codicePA#&lt;/identificativoDominio&gt;
+&lt;identificativoUnivocoVersamento&gt;$1iuv&lt;/identificativoUnivocoVersamento&gt;
+&lt;codiceContestoPagamento&gt;$1carrello&lt;/codiceContestoPagamento&gt;
+&lt;rpt&gt;$rpt1Attachment&lt;/rpt&gt;
+&lt;/elementoListaRPT&gt;
+&lt;elementoListaRPT&gt;
+&lt;identificativoDominio&gt;90000000001&lt;/identificativoDominio&gt;
+&lt;identificativoUnivocoVersamento&gt;$1iuv&lt;/identificativoUnivocoVersamento&gt;
+&lt;codiceContestoPagamento&gt;$1carrello&lt;/codiceContestoPagamento&gt;
+&lt;rpt&gt;$rpt2Attachment&lt;/rpt&gt;
+&lt;/elementoListaRPT&gt;
+&lt;/listaRPT&gt;
+&lt;requireLightPayment&gt;01&lt;/requireLightPayment&gt;
+&lt;multiBeneficiario&gt;1&lt;/multiBeneficiario&gt;
+&lt;/ws:nodoInviaCarrelloRPT&gt;
+&lt;/soapenv:Body&gt;
+&lt;/soapenv:Envelope&gt;</pre></div><span class="embed" /></li><li class="step passed"><div class="step_name"><span class="keyword">When </span><span class="step val"><span /><b>EC</b><span> sends SOAP </span><b>nodoInviaCarrelloRPT</b><span> to </span><b>nodo-dei-pagamenti</b><span /></span><small class="step_duration">(1.309s)</small></div><div class="step_file"><span>src/integ-test/bdd-test/features/steps/steps.py:692</span></div><span class="embed" /></li><li class="step passed"><div class="step_name"><span class="keyword">Then </span><span class="step val"><span>check </span><b>esitoComplessivoOperazione</b><span> is </span><b>OK</b><span> of </span><b>nodoInviaCarrelloRPT</b><span> response</span></span><small class="step_duration">(0.002s)</small></div><div class="step_file"><span>src/integ-test/bdd-test/features/steps/steps.py:723</span></div><span class="embed" /></li><li class="step passed"><div class="step_name"><span class="keyword">Then </span><span class="step val"><span>retrieve session token from </span><b>$nodoInviaCarrelloRPTResponse.url</b><span /></span><small class="step_duration">(0.002s)</small></div><div class="step_file"><span>src/integ-test/bdd-test/features/steps/steps.py:2324</span></div><span class="embed" /></li></ol><span /></div><div class="scenario"><span class="scenario_file">src/integ-test/bdd-test/features/Mod1MB/flows/gestioneAnnulli/nodoNotificaAnnullamento_flows_PAG-1642_01.feature:226</span><h3 onclick="Collapsible_toggle('scenario_2')"><span class="val">Scenario: Execute nodoChiediInformazioniPagamento</span></h3><ol class="scenario_steps" id="scenario_2"><li class="step passed"><div class="step_name"><span class="keyword">Given </span><span class="step val">systems up</span><small class="step_duration">(0.082s)</small></div><div class="step_file"><span>src/integ-test/bdd-test/features/steps/steps.py:29</span></div><table><tr><th>name</th><th>url</th><th>healthcheck</th><th>soap_service</th><th>rest_service</th></tr><tr><td>nodo-dei-pagamenti</td><td>http://localhost:9080/</td><td>nodo-dev-health/ready</td><td>nodo-dev/webservices/input</td><td>nodo-dev</td></tr><tr><td>mock-ec</td><td>http://localhost:8089/</td><td>servizi/PagamentiTelematiciRPT/info</td><td>servizi/PagamentiTelematiciRPT</td><td /></tr><tr><td>mock-psp</td><td>http://localhost:8090/</td><td>servizi/MockPSP/info</td><td>servizi/MockPSP</td><td /></tr></table><span class="embed" /></li><li class="step passed"><div class="step_name"><span class="keyword">Given </span><span class="step val"><span>the </span><b>Execute nodoInviaCarrelloRPT request</b><span> scenario executed successfully</span></span><small class="step_duration">(6.677s)</small></div><div class="step_file"><span>src/integ-test/bdd-test/features/steps/steps.py:957</span></div><span class="embed" /></li><li class="step passed"><div class="step_name"><span class="keyword">When </span><span class="step val"><span /><b>WISP</b><span> sends rest </span><b>GET</b><span> </span><b>informazioniPagamento?idPagamento=$sessionToken</b><span> to </span><b>nodo-dei-pagamenti</b><span /></span><small class="step_duration">(0.136s)</small></div><div class="step_file"><span>src/integ-test/bdd-test/features/steps/steps.py:966</span></div><span class="embed" /></li><li class="step passed"><div class="step_name"><span class="keyword">Then </span><span class="step val"><span>verify the HTTP status code of </span><b>informazioniPagamento</b><span> response is </span><b>200</b><span /></span><small class="step_duration">(0.001s)</small></div><div class="step_file"><span>src/integ-test/bdd-test/features/steps/steps.py:997</span></div><span class="embed" /></li><li class="step passed"><div class="step_name"><span class="keyword">And </span><span class="step val"><span>check </span><b>importo</b><span> field exists in </span><b>informazioniPagamento</b><span> response</span></span><small class="step_duration">(0.001s)</small></div><div class="step_file"><span>src/integ-test/bdd-test/features/steps/steps.py:844</span></div><span class="embed" /></li><li class="step passed"><div class="step_name"><span class="keyword">And </span><span class="step val"><span>check </span><b>email</b><span> field exists in </span><b>informazioniPagamento</b><span> response</span></span><small class="step_duration">(0.001s)</small></div><div class="step_file"><span>src/integ-test/bdd-test/features/steps/steps.py:844</span></div><span class="embed" /></li><li class="step passed"><div class="step_name"><span class="keyword">And </span><span class="step val"><span>check </span><b>ragioneSociale</b><span> field exists in </span><b>informazioniPagamento</b><span> response</span></span><small class="step_duration">(0.000s)</small></div><div class="step_file"><span>src/integ-test/bdd-test/features/steps/steps.py:844</span></div><span class="embed" /></li><li class="step passed"><div class="step_name"><span class="keyword">And </span><span class="step val"><span>check </span><b>oggettoPagamento</b><span> field exists in </span><b>informazioniPagamento</b><span> response</span></span><small class="step_duration">(0.001s)</small></div><div class="step_file"><span>src/integ-test/bdd-test/features/steps/steps.py:844</span></div><span class="embed" /></li><li class="step passed"><div class="step_name"><span class="keyword">And </span><span class="step val"><span>check </span><b>urlRedirectEC</b><span> field exists in </span><b>informazioniPagamento</b><span> response</span></span><small class="step_duration">(0.000s)</small></div><div class="step_file"><span>src/integ-test/bdd-test/features/steps/steps.py:844</span></div><span class="embed" /></li></ol><span /></div><div class="scenario"><span class="scenario_file">src/integ-test/bdd-test/features/Mod1MB/flows/gestioneAnnulli/nodoNotificaAnnullamento_flows_PAG-1642_01.feature:236</span><h3 onclick="Collapsible_toggle('scenario_3')"><span class="val">Scenario: Execute nodoNotificaAnnullamento</span></h3><ol class="scenario_steps" id="scenario_3"><li class="step passed"><div class="step_name"><span class="keyword">Given </span><span class="step val">systems up</span><small class="step_duration">(0.084s)</small></div><div class="step_file"><span>src/integ-test/bdd-test/features/steps/steps.py:29</span></div><table><tr><th>name</th><th>url</th><th>healthcheck</th><th>soap_service</th><th>rest_service</th></tr><tr><td>nodo-dei-pagamenti</td><td>http://localhost:9080/</td><td>nodo-dev-health/ready</td><td>nodo-dev/webservices/input</td><td>nodo-dev</td></tr><tr><td>mock-ec</td><td>http://localhost:8089/</td><td>servizi/PagamentiTelematiciRPT/info</td><td>servizi/PagamentiTelematiciRPT</td><td /></tr><tr><td>mock-psp</td><td>http://localhost:8090/</td><td>servizi/MockPSP/info</td><td>servizi/MockPSP</td><td /></tr></table><span class="embed" /></li><li class="step passed"><div class="step_name"><span class="keyword">Given </span><span class="step val"><span>the </span><b>Execute nodoChiediInformazioniPagamento</b><span> scenario executed successfully</span></span><small class="step_duration">(6.715s)</small></div><div class="step_file"><span>src/integ-test/bdd-test/features/steps/steps.py:957</span></div><span class="embed" /></li><li class="step passed"><div class="step_name"><span class="keyword">When </span><span class="step val"><span /><b>WISP</b><span> sends rest </span><b>GET</b><span> </span><b>notificaAnnullamento?idPagamento=$sessionToken</b><span> to </span><b>nodo-dei-pagamenti</b><span /></span><small class="step_duration">(0.103s)</small></div><div class="step_file"><span>src/integ-test/bdd-test/features/steps/steps.py:966</span></div><span class="embed" /></li><li class="step passed"><div class="step_name"><span class="keyword">Then </span><span class="step val"><span>verify the HTTP status code of </span><b>notificaAnnullamento</b><span> response is </span><b>200</b><span /></span><small class="step_duration">(0.001s)</small></div><div class="step_file"><span>src/integ-test/bdd-test/features/steps/steps.py:997</span></div><span class="embed" /></li><li class="step passed"><div class="step_name"><span class="keyword">And </span><span class="step val"><span>wait </span><b>5</b><span> seconds for expiration</span></span><small class="step_duration">(5.011s)</small></div><div class="step_file"><span>src/integ-test/bdd-test/features/steps/steps.py:1480</span></div><span class="embed" /></li><li class="step passed"><div class="step_name"><span class="keyword">And </span><span class="step val"><span>replace </span><b>iuv</b><span> content with </span><b>$1iuv</b><span> content</span></span><small class="step_duration">(0.003s)</small></div><div class="step_file"><span>src/integ-test/bdd-test/features/steps/steps.py:2338</span></div><span class="embed" /></li><li class="step passed"><div class="step_name"><span class="keyword">And </span><span class="step val"><span>checks the value </span><b>RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO, RPT_ANNULLATA_WISP</b><span> of the record at column </span><b>STATO</b><span> of the table </span><b>STATI_RPT</b><span> retrived by the query </span><b>DB_GEST_ANN_stati_rpt</b><span> on db </span><b>nodo_online</b><span> under macro </span><b>Mod1Mb</b><span /></span><small class="step_duration">(0.183s)</small></div><div class="step_file"><span>src/integ-test/bdd-test/features/steps/steps.py:1502</span></div><span class="embed" /></li><li class="step passed"><div class="step_name"><span class="keyword">And </span><span class="step val"><span>checks the value </span><b>RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO, RPT_ANNULLATA_WISP</b><span> of the record at column </span><b>STATO</b><span> of the table </span><b>STATI_RPT</b><span> retrived by the query </span><b>DB_GEST_ANN_stati_rpt_pa1</b><span> on db </span><b>nodo_online</b><span> under macro </span><b>Mod1Mb</b><span /></span><small class="step_duration">(0.154s)</small></div><div class="step_file"><span>src/integ-test/bdd-test/features/steps/steps.py:1502</span></div><span class="embed" /></li><li class="step passed"><div class="step_name"><span class="keyword">And </span><span class="step val"><span>checks the value </span><b>RPT_ANNULLATA_WISP</b><span> of the record at column </span><b>STATO</b><span> of the table </span><b>STATI_RPT_SNAPSHOT</b><span> retrived by the query </span><b>DB_GEST_ANN_stati_rpt</b><span> on db </span><b>nodo_online</b><span> under macro </span><b>Mod1Mb</b><span /></span><small class="step_duration">(0.150s)</small></div><div class="step_file"><span>src/integ-test/bdd-test/features/steps/steps.py:1502</span></div><span class="embed" /></li><li class="step passed"><div class="step_name"><span class="keyword">And </span><span class="step val"><span>checks the value </span><b>RPT_ANNULLATA_WISP</b><span> of the record at column </span><b>STATO</b><span> of the table </span><b>STATI_RPT_SNAPSHOT</b><span> retrived by the query </span><b>DB_GEST_ANN_stati_rpt_pa1</b><span> on db </span><b>nodo_online</b><span> under macro </span><b>Mod1Mb</b><span /></span><small class="step_duration">(0.120s)</small></div><div class="step_file"><span>src/integ-test/bdd-test/features/steps/steps.py:1502</span></div><span class="embed" /></li><li class="step passed"><div class="step_name"><span class="keyword">And </span><span class="step val"><span>checks the value </span><b>CART_RICEVUTO_NODO, CART_ACCETTATO_NODO, CART_PARCHEGGIATO_NODO, CART_ANNULLATO_WISP</b><span> of the record at column </span><b>STATO</b><span> of the table </span><b>STATI_CARRELLO</b><span> retrived by the query </span><b>DB_GEST_ANN_stati_payment_token</b><span> on db </span><b>nodo_online</b><span> under macro </span><b>Mod1Mb</b><span /></span><small class="step_duration">(0.118s)</small></div><div class="step_file"><span>src/integ-test/bdd-test/features/steps/steps.py:1502</span></div><span class="embed" /></li><li class="step passed"><div class="step_name"><span class="keyword">And </span><span class="step val"><span>checks the value </span><b>CART_ANNULLATO_WISP</b><span> of the record at column </span><b>STATO</b><span> of the table </span><b>STATI_CARRELLO_SNAPSHOT</b><span> retrived by the query </span><b>DB_GEST_ANN_stati_payment_token</b><span> on db </span><b>nodo_online</b><span> under macro </span><b>Mod1Mb</b><span /></span><small class="step_duration">(0.128s)</small></div><div class="step_file"><span>src/integ-test/bdd-test/features/steps/steps.py:1502</span></div><span class="embed" /></li><li class="step passed"><div class="step_name"><span class="keyword">And </span><span class="step val"><span>checks the value </span><b>PAYING, CANCELLED</b><span> of the record at column </span><b>STATUS</b><span> of the table </span><b>POSITION_PAYMENT_STATUS</b><span> retrived by the query </span><b>DB_GEST_ANN_stati_position_payment_status</b><span> on db </span><b>nodo_online</b><span> under macro </span><b>Mod1Mb</b><span /></span><small class="step_duration">(0.155s)</small></div><div class="step_file"><span>src/integ-test/bdd-test/features/steps/steps.py:1502</span></div><span class="embed" /></li><li class="step passed"><div class="step_name"><span class="keyword">And </span><span class="step val"><span>checks the value </span><b>CANCELLED</b><span> of the record at column </span><b>STATUS</b><span> of the table </span><b>POSITION_PAYMENT_STATUS_SNAPSHOT</b><span> retrived by the query </span><b>DB_GEST_ANN_stati_position_payment_status</b><span> on db </span><b>nodo_online</b><span> under macro </span><b>Mod1Mb</b><span /></span><small class="step_duration">(0.140s)</small></div><div class="step_file"><span>src/integ-test/bdd-test/features/steps/steps.py:1502</span></div><span class="embed" /></li><li class="step passed"><div class="step_name"><span class="keyword">And </span><span class="step val"><span>execution query </span><b>DB_GEST_ANN_stati_position_payment_status</b><span> to get value on the table </span><b>POSITION_PAYMENT_STATUS</b><span>, with the columns </span><b>NOTICE_ID</b><span> under macro </span><b>Mod1Mb</b><span> with db name </span><b>nodo_online</b><span /></span><small class="step_duration">(0.139s)</small></div><div class="step_file"><span>src/integ-test/bdd-test/features/steps/steps.py:1363</span></div><span class="embed" /></li><li class="step passed"><div class="step_name"><span class="keyword">And </span><span class="step val"><span>through the query </span><b>DB_GEST_ANN_stati_position_payment_status</b><span> retrieve param </span><b>NOTICE_ID</b><span> at position </span><b>0</b><span> and save it under the key </span><b>NOTICE_ID</b><span /></span><small class="step_duration">(0.002s)</small></div><div class="step_file"><span>src/integ-test/bdd-test/features/steps/steps.py:1382</span></div><span class="embed" /></li><li class="step passed"><div class="step_name"><span class="keyword">And </span><span class="step val"><span>checks the value </span><b>PAYING, INSERTED</b><span> of the record at column </span><b>STATUS</b><span> of the table </span><b>POSITION_STATUS</b><span> retrived by the query </span><b>DB_GEST_ANN_notice_number</b><span> on db </span><b>nodo_online</b><span> under macro </span><b>Mod1Mb</b><span /></span><small class="step_duration">(0.137s)</small></div><div class="step_file"><span>src/integ-test/bdd-test/features/steps/steps.py:1502</span></div><span class="embed" /></li><li class="step passed"><div class="step_name"><span class="keyword">And </span><span class="step val"><span>checks the value </span><b>INSERTED</b><span> of the record at column </span><b>STATUS</b><span> of the table </span><b>POSITION_STATUS_SNAPSHOT</b><span> retrived by the query </span><b>DB_GEST_ANN_notice_number</b><span> on db </span><b>nodo_online</b><span> under macro </span><b>Mod1Mb</b><span /></span><small class="step_duration">(0.149s)</small></div><div class="step_file"><span>src/integ-test/bdd-test/features/steps/steps.py:1502</span></div><span class="embed" /></li></ol><span /></div><div class="scenario"><span class="scenario_file">src/integ-test/bdd-test/features/Mod1MB/flows/gestioneAnnulli/nodoNotificaAnnullamento_flows_PAG-1642_01.feature:272</span><h3 onclick="Collapsible_toggle('scenario_4')" class="failed"><span class="val">Scenario: Execute activateIOPayment</span></h3><ol class="scenario_steps" id="scenario_4"><li class="step passed"><div class="step_name"><span class="keyword">Given </span><span class="step val">systems up</span><small class="step_duration">(0.087s)</small></div><div class="step_file"><span>src/integ-test/bdd-test/features/steps/steps.py:29</span></div><table><tr><th>name</th><th>url</th><th>healthcheck</th><th>soap_service</th><th>rest_service</th></tr><tr><td>nodo-dei-pagamenti</td><td>http://localhost:9080/</td><td>nodo-dev-health/ready</td><td>nodo-dev/webservices/input</td><td>nodo-dev</td></tr><tr><td>mock-ec</td><td>http://localhost:8089/</td><td>servizi/PagamentiTelematiciRPT/info</td><td>servizi/PagamentiTelematiciRPT</td><td /></tr><tr><td>mock-psp</td><td>http://localhost:8090/</td><td>servizi/MockPSP/info</td><td>servizi/MockPSP</td><td /></tr></table><span class="embed" /></li><li class="step passed"><div class="step_name"><span class="keyword">Given </span><span class="step val"><span>the </span><b>Execute nodoNotificaAnnullamento</b><span> scenario executed successfully</span></span><small class="step_duration">(13.814s)</small></div><div class="step_file"><span>src/integ-test/bdd-test/features/steps/steps.py:957</span></div><span class="embed" /></li><li class="step passed"><div class="step_name"><span class="keyword">And </span><span class="step val"><span>initial XML </span><b>activateIOPayment</b><span /></span><small class="step_duration">(0.004s)</small></div><div class="step_file"><span>src/integ-test/bdd-test/features/steps/steps.py:57</span></div><div class="message"><pre>&lt;soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd"&gt;
+&lt;soapenv:Header/&gt;
+&lt;soapenv:Body&gt;
+&lt;nod:activateIOPaymentReq&gt;
+&lt;idPSP&gt;#psp_AGID#&lt;/idPSP&gt;
+&lt;idBrokerPSP&gt;#broker_AGID#&lt;/idBrokerPSP&gt;
+&lt;idChannel&gt;#canale_AGID#&lt;/idChannel&gt;
+&lt;password&gt;pwdpwdpwd&lt;/password&gt;
+&lt;!--Optional:--&gt;
+&lt;qrCode&gt;
+&lt;fiscalCode&gt;$nodoInviaCarrelloRPT.identificativoDominio&lt;/fiscalCode&gt;
+&lt;noticeNumber&gt;$1noticeNumber&lt;/noticeNumber&gt;
+&lt;/qrCode&gt;
+&lt;!--Optional:--&gt;
+&lt;!--expirationTime&gt;60000&lt;/expirationTime--&gt;
+&lt;amount&gt;1.50&lt;/amount&gt;
+&lt;!--Optional:--&gt;
+&lt;dueDate&gt;2021-12-12&lt;/dueDate&gt;
+&lt;!--Optional:--&gt;
+&lt;paymentNote&gt;responseFull&lt;/paymentNote&gt;
+&lt;!--Optional:--&gt;
+&lt;payer&gt;
+&lt;uniqueIdentifier&gt;
+&lt;entityUniqueIdentifierType&gt;G&lt;/entityUniqueIdentifierType&gt;
+&lt;entityUniqueIdentifierValue&gt;#codicePA#&lt;/entityUniqueIdentifierValue&gt;
+&lt;/uniqueIdentifier&gt;
+&lt;fullName&gt;IOname_&lt;/fullName&gt;
+&lt;!--Optional:--&gt;
+&lt;streetName&gt;IOstreet&lt;/streetName&gt;
+&lt;!--Optional:--&gt;
+&lt;civicNumber&gt;IOcivic&lt;/civicNumber&gt;
+&lt;!--Optional:--&gt;
+&lt;postalCode&gt;IOcode&lt;/postalCode&gt;
+&lt;!--Optional:--&gt;
+&lt;city&gt;IOcity&lt;/city&gt;
+&lt;!--Optional:--&gt;
+&lt;stateProvinceRegion&gt;IOstate&lt;/stateProvinceRegion&gt;
+&lt;!--Optional:--&gt;
+&lt;country&gt;DE&lt;/country&gt;
+&lt;!--Optional:--&gt;
+&lt;e-mail&gt;IO.test.prova@gmail.com&lt;/e-mail&gt;
+&lt;/payer&gt;
+&lt;/nod:activateIOPaymentReq&gt;
+&lt;/soapenv:Body&gt;
+&lt;/soapenv:Envelope&gt;</pre></div><span class="embed" /></li><li class="step passed"><div class="step_name"><span class="keyword">When </span><span class="step val"><span /><b>EC</b><span> sends SOAP </span><b>activateIOPayment</b><span> to </span><b>nodo-dei-pagamenti</b><span /></span><small class="step_duration">(2.452s)</small></div><div class="step_file"><span>src/integ-test/bdd-test/features/steps/steps.py:692</span></div><span class="embed" /></li><li class="step failed"><div class="step_name"><span class="keyword">Then </span><span class="step val"><span>check </span><b>outcome</b><span> is </span><b>OK</b><span> of </span><b>activateIOPayment</b><span> response</span></span><small class="step_duration">(0.017s)</small></div><div class="step_file"><span>src/integ-test/bdd-test/features/steps/steps.py:723</span></div><span class="embed"><a onclick="Collapsible_toggle('embed_1')">Error Message</a><pre id="embed_1" style="display: none">Traceback (most recent call last):
+  File "C:\Users\alessandro.cancelli\Desktop\venv\lib\site-packages\behave\model.py", line 1329, in run
+    match.run(runner.context)
+  File "C:\Users\alessandro.cancelli\Desktop\venv\lib\site-packages\behave\matchers.py", line 98, in run
+    self.func(context, *args, **kwargs)
+  File "src\integ-test\bdd-test\features\steps\steps.py", line 740, in step_impl
+    assert value == data
+AssertionError
+
+Captured stdout:
+calling: nodo-dei-pagamenti -&gt; http://localhost:9080/
+calling -&gt; http://localhost:9080/nodo-dev-health/ready
+response: 200
+calling: mock-ec -&gt; http://localhost:8089/
+calling -&gt; http://localhost:8089/servizi/PagamentiTelematiciRPT/info
+response: 200
+calling: mock-psp -&gt; http://localhost:8090/
+calling -&gt; http://localhost:8090/servizi/MockPSP/info
+response: 200
+Connecting to the OracleDB... NODO4_CFG
+Successfully connected to OracleDB
+ Executing query [UPDATE NODO4_CFG.CONFIGURATION_KEYS s SET s.CONFIG_VALUE = q'[false]' WHERE s.CONFIG_KEY = 'CONFIG_VALUE'] on OracleDB instance...
+Closing connection to the OracleDb...
+Connection to OracleDB closed successfully
+refresh_response:  &lt;Response [200]&gt;
+PHBheV9pOlJQVCB4bWxuczpwYXlfaT0iaHR0cDovL3d3dy5kaWdpdHBhLmdvdi5pdC9zY2hlbWFzLzIwMTEvUGFnYW1lbnRpLyIgeG1sbnM6eHNpPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYS1pbnN0YW5jZSIgeHNpOnNjaGVtYUxvY2F0aW9uPSJodHRwOi8vd3d3LmRpZ2l0cGEuZ292Lml0L3NjaGVtYXMvMjAxMS9QYWdhbWVudGkvIFBhZ0luZl9SUFRfUlRfNl8wXzEueHNkICI+DQo8cGF5X2k6dmVyc2lvbmVPZ2dldHRvPjEuMDwvcGF5X2k6dmVyc2lvbmVPZ2dldHRvPg0KPHBheV9pOmRvbWluaW8+DQo8cGF5X2k6aWRlbnRpZmljYXRpdm9Eb21pbmlvPjc3Nzc3Nzc3Nzc3PC9wYXlfaTppZGVudGlmaWNhdGl2b0RvbWluaW8+DQo8cGF5X2k6aWRlbnRpZmljYXRpdm9TdGF6aW9uZVJpY2hpZWRlbnRlPjc3Nzc3Nzc3Nzc3XzAxPC9wYXlfaTppZGVudGlmaWNhdGl2b1N0YXppb25lUmljaGllZGVudGU+DQo8L3BheV9pOmRvbWluaW8+DQo8cGF5X2k6aWRlbnRpZmljYXRpdm9NZXNzYWdnaW9SaWNoaWVzdGE+TVNHUklDSElFU1RBMDE8L3BheV9pOmlkZW50aWZpY2F0aXZvTWVzc2FnZ2lvUmljaGllc3RhPg0KPHBheV9pOmRhdGFPcmFNZXNzYWdnaW9SaWNoaWVzdGE+MjAyMi0wOS0yMFQxMTozMTo1OC4yMjY8L3BheV9pOmRhdGFPcmFNZXNzYWdnaW9SaWNoaWVzdGE+DQo8cGF5X2k6YXV0ZW50aWNhemlvbmVTb2dnZXR0bz5DTlM8L3BheV9pOmF1dGVudGljYXppb25lU29nZ2V0dG8+DQo8cGF5X2k6c29nZ2V0dG9WZXJzYW50ZT4NCjxwYXlfaTppZGVudGlmaWNhdGl2b1VuaXZvY29WZXJzYW50ZT4NCjxwYXlfaTp0aXBvSWRlbnRpZmljYXRpdm9Vbml2b2NvPkY8L3BheV9pOnRpcG9JZGVudGlmaWNhdGl2b1VuaXZvY28+DQo8cGF5X2k6Y29kaWNlSWRlbnRpZmljYXRpdm9Vbml2b2NvPlJDQ0dMRDA5UDA5SDUwMkU8L3BheV9pOmNvZGljZUlkZW50aWZpY2F0aXZvVW5pdm9jbz4NCjwvcGF5X2k6aWRlbnRpZmljYXRpdm9Vbml2b2NvVmVyc2FudGU+DQo8cGF5X2k6YW5hZ3JhZmljYVZlcnNhbnRlPkdlc3VhbGRvO1JpY2NpdGVsbGk8L3BheV9pOmFuYWdyYWZpY2FWZXJzYW50ZT4NCjxwYXlfaTppbmRpcml6em9WZXJzYW50ZT52aWEgZGVsIGdlc3U8L3BheV9pOmluZGlyaXp6b1ZlcnNhbnRlPg0KPHBheV9pOmNpdmljb1ZlcnNhbnRlPjExPC9wYXlfaTpjaXZpY29WZXJzYW50ZT4NCjxwYXlfaTpjYXBWZXJzYW50ZT4wMDE4NjwvcGF5X2k6Y2FwVmVyc2FudGU+DQo8cGF5X2k6bG9jYWxpdGFWZXJzYW50ZT5Sb21hPC9wYXlfaTpsb2NhbGl0YVZlcnNhbnRlPg0KPHBheV9pOnByb3ZpbmNpYVZlcnNhbnRlPlJNPC9wYXlfaTpwcm92aW5jaWFWZXJzYW50ZT4NCjxwYXlfaTpuYXppb25lVmVyc2FudGU+SVQ8L3BheV9pOm5hemlvbmVWZXJzYW50ZT4NCjxwYXlfaTplLW1haWxWZXJzYW50ZT5nZXN1YWxkby5yaWNjaXRlbGxpQHBvc3RlLml0PC9wYXlfaTplLW1haWxWZXJzYW50ZT4NCjwvcGF5X2k6c29nZ2V0dG9WZXJzYW50ZT4NCjxwYXlfaTpzb2dnZXR0b1BhZ2F0b3JlPg0KPHBheV9pOmlkZW50aWZpY2F0aXZvVW5pdm9jb1BhZ2F0b3JlPg0KPHBheV9pOnRpcG9JZGVudGlmaWNhdGl2b1VuaXZvY28+RjwvcGF5X2k6dGlwb0lkZW50aWZpY2F0aXZvVW5pdm9jbz4NCjxwYXlfaTpjb2RpY2VJZGVudGlmaWNhdGl2b1VuaXZvY28+UkNDR0xEMDlQMDlINTAxRTwvcGF5X2k6Y29kaWNlSWRlbnRpZmljYXRpdm9Vbml2b2NvPg0KPC9wYXlfaTppZGVudGlmaWNhdGl2b1VuaXZvY29QYWdhdG9yZT4NCjxwYXlfaTphbmFncmFmaWNhUGFnYXRvcmU+R2VzdWFsZG87UmljY2l0ZWxsaTwvcGF5X2k6YW5hZ3JhZmljYVBhZ2F0b3JlPg0KPHBheV9pOmluZGlyaXp6b1BhZ2F0b3JlPnZpYSBkZWwgZ2VzdTwvcGF5X2k6aW5kaXJpenpvUGFnYXRvcmU+DQo8cGF5X2k6Y2l2aWNvUGFnYXRvcmU+MTE8L3BheV9pOmNpdmljb1BhZ2F0b3JlPg0KPHBheV9pOmNhcFBhZ2F0b3JlPjAwMTg2PC9wYXlfaTpjYXBQYWdhdG9yZT4NCjxwYXlfaTpsb2NhbGl0YVBhZ2F0b3JlPlJvbWE8L3BheV9pOmxvY2FsaXRhUGFnYXRvcmU+DQo8cGF5X2k6cHJvdmluY2lhUGFnYXRvcmU+Uk08L3BheV9pOnByb3ZpbmNpYVBhZ2F0b3JlPg0KPHBheV9pOm5hemlvbmVQYWdhdG9yZT5JVDwvcGF5X2k6bmF6aW9uZVBhZ2F0b3JlPg0KPHBheV9pOmUtbWFpbFBhZ2F0b3JlPmdlc3VhbGRvLnJpY2NpdGVsbGlAcG9zdGUuaXQ8L3BheV9pOmUtbWFpbFBhZ2F0b3JlPg0KPC9wYXlfaTpzb2dnZXR0b1BhZ2F0b3JlPg0KPHBheV9pOmVudGVCZW5lZmljaWFyaW8+DQo8cGF5X2k6aWRlbnRpZmljYXRpdm9Vbml2b2NvQmVuZWZpY2lhcmlvPg0KPHBheV9pOnRpcG9JZGVudGlmaWNhdGl2b1VuaXZvY28+RzwvcGF5X2k6dGlwb0lkZW50aWZpY2F0aXZvVW5pdm9jbz4NCjxwYXlfaTpjb2RpY2VJZGVudGlmaWNhdGl2b1VuaXZvY28+MTExMTExMTExMTc8L3BheV9pOmNvZGljZUlkZW50aWZpY2F0aXZvVW5pdm9jbz4NCjwvcGF5X2k6aWRlbnRpZmljYXRpdm9Vbml2b2NvQmVuZWZpY2lhcmlvPg0KPHBheV9pOmRlbm9taW5hemlvbmVCZW5lZmljaWFyaW8+QVpJRU5EQSBYWFg8L3BheV9pOmRlbm9taW5hemlvbmVCZW5lZmljaWFyaW8+DQo8cGF5X2k6Y29kaWNlVW5pdE9wZXJCZW5lZmljaWFyaW8+MTIzPC9wYXlfaTpjb2RpY2VVbml0T3BlckJlbmVmaWNpYXJpbz4NCjxwYXlfaTpkZW5vbVVuaXRPcGVyQmVuZWZpY2lhcmlvPlhYWDwvcGF5X2k6ZGVub21Vbml0T3BlckJlbmVmaWNpYXJpbz4NCjxwYXlfaTppbmRpcml6em9CZW5lZmljaWFyaW8+SW5kaXJpenpvQmVuZWZpY2lhcmlvPC9wYXlfaTppbmRpcml6em9CZW5lZmljaWFyaW8+DQo8cGF5X2k6Y2l2aWNvQmVuZWZpY2lhcmlvPjEyMzwvcGF5X2k6Y2l2aWNvQmVuZWZpY2lhcmlvPg0KPHBheV9pOmNhcEJlbmVmaWNpYXJpbz4yMjIyMjwvcGF5X2k6Y2FwQmVuZWZpY2lhcmlvPg0KPHBheV9pOmxvY2FsaXRhQmVuZWZpY2lhcmlvPlJvbWE8L3BheV9pOmxvY2FsaXRhQmVuZWZpY2lhcmlvPg0KPHBheV9pOnByb3ZpbmNpYUJlbmVmaWNpYXJpbz5STTwvcGF5X2k6cHJvdmluY2lhQmVuZWZpY2lhcmlvPg0KPHBheV9pOm5hemlvbmVCZW5lZmljaWFyaW8+SVQ8L3BheV9pOm5hemlvbmVCZW5lZmljaWFyaW8+DQo8L3BheV9pOmVudGVCZW5lZmljaWFyaW8+DQo8cGF5X2k6ZGF0aVZlcnNhbWVudG8+DQo8cGF5X2k6ZGF0YUVzZWN1emlvbmVQYWdhbWVudG8+MjAyMi0wOS0yMDwvcGF5X2k6ZGF0YUVzZWN1emlvbmVQYWdhbWVudG8+DQo8cGF5X2k6aW1wb3J0b1RvdGFsZURhVmVyc2FyZT4xLjUwPC9wYXlfaTppbXBvcnRvVG90YWxlRGFWZXJzYXJlPg0KPHBheV9pOnRpcG9WZXJzYW1lbnRvPkJCVDwvcGF5X2k6dGlwb1ZlcnNhbWVudG8+DQo8cGF5X2k6aWRlbnRpZmljYXRpdm9Vbml2b2NvVmVyc2FtZW50bz42NTUxMTM5MDYxODQ1PC9wYXlfaTppZGVudGlmaWNhdGl2b1VuaXZvY29WZXJzYW1lbnRvPg0KPHBheV9pOmNvZGljZUNvbnRlc3RvUGFnYW1lbnRvPjc3Nzc3Nzc3Nzc3MzAyNjU1MTEzOTA2MTg0NTAwLTMxNzgzPC9wYXlfaTpjb2RpY2VDb250ZXN0b1BhZ2FtZW50bz4NCjxwYXlfaTppYmFuQWRkZWJpdG8+SVQ5NlIwMTIzNDUxMjM0NTEyMzQ1Njc4OTA0PC9wYXlfaTppYmFuQWRkZWJpdG8+DQo8cGF5X2k6YmljQWRkZWJpdG8+QVJUSUlUTTEwNDU8L3BheV9pOmJpY0FkZGViaXRvPg0KPHBheV9pOmZpcm1hUmljZXZ1dGE+MDwvcGF5X2k6ZmlybWFSaWNldnV0YT4NCjxwYXlfaTpkYXRpU2luZ29sb1ZlcnNhbWVudG8+DQo8cGF5X2k6aW1wb3J0b1NpbmdvbG9WZXJzYW1lbnRvPjEuNTA8L3BheV9pOmltcG9ydG9TaW5nb2xvVmVyc2FtZW50bz4NCjxwYXlfaTpjb21taXNzaW9uZUNhcmljb1BBPjEuMDA8L3BheV9pOmNvbW1pc3Npb25lQ2FyaWNvUEE+DQo8cGF5X2k6aWJhbkFjY3JlZGl0bz5JVDk2UjAxMjM0NTQzMjEwMDAwMDAwMTIzNDU8L3BheV9pOmliYW5BY2NyZWRpdG8+DQo8cGF5X2k6YmljQWNjcmVkaXRvPkFSVElJVE0xMDUwPC9wYXlfaTpiaWNBY2NyZWRpdG8+DQo8cGF5X2k6aWJhbkFwcG9nZ2lvPklUOTZSMDEyMzQ1NDMyMTAwMDAwMDAxMjM0NTwvcGF5X2k6aWJhbkFwcG9nZ2lvPg0KPHBheV9pOmJpY0FwcG9nZ2lvPkFSVElJVE0xMDUwPC9wYXlfaTpiaWNBcHBvZ2dpbz4NCjxwYXlfaTpjcmVkZW56aWFsaVBhZ2F0b3JlPkNQMS4xPC9wYXlfaTpjcmVkZW56aWFsaVBhZ2F0b3JlPg0KPHBheV9pOmNhdXNhbGVWZXJzYW1lbnRvPnBhZ2FtZW50byBmb3RvY29waWUgcHJhdGljYSBSUFQ8L3BheV9pOmNhdXNhbGVWZXJzYW1lbnRvPg0KPHBheV9pOmRhdGlTcGVjaWZpY2lSaXNjb3NzaW9uZT4xL2FiYzwvcGF5X2k6ZGF0aVNwZWNpZmljaVJpc2Nvc3Npb25lPg0KPC9wYXlfaTpkYXRpU2luZ29sb1ZlcnNhbWVudG8+DQo8L3BheV9pOmRhdGlWZXJzYW1lbnRvPg0KPC9wYXlfaTpSUFQ+DQ==
+PHBheV9pOlJQVCB4bWxuczpwYXlfaT0iaHR0cDovL3d3dy5kaWdpdHBhLmdvdi5pdC9zY2hlbWFzLzIwMTEvUGFnYW1lbnRpLyIgeG1sbnM6eHNpPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYS1pbnN0YW5jZSIgeHNpOnNjaGVtYUxvY2F0aW9uPSJodHRwOi8vd3d3LmRpZ2l0cGEuZ292Lml0L3NjaGVtYXMvMjAxMS9QYWdhbWVudGkvIFBhZ0luZl9SUFRfUlRfNl8wXzEueHNkICI+DQo8cGF5X2k6dmVyc2lvbmVPZ2dldHRvPjEuMTwvcGF5X2k6dmVyc2lvbmVPZ2dldHRvPg0KPHBheV9pOmRvbWluaW8+DQo8cGF5X2k6aWRlbnRpZmljYXRpdm9Eb21pbmlvPjkwMDAwMDAwMDAxPC9wYXlfaTppZGVudGlmaWNhdGl2b0RvbWluaW8+DQo8cGF5X2k6aWRlbnRpZmljYXRpdm9TdGF6aW9uZVJpY2hpZWRlbnRlPjkwMDAwMDAwMDAxXzAxPC9wYXlfaTppZGVudGlmaWNhdGl2b1N0YXppb25lUmljaGllZGVudGU+DQo8L3BheV9pOmRvbWluaW8+DQo8cGF5X2k6aWRlbnRpZmljYXRpdm9NZXNzYWdnaW9SaWNoaWVzdGE+TVNHUklDSElFU1RBMDE8L3BheV9pOmlkZW50aWZpY2F0aXZvTWVzc2FnZ2lvUmljaGllc3RhPg0KPHBheV9pOmRhdGFPcmFNZXNzYWdnaW9SaWNoaWVzdGE+MjAyMi0wOS0yMFQxMTozMTo1OC4yMzI8L3BheV9pOmRhdGFPcmFNZXNzYWdnaW9SaWNoaWVzdGE+DQo8cGF5X2k6YXV0ZW50aWNhemlvbmVTb2dnZXR0bz5DTlM8L3BheV9pOmF1dGVudGljYXppb25lU29nZ2V0dG8+DQo8cGF5X2k6c29nZ2V0dG9WZXJzYW50ZT4NCjxwYXlfaTppZGVudGlmaWNhdGl2b1VuaXZvY29WZXJzYW50ZT4NCjxwYXlfaTp0aXBvSWRlbnRpZmljYXRpdm9Vbml2b2NvPkY8L3BheV9pOnRpcG9JZGVudGlmaWNhdGl2b1VuaXZvY28+DQo8cGF5X2k6Y29kaWNlSWRlbnRpZmljYXRpdm9Vbml2b2NvPlJDQ0dMRDA5UDA5SDUwMkU8L3BheV9pOmNvZGljZUlkZW50aWZpY2F0aXZvVW5pdm9jbz4NCjwvcGF5X2k6aWRlbnRpZmljYXRpdm9Vbml2b2NvVmVyc2FudGU+DQo8cGF5X2k6YW5hZ3JhZmljYVZlcnNhbnRlPkdlc3VhbGRvO1JpY2NpdGVsbGk8L3BheV9pOmFuYWdyYWZpY2FWZXJzYW50ZT4NCjxwYXlfaTppbmRpcml6em9WZXJzYW50ZT52aWEgZGVsIGdlc3U8L3BheV9pOmluZGlyaXp6b1ZlcnNhbnRlPg0KPHBheV9pOmNpdmljb1ZlcnNhbnRlPjExPC9wYXlfaTpjaXZpY29WZXJzYW50ZT4NCjxwYXlfaTpjYXBWZXJzYW50ZT4wMDE4NjwvcGF5X2k6Y2FwVmVyc2FudGU+DQo8cGF5X2k6bG9jYWxpdGFWZXJzYW50ZT5Sb21hPC9wYXlfaTpsb2NhbGl0YVZlcnNhbnRlPg0KPHBheV9pOnByb3ZpbmNpYVZlcnNhbnRlPlJNPC9wYXlfaTpwcm92aW5jaWFWZXJzYW50ZT4NCjxwYXlfaTpuYXppb25lVmVyc2FudGU+SVQ8L3BheV9pOm5hemlvbmVWZXJzYW50ZT4NCjxwYXlfaTplLW1haWxWZXJzYW50ZT5nZXN1YWxkby5yaWNjaXRlbGxpQHBvc3RlLml0PC9wYXlfaTplLW1haWxWZXJzYW50ZT4NCjwvcGF5X2k6c29nZ2V0dG9WZXJzYW50ZT4NCjxwYXlfaTpzb2dnZXR0b1BhZ2F0b3JlPg0KPHBheV9pOmlkZW50aWZpY2F0aXZvVW5pdm9jb1BhZ2F0b3JlPg0KPHBheV9pOnRpcG9JZGVudGlmaWNhdGl2b1VuaXZvY28+RjwvcGF5X2k6dGlwb0lkZW50aWZpY2F0aXZvVW5pdm9jbz4NCjxwYXlfaTpjb2RpY2VJZGVudGlmaWNhdGl2b1VuaXZvY28+UkNDR0xEMDlQMDlINTAxRTwvcGF5X2k6Y29kaWNlSWRlbnRpZmljYXRpdm9Vbml2b2NvPg0KPC9wYXlfaTppZGVudGlmaWNhdGl2b1VuaXZvY29QYWdhdG9yZT4NCjxwYXlfaTphbmFncmFmaWNhUGFnYXRvcmU+R2VzdWFsZG87UmljY2l0ZWxsaTwvcGF5X2k6YW5hZ3JhZmljYVBhZ2F0b3JlPg0KPHBheV9pOmluZGlyaXp6b1BhZ2F0b3JlPnZpYSBkZWwgZ2VzdTwvcGF5X2k6aW5kaXJpenpvUGFnYXRvcmU+DQo8cGF5X2k6Y2l2aWNvUGFnYXRvcmU+MTE8L3BheV9pOmNpdmljb1BhZ2F0b3JlPg0KPHBheV9pOmNhcFBhZ2F0b3JlPjAwMTg2PC9wYXlfaTpjYXBQYWdhdG9yZT4NCjxwYXlfaTpsb2NhbGl0YVBhZ2F0b3JlPlJvbWE8L3BheV9pOmxvY2FsaXRhUGFnYXRvcmU+DQo8cGF5X2k6cHJvdmluY2lhUGFnYXRvcmU+Uk08L3BheV9pOnByb3ZpbmNpYVBhZ2F0b3JlPg0KPHBheV9pOm5hemlvbmVQYWdhdG9yZT5JVDwvcGF5X2k6bmF6aW9uZVBhZ2F0b3JlPg0KPHBheV9pOmUtbWFpbFBhZ2F0b3JlPmdlc3VhbGRvLnJpY2NpdGVsbGlAcG9zdGUuaXQ8L3BheV9pOmUtbWFpbFBhZ2F0b3JlPg0KPC9wYXlfaTpzb2dnZXR0b1BhZ2F0b3JlPg0KPHBheV9pOmVudGVCZW5lZmljaWFyaW8+DQo8cGF5X2k6aWRlbnRpZmljYXRpdm9Vbml2b2NvQmVuZWZpY2lhcmlvPg0KPHBheV9pOnRpcG9JZGVudGlmaWNhdGl2b1VuaXZvY28+RzwvcGF5X2k6dGlwb0lkZW50aWZpY2F0aXZvVW5pdm9jbz4NCjxwYXlfaTpjb2RpY2VJZGVudGlmaWNhdGl2b1VuaXZvY28+MTExMTExMTExMTc8L3BheV9pOmNvZGljZUlkZW50aWZpY2F0aXZvVW5pdm9jbz4NCjwvcGF5X2k6aWRlbnRpZmljYXRpdm9Vbml2b2NvQmVuZWZpY2lhcmlvPg0KPHBheV9pOmRlbm9taW5hemlvbmVCZW5lZmljaWFyaW8+QVpJRU5EQSBYWFg8L3BheV9pOmRlbm9taW5hemlvbmVCZW5lZmljaWFyaW8+DQo8cGF5X2k6Y29kaWNlVW5pdE9wZXJCZW5lZmljaWFyaW8+MTIzPC9wYXlfaTpjb2RpY2VVbml0T3BlckJlbmVmaWNpYXJpbz4NCjxwYXlfaTpkZW5vbVVuaXRPcGVyQmVuZWZpY2lhcmlvPlhYWDwvcGF5X2k6ZGVub21Vbml0T3BlckJlbmVmaWNpYXJpbz4NCjxwYXlfaTppbmRpcml6em9CZW5lZmljaWFyaW8+SW5kaXJpenpvQmVuZWZpY2lhcmlvPC9wYXlfaTppbmRpcml6em9CZW5lZmljaWFyaW8+DQo8cGF5X2k6Y2l2aWNvQmVuZWZpY2lhcmlvPjEyMzwvcGF5X2k6Y2l2aWNvQmVuZWZpY2lhcmlvPg0KPHBheV9pOmNhcEJlbmVmaWNpYXJpbz4yMjIyMjwvcGF5X2k6Y2FwQmVuZWZpY2lhcmlvPg0KPHBheV9pOmxvY2FsaXRhQmVuZWZpY2lhcmlvPlJvbWE8L3BheV9pOmxvY2FsaXRhQmVuZWZpY2lhcmlvPg0KPHBheV9pOnByb3ZpbmNpYUJlbmVmaWNpYXJpbz5STTwvcGF5X2k6cHJvdmluY2lhQmVuZWZpY2lhcmlvPg0KPHBheV9pOm5hemlvbmVCZW5lZmljaWFyaW8+SVQ8L3BheV9pOm5hemlvbmVCZW5lZmljaWFyaW8+DQo8L3BheV9pOmVudGVCZW5lZmljaWFyaW8+DQo8cGF5X2k6ZGF0aVZlcnNhbWVudG8+DQo8cGF5X2k6ZGF0YUVzZWN1emlvbmVQYWdhbWVudG8+MjAyMi0wOS0yMDwvcGF5X2k6ZGF0YUVzZWN1emlvbmVQYWdhbWVudG8+DQo8cGF5X2k6aW1wb3J0b1RvdGFsZURhVmVyc2FyZT4xLjUwPC9wYXlfaTppbXBvcnRvVG90YWxlRGFWZXJzYXJlPg0KPHBheV9pOnRpcG9WZXJzYW1lbnRvPkJCVDwvcGF5X2k6dGlwb1ZlcnNhbWVudG8+DQo8cGF5X2k6aWRlbnRpZmljYXRpdm9Vbml2b2NvVmVyc2FtZW50bz42NTUxMTM5MDYxODQ1PC9wYXlfaTppZGVudGlmaWNhdGl2b1VuaXZvY29WZXJzYW1lbnRvPg0KPHBheV9pOmNvZGljZUNvbnRlc3RvUGFnYW1lbnRvPjc3Nzc3Nzc3Nzc3MzAyNjU1MTEzOTA2MTg0NTAwLTMxNzgzPC9wYXlfaTpjb2RpY2VDb250ZXN0b1BhZ2FtZW50bz4NCjxwYXlfaTppYmFuQWRkZWJpdG8+SVQ5NlIwMTIzNDU0MzIxMDAwMDAwMDEyMzQ1PC9wYXlfaTppYmFuQWRkZWJpdG8+DQo8cGF5X2k6YmljQWRkZWJpdG8+QVJUSUlUTTEwNDU8L3BheV9pOmJpY0FkZGViaXRvPg0KPHBheV9pOmZpcm1hUmljZXZ1dGE+MDwvcGF5X2k6ZmlybWFSaWNldnV0YT4NCjxwYXlfaTpkYXRpU2luZ29sb1ZlcnNhbWVudG8+DQo8cGF5X2k6aW1wb3J0b1NpbmdvbG9WZXJzYW1lbnRvPjEuNTA8L3BheV9pOmltcG9ydG9TaW5nb2xvVmVyc2FtZW50bz4NCjxwYXlfaTpjb21taXNzaW9uZUNhcmljb1BBPjEuMDA8L3BheV9pOmNvbW1pc3Npb25lQ2FyaWNvUEE+DQo8cGF5X2k6aWJhbkFjY3JlZGl0bz5JVDQ1UjA3NjAxMDMyMDAwMDAwMDAwMDEwMTY8L3BheV9pOmliYW5BY2NyZWRpdG8+DQo8cGF5X2k6YmljQWNjcmVkaXRvPkFSVElJVE0xMDUwPC9wYXlfaTpiaWNBY2NyZWRpdG8+DQo8cGF5X2k6aWJhbkFwcG9nZ2lvPklUNDVSMDc2MDEwMzIwMDAwMDAwMDAwMTAxNjwvcGF5X2k6aWJhbkFwcG9nZ2lvPg0KPHBheV9pOmJpY0FwcG9nZ2lvPkFSVElJVE0xMDUwPC9wYXlfaTpiaWNBcHBvZ2dpbz4NCjxwYXlfaTpjcmVkZW56aWFsaVBhZ2F0b3JlPkNQMS4xPC9wYXlfaTpjcmVkZW56aWFsaVBhZ2F0b3JlPg0KPHBheV9pOmNhdXNhbGVWZXJzYW1lbnRvPnBhZ2FtZW50byBmb3RvY29waWUgcHJhdGljYTwvcGF5X2k6Y2F1c2FsZVZlcnNhbWVudG8+DQo8cGF5X2k6ZGF0aVNwZWNpZmljaVJpc2Nvc3Npb25lPjEvYWJjPC9wYXlfaTpkYXRpU3BlY2lmaWNpUmlzY29zc2lvbmU+DQo8L3BheV9pOmRhdGlTaW5nb2xvVmVyc2FtZW50bz4NCjwvcGF5X2k6ZGF0aVZlcnNhbWVudG8+DQo8L3BheV9pOlJQVD4N
+&lt;soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/"&gt;
+&lt;soapenv:Header/&gt;
+&lt;soapenv:Body&gt;
+&lt;ws:paaInviaRTRisposta&gt;
+&lt;paaInviaRTRisposta&gt;
+&lt;esito&gt;OK&lt;/esito&gt;
+&lt;/paaInviaRTRisposta&gt;
+&lt;/ws:paaInviaRTRisposta&gt;
+&lt;/soapenv:Body&gt;
+&lt;/soapenv:Envelope&gt;
+http://localhost:8089/servizi/PagamentiTelematiciRPT
+http://localhost:8089/servizi/PagamentiTelematiciRPT/response/paaInviaRT?override=True
+b'paaInviaRT updated' 200
+url_nodo:  http://localhost:9080/nodo-dev/webservices/input
+nodo soap_request sent &gt;&gt;&gt; &lt;soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/"&gt;
+&lt;soapenv:Header&gt;
+&lt;ppt:intestazioneCarrelloPPT&gt;
+&lt;identificativoIntermediarioPA&gt;77777777777&lt;/identificativoIntermediarioPA&gt;
+&lt;identificativoStazioneIntermediarioPA&gt;77777777777_01&lt;/identificativoStazioneIntermediarioPA&gt;
+&lt;identificativoCarrello&gt;77777777777302655113906184500-31783&lt;/identificativoCarrello&gt;
+&lt;/ppt:intestazioneCarrelloPPT&gt;
+&lt;/soapenv:Header&gt;
+&lt;soapenv:Body&gt;
+&lt;ws:nodoInviaCarrelloRPT&gt;
+&lt;password&gt;pwdpwdpwd&lt;/password&gt;
+&lt;identificativoPSP&gt;AGID_01&lt;/identificativoPSP&gt;
+&lt;identificativoIntermediarioPSP&gt;97735020584&lt;/identificativoIntermediarioPSP&gt;
+&lt;identificativoCanale&gt;97735020584_02&lt;/identificativoCanale&gt;
+&lt;listaRPT&gt;
+&lt;elementoListaRPT&gt;
+&lt;identificativoDominio&gt;77777777777&lt;/identificativoDominio&gt;
+&lt;identificativoUnivocoVersamento&gt;6551139061845&lt;/identificativoUnivocoVersamento&gt;
+&lt;codiceContestoPagamento&gt;77777777777302655113906184500-31783&lt;/codiceContestoPagamento&gt;
+&lt;rpt&gt;PHBheV9pOlJQVCB4bWxuczpwYXlfaT0iaHR0cDovL3d3dy5kaWdpdHBhLmdvdi5pdC9zY2hlbWFzLzIwMTEvUGFnYW1lbnRpLyIgeG1sbnM6eHNpPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYS1pbnN0YW5jZSIgeHNpOnNjaGVtYUxvY2F0aW9uPSJodHRwOi8vd3d3LmRpZ2l0cGEuZ292Lml0L3NjaGVtYXMvMjAxMS9QYWdhbWVudGkvIFBhZ0luZl9SUFRfUlRfNl8wXzEueHNkICI+DQo8cGF5X2k6dmVyc2lvbmVPZ2dldHRvPjEuMDwvcGF5X2k6dmVyc2lvbmVPZ2dldHRvPg0KPHBheV9pOmRvbWluaW8+DQo8cGF5X2k6aWRlbnRpZmljYXRpdm9Eb21pbmlvPjc3Nzc3Nzc3Nzc3PC9wYXlfaTppZGVudGlmaWNhdGl2b0RvbWluaW8+DQo8cGF5X2k6aWRlbnRpZmljYXRpdm9TdGF6aW9uZVJpY2hpZWRlbnRlPjc3Nzc3Nzc3Nzc3XzAxPC9wYXlfaTppZGVudGlmaWNhdGl2b1N0YXppb25lUmljaGllZGVudGU+DQo8L3BheV9pOmRvbWluaW8+DQo8cGF5X2k6aWRlbnRpZmljYXRpdm9NZXNzYWdnaW9SaWNoaWVzdGE+TVNHUklDSElFU1RBMDE8L3BheV9pOmlkZW50aWZpY2F0aXZvTWVzc2FnZ2lvUmljaGllc3RhPg0KPHBheV9pOmRhdGFPcmFNZXNzYWdnaW9SaWNoaWVzdGE+MjAyMi0wOS0yMFQxMTozMTo1OC4yMjY8L3BheV9pOmRhdGFPcmFNZXNzYWdnaW9SaWNoaWVzdGE+DQo8cGF5X2k6YXV0ZW50aWNhemlvbmVTb2dnZXR0bz5DTlM8L3BheV9pOmF1dGVudGljYXppb25lU29nZ2V0dG8+DQo8cGF5X2k6c29nZ2V0dG9WZXJzYW50ZT4NCjxwYXlfaTppZGVudGlmaWNhdGl2b1VuaXZvY29WZXJzYW50ZT4NCjxwYXlfaTp0aXBvSWRlbnRpZmljYXRpdm9Vbml2b2NvPkY8L3BheV9pOnRpcG9JZGVudGlmaWNhdGl2b1VuaXZvY28+DQo8cGF5X2k6Y29kaWNlSWRlbnRpZmljYXRpdm9Vbml2b2NvPlJDQ0dMRDA5UDA5SDUwMkU8L3BheV9pOmNvZGljZUlkZW50aWZpY2F0aXZvVW5pdm9jbz4NCjwvcGF5X2k6aWRlbnRpZmljYXRpdm9Vbml2b2NvVmVyc2FudGU+DQo8cGF5X2k6YW5hZ3JhZmljYVZlcnNhbnRlPkdlc3VhbGRvO1JpY2NpdGVsbGk8L3BheV9pOmFuYWdyYWZpY2FWZXJzYW50ZT4NCjxwYXlfaTppbmRpcml6em9WZXJzYW50ZT52aWEgZGVsIGdlc3U8L3BheV9pOmluZGlyaXp6b1ZlcnNhbnRlPg0KPHBheV9pOmNpdmljb1ZlcnNhbnRlPjExPC9wYXlfaTpjaXZpY29WZXJzYW50ZT4NCjxwYXlfaTpjYXBWZXJzYW50ZT4wMDE4NjwvcGF5X2k6Y2FwVmVyc2FudGU+DQo8cGF5X2k6bG9jYWxpdGFWZXJzYW50ZT5Sb21hPC9wYXlfaTpsb2NhbGl0YVZlcnNhbnRlPg0KPHBheV9pOnByb3ZpbmNpYVZlcnNhbnRlPlJNPC9wYXlfaTpwcm92aW5jaWFWZXJzYW50ZT4NCjxwYXlfaTpuYXppb25lVmVyc2FudGU+SVQ8L3BheV9pOm5hemlvbmVWZXJzYW50ZT4NCjxwYXlfaTplLW1haWxWZXJzYW50ZT5nZXN1YWxkby5yaWNjaXRlbGxpQHBvc3RlLml0PC9wYXlfaTplLW1haWxWZXJzYW50ZT4NCjwvcGF5X2k6c29nZ2V0dG9WZXJzYW50ZT4NCjxwYXlfaTpzb2dnZXR0b1BhZ2F0b3JlPg0KPHBheV9pOmlkZW50aWZpY2F0aXZvVW5pdm9jb1BhZ2F0b3JlPg0KPHBheV9pOnRpcG9JZGVudGlmaWNhdGl2b1VuaXZvY28+RjwvcGF5X2k6dGlwb0lkZW50aWZpY2F0aXZvVW5pdm9jbz4NCjxwYXlfaTpjb2RpY2VJZGVudGlmaWNhdGl2b1VuaXZvY28+UkNDR0xEMDlQMDlINTAxRTwvcGF5X2k6Y29kaWNlSWRlbnRpZmljYXRpdm9Vbml2b2NvPg0KPC9wYXlfaTppZGVudGlmaWNhdGl2b1VuaXZvY29QYWdhdG9yZT4NCjxwYXlfaTphbmFncmFmaWNhUGFnYXRvcmU+R2VzdWFsZG87UmljY2l0ZWxsaTwvcGF5X2k6YW5hZ3JhZmljYVBhZ2F0b3JlPg0KPHBheV9pOmluZGlyaXp6b1BhZ2F0b3JlPnZpYSBkZWwgZ2VzdTwvcGF5X2k6aW5kaXJpenpvUGFnYXRvcmU+DQo8cGF5X2k6Y2l2aWNvUGFnYXRvcmU+MTE8L3BheV9pOmNpdmljb1BhZ2F0b3JlPg0KPHBheV9pOmNhcFBhZ2F0b3JlPjAwMTg2PC9wYXlfaTpjYXBQYWdhdG9yZT4NCjxwYXlfaTpsb2NhbGl0YVBhZ2F0b3JlPlJvbWE8L3BheV9pOmxvY2FsaXRhUGFnYXRvcmU+DQo8cGF5X2k6cHJvdmluY2lhUGFnYXRvcmU+Uk08L3BheV9pOnByb3ZpbmNpYVBhZ2F0b3JlPg0KPHBheV9pOm5hemlvbmVQYWdhdG9yZT5JVDwvcGF5X2k6bmF6aW9uZVBhZ2F0b3JlPg0KPHBheV9pOmUtbWFpbFBhZ2F0b3JlPmdlc3VhbGRvLnJpY2NpdGVsbGlAcG9zdGUuaXQ8L3BheV9pOmUtbWFpbFBhZ2F0b3JlPg0KPC9wYXlfaTpzb2dnZXR0b1BhZ2F0b3JlPg0KPHBheV9pOmVudGVCZW5lZmljaWFyaW8+DQo8cGF5X2k6aWRlbnRpZmljYXRpdm9Vbml2b2NvQmVuZWZpY2lhcmlvPg0KPHBheV9pOnRpcG9JZGVudGlmaWNhdGl2b1VuaXZvY28+RzwvcGF5X2k6dGlwb0lkZW50aWZpY2F0aXZvVW5pdm9jbz4NCjxwYXlfaTpjb2RpY2VJZGVudGlmaWNhdGl2b1VuaXZvY28+MTExMTExMTExMTc8L3BheV9pOmNvZGljZUlkZW50aWZpY2F0aXZvVW5pdm9jbz4NCjwvcGF5X2k6aWRlbnRpZmljYXRpdm9Vbml2b2NvQmVuZWZpY2lhcmlvPg0KPHBheV9pOmRlbm9taW5hemlvbmVCZW5lZmljaWFyaW8+QVpJRU5EQSBYWFg8L3BheV9pOmRlbm9taW5hemlvbmVCZW5lZmljaWFyaW8+DQo8cGF5X2k6Y29kaWNlVW5pdE9wZXJCZW5lZmljaWFyaW8+MTIzPC9wYXlfaTpjb2RpY2VVbml0T3BlckJlbmVmaWNpYXJpbz4NCjxwYXlfaTpkZW5vbVVuaXRPcGVyQmVuZWZpY2lhcmlvPlhYWDwvcGF5X2k6ZGVub21Vbml0T3BlckJlbmVmaWNpYXJpbz4NCjxwYXlfaTppbmRpcml6em9CZW5lZmljaWFyaW8+SW5kaXJpenpvQmVuZWZpY2lhcmlvPC9wYXlfaTppbmRpcml6em9CZW5lZmljaWFyaW8+DQo8cGF5X2k6Y2l2aWNvQmVuZWZpY2lhcmlvPjEyMzwvcGF5X2k6Y2l2aWNvQmVuZWZpY2lhcmlvPg0KPHBheV9pOmNhcEJlbmVmaWNpYXJpbz4yMjIyMjwvcGF5X2k6Y2FwQmVuZWZpY2lhcmlvPg0KPHBheV9pOmxvY2FsaXRhQmVuZWZpY2lhcmlvPlJvbWE8L3BheV9pOmxvY2FsaXRhQmVuZWZpY2lhcmlvPg0KPHBheV9pOnByb3ZpbmNpYUJlbmVmaWNpYXJpbz5STTwvcGF5X2k6cHJvdmluY2lhQmVuZWZpY2lhcmlvPg0KPHBheV9pOm5hemlvbmVCZW5lZmljaWFyaW8+SVQ8L3BheV9pOm5hemlvbmVCZW5lZmljaWFyaW8+DQo8L3BheV9pOmVudGVCZW5lZmljaWFyaW8+DQo8cGF5X2k6ZGF0aVZlcnNhbWVudG8+DQo8cGF5X2k6ZGF0YUVzZWN1emlvbmVQYWdhbWVudG8+MjAyMi0wOS0yMDwvcGF5X2k6ZGF0YUVzZWN1emlvbmVQYWdhbWVudG8+DQo8cGF5X2k6aW1wb3J0b1RvdGFsZURhVmVyc2FyZT4xLjUwPC9wYXlfaTppbXBvcnRvVG90YWxlRGFWZXJzYXJlPg0KPHBheV9pOnRpcG9WZXJzYW1lbnRvPkJCVDwvcGF5X2k6dGlwb1ZlcnNhbWVudG8+DQo8cGF5X2k6aWRlbnRpZmljYXRpdm9Vbml2b2NvVmVyc2FtZW50bz42NTUxMTM5MDYxODQ1PC9wYXlfaTppZGVudGlmaWNhdGl2b1VuaXZvY29WZXJzYW1lbnRvPg0KPHBheV9pOmNvZGljZUNvbnRlc3RvUGFnYW1lbnRvPjc3Nzc3Nzc3Nzc3MzAyNjU1MTEzOTA2MTg0NTAwLTMxNzgzPC9wYXlfaTpjb2RpY2VDb250ZXN0b1BhZ2FtZW50bz4NCjxwYXlfaTppYmFuQWRkZWJpdG8+SVQ5NlIwMTIzNDUxMjM0NTEyMzQ1Njc4OTA0PC9wYXlfaTppYmFuQWRkZWJpdG8+DQo8cGF5X2k6YmljQWRkZWJpdG8+QVJUSUlUTTEwNDU8L3BheV9pOmJpY0FkZGViaXRvPg0KPHBheV9pOmZpcm1hUmljZXZ1dGE+MDwvcGF5X2k6ZmlybWFSaWNldnV0YT4NCjxwYXlfaTpkYXRpU2luZ29sb1ZlcnNhbWVudG8+DQo8cGF5X2k6aW1wb3J0b1NpbmdvbG9WZXJzYW1lbnRvPjEuNTA8L3BheV9pOmltcG9ydG9TaW5nb2xvVmVyc2FtZW50bz4NCjxwYXlfaTpjb21taXNzaW9uZUNhcmljb1BBPjEuMDA8L3BheV9pOmNvbW1pc3Npb25lQ2FyaWNvUEE+DQo8cGF5X2k6aWJhbkFjY3JlZGl0bz5JVDk2UjAxMjM0NTQzMjEwMDAwMDAwMTIzNDU8L3BheV9pOmliYW5BY2NyZWRpdG8+DQo8cGF5X2k6YmljQWNjcmVkaXRvPkFSVElJVE0xMDUwPC9wYXlfaTpiaWNBY2NyZWRpdG8+DQo8cGF5X2k6aWJhbkFwcG9nZ2lvPklUOTZSMDEyMzQ1NDMyMTAwMDAwMDAxMjM0NTwvcGF5X2k6aWJhbkFwcG9nZ2lvPg0KPHBheV9pOmJpY0FwcG9nZ2lvPkFSVElJVE0xMDUwPC9wYXlfaTpiaWNBcHBvZ2dpbz4NCjxwYXlfaTpjcmVkZW56aWFsaVBhZ2F0b3JlPkNQMS4xPC9wYXlfaTpjcmVkZW56aWFsaVBhZ2F0b3JlPg0KPHBheV9pOmNhdXNhbGVWZXJzYW1lbnRvPnBhZ2FtZW50byBmb3RvY29waWUgcHJhdGljYSBSUFQ8L3BheV9pOmNhdXNhbGVWZXJzYW1lbnRvPg0KPHBheV9pOmRhdGlTcGVjaWZpY2lSaXNjb3NzaW9uZT4xL2FiYzwvcGF5X2k6ZGF0aVNwZWNpZmljaVJpc2Nvc3Npb25lPg0KPC9wYXlfaTpkYXRpU2luZ29sb1ZlcnNhbWVudG8+DQo8L3BheV9pOmRhdGlWZXJzYW1lbnRvPg0KPC9wYXlfaTpSUFQ+DQ==&lt;/rpt&gt;
+&lt;/elementoListaRPT&gt;
+&lt;elementoListaRPT&gt;
+&lt;identificativoDominio&gt;90000000001&lt;/identificativoDominio&gt;
+&lt;identificativoUnivocoVersamento&gt;6551139061845&lt;/identificativoUnivocoVersamento&gt;
+&lt;codiceContestoPagamento&gt;77777777777302655113906184500-31783&lt;/codiceContestoPagamento&gt;
+&lt;rpt&gt;PHBheV9pOlJQVCB4bWxuczpwYXlfaT0iaHR0cDovL3d3dy5kaWdpdHBhLmdvdi5pdC9zY2hlbWFzLzIwMTEvUGFnYW1lbnRpLyIgeG1sbnM6eHNpPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYS1pbnN0YW5jZSIgeHNpOnNjaGVtYUxvY2F0aW9uPSJodHRwOi8vd3d3LmRpZ2l0cGEuZ292Lml0L3NjaGVtYXMvMjAxMS9QYWdhbWVudGkvIFBhZ0luZl9SUFRfUlRfNl8wXzEueHNkICI+DQo8cGF5X2k6dmVyc2lvbmVPZ2dldHRvPjEuMTwvcGF5X2k6dmVyc2lvbmVPZ2dldHRvPg0KPHBheV9pOmRvbWluaW8+DQo8cGF5X2k6aWRlbnRpZmljYXRpdm9Eb21pbmlvPjkwMDAwMDAwMDAxPC9wYXlfaTppZGVudGlmaWNhdGl2b0RvbWluaW8+DQo8cGF5X2k6aWRlbnRpZmljYXRpdm9TdGF6aW9uZVJpY2hpZWRlbnRlPjkwMDAwMDAwMDAxXzAxPC9wYXlfaTppZGVudGlmaWNhdGl2b1N0YXppb25lUmljaGllZGVudGU+DQo8L3BheV9pOmRvbWluaW8+DQo8cGF5X2k6aWRlbnRpZmljYXRpdm9NZXNzYWdnaW9SaWNoaWVzdGE+TVNHUklDSElFU1RBMDE8L3BheV9pOmlkZW50aWZpY2F0aXZvTWVzc2FnZ2lvUmljaGllc3RhPg0KPHBheV9pOmRhdGFPcmFNZXNzYWdnaW9SaWNoaWVzdGE+MjAyMi0wOS0yMFQxMTozMTo1OC4yMzI8L3BheV9pOmRhdGFPcmFNZXNzYWdnaW9SaWNoaWVzdGE+DQo8cGF5X2k6YXV0ZW50aWNhemlvbmVTb2dnZXR0bz5DTlM8L3BheV9pOmF1dGVudGljYXppb25lU29nZ2V0dG8+DQo8cGF5X2k6c29nZ2V0dG9WZXJzYW50ZT4NCjxwYXlfaTppZGVudGlmaWNhdGl2b1VuaXZvY29WZXJzYW50ZT4NCjxwYXlfaTp0aXBvSWRlbnRpZmljYXRpdm9Vbml2b2NvPkY8L3BheV9pOnRpcG9JZGVudGlmaWNhdGl2b1VuaXZvY28+DQo8cGF5X2k6Y29kaWNlSWRlbnRpZmljYXRpdm9Vbml2b2NvPlJDQ0dMRDA5UDA5SDUwMkU8L3BheV9pOmNvZGljZUlkZW50aWZpY2F0aXZvVW5pdm9jbz4NCjwvcGF5X2k6aWRlbnRpZmljYXRpdm9Vbml2b2NvVmVyc2FudGU+DQo8cGF5X2k6YW5hZ3JhZmljYVZlcnNhbnRlPkdlc3VhbGRvO1JpY2NpdGVsbGk8L3BheV9pOmFuYWdyYWZpY2FWZXJzYW50ZT4NCjxwYXlfaTppbmRpcml6em9WZXJzYW50ZT52aWEgZGVsIGdlc3U8L3BheV9pOmluZGlyaXp6b1ZlcnNhbnRlPg0KPHBheV9pOmNpdmljb1ZlcnNhbnRlPjExPC9wYXlfaTpjaXZpY29WZXJzYW50ZT4NCjxwYXlfaTpjYXBWZXJzYW50ZT4wMDE4NjwvcGF5X2k6Y2FwVmVyc2FudGU+DQo8cGF5X2k6bG9jYWxpdGFWZXJzYW50ZT5Sb21hPC9wYXlfaTpsb2NhbGl0YVZlcnNhbnRlPg0KPHBheV9pOnByb3ZpbmNpYVZlcnNhbnRlPlJNPC9wYXlfaTpwcm92aW5jaWFWZXJzYW50ZT4NCjxwYXlfaTpuYXppb25lVmVyc2FudGU+SVQ8L3BheV9pOm5hemlvbmVWZXJzYW50ZT4NCjxwYXlfaTplLW1haWxWZXJzYW50ZT5nZXN1YWxkby5yaWNjaXRlbGxpQHBvc3RlLml0PC9wYXlfaTplLW1haWxWZXJzYW50ZT4NCjwvcGF5X2k6c29nZ2V0dG9WZXJzYW50ZT4NCjxwYXlfaTpzb2dnZXR0b1BhZ2F0b3JlPg0KPHBheV9pOmlkZW50aWZpY2F0aXZvVW5pdm9jb1BhZ2F0b3JlPg0KPHBheV9pOnRpcG9JZGVudGlmaWNhdGl2b1VuaXZvY28+RjwvcGF5X2k6dGlwb0lkZW50aWZpY2F0aXZvVW5pdm9jbz4NCjxwYXlfaTpjb2RpY2VJZGVudGlmaWNhdGl2b1VuaXZvY28+UkNDR0xEMDlQMDlINTAxRTwvcGF5X2k6Y29kaWNlSWRlbnRpZmljYXRpdm9Vbml2b2NvPg0KPC9wYXlfaTppZGVudGlmaWNhdGl2b1VuaXZvY29QYWdhdG9yZT4NCjxwYXlfaTphbmFncmFmaWNhUGFnYXRvcmU+R2VzdWFsZG87UmljY2l0ZWxsaTwvcGF5X2k6YW5hZ3JhZmljYVBhZ2F0b3JlPg0KPHBheV9pOmluZGlyaXp6b1BhZ2F0b3JlPnZpYSBkZWwgZ2VzdTwvcGF5X2k6aW5kaXJpenpvUGFnYXRvcmU+DQo8cGF5X2k6Y2l2aWNvUGFnYXRvcmU+MTE8L3BheV9pOmNpdmljb1BhZ2F0b3JlPg0KPHBheV9pOmNhcFBhZ2F0b3JlPjAwMTg2PC9wYXlfaTpjYXBQYWdhdG9yZT4NCjxwYXlfaTpsb2NhbGl0YVBhZ2F0b3JlPlJvbWE8L3BheV9pOmxvY2FsaXRhUGFnYXRvcmU+DQo8cGF5X2k6cHJvdmluY2lhUGFnYXRvcmU+Uk08L3BheV9pOnByb3ZpbmNpYVBhZ2F0b3JlPg0KPHBheV9pOm5hemlvbmVQYWdhdG9yZT5JVDwvcGF5X2k6bmF6aW9uZVBhZ2F0b3JlPg0KPHBheV9pOmUtbWFpbFBhZ2F0b3JlPmdlc3VhbGRvLnJpY2NpdGVsbGlAcG9zdGUuaXQ8L3BheV9pOmUtbWFpbFBhZ2F0b3JlPg0KPC9wYXlfaTpzb2dnZXR0b1BhZ2F0b3JlPg0KPHBheV9pOmVudGVCZW5lZmljaWFyaW8+DQo8cGF5X2k6aWRlbnRpZmljYXRpdm9Vbml2b2NvQmVuZWZpY2lhcmlvPg0KPHBheV9pOnRpcG9JZGVudGlmaWNhdGl2b1VuaXZvY28+RzwvcGF5X2k6dGlwb0lkZW50aWZpY2F0aXZvVW5pdm9jbz4NCjxwYXlfaTpjb2RpY2VJZGVudGlmaWNhdGl2b1VuaXZvY28+MTExMTExMTExMTc8L3BheV9pOmNvZGljZUlkZW50aWZpY2F0aXZvVW5pdm9jbz4NCjwvcGF5X2k6aWRlbnRpZmljYXRpdm9Vbml2b2NvQmVuZWZpY2lhcmlvPg0KPHBheV9pOmRlbm9taW5hemlvbmVCZW5lZmljaWFyaW8+QVpJRU5EQSBYWFg8L3BheV9pOmRlbm9taW5hemlvbmVCZW5lZmljaWFyaW8+DQo8cGF5X2k6Y29kaWNlVW5pdE9wZXJCZW5lZmljaWFyaW8+MTIzPC9wYXlfaTpjb2RpY2VVbml0T3BlckJlbmVmaWNpYXJpbz4NCjxwYXlfaTpkZW5vbVVuaXRPcGVyQmVuZWZpY2lhcmlvPlhYWDwvcGF5X2k6ZGVub21Vbml0T3BlckJlbmVmaWNpYXJpbz4NCjxwYXlfaTppbmRpcml6em9CZW5lZmljaWFyaW8+SW5kaXJpenpvQmVuZWZpY2lhcmlvPC9wYXlfaTppbmRpcml6em9CZW5lZmljaWFyaW8+DQo8cGF5X2k6Y2l2aWNvQmVuZWZpY2lhcmlvPjEyMzwvcGF5X2k6Y2l2aWNvQmVuZWZpY2lhcmlvPg0KPHBheV9pOmNhcEJlbmVmaWNpYXJpbz4yMjIyMjwvcGF5X2k6Y2FwQmVuZWZpY2lhcmlvPg0KPHBheV9pOmxvY2FsaXRhQmVuZWZpY2lhcmlvPlJvbWE8L3BheV9pOmxvY2FsaXRhQmVuZWZpY2lhcmlvPg0KPHBheV9pOnByb3ZpbmNpYUJlbmVmaWNpYXJpbz5STTwvcGF5X2k6cHJvdmluY2lhQmVuZWZpY2lhcmlvPg0KPHBheV9pOm5hemlvbmVCZW5lZmljaWFyaW8+SVQ8L3BheV9pOm5hemlvbmVCZW5lZmljaWFyaW8+DQo8L3BheV9pOmVudGVCZW5lZmljaWFyaW8+DQo8cGF5X2k6ZGF0aVZlcnNhbWVudG8+DQo8cGF5X2k6ZGF0YUVzZWN1emlvbmVQYWdhbWVudG8+MjAyMi0wOS0yMDwvcGF5X2k6ZGF0YUVzZWN1emlvbmVQYWdhbWVudG8+DQo8cGF5X2k6aW1wb3J0b1RvdGFsZURhVmVyc2FyZT4xLjUwPC9wYXlfaTppbXBvcnRvVG90YWxlRGFWZXJzYXJlPg0KPHBheV9pOnRpcG9WZXJzYW1lbnRvPkJCVDwvcGF5X2k6dGlwb1ZlcnNhbWVudG8+DQo8cGF5X2k6aWRlbnRpZmljYXRpdm9Vbml2b2NvVmVyc2FtZW50bz42NTUxMTM5MDYxODQ1PC9wYXlfaTppZGVudGlmaWNhdGl2b1VuaXZvY29WZXJzYW1lbnRvPg0KPHBheV9pOmNvZGljZUNvbnRlc3RvUGFnYW1lbnRvPjc3Nzc3Nzc3Nzc3MzAyNjU1MTEzOTA2MTg0NTAwLTMxNzgzPC9wYXlfaTpjb2RpY2VDb250ZXN0b1BhZ2FtZW50bz4NCjxwYXlfaTppYmFuQWRkZWJpdG8+SVQ5NlIwMTIzNDU0MzIxMDAwMDAwMDEyMzQ1PC9wYXlfaTppYmFuQWRkZWJpdG8+DQo8cGF5X2k6YmljQWRkZWJpdG8+QVJUSUlUTTEwNDU8L3BheV9pOmJpY0FkZGViaXRvPg0KPHBheV9pOmZpcm1hUmljZXZ1dGE+MDwvcGF5X2k6ZmlybWFSaWNldnV0YT4NCjxwYXlfaTpkYXRpU2luZ29sb1ZlcnNhbWVudG8+DQo8cGF5X2k6aW1wb3J0b1NpbmdvbG9WZXJzYW1lbnRvPjEuNTA8L3BheV9pOmltcG9ydG9TaW5nb2xvVmVyc2FtZW50bz4NCjxwYXlfaTpjb21taXNzaW9uZUNhcmljb1BBPjEuMDA8L3BheV9pOmNvbW1pc3Npb25lQ2FyaWNvUEE+DQo8cGF5X2k6aWJhbkFjY3JlZGl0bz5JVDQ1UjA3NjAxMDMyMDAwMDAwMDAwMDEwMTY8L3BheV9pOmliYW5BY2NyZWRpdG8+DQo8cGF5X2k6YmljQWNjcmVkaXRvPkFSVElJVE0xMDUwPC9wYXlfaTpiaWNBY2NyZWRpdG8+DQo8cGF5X2k6aWJhbkFwcG9nZ2lvPklUNDVSMDc2MDEwMzIwMDAwMDAwMDAwMTAxNjwvcGF5X2k6aWJhbkFwcG9nZ2lvPg0KPHBheV9pOmJpY0FwcG9nZ2lvPkFSVElJVE0xMDUwPC9wYXlfaTpiaWNBcHBvZ2dpbz4NCjxwYXlfaTpjcmVkZW56aWFsaVBhZ2F0b3JlPkNQMS4xPC9wYXlfaTpjcmVkZW56aWFsaVBhZ2F0b3JlPg0KPHBheV9pOmNhdXNhbGVWZXJzYW1lbnRvPnBhZ2FtZW50byBmb3RvY29waWUgcHJhdGljYTwvcGF5X2k6Y2F1c2FsZVZlcnNhbWVudG8+DQo8cGF5X2k6ZGF0aVNwZWNpZmljaVJpc2Nvc3Npb25lPjEvYWJjPC9wYXlfaTpkYXRpU3BlY2lmaWNpUmlzY29zc2lvbmU+DQo8L3BheV9pOmRhdGlTaW5nb2xvVmVyc2FtZW50bz4NCjwvcGF5X2k6ZGF0aVZlcnNhbWVudG8+DQo8L3BheV9pOlJQVD4N&lt;/rpt&gt;
+&lt;/elementoListaRPT&gt;
+&lt;/listaRPT&gt;
+&lt;requireLightPayment&gt;01&lt;/requireLightPayment&gt;
+&lt;multiBeneficiario&gt;1&lt;/multiBeneficiario&gt;
+&lt;/ws:nodoInviaCarrelloRPT&gt;
+&lt;/soapenv:Body&gt;
+&lt;/soapenv:Envelope&gt;
+headers:  {'Content-Type': 'application/xml', 'SOAPAction': 'nodoInviaCarrelloRPT', 'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}
+b'&lt;?xml version="1.0" encoding="UTF-8" standalone="no" ?&gt;&lt;soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/" xmlns:tns="http://NodoPagamentiSPC.spcoop.gov.it/servizi/PagamentiTelematiciRPT" xmlns:ppthead="http://ws.pagamenti.telematici.gov/ppthead"&gt;&lt;soapenv:Body&gt;&lt;ppt:nodoInviaCarrelloRPTRisposta&gt;&lt;esitoComplessivoOperazione&gt;OK&lt;/esitoComplessivoOperazione&gt;&lt;url&gt;https://acardste.vaservices.eu:1443/wallet/welcome?idSession=b5d1c2df-8052-4072-861d-31eb6bc69479&lt;/url&gt;&lt;/ppt:nodoInviaCarrelloRPTRisposta&gt;&lt;/soapenv:Body&gt;&lt;/soapenv:Envelope&gt;'
+200
+check tag "esitoComplessivoOperazione" - expected: OK, obtained: OK
+url
+https://acardste.vaservices.eu:1443/wallet/welcome?idSession=b5d1c2df-8052-4072-861d-31eb6bc69479
+#################### b5d1c2df-8052-4072-861d-31eb6bc69479
+
+
+http://localhost:9080/nodo-dev/informazioniPagamento?idPagamento=b5d1c2df-8052-4072-861d-31eb6bc69479
+informazioniPagamentoResponse
+b'{"IBAN":"IT96R0123454321000000012345","bolloDigitale":false,"codiceFiscale":"RCCGLD09P09H502E","dettagli":[{"CCP":"77777777777302655113906184500-31783","IUV":"6551139061845","codicePagatore":"RCCGLD09P09H501E","enteBeneficiario":"AZIENDA XXX","idDominio":"77777777777","importo":1.50,"nomePagatore":"Gesualdo;Riccitelli","tipoPagatore":"F"},{"CCP":"77777777777302655113906184500-31783","IUV":"6551139061845","codicePagatore":"RCCGLD09P09H501E","enteBeneficiario":"AZIENDA XXX","idDominio":"90000000001","importo":1.50,"nomePagatore":"Gesualdo;Riccitelli","tipoPagatore":"F"}],"email":"gesualdo.riccitelli@poste.it","idCarrello":"77777777777302655113906184500-31783","importoTotale":3.00,"oggettoPagamento":"Causali multiple di versamento","ragioneSociale":"Pa Salvo","urlRedirectEC":"http://siapagopa.rf.gd/ec?qrstr=prova&amp;idSession=b5d1c2df-8052-4072-861d-31eb6bc69479"}'
+HTTP status expected: 200 - obtained:200
+
+
+http://localhost:9080/nodo-dev/notificaAnnullamento?idPagamento=b5d1c2df-8052-4072-861d-31eb6bc69479
+notificaAnnullamentoResponse
+b'{"esito":"OK"}'
+HTTP status expected: 200 - obtained:200
+wait for: 5.0 seconds
+Connecting to the OracleDB... NODO_ONLINE
+Successfully connected to OracleDB
+SELECT s.STATO FROM STATI_RPT s WHERE s.IUV = '6551139061845' and s.ID_DOMINIO = '77777777777'
+ Executing query [SELECT s.STATO FROM STATI_RPT s WHERE s.IUV = '6551139061845' and s.ID_DOMINIO = '77777777777'] on OracleDB instance...
+ Query executed successfully - [4] row/s found
+query_result:  ['RPT_RICEVUTA_NODO', 'RPT_ACCETTATA_NODO', 'RPT_PARCHEGGIATA_NODO', 'RPT_ANNULLATA_WISP']
+value:  ['RPT_RICEVUTA_NODO', 'RPT_ACCETTATA_NODO', 'RPT_PARCHEGGIATA_NODO', 'RPT_ANNULLATA_WISP']
+Closing connection to the OracleDb...
+Connection to OracleDB closed successfully
+Connecting to the OracleDB... NODO_ONLINE
+Successfully connected to OracleDB
+SELECT s.STATO FROM STATI_RPT s WHERE s.IUV = '6551139061845' and s.ID_DOMINIO = '90000000001'
+ Executing query [SELECT s.STATO FROM STATI_RPT s WHERE s.IUV = '6551139061845' and s.ID_DOMINIO = '90000000001'] on OracleDB instance...
+ Query executed successfully - [4] row/s found
+query_result:  ['RPT_RICEVUTA_NODO', 'RPT_ACCETTATA_NODO', 'RPT_PARCHEGGIATA_NODO', 'RPT_ANNULLATA_WISP']
+value:  ['RPT_RICEVUTA_NODO', 'RPT_ACCETTATA_NODO', 'RPT_PARCHEGGIATA_NODO', 'RPT_ANNULLATA_WISP']
+Closing connection to the OracleDb...
+Connection to OracleDB closed successfully
+Connecting to the OracleDB... NODO_ONLINE
+Successfully connected to OracleDB
+SELECT s.STATO FROM STATI_RPT_SNAPSHOT s WHERE s.IUV = '6551139061845' and s.ID_DOMINIO = '77777777777'
+ Executing query [SELECT s.STATO FROM STATI_RPT_SNAPSHOT s WHERE s.IUV = '6551139061845' and s.ID_DOMINIO = '77777777777'] on OracleDB instance...
+ Query executed successfully - [1] row/s found
+query_result:  ['RPT_ANNULLATA_WISP']
+value:  ['RPT_ANNULLATA_WISP']
+Closing connection to the OracleDb...
+Connection to OracleDB closed successfully
+Connecting to the OracleDB... NODO_ONLINE
+Successfully connected to OracleDB
+SELECT s.STATO FROM STATI_RPT_SNAPSHOT s WHERE s.IUV = '6551139061845' and s.ID_DOMINIO = '90000000001'
+ Executing query [SELECT s.STATO FROM STATI_RPT_SNAPSHOT s WHERE s.IUV = '6551139061845' and s.ID_DOMINIO = '90000000001'] on OracleDB instance...
+ Query executed successfully - [1] row/s found
+query_result:  ['RPT_ANNULLATA_WISP']
+value:  ['RPT_ANNULLATA_WISP']
+Closing connection to the OracleDb...
+Connection to OracleDB closed successfully
+Connecting to the OracleDB... NODO_ONLINE
+Successfully connected to OracleDB
+SELECT s.STATO FROM STATI_CARRELLO s WHERE s.ID_CARRELLO = '77777777777302655113906184500-31783'
+ Executing query [SELECT s.STATO FROM STATI_CARRELLO s WHERE s.ID_CARRELLO = '77777777777302655113906184500-31783'] on OracleDB instance...
+ Query executed successfully - [4] row/s found
+query_result:  ['CART_RICEVUTO_NODO', 'CART_ACCETTATO_NODO', 'CART_PARCHEGGIATO_NODO', 'CART_ANNULLATO_WISP']
+value:  ['CART_RICEVUTO_NODO', 'CART_ACCETTATO_NODO', 'CART_PARCHEGGIATO_NODO', 'CART_ANNULLATO_WISP']
+Closing connection to the OracleDb...
+Connection to OracleDB closed successfully
+Connecting to the OracleDB... NODO_ONLINE
+Successfully connected to OracleDB
+SELECT s.STATO FROM STATI_CARRELLO_SNAPSHOT s WHERE s.ID_CARRELLO = '77777777777302655113906184500-31783'
+ Executing query [SELECT s.STATO FROM STATI_CARRELLO_SNAPSHOT s WHERE s.ID_CARRELLO = '77777777777302655113906184500-31783'] on OracleDB instance...
+ Query executed successfully - [1] row/s found
+query_result:  ['CART_ANNULLATO_WISP']
+value:  ['CART_ANNULLATO_WISP']
+Closing connection to the OracleDb...
+Connection to OracleDB closed successfully
+Connecting to the OracleDB... NODO_ONLINE
+Successfully connected to OracleDB
+SELECT s.STATUS FROM POSITION_PAYMENT_STATUS s WHERE s.PAYMENT_TOKEN = '77777777777302655113906184500-31783' and s.pa_fiscal_code= '77777777777'
+ Executing query [SELECT s.STATUS FROM POSITION_PAYMENT_STATUS s WHERE s.PAYMENT_TOKEN = '77777777777302655113906184500-31783' and s.pa_fiscal_code= '77777777777'] on OracleDB instance...
+ Query executed successfully - [2] row/s found
+query_result:  ['PAYING', 'CANCELLED']
+value:  ['PAYING', 'CANCELLED']
+Closing connection to the OracleDb...
+Connection to OracleDB closed successfully
+Connecting to the OracleDB... NODO_ONLINE
+Successfully connected to OracleDB
+SELECT s.STATUS FROM POSITION_PAYMENT_STATUS_SNAPSHOT s WHERE s.PAYMENT_TOKEN = '77777777777302655113906184500-31783' and s.pa_fiscal_code= '77777777777'
+ Executing query [SELECT s.STATUS FROM POSITION_PAYMENT_STATUS_SNAPSHOT s WHERE s.PAYMENT_TOKEN = '77777777777302655113906184500-31783' and s.pa_fiscal_code= '77777777777'] on OracleDB instance...
+ Query executed successfully - [1] row/s found
+query_result:  ['CANCELLED']
+value:  ['CANCELLED']
+Closing connection to the OracleDb...
+Connection to OracleDB closed successfully
+Connecting to the OracleDB... NODO_ONLINE
+Successfully connected to OracleDB
+ Executing query [SELECT s.NOTICE_ID FROM POSITION_PAYMENT_STATUS s WHERE s.PAYMENT_TOKEN = '77777777777302655113906184500-31783' and s.pa_fiscal_code= '77777777777'] on OracleDB instance...
+ Query executed successfully - [2] row/s found
+executed query: [('302655113906184500',), ('302655113906184500',)]
+DB_GEST_ANN_stati_position_payment_status: [('302655113906184500',), ('302655113906184500',)]
+NOTICE_ID: 302655113906184500
+Connecting to the OracleDB... NODO_ONLINE
+Successfully connected to OracleDB
+SELECT s.STATUS FROM POSITION_STATUS s WHERE s.NOTICE_ID = '302655113906184500'
+ Executing query [SELECT s.STATUS FROM POSITION_STATUS s WHERE s.NOTICE_ID = '302655113906184500'] on OracleDB instance...
+ Query executed successfully - [2] row/s found
+query_result:  ['PAYING', 'INSERTED']
+value:  ['PAYING', 'INSERTED']
+Closing connection to the OracleDb...
+Connection to OracleDB closed successfully
+Connecting to the OracleDB... NODO_ONLINE
+Successfully connected to OracleDB
+SELECT s.STATUS FROM POSITION_STATUS_SNAPSHOT s WHERE s.NOTICE_ID = '302655113906184500'
+ Executing query [SELECT s.STATUS FROM POSITION_STATUS_SNAPSHOT s WHERE s.NOTICE_ID = '302655113906184500'] on OracleDB instance...
+ Query executed successfully - [1] row/s found
+query_result:  ['INSERTED']
+value:  ['INSERTED']
+Closing connection to the OracleDb...
+Connection to OracleDB closed successfully
+url_nodo:  http://localhost:9080/nodo-dev/webservices/input
+nodo soap_request sent &gt;&gt;&gt; &lt;soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd"&gt;
+&lt;soapenv:Header/&gt;
+&lt;soapenv:Body&gt;
+&lt;nod:activateIOPaymentReq&gt;
+&lt;idPSP&gt;AGID_01&lt;/idPSP&gt;
+&lt;idBrokerPSP&gt;97735020584&lt;/idBrokerPSP&gt;
+&lt;idChannel&gt;97735020584_03&lt;/idChannel&gt;
+&lt;password&gt;pwdpwdpwd&lt;/password&gt;
+&lt;!--Optional:--&gt;
+&lt;qrCode&gt;
+&lt;fiscalCode&gt;77777777777&lt;/fiscalCode&gt;
+&lt;noticeNumber&gt;302655113906184500&lt;/noticeNumber&gt;
+&lt;/qrCode&gt;
+&lt;!--Optional:--&gt;
+&lt;!--expirationTime&gt;60000&lt;/expirationTime--&gt;
+&lt;amount&gt;1.50&lt;/amount&gt;
+&lt;!--Optional:--&gt;
+&lt;dueDate&gt;2021-12-12&lt;/dueDate&gt;
+&lt;!--Optional:--&gt;
+&lt;paymentNote&gt;responseFull&lt;/paymentNote&gt;
+&lt;!--Optional:--&gt;
+&lt;payer&gt;
+&lt;uniqueIdentifier&gt;
+&lt;entityUniqueIdentifierType&gt;G&lt;/entityUniqueIdentifierType&gt;
+&lt;entityUniqueIdentifierValue&gt;77777777777&lt;/entityUniqueIdentifierValue&gt;
+&lt;/uniqueIdentifier&gt;
+&lt;fullName&gt;IOname_&lt;/fullName&gt;
+&lt;!--Optional:--&gt;
+&lt;streetName&gt;IOstreet&lt;/streetName&gt;
+&lt;!--Optional:--&gt;
+&lt;civicNumber&gt;IOcivic&lt;/civicNumber&gt;
+&lt;!--Optional:--&gt;
+&lt;postalCode&gt;IOcode&lt;/postalCode&gt;
+&lt;!--Optional:--&gt;
+&lt;city&gt;IOcity&lt;/city&gt;
+&lt;!--Optional:--&gt;
+&lt;stateProvinceRegion&gt;IOstate&lt;/stateProvinceRegion&gt;
+&lt;!--Optional:--&gt;
+&lt;country&gt;DE&lt;/country&gt;
+&lt;!--Optional:--&gt;
+&lt;e-mail&gt;IO.test.prova@gmail.com&lt;/e-mail&gt;
+&lt;/payer&gt;
+&lt;/nod:activateIOPaymentReq&gt;
+&lt;/soapenv:Body&gt;
+&lt;/soapenv:Envelope&gt;
+headers:  {'Content-Type': 'application/xml', 'SOAPAction': 'activateIOPayment', 'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}
+b'&lt;?xml version="1.0" encoding="UTF-8" standalone="no" ?&gt;&lt;soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:nfpsp="http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd"&gt;&lt;soapenv:Body&gt;&lt;nfpsp:activateIOPaymentRes&gt;&lt;outcome&gt;KO&lt;/outcome&gt;&lt;fault&gt;&lt;faultCode&gt;PPT_ERRORE_EMESSO_DA_PAA&lt;/faultCode&gt;&lt;faultString&gt;Errore restituito dalla PAA.&lt;/faultString&gt;&lt;id&gt;77777777777&lt;/id&gt;&lt;description&gt;FaultCode PA: PAA_PAGAMENTO_SCONOSCIUTO\nFaultString PA: Pagamento in attesa risulta sconosciuto all\xe2\x80\x99Ente Creditore\nDescription PA: numero avviso deve iniziare con 302[00|01|02|03|04|05|06|07|08|09|10|11|12|13|14|15|16|99|98|97]&lt;/description&gt;&lt;/fault&gt;&lt;/nfpsp:activateIOPaymentRes&gt;&lt;/soapenv:Body&gt;&lt;/soapenv:Envelope&gt;'
+200
+fault code:  PPT_ERRORE_EMESSO_DA_PAA
+fault string:  Errore restituito dalla PAA.
+description:  FaultCode PA: PAA_PAGAMENTO_SCONOSCIUTO
+FaultString PA: Pagamento in attesa risulta sconosciuto all’Ente Creditore
+Description PA: numero avviso deve iniziare con 302[00|01|02|03|04|05|06|07|08|09|10|11|12|13|14|15|16|99|98|97]
+check tag "outcome" - expected: OK, obtained: KO</pre>    </span></li></ol><span /></div><div class="scenario"><span class="scenario_file">src/integ-test/bdd-test/features/Mod1MB/flows/gestioneAnnulli/nodoNotificaAnnullamento_flows_PAG-1642_01.feature:328</span><h3 onclick="Collapsible_toggle('scenario_5')" class="failed"><span class="val">Scenario: Trigger paaInviaRt</span></h3><ol class="scenario_steps" id="scenario_5"><li class="step passed"><div class="step_name"><span class="keyword">Given </span><span class="step val">systems up</span><small class="step_duration">(0.091s)</small></div><div class="step_file"><span>src/integ-test/bdd-test/features/steps/steps.py:29</span></div><table><tr><th>name</th><th>url</th><th>healthcheck</th><th>soap_service</th><th>rest_service</th></tr><tr><td>nodo-dei-pagamenti</td><td>http://localhost:9080/</td><td>nodo-dev-health/ready</td><td>nodo-dev/webservices/input</td><td>nodo-dev</td></tr><tr><td>mock-ec</td><td>http://localhost:8089/</td><td>servizi/PagamentiTelematiciRPT/info</td><td>servizi/PagamentiTelematiciRPT</td><td /></tr><tr><td>mock-psp</td><td>http://localhost:8090/</td><td>servizi/MockPSP/info</td><td>servizi/MockPSP</td><td /></tr></table><span class="embed" /></li><li class="step failed"><div class="step_name"><span class="keyword">Given </span><span class="step val"><span>the </span><b>Execute activateIOPayment</b><span> scenario executed successfully</span></span><small class="step_duration">(16.298s)</small></div><div class="step_file"><span>src/integ-test/bdd-test/features/steps/steps.py:957</span></div><span class="embed"><a onclick="Collapsible_toggle('embed_2')">Error Message</a><pre id="embed_2" style="display: none">Assertion Failed: FAILED SUB-STEP: Then check outcome is OK of activateIOPayment response
+Substep info: Traceback (most recent call last):
+  File "C:\Users\alessandro.cancelli\Desktop\venv\lib\site-packages\behave\model.py", line 1329, in run
+    match.run(runner.context)
+  File "C:\Users\alessandro.cancelli\Desktop\venv\lib\site-packages\behave\matchers.py", line 98, in run
+    self.func(context, *args, **kwargs)
+  File "src\integ-test\bdd-test\features\steps\steps.py", line 740, in step_impl
+    assert value == data
+AssertionError
+
+Traceback (of failed substep):
+  File "C:\Users\alessandro.cancelli\Desktop\venv\lib\site-packages\behave\model.py", line 1329, in run
+    match.run(runner.context)
+  File "C:\Users\alessandro.cancelli\Desktop\venv\lib\site-packages\behave\matchers.py", line 98, in run
+    self.func(context, *args, **kwargs)
+  File "src\integ-test\bdd-test\features\steps\steps.py", line 740, in step_impl
+    assert value == data
+
+Captured stdout:
+calling: nodo-dei-pagamenti -&gt; http://localhost:9080/
+calling -&gt; http://localhost:9080/nodo-dev-health/ready
+response: 200
+calling: mock-ec -&gt; http://localhost:8089/
+calling -&gt; http://localhost:8089/servizi/PagamentiTelematiciRPT/info
+response: 200
+calling: mock-psp -&gt; http://localhost:8090/
+calling -&gt; http://localhost:8090/servizi/MockPSP/info
+response: 200
+Connecting to the OracleDB... NODO4_CFG
+Successfully connected to OracleDB
+ Executing query [UPDATE NODO4_CFG.CONFIGURATION_KEYS s SET s.CONFIG_VALUE = q'[false]' WHERE s.CONFIG_KEY = 'CONFIG_VALUE'] on OracleDB instance...
+Closing connection to the OracleDb...
+Connection to OracleDB closed successfully
+refresh_response:  &lt;Response [200]&gt;
+PHBheV9pOlJQVCB4bWxuczpwYXlfaT0iaHR0cDovL3d3dy5kaWdpdHBhLmdvdi5pdC9zY2hlbWFzLzIwMTEvUGFnYW1lbnRpLyIgeG1sbnM6eHNpPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYS1pbnN0YW5jZSIgeHNpOnNjaGVtYUxvY2F0aW9uPSJodHRwOi8vd3d3LmRpZ2l0cGEuZ292Lml0L3NjaGVtYXMvMjAxMS9QYWdhbWVudGkvIFBhZ0luZl9SUFRfUlRfNl8wXzEueHNkICI+DQo8cGF5X2k6dmVyc2lvbmVPZ2dldHRvPjEuMDwvcGF5X2k6dmVyc2lvbmVPZ2dldHRvPg0KPHBheV9pOmRvbWluaW8+DQo8cGF5X2k6aWRlbnRpZmljYXRpdm9Eb21pbmlvPjc3Nzc3Nzc3Nzc3PC9wYXlfaTppZGVudGlmaWNhdGl2b0RvbWluaW8+DQo8cGF5X2k6aWRlbnRpZmljYXRpdm9TdGF6aW9uZVJpY2hpZWRlbnRlPjc3Nzc3Nzc3Nzc3XzAxPC9wYXlfaTppZGVudGlmaWNhdGl2b1N0YXppb25lUmljaGllZGVudGU+DQo8L3BheV9pOmRvbWluaW8+DQo8cGF5X2k6aWRlbnRpZmljYXRpdm9NZXNzYWdnaW9SaWNoaWVzdGE+TVNHUklDSElFU1RBMDE8L3BheV9pOmlkZW50aWZpY2F0aXZvTWVzc2FnZ2lvUmljaGllc3RhPg0KPHBheV9pOmRhdGFPcmFNZXNzYWdnaW9SaWNoaWVzdGE+MjAyMi0wOS0yMFQxMTozMjoxNC42MjE8L3BheV9pOmRhdGFPcmFNZXNzYWdnaW9SaWNoaWVzdGE+DQo8cGF5X2k6YXV0ZW50aWNhemlvbmVTb2dnZXR0bz5DTlM8L3BheV9pOmF1dGVudGljYXppb25lU29nZ2V0dG8+DQo8cGF5X2k6c29nZ2V0dG9WZXJzYW50ZT4NCjxwYXlfaTppZGVudGlmaWNhdGl2b1VuaXZvY29WZXJzYW50ZT4NCjxwYXlfaTp0aXBvSWRlbnRpZmljYXRpdm9Vbml2b2NvPkY8L3BheV9pOnRpcG9JZGVudGlmaWNhdGl2b1VuaXZvY28+DQo8cGF5X2k6Y29kaWNlSWRlbnRpZmljYXRpdm9Vbml2b2NvPlJDQ0dMRDA5UDA5SDUwMkU8L3BheV9pOmNvZGljZUlkZW50aWZpY2F0aXZvVW5pdm9jbz4NCjwvcGF5X2k6aWRlbnRpZmljYXRpdm9Vbml2b2NvVmVyc2FudGU+DQo8cGF5X2k6YW5hZ3JhZmljYVZlcnNhbnRlPkdlc3VhbGRvO1JpY2NpdGVsbGk8L3BheV9pOmFuYWdyYWZpY2FWZXJzYW50ZT4NCjxwYXlfaTppbmRpcml6em9WZXJzYW50ZT52aWEgZGVsIGdlc3U8L3BheV9pOmluZGlyaXp6b1ZlcnNhbnRlPg0KPHBheV9pOmNpdmljb1ZlcnNhbnRlPjExPC9wYXlfaTpjaXZpY29WZXJzYW50ZT4NCjxwYXlfaTpjYXBWZXJzYW50ZT4wMDE4NjwvcGF5X2k6Y2FwVmVyc2FudGU+DQo8cGF5X2k6bG9jYWxpdGFWZXJzYW50ZT5Sb21hPC9wYXlfaTpsb2NhbGl0YVZlcnNhbnRlPg0KPHBheV9pOnByb3ZpbmNpYVZlcnNhbnRlPlJNPC9wYXlfaTpwcm92aW5jaWFWZXJzYW50ZT4NCjxwYXlfaTpuYXppb25lVmVyc2FudGU+SVQ8L3BheV9pOm5hemlvbmVWZXJzYW50ZT4NCjxwYXlfaTplLW1haWxWZXJzYW50ZT5nZXN1YWxkby5yaWNjaXRlbGxpQHBvc3RlLml0PC9wYXlfaTplLW1haWxWZXJzYW50ZT4NCjwvcGF5X2k6c29nZ2V0dG9WZXJzYW50ZT4NCjxwYXlfaTpzb2dnZXR0b1BhZ2F0b3JlPg0KPHBheV9pOmlkZW50aWZpY2F0aXZvVW5pdm9jb1BhZ2F0b3JlPg0KPHBheV9pOnRpcG9JZGVudGlmaWNhdGl2b1VuaXZvY28+RjwvcGF5X2k6dGlwb0lkZW50aWZpY2F0aXZvVW5pdm9jbz4NCjxwYXlfaTpjb2RpY2VJZGVudGlmaWNhdGl2b1VuaXZvY28+UkNDR0xEMDlQMDlINTAxRTwvcGF5X2k6Y29kaWNlSWRlbnRpZmljYXRpdm9Vbml2b2NvPg0KPC9wYXlfaTppZGVudGlmaWNhdGl2b1VuaXZvY29QYWdhdG9yZT4NCjxwYXlfaTphbmFncmFmaWNhUGFnYXRvcmU+R2VzdWFsZG87UmljY2l0ZWxsaTwvcGF5X2k6YW5hZ3JhZmljYVBhZ2F0b3JlPg0KPHBheV9pOmluZGlyaXp6b1BhZ2F0b3JlPnZpYSBkZWwgZ2VzdTwvcGF5X2k6aW5kaXJpenpvUGFnYXRvcmU+DQo8cGF5X2k6Y2l2aWNvUGFnYXRvcmU+MTE8L3BheV9pOmNpdmljb1BhZ2F0b3JlPg0KPHBheV9pOmNhcFBhZ2F0b3JlPjAwMTg2PC9wYXlfaTpjYXBQYWdhdG9yZT4NCjxwYXlfaTpsb2NhbGl0YVBhZ2F0b3JlPlJvbWE8L3BheV9pOmxvY2FsaXRhUGFnYXRvcmU+DQo8cGF5X2k6cHJvdmluY2lhUGFnYXRvcmU+Uk08L3BheV9pOnByb3ZpbmNpYVBhZ2F0b3JlPg0KPHBheV9pOm5hemlvbmVQYWdhdG9yZT5JVDwvcGF5X2k6bmF6aW9uZVBhZ2F0b3JlPg0KPHBheV9pOmUtbWFpbFBhZ2F0b3JlPmdlc3VhbGRvLnJpY2NpdGVsbGlAcG9zdGUuaXQ8L3BheV9pOmUtbWFpbFBhZ2F0b3JlPg0KPC9wYXlfaTpzb2dnZXR0b1BhZ2F0b3JlPg0KPHBheV9pOmVudGVCZW5lZmljaWFyaW8+DQo8cGF5X2k6aWRlbnRpZmljYXRpdm9Vbml2b2NvQmVuZWZpY2lhcmlvPg0KPHBheV9pOnRpcG9JZGVudGlmaWNhdGl2b1VuaXZvY28+RzwvcGF5X2k6dGlwb0lkZW50aWZpY2F0aXZvVW5pdm9jbz4NCjxwYXlfaTpjb2RpY2VJZGVudGlmaWNhdGl2b1VuaXZvY28+MTExMTExMTExMTc8L3BheV9pOmNvZGljZUlkZW50aWZpY2F0aXZvVW5pdm9jbz4NCjwvcGF5X2k6aWRlbnRpZmljYXRpdm9Vbml2b2NvQmVuZWZpY2lhcmlvPg0KPHBheV9pOmRlbm9taW5hemlvbmVCZW5lZmljaWFyaW8+QVpJRU5EQSBYWFg8L3BheV9pOmRlbm9taW5hemlvbmVCZW5lZmljaWFyaW8+DQo8cGF5X2k6Y29kaWNlVW5pdE9wZXJCZW5lZmljaWFyaW8+MTIzPC9wYXlfaTpjb2RpY2VVbml0T3BlckJlbmVmaWNpYXJpbz4NCjxwYXlfaTpkZW5vbVVuaXRPcGVyQmVuZWZpY2lhcmlvPlhYWDwvcGF5X2k6ZGVub21Vbml0T3BlckJlbmVmaWNpYXJpbz4NCjxwYXlfaTppbmRpcml6em9CZW5lZmljaWFyaW8+SW5kaXJpenpvQmVuZWZpY2lhcmlvPC9wYXlfaTppbmRpcml6em9CZW5lZmljaWFyaW8+DQo8cGF5X2k6Y2l2aWNvQmVuZWZpY2lhcmlvPjEyMzwvcGF5X2k6Y2l2aWNvQmVuZWZpY2lhcmlvPg0KPHBheV9pOmNhcEJlbmVmaWNpYXJpbz4yMjIyMjwvcGF5X2k6Y2FwQmVuZWZpY2lhcmlvPg0KPHBheV9pOmxvY2FsaXRhQmVuZWZpY2lhcmlvPlJvbWE8L3BheV9pOmxvY2FsaXRhQmVuZWZpY2lhcmlvPg0KPHBheV9pOnByb3ZpbmNpYUJlbmVmaWNpYXJpbz5STTwvcGF5X2k6cHJvdmluY2lhQmVuZWZpY2lhcmlvPg0KPHBheV9pOm5hemlvbmVCZW5lZmljaWFyaW8+SVQ8L3BheV9pOm5hemlvbmVCZW5lZmljaWFyaW8+DQo8L3BheV9pOmVudGVCZW5lZmljaWFyaW8+DQo8cGF5X2k6ZGF0aVZlcnNhbWVudG8+DQo8cGF5X2k6ZGF0YUVzZWN1emlvbmVQYWdhbWVudG8+MjAyMi0wOS0yMDwvcGF5X2k6ZGF0YUVzZWN1emlvbmVQYWdhbWVudG8+DQo8cGF5X2k6aW1wb3J0b1RvdGFsZURhVmVyc2FyZT4xLjUwPC9wYXlfaTppbXBvcnRvVG90YWxlRGFWZXJzYXJlPg0KPHBheV9pOnRpcG9WZXJzYW1lbnRvPkJCVDwvcGF5X2k6dGlwb1ZlcnNhbWVudG8+DQo8cGF5X2k6aWRlbnRpZmljYXRpdm9Vbml2b2NvVmVyc2FtZW50bz43MDUzMTk1NjQxNTY2PC9wYXlfaTppZGVudGlmaWNhdGl2b1VuaXZvY29WZXJzYW1lbnRvPg0KPHBheV9pOmNvZGljZUNvbnRlc3RvUGFnYW1lbnRvPjc3Nzc3Nzc3Nzc3MzAyNzA1MzE5NTY0MTU2NjAwLTAyNDY3PC9wYXlfaTpjb2RpY2VDb250ZXN0b1BhZ2FtZW50bz4NCjxwYXlfaTppYmFuQWRkZWJpdG8+SVQ5NlIwMTIzNDUxMjM0NTEyMzQ1Njc4OTA0PC9wYXlfaTppYmFuQWRkZWJpdG8+DQo8cGF5X2k6YmljQWRkZWJpdG8+QVJUSUlUTTEwNDU8L3BheV9pOmJpY0FkZGViaXRvPg0KPHBheV9pOmZpcm1hUmljZXZ1dGE+MDwvcGF5X2k6ZmlybWFSaWNldnV0YT4NCjxwYXlfaTpkYXRpU2luZ29sb1ZlcnNhbWVudG8+DQo8cGF5X2k6aW1wb3J0b1NpbmdvbG9WZXJzYW1lbnRvPjEuNTA8L3BheV9pOmltcG9ydG9TaW5nb2xvVmVyc2FtZW50bz4NCjxwYXlfaTpjb21taXNzaW9uZUNhcmljb1BBPjEuMDA8L3BheV9pOmNvbW1pc3Npb25lQ2FyaWNvUEE+DQo8cGF5X2k6aWJhbkFjY3JlZGl0bz5JVDk2UjAxMjM0NTQzMjEwMDAwMDAwMTIzNDU8L3BheV9pOmliYW5BY2NyZWRpdG8+DQo8cGF5X2k6YmljQWNjcmVkaXRvPkFSVElJVE0xMDUwPC9wYXlfaTpiaWNBY2NyZWRpdG8+DQo8cGF5X2k6aWJhbkFwcG9nZ2lvPklUOTZSMDEyMzQ1NDMyMTAwMDAwMDAxMjM0NTwvcGF5X2k6aWJhbkFwcG9nZ2lvPg0KPHBheV9pOmJpY0FwcG9nZ2lvPkFSVElJVE0xMDUwPC9wYXlfaTpiaWNBcHBvZ2dpbz4NCjxwYXlfaTpjcmVkZW56aWFsaVBhZ2F0b3JlPkNQMS4xPC9wYXlfaTpjcmVkZW56aWFsaVBhZ2F0b3JlPg0KPHBheV9pOmNhdXNhbGVWZXJzYW1lbnRvPnBhZ2FtZW50byBmb3RvY29waWUgcHJhdGljYSBSUFQ8L3BheV9pOmNhdXNhbGVWZXJzYW1lbnRvPg0KPHBheV9pOmRhdGlTcGVjaWZpY2lSaXNjb3NzaW9uZT4xL2FiYzwvcGF5X2k6ZGF0aVNwZWNpZmljaVJpc2Nvc3Npb25lPg0KPC9wYXlfaTpkYXRpU2luZ29sb1ZlcnNhbWVudG8+DQo8L3BheV9pOmRhdGlWZXJzYW1lbnRvPg0KPC9wYXlfaTpSUFQ+DQ==
+PHBheV9pOlJQVCB4bWxuczpwYXlfaT0iaHR0cDovL3d3dy5kaWdpdHBhLmdvdi5pdC9zY2hlbWFzLzIwMTEvUGFnYW1lbnRpLyIgeG1sbnM6eHNpPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYS1pbnN0YW5jZSIgeHNpOnNjaGVtYUxvY2F0aW9uPSJodHRwOi8vd3d3LmRpZ2l0cGEuZ292Lml0L3NjaGVtYXMvMjAxMS9QYWdhbWVudGkvIFBhZ0luZl9SUFRfUlRfNl8wXzEueHNkICI+DQo8cGF5X2k6dmVyc2lvbmVPZ2dldHRvPjEuMTwvcGF5X2k6dmVyc2lvbmVPZ2dldHRvPg0KPHBheV9pOmRvbWluaW8+DQo8cGF5X2k6aWRlbnRpZmljYXRpdm9Eb21pbmlvPjkwMDAwMDAwMDAxPC9wYXlfaTppZGVudGlmaWNhdGl2b0RvbWluaW8+DQo8cGF5X2k6aWRlbnRpZmljYXRpdm9TdGF6aW9uZVJpY2hpZWRlbnRlPjkwMDAwMDAwMDAxXzAxPC9wYXlfaTppZGVudGlmaWNhdGl2b1N0YXppb25lUmljaGllZGVudGU+DQo8L3BheV9pOmRvbWluaW8+DQo8cGF5X2k6aWRlbnRpZmljYXRpdm9NZXNzYWdnaW9SaWNoaWVzdGE+TVNHUklDSElFU1RBMDE8L3BheV9pOmlkZW50aWZpY2F0aXZvTWVzc2FnZ2lvUmljaGllc3RhPg0KPHBheV9pOmRhdGFPcmFNZXNzYWdnaW9SaWNoaWVzdGE+MjAyMi0wOS0yMFQxMTozMjoxNC42MjU8L3BheV9pOmRhdGFPcmFNZXNzYWdnaW9SaWNoaWVzdGE+DQo8cGF5X2k6YXV0ZW50aWNhemlvbmVTb2dnZXR0bz5DTlM8L3BheV9pOmF1dGVudGljYXppb25lU29nZ2V0dG8+DQo8cGF5X2k6c29nZ2V0dG9WZXJzYW50ZT4NCjxwYXlfaTppZGVudGlmaWNhdGl2b1VuaXZvY29WZXJzYW50ZT4NCjxwYXlfaTp0aXBvSWRlbnRpZmljYXRpdm9Vbml2b2NvPkY8L3BheV9pOnRpcG9JZGVudGlmaWNhdGl2b1VuaXZvY28+DQo8cGF5X2k6Y29kaWNlSWRlbnRpZmljYXRpdm9Vbml2b2NvPlJDQ0dMRDA5UDA5SDUwMkU8L3BheV9pOmNvZGljZUlkZW50aWZpY2F0aXZvVW5pdm9jbz4NCjwvcGF5X2k6aWRlbnRpZmljYXRpdm9Vbml2b2NvVmVyc2FudGU+DQo8cGF5X2k6YW5hZ3JhZmljYVZlcnNhbnRlPkdlc3VhbGRvO1JpY2NpdGVsbGk8L3BheV9pOmFuYWdyYWZpY2FWZXJzYW50ZT4NCjxwYXlfaTppbmRpcml6em9WZXJzYW50ZT52aWEgZGVsIGdlc3U8L3BheV9pOmluZGlyaXp6b1ZlcnNhbnRlPg0KPHBheV9pOmNpdmljb1ZlcnNhbnRlPjExPC9wYXlfaTpjaXZpY29WZXJzYW50ZT4NCjxwYXlfaTpjYXBWZXJzYW50ZT4wMDE4NjwvcGF5X2k6Y2FwVmVyc2FudGU+DQo8cGF5X2k6bG9jYWxpdGFWZXJzYW50ZT5Sb21hPC9wYXlfaTpsb2NhbGl0YVZlcnNhbnRlPg0KPHBheV9pOnByb3ZpbmNpYVZlcnNhbnRlPlJNPC9wYXlfaTpwcm92aW5jaWFWZXJzYW50ZT4NCjxwYXlfaTpuYXppb25lVmVyc2FudGU+SVQ8L3BheV9pOm5hemlvbmVWZXJzYW50ZT4NCjxwYXlfaTplLW1haWxWZXJzYW50ZT5nZXN1YWxkby5yaWNjaXRlbGxpQHBvc3RlLml0PC9wYXlfaTplLW1haWxWZXJzYW50ZT4NCjwvcGF5X2k6c29nZ2V0dG9WZXJzYW50ZT4NCjxwYXlfaTpzb2dnZXR0b1BhZ2F0b3JlPg0KPHBheV9pOmlkZW50aWZpY2F0aXZvVW5pdm9jb1BhZ2F0b3JlPg0KPHBheV9pOnRpcG9JZGVudGlmaWNhdGl2b1VuaXZvY28+RjwvcGF5X2k6dGlwb0lkZW50aWZpY2F0aXZvVW5pdm9jbz4NCjxwYXlfaTpjb2RpY2VJZGVudGlmaWNhdGl2b1VuaXZvY28+UkNDR0xEMDlQMDlINTAxRTwvcGF5X2k6Y29kaWNlSWRlbnRpZmljYXRpdm9Vbml2b2NvPg0KPC9wYXlfaTppZGVudGlmaWNhdGl2b1VuaXZvY29QYWdhdG9yZT4NCjxwYXlfaTphbmFncmFmaWNhUGFnYXRvcmU+R2VzdWFsZG87UmljY2l0ZWxsaTwvcGF5X2k6YW5hZ3JhZmljYVBhZ2F0b3JlPg0KPHBheV9pOmluZGlyaXp6b1BhZ2F0b3JlPnZpYSBkZWwgZ2VzdTwvcGF5X2k6aW5kaXJpenpvUGFnYXRvcmU+DQo8cGF5X2k6Y2l2aWNvUGFnYXRvcmU+MTE8L3BheV9pOmNpdmljb1BhZ2F0b3JlPg0KPHBheV9pOmNhcFBhZ2F0b3JlPjAwMTg2PC9wYXlfaTpjYXBQYWdhdG9yZT4NCjxwYXlfaTpsb2NhbGl0YVBhZ2F0b3JlPlJvbWE8L3BheV9pOmxvY2FsaXRhUGFnYXRvcmU+DQo8cGF5X2k6cHJvdmluY2lhUGFnYXRvcmU+Uk08L3BheV9pOnByb3ZpbmNpYVBhZ2F0b3JlPg0KPHBheV9pOm5hemlvbmVQYWdhdG9yZT5JVDwvcGF5X2k6bmF6aW9uZVBhZ2F0b3JlPg0KPHBheV9pOmUtbWFpbFBhZ2F0b3JlPmdlc3VhbGRvLnJpY2NpdGVsbGlAcG9zdGUuaXQ8L3BheV9pOmUtbWFpbFBhZ2F0b3JlPg0KPC9wYXlfaTpzb2dnZXR0b1BhZ2F0b3JlPg0KPHBheV9pOmVudGVCZW5lZmljaWFyaW8+DQo8cGF5X2k6aWRlbnRpZmljYXRpdm9Vbml2b2NvQmVuZWZpY2lhcmlvPg0KPHBheV9pOnRpcG9JZGVudGlmaWNhdGl2b1VuaXZvY28+RzwvcGF5X2k6dGlwb0lkZW50aWZpY2F0aXZvVW5pdm9jbz4NCjxwYXlfaTpjb2RpY2VJZGVudGlmaWNhdGl2b1VuaXZvY28+MTExMTExMTExMTc8L3BheV9pOmNvZGljZUlkZW50aWZpY2F0aXZvVW5pdm9jbz4NCjwvcGF5X2k6aWRlbnRpZmljYXRpdm9Vbml2b2NvQmVuZWZpY2lhcmlvPg0KPHBheV9pOmRlbm9taW5hemlvbmVCZW5lZmljaWFyaW8+QVpJRU5EQSBYWFg8L3BheV9pOmRlbm9taW5hemlvbmVCZW5lZmljaWFyaW8+DQo8cGF5X2k6Y29kaWNlVW5pdE9wZXJCZW5lZmljaWFyaW8+MTIzPC9wYXlfaTpjb2RpY2VVbml0T3BlckJlbmVmaWNpYXJpbz4NCjxwYXlfaTpkZW5vbVVuaXRPcGVyQmVuZWZpY2lhcmlvPlhYWDwvcGF5X2k6ZGVub21Vbml0T3BlckJlbmVmaWNpYXJpbz4NCjxwYXlfaTppbmRpcml6em9CZW5lZmljaWFyaW8+SW5kaXJpenpvQmVuZWZpY2lhcmlvPC9wYXlfaTppbmRpcml6em9CZW5lZmljaWFyaW8+DQo8cGF5X2k6Y2l2aWNvQmVuZWZpY2lhcmlvPjEyMzwvcGF5X2k6Y2l2aWNvQmVuZWZpY2lhcmlvPg0KPHBheV9pOmNhcEJlbmVmaWNpYXJpbz4yMjIyMjwvcGF5X2k6Y2FwQmVuZWZpY2lhcmlvPg0KPHBheV9pOmxvY2FsaXRhQmVuZWZpY2lhcmlvPlJvbWE8L3BheV9pOmxvY2FsaXRhQmVuZWZpY2lhcmlvPg0KPHBheV9pOnByb3ZpbmNpYUJlbmVmaWNpYXJpbz5STTwvcGF5X2k6cHJvdmluY2lhQmVuZWZpY2lhcmlvPg0KPHBheV9pOm5hemlvbmVCZW5lZmljaWFyaW8+SVQ8L3BheV9pOm5hemlvbmVCZW5lZmljaWFyaW8+DQo8L3BheV9pOmVudGVCZW5lZmljaWFyaW8+DQo8cGF5X2k6ZGF0aVZlcnNhbWVudG8+DQo8cGF5X2k6ZGF0YUVzZWN1emlvbmVQYWdhbWVudG8+MjAyMi0wOS0yMDwvcGF5X2k6ZGF0YUVzZWN1emlvbmVQYWdhbWVudG8+DQo8cGF5X2k6aW1wb3J0b1RvdGFsZURhVmVyc2FyZT4xLjUwPC9wYXlfaTppbXBvcnRvVG90YWxlRGFWZXJzYXJlPg0KPHBheV9pOnRpcG9WZXJzYW1lbnRvPkJCVDwvcGF5X2k6dGlwb1ZlcnNhbWVudG8+DQo8cGF5X2k6aWRlbnRpZmljYXRpdm9Vbml2b2NvVmVyc2FtZW50bz43MDUzMTk1NjQxNTY2PC9wYXlfaTppZGVudGlmaWNhdGl2b1VuaXZvY29WZXJzYW1lbnRvPg0KPHBheV9pOmNvZGljZUNvbnRlc3RvUGFnYW1lbnRvPjc3Nzc3Nzc3Nzc3MzAyNzA1MzE5NTY0MTU2NjAwLTAyNDY3PC9wYXlfaTpjb2RpY2VDb250ZXN0b1BhZ2FtZW50bz4NCjxwYXlfaTppYmFuQWRkZWJpdG8+SVQ5NlIwMTIzNDU0MzIxMDAwMDAwMDEyMzQ1PC9wYXlfaTppYmFuQWRkZWJpdG8+DQo8cGF5X2k6YmljQWRkZWJpdG8+QVJUSUlUTTEwNDU8L3BheV9pOmJpY0FkZGViaXRvPg0KPHBheV9pOmZpcm1hUmljZXZ1dGE+MDwvcGF5X2k6ZmlybWFSaWNldnV0YT4NCjxwYXlfaTpkYXRpU2luZ29sb1ZlcnNhbWVudG8+DQo8cGF5X2k6aW1wb3J0b1NpbmdvbG9WZXJzYW1lbnRvPjEuNTA8L3BheV9pOmltcG9ydG9TaW5nb2xvVmVyc2FtZW50bz4NCjxwYXlfaTpjb21taXNzaW9uZUNhcmljb1BBPjEuMDA8L3BheV9pOmNvbW1pc3Npb25lQ2FyaWNvUEE+DQo8cGF5X2k6aWJhbkFjY3JlZGl0bz5JVDQ1UjA3NjAxMDMyMDAwMDAwMDAwMDEwMTY8L3BheV9pOmliYW5BY2NyZWRpdG8+DQo8cGF5X2k6YmljQWNjcmVkaXRvPkFSVElJVE0xMDUwPC9wYXlfaTpiaWNBY2NyZWRpdG8+DQo8cGF5X2k6aWJhbkFwcG9nZ2lvPklUNDVSMDc2MDEwMzIwMDAwMDAwMDAwMTAxNjwvcGF5X2k6aWJhbkFwcG9nZ2lvPg0KPHBheV9pOmJpY0FwcG9nZ2lvPkFSVElJVE0xMDUwPC9wYXlfaTpiaWNBcHBvZ2dpbz4NCjxwYXlfaTpjcmVkZW56aWFsaVBhZ2F0b3JlPkNQMS4xPC9wYXlfaTpjcmVkZW56aWFsaVBhZ2F0b3JlPg0KPHBheV9pOmNhdXNhbGVWZXJzYW1lbnRvPnBhZ2FtZW50byBmb3RvY29waWUgcHJhdGljYTwvcGF5X2k6Y2F1c2FsZVZlcnNhbWVudG8+DQo8cGF5X2k6ZGF0aVNwZWNpZmljaVJpc2Nvc3Npb25lPjEvYWJjPC9wYXlfaTpkYXRpU3BlY2lmaWNpUmlzY29zc2lvbmU+DQo8L3BheV9pOmRhdGlTaW5nb2xvVmVyc2FtZW50bz4NCjwvcGF5X2k6ZGF0aVZlcnNhbWVudG8+DQo8L3BheV9pOlJQVD4N
+&lt;soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/"&gt;
+&lt;soapenv:Header/&gt;
+&lt;soapenv:Body&gt;
+&lt;ws:paaInviaRTRisposta&gt;
+&lt;paaInviaRTRisposta&gt;
+&lt;esito&gt;OK&lt;/esito&gt;
+&lt;/paaInviaRTRisposta&gt;
+&lt;/ws:paaInviaRTRisposta&gt;
+&lt;/soapenv:Body&gt;
+&lt;/soapenv:Envelope&gt;
+http://localhost:8089/servizi/PagamentiTelematiciRPT
+http://localhost:8089/servizi/PagamentiTelematiciRPT/response/paaInviaRT?override=True
+b'paaInviaRT updated' 200
+url_nodo:  http://localhost:9080/nodo-dev/webservices/input
+nodo soap_request sent &gt;&gt;&gt; &lt;soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/"&gt;
+&lt;soapenv:Header&gt;
+&lt;ppt:intestazioneCarrelloPPT&gt;
+&lt;identificativoIntermediarioPA&gt;77777777777&lt;/identificativoIntermediarioPA&gt;
+&lt;identificativoStazioneIntermediarioPA&gt;77777777777_01&lt;/identificativoStazioneIntermediarioPA&gt;
+&lt;identificativoCarrello&gt;77777777777302705319564156600-02467&lt;/identificativoCarrello&gt;
+&lt;/ppt:intestazioneCarrelloPPT&gt;
+&lt;/soapenv:Header&gt;
+&lt;soapenv:Body&gt;
+&lt;ws:nodoInviaCarrelloRPT&gt;
+&lt;password&gt;pwdpwdpwd&lt;/password&gt;
+&lt;identificativoPSP&gt;AGID_01&lt;/identificativoPSP&gt;
+&lt;identificativoIntermediarioPSP&gt;97735020584&lt;/identificativoIntermediarioPSP&gt;
+&lt;identificativoCanale&gt;97735020584_02&lt;/identificativoCanale&gt;
+&lt;listaRPT&gt;
+&lt;elementoListaRPT&gt;
+&lt;identificativoDominio&gt;77777777777&lt;/identificativoDominio&gt;
+&lt;identificativoUnivocoVersamento&gt;7053195641566&lt;/identificativoUnivocoVersamento&gt;
+&lt;codiceContestoPagamento&gt;77777777777302705319564156600-02467&lt;/codiceContestoPagamento&gt;
+&lt;rpt&gt;PHBheV9pOlJQVCB4bWxuczpwYXlfaT0iaHR0cDovL3d3dy5kaWdpdHBhLmdvdi5pdC9zY2hlbWFzLzIwMTEvUGFnYW1lbnRpLyIgeG1sbnM6eHNpPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYS1pbnN0YW5jZSIgeHNpOnNjaGVtYUxvY2F0aW9uPSJodHRwOi8vd3d3LmRpZ2l0cGEuZ292Lml0L3NjaGVtYXMvMjAxMS9QYWdhbWVudGkvIFBhZ0luZl9SUFRfUlRfNl8wXzEueHNkICI+DQo8cGF5X2k6dmVyc2lvbmVPZ2dldHRvPjEuMDwvcGF5X2k6dmVyc2lvbmVPZ2dldHRvPg0KPHBheV9pOmRvbWluaW8+DQo8cGF5X2k6aWRlbnRpZmljYXRpdm9Eb21pbmlvPjc3Nzc3Nzc3Nzc3PC9wYXlfaTppZGVudGlmaWNhdGl2b0RvbWluaW8+DQo8cGF5X2k6aWRlbnRpZmljYXRpdm9TdGF6aW9uZVJpY2hpZWRlbnRlPjc3Nzc3Nzc3Nzc3XzAxPC9wYXlfaTppZGVudGlmaWNhdGl2b1N0YXppb25lUmljaGllZGVudGU+DQo8L3BheV9pOmRvbWluaW8+DQo8cGF5X2k6aWRlbnRpZmljYXRpdm9NZXNzYWdnaW9SaWNoaWVzdGE+TVNHUklDSElFU1RBMDE8L3BheV9pOmlkZW50aWZpY2F0aXZvTWVzc2FnZ2lvUmljaGllc3RhPg0KPHBheV9pOmRhdGFPcmFNZXNzYWdnaW9SaWNoaWVzdGE+MjAyMi0wOS0yMFQxMTozMjoxNC42MjE8L3BheV9pOmRhdGFPcmFNZXNzYWdnaW9SaWNoaWVzdGE+DQo8cGF5X2k6YXV0ZW50aWNhemlvbmVTb2dnZXR0bz5DTlM8L3BheV9pOmF1dGVudGljYXppb25lU29nZ2V0dG8+DQo8cGF5X2k6c29nZ2V0dG9WZXJzYW50ZT4NCjxwYXlfaTppZGVudGlmaWNhdGl2b1VuaXZvY29WZXJzYW50ZT4NCjxwYXlfaTp0aXBvSWRlbnRpZmljYXRpdm9Vbml2b2NvPkY8L3BheV9pOnRpcG9JZGVudGlmaWNhdGl2b1VuaXZvY28+DQo8cGF5X2k6Y29kaWNlSWRlbnRpZmljYXRpdm9Vbml2b2NvPlJDQ0dMRDA5UDA5SDUwMkU8L3BheV9pOmNvZGljZUlkZW50aWZpY2F0aXZvVW5pdm9jbz4NCjwvcGF5X2k6aWRlbnRpZmljYXRpdm9Vbml2b2NvVmVyc2FudGU+DQo8cGF5X2k6YW5hZ3JhZmljYVZlcnNhbnRlPkdlc3VhbGRvO1JpY2NpdGVsbGk8L3BheV9pOmFuYWdyYWZpY2FWZXJzYW50ZT4NCjxwYXlfaTppbmRpcml6em9WZXJzYW50ZT52aWEgZGVsIGdlc3U8L3BheV9pOmluZGlyaXp6b1ZlcnNhbnRlPg0KPHBheV9pOmNpdmljb1ZlcnNhbnRlPjExPC9wYXlfaTpjaXZpY29WZXJzYW50ZT4NCjxwYXlfaTpjYXBWZXJzYW50ZT4wMDE4NjwvcGF5X2k6Y2FwVmVyc2FudGU+DQo8cGF5X2k6bG9jYWxpdGFWZXJzYW50ZT5Sb21hPC9wYXlfaTpsb2NhbGl0YVZlcnNhbnRlPg0KPHBheV9pOnByb3ZpbmNpYVZlcnNhbnRlPlJNPC9wYXlfaTpwcm92aW5jaWFWZXJzYW50ZT4NCjxwYXlfaTpuYXppb25lVmVyc2FudGU+SVQ8L3BheV9pOm5hemlvbmVWZXJzYW50ZT4NCjxwYXlfaTplLW1haWxWZXJzYW50ZT5nZXN1YWxkby5yaWNjaXRlbGxpQHBvc3RlLml0PC9wYXlfaTplLW1haWxWZXJzYW50ZT4NCjwvcGF5X2k6c29nZ2V0dG9WZXJzYW50ZT4NCjxwYXlfaTpzb2dnZXR0b1BhZ2F0b3JlPg0KPHBheV9pOmlkZW50aWZpY2F0aXZvVW5pdm9jb1BhZ2F0b3JlPg0KPHBheV9pOnRpcG9JZGVudGlmaWNhdGl2b1VuaXZvY28+RjwvcGF5X2k6dGlwb0lkZW50aWZpY2F0aXZvVW5pdm9jbz4NCjxwYXlfaTpjb2RpY2VJZGVudGlmaWNhdGl2b1VuaXZvY28+UkNDR0xEMDlQMDlINTAxRTwvcGF5X2k6Y29kaWNlSWRlbnRpZmljYXRpdm9Vbml2b2NvPg0KPC9wYXlfaTppZGVudGlmaWNhdGl2b1VuaXZvY29QYWdhdG9yZT4NCjxwYXlfaTphbmFncmFmaWNhUGFnYXRvcmU+R2VzdWFsZG87UmljY2l0ZWxsaTwvcGF5X2k6YW5hZ3JhZmljYVBhZ2F0b3JlPg0KPHBheV9pOmluZGlyaXp6b1BhZ2F0b3JlPnZpYSBkZWwgZ2VzdTwvcGF5X2k6aW5kaXJpenpvUGFnYXRvcmU+DQo8cGF5X2k6Y2l2aWNvUGFnYXRvcmU+MTE8L3BheV9pOmNpdmljb1BhZ2F0b3JlPg0KPHBheV9pOmNhcFBhZ2F0b3JlPjAwMTg2PC9wYXlfaTpjYXBQYWdhdG9yZT4NCjxwYXlfaTpsb2NhbGl0YVBhZ2F0b3JlPlJvbWE8L3BheV9pOmxvY2FsaXRhUGFnYXRvcmU+DQo8cGF5X2k6cHJvdmluY2lhUGFnYXRvcmU+Uk08L3BheV9pOnByb3ZpbmNpYVBhZ2F0b3JlPg0KPHBheV9pOm5hemlvbmVQYWdhdG9yZT5JVDwvcGF5X2k6bmF6aW9uZVBhZ2F0b3JlPg0KPHBheV9pOmUtbWFpbFBhZ2F0b3JlPmdlc3VhbGRvLnJpY2NpdGVsbGlAcG9zdGUuaXQ8L3BheV9pOmUtbWFpbFBhZ2F0b3JlPg0KPC9wYXlfaTpzb2dnZXR0b1BhZ2F0b3JlPg0KPHBheV9pOmVudGVCZW5lZmljaWFyaW8+DQo8cGF5X2k6aWRlbnRpZmljYXRpdm9Vbml2b2NvQmVuZWZpY2lhcmlvPg0KPHBheV9pOnRpcG9JZGVudGlmaWNhdGl2b1VuaXZvY28+RzwvcGF5X2k6dGlwb0lkZW50aWZpY2F0aXZvVW5pdm9jbz4NCjxwYXlfaTpjb2RpY2VJZGVudGlmaWNhdGl2b1VuaXZvY28+MTExMTExMTExMTc8L3BheV9pOmNvZGljZUlkZW50aWZpY2F0aXZvVW5pdm9jbz4NCjwvcGF5X2k6aWRlbnRpZmljYXRpdm9Vbml2b2NvQmVuZWZpY2lhcmlvPg0KPHBheV9pOmRlbm9taW5hemlvbmVCZW5lZmljaWFyaW8+QVpJRU5EQSBYWFg8L3BheV9pOmRlbm9taW5hemlvbmVCZW5lZmljaWFyaW8+DQo8cGF5X2k6Y29kaWNlVW5pdE9wZXJCZW5lZmljaWFyaW8+MTIzPC9wYXlfaTpjb2RpY2VVbml0T3BlckJlbmVmaWNpYXJpbz4NCjxwYXlfaTpkZW5vbVVuaXRPcGVyQmVuZWZpY2lhcmlvPlhYWDwvcGF5X2k6ZGVub21Vbml0T3BlckJlbmVmaWNpYXJpbz4NCjxwYXlfaTppbmRpcml6em9CZW5lZmljaWFyaW8+SW5kaXJpenpvQmVuZWZpY2lhcmlvPC9wYXlfaTppbmRpcml6em9CZW5lZmljaWFyaW8+DQo8cGF5X2k6Y2l2aWNvQmVuZWZpY2lhcmlvPjEyMzwvcGF5X2k6Y2l2aWNvQmVuZWZpY2lhcmlvPg0KPHBheV9pOmNhcEJlbmVmaWNpYXJpbz4yMjIyMjwvcGF5X2k6Y2FwQmVuZWZpY2lhcmlvPg0KPHBheV9pOmxvY2FsaXRhQmVuZWZpY2lhcmlvPlJvbWE8L3BheV9pOmxvY2FsaXRhQmVuZWZpY2lhcmlvPg0KPHBheV9pOnByb3ZpbmNpYUJlbmVmaWNpYXJpbz5STTwvcGF5X2k6cHJvdmluY2lhQmVuZWZpY2lhcmlvPg0KPHBheV9pOm5hemlvbmVCZW5lZmljaWFyaW8+SVQ8L3BheV9pOm5hemlvbmVCZW5lZmljaWFyaW8+DQo8L3BheV9pOmVudGVCZW5lZmljaWFyaW8+DQo8cGF5X2k6ZGF0aVZlcnNhbWVudG8+DQo8cGF5X2k6ZGF0YUVzZWN1emlvbmVQYWdhbWVudG8+MjAyMi0wOS0yMDwvcGF5X2k6ZGF0YUVzZWN1emlvbmVQYWdhbWVudG8+DQo8cGF5X2k6aW1wb3J0b1RvdGFsZURhVmVyc2FyZT4xLjUwPC9wYXlfaTppbXBvcnRvVG90YWxlRGFWZXJzYXJlPg0KPHBheV9pOnRpcG9WZXJzYW1lbnRvPkJCVDwvcGF5X2k6dGlwb1ZlcnNhbWVudG8+DQo8cGF5X2k6aWRlbnRpZmljYXRpdm9Vbml2b2NvVmVyc2FtZW50bz43MDUzMTk1NjQxNTY2PC9wYXlfaTppZGVudGlmaWNhdGl2b1VuaXZvY29WZXJzYW1lbnRvPg0KPHBheV9pOmNvZGljZUNvbnRlc3RvUGFnYW1lbnRvPjc3Nzc3Nzc3Nzc3MzAyNzA1MzE5NTY0MTU2NjAwLTAyNDY3PC9wYXlfaTpjb2RpY2VDb250ZXN0b1BhZ2FtZW50bz4NCjxwYXlfaTppYmFuQWRkZWJpdG8+SVQ5NlIwMTIzNDUxMjM0NTEyMzQ1Njc4OTA0PC9wYXlfaTppYmFuQWRkZWJpdG8+DQo8cGF5X2k6YmljQWRkZWJpdG8+QVJUSUlUTTEwNDU8L3BheV9pOmJpY0FkZGViaXRvPg0KPHBheV9pOmZpcm1hUmljZXZ1dGE+MDwvcGF5X2k6ZmlybWFSaWNldnV0YT4NCjxwYXlfaTpkYXRpU2luZ29sb1ZlcnNhbWVudG8+DQo8cGF5X2k6aW1wb3J0b1NpbmdvbG9WZXJzYW1lbnRvPjEuNTA8L3BheV9pOmltcG9ydG9TaW5nb2xvVmVyc2FtZW50bz4NCjxwYXlfaTpjb21taXNzaW9uZUNhcmljb1BBPjEuMDA8L3BheV9pOmNvbW1pc3Npb25lQ2FyaWNvUEE+DQo8cGF5X2k6aWJhbkFjY3JlZGl0bz5JVDk2UjAxMjM0NTQzMjEwMDAwMDAwMTIzNDU8L3BheV9pOmliYW5BY2NyZWRpdG8+DQo8cGF5X2k6YmljQWNjcmVkaXRvPkFSVElJVE0xMDUwPC9wYXlfaTpiaWNBY2NyZWRpdG8+DQo8cGF5X2k6aWJhbkFwcG9nZ2lvPklUOTZSMDEyMzQ1NDMyMTAwMDAwMDAxMjM0NTwvcGF5X2k6aWJhbkFwcG9nZ2lvPg0KPHBheV9pOmJpY0FwcG9nZ2lvPkFSVElJVE0xMDUwPC9wYXlfaTpiaWNBcHBvZ2dpbz4NCjxwYXlfaTpjcmVkZW56aWFsaVBhZ2F0b3JlPkNQMS4xPC9wYXlfaTpjcmVkZW56aWFsaVBhZ2F0b3JlPg0KPHBheV9pOmNhdXNhbGVWZXJzYW1lbnRvPnBhZ2FtZW50byBmb3RvY29waWUgcHJhdGljYSBSUFQ8L3BheV9pOmNhdXNhbGVWZXJzYW1lbnRvPg0KPHBheV9pOmRhdGlTcGVjaWZpY2lSaXNjb3NzaW9uZT4xL2FiYzwvcGF5X2k6ZGF0aVNwZWNpZmljaVJpc2Nvc3Npb25lPg0KPC9wYXlfaTpkYXRpU2luZ29sb1ZlcnNhbWVudG8+DQo8L3BheV9pOmRhdGlWZXJzYW1lbnRvPg0KPC9wYXlfaTpSUFQ+DQ==&lt;/rpt&gt;
+&lt;/elementoListaRPT&gt;
+&lt;elementoListaRPT&gt;
+&lt;identificativoDominio&gt;90000000001&lt;/identificativoDominio&gt;
+&lt;identificativoUnivocoVersamento&gt;7053195641566&lt;/identificativoUnivocoVersamento&gt;
+&lt;codiceContestoPagamento&gt;77777777777302705319564156600-02467&lt;/codiceContestoPagamento&gt;
+&lt;rpt&gt;PHBheV9pOlJQVCB4bWxuczpwYXlfaT0iaHR0cDovL3d3dy5kaWdpdHBhLmdvdi5pdC9zY2hlbWFzLzIwMTEvUGFnYW1lbnRpLyIgeG1sbnM6eHNpPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYS1pbnN0YW5jZSIgeHNpOnNjaGVtYUxvY2F0aW9uPSJodHRwOi8vd3d3LmRpZ2l0cGEuZ292Lml0L3NjaGVtYXMvMjAxMS9QYWdhbWVudGkvIFBhZ0luZl9SUFRfUlRfNl8wXzEueHNkICI+DQo8cGF5X2k6dmVyc2lvbmVPZ2dldHRvPjEuMTwvcGF5X2k6dmVyc2lvbmVPZ2dldHRvPg0KPHBheV9pOmRvbWluaW8+DQo8cGF5X2k6aWRlbnRpZmljYXRpdm9Eb21pbmlvPjkwMDAwMDAwMDAxPC9wYXlfaTppZGVudGlmaWNhdGl2b0RvbWluaW8+DQo8cGF5X2k6aWRlbnRpZmljYXRpdm9TdGF6aW9uZVJpY2hpZWRlbnRlPjkwMDAwMDAwMDAxXzAxPC9wYXlfaTppZGVudGlmaWNhdGl2b1N0YXppb25lUmljaGllZGVudGU+DQo8L3BheV9pOmRvbWluaW8+DQo8cGF5X2k6aWRlbnRpZmljYXRpdm9NZXNzYWdnaW9SaWNoaWVzdGE+TVNHUklDSElFU1RBMDE8L3BheV9pOmlkZW50aWZpY2F0aXZvTWVzc2FnZ2lvUmljaGllc3RhPg0KPHBheV9pOmRhdGFPcmFNZXNzYWdnaW9SaWNoaWVzdGE+MjAyMi0wOS0yMFQxMTozMjoxNC42MjU8L3BheV9pOmRhdGFPcmFNZXNzYWdnaW9SaWNoaWVzdGE+DQo8cGF5X2k6YXV0ZW50aWNhemlvbmVTb2dnZXR0bz5DTlM8L3BheV9pOmF1dGVudGljYXppb25lU29nZ2V0dG8+DQo8cGF5X2k6c29nZ2V0dG9WZXJzYW50ZT4NCjxwYXlfaTppZGVudGlmaWNhdGl2b1VuaXZvY29WZXJzYW50ZT4NCjxwYXlfaTp0aXBvSWRlbnRpZmljYXRpdm9Vbml2b2NvPkY8L3BheV9pOnRpcG9JZGVudGlmaWNhdGl2b1VuaXZvY28+DQo8cGF5X2k6Y29kaWNlSWRlbnRpZmljYXRpdm9Vbml2b2NvPlJDQ0dMRDA5UDA5SDUwMkU8L3BheV9pOmNvZGljZUlkZW50aWZpY2F0aXZvVW5pdm9jbz4NCjwvcGF5X2k6aWRlbnRpZmljYXRpdm9Vbml2b2NvVmVyc2FudGU+DQo8cGF5X2k6YW5hZ3JhZmljYVZlcnNhbnRlPkdlc3VhbGRvO1JpY2NpdGVsbGk8L3BheV9pOmFuYWdyYWZpY2FWZXJzYW50ZT4NCjxwYXlfaTppbmRpcml6em9WZXJzYW50ZT52aWEgZGVsIGdlc3U8L3BheV9pOmluZGlyaXp6b1ZlcnNhbnRlPg0KPHBheV9pOmNpdmljb1ZlcnNhbnRlPjExPC9wYXlfaTpjaXZpY29WZXJzYW50ZT4NCjxwYXlfaTpjYXBWZXJzYW50ZT4wMDE4NjwvcGF5X2k6Y2FwVmVyc2FudGU+DQo8cGF5X2k6bG9jYWxpdGFWZXJzYW50ZT5Sb21hPC9wYXlfaTpsb2NhbGl0YVZlcnNhbnRlPg0KPHBheV9pOnByb3ZpbmNpYVZlcnNhbnRlPlJNPC9wYXlfaTpwcm92aW5jaWFWZXJzYW50ZT4NCjxwYXlfaTpuYXppb25lVmVyc2FudGU+SVQ8L3BheV9pOm5hemlvbmVWZXJzYW50ZT4NCjxwYXlfaTplLW1haWxWZXJzYW50ZT5nZXN1YWxkby5yaWNjaXRlbGxpQHBvc3RlLml0PC9wYXlfaTplLW1haWxWZXJzYW50ZT4NCjwvcGF5X2k6c29nZ2V0dG9WZXJzYW50ZT4NCjxwYXlfaTpzb2dnZXR0b1BhZ2F0b3JlPg0KPHBheV9pOmlkZW50aWZpY2F0aXZvVW5pdm9jb1BhZ2F0b3JlPg0KPHBheV9pOnRpcG9JZGVudGlmaWNhdGl2b1VuaXZvY28+RjwvcGF5X2k6dGlwb0lkZW50aWZpY2F0aXZvVW5pdm9jbz4NCjxwYXlfaTpjb2RpY2VJZGVudGlmaWNhdGl2b1VuaXZvY28+UkNDR0xEMDlQMDlINTAxRTwvcGF5X2k6Y29kaWNlSWRlbnRpZmljYXRpdm9Vbml2b2NvPg0KPC9wYXlfaTppZGVudGlmaWNhdGl2b1VuaXZvY29QYWdhdG9yZT4NCjxwYXlfaTphbmFncmFmaWNhUGFnYXRvcmU+R2VzdWFsZG87UmljY2l0ZWxsaTwvcGF5X2k6YW5hZ3JhZmljYVBhZ2F0b3JlPg0KPHBheV9pOmluZGlyaXp6b1BhZ2F0b3JlPnZpYSBkZWwgZ2VzdTwvcGF5X2k6aW5kaXJpenpvUGFnYXRvcmU+DQo8cGF5X2k6Y2l2aWNvUGFnYXRvcmU+MTE8L3BheV9pOmNpdmljb1BhZ2F0b3JlPg0KPHBheV9pOmNhcFBhZ2F0b3JlPjAwMTg2PC9wYXlfaTpjYXBQYWdhdG9yZT4NCjxwYXlfaTpsb2NhbGl0YVBhZ2F0b3JlPlJvbWE8L3BheV9pOmxvY2FsaXRhUGFnYXRvcmU+DQo8cGF5X2k6cHJvdmluY2lhUGFnYXRvcmU+Uk08L3BheV9pOnByb3ZpbmNpYVBhZ2F0b3JlPg0KPHBheV9pOm5hemlvbmVQYWdhdG9yZT5JVDwvcGF5X2k6bmF6aW9uZVBhZ2F0b3JlPg0KPHBheV9pOmUtbWFpbFBhZ2F0b3JlPmdlc3VhbGRvLnJpY2NpdGVsbGlAcG9zdGUuaXQ8L3BheV9pOmUtbWFpbFBhZ2F0b3JlPg0KPC9wYXlfaTpzb2dnZXR0b1BhZ2F0b3JlPg0KPHBheV9pOmVudGVCZW5lZmljaWFyaW8+DQo8cGF5X2k6aWRlbnRpZmljYXRpdm9Vbml2b2NvQmVuZWZpY2lhcmlvPg0KPHBheV9pOnRpcG9JZGVudGlmaWNhdGl2b1VuaXZvY28+RzwvcGF5X2k6dGlwb0lkZW50aWZpY2F0aXZvVW5pdm9jbz4NCjxwYXlfaTpjb2RpY2VJZGVudGlmaWNhdGl2b1VuaXZvY28+MTExMTExMTExMTc8L3BheV9pOmNvZGljZUlkZW50aWZpY2F0aXZvVW5pdm9jbz4NCjwvcGF5X2k6aWRlbnRpZmljYXRpdm9Vbml2b2NvQmVuZWZpY2lhcmlvPg0KPHBheV9pOmRlbm9taW5hemlvbmVCZW5lZmljaWFyaW8+QVpJRU5EQSBYWFg8L3BheV9pOmRlbm9taW5hemlvbmVCZW5lZmljaWFyaW8+DQo8cGF5X2k6Y29kaWNlVW5pdE9wZXJCZW5lZmljaWFyaW8+MTIzPC9wYXlfaTpjb2RpY2VVbml0T3BlckJlbmVmaWNpYXJpbz4NCjxwYXlfaTpkZW5vbVVuaXRPcGVyQmVuZWZpY2lhcmlvPlhYWDwvcGF5X2k6ZGVub21Vbml0T3BlckJlbmVmaWNpYXJpbz4NCjxwYXlfaTppbmRpcml6em9CZW5lZmljaWFyaW8+SW5kaXJpenpvQmVuZWZpY2lhcmlvPC9wYXlfaTppbmRpcml6em9CZW5lZmljaWFyaW8+DQo8cGF5X2k6Y2l2aWNvQmVuZWZpY2lhcmlvPjEyMzwvcGF5X2k6Y2l2aWNvQmVuZWZpY2lhcmlvPg0KPHBheV9pOmNhcEJlbmVmaWNpYXJpbz4yMjIyMjwvcGF5X2k6Y2FwQmVuZWZpY2lhcmlvPg0KPHBheV9pOmxvY2FsaXRhQmVuZWZpY2lhcmlvPlJvbWE8L3BheV9pOmxvY2FsaXRhQmVuZWZpY2lhcmlvPg0KPHBheV9pOnByb3ZpbmNpYUJlbmVmaWNpYXJpbz5STTwvcGF5X2k6cHJvdmluY2lhQmVuZWZpY2lhcmlvPg0KPHBheV9pOm5hemlvbmVCZW5lZmljaWFyaW8+SVQ8L3BheV9pOm5hemlvbmVCZW5lZmljaWFyaW8+DQo8L3BheV9pOmVudGVCZW5lZmljaWFyaW8+DQo8cGF5X2k6ZGF0aVZlcnNhbWVudG8+DQo8cGF5X2k6ZGF0YUVzZWN1emlvbmVQYWdhbWVudG8+MjAyMi0wOS0yMDwvcGF5X2k6ZGF0YUVzZWN1emlvbmVQYWdhbWVudG8+DQo8cGF5X2k6aW1wb3J0b1RvdGFsZURhVmVyc2FyZT4xLjUwPC9wYXlfaTppbXBvcnRvVG90YWxlRGFWZXJzYXJlPg0KPHBheV9pOnRpcG9WZXJzYW1lbnRvPkJCVDwvcGF5X2k6dGlwb1ZlcnNhbWVudG8+DQo8cGF5X2k6aWRlbnRpZmljYXRpdm9Vbml2b2NvVmVyc2FtZW50bz43MDUzMTk1NjQxNTY2PC9wYXlfaTppZGVudGlmaWNhdGl2b1VuaXZvY29WZXJzYW1lbnRvPg0KPHBheV9pOmNvZGljZUNvbnRlc3RvUGFnYW1lbnRvPjc3Nzc3Nzc3Nzc3MzAyNzA1MzE5NTY0MTU2NjAwLTAyNDY3PC9wYXlfaTpjb2RpY2VDb250ZXN0b1BhZ2FtZW50bz4NCjxwYXlfaTppYmFuQWRkZWJpdG8+SVQ5NlIwMTIzNDU0MzIxMDAwMDAwMDEyMzQ1PC9wYXlfaTppYmFuQWRkZWJpdG8+DQo8cGF5X2k6YmljQWRkZWJpdG8+QVJUSUlUTTEwNDU8L3BheV9pOmJpY0FkZGViaXRvPg0KPHBheV9pOmZpcm1hUmljZXZ1dGE+MDwvcGF5X2k6ZmlybWFSaWNldnV0YT4NCjxwYXlfaTpkYXRpU2luZ29sb1ZlcnNhbWVudG8+DQo8cGF5X2k6aW1wb3J0b1NpbmdvbG9WZXJzYW1lbnRvPjEuNTA8L3BheV9pOmltcG9ydG9TaW5nb2xvVmVyc2FtZW50bz4NCjxwYXlfaTpjb21taXNzaW9uZUNhcmljb1BBPjEuMDA8L3BheV9pOmNvbW1pc3Npb25lQ2FyaWNvUEE+DQo8cGF5X2k6aWJhbkFjY3JlZGl0bz5JVDQ1UjA3NjAxMDMyMDAwMDAwMDAwMDEwMTY8L3BheV9pOmliYW5BY2NyZWRpdG8+DQo8cGF5X2k6YmljQWNjcmVkaXRvPkFSVElJVE0xMDUwPC9wYXlfaTpiaWNBY2NyZWRpdG8+DQo8cGF5X2k6aWJhbkFwcG9nZ2lvPklUNDVSMDc2MDEwMzIwMDAwMDAwMDAwMTAxNjwvcGF5X2k6aWJhbkFwcG9nZ2lvPg0KPHBheV9pOmJpY0FwcG9nZ2lvPkFSVElJVE0xMDUwPC9wYXlfaTpiaWNBcHBvZ2dpbz4NCjxwYXlfaTpjcmVkZW56aWFsaVBhZ2F0b3JlPkNQMS4xPC9wYXlfaTpjcmVkZW56aWFsaVBhZ2F0b3JlPg0KPHBheV9pOmNhdXNhbGVWZXJzYW1lbnRvPnBhZ2FtZW50byBmb3RvY29waWUgcHJhdGljYTwvcGF5X2k6Y2F1c2FsZVZlcnNhbWVudG8+DQo8cGF5X2k6ZGF0aVNwZWNpZmljaVJpc2Nvc3Npb25lPjEvYWJjPC9wYXlfaTpkYXRpU3BlY2lmaWNpUmlzY29zc2lvbmU+DQo8L3BheV9pOmRhdGlTaW5nb2xvVmVyc2FtZW50bz4NCjwvcGF5X2k6ZGF0aVZlcnNhbWVudG8+DQo8L3BheV9pOlJQVD4N&lt;/rpt&gt;
+&lt;/elementoListaRPT&gt;
+&lt;/listaRPT&gt;
+&lt;requireLightPayment&gt;01&lt;/requireLightPayment&gt;
+&lt;multiBeneficiario&gt;1&lt;/multiBeneficiario&gt;
+&lt;/ws:nodoInviaCarrelloRPT&gt;
+&lt;/soapenv:Body&gt;
+&lt;/soapenv:Envelope&gt;
+headers:  {'Content-Type': 'application/xml', 'SOAPAction': 'nodoInviaCarrelloRPT', 'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}
+b'&lt;?xml version="1.0" encoding="UTF-8" standalone="no" ?&gt;&lt;soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/" xmlns:tns="http://NodoPagamentiSPC.spcoop.gov.it/servizi/PagamentiTelematiciRPT" xmlns:ppthead="http://ws.pagamenti.telematici.gov/ppthead"&gt;&lt;soapenv:Body&gt;&lt;ppt:nodoInviaCarrelloRPTRisposta&gt;&lt;esitoComplessivoOperazione&gt;OK&lt;/esitoComplessivoOperazione&gt;&lt;url&gt;https://acardste.vaservices.eu:1443/wallet/welcome?idSession=9b4fc773-2a7a-4070-8dd3-1e538a940adc&lt;/url&gt;&lt;/ppt:nodoInviaCarrelloRPTRisposta&gt;&lt;/soapenv:Body&gt;&lt;/soapenv:Envelope&gt;'
+200
+check tag "esitoComplessivoOperazione" - expected: OK, obtained: OK
+url
+https://acardste.vaservices.eu:1443/wallet/welcome?idSession=9b4fc773-2a7a-4070-8dd3-1e538a940adc
+#################### 9b4fc773-2a7a-4070-8dd3-1e538a940adc
+
+
+http://localhost:9080/nodo-dev/informazioniPagamento?idPagamento=9b4fc773-2a7a-4070-8dd3-1e538a940adc
+informazioniPagamentoResponse
+b'{"IBAN":"IT96R0123454321000000012345","bolloDigitale":false,"codiceFiscale":"RCCGLD09P09H502E","dettagli":[{"CCP":"77777777777302705319564156600-02467","IUV":"7053195641566","codicePagatore":"RCCGLD09P09H501E","enteBeneficiario":"AZIENDA XXX","idDominio":"77777777777","importo":1.50,"nomePagatore":"Gesualdo;Riccitelli","tipoPagatore":"F"},{"CCP":"77777777777302705319564156600-02467","IUV":"7053195641566","codicePagatore":"RCCGLD09P09H501E","enteBeneficiario":"AZIENDA XXX","idDominio":"90000000001","importo":1.50,"nomePagatore":"Gesualdo;Riccitelli","tipoPagatore":"F"}],"email":"gesualdo.riccitelli@poste.it","idCarrello":"77777777777302705319564156600-02467","importoTotale":3.00,"oggettoPagamento":"Causali multiple di versamento","ragioneSociale":"Pa Salvo","urlRedirectEC":"http://siapagopa.rf.gd/ec?qrstr=prova&amp;idSession=9b4fc773-2a7a-4070-8dd3-1e538a940adc"}'
+HTTP status expected: 200 - obtained:200
+
+
+http://localhost:9080/nodo-dev/notificaAnnullamento?idPagamento=9b4fc773-2a7a-4070-8dd3-1e538a940adc
+notificaAnnullamentoResponse
+b'{"esito":"OK"}'
+HTTP status expected: 200 - obtained:200
+wait for: 5.0 seconds
+Connecting to the OracleDB... NODO_ONLINE
+Successfully connected to OracleDB
+SELECT s.STATO FROM STATI_RPT s WHERE s.IUV = '7053195641566' and s.ID_DOMINIO = '77777777777'
+ Executing query [SELECT s.STATO FROM STATI_RPT s WHERE s.IUV = '7053195641566' and s.ID_DOMINIO = '77777777777'] on OracleDB instance...
+ Query executed successfully - [4] row/s found
+query_result:  ['RPT_RICEVUTA_NODO', 'RPT_ACCETTATA_NODO', 'RPT_PARCHEGGIATA_NODO', 'RPT_ANNULLATA_WISP']
+value:  ['RPT_RICEVUTA_NODO', 'RPT_ACCETTATA_NODO', 'RPT_PARCHEGGIATA_NODO', 'RPT_ANNULLATA_WISP']
+Closing connection to the OracleDb...
+Connection to OracleDB closed successfully
+Connecting to the OracleDB... NODO_ONLINE
+Successfully connected to OracleDB
+SELECT s.STATO FROM STATI_RPT s WHERE s.IUV = '7053195641566' and s.ID_DOMINIO = '90000000001'
+ Executing query [SELECT s.STATO FROM STATI_RPT s WHERE s.IUV = '7053195641566' and s.ID_DOMINIO = '90000000001'] on OracleDB instance...
+ Query executed successfully - [4] row/s found
+query_result:  ['RPT_RICEVUTA_NODO', 'RPT_ACCETTATA_NODO', 'RPT_PARCHEGGIATA_NODO', 'RPT_ANNULLATA_WISP']
+value:  ['RPT_RICEVUTA_NODO', 'RPT_ACCETTATA_NODO', 'RPT_PARCHEGGIATA_NODO', 'RPT_ANNULLATA_WISP']
+Closing connection to the OracleDb...
+Connection to OracleDB closed successfully
+Connecting to the OracleDB... NODO_ONLINE
+Successfully connected to OracleDB
+SELECT s.STATO FROM STATI_RPT_SNAPSHOT s WHERE s.IUV = '7053195641566' and s.ID_DOMINIO = '77777777777'
+ Executing query [SELECT s.STATO FROM STATI_RPT_SNAPSHOT s WHERE s.IUV = '7053195641566' and s.ID_DOMINIO = '77777777777'] on OracleDB instance...
+ Query executed successfully - [1] row/s found
+query_result:  ['RPT_ANNULLATA_WISP']
+value:  ['RPT_ANNULLATA_WISP']
+Closing connection to the OracleDb...
+Connection to OracleDB closed successfully
+Connecting to the OracleDB... NODO_ONLINE
+Successfully connected to OracleDB
+SELECT s.STATO FROM STATI_RPT_SNAPSHOT s WHERE s.IUV = '7053195641566' and s.ID_DOMINIO = '90000000001'
+ Executing query [SELECT s.STATO FROM STATI_RPT_SNAPSHOT s WHERE s.IUV = '7053195641566' and s.ID_DOMINIO = '90000000001'] on OracleDB instance...
+ Query executed successfully - [1] row/s found
+query_result:  ['RPT_ANNULLATA_WISP']
+value:  ['RPT_ANNULLATA_WISP']
+Closing connection to the OracleDb...
+Connection to OracleDB closed successfully
+Connecting to the OracleDB... NODO_ONLINE
+Successfully connected to OracleDB
+SELECT s.STATO FROM STATI_CARRELLO s WHERE s.ID_CARRELLO = '77777777777302705319564156600-02467'
+ Executing query [SELECT s.STATO FROM STATI_CARRELLO s WHERE s.ID_CARRELLO = '77777777777302705319564156600-02467'] on OracleDB instance...
+ Query executed successfully - [4] row/s found
+query_result:  ['CART_RICEVUTO_NODO', 'CART_ACCETTATO_NODO', 'CART_PARCHEGGIATO_NODO', 'CART_ANNULLATO_WISP']
+value:  ['CART_RICEVUTO_NODO', 'CART_ACCETTATO_NODO', 'CART_PARCHEGGIATO_NODO', 'CART_ANNULLATO_WISP']
+Closing connection to the OracleDb...
+Connection to OracleDB closed successfully
+Connecting to the OracleDB... NODO_ONLINE
+Successfully connected to OracleDB
+SELECT s.STATO FROM STATI_CARRELLO_SNAPSHOT s WHERE s.ID_CARRELLO = '77777777777302705319564156600-02467'
+ Executing query [SELECT s.STATO FROM STATI_CARRELLO_SNAPSHOT s WHERE s.ID_CARRELLO = '77777777777302705319564156600-02467'] on OracleDB instance...
+ Query executed successfully - [1] row/s found
+query_result:  ['CART_ANNULLATO_WISP']
+value:  ['CART_ANNULLATO_WISP']
+Closing connection to the OracleDb...
+Connection to OracleDB closed successfully
+Connecting to the OracleDB... NODO_ONLINE
+Successfully connected to OracleDB
+SELECT s.STATUS FROM POSITION_PAYMENT_STATUS s WHERE s.PAYMENT_TOKEN = '77777777777302705319564156600-02467' and s.pa_fiscal_code= '77777777777'
+ Executing query [SELECT s.STATUS FROM POSITION_PAYMENT_STATUS s WHERE s.PAYMENT_TOKEN = '77777777777302705319564156600-02467' and s.pa_fiscal_code= '77777777777'] on OracleDB instance...
+ Query executed successfully - [2] row/s found
+query_result:  ['PAYING', 'CANCELLED']
+value:  ['PAYING', 'CANCELLED']
+Closing connection to the OracleDb...
+Connection to OracleDB closed successfully
+Connecting to the OracleDB... NODO_ONLINE
+Successfully connected to OracleDB
+SELECT s.STATUS FROM POSITION_PAYMENT_STATUS_SNAPSHOT s WHERE s.PAYMENT_TOKEN = '77777777777302705319564156600-02467' and s.pa_fiscal_code= '77777777777'
+ Executing query [SELECT s.STATUS FROM POSITION_PAYMENT_STATUS_SNAPSHOT s WHERE s.PAYMENT_TOKEN = '77777777777302705319564156600-02467' and s.pa_fiscal_code= '77777777777'] on OracleDB instance...
+ Query executed successfully - [1] row/s found
+query_result:  ['CANCELLED']
+value:  ['CANCELLED']
+Closing connection to the OracleDb...
+Connection to OracleDB closed successfully
+Connecting to the OracleDB... NODO_ONLINE
+Successfully connected to OracleDB
+ Executing query [SELECT s.NOTICE_ID FROM POSITION_PAYMENT_STATUS s WHERE s.PAYMENT_TOKEN = '77777777777302705319564156600-02467' and s.pa_fiscal_code= '77777777777'] on OracleDB instance...
+ Query executed successfully - [2] row/s found
+executed query: [('302705319564156600',), ('302705319564156600',)]
+DB_GEST_ANN_stati_position_payment_status: [('302705319564156600',), ('302705319564156600',)]
+NOTICE_ID: 302705319564156600
+Connecting to the OracleDB... NODO_ONLINE
+Successfully connected to OracleDB
+SELECT s.STATUS FROM POSITION_STATUS s WHERE s.NOTICE_ID = '302705319564156600'
+ Executing query [SELECT s.STATUS FROM POSITION_STATUS s WHERE s.NOTICE_ID = '302705319564156600'] on OracleDB instance...
+ Query executed successfully - [2] row/s found
+query_result:  ['PAYING', 'INSERTED']
+value:  ['PAYING', 'INSERTED']
+Closing connection to the OracleDb...
+Connection to OracleDB closed successfully
+Connecting to the OracleDB... NODO_ONLINE
+Successfully connected to OracleDB
+SELECT s.STATUS FROM POSITION_STATUS_SNAPSHOT s WHERE s.NOTICE_ID = '302705319564156600'
+ Executing query [SELECT s.STATUS FROM POSITION_STATUS_SNAPSHOT s WHERE s.NOTICE_ID = '302705319564156600'] on OracleDB instance...
+ Query executed successfully - [1] row/s found
+query_result:  ['INSERTED']
+value:  ['INSERTED']
+Closing connection to the OracleDb...
+Connection to OracleDB closed successfully
+url_nodo:  http://localhost:9080/nodo-dev/webservices/input
+nodo soap_request sent &gt;&gt;&gt; &lt;soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd"&gt;
+&lt;soapenv:Header/&gt;
+&lt;soapenv:Body&gt;
+&lt;nod:activateIOPaymentReq&gt;
+&lt;idPSP&gt;AGID_01&lt;/idPSP&gt;
+&lt;idBrokerPSP&gt;97735020584&lt;/idBrokerPSP&gt;
+&lt;idChannel&gt;97735020584_03&lt;/idChannel&gt;
+&lt;password&gt;pwdpwdpwd&lt;/password&gt;
+&lt;!--Optional:--&gt;
+&lt;qrCode&gt;
+&lt;fiscalCode&gt;77777777777&lt;/fiscalCode&gt;
+&lt;noticeNumber&gt;302705319564156600&lt;/noticeNumber&gt;
+&lt;/qrCode&gt;
+&lt;!--Optional:--&gt;
+&lt;!--expirationTime&gt;60000&lt;/expirationTime--&gt;
+&lt;amount&gt;1.50&lt;/amount&gt;
+&lt;!--Optional:--&gt;
+&lt;dueDate&gt;2021-12-12&lt;/dueDate&gt;
+&lt;!--Optional:--&gt;
+&lt;paymentNote&gt;responseFull&lt;/paymentNote&gt;
+&lt;!--Optional:--&gt;
+&lt;payer&gt;
+&lt;uniqueIdentifier&gt;
+&lt;entityUniqueIdentifierType&gt;G&lt;/entityUniqueIdentifierType&gt;
+&lt;entityUniqueIdentifierValue&gt;77777777777&lt;/entityUniqueIdentifierValue&gt;
+&lt;/uniqueIdentifier&gt;
+&lt;fullName&gt;IOname_&lt;/fullName&gt;
+&lt;!--Optional:--&gt;
+&lt;streetName&gt;IOstreet&lt;/streetName&gt;
+&lt;!--Optional:--&gt;
+&lt;civicNumber&gt;IOcivic&lt;/civicNumber&gt;
+&lt;!--Optional:--&gt;
+&lt;postalCode&gt;IOcode&lt;/postalCode&gt;
+&lt;!--Optional:--&gt;
+&lt;city&gt;IOcity&lt;/city&gt;
+&lt;!--Optional:--&gt;
+&lt;stateProvinceRegion&gt;IOstate&lt;/stateProvinceRegion&gt;
+&lt;!--Optional:--&gt;
+&lt;country&gt;DE&lt;/country&gt;
+&lt;!--Optional:--&gt;
+&lt;e-mail&gt;IO.test.prova@gmail.com&lt;/e-mail&gt;
+&lt;/payer&gt;
+&lt;/nod:activateIOPaymentReq&gt;
+&lt;/soapenv:Body&gt;
+&lt;/soapenv:Envelope&gt;
+headers:  {'Content-Type': 'application/xml', 'SOAPAction': 'activateIOPayment', 'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}
+b'&lt;?xml version="1.0" encoding="UTF-8" standalone="no" ?&gt;&lt;soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:nfpsp="http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd"&gt;&lt;soapenv:Body&gt;&lt;nfpsp:activateIOPaymentRes&gt;&lt;outcome&gt;KO&lt;/outcome&gt;&lt;fault&gt;&lt;faultCode&gt;PPT_ERRORE_EMESSO_DA_PAA&lt;/faultCode&gt;&lt;faultString&gt;Errore restituito dalla PAA.&lt;/faultString&gt;&lt;id&gt;77777777777&lt;/id&gt;&lt;description&gt;FaultCode PA: PAA_PAGAMENTO_SCONOSCIUTO\nFaultString PA: Pagamento in attesa risulta sconosciuto all\xe2\x80\x99Ente Creditore\nDescription PA: numero avviso deve iniziare con 302[00|01|02|03|04|05|06|07|08|09|10|11|12|13|14|15|16|99|98|97]&lt;/description&gt;&lt;/fault&gt;&lt;/nfpsp:activateIOPaymentRes&gt;&lt;/soapenv:Body&gt;&lt;/soapenv:Envelope&gt;'
+200
+fault code:  PPT_ERRORE_EMESSO_DA_PAA
+fault string:  Errore restituito dalla PAA.
+description:  FaultCode PA: PAA_PAGAMENTO_SCONOSCIUTO
+FaultString PA: Pagamento in attesa risulta sconosciuto all’Ente Creditore
+Description PA: numero avviso deve iniziare con 302[00|01|02|03|04|05|06|07|08|09|10|11|12|13|14|15|16|99|98|97]
+check tag "outcome" - expected: OK, obtained: KO</pre>    </span></li></ol><span /></div><div class="scenario"><span class="scenario_file">src/integ-test/bdd-test/features/Mod1MB/flows/gestioneAnnulli/nodoNotificaAnnullamento_flows_PAG-1642_01.feature:337</span><h3 onclick="Collapsible_toggle('scenario_6')" class="failed"><span class="val">Scenario: Execute nodoChiediInformazioniPagamento1</span></h3><ol class="scenario_steps" id="scenario_6"><li class="step passed"><div class="step_name"><span class="keyword">Given </span><span class="step val">systems up</span><small class="step_duration">(0.093s)</small></div><div class="step_file"><span>src/integ-test/bdd-test/features/steps/steps.py:29</span></div><table><tr><th>name</th><th>url</th><th>healthcheck</th><th>soap_service</th><th>rest_service</th></tr><tr><td>nodo-dei-pagamenti</td><td>http://localhost:9080/</td><td>nodo-dev-health/ready</td><td>nodo-dev/webservices/input</td><td>nodo-dev</td></tr><tr><td>mock-ec</td><td>http://localhost:8089/</td><td>servizi/PagamentiTelematiciRPT/info</td><td>servizi/PagamentiTelematiciRPT</td><td /></tr><tr><td>mock-psp</td><td>http://localhost:8090/</td><td>servizi/MockPSP/info</td><td>servizi/MockPSP</td><td /></tr></table><span class="embed" /></li><li class="step failed"><div class="step_name"><span class="keyword">Given </span><span class="step val"><span>the </span><b>Trigger paInviaRt</b><span> scenario executed successfully</span></span><small class="step_duration">(0.003s)</small></div><div class="step_file"><span>src/integ-test/bdd-test/features/steps/steps.py:957</span></div><span class="embed"><a onclick="Collapsible_toggle('embed_3')">Error Message</a><pre id="embed_3" style="display: none">Traceback (most recent call last):
+  File "C:\Users\alessandro.cancelli\Desktop\venv\lib\site-packages\behave\model.py", line 1329, in run
+    match.run(runner.context)
+  File "C:\Users\alessandro.cancelli\Desktop\venv\lib\site-packages\behave\matchers.py", line 98, in run
+    self.func(context, *args, **kwargs)
+  File "src\integ-test\bdd-test\features\steps\steps.py", line 962, in step_impl
+    [step.keyword + " " + step.name + "\n\"\"\"\n" + (step.text or '') + "\n\"\"\"\n" for step in phase.steps])
+AttributeError: 'NoneType' object has no attribute 'steps'
+
+Captured stdout:
+calling: nodo-dei-pagamenti -&gt; http://localhost:9080/
+calling -&gt; http://localhost:9080/nodo-dev-health/ready
+response: 200
+calling: mock-ec -&gt; http://localhost:8089/
+calling -&gt; http://localhost:8089/servizi/PagamentiTelematiciRPT/info
+response: 200
+calling: mock-psp -&gt; http://localhost:8090/
+calling -&gt; http://localhost:8090/servizi/MockPSP/info
+response: 200</pre>    </span></li></ol><span /></div><div class="scenario"><span class="scenario_file">src/integ-test/bdd-test/features/Mod1MB/flows/gestioneAnnulli/nodoNotificaAnnullamento_flows_PAG-1642_01.feature:350</span><h3 onclick="Collapsible_toggle('scenario_7')" class="failed"><span class="val">Scenario: Execute nodoNotificaAnnullamento1</span></h3><ol class="scenario_steps" id="scenario_7"><li class="step passed"><div class="step_name"><span class="keyword">Given </span><span class="step val">systems up</span><small class="step_duration">(0.097s)</small></div><div class="step_file"><span>src/integ-test/bdd-test/features/steps/steps.py:29</span></div><table><tr><th>name</th><th>url</th><th>healthcheck</th><th>soap_service</th><th>rest_service</th></tr><tr><td>nodo-dei-pagamenti</td><td>http://localhost:9080/</td><td>nodo-dev-health/ready</td><td>nodo-dev/webservices/input</td><td>nodo-dev</td></tr><tr><td>mock-ec</td><td>http://localhost:8089/</td><td>servizi/PagamentiTelematiciRPT/info</td><td>servizi/PagamentiTelematiciRPT</td><td /></tr><tr><td>mock-psp</td><td>http://localhost:8090/</td><td>servizi/MockPSP/info</td><td>servizi/MockPSP</td><td /></tr></table><span class="embed" /></li><li class="step failed"><div class="step_name"><span class="keyword">Given </span><span class="step val"><span>the </span><b>Execute nodoChiediInformazioniPagamento1</b><span> scenario executed successfully</span></span><small class="step_duration">(0.011s)</small></div><div class="step_file"><span>src/integ-test/bdd-test/features/steps/steps.py:957</span></div><span class="embed"><a onclick="Collapsible_toggle('embed_4')">Error Message</a><pre id="embed_4" style="display: none">Assertion Failed: FAILED SUB-STEP: Given the Trigger paInviaRt scenario executed successfully
+Substep info: Traceback (most recent call last):
+  File "C:\Users\alessandro.cancelli\Desktop\venv\lib\site-packages\behave\model.py", line 1329, in run
+    match.run(runner.context)
+  File "C:\Users\alessandro.cancelli\Desktop\venv\lib\site-packages\behave\matchers.py", line 98, in run
+    self.func(context, *args, **kwargs)
+  File "src\integ-test\bdd-test\features\steps\steps.py", line 962, in step_impl
+    [step.keyword + " " + step.name + "\n\"\"\"\n" + (step.text or '') + "\n\"\"\"\n" for step in phase.steps])
+AttributeError: 'NoneType' object has no attribute 'steps'
+
+Traceback (of failed substep):
+  File "C:\Users\alessandro.cancelli\Desktop\venv\lib\site-packages\behave\model.py", line 1329, in run
+    match.run(runner.context)
+  File "C:\Users\alessandro.cancelli\Desktop\venv\lib\site-packages\behave\matchers.py", line 98, in run
+    self.func(context, *args, **kwargs)
+  File "src\integ-test\bdd-test\features\steps\steps.py", line 962, in step_impl
+    [step.keyword + " " + step.name + "\n\"\"\"\n" + (step.text or '') + "\n\"\"\"\n" for step in phase.steps])
+
+Captured stdout:
+calling: nodo-dei-pagamenti -&gt; http://localhost:9080/
+calling -&gt; http://localhost:9080/nodo-dev-health/ready
+response: 200
+calling: mock-ec -&gt; http://localhost:8089/
+calling -&gt; http://localhost:8089/servizi/PagamentiTelematiciRPT/info
+response: 200
+calling: mock-psp -&gt; http://localhost:8090/
+calling -&gt; http://localhost:8090/servizi/MockPSP/info
+response: 200</pre>    </span></li></ol><span /></div><div class="scenario"><span class="scenario_file">src/integ-test/bdd-test/features/Mod1MB/flows/gestioneAnnulli/nodoNotificaAnnullamento_flows_PAG-1642_01.feature:357</span><h3 onclick="Collapsible_toggle('scenario_8')" class="failed"><span class="val">Scenario: Execute sendPaymentOutcome request</span></h3><ol class="scenario_steps" id="scenario_8"><li class="step passed"><div class="step_name"><span class="keyword">Given </span><span class="step val">systems up</span><small class="step_duration">(0.089s)</small></div><div class="step_file"><span>src/integ-test/bdd-test/features/steps/steps.py:29</span></div><table><tr><th>name</th><th>url</th><th>healthcheck</th><th>soap_service</th><th>rest_service</th></tr><tr><td>nodo-dei-pagamenti</td><td>http://localhost:9080/</td><td>nodo-dev-health/ready</td><td>nodo-dev/webservices/input</td><td>nodo-dev</td></tr><tr><td>mock-ec</td><td>http://localhost:8089/</td><td>servizi/PagamentiTelematiciRPT/info</td><td>servizi/PagamentiTelematiciRPT</td><td /></tr><tr><td>mock-psp</td><td>http://localhost:8090/</td><td>servizi/MockPSP/info</td><td>servizi/MockPSP</td><td /></tr></table><span class="embed" /></li><li class="step failed"><div class="step_name"><span class="keyword">Given </span><span class="step val"><span>the </span><b>activatePaymentNotice1 request</b><span> scenario executed successfully</span></span><small class="step_duration">(0.002s)</small></div><div class="step_file"><span>src/integ-test/bdd-test/features/steps/steps.py:957</span></div><span class="embed"><a onclick="Collapsible_toggle('embed_5')">Error Message</a><pre id="embed_5" style="display: none">Traceback (most recent call last):
+  File "C:\Users\alessandro.cancelli\Desktop\venv\lib\site-packages\behave\model.py", line 1329, in run
+    match.run(runner.context)
+  File "C:\Users\alessandro.cancelli\Desktop\venv\lib\site-packages\behave\matchers.py", line 98, in run
+    self.func(context, *args, **kwargs)
+  File "src\integ-test\bdd-test\features\steps\steps.py", line 962, in step_impl
+    [step.keyword + " " + step.name + "\n\"\"\"\n" + (step.text or '') + "\n\"\"\"\n" for step in phase.steps])
+AttributeError: 'NoneType' object has no attribute 'steps'
+
+Captured stdout:
+calling: nodo-dei-pagamenti -&gt; http://localhost:9080/
+calling -&gt; http://localhost:9080/nodo-dev-health/ready
+response: 200
+calling: mock-ec -&gt; http://localhost:8089/
+calling -&gt; http://localhost:8089/servizi/PagamentiTelematiciRPT/info
+response: 200
+calling: mock-psp -&gt; http://localhost:8090/
+calling -&gt; http://localhost:8090/servizi/MockPSP/info
+response: 200</pre>    </span></li></ol><span /></div></div></body></html>
