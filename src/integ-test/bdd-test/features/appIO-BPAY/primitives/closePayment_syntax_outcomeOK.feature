@@ -290,7 +290,8 @@ Feature: syntax checks for closePayment outcome OK
     And save activateIOPayment response in activateIOPayment2Response
 
   Scenario: closePayment 2 tokens
-    Given initial JSON v1/closepayment
+    Given the check activateIOPayment2 OK scenario executed successfully
+    And initial JSON v1/closepayment
       """
       {
         "paymentTokens": [
@@ -315,8 +316,7 @@ Feature: syntax checks for closePayment outcome OK
       """
 
   Scenario: check closePayment OK with 2 tokens
-    Given the check activateIOPayment2 OK scenario executed successfully
-    And the closePayment 2 tokens scenario executed successfully
+    Given the closePayment 2 tokens scenario executed successfully
     When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
     Then verify the HTTP status code of v1/closepayment response is 200
     And check esito is OK of v1/closepayment response
