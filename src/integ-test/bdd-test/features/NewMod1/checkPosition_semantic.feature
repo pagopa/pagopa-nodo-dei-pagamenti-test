@@ -214,7 +214,7 @@ Feature: semantic checks for checkPosition outcome OK
                 "positionslist": [
                     {
                         "fiscalCode": "#creditor_institution_code#",
-                        "noticeNumber": "311$iuv#"
+                        "noticeNumber": "311#iuv#"
                     },
                     {
                         "fiscalCode": "#creditor_institution_code#",
@@ -222,7 +222,7 @@ Feature: semantic checks for checkPosition outcome OK
                     },
                     {
                         "fiscalCode": "#creditor_institution_code#",
-                        "noticeNumber": "310$iuv2"
+                        "noticeNumber": "310$iuv"
                     }
                 ]
             }
