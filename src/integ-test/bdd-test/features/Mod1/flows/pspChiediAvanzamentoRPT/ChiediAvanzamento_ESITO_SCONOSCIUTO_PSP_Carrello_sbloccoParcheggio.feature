@@ -208,6 +208,8 @@ Feature: process tests for ChiediAvanzamento_ESITO_SCONOSCIUTO_PSP_Carrello_sblo
 
     Scenario: Execute check DB-RPT
         Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
+        And replace iuv content with avanzaErrResponse content
+        And replace iuv2 content with avanzaErrResponse content
         Then checks the value $sessionToken of the record at column ID_SESSIONE of the table STATI_RPT retrived by the query stati_RPT on db nodo_online under macro Mod1
         And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query stati_RPT on db nodo_online under macro Mod1
         And checks the value nodoInviaCarrelloRPT of the record at column INSERTED_BY of the table STATI_RPT retrived by the query stati_RPT on db nodo_online under macro Mod1
@@ -254,7 +256,6 @@ Feature: process tests for ChiediAvanzamento_ESITO_SCONOSCIUTO_PSP_Carrello_sblo
 
     Scenario: Execute second check DB-RPT 
         Given the Execution Esito Carta scenario executed successfully
-        And replace iuv content with avanzaErrResponse content
         Then checks the value CART_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query retry_rpt on db nodo_online under macro Mod1
         And checks the value avanzaErrResponse of the record at column IUV of the table RETRY_RPT retrived by the query retry_rpt_original on db nodo_online under macro Mod1
         And checks the value $1ccp of the record at column CCP of the table RETRY_RPT retrived by the query retry_rpt_original on db nodo_online under macro Mod1

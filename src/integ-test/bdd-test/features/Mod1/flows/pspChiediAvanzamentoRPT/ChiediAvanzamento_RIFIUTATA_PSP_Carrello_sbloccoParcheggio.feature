@@ -208,6 +208,8 @@ Feature: process tests for ChiediAvanzamento_RIFIUTATA_PSP_Carrello_sbloccoParch
 
     Scenario: Execute check DB-RPT
         Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
+        And replace iuv content with avanzaKO content
+        And replace iuv2 content with avanzaKO content
         Then checks the value $sessionToken of the record at column ID_SESSIONE of the table STATI_RPT retrived by the query stati_RPT on db nodo_online under macro Mod1
         And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query stati_RPT on db nodo_online under macro Mod1
         And checks the value nodoInviaCarrelloRPT of the record at column INSERTED_BY of the table STATI_RPT retrived by the query stati_RPT on db nodo_online under macro Mod1
