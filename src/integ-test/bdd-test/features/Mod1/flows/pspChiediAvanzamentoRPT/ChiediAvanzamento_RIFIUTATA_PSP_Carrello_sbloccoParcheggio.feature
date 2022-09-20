@@ -254,6 +254,7 @@ Feature: process tests for ChiediAvanzamento_RIFIUTATA_PSP_Carrello_sbloccoParch
 
     Scenario: Execute second check DB-RPT 
         Given the Execution Esito Carta scenario executed successfully
+        And replace iuv content with avanzaKO content
         Then checks the value CART_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query motivo_annullamento on db nodo_online under macro Mod1
         And checks the value avanzaKO of the record at column IUV of the table RETRY_RPT retrived by the query motivo_annullamento_originale on db nodo_online under macro Mod1
         And checks the value $1ccp of the record at column CCP of the table RETRY_RPT retrived by the query motivo_annullamento_originale on db nodo_online under macro Mod1
