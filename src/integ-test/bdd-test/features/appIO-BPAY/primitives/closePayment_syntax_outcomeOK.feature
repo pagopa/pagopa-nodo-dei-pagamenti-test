@@ -81,9 +81,11 @@ Feature: syntax checks for closePayment outcome OK
       | pspTransactionId            | Empty                                                                                                                                                                                                                                                            | SIN_CP_20   |
       | pspTransactionId            | abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fgh | SIN_CP_21   |
       | totalAmount                 | None                                                                                                                                                                                                                                                             | SIN_CP_22   |
+      | totalAmount                 | Empty                                                                                                                                                                                                                                                            | SIN_CP_23   |
       | totalAmount                 | 12.321                                                                                                                                                                                                                                                           | SIN_CP_25   |
       | totalAmount                 | 1234567890.12                                                                                                                                                                                                                                                    | SIN_CP_26   |
       | fee                         | None                                                                                                                                                                                                                                                             | SIN_CP_27   |
+      | fee                         | Empty                                                                                                                                                                                                                                                            | SIN_CP_28   |
       | fee                         | 12.321                                                                                                                                                                                                                                                           | SIN_CP_30   |
       | fee                         | 1234567890.12                                                                                                                                                                                                                                                    | SIN_CP_31   |
       | timestampOperation          | None                                                                                                                                                                                                                                                             | SIN_CP_32   |
@@ -347,10 +349,8 @@ Feature: syntax checks for closePayment outcome OK
     And check descrizione is Richiesta non valida of v1/closepayment response
     Examples:
       | elem                          | value | soapUI test |
-      | totalAmount                   | Empty | SIN_CP_23   |
-      | totalAmount                   | 12,21 | SIN_CP_24   |
-      | fee                           | Empty | SIN_CP_28   |
-      | fee                           | 12,32 | SIN_CP_29   |
+      # | totalAmount                 | 12,21 | SIN_CP_24   |   gestione della virgola non previsto nello step when(u'{sender} sends rest {method:Method} {service} to {receiver}')
+      # | fee                         | 12,32 | SIN_CP_29   |   gestione della virgola non previsto nello step when(u'{sender} sends rest {method:Method} {service} to {receiver}')
       | additionalPaymentInformations | None  | SIN_CP_35   |
 
 
@@ -362,4 +362,3 @@ Feature: syntax checks for closePayment outcome OK
     Then verify the HTTP status code of v1/closepayment response is 404
     And check esito is KO of v1/closepayment response
     And check descrizione is Il Pagamento indicato non esiste of v1/closepayment response
-    

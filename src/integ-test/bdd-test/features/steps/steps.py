@@ -778,8 +778,6 @@ def step_impl(context, sender, method, service, receiver):
         bodyXml = getattr(context, service)
         body = xmltodict.parse(bodyXml)
         body = body["root"]
-        amount_comma=0
-        amount_empty=0
 
         if ('paymentTokens' in body.keys()) and (body["paymentTokens"] != None):
             body["paymentTokens"] = body["paymentTokens"]["paymentToken"]
@@ -788,16 +786,10 @@ def step_impl(context, sender, method, service, receiver):
                 l.append(body["paymentTokens"])
                 body["paymentTokens"] = l
 
-        if 'totalAmount' in body.keys():
-            if body["totalAmount"] != None:
-                if ',' in body["totalAmount"]:
-                    amount_comma=1
-                    amount = body["totalAmount"]
-                body["totalAmount"] = float(body["totalAmount"].replace(',','.'))
-            else:
-                amount_empty=1
+        if ('totalAmount' in body.keys()) and (body["totalAmount"] != None):
+            body["totalAmount"] = float(body["totalAmount"])
 
-        if 'fee' in body.keys():
+        if ('fee' in body.keys()) and (body["fee"] != None):
             body["fee"] = float(body["fee"])
 
         if ('positionslist' in body.keys()) and (body["positionslist"] != None):
@@ -808,12 +800,6 @@ def step_impl(context, sender, method, service, receiver):
                 body["positionslist"] = l
 
         body = json.dumps(body, indent=4)
-
-        l_amount_string = body.index('"totalAmount": ') + len('"totalAmount": ')
-        if amount_comma == 1:
-            body = body.replace(body[l_amount_string:l_amount_string + len(amount)],amount)
-        if amount_empty == 1:
-            body = body.replace(body[l_amount_string:l_amount_string + len('null')],'')
 
     print(body)
 
