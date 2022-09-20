@@ -49,7 +49,7 @@ Feature: syntax checks for closePayment outcome OK
   #     }
   #     """
 
-  # element value check
+  # syntax check - Field invalido
   Scenario Outline: Check syntax error on invalid body element value
     Given the closePayment scenario executed successfully
     And <elem> with <value> in v1/closepayment
@@ -60,19 +60,25 @@ Feature: syntax checks for closePayment outcome OK
     Examples:
       | elem                        | value                                                                                                                                                                                                                                                            | soapUI test |
       | paymentTokens               | None                                                                                                                                                                                                                                                             | SIN_CP_01   |
-      #  | paymentTokens                  | No []                                 | SIN_CP_03.1 |
+      #| paymentTokens                  | No []                                 | SIN_CP_03.1 |
       | outcome                     | None                                                                                                                                                                                                                                                             | SIN_CP_04   |
       | outcome                     | Empty                                                                                                                                                                                                                                                            | SIN_CP_05   |
       | outcome                     | OO                                                                                                                                                                                                                                                               | SIN_CP_06   |
       | identificativoPsp           | None                                                                                                                                                                                                                                                             | SIN_CP_07   |
+      | identificativoPsp           | Empty                                                                                                                                                                                                                                                            | SIN_CP_08   |
       | identificativoPsp           | 700000000017000000000170000000001700                                                                                                                                                                                                                             | SIN_CP_09   |
       | tipoVersamento              | None                                                                                                                                                                                                                                                             | SIN_CP_10   |
       | tipoVersamento              | Empty                                                                                                                                                                                                                                                            | SIN_CP_11   |
+      | tipoVersamento              | OBEP                                                                                                                                                                                                                                                             | SIN_CP_12   |
+      | tipoVersamento              | CP                                                                                                                                                                                                                                                               | SIN_CP_12   |
       | identificativoIntermediario | None                                                                                                                                                                                                                                                             | SIN_CP_13   |
+      | identificativoIntermediario | Empty                                                                                                                                                                                                                                                            | SIN_CP_14   |
       | identificativoIntermediario | 700000000017000000000170000000001700                                                                                                                                                                                                                             | SIN_CP_15   |
       | identificativoCanale        | None                                                                                                                                                                                                                                                             | SIN_CP_16   |
+      | identificativoCanale        | Empty                                                                                                                                                                                                                                                            | SIN_CP_17   |
       | identificativoCanale        | 70000000001_0370000000001_0370000000                                                                                                                                                                                                                             | SIN_CP_18   |
       | pspTransactionId            | None                                                                                                                                                                                                                                                             | SIN_CP_19   |
+      | pspTransactionId            | Empty                                                                                                                                                                                                                                                            | SIN_CP_20   |
       | pspTransactionId            | abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fgh | SIN_CP_21   |
       | totalAmount                 | None                                                                                                                                                                                                                                                             | SIN_CP_22   |
       | totalAmount                 | 12.321                                                                                                                                                                                                                                                           | SIN_CP_25   |
@@ -86,6 +92,7 @@ Feature: syntax checks for closePayment outcome OK
       | timestampOperation          | 2012-04-23T18:25:43                                                                                                                                                                                                                                              | SIN_CP_34   |
       | timestampOperation          | 2012-04-23T18:25                                                                                                                                                                                                                                                 | SIN_CP_34   |
       | transactionId               | None                                                                                                                                                                                                                                                             | SIN_CP_37   |
+      | transactionId               | Empty                                                                                                                                                                                                                                                            | SIN_CP_38   |
       | transactionId               | abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fgh | SIN_CP_39   |
       | outcomePaymentGateway       | None                                                                                                                                                                                                                                                             | SIN_CP_40   |
       | outcomePaymentGateway       | abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fgh | SIN_CP_42   |
@@ -93,7 +100,7 @@ Feature: syntax checks for closePayment outcome OK
       | authorizationCode           | abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fgh | SIN_CP_45   |
 
 
-  Scenario Outline: Check syntax error on invalid body element value
+  Scenario Outline: Check syntax error on invalid body element value - paymentToken
     Given the closePayment scenario executed successfully
     And <elem> with <value> in v1/closepayment
     When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
@@ -113,6 +120,8 @@ Feature: syntax checks for closePayment outcome OK
   #   And check descrizione is paymentTokens invalido of v1/closepayment response
 
 
+
+  # syntax check - No error
   Scenario: activateIOPayment
     Given initial XML activateIOPayment
       """
@@ -247,23 +256,96 @@ Feature: syntax checks for closePayment outcome OK
       """
     And EC replies to nodo-dei-pagamenti with the paGetPayment
 
-
   Scenario: check activateIOPayment OK
     Given the activateIOPayment scenario executed successfully
     When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is OK of activateIOPayment response
     And save activateIOPayment response in activateIOPaymentResponse
 
-  Scenario: nodoChiediInformazioniPagamento
+  Scenario Outline: check closePayment OK
     Given the check activateIOPayment OK scenario executed successfully
-    When WISP sends REST GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
-    Then verify the HTTP status code of informazioniPagamento response is 200
-
-  Scenario: check closePayment OK
-    Given the nodoChiediInformazioniPagamento scenario executed successfully
     And the closePayment scenario executed successfully
-    And paymentToken with $activateIOPaymentResponse.paymentToken in v1/closepayment
+    And <elem> with <value> in v1/closepayment
+    When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
+    Then verify the HTTP status code of v1/closepayment response is 200
+    And check esito is OK of v1/closepayment response
+    Examples:
+      | elem                  | value | soapUI test |
+      | fee                   | 0.00  | SIN_CP_31.2 |
+      | outcomePaymentGateway | Empty | SIN_CP_41   |
+      | authorizationCode     | Empty | SIN_CP_44   |
+
+
+  # syntax check - No error [SIN_CP_03.2]
+  Scenario: check activateIOPayment OK
+    Given the activateIOPayment scenario executed successfully
+    When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
+    Then check outcome is OK of activateIOPayment response
+    And save activateIOPayment response in activateIOPaymentResponse
+
+  Scenario: check activateIOPayment2 OK
+    Given the check activateIOPayment OK scenario executed successfully
+    And the activateIOPayment scenario executed successfully
+    And noticeNumber with 311#iuv# in activateIOPayment
+    When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
+    Then check outcome is OK of activateIOPayment response
+    And save activateIOPayment response in activateIOPayment2Response
+
+  Scenario: closePayment 2 tokens
+    Given initial JSON v1/closepayment
+      """
+      {
+        "paymentTokens": [
+          "$activateIOPaymentResponse.paymentToken",
+          "$activateIOPayment2Response.paymentToken"
+        ],
+        "outcome": "OK",
+        "identificativoPsp": "#psp#",
+        "tipoVersamento": "BPAY",
+        "identificativoIntermediario": "#id_broker_psp#",
+        "identificativoCanale": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
+        "pspTransactionId": "#psp_transaction_id#",
+        "totalAmount": 12,
+        "fee": 2,
+        "timestampOperation": "2033-04-23T18:25:43Z",
+        "additionalPaymentInformations": {
+          "transactionId": "#transaction_id#",
+          "outcomePaymentGateway": "EFF",
+          "authorizationCode": "resOK"
+        }
+      }
+      """
+
+  Scenario: check closePayment OK with 2 tokens
+    Given the check activateIOPayment2 OK scenario executed successfully
+    And the closePayment 2 tokens scenario executed successfully
     When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
     Then verify the HTTP status code of v1/closepayment response is 200
     And check esito is OK of v1/closepayment response
 
+
+  # syntax check - Richiesta non valida
+  Scenario Outline: Check syntax error on invalid request
+    Given the closePayment scenario executed successfully
+    And <elem> with <value> in v1/closepayment
+    When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
+    Then verify the HTTP status code of v1/closepayment response is 400
+    And check esito is KO of v1/closepayment response
+    And check descrizione is Richiesta non valida of v1/closepayment response
+    Examples:
+      | elem                          | value | soapUI test |
+      | totalAmount                   | Empty | SIN_CP_23   |
+      | totalAmount                   | 12,21 | SIN_CP_24   |
+      | fee                           | Empty | SIN_CP_28   |
+      | fee                           | 12,32 | SIN_CP_29   |
+      | additionalPaymentInformations | None  | SIN_CP_35   |
+
+
+  # syntax check - Il Pagamento indicato non esiste [SIN_CP_31.1]
+  Scenario: Check syntax error on fee greater than totalAmount
+    Given the closePayment scenario executed successfully
+    And fee with 20 in v1/closepayment
+    When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
+    Then verify the HTTP status code of v1/closepayment response is 404
+    And check esito is KO of v1/closepayment response
+    And check descrizione is Il Pagamento indicato non esiste of v1/closepayment response
