@@ -128,7 +128,7 @@ Feature: flux tests for activatePaymentNoticeV2Request
                 "idChannel": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
                 "transactionId": "#transaction_id#",
                 "totalAmount": 12,
-                "fee": 0,
+                "fee": 2,
                 "timestampOperation": "2012-04-23T18:25:43Z",
                 "additionalPaymentInformations": {
                     "key": "12345678"
@@ -332,7 +332,7 @@ Feature: flux tests for activatePaymentNoticeV2Request
     Scenario: Activate_blocco_06 (parte 2)
         Given the Activate_blocco_06 (parte 1) scenario executed successfully
         When job mod3CancelV2 triggered after 3 seconds
-        Then wait 5 seconds for expiration
+        Then wait 0 seconds for expiration
         And checks the value PAYING,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query PAYMENT_TOKEN on db nodo_online under macro NewMod1
         And checks the value CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query PAYMENT_TOKEN on db nodo_online under macro NewMod1
         And checks the value PAYING,INSERTED of the record at column STATUS of the table POSITION_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
