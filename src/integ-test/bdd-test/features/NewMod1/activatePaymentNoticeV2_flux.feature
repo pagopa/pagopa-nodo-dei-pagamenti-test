@@ -214,7 +214,7 @@ Feature: flux tests for activatePaymentNoticeV2Request
         And paymentToken with $activatePaymentNoticeV2Response.paymentToken in v2/closepayment
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
-        And check esito is OK of v2/closepayment response
+        And check outcome is OK of v2/closepayment response
         And wait 5 seconds for expiration
 
     Scenario: Activate_blocco_02 (part 3)
@@ -259,7 +259,7 @@ Feature: flux tests for activatePaymentNoticeV2Request
         And paymentToken with $activatePaymentNoticeV2Response.paymentToken in v2/closepayment
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
-        And check esito is OK of v2/closepayment response
+        And check outcome is OK of v2/closepayment response
         And wait 5 seconds for expiration
 
     Scenario: Activate_blocco_03 (part 3)
