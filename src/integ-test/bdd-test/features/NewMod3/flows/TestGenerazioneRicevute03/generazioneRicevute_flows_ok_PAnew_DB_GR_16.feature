@@ -327,8 +327,9 @@ Feature: process tests for generazioneRicevute [DB_GR_16]
 
 
     #POSITION_RECEIPT_XML 1 query
-    And execution query get_receipt1 to get value on the table POSITION_RECEIPT_XML, with the columns XML under macro NewMod3 with db name nodo_online
-    And through the query get_receipt1 retrieve xml prx_1xml at position 0 and save it under the key prx_1xml
+    And replace recipientStationId content with 90000000001_06 content
+    And execution query get_receipt to get value on the table POSITION_RECEIPT_XML, with the columns XML under macro NewMod3 with db name nodo_online
+    And through the query get_receipt retrieve xml prx_1xml at position 0 and save it under the key prx_1xml
     #checks on XML
     And check value $prx_1xml.idPA is equal to value 90000000001
     And check value $prx_1xml.idBrokerPA is equal to value 90000000001
@@ -362,8 +363,9 @@ Feature: process tests for generazioneRicevute [DB_GR_16]
 
 
     #POSITION_RECEIPT_XML 2 query
-    And execution query get_receipt2 to get value on the table POSITION_RECEIPT_XML, with the columns XML under macro NewMod3 with db name nodo_online
-    And through the query get_receipt2 retrieve xml prx_2xml at position 0 and save it under the key prx_2xml
+    And replace recipientStationId content with 90000000001_09 content
+    And execution query get_receipt to get value on the table POSITION_RECEIPT_XML, with the columns XML under macro NewMod3 with db name nodo_online
+    And through the query get_receipt retrieve xml prx_2xml at position 0 and save it under the key prx_2xml
     #checks on XML
     And check value $prx_2xml.idPA is equal to value 90000000001
     And check value $prx_2xml.idBrokerPA is equal to value 90000000001
