@@ -15,20 +15,29 @@ Feature: syntax checks for checkPosition
             """
 
     # SIN_CPO_01
-    # Scenario: Invalid positionslist 1
-    #     Given positionslist with None in checkPosition
-    #     When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
-    #     Then verify the HTTP status code of checkPosition response is 400
-    #     And check outcome is KO of checkPosition response
-    #     And check description is Invalid positionslist of checkPosition response
+    Scenario: Invalid positionslist 1
+        Given positionslist with None in checkPosition
+        When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of checkPosition response is 400
+        And check outcome is KO of checkPosition response
+        And check description is Invalid positionslist of checkPosition response
 
     # SIN_CPO_02
     Scenario: Invalid positionslist 2
+        Given positionslist with Empty in checkPosition
+        When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of checkPosition response is 400
+        And check outcome is KO of checkPosition response
+        And check description is Invalid positionslist of checkPosition response
+
+    # SIN_CPO_02 alternativo da cancellare se non va bene
+    Scenario: Invalid positionslist 2 alternative
         Given position with None in checkPosition
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
         Then verify the HTTP status code of checkPosition response is 400
         And check outcome is KO of checkPosition response
         And check description is Invalid positionslist of checkPosition response
+    # SIN_CPO_02 alternativo da cancellare se non va bene
 
     # SIN_CPO_03
     Scenario: Invalid fiscalCode 1
@@ -110,10 +119,30 @@ Feature: syntax checks for checkPosition
         And check outcome is KO of checkPosition response
         And check description is Invalid noticeNumber of checkPosition response
 
-    # test prova OK, poi rimuoverlo
-    Scenario: checkposition ok
+    # prove da cancellare in seguito
+    Scenario: checkposition ok 1 position
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
         Then verify the HTTP status code of checkPosition response is 200
         And check outcome is OK of checkPosition response
 
-# test prova OK, poi rimuoverlo
+    Scenario: checkposition ok 2 position
+        Given initial json checkPosition
+            """
+            {
+                "positionslist": [
+                    {
+                        "fiscalCode": "#creditor_institution_code#",
+                        "noticeNumber": "311#iuv#"
+                    },
+                    {
+                        "fiscalCode": "#creditor_institution_code#",
+                        "noticeNumber": "123#iuv#"
+                    }
+                ]
+            }
+            """
+        When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of checkPosition response is 200
+        And check outcome is OK of checkPosition response
+
+# prove da cancellare in seguito

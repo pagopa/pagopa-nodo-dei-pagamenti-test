@@ -817,11 +817,12 @@ def step_impl(context, sender, method, service, receiver):
              body["totalAmount"] = float(body["totalAmount"])
         if 'fee' in body.keys():
             body["fee"] = float(body["fee"])
-        if 'positionslist' in body.keys():
+        if ('positionslist' in body.keys()) and (body["positionslist"] != None):
             body["positionslist"] = body["positionslist"]["position"]
-            l = list()
-            l.append(body["positionslist"])
-            body["positionslist"] = l
+            if type(body["positionslist"]) != list:
+                l = list()
+                l.append(body["positionslist"])
+                body["positionslist"] = l
         body = json.dumps(body, indent=4)
     print(body)
     body = utils.replace_local_variables(body, context)
