@@ -8,6 +8,7 @@ from sre_constants import ASSERT
 import time
 from xml.dom.minidom import parseString
 import base64 as b64
+import xmltodict
 
 import requests
 from behave import *
