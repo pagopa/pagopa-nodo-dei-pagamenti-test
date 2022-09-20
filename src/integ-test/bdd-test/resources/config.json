@@ -44,6 +44,7 @@
     "id_broker":"70000000001",
     "id_broker_old": "44444444444",
     "cod_segr":"02",
+    "cod_segr_old":"12",
     "ccPoste": "777777777777",
     "ccPoste_noIBAN": "717777777777",
     "pspPoste": "POSTE3",
