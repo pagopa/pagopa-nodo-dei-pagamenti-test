@@ -268,7 +268,7 @@ Feature: process tests for ChiediAvanzamento_RT_ACCETTATA_PA_sbloccoParcheggio
 
     Scenario: Execute job pspChiediAvanzamentoRPT
         Given the Execute nodoInviaRT request scenario executed successfully
-        When job pspChiediAvanzamentoRPT triggered after 5 seconds
+        When job pspChiediAvanzamentoRpt triggered after 5 seconds
         And wait 10 seconds for expiration
         And job paaInviaRT triggered after 5 seconds
         And wait 10 seconds for expiration
