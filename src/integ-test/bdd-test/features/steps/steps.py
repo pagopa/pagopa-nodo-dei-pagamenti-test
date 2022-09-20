@@ -785,10 +785,16 @@ def step_impl(context, sender, method, service, receiver):
                 l = list()
                 l.append(body["paymentTokens"])
                 body["paymentTokens"] = l
-        if ('totalAmount' in body.keys()) and (body["totalAmount"] != 'Empty'):
-             body["totalAmount"] = float(body["totalAmount"])
+        if ('totalAmount' in body.keys()) and (body["totalAmount"] != None):
+             body["totalAmount"] = float(body["totalAmount"].replace(',','.'))
         if 'fee' in body.keys():
             body["fee"] = float(body["fee"])
+        if ('positionslist' in body.keys()) and (body["positionslist"] != None):
+            body["positionslist"] = body["positionslist"]["position"]
+            if type(body["positionslist"]) != list:
+                l = list()
+                l.append(body["positionslist"])
+                body["positionslist"] = l
         body = json.dumps(body, indent=4)
 
     print(body)
@@ -2231,6 +2237,7 @@ def step_impl(context, causaleVers):
 def step_impl(context, primitive):
     payload = context.text or ""
     payload = utils.replace_local_variables(payload, context)
+
     jsonDict = json.loads(payload)
     payload = utils.json2xml(jsonDict)
     payload = '<root>' + payload + '</root>'
@@ -2253,6 +2260,7 @@ def step_impl(context, primitive):
         payload = payload.replace('$transaction_id', getattr(context, 'transaction_id'))
     if '$psp_transaction_id' in payload:
         payload = payload.replace('$psp_transaction_id', getattr(context, 'psp_transaction_id'))
+        
     payload = utils.replace_context_variables(payload, context)
     payload = utils.replace_global_variables(payload, context)
     setattr(context, primitive, payload)

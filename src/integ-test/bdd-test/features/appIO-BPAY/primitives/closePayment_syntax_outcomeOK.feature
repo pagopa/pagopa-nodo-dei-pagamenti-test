@@ -262,8 +262,13 @@ Feature: syntax checks for closePayment outcome OK
     Then check outcome is OK of activateIOPayment response
     And save activateIOPayment response in activateIOPaymentResponse
 
-  Scenario: check closePayment OK 
+  Scenario: nodoChiediInformazioniPagamento
     Given the check activateIOPayment OK scenario executed successfully
+    When WISP sends REST GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
+    Then verify the HTTP status code of informazioniPagamento response is 200
+
+  Scenario: check closePayment OK
+    Given the nodoChiediInformazioniPagamento scenario executed successfully
     And the closePayment scenario executed successfully
     And paymentToken with $activateIOPaymentResponse.paymentToken in v1/closepayment
     And fee with 0 in v1/closepayment
@@ -289,8 +294,18 @@ Feature: syntax checks for closePayment outcome OK
     Then check outcome is OK of activateIOPayment response
     And save activateIOPayment response in activateIOPayment2Response
 
-  Scenario: closePayment 2 tokens
+  Scenario: nodoChiediInformazioniPagamento
     Given the check activateIOPayment2 OK scenario executed successfully
+    When WISP sends REST GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
+    Then verify the HTTP status code of informazioniPagamento response is 200
+
+  Scenario: nodoChiediInformazioniPagamento2
+    Given the nodoChiediInformazioniPagamento scenario executed successfully
+    When WISP sends REST GET informazioniPagamento?idPagamento=$activateIOPayment2Response.paymentToken to nodo-dei-pagamenti
+    Then verify the HTTP status code of informazioniPagamento response is 200
+
+  Scenario: closePayment 2 tokens
+    Given the nodoChiediInformazioniPagamento2 scenario executed successfully
     And initial JSON v1/closepayment
       """
       {
