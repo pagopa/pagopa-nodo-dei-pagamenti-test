@@ -24,7 +24,7 @@ Feature: syntax checks for checkPosition
 
     # SIN_CPO_02
     Scenario: Invalid positionslist 2
-        Given positionslist with Empty in checkPosition
+        Given position with None in checkPosition
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
         Then verify the HTTP status code of checkPosition response is 400
         And check outcome is KO of checkPosition response
@@ -109,3 +109,11 @@ Feature: syntax checks for checkPosition
         Then verify the HTTP status code of checkPosition response is 400
         And check outcome is KO of checkPosition response
         And check description is Invalid noticeNumber of checkPosition response
+
+    # test prova OK, poi rimuoverlo
+    Scenario: checkposition ok
+        When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of checkPosition response is 200
+        And check outcome is OK of checkPosition response
+
+# test prova OK, poi rimuoverlo
