@@ -1,4 +1,4 @@
-Feature: process tests for ChiediAvanzamento_ACCETTATA_PSP_Carrello_sbloccoParcheggio
+Feature: process tests for ChiediAvanzamento_RIFIUTATA_PSP_Carrello_sbloccoParcheggio
 
     Background:
         Given systems up
@@ -63,7 +63,7 @@ Feature: process tests for ChiediAvanzamento_ACCETTATA_PSP_Carrello_sbloccoParch
         <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
         <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
         <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
-        <pay_i:identificativoUnivocoVersamento>avanzaOK</pay_i:identificativoUnivocoVersamento>
+        <pay_i:identificativoUnivocoVersamento>avanzaErrResponse</pay_i:identificativoUnivocoVersamento>
         <pay_i:codiceContestoPagamento>#ccp1#</pay_i:codiceContestoPagamento>
         <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
         <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
@@ -144,7 +144,7 @@ Feature: process tests for ChiediAvanzamento_ACCETTATA_PSP_Carrello_sbloccoParch
             <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
             <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
-            <pay_i:identificativoUnivocoVersamento>avanzaOK</pay_i:identificativoUnivocoVersamento>
+            <pay_i:identificativoUnivocoVersamento>avanzaErrResponse2</pay_i:identificativoUnivocoVersamento>
             <pay_i:codiceContestoPagamento>#CCP2#</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
@@ -185,13 +185,13 @@ Feature: process tests for ChiediAvanzamento_ACCETTATA_PSP_Carrello_sbloccoParch
                 <listaRPT>
                     <elementoListaRPT>
                     <identificativoDominio>44444444444</identificativoDominio>
-                    <identificativoUnivocoVersamento>avanzaOK</identificativoUnivocoVersamento>
+                    <identificativoUnivocoVersamento>avanzaErrResponse</identificativoUnivocoVersamento>
                     <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
                     <rpt>$rptAttachment</rpt>
                     </elementoListaRPT>
                     <elementoListaRPT>
                     <identificativoDominio>44444444445</identificativoDominio>
-                    <identificativoUnivocoVersamento>avanzaOK</identificativoUnivocoVersamento>
+                    <identificativoUnivocoVersamento>avanzaErrResponse2</identificativoUnivocoVersamento>
                     <codiceContestoPagamento>$2CCP</codiceContestoPagamento>
                     <rpt>$rpt2Attachment</rpt>
                     </elementoListaRPT>
@@ -209,12 +209,13 @@ Feature: process tests for ChiediAvanzamento_ACCETTATA_PSP_Carrello_sbloccoParch
     Scenario: Execute check DB-RPT
         Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
         Then checks the value $sessionToken of the record at column ID_SESSIONE of the table STATI_RPT retrived by the query stati_RPT on db nodo_online under macro Mod1
-        And verify 3 record for the table STATI_RPT retrived by the query stati_RPT on db nodo_online under macro Mod1
-        And verify 3 record for the table STATI_RPT retrived by the query stati_RPT2 on db nodo_online under macro Mod1
-        And checks the value nodoInviaCarrelloRPT of the record at column INSERTED_BY of the table STATI_RPT retrived by the query stati_RPT on db nodo_online under macro Mod1
         And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query stati_RPT on db nodo_online under macro Mod1
+        And checks the value nodoInviaCarrelloRPT of the record at column INSERTED_BY of the table STATI_RPT retrived by the query stati_RPT on db nodo_online under macro Mod1
+        And verify 3 record for the table STATI_RPT retrived by the query stati_RPT on db nodo_online under macro Mod1
         And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query stati_RPT2 on db nodo_online under macro Mod1
         And checks the value nodoInviaCarrelloRPT of the record at column INSERTED_BY of the table STATI_RPT retrived by the query stati_RPT2 on db nodo_online under macro Mod1
+        And verify 3 record for the table STATI_RPT retrived by the query stati_RPT2 on db nodo_online under macro Mod1
+
 
     Scenario: Execution Esito Carta
         Given the Execute check DB-RPT scenario executed successfully
@@ -253,12 +254,12 @@ Feature: process tests for ChiediAvanzamento_ACCETTATA_PSP_Carrello_sbloccoParch
 
     Scenario: Execute second check DB-RPT 
         Given the Execution Esito Carta scenario executed successfully
-        Then checks the value CART_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query motivo_annullamento on db nodo_online under macro Mod1
-        And checks the value avanzaOK of the record at column IUV of the table RETRY_RPT retrived by the query motivo_annullamento_originale on db nodo_online under macro Mod1
-        And checks the value $1ccp of the record at column CCP of the table RETRY_RPT retrived by the query motivo_annullamento_originale on db nodo_online under macro Mod1
-        And checks the value 44444444444 of the record at column ID_DOMINIO of the table RETRY_RPT retrived by the query motivo_annullamento_originale on db nodo_online under macro Mod1
-        And checks the value 0 of the record at column RETRY of the table RETRY_RPT retrived by the query motivo_annullamento_originale on db nodo_online under macro Mod1
-        And verify 1 record for the table RETRY_RPT retrived by the query motivo_annullamento_originale on db nodo_online under macro Mod1
+        Then checks the value CART_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query retry_rpt on db nodo_online under macro Mod1
+        And checks the value avanzaErrResponse of the record at column IUV of the table RETRY_RPT retrived by the query retry_rpt_original on db nodo_online under macro Mod1
+        And checks the value $1ccp of the record at column CCP of the table RETRY_RPT retrived by the query retry_rpt_original on db nodo_online under macro Mod1
+        And checks the value 44444444444 of the record at column ID_DOMINIO of the table RETRY_RPT retrived by the query retry_rpt_original on db nodo_online under macro Mod1
+        And checks the value 0 of the record at column RETRY of the table RETRY_RPT retrived by the query retry_rpt_original on db nodo_online under macro Mod1
+        And verify 1 record for the table RETRY_RPT retrived by the query retry_rpt_original on db nodo_online under macro Mod1
         And wait 5 seconds for expiration
     
     Scenario: Execute job pspChiediAvanzamentoRPT
@@ -276,7 +277,7 @@ Feature: process tests for ChiediAvanzamento_ACCETTATA_PSP_Carrello_sbloccoParch
                 <soapenv:Body>
                     <ws:pspInviaCarrelloRPTCarteResponse>
                         <pspInviaCarrelloRPTResponse>
-                            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+                            <esitoComplessivoOperazione>timeout</esitoComplessivoOperazione>
                         </pspInviaCarrelloRPTResponse>
                     </ws:pspInviaCarrelloRPTCarteResponse>
                 </soapenv:Body>
@@ -298,15 +299,19 @@ Feature: process tests for ChiediAvanzamento_ACCETTATA_PSP_Carrello_sbloccoParch
             "codiceAutorizzativo": "123212"
         }
         """
-        Then verify the HTTP status code of inoltroEsito/carta response is 200
-        And check esito is OK of inoltroEsito/carta response
+        Then verify the HTTP status code of inoltroEsito/carta response is 408
+        And check error is Operazione in timeout of inoltroEsito/carta response
         And check url field not exists in inoltroEsito/carta response
 
 
     Scenario: Execute third check DB-RPT 
         Given the Execution Esito Carta scenario executed successfully
-        Then checks the value RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query stati_RPT_noOrder on db nodo_online under macro Mod1
-        And checks the value RPT_ACCETTATA_PSP_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query stati_RPT2_noOrder on db nodo_online under macro Mod1
-        And checks the value CART_ACCETTATO_PSP of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query motivo_annullamento on db nodo_online under macro Mod1
-        And verify 0 record for the table RETRY_RPT retrived by the query motivo_annullamento_originale on db nodo_online under macro Mod1
+        Then checks the value RPT_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query stati_RPT_noOrder on db nodo_online under macro Mod1
+        And checks the value RPT_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query stati_RPT2_noOrder on db nodo_online under macro Mod1
+        And checks the value CART_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query motivo_annullamento on db nodo_online under macro Mod1
+        And checks the value 44444444444 of the record at column ID_DOMINIO of the table RETRY_RPT retrived by the query motivo_annullamento_originale on db nodo_online under macro Mod1
+        And checks the value avanzaErrResponse of the record at column IUV of the table RETRY_RPT retrived by the query motivo_annullamento_originale on db nodo_online under macro Mod1
+        And checks the value $1ccp of the record at column CCP of the table RETRY_RPT retrived by the query motivo_annullamento_originale on db nodo_online under macro Mod1
+        And verify if the records for the table RETRY_RPT retrived by the query motivo_annullamento_originale on db nodo_online under macro Mod1 are not null
+        And verify 1 record for the table RETRY_RPT retrived by the query motivo_annullamento_originale on db nodo_online under macro Mod1
         
