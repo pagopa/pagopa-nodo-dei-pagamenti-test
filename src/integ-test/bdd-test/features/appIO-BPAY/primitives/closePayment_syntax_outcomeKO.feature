@@ -268,7 +268,7 @@ Feature: syntax checks for closePayment outcome KO
       "paymentTokens": [
       "a3738f8bff1f4a32998fc197bd0a6b05"
       ],
-      "outcome": "KO",
+      "outcome": "KO"
       }
       """
 
