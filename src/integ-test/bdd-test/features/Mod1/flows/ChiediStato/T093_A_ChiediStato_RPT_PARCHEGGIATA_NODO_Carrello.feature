@@ -200,19 +200,19 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
 	    Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
         And check url contains acardste of nodoInviaCarrelloRPT response
-    #     And retrieve session token from $nodoInviaCarrelloRPTResponse.url
-    #     And replace iuv content with $IUV content
-    #     And replace iuv2 content with $2iuv content
-    #     And replace 1ccp content with CCD01 content
-    #     And replace 2CCP content with CCD01 content
-    #     And verify 3 record for the table STATI_RPT retrived by the query stati_RPT on db nodo_online under macro Mod1
-    #     And verify 3 record for the table STATI_RPT retrived by the query stati_RPT2 on db nodo_online under macro Mod1
-    #     And checks the value $sessionToken of the record at column ID_SESSIONE of the table STATI_RPT retrived by the query stati_RPT on db nodo_online under macro Mod1
-    #     And checks the value nodoInviaCarrelloRPT of the record at column INSERTED_BY of the table STATI_RPT retrived by the query stati_RPT on db nodo_online under macro Mod1
-    #     And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query stati_RPT on db nodo_online under macro Mod1
-    #     And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query stati_RPT2 on db nodo_online under macro Mod1
-    #     And checks the value RPT_PARCHEGGIATA_NODO,RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query motivo_annullamento on db nodo_online under macro Mod1
-    #     And checks the value CART_PARCHEGGIATO_NODO of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query motivo_annullamento on db nodo_online under macro Mod1
+        And retrieve session token from $nodoInviaCarrelloRPTResponse.url
+        And replace iuv content with $IUV content
+        And replace iuv2 content with $2iuv content
+        And replace 1ccp content with CCD01 content
+        And replace 2CCP content with CCD01 content
+        And verify 3 record for the table STATI_RPT retrived by the query stati_RPT on db nodo_online under macro Mod1
+        And verify 3 record for the table STATI_RPT retrived by the query stati_RPT2 on db nodo_online under macro Mod1
+        And checks the value $sessionToken of the record at column ID_SESSIONE of the table STATI_RPT retrived by the query stati_RPT on db nodo_online under macro Mod1
+        And checks the value nodoInviaCarrelloRPT of the record at column INSERTED_BY of the table STATI_RPT retrived by the query stati_RPT on db nodo_online under macro Mod1
+        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query stati_RPT on db nodo_online under macro Mod1
+        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query stati_RPT2 on db nodo_online under macro Mod1
+        And checks the value RPT_PARCHEGGIATA_NODO,RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query motivo_annullamento on db nodo_online under macro Mod1
+        And checks the value CART_PARCHEGGIATO_NODO of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query motivo_annullamento on db nodo_online under macro Mod1
 
     # Scenario: Execute nodoChiediStatoRPT request
     #     Given the Execute nodoInviaCarrelloRPT scenario executed successfully
