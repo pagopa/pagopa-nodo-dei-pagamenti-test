@@ -63,7 +63,7 @@ Feature: process tests for ChiediStato_RPT_RIFIUTATA_PSP
                 <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
                 <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
                 <pay_i:identificativoUnivocoVersamento>RPTdaRifPsp</pay_i:identificativoUnivocoVersamento>
-                <pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
+                <pay_i:codiceContestoPagamento>#ccp1#</pay_i:codiceContestoPagamento>
                 <pay_i:ibanAddebito>IT45R0760103200000000001016</pay_i:ibanAddebito> 
                 <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
                 <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -93,7 +93,7 @@ Feature: process tests for ChiediStato_RPT_RIFIUTATA_PSP
             <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
             <identificativoDominio>44444444444</identificativoDominio>
             <identificativoUnivocoVersamento>RPTdaRifPsp</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+            <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
             </ppt:intestazionePPT>
             </soapenv:Header>
             <soapenv:Body>
@@ -109,58 +109,59 @@ Feature: process tests for ChiediStato_RPT_RIFIUTATA_PSP
             </soapenv:Envelope>
             """
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-        Then check esito is OK of nodoInviaRPT response
+        Then check esito is KO of nodoInviaRPT response
         And check url field exists in nodoInviaRPT response
+        And check url contains CANALE_RPT_DA_RIFIUTARE of nodoInviaCarrelloRPT response
 
-    Scenario: Execute nodoChiediStatoRPT request
-        Given the Execute nodoInviaCarrelloRPT scenario executed successfully
-        And initial XML nodoChiediStatoRPT
-        """
-        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-        <soapenv:Header/>
-        <soapenv:Body>
-            <ws:nodoChiediStatoRPT>
-                <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
-                <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
-                <password>pwdpwdpwd</password>
-                <identificativoDominio>44444444444</identificativoDominio>
-                <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
-                <codiceContestoPagamento>CCD01</codiceContestoPagamento>
-            </ws:nodoChiediStatoRPT>
-        </soapenv:Body>
-        </soapenv:Envelope>
-        """
-        When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
-        Then checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
-        And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
-        And check url contains https://acardste.vaservices.eu:1443/wallet of nodoChiediStatoRPT response
+    # Scenario: Execute nodoChiediStatoRPT request
+    #     Given the Execute nodoInviaCarrelloRPT scenario executed successfully
+    #     And initial XML nodoChiediStatoRPT
+    #     """
+    #     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+    #     <soapenv:Header/>
+    #     <soapenv:Body>
+    #         <ws:nodoChiediStatoRPT>
+    #             <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
+    #             <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
+    #             <password>pwdpwdpwd</password>
+    #             <identificativoDominio>44444444444</identificativoDominio>
+    #             <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
+    #             <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+    #         </ws:nodoChiediStatoRPT>
+    #     </soapenv:Body>
+    #     </soapenv:Envelope>
+    #     """
+    #     When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
+    #     Then checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
+    #     And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
+    #     And check url contains https://acardste.vaservices.eu:1443/wallet of nodoChiediStatoRPT response
 
-    Scenario: Execute second nodoInviaRPT request
-        Given the Execute nodoChiediStatoRPT request executed successfully
-        And initial XML nodoInviaRPT
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header>
-            <ppt:intestazionePPT>
-            <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
-            <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
-            <identificativoDominio>44444444444</identificativoDominio>
-            <identificativoUnivocoVersamento>$2iuv</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>CCD01</codiceContestoPagamento>
-            </ppt:intestazionePPT>
-            </soapenv:Header>
-            <soapenv:Body>
-            <ws:nodoInviaRPT>
-            <password>pwdpwdpwd</password>
-            <identificativoPSP>40000000001</identificativoPSP>
-            <identificativoIntermediarioPSP>40000000001</identificativoIntermediarioPSP>
-            <identificativoCanale>40000000001_03</identificativoCanale>
-            <tipoFirma></tipoFirma>
-            <rpt>$rptAttachment</rpt>
-            </ws:nodoInviaRPT>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-        Then check esito is OK of nodoInviaRPT response
-        And check url field exists in nodoInviaRPT response
+    # Scenario: Execute second nodoInviaRPT request
+    #     Given the Execute nodoChiediStatoRPT request executed successfully
+    #     And initial XML nodoInviaRPT
+    #         """
+    #         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+    #         <soapenv:Header>
+    #         <ppt:intestazionePPT>
+    #         <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
+    #         <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
+    #         <identificativoDominio>44444444444</identificativoDominio>
+    #         <identificativoUnivocoVersamento>$2iuv</identificativoUnivocoVersamento>
+    #         <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+    #         </ppt:intestazionePPT>
+    #         </soapenv:Header>
+    #         <soapenv:Body>
+    #         <ws:nodoInviaRPT>
+    #         <password>pwdpwdpwd</password>
+    #         <identificativoPSP>40000000001</identificativoPSP>
+    #         <identificativoIntermediarioPSP>40000000001</identificativoIntermediarioPSP>
+    #         <identificativoCanale>40000000001_03</identificativoCanale>
+    #         <tipoFirma></tipoFirma>
+    #         <rpt>$rptAttachment</rpt>
+    #         </ws:nodoInviaRPT>
+    #         </soapenv:Body>
+    #         </soapenv:Envelope>
+    #         """
+    #     When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+    #     Then check esito is OK of nodoInviaRPT response
+    #     And check url field exists in nodoInviaRPT response
