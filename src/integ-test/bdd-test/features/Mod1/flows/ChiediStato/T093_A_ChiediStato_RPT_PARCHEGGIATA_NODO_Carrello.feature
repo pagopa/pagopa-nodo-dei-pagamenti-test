@@ -260,41 +260,41 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
         And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks url contains https://acardste.vaservices.eu:1443/wallet of nodoChiediStatoRPT response
 
-    Scenario: Execute second nodoInviaCarrelloRPT
-		Given the Execute second nodoChiediStatoRPT request scenario executed successfully
-		And initial XML nodoInviaCarrelloRPT
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header>
-            <ppt:intestazioneCarrelloPPT>
-            <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
-            <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
-            <identificativoCarrello>$IUV</identificativoCarrello>
-            </ppt:intestazioneCarrelloPPT>
-            </soapenv:Header>
-            <soapenv:Body>
-            <ws:nodoInviaCarrelloRPT>
-            <password>pwdpwdpwd</password>
-            <identificativoPSP>AGID_01</identificativoPSP>
-            <identificativoIntermediarioPSP>97735020584</identificativoIntermediarioPSP>
-            <identificativoCanale>97735020584_02</identificativoCanale>
-            <listaRPT>
-            <elementoListaRPT>
-            <identificativoDominio>44444444444</identificativoDominio>
-            <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>CCD01</codiceContestoPagamento>
-            <rpt>$rptAttachment</rpt>
-            </elementoListaRPT>
-            <elementoListaRPT>
-            <identificativoDominio>44444444445</identificativoDominio>
-            <identificativoUnivocoVersamento>$2iuv</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>CCD01</codiceContestoPagamento>
-            <rpt>$rpt2Attachment</rpt>
-            </elementoListaRPT>
-            </listaRPT>
-            </ws:nodoInviaCarrelloRPT>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
-	    Then check faultCode is PPT_ID_CARRELLO_DUPLICATO of nodoInviaCarrelloRPT response
+    # Scenario: Execute second nodoInviaCarrelloRPT
+	# 	Given the Execute second nodoChiediStatoRPT request scenario executed successfully
+	# 	And initial XML nodoInviaCarrelloRPT
+    #         """
+    #         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+    #         <soapenv:Header>
+    #         <ppt:intestazioneCarrelloPPT>
+    #         <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
+    #         <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
+    #         <identificativoCarrello>$IUV</identificativoCarrello>
+    #         </ppt:intestazioneCarrelloPPT>
+    #         </soapenv:Header>
+    #         <soapenv:Body>
+    #         <ws:nodoInviaCarrelloRPT>
+    #         <password>pwdpwdpwd</password>
+    #         <identificativoPSP>AGID_01</identificativoPSP>
+    #         <identificativoIntermediarioPSP>97735020584</identificativoIntermediarioPSP>
+    #         <identificativoCanale>97735020584_02</identificativoCanale>
+    #         <listaRPT>
+    #         <elementoListaRPT>
+    #         <identificativoDominio>44444444444</identificativoDominio>
+    #         <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
+    #         <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+    #         <rpt>$rptAttachment</rpt>
+    #         </elementoListaRPT>
+    #         <elementoListaRPT>
+    #         <identificativoDominio>44444444445</identificativoDominio>
+    #         <identificativoUnivocoVersamento>$2iuv</identificativoUnivocoVersamento>
+    #         <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+    #         <rpt>$rpt2Attachment</rpt>
+    #         </elementoListaRPT>
+    #         </listaRPT>
+    #         </ws:nodoInviaCarrelloRPT>
+    #         </soapenv:Body>
+    #         </soapenv:Envelope>
+    #         """
+    #     When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
+	#     Then check faultCode is PPT_ID_CARRELLO_DUPLICATO of nodoInviaCarrelloRPT response
