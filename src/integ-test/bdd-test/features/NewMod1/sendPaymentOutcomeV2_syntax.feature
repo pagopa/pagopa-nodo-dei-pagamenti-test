@@ -55,6 +55,63 @@ Feature: syntax checks for sendPaymentOutcomeV2
             </soapenv:Envelope>
             """
 
+    Scenario: sendPaymentOutcomeV2 with 6 paymentToken
+        Given initial XML sendPaymentOutcomeV2
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <nod:sendPaymentOutcomeV2Request>
+            <idPSP>#psp#</idPSP>
+            <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
+            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
+            <password>#password#</password>
+            <idempotencyKey>#idempotency_key#</idempotencyKey>
+            <paymentTokens>
+            <paymentToken>1213123423254r4r44dfwqfdf</paymentToken>
+            <paymentToken>1213123423254r4r44dfwqfda</paymentToken>
+            <paymentToken>1213123423254r4r44dfwqfdb</paymentToken>
+            <paymentToken>1213123423254r4r44dfwqfdc</paymentToken>
+            <paymentToken>1213123423254r4r44dfwqfdd</paymentToken>
+            <paymentToken>1213123423254r4r44dfwqfde</paymentToken>
+            </paymentTokens>
+            <outcome>OK</outcome>
+            <!--Optional:-->
+            <details>
+            <paymentMethod>creditCard</paymentMethod>
+            <!--Optional:-->
+            <paymentChannel>app</paymentChannel>
+            <fee>2.00</fee>
+            <!--Optional:-->
+            <payer>
+            <uniqueIdentifier>
+            <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
+            <entityUniqueIdentifierValue>77777777777_01</entityUniqueIdentifierValue>
+            </uniqueIdentifier>
+            <fullName>name</fullName>
+            <!--Optional:-->
+            <streetName>street</streetName>
+            <!--Optional:-->
+            <civicNumber>civic</civicNumber>
+            <!--Optional:-->
+            <postalCode>postal</postalCode>
+            <!--Optional:-->
+            <city>city</city>
+            <!--Optional:-->
+            <stateProvinceRegion>state</stateProvinceRegion>
+            <!--Optional:-->
+            <country>IT</country>
+            <!--Optional:-->
+            <e-mail>prova@test.it</e-mail>
+            </payer>
+            <applicationDate>2021-12-12</applicationDate>
+            <transferDate>2021-12-11</transferDate>
+            </details>
+            </nod:sendPaymentOutcomeV2Request>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+
     # SIN_SPO_00
 
     Scenario: SIN_SPO_00
@@ -205,62 +262,8 @@ Feature: syntax checks for sendPaymentOutcomeV2
 
     # SIN_SPO_19.3
 
-    Scenario: sendPaymentOutcomeV2
-        Given initial XML sendPaymentOutcomeV2
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <nod:sendPaymentOutcomeV2Request>
-            <idPSP>#psp#</idPSP>
-            <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
-            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
-            <password>#password#</password>
-            <idempotencyKey>#idempotency_key#</idempotencyKey>
-            <paymentTokens>
-            <paymentToken>1213123423254r4r44dfwqfdf</paymentToken>
-            <paymentToken>1213123423254r4r44dfwqfda</paymentToken>
-            <paymentToken>1213123423254r4r44dfwqfdb</paymentToken>
-            <paymentToken>1213123423254r4r44dfwqfdc</paymentToken>
-            <paymentToken>1213123423254r4r44dfwqfdd</paymentToken>
-            <paymentToken>1213123423254r4r44dfwqfde</paymentToken>
-            </paymentTokens>
-            <outcome>OK</outcome>
-            <!--Optional:-->
-            <details>
-            <paymentMethod>creditCard</paymentMethod>
-            <!--Optional:-->
-            <paymentChannel>app</paymentChannel>
-            <fee>2.00</fee>
-            <!--Optional:-->
-            <payer>
-            <uniqueIdentifier>
-            <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-            <entityUniqueIdentifierValue>77777777777_01</entityUniqueIdentifierValue>
-            </uniqueIdentifier>
-            <fullName>name</fullName>
-            <!--Optional:-->
-            <streetName>street</streetName>
-            <!--Optional:-->
-            <civicNumber>civic</civicNumber>
-            <!--Optional:-->
-            <postalCode>postal</postalCode>
-            <!--Optional:-->
-            <city>city</city>
-            <!--Optional:-->
-            <stateProvinceRegion>state</stateProvinceRegion>
-            <!--Optional:-->
-            <country>IT</country>
-            <!--Optional:-->
-            <e-mail>prova@test.it</e-mail>
-            </payer>
-            <applicationDate>2021-12-12</applicationDate>
-            <transferDate>2021-12-11</transferDate>
-            </details>
-            </nod:sendPaymentOutcomeV2Request>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
+    Scenario: SIN_SPO_19.3
+        Given the sendPaymentOutcomeV2 with 6 paymentToken scenario executed successfully
         When psp sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcomeV2 response
         And check faultCode is PPT_SINTASSI_EXTRAXSD of sendPaymentOutcomeV2 response

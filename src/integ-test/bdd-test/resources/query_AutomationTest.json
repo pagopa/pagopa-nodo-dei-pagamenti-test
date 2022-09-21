@@ -115,6 +115,7 @@
         "payment_token": "SELECT columns FROM table_name WHERE TOKEN = '$activatePaymentNoticeV2Response.paymentToken'",
         "PAYMENT_TOKEN": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN = '$activatePaymentNoticeV2Response.paymentToken'",
         "update_PAYMENT_TOKEN": "UPDATE table_name SET param = 'value' WHERE PAYMENT_TOKEN = '$activatePaymentNoticeV2Response.paymentToken'",
-        "notice_number": "SELECT columns FROM table_name WHERE NOTICE_ID = '$activatePaymentNoticeV2.noticeNumber'"
+        "notice_number": "SELECT columns FROM table_name WHERE NOTICE_ID = '$activatePaymentNoticeV2.noticeNumber'",
+        "update_noticeidrandom": "UPDATE table_name SET param = 'value' WHERE NOTICE_ID ='310011451292109621'"
     }
 }
