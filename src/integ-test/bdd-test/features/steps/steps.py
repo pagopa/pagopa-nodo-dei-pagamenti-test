@@ -760,7 +760,7 @@ def step_impl(context, sender, method, service, receiver):
                 l.append(body["paymentTokens"])
                 body["paymentTokens"] = l
         if 'totalAmount' in body.keys():
-             body["totalAmount"] = float(body["totalAmount"])
+            body["totalAmount"] = float(body["totalAmount"])
         if 'fee' in body.keys():
             body["fee"] = float(body["fee"])
         if ('positionslist' in body.keys()) and (body["positionslist"] != None):
@@ -788,6 +788,7 @@ def step_impl(context, sender, method, service, receiver):
     setattr(context, service.split('?')[0] + RESPONSE, nodo_response)
     print(service.split('?')[0] + RESPONSE)
     print(nodo_response.content)
+
 
 @then('verify the HTTP status code of {action} response is {value}')
 def step_impl(context, action, value):
@@ -2205,12 +2206,15 @@ def step_impl(context, query_name, table_name, param, value, where_condition, ma
 @step("updates through the query {query_name} of the table {table_name} the parameter {param} with {value} under macro {macro} on db {db_name}")
 def step_impl(context, query_name, table_name, param, value, macro, db_name):
     db_selected = context.config.userdata.get("db_configuration").get(db_name)
-    selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('param', param).replace('value', value)
+    selected_query = utils.query_json(context, query_name, macro).replace(
+        'table_name', table_name).replace('param', param).replace('value', value)
     selected_query = utils.replace_local_variables(selected_query, context)
     selected_query = utils.replace_context_variables(selected_query, context)
-    conn = db.getConnection(db_selected.get('host'), db_selected.get('database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+    conn = db.getConnection(db_selected.get('host'), db_selected.get(
+        'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
     exec_query = db.executeQuery(conn, selected_query)
     db.closeConnection(conn)
+
 
 @step("nodo-dei-pagamenti DEV has config parameter {param} set to {value}")
 def step_impl(context, param, value):
@@ -2230,7 +2234,6 @@ def step_impl(context, param, value):
         context), headers=headers, verify=False)
     time.sleep(5)
     assert refresh_response.status_code == 200
-
 
     @given('initial JSON {primitive}')
 def step_impl(context, primitive):
@@ -2254,9 +2257,11 @@ def step_impl(context, primitive):
     if '$iuv' in payload:
         payload = payload.replace('$iuv', getattr(context, 'iuv'))
     if '$transaction_id' in payload:
-        payload = payload.replace('$transaction_id', getattr(context, 'transaction_id'))
+        payload = payload.replace(
+            '$transaction_id', getattr(context, 'transaction_id'))
     if '$psp_transaction_id' in payload:
-        payload = payload.replace('$psp_transaction_id', getattr(context, 'psp_transaction_id'))
+        payload = payload.replace(
+            '$psp_transaction_id', getattr(context, 'psp_transaction_id'))
     payload = utils.replace_context_variables(payload, context)
     payload = utils.replace_global_variables(payload, context)
     setattr(context, primitive, payload)
