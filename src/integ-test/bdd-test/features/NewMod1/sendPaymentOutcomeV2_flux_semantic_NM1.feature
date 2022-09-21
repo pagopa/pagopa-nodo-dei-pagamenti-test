@@ -340,7 +340,8 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
         # And paymentToken with $activatePaymentNoticeV2Response1.paymentToken in sendPaymentOutcomeV2
 
         # step di prova
-        And paymentToken with token1 in sendPaymentOutcomeV2
+        And paymentToken with $token1 in sendPaymentOutcomeV2
+
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
 
