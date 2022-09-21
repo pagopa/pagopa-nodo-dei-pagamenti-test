@@ -360,3 +360,15 @@ Feature: syntax checks for closePayment outcome OK
     Then verify the HTTP status code of v1/closepayment response is 404
     And check esito is KO of v1/closepayment response
     And check descrizione is Il Pagamento indicato non esiste of v1/closepayment response
+
+
+  # syntax check - additionalPaymentInformations vuoto [SIN_CP_36]
+  Scenario: Check syntax error on empty additionalPaymentInformations
+    Given the closePayment scenario executed successfully
+    And transactionId with None in v1/closepayment
+    And outcomePaymentGateway with None in v1/closepayment
+    And authorizationCode with None in v1/closepayment
+    When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
+    Then verify the HTTP status code of v1/closepayment response is 400
+    And check esito is KO of v1/closepayment response
+    And check descrizione is authorizationCode invalido of v1/closepayment response
