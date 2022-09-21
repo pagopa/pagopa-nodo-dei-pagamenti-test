@@ -222,8 +222,10 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_03]
 
    Scenario: update column valid_to UPDATED_TIMESTAMP
       Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
-      Then update through the query DB_GEST_ANN_update1 with date Today under macro Mod1Mb on db nodo_online
-      And update through the query DB_GEST_ANN_update2 with date Today under macro Mod1Mb on db nodo_online
+      And replace iuv content with $IuV content
+      And change date Today to remove minutes 20
+      Then update through the query DB_GEST_ANN_update1 with date $date under macro Mod1Mb on db nodo_online
+      And update through the query DB_GEST_ANN_update2 with date $date under macro Mod1Mb on db nodo_online
       And wait 10 seconds for expiration
 
 
@@ -234,9 +236,9 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_03]
 
    Scenario: Trigger paInviaRT
       Given the Trigger annullamentoRptMaiRichiesteDaPm scenario executed successfully
-      When job paInviaRT triggered after 5 seconds
+      When job paInviaRt triggered after 5 seconds
       And wait 10 seconds for expiration
-      Then verify the HTTP status code of paInviaRT response is 200
+      Then verify the HTTP status code of paInviaRt response is 200
 
 
       #And wait 20 seconds for expiration

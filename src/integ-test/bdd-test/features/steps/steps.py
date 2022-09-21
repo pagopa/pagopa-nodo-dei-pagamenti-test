@@ -1320,12 +1320,32 @@ def step_impl(context, job_name):
     assert refresh_response.status_code == 200
 
 
+@step("change date {date} to {add_remove} minutes {minutes:d}")
+def stemp_impl(context, date, add_remove, minutes):
+
+    if date == 'Today':
+        date = datetime.datetime.today()
+    else:
+        date = utils.replace_local_variables(date, context)
+        date = utils.replace_context_variables(date, context)
+
+    if add_remove == 'add':
+        date += timedelta(minutes=minutes)
+    elif add_remove == 'remove':
+        date -= timedelta(minutes=minutes)
+    
+    setattr(context, 'date', date.strftime("%Y-%m-%d %H:%M:%S"))
+
+
 @step("update through the query {query_name} with date {date} under macro {macro} on db {db_name}")
 def step_impl(context, query_name, date, macro, db_name):
     db_selected = context.config.userdata.get("db_configuration").get(db_name)
 
+    date = utils.replace_context_variables(date, context)
+
     if date == 'Today':
-        date = str(datetime.datetime.today())
+        #date = str(datetime.datetime.today())
+        date = datetime.datetime.today().strftime("%Y-%m-%d %H:%M:%S")
 
     selected_query = utils.query_json(
         context, query_name, macro).replace('date', date)
