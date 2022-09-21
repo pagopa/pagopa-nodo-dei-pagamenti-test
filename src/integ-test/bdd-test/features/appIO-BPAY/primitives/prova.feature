@@ -263,7 +263,7 @@
       </soapenv:Body>
       </soapenv:Envelope>
       """
-    And EC replies to nodo-dei-pagamenti with the paGetPayment  
+    And EC replies to nodo-dei-pagamenti with the getPay  
   
   
   # syntax check - No error with 2 tokens [SIN_CP_03.2]
