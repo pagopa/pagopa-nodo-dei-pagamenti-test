@@ -309,7 +309,7 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
     # closePayment-v2 phase
     Scenario: Execute a closePayment-v2 request
         Given the Execute a nodoChiediInformazioniPagamento request scenario executed successfully
-        And initial json closePayment-v2
+        And initial JSON v2/closepayment
             """
             {
                 "paymentTokens": [
@@ -330,10 +330,11 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
             }
             """
 
-        When PM sends closePayment-v2 to nodo-dei-pagamenti
-        Then check outcome is OK of closePayment-v2
-        And verify the HTTP status code of closePayment-v2 response is 200
-        And check no sendPaymentResult-v2 is sent
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then check outcome is OK of v2/closepayment response
+        And verify the HTTP status code of v2/closepayment response is 200
+
+#And check no sendPaymentResult-v2 is sent
 
 #implementare i DB check e controllare che la tabella RE sia vuota per il tipo_evento = sendPaymentResult-v2
 
