@@ -212,21 +212,26 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
 
     Scenario: Execution Esito Carta
         Given the Execute nodoInviaCarrelloRPT scenario executed successfully
-        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT 
+        And initial XML pspInviaCarrelloRPT 
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header/>
             <soapenv:Body>
             <ws:pspInviaCarrelloRPTResponse>
             <pspInviaCarrelloRPTResponse>
+            <fault>
+               <faultCode>CANALE_RPT_RIFIUTATA</faultCode>
+               <faultString>fault esterno</faultString>
+               <id>400000000001</id>
+               <description>descrizione fault esterno</description>
+            </fault>
             <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
-            <identificativoCarrello>$nodoInviaCarrelloRPT.identificativoCarrello</identificativoCarrello>
-            <parametriPagamentoImmediato>idBruciatura=$nodoInviaCarrelloRPT.identificativoCarrello</parametriPagamentoImmediato>
             </pspInviaCarrelloRPTResponse>
             </ws:pspInviaCarrelloRPTResponse>
             </soapenv:Body>
             </soapenv:Envelope>
             """
+        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT 
         When WISP sends REST POST inoltroEsito/mod2 to nodo-dei-pagamenti
 
             """
@@ -265,7 +270,7 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
         Then checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_PARCHEGGIATA_NODO of nodoChiediStatoRPT response
-        And checks redirect contains RPT_INVIATA_A_PSP of nodoChiediStatoRPT response
+        And checks stato contains RPT_INVIATA_A_PSP of nodoChiediStatoRPT response
         And checks stato contains RPT_RIFIUTATA_PSP of nodoChiediStatoRPT response
 
     Scenario: Execute second nodoInviaCarrelloRPT
@@ -305,11 +310,11 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
             </soapenv:Envelope>
             """
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
-	    Then check faultCode is PPT_ID_CARRELLO_DUPLICATO of nodoInviaCarrelloRPT
+	    Then check faultCode is PPT_ID_CARRELLO_DUPLICATO of nodoInviaCarrelloRPT response
 
 
     Scenario: Execute second nodoChiediStatoRPT request
-        Given the Execute nodoChiediStatoRPT request scenario executed successfully
+        Given the Execute second nodoInviaCarrelloRPT scenario executed successfully
         And initial XML nodoChiediStatoRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -330,7 +335,7 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
         Then checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_PARCHEGGIATA_NODO of nodoChiediStatoRPT response
-        And checks redirect contains RPT_INVIATA_A_PSP of nodoChiediStatoRPT response
+        And checks stato contains RPT_INVIATA_A_PSP of nodoChiediStatoRPT response
         And checks stato contains RPT_RIFIUTATA_NODO of nodoChiediStatoRPT response
 
 
@@ -338,4 +343,4 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
         Given the Execute second nodoChiediStatoRPT request scenario executed successfully
         When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of notificaAnnullamento response is 200
-        And check esito is OK of nodoNotificaAnnullamento response
+        And check esito is OK of notificaAnnullamento response
