@@ -124,6 +124,9 @@
         "by_iuv": "SELECT columns FROM table_name s WHERE s.IUV = '$iuv'",
         "getSchedulerPspRetryAckNegativePollerMaxRetry": "SELECT columns FROM table_name s WHERE s.CONFIG_KEY='scheduler.pspRetryAckNegativePollerMaxRetry'"
     },
+    "faultBeanEsteso": {
+        "by_iuv_ccp_pa": "SELECT columns FROM table_name s WHERE s.IUV = '$iuv' AND s.CCP = '$ccp' AND s.ID_DOMINIO = '$pa'"
+    },
     "costanti":{
         "get_broadcast": "SELECT columns FROM PA p, table_name psp WHERE p.OBJ_ID = psp.FK_PA AND p.ID_DOMINIO = '$verifyPaymentNotice.fiscalCode' AND psp.SEGREGAZIONE = '#cod_segr#'"
     },
