@@ -321,30 +321,27 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
 
     Scenario: SEM_SPO_13 (part 2)
         Given the SEM_SPO_13 (part 1) scenario executed successfully
-        And random idempotencyKey having $activatePaymentNoticeV2.idPSP as idPSP in activatePaymentNoticeV2
-        And EC replies to nodo-dei-pagamenti with the paGetPayment
-        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-        Then check outcome is OK of activatePaymentNoticeV2 response
 
         # step precedente
-        # And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response1
+        # And random idempotencyKey having $activatePaymentNoticeV2.idPSP as idPSP in activatePaymentNoticeV2
 
-        # step di prova
-        And call the paymentToken of activatePaymentNoticeV2 response as token1
+        # step prova
+        And the activatePaymentNoticeV2 scenario executed successfully
+
+        # step precedente
+        # And EC replies to nodo-dei-pagamenti with the paGetPayment
+
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response1
 
     Scenario: SEM_SPO_13 (part 3)
         Given the SEM_SPO_13 (part 2) scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
-
-        # step precedente
-        # And paymentToken with $activatePaymentNoticeV2Response1.paymentToken in sendPaymentOutcomeV2
-
-        # step di prova
-        And paymentToken with $token1 in sendPaymentOutcomeV2
-
+        And paymentToken with $activatePaymentNoticeV2Response1.paymentToken in sendPaymentOutcomeV2
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-
+    @wip
     Scenario: SEM_SPO_13 (part 4)
         Given the SEM_SPO_13 (part 3) scenario executed successfully
         And paymentToken with $activatePaymentNoticeV2Response.paymentToken in sendPaymentOutcomeV2
