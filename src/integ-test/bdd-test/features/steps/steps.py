@@ -184,6 +184,10 @@ def step_impl(context, primitive):
         iuv = str(random.randint(100000000000000, 999999999999999))
         payload = payload.replace('#iuv#', iuv)
         setattr(context, "iuv", iuv)
+    if "#iuv1#" in payload:
+        iuv1 = str(random.randint(100000000000000, 999999999999999))
+        payload = payload.replace('#iuv1#', iuv1)
+        setattr(context, "iuv1", iuv1)
     if '#transaction_id#' in payload:
         transaction_id = str(random.randint(10000000, 99999999))
         payload = payload.replace('#transaction_id#', transaction_id)
