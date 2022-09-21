@@ -8,5 +8,3 @@ spec:
       port: 8484
       protocol: TCP
       targetPort: 8484
-  type: LoadBalancer
-  loadBalancerIP: 10.70.74.200
