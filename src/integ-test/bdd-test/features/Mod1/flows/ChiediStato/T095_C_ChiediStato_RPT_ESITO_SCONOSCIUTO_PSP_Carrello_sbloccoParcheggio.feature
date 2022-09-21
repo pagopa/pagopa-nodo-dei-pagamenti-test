@@ -406,7 +406,7 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
         When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
         Then checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_PARCHEGGIATA_NODO of nodoChiediStatoRPT response
-        And checks redirect contains RPT_INVIATA_A_PSP of nodoChiediStatoRPT response
+        And checks stato contains RPT_INVIATA_A_PSP of nodoChiediStatoRPT response
         And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ESITO_SCONOSCIUTO_PSP of nodoChiediStatoRPT response
 
