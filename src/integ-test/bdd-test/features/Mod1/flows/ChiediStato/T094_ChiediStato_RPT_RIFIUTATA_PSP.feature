@@ -167,4 +167,4 @@ Feature: process tests for ChiediStato_RPT_RIFIUTATA_PSP
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is KO of nodoInviaRPT response
         And check faultCode is PPT_RPT_DUPLICATA of nodoInviaRPT response
-        And check NodoDeiPagamentiSPC field exists in nodoInviaRPT response
+        And check id is NodoDeiPagamentiSPC of nodoInviaRPT response
