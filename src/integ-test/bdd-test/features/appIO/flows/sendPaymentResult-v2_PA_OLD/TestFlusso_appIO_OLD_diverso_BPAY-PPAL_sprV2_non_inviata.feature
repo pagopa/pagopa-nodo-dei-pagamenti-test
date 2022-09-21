@@ -184,7 +184,7 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
         Then check esito is OK of nodoAttivaRPT response
 
     # nodoInviaRPT phase
-	Scenario: Define RPT
+    Scenario: Define RPT
         Given the Execute nodoAttivaRPT request scenario executed successfully
         And RPT generation
 
@@ -264,12 +264,12 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-    
-	
-	
-	Scenario: Execute nodoInviaRPT
+
+
+
+    Scenario: Execute nodoInviaRPT
         Given the Define RPT scenario executed successfully
-		And initial XML nodoInviaRPT							
+        And initial XML nodoInviaRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
@@ -296,14 +296,8 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
 
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
-		And retrieve session token from $nodoInviaRPTResponse.url
+        And retrieve session token from $nodoInviaRPTResponse.url
 
-    Scenario: DB check
-        Given the Execute nodoInviaRPT scenario executed successfully
-        Then checks the value $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
-        And checks the value $activateIOPaymentRequest.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
-		And verify 1 record for the table CD_INFO_PAGAMENTO retrived by the query info_pagamento on db nodo_online under macro AppIO
-		
 
     # nodoChiediInformazioniPagamento phase
     Scenario: Execute a nodoChiediInformazioniPagamento request
@@ -342,3 +336,9 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
         And check no sendPaymentResult-v2 is sent
 
 #implementare i DB check e controllare che la tabella RE sia vuota per il tipo_evento = sendPaymentResult-v2
+
+#Scenario: DB check
+#   Given the Execute nodoInviaRPT scenario executed successfully
+#   Then checks the value $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
+#   And checks the value $activateIOPaymentRequest.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
+#   And verify 1 record for the table CD_INFO_PAGAMENTO retrived by the query info_pagamento on db nodo_online under macro AppIO
