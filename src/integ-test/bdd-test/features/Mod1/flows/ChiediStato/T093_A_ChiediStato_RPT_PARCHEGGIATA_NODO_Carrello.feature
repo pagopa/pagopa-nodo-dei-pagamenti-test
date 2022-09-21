@@ -214,28 +214,28 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
         And checks the value RPT_PARCHEGGIATA_NODO,RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query motivo_annullamento on db nodo_online under macro Mod1
         And checks the value CART_PARCHEGGIATO_NODO of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query motivo_annullamento on db nodo_online under macro Mod1
 
-    # Scenario: Execute nodoChiediStatoRPT request
-    #     Given the Execute nodoInviaCarrelloRPT scenario executed successfully
-    #     And initial XML nodoChiediStatoRPT
-    #     """
-    #     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-    #     <soapenv:Header/>
-    #     <soapenv:Body>
-    #         <ws:nodoChiediStatoRPT>
-    #             <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
-    #             <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
-    #             <password>pwdpwdpwd</password>
-    #             <identificativoDominio>44444444444</identificativoDominio>
-    #             <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
-    #             <codiceContestoPagamento>CCD01</codiceContestoPagamento>
-    #         </ws:nodoChiediStatoRPT>
-    #     </soapenv:Body>
-    #     </soapenv:Envelope>
-    #     """
-    #     When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
-    #     Then checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
-    #     And checks stato contains RT_RICEVUTA_NODO of nodoChiediStatoRPT response
-    #     And checks url contains https://acardste.vaservices.eu:1443/wallet of nodoChiediStatoRPT response
+    Scenario: Execute nodoChiediStatoRPT request
+        Given the Execute nodoInviaCarrelloRPT scenario executed successfully
+        And initial XML nodoChiediStatoRPT
+        """
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+        <soapenv:Header/>
+        <soapenv:Body>
+            <ws:nodoChiediStatoRPT>
+                <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
+                <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
+                <password>pwdpwdpwd</password>
+                <identificativoDominio>44444444444</identificativoDominio>
+                <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
+                <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+            </ws:nodoChiediStatoRPT>
+        </soapenv:Body>
+        </soapenv:Envelope>
+        """
+        When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
+        Then checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
+        And checks stato contains RT_RICEVUTA_NODO of nodoChiediStatoRPT response
+        And checks url contains https://acardste.vaservices.eu:1443/wallet of nodoChiediStatoRPT response
 
     # Scenario: Execute second nodoChiediStatoRPT request
     #     Given the Execute nodoChiediStatoRPT request scenario executed successfully
