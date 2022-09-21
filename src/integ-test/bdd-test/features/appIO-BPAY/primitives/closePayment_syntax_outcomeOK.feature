@@ -141,9 +141,7 @@ Feature: syntax checks for closePayment outcome OK
       <fiscalCode>#creditor_institution_code#</fiscalCode>
       <noticeNumber>311#iuv#</noticeNumber>
       </qrCode>
-      <!--Optional:-->
-      <expirationTime>12345</expirationTime>
-      <amount>70.00</amount>
+      <amount>12.00</amount>
       <!--Optional:-->
       <dueDate>2021-12-12</dueDate>
       <!--Optional:-->
@@ -183,7 +181,7 @@ Feature: syntax checks for closePayment outcome OK
       <outcome>OK</outcome>
       <data>
       <creditorReferenceId>11$iuv</creditorReferenceId>
-      <paymentAmount>10.00</paymentAmount>
+      <paymentAmount>12.00</paymentAmount>
       <dueDate>2021-12-31</dueDate>
       <!--Optional:-->
       <retentionDate>2021-12-31T12:12:12</retentionDate>
@@ -220,7 +218,7 @@ Feature: syntax checks for closePayment outcome OK
       <!--1 to 5 repetitions:-->
       <transfer>
       <idTransfer>1</idTransfer>
-      <transferAmount>3.00</transferAmount>
+      <transferAmount>5.00</transferAmount>
       <fiscalCodePA>66666666666</fiscalCodePA>
       <IBAN>IT45R0760103200000000001016</IBAN>
       <remittanceInformation>testPaGetPayment</remittanceInformation>
@@ -273,7 +271,7 @@ Feature: syntax checks for closePayment outcome OK
     Given the nodoChiediInformazioniPagamento scenario executed successfully
     And the closePayment scenario executed successfully
     And paymentToken with $activateIOPaymentResponse.paymentToken in v1/closepayment
-    # And fee with 0 in v1/closepayment
+    And fee with 0 in v1/closepayment
     When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
     Then verify the HTTP status code of v1/closepayment response is 200
     And check esito is OK of v1/closepayment response
@@ -321,7 +319,7 @@ Feature: syntax checks for closePayment outcome OK
         "identificativoIntermediario": "#id_broker_psp#",
         "identificativoCanale": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
         "pspTransactionId": "#psp_transaction_id#",
-        "totalAmount": 12,
+        "totalAmount": 26,
         "fee": 2,
         "timestampOperation": "2033-04-23T18:25:43Z",
         "additionalPaymentInformations": {
