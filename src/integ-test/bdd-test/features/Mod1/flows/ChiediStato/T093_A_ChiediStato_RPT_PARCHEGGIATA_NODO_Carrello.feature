@@ -199,102 +199,102 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
             """
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
 	    Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
-        #And check url contains acardste of nodoInviaCarrelloRPT response
-        And retrieve session token from $nodoInviaCarrelloRPTResponse.url
-        And replace iuv content with $IUV content
-        And replace iuv2 content with $2iuv content
-        And replace 1ccp content with CCD01 content
-        And replace 2CCP content with CCD01 content
-        And verify 3 record for the table STATI_RPT retrived by the query stati_RPT on db nodo_online under macro Mod1
-        And verify 3 record for the table STATI_RPT retrived by the query stati_RPT2 on db nodo_online under macro Mod1
-        And checks the value $sessionToken,$sessionToken,$sessionToken of the record at column ID_SESSIONE of the table STATI_RPT retrived by the query stati_RPT on db nodo_online under macro Mod1
-        And checks the value nodoInviaCarrelloRPT,nodoInviaCarrelloRPT,nodoInviaCarrelloRPT of the record at column INSERTED_BY of the table STATI_RPT retrived by the query stati_RPT on db nodo_online under macro Mod1
-        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query stati_RPT on db nodo_online under macro Mod1
-        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query stati_RPT2 on db nodo_online under macro Mod1
-        And checks the value RPT_PARCHEGGIATA_NODO,RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query motivo_annullamento on db nodo_online under macro Mod1
-        And checks the value CART_PARCHEGGIATO_NODO of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query motivo_annullamento on db nodo_online under macro Mod1
+        And check url contains acardste of nodoInviaCarrelloRPT response
+    #     And retrieve session token from $nodoInviaCarrelloRPTResponse.url
+    #     And replace iuv content with $IUV content
+    #     And replace iuv2 content with $2iuv content
+    #     And replace 1ccp content with CCD01 content
+    #     And replace 2CCP content with CCD01 content
+    #     And verify 3 record for the table STATI_RPT retrived by the query stati_RPT on db nodo_online under macro Mod1
+    #     And verify 3 record for the table STATI_RPT retrived by the query stati_RPT2 on db nodo_online under macro Mod1
+    #     And checks the value $sessionToken of the record at column ID_SESSIONE of the table STATI_RPT retrived by the query stati_RPT on db nodo_online under macro Mod1
+    #     And checks the value nodoInviaCarrelloRPT of the record at column INSERTED_BY of the table STATI_RPT retrived by the query stati_RPT on db nodo_online under macro Mod1
+    #     And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query stati_RPT on db nodo_online under macro Mod1
+    #     And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query stati_RPT2 on db nodo_online under macro Mod1
+    #     And checks the value RPT_PARCHEGGIATA_NODO,RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query motivo_annullamento on db nodo_online under macro Mod1
+    #     And checks the value CART_PARCHEGGIATO_NODO of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query motivo_annullamento on db nodo_online under macro Mod1
 
-    Scenario: Execute nodoChiediStatoRPT request
-        Given the Execute nodoInviaCarrelloRPT scenario executed successfully
-        And initial XML nodoChiediStatoRPT
-        """
-        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-        <soapenv:Header/>
-        <soapenv:Body>
-            <ws:nodoChiediStatoRPT>
-                <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
-                <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
-                <password>pwdpwdpwd</password>
-                <identificativoDominio>44444444444</identificativoDominio>
-                <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
-                <codiceContestoPagamento>CCD01</codiceContestoPagamento>
-            </ws:nodoChiediStatoRPT>
-        </soapenv:Body>
-        </soapenv:Envelope>
-        """
-        When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
-        Then checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
-        And checks stato contains RT_RICEVUTA_NODO of nodoChiediStatoRPT response
-        And checks url contains https://acardste.vaservices.eu:1443/wallet of nodoChiediStatoRPT response
+    # Scenario: Execute nodoChiediStatoRPT request
+    #     Given the Execute nodoInviaCarrelloRPT scenario executed successfully
+    #     And initial XML nodoChiediStatoRPT
+    #     """
+    #     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+    #     <soapenv:Header/>
+    #     <soapenv:Body>
+    #         <ws:nodoChiediStatoRPT>
+    #             <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
+    #             <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
+    #             <password>pwdpwdpwd</password>
+    #             <identificativoDominio>44444444444</identificativoDominio>
+    #             <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
+    #             <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+    #         </ws:nodoChiediStatoRPT>
+    #     </soapenv:Body>
+    #     </soapenv:Envelope>
+    #     """
+    #     When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
+    #     Then checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
+    #     And checks stato contains RT_RICEVUTA_NODO of nodoChiediStatoRPT response
+    #     And checks url contains https://acardste.vaservices.eu:1443/wallet of nodoChiediStatoRPT response
 
-    Scenario: Execute second nodoChiediStatoRPT request
-        Given the Execute nodoChiediStatoRPT request scenario executed successfully
-        And initial XML nodoChiediStatoRPT
-        """
-        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-        <soapenv:Header/>
-        <soapenv:Body>
-            <ws:nodoChiediStatoRPT>
-                <identificativoIntermediarioPA>44444444445</identificativoIntermediarioPA>
-                <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
-                <password>pwdpwdpwd</password>
-                <identificativoDominio>44444444445</identificativoDominio>
-                <identificativoUnivocoVersamento>$2iuv</identificativoUnivocoVersamento>
-                <codiceContestoPagamento>CCD01</codiceContestoPagamento>
-            </ws:nodoChiediStatoRPT>
-        </soapenv:Body>
-        </soapenv:Envelope>
-        """
-        When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
-        Then checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
-        And checks stato contains RT_RICEVUTA_NODO of nodoChiediStatoRPT response
-        And checks url contains https://acardste.vaservices.eu:1443/wallet of nodoChiediStatoRPT response
+    # Scenario: Execute second nodoChiediStatoRPT request
+    #     Given the Execute nodoChiediStatoRPT request scenario executed successfully
+    #     And initial XML nodoChiediStatoRPT
+    #     """
+    #     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+    #     <soapenv:Header/>
+    #     <soapenv:Body>
+    #         <ws:nodoChiediStatoRPT>
+    #             <identificativoIntermediarioPA>44444444445</identificativoIntermediarioPA>
+    #             <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
+    #             <password>pwdpwdpwd</password>
+    #             <identificativoDominio>44444444445</identificativoDominio>
+    #             <identificativoUnivocoVersamento>$2iuv</identificativoUnivocoVersamento>
+    #             <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+    #         </ws:nodoChiediStatoRPT>
+    #     </soapenv:Body>
+    #     </soapenv:Envelope>
+    #     """
+    #     When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
+    #     Then checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
+    #     And checks stato contains RT_RICEVUTA_NODO of nodoChiediStatoRPT response
+    #     And checks url contains https://acardste.vaservices.eu:1443/wallet of nodoChiediStatoRPT response
 
-    Scenario: Execute second nodoInviaCarrelloRPT
-		Given the Execute second nodoChiediStatoRPT request scenario executed successfully
-		And initial XML nodoInviaCarrelloRPT
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header>
-            <ppt:intestazioneCarrelloPPT>
-            <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
-            <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
-            <identificativoCarrello>$IUV</identificativoCarrello>
-            </ppt:intestazioneCarrelloPPT>
-            </soapenv:Header>
-            <soapenv:Body>
-            <ws:nodoInviaCarrelloRPT>
-            <password>pwdpwdpwd</password>
-            <identificativoPSP>AGID_01</identificativoPSP>
-            <identificativoIntermediarioPSP>97735020584</identificativoIntermediarioPSP>
-            <identificativoCanale>97735020584_02</identificativoCanale>
-            <listaRPT>
-            <elementoListaRPT>
-            <identificativoDominio>44444444444</identificativoDominio>
-            <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>CCD01</codiceContestoPagamento>
-            <rpt>$rptAttachment</rpt>
-            </elementoListaRPT>
-            <elementoListaRPT>
-            <identificativoDominio>44444444445</identificativoDominio>
-            <identificativoUnivocoVersamento>$2iuv</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>CCD01</codiceContestoPagamento>
-            <rpt>$rpt2Attachment</rpt>
-            </elementoListaRPT>
-            </listaRPT>
-            </ws:nodoInviaCarrelloRPT>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
-	    Then check faultCode is PPT_ID_CARRELLO_DUPLICATO of nodoInviaCarrelloRPT response
+    # Scenario: Execute second nodoInviaCarrelloRPT
+	# 	Given the Execute second nodoChiediStatoRPT request scenario executed successfully
+	# 	And initial XML nodoInviaCarrelloRPT
+    #         """
+    #         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+    #         <soapenv:Header>
+    #         <ppt:intestazioneCarrelloPPT>
+    #         <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
+    #         <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
+    #         <identificativoCarrello>$IUV</identificativoCarrello>
+    #         </ppt:intestazioneCarrelloPPT>
+    #         </soapenv:Header>
+    #         <soapenv:Body>
+    #         <ws:nodoInviaCarrelloRPT>
+    #         <password>pwdpwdpwd</password>
+    #         <identificativoPSP>AGID_01</identificativoPSP>
+    #         <identificativoIntermediarioPSP>97735020584</identificativoIntermediarioPSP>
+    #         <identificativoCanale>97735020584_02</identificativoCanale>
+    #         <listaRPT>
+    #         <elementoListaRPT>
+    #         <identificativoDominio>44444444444</identificativoDominio>
+    #         <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
+    #         <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+    #         <rpt>$rptAttachment</rpt>
+    #         </elementoListaRPT>
+    #         <elementoListaRPT>
+    #         <identificativoDominio>44444444445</identificativoDominio>
+    #         <identificativoUnivocoVersamento>$2iuv</identificativoUnivocoVersamento>
+    #         <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+    #         <rpt>$rpt2Attachment</rpt>
+    #         </elementoListaRPT>
+    #         </listaRPT>
+    #         </ws:nodoInviaCarrelloRPT>
+    #         </soapenv:Body>
+    #         </soapenv:Envelope>
+    #         """
+    #     When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
+	#     Then check faultCode is PPT_ID_CARRELLO_DUPLICATO of nodoInviaCarrelloRPT response
