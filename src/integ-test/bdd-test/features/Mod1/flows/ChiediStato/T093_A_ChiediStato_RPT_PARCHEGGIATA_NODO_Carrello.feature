@@ -199,7 +199,7 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
             """
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
 	    Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
-        And check url contains acardste of nodoInviaCarrelloRPT response
+        #And check url contains acardste of nodoInviaCarrelloRPT response
         And retrieve session token from $nodoInviaCarrelloRPTResponse.url
         And replace iuv content with $IUV content
         And replace iuv2 content with $2iuv content
