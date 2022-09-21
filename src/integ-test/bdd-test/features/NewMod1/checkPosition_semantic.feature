@@ -49,7 +49,6 @@ Feature: semantic checks for checkPosition outcome OK
             <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
             <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
             <password>#password#</password>
-            <idempotencyKey>#idempotency_key#</idempotencyKey>
             <qrCode>
             <fiscalCode>#creditor_institution_code#</fiscalCode>
             <noticeNumber>311#iuv#</noticeNumber>
