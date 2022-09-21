@@ -303,20 +303,18 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
         When WISP sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200
 
-
-    # closePayment-v2 phase
-    Scenario: Execute a closePayment-v2 request
-        Given the Execute a nodoChiediInformazioniPagamento request scenario executed successfully
-        And initial json closePayment-v2
+    # define closePayment-v2
+    Scenario: closePaymentV2
+        Given initial JSON v2/closepayment
             """
             {
                 "paymentTokens": [
-                    "$sessionToken"
+                    "token"
                 ],
                 "outcome": "OK",
                 "idPSP": "#psp#",
                 "idBrokerPSP": "60000000001",
-                "idChannel": "60000000001_03",
+                "idChannel": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
                 "paymentMethod": "TPAY",
                 "transactionId": "19392562",
                 "totalAmount": 12,
@@ -328,10 +326,15 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
             }
             """
 
-        When PM sends closePayment-v2 to nodo-dei-pagamenti
+    # closePayment-v2 phase
+    Scenario: Execute a closePayment-v2 request
+        Given the Execute a nodoChiediInformazioniPagamento request scenario executed successfully
+        And the closePaymentV2 scenario executed successfully
+        And paymentToken with $sessionToken in v2/closepayment
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         And psp sends pspNotifyPayment-v2 Response in late
-        Then check outcome is OK of closePayment-v2
-        And verify the HTTP status code of closePayment-v2 response is 200
+        Then check outcome is OK of v2/closepayment response
+        And verify the HTTP status code of v2/closepayment response is 200
 
 
     # sendPaymentOutcome phase
