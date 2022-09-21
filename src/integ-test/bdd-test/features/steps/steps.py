@@ -1,4 +1,5 @@
 import datetime
+import xmltodict
 
 from email.policy import default
 import json
@@ -8,7 +9,6 @@ from sre_constants import ASSERT
 import time
 from xml.dom.minidom import parseString
 import base64 as b64
-import xmltodict
 
 import requests
 from behave import *
@@ -2155,14 +2155,14 @@ def step_impl(context, causaleVers):
     def step_impl(context, value, column, query_name, table_name, where_condition, db_name, name_macro):
         db_config = context.config.userdata.get("db_configuration")
         db_selected = db_config.get(db_name)
-    conn = db.getConnection(db_selected.get('host'), db_selected.get(
+        conn = db.getConnection(db_selected.get('host'), db_selected.get(
         'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
-    selected_query = utils.query_json(context, query_name, name_macro).replace(
+        selected_query = utils.query_json(context, query_name, name_macro).replace(
         "columns", column).replace("table_name", table_name).replace('where_condition', where_condition)
-    print(selected_query)
-    exec_query = db.executeQuery(conn, selected_query)
-    query_result = [t[0] for t in exec_query]
-    print('query_result: ', query_result)
+        print(selected_query)
+        exec_query = db.executeQuery(conn, selected_query)
+        query_result = [t[0] for t in exec_query]
+        print('query_result: ', query_result)
     if value == 'None':
         print('None')
         assert query_result[0] == None
@@ -2187,7 +2187,7 @@ def step_impl(context, causaleVers):
         print("value: ", split_value)
         for elem in split_value:
             assert elem in query_result, f"check expected element: {value}, obtained: {query_result}"
-    db.closeConnection(conn)
+        db.closeConnection(conn)
 
 
 @step("updating through the query {query_name} of the table {table_name} the parameter {param} with {value} with where condition {where_condition} under macro {macro} on db {db_name}")
@@ -2235,7 +2235,7 @@ def step_impl(context, param, value):
     time.sleep(5)
     assert refresh_response.status_code == 200
 
-    @given('initial JSON {primitive}')
+@given('initial JSON {primitive}')
 def step_impl(context, primitive):
     payload = context.text or ""
     payload = utils.replace_local_variables(payload, context)
@@ -2262,6 +2262,6 @@ def step_impl(context, primitive):
     if '$psp_transaction_id' in payload:
         payload = payload.replace(
             '$psp_transaction_id', getattr(context, 'psp_transaction_id'))
-    payload = utils.replace_context_variables(payload, context)
-    payload = utils.replace_global_variables(payload, context)
-    setattr(context, primitive, payload)
+        payload = utils.replace_context_variables(payload, context)
+        payload = utils.replace_global_variables(payload, context)
+        setattr(context, primitive, payload)

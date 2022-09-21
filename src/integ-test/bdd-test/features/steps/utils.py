@@ -287,7 +287,7 @@ def random_s():
         cont -= 1
         return strNumRand
 
-        def json2xml(json_obj, line_padding=""):
+def json2xml(json_obj, line_padding=""):
     result_list = list()
     json_obj_type = type(json_obj)
     if json_obj_type is list:
