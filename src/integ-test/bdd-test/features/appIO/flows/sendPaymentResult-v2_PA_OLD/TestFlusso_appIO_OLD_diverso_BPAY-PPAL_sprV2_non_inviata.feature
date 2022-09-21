@@ -339,12 +339,15 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
         Then check outcome is OK of v2/closepayment response
         And verify the HTTP status code of v2/closepayment response is 200
 
+    # DB check
+    Scenario: DB check
+        Given the Execute a closePayment-v2 request scenario executed successfully
+        Then checks the value None of the record at column ID of the table RE retrived by the query select_sprV2_old on db re under macro sendPaymentResultV2
+
 #And check no sendPaymentResult-v2 is sent
 
 #implementare i DB check e controllare che la tabella RE sia vuota per il tipo_evento = sendPaymentResult-v2
 
-#Scenario: DB check
-#   Given the Execute nodoInviaRPT scenario executed successfully
 #   Then checks the value $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
 #   And checks the value $activateIOPaymentRequest.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
 #   And verify 1 record for the table CD_INFO_PAGAMENTO retrived by the query info_pagamento on db nodo_online under macro AppIO
