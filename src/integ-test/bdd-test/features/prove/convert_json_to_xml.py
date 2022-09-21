@@ -53,38 +53,46 @@ def json2xml(json_obj, line_padding=""):
     return "%s%s" % (line_padding, json_obj)
 
 
-s='{"paymentTokens": ["a3738f8bff1f4a32998fc197bd0a6b05"],"outcome": "OK","identificativoPsp": "#psp#","tipoVersamento": "BPAY","identificativoIntermediario": "#id_broker_psp#","identificativoCanale": "#canale_IMMEDIATO_MULTIBENEFICIARIO#","pspTransactionId": "#psp_transaction_id#","totalAmount": 12,"fee": 2,"timestampOperation": "2033-04-23T18:25:43Z","additionalPaymentInformations": {"transactionId": "#transaction_id#","outcomePaymentGateway": "EFF","authorizationCode": "resOK"}}'
+s='{"paymentTokens": ["a3738f8bff1f4a32998fc197bd0a6b05","b3738f8bff1f4a32998fc197bd0a6b05"],"outcome": "OK","identificativoPsp": "#psp#","tipoVersamento": "BPAY","identificativoIntermediario": "#id_broker_psp#","identificativoCanale": "#canale_IMMEDIATO_MULTIBENEFICIARIO#","pspTransactionId": "#psp_transaction_id#","totalAmount": 12,"fee": 2,"timestampOperation": "2033-04-23T18:25:43Z","additionalPaymentInformations": {"transactionId": "#transaction_id#","outcomePaymentGateway": "EFF","authorizationCode": "resOK"}}'
 # s='{"paymentTokens": ["a3738f8bff1f4a32998fc197bd0a6b05"],"outcome": "OK","identificativoPsp": "#psp#","tipoVersamento": "BPAY","identificativoIntermediario": "#id_broker_psp#","identificativoCanale": "#canale_IMMEDIATO_MULTIBENEFICIARIO#","pspTransactionId": "#psp_transaction_id#","totalAmount": 12,"fee": 2,"timestampOperation": "2033-04-23T18:25:43Z","additionalPaymentInformations": {"transactionId": "#transaction_id#","outcomePaymentGateway": "EFF","authorizationCode": "resOK"}}'
 j = json.loads(s)
 # print(json2xml(j))
 
 xmlFields = json2xml(j)
-xml = '<root>' + xmlFields + '</root>'
+# xml = '<root>' + xmlFields + '</root>'
+
+xml = '<root><paymentTokens><paymentToken>a3738f8bff1f4a32998fc197bd0a6b05</paymentToken><paymentToken>b3738f8bff1f4a32998fc197bd0a6b05</paymentToken></paymentTokens><outcome>OK</outcome><identificativoPsp>#psp#</identificativoPsp><tipoVersamento>BPAY</tipoVersamento><identificativoIntermediario>#id_broker_psp#</identificativoIntermediario><identificativoCanale>#canale_IMMEDIATO_MULTIBENEFICIARIO#</identificativoCanale><pspTransactionId>#psp_transaction_id#</pspTransactionId><totalAmount>12,21</totalAmount><fee>2</fee><timestampOperation>2033-04-23T18:25:43Z</timestampOperation><additionalPaymentInformations><transactionId>#transaction_id#</transactionId><outcomePaymentGateway>EFF</outcomePaymentGateway><authorizationCode>resOK</authorizationCode></additionalPaymentInformations></root>'
 
 print(xml)
 
 jsonNew = xmltodict.parse(xml)
 
+amount_comma=0
+amount_empty=0
 jsonNew = jsonNew["root"]
-if 'paymentTokens' in jsonNew.keys():
+
+if ('paymentTokens' in jsonNew.keys()) and ('paymentToken' in jsonNew["paymentTokens"].keys()):
     jsonNew["paymentTokens"] = jsonNew["paymentTokens"]["paymentToken"]
     if type(jsonNew["paymentTokens"]) != list:
         l = list()
         l.append(jsonNew["paymentTokens"])
         jsonNew["paymentTokens"] = l
 if 'totalAmount' in jsonNew.keys():
-    jsonNew["totalAmount"] = float(jsonNew["totalAmount"])
+    if jsonNew["totalAmount"] != None:
+        if ',' in jsonNew["totalAmount"]:
+            amount_comma=1
+            amount = jsonNew["totalAmount"]
+        jsonNew["totalAmount"] = float(jsonNew["totalAmount"].replace(',','.'))
+    else:
+        amount_empty=1
+
 if 'fee' in jsonNew.keys():
     jsonNew["fee"] = float(jsonNew["fee"])
 jsonNew = json.dumps(jsonNew, indent=4)
 
-def insert_bracket(string, index, addString):
-     return string[:index] + addString + string[index:]
+jsonNew_body = json.loads(jsonNew)
+print(type(jsonNew_body))
+if amount_comma == 1:
+    jsonNew_body["totalAmount"] = amount
 
-# l_tok_string = jsonNew.index('"paymentTokens": ') + len('"paymentTokens": ')
-
-# if jsonNew[l_tok_string:l_tok_string + 1] != '[':
-#     jsonNew = insert_bracket(jsonNew, l_tok_string,'[')
-#     jsonNew = insert_bracket(jsonNew, jsonNew.index(token)+ len(token) + 1,']')
-
-print(jsonNew)
+print(jsonNew_body)
