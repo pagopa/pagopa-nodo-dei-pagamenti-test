@@ -2266,7 +2266,7 @@ def step_impl(context, primitive):
     payload = utils.replace_global_variables(payload, context)
     setattr(context, primitive, payload)
 
-    @step(u"verify if the records for the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro} are null")
+    @step(u"verify if the records for the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro} are not null")
     def step_impl(context, query_name, table_name, db_name, name_macro):
         db_config = context.config.userdata.get("db_configuration")
         db_selected = db_config.get(db_name)
