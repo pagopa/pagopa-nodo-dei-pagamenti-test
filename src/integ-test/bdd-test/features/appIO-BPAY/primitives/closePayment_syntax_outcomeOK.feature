@@ -349,7 +349,7 @@ Feature: syntax checks for closePayment outcome OK
 
 #-----------gestione del paymentTokens senza [] non previsto nello step when(u'{sender} sends rest {method:Method} {service} to {receiver}')
 
-  # Scenario: closePayment without brackets in paymentTokens   
+  # Scenario: closePayment without brackets in paymentTokens [SIN_CP_03.1]
   #   Given initial JSON v1/closepayment
   #     """
   #     {
