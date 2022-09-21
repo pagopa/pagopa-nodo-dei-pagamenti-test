@@ -260,19 +260,7 @@ Feature: syntax checks for closePayment outcome OK
       # | totalAmount                 | 12,21 | SIN_CP_24   |   gestione della virgola non previsto nello step when(u'{sender} sends rest {method:Method} {service} to {receiver}')
       # | fee                         | 12,32 | SIN_CP_29   |   gestione della virgola non previsto nello step when(u'{sender} sends rest {method:Method} {service} to {receiver}')
       | additionalPaymentInformations | None  | SIN_CP_35   |
-
-
-  # syntax check - additionalPaymentInformations vuoto [SIN_CP_36]
-  Scenario: Check syntax error on empty additionalPaymentInformations
-    Given the closePayment scenario executed successfully
-    And additionalPaymentInformations with Empty in v1/closepayment
-    # And transactionId with None in v1/closepayment
-    # And outcomePaymentGateway with None in v1/closepayment
-    # And authorizationCode with None in v1/closepayment
-    When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
-    Then verify the HTTP status code of v1/closepayment response is 400
-    And check esito is KO of v1/closepayment response
-    And check descrizione is Richiesta non valida of v1/closepayment response
+      | additionalPaymentInformations | Empty | SIN_CP_36   |
 
 
   # syntax check - Il Pagamento indicato non esiste [SIN_CP_31.1]
