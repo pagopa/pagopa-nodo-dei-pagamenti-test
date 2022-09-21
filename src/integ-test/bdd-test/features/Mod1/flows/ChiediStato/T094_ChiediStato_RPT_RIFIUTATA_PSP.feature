@@ -110,8 +110,9 @@ Feature: process tests for ChiediStato_RPT_RIFIUTATA_PSP
             """
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is KO of nodoInviaRPT response
-        And check url field exists in nodoInviaRPT response
-        And check url contains CANALE_RPT_DA_RIFIUTARE of nodoInviaCarrelloRPT response
+        And check faultCode is PPT_CANALE_ERRORE of nodoInviaRPT response
+        And check description is FaultCode PSP: CANALE_RPT_DA_RIFIUTARE of nodoInviaCarrelloRPT response
+        And check id is 40000000001 of nodoInviaCarrelloRPT response
 
     # Scenario: Execute nodoChiediStatoRPT request
     #     Given the Execute nodoInviaCarrelloRPT scenario executed successfully
