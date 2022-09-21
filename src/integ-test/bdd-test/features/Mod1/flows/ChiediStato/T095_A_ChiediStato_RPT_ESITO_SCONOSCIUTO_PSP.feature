@@ -201,7 +201,8 @@ Feature: process tests for T095_A_ChiediStato_RPT_ESITO_SCONOSCIUTO_PSP
         </soapenv:Envelope>
         """
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
-        Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
+        Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
+        And check faultCode is PPT_CANALE_ERRORE_RESPONSE of nodoInviaCarrelloRPT response
 
     Scenario: Execute nodoChiediStatoRPT request
         Given the Execute nodoInviaCarrelloRPT scenario executed successfully
