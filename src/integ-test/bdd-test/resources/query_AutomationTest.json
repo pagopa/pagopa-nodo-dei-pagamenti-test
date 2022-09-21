@@ -114,6 +114,7 @@
         "position_payment_status_snapshot" : "SELECT columns FROM table_name WHERE POSITION_PAYMENT_STATUS_SNAPSHOT.PA_FISCAL_CODE = '$activatePaymentNoticeV2.fiscalCode' AND POSITION_PAYMENT_STATUS_SNAPSHOT.NOTICE_ID = '$activatePaymentNoticeV2.noticeNumber'",
         "payment_token": "SELECT columns FROM table_name WHERE TOKEN = '$activatePaymentNoticeV2Response.paymentToken'",
         "PAYMENT_TOKEN": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN = '$activatePaymentNoticeV2Response.paymentToken'",
+        "update_PAYMENT_TOKEN": "UPDATE table_name SET param = 'value' WHERE PAYMENT_TOKEN = '$activatePaymentNoticeV2Response.paymentToken'",
         "notice_number": "SELECT columns FROM table_name WHERE NOTICE_ID = '$activatePaymentNoticeV2.noticeNumber'"
     }
 }
