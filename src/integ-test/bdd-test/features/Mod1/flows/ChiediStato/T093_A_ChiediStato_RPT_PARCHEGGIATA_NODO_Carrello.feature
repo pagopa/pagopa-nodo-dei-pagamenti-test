@@ -256,7 +256,7 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
         </soapenv:Envelope>
         """
         When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
-        Then checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
+        Then checks url contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         #And checks url contains https://acardste.vaservices.eu:1443/wallet of nodoChiediStatoRPT response
 
