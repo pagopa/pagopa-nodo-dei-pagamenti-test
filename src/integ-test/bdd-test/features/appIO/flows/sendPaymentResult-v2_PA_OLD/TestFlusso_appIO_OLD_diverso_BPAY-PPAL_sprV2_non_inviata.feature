@@ -306,14 +306,14 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
         Then verify the HTTP status code of informazioniPagamento response is 200
 
 
-    # closePayment-v2 phase
-    Scenario: Execute a closePayment-v2 request
-        Given the Execute a nodoChiediInformazioniPagamento request scenario executed successfully
-        And initial JSON v2/closepayment
+
+    # define closePayment-v2
+    Scenario: closePaymentV2
+        Given initial JSON v2/closepayment
             """
             {
                 "paymentTokens": [
-                    "$sessionToken"
+                    "token"
                 ],
                 "outcome": "OK",
                 "idPSP": "#psp#",
@@ -330,6 +330,11 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
             }
             """
 
+    # closePayment-v2 phase
+    Scenario: Execute a closePayment-v2 request
+        Given the Execute a nodoChiediInformazioniPagamento request scenario executed successfully
+        And the closePaymentV2 scenario executed successfully
+        And paymentToken with $sessionToken in v2/closePayment
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then check outcome is OK of v2/closepayment response
         And verify the HTTP status code of v2/closepayment response is 200
