@@ -16,7 +16,7 @@ Feature: semantic checks for checkPosition outcome OK
             }
             """
 
-    Scenario: checkPosition with 3 positions
+    Scenario: checkPosition with 3 notice numbers
         Given initial json checkPosition
             """
             {
@@ -129,6 +129,28 @@ Feature: semantic checks for checkPosition outcome OK
             """
         And EC replies to nodo-dei-pagamenti with the paGetPayment
 
+    @skip
+    Scenario: checkPosition with 3 activatePaymentNoticeV2 notice numbers
+        Given initial json checkPosition
+            """
+            {
+                "positionslist": [
+                    {
+                        "fiscalCode": "#creditor_institution_code#",
+                        "noticeNumber": "$activatePaymentNoticeV2Request.noticeNumber"
+                    },
+                    {
+                        "fiscalCode": "#creditor_institution_code#",
+                        "noticeNumber": "$activatePaymentNoticeV2Request1.noticeNumber"
+                    },
+                    {
+                        "fiscalCode": "#creditor_institution_code#",
+                        "noticeNumber": "$activatePaymentNoticeV2Request2.noticeNumber"
+                    }
+                ]
+            }
+            """
+
     # SEM_CPO_01
     Scenario: Code 200 OK 1
         Given the checkPosition scenario executed successfully
@@ -182,26 +204,7 @@ Feature: semantic checks for checkPosition outcome OK
 
     Scenario: Code 200 KO (part 4)
         Given the Code 200 KO (part 3) scenario executed successfully
-        And initial json checkPosition
-            """
-            {
-                "positionslist": [
-                    {
-                        "fiscalCode": "#creditor_institution_code#",
-                        "noticeNumber": "$activatePaymentNoticeV2Request.noticeNumber"
-                    },
-                    {
-                        "fiscalCode": "#creditor_institution_code#",
-                        "noticeNumber": "$activatePaymentNoticeV2Request1.noticeNumber"
-                    },
-                    {
-                        "fiscalCode": "#creditor_institution_code#",
-                        "noticeNumber": "$activatePaymentNoticeV2Request2.noticeNumber"
-                    }
-                ]
-            }
-            """
-
+        And the checkPosition with 3 activatePaymentNoticeV2 notice numbers scenario executed successfully
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
         Then verify the HTTP status code of checkPosition response is 200
         And check outcome is KO of checkPosition response
@@ -229,7 +232,7 @@ Feature: semantic checks for checkPosition outcome OK
 
     # SEM_CPO_06
     Scenario: Wrong configuration 3
-        Given the checkPosition with 3 positions scenario executed successfully
+        Given the checkPosition with 3 notice numbers scenario executed successfully
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
         Then verify the HTTP status code of checkPosition response is 400
         And check outcome is KO of checkPosition response
