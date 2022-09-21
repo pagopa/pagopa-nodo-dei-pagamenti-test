@@ -319,9 +319,9 @@ def step_impl(context):
 def step_impl(context, number, aux_digit, segregation_code, application_code):
     segregation_code = utils.replace_global_variables(segregation_code, context)
     if aux_digit == 0 or aux_digit == 3:
-        iuv = f"11{random.randint(10000000000, 99999999999)}"
+        iuv = f"11{random.randint(10000000000, 99999999999)}00"
         reference_code = application_code if aux_digit == 0 else segregation_code
-        notice_number = f"{aux_digit}{reference_code}{iuv}00"
+        notice_number = f"{aux_digit}{reference_code}{iuv}"
     elif aux_digit == 1:
         iuv = random.randint(10000000000000000, 99999999999999999)
         notice_number = f"{aux_digit}{iuv}"
@@ -1319,12 +1319,32 @@ def step_impl(context, job_name):
     assert refresh_response.status_code == 200
 
 
+@step("change date {date} to {add_remove} minutes {minutes:d}")
+def stemp_impl(context, date, add_remove, minutes):
+
+    if date == 'Today':
+        date = datetime.datetime.today()
+    else:
+        date = utils.replace_local_variables(date, context)
+        date = utils.replace_context_variables(date, context)
+
+    if add_remove == 'add':
+        date += timedelta(minutes=minutes)
+    elif add_remove == 'remove':
+        date -= timedelta(minutes=minutes)
+    
+    setattr(context, 'date', date.strftime("%Y-%m-%d %H:%M:%S"))
+
+
 @step("update through the query {query_name} with date {date} under macro {macro} on db {db_name}")
 def step_impl(context, query_name, date, macro, db_name):
     db_selected = context.config.userdata.get("db_configuration").get(db_name)
 
+    date = utils.replace_context_variables(date, context)
+
     if date == 'Today':
-        date = str(datetime.datetime.today())
+        #date = str(datetime.datetime.today())
+        date = datetime.datetime.today().strftime("%Y-%m-%d %H:%M:%S")
 
     selected_query = utils.query_json(
         context, query_name, macro).replace('date', date)

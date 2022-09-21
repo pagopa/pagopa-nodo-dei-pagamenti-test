@@ -1,4 +1,4 @@
-Feature: Flows checks for nodoInviaCarrelloRPT [PAG-1642_01]
+Feature: Flows checks for nodoInviaCarrelloRPT [PAG-1642_02]
 
     Background:
         Given systems up
@@ -223,24 +223,23 @@ Feature: Flows checks for nodoInviaCarrelloRPT [PAG-1642_01]
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
         Then retrieve session token from $nodoInviaCarrelloRPTResponse.url
 
-    Scenario: Execute nodoChiediInformazioniPagamento
+    Scenario: update column valid_to UPDATED_TIMESTAMP
         Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
-        When WISP sends rest GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-        Then verify the HTTP status code of informazioniPagamento response is 200
-        And check importo field exists in informazioniPagamento response
-        And check email field exists in informazioniPagamento response
-        And check ragioneSociale field exists in informazioniPagamento response
-        And check oggettoPagamento field exists in informazioniPagamento response
-        And check urlRedirectEC field exists in informazioniPagamento response
+        And replace iuv content with $1iuv content
+        And change date Today to remove minutes 20
+        Then update through the query DB_GEST_ANN_update1 with date $date under macro Mod1Mb on db nodo_online
+        And update through the query DB_GEST_ANN_update2 with date $date under macro Mod1Mb on db nodo_online
+        And wait 10 seconds for expiration
 
-    Scenario: Execute nodoNotificaAnnullamento
-        Given the Execute nodoChiediInformazioniPagamento scenario executed successfully
-        When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-        Then verify the HTTP status code of notificaAnnullamento response is 200
-        And wait 5 seconds for expiration
+
+    Scenario: Trigger annullamentoRptMaiRichiesteDaPm
+        Given the update column valid_to UPDATED_TIMESTAMP scenario executed successfully
+        When job annullamentoRptMaiRichiesteDaPm triggered after 10 seconds
+        Then verify the HTTP status code of annullamentoRptMaiRichiesteDaPm response is 200
+
+
 
         #DB-CHECK-STATI_RPT
-        And replace iuv content with $1iuv content
         And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO, RPT_ANNULLATA_WISP of the record at column STATO of the table STATI_RPT retrived by the query DB_GEST_ANN_stati_rpt on db nodo_online under macro Mod1Mb
         And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO, RPT_ANNULLATA_WISP of the record at column STATO of the table STATI_RPT retrived by the query DB_GEST_ANN_stati_rpt_pa1 on db nodo_online under macro Mod1Mb
 
@@ -270,7 +269,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [PAG-1642_01]
 
 
     Scenario: Execute activateIOPayment
-        Given the Execute nodoNotificaAnnullamento scenario executed successfully
+        Given the Trigger annullamentoRptMaiRichiesteDaPm scenario executed successfully
         And initial XML activateIOPayment
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd">
@@ -345,8 +344,8 @@ Feature: Flows checks for nodoInviaCarrelloRPT [PAG-1642_01]
         And check oggettoPagamento field exists in informazioniPagamento response
         And check urlRedirectEC field exists in informazioniPagamento response
         And check enteBeneficiario field exists in informazioniPagamento response
-    #And check $1iuv field exists in informazioniPagamento response
-    #And check #codicePA# field exists in informazioniPagamento response
+        #And check $1iuv field exists in informazioniPagamento response
+        #And check #codicePA# field exists in informazioniPagamento response
 
     Scenario: Execute nodoInoltroEsitoCarta
         Given the Execute nodoChiediInformazioniPagamento1 scenario executed successfully
@@ -441,7 +440,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [PAG-1642_01]
         And replace noticeNumber content with $1noticeNumber content
         And checks the value PAYING, CANCELLED, PAYMENT_SENT, PAYMENT_ACCEPTED, PAID, NOTICE_GENERATED, NOTICE_SENT, NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value $nodoInviaCarrelloRPT.identificativoCarrello, $activateIOPaymentResponse.paymentToken, $activateIOPaymentResponse.paymentToken, $activateIOPaymentResponse.paymentToken, $activateIOPaymentResponse.paymentToken, $activateIOPaymentResponse.paymentToken, $activateIOPaymentResponse.paymentToken, $activateIOPaymentResponse.paymentToken, $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_PAYMENT_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        And checks the value nodoInviaCarrelloRPT, nodoNotificaAnnullamento, activateIOPayment, nodoInoltraEsitoPagamentoCarta, nodoInoltraEsitoPagamentoCarta, sendPaymentOutcome, sendPaymentOutcome, sendPaymentOutcome, sendPaymentOutcome of the record at column INSERTED_BY of the table POSITION_PAYMENT_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+        And checks the value nodoInviaCarrelloRPT, annullamentoRptMaiRichiesteDaPm, activateIOPayment, nodoInoltraEsitoPagamentoCarta, nodoInoltraEsitoPagamentoCarta, sendPaymentOutcome, sendPaymentOutcome, sendPaymentOutcome, sendPaymentOutcome of the record at column INSERTED_BY of the table POSITION_PAYMENT_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
 
         #DB-CHECK-POSITION_PAYMENT_STATUS_SNAPSHOT
         And checks the value CANCELLED, NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb

@@ -6,7 +6,9 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_03]
 
    # [annulli_03]
    Scenario: RPT generation
-      Given RPT generation
+      Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
+      And generate 1 cart with PA #codicePA# and notice number $1noticeNumber
+      And RPT1 generation
          """
          <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
          <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
@@ -64,8 +66,8 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_03]
          <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
          <pay_i:importoTotaleDaVersare>1.50</pay_i:importoTotaleDaVersare>
          <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
-         <pay_i:identificativoUnivocoVersamento>#IuV#</pay_i:identificativoUnivocoVersamento>
-         <pay_i:codiceContestoPagamento>#carrello#</pay_i:codiceContestoPagamento>
+         <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
+         <pay_i:codiceContestoPagamento>$1carrello</pay_i:codiceContestoPagamento>
          <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
          <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
          <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -142,8 +144,8 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_03]
          <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
          <pay_i:importoTotaleDaVersare>1.50</pay_i:importoTotaleDaVersare>
          <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
-         <pay_i:identificativoUnivocoVersamento>$IuV</pay_i:identificativoUnivocoVersamento>
-         <pay_i:codiceContestoPagamento>$carrello</pay_i:codiceContestoPagamento>
+         <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
+         <pay_i:codiceContestoPagamento>$1carrello</pay_i:codiceContestoPagamento>
          <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
          <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
          <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -187,7 +189,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_03]
          <ppt:intestazioneCarrelloPPT>
          <identificativoIntermediarioPA>#codicePA#</identificativoIntermediarioPA>
          <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
-         <identificativoCarrello>$carrello</identificativoCarrello>
+         <identificativoCarrello>$1carrello</identificativoCarrello>
          </ppt:intestazioneCarrelloPPT>
          </soapenv:Header>
          <soapenv:Body>
@@ -199,14 +201,14 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_03]
          <listaRPT>
          <elementoListaRPT>
          <identificativoDominio>#codicePA#</identificativoDominio>
-         <identificativoUnivocoVersamento>$IuV</identificativoUnivocoVersamento>
-         <codiceContestoPagamento>$carrello</codiceContestoPagamento>
-         <rpt>$rptAttachment</rpt>
+         <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
+         <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
+         <rpt>$rpt1Attachment</rpt>
          </elementoListaRPT>
          <elementoListaRPT>
          <identificativoDominio>90000000001</identificativoDominio>
-         <identificativoUnivocoVersamento>$IuV</identificativoUnivocoVersamento>
-         <codiceContestoPagamento>$carrello</codiceContestoPagamento>
+         <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
+         <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
          <rpt>$rpt2Attachment</rpt>
          </elementoListaRPT>
          </listaRPT>
@@ -220,10 +222,13 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_03]
       Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
       Then retrieve session token from $nodoInviaCarrelloRPTResponse.url
 
+
    Scenario: update column valid_to UPDATED_TIMESTAMP
       Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
-      Then update through the query DB_GEST_ANN_update1 with date Today under macro Mod1Mb on db nodo_online
-      And update through the query DB_GEST_ANN_update2 with date Today under macro Mod1Mb on db nodo_online
+      And replace iuv content with $1iuv content
+      And change date Today to remove minutes 20
+      Then update through the query DB_GEST_ANN_update1 with date $date under macro Mod1Mb on db nodo_online
+      And update through the query DB_GEST_ANN_update2 with date $date under macro Mod1Mb on db nodo_online
       And wait 10 seconds for expiration
 
 
@@ -234,9 +239,9 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_03]
 
    Scenario: Trigger paInviaRT
       Given the Trigger annullamentoRptMaiRichiesteDaPm scenario executed successfully
-      When job paInviaRT triggered after 5 seconds
+      When job paInviaRt triggered after 5 seconds
       And wait 10 seconds for expiration
-      Then verify the HTTP status code of paInviaRT response is 200
+      Then verify the HTTP status code of paInviaRt response is 200
 
 
       #And wait 20 seconds for expiration
@@ -264,7 +269,13 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_03]
       And checks the value CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query DB_GEST_ANN_stati_position_payment_status on db nodo_online under macro Mod1Mb
 
       #DB-CHECK-POSITION_STATUS
-      And checks the value PAYING, INSERTED of the record at column STATUS of the table POSITION_STATUS retrived by the query DB_GEST_ANN_stati_position_payment_status on db nodo_online under macro Mod1Mb
+
+      And execution query DB_GEST_ANN_stati_position_payment_status to get value on the table POSITION_PAYMENT_STATUS, with the columns NOTICE_ID under macro Mod1Mb with db name nodo_online
+      And through the query DB_GEST_ANN_stati_position_payment_status retrieve param NOTICE_ID at position 0 and save it under the key NOTICE_ID
+      And checks the value PAYING, INSERTED of the record at column STATUS of the table POSITION_STATUS retrived by the query DB_GEST_ANN_notice_number on db nodo_online under macro Mod1Mb
+
 
       #DB-CHECK-POSITION_STATUS_SNAPSHOT
-      And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query DB_GEST_ANN_stati_position_payment_status on db nodo_online under macro Mod1Mb
+      And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query DB_GEST_ANN_notice_number on db nodo_online under macro Mod1Mb
+
+      And restore initial configurations
