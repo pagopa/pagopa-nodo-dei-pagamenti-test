@@ -38,8 +38,6 @@ Feature: syntax checks for closePayment outcome KO
     Examples:
       | elem          | value | soapUI test |
       | paymentTokens | None  | SIN_CP_01   |
-  # | totalAmount   | Empty | SIN_CP_23   |
-  # | fee           | Empty | SIN_CP_28   |
 
 
   Scenario Outline: Check syntax error on invalid body element value - paymentToken
@@ -56,7 +54,7 @@ Feature: syntax checks for closePayment outcome KO
 
 
 
-  # syntax check - No error [SIN_CP_31.2]
+  # syntax check - No error
   Scenario: activateIOPayment
     Given initial XML activateIOPayment
       """
@@ -238,7 +236,7 @@ Feature: syntax checks for closePayment outcome KO
       | timestampOperation            | 2012-04-23T18:25:43                                                                                                                                                                                                                                              | SIN_CP_34   |
       | timestampOperation            | 2012-04-23T18:25                                                                                                                                                                                                                                                 | SIN_CP_34   |
       | additionalPaymentInformations | None                                                                                                                                                                                                                                                             | SIN_CP_35   |
-      | additionalPaymentInformations | Empty                                                                                                                                                                                                                                                             | SIN_CP_36   |
+      | additionalPaymentInformations | Empty                                                                                                                                                                                                                                                            | SIN_CP_36   |
       | transactionId                 | None                                                                                                                                                                                                                                                             | SIN_CP_37   |
       | transactionId                 | Empty                                                                                                                                                                                                                                                            | SIN_CP_38   |
       | transactionId                 | abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fgh | SIN_CP_39   |
@@ -248,34 +246,67 @@ Feature: syntax checks for closePayment outcome KO
       | authorizationCode             | None                                                                                                                                                                                                                                                             | SIN_CP_43   |
       | authorizationCode             | Empty                                                                                                                                                                                                                                                            | SIN_CP_44   |
       | authorizationCode             | abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fgh | SIN_CP_45   |
+      | authorizationCode             | resOK                                                                                                                                                                                                                                                            | SIN_CP_46   |
 
 
-  # syntax check - additionalPaymentInformations vuoto [SIN_CP_36]
-  Scenario: Check syntax error on empty additionalPaymentInformations
-    Given the closePayment scenario executed successfully
-    And transactionId with None in v1/closepayment
-    And outcomePaymentGateway with None in v1/closepayment
-    And authorizationCode with None in v1/closepayment
+  # syntax check - No error with only fields paymentTokens and outcome [SIN_CP_47]
+  Scenario: check activateIOPayment OK 2
+    Given the activateIOPayment scenario executed successfully
+    When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
+    Then check outcome is OK of activateIOPayment response
+    And save activateIOPayment response in activateIOPaymentResponse
+
+  Scenario: nodoChiediInformazioniPagamento 2
+    Given the check activateIOPayment OK 2 scenario executed successfully
+    When WISP sends REST GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
+    Then verify the HTTP status code of informazioniPagamento response is 200
+
+  Scenario: closePayment 2
+    Given initial JSON v1/closepayment
+      """
+      {
+      "paymentTokens": [
+      "a3738f8bff1f4a32998fc197bd0a6b05"
+      ],
+      "outcome": "KO",
+      }
+      """
+
+  Scenario: check closePayment OK 2
+    Given the nodoChiediInformazioniPagamento 2 scenario executed successfully
+    And the closePayment 2 scenario executed successfully
+    And paymentToken with $activateIOPaymentResponse.paymentToken in v1/closepayment
     When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
-    Then verify the HTTP status code of v1/closepayment response is 400
+    Then verify the HTTP status code of v1/closepayment response is 200
+    And check esito is OK of v1/closepayment response
+
+
+  # syntax check - Il Pagamento indicato non esiste
+  Scenario Outline: Check syntax error on totalAmount and fee empty
+    Given the closePayment scenario executed successfully
+    And <elem> with <value> in v1/closepayment
+    When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
+    Then verify the HTTP status code of v1/closepayment response is 404
     And check esito is KO of v1/closepayment response
-    And check descrizione is Richiesta non valida of v1/closepayment response
+    And check descrizione is Il Pagamento indicato non esiste of v1/closepayment response
+    Examples:
+      | elem        | value | soapUI test |
+      | totalAmount | Empty | SIN_CP_23   |
+      | fee         | Empty | SIN_CP_28   |
 
 
-
-
-  # # syntax check - Richiesta non valida
-  # Scenario Outline: Check syntax error on invalid request
-  #   Given the closePayment scenario executed successfully
-  #   And <elem> with <value> in v1/closepayment
-  #   When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
-  #   Then verify the HTTP status code of v1/closepayment response is 400
-  #   And check esito is KO of v1/closepayment response
-  #   And check descrizione is Richiesta non valida of v1/closepayment response
-  #   Examples:
-  #     | elem | value | soapUI test |
-  # | totalAmount                 | 12,21 | SIN_CP_24   |   gestione della virgola non previsto nello step when(u'{sender} sends rest {method:Method} {service} to {receiver}')
-  # | fee                         | 12,32 | SIN_CP_29   |   gestione della virgola non previsto nello step when(u'{sender} sends rest {method:Method} {service} to {receiver}')
+# # syntax check - Richiesta non valida
+# Scenario Outline: Check syntax error on invalid request
+#   Given the closePayment scenario executed successfully
+#   And <elem> with <value> in v1/closepayment
+#   When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
+#   Then verify the HTTP status code of v1/closepayment response is 400
+#   And check esito is KO of v1/closepayment response
+#   And check descrizione is Richiesta non valida of v1/closepayment response
+#   Examples:
+#     | elem | value | soapUI test |
+# | totalAmount                 | 12,21 | SIN_CP_24   |   gestione della virgola non previsto nello step when(u'{sender} sends rest {method:Method} {service} to {receiver}')
+# | fee                         | 12,32 | SIN_CP_29   |   gestione della virgola non previsto nello step when(u'{sender} sends rest {method:Method} {service} to {receiver}')
 
 
 
