@@ -82,6 +82,9 @@
         "info_pagamento": "SELECT columns FROM CD_INFO_PAGAMENTO WHERE ID_SESSIONE='$sessionToken'",
         "rpt_stati": "SELECT columns FROM table_name s WHERE s.IUV = '$iuv' ORDER BY INSERTED_TIMESTAMP ASC"
     },
+    "AppIOold":{
+        "cd_info_pagamento": "SELECT s.columns FROM table_name s WHERE s.IUV = '$nodoInviaRPT.identificativoUnivocoVersamento' AND s.IDENT_DOMINIO = '#codicePA#'"
+    },
     "Mod1Mb":{
         "DB_GEST_ANN_stati_rpt": "SELECT s.columns FROM table_name s WHERE s.IUV = '$iuv' and s.ID_DOMINIO = '$nodoInviaCarrelloRPT.identificativoDominio'",
         "DB_GEST_ANN_stati_rpt_pa1": "SELECT s.columns FROM table_name s WHERE s.IUV = '$iuv' and s.ID_DOMINIO = '90000000001'",
