@@ -228,20 +228,25 @@ Feature: process tests for inoltropagamentoMb_04
       And check oggettoPagamento field exists in informazioniPagamento response
       And check urlRedirectEC field exists in informazioniPagamento response
 
-   Scenario: Execute nodoInoltraPagamentoMod2
+   Scenario: Execute nodoInoltraEsitoCarta
       Given the Execute nodoChiediInformazioniPagamento scenario executed successfully
-      When WISP sends rest POST inoltroEsito/mod2 to nodo-dei-pagamenti
+      When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
          """
          {
-         "idPagamento": "$sessionToken",
-         "identificativoPsp": "#psp#",
-         "tipoVersamento": "BBT",
-         "identificativoIntermediario": "#psp#",
-         "identificativoCanale": "${canale2}" ##???
+         "idPagamento":"$sessionToken",
+         "RRN":10638081,
+         "identificativoPsp":"#psp#",
+         "tipoVersamento":"BBT",
+         "identificativoIntermediario":"#psp#",
+         "identificativoCanale":"#canale#",
+         "importoTotalePagato":12.31,
+         "timestampOperazione":"2018-02-08T17:06:03.100+01:00",
+         "codiceAutorizzativo":"123456",
+         "esitoTransazioneCarta":"00"
          }
          """
       Then verify the HTTP status code of inoltroEsito/mod1 response is 200
-      And check esito is OK of inoltroEsito/mod2 response
+      And check esito is OK of inoltroEsito/carta response
 
       #DB-CHECK-STATI_RPT
       And replace iuv content with $1iuv content
