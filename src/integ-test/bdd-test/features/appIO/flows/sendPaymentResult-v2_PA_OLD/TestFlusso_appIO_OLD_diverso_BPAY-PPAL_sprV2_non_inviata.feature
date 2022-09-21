@@ -342,7 +342,7 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
     # DB check
     Scenario: DB check
         Given the Execute a closePayment-v2 request scenario executed successfully
-        Then verify if the records for the table RE retrived by the query select_sprV2_old on db re under macro sendPaymentResultV2 are null
+        Then verify 0 record for the table RE retrived by the query select_sprV2_old on db re under macro sendPaymentResultV2
 
 #implementare i DB check e controllare che la tabella RE sia vuota per il tipo_evento = sendPaymentResult-v2
 
