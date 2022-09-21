@@ -250,7 +250,7 @@ Feature: process tests for T095_A_ChiediStato_RPT_ESITO_SCONOSCIUTO_PSP
         Then checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ESITO_SCONOSCIUTO_PSP of nodoChiediStatoRPT response
-        And check url field not exist in nodoChiediStatoRPT response
+        And check url field not exists in nodoChiediStatoRPT response
 
     Scenario: Execute second nodoInviaCarrelloRPT request
         Given the Execute second nodoChiediStatoRPT request scenario executed successfully
