@@ -139,7 +139,7 @@ Feature: process tests for ChiediStato_RPT_RIFIUTATA_PSP
         And check url field not exists in nodoChiediStatoRPT response
 
     Scenario: Execute second nodoInviaRPT request
-        Given the Execute nodoChiediStatoRPT request executed successfully
+        Given the Execute nodoChiediStatoRPT request scenario executed successfully
         And initial XML nodoInviaRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
