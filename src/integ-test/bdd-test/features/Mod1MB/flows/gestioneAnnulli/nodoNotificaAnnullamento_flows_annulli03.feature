@@ -225,7 +225,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_03]
 
    Scenario: update column valid_to UPDATED_TIMESTAMP
       Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
-      And replace iuv content with $IuV content
+      And replace iuv content with $1iuv content
       And change date Today to remove minutes 20
       Then update through the query DB_GEST_ANN_update1 with date $date under macro Mod1Mb on db nodo_online
       And update through the query DB_GEST_ANN_update2 with date $date under macro Mod1Mb on db nodo_online
@@ -247,7 +247,6 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_03]
       #And wait 20 seconds for expiration
 
       #DB-CHECK-STATI_RPT
-
       And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO, RPT_ANNULLATA_WISP, RT_GENERATA_NODO, RT_INVIATA_PA, RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query DB_GEST_ANN_stati_rpt on db nodo_online under macro Mod1Mb
 
       And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO, RPT_ANNULLATA_WISP, RT_GENERATA_NODO, RT_INVIATA_PA, RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query DB_GEST_ANN_stati_rpt_pa1 on db nodo_online under macro Mod1Mb
@@ -270,9 +269,13 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_03]
       And checks the value CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query DB_GEST_ANN_stati_position_payment_status on db nodo_online under macro Mod1Mb
 
       #DB-CHECK-POSITION_STATUS
-      And checks the value PAYING, INSERTED of the record at column STATUS of the table POSITION_STATUS retrived by the query DB_GEST_ANN_stati_position_payment_status on db nodo_online under macro Mod1Mb
+
+      And execution query DB_GEST_ANN_stati_position_payment_status to get value on the table POSITION_PAYMENT_STATUS, with the columns NOTICE_ID under macro Mod1Mb with db name nodo_online
+      And through the query DB_GEST_ANN_stati_position_payment_status retrieve param NOTICE_ID at position 0 and save it under the key NOTICE_ID
+      And checks the value PAYING, INSERTED of the record at column STATUS of the table POSITION_STATUS retrived by the query DB_GEST_ANN_notice_number on db nodo_online under macro Mod1Mb
+
 
       #DB-CHECK-POSITION_STATUS_SNAPSHOT
-      And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query DB_GEST_ANN_stati_position_payment_status on db nodo_online under macro Mod1Mb
+      And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query DB_GEST_ANN_notice_number on db nodo_online under macro Mod1Mb
 
       And restore initial configurations
