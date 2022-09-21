@@ -208,7 +208,6 @@ Feature: semantic checks for checkPosition outcome OK
     # And check positionslist contains PAYING of checkPosition response
     # And check positionslist contains PAID of checkPosition response
     # And check positionslist contains NOTIFIED of checkPosition response
-    # And check positionslist field exists in checkPosition response
 
     # SEM_CPO_04
     Scenario: Wrong configuration 1
