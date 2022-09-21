@@ -166,7 +166,7 @@ Feature: semantic checks for checkPosition outcome OK
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
         Then verify the HTTP status code of checkPosition response is 200
         And check outcome is KO of checkPosition response
-        And check description is PAYING of checkPosition response
+        And check positionslist contains PAYING of checkPosition response
         And updates through the query select_activatev2 of the table POSITION_STATUS_SNAPSHOT the parameter STATUS with PAID under macro NewMod1 on db nodo_online
 
     Scenario: Code 200 KO (part 3)
@@ -174,7 +174,7 @@ Feature: semantic checks for checkPosition outcome OK
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
         Then verify the HTTP status code of checkPosition response is 200
         And check outcome is KO of checkPosition response
-        And check description is PAID of checkPosition response
+        And check positionslist contains PAID of checkPosition response
         And updates through the query select_activatev2 of the table POSITION_STATUS_SNAPSHOT the parameter STATUS with NOTIFIED under macro NewMod1 on db nodo_online
 
     Scenario: Code 200 KO (part 4)
@@ -183,7 +183,7 @@ Feature: semantic checks for checkPosition outcome OK
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
         Then verify the HTTP status code of checkPosition response is 200
         And check outcome is KO of checkPosition response
-        And check description is NOTIFIED of checkPosition response
+        And check positionslist contains NOTIFIED of checkPosition response
 
     # SEM_CPO_04
     Scenario: Wrong configuration 1
