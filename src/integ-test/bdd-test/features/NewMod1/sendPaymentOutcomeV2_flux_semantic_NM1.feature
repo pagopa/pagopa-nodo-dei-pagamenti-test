@@ -112,12 +112,13 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
             """
         And EC replies to nodo-dei-pagamenti with the paGetPayment
 
+    @skip
     Scenario: closePaymentV2
         Given initial json v2/closepayment
             """
             {
                 "paymentTokens": [
-                    "12345678901234567890123456789012"
+                    "$activatePaymentNoticeV2Response.paymentToken"
                 ],
                 "outcome": "OK",
                 "idPSP": "#psp#",
@@ -134,6 +135,31 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
             }
             """
 
+    @skip
+    Scenario: closePaymentV2 with 2 paymentToken
+        Given initial json v2/closepayment
+            """
+            {
+                "paymentTokens": [
+                    "$activatePaymentNoticeV2Response.paymentToken",
+                    "$activatePaymentNoticeV2Response1.paymentToken"
+                ],
+                "outcome": "OK",
+                "idPSP": "#psp#",
+                "paymentMethod": "TPAY",
+                "idBrokerPSP": "#id_broker_psp#",
+                "idChannel": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
+                "transactionId": "#transaction_id#",
+                "totalAmount": 22,
+                "fee": 2,
+                "timestampOperation": "2012-04-23T18:25:43Z",
+                "additionalPaymentInformations": {
+                    "key": "12345678"
+                }
+            }
+            """
+
+    @skip
     Scenario: sendPaymentOutcomeV2
         Given initial XML sendPaymentOutcomeV2
             """
@@ -146,7 +172,60 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
             <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
             <password>#password#</password>
             <paymentTokens>
-            <paymentToken>12345678901234567890123456789012</paymentToken>
+            <paymentToken>$activatePaymentNoticeV2Response.paymentToken</paymentToken>
+            </paymentTokens>
+            <outcome>OK</outcome>
+            <!--Optional:-->
+            <details>
+            <paymentMethod>creditCard</paymentMethod>
+            <!--Optional:-->
+            <paymentChannel>app</paymentChannel>
+            <fee>2.00</fee>
+            <!--Optional:-->
+            <payer>
+            <uniqueIdentifier>
+            <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
+            <entityUniqueIdentifierValue>77777777777_01</entityUniqueIdentifierValue>
+            </uniqueIdentifier>
+            <fullName>name</fullName>
+            <!--Optional:-->
+            <streetName>street</streetName>
+            <!--Optional:-->
+            <civicNumber>civic</civicNumber>
+            <!--Optional:-->
+            <postalCode>postal</postalCode>
+            <!--Optional:-->
+            <city>city</city>
+            <!--Optional:-->
+            <stateProvinceRegion>state</stateProvinceRegion>
+            <!--Optional:-->
+            <country>IT</country>
+            <!--Optional:-->
+            <e-mail>prova@test.it</e-mail>
+            </payer>
+            <applicationDate>2021-12-12</applicationDate>
+            <transferDate>2021-12-11</transferDate>
+            </details>
+            </nod:sendPaymentOutcomeV2Request>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+
+    @skip
+    Scenario: sendPaymentOutcomeV2 with 2 paymentToken
+        Given initial XML sendPaymentOutcomeV2
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <nod:sendPaymentOutcomeV2Request>
+            <idPSP>#psp#</idPSP>
+            <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
+            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
+            <password>#password#</password>
+            <paymentTokens>
+            <paymentToken>$activatePaymentNoticeV2Response.paymentToken</paymentToken>
+            <paymentToken>$activatePaymentNoticeV2Response1.paymentToken</paymentToken>
             </paymentTokens>
             <outcome>OK</outcome>
             <!--Optional:-->
@@ -213,7 +292,6 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
     Scenario: SEM_SPO_9.1 (part 3)
         Given the SEM_SPO_9.1 (part 2) scenario executed successfully
         And the closePaymentV2 scenario executed successfully
-        And paymentToken with $activatePaymentNoticeV2Response.paymentToken in v2/closepayment
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
@@ -221,57 +299,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
 
     Scenario: SEM_SPO_9.1 (part 4)
         Given the SEM_SPO_9.1 (part 3) scenario executed successfully
-        And initial XML sendPaymentOutcomeV2
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <nod:sendPaymentOutcomeV2Request>
-            <idPSP>#psp#</idPSP>
-            <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
-            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
-            <password>#password#</password>
-            <paymentTokens>
-            <paymentToken>$activatePaymentNoticeV2Response.paymentToken</paymentToken>
-            <paymentToken>$activatePaymentNoticeV2Response1.paymentToken</paymentToken>
-            </paymentTokens>
-            <outcome>OK</outcome>
-            <!--Optional:-->
-            <details>
-            <paymentMethod>creditCard</paymentMethod>
-            <!--Optional:-->
-            <paymentChannel>app</paymentChannel>
-            <fee>2.00</fee>
-            <!--Optional:-->
-            <payer>
-            <uniqueIdentifier>
-            <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-            <entityUniqueIdentifierValue>77777777777_01</entityUniqueIdentifierValue>
-            </uniqueIdentifier>
-            <fullName>name</fullName>
-            <!--Optional:-->
-            <streetName>street</streetName>
-            <!--Optional:-->
-            <civicNumber>civic</civicNumber>
-            <!--Optional:-->
-            <postalCode>postal</postalCode>
-            <!--Optional:-->
-            <city>city</city>
-            <!--Optional:-->
-            <stateProvinceRegion>state</stateProvinceRegion>
-            <!--Optional:-->
-            <country>IT</country>
-            <!--Optional:-->
-            <e-mail>prova@test.it</e-mail>
-            </payer>
-            <applicationDate>2021-12-12</applicationDate>
-            <transferDate>2021-12-11</transferDate>
-            </details>
-            </nod:sendPaymentOutcomeV2Request>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
+        And the sendPaymentOutcomeV2 with 2 paymentToken scenario executed successfully        When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcomeV2 response
         And check faultCode is PPT_TOKEN_SCONOSCIUTO of sendPaymentOutcomeV2 response
 
@@ -326,7 +354,6 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
     Scenario: SEM_SPO_13.1 (part 3)
         Given the SEM_SPO_13.1 (part 2) scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
-        And paymentToken with $activatePaymentNoticeV2Response.paymentToken in sendPaymentOutcomeV2
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcomeV2 response
         And check faultCode is PPT_PAGAMENTO_DUPLICATO of sendPaymentOutcomeV2 response
@@ -342,7 +369,6 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
     Scenario: SEM_SPO_21 (part 2)
         Given the SEM_SPO_21 (part 1) scenario executed successfully
         And the closePaymentV2 scenario executed successfully
-        And paymentToken with $activatePaymentNoticeV2Response.paymentToken in v2/closepayment
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
@@ -351,7 +377,6 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
     Scenario: SEM_SPO_21 (part 3)
         Given the SEM_SPO_21 (part 2) scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
-        And paymentToken with $activatePaymentNoticeV2Response.paymentToken in sendPaymentOutcomeV2
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
         And checks the value PAYING,PAID,NOTIFIED of the record at column STATUS of the table POSITION_STATUS retrived by the query noticeid_pa on db nodo_online under macro NewMod1
@@ -374,7 +399,6 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
     Scenario: SEM_SPO_23 (part 2)
         Given the SEM_SPO_23 (part 1) scenario executed successfully
         And the closePaymentV2 scenario executed successfully
-        And paymentToken with $activatePaymentNoticeV2Response.paymentToken in v2/closepayment
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
@@ -383,13 +407,11 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
     Scenario: SEM_SPO_23 (part 3)
         Given the SEM_SPO_23 (part 2) scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
-        And paymentToken with $activatePaymentNoticeV2Response.paymentToken in sendPaymentOutcomeV2
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
 
     Scenario: SEM_SPO_23 (part 4)
         Given the SEM_SPO_23 (part 3) scenario executed successfully
-        And paymentToken with $activatePaymentNoticeV2Response.paymentToken in sendPaymentOutcomeV2
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcomeV2 response
         And check faultCode is PPT_ESITO_GIA_ACQUISITO of sendPaymentOutcomeV2 response
@@ -415,27 +437,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
 
     Scenario: SEM_SPO_23.1 (part 3)
         Given the SEM_SPO_23.1 (part 2) scenario executed successfully
-        And initial json v2/closepayment
-            """
-            {
-                "paymentTokens": [
-                    "$activatePaymentNoticeV2Response.paymentToken",
-                    "$activatePaymentNoticeV2Response1.paymentToken"
-                ],
-                "outcome": "OK",
-                "idPSP": "#psp#",
-                "paymentMethod": "TPAY",
-                "idBrokerPSP": "#id_broker_psp#",
-                "idChannel": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
-                "transactionId": "#transaction_id#",
-                "totalAmount": 22,
-                "fee": 2,
-                "timestampOperation": "2012-04-23T18:25:43Z",
-                "additionalPaymentInformations": {
-                    "key": "12345678"
-                }
-            }
-            """
+        And the closePaymentV2 with 2 paymentToken scenario executed successfully
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
@@ -443,56 +445,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
 
     Scenario: SEM_SPO_23.1 (part 4)
         Given the SEM_SPO_23.1 (part 3) scenario executed successfully
-        And initial XML sendPaymentOutcomeV2
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <nod:sendPaymentOutcomeV2Request>
-            <idPSP>#psp#</idPSP>
-            <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
-            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
-            <password>#password#</password>
-            <paymentTokens>
-            <paymentToken>$activatePaymentNoticeV2Response.paymentToken</paymentToken>
-            <paymentToken>$activatePaymentNoticeV2Response1.paymentToken</paymentToken>
-            </paymentTokens>
-            <outcome>OK</outcome>
-            <!--Optional:-->
-            <details>
-            <paymentMethod>creditCard</paymentMethod>
-            <!--Optional:-->
-            <paymentChannel>app</paymentChannel>
-            <fee>2.00</fee>
-            <!--Optional:-->
-            <payer>
-            <uniqueIdentifier>
-            <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-            <entityUniqueIdentifierValue>77777777777_01</entityUniqueIdentifierValue>
-            </uniqueIdentifier>
-            <fullName>name</fullName>
-            <!--Optional:-->
-            <streetName>street</streetName>
-            <!--Optional:-->
-            <civicNumber>civic</civicNumber>
-            <!--Optional:-->
-            <postalCode>postal</postalCode>
-            <!--Optional:-->
-            <city>city</city>
-            <!--Optional:-->
-            <stateProvinceRegion>state</stateProvinceRegion>
-            <!--Optional:-->
-            <country>IT</country>
-            <!--Optional:-->
-            <e-mail>prova@test.it</e-mail>
-            </payer>
-            <applicationDate>2021-12-12</applicationDate>
-            <transferDate>2021-12-11</transferDate>
-            </details>
-            </nod:sendPaymentOutcomeV2Request>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
+        And the sendPaymentOutcomeV2 with 2 paymentToken scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
 
@@ -514,7 +467,6 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
     Scenario: SEM_SPO_28 (part 2)
         Given the SEM_SPO_28 (part 1) scenario executed successfully
         And the closePaymentV2 scenario executed successfully
-        And paymentToken with $activatePaymentNoticeV2Response.paymentToken in v2/closepayment
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
@@ -523,7 +475,6 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
     Scenario: SEM_SPO_28 (part 3)
         Given the SEM_SPO_28 (part 2) scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
-        And paymentToken with $activatePaymentNoticeV2Response.paymentToken in sendPaymentOutcomeV2
         And outcome with KO in sendPaymentOutcomeV2
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcomeV2 response
@@ -541,7 +492,6 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
     Scenario: SEM_SPO_29 (part 2)
         Given the SEM_SPO_29 (part 1) scenario executed successfully
         And the closePaymentV2 scenario executed successfully
-        And paymentToken with $activatePaymentNoticeV2Response.paymentToken in v2/closepayment
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
@@ -550,7 +500,6 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
     Scenario: SEM_SPO_29 (part 3)
         Given the SEM_SPO_29 (part 2) scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
-        And paymentToken with $activatePaymentNoticeV2Response.paymentToken in sendPaymentOutcomeV2
         And fee with 3.00 in sendPaymentOutcomeV2
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcomeV2 response
@@ -576,27 +525,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
 
     Scenario: SEM_SPO_30 (part 3)
         Given the SEM_SPO_30 (part 2) scenario executed successfully
-        And initial json v2/closepayment
-            """
-            {
-                "paymentTokens": [
-                    "$activatePaymentNoticeV2Response.paymentToken",
-                    "$activatePaymentNoticeV2Response1.paymentToken"
-                ],
-                "outcome": "OK",
-                "idPSP": "#psp#",
-                "paymentMethod": "TPAY",
-                "idBrokerPSP": "#id_broker_psp#",
-                "idChannel": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
-                "transactionId": "#transaction_id#",
-                "totalAmount": 22,
-                "fee": 2,
-                "timestampOperation": "2012-04-23T18:25:43Z",
-                "additionalPaymentInformations": {
-                    "key": "12345678"
-                }
-            }
-            """
+        And the closePaymentV2 with 2 paymentToken scenario executed successfully
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
@@ -604,56 +533,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
 
     Scenario: SEM_SPO_30 (part 4)
         Given the SEM_SPO_30 (part 3) scenario executed successfully
-        And initial XML sendPaymentOutcomeV2
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <nod:sendPaymentOutcomeV2Request>
-            <idPSP>#psp#</idPSP>
-            <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
-            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
-            <password>#password#</password>
-            <paymentTokens>
-            <paymentToken>$activatePaymentNoticeV2Response.paymentToken</paymentToken>
-            <paymentToken>$activatePaymentNoticeV2Response1.paymentToken</paymentToken>
-            </paymentTokens>
-            <outcome>OK</outcome>
-            <!--Optional:-->
-            <details>
-            <paymentMethod>creditCard</paymentMethod>
-            <!--Optional:-->
-            <paymentChannel>app</paymentChannel>
-            <fee>2.00</fee>
-            <!--Optional:-->
-            <payer>
-            <uniqueIdentifier>
-            <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-            <entityUniqueIdentifierValue>77777777777_01</entityUniqueIdentifierValue>
-            </uniqueIdentifier>
-            <fullName>name</fullName>
-            <!--Optional:-->
-            <streetName>street</streetName>
-            <!--Optional:-->
-            <civicNumber>civic</civicNumber>
-            <!--Optional:-->
-            <postalCode>postal</postalCode>
-            <!--Optional:-->
-            <city>city</city>
-            <!--Optional:-->
-            <stateProvinceRegion>state</stateProvinceRegion>
-            <!--Optional:-->
-            <country>IT</country>
-            <!--Optional:-->
-            <e-mail>prova@test.it</e-mail>
-            </payer>
-            <applicationDate>2021-12-12</applicationDate>
-            <transferDate>2021-12-11</transferDate>
-            </details>
-            </nod:sendPaymentOutcomeV2Request>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
+        And the sendPaymentOutcomeV2 with 2 paymentToken scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
         And updates through the query update_PAYMENT_TOKEN of the table POSITION_PAYMENT the parameter OUTCOME with OO under macro NewMod1 on db nodo_online
@@ -685,508 +565,442 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
 
     Scenario: SEM_SPO_31 (part 3)
         Given the SEM_SPO_31 (part 2) scenario executed successfully
-        And initial json v2/closepayment
-            """
-            {
-                "paymentTokens": [
-                    "$activatePaymentNoticeV2Response.paymentToken",
-                    "$activatePaymentNoticeV2Response1.paymentToken"
-                ],
-                "outcome": "OK",
-                "idPSP": "#psp#",
-                "paymentMethod": "TPAY",
-                "idBrokerPSP": "#id_broker_psp#",
-                "idChannel": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
-                "transactionId": "#transaction_id#",
-                "totalAmount": 22,
-                "fee": 2,
-                "timestampOperation": "2012-04-23T18:25:43Z",
-                "additionalPaymentInformations": {
-                    "key": "12345678"
-                }
-            }
-            """
+        And the closePaymentV2 with 2 paymentToken scenario executed successfully
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
         And wait 5 seconds for expiration
-        And updates through the query update_activatev2 of the table POSITION_STATUS_SNAPSHOT the parameter NOTICE_ID with 310011451292109621 under macro NewMod1 on db nodo_online
+        And updates through the query update_activatev2 of the table POSITION_STATUS_SNAPSHOT the parameter NOTICE_ID with 311011451292109621 under macro NewMod1 on db nodo_online
 
     Scenario: SEM_SPO_31 (part 4)
         Given the SEM_SPO_31 (part 3) scenario executed successfully
-        And initial XML sendPaymentOutcomeV2
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <nod:sendPaymentOutcomeV2Request>
-            <idPSP>#psp#</idPSP>
-            <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
-            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
-            <password>#password#</password>
-            <paymentTokens>
-            <paymentToken>$activatePaymentNoticeV2Response.paymentToken</paymentToken>
-            <paymentToken>$activatePaymentNoticeV2Response1.paymentToken</paymentToken>
-            </paymentTokens>
-            <outcome>OK</outcome>
-            <!--Optional:-->
-            <details>
-            <paymentMethod>creditCard</paymentMethod>
-            <!--Optional:-->
-            <paymentChannel>app</paymentChannel>
-            <fee>2.00</fee>
-            <!--Optional:-->
-            <payer>
-            <uniqueIdentifier>
-            <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-            <entityUniqueIdentifierValue>77777777777_01</entityUniqueIdentifierValue>
-            </uniqueIdentifier>
-            <fullName>name</fullName>
-            <!--Optional:-->
-            <streetName>street</streetName>
-            <!--Optional:-->
-            <civicNumber>civic</civicNumber>
-            <!--Optional:-->
-            <postalCode>postal</postalCode>
-            <!--Optional:-->
-            <city>city</city>
-            <!--Optional:-->
-            <stateProvinceRegion>state</stateProvinceRegion>
-            <!--Optional:-->
-            <country>IT</country>
-            <!--Optional:-->
-            <e-mail>prova@test.it</e-mail>
-            </payer>
-            <applicationDate>2021-12-12</applicationDate>
-            <transferDate>2021-12-11</transferDate>
-            </details>
-            </nod:sendPaymentOutcomeV2Request>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
+        And the sendPaymentOutcomeV2 with 2 paymentToken scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcomeV2 response
         And check faultCode is PPT_PAGAMENTO_SCONOSCIUTO of sendPaymentOutcomeV2 response
         And updates through the query update_noticeidrandom of the table POSITION_STATUS_SNAPSHOT the parameter NOTICE_ID with $activatePaymentNoticeV2.noticeNumber under macro NewMod1 on db nodo_online
 
-# # SEM_SPO_32
+    # SEM_SPO_32
 
-# Scenario: SEM_SPO_32 (part 1)
-#     Given the activatePaymentNoticeV2 scenario executed successfully
-#     When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-#     Then check outcome is OK of activatePaymentNoticeV2 response
-#     And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response
+    Scenario: SEM_SPO_32 (part 1)
+        Given the activatePaymentNoticeV2 scenario executed successfully
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response
 
-# Scenario: SEM_SPO_32 (part 2)
-#     Given the SEM_SPO_32 (part 1) scenario executed successfully
-#     And the activatePaymentNoticeV2 scenario executed successfully
-#     And noticeNumber with 310$iuv1 in activatePaymentNoticeV2
-#     And idempotencyKey with #idempotency_key1# in activatePaymentNoticeV2
-#     When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-#     Then check outcome is OK of activatePaymentNoticeV2 response
-#     And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response1
+    Scenario: SEM_SPO_32 (part 2)
+        Given the SEM_SPO_32 (part 1) scenario executed successfully
+        And noticeNumber with 311$iuv1 in activatePaymentNoticeV2
+        And creditorReferenceId with 11$iuv1 in paGetPayment
+        And EC replies to nodo-dei-pagamenti with the paGetPayment
+        And random idempotencyKey having $activatePaymentNoticeV2.idPSP as idPSP in activatePaymentNoticeV2
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response1
 
-# Scenario: SEM_SPO_32 (part 3)
-#     Given the SEM_SPO_32 (part 2) scenario executed successfully
-#     And the closePaymentV2 scenario executed successfully
-#     When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
-#     Then verify the HTTP status code of v2/closepayment response is 200
-#     And check outcome is OK of v2/closepayment response
-#     And update through the query update_token_pa of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with CANCELLED under macro NewMod1 on db nodo_online
-#     And update through the query update_token1_pa of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with CANCELLED under macro NewMod1 on db nodo_online
-#     And wait 10 seconds for expiration
+    Scenario: SEM_SPO_32 (part 3)
+        Given the SEM_SPO_32 (part 2) scenario executed successfully
+        And the closePaymentV2 with 2 paymentToken scenario executed successfully
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 200
+        And check outcome is OK of v2/closepayment response
+        And wait 5 seconds for expiration
+        And updates through the query update_PAYMENT_TOKEN of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with CANCELLED under macro NewMod1 on db nodo_online
+        And updates through the query update_PAYMENT_TOKEN_1 of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with CANCELLED under macro NewMod1 on db nodo_online
 
-# Scenario: SEM_SPO_32 (part 4)
-#     Given the SEM_SPO_32 (part 3) scenario executed successfully
-#     And the sendPaymentOutcomeV2 scenario executed successfully
-#     When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
-#     Then check outcome is KO of sendPaymentOutcomeV2 response
-#     And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcomeV2 response
+    Scenario: SEM_SPO_32 (part 4)
+        Given the SEM_SPO_32 (part 3) scenario executed successfully
+        And the sendPaymentOutcomeV2 with 2 paymentToken scenario executed successfully
+        When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
+        Then check outcome is KO of sendPaymentOutcomeV2 response
+        And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcomeV2 response
 
-# # SEM_SPO_33
+    # SEM_SPO_33
 
-# Scenario: SEM_SPO_33 (part 1)
-#     Given the activatePaymentNoticeV2 scenario executed successfully
-#     When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-#     Then check outcome is OK of activatePaymentNoticeV2 response
-#     And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response
+    Scenario: SEM_SPO_33 (part 1)
+        Given the activatePaymentNoticeV2 scenario executed successfully
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response
 
-# Scenario: SEM_SPO_33 (part 2)
-#     Given the SEM_SPO_33 (part 1) scenario executed successfully
-#     And the activatePaymentNoticeV2 scenario executed successfully
-#     And noticeNumber with 310$iuv1 in activatePaymentNoticeV2
-#     And idempotencyKey with #idempotency_key1# in activatePaymentNoticeV2
-#     When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-#     Then check outcome is OK of activatePaymentNoticeV2 response
-#     And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response1
+    Scenario: SEM_SPO_33 (part 2)
+        Given the SEM_SPO_33 (part 1) scenario executed successfully
+        And noticeNumber with 311$iuv1 in activatePaymentNoticeV2
+        And creditorReferenceId with 11$iuv1 in paGetPayment
+        And EC replies to nodo-dei-pagamenti with the paGetPayment
+        And random idempotencyKey having $activatePaymentNoticeV2.idPSP as idPSP in activatePaymentNoticeV2
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response1
 
-# Scenario: SEM_SPO_33 (part 3)
-#     Given the SEM_SPO_33 (part 2) scenario executed successfully
-#     And the closePaymentV2 scenario executed successfully
-#     When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
-#     Then verify the HTTP status code of v2/closepayment response is 200
-#     And check outcome is OK of v2/closepayment response
-#     And update through the query update_token_pa of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_ACCEPTED under macro NewMod1 on db nodo_online
-#     And update through the query update_token1_pa of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_ACCEPTED under macro NewMod1 on db nodo_online
-#     And wait 10 seconds for expiration
+    Scenario: SEM_SPO_33 (part 3)
+        Given the SEM_SPO_33 (part 2) scenario executed successfully
+        And the closePaymentV2 with 2 paymentToken scenario executed successfully
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 200
+        And check outcome is OK of v2/closepayment response
+        And wait 5 seconds for expiration
+        And updates through the query update_PAYMENT_TOKEN of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_ACCEPTED under macro NewMod1 on db nodo_online
+        And updates through the query update_PAYMENT_TOKEN_1 of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_ACCEPTED under macro NewMod1 on db nodo_online
 
-# Scenario: SEM_SPO_33 (part 4)
-#     Given the SEM_SPO_33 (part 3) scenario executed successfully
-#     And the sendPaymentOutcomeV2 scenario executed successfully
-#     When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
-#     Then check outcome is OK of sendPaymentOutcomeV2 response
+    Scenario: SEM_SPO_33 (part 4)
+        Given the SEM_SPO_33 (part 3) scenario executed successfully
+        And the sendPaymentOutcomeV2 with 2 paymentToken scenario executed successfully
+        When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of sendPaymentOutcomeV2 response
 
-# # SEM_SPO_33.1
+    # SEM_SPO_33.1
 
-# Scenario: SEM_SPO_33.1 (part 1)
-#     Given the activatePaymentNoticeV2 scenario executed successfully
-#     When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-#     Then check outcome is OK of activatePaymentNoticeV2 response
-#     And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response
+    Scenario: SEM_SPO_33.1 (part 1)
+        Given the activatePaymentNoticeV2 scenario executed successfully
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response
 
-# Scenario: SEM_SPO_33.1 (part 2)
-#     Given the SEM_SPO_33.1 (part 1) scenario executed successfully
-#     And the activatePaymentNoticeV2 scenario executed successfully
-#     And noticeNumber with 310$iuv1 in activatePaymentNoticeV2
-#     And idempotencyKey with #idempotency_key1# in activatePaymentNoticeV2
-#     When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-#     Then check outcome is OK of activatePaymentNoticeV2 response
-#     And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response1
+    Scenario: SEM_SPO_33.1 (part 2)
+        Given the SEM_SPO_33.1 (part 1) scenario executed successfully
+        And noticeNumber with 311$iuv1 in activatePaymentNoticeV2
+        And creditorReferenceId with 11$iuv1 in paGetPayment
+        And EC replies to nodo-dei-pagamenti with the paGetPayment
+        And random idempotencyKey having $activatePaymentNoticeV2.idPSP as idPSP in activatePaymentNoticeV2
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response1
 
-# Scenario: SEM_SPO_33.1 (part 3)
-#     Given the SEM_SPO_33.1 (part 2) scenario executed successfully
-#     And the closePaymentV2 scenario executed successfully
-#     When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
-#     Then verify the HTTP status code of v2/closepayment response is 200
-#     And check outcome is OK of v2/closepayment response
-#     And update through the query update_token_pa of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_UNKNOWN under macro NewMod1 on db nodo_online
-#     And update through the query update_token1_pa of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_UNKNOWN under macro NewMod1 on db nodo_online
-#     And wait 10 seconds for expiration
+    Scenario: SEM_SPO_33.1 (part 3)
+        Given the SEM_SPO_33.1 (part 2) scenario executed successfully
+        And the closePaymentV2 with 2 paymentToken scenario executed successfully
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 200
+        And check outcome is OK of v2/closepayment response
+        And wait 5 seconds for expiration
+        And updates through the query update_PAYMENT_TOKEN of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_UNKNOWN under macro NewMod1 on db nodo_online
+        And updates through the query update_PAYMENT_TOKEN_1 of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_UNKNOWN under macro NewMod1 on db nodo_online
 
-# Scenario: SEM_SPO_33.1 (part 4)
-#     Given the SEM_SPO_33.1 (part 3) scenario executed successfully
-#     And the sendPaymentOutcomeV2 scenario executed successfully
-#     When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
-#     Then check outcome is OK of sendPaymentOutcomeV2 response
-#     And checks the value None of the record at column ID of the table NMU_CANCEL_UTILITY retrived by the query transationid on db nodo_online under macro NewMod1
+    Scenario: SEM_SPO_33.1 (part 4)
+        Given the SEM_SPO_33.1 (part 3) scenario executed successfully
+        And the sendPaymentOutcomeV2 with 2 paymentToken scenario executed successfully
+        When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of sendPaymentOutcomeV2 response
+        And verify 0 record for the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
 
-# # SEM_SPO_35
+    # SEM_SPO_35
 
-# Scenario: SEM_SPO_35 (part 1)
-#     Given the activatePaymentNoticeV2 scenario executed successfully
-#     When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-#     Then check outcome is OK of activatePaymentNoticeV2 response
-#     And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response
+    Scenario: SEM_SPO_35 (part 1)
+        Given the activatePaymentNoticeV2 scenario executed successfully
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response
 
-# Scenario: SEM_SPO_35 (part 2)
-#     Given the SEM_SPO_35 (part 1) scenario executed successfully
-#     And the activatePaymentNoticeV2 scenario executed successfully
-#     And noticeNumber with 310$iuv1 in activatePaymentNoticeV2
-#     And idempotencyKey with #idempotency_key1# in activatePaymentNoticeV2
-#     When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-#     Then check outcome is OK of activatePaymentNoticeV2 response
-#     And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response1
+    Scenario: SEM_SPO_35 (part 2)
+        Given the SEM_SPO_35 (part 1) scenario executed successfully
+        And noticeNumber with 311$iuv1 in activatePaymentNoticeV2
+        And creditorReferenceId with 11$iuv1 in paGetPayment
+        And EC replies to nodo-dei-pagamenti with the paGetPayment
+        And random idempotencyKey having $activatePaymentNoticeV2.idPSP as idPSP in activatePaymentNoticeV2
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response1
 
-# Scenario: SEM_SPO_35 (part 3)
-#     Given the SEM_SPO_35 (part 2) scenario executed successfully
-#     And the closePaymentV2 scenario executed successfully
-#     When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
-#     Then verify the HTTP status code of v2/closepayment response is 200
-#     And check outcome is OK of v2/closepayment response
-#     And update through the query update_token_pa of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_SENT under macro NewMod1 on db nodo_online
-#     And update through the query update_token1_pa of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_RESERVED under macro NewMod1 on db nodo_online
-#     And wait 10 seconds for expiration
+    Scenario: SEM_SPO_35 (part 3)
+        Given the SEM_SPO_35 (part 2) scenario executed successfully
+        And the closePaymentV2 with 2 paymentToken scenario executed successfully
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 200
+        And check outcome is OK of v2/closepayment response
+        And wait 5 seconds for expiration
+        And updates through the query update_PAYMENT_TOKEN of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_SENT under macro NewMod1 on db nodo_online
+        And updates through the query update_PAYMENT_TOKEN_1 of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_RESERVED under macro NewMod1 on db nodo_online
 
-# Scenario: SEM_SPO_35 (part 4)
-#     Given the SEM_SPO_35 (part 3) scenario executed successfully
-#     And the sendPaymentOutcomeV2 scenario executed successfully
-#     When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
-#     Then check outcome is KO of sendPaymentOutcomeV2 response
-#     And check faultCode is PPT_SEMANTICA of sendPaymentOutcomeV2 response
-#     And check description is Outcome non accettabile per stato pagamento of sendPaymentOutcomeV2 response
+    Scenario: SEM_SPO_35 (part 4)
+        Given the SEM_SPO_35 (part 3) scenario executed successfully
+        And the sendPaymentOutcomeV2 with 2 paymentToken scenario executed successfully
+        When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
+        Then check outcome is KO of sendPaymentOutcomeV2 response
+        And check faultCode is PPT_SEMANTICA of sendPaymentOutcomeV2 response
+        And check description is Outcome non accettabile per stato pagamento of sendPaymentOutcomeV2 response
 
-# # SEM_SPO_35.1
+    # SEM_SPO_35.1
 
-# Scenario: SEM_SPO_35.1 (part 1)
-#     Given the activatePaymentNoticeV2 scenario executed successfully
-#     When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-#     Then check outcome is OK of activatePaymentNoticeV2 response
-#     And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response
+    Scenario: SEM_SPO_35.1 (part 1)
+        Given the activatePaymentNoticeV2 scenario executed successfully
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response
 
-# Scenario: SEM_SPO_35.1 (part 2)
-#     Given the SEM_SPO_35.1 (part 1) scenario executed successfully
-#     And the activatePaymentNoticeV2 scenario executed successfully
-#     And noticeNumber with 310$iuv1 in activatePaymentNoticeV2
-#     And idempotencyKey with #idempotency_key1# in activatePaymentNoticeV2
-#     When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-#     Then check outcome is OK of activatePaymentNoticeV2 response
-#     And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response1
+    Scenario: SEM_SPO_35.1 (part 2)
+        Given the SEM_SPO_35.1 (part 1) scenario executed successfully
+        And noticeNumber with 311$iuv1 in activatePaymentNoticeV2
+        And creditorReferenceId with 11$iuv1 in paGetPayment
+        And EC replies to nodo-dei-pagamenti with the paGetPayment
+        And random idempotencyKey having $activatePaymentNoticeV2.idPSP as idPSP in activatePaymentNoticeV2
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response1
 
-# Scenario: SEM_SPO_35.1 (part 3)
-#     Given the SEM_SPO_35.1 (part 2) scenario executed successfully
-#     And the closePaymentV2 scenario executed successfully
-#     When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
-#     Then verify the HTTP status code of v2/closepayment response is 200
-#     And check outcome is OK of v2/closepayment response
-#     And update through the query update_noticeid_pa of the table POSITION_STATUS_SNAPSHOT the parameter ACTIVATION_PENDING with Y under macro NewMod1 on db nodo_online
-#     And wait 10 seconds for expiration
+    Scenario: SEM_SPO_35.1 (part 3)
+        Given the SEM_SPO_35.1 (part 2) scenario executed successfully
+        And the closePaymentV2 with 2 paymentToken scenario executed successfully
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 200
+        And wait 5 seconds for expiration
+        And check outcome is OK of v2/closepayment response
+        And updates through the query update_activatev2 of the table POSITION_STATUS_SNAPSHOT the parameter ACTIVATION_PENDING with Y under macro NewMod1 on db nodo_online
 
-# Scenario: SEM_SPO_35.1 (part 4)
-#     Given the SEM_SPO_35.1 (part 3) scenario executed successfully
-#     And the sendPaymentOutcomeV2 scenario executed successfully
-#     When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
-#     Then check outcome is KO of sendPaymentOutcomeV2 response
-#     And check faultCode is PPT_SEMANTICA of sendPaymentOutcomeV2 response
-#     And check description is Outcome non accettabile per stato pagamento of sendPaymentOutcomeV2 response
+    Scenario: SEM_SPO_35.1 (part 4)
+        Given the SEM_SPO_35.1 (part 3) scenario executed successfully
+        And the sendPaymentOutcomeV2 with 2 paymentToken scenario executed successfully
+        When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
+        Then check outcome is KO of sendPaymentOutcomeV2 response
+        And check faultCode is PPT_SEMANTICA of sendPaymentOutcomeV2 response
+        And check description is Outcome non accettabile per stato pagamento of sendPaymentOutcomeV2 response
 
-# # SEM_SPO_35.2
+    # SEM_SPO_35.2
 
-# Scenario: SEM_SPO_35.2 (part 1)
-#     Given the activatePaymentNoticeV2 scenario executed successfully
-#     When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-#     Then check outcome is OK of activatePaymentNoticeV2 response
-#     And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response
+    Scenario: SEM_SPO_35.2 (part 1)
+        Given the activatePaymentNoticeV2 scenario executed successfully
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response
 
-# Scenario: SEM_SPO_35.2 (part 2)
-#     Given the SEM_SPO_35.2 (part 1) scenario executed successfully
-#     And the activatePaymentNoticeV2 scenario executed successfully
-#     And noticeNumber with 310$iuv1 in activatePaymentNoticeV2
-#     And idempotencyKey with #idempotency_key1# in activatePaymentNoticeV2
-#     When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-#     Then check outcome is OK of activatePaymentNoticeV2 response
-#     And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response1
+    Scenario: SEM_SPO_35.2 (part 2)
+        Given the SEM_SPO_35.2 (part 1) scenario executed successfully
+        And noticeNumber with 311$iuv1 in activatePaymentNoticeV2
+        And creditorReferenceId with 11$iuv1 in paGetPayment
+        And EC replies to nodo-dei-pagamenti with the paGetPayment
+        And random idempotencyKey having $activatePaymentNoticeV2.idPSP as idPSP in activatePaymentNoticeV2
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response1
 
-# Scenario: SEM_SPO_35.2 (part 3)
-#     Given the SEM_SPO_35.2 (part 2) scenario executed successfully
-#     And the closePaymentV2 scenario executed successfully
-#     When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
-#     Then verify the HTTP status code of v2/closepayment response is 200
-#     And check outcome is OK of v2/closepayment response
-#     And update through the query update_token_pa of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYING under macro NewMod1 on db nodo_online
-#     And update through the query update_token1_pa of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYING under macro NewMod1 on db nodo_online
-#     And wait 10 seconds for expiration
+    Scenario: SEM_SPO_35.2 (part 3)
+        Given the SEM_SPO_35.2 (part 2) scenario executed successfully
+        And the closePaymentV2 with 2 paymentToken scenario executed successfully
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 200
+        And check outcome is OK of v2/closepayment response
+        And wait 5 seconds for expiration
+        And updates through the query update_PAYMENT_TOKEN of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYING under macro NewMod1 on db nodo_online
+        And updates through the query update_PAYMENT_TOKEN_1 of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYING under macro NewMod1 on db nodo_online
 
-# Scenario: SEM_SPO_35.2 (part 4)
-#     Given the SEM_SPO_35.2 (part 3) scenario executed successfully
-#     And the sendPaymentOutcomeV2 scenario executed successfully
-#     When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
-#     Then check outcome is KO of sendPaymentOutcomeV2 response
-#     And check faultCode is PPT_SEMANTICA of sendPaymentOutcomeV2 response
-#     And check description is Outcome non accettabile per stato pagamento of sendPaymentOutcomeV2 response
+    Scenario: SEM_SPO_35.2 (part 4)
+        Given the SEM_SPO_35.2 (part 3) scenario executed successfully
+        And the sendPaymentOutcomeV2 with 2 paymentToken scenario executed successfully
+        When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
+        Then check outcome is KO of sendPaymentOutcomeV2 response
+        And check faultCode is PPT_SEMANTICA of sendPaymentOutcomeV2 response
+        And check description is Outcome non accettabile per stato pagamento of sendPaymentOutcomeV2 response
 
-# # SEM_SPO_35.3
+    # SEM_SPO_35.3
 
-# Scenario: SEM_SPO_35.3 (part 1)
-#     Given the activatePaymentNoticeV2 scenario executed successfully
-#     When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-#     Then check outcome is OK of activatePaymentNoticeV2 response
-#     And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response
+    Scenario: SEM_SPO_35.3 (part 1)
+        Given the activatePaymentNoticeV2 scenario executed successfully
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response
 
-# Scenario: SEM_SPO_35.3 (part 2)
-#     Given the SEM_SPO_35.3 (part 1) scenario executed successfully
-#     And the activatePaymentNoticeV2 scenario executed successfully
-#     And noticeNumber with 310$iuv1 in activatePaymentNoticeV2
-#     And idempotencyKey with #idempotency_key1# in activatePaymentNoticeV2
-#     When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-#     Then check outcome is OK of activatePaymentNoticeV2 response
-#     And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response1
+    Scenario: SEM_SPO_35.3 (part 2)
+        Given the SEM_SPO_35.3 (part 1) scenario executed successfully
+        And noticeNumber with 311$iuv1 in activatePaymentNoticeV2
+        And creditorReferenceId with 11$iuv1 in paGetPayment
+        And EC replies to nodo-dei-pagamenti with the paGetPayment
+        And random idempotencyKey having $activatePaymentNoticeV2.idPSP as idPSP in activatePaymentNoticeV2
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response1
 
-# Scenario: SEM_SPO_35.3 (part 3)
-#     Given the SEM_SPO_35.3 (part 2) scenario executed successfully
-#     And the closePaymentV2 scenario executed successfully
-#     When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
-#     Then verify the HTTP status code of v2/closepayment response is 200
-#     And check outcome is OK of v2/closepayment response
-#     And update through the query update_token_pa of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_RESERVED under macro NewMod1 on db nodo_online
-#     And update through the query update_token1_pa of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_RESERVED under macro NewMod1 on db nodo_online
-#     And wait 10 seconds for expiration
+    Scenario: SEM_SPO_35.3 (part 3)
+        Given the SEM_SPO_35.3 (part 2) scenario executed successfully
+        And the closePaymentV2 with 2 paymentToken scenario executed successfully
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 200
+        And check outcome is OK of v2/closepayment response
+        And wait 5 seconds for expiration
+        And updates through the query update_PAYMENT_TOKEN of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_RESERVED under macro NewMod1 on db nodo_online
+        And updates through the query update_PAYMENT_TOKEN_1 of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_RESERVED under macro NewMod1 on db nodo_online
 
-# Scenario: SEM_SPO_35.3 (part 4)
-#     Given the SEM_SPO_35.3 (part 3) scenario executed successfully
-#     And the sendPaymentOutcomeV2 scenario executed successfully
-#     When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
-#     Then check outcome is KO of sendPaymentOutcomeV2 response
-#     And check faultCode is PPT_SEMANTICA of sendPaymentOutcomeV2 response
-#     And check description is Outcome non accettabile per stato pagamento of sendPaymentOutcomeV2 response
+    Scenario: SEM_SPO_35.3 (part 4)
+        Given the SEM_SPO_35.3 (part 3) scenario executed successfully
+        And the sendPaymentOutcomeV2 with 2 paymentToken scenario executed successfully
+        When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
+        Then check outcome is KO of sendPaymentOutcomeV2 response
+        And check faultCode is PPT_SEMANTICA of sendPaymentOutcomeV2 response
+        And check description is Outcome non accettabile per stato pagamento of sendPaymentOutcomeV2 response
 
-# # SEM_SPO_35.4
+    # SEM_SPO_35.4
 
-# Scenario: SEM_SPO_35.4 (part 1)
-#     Given the activatePaymentNoticeV2 scenario executed successfully
-#     When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-#     Then check outcome is OK of activatePaymentNoticeV2 response
-#     And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response
+    Scenario: SEM_SPO_35.4 (part 1)
+        Given the activatePaymentNoticeV2 scenario executed successfully
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response
 
-# Scenario: SEM_SPO_35.4 (part 2)
-#     Given the SEM_SPO_35.4 (part 1) scenario executed successfully
-#     And the activatePaymentNoticeV2 scenario executed successfully
-#     And noticeNumber with 310$iuv1 in activatePaymentNoticeV2
-#     And idempotencyKey with #idempotency_key1# in activatePaymentNoticeV2
-#     When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-#     Then check outcome is OK of activatePaymentNoticeV2 response
-#     And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response1
+    Scenario: SEM_SPO_35.4 (part 2)
+        Given the SEM_SPO_35.4 (part 1) scenario executed successfully
+        And noticeNumber with 311$iuv1 in activatePaymentNoticeV2
+        And creditorReferenceId with 11$iuv1 in paGetPayment
+        And EC replies to nodo-dei-pagamenti with the paGetPayment
+        And random idempotencyKey having $activatePaymentNoticeV2.idPSP as idPSP in activatePaymentNoticeV2
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response1
 
-# Scenario: SEM_SPO_35.4 (part 3)
-#     Given the SEM_SPO_35.4 (part 2) scenario executed successfully
-#     And the closePaymentV2 scenario executed successfully
-#     When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
-#     Then verify the HTTP status code of v2/closepayment response is 200
-#     And check outcome is OK of v2/closepayment response
-#     And update through the query update_token_pa of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_SENT under macro NewMod1 on db nodo_online
-#     And update through the query update_token1_pa of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_SENT under macro NewMod1 on db nodo_online
-#     And wait 10 seconds for expiration
+    Scenario: SEM_SPO_35.4 (part 3)
+        Given the SEM_SPO_35.4 (part 2) scenario executed successfully
+        And the closePaymentV2 with 2 paymentToken scenario executed successfully
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 200
+        And check outcome is OK of v2/closepayment response
+        And wait 5 seconds for expiration
+        And updates through the query update_PAYMENT_TOKEN of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_SENT under macro NewMod1 on db nodo_online
+        And updates through the query update_PAYMENT_TOKEN_1 of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_SENT under macro NewMod1 on db nodo_online
 
-# Scenario: SEM_SPO_35.4 (part 4)
-#     Given the SEM_SPO_35.4 (part 3) scenario executed successfully
-#     And the sendPaymentOutcomeV2 scenario executed successfully
-#     When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
-#     Then check outcome is KO of sendPaymentOutcomeV2 response
-#     And check faultCode is PPT_SEMANTICA of sendPaymentOutcomeV2 response
-#     And check description is Outcome non accettabile per stato pagamento of sendPaymentOutcomeV2 response
+    Scenario: SEM_SPO_35.4 (part 4)
+        Given the SEM_SPO_35.4 (part 3) scenario executed successfully
+        And the sendPaymentOutcomeV2 with 2 paymentToken scenario executed successfully
+        When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
+        Then check outcome is KO of sendPaymentOutcomeV2 response
+        And check faultCode is PPT_SEMANTICA of sendPaymentOutcomeV2 response
+        And check description is Outcome non accettabile per stato pagamento of sendPaymentOutcomeV2 response
 
-# # SEM_SPO_35.5
+    # SEM_SPO_35.5
 
-# Scenario: SEM_SPO_35.5 (part 1)
-#     Given the activatePaymentNoticeV2 scenario executed successfully
-#     When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-#     Then check outcome is OK of activatePaymentNoticeV2 response
-#     And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response
+    Scenario: SEM_SPO_35.5 (part 1)
+        Given the activatePaymentNoticeV2 scenario executed successfully
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response
 
-# Scenario: SEM_SPO_35.5 (part 2)
-#     Given the SEM_SPO_35.5 (part 1) scenario executed successfully
-#     And the activatePaymentNoticeV2 scenario executed successfully
-#     And noticeNumber with 310$iuv1 in activatePaymentNoticeV2
-#     And idempotencyKey with #idempotency_key1# in activatePaymentNoticeV2
-#     When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-#     Then check outcome is OK of activatePaymentNoticeV2 response
-#     And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response1
+    Scenario: SEM_SPO_35.5 (part 2)
+        Given the SEM_SPO_35.5 (part 1) scenario executed successfully
+        And noticeNumber with 311$iuv1 in activatePaymentNoticeV2
+        And creditorReferenceId with 11$iuv1 in paGetPayment
+        And EC replies to nodo-dei-pagamenti with the paGetPayment
+        And random idempotencyKey having $activatePaymentNoticeV2.idPSP as idPSP in activatePaymentNoticeV2
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response1
 
-# Scenario: SEM_SPO_35.5 (part 3)
-#     Given the SEM_SPO_35.5 (part 2) scenario executed successfully
-#     And the closePaymentV2 scenario executed successfully
-#     When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
-#     Then verify the HTTP status code of v2/closepayment response is 200
-#     And check outcome is OK of v2/closepayment response
-#     And update through the query update_token_pa of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_SEND_ERROR under macro NewMod1 on db nodo_online
-#     And update through the query update_token1_pa of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_SEND_ERROR under macro NewMod1 on db nodo_online
-#     And wait 10 seconds for expiration
+    Scenario: SEM_SPO_35.5 (part 3)
+        Given the SEM_SPO_35.5 (part 2) scenario executed successfully
+        And the closePaymentV2 with 2 paymentToken scenario executed successfully
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 200
+        And check outcome is OK of v2/closepayment response
+        And wait 5 seconds for expiration
+        And updates through the query update_PAYMENT_TOKEN of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_SEND_ERROR under macro NewMod1 on db nodo_online
+        And updates through the query update_PAYMENT_TOKEN_1 of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_SEND_ERROR under macro NewMod1 on db nodo_online
 
-# Scenario: SEM_SPO_35.5 (part 4)
-#     Given the SEM_SPO_35.5 (part 3) scenario executed successfully
-#     And the sendPaymentOutcomeV2 scenario executed successfully
-#     When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
-#     Then check outcome is KO of sendPaymentOutcomeV2 response
-#     And check faultCode is PPT_SEMANTICA of sendPaymentOutcomeV2 response
-#     And check description is Outcome non accettabile per stato pagamento of sendPaymentOutcomeV2 response
+    Scenario: SEM_SPO_35.5 (part 4)
+        Given the SEM_SPO_35.5 (part 3) scenario executed successfully
+        And the sendPaymentOutcomeV2 with 2 paymentToken scenario executed successfully
+        When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
+        Then check outcome is KO of sendPaymentOutcomeV2 response
+        And check faultCode is PPT_SEMANTICA of sendPaymentOutcomeV2 response
+        And check description is Outcome non accettabile per stato pagamento of sendPaymentOutcomeV2 response
 
-# # SEM_SPO_35.6
+    # SEM_SPO_35.6
 
-# Scenario: SEM_SPO_35.6 (part 1)
-#     Given the activatePaymentNoticeV2 scenario executed successfully
-#     When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-#     Then check outcome is OK of activatePaymentNoticeV2 response
-#     And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response
+    Scenario: SEM_SPO_35.6 (part 1)
+        Given the activatePaymentNoticeV2 scenario executed successfully
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response
 
-# Scenario: SEM_SPO_35.6 (part 2)
-#     Given the SEM_SPO_35.6 (part 1) scenario executed successfully
-#     And the activatePaymentNoticeV2 scenario executed successfully
-#     And noticeNumber with 310$iuv1 in activatePaymentNoticeV2
-#     And idempotencyKey with #idempotency_key1# in activatePaymentNoticeV2
-#     When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-#     Then check outcome is OK of activatePaymentNoticeV2 response
-#     And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response1
+    Scenario: SEM_SPO_35.6 (part 2)
+        Given the SEM_SPO_35.6 (part 1) scenario executed successfully
+        And noticeNumber with 311$iuv1 in activatePaymentNoticeV2
+        And creditorReferenceId with 11$iuv1 in paGetPayment
+        And EC replies to nodo-dei-pagamenti with the paGetPayment
+        And random idempotencyKey having $activatePaymentNoticeV2.idPSP as idPSP in activatePaymentNoticeV2
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response1
 
-# Scenario: SEM_SPO_35.6 (part 3)
-#     Given the SEM_SPO_35.6 (part 2) scenario executed successfully
-#     And the closePaymentV2 scenario executed successfully
-#     When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
-#     Then verify the HTTP status code of v2/closepayment response is 200
-#     And check outcome is OK of v2/closepayment response
-#     And update through the query update_token_pa of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_REFUSED under macro NewMod1 on db nodo_online
-#     And update through the query update_token1_pa of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_REFUSED under macro NewMod1 on db nodo_online
-#     And wait 10 seconds for expiration
+    Scenario: SEM_SPO_35.6 (part 3)
+        Given the SEM_SPO_35.6 (part 2) scenario executed successfully
+        And the closePaymentV2 with 2 paymentToken scenario executed successfully
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 200
+        And check outcome is OK of v2/closepayment response
+        And wait 5 seconds for expiration
+        And updates through the query update_PAYMENT_TOKEN of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_REFUSED under macro NewMod1 on db nodo_online
+        And updates through the query update_PAYMENT_TOKEN_1 of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_REFUSED under macro NewMod1 on db nodo_online
 
-# Scenario: SEM_SPO_35.6 (part 4)
-#     Given the SEM_SPO_35.6 (part 3) scenario executed successfully
-#     And the sendPaymentOutcomeV2 scenario executed successfully
-#     When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
-#     Then check outcome is KO of sendPaymentOutcomeV2 response
-#     And check faultCode is PPT_SEMANTICA of sendPaymentOutcomeV2 response
-#     And check description is Outcome non accettabile per stato pagamento of sendPaymentOutcomeV2 response
+    Scenario: SEM_SPO_35.6 (part 4)
+        Given the SEM_SPO_35.6 (part 3) scenario executed successfully
+        And the sendPaymentOutcomeV2 with 2 paymentToken scenario executed successfully
+        When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
+        Then check outcome is KO of sendPaymentOutcomeV2 response
+        And check faultCode is PPT_SEMANTICA of sendPaymentOutcomeV2 response
+        And check description is Outcome non accettabile per stato pagamento of sendPaymentOutcomeV2 response
 
-# # SEM_SPO_36
+    # SEM_SPO_36
 
-# Scenario: SEM_SPO_36 (part 1)
-#     Given the activatePaymentNoticeV2 scenario executed successfully
-#     When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-#     Then check outcome is OK of activatePaymentNoticeV2 response
-#     And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response
+    Scenario: SEM_SPO_36 (part 1)
+        Given the activatePaymentNoticeV2 scenario executed successfully
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response
 
-# Scenario: SEM_SPO_36 (part 2)
-#     Given the SEM_SPO_36 (part 1) scenario executed successfully
-#     And the activatePaymentNoticeV2 scenario executed successfully
-#     And noticeNumber with 310$iuv1 in activatePaymentNoticeV2
-#     And idempotencyKey with #idempotency_key1# in activatePaymentNoticeV2
-#     When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-#     Then check outcome is OK of activatePaymentNoticeV2 response
-#     And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response1
+    Scenario: SEM_SPO_36 (part 2)
+        Given the SEM_SPO_36 (part 1) scenario executed successfully
+        And noticeNumber with 311$iuv1 in activatePaymentNoticeV2
+        And creditorReferenceId with 11$iuv1 in paGetPayment
+        And EC replies to nodo-dei-pagamenti with the paGetPayment
+        And random idempotencyKey having $activatePaymentNoticeV2.idPSP as idPSP in activatePaymentNoticeV2
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response1
 
-# Scenario: SEM_SPO_36 (part 3)
-#     Given the SEM_SPO_36 (part 2) scenario executed successfully
-#     And the closePaymentV2 scenario executed successfully
-#     When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
-#     Then verify the HTTP status code of v2/closepayment response is 200
-#     And check outcome is OK of v2/closepayment response
-#     And update through the query update_noticeid_pa of the table POSITION_STATUS_SNAPSHOT the parameter STATUS with PAID under macro NewMod1 on db nodo_online
-#     And update through the query update_noticeid1_pa of the table POSITION_STATUS_SNAPSHOT the parameter STATUS with PAID under macro NewMod1 on db nodo_online
-#     And wait 10 seconds for expiration
+    Scenario: SEM_SPO_36 (part 3)
+        Given the SEM_SPO_36 (part 2) scenario executed successfully
+        And the closePaymentV2 with 2 paymentToken scenario executed successfully
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 200
+        And check outcome is OK of v2/closepayment response
+        And wait 5 seconds for expiration
+        And updates through the query update_noticeid_pa of the table POSITION_STATUS_SNAPSHOT the parameter STATUS with PAID under macro NewMod1 on db nodo_online
+        And updates through the query update_noticeid1_pa of the table POSITION_STATUS_SNAPSHOT the parameter STATUS with PAID under macro NewMod1 on db nodo_online
 
-# Scenario: SEM_SPO_36 (part 4)
-#     Given the SEM_SPO_36 (part 3) scenario executed successfully
-#     And the sendPaymentOutcomeV2 scenario executed successfully
-#     When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
-#     Then check outcome is KO of sendPaymentOutcomeV2 response
-#     And check faultCode is PPT_PAGAMENTO_DUPLICATO of sendPaymentOutcomeV2 response
+    Scenario: SEM_SPO_36 (part 4)
+        Given the SEM_SPO_36 (part 3) scenario executed successfully
+        And the sendPaymentOutcomeV2 with 2 paymentToken scenario executed successfully
+        When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
+        Then check outcome is KO of sendPaymentOutcomeV2 response
+        And check faultCode is PPT_PAGAMENTO_DUPLICATO of sendPaymentOutcomeV2 response
 
-# # SEM_SPO_36.1
+    # SEM_SPO_36.1
 
-# Scenario: SEM_SPO_36.1 (part 1)
-#     Given the activatePaymentNoticeV2 scenario executed successfully
-#     When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-#     Then check outcome is OK of activatePaymentNoticeV2 response
-#     And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response
+    Scenario: SEM_SPO_36.1 (part 1)
+        Given the activatePaymentNoticeV2 scenario executed successfully
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response
 
-# Scenario: SEM_SPO_36.1 (part 2)
-#     Given the SEM_SPO_36.1 (part 1) scenario executed successfully
-#     And the activatePaymentNoticeV2 scenario executed successfully
-#     And noticeNumber with 310$iuv1 in activatePaymentNoticeV2
-#     And idempotencyKey with #idempotency_key1# in activatePaymentNoticeV2
-#     When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-#     Then check outcome is OK of activatePaymentNoticeV2 response
-#     And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response1
+    Scenario: SEM_SPO_36.1 (part 2)
+        Given the SEM_SPO_36.1 (part 1) scenario executed successfully
+        And noticeNumber with 311$iuv1 in activatePaymentNoticeV2
+        And creditorReferenceId with 11$iuv1 in paGetPayment
+        And EC replies to nodo-dei-pagamenti with the paGetPayment
+        And random idempotencyKey having $activatePaymentNoticeV2.idPSP as idPSP in activatePaymentNoticeV2
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response1
 
-# Scenario: SEM_SPO_36.1 (part 3)
-#     Given the SEM_SPO_36.1 (part 2) scenario executed successfully
-#     And the closePaymentV2 scenario executed successfully
-#     When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
-#     Then verify the HTTP status code of v2/closepayment response is 200
-#     And check outcome is OK of v2/closepayment response
-#     And update through the query update_noticeid_pa of the table POSITION_STATUS_SNAPSHOT the parameter STATUS with NOTIFIED under macro NewMod1 on db nodo_online
-#     And update through the query update_noticeid1_pa of the table POSITION_STATUS_SNAPSHOT the parameter STATUS with NOTIFIED under macro NewMod1 on db nodo_online
-#     And wait 10 seconds for expiration
+    Scenario: SEM_SPO_36.1 (part 3)
+        Given the SEM_SPO_36.1 (part 2) scenario executed successfully
+        And the closePaymentV2 with 2 paymentToken scenario executed successfully
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 200
+        And check outcome is OK of v2/closepayment response
+        And wait 5 seconds for expiration
+        And updates through the query update_noticeid_pa of the table POSITION_STATUS_SNAPSHOT the parameter STATUS with NOTIFIED under macro NewMod1 on db nodo_online
+        And updates through the query update_noticeid1_pa of the table POSITION_STATUS_SNAPSHOT the parameter STATUS with NOTIFIED under macro NewMod1 on db nodo_online
 
-# Scenario: SEM_SPO_36.1 (part 4)
-#     Given the SEM_SPO_36.1 (part 3) scenario executed successfully
-#     And the sendPaymentOutcomeV2 scenario executed successfully
-#     When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
-#     Then check outcome is KO of sendPaymentOutcomeV2 response
-#     And check faultCode is PPT_PAGAMENTO_DUPLICATO of sendPaymentOutcomeV2 response
-
-# da aggiungere in query_AutomationTest.json
-# "NewMod1" : {"update_token_pa" : "UPDATE table_name SET param = 'value' WHERE PAYMENT_TOKEN ='$activatePaymentNoticeV2Response.paymentToken' and PA_FISCAL_CODE='#creditor_institution_code#",
-#              "update_token1_pa" : "UPDATE table_name SET param = 'value' WHERE PAYMENT_TOKEN ='$activatePaymentNoticeV2Response1.paymentToken' and PA_FISCAL_CODE='#creditor_institution_code#",
-#              "update_noticeid_pa": "UPDATE table_name SET param = 'value' WHERE NOTICE_ID ='310$iuv' and PA_FISCAL_CODE='#creditor_institution_code#'",
-#              "update_noticeid1_pa": "UPDATE table_name SET param = 'value' WHERE NOTICE_ID ='310$iuv1' and PA_FISCAL_CODE='#creditor_institution_code#'",
-#              "update_noticeidrandom_pa": "UPDATE table_name SET param = 'value' WHERE NOTICE_ID ='310011451292109621' and PA_FISCAL_CODE='#creditor_institution_code#'",
-#              "noticeid_pa": "SELECT columns FROM table_name WHERE NOTICE_ID = '310$iuv' and ID_DOMINIO = '#creditor_institution_code#' ORDER BY ID ASC",
-#              "transactionid": "SELECT columns FROM table_name WHERE TRANSACTION_ID = '$closePaymentV2.transactionId'"}
+    Scenario: SEM_SPO_36.1 (part 4)
+        Given the SEM_SPO_36.1 (part 3) scenario executed successfully
+        And the sendPaymentOutcomeV2 with 2 paymentToken scenario executed successfully
+        When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
+        Then check outcome is KO of sendPaymentOutcomeV2 response
+        And check faultCode is PPT_PAGAMENTO_DUPLICATO of sendPaymentOutcomeV2 response
