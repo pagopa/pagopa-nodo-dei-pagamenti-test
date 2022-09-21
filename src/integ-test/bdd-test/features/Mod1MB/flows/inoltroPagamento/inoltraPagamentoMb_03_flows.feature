@@ -230,18 +230,42 @@ Feature: process tests for inoltropagamentoMb_03
 
    Scenario: Execute nodoInoltraPagamentoMod2
       Given the Execute nodoChiediInformazioniPagamento scenario executed successfully
-      When WISP sends rest POST inoltroEsito/mod2 to nodo-dei-pagamenti
+      And initial XML pspInviaRPT
+         """
+         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+         <soapenv:Header/>
+         <soapenv:Body>
+         <ws:pspInviaRPTResponse>
+         <pspInviaRPTResponse>
+         <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+         <wait>timeout</wait>
+         <identificativoCarrello>$nodoInviaCarrelloRPT.identificativoCarrello</identificativoCarrello>
+         <parametriPagamentoImmediato>idBruciatura=$nodoInviaCarrelloRPT.identificativoCarrello</parametriPagamentoImmediato>
+         </pspInviaRPTResponse>
+         </ws:pspInviaRPTResponse>
+         </soapenv:Body>
+         </soapenv:Envelope>
+         """
+      And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
+      When WISP sends REST POST inoltroEsito/mod2 to nodo-dei-pagamenti
          """
          {
             "idPagamento": "$sessionToken",
             "identificativoPsp": "#psp#",
             "tipoVersamento": "BBT",
             "identificativoIntermediario": "#psp#",
-            "identificativoCanale": "${canale2}" ##???
+            "identificativoCanale": "#canale_DIFFERITO_MOD2#"
          }
          """
-      Then verify the HTTP status code of inoltroEsito/mod1 response is 200
+      Then verify the HTTP status code of inoltroEsito/mod2 response is 200
       And check esito is OK of inoltroEsito/mod2 response
+
+   Scenario: Trigger paInviaRT
+      Given the Execute nodoInoltraPagamentoMod2 scenario executed successfully
+      When job paInviaRt triggered after 5 seconds
+      And wait 10 seconds for expiration
+      Then verify the HTTP status code of paInviaRt response is 200
+
 
       #DB-CHECK-STATI_RPT
       And replace iuv content with $1iuv content
@@ -289,8 +313,8 @@ Feature: process tests for inoltropagamentoMb_03
       And checks the value Y of the record at column WISP_2 of the table RPT retrived by the query by_iuv_and_ident_dominio on db nodo_online under macro Mod1Mb
 
       #DB-CHECK-CARRELLO
-      And checks the value #canale# of the record at column CANALE of the table CARRELLO retrived by the query DB_GEST_ANN_stati_position_payment_status on db nodo_online under macro Mod1Mb
-      And checks the value #psp# of the record at column PSP of the table CARRELLO retrived by the query DB_GEST_ANN_stati_position_payment_status on db nodo_online under macro Mod1Mb
-      And checks the value #psp# of the record at column INTERMEDIARIOPSP of the table CARRELLO retrived by the query DB_GEST_ANN_stati_position_payment_status on db nodo_online under macro Mod1Mb
-      And checks the value BBT of the record at column TIPO_VERSAMENTO of the table CARRELLO retrived by the query DB_GEST_ANN_stati_position_payment_status on db nodo_online under macro Mod1Mb
+      And checks the value #canale# of the record at column CANALE of the table CARRELLO retrived by the query by_id_sessione on db nodo_online under macro Mod1Mb
+      And checks the value #psp# of the record at column PSP of the table CARRELLO retrived by the query by_id_sessione on db nodo_online under macro Mod1Mb
+      And checks the value #psp# of the record at column INTERMEDIARIOPSP of the table CARRELLO retrived by the query by_id_sessione on db nodo_online under macro Mod1Mb
+      And checks the value BBT of the record at column TIPO_VERSAMENTO of the table CARRELLO retrived by the query by_id_sessione on db nodo_online under macro Mod1Mb
 

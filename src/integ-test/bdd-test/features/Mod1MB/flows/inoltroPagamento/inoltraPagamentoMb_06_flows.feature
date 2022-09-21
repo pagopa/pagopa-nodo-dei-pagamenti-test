@@ -1,4 +1,4 @@
-Feature: process tests for inoltropagamentoMb_09
+Feature: process tests for inoltropagamentoMb_06
     Background:
         Given systems up
     Scenario: RPT generation
@@ -209,6 +209,7 @@ Feature: process tests for inoltropagamentoMb_09
             </elementoListaRPT>
             </listaRPT>
             <requireLightPayment>01</requireLightPayment>
+            <multiBeneficiario>0</multiBeneficiario>
             </ws:nodoInviaCarrelloRPT>
             </soapenv:Body>
             </soapenv:Envelope>
@@ -236,11 +237,12 @@ Feature: process tests for inoltropagamentoMb_09
             "identificativoPsp": "#psp#",
             "tipoVersamento": "BBT",
             "identificativoIntermediario": "#psp#",
-            "identificativoCanale": "${canale2}" 
+            "identificativoCanale": "#canale#"
             }
             """
-        Then verify the HTTP status code of inoltroEsito/mod1 response is 200
+        Then verify the HTTP status code of inoltroEsito/mod2 response is 200
         And check esito is OK of inoltroEsito/mod2 response
+
 
     Scenario: Trigger paInviaRT
         Given the Execute nodoInoltraPagamentoMod2 scenario executed successfully
@@ -295,6 +297,7 @@ Feature: process tests for inoltropagamentoMb_09
         And checks the value Y of the record at column WISP_2 of the table RPT retrived by the query by_iuv_and_ident_dominio on db nodo_online under macro Mod1Mb
 
         #DB-CHECK-CARRELLO
+
         And replace pa content with #codicePA# content
         And replace iuv content with $1iuv content
 

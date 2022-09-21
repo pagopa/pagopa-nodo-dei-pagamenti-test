@@ -230,6 +230,26 @@ Feature: process tests for inoltropagamentoMb_02
 
    Scenario: Execute nodoInoltraPagamentoMod1
       Given the Execute nodoChiediInformazioniPagamento scenario executed successfully
+      And initial XML pspInviaCarrelloRPT
+         """
+         <soapenv:Envelope
+         xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+         xmlns:ws="http://ws.pagamenti.telematici.gov/">
+         <soapenv:Header/>
+         <soapenv:Body>
+         <ws:pspInviaCarrelloRPTResponse>
+         <pspInviaCarrelloRPTResponse>
+         <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+         <identificativoCarrello>$nodoInviaCarrelloRPT.identificativoCarrello</identificativoCarrello>
+         <parametriPagamentoImmediato>idBruciatura=$nodoInviaCarrelloRPT.identificativoCarrello</parametriPagamentoImmediato>
+         </pspInviaCarrelloRPTResponse>
+         </ws:pspInviaCarrelloRPTResponse>
+         </soapenv:Body>
+         </soapenv:Envelope>
+         """
+
+      And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
+
       When WISP sends rest POST inoltroEsito/mod1 to nodo-dei-pagamenti
          """
          {
@@ -244,6 +264,13 @@ Feature: process tests for inoltropagamentoMb_02
          """
       Then verify the HTTP status code of inoltroEsito/mod1 response is 200
       And check esito is OK of inoltroEsito/mod1 response
+
+   Scenario: Trigger paInviaRT
+      Given the Execute nodoInoltraPagamentoMod1 scenario executed successfully
+      When job paInviaRt triggered after 5 seconds
+      And wait 10 seconds for expiration
+      Then verify the HTTP status code of paInviaRt response is 200
+
 
       #DB-CHECK-STATI_RPT
       And replace iuv content with $1iuv content
@@ -271,9 +298,8 @@ Feature: process tests for inoltropagamentoMb_02
       And checks the value #canale# of the record at column CHANNEL_ID of the table POSITION_PAYMENT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
 
       #DB-CHECK-RPT
-      And replace pa content with #codicePA# content
       And replace iuv content with $1iuv content
-
+      
       And checks the value #canale# of the record at column CANALE of the table RPT retrived by the query by_iuv_and_ident_dominio on db nodo_online under macro Mod1Mb
       And checks the value #psp# of the record at column PSP of the table RPT retrived by the query by_iuv_and_ident_dominio on db nodo_online under macro Mod1Mb
       And checks the value #psp# of the record at column INTERMEDIARIOPSP of the table RPT retrived by the query by_iuv_and_ident_dominio on db nodo_online under macro Mod1Mb
@@ -291,10 +317,10 @@ Feature: process tests for inoltropagamentoMb_02
       And checks the value Y of the record at column WISP_2 of the table RPT retrived by the query by_iuv_and_ident_dominio on db nodo_online under macro Mod1Mb
 
       #DB-CHECK-CARRELLO
-      And checks the value #canale# of the record at column CANALE of the table CARRELLO retrived by the query DB_GEST_ANN_stati_position_payment_status on db nodo_online under macro Mod1Mb
-      And checks the value #psp# of the record at column PSP of the table CARRELLO retrived by the query DB_GEST_ANN_stati_position_payment_status on db nodo_online under macro Mod1Mb
-      And checks the value #psp# of the record at column INTERMEDIARIOPSP of the table CARRELLO retrived by the query DB_GEST_ANN_stati_position_payment_status on db nodo_online under macro Mod1Mb
-      And checks the value BBT of the record at column TIPO_VERSAMENTO of the table CARRELLO retrived by the query DB_GEST_ANN_stati_position_payment_status on db nodo_online under macro Mod1Mb
+      And checks the value #canale# of the record at column CANALE of the table CARRELLO retrived by the query by_id_sessione on db nodo_online under macro Mod1Mb
+      And checks the value #psp# of the record at column PSP of the table CARRELLO retrived by the query by_id_sessione on db nodo_online under macro Mod1Mb
+      And checks the value #psp# of the record at column INTERMEDIARIOPSP of the table CARRELLO retrived by the query by_id_sessione on db nodo_online under macro Mod1Mb
+      And checks the value BBT of the record at column TIPO_VERSAMENTO of the table CARRELLO retrived by the query by_id_sessione on db nodo_online under macro Mod1Mb
 
       #DB-CHECK-PM_SESSION_DATA
       And checks the value CARRELLO of the record at column TIPO of the table PM_SESSION_DATA retrived by the query by_id_sessione on db nodo_online under macro Mod1Mb

@@ -1,4 +1,4 @@
-Feature: process tests for inoltropagamentoMb_09
+Feature: process tests for inoltropagamentoMb_07
     Background:
         Given systems up
     Scenario: RPT generation
@@ -227,23 +227,28 @@ Feature: process tests for inoltropagamentoMb_09
         And check oggettoPagamento field exists in informazioniPagamento response
         And check urlRedirectEC field exists in informazioniPagamento response
 
-    Scenario: Execute nodoInoltraPagamentoMod2
+    Scenario: Execute nodoInoltraEsitoCarta
         Given the Execute nodoChiediInformazioniPagamento scenario executed successfully
-        When WISP sends rest POST inoltroEsito/mod2 to nodo-dei-pagamenti
+        When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
             """
             {
-            "idPagamento": "$sessionToken",
-            "identificativoPsp": "#psp#",
-            "tipoVersamento": "BBT",
-            "identificativoIntermediario": "#psp#",
-            "identificativoCanale": "${canale2}" 
+                "idPagamento": "$sessionToken",
+                "RRN": 10638081,
+                "identificativoPsp": "#psp#",
+                "tipoVersamento": "BBT",
+                "identificativoIntermediario": "#psp#",
+                "identificativoCanale": "#canale#",
+                "importoTotalePagato": 12.31,
+                "timestampOperazione": "2018-02-08T17:06:03.100+01:00",
+                "codiceAutorizzativo": "123456",
+                "esitoTransazioneCarta": "00"
             }
             """
-        Then verify the HTTP status code of inoltroEsito/mod1 response is 200
-        And check esito is OK of inoltroEsito/mod2 response
+        Then verify the HTTP status code of inoltroEsito/carta response is 200
+        And check esito is OK of inoltroEsito/carta response
 
     Scenario: Trigger paInviaRT
-        Given the Execute nodoInoltraPagamentoMod2 scenario executed successfully
+        Given the Execute nodoInoltraEsitoCarta scenario executed successfully
         When job paInviaRt triggered after 5 seconds
         And wait 10 seconds for expiration
         Then verify the HTTP status code of paInviaRt response is 200
@@ -298,8 +303,14 @@ Feature: process tests for inoltropagamentoMb_09
         And replace pa content with #codicePA# content
         And replace iuv content with $1iuv content
 
-        And checks the value #canale# of the record at column CANALE of the table CARRELLO retrived by the query DB_GEST_ANN_stati_position_payment_status on db nodo_online under macro Mod1Mb
-        And checks the value #psp# of the record at column PSP of the table CARRELLO retrived by the query DB_GEST_ANN_stati_position_payment_status on db nodo_online under macro Mod1Mb
-        And checks the value #psp# of the record at column INTERMEDIARIOPSP of the table CARRELLO retrived by the query DB_GEST_ANN_stati_position_payment_status on db nodo_online under macro Mod1Mb
-        And checks the value BBT of the record at column TIPO_VERSAMENTO of the table CARRELLO retrived by the query DB_GEST_ANN_stati_position_payment_status on db nodo_online under macro Mod1Mb
+        And checks the value #canale# of the record at column CANALE of the table CARRELLO retrived by the query by_id_sessione on db nodo_online under macro Mod1Mb
+        And checks the value #psp# of the record at column PSP of the table CARRELLO retrived by the query by_id_sessione on db nodo_online under macro Mod1Mb
+        And checks the value #psp# of the record at column INTERMEDIARIOPSP of the table CARRELLO retrived by the query by_id_sessione on db nodo_online under macro Mod1Mb
+        And checks the value BBT of the record at column TIPO_VERSAMENTO of the table CARRELLO retrived by the query by_id_sessione on db nodo_online under macro Mod1Mb
 
+        #DB-CHECK-PM_SESSION_DATA
+        And checks the value CARRELLO of the record at column TIPO of the table PM_SESSION_DATA retrived by the query by_id_sessione on db nodo_online under macro Mod1Mb
+        And checks the value 10638081 of the record at column RRN of the table PM_SESSION_DATA retrived by the query by_id_sessione on db nodo_online under macro Mod1Mb
+        And checks the value 12.31 of the record at column IMPORTO_TOTALE_PAGATO of the table PM_SESSION_DATA retrived by the query by_id_sessione on db nodo_online under macro Mod1Mb
+        And checks the value 00 of the record at column ESITO_TRANSAZIONE_CARTA of the table PM_SESSION_DATA retrived by the query by_id_sessione on db nodo_online under macro Mod1Mb
+        And checks the value 123456 of the record at column CODICE_AUTORIZZATIVO of the table PM_SESSION_DATA retrived by the query by_id_sessione on db nodo_online under macro Mod1Mb

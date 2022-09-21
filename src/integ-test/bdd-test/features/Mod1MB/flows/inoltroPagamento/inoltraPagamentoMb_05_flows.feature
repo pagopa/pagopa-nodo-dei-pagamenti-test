@@ -1,4 +1,4 @@
-Feature: process tests for inoltropagamentoMb_09
+Feature: process tests for inoltropagamentoMb_05
     Background:
         Given systems up
     Scenario: RPT generation
@@ -209,6 +209,7 @@ Feature: process tests for inoltropagamentoMb_09
             </elementoListaRPT>
             </listaRPT>
             <requireLightPayment>01</requireLightPayment>
+            <multiBeneficiario>0</multiBeneficiario>
             </ws:nodoInviaCarrelloRPT>
             </soapenv:Body>
             </soapenv:Envelope>
@@ -227,23 +228,46 @@ Feature: process tests for inoltropagamentoMb_09
         And check oggettoPagamento field exists in informazioniPagamento response
         And check urlRedirectEC field exists in informazioniPagamento response
 
-    Scenario: Execute nodoInoltraPagamentoMod2
+    Scenario: Execute nodoInoltraPagamentoMod1
         Given the Execute nodoChiediInformazioniPagamento scenario executed successfully
-        When WISP sends rest POST inoltroEsito/mod2 to nodo-dei-pagamenti
+        And initial XML pspInviaCarrelloRPT
+            """
+            <soapenv:Envelope
+            xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+            xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <ws:pspInviaCarrelloRPTResponse>
+            <pspInviaCarrelloRPTResponse>
+            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+            <identificativoCarrello>$nodoInviaCarrelloRPT.identificativoCarrello</identificativoCarrello>
+            <parametriPagamentoImmediato>idBruciatura=$nodoInviaCarrelloRPT.identificativoCarrello</parametriPagamentoImmediato>
+            </pspInviaCarrelloRPTResponse>
+            </ws:pspInviaCarrelloRPTResponse>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+
+        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
+
+
+        When WISP sends rest POST inoltroEsito/mod1 to nodo-dei-pagamenti
             """
             {
-            "idPagamento": "$sessionToken",
-            "identificativoPsp": "#psp#",
-            "tipoVersamento": "BBT",
-            "identificativoIntermediario": "#psp#",
-            "identificativoCanale": "${canale2}" 
+                "idPagamento": "$sessionToken",
+                "identificativoPsp": "#psp#",
+                "tipoVersamento": "BBT",
+                "identificativoIntermediario": "#psp#",
+                "identificativoCanale": "#canale#",
+                "tipoOperazione": "mobile",
+                "mobileToken": "123ABC456"
             }
             """
         Then verify the HTTP status code of inoltroEsito/mod1 response is 200
-        And check esito is OK of inoltroEsito/mod2 response
+        And check esito is OK of inoltroEsito/mod1 response
 
     Scenario: Trigger paInviaRT
-        Given the Execute nodoInoltraPagamentoMod2 scenario executed successfully
+        Given the Execute nodoInoltraPagamentoMod1 scenario executed successfully
         When job paInviaRt triggered after 5 seconds
         And wait 10 seconds for expiration
         Then verify the HTTP status code of paInviaRt response is 200
@@ -298,8 +322,12 @@ Feature: process tests for inoltropagamentoMb_09
         And replace pa content with #codicePA# content
         And replace iuv content with $1iuv content
 
-        And checks the value #canale# of the record at column CANALE of the table CARRELLO retrived by the query DB_GEST_ANN_stati_position_payment_status on db nodo_online under macro Mod1Mb
-        And checks the value #psp# of the record at column PSP of the table CARRELLO retrived by the query DB_GEST_ANN_stati_position_payment_status on db nodo_online under macro Mod1Mb
-        And checks the value #psp# of the record at column INTERMEDIARIOPSP of the table CARRELLO retrived by the query DB_GEST_ANN_stati_position_payment_status on db nodo_online under macro Mod1Mb
-        And checks the value BBT of the record at column TIPO_VERSAMENTO of the table CARRELLO retrived by the query DB_GEST_ANN_stati_position_payment_status on db nodo_online under macro Mod1Mb
+        And checks the value #canale# of the record at column CANALE of the table CARRELLO retrived by the query by_id_sessione on db nodo_online under macro Mod1Mb
+        And checks the value #psp# of the record at column PSP of the table CARRELLO retrived by the query by_id_sessione on db nodo_online under macro Mod1Mb
+        And checks the value #psp# of the record at column INTERMEDIARIOPSP of the table CARRELLO retrived by the query by_id_sessione on db nodo_online under macro Mod1Mb
+        And checks the value BBT of the record at column TIPO_VERSAMENTO of the table CARRELLO retrived by the query by_id_sessione on db nodo_online under macro Mod1Mb
 
+        #DB-CHECK-PM_SESSION_DATA
+        And checks the value CARRELLO of the record at column TIPO of the table PM_SESSION_DATA retrived by the query by_id_sessione on db nodo_online under macro Mod1Mb
+        And checks the value mobile of the record at column TIPO_INTERAZIONE of the table PM_SESSION_DATA retrived by the query by_id_sessione on db nodo_online under macro Mod1Mb
+        And checks the value 123ABC456 of the record at column MOBILE_TOKEN of the table PM_SESSION_DATA retrived by the query by_id_sessione on db nodo_online under macro Mod1Mb
