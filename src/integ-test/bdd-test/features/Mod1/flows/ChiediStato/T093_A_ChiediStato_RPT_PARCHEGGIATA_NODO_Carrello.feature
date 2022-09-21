@@ -235,7 +235,7 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
         When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
         Then checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
-        #And checks url contains https://acardste.vaservices.eu:1443/wallet of nodoChiediStatoRPT response
+        And check url contains https://acardste.vaservices.eu:1443/wallet of nodoChiediStatoRPT response
 
     Scenario: Execute second nodoChiediStatoRPT request
         Given the Execute nodoChiediStatoRPT request scenario executed successfully
@@ -258,7 +258,7 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
         When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
         Then checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
-        #And checks url contains https://acardste.vaservices.eu:1443/wallet of nodoChiediStatoRPT response
+        And check url contains https://acardste.vaservices.eu:1443/wallet of nodoChiediStatoRPT response
 
     Scenario: Execute second nodoInviaCarrelloRPT
 		Given the Execute second nodoChiediStatoRPT request scenario executed successfully
