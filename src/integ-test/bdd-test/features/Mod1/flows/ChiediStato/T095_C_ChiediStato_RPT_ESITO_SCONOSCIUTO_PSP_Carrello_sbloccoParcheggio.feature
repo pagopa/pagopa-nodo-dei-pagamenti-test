@@ -440,7 +440,7 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
             <identificativoDominio>44444444445</identificativoDominio>
             <identificativoUnivocoVersamento>avanzaErrResponse</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$2CCP</codiceContestoPagamento>
-            <rpt>$rpt2Attachment</rpt>
+            <rpt>$rpt21Attachment</rpt>
             </elementoListaRPT>
             </listaRPT>
             </ws:nodoInviaCarrelloRPT>
@@ -478,4 +478,4 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
         Given the Execute 21nodoChiediStatoRPT request scenario executed successfully
         When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of notificaAnnullamento response is 404
-        And check error is non esiste of nodoNotificaAnnullamento response
+        And check error is non esiste of notificaAnnullamento response
