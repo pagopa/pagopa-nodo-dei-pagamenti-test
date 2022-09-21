@@ -79,7 +79,7 @@ Feature: process tests for nodoInviaRPT [REV_NIRPT_01]
             <payer>
             <uniqueIdentifier>
             <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-            <entityUniqueIdentifierValue>77777777777_01</entityUniqueIdentifierValue>
+            <entityUniqueIdentifierValue>#id_station#</entityUniqueIdentifierValue>
             </uniqueIdentifier>
             <fullName>name</fullName>
             <!--Optional:-->
@@ -220,17 +220,15 @@ Feature: process tests for nodoInviaRPT [REV_NIRPT_01]
         Then check esito is OK of nodoInviaRPT response
         #DB CHECK-POSITION_PAYMENT_STATUS
         And checks the value PAYING, PAID_NORPT, PAID, NOTICE_GENERATED, NOTICE_STORED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
-        ###############################################################
-        #Redis G.
         #DB CHECK POSITION_PAYMENT_STATUS_SNAPSHOT
         And checks the value NOTICE_STORED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro NewMod3
         #DB CHECK STATI_RPT
-        And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO_MOD3, RPT_RISOLTA_OK, RT_GENERATA_NODO of the record at column STATUS of the table STATI_RPT retrived by the query payment_status on db nodo_online under macro NewMod3
+        And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO_MOD3, RPT_RISOLTA_OK, RT_GENERATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query stati_rpt on db nodo_online under macro NewMod3
         #DB CHECK STATI_RPT_SNAPSHOT
-        And checks the value RT_GENERATA_NODO of the record at column STATUS of the table STATI_RPT_SNAPSHOT retrived by the query payment_status on db nodo_online under macro NewMod3
+        And checks the value RT_GENERATA_NODO of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query stati_rpt on db nodo_online under macro NewMod3
         # DB CHECK POSITION_SUBJECT
         And checks the value NotNone of the record at column ID of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro NewMod3
-        And checks the value PAYER of the record at column SUBJECT_TYPE of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro NewMod3
+        And checks the value DEBTOR of the record at column SUBJECT_TYPE of the table POSITION_SUBJECT retrived by the query position_subject_3 on db nodo_online under macro NewMod3
         And checks the value $sendPaymentOutcome.entityUniqueIdentifierType of the record at column ENTITY_UNIQUE_IDENTIFIER_TYPE of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro NewMod3
         And checks the value $sendPaymentOutcome.entityUniqueIdentifierValue of the record at column ENTITY_UNIQUE_IDENTIFIER_VALUE of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro NewMod3
         And checks the value $sendPaymentOutcome.fullName of the record at column FULL_NAME of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro NewMod3
@@ -240,18 +238,23 @@ Feature: process tests for nodoInviaRPT [REV_NIRPT_01]
         And checks the value $sendPaymentOutcome.city of the record at column CITY of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro NewMod3
         And checks the value $sendPaymentOutcome.stateProvinceRegion of the record at column STATE_PROVINCE_REGION of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro NewMod3
         And checks the value $sendPaymentOutcome.country of the record at column COUNTRY of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro NewMod3
-        And checks the value $sendPaymentOutcome.e-mail of the record at column EMAIL of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro NewMod3
+        And checks the value prova@test.it of the record at column EMAIL of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro NewMod3
         #DB CHECK-POSITION_SERVICE
-        And execution query position_service to get value on the table POSITION_SERVICE, with the columns debtor_id, under macro nodo_online with db name NewMod3
-        And execution query position_subject_2 to get value on the table POSITION_SUBJECT, with the columns id under macro nodo_online with db name NewMod3
-        And with the query position_service check assert beetwen elem debtor_id in position 0 and elem id with position 0 of the query position_subject_2
-        And checks the value $DEBTOR_ID of the record at column ID of the table POSITION_SERVICE retrived by the query position_service on db nodo_online under macro NewMod3
+        And execution query position_service to get value on the table POSITION_SERVICE, with the columns debtor_id under macro NewMod3 with db name nodo_online
+        And execution query position_subject_3 to get value on the table POSITION_SUBJECT, with the columns id under macro NewMod3 with db name nodo_online
+        And with the query position_service check assert beetwen elem debtor_id in position 0 and elem id with position 0 of the query position_subject_3
         #DB CHECK-POSITION_PAYMENT
-        And checks the value $RPT_ID of the record at column ID of the table RPT retrived by the query rpt on db nodo_online under macro NewMod3
+        And execution query position_receipt_recipient to get value on the table POSITION_PAYMENT, with the columns rpt_id under macro NewMod3 with db name nodo_online
+        And execution query rpt to get value on the table RPT, with the columns id under macro NewMod3 with db name nodo_online
+        And with the query position_receipt_recipient check assert beetwen elem rpt_id in position 0 and elem id with position 0 of the query rpt
+        #DB CHECK-POSITION_TRANSFER
+        And execution query position_transfer to get value on the table POSITION_TRANSFER, with the columns transfer_category under macro NewMod3 with db name nodo_online
+        And execution query rpt_versamenti to get value on the table RPT_VERSAMENTI, with the columns dati_specifici_riscossione under macro NewMod3 with db name nodo_online
+        And with the query position_transfer check assert beetwen elem rpt_id in position 0 and elem dati_specifici_riscossione with position 0 of the query rpt_versamenti
         #DB CHECK-RT
         And checks the value NotNone of the record at column ID_SESSIONE of the table RT retrived by the query rt on db nodo_online under macro NewMod3
         And checks the value $activatePaymentNoticeResponse.paymentToken of the record at column CCP of the table RT retrived by the query rt on db nodo_online under macro NewMod3      
-        And checks the value $activatePaymentNotice.fiscalCode of the record at column INDENT_DOMINIO of the table RT retrived by the query rt on db nodo_online under macro NewMod3
+        And checks the value $activatePaymentNotice.fiscalCode of the record at column IDENT_DOMINIO of the table RT retrived by the query rt on db nodo_online under macro NewMod3
         And checks the value $iuv of the record at column IUV of the table RT retrived by the query rt on db nodo_online under macro NewMod3
         And checks the value 0 of the record at column COD_ESITO of the table RT retrived by the query rt on db nodo_online under macro NewMod3
         And checks the value ESEGUITO of the record at column ESITO of the table RT retrived by the query rt on db nodo_online under macro NewMod3
@@ -259,11 +262,32 @@ Feature: process tests for nodoInviaRPT [REV_NIRPT_01]
         And checks the value NotNone of the record at column DATA_RICHIESTA of the table RT retrived by the query rt on db nodo_online under macro NewMod3
         And checks the value NotNone of the record at column ID_RICEVUTA of the table RT retrived by the query rt on db nodo_online under macro NewMod3
         And execution query rt to get value on the table RT, with the columns ID_RICHIESTA under macro NewMod3 with db name nodo_online
-        And through the query rt retrieve param ID_MSG_RICH at position 0 and save it under the key ID_RICHIESTA
-        And checks the value $ID_RICHIESTA of the record at column ID_MSG_RICH of the table RPT retrived by the query rpt on db nodo_online under macro NewMod3
+        And execution query rpt to get value on the table RPT, with the columns ID_MSG_RICH under macro NewMod3 with db name nodo_online
+        And with the query rt check assert beetwen elem ID_RICHIESTA in position 0 and elem ID_MSG_RICH with position 0 of the query rpt
         And execution query rt to get value on the table RT, with the columns SOMMA_VERSAMENTI under macro NewMod3 with db name nodo_online
-        And through the query rt retrieve param AMOUNT at position 0 and save it under the key SOMMA_VERSAMENTI
-        And checks the value $SOMMA_VERSAMENTI of the record at column AMOUNT of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
+        And execution query position_receipt_recipient to get value on the table POSITION_PAYMENT, with the columns AMOUNT under macro NewMod3 with db name nodo_online
+        And with the query rt check assert beetwen elem SOMMA_VERSAMENTI in position 0 and elem AMOUNT with position 0 of the query position_receipt_recipient
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RT retrived by the query rt on db nodo_online under macro NewMod3
         And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table RT retrived by the query rt on db nodo_online under macro NewMod3
         And checks the value 15376371009_01 of the record at column CANALE of the table RT retrived by the query rt on db nodo_online under macro NewMod3
+        #DB CHECK-RT_VERSAMENTI
+        And checks the value NotNone of the record at column ID of the table RT_VERSAMENTI retrived by the query rt_versamenti on db nodo_online under macro NewMod3
+        And checks the value 1 of the record at column PROGRESSIVO of the table RT_VERSAMENTI retrived by the query rt_versamenti on db nodo_online under macro NewMod3
+        And execution query rt_versamenti to get value on the table RT_VERSAMENTI, with the columns IMPORTO_RT under macro NewMod3 with db name nodo_online
+        And execution query position_receipt_recipient to get value on the table POSITION_PAYMENT, with the columns AMOUNT under macro NewMod3 with db name nodo_online
+        And with the query rt_versamenti check assert beetwen elem IMPORTO_RT in position 0 and elem AMOUNT with position 0 of the query position_receipt_recipient
+        And checks the value ESEGUITO of the record at column ESITO of the table RT_VERSAMENTI retrived by the query rt_versamenti on db nodo_online under macro NewMod3        
+        And execution query rt_versamenti to get value on the table RT_VERSAMENTI, with the columns causale_versamento under macro NewMod3 with db name nodo_online
+        And execution query rpt_versamenti to get value on the table RPT_VERSAMENTI, with the columns causale_versamento under macro NewMod3 with db name nodo_online
+        And with the query rt_versamenti check assert beetwen elem causale_versamento in position 0 and elem causale_versamento with position 0 of the query rpt_versamenti        
+        And execution query rt_versamenti to get value on the table RT_VERSAMENTI, with the columns dati_specifici_riscossione under macro NewMod3 with db name nodo_online
+        And execution query rpt_versamenti to get value on the table RPT_VERSAMENTI, with the columns dati_specifici_riscossione under macro NewMod3 with db name nodo_online
+        And with the query rt_versamenti check assert beetwen elem dati_specifici_riscossione in position 0 and elem dati_specifici_riscossione with position 0 of the query rpt_versamenti        
+        And execution query rt_versamenti to get value on the table RT_VERSAMENTI, with the columns COMMISSIONE_APPLICATE_PSP under macro NewMod3 with db name nodo_online
+        And execution query position_receipt_recipient to get value on the table POSITION_PAYMENT, with the columns fee under macro NewMod3 with db name nodo_online
+        And with the query rt_versamenti check assert beetwen elem COMMISSIONE_APPLICATE_PSP in position 0 and elem fee with position 0 of the query position_receipt_recipient        
+        And execution query rt_versamenti to get value on the table RT_VERSAMENTI, with the columns fk_RT under macro NewMod3 with db name nodo_online
+        And execution query rt to get value on the table RT, with the columns id under macro NewMod3 with db name nodo_online
+        And with the query rt_versamenti check assert beetwen elem fk_RT in position 0 and elem id with position 0 of the query rt
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RT_VERSAMENTI retrived by the query rt_versamenti on db nodo_online under macro NewMod3
+        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table RT_VERSAMENTI retrived by the query rt_versamenti on db nodo_online under macro NewMod3
