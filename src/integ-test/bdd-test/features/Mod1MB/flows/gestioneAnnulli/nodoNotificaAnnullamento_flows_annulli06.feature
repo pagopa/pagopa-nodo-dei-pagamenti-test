@@ -224,9 +224,8 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_06]
 
    Scenario: update column valid_to UPDATED_TIMESTAMP
       Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
-      Then replace iuv content with $1iuv content
-
-      And update through the query DB_GEST_ANN_update1 with date Today under macro Mod1Mb on db nodo_online
+      And replace iuv content with $1iuv content
+      Then update through the query DB_GEST_ANN_update1 with date Today under macro Mod1Mb on db nodo_online
       And update through the query DB_GEST_ANN_update2 with date Today under macro Mod1Mb on db nodo_online
       And wait 10 seconds for expiration
 
@@ -272,7 +271,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_06]
 
 
    Scenario: Generation of two more RPT
-      Given the Trigger annullamentoRptMaiRichiesteDaPm scenario executed successfully
+      Given the Execute nodoNotificaAnnullamento scenario executed successfully
       And generate 1 cart with PA #codicePA# and notice number $1noticeNumber
       And RPT3 generation
          """
@@ -508,6 +507,9 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_06]
       And checks the value CART_PARCHEGGIATO_NODO of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query DB_GEST_ANN_stati_payment_token on db nodo_online under macro Mod1Mb
 
       #DB-CHECK-POSITION_PAYMENT_STATUS
+      And replace pa content with #codicePA# content
+      And replace noticeNumber content with $1noticeNumber content
+
       And checks the value PAYING, CANCELLED, PAYING of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query DB_GEST_ANN_stati_position_payment_status on db nodo_online under macro Mod1Mb
 
       #DB-CHECK-POSITION_PAYMENT_STATUS_SNAPSHOT

@@ -1325,6 +1325,7 @@ def step_impl(context, query_name, date, macro, db_name):
 
     if date == 'Today':
         date = str(datetime.datetime.today())
+    
 
     selected_query = utils.query_json(
         context, query_name, macro).replace('date', date)
