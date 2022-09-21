@@ -161,32 +161,55 @@ Feature: semantic checks for checkPosition outcome OK
 
     Scenario: Code 200 KO (part 2)
         Given the Code 200 KO (part 1) scenario executed successfully
-        And the checkPosition scenario executed successfully
-        And noticeNumber with $activatePaymentNoticeV2Request.noticeNumber in checkPosition
-        When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
-        Then verify the HTTP status code of checkPosition response is 200
-        And check outcome is KO of checkPosition response
-        # And check positionslist contains PAYING of checkPosition response
-        # And check positionslist field exists in checkPosition response
+        And random iuv in context
+        And noticeNumber with 311$iuv in activatePaymentNoticeV2
+        And creditorReferenceId with 11$iuv in paGetPayment
+        And EC replies to nodo-dei-pagamenti with the paGetPayment
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2Request1
         And updates through the query select_activatev2 of the table POSITION_STATUS_SNAPSHOT the parameter STATUS with PAID under macro NewMod1 on db nodo_online
 
     Scenario: Code 200 KO (part 3)
         Given the Code 200 KO (part 2) scenario executed successfully
-        When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
-        Then verify the HTTP status code of checkPosition response is 200
-        And check outcome is KO of checkPosition response
-        # And check positionslist contains PAID of checkPosition response
-        # And check positionslist field exists in checkPosition response
+        And random iuv in context
+        And noticeNumber with 311$iuv in activatePaymentNoticeV2
+        And creditorReferenceId with 11$iuv in paGetPayment
+        And EC replies to nodo-dei-pagamenti with the paGetPayment
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2Request2
         And updates through the query select_activatev2 of the table POSITION_STATUS_SNAPSHOT the parameter STATUS with NOTIFIED under macro NewMod1 on db nodo_online
 
     Scenario: Code 200 KO (part 4)
         Given the Code 200 KO (part 3) scenario executed successfully
-        And noticeNumber with 311$iuv in checkPosition
+        And initial json checkPosition
+            """
+            {
+                "positionslist": [
+                    {
+                        "fiscalCode": "#creditor_institution_code#",
+                        "noticeNumber": "$activatePaymentNoticeV2Request.noticeNumber"
+                    },
+                    {
+                        "fiscalCode": "#creditor_institution_code#",
+                        "noticeNumber": "$activatePaymentNoticeV2Request1.noticeNumber"
+                    },
+                    {
+                        "fiscalCode": "#creditor_institution_code#",
+                        "noticeNumber": "$activatePaymentNoticeV2Request2.noticeNumber"
+                    }
+                ]
+            }
+            """
+
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
         Then verify the HTTP status code of checkPosition response is 200
         And check outcome is KO of checkPosition response
-        # And check positionslist contains NOTIFIED of checkPosition response
-        # And check positionslist field exists in checkPosition response
+    # And check positionslist contains PAYING of checkPosition response
+    # And check positionslist contains PAID of checkPosition response
+    # And check positionslist contains NOTIFIED of checkPosition response
+    # And check positionslist field exists in checkPosition response
 
     # SEM_CPO_04
     Scenario: Wrong configuration 1
