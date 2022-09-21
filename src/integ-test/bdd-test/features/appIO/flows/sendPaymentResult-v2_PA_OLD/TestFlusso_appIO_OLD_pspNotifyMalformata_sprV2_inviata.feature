@@ -407,9 +407,6 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
         When psp sends sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
 
-# db
-# Scenario: DB check1
-#Given the Execute sendPaymentOutcome request scenario executed successfully
 #Then verify 1 record for the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
 #And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_UNKNOWN,PAID of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
 #And checks the value NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
@@ -418,10 +415,14 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
 
 
 Scenario: DB check
-        Given the Execute a closePayment-v2 request scenario executed successfully
-        Then verify 0 record for the table RE retrived by the query select_sprV2_old on db re under macro sendPaymentResultV2
-        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro Mod1
-		And checks the value RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro Mod1
+        Given the Execute sendPaymentOutcome request scenario executed successfully
+        Then verify 2 record for the table RE retrived by the query select_sprV2_old on db re under macro sendPaymentResultV2
+        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_RISOLTA_OK,RT_GENERATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro Mod1
+		And checks the value RT_GENERATA_NODO of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro Mod1
+        And verify 1 record for the table STATI_RPT_SNAPSHOT retrived the query rpt_stati on db nodo_online under macro Mod1
+        
+        
+        
         And checks the value PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
         And checks the value PAYMENT_ACCEPTED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
         And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
