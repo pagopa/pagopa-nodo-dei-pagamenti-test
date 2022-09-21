@@ -299,7 +299,7 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
 		And retrieve session token from $nodoInviaRPTResponse.url
 
     Scenario: DB check
-        Given the Execute nodoInviaRPT request scenario executed successfully
+        Given the Execute nodoInviaRPT scenario executed successfully
         Then checks the value $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value $activateIOPaymentRequest.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
 		And verify 1 record for the table CD_INFO_PAGAMENTO retrived by the query info_pagamento on db nodo_online under macro AppIO
