@@ -47,7 +47,7 @@ Feature: semantic checks for closePayment
         When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v1/closepayment response is 404
         And check esito is KO of v1/closepayment response
-        And check descrizione is L'intermediario indicato non esiste of v1/closepayment response
+        And check descrizione is L'Intermediario indicato non esiste of v1/closepayment response
         Examples:
             | elem                        | value           | soapUI test |
             | identificativoIntermediario | 12545678987     | SEM_CP_05   |
