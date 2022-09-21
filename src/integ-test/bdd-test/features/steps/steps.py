@@ -2262,6 +2262,6 @@ def step_impl(context, primitive):
     if '$psp_transaction_id' in payload:
         payload = payload.replace(
             '$psp_transaction_id', getattr(context, 'psp_transaction_id'))
-        payload = utils.replace_context_variables(payload, context)
-        payload = utils.replace_global_variables(payload, context)
-        setattr(context, primitive, payload)
+    payload = utils.replace_context_variables(payload, context)
+    payload = utils.replace_global_variables(payload, context)
+    setattr(context, primitive, payload)
