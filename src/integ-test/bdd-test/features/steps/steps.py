@@ -319,9 +319,9 @@ def step_impl(context):
 def step_impl(context, number, aux_digit, segregation_code, application_code):
     segregation_code = utils.replace_global_variables(segregation_code, context)
     if aux_digit == 0 or aux_digit == 3:
-        iuv = f"11{random.randint(10000000000, 99999999999)}"
+        iuv = f"11{random.randint(10000000000, 99999999999)}00"
         reference_code = application_code if aux_digit == 0 else segregation_code
-        notice_number = f"{aux_digit}{reference_code}{iuv}00"
+        notice_number = f"{aux_digit}{reference_code}{iuv}"
     elif aux_digit == 1:
         iuv = random.randint(10000000000000000, 99999999999999999)
         notice_number = f"{aux_digit}{iuv}"
@@ -368,7 +368,7 @@ def step_impl(context, number):
         setattr(context, f'{number}IUV', IUV)
 
     if f"#ccp{number}#" in payload:
-        ccp = str(int(time() * 1000))
+        ccp = str(int(time.time() * 1000))
         payload = payload.replace(f'#ccp{number}#', ccp)
         setattr(context, f"{number}ccp", ccp)
 
@@ -791,7 +791,6 @@ def step_impl(context, tag, value, primitive):
     value = utils.replace_local_variables(value, context)
     value = utils.replace_context_variables(value, context)
     soap_response = getattr(context, primitive + RESPONSE)
-    print(soap_response)
     if 'xml' in soap_response.headers['content-type']:
         my_document = parseString(soap_response.content)
         if len(my_document.getElementsByTagName('faultCode')) > 0:

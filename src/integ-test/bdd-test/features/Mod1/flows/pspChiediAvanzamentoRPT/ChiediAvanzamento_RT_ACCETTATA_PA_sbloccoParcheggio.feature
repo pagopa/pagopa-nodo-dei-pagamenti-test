@@ -157,11 +157,11 @@ Feature: process tests for ChiediAvanzamento_RT_ACCETTATA_PA_sbloccoParcheggio
         </pay_i:soggettoPagatore>
         <pay_i:datiPagamento>
             <pay_i:codiceEsitoPagamento>0</pay_i:codiceEsitoPagamento>
-            <pay_i:importoTotalePagato>TUTTO_OK</pay_i:importoTotalePagato>
+            <pay_i:importoTotalePagato>10.00</pay_i:importoTotalePagato>
             <pay_i:identificativoUnivocoVersamento>avanzaOK</pay_i:identificativoUnivocoVersamento>
             <pay_i:CodiceContestoPagamento>$1ccp</pay_i:CodiceContestoPagamento>
             <pay_i:datiSingoloPagamento>
-                <pay_i:singoloImportoPagato>TUTTO_OK</pay_i:singoloImportoPagato>
+                <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
                 <pay_i:esitoSingoloPagamento>REJECT</pay_i:esitoSingoloPagamento>
                 <pay_i:dataEsitoSingoloPagamento>2001-01-01</pay_i:dataEsitoSingoloPagamento>
                 <pay_i:identificativoUnivocoRiscossione>avanzaOK</pay_i:identificativoUnivocoRiscossione>
@@ -204,7 +204,7 @@ Feature: process tests for ChiediAvanzamento_RT_ACCETTATA_PA_sbloccoParcheggio
             <soapenv:Body>
             <ws:pspInviaRPTResponse>
             <pspInviaRPTResponse>
-            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+            <esitoComplessivoOperazione>timeout</esitoComplessivoOperazione>
             <identificativoCarrello>$nodoInviaRPT.identificativoUnivocoVersamento</identificativoCarrello>
             <parametriPagamentoImmediato>idBruciatura=$nodoInviaRPT.identificativoUnivocoVersamento</parametriPagamentoImmediato>
             </pspInviaRPTResponse>
@@ -228,12 +228,11 @@ Feature: process tests for ChiediAvanzamento_RT_ACCETTATA_PA_sbloccoParcheggio
             "tipoVersamento":"BBT", 
             "identificativoIntermediario":"40000000001",
             "identificativoCanale":"40000000001_03",
-            "tipoOperazione":"web", 
+            "tipoOperazione":"web"
             }
-
              """
         Then verify the HTTP status code of inoltroEsito/mod1 response is 408
-        And check error is Operazione in timeout of inoltroEsito/mod1 response
+        And check error is timeout of inoltroEsito/mod1 response
         # controllare se serve lo step successivo
         And check url field not exists in inoltroEsito/mod1 response
         And replace iuv content with avanzaOK content
