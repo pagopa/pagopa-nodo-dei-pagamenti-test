@@ -1145,14 +1145,10 @@ def step_impl(context):
     iuv = str(random.randint(100000000000000, 999999999999999))
     setattr(context, "iuv", iuv)
 
-### prova
-
 @step('current date generation')
 def step_impl(context):
-    date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    date = (datetime.datetime.now() + datetime.timedelta(hours = 2)).strftime("%Y-%m-%d %H:%M:%S")
     setattr(context, 'date', date)
-
-### prova
 
 @step("nodo-dei-pagamenti has config parameter {param} set to {value}")
 def step_impl(context, param, value):
