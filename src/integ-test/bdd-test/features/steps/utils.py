@@ -201,7 +201,7 @@ def replace_local_variables(body, context):
             else:
                 document = parseString(saved_elem.content)
                 print(tag)
-            value = document.getElementsByTagName(tag)[0].firstChild.data
+            value = document.getElementsByTagNameNS('*',tag)[0].firstChild.data
         body = body.replace(field, value)
     return body
 
