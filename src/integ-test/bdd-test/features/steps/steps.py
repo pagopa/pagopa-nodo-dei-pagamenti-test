@@ -1145,6 +1145,15 @@ def step_impl(context):
     iuv = str(random.randint(100000000000000, 999999999999999))
     setattr(context, "iuv", iuv)
 
+### prova
+
+@step('current date generation')
+def step_impl(context):
+    date = datetime.date.today().strftime("%Y-%m-%d %H:%M:%S")    
+    setattr(context, 'date', date)
+
+### prova
+
 @step("nodo-dei-pagamenti has config parameter {param} set to {value}")
 def step_impl(context, param, value):
     db_selected = context.config.userdata.get(
