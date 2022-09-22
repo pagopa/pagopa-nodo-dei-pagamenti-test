@@ -101,5 +101,5 @@ Feature: process tests for T100_ChiediStato_RPT_SCONOSCIUTA
         </soapenv:Envelope>
         """
         When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
-        Then checks stato contains PPT_RPT_SCONOSCIUTA of nodoChiediStatoRPT response
+        Then check faultCode is PPT_RPT_SCONOSCIUTA of nodoChiediStatoRPT response
         And check url field not exists in nodoChiediStatoRPT response
