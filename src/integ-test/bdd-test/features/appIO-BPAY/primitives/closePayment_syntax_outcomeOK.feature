@@ -295,14 +295,14 @@ Feature: syntax checks for closePayment outcome OK
     When WISP sends REST GET informazioniPagamento?idPagamento=$activateIOPayment1Response.paymentToken to nodo-dei-pagamenti
     Then verify the HTTP status code of informazioniPagamento response is 200
 
-  @test
   Scenario: nodoChiediInformazioniPagamento2
     Given the check activateIOPayment2 OK 2 tokens scenario executed successfully
     When WISP sends REST GET informazioniPagamento?idPagamento=$activateIOPayment2Response.paymentToken to nodo-dei-pagamenti
     Then verify the HTTP status code of informazioniPagamento response is 200
 
   Scenario: closePayment 2 tokens
-    Given the nodoChiediInformazioniPagamento2 scenario executed successfully
+    Given the nodoChiediInformazioniPagamento scenario executed successfully
+    And the nodoChiediInformazioniPagamento2 scenario executed successfully
     And initial JSON v1/closepayment
       """
       {
