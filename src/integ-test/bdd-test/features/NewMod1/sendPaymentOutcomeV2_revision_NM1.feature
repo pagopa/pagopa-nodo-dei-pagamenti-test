@@ -187,7 +187,7 @@ Feature: revision checks for sendPaymentOutcomeV2
             """
 
     # REV_SPO_03
-    
+
     Scenario: REV_SPO_03 (part 1)
         Given the checkPosition scenario executed successfully
         And the activatePaymentNoticeV2 scenario executed successfully
@@ -216,7 +216,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         And verify 3 record for the table POSITION_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value NOTIFIED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And through the query inserted_timestamp retrieve param INSERTED_TIMESTAMP at position 1 and save it under the key date
+        And through the query SELECT INSERTED_TIMESTAMP FROM POSITION_STATUS_SNAPSHOT WHERE NOTICE_ID = '$activatePaymentNoticeV2.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNoticeV2.fiscalCode' retrieve param INSERTED_TIMESTAMP at position 1 and save it under the key date
         And checks the value NotNone of the record at column ID of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro NewMod1
         And checks the value PAYER of the record at column SUBJECT_TYPE of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro NewMod1
         And checks the value $sendPaymentOutcomeV2.entityUniqueIdentifierType of the record at column ENTITY_UNIQUE_IDENTIFIER_TYPE of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro NewMod1
