@@ -171,6 +171,24 @@ Feature: process tests for T101_chiediStato_RT_ACCETTATA_PA
 
     Scenario: Execute nodoInviaRPT request
         Given the RPT generation scenario executed successfully
+        And initial XML pspInviaRPT
+        """
+        <soapenv:Envelope
+            xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+            xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+                <ws:pspInviaRPTResponse>
+                    <pspInviaRPTResponse>
+                        <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+                        <identificativoCarrello>$IUV</identificativoCarrello>
+                        <parametriPagamentoImmediato>idBruciatura=$IUV</parametriPagamentoImmediato>
+                    </pspInviaRPTResponse>
+                </ws:pspInviaRPTResponse>
+            </soapenv:Body>
+        </soapenv:Envelope>
+        """
+        And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
         And initial XML nodoInviaRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -222,6 +240,7 @@ Feature: process tests for T101_chiediStato_RT_ACCETTATA_PA
             """
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
+        And wait 10 seconds for expiration
 
     Scenario: Execute nodoChiediStatoRPT request
         Given the Execute nodoInviaRT request scenario executed successfully
