@@ -70,7 +70,7 @@ Feature: process tests for T101_chiediStato_RT_ACCETTATA_PA
                 <pay_i:datiSingoloVersamento>
                     <pay_i:importoSingoloVersamento>10.00</pay_i:importoSingoloVersamento>
                     <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
-                    <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
+                    <pay_i:ibanAccredito>IT45R0760103200000000001016</pay_i:ibanAccredito>
                     <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
                     <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio>
                     <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
