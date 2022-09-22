@@ -58,6 +58,8 @@ def step_impl(context, version):
 def step_impl(context, primitive):
     payload = context.text or ""
     payload = utils.replace_local_variables(payload, context)
+    payload = utils.replace_context_variables(payload, context)
+    payload = utils.replace_global_variables(payload, context)
     date = datetime.date.today().strftime("%Y-%m-%d")
     timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
     yesterday_date = datetime.date.today() - datetime.timedelta(days=1)
@@ -192,8 +194,6 @@ def step_impl(context, primitive):
         payload = payload.replace('#carrello#', carrello)
         setattr(context, 'carrello', carrello)
 
-    payload = utils.replace_context_variables(payload, context)
-    payload = utils.replace_global_variables(payload, context)
     setattr(context, primitive, payload)
 
 
@@ -779,7 +779,7 @@ def step_impl(context, tag, value, primitive):
     if 'xml' in soap_response.headers['content-type']:
         my_document = parseString(soap_response.content)
         nodeList= my_document.getElementsByTagName(tag)
-        print(nodeList)
+        print("#######################",nodeList)
         values = [node.childNodes[0].nodeValue for node in nodeList]
         print(values)
         assert value in values
