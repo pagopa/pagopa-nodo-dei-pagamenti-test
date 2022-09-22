@@ -459,7 +459,7 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
                 <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
                 <password>pwdpwdpwd</password>
                 <identificativoDominio>44444444445</identificativoDominio>
-                <identificativoUnivocoVersamento>avanzaErrResponse</identificativoUnivocoVersamento>
+                <identificativoUnivocoVersamento>esitoSconosciutoPsp</identificativoUnivocoVersamento>
                 <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
             </ws:nodoChiediStatoRPT>
         </soapenv:Body>
