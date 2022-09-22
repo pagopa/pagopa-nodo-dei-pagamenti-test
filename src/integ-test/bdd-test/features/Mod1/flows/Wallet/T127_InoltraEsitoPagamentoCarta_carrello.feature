@@ -410,7 +410,7 @@ Feature: process tests for InoltroEsitoCartaCarrello
 
     Scenario: Execution Esito Carta
         Given the Execution idPagamento scenario executed successfully
-        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT 
+        And initial XML pspInviaCarrelloRPT 
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header/>
@@ -425,6 +425,7 @@ Feature: process tests for InoltroEsitoCartaCarrello
             </soapenv:Body>
             </soapenv:Envelope>
             """
+        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
         When WISP sends REST POST inoltroEsito/carta to nodo-dei-pagamenti
 
             """

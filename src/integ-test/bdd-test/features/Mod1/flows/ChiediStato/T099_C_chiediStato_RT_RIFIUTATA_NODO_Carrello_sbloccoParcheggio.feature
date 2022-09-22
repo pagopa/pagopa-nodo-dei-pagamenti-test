@@ -376,7 +376,7 @@ Feature: process tests for T099_C_chiediStato_RT_RIFIUTATA_NODO_Carrello_sblocco
 
     Scenario: Execution Esito Mod1
         Given the Execute nodoInviaCarrelloRPT scenario executed successfully
-        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT 
+        And initial XML pspInviaCarrelloRPT 
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
                 <soapenv:Header/>
@@ -391,6 +391,7 @@ Feature: process tests for T099_C_chiediStato_RT_RIFIUTATA_NODO_Carrello_sblocco
                 </soapenv:Body>
             </soapenv:Envelope>
             """
+        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
         When WISP sends REST POST inoltroEsito/mod1 to nodo-dei-pagamenti
 
             """
@@ -402,8 +403,7 @@ Feature: process tests for T099_C_chiediStato_RT_RIFIUTATA_NODO_Carrello_sblocco
             "identificativoCanale":"40000000001_03",
             "tipoOperazione":"web"
             }
-
-             """
+            """
         Then check esito is OK of inoltroEsito/mod1 response
         And check urlRedirectPSP field exists in inoltroEsito/mod1 response
 
@@ -519,7 +519,7 @@ Feature: process tests for T099_C_chiediStato_RT_RIFIUTATA_NODO_Carrello_sblocco
         And check error is Il Pagamento indicato non esiste of notificaAnnullamento response
 
 
-    Scenario: Execute nodoInviaCarrelloRPT
+    Scenario: Execute second nodoInviaCarrelloRPT
 		Given the Execute nodoNotificaAnnullamento scenario executed successfully
 		And initial XML nodoInviaCarrelloRPT
             """
@@ -556,11 +556,11 @@ Feature: process tests for T099_C_chiediStato_RT_RIFIUTATA_NODO_Carrello_sblocco
             </soapenv:Envelope>
             """
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
-        Then check url contains DUPLICAT of nodoInviaCarrelloRPT response
+        Then check faultCode contains PPT_ID_CARRELLO_DUPLICATO of nodoInviaCarrelloRPT response
 
 
     Scenario: Execute third nodoInviaRT request
-        Given the Execute nodoInviaCarrelloRPT scenario executed successfully
+        Given the Execute second nodoInviaCarrelloRPT scenario executed successfully
         And initial XML nodoInviaRT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
