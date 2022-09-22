@@ -428,13 +428,13 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
             <listaRPT>
             <elementoListaRPT>
             <identificativoDominio>44444444444</identificativoDominio>
-            <identificativoUnivocoVersamento>avanzaErrResponse</identificativoUnivocoVersamento>
+            <identificativoUnivocoVersamento>esitoSconosciutoPsp</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
             <rpt>$rptAttachment</rpt>
             </elementoListaRPT>
             <elementoListaRPT>
             <identificativoDominio>44444444445</identificativoDominio>
-            <identificativoUnivocoVersamento>avanzaErrResponse</identificativoUnivocoVersamento>
+            <identificativoUnivocoVersamento>esitoSconosciutoPsp</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
             <rpt>$rpt21Attachment</rpt>
             </elementoListaRPT>
