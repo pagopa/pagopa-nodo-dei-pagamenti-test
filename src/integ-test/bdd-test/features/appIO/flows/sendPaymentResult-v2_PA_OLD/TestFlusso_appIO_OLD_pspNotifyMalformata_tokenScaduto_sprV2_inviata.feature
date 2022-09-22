@@ -368,7 +368,7 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
         And restore initial configurations
 
     Scenario: DB check
-        Given the Execute Execute mod3CancelV1 scenario executed successfully
+        Given the Execute mod3CancelV1 scenario executed successfully
         And wait 30 seconds for expiration
         Then verify 2 record for the table RE retrived by the query select_sprV2_old on db re under macro sendPaymentResultV2
         And checks the value REQ,RESP of the record at column SOTTO_TIPO_EVENTO of the table RE retrived by the query select_sprV2_old on db re under macro sendPaymentResultV2
