@@ -273,67 +273,64 @@ Feature: syntax checks for closePayment outcome OK
     And check descrizione is Il Pagamento indicato non esiste of v1/closepayment response
 
 
+  # syntax check - No error with 2 tokens [SIN_CP_03.2]
+  Scenario: check activateIOPayment OK 2 tokens
+    Given the activateIOPayment scenario executed successfully
+    When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
+    Then check outcome is OK of activateIOPayment response
+    And save activateIOPayment response in activateIOPayment1  
 
-#----------Non riesce a recuperare la activateIOPaymentResponse2 dal context
+  Scenario: check activateIOPayment2 OK 2 tokens
+    Given the check activateIOPayment OK 2 tokens scenario executed successfully
+    And random iuv in context
+    And noticeNumber with 311$iuv in activateIOPayment
+    And creditorReferenceId with 11$iuv in paGetPayment
+    And EC replies to nodo-dei-pagamenti with the paGetPayment
+    When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
+    Then check outcome is OK of activateIOPayment response
+    And save activateIOPayment response in activateIOPayment2
 
-  # # syntax check - No error with 2 tokens [SIN_CP_03.2]
-  # Scenario: check activateIOPayment OK 2 tokens
-  #   Given the activateIOPayment scenario executed successfully
-  #   When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
-  #   Then check outcome is OK of activateIOPayment response
-  #   And save activateIOPayment response in activateIOPaymentResponse
+  Scenario: nodoChiediInformazioniPagamento
+    Given the check activateIOPayment2 OK 2 tokens scenario executed successfully
+    When WISP sends REST GET informazioniPagamento?idPagamento=$activateIOPayment1Response.paymentToken to nodo-dei-pagamenti
+    Then verify the HTTP status code of informazioniPagamento response is 200
 
-  # Scenario: check activateIOPayment2 OK 2 tokens
-  #   Given the check activateIOPayment OK 2 tokens scenario executed successfully
-  #   And random iuv in context
-  #   And noticeNumber with 311$iuv in activateIOPayment
-  #   And creditorReferenceId with 11$iuv in paGetPayment
-  #   And EC replies to nodo-dei-pagamenti with the paGetPayment
-  #   When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
-  #   Then check outcome is OK of activateIOPayment response
-  #   And save activateIOPayment response in activateIOPaymentResponse2
+  Scenario: nodoChiediInformazioniPagamento2
+    Given the nodoChiediInformazioniPagamento scenario executed successfully
+    When WISP sends REST GET informazioniPagamento?idPagamento=$activateIOPayment2Response.paymentToken to nodo-dei-pagamenti
+    Then verify the HTTP status code of informazioniPagamento response is 200
 
-  # Scenario: nodoChiediInformazioniPagamento
-  #   Given the check activateIOPayment2 OK 2 tokens scenario executed successfully
-  #   When WISP sends REST GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
-  #   Then verify the HTTP status code of informazioniPagamento response is 200
+  Scenario: closePayment 2 tokens
+    Given the nodoChiediInformazioniPagamento2 scenario executed successfully
+    And initial JSON v1/closepayment
+      """
+      {
+        "paymentTokens": [
+          "$activateIOPayment1Response.paymentToken",
+          "$activateIOPayment2Response.paymentToken"
+        ],
+        "outcome": "OK",
+        "identificativoPsp": "#psp#",
+        "tipoVersamento": "BPAY",
+        "identificativoIntermediario": "#id_broker_psp#",
+        "identificativoCanale": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
+        "pspTransactionId": "#psp_transaction_id#",
+        "totalAmount": 14,
+        "fee": 2,
+        "timestampOperation": "2033-04-23T18:25:43Z",
+        "additionalPaymentInformations": {
+          "transactionId": "#transaction_id#",
+          "outcomePaymentGateway": "EFF",
+          "authorizationCode": "resOK"
+        }
+      }
+      """
 
-  # Scenario: nodoChiediInformazioniPagamento2
-  #   Given the nodoChiediInformazioniPagamento scenario executed successfully
-  #   When WISP sends REST GET informazioniPagamento?idPagamento=$activateIOPaymentResponse2.paymentToken to nodo-dei-pagamenti
-  #   Then verify the HTTP status code of informazioniPagamento response is 200
-
-  # Scenario: closePayment 2 tokens
-  #   Given the nodoChiediInformazioniPagamento2 scenario executed successfully
-  #   And initial JSON v1/closepayment
-  #     """
-  #     {
-  #       "paymentTokens": [
-  #         "$activateIOPaymentResponse.paymentToken",
-  #         "$activateIOPaymentResponse2.paymentToken"
-  #       ],
-  #       "outcome": "OK",
-  #       "identificativoPsp": "#psp#",
-  #       "tipoVersamento": "BPAY",
-  #       "identificativoIntermediario": "#id_broker_psp#",
-  #       "identificativoCanale": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
-  #       "pspTransactionId": "#psp_transaction_id#",
-  #       "totalAmount": 14,
-  #       "fee": 2,
-  #       "timestampOperation": "2033-04-23T18:25:43Z",
-  #       "additionalPaymentInformations": {
-  #         "transactionId": "#transaction_id#",
-  #         "outcomePaymentGateway": "EFF",
-  #         "authorizationCode": "resOK"
-  #       }
-  #     }
-  #     """
-
-  # Scenario: check closePayment OK with 2 tokens
-  #   Given the closePayment 2 tokens scenario executed successfully
-  #   When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
-  #   Then verify the HTTP status code of v1/closepayment response is 200
-  #   And check esito is OK of v1/closepayment response
+  Scenario: check closePayment OK with 2 tokens
+    Given the closePayment 2 tokens scenario executed successfully
+    When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
+    Then verify the HTTP status code of v1/closepayment response is 200
+    And check esito is OK of v1/closepayment response
 
 
 #-----------gestione del paymentTokens senza [] non previsto nello step when(u'{sender} sends rest {method:Method} {service} to {receiver}')
