@@ -64,7 +64,7 @@ Feature: process tests for T101_chiediStato_RT_ACCETTATA_PA
                 <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
                 <pay_i:identificativoUnivocoVersamento>#IUV#</pay_i:identificativoUnivocoVersamento>
                 <pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
-                <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
+                <pay_i:ibanAddebito>IT45R0760103200000000001016</pay_i:ibanAddebito>
                 <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
                 <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
                 <pay_i:datiSingoloVersamento>
