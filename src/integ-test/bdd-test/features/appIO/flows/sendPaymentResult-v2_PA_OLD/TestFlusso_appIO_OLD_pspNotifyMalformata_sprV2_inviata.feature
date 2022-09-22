@@ -330,13 +330,9 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
             }
             """
 
-
-    # closePayment-v2 phase
-    Scenario: Execute a closePayment-v2 request
-        Given the Execute a nodoChiediInformazioniPagamento request scenario executed successfully
-        And the closePaymentV2 scenario executed successfully
-        And paymentToken with $sessionToken in v2/closepayment
-        And initial xml pspNotifyPayment
+    # define pspNotifyPayment
+    Scenario: pspNotifyPayment
+        Given initial xml pspNotifyPayment
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:psp="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
             <soapenv:Header/>
@@ -347,8 +343,16 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
-        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+
+
+    # closePayment-v2 phase
+    Scenario: Execute a closePayment-v2 request
+        Given the Execute a nodoChiediInformazioniPagamento request scenario executed successfully
+        And the closePaymentV2 scenario executed successfully
+        And paymentToken with $sessionToken in v2/closepayment
+        And the pspNotifyPayment scenario executed successfully
+        When PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
+        And WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then check outcome is OK of v2/closepayment response
         And verify the HTTP status code of v2/closepayment response is 200
 
