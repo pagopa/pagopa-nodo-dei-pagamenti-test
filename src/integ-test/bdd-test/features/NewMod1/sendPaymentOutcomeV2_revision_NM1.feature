@@ -19,6 +19,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         Then verify the HTTP status code of checkPosition response is 200
         And check outcome is OK of checkPosition response
 
+    @skip
     Scenario: activatePaymentNoticeV2
         Given initial XML activatePaymentNoticeV2
             """
@@ -135,8 +136,7 @@ Feature: revision checks for sendPaymentOutcomeV2
 
     @skip
     Scenario: sendPaymentOutcomeV2
-        Given the scenario executed successfully
-        And initial XML sendPaymentOutcomeV2
+        Given initial XML sendPaymentOutcomeV2
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
             <soapenv:Header/>
@@ -261,7 +261,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         And checks the value NotNone of the record at column FLAG_PAYPAL of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column INSERTED_BY of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value sendPaymentOutcomeV2 of the record at column UPDATED_BY of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value $closePaymentV2.transactionId of the record at column TRANSACTION_ID of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value $v2/closepayment.transactionId of the record at column TRANSACTION_ID of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value v2 of the record at column CLOSE_PAYMENT of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column ID of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
