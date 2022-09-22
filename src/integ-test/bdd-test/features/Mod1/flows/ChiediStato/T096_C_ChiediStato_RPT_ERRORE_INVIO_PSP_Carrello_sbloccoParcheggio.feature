@@ -62,7 +62,7 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
                 <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
                 <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
                 <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
-                <pay_i:identificativoUnivocoVersamento>avanzaErrResponse</pay_i:identificativoUnivocoVersamento>
+                <pay_i:identificativoUnivocoVersamento>esitoSconosciutoPsp</pay_i:identificativoUnivocoVersamento>
                 <pay_i:codiceContestoPagamento>#ccp1#</pay_i:codiceContestoPagamento>
                 <pay_i:ibanAddebito>IT45R0760103200000000001016</pay_i:ibanAddebito> 
                 <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
@@ -140,7 +140,7 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
                 <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
                 <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
                 <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
-                <pay_i:identificativoUnivocoVersamento>avanzaErrResponse</pay_i:identificativoUnivocoVersamento>
+                <pay_i:identificativoUnivocoVersamento>esitoSconosciutoPsp</pay_i:identificativoUnivocoVersamento>
                 <pay_i:codiceContestoPagamento>#CCP2#</pay_i:codiceContestoPagamento>
                 <pay_i:ibanAddebito>IT45R0760103200000000001016</pay_i:ibanAddebito> 
                 <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
@@ -218,7 +218,7 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
                 <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
                 <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
                 <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
-                <pay_i:identificativoUnivocoVersamento>avanzaErrResponse</pay_i:identificativoUnivocoVersamento>
+                <pay_i:identificativoUnivocoVersamento>esitoSconosciutoPsp</pay_i:identificativoUnivocoVersamento>
                 <pay_i:codiceContestoPagamento>$1ccp</pay_i:codiceContestoPagamento>
                 <pay_i:ibanAddebito>IT45R0760103200000000001016</pay_i:ibanAddebito> 
                 <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
@@ -237,7 +237,6 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
                 </pay_i:datiVersamento>
                 </pay_i:RPT>
             """
-        
 
     Scenario: Execute nodoInviaCarrelloRPT
 		Given the RPT generation scenario executed successfully
@@ -260,13 +259,13 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
             <listaRPT>
             <elementoListaRPT>
             <identificativoDominio>44444444444</identificativoDominio>
-            <identificativoUnivocoVersamento>avanzaErrResponse</identificativoUnivocoVersamento>
+            <identificativoUnivocoVersamento>esitoSconosciutoPsp</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
             <rpt>$rptAttachment</rpt>
             </elementoListaRPT>
             <elementoListaRPT>
             <identificativoDominio>44444444445</identificativoDominio>
-            <identificativoUnivocoVersamento>avanzaErrResponse</identificativoUnivocoVersamento>
+            <identificativoUnivocoVersamento>esitoSconosciutoPsp</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$2CCP</codiceContestoPagamento>
             <rpt>$rpt2Attachment</rpt>
             </elementoListaRPT>
@@ -279,8 +278,8 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
 	    Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
         And check url contains acardste of nodoInviaCarrelloRPT response
         And retrieve session token from $nodoInviaCarrelloRPTResponse.url
-        And replace iuv content with avanzaErrResponse content
-        And replace iuv2 content with avanzaErrResponse content
+        And replace iuv content with esitoSconosciutoPsp content
+        And replace iuv2 content with esitoSconosciutoPsp content
         And verify 3 record for the table STATI_RPT retrived by the query stati_RPT on db nodo_online under macro Mod1
         And verify 3 record for the table STATI_RPT retrived by the query stati_RPT2 on db nodo_online under macro Mod1
         And checks the value $sessionToken of the record at column ID_SESSIONE of the table STATI_RPT retrived by the query stati_RPT on db nodo_online under macro Mod1
@@ -288,39 +287,28 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
         And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query stati_RPT on db nodo_online under macro Mod1
 
 
-    Scenario: Execution Esito Mod1
+    Scenario: Execution Esito Carta
         Given the Execute nodoInviaCarrelloRPT scenario executed successfully
-        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT 
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-                <soapenv:Header/>
-                <soapenv:Body>
-                    <ws:pspInviaCarrelloRPTResponse>
-                        <pspInviaCarrelloRPTResponse>
-                            <esitoComplessivoOperazione>timeout</esitoComplessivoOperazione>
-                        </pspInviaCarrelloRPTResponse>
-                    </ws:pspInviaCarrelloRPTResponse>
-                </soapenv:Body>
-            </soapenv:Envelope>
-            """
         When WISP sends REST POST inoltroEsito/mod1 to nodo-dei-pagamenti
 
             """
             {
             "idPagamento":"$sessionToken",
-            "identificativoPsp":"40000000001",
+            "identificativoPsp":"irraggiungibile",
             "tipoVersamento":"BBT", 
-            "identificativoIntermediario":"40000000001",
-            "identificativoCanale":"40000000001_03",
+            "identificativoIntermediario":"irraggiungibile",
+            "identificativoCanale":"irraggiungibile",
             "tipoOperazione":"web"
             }
-
              """
-        Then verify the HTTP status code of inoltroEsito/mod1 response is 408
-        And check error is timeout of inoltroEsito/mod1 response
+        Then verify the HTTP status code of inoltroEsito/mod1 response is 200
+        And check esito is KO of inoltroEsito/mod1 response
+        And check descrizione is Canale non raggiungibile of inoltroEsito/mod1 response 
+        And check errorCode is CONPSP of inoltroEsito/mod1 response
+
 
     Scenario: Execute nodoChiediStatoRPT request
-        Given the Execution Esito Mod1 scenario executed successfully
+        Given the Execution Esito Carta scenario executed successfully
         And initial XML nodoChiediStatoRPT
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -331,7 +319,7 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
                 <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
                 <password>pwdpwdpwd</password>
                 <identificativoDominio>44444444444</identificativoDominio>
-                <identificativoUnivocoVersamento>avanzaErrResponse</identificativoUnivocoVersamento>
+                <identificativoUnivocoVersamento>esitoSconosciutoPsp</identificativoUnivocoVersamento>
                 <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
             </ws:nodoChiediStatoRPT>
         </soapenv:Body>
@@ -339,14 +327,22 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
         """
         When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
         Then checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
+        And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_PARCHEGGIATA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_INVIATA_A_PSP of nodoChiediStatoRPT response
-        And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
-        And checks stato contains RPT_ESITO_SCONOSCIUTO_PSP of nodoChiediStatoRPT response
+        And checks stato contains RPT_ERRORE_INVIO_A_PSP of nodoChiediStatoRPT response
+        And check redirect is 0 of nodoChiediStatoRPT response
+
+
+    Scenario: Execute nodoNotificaAnnullamento
+        Given the Execute nodoChiediStatoRPT request scenario executed successfully
+        When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken to nodo-dei-pagamenti
+        Then verify the HTTP status code of notificaAnnullamento response is 200
+        And check esito is OK of notificaAnnullamento response
 
 
     Scenario: Execute second nodoInviaCarrelloRPT
-		Given the Execute nodoChiediStatoRPT request scenario executed successfully
+		Given the Execute nodoNotificaAnnullamento scenario executed successfully
 		And initial XML nodoInviaCarrelloRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -354,7 +350,7 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
             <ppt:intestazioneCarrelloPPT>
             <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
-            <identificativoCarrello>$2CCP</identificativoCarrello>
+            <identificativoCarrello>$1ccp</identificativoCarrello>
             </ppt:intestazioneCarrelloPPT>
             </soapenv:Header>
             <soapenv:Body>
@@ -366,13 +362,13 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
             <listaRPT>
             <elementoListaRPT>
             <identificativoDominio>44444444444</identificativoDominio>
-            <identificativoUnivocoVersamento>avanzaErrResponse</identificativoUnivocoVersamento>
+            <identificativoUnivocoVersamento>esitoSconosciutoPsp</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
             <rpt>$rptAttachment</rpt>
             </elementoListaRPT>
             <elementoListaRPT>
             <identificativoDominio>44444444445</identificativoDominio>
-            <identificativoUnivocoVersamento>avanzaErrResponse</identificativoUnivocoVersamento>
+            <identificativoUnivocoVersamento>esitoSconosciutoPsp</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$2CCP</codiceContestoPagamento>
             <rpt>$rpt2Attachment</rpt>
             </elementoListaRPT>
@@ -382,34 +378,34 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
             </soapenv:Envelope>
             """
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
-	    Then check faultCode is PPT_RPT_DUPLICATA of nodoInviaCarrelloRPT response
+	    Then check faultCode is PPT_ID_CARRELLO_DUPLICATO of nodoInviaCarrelloRPT response
 
 
     Scenario: Execute second nodoChiediStatoRPT request
         Given the Execute second nodoInviaCarrelloRPT scenario executed successfully
         And initial XML nodoChiediStatoRPT
-        """
-        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-        <soapenv:Header/>
-        <soapenv:Body>
-            <ws:nodoChiediStatoRPT>
-                <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
-                <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
-                <password>pwdpwdpwd</password>
-                <identificativoDominio>44444444445</identificativoDominio>
-                <identificativoUnivocoVersamento>avanzaErrResponse</identificativoUnivocoVersamento>
-                <codiceContestoPagamento>$2CCP</codiceContestoPagamento>
-            </ws:nodoChiediStatoRPT>
-        </soapenv:Body>
-        </soapenv:Envelope>
-        """
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+                <ws:nodoChiediStatoRPT>
+                    <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
+                    <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
+                    <password>pwdpwdpwd</password>
+                    <identificativoDominio>44444444445</identificativoDominio>
+                    <identificativoUnivocoVersamento>esitoSconosciutoPsp</identificativoUnivocoVersamento>
+                    <codiceContestoPagamento>$2CCP</codiceContestoPagamento>
+                </ws:nodoChiediStatoRPT>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
         When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
         Then checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
+        And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_PARCHEGGIATA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_INVIATA_A_PSP of nodoChiediStatoRPT response
-        And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
-        And checks stato contains RPT_ESITO_SCONOSCIUTO_PSP of nodoChiediStatoRPT response
-
+        And checks stato contains RPT_RIFIUTATA_NODO of nodoChiediStatoRPT response
+        And check redirect is 0 of nodoChiediStatoRPT response
 
     Scenario: Execute 21nodoInviaCarrelloRPT
 		Given the Execute second nodoChiediStatoRPT request scenario executed successfully
@@ -432,13 +428,13 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
             <listaRPT>
             <elementoListaRPT>
             <identificativoDominio>44444444444</identificativoDominio>
-            <identificativoUnivocoVersamento>avanzaErrResponse</identificativoUnivocoVersamento>
+            <identificativoUnivocoVersamento>esitoSconosciutoPsp</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
             <rpt>$rptAttachment</rpt>
             </elementoListaRPT>
             <elementoListaRPT>
             <identificativoDominio>44444444445</identificativoDominio>
-            <identificativoUnivocoVersamento>avanzaErrResponse</identificativoUnivocoVersamento>
+            <identificativoUnivocoVersamento>esitoSconosciutoPsp</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
             <rpt>$rpt21Attachment</rpt>
             </elementoListaRPT>
@@ -463,7 +459,7 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
                 <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
                 <password>pwdpwdpwd</password>
                 <identificativoDominio>44444444445</identificativoDominio>
-                <identificativoUnivocoVersamento>avanzaErrResponse</identificativoUnivocoVersamento>
+                <identificativoUnivocoVersamento>esitoSconosciutoPsp</identificativoUnivocoVersamento>
                 <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
             </ws:nodoChiediStatoRPT>
         </soapenv:Body>
@@ -472,10 +468,4 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
         When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
         Then checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_RIFIUTATA_NODO of nodoChiediStatoRPT response
-
-
-    Scenario: Execute nodoNotificaAnnullamento
-        Given the Execute 21nodoChiediStatoRPT request scenario executed successfully
-        When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-        Then verify the HTTP status code of notificaAnnullamento response is 404
-        And check error is Il Pagamento indicato non esiste of notificaAnnullamento response
+        And check redirect is 0 of nodoChiediStatoRPT response
