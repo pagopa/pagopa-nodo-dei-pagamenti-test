@@ -692,7 +692,7 @@ Feature: process tests for 5 RPT 5 Versamenti
         And check data field exists in listaPSP response
 
     Scenario: Execution Esito Mod1
-        Given the Execute nodoInviaCarrelloRPT scenario executed successfully
+        Given the Execution chiediLista scenario executed successfully
         And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT 
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -721,7 +721,7 @@ Feature: process tests for 5 RPT 5 Versamenti
             }
 
              """
-        Then check esito is ok of inoltroEsito/mod1 response
+        Then check esito is OK of inoltroEsito/mod1 response
         And check urlRedirectPSP field exists in inoltroEsito/mod1 response
 
     Scenario: Execute nodoChiediStatoRPT request
