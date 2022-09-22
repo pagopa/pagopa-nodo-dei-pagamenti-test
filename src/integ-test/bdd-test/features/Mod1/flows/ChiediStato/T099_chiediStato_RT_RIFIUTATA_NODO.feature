@@ -153,7 +153,7 @@ Feature: process tests for T099_chiediStato_RT_RIFIUTATA_NODO
                 <pay_i:e-mailPagatore>gesualdo.riccitelli@poste.it</pay_i:e-mailPagatore>
             </pay_i:soggettoPagatore>
             <pay_i:datiPagamento>
-                <pay_i:codiceEsitoPagamento>0</pay_i:codiceEsitoPagamento>
+                <pay_i:codiceEsitoPagamento>1</pay_i:codiceEsitoPagamento>
                 <pay_i:importoTotalePagato>10.00</pay_i:importoTotalePagato>
                 <pay_i:identificativoUnivocoVersamento>$2iuv</pay_i:identificativoUnivocoVersamento>
                 <pay_i:CodiceContestoPagamento>CCD01</pay_i:CodiceContestoPagamento>
