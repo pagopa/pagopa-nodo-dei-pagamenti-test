@@ -325,6 +325,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         And checks the value NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 3 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
+# test attualmente non eseguibile: manca la logica del timeout sul mock pa
 # REV_SPO_04
 
 # Scenario: REV_SPO_04 (part 1)

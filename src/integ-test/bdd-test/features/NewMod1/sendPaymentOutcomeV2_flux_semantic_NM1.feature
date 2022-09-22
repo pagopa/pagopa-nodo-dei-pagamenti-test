@@ -266,7 +266,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
             </soapenv:Body>
             </soapenv:Envelope>
             """
-
+    # test al momento non eseguibile: manca il mock del psp in cloud
     # SEM_SPO_7.1
 
     # Scenario: SEM_SPO_7.1
@@ -429,6 +429,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
         And check faultCode is PPT_ESITO_GIA_ACQUISITO of sendPaymentOutcomeV2 response
         And check description contains Esito concorde of sendPaymentOutcomeV2 response
 
+    # test al momento non eseguibile: manca il mock del psp in cloud
     # SEM_SPO_23.1
 
     # Scenario: SEM_SPO_23.1 (part 1)
@@ -520,6 +521,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
         Then check outcome is KO of sendPaymentOutcomeV2 response
         And check faultCode is PPT_SEMANTICA of sendPaymentOutcomeV2 response
 
+# test al momento non eseguibile: manca il mock del psp in cloud
 # SEM_SPO_30
 
 # Scenario: SEM_SPO_30 (part 1)
@@ -561,6 +563,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
 #     And check faultCode is PPT_SEMANTICA of sendPaymentOutcomeV2 response
 #     And check description is Esiti acquisiti parziali o discordi of sendPaymentOutcomeV2 response
 
+# test al momento non eseguibile: manca il mock del psp in cloud
 # SEM_SPO_31
 
 # Scenario: SEM_SPO_31 (part 1)
@@ -597,6 +600,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
 #     And check faultCode is PPT_PAGAMENTO_SCONOSCIUTO of sendPaymentOutcomeV2 response
 #     And updates through the query update_noticeidrandom of the table POSITION_STATUS_SNAPSHOT the parameter NOTICE_ID with $activatePaymentNoticeV2.noticeNumber under macro NewMod1 on db nodo_online
 
+# test al momento non eseguibile: manca il mock del psp in cloud
 # SEM_SPO_32
 
 # Scenario: SEM_SPO_32 (part 1)
@@ -633,6 +637,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
 #     Then check outcome is KO of sendPaymentOutcomeV2 response
 #     And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcomeV2 response
 
+# test al momento non eseguibile: manca il mock del psp in cloud
 # SEM_SPO_33
 
 # Scenario: SEM_SPO_33 (part 1)
@@ -668,6 +673,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
 #     When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
 #     Then check outcome is OK of sendPaymentOutcomeV2 response
 
+# test al momento non eseguibile: manca il mock del psp in cloud
 # SEM_SPO_33.1
 
 # Scenario: SEM_SPO_33.1 (part 1)
@@ -704,6 +710,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
 #     Then check outcome is OK of sendPaymentOutcomeV2 response
 #     And verify 0 record for the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
 
+# test al momento non eseguibile: manca il mock del psp in cloud
 # SEM_SPO_35
 
 # Scenario: SEM_SPO_35 (part 1)
@@ -741,6 +748,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
 #     And check faultCode is PPT_SEMANTICA of sendPaymentOutcomeV2 response
 #     And check description is Outcome non accettabile per stato pagamento of sendPaymentOutcomeV2 response
 
+# test al momento non eseguibile: manca il mock del psp in cloud
 # SEM_SPO_35.1
 
 # Scenario: SEM_SPO_35.1 (part 1)
@@ -777,6 +785,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
 #     And check faultCode is PPT_SEMANTICA of sendPaymentOutcomeV2 response
 #     And check description is Outcome non accettabile per stato pagamento of sendPaymentOutcomeV2 response
 
+# test al momento non eseguibile: manca il mock del psp in cloud
 # SEM_SPO_35.2
 
 # Scenario: SEM_SPO_35.2 (part 1)
@@ -814,6 +823,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
 #     And check faultCode is PPT_SEMANTICA of sendPaymentOutcomeV2 response
 #     And check description is Outcome non accettabile per stato pagamento of sendPaymentOutcomeV2 response
 
+# test al momento non eseguibile: manca il mock del psp in cloud
 # SEM_SPO_35.3
 
 # Scenario: SEM_SPO_35.3 (part 1)
@@ -851,6 +861,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
 #     And check faultCode is PPT_SEMANTICA of sendPaymentOutcomeV2 response
 #     And check description is Outcome non accettabile per stato pagamento of sendPaymentOutcomeV2 response
 
+# test al momento non eseguibile: manca il mock del psp in cloud
 # SEM_SPO_35.4
 
 # Scenario: SEM_SPO_35.4 (part 1)
@@ -888,6 +899,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
 #     And check faultCode is PPT_SEMANTICA of sendPaymentOutcomeV2 response
 #     And check description is Outcome non accettabile per stato pagamento of sendPaymentOutcomeV2 response
 
+# test al momento non eseguibile: manca il mock del psp in cloud
 # SEM_SPO_35.5
 
 # Scenario: SEM_SPO_35.5 (part 1)
@@ -925,6 +937,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
 #     And check faultCode is PPT_SEMANTICA of sendPaymentOutcomeV2 response
 #     And check description is Outcome non accettabile per stato pagamento of sendPaymentOutcomeV2 response
 
+# test al momento non eseguibile: manca il mock del psp in cloud
 # SEM_SPO_35.6
 
 # Scenario: SEM_SPO_35.6 (part 1)
@@ -962,6 +975,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
 #     And check faultCode is PPT_SEMANTICA of sendPaymentOutcomeV2 response
 #     And check description is Outcome non accettabile per stato pagamento of sendPaymentOutcomeV2 response
 
+# test al momento non eseguibile: manca il mock del psp in cloud
 # SEM_SPO_36
 
 # Scenario: SEM_SPO_36 (part 1)
@@ -998,6 +1012,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
 #     Then check outcome is KO of sendPaymentOutcomeV2 response
 #     And check faultCode is PPT_PAGAMENTO_DUPLICATO of sendPaymentOutcomeV2 response
 
+# test al momento non eseguibile: manca il mock del psp in cloud
 # SEM_SPO_36.1
 
 # Scenario: SEM_SPO_36.1 (part 1)
