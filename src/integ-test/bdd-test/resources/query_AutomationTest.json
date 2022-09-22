@@ -99,7 +99,9 @@
         "by_notice_number_and_pa": "SELECT s.columns FROM table_name s WHERE s.NOTICE_ID = '$noticeNumber' and s.pa_fiscal_code= '$pa'",
         "by_iuv_and_ident_dominio": "SELECT s.columns FROM table_name s WHERE s.IUV = '$iuv' and s.IDENT_DOMINIO = '$pa'",
         "by_id_sessione":"SELECT s.columns FROM table_name s WHERE s.ID_SESSIONE = '$sessionToken'",
-        "by_payment_token":"SELECT s.columns FROM table_name s WHERE s.ID_CARRELLO = '$sessionToken'"
+        "by_position_subject":"SELECT s.columns FROM table_name s JOIN POSITION_SERVICE pp ON pp.DEBTOR_ID = s.ID  where pp.notice_id = '$noticeNumber' and pp.pa_fiscal_code= '$pa'",
+        "by_position_transfer":"SELECT s.columns FROM table_name s where s.NOTICE_ID = '$noticeNumber' and s.pa_fiscal_code= '$pa' order by s.id asc",
+        "by_id_carrello":"SELECT columns FROM table_name WHERE ID_CARRELLO = '$idCarrello"
         
     },
     "Mod1":{
