@@ -226,21 +226,21 @@ Feature: process tests for T101_chiediStato_RT_ACCETTATA_PA
     Scenario: Execute nodoChiediStatoRPT request
         Given the Execute nodoInviaRT request scenario executed successfully
         And initial XML nodoChiediStatoRPT
-        """
-        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-        <soapenv:Header/>
-        <soapenv:Body>
-            <ws:nodoChiediStatoRPT>
-                <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
-                <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
-                <password>pwdpwdpwd</password>
-                <identificativoDominio>44444444444</identificativoDominio>
-                <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
-                <codiceContestoPagamento>CCD01</codiceContestoPagamento>
-            </ws:nodoChiediStatoRPT>
-        </soapenv:Body>
-        </soapenv:Envelope>
-        """
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+                <ws:nodoChiediStatoRPT>
+                    <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
+                    <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
+                    <password>pwdpwdpwd</password>
+                    <identificativoDominio>44444444444</identificativoDominio>
+                    <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
+                    <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+                </ws:nodoChiediStatoRPT>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
         When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
         Then checks stato contains RPT_ACCETTATA_PSP of nodoChiediStatoRPT response
         And checks stato contains RT_ACCETTATA_PA of nodoChiediStatoRPT response
@@ -254,21 +254,21 @@ Feature: process tests for T101_chiediStato_RT_ACCETTATA_PA
     Scenario: Execute second nodoChiediStatoRPT request
         Given the Execute nodoChiediStatoRPT request scenario executed successfully
         And initial XML nodoChiediStatoRPT
-        """
-        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-        <soapenv:Header/>
-        <soapenv:Body>
-            <ws:nodoChiediStatoRPT>
-                <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
-                <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
-                <password>pwdpwdpwd</password>
-                <identificativoDominio>44444444444</identificativoDominio>
-                <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
-                <codiceContestoPagamento>CCD01</codiceContestoPagamento>
-            </ws:nodoChiediStatoRPT>
-        </soapenv:Body>
-        </soapenv:Envelope>
-        """
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+                <ws:nodoChiediStatoRPT>
+                    <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
+                    <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
+                    <password>pwdpwdpwd</password>
+                    <identificativoDominio>44444444444</identificativoDominio>
+                    <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
+                    <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+                </ws:nodoChiediStatoRPT>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
         When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
         Then checks stato contains RPT_ACCETTATA_PSP of nodoChiediStatoRPT response
         And checks stato contains RT_ACCETTATA_PA of nodoChiediStatoRPT response
