@@ -220,7 +220,7 @@ export function total() {
  
    
   let anagPayPP = inputDataUtil.getAnagPay_PP();
-  let idWallet = anagPayPP.IdWallet;
+  //let idWallet = anagPayPP.IdWallet; //va estrapolato dalla response di una delle primitive
   let tokenIO = anagPayPP.TokenIO;
 
   
@@ -245,7 +245,7 @@ export function total() {
   res = pay_PP_Check(baseUrl, idPay, token);
 
   
-
+  //idWallet va estrapolato dalla response di una delle primitive precedenti in questo scenario (check o getWalletV3)
   console.log('token='+token+'idWallet='+idWallet+'idPay'+idPay);
   res = pay_PP_Pay(baseUrl, token, idWallet, idPay);
   let idTr=res.idTr;
