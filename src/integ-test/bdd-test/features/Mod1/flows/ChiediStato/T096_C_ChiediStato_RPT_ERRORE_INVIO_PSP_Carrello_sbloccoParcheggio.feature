@@ -330,7 +330,7 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
         And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_PARCHEGGIATA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_INVIATA_A_PSP of nodoChiediStatoRPT response
-        And checks stato contains RPT_RIFIUTATA_PSP of nodoChiediStatoRPT response
+        And checks stato contains RPT_ERRORE_INVIO_A_PSP of nodoChiediStatoRPT response
         And check redirect is 0 of nodoChiediStatoRPT response
 
 
