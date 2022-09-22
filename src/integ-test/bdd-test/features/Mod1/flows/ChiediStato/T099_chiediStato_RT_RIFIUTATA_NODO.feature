@@ -170,7 +170,7 @@ Feature: process tests for T099_chiediStato_RT_RIFIUTATA_NODO
             """
 
     Scenario: Execute nodoInviaRPT request
-        Given the RT generation scenario executed successfully
+        Given the RPT generation scenario executed successfully
         And initial XML nodoInviaRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
