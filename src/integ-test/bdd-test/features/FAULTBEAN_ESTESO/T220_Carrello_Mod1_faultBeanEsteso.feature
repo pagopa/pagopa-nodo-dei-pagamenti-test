@@ -176,9 +176,9 @@ Feature: T220_Carrello_Mod1_faultBeanEsteso
             <soapenv:Body>
                 <ws:nodoInviaCarrelloRPT>
                     <password>pwdpwdpwd</password>
-                    <identificativoPSP>#psp#</identificativoPSP>
-                    <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-                    <identificativoCanale>#canale#</identificativoCanale>
+                    <identificativoPSP>#psp_AGID#</identificativoPSP>
+                    <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
+                    <identificativoCanale>97735020584_02</identificativoCanale>
                     <listaRPT>
                         <elementoListaRPT>
                             <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
@@ -226,7 +226,7 @@ Feature: T220_Carrello_Mod1_faultBeanEsteso
         And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query by_iuv_ccp_pa on db nodo_online under macro faultBeanEsteso
         And retrieve session token from $nodoInviaCarrelloRPTResponse.url
 
-    Scenario: Execute inoltroEsit/mod1 (Phase 2)
+    Scenario: Execute inoltroEsito/mod1 (Phase 2)
         Given the Execute nodoInviaCarrelloRPT (Phase 1) scenario executed successfully
         And initial XML pspInviaCarrelloRPT
         """
@@ -247,6 +247,7 @@ Feature: T220_Carrello_Mod1_faultBeanEsteso
         </soapenv:Body>
         </soapenv:Envelope>
         """
+        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
         When WISP sends REST POST inoltroEsito/mod1 to nodo-dei-pagamenti
         """
         {
@@ -261,10 +262,10 @@ Feature: T220_Carrello_Mod1_faultBeanEsteso
         Then verify the HTTP status code of inoltroEsito/mod1 response is 200
         And check esito is KO of inoltroEsito/mod1 response
         And check errorCode is RIFPSP of inoltroEsito/mod1 response
-        And check descrizione is Risposta negativa del canale of inoltroEsito/mod1 response
+        And check descrizione is Risposta negativa del Canale of inoltroEsito/mod1 response
 
     Scenario: Execute nodoChiediStatoRPT (Phase 3)
-        Given the Execute inol/mod1 (Phase 2) scenario executed successfully
+        Given the Execute inoltroEsito/mod1 (Phase 2) scenario executed successfully
         And initial XML nodoChiediStatoRPT
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -285,12 +286,12 @@ Feature: T220_Carrello_Mod1_faultBeanEsteso
         Then checks stato contains RPT_PARCHEGGIATA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
-        And checks stato contains RPT_INVIATA_PSP of nodoChiediStatoRPT response
+        And checks stato contains RPT_INVIATA_A_PSP of nodoChiediStatoRPT response
         And checks stato contains RPT_RIFIUTATA_PSP of nodoChiediStatoRPT response
         And check url field not exists in nodoChiediStatoRPT response
 
     Scenario: Execute nodoInviaCarrelloRPT (Phase 4)
-        Given initial XML nodoChiediStatoRPT (Phase 3) scenario executed successfully
+        Given the Execute nodoChiediStatoRPT (Phase 3) scenario executed successfully
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
         And check faultCode is PPT_ID_CARRELLO_DUPLICATO of nodoInviaCarrelloRPT response
@@ -303,5 +304,5 @@ Feature: T220_Carrello_Mod1_faultBeanEsteso
         Then checks stato contains RPT_PARCHEGGIATA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
-        And checks stato contains RPT_INVIATA_PSP of nodoChiediStatoRPT response
+        And checks stato contains RPT_INVIATA_A_PSP of nodoChiediStatoRPT response
         And checks stato contains RPT_RIFIUTATA_NODO of nodoChiediStatoRPT response
