@@ -443,6 +443,25 @@ Feature: process tests for nodoInviaCarrelloMb
             <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
             <rpt>$rpt2Attachment</rpt>
             </elementoListaRPT>
+            <elementoListaRPT>
+            <identificativoDominio>#codicePA#</identificativoDominio>
+            <identificativoUnivocoVersamento>$2iuv</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
+            <rpt>$rpt3Attachment</rpt>
+            </elementoListaRPT>
+            <elementoListaRPT>
+            <identificativoDominio>#codicePA#</identificativoDominio>
+            <identificativoUnivocoVersamento>$3iuv</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
+            <rpt>$rpt4Attachment</rpt>
+            </elementoListaRPT>
+            <elementoListaRPT>
+            <identificativoDominio>#codicePA#</identificativoDominio>
+            <identificativoUnivocoVersamento>$4iuv</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
+            <rpt>$rpt5Attachment</rpt>
+            </elementoListaRPT>
+
             </listaRPT>
             <requireLightPayment>01</requireLightPayment>
             <multiBeneficiario>1</multiBeneficiaridCarrelloio>

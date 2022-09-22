@@ -98,7 +98,7 @@
         "DB_GEST_ANN_update1": "UPDATE STATI_RPT_SNAPSHOT SET UPDATED_TIMESTAMP = TO_DATE('date', 'YYYY-MM-DD HH24:MI:SS') WHERE IUV = '$iuv' AND ID_DOMINIO = '$nodoInviaCarrelloRPT.identificativoDominio'",
         "DB_GEST_ANN_update2": "UPDATE STATI_RPT_SNAPSHOT SET UPDATED_TIMESTAMP = TO_DATE('date', 'YYYY-MM-DD HH24:MI:SS') WHERE IUV = '$iuv' AND ID_DOMINIO = '90000000001'",
         "DB_GEST_ANN_notice_number": "SELECT s.columns FROM table_name s WHERE s.NOTICE_ID = '$NOTICE_ID'",
-        "DB_GEST_ANN_stati_position_status": "SELECT s.columns FROM table_name s WHERE s.NOTICE_ID = '311$IuV' and s.pa_fiscal_code= '$nodoInviaCarrelloRPT.identificativoDominio'",
+        "DB_GEST_ANN_stati_position_status": "SELECT s.columns FROM table_name s WHERE s.NOTICE_ID = '311$iuv' and s.pa_fiscal_code= '$nodoInviaCarrelloRPT.identificativoDominio'",
         "by_notice_number_and_pa": "SELECT s.columns FROM table_name s WHERE s.NOTICE_ID = '$noticeNumber' and s.pa_fiscal_code= '$pa'",
         "by_iuv_and_ident_dominio": "SELECT s.columns FROM table_name s WHERE s.IUV = '$iuv' and s.IDENT_DOMINIO = '$pa'",
         "by_id_sessione":"SELECT s.columns FROM table_name s WHERE s.ID_SESSIONE = '$sessionToken'",
