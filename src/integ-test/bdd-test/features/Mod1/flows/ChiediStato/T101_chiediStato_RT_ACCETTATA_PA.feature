@@ -249,7 +249,7 @@ Feature: process tests for T101_chiediStato_RT_ACCETTATA_PA
         And checks stato contains RT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And check redirect is 0 of nodoChiediStatoRPT response
         And check url field not exists in nodoChiediStatoRPT response
-        And wait 1 seconds for expiration
+        And wait 5 seconds for expiration
 
     Scenario: Execute second nodoChiediStatoRPT request
         Given the Execute nodoChiediStatoRPT request scenario executed successfully
