@@ -116,10 +116,10 @@ function Collapsible_expandAllFailed()
         <div id="summary">
           <p id="totals">
             <p id="feature_totals">Features: passed: 1</p>
-            <p id="scenario_totals">Scenarios: skipped: 5, passed: 1</p>
-            <p id="step_totals">Steps: skipped: 21, passed: 197</p>
+            <p id="scenario_totals">Scenarios: passed: 6</p>
+            <p id="step_totals">Steps: passed: 228</p>
           </p>
-          <p id="duration">Finished in 108.8 seconds</p>
+          <p id="duration">Finished in 209.9 seconds</p>
           <div id="expand-collapse">
             <a id="expander" href="#" onclick="Collapsible_expandAll('scenario_steps')">Expand All</a>
             <span> | </span>
@@ -147,53 +147,12 @@ function Collapsible_expandAllFailed()
         <h3 onclick="Collapsible_toggle('scenario_0')">
           <span class="val">Scenario: Execute verifyPaymentNotice request</span>
         </h3>
-        <ol class="scenario_steps" id="scenario_0"/>
-        <span/>
-      </div>
-      <div class="scenario">
-        <span class="scenario_file">src/integ-test/bdd-test/features/NewMod3/flows/Revisione_nodoInviaRPT/Retry_paaInviaRT_01.feature:30</span>
-        <h3 onclick="Collapsible_toggle('scenario_1')">
-          <span class="val">Scenario: Execute activatePaymentNotice request</span>
-        </h3>
-        <ol class="scenario_steps" id="scenario_1"/>
-        <span/>
-      </div>
-      <div class="scenario">
-        <span class="scenario_file">src/integ-test/bdd-test/features/NewMod3/flows/Revisione_nodoInviaRPT/Retry_paaInviaRT_01.feature:56</span>
-        <h3 onclick="Collapsible_toggle('scenario_2')">
-          <span class="val">Scenario: Define RPT</span>
-        </h3>
-        <ol class="scenario_steps" id="scenario_2"/>
-        <span/>
-      </div>
-      <div class="scenario">
-        <span class="scenario_file">src/integ-test/bdd-test/features/NewMod3/flows/Revisione_nodoInviaRPT/Retry_paaInviaRT_01.feature:136</span>
-        <h3 onclick="Collapsible_toggle('scenario_3')">
-          <span class="val">Scenario: Excecute nodoInviaRPT</span>
-        </h3>
-        <ol class="scenario_steps" id="scenario_3"/>
-        <span/>
-      </div>
-      <div class="scenario">
-        <span class="scenario_file">src/integ-test/bdd-test/features/NewMod3/flows/Revisione_nodoInviaRPT/Retry_paaInviaRT_01.feature:166</span>
-        <h3 onclick="Collapsible_toggle('scenario_4')">
-          <span class="val">Scenario: Execute sendPaymentOutcome request</span>
-        </h3>
-        <ol class="scenario_steps" id="scenario_4"/>
-        <span/>
-      </div>
-      <div class="scenario">
-        <span class="scenario_file">src/integ-test/bdd-test/features/NewMod3/flows/Revisione_nodoInviaRPT/Retry_paaInviaRT_01.feature:237</span>
-        <span class="tag">@prova</span>
-        <h3 onclick="Collapsible_toggle('scenario_5')">
-          <span class="val">Scenario: DB check</span>
-        </h3>
-        <ol class="scenario_steps" id="scenario_5">
+        <ol class="scenario_steps" id="scenario_0">
           <li class="step passed">
             <div class="step_name">
               <span class="keyword">Given </span>
               <span class="step val">systems up</span>
-              <small class="step_duration">(0.124s)</small>
+              <small class="step_duration">(0.111s)</small>
             </div>
             <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:29</span>
@@ -253,7 +212,1030 @@ function Collapsible_expandAllFailed()
                 <b>verifyPaymentNotice</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.018s)</small>
+              <small class="step_duration">(0.019s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:57</span>
+            </div>
+            <span class="embed"/>
+            <div class="message">
+              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd&quot;&gt;
+&lt;soapenv:Header/&gt;
+&lt;soapenv:Body&gt;
+&lt;nod:verifyPaymentNoticeReq&gt;
+&lt;idPSP&gt;#psp#&lt;/idPSP&gt;
+&lt;idBrokerPSP&gt;#psp#&lt;/idBrokerPSP&gt;
+&lt;idChannel&gt;#canale_ATTIVATO_PRESSO_PSP#&lt;/idChannel&gt;
+&lt;password&gt;pwdpwdpwd&lt;/password&gt;
+&lt;qrCode&gt;
+&lt;fiscalCode&gt;#creditor_institution_code_old#&lt;/fiscalCode&gt;
+&lt;noticeNumber&gt;#notice_number_old#&lt;/noticeNumber&gt;
+&lt;/qrCode&gt;
+&lt;/nod:verifyPaymentNoticeReq&gt;
+&lt;/soapenv:Body&gt;
+&lt;/soapenv:Envelope&gt;
+</pre>
+            </div>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">When </span>
+              <span class="step val">
+                <span/>
+                <b>PSP</b>
+                <span> sends SOAP </span>
+                <b>verifyPaymentNotice</b>
+                <span> to </span>
+                <b>nodo-dei-pagamenti</b>
+                <span/>
+              </span>
+              <small class="step_duration">(2.116s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:692</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">Then </span>
+              <span class="step val">
+                <span>check </span>
+                <b>outcome</b>
+                <span> is </span>
+                <b>OK</b>
+                <span> of </span>
+                <b>verifyPaymentNotice</b>
+                <span> response</span>
+              </span>
+              <small class="step_duration">(0.002s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:723</span>
+            </div>
+            <span class="embed"/>
+          </li>
+        </ol>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/NewMod3/flows/Revisione_nodoInviaRPT/Retry_paaInviaRT_01.feature:30</span>
+        <h3 onclick="Collapsible_toggle('scenario_1')">
+          <span class="val">Scenario: Execute activatePaymentNotice request</span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_1">
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">Given </span>
+              <span class="step val">systems up</span>
+              <small class="step_duration">(0.207s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:29</span>
+            </div>
+            <span class="embed"/>
+            <table>
+              <tr>
+                <th>name</th>
+                <th>url</th>
+                <th>healthcheck</th>
+                <th>soap_service</th>
+                <th>rest_service</th>
+              </tr>
+              <tr>
+                <td>nodo-dei-pagamenti</td>
+                <td>http://localhost:9080/</td>
+                <td>nodo-dev-health/ready</td>
+                <td>nodo-dev/webservices/input</td>
+                <td>nodo-dev</td>
+              </tr>
+              <tr>
+                <td>mock-ec</td>
+                <td>http://localhost:8089/</td>
+                <td>servizi/PagamentiTelematiciRPT/info</td>
+                <td>servizi/PagamentiTelematiciRPT</td>
+                <td/>
+              </tr>
+              <tr>
+                <td>mock-psp</td>
+                <td>http://localhost:8090/</td>
+                <td>servizi/MockPSP/info</td>
+                <td>servizi/MockPSP</td>
+                <td/>
+              </tr>
+            </table>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>EC </span>
+                <b>old</b>
+                <span> version</span>
+              </span>
+              <small class="step_duration">(0.005s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:51</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>initial XML </span>
+                <b>verifyPaymentNotice</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.008s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:57</span>
+            </div>
+            <span class="embed"/>
+            <div class="message">
+              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd&quot;&gt;
+&lt;soapenv:Header/&gt;
+&lt;soapenv:Body&gt;
+&lt;nod:verifyPaymentNoticeReq&gt;
+&lt;idPSP&gt;#psp#&lt;/idPSP&gt;
+&lt;idBrokerPSP&gt;#psp#&lt;/idBrokerPSP&gt;
+&lt;idChannel&gt;#canale_ATTIVATO_PRESSO_PSP#&lt;/idChannel&gt;
+&lt;password&gt;pwdpwdpwd&lt;/password&gt;
+&lt;qrCode&gt;
+&lt;fiscalCode&gt;#creditor_institution_code_old#&lt;/fiscalCode&gt;
+&lt;noticeNumber&gt;#notice_number_old#&lt;/noticeNumber&gt;
+&lt;/qrCode&gt;
+&lt;/nod:verifyPaymentNoticeReq&gt;
+&lt;/soapenv:Body&gt;
+&lt;/soapenv:Envelope&gt;
+</pre>
+            </div>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">Given </span>
+              <span class="step val">
+                <span>the </span>
+                <b>Execute verifyPaymentNotice request</b>
+                <span> scenario executed successfully</span>
+              </span>
+              <small class="step_duration">(2.791s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:954</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>initial XML </span>
+                <b>activatePaymentNotice</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.007s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:57</span>
+            </div>
+            <span class="embed"/>
+            <div class="message">
+              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd&quot;&gt;
+&lt;soapenv:Header/&gt;
+&lt;soapenv:Body&gt;
+&lt;nod:activatePaymentNoticeReq&gt;
+&lt;idPSP&gt;$verifyPaymentNotice.idPSP&lt;/idPSP&gt;
+&lt;idBrokerPSP&gt;$verifyPaymentNotice.idBrokerPSP&lt;/idBrokerPSP&gt;
+&lt;idChannel&gt;$verifyPaymentNotice.idChannel&lt;/idChannel&gt;
+&lt;password&gt;pwdpwdpwd&lt;/password&gt;
+&lt;idempotencyKey&gt;#idempotency_key#&lt;/idempotencyKey&gt;
+&lt;qrCode&gt;
+&lt;fiscalCode&gt;#creditor_institution_code_old#&lt;/fiscalCode&gt;
+&lt;noticeNumber&gt;$verifyPaymentNotice.noticeNumber&lt;/noticeNumber&gt;
+&lt;/qrCode&gt;
+&lt;amount&gt;10.00&lt;/amount&gt;
+&lt;/nod:activatePaymentNoticeReq&gt;
+&lt;/soapenv:Body&gt;
+&lt;/soapenv:Envelope&gt;
+</pre>
+            </div>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">When </span>
+              <span class="step val">
+                <span/>
+                <b>psp</b>
+                <span> sends SOAP </span>
+                <b>activatePaymentNotice</b>
+                <span> to </span>
+                <b>nodo-dei-pagamenti</b>
+                <span/>
+              </span>
+              <small class="step_duration">(3.317s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:692</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">Then </span>
+              <span class="step val">
+                <span>check </span>
+                <b>outcome</b>
+                <span> is </span>
+                <b>OK</b>
+                <span> of </span>
+                <b>activatePaymentNotice</b>
+                <span> response</span>
+              </span>
+              <small class="step_duration">(0.006s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:723</span>
+            </div>
+            <span class="embed"/>
+          </li>
+        </ol>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/NewMod3/flows/Revisione_nodoInviaRPT/Retry_paaInviaRT_01.feature:56</span>
+        <h3 onclick="Collapsible_toggle('scenario_2')">
+          <span class="val">Scenario: Define RPT</span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_2">
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">Given </span>
+              <span class="step val">systems up</span>
+              <small class="step_duration">(0.111s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:29</span>
+            </div>
+            <span class="embed"/>
+            <table>
+              <tr>
+                <th>name</th>
+                <th>url</th>
+                <th>healthcheck</th>
+                <th>soap_service</th>
+                <th>rest_service</th>
+              </tr>
+              <tr>
+                <td>nodo-dei-pagamenti</td>
+                <td>http://localhost:9080/</td>
+                <td>nodo-dev-health/ready</td>
+                <td>nodo-dev/webservices/input</td>
+                <td>nodo-dev</td>
+              </tr>
+              <tr>
+                <td>mock-ec</td>
+                <td>http://localhost:8089/</td>
+                <td>servizi/PagamentiTelematiciRPT/info</td>
+                <td>servizi/PagamentiTelematiciRPT</td>
+                <td/>
+              </tr>
+              <tr>
+                <td>mock-psp</td>
+                <td>http://localhost:8090/</td>
+                <td>servizi/MockPSP/info</td>
+                <td>servizi/MockPSP</td>
+                <td/>
+              </tr>
+            </table>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>EC </span>
+                <b>old</b>
+                <span> version</span>
+              </span>
+              <small class="step_duration">(0.002s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:51</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>initial XML </span>
+                <b>verifyPaymentNotice</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.006s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:57</span>
+            </div>
+            <span class="embed"/>
+            <div class="message">
+              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd&quot;&gt;
+&lt;soapenv:Header/&gt;
+&lt;soapenv:Body&gt;
+&lt;nod:verifyPaymentNoticeReq&gt;
+&lt;idPSP&gt;#psp#&lt;/idPSP&gt;
+&lt;idBrokerPSP&gt;#psp#&lt;/idBrokerPSP&gt;
+&lt;idChannel&gt;#canale_ATTIVATO_PRESSO_PSP#&lt;/idChannel&gt;
+&lt;password&gt;pwdpwdpwd&lt;/password&gt;
+&lt;qrCode&gt;
+&lt;fiscalCode&gt;#creditor_institution_code_old#&lt;/fiscalCode&gt;
+&lt;noticeNumber&gt;#notice_number_old#&lt;/noticeNumber&gt;
+&lt;/qrCode&gt;
+&lt;/nod:verifyPaymentNoticeReq&gt;
+&lt;/soapenv:Body&gt;
+&lt;/soapenv:Envelope&gt;
+</pre>
+            </div>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">Given </span>
+              <span class="step val">
+                <span>the </span>
+                <b>Execute activatePaymentNotice request</b>
+                <span> scenario executed successfully</span>
+              </span>
+              <small class="step_duration">(4.576s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:954</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">RPT generation</span>
+              <small class="step_duration">(0.005s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:200</span>
+            </div>
+            <span class="embed"/>
+            <div class="message">
+              <pre>&lt;pay_i:RPT xmlns:pay_i=&quot;http://www.digitpa.gov.it/schemas/2011/Pagamenti/&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xsi:schemaLocation=&quot;http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd &quot;&gt;
+&lt;pay_i:versioneOggetto&gt;1.0&lt;/pay_i:versioneOggetto&gt;
+&lt;pay_i:dominio&gt;
+&lt;pay_i:identificativoDominio&gt;#codicePA_old#&lt;/pay_i:identificativoDominio&gt;
+&lt;pay_i:identificativoStazioneRichiedente&gt;#id_station_old#&lt;/pay_i:identificativoStazioneRichiedente&gt;
+&lt;/pay_i:dominio&gt;
+&lt;pay_i:identificativoMessaggioRichiesta&gt;MSGRICHIESTA01&lt;/pay_i:identificativoMessaggioRichiesta&gt;
+&lt;pay_i:dataOraMessaggioRichiesta&gt;2016-09-16T11:24:10&lt;/pay_i:dataOraMessaggioRichiesta&gt;
+&lt;pay_i:autenticazioneSoggetto&gt;CNS&lt;/pay_i:autenticazioneSoggetto&gt;
+&lt;pay_i:soggettoVersante&gt;
+&lt;pay_i:identificativoUnivocoVersante&gt;
+&lt;pay_i:tipoIdentificativoUnivoco&gt;G&lt;/pay_i:tipoIdentificativoUnivoco&gt;
+&lt;pay_i:codiceIdentificativoUnivoco&gt;RCCGLD09P09H502E&lt;/pay_i:codiceIdentificativoUnivoco&gt;
+&lt;/pay_i:identificativoUnivocoVersante&gt;
+&lt;pay_i:anagraficaVersante&gt;Gesualdo;Riccitelli&lt;/pay_i:anagraficaVersante&gt;
+&lt;pay_i:indirizzoVersante&gt;via del gesu&lt;/pay_i:indirizzoVersante&gt;
+&lt;pay_i:civicoVersante&gt;11&lt;/pay_i:civicoVersante&gt;
+&lt;pay_i:capVersante&gt;00186&lt;/pay_i:capVersante&gt;
+&lt;pay_i:localitaVersante&gt;Roma&lt;/pay_i:localitaVersante&gt;
+&lt;pay_i:provinciaVersante&gt;RM&lt;/pay_i:provinciaVersante&gt;
+&lt;pay_i:nazioneVersante&gt;IT&lt;/pay_i:nazioneVersante&gt;
+&lt;pay_i:e-mailVersante&gt;gesualdo.riccitelli@poste.it&lt;/pay_i:e-mailVersante&gt;
+&lt;/pay_i:soggettoVersante&gt;
+&lt;pay_i:soggettoPagatore&gt;
+&lt;pay_i:identificativoUnivocoPagatore&gt;
+&lt;pay_i:tipoIdentificativoUnivoco&gt;G&lt;/pay_i:tipoIdentificativoUnivoco&gt;
+&lt;pay_i:codiceIdentificativoUnivoco&gt;RCCGLD09P09H501E&lt;/pay_i:codiceIdentificativoUnivoco&gt;
+&lt;/pay_i:identificativoUnivocoPagatore&gt;
+&lt;pay_i:anagraficaPagatore&gt;Gesualdo;Riccitelli&lt;/pay_i:anagraficaPagatore&gt;
+&lt;pay_i:indirizzoPagatore&gt;via del gesu&lt;/pay_i:indirizzoPagatore&gt;
+&lt;pay_i:civicoPagatore&gt;11&lt;/pay_i:civicoPagatore&gt;
+&lt;pay_i:capPagatore&gt;00186&lt;/pay_i:capPagatore&gt;
+&lt;pay_i:localitaPagatore&gt;Roma&lt;/pay_i:localitaPagatore&gt;
+&lt;pay_i:provinciaPagatore&gt;RM&lt;/pay_i:provinciaPagatore&gt;
+&lt;pay_i:nazionePagatore&gt;IT&lt;/pay_i:nazionePagatore&gt;
+&lt;pay_i:e-mailPagatore&gt;gesualdo.riccitelli@poste.it&lt;/pay_i:e-mailPagatore&gt;
+&lt;/pay_i:soggettoPagatore&gt;
+&lt;pay_i:enteBeneficiario&gt;
+&lt;pay_i:identificativoUnivocoBeneficiario&gt;
+&lt;pay_i:tipoIdentificativoUnivoco&gt;G&lt;/pay_i:tipoIdentificativoUnivoco&gt;
+&lt;pay_i:codiceIdentificativoUnivoco&gt;11111111117&lt;/pay_i:codiceIdentificativoUnivoco&gt;
+&lt;/pay_i:identificativoUnivocoBeneficiario&gt;
+&lt;pay_i:denominazioneBeneficiario&gt;AZIENDA XXX&lt;/pay_i:denominazioneBeneficiario&gt;
+&lt;pay_i:codiceUnitOperBeneficiario&gt;123&lt;/pay_i:codiceUnitOperBeneficiario&gt;
+&lt;pay_i:denomUnitOperBeneficiario&gt;XXX&lt;/pay_i:denomUnitOperBeneficiario&gt;
+&lt;pay_i:indirizzoBeneficiario&gt;IndirizzoBeneficiario&lt;/pay_i:indirizzoBeneficiario&gt;
+&lt;pay_i:civicoBeneficiario&gt;123&lt;/pay_i:civicoBeneficiario&gt;
+&lt;pay_i:capBeneficiario&gt;22222&lt;/pay_i:capBeneficiario&gt;
+&lt;pay_i:localitaBeneficiario&gt;Roma&lt;/pay_i:localitaBeneficiario&gt;
+&lt;pay_i:provinciaBeneficiario&gt;RM&lt;/pay_i:provinciaBeneficiario&gt;
+&lt;pay_i:nazioneBeneficiario&gt;IT&lt;/pay_i:nazioneBeneficiario&gt;
+&lt;/pay_i:enteBeneficiario&gt;
+&lt;pay_i:datiVersamento&gt;
+&lt;pay_i:dataEsecuzionePagamento&gt;2016-09-16&lt;/pay_i:dataEsecuzionePagamento&gt;
+&lt;pay_i:importoTotaleDaVersare&gt;10.00&lt;/pay_i:importoTotaleDaVersare&gt;
+&lt;pay_i:tipoVersamento&gt;PO&lt;/pay_i:tipoVersamento&gt;
+&lt;pay_i:identificativoUnivocoVersamento&gt;$iuv&lt;/pay_i:identificativoUnivocoVersamento&gt;
+&lt;pay_i:codiceContestoPagamento&gt;$activatePaymentNoticeResponse.paymentToken&lt;/pay_i:codiceContestoPagamento&gt;
+&lt;pay_i:ibanAddebito&gt;IT96R0123454321000000012345&lt;/pay_i:ibanAddebito&gt;
+&lt;pay_i:bicAddebito&gt;ARTIITM1045&lt;/pay_i:bicAddebito&gt;
+&lt;pay_i:firmaRicevuta&gt;0&lt;/pay_i:firmaRicevuta&gt;
+&lt;pay_i:datiSingoloVersamento&gt;
+&lt;pay_i:importoSingoloVersamento&gt;10.00&lt;/pay_i:importoSingoloVersamento&gt;
+&lt;pay_i:commissioneCaricoPA&gt;1.00&lt;/pay_i:commissioneCaricoPA&gt;
+&lt;pay_i:ibanAccredito&gt;IT96R0123454321000000012345&lt;/pay_i:ibanAccredito&gt;
+&lt;pay_i:bicAccredito&gt;ARTIITM1050&lt;/pay_i:bicAccredito&gt;
+&lt;pay_i:ibanAppoggio&gt;IT96R0123454321000000012345&lt;/pay_i:ibanAppoggio&gt;
+&lt;pay_i:bicAppoggio&gt;ARTIITM1050&lt;/pay_i:bicAppoggio&gt;
+&lt;pay_i:credenzialiPagatore&gt;CP1.1&lt;/pay_i:credenzialiPagatore&gt;
+&lt;pay_i:causaleVersamento&gt;pagamento fotocopie pratica RPT&lt;/pay_i:causaleVersamento&gt;
+&lt;pay_i:datiSpecificiRiscossione&gt;1/abc&lt;/pay_i:datiSpecificiRiscossione&gt;
+&lt;/pay_i:datiSingoloVersamento&gt;
+&lt;/pay_i:datiVersamento&gt;
+&lt;/pay_i:RPT&gt;
+</pre>
+            </div>
+          </li>
+        </ol>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/NewMod3/flows/Revisione_nodoInviaRPT/Retry_paaInviaRT_01.feature:136</span>
+        <h3 onclick="Collapsible_toggle('scenario_3')">
+          <span class="val">Scenario: Excecute nodoInviaRPT</span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_3">
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">Given </span>
+              <span class="step val">systems up</span>
+              <small class="step_duration">(0.126s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:29</span>
+            </div>
+            <span class="embed"/>
+            <table>
+              <tr>
+                <th>name</th>
+                <th>url</th>
+                <th>healthcheck</th>
+                <th>soap_service</th>
+                <th>rest_service</th>
+              </tr>
+              <tr>
+                <td>nodo-dei-pagamenti</td>
+                <td>http://localhost:9080/</td>
+                <td>nodo-dev-health/ready</td>
+                <td>nodo-dev/webservices/input</td>
+                <td>nodo-dev</td>
+              </tr>
+              <tr>
+                <td>mock-ec</td>
+                <td>http://localhost:8089/</td>
+                <td>servizi/PagamentiTelematiciRPT/info</td>
+                <td>servizi/PagamentiTelematiciRPT</td>
+                <td/>
+              </tr>
+              <tr>
+                <td>mock-psp</td>
+                <td>http://localhost:8090/</td>
+                <td>servizi/MockPSP/info</td>
+                <td>servizi/MockPSP</td>
+                <td/>
+              </tr>
+            </table>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>EC </span>
+                <b>old</b>
+                <span> version</span>
+              </span>
+              <small class="step_duration">(0.002s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:51</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>initial XML </span>
+                <b>verifyPaymentNotice</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.004s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:57</span>
+            </div>
+            <span class="embed"/>
+            <div class="message">
+              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd&quot;&gt;
+&lt;soapenv:Header/&gt;
+&lt;soapenv:Body&gt;
+&lt;nod:verifyPaymentNoticeReq&gt;
+&lt;idPSP&gt;#psp#&lt;/idPSP&gt;
+&lt;idBrokerPSP&gt;#psp#&lt;/idBrokerPSP&gt;
+&lt;idChannel&gt;#canale_ATTIVATO_PRESSO_PSP#&lt;/idChannel&gt;
+&lt;password&gt;pwdpwdpwd&lt;/password&gt;
+&lt;qrCode&gt;
+&lt;fiscalCode&gt;#creditor_institution_code_old#&lt;/fiscalCode&gt;
+&lt;noticeNumber&gt;#notice_number_old#&lt;/noticeNumber&gt;
+&lt;/qrCode&gt;
+&lt;/nod:verifyPaymentNoticeReq&gt;
+&lt;/soapenv:Body&gt;
+&lt;/soapenv:Envelope&gt;
+</pre>
+            </div>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">Given </span>
+              <span class="step val">
+                <span>the </span>
+                <b>Define RPT</b>
+                <span> scenario executed successfully</span>
+              </span>
+              <small class="step_duration">(3.975s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:954</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>initial XML </span>
+                <b>nodoInviaRPT</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.004s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:57</span>
+            </div>
+            <span class="embed"/>
+            <div class="message">
+              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:ppt=&quot;http://ws.pagamenti.telematici.gov/ppthead&quot; xmlns:ws=&quot;http://ws.pagamenti.telematici.gov/&quot;&gt;
+&lt;soapenv:Header&gt;
+&lt;ppt:intestazionePPT&gt;
+&lt;identificativoIntermediarioPA&gt;#codicePA_old#&lt;/identificativoIntermediarioPA&gt;
+&lt;identificativoStazioneIntermediarioPA&gt;#id_station_old#&lt;/identificativoStazioneIntermediarioPA&gt;
+&lt;identificativoDominio&gt;#codicePA_old#&lt;/identificativoDominio&gt;
+&lt;identificativoUnivocoVersamento&gt;$iuv&lt;/identificativoUnivocoVersamento&gt;
+&lt;codiceContestoPagamento&gt;$activatePaymentNoticeResponse.paymentToken&lt;/codiceContestoPagamento&gt;
+&lt;/ppt:intestazionePPT&gt;
+&lt;/soapenv:Header&gt;
+&lt;soapenv:Body&gt;
+&lt;ws:nodoInviaRPT&gt;
+&lt;password&gt;pwdpwdpwd&lt;/password&gt;
+&lt;identificativoPSP&gt;15376371009&lt;/identificativoPSP&gt;
+&lt;identificativoIntermediarioPSP&gt;15376371009&lt;/identificativoIntermediarioPSP&gt;
+&lt;identificativoCanale&gt;15376371009_01&lt;/identificativoCanale&gt;
+&lt;tipoFirma&gt;&lt;/tipoFirma&gt;
+&lt;rpt&gt;$rptAttachment&lt;/rpt&gt;
+&lt;/ws:nodoInviaRPT&gt;
+&lt;/soapenv:Body&gt;
+&lt;/soapenv:Envelope&gt;
+</pre>
+            </div>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">When </span>
+              <span class="step val">
+                <span/>
+                <b>EC</b>
+                <span> sends SOAP </span>
+                <b>nodoInviaRPT</b>
+                <span> to </span>
+                <b>nodo-dei-pagamenti</b>
+                <span/>
+              </span>
+              <small class="step_duration">(1.129s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:692</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">Then </span>
+              <span class="step val">
+                <span>check </span>
+                <b>esito</b>
+                <span> is </span>
+                <b>OK</b>
+                <span> of </span>
+                <b>nodoInviaRPT</b>
+                <span> response</span>
+              </span>
+              <small class="step_duration">(0.003s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:723</span>
+            </div>
+            <span class="embed"/>
+          </li>
+        </ol>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/NewMod3/flows/Revisione_nodoInviaRPT/Retry_paaInviaRT_01.feature:166</span>
+        <h3 onclick="Collapsible_toggle('scenario_4')">
+          <span class="val">Scenario: Execute sendPaymentOutcome request</span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_4">
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">Given </span>
+              <span class="step val">systems up</span>
+              <small class="step_duration">(0.098s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:29</span>
+            </div>
+            <span class="embed"/>
+            <table>
+              <tr>
+                <th>name</th>
+                <th>url</th>
+                <th>healthcheck</th>
+                <th>soap_service</th>
+                <th>rest_service</th>
+              </tr>
+              <tr>
+                <td>nodo-dei-pagamenti</td>
+                <td>http://localhost:9080/</td>
+                <td>nodo-dev-health/ready</td>
+                <td>nodo-dev/webservices/input</td>
+                <td>nodo-dev</td>
+              </tr>
+              <tr>
+                <td>mock-ec</td>
+                <td>http://localhost:8089/</td>
+                <td>servizi/PagamentiTelematiciRPT/info</td>
+                <td>servizi/PagamentiTelematiciRPT</td>
+                <td/>
+              </tr>
+              <tr>
+                <td>mock-psp</td>
+                <td>http://localhost:8090/</td>
+                <td>servizi/MockPSP/info</td>
+                <td>servizi/MockPSP</td>
+                <td/>
+              </tr>
+            </table>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>EC </span>
+                <b>old</b>
+                <span> version</span>
+              </span>
+              <small class="step_duration">(0.001s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:51</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>initial XML </span>
+                <b>verifyPaymentNotice</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.005s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:57</span>
+            </div>
+            <span class="embed"/>
+            <div class="message">
+              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd&quot;&gt;
+&lt;soapenv:Header/&gt;
+&lt;soapenv:Body&gt;
+&lt;nod:verifyPaymentNoticeReq&gt;
+&lt;idPSP&gt;#psp#&lt;/idPSP&gt;
+&lt;idBrokerPSP&gt;#psp#&lt;/idBrokerPSP&gt;
+&lt;idChannel&gt;#canale_ATTIVATO_PRESSO_PSP#&lt;/idChannel&gt;
+&lt;password&gt;pwdpwdpwd&lt;/password&gt;
+&lt;qrCode&gt;
+&lt;fiscalCode&gt;#creditor_institution_code_old#&lt;/fiscalCode&gt;
+&lt;noticeNumber&gt;#notice_number_old#&lt;/noticeNumber&gt;
+&lt;/qrCode&gt;
+&lt;/nod:verifyPaymentNoticeReq&gt;
+&lt;/soapenv:Body&gt;
+&lt;/soapenv:Envelope&gt;
+</pre>
+            </div>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">Given </span>
+              <span class="step val">
+                <span>the </span>
+                <b>Excecute nodoInviaRPT</b>
+                <span> Scenario executed successfully</span>
+              </span>
+              <small class="step_duration">(5.315s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:954</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>initial XML </span>
+                <b>sendPaymentOutcome</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.006s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:57</span>
+            </div>
+            <span class="embed"/>
+            <div class="message">
+              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd&quot;&gt;
+&lt;soapenv:Header/&gt;
+&lt;soapenv:Body&gt;
+&lt;nod:sendPaymentOutcomeReq&gt;
+&lt;idPSP&gt;$verifyPaymentNotice.idPSP&lt;/idPSP&gt;
+&lt;idBrokerPSP&gt;$verifyPaymentNotice.idBrokerPSP&lt;/idBrokerPSP&gt;
+&lt;idChannel&gt;$verifyPaymentNotice.idChannel&lt;/idChannel&gt;
+&lt;password&gt;pwdpwdpwd&lt;/password&gt;
+&lt;paymentToken&gt;$activatePaymentNoticeResponse.paymentToken&lt;/paymentToken&gt;
+&lt;outcome&gt;OK&lt;/outcome&gt;
+&lt;!--Optional:--&gt;
+&lt;details&gt;
+&lt;paymentMethod&gt;creditCard&lt;/paymentMethod&gt;
+&lt;!--Optional:--&gt;
+&lt;paymentChannel&gt;app&lt;/paymentChannel&gt;
+&lt;fee&gt;2.00&lt;/fee&gt;
+&lt;!--Optional:--&gt;
+&lt;payer&gt;
+&lt;uniqueIdentifier&gt;
+&lt;entityUniqueIdentifierType&gt;G&lt;/entityUniqueIdentifierType&gt;
+&lt;entityUniqueIdentifierValue&gt;RCCGLD09P09H501E&lt;/entityUniqueIdentifierValue&gt;
+&lt;/uniqueIdentifier&gt;
+&lt;fullName&gt;Gesualdo;Riccitelli&lt;/fullName&gt;
+&lt;!--Optional:--&gt;
+&lt;streetName&gt;via del gesu&lt;/streetName&gt;
+&lt;!--Optional:--&gt;
+&lt;civicNumber&gt;11&lt;/civicNumber&gt;
+&lt;!--Optional:--&gt;
+&lt;postalCode&gt;00186&lt;/postalCode&gt;
+&lt;!--Optional:--&gt;
+&lt;city&gt;Roma&lt;/city&gt;
+&lt;!--Optional:--&gt;
+&lt;stateProvinceRegion&gt;RM&lt;/stateProvinceRegion&gt;
+&lt;!--Optional:--&gt;
+&lt;country&gt;IT&lt;/country&gt;
+&lt;!--Optional:--&gt;
+&lt;e-mail&gt;prova@test.it&lt;/e-mail&gt;
+&lt;/payer&gt;
+&lt;applicationDate&gt;2021-12-12&lt;/applicationDate&gt;
+&lt;transferDate&gt;2021-12-11&lt;/transferDate&gt;
+&lt;/details&gt;
+&lt;/nod:sendPaymentOutcomeReq&gt;
+&lt;/soapenv:Body&gt;
+&lt;/soapenv:Envelope&gt;
+</pre>
+            </div>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>initial XML </span>
+                <b>paaInviaRT</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.005s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:57</span>
+            </div>
+            <span class="embed"/>
+            <div class="message">
+              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:ws=&quot;http://ws.pagamenti.telematici.gov/&quot;&gt;
+&lt;soapenv:Header/&gt;
+&lt;soapenv:Body&gt;
+&lt;ws:paaInviaRTRisposta&gt;
+&lt;paaInviaRTRisposta&gt;
+&lt;delay&gt;60000&lt;/delay&gt;
+&lt;esito&gt;OK&lt;/esito&gt;
+&lt;/paaInviaRTRisposta&gt;
+&lt;/ws:paaInviaRTRisposta&gt;
+&lt;/soapenv:Body&gt;
+&lt;/soapenv:Envelope&gt;
+</pre>
+            </div>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span/>
+                <b>EC</b>
+                <span> replies to </span>
+                <b>nodo-dei-pagamenti</b>
+                <span> with the </span>
+                <b>paaInviaRT</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.031s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1001</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">When </span>
+              <span class="step val">
+                <span/>
+                <b>psp</b>
+                <span> sends SOAP </span>
+                <b>sendPaymentOutcome</b>
+                <span> to </span>
+                <b>nodo-dei-pagamenti</b>
+                <span/>
+              </span>
+              <small class="step_duration">(1.297s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:692</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>job </span>
+                <b>paInviaRt</b>
+                <span> triggered after </span>
+                <b>5</b>
+                <span> seconds</span>
+              </span>
+              <small class="step_duration">(15.532s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:711</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">Then </span>
+              <span class="step val">
+                <span>verify the HTTP status code of </span>
+                <b>paInviaRt</b>
+                <span> response is </span>
+                <b>200</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.002s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:994</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>check </span>
+                <b>outcome</b>
+                <span> is </span>
+                <b>OK</b>
+                <span> of </span>
+                <b>sendPaymentOutcome</b>
+                <span> response</span>
+              </span>
+              <small class="step_duration">(0.003s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:723</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>wait </span>
+                <b>65</b>
+                <span> seconds for expiration</span>
+              </span>
+              <small class="step_duration">(65.013s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1510</span>
+            </div>
+            <span class="embed"/>
+          </li>
+        </ol>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/NewMod3/flows/Revisione_nodoInviaRPT/Retry_paaInviaRT_01.feature:236</span>
+        <h3 onclick="Collapsible_toggle('scenario_5')">
+          <span class="val">Scenario: DB check</span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_5">
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">Given </span>
+              <span class="step val">systems up</span>
+              <small class="step_duration">(0.091s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:29</span>
+            </div>
+            <span class="embed"/>
+            <table>
+              <tr>
+                <th>name</th>
+                <th>url</th>
+                <th>healthcheck</th>
+                <th>soap_service</th>
+                <th>rest_service</th>
+              </tr>
+              <tr>
+                <td>nodo-dei-pagamenti</td>
+                <td>http://localhost:9080/</td>
+                <td>nodo-dev-health/ready</td>
+                <td>nodo-dev/webservices/input</td>
+                <td>nodo-dev</td>
+              </tr>
+              <tr>
+                <td>mock-ec</td>
+                <td>http://localhost:8089/</td>
+                <td>servizi/PagamentiTelematiciRPT/info</td>
+                <td>servizi/PagamentiTelematiciRPT</td>
+                <td/>
+              </tr>
+              <tr>
+                <td>mock-psp</td>
+                <td>http://localhost:8090/</td>
+                <td>servizi/MockPSP/info</td>
+                <td>servizi/MockPSP</td>
+                <td/>
+              </tr>
+            </table>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>EC </span>
+                <b>old</b>
+                <span> version</span>
+              </span>
+              <small class="step_duration">(0.002s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:51</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>initial XML </span>
+                <b>verifyPaymentNotice</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.005s)</small>
             </div>
             <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:57</span>
@@ -286,10 +1268,10 @@ function Collapsible_expandAllFailed()
                 <b>Execute sendPaymentOutcome request</b>
                 <span> Scenario executed successfully</span>
               </span>
-              <small class="step_duration">(88.500s)</small>
+              <small class="step_duration">(87.905s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:952</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:954</span>
             </div>
             <span class="embed"/>
           </li>
@@ -311,10 +1293,10 @@ function Collapsible_expandAllFailed()
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.144s)</small>
+              <small class="step_duration">(0.142s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1530</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1532</span>
             </div>
             <span class="embed"/>
           </li>
@@ -336,10 +1318,10 @@ function Collapsible_expandAllFailed()
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.178s)</small>
+              <small class="step_duration">(0.113s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1530</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1532</span>
             </div>
             <span class="embed"/>
           </li>
@@ -361,10 +1343,10 @@ function Collapsible_expandAllFailed()
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.170s)</small>
+              <small class="step_duration">(0.164s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1530</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1532</span>
             </div>
             <span class="embed"/>
           </li>
@@ -386,10 +1368,10 @@ function Collapsible_expandAllFailed()
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.206s)</small>
+              <small class="step_duration">(0.158s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1530</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1532</span>
             </div>
             <span class="embed"/>
           </li>
@@ -411,10 +1393,10 @@ function Collapsible_expandAllFailed()
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.172s)</small>
+              <small class="step_duration">(0.195s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1530</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1532</span>
             </div>
             <span class="embed"/>
           </li>
@@ -436,10 +1418,10 @@ function Collapsible_expandAllFailed()
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.259s)</small>
+              <small class="step_duration">(0.146s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1530</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1532</span>
             </div>
             <span class="embed"/>
           </li>
@@ -459,10 +1441,10 @@ function Collapsible_expandAllFailed()
                 <b>nodo_online</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.276s)</small>
+              <small class="step_duration">(0.253s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1382</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1384</span>
             </div>
             <span class="embed"/>
           </li>
@@ -480,10 +1462,10 @@ function Collapsible_expandAllFailed()
                 <b>DEBTOR_ID</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.004s)</small>
+              <small class="step_duration">(0.003s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1401</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1403</span>
             </div>
             <span class="embed"/>
           </li>
@@ -505,10 +1487,10 @@ function Collapsible_expandAllFailed()
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.428s)</small>
+              <small class="step_duration">(0.350s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1530</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1532</span>
             </div>
             <span class="embed"/>
           </li>
@@ -530,10 +1512,10 @@ function Collapsible_expandAllFailed()
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.798s)</small>
+              <small class="step_duration">(0.249s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1530</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1532</span>
             </div>
             <span class="embed"/>
           </li>
@@ -555,10 +1537,10 @@ function Collapsible_expandAllFailed()
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.403s)</small>
+              <small class="step_duration">(0.226s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1530</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1532</span>
             </div>
             <span class="embed"/>
           </li>
@@ -580,10 +1562,10 @@ function Collapsible_expandAllFailed()
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.374s)</small>
+              <small class="step_duration">(0.252s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1530</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1532</span>
             </div>
             <span class="embed"/>
           </li>
@@ -605,10 +1587,10 @@ function Collapsible_expandAllFailed()
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.325s)</small>
+              <small class="step_duration">(0.280s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1530</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1532</span>
             </div>
             <span class="embed"/>
           </li>
@@ -630,10 +1612,10 @@ function Collapsible_expandAllFailed()
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.522s)</small>
+              <small class="step_duration">(0.240s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1530</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1532</span>
             </div>
             <span class="embed"/>
           </li>
@@ -655,10 +1637,10 @@ function Collapsible_expandAllFailed()
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.355s)</small>
+              <small class="step_duration">(0.222s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1530</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1532</span>
             </div>
             <span class="embed"/>
           </li>
@@ -680,10 +1662,10 @@ function Collapsible_expandAllFailed()
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.317s)</small>
+              <small class="step_duration">(0.194s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1530</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1532</span>
             </div>
             <span class="embed"/>
           </li>
@@ -705,10 +1687,10 @@ function Collapsible_expandAllFailed()
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.306s)</small>
+              <small class="step_duration">(0.214s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1530</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1532</span>
             </div>
             <span class="embed"/>
           </li>
@@ -730,10 +1712,10 @@ function Collapsible_expandAllFailed()
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.248s)</small>
+              <small class="step_duration">(0.224s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1530</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1532</span>
             </div>
             <span class="embed"/>
           </li>
@@ -755,10 +1737,10 @@ function Collapsible_expandAllFailed()
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.342s)</small>
+              <small class="step_duration">(0.233s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1530</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1532</span>
             </div>
             <span class="embed"/>
           </li>
@@ -780,10 +1762,10 @@ function Collapsible_expandAllFailed()
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.530s)</small>
+              <small class="step_duration">(0.258s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1530</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1532</span>
             </div>
             <span class="embed"/>
           </li>
@@ -805,10 +1787,10 @@ function Collapsible_expandAllFailed()
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.606s)</small>
+              <small class="step_duration">(0.313s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1530</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1532</span>
             </div>
             <span class="embed"/>
           </li>
@@ -828,10 +1810,10 @@ function Collapsible_expandAllFailed()
                 <b>nodo_online</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.176s)</small>
+              <small class="step_duration">(0.194s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1382</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1384</span>
             </div>
             <span class="embed"/>
           </li>
@@ -849,10 +1831,10 @@ function Collapsible_expandAllFailed()
                 <b>DEBTOR_ID</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.003s)</small>
+              <small class="step_duration">(0.002s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1401</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1403</span>
             </div>
             <span class="embed"/>
           </li>
@@ -874,10 +1856,10 @@ function Collapsible_expandAllFailed()
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.421s)</small>
+              <small class="step_duration">(0.417s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1530</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1532</span>
             </div>
             <span class="embed"/>
           </li>
@@ -897,10 +1879,10 @@ function Collapsible_expandAllFailed()
                 <b>nodo_online</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.157s)</small>
+              <small class="step_duration">(0.164s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1382</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1384</span>
             </div>
             <span class="embed"/>
           </li>
@@ -918,10 +1900,10 @@ function Collapsible_expandAllFailed()
                 <b>RPT_ID</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.003s)</small>
+              <small class="step_duration">(0.002s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1401</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1403</span>
             </div>
             <span class="embed"/>
           </li>
@@ -943,10 +1925,10 @@ function Collapsible_expandAllFailed()
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.161s)</small>
+              <small class="step_duration">(0.132s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1530</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1532</span>
             </div>
             <span class="embed"/>
           </li>
@@ -966,10 +1948,10 @@ function Collapsible_expandAllFailed()
                 <b>nodo_online</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.161s)</small>
+              <small class="step_duration">(0.152s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1382</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1384</span>
             </div>
             <span class="embed"/>
           </li>
@@ -987,10 +1969,10 @@ function Collapsible_expandAllFailed()
                 <b>TRANSFER_CATEGORY</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.003s)</small>
+              <small class="step_duration">(0.001s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1401</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1403</span>
             </div>
             <span class="embed"/>
           </li>
@@ -1012,10 +1994,10 @@ function Collapsible_expandAllFailed()
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.156s)</small>
+              <small class="step_duration">(0.159s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1530</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1532</span>
             </div>
             <span class="embed"/>
           </li>
@@ -1035,10 +2017,10 @@ function Collapsible_expandAllFailed()
                 <b>nodo_online</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.179s)</small>
+              <small class="step_duration">(0.306s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1382</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1384</span>
             </div>
             <span class="embed"/>
           </li>
@@ -1056,10 +2038,10 @@ function Collapsible_expandAllFailed()
                 <b>amount</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.005s)</small>
+              <small class="step_duration">(0.003s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1401</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1403</span>
             </div>
             <span class="embed"/>
           </li>
@@ -1077,10 +2059,10 @@ function Collapsible_expandAllFailed()
                 <b>fee</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.003s)</small>
+              <small class="step_duration">(0.002s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1401</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1403</span>
             </div>
             <span class="embed"/>
           </li>
@@ -1098,10 +2080,10 @@ function Collapsible_expandAllFailed()
                 <b>outcome</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.004s)</small>
+              <small class="step_duration">(0.002s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1401</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1403</span>
             </div>
             <span class="embed"/>
           </li>
@@ -1119,10 +2101,10 @@ function Collapsible_expandAllFailed()
                 <b>channel_id</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.003s)</small>
+              <small class="step_duration">(0.002s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1401</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1403</span>
             </div>
             <span class="embed"/>
           </li>
@@ -1140,10 +2122,10 @@ function Collapsible_expandAllFailed()
                 <b>payment_channel</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.004s)</small>
+              <small class="step_duration">(0.001s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1401</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1403</span>
             </div>
             <span class="embed"/>
           </li>
@@ -1161,10 +2143,10 @@ function Collapsible_expandAllFailed()
                 <b>payer_id</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.006s)</small>
+              <small class="step_duration">(0.002s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1401</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1403</span>
             </div>
             <span class="embed"/>
           </li>
@@ -1182,10 +2164,10 @@ function Collapsible_expandAllFailed()
                 <b>payment_method</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.009s)</small>
+              <small class="step_duration">(0.002s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1401</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1403</span>
             </div>
             <span class="embed"/>
           </li>
@@ -1203,10 +2185,10 @@ function Collapsible_expandAllFailed()
                 <b>id</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.009s)</small>
+              <small class="step_duration">(0.002s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1401</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1403</span>
             </div>
             <span class="embed"/>
           </li>
@@ -1224,10 +2206,10 @@ function Collapsible_expandAllFailed()
                 <b>inserted_timestamp</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.011s)</small>
+              <small class="step_duration">(0.001s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1401</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1403</span>
             </div>
             <span class="embed"/>
           </li>
@@ -1245,10 +2227,10 @@ function Collapsible_expandAllFailed()
                 <b>application_date</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.004s)</small>
+              <small class="step_duration">(0.001s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1401</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1403</span>
             </div>
             <span class="embed"/>
           </li>
@@ -1266,10 +2248,10 @@ function Collapsible_expandAllFailed()
                 <b>transfer_date</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.003s)</small>
+              <small class="step_duration">(0.002s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1401</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1403</span>
             </div>
             <span class="embed"/>
           </li>
@@ -1287,10 +2269,10 @@ function Collapsible_expandAllFailed()
                 <b>creditor_reference_id</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.008s)</small>
+              <small class="step_duration">(0.002s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1401</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1403</span>
             </div>
             <span class="embed"/>
           </li>
@@ -1308,10 +2290,10 @@ function Collapsible_expandAllFailed()
                 <b>pa_fiscal_code</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.006s)</small>
+              <small class="step_duration">(0.001s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1401</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1403</span>
             </div>
             <span class="embed"/>
           </li>
@@ -1329,10 +2311,10 @@ function Collapsible_expandAllFailed()
                 <b>broker_pa_id</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.012s)</small>
+              <small class="step_duration">(0.001s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1401</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1403</span>
             </div>
             <span class="embed"/>
           </li>
@@ -1350,10 +2332,10 @@ function Collapsible_expandAllFailed()
                 <b>station_id</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.004s)</small>
+              <small class="step_duration">(0.002s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1401</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1403</span>
             </div>
             <span class="embed"/>
           </li>
@@ -1375,10 +2357,10 @@ function Collapsible_expandAllFailed()
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.216s)</small>
+              <small class="step_duration">(0.140s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1530</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1532</span>
             </div>
             <span class="embed"/>
           </li>
@@ -1400,10 +2382,10 @@ function Collapsible_expandAllFailed()
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.200s)</small>
+              <small class="step_duration">(0.189s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1530</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1532</span>
             </div>
             <span class="embed"/>
           </li>
@@ -1425,10 +2407,10 @@ function Collapsible_expandAllFailed()
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.169s)</small>
+              <small class="step_duration">(0.396s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1530</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1532</span>
             </div>
             <span class="embed"/>
           </li>
@@ -1450,10 +2432,10 @@ function Collapsible_expandAllFailed()
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.169s)</small>
+              <small class="step_duration">(0.204s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1530</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1532</span>
             </div>
             <span class="embed"/>
           </li>
@@ -1475,10 +2457,10 @@ function Collapsible_expandAllFailed()
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.238s)</small>
+              <small class="step_duration">(0.158s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1530</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1532</span>
             </div>
             <span class="embed"/>
           </li>
@@ -1500,10 +2482,10 @@ function Collapsible_expandAllFailed()
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.201s)</small>
+              <small class="step_duration">(0.146s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1530</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1532</span>
             </div>
             <span class="embed"/>
           </li>
@@ -1525,10 +2507,10 @@ function Collapsible_expandAllFailed()
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.160s)</small>
+              <small class="step_duration">(0.135s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1530</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1532</span>
             </div>
             <span class="embed"/>
           </li>
@@ -1550,10 +2532,10 @@ function Collapsible_expandAllFailed()
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.154s)</small>
+              <small class="step_duration">(0.151s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1530</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1532</span>
             </div>
             <span class="embed"/>
           </li>
@@ -1575,10 +2557,10 @@ function Collapsible_expandAllFailed()
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.157s)</small>
+              <small class="step_duration">(0.143s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1530</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1532</span>
             </div>
             <span class="embed"/>
           </li>
@@ -1600,10 +2582,10 @@ function Collapsible_expandAllFailed()
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.145s)</small>
+              <small class="step_duration">(0.148s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1530</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1532</span>
             </div>
             <span class="embed"/>
           </li>
@@ -1625,10 +2607,10 @@ function Collapsible_expandAllFailed()
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.161s)</small>
+              <small class="step_duration">(0.108s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1530</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1532</span>
             </div>
             <span class="embed"/>
           </li>
@@ -1650,10 +2632,10 @@ function Collapsible_expandAllFailed()
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.147s)</small>
+              <small class="step_duration">(0.133s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1530</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1532</span>
             </div>
             <span class="embed"/>
           </li>
@@ -1675,10 +2657,10 @@ function Collapsible_expandAllFailed()
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.160s)</small>
+              <small class="step_duration">(0.117s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1530</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1532</span>
             </div>
             <span class="embed"/>
           </li>
@@ -1698,10 +2680,10 @@ function Collapsible_expandAllFailed()
                 <b>nodo_online</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.143s)</small>
+              <small class="step_duration">(0.132s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1382</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1384</span>
             </div>
             <span class="embed"/>
           </li>
@@ -1719,10 +2701,10 @@ function Collapsible_expandAllFailed()
                 <b>ID_RICHIESTA</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.003s)</small>
+              <small class="step_duration">(0.002s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1401</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1403</span>
             </div>
             <span class="embed"/>
           </li>
@@ -1744,10 +2726,10 @@ function Collapsible_expandAllFailed()
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.167s)</small>
+              <small class="step_duration">(0.113s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1530</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1532</span>
             </div>
             <span class="embed"/>
           </li>
@@ -1767,10 +2749,10 @@ function Collapsible_expandAllFailed()
                 <b>nodo_online</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.159s)</small>
+              <small class="step_duration">(0.154s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1382</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1384</span>
             </div>
             <span class="embed"/>
           </li>
@@ -1788,10 +2770,10 @@ function Collapsible_expandAllFailed()
                 <b>causale_versamento</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.004s)</small>
+              <small class="step_duration">(0.002s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1401</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1403</span>
             </div>
             <span class="embed"/>
           </li>
@@ -1809,10 +2791,10 @@ function Collapsible_expandAllFailed()
                 <b>dati_specifici_riscossione</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.003s)</small>
+              <small class="step_duration">(0.002s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1401</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1403</span>
             </div>
             <span class="embed"/>
           </li>
@@ -1834,10 +2816,10 @@ function Collapsible_expandAllFailed()
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.155s)</small>
+              <small class="step_duration">(0.147s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1530</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1532</span>
             </div>
             <span class="embed"/>
           </li>
@@ -1859,10 +2841,10 @@ function Collapsible_expandAllFailed()
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.173s)</small>
+              <small class="step_duration">(0.180s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1530</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1532</span>
             </div>
             <span class="embed"/>
           </li>
@@ -1884,10 +2866,10 @@ function Collapsible_expandAllFailed()
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.168s)</small>
+              <small class="step_duration">(0.172s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1530</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1532</span>
             </div>
             <span class="embed"/>
           </li>
@@ -1909,10 +2891,10 @@ function Collapsible_expandAllFailed()
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.160s)</small>
+              <small class="step_duration">(0.197s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1530</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1532</span>
             </div>
             <span class="embed"/>
           </li>
@@ -1934,10 +2916,10 @@ function Collapsible_expandAllFailed()
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.149s)</small>
+              <small class="step_duration">(0.162s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1530</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1532</span>
             </div>
             <span class="embed"/>
           </li>
@@ -1959,10 +2941,10 @@ function Collapsible_expandAllFailed()
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.149s)</small>
+              <small class="step_duration">(0.172s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1530</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1532</span>
             </div>
             <span class="embed"/>
           </li>
@@ -1984,10 +2966,10 @@ function Collapsible_expandAllFailed()
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.155s)</small>
+              <small class="step_duration">(0.154s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1530</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1532</span>
             </div>
             <span class="embed"/>
           </li>
@@ -2009,10 +2991,10 @@ function Collapsible_expandAllFailed()
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.162s)</small>
+              <small class="step_duration">(0.145s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1530</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1532</span>
             </div>
             <span class="embed"/>
           </li>
@@ -2032,10 +3014,10 @@ function Collapsible_expandAllFailed()
                 <b>nodo_cfg</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.154s)</small>
+              <small class="step_duration">(0.145s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1382</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1384</span>
             </div>
             <span class="embed"/>
           </li>
@@ -2056,7 +3038,7 @@ function Collapsible_expandAllFailed()
               <small class="step_duration">(0.002s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1401</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1403</span>
             </div>
             <span class="embed"/>
           </li>
@@ -2074,10 +3056,10 @@ function Collapsible_expandAllFailed()
                 <b>codice_fiscale</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.003s)</small>
+              <small class="step_duration">(0.002s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1401</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1403</span>
             </div>
             <span class="embed"/>
           </li>
@@ -2098,7 +3080,7 @@ function Collapsible_expandAllFailed()
               <small class="step_duration">(0.003s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1401</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1403</span>
             </div>
             <span class="embed"/>
           </li>
@@ -2118,10 +3100,10 @@ function Collapsible_expandAllFailed()
                 <b>nodo_online</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.149s)</small>
+              <small class="step_duration">(0.160s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1382</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1384</span>
             </div>
             <span class="embed"/>
           </li>
@@ -2142,7 +3124,7 @@ function Collapsible_expandAllFailed()
               <small class="step_duration">(0.003s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1401</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1403</span>
             </div>
             <span class="embed"/>
           </li>
@@ -2160,10 +3142,10 @@ function Collapsible_expandAllFailed()
                 <b>company_name</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.002s)</small>
+              <small class="step_duration">(0.001s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1401</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1403</span>
             </div>
             <span class="embed"/>
           </li>
@@ -2181,10 +3163,10 @@ function Collapsible_expandAllFailed()
                 <b>office_name</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.003s)</small>
+              <small class="step_duration">(0.002s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1401</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1403</span>
             </div>
             <span class="embed"/>
           </li>
@@ -2205,7 +3187,7 @@ function Collapsible_expandAllFailed()
               <small class="step_duration">(0.002s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1401</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1403</span>
             </div>
             <span class="embed"/>
           </li>
@@ -2225,10 +3207,10 @@ function Collapsible_expandAllFailed()
                 <b>nodo_online</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.157s)</small>
+              <small class="step_duration">(0.163s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1382</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1384</span>
             </div>
             <span class="embed"/>
           </li>
@@ -2246,10 +3228,10 @@ function Collapsible_expandAllFailed()
                 <b>metadata</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.003s)</small>
+              <small class="step_duration">(0.002s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1401</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1403</span>
             </div>
             <span class="embed"/>
           </li>
@@ -2274,7 +3256,7 @@ function Collapsible_expandAllFailed()
               <small class="step_duration">(0.152s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1530</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1532</span>
             </div>
             <span class="embed"/>
           </li>
@@ -2296,10 +3278,10 @@ function Collapsible_expandAllFailed()
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.151s)</small>
+              <small class="step_duration">(0.148s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1530</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1532</span>
             </div>
             <span class="embed"/>
           </li>
@@ -2321,10 +3303,10 @@ function Collapsible_expandAllFailed()
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.198s)</small>
+              <small class="step_duration">(0.152s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1530</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1532</span>
             </div>
             <span class="embed"/>
           </li>
@@ -2346,10 +3328,10 @@ function Collapsible_expandAllFailed()
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.157s)</small>
+              <small class="step_duration">(0.149s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1530</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1532</span>
             </div>
             <span class="embed"/>
           </li>
@@ -2374,7 +3356,7 @@ function Collapsible_expandAllFailed()
               <small class="step_duration">(0.150s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1530</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1532</span>
             </div>
             <span class="embed"/>
           </li>
@@ -2396,10 +3378,10 @@ function Collapsible_expandAllFailed()
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.172s)</small>
+              <small class="step_duration">(0.146s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1530</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1532</span>
             </div>
             <span class="embed"/>
           </li>
@@ -2421,10 +3403,10 @@ function Collapsible_expandAllFailed()
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.251s)</small>
+              <small class="step_duration">(0.132s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1530</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1532</span>
             </div>
             <span class="embed"/>
           </li>
@@ -2446,10 +3428,10 @@ function Collapsible_expandAllFailed()
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.233s)</small>
+              <small class="step_duration">(0.149s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1530</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1532</span>
             </div>
             <span class="embed"/>
           </li>
@@ -2471,10 +3453,10 @@ function Collapsible_expandAllFailed()
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.214s)</small>
+              <small class="step_duration">(0.121s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1530</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1532</span>
             </div>
             <span class="embed"/>
           </li>
@@ -2496,10 +3478,10 @@ function Collapsible_expandAllFailed()
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.176s)</small>
+              <small class="step_duration">(0.125s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1530</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1532</span>
             </div>
             <span class="embed"/>
           </li>
@@ -2521,10 +3503,10 @@ function Collapsible_expandAllFailed()
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.159s)</small>
+              <small class="step_duration">(0.142s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1530</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1532</span>
             </div>
             <span class="embed"/>
           </li>
@@ -2546,10 +3528,10 @@ function Collapsible_expandAllFailed()
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.175s)</small>
+              <small class="step_duration">(0.138s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1530</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1532</span>
             </div>
             <span class="embed"/>
           </li>
@@ -2571,10 +3553,10 @@ function Collapsible_expandAllFailed()
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.167s)</small>
+              <small class="step_duration">(0.135s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1530</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1532</span>
             </div>
             <span class="embed"/>
           </li>
@@ -2596,10 +3578,10 @@ function Collapsible_expandAllFailed()
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.145s)</small>
+              <small class="step_duration">(0.130s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1530</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1532</span>
             </div>
             <span class="embed"/>
           </li>
@@ -2621,10 +3603,10 @@ function Collapsible_expandAllFailed()
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.170s)</small>
+              <small class="step_duration">(0.137s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1530</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1532</span>
             </div>
             <span class="embed"/>
           </li>
@@ -2646,10 +3628,10 @@ function Collapsible_expandAllFailed()
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.178s)</small>
+              <small class="step_duration">(0.135s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1530</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1532</span>
             </div>
             <span class="embed"/>
           </li>
@@ -2671,10 +3653,10 @@ function Collapsible_expandAllFailed()
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.157s)</small>
+              <small class="step_duration">(0.122s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1530</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1532</span>
             </div>
             <span class="embed"/>
           </li>
@@ -2696,10 +3678,10 @@ function Collapsible_expandAllFailed()
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.153s)</small>
+              <small class="step_duration">(0.128s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1530</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1532</span>
             </div>
             <span class="embed"/>
           </li>
@@ -2721,10 +3703,10 @@ function Collapsible_expandAllFailed()
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.189s)</small>
+              <small class="step_duration">(0.138s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1530</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1532</span>
             </div>
             <span class="embed"/>
           </li>
@@ -2746,10 +3728,10 @@ function Collapsible_expandAllFailed()
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.177s)</small>
+              <small class="step_duration">(0.137s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1530</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1532</span>
             </div>
             <span class="embed"/>
           </li>
@@ -2769,10 +3751,10 @@ function Collapsible_expandAllFailed()
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.209s)</small>
+              <small class="step_duration">(0.117s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1689</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1691</span>
             </div>
             <span class="embed"/>
           </li>
@@ -2792,10 +3774,10 @@ function Collapsible_expandAllFailed()
                 <b>nodo_online</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.190s)</small>
+              <small class="step_duration">(0.132s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1382</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1384</span>
             </div>
             <span class="embed"/>
           </li>
@@ -2813,10 +3795,10 @@ function Collapsible_expandAllFailed()
                 <b>FK_RT</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.005s)</small>
+              <small class="step_duration">(0.002s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1401</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1403</span>
             </div>
             <span class="embed"/>
           </li>
@@ -2838,10 +3820,10 @@ function Collapsible_expandAllFailed()
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.194s)</small>
+              <small class="step_duration">(0.153s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1530</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1532</span>
             </div>
             <span class="embed"/>
           </li>
@@ -2863,10 +3845,10 @@ function Collapsible_expandAllFailed()
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.153s)</small>
+              <small class="step_duration">(0.143s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1530</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1532</span>
             </div>
             <span class="embed"/>
           </li>
@@ -2888,10 +3870,10 @@ function Collapsible_expandAllFailed()
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.171s)</small>
+              <small class="step_duration">(0.167s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1530</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1532</span>
             </div>
             <span class="embed"/>
           </li>
@@ -2913,10 +3895,10 @@ function Collapsible_expandAllFailed()
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.177s)</small>
+              <small class="step_duration">(0.185s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1530</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1532</span>
             </div>
             <span class="embed"/>
           </li>
@@ -2938,10 +3920,10 @@ function Collapsible_expandAllFailed()
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.152s)</small>
+              <small class="step_duration">(0.149s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1530</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1532</span>
             </div>
             <span class="embed"/>
           </li>
@@ -2963,10 +3945,10 @@ function Collapsible_expandAllFailed()
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.152s)</small>
+              <small class="step_duration">(0.145s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1530</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1532</span>
             </div>
             <span class="embed"/>
           </li>
@@ -2988,10 +3970,10 @@ function Collapsible_expandAllFailed()
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.155s)</small>
+              <small class="step_duration">(0.190s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1530</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1532</span>
             </div>
             <span class="embed"/>
           </li>
@@ -3013,10 +3995,10 @@ function Collapsible_expandAllFailed()
                 <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.153s)</small>
+              <small class="step_duration">(0.155s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1530</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1532</span>
             </div>
             <span class="embed"/>
           </li>
@@ -3036,10 +4018,10 @@ function Collapsible_expandAllFailed()
                 <b>nodo_online</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.171s)</small>
+              <small class="step_duration">(0.149s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1382</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1384</span>
             </div>
             <span class="embed"/>
           </li>
@@ -3057,10 +4039,10 @@ function Collapsible_expandAllFailed()
                 <b>prx_xml</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.011s)</small>
+              <small class="step_duration">(0.005s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1419</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1421</span>
             </div>
             <span class="embed"/>
           </li>
@@ -3080,10 +4062,10 @@ function Collapsible_expandAllFailed()
                 <b>nodo_online</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.198s)</small>
+              <small class="step_duration">(0.155s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1382</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1384</span>
             </div>
             <span class="embed"/>
           </li>
@@ -3101,10 +4083,10 @@ function Collapsible_expandAllFailed()
                 <b>pp1_broker_pa_id</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.006s)</small>
+              <small class="step_duration">(0.002s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1401</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1403</span>
             </div>
             <span class="embed"/>
           </li>
@@ -3122,10 +4104,10 @@ function Collapsible_expandAllFailed()
                 <b>pp1_station_id</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.003s)</small>
+              <small class="step_duration">(0.002s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1401</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1403</span>
             </div>
             <span class="embed"/>
           </li>
@@ -3143,10 +4125,10 @@ function Collapsible_expandAllFailed()
                 <b>pp1_payment_token</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.003s)</small>
+              <small class="step_duration">(0.001s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1401</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1403</span>
             </div>
             <span class="embed"/>
           </li>
@@ -3164,10 +4146,10 @@ function Collapsible_expandAllFailed()
                 <b>pp1_notice_id</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.004s)</small>
+              <small class="step_duration">(0.001s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1401</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1403</span>
             </div>
             <span class="embed"/>
           </li>
@@ -3185,10 +4167,10 @@ function Collapsible_expandAllFailed()
                 <b>pp1_pa_fiscal_code</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.009s)</small>
+              <small class="step_duration">(0.001s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1401</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1403</span>
             </div>
             <span class="embed"/>
           </li>
@@ -3206,10 +4188,10 @@ function Collapsible_expandAllFailed()
                 <b>pp1_outcome</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.010s)</small>
+              <small class="step_duration">(0.001s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1401</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1403</span>
             </div>
             <span class="embed"/>
           </li>
@@ -3227,10 +4209,10 @@ function Collapsible_expandAllFailed()
                 <b>pp1_creditor_reference_id</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.019s)</small>
+              <small class="step_duration">(0.002s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1401</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1403</span>
             </div>
             <span class="embed"/>
           </li>
@@ -3248,10 +4230,10 @@ function Collapsible_expandAllFailed()
                 <b>pp1_amount</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.010s)</small>
+              <small class="step_duration">(0.001s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1401</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1403</span>
             </div>
             <span class="embed"/>
           </li>
@@ -3269,10 +4251,10 @@ function Collapsible_expandAllFailed()
                 <b>pp1_psp_id</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.005s)</small>
+              <small class="step_duration">(0.002s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1401</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1403</span>
             </div>
             <span class="embed"/>
           </li>
@@ -3290,10 +4272,10 @@ function Collapsible_expandAllFailed()
                 <b>pp1_channel_id</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.006s)</small>
+              <small class="step_duration">(0.001s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1401</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1403</span>
             </div>
             <span class="embed"/>
           </li>
@@ -3313,10 +4295,10 @@ function Collapsible_expandAllFailed()
                 <b>nodo_online</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.183s)</small>
+              <small class="step_duration">(0.142s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1382</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1384</span>
             </div>
             <span class="embed"/>
           </li>
@@ -3334,10 +4316,10 @@ function Collapsible_expandAllFailed()
                 <b>ps_description</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.003s)</small>
+              <small class="step_duration">(0.001s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1401</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1403</span>
             </div>
             <span class="embed"/>
           </li>
@@ -3355,10 +4337,10 @@ function Collapsible_expandAllFailed()
                 <b>ps_company_name</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.003s)</small>
+              <small class="step_duration">(0.001s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1401</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1403</span>
             </div>
             <span class="embed"/>
           </li>
@@ -3378,10 +4360,10 @@ function Collapsible_expandAllFailed()
                 <b>nodo_online</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.150s)</small>
+              <small class="step_duration">(0.125s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1382</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1384</span>
             </div>
             <span class="embed"/>
           </li>
@@ -3399,10 +4381,10 @@ function Collapsible_expandAllFailed()
                 <b>pss_entity_unique_identifier_type</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.003s)</small>
+              <small class="step_duration">(0.001s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1401</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1403</span>
             </div>
             <span class="embed"/>
           </li>
@@ -3420,10 +4402,10 @@ function Collapsible_expandAllFailed()
                 <b>pss_entity_unique_identifier_value</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.004s)</small>
+              <small class="step_duration">(0.002s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1401</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1403</span>
             </div>
             <span class="embed"/>
           </li>
@@ -3441,10 +4423,10 @@ function Collapsible_expandAllFailed()
                 <b>pss_full_name</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.003s)</small>
+              <small class="step_duration">(0.001s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1401</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1403</span>
             </div>
             <span class="embed"/>
           </li>
@@ -3462,10 +4444,10 @@ function Collapsible_expandAllFailed()
                 <b>pss_street_name</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.003s)</small>
+              <small class="step_duration">(0.001s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1401</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1403</span>
             </div>
             <span class="embed"/>
           </li>
@@ -3483,10 +4465,10 @@ function Collapsible_expandAllFailed()
                 <b>pss_civic_number</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.002s)</small>
+              <small class="step_duration">(0.001s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1401</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1403</span>
             </div>
             <span class="embed"/>
           </li>
@@ -3504,10 +4486,10 @@ function Collapsible_expandAllFailed()
                 <b>pss_postal_code</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.003s)</small>
+              <small class="step_duration">(0.000s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1401</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1403</span>
             </div>
             <span class="embed"/>
           </li>
@@ -3525,10 +4507,10 @@ function Collapsible_expandAllFailed()
                 <b>pss_city</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.026s)</small>
+              <small class="step_duration">(0.001s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1401</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1403</span>
             </div>
             <span class="embed"/>
           </li>
@@ -3546,10 +4528,10 @@ function Collapsible_expandAllFailed()
                 <b>pss_state_province_region</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.017s)</small>
+              <small class="step_duration">(0.000s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1401</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1403</span>
             </div>
             <span class="embed"/>
           </li>
@@ -3567,10 +4549,10 @@ function Collapsible_expandAllFailed()
                 <b>pss_country</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.007s)</small>
+              <small class="step_duration">(0.001s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1401</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1403</span>
             </div>
             <span class="embed"/>
           </li>
@@ -3588,10 +4570,10 @@ function Collapsible_expandAllFailed()
                 <b>pss_email</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.004s)</small>
+              <small class="step_duration">(0.001s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1401</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1403</span>
             </div>
             <span class="embed"/>
           </li>
@@ -3611,10 +4593,10 @@ function Collapsible_expandAllFailed()
                 <b>nodo_online</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.161s)</small>
+              <small class="step_duration">(0.172s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1382</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1384</span>
             </div>
             <span class="embed"/>
           </li>
@@ -3632,10 +4614,10 @@ function Collapsible_expandAllFailed()
                 <b>pt_transfer_identifier</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.004s)</small>
+              <small class="step_duration">(0.002s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1401</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1403</span>
             </div>
             <span class="embed"/>
           </li>
@@ -3653,10 +4635,10 @@ function Collapsible_expandAllFailed()
                 <b>pt_amount</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.003s)</small>
+              <small class="step_duration">(0.002s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1401</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1403</span>
             </div>
             <span class="embed"/>
           </li>
@@ -3674,10 +4656,10 @@ function Collapsible_expandAllFailed()
                 <b>pt_pa_fiscal_code_secondary</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.002s)</small>
+              <small class="step_duration">(0.001s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1401</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1403</span>
             </div>
             <span class="embed"/>
           </li>
@@ -3695,10 +4677,10 @@ function Collapsible_expandAllFailed()
                 <b>pt_iban</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.002s)</small>
+              <small class="step_duration">(0.000s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1401</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1403</span>
             </div>
             <span class="embed"/>
           </li>
@@ -3716,10 +4698,10 @@ function Collapsible_expandAllFailed()
                 <b>pt_remittance_information</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.002s)</small>
+              <small class="step_duration">(0.001s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1401</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1403</span>
             </div>
             <span class="embed"/>
           </li>
@@ -3737,10 +4719,10 @@ function Collapsible_expandAllFailed()
                 <b>pt_transfer_category</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.003s)</small>
+              <small class="step_duration">(0.002s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1401</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1403</span>
             </div>
             <span class="embed"/>
           </li>
@@ -3756,10 +4738,10 @@ function Collapsible_expandAllFailed()
                 <b>$pp1_pa_fiscal_code</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.003s)</small>
+              <small class="step_duration">(0.001s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1747</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1749</span>
             </div>
             <span class="embed"/>
           </li>
@@ -3775,10 +4757,10 @@ function Collapsible_expandAllFailed()
                 <b>$pp1_broker_pa_id</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.003s)</small>
+              <small class="step_duration">(0.001s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1747</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1749</span>
             </div>
             <span class="embed"/>
           </li>
@@ -3794,10 +4776,10 @@ function Collapsible_expandAllFailed()
                 <b>$pp1_station_id</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.002s)</small>
+              <small class="step_duration">(0.001s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1747</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1749</span>
             </div>
             <span class="embed"/>
           </li>
@@ -3816,7 +4798,7 @@ function Collapsible_expandAllFailed()
               <small class="step_duration">(0.001s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1747</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1749</span>
             </div>
             <span class="embed"/>
           </li>
@@ -3835,7 +4817,7 @@ function Collapsible_expandAllFailed()
               <small class="step_duration">(0.001s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1747</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1749</span>
             </div>
             <span class="embed"/>
           </li>
@@ -3851,10 +4833,10 @@ function Collapsible_expandAllFailed()
                 <b>$pp1_pa_fiscal_code</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.002s)</small>
+              <small class="step_duration">(0.001s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1747</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1749</span>
             </div>
             <span class="embed"/>
           </li>
@@ -3870,10 +4852,10 @@ function Collapsible_expandAllFailed()
                 <b>$pp1_outcome</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.003s)</small>
+              <small class="step_duration">(0.002s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1747</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1749</span>
             </div>
             <span class="embed"/>
           </li>
@@ -3889,10 +4871,10 @@ function Collapsible_expandAllFailed()
                 <b>$pp1_creditor_reference_id</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.003s)</small>
+              <small class="step_duration">(0.002s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1747</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1749</span>
             </div>
             <span class="embed"/>
           </li>
@@ -3908,10 +4890,10 @@ function Collapsible_expandAllFailed()
                 <b>$ps_description</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.002s)</small>
+              <small class="step_duration">(0.001s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1747</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1749</span>
             </div>
             <span class="embed"/>
           </li>
@@ -3927,10 +4909,10 @@ function Collapsible_expandAllFailed()
                 <b>$ps_company_name</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.002s)</small>
+              <small class="step_duration">(0.001s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1747</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1749</span>
             </div>
             <span class="embed"/>
           </li>
@@ -3946,10 +4928,10 @@ function Collapsible_expandAllFailed()
                 <b>$pss_entity_unique_identifier_type</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.002s)</small>
+              <small class="step_duration">(0.001s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1747</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1749</span>
             </div>
             <span class="embed"/>
           </li>
@@ -3968,7 +4950,7 @@ function Collapsible_expandAllFailed()
               <small class="step_duration">(0.001s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1747</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1749</span>
             </div>
             <span class="embed"/>
           </li>
@@ -3984,10 +4966,10 @@ function Collapsible_expandAllFailed()
                 <b>$pss_full_name</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.002s)</small>
+              <small class="step_duration">(0.001s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1747</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1749</span>
             </div>
             <span class="embed"/>
           </li>
@@ -4003,10 +4985,10 @@ function Collapsible_expandAllFailed()
                 <b>$pss_street_name</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.002s)</small>
+              <small class="step_duration">(0.001s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1747</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1749</span>
             </div>
             <span class="embed"/>
           </li>
@@ -4022,10 +5004,10 @@ function Collapsible_expandAllFailed()
                 <b>$pss_civic_number</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.006s)</small>
+              <small class="step_duration">(0.001s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1747</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1749</span>
             </div>
             <span class="embed"/>
           </li>
@@ -4041,10 +5023,10 @@ function Collapsible_expandAllFailed()
                 <b>$pss_postal_code</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.003s)</small>
+              <small class="step_duration">(0.001s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1747</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1749</span>
             </div>
             <span class="embed"/>
           </li>
@@ -4060,10 +5042,10 @@ function Collapsible_expandAllFailed()
                 <b>$pss_city</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.003s)</small>
+              <small class="step_duration">(0.001s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1747</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1749</span>
             </div>
             <span class="embed"/>
           </li>
@@ -4079,10 +5061,10 @@ function Collapsible_expandAllFailed()
                 <b>$pss_state_province_region</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.003s)</small>
+              <small class="step_duration">(0.001s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1747</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1749</span>
             </div>
             <span class="embed"/>
           </li>
@@ -4098,10 +5080,10 @@ function Collapsible_expandAllFailed()
                 <b>$pss_country</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.003s)</small>
+              <small class="step_duration">(0.001s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1747</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1749</span>
             </div>
             <span class="embed"/>
           </li>
@@ -4117,10 +5099,10 @@ function Collapsible_expandAllFailed()
                 <b>$pt_transfer_identifier</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.006s)</small>
+              <small class="step_duration">(0.001s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1747</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1749</span>
             </div>
             <span class="embed"/>
           </li>
@@ -4136,10 +5118,10 @@ function Collapsible_expandAllFailed()
                 <b>$pt_pa_fiscal_code_secondary</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.003s)</small>
+              <small class="step_duration">(0.001s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1747</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1749</span>
             </div>
             <span class="embed"/>
           </li>
@@ -4155,10 +5137,10 @@ function Collapsible_expandAllFailed()
                 <b>$pt_iban</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.003s)</small>
+              <small class="step_duration">(0.002s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1747</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1749</span>
             </div>
             <span class="embed"/>
           </li>
@@ -4174,10 +5156,10 @@ function Collapsible_expandAllFailed()
                 <b>$pt_remittance_information</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.003s)</small>
+              <small class="step_duration">(0.000s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1747</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1749</span>
             </div>
             <span class="embed"/>
           </li>
@@ -4193,10 +5175,10 @@ function Collapsible_expandAllFailed()
                 <b>$pt_transfer_category</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.002s)</small>
+              <small class="step_duration">(0.001s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1747</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1749</span>
             </div>
             <span class="embed"/>
           </li>
@@ -4212,10 +5194,10 @@ function Collapsible_expandAllFailed()
                 <b>$pp1_psp_id</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.005s)</small>
+              <small class="step_duration">(0.002s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1747</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1749</span>
             </div>
             <span class="embed"/>
           </li>
@@ -4231,10 +5213,10 @@ function Collapsible_expandAllFailed()
                 <b>$pp1_channel_id</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.002s)</small>
+              <small class="step_duration">(0.001s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1747</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1749</span>
             </div>
             <span class="embed"/>
           </li>
@@ -4254,10 +5236,10 @@ function Collapsible_expandAllFailed()
                 <b>nodo_online</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.180s)</small>
+              <small class="step_duration">(0.132s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1382</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1384</span>
             </div>
             <span class="embed"/>
           </li>
@@ -4275,10 +5257,10 @@ function Collapsible_expandAllFailed()
                 <b>xml_rt</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.009s)</small>
+              <small class="step_duration">(0.004s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1429</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1431</span>
             </div>
             <span class="embed"/>
           </li>
@@ -4298,10 +5280,10 @@ function Collapsible_expandAllFailed()
                 <b>nodo_online</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.176s)</small>
+              <small class="step_duration">(0.135s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1382</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1384</span>
             </div>
             <span class="embed"/>
           </li>
@@ -4319,10 +5301,10 @@ function Collapsible_expandAllFailed()
                 <b>xml_rpt</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.025s)</small>
+              <small class="step_duration">(0.004s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1429</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1431</span>
             </div>
             <span class="embed"/>
           </li>
@@ -4342,10 +5324,10 @@ function Collapsible_expandAllFailed()
                 <b>nodo_online</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.177s)</small>
+              <small class="step_duration">(0.144s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1382</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1384</span>
             </div>
             <span class="embed"/>
           </li>
@@ -4363,10 +5345,10 @@ function Collapsible_expandAllFailed()
                 <b>BROKER_PA_ID</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.004s)</small>
+              <small class="step_duration">(0.001s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1401</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1403</span>
             </div>
             <span class="embed"/>
           </li>
@@ -4384,10 +5366,10 @@ function Collapsible_expandAllFailed()
                 <b>STATION_ID</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.004s)</small>
+              <small class="step_duration">(0.001s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1401</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1403</span>
             </div>
             <span class="embed"/>
           </li>
@@ -4405,10 +5387,10 @@ function Collapsible_expandAllFailed()
                 <b>PAYMENT_TOKEN</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.004s)</small>
+              <small class="step_duration">(0.002s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1401</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1403</span>
             </div>
             <span class="embed"/>
           </li>
@@ -4426,10 +5408,10 @@ function Collapsible_expandAllFailed()
                 <b>NOTICE_ID</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.003s)</small>
+              <small class="step_duration">(0.001s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1401</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1403</span>
             </div>
             <span class="embed"/>
           </li>
@@ -4447,10 +5429,10 @@ function Collapsible_expandAllFailed()
                 <b>PA_FISCAL_CODE</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.004s)</small>
+              <small class="step_duration">(0.001s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1401</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1403</span>
             </div>
             <span class="embed"/>
           </li>
@@ -4468,10 +5450,10 @@ function Collapsible_expandAllFailed()
                 <b>OUTCOME</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.003s)</small>
+              <small class="step_duration">(0.001s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1401</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1403</span>
             </div>
             <span class="embed"/>
           </li>
@@ -4489,10 +5471,10 @@ function Collapsible_expandAllFailed()
                 <b>CREDITOR_REFERENCE_ID</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.005s)</small>
+              <small class="step_duration">(0.001s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1401</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1403</span>
             </div>
             <span class="embed"/>
           </li>
@@ -4510,10 +5492,10 @@ function Collapsible_expandAllFailed()
                 <b>AMOUNT</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.005s)</small>
+              <small class="step_duration">(0.001s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1401</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1403</span>
             </div>
             <span class="embed"/>
           </li>
@@ -4531,10 +5513,10 @@ function Collapsible_expandAllFailed()
                 <b>PSP_ID</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.004s)</small>
+              <small class="step_duration">(0.001s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1401</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1403</span>
             </div>
             <span class="embed"/>
           </li>
@@ -4555,7 +5537,7 @@ function Collapsible_expandAllFailed()
               <small class="step_duration">(0.003s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1401</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1403</span>
             </div>
             <span class="embed"/>
           </li>
@@ -4573,10 +5555,10 @@ function Collapsible_expandAllFailed()
                 <b>PAYMENT_CHANNEL</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.007s)</small>
+              <small class="step_duration">(0.002s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1401</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1403</span>
             </div>
             <span class="embed"/>
           </li>
@@ -4594,10 +5576,10 @@ function Collapsible_expandAllFailed()
                 <b>PAYMENT_METHOD</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.004s)</small>
+              <small class="step_duration">(0.001s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1401</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1403</span>
             </div>
             <span class="embed"/>
           </li>
@@ -4615,10 +5597,10 @@ function Collapsible_expandAllFailed()
                 <b>FEE</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.007s)</small>
+              <small class="step_duration">(0.002s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1401</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1403</span>
             </div>
             <span class="embed"/>
           </li>
@@ -4638,10 +5620,10 @@ function Collapsible_expandAllFailed()
                 <b>nodo_cfg</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.183s)</small>
+              <small class="step_duration">(0.139s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1382</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1384</span>
             </div>
             <span class="embed"/>
           </li>
@@ -4659,10 +5641,10 @@ function Collapsible_expandAllFailed()
                 <b>RAGIONE_SOCIALE</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.003s)</small>
+              <small class="step_duration">(0.002s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1401</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1403</span>
             </div>
             <span class="embed"/>
           </li>
@@ -4678,10 +5660,200 @@ function Collapsible_expandAllFailed()
                 <b>$xml_rpt.identificativoDominio</b>
                 <span/>
               </span>
+              <small class="step_duration">(0.006s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1749</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>check value </span>
+                <b>$xml_rt.riferimentoMessaggioRichiesta</b>
+                <span> is </span>
+                <b>equal to</b>
+                <span> value </span>
+                <b>$xml_rpt.identificativoMessaggioRichiesta</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.007s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1749</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>check value </span>
+                <b>$xml_rt.codiceIdentificativoUnivoco</b>
+                <span> is </span>
+                <b>equal to</b>
+                <span> value </span>
+                <b>$PSP_ID</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.003s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1749</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>check value </span>
+                <b>$xml_rt.tipoIdentificativoUnivoco</b>
+                <span> is </span>
+                <b>equal to</b>
+                <span> value </span>
+                <b>$xml_rpt.tipoIdentificativoUnivoco</b>
+                <span/>
+              </span>
               <small class="step_duration">(0.004s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1747</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1749</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>check value </span>
+                <b>$xml_rt.denominazioneBeneficiario</b>
+                <span> is </span>
+                <b>equal to</b>
+                <span> value </span>
+                <b>$xml_rpt.denominazioneBeneficiario</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.004s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1749</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>check value </span>
+                <b>$xml_rt.anagraficaPagatore</b>
+                <span> is </span>
+                <b>equal to</b>
+                <span> value </span>
+                <b>$xml_rpt.anagraficaPagatore</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.003s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1749</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>check value </span>
+                <b>$xml_rt.identificativoUnivocoVersamento</b>
+                <span> is </span>
+                <b>equal to</b>
+                <span> value </span>
+                <b>$xml_rpt.identificativoUnivocoVersamento</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.003s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1749</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>check value </span>
+                <b>$xml_rt.CodiceContestoPagamento</b>
+                <span> is </span>
+                <b>equal to</b>
+                <span> value </span>
+                <b>$xml_rpt.codiceContestoPagamento</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.003s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1749</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>check value </span>
+                <b>$xml_rt.identificativoUnivocoRiscossione</b>
+                <span> is </span>
+                <b>equal to</b>
+                <span> value </span>
+                <b>$PAYMENT_TOKEN</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.003s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1749</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>check value </span>
+                <b>$xml_rt.causaleVersamento</b>
+                <span> is </span>
+                <b>equal to</b>
+                <span> value </span>
+                <b>$xml_rpt.causaleVersamento</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.004s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1749</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>check value </span>
+                <b>$xml_rt.datiSpecificiRiscossione</b>
+                <span> is </span>
+                <b>equal to</b>
+                <span> value </span>
+                <b>$xml_rpt.datiSpecificiRiscossione</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.003s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1749</span>
             </div>
             <span class="embed"/>
           </li>

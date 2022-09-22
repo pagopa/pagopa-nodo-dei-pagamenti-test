@@ -68,7 +68,7 @@ Feature: process tests for nodoInviaRPT [Retry_paaInviaRT_01]
             <pay_i:autenticazioneSoggetto>CNS</pay_i:autenticazioneSoggetto>
             <pay_i:soggettoVersante>
             <pay_i:identificativoUnivocoVersante>
-            <pay_i:tipoIdentificativoUnivoco>F</pay_i:tipoIdentificativoUnivoco>
+            <pay_i:tipoIdentificativoUnivoco>G</pay_i:tipoIdentificativoUnivoco>
             <pay_i:codiceIdentificativoUnivoco>RCCGLD09P09H502E</pay_i:codiceIdentificativoUnivoco>
             </pay_i:identificativoUnivocoVersante>
             <pay_i:anagraficaVersante>Gesualdo;Riccitelli</pay_i:anagraficaVersante>
@@ -82,7 +82,7 @@ Feature: process tests for nodoInviaRPT [Retry_paaInviaRT_01]
             </pay_i:soggettoVersante>
             <pay_i:soggettoPagatore>
             <pay_i:identificativoUnivocoPagatore>
-            <pay_i:tipoIdentificativoUnivoco>F</pay_i:tipoIdentificativoUnivoco>
+            <pay_i:tipoIdentificativoUnivoco>G</pay_i:tipoIdentificativoUnivoco>
             <pay_i:codiceIdentificativoUnivoco>RCCGLD09P09H501E</pay_i:codiceIdentificativoUnivoco>
             </pay_i:identificativoUnivocoPagatore>
             <pay_i:anagraficaPagatore>Gesualdo;Riccitelli</pay_i:anagraficaPagatore>
@@ -186,7 +186,7 @@ Feature: process tests for nodoInviaRPT [Retry_paaInviaRT_01]
             <!--Optional:-->
             <payer>
             <uniqueIdentifier>
-            <entityUniqueIdentifierType>F</entityUniqueIdentifierType>
+            <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
             <entityUniqueIdentifierValue>RCCGLD09P09H501E</entityUniqueIdentifierValue>
             </uniqueIdentifier>
             <fullName>Gesualdo;Riccitelli</fullName>
@@ -233,7 +233,6 @@ Feature: process tests for nodoInviaRPT [Retry_paaInviaRT_01]
         And check outcome is OK of sendPaymentOutcome response
         And wait 65 seconds for expiration
 
-    @prova
     Scenario: DB check
         Given the Execute sendPaymentOutcome request Scenario executed successfully
         Then checks the value NotNone of the record at column id of the table RETRY_PA_INVIA_RT retrived by the query retry_pa_invia_rt_only_ccp on db nodo_online under macro NewMod3
@@ -459,32 +458,14 @@ Feature: process tests for nodoInviaRPT [Retry_paaInviaRT_01]
         And through the query psp retrieve param RAGIONE_SOCIALE at position 0 and save it under the key RAGIONE_SOCIALE 
         #checks on XML
         And check value $xml_rt.identificativoDominio is equal to value $xml_rpt.identificativoDominio
-        # And check value $xml_rt.idBrokerPA is equal to value $pp1_broker_pa_id
-        # And check value $xml_rt.idStation is equal to value $pp1_station_id
-        # And check value $xml_rt.receiptId is equal to value $pp1_payment_token
-        # And check value $xml_rt.noticeNumber is equal to value $pp1_notice_id
-        # And check value $xml_rt.fiscalCode is equal to value $pp1_pa_fiscal_code
-        # And check value $xml_rt.outcome is equal to value $pp1_outcome
-        # And check value $xml_rt.creditorReferenceId is equal to value $pp1_creditor_reference_id
-        # #And check value $xml_rt.paymentAmount is equal to value $pp1_amount
-        # And check value $xml_rt.description is equal to value $ps_description
-        # And check value $xml_rt.companyName is equal to value $ps_company_name
-        # And check value $xml_rt.entityUniqueIdentifierType is equal to value $pss_entity_unique_identifier_type
-        # And check value $xml_rt.entityUniqueIdentifierValue is equal to value $pss_entity_unique_identifier_value
-        # And check value $xml_rt.fullName is equal to value $pss_full_name
-        # And check value $xml_rt.streetName is equal to value $pss_street_name
-        # And check value $xml_rt.civicNumber is equal to value $pss_civic_number
-        # And check value $xml_rt.postalCode is equal to value $pss_postal_code
-        # And check value $xml_rt.city is equal to value $pss_city
-        # And check value $xml_rt.stateProvinceRegion is equal to value $pss_state_province_region
-        # And check value $xml_rt.country is equal to value $pss_country
-        # #And check value $xml_rt.e-mail is equal to value $pss_email
-        # And check value $xml_rt.idTransfer is equal to value $pt_transfer_identifier
-        # #And check value $xml_rt.transferAmount is equal to value $pt_amount
-        # And check value $xml_rt.fiscalCodePA is equal to value $pt_pa_fiscal_code_secondary
-        # And check value $xml_rt.IBAN is equal to value $pt_iban
-        # And check value $xml_rt.remittanceInformation is equal to value $pt_remittance_information
-        # And check value $xml_rt.transferCategory is equal to value $pt_transfer_category
-        # And check value $xml_rt.idPSP is equal to value $pp1_psp_id
-        # And check value $xml_rt.idChannel is equal to value $pp1_channel_id        
-
+        And check value $xml_rt.riferimentoMessaggioRichiesta is equal to value $xml_rpt.identificativoMessaggioRichiesta
+        And check value $xml_rt.codiceIdentificativoUnivoco is equal to value $PSP_ID
+        And check value $xml_rt.tipoIdentificativoUnivoco is equal to value $xml_rpt.tipoIdentificativoUnivoco
+        And check value $xml_rt.denominazioneBeneficiario is equal to value $xml_rpt.denominazioneBeneficiario
+        And check value $xml_rt.anagraficaPagatore is equal to value $xml_rpt.anagraficaPagatore
+        #And check value $xml_rt.importoTotalePagato is equal to value $AMOUNT
+        And check value $xml_rt.identificativoUnivocoVersamento is equal to value $xml_rpt.identificativoUnivocoVersamento
+        And check value $xml_rt.CodiceContestoPagamento is equal to value $xml_rpt.codiceContestoPagamento
+        And check value $xml_rt.identificativoUnivocoRiscossione is equal to value $PAYMENT_TOKEN
+        And check value $xml_rt.causaleVersamento is equal to value $xml_rpt.causaleVersamento
+        And check value $xml_rt.datiSpecificiRiscossione is equal to value $xml_rpt.datiSpecificiRiscossione
