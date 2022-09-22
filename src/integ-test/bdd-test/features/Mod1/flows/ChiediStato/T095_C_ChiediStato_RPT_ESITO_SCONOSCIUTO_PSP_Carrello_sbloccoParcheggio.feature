@@ -63,7 +63,7 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
                 <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
                 <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
                 <pay_i:identificativoUnivocoVersamento>avanzaErrResponse</pay_i:identificativoUnivocoVersamento>
-                <pay_i:codiceContestoPagamento>##ccp1#</pay_i:codiceContestoPagamento>
+                <pay_i:codiceContestoPagamento>#ccp1#</pay_i:codiceContestoPagamento>
                 <pay_i:ibanAddebito>IT45R0760103200000000001016</pay_i:ibanAddebito> 
                 <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
                 <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -290,20 +290,20 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
 
     Scenario: Execution Esito Mod1
         Given the Execute nodoInviaCarrelloRPT scenario executed successfully
-        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte 
+        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT 
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
                 <soapenv:Header/>
                 <soapenv:Body>
-                    <ws:pspInviaCarrelloRPTCarteResponse>
+                    <ws:pspInviaCarrelloRPTResponse>
                         <pspInviaCarrelloRPTResponse>
                             <esitoComplessivoOperazione>timeout</esitoComplessivoOperazione>
                         </pspInviaCarrelloRPTResponse>
-                    </ws:pspInviaCarrelloRPTCarteResponse>
+                    </ws:pspInviaCarrelloRPTResponse>
                 </soapenv:Body>
             </soapenv:Envelope>
             """
-        When WISP sends REST POST inoltroEsito/carta to nodo-dei-pagamenti
+        When WISP sends REST POST inoltroEsito/mod1 to nodo-dei-pagamenti
 
             """
             {
@@ -340,7 +340,7 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
         When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
         Then checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_PARCHEGGIATA_NODO of nodoChiediStatoRPT response
-        And checks redirect contains RPT_INVIATA_A_PSP of nodoChiediStatoRPT response
+        And checks stato contains RPT_INVIATA_A_PSP of nodoChiediStatoRPT response
         And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ESITO_SCONOSCIUTO_PSP of nodoChiediStatoRPT response
 
@@ -439,7 +439,7 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
             <elementoListaRPT>
             <identificativoDominio>44444444445</identificativoDominio>
             <identificativoUnivocoVersamento>avanzaErrResponse</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>$2CCP</codiceContestoPagamento>
+            <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
             <rpt>$rpt21Attachment</rpt>
             </elementoListaRPT>
             </listaRPT>
@@ -478,4 +478,4 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
         Given the Execute 21nodoChiediStatoRPT request scenario executed successfully
         When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of notificaAnnullamento response is 404
-        And check error is non esiste of notificaAnnullamento response
+        And check error is Il Pagamento indicato non esiste of notificaAnnullamento response
