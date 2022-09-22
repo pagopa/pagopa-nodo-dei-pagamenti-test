@@ -416,7 +416,7 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
             <ppt:intestazioneCarrelloPPT>
             <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
-            <identificativoCarrello>D$2CCP</identificativoCarrello>
+            <identificativoCarrello>$2CCP</identificativoCarrello>
             </ppt:intestazioneCarrelloPPT>
             </soapenv:Header>
             <soapenv:Body>
