@@ -15,6 +15,7 @@ export function handleSummary(data, path,test) {
 	[`${path}/${d}_${test}.summary.csv`]: csv[0],
 	[`${path}/${d}_${test}.trOverSla.csv`]: csv[1],
 	[`${path}/${d}_${test}.resultCodeSummary.csv`]: csv[2],
+	[`${path}/${d}_${test}.junit.xml`]: jUnit(data),
 	 	
   };
   
