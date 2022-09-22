@@ -125,17 +125,20 @@ Feature: T220_RPT_Mod1_faultBeanEsteso
         <soapenv:Body>
             <ws:pspInviaRPTResponse>
                 <pspInviaRPTResponse>
-                    <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
-                    <fault>
-                        <faultCode>CANALE_RPT_RIFIUTATA</faultCode>
-                        <faultString>fault esterno</faultString>
-                        <id>40000000001</id>
+            <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
+                <listaErroriRPT>
+                <fault>
+                    <faultCode>CANALE_RPT_DA_RIFIUTARE</faultCode>
+                    <faultString>RPT da Rifiutare lato PSP</faultString>
+                    <id>40000000001</id>
                     </fault>
+                </listaErroriRPT>
                 </pspInviaRPTResponse>
             </ws:pspInviaRPTResponse>
         </soapenv:Body>
         </soapenv:Envelope>
         """
+        And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
         When WISP sends REST POST inoltroEsito/mod1 to nodo-dei-pagamenti
         """
         {
@@ -150,7 +153,7 @@ Feature: T220_RPT_Mod1_faultBeanEsteso
         Then verify the HTTP status code of inoltroEsito/mod1 response is 200
         And check esito is KO of inoltroEsito/mod1 response
         And check errorCode is RIFPSP of inoltroEsito/mod1 response
-        And check descrizione is Risposta negativa del canale of inoltroEsito/mod1 response
+        And check descrizione is Risposta negativa del Canale of inoltroEsito/mod1 response
 
     Scenario: Execute nodoChiediStatoRPT (Phase 3)
         Given the Execute inoltroEsito/mod1 (Phase 2) scenario executed successfully
@@ -171,8 +174,7 @@ Feature: T220_RPT_Mod1_faultBeanEsteso
         </soapenv:Envelope>
         """
         When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
-        Then check esito is KO of nodoChiediStatoRPT response
-        And checks stato contains RPT_PARCHEGGIATA_NODO of nodoChiediStatoRPT response
+        Then checks stato contains RPT_PARCHEGGIATA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_INVIATA_A_PSP of nodoChiediStatoRPT response
         And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_RIFIUTATA_PSP of nodoChiediStatoRPT response
@@ -187,8 +189,7 @@ Feature: T220_RPT_Mod1_faultBeanEsteso
     Scenario: Execute nodoChiediStatoRPT2 (Phase 5)
         Given the Execute nodoInviaRPT1 (Phase 4) scenario executed successfully
         When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
-        Then check esito is KO of nodoChiediStatoRPT response
-        And checks stato contains RPT_PARCHEGGIATA_NODO of nodoChiediStatoRPT response
+        Then checks stato contains RPT_PARCHEGGIATA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_INVIATA_A_PSP of nodoChiediStatoRPT response
         And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
