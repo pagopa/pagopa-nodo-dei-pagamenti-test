@@ -250,7 +250,6 @@ Feature: process tests for 5 RPT 5 Versamenti
             """
 
         And RPT3 generation
-
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.1</pay_i:versioneOggetto>
@@ -631,9 +630,9 @@ Feature: process tests for 5 RPT 5 Versamenti
         <soapenv:Body>
         <ws:nodoInviaCarrelloRPT>
         <password>pwdpwdpwd</password>
-        <identificativoPSP>40000000001</identificativoPSP>
-        <identificativoIntermediarioPSP>40000000001</identificativoIntermediarioPSP>
-        <identificativoCanale>40000000001_03</identificativoCanale>
+        <identificativoPSP>#psp_AGID#</identificativoPSP>
+        <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
+        <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
         <listaRPT>
             <elementoListaRPT>
                 <identificativoDominio>44444444444</identificativoDominio>
@@ -688,12 +687,12 @@ Feature: process tests for 5 RPT 5 Versamenti
     Scenario: Execution chiediLista
         Given the Execution idPagamento scenario executed successfully
         When WISP sends rest GET listaPSP?idPagamento=$sessionToken&importoTotale=1000&percorsoPagamento=CARTE to nodo-dei-pagamenti
-        And check totalrows field exists in listaPSP response
+        Then check totalRows field exists in listaPSP response
         And check data field exists in listaPSP response
 
     Scenario: Execution Esito Mod1
         Given the Execution chiediLista scenario executed successfully
-        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT 
+        And initial XML pspInviaCarrelloRPT 
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
                 <soapenv:Header/>
@@ -708,6 +707,7 @@ Feature: process tests for 5 RPT 5 Versamenti
                 </soapenv:Body>
             </soapenv:Envelope>
             """
+        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT 
         When WISP sends REST POST inoltroEsito/mod1 to nodo-dei-pagamenti
 
             """
@@ -868,9 +868,9 @@ Feature: process tests for 5 RPT 5 Versamenti
         <soapenv:Body>
         <ws:nodoInviaCarrelloRPT>
         <password>pwdpwdpwd</password>
-        <identificativoPSP>40000000001</identificativoPSP>
-        <identificativoIntermediarioPSP>40000000001</identificativoIntermediarioPSP>
-        <identificativoCanale>40000000001_03</identificativoCanale>
+        <identificativoPSP>#psp_AGID#</identificativoPSP>
+        <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
+        <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
         <listaRPT>
             <elementoListaRPT>
                 <identificativoDominio>44444444444</identificativoDominio>
