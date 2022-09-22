@@ -67,7 +67,7 @@ Feature: gestionRTMb_01
             <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>PO</pay_i:tipoVersamento>
             <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
-            <pay_i:codiceContestoPagamento>#ccp#</pay_i:codiceContestoPagamento>
+            <pay_i:codiceContestoPagamento>#ccp1#</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
             <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -144,7 +144,7 @@ Feature: gestionRTMb_01
             <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>PO</pay_i:tipoVersamento>
             <pay_i:identificativoUnivocoVersamento>$2iuv</pay_i:identificativoUnivocoVersamento>
-            <pay_i:codiceContestoPagamento>#ccp#</pay_i:codiceContestoPagamento>
+            <pay_i:codiceContestoPagamento>#ccp2#</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
             <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -349,7 +349,7 @@ Feature: gestionRTMb_01
                         <password>pwdpwdpwd</password>
                         <identificativoPSP>#psp_AGID#</identificativoPSP>
                         <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
-                        <identificativoCanale>#canale_AGID#</identificativoCanale>
+                        <identificativoCanale>97735020584_02</identificativoCanale>
                         <listaRPT>
                             <elementoListaRPT>
                                 <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
@@ -373,7 +373,8 @@ Feature: gestionRTMb_01
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
         And retrieve session token from $nodoInviaCarrelloRPTResponse.url
-    #set broadcast = False
+        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'N', with where condition s.FK_PA IN (SELECT OBJ_ID FROM PA WHERE ID_DOMINIO = #creditor_institution_code_old# OR ID_DOMINIO = $pa1) under macro update_query on db nodo_cfg
+        And refresh job PA triggered after 10 seconds
 
     Scenario: Execute nodoChiediInformazioniPagamento (Phase 2)
         Given the Execute nodoInviaCarrelloRPT (Phase 1) scenario executed successfully
@@ -436,7 +437,7 @@ Feature: gestionRTMb_01
         Then check esito is OK of nodoInviaRT response
         #pa
         And replace pa content with #creditor_institution_code_old# content
-        And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO, RPT_INVIATA_A_PSP, RPT_ACCETTATA_PSP, RT_RICEVUTA_NODO, RT_ACCETTATA_NODO, RT_INVIATA_PA, RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query by_iuv_and_indent_dominio under macro Mod1MB
+        And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO, RPT_INVIATA_A_PSP, RPT_ACCETTATA_PSP, RT_RICEVUTA_NODO, RT_ACCETTATA_NODO, RT_INVIATA_PA, RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query by_iuv_and_indent_dominio on db nodo_online under macro Mod1MB
         And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query by_iuv_and_indent_dominio on db nodo_online under macro Mod1MB
         And checks the value PAYING, PAID, NOTICE_GENERATED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1MB
         And checks the value NOTICE_GENERATED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1MB
@@ -444,7 +445,7 @@ Feature: gestionRTMb_01
         And checks the value PAID of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1MB
         #pa1
         And replace pa content with 90000000001 content
-        And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO, RPT_INVIATA_A_PSP, RPT_ACCETTATA_PSP, RT_RICEVUTA_NODO, RT_ACCETTATA_NODO, RT_INVIATA_PA, RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query by_iuv_and_indent_dominio under macro Mod1MB
+        And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO, RPT_INVIATA_A_PSP, RPT_ACCETTATA_PSP, RT_RICEVUTA_NODO, RT_ACCETTATA_NODO, RT_INVIATA_PA, RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query by_iuv_and_indent_dominio on db nodo_online under macro Mod1MB
         And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query by_iuv_and_indent_dominio on db nodo_online under macro Mod1MB
         And checks the value CART_RICEVUTO_NODO, CART_ACCETTATO_NODO, CART_PARCHEGGIATO_NODO, CART_INVIATO_A_PSP, CART_ACCETTATO_PSP of the record at column STATO of the table STATI_CARRELLO retrived by the query by_payment_token on db nodo_online under macro Mod1MB
         And checks the value CART_ACCETTATO_PSP of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query by_payment_token on db nodo_online under macro Mod1MB

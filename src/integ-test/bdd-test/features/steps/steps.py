@@ -1595,6 +1595,7 @@ def step_impl(context, query_name, table_name, param, where_condition, macro, db
         'table_name', table_name).replace('param', param).replace('where_condition', where_condition)
     selected_query = utils.replace_local_variables(selected_query, context)
     selected_query = utils.replace_context_variables(selected_query, context)
+    selected_query = utils.replace_global_variables(selected_query, context)
     conn = db.getConnection(db_selected.get('host'), db_selected.get(
         'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
     exec_query = db.executeQuery(conn, selected_query)
