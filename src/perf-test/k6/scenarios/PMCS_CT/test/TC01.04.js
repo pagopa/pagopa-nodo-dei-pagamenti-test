@@ -190,9 +190,9 @@ export const options = {
 	'checks{ALL:over_sla500}': [],
 	'checks{ALL:over_sla600}': [],
 	'checks{ALL:over_sla800}': [],
-	'checks{ALL:over_sla1000}': [],
+	'checks{ALL:over_sla1000}': ['rate<0.05'],
 	'checks{ALL:ok_rate}': [],
-	'checks{ALL:ko_rate}': ['rate<0.01'],
+	'checks{ALL:ko_rate}': [],
 	},
    
   
