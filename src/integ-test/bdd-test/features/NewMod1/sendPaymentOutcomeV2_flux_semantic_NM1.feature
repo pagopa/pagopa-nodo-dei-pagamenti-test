@@ -331,7 +331,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
         And paymentToken with $activatePaymentNoticeV2NewResponse.paymentToken in sendPaymentOutcomeV2
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-    
+    @wip
     Scenario: SEM_SPO_13 (part 4)
         Given the SEM_SPO_13 (part 3) scenario executed successfully
         And paymentToken with $activatePaymentNoticeV2Response.paymentToken in sendPaymentOutcomeV2
