@@ -243,11 +243,8 @@ def step_impl(context):
         payload = payload.replace('#IuV#', iuv)
         setattr(context, 'IuV', iuv)
 
-
     if '#iuv2#' in payload:
-        iuv = 'IUV' + '-' + \
-            str(date + '-' +
-                datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3])
+        iuv = 'IUV' + '-' + str(date + '-' + datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3])
         payload = payload.replace('#iuv2#', iuv)
         setattr(context, '2iuv', iuv)
 
@@ -366,6 +363,11 @@ def step_impl(context, number):
             '-' + str(random.randint(0, 10000))
         payload = payload.replace(f'#IUV{number}#', IUV)
         setattr(context, f'{number}IUV', IUV)
+
+    if f'#iUV{number}#' in payload:
+        iuv = 'IUV2' + '-' + str(date + '-' + datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3])
+        payload = payload.replace(f'#iUV{number}#', iuv)
+        setattr(context, f'{number}iUV', iuv)
 
     if f"#ccp{number}#" in payload:
         ccp = str(int(time.time() * 1000))
@@ -1153,6 +1155,10 @@ def step_impl(context, primitive, new_primitive):
     soap_request = getattr(context, primitive)
     setattr(context, new_primitive, soap_request)
 
+@step('random iuv in context')
+def step_impl(context):
+    iuv = str(random.randint(1000000000000, 9999999999999))
+    setattr(context, "iuv", iuv)
 
 @then('{response} response is equal to {response_1} response')
 def step_impl(context, response, response_1):
@@ -1419,6 +1425,15 @@ def step_impl(context, query_name, xml, position, key):
     selected_element = result_query[0][position]
     selected_element = selected_element.read()
     selected_element = selected_element.decode("utf-8")
+    print(f'{xml}: {selected_element}')
+    setattr(context, key, selected_element)
+
+@step("through the query {query_name} retrieve xml_no_decode {xml} at position {position:d} and save it under the key {key}")
+def step_impl(context, query_name, xml, position, key):
+    result_query = getattr(context, query_name)
+    print(f'{query_name}: {result_query}')
+    selected_element = result_query[0][position]
+    selected_element = selected_element.read()
     print(f'{xml}: {selected_element}')
     setattr(context, key, selected_element)
     
