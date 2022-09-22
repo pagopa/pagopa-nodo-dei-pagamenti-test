@@ -259,6 +259,7 @@ Feature: T220_RT_faultBeanEsteso
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
         When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
+        And wait 10 seconds for expiration
 
     Scenario: Execute nodoChiediStatoRPT (Phase 3)
         Given the Execute nodoInviaRT (Phase 2) scenario executed successfully
