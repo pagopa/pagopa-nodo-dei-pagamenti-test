@@ -349,7 +349,7 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
     Scenario: Execute a closePayment-v2 request
         Given the Execute a nodoChiediInformazioniPagamento request scenario executed successfully
         And the pspNotifyPayment scenario executed successfully
-        And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
+        And EC replies to nodo-dei-pagamenti with the pspNotifyPayment
         And the closePaymentV2 scenario executed successfully
         And paymentToken with $sessionToken in v2/closepayment
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
