@@ -291,3 +291,178 @@ Feature: process tests for nodoInviaRPT [REV_NIRPT_01]
         And with the query rt_versamenti check assert beetwen elem fk_RT in position 0 and elem id with position 0 of the query rt
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RT_VERSAMENTI retrived by the query rt_versamenti on db nodo_online under macro NewMod3
         And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table RT_VERSAMENTI retrived by the query rt_versamenti on db nodo_online under macro NewMod3
+
+        #DB CHECK POSITION_RECEIPT
+        And checks the value $activatePaymentNoticeResponse.paymentToken of the record at column receipt_id of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
+        And checks the value $activatePaymentNotice.noticeNumber of the record at column notice_id of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
+        And checks the value $activatePaymentNotice.fiscalCode of the record at column pa_fiscal_code of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
+        
+        #assert creditor == rows4.creditor_reference_id[0]
+        And execution query position_receipt to get value on the table POSITION_RECEIPT, with the columns creditor_reference_id under macro NewMod3 with db name nodo_online
+        And execution query position_receipt_recipient to get value on the table POSITION_PAYMENT, with the columns creditor_reference_id under macro NewMod3 with db name nodo_online
+        And with the query position_receipt check assert beetwen elem creditor_reference_id in position 0 and elem creditor_reference_id with position 0 of the query position_receipt_recipient
+        And checks the value $activatePaymentNoticeResponse.paymentToken of the record at column payment_token of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
+        
+        #assert outcome == rows4.outcome[0]
+        And execution query position_receipt to get value on the table POSITION_RECEIPT, with the columns outcome under macro NewMod3 with db name nodo_online
+        And execution query position_receipt_recipient to get value on the table POSITION_PAYMENT, with the columns outcome under macro NewMod3 with db name nodo_online
+        And with the query position_receipt check assert beetwen elem outcome in position 0 and elem outcome with position 0 of the query position_receipt_recipient
+        
+        #assert amount == rows4.amount[0]
+        And execution query position_receipt to get value on the table POSITION_RECEIPT, with the columns payment_amount under macro NewMod3 with db name nodo_online
+        And execution query position_receipt_recipient to get value on the table POSITION_PAYMENT, with the columns amount under macro NewMod3 with db name nodo_online
+        And with the query position_receipt check assert beetwen elem payment_amount in position 0 and elem amount with position 0 of the query position_receipt_recipient
+        
+        #assert description == rows10.description[0]
+        And execution query position_receipt to get value on the table POSITION_RECEIPT, with the columns description under macro NewMod3 with db name nodo_online
+        And execution query position_service to get value on the table POSITION_SERVICE, with the columns description under macro NewMod3 with db name nodo_online
+        And with the query position_receipt check assert beetwen elem description in position 0 and elem description with position 0 of the query position_service
+        
+        #assert company == rows10.company_name[0]
+        And execution query position_receipt to get value on the table POSITION_RECEIPT, with the columns company_name under macro NewMod3 with db name nodo_online
+        And execution query position_service to get value on the table POSITION_SERVICE, with the columns company_name under macro NewMod3 with db name nodo_online
+        And with the query position_receipt check assert beetwen elem company_name in position 0 and elem company_name with position 0 of the query position_service
+        
+        #assert office == rows10.office_name[0]
+        And execution query position_receipt to get value on the table POSITION_RECEIPT, with the columns office_name under macro NewMod3 with db name nodo_online
+        And execution query position_service to get value on the table POSITION_SERVICE, with the columns office_name under macro NewMod3 with db name nodo_online
+        And with the query position_receipt check assert beetwen elem office_name in position 0 and elem office_name with position 0 of the query position_service
+        
+        #assert debtor == rows10.debtor_id[0]
+        And execution query position_receipt to get value on the table POSITION_RECEIPT, with the columns debtor_id under macro NewMod3 with db name nodo_online
+        And execution query position_service to get value on the table POSITION_SERVICE, with the columns debtor_id under macro NewMod3 with db name nodo_online
+        And with the query position_receipt check assert beetwen elem debtor_id in position 0 and elem debtor_id with position 0 of the query position_service  
+        And checks the value $activatePaymentNotice.idPSP of the record at column psp_id of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
+
+        #assert pspCompany == rows13.ragione_sociale[0]
+        And execution query position_receipt to get value on the table POSITION_RECEIPT, with the columns PSP_COMPANY_NAME under macro NewMod3 with db name nodo_online													
+        And execution query psp to get value on the table PSP, with the columns RAGIONE_SOCIALE under macro NewMod3 with db name nodo_cfg													
+        And with the query position_receipt check assert beetwen elem PSP_COMPANY_NAME in position 0 and elem RAGIONE_SOCIALE with position 0 of the query psp													
+
+        #assert pspFiscalCode == rows13.codice_fiscale[0]
+        And execution query position_receipt to get value on the table POSITION_RECEIPT, with the columns PSP_FISCAL_CODE under macro NewMod3 with db name nodo_online													
+        And execution query psp to get value on the table PSP, with the columns CODICE_FISCALE under macro NewMod3 with db name nodo_cfg													
+        And with the query position_receipt check assert beetwen elem PSP_FISCAL_CODE in position 0 and elem CODICE_FISCALE with position 0 of the query psp													
+
+        #assert pspVat == rows13.vat_number[0]
+        And execution query position_receipt to get value on the table POSITION_RECEIPT, with the columns PSP_VAT_NUMBER under macro NewMod3 with db name nodo_online													
+        And execution query psp to get value on the table PSP, with the columns VAT_NUMBER under macro NewMod3 with db name nodo_cfg													
+        And with the query position_receipt check assert beetwen elem PSP_VAT_NUMBER in position 0 and elem VAT_NUMBER with position 0 of the query psp													
+
+        #assert channel == rows4.channel_id[0]
+        And execution query position_receipt to get value on the table POSITION_RECEIPT, with the columns channel_id under macro NewMod3 with db name nodo_online													
+        And execution query position_receipt_recipient to get value on the table POSITION_PAYMENT, with the columns channel_id under macro NewMod3 with db name nodo_online													
+        And with the query position_receipt check assert beetwen elem channel_id in position 0 and elem channel_id with position 0 of the query position_receipt_recipient													
+
+        #assert channelDescription == rows4.payment_channel[0]
+        And execution query position_receipt to get value on the table POSITION_RECEIPT, with the columns channel_description under macro NewMod3 with db name nodo_online													
+        And execution query position_receipt_recipient to get value on the table POSITION_PAYMENT, with the columns payment_channel under macro NewMod3 with db name nodo_online													
+        And with the query position_receipt check assert beetwen elem channel_description in position 0 and elem payment_channel with position 0 of the query position_receipt_recipient													
+
+        #assert payer == rows4.payer_id[0]
+        And execution query position_receipt to get value on the table POSITION_RECEIPT, with the columns payer_id under macro NewMod3 with db name nodo_online													
+        And execution query position_receipt_recipient to get value on the table POSITION_PAYMENT, with the columns payer_id under macro NewMod3 with db name nodo_online													
+        And with the query position_receipt check assert beetwen elem payer_id in position 0 and elem payer_id with position 0 of the query position_receipt_recipient													
+
+        #assert paymentMethod == rows4.payment_method[0]
+        And execution query position_receipt to get value on the table POSITION_RECEIPT, with the columns payment_method under macro NewMod3 with db name nodo_online													
+        And execution query position_receipt_recipient to get value on the table POSITION_PAYMENT, with the columns payment_method under macro NewMod3 with db name nodo_online													
+        And with the query position_receipt check assert beetwen elem payment_method in position 0 and elem payment_method with position 0 of the query position_receipt_recipient													
+
+        #assert fee == rows4.fee[0]
+        And execution query position_receipt to get value on the table POSITION_RECEIPT, with the columns FEE under macro NewMod3 with db name nodo_online													
+        And execution query position_receipt_recipient to get value on the table POSITION_PAYMENT, with the columns FEE under macro NewMod3 with db name nodo_online													
+        And with the query position_receipt check assert beetwen elem FEE in position 0 and elem FEE with position 0 of the query position_receipt_recipient													
+
+        #assert paymentDateTime == rows4.inserted_timestamp[0]
+        And execution query position_receipt to get value on the table POSITION_RECEIPT, with the columns PAYMENT_DATE_TIME under macro NewMod3 with db name nodo_online													
+        And execution query position_receipt_recipient to get value on the table POSITION_PAYMENT, with the columns INSERTED_TIMESTAMP under macro NewMod3 with db name nodo_online													
+        And with the query position_receipt check assert beetwen elem PAYMENT_DATE_TIME in position 0 and elem INSERTED_TIMESTAMP with position 0 of the query position_receipt_recipient													
+
+        #assert applicationDate == rows4.application_date[0]
+        And execution query position_receipt to get value on the table POSITION_RECEIPT, with the columns APPLICATION_DATE under macro NewMod3 with db name nodo_online													
+        And execution query position_receipt_recipient to get value on the table POSITION_PAYMENT, with the columns APPLICATION_DATE under macro NewMod3 with db name nodo_online													
+        And with the query position_receipt check assert beetwen elem APPLICATION_DATE in position 0 and elem APPLICATION_DATE with position 0 of the query position_receipt_recipient													
+
+        #assert transferDate == rows4.transfer_date[0]
+        And execution query position_receipt to get value on the table POSITION_RECEIPT, with the columns TRANSFER_DATE under macro NewMod3 with db name nodo_online													
+        And execution query position_receipt_recipient to get value on the table POSITION_PAYMENT, with the columns TRANSFER_DATE under macro NewMod3 with db name nodo_online													
+        And with the query position_receipt check assert beetwen elem TRANSFER_DATE in position 0 and elem TRANSFER_DATE with position 0 of the query position_receipt_recipient													
+
+        #assert metadata == rows14.metadata[0]
+        And execution query position_receipt to get value on the table POSITION_RECEIPT, with the columns METADATA under macro NewMod3 with db name nodo_online													
+        And execution query position_payment_plan to get value on the table POSITION_PAYMENT_PLAN, with the columns METADATA under macro NewMod3 with db name nodo_online													
+        And with the query position_receipt check assert beetwen elem METADATA in position 0 and elem METADATA with position 0 of the query position_payment_plan													
+
+        #assert rtID == rows1.id[0]
+        And execution query position_receipt to get value on the table POSITION_RECEIPT, with the columns RT_ID under macro NewMod3 with db name nodo_online													
+        And execution query rt to get value on the table RT, with the columns ID under macro NewMod3 with db name nodo_online													
+        And with the query position_receipt check assert beetwen elem RT_ID in position 0 and elem ID with position 0 of the query rt													
+
+        #assert fkPayment == rows4.id[0]
+        And execution query position_receipt to get value on the table POSITION_RECEIPT, with the columns FK_POSITION_PAYMENT under macro NewMod3 with db name nodo_online													
+        And execution query position_receipt_recipient to get value on the table POSITION_PAYMENT, with the columns ID under macro NewMod3 with db name nodo_online													
+        And with the query position_receipt check assert beetwen elem FK_POSITION_PAYMENT in position 0 and elem ID with position 0 of the query position_receipt_recipient													
+
+        #CHECK DB POSITION_RECEIPT_RECIPIENT
+        #And checks the value None of the record at column id of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_payment_plan on db nodo_online under macro NewMod3											
+        And verify 0 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query position_payment_plan on db nodo_online under macro NewMod3
+
+        #CHECK DB RT_XML
+        #assert id4 != null
+        And checks the value NotNone of the record at column id of the table RT_XML retrived by the query rt_xml on db nodo_online under macro NewMod3											
+
+        #assert fkRT1 == rows1.id[0]
+        And execution query rt_xml to get value on the table RT_XML, with the columns FK_RT under macro NewMod3 with db name nodo_online													
+        And execution query rt to get value on the table RT, with the columns ID under macro NewMod3 with db name nodo_online													
+        And with the query rt_xml check assert beetwen elem FK_RT in position 0 and elem ID with position 0 of the query rt													
+        
+        #assert tipoFirma == null
+        And checks the value None of the record at column tipo_firma of the table RT_XML retrived by the query rt_xml on db nodo_online under macro NewMod3											
+        #And verify 0 record for the table RT_XML retrived by the query rt_xml on db nodo_online under macro NewMod3
+
+        #assert xmlContent != null
+        And checks the value NotNone of the record at column xml_content of the table RT_XML retrived by the query rt_xml on db nodo_online under macro NewMod3											
+
+        #assert insertedTimestamp4 != null
+        And checks the value NotNone of the record at column inserted_timestamp of the table RT_XML retrived by the query rt_xml on db nodo_online under macro NewMod3											
+
+        #assert updatedTimestamp4 != null
+        And checks the value NotNone of the record at column updated_timestamp of the table RT_XML retrived by the query rt_xml on db nodo_online under macro NewMod3											
+
+        #assert sessionID != null
+        And checks the value NotNone of the record at column id_sessione of the table RT_XML retrived by the query rt_xml on db nodo_online under macro NewMod3											
+
+        #DB POSITION_RECEIPT_TRANSFER
+        #assert fkPositionReceipt == rows12.id[0]
+        And execution query position_transfer_2 to get value on the table POSITION_RECEIPT_TRANSFER, with the columns FK_POSITION_RECEIPT under macro NewMod3 with db name nodo_online													
+        And execution query position_receipt to get value on the table POSITION_RECEIPT, with the columns ID under macro NewMod3 with db name nodo_online													
+        And with the query position_transfer_2 check assert beetwen elem FK_POSITION_RECEIPT in position 0 and elem ID with position 0 of the query position_receipt													
+                        
+        #assert fkPositionTransfer == rows11.id[0]
+        And execution query position_transfer_2 to get value on the table POSITION_RECEIPT_TRANSFER, with the columns FK_POSITION_TRANSFER under macro NewMod3 with db name nodo_online													
+        And execution query position_status_n to get value on the table POSITION_TRANSFER, with the columns ID under macro NewMod3 with db name nodo_online													
+        And with the query position_transfer_2 check assert beetwen elem FK_POSITION_TRANSFER in position 1 and elem ID with position 0 of the query position_status_n													
+
+        #DB POSITION_RECEIPT_XML
+        And checks the value NotNone of the record at column id of the table POSITION_RECEIPT_XML retrived by the query position_status_n on db nodo_online under macro NewMod3											
+        And checks the value $iuv of the record at column creditor_reference_id of the table POSITION_RECEIPT_XML retrived by the query position_status_n on db nodo_online under macro NewMod3											
+        And checks the value $activatePaymentNoticeResponse.paymentToken of the record at column payment_token of the table POSITION_RECEIPT_XML retrived by the query position_status_n on db nodo_online under macro NewMod3											
+        
+        #assert recipientPAFiscalCode == rows4.pa_fiscal_code[0]
+        And execution query position_status_n to get value on the table POSITION_RECEIPT_XML, with the columns RECIPIENT_PA_FISCAL_CODE under macro NewMod3 with db name nodo_online													
+        And execution query position_receipt_recipient to get value on the table POSITION_PAYMENT, with the columns PA_FISCAL_CODE under macro NewMod3 with db name nodo_online													
+        And with the query position_status_n check assert beetwen elem RECIPIENT_PA_FISCAL_CODE in position 0 and elem PA_FISCAL_CODE with position 0 of the query position_receipt_recipient													
+
+        #assert recipientBrokerPaID == rows4.broker_pa_id[0]
+        And execution query position_status_n to get value on the table POSITION_RECEIPT_XML, with the columns RECIPIENT_BROKER_PA_ID under macro NewMod3 with db name nodo_online													
+        And execution query position_receipt_recipient to get value on the table POSITION_PAYMENT, with the columns BROKER_PA_ID under macro NewMod3 with db name nodo_online													
+        And with the query position_status_n check assert beetwen elem RECIPIENT_BROKER_PA_ID in position 0 and elem BROKER_PA_ID with position 0 of the query position_receipt_recipient													
+
+        #assert recipientStationID == rows4.station_id[0]
+        And execution query position_status_n to get value on the table POSITION_RECEIPT_XML, with the columns RECIPIENT_STATION_ID under macro NewMod3 with db name nodo_online													
+        And execution query position_receipt_recipient to get value on the table POSITION_PAYMENT, with the columns STATION_ID under macro NewMod3 with db name nodo_online													
+        And with the query position_status_n check assert beetwen elem RECIPIENT_STATION_ID in position 0 and elem STATION_ID with position 0 of the query position_receipt_recipient													
+        And checks the value NotNone of the record at column xml of the table POSITION_RECEIPT_XML retrived by the query position_status_n on db nodo_online under macro NewMod3											
+        And checks the value NotNone of the record at column inserted_timestamp of the table POSITION_RECEIPT_XML retrived by the query position_status_n on db nodo_online under macro NewMod3											
+

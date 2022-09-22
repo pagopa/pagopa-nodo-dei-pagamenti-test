@@ -58,6 +58,8 @@ def step_impl(context, version):
 def step_impl(context, primitive):
     payload = context.text or ""
     payload = utils.replace_local_variables(payload, context)
+    payload = utils.replace_context_variables(payload, context)
+    payload = utils.replace_global_variables(payload, context)
     date = datetime.date.today().strftime("%Y-%m-%d")
     timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
     yesterday_date = datetime.date.today() - datetime.timedelta(days=1)
@@ -192,8 +194,6 @@ def step_impl(context, primitive):
         payload = payload.replace('#carrello#', carrello)
         setattr(context, 'carrello', carrello)
 
-    payload = utils.replace_context_variables(payload, context)
-    payload = utils.replace_global_variables(payload, context)
     setattr(context, primitive, payload)
 
 
@@ -243,11 +243,8 @@ def step_impl(context):
         payload = payload.replace('#IuV#', iuv)
         setattr(context, 'IuV', iuv)
 
-
     if '#iuv2#' in payload:
-        iuv = 'IUV' + '-' + \
-            str(date + '-' +
-                datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3])
+        iuv = 'IUV' + '-' + str(date + '-' + datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3])
         payload = payload.replace('#iuv2#', iuv)
         setattr(context, '2iuv', iuv)
 
@@ -366,6 +363,11 @@ def step_impl(context, number):
             '-' + str(random.randint(0, 10000))
         payload = payload.replace(f'#IUV{number}#', IUV)
         setattr(context, f'{number}IUV', IUV)
+
+    if f'#iUV{number}#' in payload:
+        iuv = 'IUV2' + '-' + str(date + '-' + datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3])
+        payload = payload.replace(f'#iUV{number}#', iuv)
+        setattr(context, f'{number}iUV', iuv)
 
     if f"#ccp{number}#" in payload:
         ccp = str(int(time.time() * 1000))
@@ -779,7 +781,7 @@ def step_impl(context, tag, value, primitive):
     if 'xml' in soap_response.headers['content-type']:
         my_document = parseString(soap_response.content)
         nodeList= my_document.getElementsByTagName(tag)
-        print(nodeList)
+        print("#######################",nodeList)
         values = [node.childNodes[0].nodeValue for node in nodeList]
         print(values)
         assert value in values
