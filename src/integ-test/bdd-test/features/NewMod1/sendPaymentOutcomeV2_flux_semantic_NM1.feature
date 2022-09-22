@@ -308,7 +308,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
         And check faultCode is PPT_TOKEN_SCONOSCIUTO of sendPaymentOutcomeV2 response
 
     # SEM_SPO_13
-    
+    @wip
     Scenario: SEM_SPO_13 (part 1)
         Given the checkPosition scenario executed successfully
         And the activatePaymentNoticeV2 scenario executed successfully
@@ -316,7 +316,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
         Then check outcome is OK of activatePaymentNoticeV2 response
         And updates through the query update_activatev2 of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with CANCELLED under macro NewMod1 on db nodo_online
         And updates through the query update_activatev2 of the table POSITION_STATUS_SNAPSHOT the parameter STATUS with INSERTED under macro NewMod1 on db nodo_online
-    
+    @wip
     Scenario: SEM_SPO_13 (part 2)
         Given the SEM_SPO_13 (part 1) scenario executed successfully
         And random idempotencyKey having $activatePaymentNoticeV2.idPSP as idPSP in activatePaymentNoticeV2
@@ -324,7 +324,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV2New
-    
+    @wip
     Scenario: SEM_SPO_13 (part 3)
         Given the SEM_SPO_13 (part 2) scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
