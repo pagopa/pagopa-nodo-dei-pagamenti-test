@@ -413,6 +413,7 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
 
     Scenario: DB check
         Given the Execute sendPaymentOutcome request scenario executed successfully
+        And wait 30 seconds for expiration
         Then verify 2 record for the table RE retrived by the query select_sprV2_old on db re under macro sendPaymentResultV2
         And checks the value REQ,RESP of the record at column SOTTO_TIPO_EVENTO of the table RE retrived by the query select_sprV2_old on db re under macro sendPaymentResultV2
         And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_RISOLTA_OK,RT_GENERATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro Mod1
