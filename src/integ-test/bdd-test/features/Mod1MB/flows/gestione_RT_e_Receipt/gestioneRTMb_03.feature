@@ -5,8 +5,7 @@ Feature: gestioneRTMb_03
 
     Scenario: Execute nodoInviaCarrelloRPT (Phase 1)
         Given generate 1 notice number and iuv with aux digit 3, segregation code 02 and application code -
-        And generate 2 notice number and iuv with aux digit 3, segregation code 02 and application code -
-        And generate 1 cart with PA #creditor_institution_code_old# and notice number $1noticeNumber
+        And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
         And replace pa1 content with 90000000001 content
         And RPT1 generation
             """
@@ -67,7 +66,7 @@ Feature: gestioneRTMb_03
             <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>PO</pay_i:tipoVersamento>
             <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
-            <pay_i:codiceContestoPagamento>#ccp1#</pay_i:codiceContestoPagamento>
+            <pay_i:codiceContestoPagamento>$1carrello</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
             <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -90,8 +89,8 @@ Feature: gestioneRTMb_03
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-            <pay_i:identificativoDominio>#creditor_institution_code_old#</pay_i:identificativoDominio>
-            <pay_i:identificativoStazioneRichiedente>#id_station_old#</pay_i:identificativoStazioneRichiedente>
+            <pay_i:identificativoDominio>$pa1</pay_i:identificativoDominio>
+            <pay_i:identificativoStazioneRichiedente>90000000001_01</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
             <pay_i:dataOraMessaggioRichiesta>2016-09-16T11:24:10</pay_i:dataOraMessaggioRichiesta>
@@ -143,8 +142,8 @@ Feature: gestioneRTMb_03
             <pay_i:dataEsecuzionePagamento>2016-09-16</pay_i:dataEsecuzionePagamento>
             <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>PO</pay_i:tipoVersamento>
-            <pay_i:identificativoUnivocoVersamento>$2iuv</pay_i:identificativoUnivocoVersamento>
-            <pay_i:codiceContestoPagamento>#ccp2#</pay_i:codiceContestoPagamento>
+            <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
+            <pay_i:codiceContestoPagamento>$1carrello</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
             <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -168,8 +167,8 @@ Feature: gestioneRTMb_03
             <pay_i:RT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0.xsd ">
             <pay_i:versioneOggetto>6.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-            <pay_i:identificativoDominio>#creditor_institution_code_old#</pay_i:identificativoDominio>
-            <pay_i:identificativoStazioneRichiedente>#id_station_old#</pay_i:identificativoStazioneRichiedente>
+            <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
+            <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRicevuta>TR0001_20120302-10:37:52.0264-F098</pay_i:identificativoMessaggioRicevuta>
             <pay_i:dataOraMessaggioRicevuta>2012-03-02T10:37:52</pay_i:dataOraMessaggioRicevuta>
@@ -236,7 +235,7 @@ Feature: gestioneRTMb_03
             <pay_i:codiceEsitoPagamento>0</pay_i:codiceEsitoPagamento>
             <pay_i:importoTotalePagato>10.00</pay_i:importoTotalePagato>
             <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
-            <pay_i:CodiceContestoPagamento>$1ccp</pay_i:CodiceContestoPagamento>
+            <pay_i:CodiceContestoPagamento>$1carrello</pay_i:CodiceContestoPagamento>
             <pay_i:datiSingoloPagamento>
             <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
             <pay_i:esitoSingoloPagamento>ACCEPTED</pay_i:esitoSingoloPagamento>
@@ -254,8 +253,8 @@ Feature: gestioneRTMb_03
             <pay_i:RT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0.xsd ">
             <pay_i:versioneOggetto>6.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-            <pay_i:identificativoDominio>#creditor_institution_code_old#</pay_i:identificativoDominio>
-            <pay_i:identificativoStazioneRichiedente>#id_station_old#</pay_i:identificativoStazioneRichiedente>
+            <pay_i:identificativoDominio>$pa1</pay_i:identificativoDominio>
+            <pay_i:identificativoStazioneRichiedente>9000000001_01</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRicevuta>TR0001_20120302-10:37:52.0264-F098</pay_i:identificativoMessaggioRicevuta>
             <pay_i:dataOraMessaggioRicevuta>2012-03-02T10:37:52</pay_i:dataOraMessaggioRicevuta>
@@ -322,7 +321,7 @@ Feature: gestioneRTMb_03
             <pay_i:codiceEsitoPagamento>0</pay_i:codiceEsitoPagamento>
             <pay_i:importoTotalePagato>10.00</pay_i:importoTotalePagato>
             <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
-            <pay_i:CodiceContestoPagamento>$2ccp</pay_i:CodiceContestoPagamento>
+            <pay_i:CodiceContestoPagamento>$1carrello</pay_i:CodiceContestoPagamento>
             <pay_i:datiSingoloPagamento>
             <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
             <pay_i:esitoSingoloPagamento>ACCEPTED</pay_i:esitoSingoloPagamento>
@@ -339,8 +338,8 @@ Feature: gestioneRTMb_03
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
                 <soapenv:Header>
                     <ppt:intestazioneCarrelloPPT>
-                        <identificativoIntermediarioPA>#creditor_institution_code_old#</identificativoIntermediarioPA>
-                        <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
+                        <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
+                        <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
                         <identificativoCarrello>$1carrello</identificativoCarrello>
                     </ppt:intestazioneCarrelloPPT>
                 </soapenv:Header>
@@ -352,15 +351,15 @@ Feature: gestioneRTMb_03
                         <identificativoCanale>97735020584_02</identificativoCanale>
                         <listaRPT>
                             <elementoListaRPT>
-                                <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
+                                <identificativoDominio>#creditor_institution_code#</identificativoDominio>
                                 <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
-                                <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
+                                <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
                                 <rpt>$rpt1Attachment</rpt>
                             </elementoListaRPT>
                             <elementoListaRPT>
                                 <identificativoDominio>$pa1</identificativoDominio>
-                                <identificativoUnivocoVersamento>$2iuv</identificativoUnivocoVersamento>
-                                <codiceContestoPagamento>$2ccp</codiceContestoPagamento>
+                                <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
+                                <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
                                 <rpt>$rpt2Attachment</rpt>
                             </elementoListaRPT>
                         </listaRPT>
@@ -373,9 +372,20 @@ Feature: gestioneRTMb_03
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
         And retrieve session token from $nodoInviaCarrelloRPTResponse.url
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'N', with where condition s.FK_PA IN (SELECT OBJ_ID FROM PA WHERE ID_DOMINIO = #creditor_institution_code_old# OR ID_DOMINIO = $pa1) under macro update_query on db nodo_cfg
+        #And execution query get_broadcast to get value on the table PA_STAZIONE_PA, with the columns psp.OBJ_ID under macro costanti with db name nodo_cfg
+        #And through the query get_broadcast retrieve param objId at position 0 and save it under the key objId
+        #And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '$objId' under macro update_query on db nodo_cfg
+        And replace pa content with #creditor_institution_code# content
+        And execution query get_pa_id to get value on the table PA, with the columns OBJ_ID under macro costanti with db name nodo_cfg
+        And through the query get_pa_id retrieve param objId at position 0 and save it under the key objId
+        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'N', with where condition FK_PA = $objId under macro update_query on db nodo_cfg
+        And replace pa content with $pa1 content
+        And execution query get_pa_id to get value on the table PA, with the columns OBJ_ID under macro costanti with db name nodo_cfg
+        And through the query get_pa_id retrieve param objId at position 0 and save it under the key objId
+        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'N', with where condition FK_PA = $objId under macro update_query on db nodo_cfg
         And refresh job PA triggered after 10 seconds
-    
+        And wait 5 seconds for expiration
+
     Scenario: Execute nodoChiediInformazioniPagamento (Phase 2)
         Given the Execute nodoInviaCarrelloRPT (Phase 1) scenario executed successfully
         When WISP sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
@@ -383,6 +393,22 @@ Feature: gestioneRTMb_03
 
     Scenario: Execute nodoInoltroEsitoMod1 (Phase 3)
         Given the Execute nodoChiediInformazioniPagamento (Phase 2) scenario executed successfully
+        And initial XML pspInviaCarrelloRPT
+        """
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+                <ws:pspInviaCarrelloRPTResponse>
+                    <pspInviaCarrelloRPTResponse>
+                        <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+                        <identificativoCarrello>$nodoInviaCarrelloRPT.identificativoCarrello</identificativoCarrello>
+                        <parametriPagamentoImmediato>idBruciatura=$nodoInviaCarrelloRPT.identificativoCarrello</parametriPagamentoImmediato>
+                    </pspInviaCarrelloRPTResponse>
+                </ws:pspInviaCarrelloRPTResponse>
+            </soapenv:Body>
+        </soapenv:Envelope>
+        """
+        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
         When WISP sends REST POST inoltroEsito/mod1 to nodo-dei-pagamenti
             """
             {
@@ -409,9 +435,9 @@ Feature: gestioneRTMb_03
                     <identificativoCanale>#canale#</identificativoCanale>
                     <password>pwdpwdpwd</password>
                     <identificativoPSP>#psp#</identificativoPSP>
-                    <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
+                    <identificativoDominio>#creditor_institution_code#</identificativoDominio>
                     <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
-                    <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
+                    <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
                     <tipoFirma></tipoFirma>
                     <forzaControlloSegno>1</forzaControlloSegno>
                     <rt>$rt1Attachment</rt>
@@ -421,7 +447,9 @@ Feature: gestioneRTMb_03
             """
         When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
-        And checks the value PAYING of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1MB
-        And checks the value PAYING of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1MB
-        And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1MB
-        And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1MB
+        And replace pa content with #creditor_institution_code# content
+        And replace noticeNumber content with $1noticeNumber content
+        And checks the value PAYING of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+        And checks the value PAYING of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+        And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+        And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
