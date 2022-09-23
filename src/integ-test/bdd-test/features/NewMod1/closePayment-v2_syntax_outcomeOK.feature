@@ -242,7 +242,7 @@ Feature: syntax checks for closePaymentV2 outcome OK
             """
             {
             "paymentTokens": [
-            "$activatePaymentNoticeV21Response.paymentToken",
+            "$activatePaymentNoticeV21Response.paymentToken"
             ],
             "outcome": "OK",
             "idPSP": "#psp#",
@@ -288,7 +288,7 @@ Feature: syntax checks for closePaymentV2 outcome OK
             """
             {
             "paymentTokens": [
-            "$activatePaymentNoticeV21Response.paymentToken",
+            "$activatePaymentNoticeV21Response.paymentToken"
             ],
             "outcome": "OK",
             "idPSP": "#psp#",
@@ -348,7 +348,7 @@ Feature: syntax checks for closePaymentV2 outcome OK
             """
             {
             "paymentTokens": [
-            "$activatePaymentNoticeV21Response.paymentToken",
+            "$activatePaymentNoticeV21Response.paymentToken"
             ],
             "outcome": "OK",
             "idPSP": "#psp#",
