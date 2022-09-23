@@ -62,8 +62,8 @@ Feature: process tests for T102_D_chiediStato_RT_RIFIUTATA_PA_Annullamento
                 <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
                 <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
                 <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
-                <pay_i:identificativoUnivocoVersamento>rtDuplicata</pay_i:identificativoUnivocoVersamento>
-                <pay_i:codiceContestoPagamento>#timedate#</pay_i:codiceContestoPagamento>
+                <pay_i:identificativoUnivocoVersamento>#IUV#</pay_i:identificativoUnivocoVersamento>
+                <pay_i:codiceContestoPagamento>$timedate</pay_i:codiceContestoPagamento>
                 <pay_i:ibanAddebito>IT45R0760103200000000001016</pay_i:ibanAddebito>
                 <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
                 <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -91,7 +91,7 @@ Feature: process tests for T102_D_chiediStato_RT_RIFIUTATA_PA_Annullamento
                 <pay_i:identificativoStazioneRichiedente>44444444444_01</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRicevuta>IdentificativoMessaggioRicevuta</pay_i:identificativoMessaggioRicevuta>
-            <pay_i:dataOraMessaggioRicevuta>#timedate#</pay_i:dataOraMessaggioRicevuta>
+            <pay_i:dataOraMessaggioRicevuta>$timedate</pay_i:dataOraMessaggioRicevuta>
             <pay_i:riferimentoMessaggioRichiesta>RiferimentoMessaggioRichiesta</pay_i:riferimentoMessaggioRichiesta>
             <pay_i:riferimentoDataRichiesta>2001-01-01</pay_i:riferimentoDataRichiesta>
             <pay_i:istitutoAttestante>
@@ -155,13 +155,13 @@ Feature: process tests for T102_D_chiediStato_RT_RIFIUTATA_PA_Annullamento
             <pay_i:datiPagamento>
                 <pay_i:codiceEsitoPagamento>0</pay_i:codiceEsitoPagamento>
                 <pay_i:importoTotalePagato>10.00</pay_i:importoTotalePagato>
-                <pay_i:identificativoUnivocoVersamento>rtDuplicata</pay_i:identificativoUnivocoVersamento>
-                <pay_i:CodiceContestoPagamento>CCD01</pay_i:CodiceContestoPagamento>
+                <pay_i:identificativoUnivocoVersamento>$IUV</pay_i:identificativoUnivocoVersamento>
+                <pay_i:CodiceContestoPagamento>$timedate</pay_i:CodiceContestoPagamento>
                 <pay_i:datiSingoloPagamento>
                     <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
                     <pay_i:esitoSingoloPagamento>TUTTO_OK</pay_i:esitoSingoloPagamento>
                     <pay_i:dataEsitoSingoloPagamento>#date#</pay_i:dataEsitoSingoloPagamento>
-                    <pay_i:identificativoUnivocoRiscossione>rtDuplicata</pay_i:identificativoUnivocoRiscossione>
+                    <pay_i:identificativoUnivocoRiscossione>$IUV</pay_i:identificativoUnivocoRiscossione>
                     <pay_i:causaleVersamento>pagamento fotocopie pratica RT</pay_i:causaleVersamento>
                     <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
                 </pay_i:datiSingoloPagamento>
@@ -179,7 +179,7 @@ Feature: process tests for T102_D_chiediStato_RT_RIFIUTATA_PA_Annullamento
             <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
             <identificativoDominio>44444444444</identificativoDominio>
-            <identificativoUnivocoVersamento>rtDuplicata</identificativoUnivocoVersamento>
+            <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$timedate</codiceContestoPagamento>
             </ppt:intestazionePPT>
             </soapenv:Header>
@@ -206,11 +206,36 @@ Feature: process tests for T102_D_chiediStato_RT_RIFIUTATA_PA_Annullamento
         When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of notificaAnnullamento response is 200
         And check esito is OK of notificaAnnullamento response
-        And wait 7 seconds for expiration
+        And wait 10 seconds for expiration
+
+
+    Scenario: Execute paInviaRT job
+        Given the Execute nodoNotificaAnnullamento scenario executed successfully
+        And initial XML paaInviaRT
+        """
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+        <soapenv:Header/>
+        <soapenv:Body>
+            <ws:paaInviaRTRisposta>
+                <paaInviaRTRisposta>
+                    <fault>
+                    <faultCode>PAA_RT_DUPLICATA</faultCode>
+                    <faultString>tegba</faultString>
+                    <id>44444444444</id>
+                    </fault>
+                    <esito>KO</esito>
+                </paaInviaRTRisposta>
+            </ws:paaInviaRTRisposta>
+        </soapenv:Body>
+        </soapenv:Envelope>
+        """
+        And EC replies to nodo-dei-pagamenti with the paaInviaRT
+        When job paInviaRt triggered after 20 seconds
+        Then wait 20 seconds for expiration
 
 
     Scenario: Execute nodoChiediStatoRPT request
-        Given the Execute nodoNotificaAnnullamento scenario executed successfully
+        Given the Execute paInviaRT job scenario executed successfully
         And initial XML nodoChiediStatoRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -221,18 +246,17 @@ Feature: process tests for T102_D_chiediStato_RT_RIFIUTATA_PA_Annullamento
                     <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
                     <password>pwdpwdpwd</password>
                     <identificativoDominio>44444444444</identificativoDominio>
-                    <identificativoUnivocoVersamento>rtDuplicata</identificativoUnivocoVersamento>
+                    <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
                     <codiceContestoPagamento>$timedate</codiceContestoPagamento>
                 </ws:nodoChiediStatoRPT>
             </soapenv:Body>
             </soapenv:Envelope>
             """
         When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
-        Then checks stato contains RPT_ACCETTATA_PSP of nodoChiediStatoRPT response
-        And checks stato contains RT_RIFIUTATA_PA of nodoChiediStatoRPT response
+        Then checks stato contains RT_RIFIUTATA_PA of nodoChiediStatoRPT response
         And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
-        And checks stato contains RPT_ANNULLATA_WISP of nodoChiediStatoRPT response
         And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
+        And checks stato contains RPT_ANNULLATA_WISP of nodoChiediStatoRPT response
         And checks stato contains RT_GENERATA_NODO of nodoChiediStatoRPT response
         And checks stato contains RT_INVIATA_PA of nodoChiediStatoRPT response
         And check redirect is 0 of nodoChiediStatoRPT response

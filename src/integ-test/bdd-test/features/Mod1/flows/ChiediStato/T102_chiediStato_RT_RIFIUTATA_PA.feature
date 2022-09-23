@@ -62,7 +62,7 @@ Feature: process tests for T102_chiediStato_RT_RIFIUTATA_PA
                 <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
                 <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
                 <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
-                <pay_i:identificativoUnivocoVersamento>RTdaRifPA</pay_i:identificativoUnivocoVersamento>
+                <pay_i:identificativoUnivocoVersamento>#IUV#</pay_i:identificativoUnivocoVersamento>
                 <pay_i:codiceContestoPagamento>#ccp1#</pay_i:codiceContestoPagamento>
                 <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
                 <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
@@ -155,13 +155,13 @@ Feature: process tests for T102_chiediStato_RT_RIFIUTATA_PA
             <pay_i:datiPagamento>
                 <pay_i:codiceEsitoPagamento>1</pay_i:codiceEsitoPagamento>
                 <pay_i:importoTotalePagato>0.00</pay_i:importoTotalePagato>
-                <pay_i:identificativoUnivocoVersamento>RTdaRifPA</pay_i:identificativoUnivocoVersamento>
+                <pay_i:identificativoUnivocoVersamento>$IUV</pay_i:identificativoUnivocoVersamento>
                 <pay_i:CodiceContestoPagamento>$1ccp</pay_i:CodiceContestoPagamento>
                 <pay_i:datiSingoloPagamento>
                     <pay_i:singoloImportoPagato>0.00</pay_i:singoloImportoPagato>
                     <pay_i:esitoSingoloPagamento>NON_PAGATO</pay_i:esitoSingoloPagamento>
                     <pay_i:dataEsitoSingoloPagamento>#date#</pay_i:dataEsitoSingoloPagamento>
-                    <pay_i:identificativoUnivocoRiscossione>RTdaRifPA</pay_i:identificativoUnivocoRiscossione>
+                    <pay_i:identificativoUnivocoRiscossione>$IUV</pay_i:identificativoUnivocoRiscossione>
                     <pay_i:causaleVersamento>pagamento fotocopie pratica RT</pay_i:causaleVersamento>
                     <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
                 </pay_i:datiSingoloPagamento>
@@ -181,8 +181,8 @@ Feature: process tests for T102_chiediStato_RT_RIFIUTATA_PA
                     <ws:pspInviaRPTResponse>
                         <pspInviaRPTResponse>
                             <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-                            <identificativoCarrello>$nodoInviaCarrelloRPT.identificativoCarrello</identificativoCarrello>
-                            <parametriPagamentoImmediato>idBruciatura=$nodoInviaCarrelloRPT.identificativoCarrello</parametriPagamentoImmediato>
+                            <identificativoCarrello>$IUV</identificativoCarrello>
+                            <parametriPagamentoImmediato>idBruciatura=$IUV</parametriPagamentoImmediato>
                         </pspInviaRPTResponse>
                     </ws:pspInviaRPTResponse>
                 </soapenv:Body>
@@ -197,7 +197,7 @@ Feature: process tests for T102_chiediStato_RT_RIFIUTATA_PA
             <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
             <identificativoDominio>44444444444</identificativoDominio>
-            <identificativoUnivocoVersamento>RTdaRifPA</identificativoUnivocoVersamento>
+            <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
             </ppt:intestazionePPT>
             </soapenv:Header>
@@ -218,6 +218,25 @@ Feature: process tests for T102_chiediStato_RT_RIFIUTATA_PA
 
     Scenario: Execute nodoInviaRT request
         Given the Execute nodoInviaRPT request scenario executed successfully
+        And initial XML paaInviaRT
+        """
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+        <soapenv:Header/>
+        <soapenv:Body>
+            <ws:paaInviaRTRisposta>
+                <paaInviaRTRisposta>
+                    <fault>
+                    <faultCode>PAA_RT_DUPLICATA</faultCode>
+                    <faultString>tegba</faultString>
+                    <id>44444444444</id>
+                    </fault>
+                    <esito>KO</esito>
+                </paaInviaRTRisposta>
+            </ws:paaInviaRTRisposta>
+        </soapenv:Body>
+        </soapenv:Envelope>
+        """
+        And EC replies to nodo-dei-pagamenti with the paaInviaRT
         And initial XML nodoInviaRT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -229,7 +248,7 @@ Feature: process tests for T102_chiediStato_RT_RIFIUTATA_PA
             <password>pwdpwdpwd</password>
             <identificativoPSP>40000000001</identificativoPSP>
             <identificativoDominio>44444444444</identificativoDominio>
-            <identificativoUnivocoVersamento>RTdaRifPA</identificativoUnivocoVersamento>
+            <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
             <tipoFirma></tipoFirma>
             <forzaControlloSegno>1</forzaControlloSegno>
@@ -240,7 +259,7 @@ Feature: process tests for T102_chiediStato_RT_RIFIUTATA_PA
             """
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
-        And wait 1 seconds for expiration
+        And wait 10 seconds for expiration
 
     Scenario: Execute nodoChiediStatoRPT request
         Given the Execute nodoInviaRT request scenario executed successfully
@@ -254,19 +273,19 @@ Feature: process tests for T102_chiediStato_RT_RIFIUTATA_PA
                 <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
                 <password>pwdpwdpwd</password>
                 <identificativoDominio>44444444444</identificativoDominio>
-                <identificativoUnivocoVersamento>RTdaRifPA</identificativoUnivocoVersamento>
-                <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+                <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
+                <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
             </ws:nodoChiediStatoRPT>
         </soapenv:Body>
         </soapenv:Envelope>
         """
         When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
-        Then checks stato contains RPT_ACCETTATA_PSP of nodoChiediStatoRPT response
-        And checks stato contains RT_RIFIUTATA_PA of nodoChiediStatoRPT response
-        And checks stato contains RT_ACCETTATA_NODO of nodoChiediStatoRPT response
+        Then checks stato contains RT_RIFIUTATA_PA of nodoChiediStatoRPT response
         And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
+        And checks stato contains RPT_ACCETTATA_PSP of nodoChiediStatoRPT response
         And checks stato contains RT_RICEVUTA_NODO of nodoChiediStatoRPT response
+        And checks stato contains RT_ACCETTATA_NODO of nodoChiediStatoRPT response
         And check url field not exists in nodoChiediStatoRPT response
 
    Scenario: Execute second nodoInviaRT request
@@ -282,7 +301,7 @@ Feature: process tests for T102_chiediStato_RT_RIFIUTATA_PA
             <password>pwdpwdpwd</password>
             <identificativoPSP>40000000001</identificativoPSP>
             <identificativoDominio>44444444444</identificativoDominio>
-            <identificativoUnivocoVersamento>RTdaRifPA</identificativoUnivocoVersamento>
+            <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
             <tipoFirma></tipoFirma>
             <forzaControlloSegno>1</forzaControlloSegno>
@@ -296,7 +315,7 @@ Feature: process tests for T102_chiediStato_RT_RIFIUTATA_PA
         And check faultCode is PPT_RT_DUPLICATA of nodoInviaRT response
 
     Scenario: Execute nodoChiediStatoRPT request
-        Given the Execute nodoInviaRT request scenario executed successfully
+        Given the Execute second nodoInviaRT request scenario executed successfully
         And initial XML nodoChiediStatoRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -307,17 +326,19 @@ Feature: process tests for T102_chiediStato_RT_RIFIUTATA_PA
                     <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
                     <password>pwdpwdpwd</password>
                     <identificativoDominio>44444444444</identificativoDominio>
-                    <identificativoUnivocoVersamento>RTdaRifPA</identificativoUnivocoVersamento>
+                    <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
                     <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
                 </ws:nodoChiediStatoRPT>
             </soapenv:Body>
             </soapenv:Envelope>
             """
         When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
-        Then checks stato contains RPT_ACCETTATA_PSP of nodoChiediStatoRPT response
-        And checks stato contains RT_RIFIUTATA_PA of nodoChiediStatoRPT response
-        And checks stato contains RT_RIFIUTATA_NODO of nodoChiediStatoRPT response
+        Then checks stato contains RT_RIFIUTATA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
+        And checks stato contains RPT_ACCETTATA_PSP of nodoChiediStatoRPT response
         And checks stato contains RT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RT_ACCETTATA_NODO of nodoChiediStatoRPT response
+        And checks stato contains RT_RIFIUTATA_PA of nodoChiediStatoRPT response
+         
+        
