@@ -444,7 +444,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
     Scenario: SEM_SPO_32 (part 2)
         Given the SEM_SPO_32 (part 1) scenario executed successfully
         When job mod3CancelV2 triggered after 3 seconds
-        Then wait 0 seconds for expiration
+        Then wait 5 seconds for expiration
 
     Scenario: SEM_SPO_32 (part 3)
         Given the SEM_SPO_32 (part 2) scenario executed successfully
