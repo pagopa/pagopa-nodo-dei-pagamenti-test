@@ -68,7 +68,6 @@ Feature: syntax checks for closePaymentV2 outcome OK
             | timestampOperation            | 2012-04-23T18:25                                                                                                                                                                                                                                                 | SIN_CPV2_34 |
             | additionalPaymentInformations | None                                                                                                                                                                                                                                                             | SIN_CPV2_35 |
             | additionalPaymentInformations | Empty                                                                                                                                                                                                                                                            | SIN_CPV2_36 |
-            | key                           | None                                                                                                                                                                                                                                                             | SIN_CPV2_37 |
 
     # syntax check - Invalid field - payment method
     Scenario Outline: Check syntax error on invalid body element value - payment method
@@ -100,6 +99,53 @@ Feature: syntax checks for closePaymentV2 outcome OK
     Scenario: Check syntax error on invalid body element value - additionalPaymentInformations
         Given the closePaymentV2 scenario executed successfully
         And key with Empty in v2/closepayment
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 400
+        And check outcome is KO of v2/closepayment response
+        And check description is Invalid additionalPaymentInformations of v2/closepayment response
+
+    # syntax check - different keys [SIN_CPV2_38.1]
+    Scenario: check activatePaymentNoticeV2 OK
+        Given the activatePaymentNoticeV2 scenario executed successfully
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV21
+
+    Scenario: closePaymentV2 with different keys
+        Given the check activatePaymentNoticeV2 OK scenario executed successfully
+        And initial JSON v2/closepayment
+            """
+            {
+                "paymentTokens": [
+                    "$activatePaymentNoticeV21Response.paymentToken",
+                ],
+                "outcome": "OK",
+                "idPSP": "#psp#",
+                "idBrokerPSP": "60000000001",
+                "idChannel": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
+                "paymentMethod": "TPAY",
+                "transactionId": "#transaction_id#",
+                "totalAmount": 12,
+                "fee": 2,
+                "timestampOperation": "2033-04-23T18:25:43Z",
+                "additionalPaymentInformations": {
+                    "transactionId": 11435230",
+                    "outcomePaymentGateway": "EFF",
+                    "authorizationCode": "resOK",
+                    "key": "114352304",
+                    "valore": "EFF",
+                    "chiave": "resOK",
+                    "campo": "114352305",
+                    "field": "EFF",
+                    "tag": "resOK",
+                    "key1": "EFF",
+                    "prova": "resOK"
+                }	
+            }
+            """
+
+    Scenario: check closePaymentV2 OK with different keys
+        Given the closePaymentV2 with different keys scenario executed successfully
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 400
         And check outcome is KO of v2/closepayment response
@@ -230,15 +276,96 @@ Feature: syntax checks for closePaymentV2 outcome OK
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
 
-
-    # No error
+    # No error - keys repeated [SIN_CPV2_38]
     Scenario: check activatePaymentNoticeV2 OK
         Given the activatePaymentNoticeV2 scenario executed successfully
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV21
 
-    Scenario Outline: check closePaymentV2 OK with fee 0
+    Scenario: closePaymentV2 with keys repeated
+        Given the check activatePaymentNoticeV2 OK scenario executed successfully
+        And initial JSON v2/closepayment
+            """
+            {
+                "paymentTokens": [
+                    "$activatePaymentNoticeV21Response.paymentToken",
+                ],
+                "outcome": "OK",
+                "idPSP": "#psp#",
+                "idBrokerPSP": "60000000001",
+                "idChannel": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
+                "paymentMethod": "TPAY",
+                "transactionId": "#transaction_id#",
+                "totalAmount": 12,
+                "fee": 2,
+                "timestampOperation": "2033-04-23T18:25:43Z",
+                "additionalPaymentInformations": {
+                    "transactionId": "11435230",
+                    "outcomePaymentGateway": "EFF",
+                    "authorizationCode": "resOK",
+                    "transactionId": "11435230",
+                    "outcomePaymentGateway": "EFF",
+                    "authorizationCode": "resOK",
+                    "transactionId": "11435230",
+                    "outcomePaymentGateway": "EFF",
+                    "authorizationCode": "resOK",
+                    "outcomePaymentGateway": "EFF",
+                    "authorizationCode": "resOK"
+                }
+            }
+            """
+
+    Scenario: check closePaymentV2 OK with keys repeated
+        Given the closePaymentV2 with keys repeated scenario executed successfully
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 200
+        And check outcome is OK of v2/closepayment response
+    
+    # No error - key transactionId [SIN_CPV2_38]
+    Scenario: check activatePaymentNoticeV2 OK
+        Given the activatePaymentNoticeV2 scenario executed successfully
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV21
+
+    Scenario: closePaymentV2 with key transactionId
+        Given the check activatePaymentNoticeV2 OK scenario executed successfully
+        And initial JSON v2/closepayment
+            """
+            {
+                "paymentTokens": [
+                    "$activatePaymentNoticeV21Response.paymentToken",
+                ],
+                "outcome": "OK",
+                "idPSP": "#psp#",
+                "idBrokerPSP": "60000000001",
+                "idChannel": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
+                "paymentMethod": "TPAY",
+                "transactionId": "#transaction_id#",
+                "totalAmount": 12,
+                "fee": 2,
+                "timestampOperation": "2033-04-23T18:25:43Z",
+                "additionalPaymentInformations": {
+                    "transactionId": "#transaction_id#",          
+                }
+            }
+            """
+
+    Scenario: check closePaymentV2 OK with key transactionId
+        Given the closePaymentV2 with key transactionId scenario executed successfully
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 200
+        And check outcome is OK of v2/closepayment response
+
+    # No error outline
+    Scenario: check activatePaymentNoticeV2 OK
+        Given the activatePaymentNoticeV2 scenario executed successfully
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV21
+
+    Scenario Outline: check closePaymentV2 OK outline
         Given the check activatePaymentNoticeV2 OK scenario executed successfully
         And the closePaymentV2 scenario executed successfully
         And paymentToken with $activatePaymentNoticeV21Response.paymentToken in v2/closepayment
@@ -252,7 +379,7 @@ Feature: syntax checks for closePaymentV2 outcome OK
             | totalAmount        | 12                         | SIN_CPV2_25.2 |
             | fee                | 2.0                        | SIN_CPV2_30   |
             | fee                | 2                          | SIN_CPV2_30.2 |
-            | timestampOperation | 2033-04-23T18:25:43Z+01:00 | SIN_CPV2_34.1 |
+            | timestampOperation | 2033-04-23T18:25:432+01:00 | SIN_CPV2_34.1 |
 
 
     # syntax check - Invalid request
@@ -277,111 +404,14 @@ Feature: syntax checks for closePaymentV2 outcome OK
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV21
 
     Scenario: Check syntax error on fee greater than totalAmount
-        Given the closePaymentV2 scenario executed successfully
+        Given the check activatePaymentNoticeV2 OK scenario executed successfully
+        And the closePaymentV2 scenario executed successfully
         And paymentToken with $activatePaymentNoticeV21Response.paymentToken in v2/closepayment
         And fee with 20 in v2/closepayment
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 400
         And check outcome is KO of v2/closepayment response
         And check description is Mismatched amount of v2/closepayment response
-
-
-    # syntax check - Invalid paymentTokens with 6 tokens [SIN_CPV2_03.3]
-    Scenario: check activatePaymentNoticeV2 OK 6 tokens
-        Given the activatePaymentNoticeV2 scenario executed successfully
-        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-        Then check outcome is OK of activatePaymentNoticeV2 response
-        And save activatePaymentNoticeV2 response in activatePaymentNoticeV21
-
-    Scenario: check activatePaymentNoticeV22 OK 6 tokens
-        Given the check activatePaymentNoticeV2 OK 6 tokens scenario executed successfully
-        And random iuv in context
-        And noticeNumber with 311$iuv in activatePaymentNoticeV2
-        And creditorReferenceId with 11$iuv in paGetPayment
-        And EC replies to nodo-dei-pagamenti with the paGetPayment
-        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-        Then check outcome is OK of activatePaymentNoticeV2 response
-        And save activatePaymentNoticeV2 response in activatePaymentNoticeV22
-
-    Scenario: check activatePaymentNoticeV23 OK 6 tokens
-        Given the check activatePaymentNoticeV22 OK 6 tokens scenario executed successfully
-        And random iuv in context
-        And noticeNumber with 311$iuv in activatePaymentNoticeV2
-        And creditorReferenceId with 11$iuv in paGetPayment
-        And EC replies to nodo-dei-pagamenti with the paGetPayment
-        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-        Then check outcome is OK of activatePaymentNoticeV2 response
-        And save activatePaymentNoticeV2 response in activatePaymentNoticeV23
-
-    Scenario: check activatePaymentNoticeV24 OK 6 tokens
-        Given the check activatePaymentNoticeV23 OK 6 tokens scenario executed successfully
-        And random iuv in context
-        And noticeNumber with 311$iuv in activatePaymentNoticeV2
-        And creditorReferenceId with 11$iuv in paGetPayment
-        And EC replies to nodo-dei-pagamenti with the paGetPayment
-        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-        Then check outcome is OK of activatePaymentNoticeV2 response
-        And save activatePaymentNoticeV2 response in activatePaymentNoticeV24
-
-    Scenario: check activatePaymentNoticeV25 OK 6 tokens
-        Given the check activatePaymentNoticeV24 OK 6 tokens scenario executed successfully
-        And random iuv in context
-        And noticeNumber with 311$iuv in activatePaymentNoticeV2
-        And creditorReferenceId with 11$iuv in paGetPayment
-        And EC replies to nodo-dei-pagamenti with the paGetPayment
-        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-        Then check outcome is OK of activatePaymentNoticeV2 response
-        And save activatePaymentNoticeV2 response in activatePaymentNoticeV25
-
-    Scenario: check activatePaymentNoticeV26 OK 6 tokens
-        Given the check activatePaymentNoticeV25 OK 6 tokens scenario executed successfully
-        And random iuv in context
-        And noticeNumber with 311$iuv in activatePaymentNoticeV2
-        And creditorReferenceId with 11$iuv in paGetPayment
-        And EC replies to nodo-dei-pagamenti with the paGetPayment
-        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-        Then check outcome is OK of activatePaymentNoticeV2 response
-        And save activatePaymentNoticeV2 response in activatePaymentNoticeV26
-
-    Scenario: closePaymentV2 6 tokens
-        Given the check activatePaymentNoticeV2 OK 6 tokens scenario executed successfully
-        And the check activatePaymentNoticeV22 OK 6 tokens scenario executed successfully
-        And the check activatePaymentNoticeV23 OK 6 tokens scenario executed successfully
-        And the check activatePaymentNoticeV24 OK 6 tokens scenario executed successfully
-        And the check activatePaymentNoticeV25 OK 6 tokens scenario executed successfully
-        And the check activatePaymentNoticeV26 OK 6 tokens scenario executed successfully
-        And initial JSON v2/closepayment
-            """
-            {
-                "paymentTokens": [
-                    "$activatePaymentNoticeV21Response.paymentToken",
-                    "$activatePaymentNoticeV22Response.paymentToken",
-                    "$activatePaymentNoticeV23Response.paymentToken",
-                    "$activatePaymentNoticeV24Response.paymentToken",
-                    "$activatePaymentNoticeV25Response.paymentToken",
-                    "$activatePaymentNoticeV26Response.paymentToken"
-                ],
-                "outcome": "OK",
-                "idPSP": "#psp#",
-                "idBrokerPSP": "60000000001",
-                "idChannel": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
-                "paymentMethod": "TPAY",
-                "transactionId": "#transaction_id#",
-                "totalAmount": 12,
-                "fee": 2,
-                "timestampOperation": "2033-04-23T18:25:43Z",
-                "additionalPaymentInformations": {
-                    "key": "#psp_transaction_id#"
-                }
-            }
-            """
-
-    Scenario: check closePaymentV2 OK with 6 tokens
-        Given the closePaymentV2 6 tokens scenario executed successfully
-        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
-        Then verify the HTTP status code of v2/closepayment response is 400
-        And check outcome is KO of v2/closepayment response
-        And check description is Invalid paymentTokens of v2/closepayment response
 
 
 #-----------gestione del paymentTokens senza [] non previsto nello step when(u'{sender} sends rest {method:Method} {service} to {receiver}')
