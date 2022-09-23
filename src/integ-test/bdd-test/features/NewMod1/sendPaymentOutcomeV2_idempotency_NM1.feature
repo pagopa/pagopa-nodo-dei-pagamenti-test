@@ -292,6 +292,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2
         And the sendPaymentOutcomeV2 scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
+        And wait 5 seconds for expiration
         And checks the value NotNone of the record at column ID of the table IDEMPOTENCY_CACHE retrived by the query idempotency_spov2 on db nodo_online under macro NewMod1
         And checks the value sendPaymentOutcomeV2 of the record at column PRIMITIVA of the table IDEMPOTENCY_CACHE retrived by the query idempotency_spov2 on db nodo_online under macro NewMod1
         And checks the value $sendPaymentOutcomeV2.idPSP of the record at column PSP_ID of the table IDEMPOTENCY_CACHE retrived by the query idempotency_spov2 on db nodo_online under macro NewMod1
@@ -557,7 +558,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2
         And checks the value NOTIFIED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_PAYMENT retrived by the query PAYMENT_TOKEN_spov2 on db nodo_online under macro NewMod1
-        And verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query idempotency_spov2 on db nodo_online under macro NewMod1
+        And verify 2 record for the table IDEMPOTENCY_CACHE retrived by the query idempotency_spov2 on db nodo_online under macro NewMod1
 
     # IDMP_SPO_16.2
 
@@ -645,6 +646,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2
 
     Scenario: IDMP_SPO_17 (part 1)
         Given nodo-dei-pagamenti DEV has config parameter scheduler.jobName_idempotencyCacheClean.enabled set to false
+        And the checkPosition scenario executed successfully
         And the activatePaymentNoticeV2 scenario executed successfully
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
@@ -777,6 +779,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2
 
     Scenario: IDMP_SPO_22 (part 1)
         Given nodo-dei-pagamenti DEV has config parameter useIdempotency set to false
+        And the checkPosition scenario executed successfully
         And the activatePaymentNoticeV2 scenario executed successfully
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
@@ -807,7 +810,8 @@ Feature: idempotency checks for sendPaymentOutcomeV2
     # IDMP_SPO_26
 
     Scenario: IDMP_SPO_26 (part 1)
-        Given the activatePaymentNoticeV2 scenario executed successfully
+        Given the checkPosition scenario executed successfully
+        And the activatePaymentNoticeV2 scenario executed successfully
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_1
@@ -831,7 +835,8 @@ Feature: idempotency checks for sendPaymentOutcomeV2
     # IDMP_SPO_27
 
     Scenario: IDMP_SPO_27 (part 1)
-        Given the activatePaymentNoticeV2 scenario executed successfully
+        Given the checkPosition scenario executed successfully
+        And the activatePaymentNoticeV2 scenario executed successfully
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_1
@@ -861,7 +866,8 @@ Feature: idempotency checks for sendPaymentOutcomeV2
     # IDMP_SPO_31
 
     Scenario: IDMP_SPO_31 (part 1)
-        Given the activatePaymentNoticeV2 scenario executed successfully
+        Given the checkPosition scenario executed successfully
+        And the activatePaymentNoticeV2 scenario executed successfully
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_1
