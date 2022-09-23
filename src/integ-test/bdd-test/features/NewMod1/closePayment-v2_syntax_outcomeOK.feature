@@ -332,7 +332,7 @@ Feature: syntax checks for closePaymentV2 outcome OK
             | totalAmount        | 12                         | SIN_CPV2_25.2 |
             | fee                | 2.0                        | SIN_CPV2_30   |
             | fee                | 2                          | SIN_CPV2_30.2 |
-            #| timestampOperation | 2033-04-23T18:25:432+01:00 | SIN_CPV2_34.1 |
+            # | timestampOperation | 2033-04-23T18:25:432+01:00 | SIN_CPV2_34.1 |
 
 
     # syntax check - different keys [SIN_CPV2_38.1]
@@ -360,17 +360,17 @@ Feature: syntax checks for closePaymentV2 outcome OK
             "fee": 2,
             "timestampOperation": "2033-04-23T18:25:43Z",
             "additionalPaymentInformations": {
-            "transactionId": 11435230",
-            "outcomePaymentGateway": "EFF",
-            "authorizationCode": "resOK",
-            "key": "114352304",
-            "valore": "EFF",
-            "chiave": "resOK",
-            "campo": "114352305",
-            "field": "EFF",
-            "tag": "resOK",
-            "key1": "EFF",
-            "prova": "resOK"
+                "transactionId": "11435230",
+                "outcomePaymentGateway": "EFF",
+                "authorizationCode": "resOK",
+                "key": "114352304",
+                "valore": "EFF",
+                "chiave": "resOK",
+                "campo": "114352305",
+                "field": "EFF",
+                "tag": "resOK",
+                "key1": "EFF",
+                "prova": "resOK"
             }
             }
             """
