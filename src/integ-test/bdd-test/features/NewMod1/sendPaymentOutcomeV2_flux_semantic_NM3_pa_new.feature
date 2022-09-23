@@ -256,19 +256,19 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
 
     # SEM_SPO_7.1
 
-    # Scenario: SEM_SPO_7.1 (part 1)
-    #     Given the verifyPaymentNotice scenario executed successfully
-    #     And the activatePaymentNotice scenario executed successfully
-    #     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
-    #     Then check outcome is OK of activatePaymentNotice response
-    #     And save activatePaymentNotice response in activatePaymentNotice_1
+    Scenario: SEM_SPO_7.1 (part 1)
+        Given the verifyPaymentNotice scenario executed successfully
+        And the activatePaymentNotice scenario executed successfully
+        When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNotice response
+        And save activatePaymentNotice response in activatePaymentNotice_1
 
-    # Scenario: SEM_SPO_7.1 (part 2)
-    #     Given the SEM_SPO_7.1 (part 1) scenario executed successfully
-    #     And the sendPaymentOutcomeV2 scenario executed successfully
-    #     And idChannel with #canale_versione_primitive_2# in sendPaymentOutcomeV2
-    #     When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
-    #     Then check outcome is OK of sendPaymentOutcomeV2 response
+    Scenario: SEM_SPO_7.1 (part 2)
+        Given the SEM_SPO_7.1 (part 1) scenario executed successfully
+        And the sendPaymentOutcomeV2 scenario executed successfully
+        And idChannel with #canale_versione_primitive_2# in sendPaymentOutcomeV2
+        When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of sendPaymentOutcomeV2 response
 
     # SEM_SPO_13
 
@@ -441,7 +441,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
         When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
         And save activatePaymentNotice response in activatePaymentNotice_1
-@wip
+
     Scenario: SEM_SPO_32 (part 2)
         Given the SEM_SPO_32 (part 1) scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
