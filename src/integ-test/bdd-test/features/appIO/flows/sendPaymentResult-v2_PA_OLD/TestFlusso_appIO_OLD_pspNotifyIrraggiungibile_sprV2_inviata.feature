@@ -339,13 +339,13 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then check outcome is OK of v2/closepayment response
         And verify the HTTP status code of v2/closepayment response is 200
-        And updates through the query pspUpdate of the table CANALI the parameter IP with 123450 under macro sendPaymentResultV2 on db db_configuration
+        And updates through the query pspUpdate of the table CANALI the parameter IP with 123450 under macro sendPaymentResultV2 on db nodo_cfg
 
     #db update after pspNotifyPayment
     Scenario: DB update
         Given the Execute a closePayment-v2 request scenario executed successfully
         And wait 40 seconds for expiration
-        Then updates through the query pspUpdate of the table CANALI the parameter IP with api.dev.platform.pagopa.it under macro sendPaymentResultV2 on db db_configuration
+        Then updates through the query pspUpdate of the table CANALI the parameter IP with api.dev.platform.pagopa.it under macro sendPaymentResultV2 on db nodo_cfg
 
 
 
