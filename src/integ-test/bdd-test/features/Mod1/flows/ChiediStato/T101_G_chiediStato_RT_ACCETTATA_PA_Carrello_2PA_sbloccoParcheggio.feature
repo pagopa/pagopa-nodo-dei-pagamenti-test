@@ -375,7 +375,7 @@ Feature: process tests for T101_G_chiediStato_RT_ACCETTATA_PA_Carrello_2PA_sbloc
         And retrieve session token from $nodoInviaCarrelloRPTResponse.url
 
     Scenario: Execute nodoNotificaAnnullamento
-        Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
+        Given the Execute nodoInviaCarrelloRPT scenario executed successfully
         When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of notificaAnnullamento response is 200
         And check esito is OK of notificaAnnullamento response
