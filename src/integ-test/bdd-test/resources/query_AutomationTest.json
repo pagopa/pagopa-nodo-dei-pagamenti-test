@@ -107,6 +107,7 @@
         "idempotency_cache_timestamp_desc": "SELECT columns FROM table_name WHERE IDEMPOTENCY_KEY = '$activatePaymentNoticeV2.idempotencyKey' ORDER BY INSERTED_TIMESTAMP DESC",
         "idempotency_key_psp": "SELECT columns FROM table_name WHERE IDEMPOTENCY_KEY = '$activatePaymentNoticeV2.idempotencyKey' AND PSP_ID = '$activatePaymentNoticeV2.idPSP'",
         "idempotency_spov2" : "SELECT columns FROM table_name WHERE IDEMPOTENCY_KEY = '$sendPaymentOutcomeV2.idempotencyKey'",
+        "idempotency_spov2_timestamp_desc" : "SELECT columns FROM table_name WHERE IDEMPOTENCY_KEY = '$sendPaymentOutcomeV2.idempotencyKey' ORDER BY INSERTED_TIMESTAMP DESC",
         "metadata": "SELECT columns FROM table_name WHERE POSITION_SERVICE.PA_FISCAL_CODE='$activatePaymentNoticeV2.fiscalCode' AND POSITION_SERVICE.NOTICE_ID='$activatePaymentNoticeV2.noticeNumber' AND POSITION_PAYMENT_PLAN.AMOUNT='$activatePaymentNoticeV2.amount'",
         "position_service" : "SELECT columns FROM table_name WHERE POSITION_SERVICE.PA_FISCAL_CODE = '$activatePaymentNoticeV2.fiscalCode' AND POSITION_SERVICE.NOTICE_ID = '$activatePaymentNoticeV2.noticeNumber'",
         "position_payment_plan" : "SELECT columns FROM table_name WHERE POSITION_SERVICE.PA_FISCAL_CODE='$activatePaymentNoticeV2.fiscalCode' AND POSITION_SERVICE.NOTICE_ID='$activatePaymentNoticeV2.noticeNumber' AND POSITION_PAYMENT_PLAN.AMOUNT='$activatePaymentNoticeV2.amount'",
