@@ -433,33 +433,33 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
 
     # SEM_SPO_32
 
-    # Scenario: SEM_SPO_32 (part 1)
-    #     Given the verifyPaymentNotice scenario executed successfully
-    #     And the activatePaymentNotice scenario executed successfully
-    #     And expirationTime with 2000 in activatePaymentNotice
-    #     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
-    #     Then check outcome is OK of activatePaymentNotice response
-    #     And save activatePaymentNotice response in activatePaymentNotice_1
+    Scenario: SEM_SPO_32 (part 1)
+        Given the verifyPaymentNotice scenario executed successfully
+        And the activatePaymentNotice scenario executed successfully
+        And expirationTime with 2000 in activatePaymentNotice
+        When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNotice response
+        And save activatePaymentNotice response in activatePaymentNotice_1
 
-    # Scenario: SEM_SPO_32 (part 2)
-    #     Given the SEM_SPO_32 (part 1) scenario executed successfully
-    #     When job mod3CancelV2 triggered after 3 seconds
-    #     Then wait 0 seconds for expiration
+    Scenario: SEM_SPO_32 (part 2)
+        Given the SEM_SPO_32 (part 1) scenario executed successfully
+        When job mod3CancelV2 triggered after 3 seconds
+        Then wait 0 seconds for expiration
 
-    # Scenario: SEM_SPO_32 (part 3)
-    #     Given the SEM_SPO_32 (part 2) scenario executed successfully
-    #     And the sendPaymentOutcomeV2 scenario executed successfully
-    #     When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
-    #     Then check outcome is KO of sendPaymentOutcomeV2 response
-    #     And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcomeV2 response
-    #     And checks the value PAYING,INSERTED of the record at column STATUS of the table POSITION_STATUS retrived by the query select_activate on db nodo_online under macro NewMod1
-    #     And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query select_activate on db nodo_online under macro NewMod1
-    #     And checks the value PAYING,CANCELLED,FAILED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activate on db nodo_online under macro NewMod1
-    #     And checks the value FAILED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activate on db nodo_online under macro NewMod1
-    #     And verify 2 record for the table POSITION_STATUS retrived by the query select_activate on db nodo_online under macro NewMod1
-    #     And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query select_activate on db nodo_online under macro NewMod1
-    #     And verify 3 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activate on db nodo_online under macro NewMod1
-    #     And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activate on db nodo_online under macro NewMod1
+    Scenario: SEM_SPO_32 (part 3)
+        Given the SEM_SPO_32 (part 2) scenario executed successfully
+        And the sendPaymentOutcomeV2 scenario executed successfully
+        When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
+        Then check outcome is KO of sendPaymentOutcomeV2 response
+        And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcomeV2 response
+        And checks the value PAYING,INSERTED of the record at column STATUS of the table POSITION_STATUS retrived by the query select_activate on db nodo_online under macro NewMod1
+        And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query select_activate on db nodo_online under macro NewMod1
+        And checks the value PAYING,CANCELLED,FAILED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activate on db nodo_online under macro NewMod1
+        And checks the value FAILED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activate on db nodo_online under macro NewMod1
+        And verify 2 record for the table POSITION_STATUS retrived by the query select_activate on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query select_activate on db nodo_online under macro NewMod1
+        And verify 3 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activate on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activate on db nodo_online under macro NewMod1
 
     # SEM_SPO_35.1
 
