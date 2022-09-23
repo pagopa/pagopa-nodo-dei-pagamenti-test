@@ -387,7 +387,6 @@ Feature: process tests for T101_G_chiediStato_RT_ACCETTATA_PA_Carrello_2PA_sbloc
             """
         And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
-        When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check url contains acardste of nodoInviaCarrelloRPT response
         And retrieve session token from $nodoInviaCarrelloRPTResponse.url
 
@@ -398,9 +397,15 @@ Feature: process tests for T101_G_chiediStato_RT_ACCETTATA_PA_Carrello_2PA_sbloc
         And check esito is OK of notificaAnnullamento response
         And wait 7 seconds for expiration 
 
+    
+    Scenario: Execute job paInviaRt
+        Given the Execute nodoNotificaAnnullamento scenario executed successfully
+        When job paInviaRt triggered after 5 seconds
+        And wait 10 seconds for expiration
+
 
     Scenario: Execute nodoChiediStatoRPT request
-        Given the Execute nodoNotificaAnnullamento scenario executed successfully
+        Given the Execute job paInviaRt scenario executed successfully
         And initial XML nodoChiediStatoRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -418,11 +423,11 @@ Feature: process tests for T101_G_chiediStato_RT_ACCETTATA_PA_Carrello_2PA_sbloc
             </soapenv:Envelope>
             """
         When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
-        Then checks stato contains RPT_ACCETTATA_PSP of nodoChiediStatoRPT response
-        And checks stato contains RT_ACCETTATA_PA of nodoChiediStatoRPT response
+        Then checks stato contains RT_ACCETTATA_PA of nodoChiediStatoRPT response
         And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
-        And checks stato contains RT_RICEVUTA_NODO of nodoChiediStatoRPT response
+        And checks stato contains RT_INVIATA_PA of nodoChiediStatoRPT response 
+        And checks stato contains RT_GENERATA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_PARCHEGGIATA_NODO of nodoChiediStatoRPT response
         And check redirect is 0 of nodoChiediStatoRPT response
         And check url field not exists in nodoChiediStatoRPT response
@@ -446,12 +451,12 @@ Feature: process tests for T101_G_chiediStato_RT_ACCETTATA_PA_Carrello_2PA_sbloc
             </soapenv:Envelope>
             """
         When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
-        Then checks stato contains RPT_PARCHEGGIATA_NODO of nodoChiediStatoRPT response
-        And checks stato contains RT_ACCETTATA_PA of nodoChiediStatoRPT response
+        Then checks stato contains RT_ACCETTATA_PA of nodoChiediStatoRPT response
         And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
-        And checks stato contains RT_RICEVUTA_NODO of nodoChiediStatoRPT response
-        And checks stato contains RT_ACCETTATA_NODO of nodoChiediStatoRPT response
+        And checks stato contains RT_INVIATA_PA of nodoChiediStatoRPT response 
+        And checks stato contains RT_GENERATA_NODO of nodoChiediStatoRPT response
+        And checks stato contains RPT_PARCHEGGIATA_NODO of nodoChiediStatoRPT response
         And check redirect is 0 of nodoChiediStatoRPT response
         And check url field not exists in nodoChiediStatoRPT response
 
