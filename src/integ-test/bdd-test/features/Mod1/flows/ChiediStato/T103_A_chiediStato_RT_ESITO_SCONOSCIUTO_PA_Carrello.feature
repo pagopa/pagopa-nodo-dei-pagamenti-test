@@ -391,6 +391,20 @@ Feature: process tests for T103_A_chiediStato_RT_ESITO_SCONOSCIUTO_PA_Carrello
 
     Scenario: Execute nodoInviaRT request
         Given the Execute nodoInviaCarrelloRPT scenario executed successfully
+        And initial XML paaInviaRT
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <ws:paaInviaRTRisposta>
+            <paaInviaRTRisposta>
+            <esito>malformata</esito>
+            </paaInviaRTRisposta>
+            </ws:paaInviaRTRisposta>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And EC replies to nodo-dei-pagamenti with the paaInviaRT
         And initial XML nodoInviaRT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -413,11 +427,25 @@ Feature: process tests for T103_A_chiediStato_RT_ESITO_SCONOSCIUTO_PA_Carrello
             """
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
-        And retrieve session token from $nodoInviaRTResponse.url
+        And wait 5 seconds for expiration
 
 
     Scenario: Execute second nodoInviaRT request
         Given the Execute nodoInviaRT request scenario executed successfully
+        And initial XML paaInviaRT
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <ws:paaInviaRTRisposta>
+            <paaInviaRTRisposta>
+            <esito>malformata</esito>
+            </paaInviaRTRisposta>
+            </ws:paaInviaRTRisposta>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And EC replies to nodo-dei-pagamenti with the paaInviaRT
         And initial XML nodoInviaRT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -440,8 +468,8 @@ Feature: process tests for T103_A_chiediStato_RT_ESITO_SCONOSCIUTO_PA_Carrello
             """
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
-        And retrieve session token 2 from $nodoInviaRTResponse.url
         And wait 5 seconds for expiration
+
 
     Scenario: Execute nodoChiediStatoRPT request
         Given the Execute second nodoInviaRT request scenario executed successfully
@@ -525,6 +553,10 @@ Feature: process tests for T103_A_chiediStato_RT_ESITO_SCONOSCIUTO_PA_Carrello
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is KO of nodoInviaRT response
         And check faultCode is PPT_RT_DUPLICATA of nodoInviaRT response
+        # query x recuperare session ID 
+        # SELECT r.ID_SESSIONE FROM NODO_ONLINE.RT r WHERE r.IUV = 'IUV9535-2022-09-23T19:07:01.444' AND r.CCP = '1663952821445';
+        # execution query {query_name} to get value on the table {table_name}, with the columns {columns} under macro {macro} with db name {db_name}
+        # through the query {query_name} retrieve param {param} at position {position:d} and save it under the key {key}
         And replace idSessione content with $sessionToken content
         And replace 2idSessione content with $2sessionToken content
         And checks the value RICEVUTA,CAMBIO_STATO,CAMBIO_STATO,INVIATA,CAMBIO_STATO,INVIATA,RICEVUTA,CAMBIO_STATO of the record at column ESITO of the table ESITO retrived by the query Re on db nodo_online under macro Mod1
