@@ -880,6 +880,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2
     Scenario: IDMP_SPO_31 (part 2)
         Given the IDMP_SPO_31 (part 1) scenario executed successfully
         And expirationTime with None in activatePaymentNoticeV2
+        And EC replies to nodo-dei-pagamenti with the paGetPayment
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_2
