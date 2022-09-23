@@ -106,6 +106,7 @@
         "idempotency_cache": "SELECT columns FROM table_name WHERE IDEMPOTENCY_KEY = '$activatePaymentNoticeV2.idempotencyKey'",
         "idempotency_cache_timestamp_desc": "SELECT columns FROM table_name WHERE IDEMPOTENCY_KEY = '$activatePaymentNoticeV2.idempotencyKey' ORDER BY INSERTED_TIMESTAMP DESC",
         "idempotency_key_psp": "SELECT columns FROM table_name WHERE IDEMPOTENCY_KEY = '$activatePaymentNoticeV2.idempotencyKey' AND PSP_ID = '$activatePaymentNoticeV2.idPSP'",
+        "idempotency_spov2" : "SELECT columns FROM table_name WHERE IDEMPOTENCY_KEY = '$sendPaymentOutcomeV2.idempotencyKey'",
         "metadata": "SELECT columns FROM table_name WHERE POSITION_SERVICE.PA_FISCAL_CODE='$activatePaymentNoticeV2.fiscalCode' AND POSITION_SERVICE.NOTICE_ID='$activatePaymentNoticeV2.noticeNumber' AND POSITION_PAYMENT_PLAN.AMOUNT='$activatePaymentNoticeV2.amount'",
         "position_service" : "SELECT columns FROM table_name WHERE POSITION_SERVICE.PA_FISCAL_CODE = '$activatePaymentNoticeV2.fiscalCode' AND POSITION_SERVICE.NOTICE_ID = '$activatePaymentNoticeV2.noticeNumber'",
         "position_payment_plan" : "SELECT columns FROM table_name WHERE POSITION_SERVICE.PA_FISCAL_CODE='$activatePaymentNoticeV2.fiscalCode' AND POSITION_SERVICE.NOTICE_ID='$activatePaymentNoticeV2.noticeNumber' AND POSITION_PAYMENT_PLAN.AMOUNT='$activatePaymentNoticeV2.amount'",
@@ -114,6 +115,7 @@
         "position_payment_status_snapshot" : "SELECT columns FROM table_name WHERE POSITION_PAYMENT_STATUS_SNAPSHOT.PA_FISCAL_CODE = '$activatePaymentNoticeV2.fiscalCode' AND POSITION_PAYMENT_STATUS_SNAPSHOT.NOTICE_ID = '$activatePaymentNoticeV2.noticeNumber'",
         "payment_token": "SELECT columns FROM table_name WHERE TOKEN = '$activatePaymentNoticeV2Response.paymentToken'",
         "PAYMENT_TOKEN": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN = '$activatePaymentNoticeV2Response.paymentToken'",
+        "PAYMENT_TOKEN_spov2": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN = '$sendPaymentOutcomeV2.paymentToken'",
         "update_PAYMENT_TOKEN": "UPDATE table_name SET param = 'value' WHERE PAYMENT_TOKEN = '$activatePaymentNoticeV2Response.paymentToken'",
         "update_PAYMENT_TOKEN_1": "UPDATE table_name SET param = 'value' WHERE PAYMENT_TOKEN = '$activatePaymentNoticeV2NewResponse.paymentToken'",
         "notice_number": "SELECT columns FROM table_name WHERE NOTICE_ID = '$activatePaymentNoticeV2.noticeNumber'",
@@ -121,6 +123,7 @@
         "transactionid": "SELECT columns FROM table_name WHERE TRANSACTION_ID = '$closePaymentV2.transactionId'",
         "update_noticeid_pa": "UPDATE table_name SET param = 'value' WHERE NOTICE_ID ='311$iuv' and PA_FISCAL_CODE='#creditor_institution_code#'",
         "update_noticeid1_pa": "UPDATE table_name SET param = 'value' WHERE NOTICE_ID ='311$iuv1' and PA_FISCAL_CODE='#creditor_institution_code#'",
-        "position_subject": "SELECT columns FROM table_name WHERE ENTITY_UNIQUE_IDENTIFIER_VALUE = '$sendPaymentOutcomeV2.entityUniqueIdentifierValue' and INSERTED_TIMESTAMP > TO_DATE ('$date','YYYY-MM-DD HH24:MI:SS')"
+        "position_subject": "SELECT columns FROM table_name WHERE ENTITY_UNIQUE_IDENTIFIER_VALUE = '$sendPaymentOutcomeV2.entityUniqueIdentifierValue' and INSERTED_TIMESTAMP > TO_DATE ('$date','YYYY-MM-DD HH24:MI:SS')",
+        "update_validto" : "UPDATE table_name SET param = TO_DATE('value', 'YYYY-MM-DD HH24:MI:SS') WHERE IDEMPOTENCY_KEY = '$sendPaymentOutcomeV2.idempotencyKey' AND PSP_ID = '$sendPaymentOutcomeV2.idPSP"
     }
 }
