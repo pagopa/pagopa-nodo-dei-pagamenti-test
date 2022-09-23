@@ -565,14 +565,10 @@ Feature: process tests for T103_A_chiediStato_RT_ESITO_SCONOSCIUTO_PA_Carrello
         And replace 2ccp content with $2CCP content
         And execution query Retrieve_IdSession2 to get value on the table RT, with the columns ID_SESSIONE under macro Mod1 with db name nodo_online
         And through the query Retrieve_IdSession2 retrieve param 2idSessione at position 0 and save it under the key 2idSessione
-        And checks the value RICEVUTA,CAMBIO_STATO,CAMBIO_STATO,INVIATA,CAMBIO_STATO,INVIATA,RICEVUTA,CAMBIO_STATO of the record at column ESITO of the table ESITO retrived by the query Re on db nodo_online under macro Mod1
-        And checks the value RICEVUTA,CAMBIO_STATO,CAMBIO_STATO,INVIATA,CAMBIO_STATO,INVIATA,RICEVUTA,CAMBIO_STATO of the record at column ESITO of the table STATUS retrived by the query Re on db nodo_online under macro Mod1
-        And checks the value RICEVUTA,CAMBIO_STATO,CAMBIO_STATO,INVIATA,CAMBIO_STATO,INVIATA,RICEVUTA,CAMBIO_STATO of the record at column ESITO of the table ESITO retrived by the query Re_2 on db nodo_online under macro Mod1
-        And checks the value RICEVUTA,CAMBIO_STATO,CAMBIO_STATO,INVIATA,CAMBIO_STATO,INVIATA,RICEVUTA,CAMBIO_STATO of the record at column ESITO of the table STATUS retrived by the query Re_2 on db nodo_online under macro Mod1
-        And checks the value RT_RICEVUTA_NODO,RT_ACCETTATA_NODO,RT_INVIATA_PA,RT_ESITO_SCONOSCIUTO_PA of the record at column STATUS of the table ESITO retrived by the query Re on db nodo_online under macro Mod1
-        And checks the value RT_RICEVUTA_NODO,RT_ACCETTATA_NODO,RT_INVIATA_PA,RT_ESITO_SCONOSCIUTO_PA of the record at column STATUS of the table STATUS retrived by the query Re on db nodo_online under macro Mod1
-        And checks the value RT_RICEVUTA_NODO,RT_ACCETTATA_NODO,RT_INVIATA_PA,RT_ESITO_SCONOSCIUTO_PA of the record at column STATUS of the table ESITO retrived by the query Re_2 on db nodo_online under macro Mod1
-        And checks the value RT_RICEVUTA_NODO,RT_ACCETTATA_NODO,RT_INVIATA_PA,RT_ESITO_SCONOSCIUTO_PA of the record at column STATUS of the table STATUS retrived by the query Re_2 on db nodo_online under macro Mod1
+        And checks the value RICEVUTA,CAMBIO_STATO,CAMBIO_STATO,INVIATA,CAMBIO_STATO,INVIATA,RICEVUTA,CAMBIO_STATO of the record at column ESITO of the table RE retrived by the query Re on db re under macro Mod1
+        And checks the value RICEVUTA,CAMBIO_STATO,CAMBIO_STATO,INVIATA,CAMBIO_STATO,INVIATA,RICEVUTA,CAMBIO_STATO of the record at column ESITO of the table RE retrived by the query Re_2 on db re under macro Mod1
+        And checks the value RT_RICEVUTA_NODO,RT_ACCETTATA_NODO,RT_INVIATA_PA,RT_ESITO_SCONOSCIUTO_PA of the record at column STATUS of the table RE retrived by the query Re on db re under macro Mod1
+        And checks the value RT_RICEVUTA_NODO,RT_ACCETTATA_NODO,RT_INVIATA_PA,RT_ESITO_SCONOSCIUTO_PA of the record at column STATUS of the table RE retrived by the query Re_2 on db re under macro Mod1
 
     Scenario: Execute third nodoChiediStatoRPT request
         Given the Execute second nodoInviaRT request scenario executed successfully
