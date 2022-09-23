@@ -1150,14 +1150,10 @@ def step_impl(context):
     date = (datetime.datetime.now() + datetime.timedelta(hours = 2)).strftime("%Y-%m-%d %H:%M:%S")
     setattr(context, 'date', date)
 
-## prova
-
 @step('current date plus {minutes:d} minutes generation')
 def step_impl(context, minutes):
     date_plus_minutes = (datetime.datetime.now() + datetime.timedelta(hours = 2, minutes = minutes)).strftime("%Y-%m-%d %H:%M:%S")
     setattr(context, 'date_plus_minutes', date_plus_minutes)
-
-## prova
 
 @step("nodo-dei-pagamenti has config parameter {param} set to {value}")
 def step_impl(context, param, value):

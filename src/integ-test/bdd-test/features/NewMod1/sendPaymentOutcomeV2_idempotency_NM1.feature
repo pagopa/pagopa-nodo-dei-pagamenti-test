@@ -679,7 +679,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2
         And current date plus 1 minutes generation
         And updates through the query update_validto of the table IDEMPOTENCY_CACHE the parameter VALID_TO with $date_plus_minutes under macro NewMod1 on db nodo_online
         And wait 65 seconds for expiration
-    @wip
+
     Scenario: IDMP_SPO_17 (part 4)
         Given the IDMP_SPO_17 (part 3) scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -855,7 +855,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2
         And the sendPaymentOutcomeV2 scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-    @wip
+
     Scenario: IDMP_SPO_27 (part 4)
         Given the IDMP_SPO_27 (part 3) scenario executed successfully
         And random idempotencyKey having $sendPaymentOutcomeV2.idPSP as idPSP in sendPaymentOutcomeV2
@@ -874,6 +874,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_1
         And updates through the query update_activatev2 of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with CANCELLED under macro NewMod1 on db nodo_online
         And updates through the query update_activatev2 of the table POSITION_STATUS_SNAPSHOT the parameter STATUS with INSERTED under macro NewMod1 on db nodo_online
+        And wait 5 seconds for expiration
 
     Scenario: IDMP_SPO_31 (part 2)
         Given the IDMP_SPO_31 (part 1) scenario executed successfully
