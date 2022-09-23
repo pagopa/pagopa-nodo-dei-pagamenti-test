@@ -155,7 +155,6 @@ Feature: Semantic checks for nodoChiediFlussoRendicontazione
         Given the Executed nodoInviaFlussoRendicontazione scenario executed successfully
         And update through the query param_update of the table RENDICONTAZIONE the parameter DOMINIO with 90000000001, with where condition ID_FLUSSO and where value $identificativoFlusso under macro update_query on db nodo_offline
 
-    @tagtest
     Scenario: Check semantic errors for nodoChiediFlussoRendicontazione primitive
         Given the Aggiornamento DB_3 scenario executed successfully
         And initial XML nodoChiediFlussoRendicontazione
@@ -164,12 +163,12 @@ Feature: Semantic checks for nodoChiediFlussoRendicontazione
             <soapenv:Header/>
             <soapenv:Body>
             <ws:nodoChiediFlussoRendicontazione>
-            <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
-            <identificativoStazioneIntermediarioPA>idStazione11<!--44444444444_01--></identificativoStazioneIntermediarioPA>
-            <password>pwd</password>
-            <identificativoDominio>90000000001<!--44444444444--></identificativoDominio>
-            <identificativoPSP>40000000001</identificativoPSP>
-            <identificativoFlusso>2017-09-11idPsp1-rend01</identificativoFlusso>
+            <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
+            <password>pwdpwdpwd</password>
+            <identificativoDominio>90000000001</identificativoDominio>
+            <identificativoPSP>#psp#</identificativoPSP>
+            <identificativoFlusso>$identificativoFlusso</identificativoFlusso>
             </ws:nodoChiediFlussoRendicontazione>
             </soapenv:Body>
             </soapenv:Envelope>

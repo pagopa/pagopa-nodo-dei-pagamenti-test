@@ -656,6 +656,11 @@ def step_impl(context):
     if '#iuv#' in payload:
         payload = payload.replace('#iuv#', iuv)
 
+    payload_b = bytes(payload, 'ascii')
+    payload_uni = b64.b64encode(payload_b)
+    payload = f"{payload_uni}".split("'")[1]
+    print(payload)
+
     print("REND generata: ", payload)
     setattr(context, 'rendAttachment', payload)
 
