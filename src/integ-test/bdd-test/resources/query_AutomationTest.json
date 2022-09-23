@@ -111,6 +111,6 @@
     },
     "sendPaymentResultV2": {
         "select_sprV2_old": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN = '$ccp' AND TIPO_EVENTO = 'sendPaymentResult-v2' ORDER BY ID ASC",
-        "pspUpdate": "UPDATE table_name SET param = 'value' where ID_CANALE = '#canale_IMMEDIATO_MULTIBENEFICIARIO#'"
+        "pspUpdate": "UPDATE NODO4_CFG_DEV.table_name SET param = 'value' where ID_CANALE = '#canale_IMMEDIATO_MULTIBENEFICIARIO#'"
     }
 }
