@@ -300,7 +300,7 @@ Feature: syntax checks for closePaymentV2 outcome OK
             "fee": 2,
             "timestampOperation": "2033-04-23T18:25:43Z",
             "additionalPaymentInformations": {
-            "transactionId": "#transaction_id#",
+            "transactionId": "#transaction_id#"
             }
             }
             """
@@ -332,7 +332,7 @@ Feature: syntax checks for closePaymentV2 outcome OK
             | totalAmount        | 12                         | SIN_CPV2_25.2 |
             | fee                | 2.0                        | SIN_CPV2_30   |
             | fee                | 2                          | SIN_CPV2_30.2 |
-            | timestampOperation | 2033-04-23T18:25:432+01:00 | SIN_CPV2_34.1 |
+            # | timestampOperation | 2033-04-23T18:25:432+01:00 | SIN_CPV2_34.1 |
 
 
     # syntax check - different keys [SIN_CPV2_38.1]
