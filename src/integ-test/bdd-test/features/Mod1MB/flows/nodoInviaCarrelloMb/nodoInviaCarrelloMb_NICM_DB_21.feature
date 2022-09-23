@@ -1,6 +1,6 @@
 Feature: process tests for nodoInviaCarrelloMb
 
-    #[NICM_DB_19]
+    #[NICM_DB_21]
     Background:
         Given systems up
     Scenario: RPT generation
@@ -83,7 +83,6 @@ Feature: process tests for nodoInviaCarrelloMb
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-
         And RPT2 generation
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
@@ -222,4 +221,14 @@ Feature: process tests for nodoInviaCarrelloMb
 
         #DB_CHECKS-CARRELLO
         And replace idCarrello content with $1carrello content
-        And checks the value Y of the record at column FLAG_MULTIBENEFICIARIO of the table CARRELLO retrived by the query by_id_carrello on db nodo_online under macro Mod1Mb
+        And replace pa content with #codicePA# content
+
+        And checks the value N of the record at column FLAG_SECONDA of the table RPT retrived by the query by_ccp_and_ident_dominio on db nodo_online under macro Mod1Mb
+        And checks the value $1carrello of the record at column CCP of the table RPT retrived by the query by_ccp_and_ident_dominio on db nodo_online under macro Mod1Mb
+        And checks the value #id_station# of the record at column STAZ_INTERMEDIARIOPA of the table RPT retrived by the query by_ccp_and_ident_dominio on db nodo_online under macro Mod1Mb
+
+        And replace pa content with 90000000001 content
+
+        And checks the value Y of the record at column FLAG_SECONDA of the table RPT retrived by the query by_ccp_and_ident_dominio on db nodo_online under macro Mod1Mb
+        And checks the value $1carrello of the record at column CCP of the table RPT retrived by the query by_ccp_and_ident_dominio on db nodo_online under macro Mod1Mb
+        And checks the value #id_station# of the record at column STAZ_INTERMEDIARIOPA of the table RPT retrived by the query by_ccp_and_ident_dominio on db nodo_online under macro Mod1Mb
