@@ -1,6 +1,6 @@
-Feature: process tests for nodoInviaCarrelloMb
+Feature: process tests for nodoInviaCarrelloMb[NICM_DB_16]
 
-    #[NICM_DB_19]
+
     Background:
         Given systems up
     Scenario: RPT generation
@@ -220,6 +220,15 @@ Feature: process tests for nodoInviaCarrelloMb
         Then retrieve session token from $nodoInviaCarrelloRPTResponse.url
 
 
-        #DB_CHECKS-CARRELLO
-        And replace idCarrello content with $1carrello content
-        And checks the value Y of the record at column FLAG_MULTIBENEFICIARIO of the table CARRELLO retrived by the query by_id_carrello on db nodo_online under macro Mod1Mb
+        #DB_CHECKS
+        #POSITION_PAYMENT_STATUS
+        And replace pa content with #codicePA# content
+        And replace iuv content with $1iuv content
+        And replace noticeNumber content with $1noticeNumber content
+
+        And checks the value $1noticeNumber of the record at column NOTICE_ID of the table POSITION_PAYMENT_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+        And checks the value #codicePA# of the record at column PA_FISCAL_CODE of the table POSITION_PAYMENT_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+        And checks the value $nodoInviaCarrelloRPT.identificativoCarrello of the record at column PAYMENT_TOKEN of the table POSITION_PAYMENT_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+        And checks the value $1iuv of the record at column CREDITOR_REFERENCE_ID of the table POSITION_PAYMENT_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+        And checks the value PAYING of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_PAYMENT_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb

@@ -1,6 +1,6 @@
 Feature: process tests for nodoInviaCarrelloMb
 
-    #[NICM_DB_19]
+    #[NICM_DB_20]
     Background:
         Given systems up
     Scenario: RPT generation
@@ -83,14 +83,14 @@ Feature: process tests for nodoInviaCarrelloMb
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-
+        And generate 2 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
         And RPT2 generation
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.1</pay_i:versioneOggetto>
             <pay_i:dominio>
-            <pay_i:identificativoDominio>90000000001</pay_i:identificativoDominio>
-            <pay_i:identificativoStazioneRichiedente>90000000001_01</pay_i:identificativoStazioneRichiedente>
+            <pay_i:identificativoDominio>#codicePA#</pay_i:identificativoDominio>
+            <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
             <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
@@ -142,7 +142,7 @@ Feature: process tests for nodoInviaCarrelloMb
             <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
             <pay_i:importoTotaleDaVersare>1.50</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
-            <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
+            <pay_i:identificativoUnivocoVersamento>$2iuv</pay_i:identificativoUnivocoVersamento>
             <pay_i:codiceContestoPagamento>$1carrello</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
@@ -203,14 +203,14 @@ Feature: process tests for nodoInviaCarrelloMb
             <rpt>$rpt1Attachment</rpt>
             </elementoListaRPT>
             <elementoListaRPT>
-            <identificativoDominio>90000000001</identificativoDominio>
-            <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
+            <identificativoDominio>#codicePA#</identificativoDominio>
+            <identificativoUnivocoVersamento>$2iuv</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
             <rpt>$rpt2Attachment</rpt>
             </elementoListaRPT>
             </listaRPT>
             <requireLightPayment>01</requireLightPayment>
-            <multiBeneficiario>1</multiBeneficiario>
+            <multiBeneficiario>0</multiBeneficiario>
             </ws:nodoInviaCarrelloRPT>
             </soapenv:Body>
             </soapenv:Envelope>
@@ -222,4 +222,4 @@ Feature: process tests for nodoInviaCarrelloMb
 
         #DB_CHECKS-CARRELLO
         And replace idCarrello content with $1carrello content
-        And checks the value Y of the record at column FLAG_MULTIBENEFICIARIO of the table CARRELLO retrived by the query by_id_carrello on db nodo_online under macro Mod1Mb
+        And checks the value N of the record at column FLAG_MULTIBENEFICIARIO of the table CARRELLO retrived by the query by_id_carrello on db nodo_online under macro Mod1Mb

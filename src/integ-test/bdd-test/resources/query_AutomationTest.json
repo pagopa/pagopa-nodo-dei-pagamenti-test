@@ -100,7 +100,7 @@
         "DB_GEST_ANN_update1": "UPDATE STATI_RPT_SNAPSHOT SET UPDATED_TIMESTAMP = TO_DATE('date', 'YYYY-MM-DD HH24:MI:SS') WHERE IUV = '$iuv' AND ID_DOMINIO = '$nodoInviaCarrelloRPT.identificativoDominio'",
         "DB_GEST_ANN_update2": "UPDATE STATI_RPT_SNAPSHOT SET UPDATED_TIMESTAMP = TO_DATE('date', 'YYYY-MM-DD HH24:MI:SS') WHERE IUV = '$iuv' AND ID_DOMINIO = '90000000001'",
         "DB_GEST_ANN_notice_number": "SELECT s.columns FROM table_name s WHERE s.NOTICE_ID = '$NOTICE_ID'",
-        "DB_GEST_ANN_stati_position_status": "SELECT s.columns FROM table_name s WHERE s.NOTICE_ID = '311$IuV' and s.pa_fiscal_code= '$nodoInviaCarrelloRPT.identificativoDominio'",
+        "DB_GEST_ANN_stati_position_status": "SELECT s.columns FROM table_name s WHERE s.NOTICE_ID = '311$iuv' and s.pa_fiscal_code= '$nodoInviaCarrelloRPT.identificativoDominio'",
         "by_notice_number_and_pa": "SELECT s.columns FROM table_name s WHERE s.NOTICE_ID = '$noticeNumber' and s.pa_fiscal_code= '$pa'",
         "by_iuv_and_ident_dominio": "SELECT s.columns FROM table_name s WHERE s.IUV = '$iuv' and s.ID_DOMINIO = '$pa'",
         "by_id_sessione":"SELECT s.columns FROM table_name s WHERE s.ID_SESSIONE = '$sessionToken'",
@@ -109,7 +109,9 @@
         "by_id_carrello":"SELECT columns FROM table_name WHERE ID_CARRELLO = '$idCarrello'",
         "by_ccp": "SELECT columns FROM table_name WHERE CCP = '$ccp'",
         "by_notice_number_and_payment_token": "SELECT columns FROM table_name s WHERE s.NOTICE_ID = '$noticeNumber' AND s.PAYMENT_TOKEN = '$paymentToken'",
-        "by_psp": "SELECT columns FROM table_name s WHERE s.ID_PSP = '$psp'"
+        "by_psp": "SELECT columns FROM table_name s WHERE s.ID_PSP = '$psp'",
+        "by_ccp_and_ident_dominio":"SELECT columns FROM table_name WHERE CCP = '$idCarrello' and IDENT_DOMINIO = '$pa'"
+        
     },
     "Mod1":{
         "esito": "SELECT v.columns FROM table_name r JOIN RT_VERSAMENTI v ON v.FK_RT=r.ID WHERE r.IUV='$iuv' AND r.CCP= '$nodoInviaRPT.codiceContestoPagamento' AND r.IDENT_DOMINIO='$nodoInviaRPT.identificativoDominio'",
@@ -124,6 +126,7 @@
         "retry_rpt": "SELECT columns FROM table_name WHERE ID_SESSIONE='$sessionToken' ORDER BY INSERTED_TIMESTAMP",
         "retry_rpt_original": "SELECT columns FROM table_name WHERE ID_SESSIONE_ORIGINALE='$sessionToken' ORDER BY INSERTED_TIMESTAMP",
         "Re": "SELECT columns FROM table_name WHERE ID_SESSIONE ='$idSessione' AND INSERTED_TIMESTAMP > ROUND(SYSDATE-1) ORDER BY DATA_ORA_EVENTO",
+        "Re_2": "SELECT columns FROM table_name WHERE ID_SESSIONE ='$2idSessione' AND INSERTED_TIMESTAMP > ROUND(SYSDATE-1) ORDER BY DATA_ORA_EVENTO",
         "rpt_stati": "SELECT columns FROM table_name s WHERE s.IUV = '$iuv' ORDER BY INSERTED_TIMESTAMP ASC",
         "rt_stati": "SELECT columns FROM table_name s WHERE s.IUV = '$IUV' ORDER BY INSERTED_TIMESTAMP ASC",
         "stati_carrello": "SELECT columns FROM table s WHERE s.ID_CARRELLO = '$nodoInviaCarrelloRPT.idCarrello' ORDER BY ID ASC",

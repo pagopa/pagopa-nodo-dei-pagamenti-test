@@ -1,6 +1,6 @@
-Feature: process tests for nodoInviaCarrelloMb
+Feature: process tests for nodoInviaCarrelloMb[NICM_DB_04]
 
-    #[NICM_DB_19]
+
     Background:
         Given systems up
     Scenario: RPT generation
@@ -220,6 +220,23 @@ Feature: process tests for nodoInviaCarrelloMb
         Then retrieve session token from $nodoInviaCarrelloRPTResponse.url
 
 
-        #DB_CHECKS-CARRELLO
-        And replace idCarrello content with $1carrello content
-        And checks the value Y of the record at column FLAG_MULTIBENEFICIARIO of the table CARRELLO retrived by the query by_id_carrello on db nodo_online under macro Mod1Mb
+        #DB_CHECKS
+        #POSITION_SERVICE
+        And replace pa content with #codicePA# content
+        And replace iuv content with $1iuv content
+        And replace noticeNumber content with $1noticeNumber content
+
+        And checks the value $1noticeNumber of the record at column NOTICE_ID of the table POSITION_SERVICE retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+        And checks the value #codicePA# of the record at column PA_FISCAL_CODE of the table POSITION_SERVICE retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+        And checks the value $nodoInviaCarrelloRPT.identificativoIntermediarioPA of the record at column PA_FISCAL_CODE of the table POSITION_SERVICE retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+        And checks the value Pagamento multibeneficiario of the record at column DESCRIPTION of the table POSITION_SERVICE retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+        And checks the value AZIENDA XXX of the record at column COMPANY_NAME of the table POSITION_SERVICE retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+        And checks the value XXX of the record at column OFFICE_NAME of the table POSITION_SERVICE retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+
+        And execution query by_notice_number_and_pa to get value on the table POSITION_SERVICE, with the columns DEBTOR_ID under macro Mod1Mb with db name nodo_online
+        And through the query by_notice_number_and_pa retrieve param ID at position 0 and save it under the key DEBTOR_ID
+        And checks the value $DEBTOR_ID of the record at column ID of the table POSITION_SUBJECT retrived by the query by_position_subject on db nodo_online under macro Mod1Mb
+
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_SERVICE retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_SERVICE retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+

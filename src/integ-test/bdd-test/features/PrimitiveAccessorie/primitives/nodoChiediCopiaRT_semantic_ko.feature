@@ -43,7 +43,8 @@ Feature: Semantic checks for nodoChiediCopiaRT - KO
         And codiceContestoPagamento with <ccp_value> in nodoChiediCopiaRT
         When EC sends SOAP nodoChiediCopiaRT to nodo-dei-pagamenti
         Then check faultCode is <error> of nodoChiediCopiaRT response
+        #per il test CCRTSEM11 prendere i dati dal db dalla STATI_RPT_SNAPSHOT con STATO = 'RPT_ACCETTATA_PSP'
         Examples:
             | iuv_value                       | ccp_value         | error                 | soapUI test |
             | 11000679416493210               | 59050             | PPT_RT_SCONOSCIUTA    | CCRTSEM10   |
-            | IUV-2022-09-07-14:58:47.285     | 40972             | PPT_RT_NONDISPONIBILE | CCRTSEM11   | 
+            | 11000778432122951               | 94020             | PPT_RT_NONDISPONIBILE | CCRTSEM11   | 

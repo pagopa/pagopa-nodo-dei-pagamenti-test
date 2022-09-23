@@ -60,13 +60,6 @@ def step_impl(context, primitive):
     payload = utils.replace_local_variables(payload, context)
     payload = utils.replace_context_variables(payload, context)
     payload = utils.replace_global_variables(payload, context)
-    date = datetime.date.today().strftime("%Y-%m-%d")
-    timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
-    yesterday_date = datetime.date.today() - datetime.timedelta(days=1)
-
-    setattr(context, 'date', date)
-    setattr(context, 'timedate', timedate)
-    setattr(context, 'yesterday_date', yesterday_date)
 
     if len(payload) > 0:
         my_document = parseString(payload)
@@ -77,15 +70,20 @@ def step_impl(context, primitive):
         payload = payload.replace(
             '#idempotency_key#', f"{idBrokerPSP}_{str(random.randint(1000000000, 9999999999))}")
 
-
     if "#timedate#" in payload:
+        timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
         payload = payload.replace('#timedate#', timedate)
+        setattr(context, 'timedate', timedate)
 
     if '#date#' in payload:
+        date = datetime.date.today().strftime("%Y-%m-%d")
         payload = payload.replace('#date#', date)
+        setattr(context, 'date', date)
 
     if '#yesterday_date#' in payload:
+        yesterday_date = datetime.date.today() - datetime.timedelta(days=1)
         payload = payload.replace('#yesterday_date#', yesterday_date)
+        setattr(context, 'yesterday_date', yesterday_date)
 
     if "#ccp#" in payload:
         ccp = str(random.randint(100000000000000, 999999999999999))
@@ -237,6 +235,7 @@ def step_impl(context):
 
     if "#timedate#" in payload:
         payload = payload.replace('#timedate#', timedate)
+        setattr(context, 'timedate', timedate)
 
     if '#IuV#' in payload:
         iuv = '0' + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + '00'
@@ -547,16 +546,17 @@ def step_impl(context):
     payload = utils.replace_global_variables(payload, context)
     payload = utils.replace_local_variables(payload, context)
     payload = utils.replace_context_variables(payload, context)
-    date = datetime.date.today().strftime("%Y-%m-%d")
-    timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
-    setattr(context, 'date', date)
-    setattr(context, 'timedate', timedate)
-
+    
     if '#date#' in payload:
+        date = datetime.date.today().strftime("%Y-%m-%d")
         payload = payload.replace('#date#', date)
+        setattr(context, 'date', date)
 
     if "#timedate#" in payload:
+        date = datetime.date.today().strftime("%Y-%m-%d")
+        timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
         payload = payload.replace('#timedate#', timedate)
+        setattr(context, 'timedate', timedate)
 
     if "#ccp#" in payload:
         ccp = str(utils.current_milli_time())
@@ -2358,6 +2358,13 @@ def step_impl(context, url):
     print(url)
     print(f"#################### {url.split('idSession=')[1]}")
     setattr(context, f'sessionToken', url.split('idSession=')[1])
+
+@step('retrieve session token {number:d} from {url}')
+def step_impl(context, number, url):
+    url = utils.replace_local_variables(url, context)
+    print(url)
+    print(f"#################### {url.split('idSession=')[1]}")
+    setattr(context, f'{number}sessionToken', url.split('idSession=')[1])
 
 
 @step('retrieve url from {url}')
