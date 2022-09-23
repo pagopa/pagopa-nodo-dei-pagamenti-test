@@ -127,6 +127,8 @@
         "position_subject": "SELECT columns FROM table_name WHERE ENTITY_UNIQUE_IDENTIFIER_VALUE = '$sendPaymentOutcomeV2.entityUniqueIdentifierValue' and INSERTED_TIMESTAMP > TO_DATE ('$date','YYYY-MM-DD HH24:MI:SS')",
         "update_validto": "UPDATE table_name SET param = TO_DATE('value', 'YYYY-MM-DD HH24:MI:SS') WHERE IDEMPOTENCY_KEY = '$sendPaymentOutcomeV2.idempotencyKey' AND PSP_ID = '$sendPaymentOutcomeV2.idPSP'",
         "update_noticeid_activate1": "UPDATE table_name SET param = 'value' WHERE NOTICE_ID ='$activatePaymentNoticeRequest1.noticeNumber'",
-        "update_noticeid_activate2": "UPDATE table_name SET param = 'value' WHERE NOTICE_ID ='$activatePaymentNoticeRequest2.noticeNumber'"
+        "update_noticeid_activate2": "UPDATE table_name SET param = 'value' WHERE NOTICE_ID ='$activatePaymentNoticeRequest2.noticeNumber'",
+        "select_activate": "SELECT columns FROM table_name WHERE NOTICE_ID = '$activatePaymentNotice.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode'",
+        "update_activate": "UPDATE table_name SET param = 'value' WHERE NOTICE_ID = '$activatePaymentNotice.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode'"
     }
 }
