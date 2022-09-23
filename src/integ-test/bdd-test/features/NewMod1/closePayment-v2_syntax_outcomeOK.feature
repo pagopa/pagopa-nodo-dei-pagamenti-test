@@ -39,13 +39,11 @@ Feature: syntax checks for closePaymentV2 outcome OK
             | outcome                       | None                                                                                                                                                                                                                                                             | SIN_CPV2_04 |
             | outcome                       | Empty                                                                                                                                                                                                                                                            | SIN_CPV2_05 |
             | outcome                       | OO                                                                                                                                                                                                                                                               | SIN_CPV2_06 |
-            | idPsp                         | None                                                                                                                                                                                                                                                             | SIN_CPV2_07 |
-            | idPsp                         | Empty                                                                                                                                                                                                                                                            | SIN_CPV2_08 |
-            | idPsp                         | 700000000017000000000170000000001700                                                                                                                                                                                                                             | SIN_CPV2_09 |
+            | idPSP                         | None                                                                                                                                                                                                                                                             | SIN_CPV2_07 |
+            | idPSP                         | Empty                                                                                                                                                                                                                                                            | SIN_CPV2_08 |
+            | idPSP                         | 700000000017000000000170000000001700                                                                                                                                                                                                                             | SIN_CPV2_09 |
             | paymentMethod                 | None                                                                                                                                                                                                                                                             | SIN_CPV2_10 |
             | paymentMethod                 | Empty                                                                                                                                                                                                                                                            | SIN_CPV2_11 |
-            | paymentMethod                 | OBEP                                                                                                                                                                                                                                                             | SIN_CPV2_12 |
-            | paymentMethod                 | CP                                                                                                                                                                                                                                                               | SIN_CPV2_12 |
             | idBrokerPSP                   | None                                                                                                                                                                                                                                                             | SIN_CPV2_13 |
             | idBrokerPSP                   | Empty                                                                                                                                                                                                                                                            | SIN_CPV2_14 |
             | idBrokerPSP                   | 700000000017000000000170000000001700                                                                                                                                                                                                                             | SIN_CPV2_15 |
@@ -69,9 +67,23 @@ Feature: syntax checks for closePaymentV2 outcome OK
             | timestampOperation            | 2012-04-23T18:25:43                                                                                                                                                                                                                                              | SIN_CPV2_34 |
             | timestampOperation            | 2012-04-23T18:25                                                                                                                                                                                                                                                 | SIN_CPV2_34 |
             | additionalPaymentInformations | None                                                                                                                                                                                                                                                             | SIN_CPV2_35 |
+            | additionalPaymentInformations | Empty                                                                                                                                                                                                                                                            | SIN_CPV2_36 |
             | key                           | None                                                                                                                                                                                                                                                             | SIN_CPV2_37 |
 
+    # syntax check - Invalid field - payment method
+    Scenario Outline: Check syntax error on invalid body element value - payment method
+        Given the closePaymentV2 scenario executed successfully
+        And <elem> with <value> in v2/closepayment
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 400
+        And check outcome is KO of v2/closepayment response
+        And check description is Invalid payment method of v2/closepayment response
+        Examples:
+            | elem          | value | soapUI test |
+            | paymentMethod | OBEP  | SIN_CPV2_12 |
+            | paymentMethod | CP    | SIN_CPV2_12 |
 
+    # syntax check - Invalid field - paymentToken
     Scenario Outline: Check syntax error on invalid body element value - paymentToken
         Given the closePaymentV2 scenario executed successfully
         And <elem> with <value> in v2/closepayment
@@ -83,6 +95,15 @@ Feature: syntax checks for closePaymentV2 outcome OK
             | elem         | value                                 | soapUI test |
             | paymentToken | None                                  | SIN_CPV2_02 |
             | paymentToken | 87cacaf799cadf9vs9s7vasdvs676cavv4574 | SIN_CPV2_03 |
+
+    # syntax check - Invalid field - additionalPaymentInformations [SIN_CPV2_37]
+    Scenario: Check syntax error on invalid body element value - additionalPaymentInformations
+        Given the closePaymentV2 scenario executed successfully
+        And key with Empty in v2/closepayment
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 400
+        And check outcome is KO of v2/closepayment response
+        And check description is Invalid additionalPaymentInformations of v2/closepayment response
 
 
     # No error with fee 0 [SIN_CPV2_31.2]
@@ -98,12 +119,10 @@ Feature: syntax checks for closePaymentV2 outcome OK
             <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
             <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
             <password>#password#</password>
-            <idempotencyKey>#idempotency_key#</idempotencyKey>
             <qrCode>
             <fiscalCode>#creditor_institution_code#</fiscalCode>
             <noticeNumber>311#iuv#</noticeNumber>
             </qrCode>
-            <expirationTime>120000</expirationTime>
             <amount>10.00</amount>
             <dueDate>2021-12-31</dueDate>
             <paymentNote>causale</paymentNote>
@@ -201,6 +220,24 @@ Feature: syntax checks for closePaymentV2 outcome OK
         Then check outcome is OK of activatePaymentNoticeV2 response
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV21
 
+    Scenario: check closePaymentV2 OK with fee 0
+        Given the check activatePaymentNoticeV2 OK scenario executed successfully
+        And the closePaymentV2 scenario executed successfully
+        And paymentToken with $activatePaymentNoticeV21Response.paymentToken in v2/closepayment
+        And totalAmount with 10 in v2/closepayment
+        And fee with 0 in v2/closepayment
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 200
+        And check outcome is OK of v2/closepayment response
+
+
+    # No error
+    Scenario: check activatePaymentNoticeV2 OK
+        Given the activatePaymentNoticeV2 scenario executed successfully
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV21
+
     Scenario Outline: check closePaymentV2 OK with fee 0
         Given the check activatePaymentNoticeV2 OK scenario executed successfully
         And the closePaymentV2 scenario executed successfully
@@ -210,25 +247,13 @@ Feature: syntax checks for closePaymentV2 outcome OK
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
         Examples:
-            | elem                          | value | soapUI test   |
-            | fee                           | 0     | SIN_CPV2_31.2 |
-            | additionalPaymentInformations | Empty | SIN_CPV2_36   |
+            | elem               | value                      | soapUI test   |
+            | totalAmount        | 12.0                       | SIN_CPV2_25   |
+            | totalAmount        | 12                         | SIN_CPV2_25.2 |
+            | fee                | 2.0                        | SIN_CPV2_30   |
+            | fee                | 2                          | SIN_CPV2_30.2 |
+            | timestampOperation | 2033-04-23T18:25:43Z+01:00 | SIN_CPV2_34.1 |
 
-    # # No error with empty additionalPaymentInformations [SIN_CPV2_36]
-    # Scenario: check activatePaymentNoticeV2 OK
-    #     Given the activatePaymentNoticeV2 scenario executed successfully
-    #     When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-    #     Then check outcome is OK of activatePaymentNoticeV2 response
-    #     And save activatePaymentNoticeV2 response in activatePaymentNoticeV21
-
-    # Scenario: check closePaymentV2 OK with empty additionalPaymentInformations
-    #     Given the check activatePaymentNoticeV2 OK scenario executed successfully
-    #     And the closePaymentV2 scenario executed successfully
-    #     And paymentToken with $activatePaymentNoticeV21Response.paymentToken in v2/closepayment
-    #     And additionalPaymentInformations with Empty in v2/closepayment
-    #     When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
-    #     Then verify the HTTP status code of v2/closepayment response is 200
-    #     And check outcome is OK of v2/closepayment response
 
     # syntax check - Invalid request
     Scenario Outline: Check syntax error on invalid request
@@ -245,8 +270,15 @@ Feature: syntax checks for closePaymentV2 outcome OK
 
 
     # syntax check - Mismatched amount [SIN_CPV2_31.1]
+    Scenario: check activatePaymentNoticeV2 OK
+        Given the activatePaymentNoticeV2 scenario executed successfully
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV21
+
     Scenario: Check syntax error on fee greater than totalAmount
         Given the closePaymentV2 scenario executed successfully
+        And paymentToken with $activatePaymentNoticeV21Response.paymentToken in v2/closepayment
         And fee with 20 in v2/closepayment
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 400
