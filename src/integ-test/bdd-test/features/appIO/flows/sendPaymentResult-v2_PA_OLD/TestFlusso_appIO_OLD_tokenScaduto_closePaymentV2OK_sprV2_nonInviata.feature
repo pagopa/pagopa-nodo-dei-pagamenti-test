@@ -68,7 +68,7 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
     # nodoAttivaRPT phase
     Scenario: Execute nodoAttivaRPT request
         Given the Execute nodoVerificaRPT request scenario executed successfully
-        And nodo-dei-pagamenti DEV has config parameter scheduler.cancelIOPaymentActorMinutesToBack set to 1
+        And nodo-dei-pagamenti DEV has config parameter scheduler.annullamentoRptMaiRichiesteDaPmPollerMinutesToBack set to 1
         And nodo-dei-pagamenti DEV has config parameter scheduler.jobName_annullamentoRptMaiRichiesteDaPm.enabled set to true
         And initial xml nodoAttivaRPT
 
