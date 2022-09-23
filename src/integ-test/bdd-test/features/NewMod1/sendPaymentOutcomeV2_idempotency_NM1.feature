@@ -679,7 +679,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2
         And current date plus 1 minutes generation
         And updates through the query update_validto of the table IDEMPOTENCY_CACHE the parameter VALID_TO with $date_plus_minutes under macro NewMod1 on db nodo_online
         And wait 65 seconds for expiration
-
+    @wip
     Scenario: IDMP_SPO_17 (part 4)
         Given the IDMP_SPO_17 (part 3) scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -855,10 +855,10 @@ Feature: idempotency checks for sendPaymentOutcomeV2
         And the sendPaymentOutcomeV2 scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-
+    @wip
     Scenario: IDMP_SPO_27 (part 4)
         Given the IDMP_SPO_27 (part 3) scenario executed successfully
-        And idempotencyKey with #idempotency_key3# in sendPaymentOutcomeV2
+        And random idempotencyKey having sendPaymentOutcomeV2.idPSP as idPSP in sendPaymentOutcomeV2
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcomeV2 response
         And check faultCode is PPT_ESITO_GIA_ACQUISITO of sendPaymentOutcomeV2 response
@@ -885,9 +885,10 @@ Feature: idempotency checks for sendPaymentOutcomeV2
         Given the IDMP_SPO_31 (part 2) scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
         And paymentToken with $activatePaymentNoticeV2_2Response.paymentToken in sendPaymentOutcomeV2
+        And idempotencyKey with None in sendPaymentOutcomeV2
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-
+    @wip
     Scenario: IDMP_SPO_31 (part 4)
         Given the IDMP_SPO_31 (part 3) scenario executed successfully
         And paymentToken with $activatePaymentNoticeV2_1Response.paymentToken in sendPaymentOutcomeV2
