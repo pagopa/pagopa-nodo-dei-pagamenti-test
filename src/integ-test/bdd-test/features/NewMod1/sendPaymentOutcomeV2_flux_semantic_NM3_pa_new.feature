@@ -432,7 +432,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
     #     And updates through the query update_noticeidrandom of the table POSITION_STATUS_SNAPSHOT the parameter NOTICE_ID with 311$iuv under macro NewMod1 on db nodo_online
 
     # SEM_SPO_32
-
+@wip
     Scenario: SEM_SPO_32 (part 1)
         Given the verifyPaymentNotice scenario executed successfully
         And the activatePaymentNotice scenario executed successfully
@@ -444,7 +444,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
     Scenario: SEM_SPO_32 (part 2)
         Given the SEM_SPO_32 (part 1) scenario executed successfully
         When job mod3CancelV2 triggered after 3 seconds
-        Then wait 5 seconds for expiration
+        Then wait 0 seconds for expiration
 
     Scenario: SEM_SPO_32 (part 3)
         Given the SEM_SPO_32 (part 2) scenario executed successfully
