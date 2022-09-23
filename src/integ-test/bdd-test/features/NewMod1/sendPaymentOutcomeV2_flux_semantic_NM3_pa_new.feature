@@ -263,7 +263,6 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
         Then check outcome is OK of activatePaymentNotice response
         And save activatePaymentNotice response in activatePaymentNotice_1
 
-    @wip
     Scenario: SEM_SPO_7.1 (part 2)
         Given the SEM_SPO_7.1 (part 1) scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
