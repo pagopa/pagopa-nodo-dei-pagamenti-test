@@ -22,6 +22,38 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
             </soapenv:Body>
             </soapenv:Envelope>
             """
+        And initial XML paVerifyPaymentNotice
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <paf:paVerifyPaymentNoticeRes>
+            <outcome>OK</outcome>
+            <paymentList>
+            <paymentOptionDescription>
+            <amount>1.00</amount>
+            <options>EQ</options>
+            <!--Optional:-->
+            <dueDate>2021-12-31</dueDate>
+            <!--Optional:-->
+            <detailDescription>descrizione dettagliata lato PA</detailDescription>
+            <!--Optional:-->
+            <allCCP>false</allCCP>
+            </paymentOptionDescription>
+            </paymentList>
+            <!--Optional:-->
+            <paymentDescription>/RFB/00202200000217527/5.00/TXT/</paymentDescription>
+            <!--Optional:-->
+            <fiscalCodePA>$verifyPaymentNotice.fiscalCode</fiscalCodePA>
+            <!--Optional:-->
+            <companyName>company PA</companyName>
+            <!--Optional:-->
+            <officeName>office PA</officeName>
+            </paf:paVerifyPaymentNoticeRes>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And EC replies to nodo-dei-pagamenti with the paVerifyPaymentNotice
         When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of verifyPaymentNotice response
 
