@@ -241,31 +241,23 @@ Feature: syntax checks for closePaymentV2 outcome OK
         And initial JSON v2/closepayment
             """
             {
-            "paymentTokens": [
-            "$activatePaymentNoticeV21Response.paymentToken"
-            ],
-            "outcome": "OK",
-            "idPSP": "#psp#",
-            "idBrokerPSP": "60000000001",
-            "idChannel": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
-            "paymentMethod": "TPAY",
-            "transactionId": "#transaction_id#",
-            "totalAmount": 12,
-            "fee": 2,
-            "timestampOperation": "2033-04-23T18:25:43Z",
-            "additionalPaymentInformations": {
-            "transactionId": "11435230",
-            "outcomePaymentGateway": "EFF",
-            "authorizationCode": "resOK",
-            "transactionId": "11435230",
-            "outcomePaymentGateway": "EFF",
-            "authorizationCode": "resOK",
-            "transactionId": "11435230",
-            "outcomePaymentGateway": "EFF",
-            "authorizationCode": "resOK",
-            "outcomePaymentGateway": "EFF",
-            "authorizationCode": "resOK"
-            }
+                "paymentTokens": [
+                    "$activatePaymentNoticeV21Response.paymentToken"
+                ],
+                "outcome": "OK",
+                "idPSP": "#psp#",
+                "idBrokerPSP": "60000000001",
+                "idChannel": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
+                "paymentMethod": "TPAY",
+                "transactionId": "#transaction_id#",
+                "totalAmount": 12,
+                "fee": 2,
+                "timestampOperation": "2033-04-23T18:25:43Z",
+                "additionalPaymentInformations": {
+                    "transactionId": "11435230",
+                    "outcomePaymentGateway": "EFF",
+                    "authorizationCode": "resOK"
+                }
             }
             """
 
@@ -287,21 +279,21 @@ Feature: syntax checks for closePaymentV2 outcome OK
         And initial JSON v2/closepayment
             """
             {
-            "paymentTokens": [
-            "$activatePaymentNoticeV21Response.paymentToken"
-            ],
-            "outcome": "OK",
-            "idPSP": "#psp#",
-            "idBrokerPSP": "60000000001",
-            "idChannel": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
-            "paymentMethod": "TPAY",
-            "transactionId": "#transaction_id#",
-            "totalAmount": 12,
-            "fee": 2,
-            "timestampOperation": "2033-04-23T18:25:43Z",
-            "additionalPaymentInformations": {
-            "transactionId": "#transaction_id#"
-            }
+                "paymentTokens": [
+                    "$activatePaymentNoticeV21Response.paymentToken"
+                ],
+                "outcome": "OK",
+                "idPSP": "#psp#",
+                "idBrokerPSP": "60000000001",
+                "idChannel": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
+                "paymentMethod": "TPAY",
+                "transactionId": "#transaction_id#",
+                "totalAmount": 12,
+                "fee": 2,
+                "timestampOperation": "2033-04-23T18:25:43Z",
+                "additionalPaymentInformations": {
+                    "transactionId": "#transaction_id#"
+                }
             }
             """
 
@@ -327,12 +319,12 @@ Feature: syntax checks for closePaymentV2 outcome OK
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
         Examples:
-            | elem               | value                      | soapUI test   |
-            | totalAmount        | 12.0                       | SIN_CPV2_25   |
-            | totalAmount        | 12                         | SIN_CPV2_25.2 |
-            | fee                | 2.0                        | SIN_CPV2_30   |
-            | fee                | 2                          | SIN_CPV2_30.2 |
-            # | timestampOperation | 2033-04-23T18:25:432+01:00 | SIN_CPV2_34.1 |
+            | elem               | value                         | soapUI test   |
+            | totalAmount        | 12.0                          | SIN_CPV2_25   |
+            | totalAmount        | 12                            | SIN_CPV2_25.2 |
+            | fee                | 2.0                           | SIN_CPV2_30   |
+            | fee                | 2                             | SIN_CPV2_30.2 |
+            | timestampOperation | 2033-04-23T18:25:43.372+01:00 | SIN_CPV2_34.1 |
 
 
     # syntax check - different keys [SIN_CPV2_38.1]
@@ -347,31 +339,31 @@ Feature: syntax checks for closePaymentV2 outcome OK
         And initial JSON v2/closepayment
             """
             {
-            "paymentTokens": [
-            "$activatePaymentNoticeV21Response.paymentToken"
-            ],
-            "outcome": "OK",
-            "idPSP": "#psp#",
-            "idBrokerPSP": "60000000001",
-            "idChannel": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
-            "paymentMethod": "TPAY",
-            "transactionId": "#transaction_id#",
-            "totalAmount": 12,
-            "fee": 2,
-            "timestampOperation": "2033-04-23T18:25:43Z",
-            "additionalPaymentInformations": {
-                "transactionId": "11435230",
-                "outcomePaymentGateway": "EFF",
-                "authorizationCode": "resOK",
-                "key": "114352304",
-                "valore": "EFF",
-                "chiave": "resOK",
-                "campo": "114352305",
-                "field": "EFF",
-                "tag": "resOK",
-                "key1": "EFF",
-                "prova": "resOK"
-            }
+                "paymentTokens": [
+                    "$activatePaymentNoticeV21Response.paymentToken"
+                ],
+                "outcome": "OK",
+                "idPSP": "#psp#",
+                "idBrokerPSP": "60000000001",
+                "idChannel": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
+                "paymentMethod": "TPAY",
+                "transactionId": "#transaction_id#",
+                "totalAmount": 12,
+                "fee": 2,
+                "timestampOperation": "2033-04-23T18:25:43Z",
+                "additionalPaymentInformations": {
+                    "transactionId": "11435230",
+                    "outcomePaymentGateway": "EFF",
+                    "authorizationCode": "resOK",
+                    "key": "114352304",
+                    "valore": "EFF",
+                    "chiave": "resOK",
+                    "campo": "114352305",
+                    "field": "EFF",
+                    "tag": "resOK",
+                    "key1": "EFF",
+                    "prova": "resOK"
+                }
             }
             """
 
