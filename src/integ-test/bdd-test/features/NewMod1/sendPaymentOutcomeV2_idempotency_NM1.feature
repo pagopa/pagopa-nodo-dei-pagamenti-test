@@ -869,12 +869,13 @@ Feature: idempotency checks for sendPaymentOutcomeV2
     Scenario: IDMP_SPO_31 (part 1)
         Given the checkPosition scenario executed successfully
         And the activatePaymentNoticeV2 scenario executed successfully
+        And expirationTime with 2000 in activatePaymentNoticeV2
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_1
         And updates through the query update_activatev2 of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with CANCELLED under macro NewMod1 on db nodo_online
         And updates through the query update_activatev2 of the table POSITION_STATUS_SNAPSHOT the parameter STATUS with INSERTED under macro NewMod1 on db nodo_online
-        And wait 5 seconds for expiration
+        And wait 3 seconds for expiration
 
     Scenario: IDMP_SPO_31 (part 2)
         Given the IDMP_SPO_31 (part 1) scenario executed successfully
