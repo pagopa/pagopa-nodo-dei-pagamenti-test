@@ -229,33 +229,39 @@ Feature: process tests for inoltropagamentoMb_03
       And check urlRedirectEC field exists in informazioniPagamento response
 
    Scenario: Execute nodoInoltraPagamentoMod2
-      Given the Execute nodoChiediInformazioniPagamento scenario executed successfully
-      And initial XML pspInviaRPT
+      Given the Execute nodoInviaCarrelloRPT scenario executed successfully
+      And initial XML pspInviaCarrelloRPT
          """
          <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
          <soapenv:Header/>
          <soapenv:Body>
-         <ws:pspInviaRPTResponse>
-         <pspInviaRPTResponse>
+         <ws:pspInviaCarrelloRPTResponse>
+         <pspInviaCarrelloRPTResponse>
+         <fault>
+         <faultCode>CANALE_RPT_RIFIUTATA</faultCode>
+         <faultString>fault esterno</faultString>
+         <id>700000000001</id>
+         <description>descrizione fault esterno</description>
+         </fault>
          <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-         <wait>timeout</wait>
-         <identificativoCarrello>$nodoInviaCarrelloRPT.identificativoCarrello</identificativoCarrello>
-         <parametriPagamentoImmediato>idBruciatura=$nodoInviaCarrelloRPT.identificativoCarrello</parametriPagamentoImmediato>
-         </pspInviaRPTResponse>
-         </ws:pspInviaRPTResponse>
+         </pspInviaCarrelloRPTResponse>
+         </ws:pspInviaCarrelloRPTResponse>
          </soapenv:Body>
          </soapenv:Envelope>
          """
-      And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
+      And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
       When WISP sends REST POST inoltroEsito/mod2 to nodo-dei-pagamenti
+
          """
+
          {
             "idPagamento": "$sessionToken",
             "identificativoPsp": "#psp#",
             "tipoVersamento": "BBT",
             "identificativoIntermediario": "#psp#",
-            "identificativoCanale": "#canale_DIFFERITO_MOD2#"
+            "identificativoCanale": "70000000001_04"
          }
+
          """
       Then verify the HTTP status code of inoltroEsito/mod2 response is 200
       And check esito is OK of inoltroEsito/mod2 response
