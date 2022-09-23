@@ -123,6 +123,7 @@
         "retry_rpt": "SELECT columns FROM table_name WHERE ID_SESSIONE='$sessionToken' ORDER BY INSERTED_TIMESTAMP",
         "retry_rpt_original": "SELECT columns FROM table_name WHERE ID_SESSIONE_ORIGINALE='$sessionToken' ORDER BY INSERTED_TIMESTAMP",
         "Re": "SELECT columns FROM table_name WHERE ID_SESSIONE ='$idSessione' AND INSERTED_TIMESTAMP > ROUND(SYSDATE-1) ORDER BY DATA_ORA_EVENTO",
+        "Re_2": "SELECT columns FROM table_name WHERE ID_SESSIONE ='$2idSessione' AND INSERTED_TIMESTAMP > ROUND(SYSDATE-1) ORDER BY DATA_ORA_EVENTO",
         "rpt_stati": "SELECT columns FROM table_name s WHERE s.IUV = '$iuv' ORDER BY INSERTED_TIMESTAMP ASC",
         "rt_stati": "SELECT columns FROM table_name s WHERE s.IUV = '$IUV' ORDER BY INSERTED_TIMESTAMP ASC",
         "stati_carrello": "SELECT columns FROM table s WHERE s.ID_CARRELLO = '$nodoInviaCarrelloRPT.idCarrello' ORDER BY ID ASC",
