@@ -151,9 +151,9 @@ Feature: process tests for nodoInviaRPT [PAG-1192_errore_response_RPT]
 
     Scenario: Trigger paInviaRT
         Given the Trigger mod3Cancel scenario executed successfully
-        When job paInviaRT triggered after 5 seconds
+        When job paInviaRt triggered after 5 seconds
         And wait 10 seconds for expiration
-        Then verify the HTTP status code of paInviaRT response is 200
+        Then verify the HTTP status code of paInviaRt response is 200
 
 
 
@@ -332,6 +332,8 @@ Feature: process tests for nodoInviaRPT [PAG-1192_errore_response_RPT]
             </soapenv:Body>
             </soapenv:Envelope>
             """
+        And job paInviaRt triggered after 5 seconds
+        And wait 5 seconds for expiration
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
 
