@@ -86,26 +86,28 @@ Feature: syntax checks for closePaymentV2 outcome OK
 
 
     # No error with fee 0 [SIN_CPV2_31.2]
-    Scenario: activatePaymentNotice
-        Given initial XML activatePaymentNotice
+    Scenario: activatePaymentNoticeV2
+        Given initial XML activatePaymentNoticeV2
             """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+            xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
             <soapenv:Header/>
             <soapenv:Body>
-            <nod:activatePaymentNoticeReq>
+            <nod:activatePaymentNoticeV2Request>
             <idPSP>#psp#</idPSP>
             <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
             <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
-            <password>pwdpwdpwd</password>
+            <password>#password#</password>
             <idempotencyKey>#idempotency_key#</idempotencyKey>
             <qrCode>
-            <fiscalCode>#creditor_institution_code_old#</fiscalCode>
+            <fiscalCode>#creditor_institution_code#</fiscalCode>
             <noticeNumber>311#iuv#</noticeNumber>
             </qrCode>
+            <expirationTime>120000</expirationTime>
             <amount>10.00</amount>
             <dueDate>2021-12-31</dueDate>
             <paymentNote>causale</paymentNote>
-            </nod:activatePaymentNoticeReq>
+            </nod:activatePaymentNoticeV2Request>
             </soapenv:Body>
             </soapenv:Envelope>
             """
@@ -193,16 +195,16 @@ Feature: syntax checks for closePaymentV2 outcome OK
             """
         And EC replies to nodo-dei-pagamenti with the paGetPayment
 
-    Scenario: check activatePaymentNotice OK
-        Given the activatePaymentNotice scenario executed successfully
-        When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
-        Then check outcome is OK of activatePaymentNotice response
-        And save activatePaymentNotice response in activatePaymentNotice1
+    Scenario: check activatePaymentNoticeV2 OK
+        Given the activatePaymentNoticeV2 scenario executed successfully
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV21
 
     Scenario Outline: check closePaymentV2 OK with fee 0
-        Given the check activatePaymentNotice OK scenario executed successfully
+        Given the check activatePaymentNoticeV2 OK scenario executed successfully
         And the closePaymentV2 scenario executed successfully
-        And paymentToken with $activatePaymentNotice1Response.paymentToken in v2/closepayment
+        And paymentToken with $activatePaymentNoticeV21Response.paymentToken in v2/closepayment
         And <elem> with <value> in v2/closepayment
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
@@ -213,16 +215,16 @@ Feature: syntax checks for closePaymentV2 outcome OK
             | additionalPaymentInformations | Empty | SIN_CPV2_36   |
 
     # # No error with empty additionalPaymentInformations [SIN_CPV2_36]
-    # Scenario: check activatePaymentNotice OK
-    #     Given the activatePaymentNotice scenario executed successfully
-    #     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
-    #     Then check outcome is OK of activatePaymentNotice response
-    #     And save activatePaymentNotice response in activatePaymentNotice1
+    # Scenario: check activatePaymentNoticeV2 OK
+    #     Given the activatePaymentNoticeV2 scenario executed successfully
+    #     When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+    #     Then check outcome is OK of activatePaymentNoticeV2 response
+    #     And save activatePaymentNoticeV2 response in activatePaymentNoticeV21
 
     # Scenario: check closePaymentV2 OK with empty additionalPaymentInformations
-    #     Given the check activatePaymentNotice OK scenario executed successfully
+    #     Given the check activatePaymentNoticeV2 OK scenario executed successfully
     #     And the closePaymentV2 scenario executed successfully
-    #     And paymentToken with $activatePaymentNotice1Response.paymentToken in v2/closepayment
+    #     And paymentToken with $activatePaymentNoticeV21Response.paymentToken in v2/closepayment
     #     And additionalPaymentInformations with Empty in v2/closepayment
     #     When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
     #     Then verify the HTTP status code of v2/closepayment response is 200
@@ -253,79 +255,79 @@ Feature: syntax checks for closePaymentV2 outcome OK
 
 
     # syntax check - Invalid paymentTokens with 6 tokens [SIN_CPV2_03.3]
-    Scenario: check activatePaymentNotice OK 6 tokens
-        Given the activatePaymentNotice scenario executed successfully
-        When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
-        Then check outcome is OK of activatePaymentNotice response
-        And save activatePaymentNotice response in activatePaymentNotice1
+    Scenario: check activatePaymentNoticeV2 OK 6 tokens
+        Given the activatePaymentNoticeV2 scenario executed successfully
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV21
 
-    Scenario: check activatePaymentNotice2 OK 6 tokens
-        Given the check activatePaymentNotice OK 6 tokens scenario executed successfully
+    Scenario: check activatePaymentNoticeV22 OK 6 tokens
+        Given the check activatePaymentNoticeV2 OK 6 tokens scenario executed successfully
         And random iuv in context
-        And noticeNumber with 311$iuv in activatePaymentNotice
+        And noticeNumber with 311$iuv in activatePaymentNoticeV2
         And creditorReferenceId with 11$iuv in paGetPayment
         And EC replies to nodo-dei-pagamenti with the paGetPayment
-        When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
-        Then check outcome is OK of activatePaymentNotice response
-        And save activatePaymentNotice response in activatePaymentNotice2
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV22
 
-    Scenario: check activatePaymentNotice3 OK 6 tokens
-        Given the check activatePaymentNotice2 OK 6 tokens scenario executed successfully
+    Scenario: check activatePaymentNoticeV23 OK 6 tokens
+        Given the check activatePaymentNoticeV22 OK 6 tokens scenario executed successfully
         And random iuv in context
-        And noticeNumber with 311$iuv in activatePaymentNotice
+        And noticeNumber with 311$iuv in activatePaymentNoticeV2
         And creditorReferenceId with 11$iuv in paGetPayment
         And EC replies to nodo-dei-pagamenti with the paGetPayment
-        When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
-        Then check outcome is OK of activatePaymentNotice response
-        And save activatePaymentNotice response in activatePaymentNotice3
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV23
 
-    Scenario: check activatePaymentNotice4 OK 6 tokens
-        Given the check activatePaymentNotice3 OK 6 tokens scenario executed successfully
+    Scenario: check activatePaymentNoticeV24 OK 6 tokens
+        Given the check activatePaymentNoticeV23 OK 6 tokens scenario executed successfully
         And random iuv in context
-        And noticeNumber with 311$iuv in activatePaymentNotice
+        And noticeNumber with 311$iuv in activatePaymentNoticeV2
         And creditorReferenceId with 11$iuv in paGetPayment
         And EC replies to nodo-dei-pagamenti with the paGetPayment
-        When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
-        Then check outcome is OK of activatePaymentNotice response
-        And save activatePaymentNotice response in activatePaymentNotice4
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV24
 
-    Scenario: check activatePaymentNotice5 OK 6 tokens
-        Given the check activatePaymentNotice4 OK 6 tokens scenario executed successfully
+    Scenario: check activatePaymentNoticeV25 OK 6 tokens
+        Given the check activatePaymentNoticeV24 OK 6 tokens scenario executed successfully
         And random iuv in context
-        And noticeNumber with 311$iuv in activatePaymentNotice
+        And noticeNumber with 311$iuv in activatePaymentNoticeV2
         And creditorReferenceId with 11$iuv in paGetPayment
         And EC replies to nodo-dei-pagamenti with the paGetPayment
-        When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
-        Then check outcome is OK of activatePaymentNotice response
-        And save activatePaymentNotice response in activatePaymentNotice5
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV25
 
-    Scenario: check activatePaymentNotice6 OK 6 tokens
-        Given the check activatePaymentNotice5 OK 6 tokens scenario executed successfully
+    Scenario: check activatePaymentNoticeV26 OK 6 tokens
+        Given the check activatePaymentNoticeV25 OK 6 tokens scenario executed successfully
         And random iuv in context
-        And noticeNumber with 311$iuv in activatePaymentNotice
+        And noticeNumber with 311$iuv in activatePaymentNoticeV2
         And creditorReferenceId with 11$iuv in paGetPayment
         And EC replies to nodo-dei-pagamenti with the paGetPayment
-        When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
-        Then check outcome is OK of activatePaymentNotice response
-        And save activatePaymentNotice response in activatePaymentNotice6
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV26
 
     Scenario: closePaymentV2 6 tokens
-        Given the check activatePaymentNotice OK 6 tokens scenario executed successfully
-        And the check activatePaymentNotice2 OK 6 tokens scenario executed successfully
-        And the check activatePaymentNotice3 OK 6 tokens scenario executed successfully
-        And the check activatePaymentNotice4 OK 6 tokens scenario executed successfully
-        And the check activatePaymentNotice5 OK 6 tokens scenario executed successfully
-        And the check activatePaymentNotice6 OK 6 tokens scenario executed successfully
+        Given the check activatePaymentNoticeV2 OK 6 tokens scenario executed successfully
+        And the check activatePaymentNoticeV22 OK 6 tokens scenario executed successfully
+        And the check activatePaymentNoticeV23 OK 6 tokens scenario executed successfully
+        And the check activatePaymentNoticeV24 OK 6 tokens scenario executed successfully
+        And the check activatePaymentNoticeV25 OK 6 tokens scenario executed successfully
+        And the check activatePaymentNoticeV26 OK 6 tokens scenario executed successfully
         And initial JSON v2/closepayment
             """
             {
                 "paymentTokens": [
-                    "$activatePaymentNotice1Response.paymentToken",
-                    "$activatePaymentNotice2Response.paymentToken",
-                    "$activatePaymentNotice3Response.paymentToken",
-                    "$activatePaymentNotice4Response.paymentToken",
-                    "$activatePaymentNotice5Response.paymentToken",
-                    "$activatePaymentNotice6Response.paymentToken"
+                    "$activatePaymentNoticeV21Response.paymentToken",
+                    "$activatePaymentNoticeV22Response.paymentToken",
+                    "$activatePaymentNoticeV23Response.paymentToken",
+                    "$activatePaymentNoticeV24Response.paymentToken",
+                    "$activatePaymentNoticeV25Response.paymentToken",
+                    "$activatePaymentNoticeV26Response.paymentToken"
                 ],
                 "outcome": "OK",
                 "idPSP": "#psp#",
