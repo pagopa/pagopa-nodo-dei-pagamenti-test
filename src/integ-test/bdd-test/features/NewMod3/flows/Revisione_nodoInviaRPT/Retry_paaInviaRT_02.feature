@@ -228,33 +228,14 @@ Feature: process tests for nodoInviaRPT [Retry_paaInviaRT_02]
             """
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
         When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-        And job paInviaRt triggered after 5 seconds
+        And job paInviaRt triggered after 0 seconds
         Then verify the HTTP status code of paInviaRt response is 200
         And check outcome is OK of sendPaymentOutcome response
         And wait 65 seconds for expiration
 
-    Scenario: retry paainviart
-        Given the Execute sendPaymentOutcome request Scenario executed successfully
-        And initial XML paaInviaRT
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <ws:paaInviaRTRisposta>
-            <paaInviaRTRisposta>
-            <esito>OK</esito>
-            </paaInviaRTRisposta>
-            </ws:paaInviaRTRisposta>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        And EC replies to nodo-dei-pagamenti with the paaInviaRT
-        When job paInviaRt triggered after 5 seconds
-        Then verify the HTTP status code of paInviaRt response is 200
-        And wait 65 seconds for expiration
 
     Scenario: DB check
-        Given the retry paainviart Scenario executed successfully
+        Given the Execute sendPaymentOutcome request Scenario executed successfully
         Then checks the value NotNone of the record at column id of the table RETRY_PA_INVIA_RT retrived by the query retry_pa_invia_rt_only_ccp on db nodo_online under macro NewMod3
         And checks the value #codicePA_old# of the record at column id_dominio of the table RETRY_PA_INVIA_RT retrived by the query retry_pa_invia_rt_only_ccp on db nodo_online under macro NewMod3
         #DB CHECK-POSITION_PAYMENT_STATUS
@@ -490,14 +471,14 @@ Feature: process tests for nodoInviaRPT [Retry_paaInviaRT_02]
         And check value $xml_rt.causaleVersamento is equal to value $xml_rpt.causaleVersamento
         And check value $xml_rt.datiSpecificiRiscossione is equal to value $xml_rpt.datiSpecificiRiscossione
 
-    Scenario: DB update xml rt
-        Given the retry DB check Scenario executed successfully
-        And causaleVersamento with timeout in xml_rt
-        Then generic update through the query param_update_generic_where_condition of the table RT_XML the parameter SET XML_CONTENT = TO_CLOB('$xml_rt'), with where condition IDENT_DOMINIO='$activatePaymentNotice,fiscalCode' AND IUV='$iuv' under macro update_query on db nodo_online
-        And wait 65 seconds for expiration
+    Scenario: retry paainviart
+        Given the DB check Scenario executed successfully
+        When job paRetryPaInviaRtNegative triggered after 5 seconds
+        Then verify the HTTP status code of paRetryPaInviaRtNegative response is 200
+        And wait 15 seconds for expiration
 
     Scenario: DB check 2
-        Given the DB update xml rt check Scenario executed successfully
+        Given the retry paainviart Scenario executed successfully
         Then verify 0 record for the table RETRY_PA_INVIA_RT retrived by the query retry_pa_invia_rt_only_ccp on db nodo_online under macro NewMod3
         #DB CHECK-POSITION_PAYMENT_STATUS
         And checks the value PAYING, PAYING_RPT, PAID, NOTICE_GENERATED, NOTICE_STORED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
