@@ -2,25 +2,25 @@ import papaparse from 'https://jslib.k6.io/papaparse/5.1.1/index.js';
 import { SharedArray } from 'k6/data';
 
 
-
+//tokenCC_OB is for the 1st PM scenario 
 const csvTokenIO_CC = new SharedArray('tokenIO_CC_data', function () {
     
   return papaparse.parse(open('../../../../data/tokenCC_OB.csv'), { header: true }).data;
 });
 
-
+//tokenPP_OB is for the 2nd PM scenario
 const csvTokenIO_PP = new SharedArray('tokenIO_PP_data', function () {
     
   return papaparse.parse(open('../../../../data/tokenPP_OB.csv'), { header: true }).data;
 });
 
-
+//anagPayCC is for 3th PM scenario
 const csvAnagPay_CC = new SharedArray('anagPayCC_data', function () {
     
   return papaparse.parse(open('../../../../data/anagPayCC.csv'), { header: true }).data;
 });
 
-
+//anagPayPP is for 4th PM scenario
 const csvAnagPay_PP = new SharedArray('anagPayPP_data', function () {
     
   return papaparse.parse(open('../../../../data/anagPayPP.csv'), { header: true }).data;

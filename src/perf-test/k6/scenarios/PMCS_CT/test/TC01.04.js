@@ -232,8 +232,7 @@ export function total() {
     
   //token='dhry56rhfyr'; //to comment
   res = getWallet_v3(baseUrl,token);
-
-
+  let idWallet = res.idWallet;
 
   res=idpay_setup();
   let idPay=res.json()[0].idPayment;

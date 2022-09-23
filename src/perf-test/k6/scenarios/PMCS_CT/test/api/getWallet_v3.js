@@ -55,7 +55,15 @@ export function getWallet_v3(baseUrl,token) {
    );
 
    // res.status = 200; //to comment
-
+   	let idWallet=undefined;
+    //console.log(res);
+    let result={};
+    try{
+	    idWallet= res.json().data.idWallet; //TODO verify if is correct
+	    result.idWallet=idWallet;
+    }catch(error){
+	    result.idWallet=idWallet;
+	}
    check(
     res,
     {

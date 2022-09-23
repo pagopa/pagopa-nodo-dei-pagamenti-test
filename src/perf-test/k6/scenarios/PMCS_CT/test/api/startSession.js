@@ -10,14 +10,16 @@ export const All_Trend = new Trend('ALL');
 
 export function startSession(baseUrl,tokenIO) {
  
-  
+  console.log("startSession request ["+baseUrl+'/pp-restapi-CD/v1/users/actions/start-session?token='+tokenIO+"]")
  const res = http.get(
     baseUrl+'/pp-restapi-CD/v1/users/actions/start-session?token='+tokenIO,
     { headers: { 'Content-Type': 'application/json' } ,
 	tags: { startSession: 'http_req_duration', ALL: 'http_req_duration'}
 	}
   );
-
+	console.log("------startSession response-----");
+	console.log(res);
+	console.log("------startSession response end-----");
    startSession_Trend.add(res.timings.duration);
    All_Trend.add(res.timings.duration);
 

@@ -23,4 +23,5 @@ echo calling 'k6 run -e scenario='$scenario' -e test='$test' -e steps='$steps' -
 
 echo Performance Test terminated.
 
-
+#run local
+#k6 run --out csv=src/perf-test/k6/scenarios/PMCS_CT/test/output/TC01.01.csv -e scenario=PMCS_CT -e test=TC01.01 -e steps=rampa_1_1_10 -e env=pagoPA_PERF_apim src/perf-test/k6/scenarios/PMCS_CT/test/TC01.01.js
