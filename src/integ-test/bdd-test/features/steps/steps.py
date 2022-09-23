@@ -553,6 +553,7 @@ def step_impl(context):
         setattr(context, 'date', date)
 
     if "#timedate#" in payload:
+        date = datetime.date.today().strftime("%Y-%m-%d")
         timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
         payload = payload.replace('#timedate#', timedate)
         setattr(context, 'timedate', timedate)
