@@ -25,14 +25,14 @@ Feature: syntax checks for closePaymentV2 outcome OK
             }
             """
 
-    # syntax check - Invalid field invalid
+    # syntax check - Invalid field
     Scenario Outline: Check syntax error on invalid body element value
         Given the closePaymentV2 scenario executed successfully
         And <elem> with <value> in v2/closepayment
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 400
-        And check esito is KO of v2/closepayment response
-        And check descrizione is Invalid <elem> of v2/closepayment response
+        And check outcome is KO of v2/closepayment response
+        And check description is Invalid <elem> of v2/closepayment response
         Examples:
             | elem                          | value                                                                                                                                                                                                                                                            | soapUI test |
             | paymentTokens                 | None                                                                                                                                                                                                                                                             | SIN_CPV2_01 |
@@ -69,17 +69,7 @@ Feature: syntax checks for closePaymentV2 outcome OK
             | timestampOperation            | 2012-04-23T18:25:43                                                                                                                                                                                                                                              | SIN_CPV2_34 |
             | timestampOperation            | 2012-04-23T18:25                                                                                                                                                                                                                                                 | SIN_CPV2_34 |
             | additionalPaymentInformations | None                                                                                                                                                                                                                                                             | SIN_CPV2_35 |
-
-
-            | transactionId         | None                                                                                                                                                                                                                                                             | SIN_CPV2_37 |
-            | transactionId         | Empty                                                                                                                                                                                                                                                            | SIN_CPV2_38 |
-            | transactionId         | abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fgh | SIN_CPV2_39 |
-            | outcomePaymentGateway | None                                                                                                                                                                                                                                                             | SIN_CPV2_40 |
-            | outcomePaymentGateway | Empty                                                                                                                                                                                                                                                            | SIN_CPV2_41 |
-            | outcomePaymentGateway | abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fgh | SIN_CPV2_42 |
-            | authorizationCode     | None                                                                                                                                                                                                                                                             | SIN_CPV2_43 |
-            | authorizationCode     | Empty                                                                                                                                                                                                                                                            | SIN_CPV2_44 |
-            | authorizationCode     | abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fgh | SIN_CPV2_45 |
+            | key                           | None                                                                                                                                                                                                                                                             | SIN_CPV2_37 |
 
 
     Scenario Outline: Check syntax error on invalid body element value - paymentToken
@@ -87,8 +77,8 @@ Feature: syntax checks for closePaymentV2 outcome OK
         And <elem> with <value> in v2/closepayment
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 400
-        And check esito is KO of v2/closepayment response
-        And check descrizione is Invalid paymentTokens of v2/closepayment response
+        And check outcome is KO of v2/closepayment response
+        And check description is Invalid paymentTokens of v2/closepayment response
         Examples:
             | elem         | value                                 | soapUI test |
             | paymentToken | None                                  | SIN_CPV2_02 |
@@ -165,7 +155,7 @@ Feature: syntax checks for closePaymentV2 outcome OK
             <!--1 to 5 repetitions:-->
             <transfer>
             <idTransfer>1</idTransfer>
-            <transferAmount>5.00</transferAmount>
+            <transferAmount>3.00</transferAmount>
             <fiscalCodePA>66666666666</fiscalCodePA>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>testPaGetPayment</remittanceInformation>
@@ -216,7 +206,7 @@ Feature: syntax checks for closePaymentV2 outcome OK
         And <elem> with <value> in v2/closepayment
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
-        And check esito is OK of v2/closepayment response
+        And check outcome is OK of v2/closepayment response
         Examples:
             | elem                          | value | soapUI test   |
             | fee                           | 0     | SIN_CPV2_31.2 |
@@ -236,7 +226,7 @@ Feature: syntax checks for closePaymentV2 outcome OK
     #     And additionalPaymentInformations with Empty in v2/closepayment
     #     When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
     #     Then verify the HTTP status code of v2/closepayment response is 200
-    #     And check esito is OK of v2/closepayment response
+    #     And check outcome is OK of v2/closepayment response
 
     # syntax check - Invalid request
     Scenario Outline: Check syntax error on invalid request
@@ -244,8 +234,8 @@ Feature: syntax checks for closePaymentV2 outcome OK
         And <elem> with <value> in v2/closepayment
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 400
-        And check esito is KO of v2/closepayment response
-        And check descrizione is Invalid request of v2/closepayment response
+        And check outcome is KO of v2/closepayment response
+        And check description is Invalid request of v2/closepayment response
         Examples:
             | elem | value | soapUI test |
     # | totalAmount                 | 12,21 | SIN_CPV2_24   |   gestione della virgola non previsto nello step when(u'{sender} sends rest {method:Method} {service} to {receiver}')
@@ -258,8 +248,8 @@ Feature: syntax checks for closePaymentV2 outcome OK
         And fee with 20 in v2/closepayment
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 400
-        And check esito is KO of v2/closepayment response
-        And check descrizione is Mismatched amount of v2/closepayment response
+        And check outcome is KO of v2/closepayment response
+        And check description is Mismatched amount of v2/closepayment response
 
 
     # syntax check - Invalid paymentTokens with 6 tokens [SIN_CPV2_03.3]
@@ -356,8 +346,8 @@ Feature: syntax checks for closePaymentV2 outcome OK
         Given the closePaymentV2 6 tokens scenario executed successfully
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 400
-        And check esito is KO of v2/closepayment response
-        And check descrizione is Invalid paymentTokens of v2/closepayment response
+        And check outcome is KO of v2/closepayment response
+        And check description is Invalid paymentTokens of v2/closepayment response
 
 
 #-----------gestione del paymentTokens senza [] non previsto nello step when(u'{sender} sends rest {method:Method} {service} to {receiver}')
@@ -388,5 +378,5 @@ Feature: syntax checks for closePaymentV2 outcome OK
 #   Given the closePaymentV2 without brackets in paymentTokens scenario executed successfully
 #   When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
 #   Then verify the HTTP status code of v2/closepayment response is 400
-#   And check esito is KO of v2/closepayment response
-#   And check descrizione is Invalid paymentTokens of v2/closepayment response
+#   And check outcome is KO of v2/closepayment response
+#   And check description is Invalid paymentTokens of v2/closepayment response
