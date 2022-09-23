@@ -445,6 +445,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
     Scenario: SEM_SPO_32 (part 2)
         Given the SEM_SPO_32 (part 1) scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
+        And outcome with KO in sendPaymentOutcomeV2
         When job mod3CancelV2 triggered after 3 seconds
         And PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcomeV2 response
