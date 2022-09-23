@@ -557,8 +557,14 @@ Feature: process tests for T103_A_chiediStato_RT_ESITO_SCONOSCIUTO_PA_Carrello
         # SELECT r.ID_SESSIONE FROM NODO_ONLINE.RT r WHERE r.IUV = 'IUV9535-2022-09-23T19:07:01.444' AND r.CCP = '1663952821445';
         # execution query {query_name} to get value on the table {table_name}, with the columns {columns} under macro {macro} with db name {db_name}
         # through the query {query_name} retrieve param {param} at position {position:d} and save it under the key {key}
-        And replace idSessione content with $sessionToken content
-        And replace 2idSessione content with $2sessionToken content
+        And replace iuv content with $IUV content
+        And replace ccp content with $1ccp content
+        And execution query Retrieve_IdSession to get value on the table RT, with the columns ID_SESSIONE under macro Mod1 with db name nodo_online
+        And through the query Retrieve_IdSession retrieve param idSessione at position 0 and save it under the key idSessione
+        And replace 2iuv content with $IUV content
+        And replace 2ccp content with $2CCP content
+        And execution query Retrieve_IdSession2 to get value on the table RT, with the columns ID_SESSIONE under macro Mod1 with db name nodo_online
+        And through the query Retrieve_IdSession2 retrieve param 2idSessione at position 0 and save it under the key 2idSessione
         And checks the value RICEVUTA,CAMBIO_STATO,CAMBIO_STATO,INVIATA,CAMBIO_STATO,INVIATA,RICEVUTA,CAMBIO_STATO of the record at column ESITO of the table ESITO retrived by the query Re on db nodo_online under macro Mod1
         And checks the value RICEVUTA,CAMBIO_STATO,CAMBIO_STATO,INVIATA,CAMBIO_STATO,INVIATA,RICEVUTA,CAMBIO_STATO of the record at column ESITO of the table STATUS retrived by the query Re on db nodo_online under macro Mod1
         And checks the value RICEVUTA,CAMBIO_STATO,CAMBIO_STATO,INVIATA,CAMBIO_STATO,INVIATA,RICEVUTA,CAMBIO_STATO of the record at column ESITO of the table ESITO retrived by the query Re_2 on db nodo_online under macro Mod1
