@@ -310,7 +310,7 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
         When WISP sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200
 
-    # annullamentoRptMaiRichiesteDaPm  trigger
+    # annullamentoRptMaiRichiesteDaPm trigger
     Scenario: Execute annullamentoRptMaiRichiesteDaPm
         Given the Execute a nodoChiediInformazioniPagamento request scenario executed successfully
         When job annullamentoRptMaiRichiesteDaPm triggered after 70 seconds
