@@ -102,11 +102,15 @@
         "DB_GEST_ANN_notice_number": "SELECT s.columns FROM table_name s WHERE s.NOTICE_ID = '$NOTICE_ID'",
         "DB_GEST_ANN_stati_position_status": "SELECT s.columns FROM table_name s WHERE s.NOTICE_ID = '311$iuv' and s.pa_fiscal_code= '$nodoInviaCarrelloRPT.identificativoDominio'",
         "by_notice_number_and_pa": "SELECT s.columns FROM table_name s WHERE s.NOTICE_ID = '$noticeNumber' and s.pa_fiscal_code= '$pa'",
+        "by_iuv_and_id_dominio": "SELECT s.columns FROM table_name s WHERE s.IUV = '$iuv' and s.ID_DOMINIO = '$pa' ORDER BY INSERTED_TIMESTAMP",
         "by_iuv_and_ident_dominio": "SELECT s.columns FROM table_name s WHERE s.IUV = '$iuv' and s.IDENT_DOMINIO = '$pa'",
         "by_id_sessione":"SELECT s.columns FROM table_name s WHERE s.ID_SESSIONE = '$sessionToken'",
         "by_position_subject":"SELECT s.columns FROM table_name s JOIN POSITION_SERVICE pp ON pp.DEBTOR_ID = s.ID  where pp.notice_id = '$noticeNumber' and pp.pa_fiscal_code= '$pa'",
         "by_position_transfer":"SELECT s.columns FROM table_name s where s.NOTICE_ID = '$noticeNumber' and s.pa_fiscal_code= '$pa' order by s.id asc",
-        "by_id_carrello":"SELECT s.columns FROM table_name s WHERE s.ID_CARRELLO = '$idCarrello'",
+        "by_id_carrello":"SELECT columns FROM table_name WHERE ID_CARRELLO = '$idCarrello'",
+        "by_ccp": "SELECT columns FROM table_name WHERE CCP = '$ccp'",
+        "by_notice_number_and_payment_token": "SELECT columns FROM table_name s WHERE s.NOTICE_ID = '$noticeNumber' AND s.PAYMENT_TOKEN = '$paymentToken'",
+        "by_psp": "SELECT columns FROM table_name s WHERE s.ID_PSP = '$psp'",
         "by_ccp_and_ident_dominio":"SELECT columns FROM table_name WHERE CCP = '$idCarrello' and IDENT_DOMINIO = '$pa'"
         
     },
@@ -144,7 +148,8 @@
         "by_iuv_ccp_pa": "SELECT columns FROM table_name s WHERE s.IUV = '$iuv' AND s.CCP = '$ccp' AND s.ID_DOMINIO = '$pa' ORDER BY INSERTED_TIMESTAMP"
     },
     "costanti":{
-        "get_broadcast": "SELECT columns FROM PA p, table_name psp WHERE p.OBJ_ID = psp.FK_PA AND p.ID_DOMINIO = '$verifyPaymentNotice.fiscalCode' AND psp.SEGREGAZIONE = '#cod_segr#'"
+        "get_broadcast": "SELECT columns FROM PA p, table_name psp WHERE p.OBJ_ID = psp.FK_PA AND p.ID_DOMINIO = '$verifyPaymentNotice.fiscalCode' AND psp.SEGREGAZIONE = '#cod_segr#'",
+        "get_pa_id": "SELECT columns FROM table_name WHERE ID_DOMINIO = '$pa'"
     },
     "update_query":{
         "idempotency_update":"UPDATE IDEMPOTENCY_CACHE SET VALID_TO = TO_DATE('date', 'YYYY-MM-DD HH24:MI:SS') WHERE IDEMPOTENCY_KEY = '$sendPaymentOutcome.idempotencyKey' AND PSP_ID = '$sendPaymentOutcome.idPSP'",

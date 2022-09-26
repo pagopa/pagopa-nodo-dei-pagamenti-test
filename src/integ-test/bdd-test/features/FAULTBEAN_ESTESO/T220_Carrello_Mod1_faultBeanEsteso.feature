@@ -231,20 +231,20 @@ Feature: T220_Carrello_Mod1_faultBeanEsteso
         And initial XML pspInviaCarrelloRPT
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-        <soapenv:Header/>
-        <soapenv:Body>
-        <ws:pspInviaCarrelloRPTResponse>
-        <pspInviaCarrelloRPTResponse>
-        <fault>
-            <faultCode>CANALE_RPT_RIFIUTATA</faultCode>
-            <faultString>fault esterno</faultString>
-            <id>400000000001</id>
-            <description>descrizione fault esterno</description>
-        </fault>
-        <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
-        </pspInviaCarrelloRPTResponse>
-        </ws:pspInviaCarrelloRPTResponse>
-        </soapenv:Body>
+            <soapenv:Header/>
+            <soapenv:Body>
+                <ws:pspInviaCarrelloRPTResponse>
+                    <pspInviaCarrelloRPTResponse>
+                        <fault>
+                            <faultCode>CANALE_RPT_RIFIUTATA</faultCode>
+                            <faultString>fault esterno</faultString>
+                            <id>400000000001</id>
+                            <description>descrizione fault esterno</description>
+                        </fault>
+                        <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
+                    </pspInviaCarrelloRPTResponse>
+                </ws:pspInviaCarrelloRPTResponse>
+            </soapenv:Body>
         </soapenv:Envelope>
         """
         And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT

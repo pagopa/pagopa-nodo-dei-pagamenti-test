@@ -14,7 +14,7 @@ Feature: T220_verifica_attiva_faultBeanEsteso
                 <ws:nodoVerificaRPT>
                     <identificativoPSP>#psp#</identificativoPSP>
                     <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-                    <identificativoCanale>#canale#</identificativoCanale>
+                    <identificativoCanale>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanale>
                     <password>pwdpwdpwd</password>
                     <codiceContestoPagamento>CCD01</codiceContestoPagamento>
                     <codificaInfrastrutturaPSP>QR-CODE</codificaInfrastrutturaPSP>
@@ -29,9 +29,8 @@ Feature: T220_verifica_attiva_faultBeanEsteso
             </soapenv:Body>
         </soapenv:Envelope>
         """
-        When PSP sends nodoVerificaRPT to nodo-dei-pagamenti
-        Then check esito is KO of nodoVerificaRPT response
-        And check faultCode is PAA_SOAPACTION of nodoVerificaRPT response
+        When PSP sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
+        Then check esito is OK of nodoVerificaRPT response
 
     Scenario: Execute nodoAttivaRPT (Phase 2)
         Given the Execute nodoVerificaRPT (Phase 1) scenario executed successfully
@@ -110,3 +109,4 @@ Feature: T220_verifica_attiva_faultBeanEsteso
         </soapenv:Envelope>
         """
         When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
+        Then check esito is OK of nodoAttivaRPT response
