@@ -310,9 +310,12 @@ Feature: process tests for nodoInviaRPT [PAG-1192_KO_RPT]
             </soapenv:Body>
             </soapenv:Envelope>
             """
+        And job paInviaRt triggered after 5 seconds
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is KO of nodoInviaRPT response
         And check faultCode is PPT_SEMANTICA of nodoInviaRPT response
+        And wait 5 seconds for expiration
+        And verify the HTTP status code of paInviaRt response is 200
 
         #DB-CHECK-RPT_ACTIVATIONS
         And verify 0 record for the table RPT_ACTIVATIONS retrived by the query payment_status on db nodo_online under macro NewMod3
