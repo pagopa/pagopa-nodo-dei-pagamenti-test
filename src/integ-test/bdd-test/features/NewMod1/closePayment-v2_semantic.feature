@@ -606,7 +606,6 @@ Feature: semantic checks for closePaymentV2
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
-        And verify 1 record for the table CD_INFO_PAGAMENTO retrived by the query info_pagamento on db nodo_online under macro AppIO
 
     Scenario: check closePaymentV2 OK 7
         Given the check nodoInviaRPT OK scenario executed successfully
@@ -630,7 +629,6 @@ Feature: semantic checks for closePaymentV2
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
-        And verify 1 record for the table CD_INFO_PAGAMENTO retrived by the query info_pagamento on db nodo_online under macro AppIO
 
     Scenario: check closePaymentV2 OK 8
         Given the check nodoInviaRPT OK 2 scenario executed successfully
