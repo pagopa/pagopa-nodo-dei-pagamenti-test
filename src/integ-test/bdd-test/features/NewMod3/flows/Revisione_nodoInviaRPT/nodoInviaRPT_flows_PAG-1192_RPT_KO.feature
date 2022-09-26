@@ -153,7 +153,7 @@ Feature: process tests for nodoInviaRPT [PAG-1192_KO_RPT]
         And wait 10 seconds for expiration
         Then verify the HTTP status code of paInviaRT response is 200
 
-    Scenario: Execute activatePaymentNotice13 request
+    Scenario: Execute activatePaymentNotice3 request
         Given the Trigger paInviaRT scenario executed successfully
         And initial XML activatePaymentNotice
             """
@@ -204,7 +204,7 @@ Feature: process tests for nodoInviaRPT [PAG-1192_KO_RPT]
 
     # test execution
     Scenario: Define RPT3
-        Given the Execute activatePaymentNotice1 request scenario executed successfully
+        Given the Execute activatePaymentNotice3 request scenario executed successfully
         And RPT generation
 
             """
@@ -285,7 +285,7 @@ Feature: process tests for nodoInviaRPT [PAG-1192_KO_RPT]
             """
 
 
-    Scenario: Excecute nodoInviaRPT
+    Scenario: Excecute nodoInviaRPT3
         Given the Define RPT3 scenario executed successfully
         And initial XML nodoInviaRPT
             """
