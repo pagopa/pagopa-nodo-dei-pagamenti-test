@@ -575,6 +575,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
     Scenario: SEM_SPO_38 (part 3)
         Given the SEM_SPO_38 (part 2) scenario executed successfully
         And updates through the query update_noticeid_activate2 of the table POSITION_STATUS_SNAPSHOT the parameter NOTICE_ID with $activatePaymentNoticeRequest1.noticeNumber under macro NewMod1 on db nodo_online
+        And wait 5 seconds for expiration
         And the sendPaymentOutcomeV2 scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcomeV2 response
