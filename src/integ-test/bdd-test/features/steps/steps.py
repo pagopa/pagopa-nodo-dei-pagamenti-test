@@ -274,26 +274,22 @@ def step_impl(context):
         setattr(context, 'carrello', carrello)
 
     if '#carrello1#' in payload:
-        carrello1 = pa + "311" + "0" + str(random.randint(1000, 2000)) + str(random.randint(
-            1000, 2000)) + str(random.randint(1000, 2000)) + "00" + utils.random_s()
+        carrello1 = pa + "311" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + utils.random_s()
         payload = payload.replace('#carrello1#', carrello1)
         setattr(context, 'carrello1', carrello1)
 
     if '#secCarrello#' in payload:
-        secCarrello = pa + "301" + "0" + str(random.randint(1000, 2000)) + str(random.randint(
-            1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+        secCarrello = pa + "301" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
         payload = payload.replace('#secCarrello#', secCarrello)
         setattr(context, 'secCarrello', secCarrello)
 
     if '#thrCarrello#' in payload:
-        thrCarrello = pa + "088" + "0" + str(random.randint(1000, 2000)) + str(random.randint(
-            1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+        thrCarrello = pa + "088" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
         payload = payload.replace('#thrCarrello#', thrCarrello)
         setattr(context, 'thrCarrello', thrCarrello)
 
     if '#carrNOTENABLED#' in payload:
-        carrNOTENABLED = "11111122223" + "311" + "0" + str(random.randint(1000, 2000)) + str(
-            random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+        carrNOTENABLED = "11111122223" + "311" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
         payload = payload.replace('#carrNOTENABLED#', carrNOTENABLED)
         setattr(context, 'carrNOTENABLED', carrNOTENABLED)
 
