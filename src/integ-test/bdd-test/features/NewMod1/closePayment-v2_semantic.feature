@@ -388,7 +388,7 @@ Feature: semantic checks for closePaymentV2
             <identificativoIntermediarioPSPPagamento>#broker_AGID#</identificativoIntermediarioPSPPagamento>
             <identificativoCanalePagamento>97735020584_02</identificativoCanalePagamento>
             <codificaInfrastrutturaPSP>BARCODE-128-AIM</codificaInfrastrutturaPSP>
-            <codiceIdRPT><aim:aim128> <aim:CCPost>#ccPoste#</aim:CCPost> <aim:CodStazPA>02</aim:CodStazPA> <aim:AuxDigit>0</aim:AuxDigit>  <aim:CodIUV>#iuv#/aim:CodIUV></aim:aim128></codiceIdRPT>
+            <codiceIdRPT><aim:aim128> <aim:CCPost>#ccPoste#</aim:CCPost> <aim:CodStazPA>02</aim:CodStazPA> <aim:AuxDigit>0</aim:AuxDigit>  <aim:CodIUV>#iuv#</aim:CodIUV></aim:aim128></codiceIdRPT>
             <datiPagamentoPSP>
             <importoSingoloVersamento>10.00</importoSingoloVersamento>
             <!--Optional:-->
