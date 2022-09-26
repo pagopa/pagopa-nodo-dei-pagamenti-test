@@ -206,7 +206,6 @@ Feature: process tests for nodoInviaRPT [PAG-1192_KO_RPT]
     Scenario: Define RPT3
         Given the Execute activatePaymentNotice3 request scenario executed successfully
         And RPT generation
-
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
