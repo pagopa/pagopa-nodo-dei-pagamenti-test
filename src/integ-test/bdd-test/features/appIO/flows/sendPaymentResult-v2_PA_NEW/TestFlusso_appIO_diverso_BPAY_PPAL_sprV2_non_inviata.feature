@@ -204,23 +204,22 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
    Scenario: closePaymentV2
       Given initial JSON v2/closepayment
          """
-         """
          {
-         "paymentTokens": [
-         "$activateIOPaymentNoticeResponse.paymentToken"
-         ],
-         "outcome": "OK",
-         "idPSP": "#psp#",
-         "idBrokerPSP": "60000000001",
-         "idChannel": "60000000001_03",
-         "paymentMethod": "TPAY",
-         "transactionId": "19392562",
-         "totalAmount": 12,
-         "fee": 2,
-         "timestampOperation": "2033-04-23T18:25:43Z",
-         "additionalPaymentInformations": {
-         "key": "10793459"
-         }
+            "paymentTokens": [
+               "$activateIOPaymentNoticeResponse.paymentToken"
+            ],
+            "outcome": "OK",
+            "idPSP": "#psp#",
+            "idBrokerPSP": "60000000001",
+            "idChannel": "60000000001_03",
+            "paymentMethod": "TPAY",
+            "transactionId": "19392562",
+            "totalAmount": 12,
+            "fee": 2,
+            "timestampOperation": "2033-04-23T18:25:43Z",
+            "additionalPaymentInformations": {
+               "key": "10793459"
+            }
          }
          """
 
