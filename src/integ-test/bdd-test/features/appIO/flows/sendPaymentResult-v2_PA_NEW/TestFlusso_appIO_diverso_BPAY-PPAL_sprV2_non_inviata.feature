@@ -113,7 +113,7 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
          </soapenv:Body>
          </soapenv:Envelope>
          """
-      
+
       And initial xml paGetPayment
          """
          <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
@@ -182,16 +182,16 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
          """
 
       And EC replies to nodo-dei-pagamenti with the paGetPayment
-      When psp sends SOAP activateIOPayment to nodo-dei-pagamenti          
+      When psp sends SOAP activateIOPayment to nodo-dei-pagamenti
       Then check outcome is OK of activateIOPayment response
       And save activateIOPayment response in activateIOPaymentResponse
 
-      Scenario: DB check
+   Scenario: DB check
       Given the Execute activateIOPayment request scenario executed successfully
       Then verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
       And checks the value $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
       And checks the value $activateIOPayment.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
-   
+
 
    # nodoChiediInformazioniPagamento phase
    Scenario: Execute a nodoChiediInformazioniPagamento request
@@ -200,87 +200,47 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
       Then verify the HTTP status code of informazioniPagamento response is 200
 
 
-   # closePayment-v2 phase
-   Scenario: Execute a closePayment-v2 request
-      Given the Execute a nodoChiediInformazioniPagamento request scenario executed successfully
-      And idChannel with CANALI_NODO.VERSIONE_PRIMITIVE = 1
-      And initial json closePayment-v2
+   # Define closePayment-v2
+   Scenario: closePaymentV2
+      Given initial JSON v2/closepayment
+         """
          """
          {
-            "paymentTokens": [
-               "$activateIOPaymentNoticeResponse.paymentToken"
-            ],
-            "outcome": "OK",
-            "idPSP": "#psp#",
-            "idBrokerPSP": "60000000001",
-            "idChannel": "60000000001_03",
-            "paymentMethod": "TPAY",
-            "transactionId": "19392562",
-            "totalAmount": 12,
-            "fee": 2,
-            "timestampOperation": "2033-04-23T18:25:43Z",
-            "additionalPaymentInformations": {
-               "key": "10793459"
-            }
+         "paymentTokens": [
+         "$activateIOPaymentNoticeResponse.paymentToken"
+         ],
+         "outcome": "OK",
+         "idPSP": "#psp#",
+         "idBrokerPSP": "60000000001",
+         "idChannel": "60000000001_03",
+         "paymentMethod": "TPAY",
+         "transactionId": "19392562",
+         "totalAmount": 12,
+         "fee": 2,
+         "timestampOperation": "2033-04-23T18:25:43Z",
+         "additionalPaymentInformations": {
+         "key": "10793459"
+         }
          }
          """
 
-      When PM sends closePayment-v2 to nodo-dei-pagamenti
-      Then check outcome is OK of closePayment-v2
-      And verify the HTTP status code of closePayment-v2 response is 200
-      And check no sendPaymentResult-v2 is sent
+   # closePayment-v2 phase
+   Scenario: Execute a closePayment-v2 request
+      Given the Execute a nodoChiediInformazioniPagamento request scenario executed successfully
+      And the closePaymentV2 scenario executed successfully
+      When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+      Then check outcome is OK of v2/closepayment response
+      And verify the HTTP status code of v2/closepayment response is 200
 
-# SELECT ID FROM RE WHERE NOTICE_ID = '#notice_number#' AND TIPO_EVENTO = 'sendPaymentResult-v2';
-# assert RE.ID = None;
 
 
-# SELECT s.* FROM NODO_ONLINE.POSITION_PAYMENT_STATUS s where s.NOTICE_ID = '#notice_number#' and s.PA_FISCAL_CODE= '#creditor_institution_code#' order by s.ID asc;
-# SELECT s.* FROM NODO_ONLINE.POSITION_PAYMENT_STATUS_SNAPSHOT s where s.NOTICE_ID = '#notice_number#' and s.PA_FISCAL_CODE= '#creditor_institution_code#';
-# SELECT s.* FROM NODO_ONLINE.POSITION_STATUS s where s.NOTICE_ID = '#notice_number#' and s.PA_FISCAL_CODE= '#creditor_institution_code#';
-# SELECT s.* FROM NODO_ONLINE.POSITION_STATUS_SNAPSHOT s where s.NOTICE_ID = '#notice_number#' and s.PA_FISCAL_CODE= '#creditor_institution_code#';
-
-#POSITION_PAYMENT_STATUS
-# ID != null
-# PA_FISCAL_CODE == '#creditor_institution_code#'
-# NOTICE_ID == '#notice_number#'
-# STATUS == 'PAYING'
-# INSERTED_TIMESTAMP != null
-# CREDITOR_REFERENCE_ID == #iuv#
-# PAYMENT_TOKEN == #ccp#
-
-# STATUS1 == 'PAYMENT_RESERVED'
-# STATUS2 == 'PAYMENT_SENT'
-# STATUS3 == 'PAYMENT_ACCEPTED'
-
-#POSITION_PAYMENT_STATUS_SNAPSHOT
-# ID != null
-# PA_FISCAL_CODE == '#creditor_institution_code#'
-# NOTICE_ID == '#notice_number#'
-# CREDITOR_REFERENCE_ID == #iuv#
-# PAYMENT_TOKEN == #ccp#
-# STATUS == 'PAYMENT_ACCEPTED'
-# INSERTED_TIMESTAMP != null
-# UPDATED_TIMESTAMP != null
-# FK_POSITION_PAYMENT == POSITION_PAYMENT.id
-
-# ID1 == null
-
-#POSITION_STATUS
-# ID != null
-# PA_FISCAL_CODE == '#creditor_institution_code#'
-# NOTICE_ID == '#notice_number#'
-# STATUS2 == 'PAYING'
-# INSERTED_TIMESTAMP != null
-
-# ID1 == null
-
-#POSITION_STATUS_SNAPSHOT
-# ID != null
-# PA_FISCAL_CODE == '#creditor_institution_code#'
-# NOTICE_ID == '#notice_number#'
-# STATUS == 'PAYING'
-# INSERTED_TIMESTAMP != null
-# UPDATED_TIMESTAPM != null
-# FK_POSITION_SERVICE == POSITION_SERVICE.id
-
-# id1 == null
+   Scenario: DB check 1
+      Given the Execute a closePayment-v2 request scenario executed successfully
+      And wait 30 seconds for expiration
+      Then verify 0 record for the table RE retrived by the query select_sprV2_old on db re under macro sendPaymentResultV2
+      And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
+      And checks the value PAYMENT_ACCEPTED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
+      And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
+      And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
+      And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
+      And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
