@@ -312,7 +312,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
          </pay_i:enteBeneficiario>
          <pay_i:datiVersamento>
          <pay_i:dataEsecuzionePagamento>2016-09-16</pay_i:dataEsecuzionePagamento>
-         <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
+         <pay_i:importoTotaleDaVersare>$activatePaymentNotice.amount</pay_i:importoTotaleDaVersare>
          <pay_i:tipoVersamento>PO</pay_i:tipoVersamento>
          <pay_i:identificativoUnivocoVersamento>$iuv</pay_i:identificativoUnivocoVersamento>
          <pay_i:codiceContestoPagamento>$activatePaymentNotice_1Response.paymentToken</pay_i:codiceContestoPagamento>
@@ -553,7 +553,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
       Given the SEM_SPO_32 (part 1) scenario executed successfully
       And the RPT scenario executed successfully
       And the nodoInviaRPT scenario executed successfully
-      When PSP sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+      When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
       Then check outcome is OK of nodoInviaRPT response
    @wip
    Scenario: SEM_SPO_32 (part 3)
