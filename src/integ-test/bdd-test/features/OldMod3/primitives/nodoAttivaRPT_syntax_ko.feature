@@ -156,3 +156,8 @@ Feature: Syntax checks KO for nodoAttivaRPT
         Given bc:CodStazPA with Empty in nodoAttivaRPT
         When psp sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
         Then check faultCode is PPT_SINTASSI_XSD of nodoAttivaRPT response
+
+    Scenario: Check faultCode PPT_PSP_SCONOSCIUTO on empty body element value [ARPTSIN7]
+        Given identificativoPSP with Empty in nodoAttivaRPT
+        When psp sends soap nodoAttivaRPT to nodo-dei-pagamenti
+        Then check faultCode is PPT_PSP_SCONOSCIUTO of nodoAttivaRPT response
