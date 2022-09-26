@@ -13,7 +13,7 @@ Feature: semantic checks for closePaymentV2
                 "outcome": "OK",
                 "idPSP": "#psp#",
                 "idBrokerPSP": "60000000001",
-                "idChannel": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
+                "idChannel": "#canale_versione_primitive_2#",
                 "paymentMethod": "TPAY",
                 "transactionId": "#transaction_id#",
                 "totalAmount": 12,
@@ -100,49 +100,26 @@ Feature: semantic checks for closePaymentV2
         And check descrizione is The indicated channel does not exist of v2/closepayment response
 
     # other semantic checks
-    Scenario: activateIOPayment
-        Given initial XML activateIOPayment
+    Scenario: activatePaymentNoticeV2
+        Given initial XML activatePaymentNoticeV2
             """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd">
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+            xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
             <soapenv:Header/>
             <soapenv:Body>
-            <nod:activateIOPaymentReq>
-            <idPSP>#psp_AGID#</idPSP>
-            <idBrokerPSP>#broker_AGID#</idBrokerPSP>
-            <idChannel>#canale_AGID#</idChannel>
-            <password>pwdpwdpwd</password>
+            <nod:activatePaymentNoticeV2Request>
+            <idPSP>#psp#</idPSP>
+            <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
+            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
+            <password>#password#</password>
             <qrCode>
             <fiscalCode>#creditor_institution_code#</fiscalCode>
             <noticeNumber>311#iuv#</noticeNumber>
             </qrCode>
-            <amount>12.00</amount>
-            <!--Optional:-->
-            <dueDate>2021-12-12</dueDate>
-            <!--Optional:-->
-            <paymentNote>test</paymentNote>
-            <!--Optional:-->
-            <payer>
-            <uniqueIdentifier>
-            <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-            <entityUniqueIdentifierValue>44444444444</entityUniqueIdentifierValue>
-            </uniqueIdentifier>
-            <fullName>name</fullName>
-            <!--Optional:-->
-            <streetName>street</streetName>
-            <!--Optional:-->
-            <civicNumber>civic</civicNumber>
-            <!--Optional:-->
-            <postalCode>code</postalCode>
-            <!--Optional:-->
-            <city>city</city>
-            <!--Optional:-->
-            <stateProvinceRegion>state</stateProvinceRegion>
-            <!--Optional:-->
-            <country>IT</country>
-            <!--Optional:-->
-            <e-mail>test.prova@gmail.com</e-mail>
-            </payer>
-            </nod:activateIOPaymentReq>
+            <amount>10.00</amount>
+            <dueDate>2021-12-31</dueDate>
+            <paymentNote>causale</paymentNote>
+            </nod:activatePaymentNoticeV2Request>
             </soapenv:Body>
             </soapenv:Envelope>
             """
@@ -192,7 +169,7 @@ Feature: semantic checks for closePaymentV2
             <!--1 to 5 repetitions:-->
             <transfer>
             <idTransfer>1</idTransfer>
-            <transferAmount>5.00</transferAmount>
+            <transferAmount>3.00</transferAmount>
             <fiscalCodePA>66666666666</fiscalCodePA>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>testPaGetPayment</remittanceInformation>
@@ -208,7 +185,7 @@ Feature: semantic checks for closePaymentV2
             </transfer>
             <transfer>
             <idTransfer>3</idTransfer>
-            <transferAmount>2.00</transferAmount>
+            <transferAmount>4.00</transferAmount>
             <fiscalCodePA>66666666666</fiscalCodePA>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>testPaGetPayment</remittanceInformation>
@@ -231,16 +208,16 @@ Feature: semantic checks for closePaymentV2
         And EC replies to nodo-dei-pagamenti with the paGetPayment
 
     # check on amount and fee [SEM_CP_12]
-    Scenario: check activateIOPayment OK
-        Given the activateIOPayment scenario executed successfully
-        When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
-        Then check outcome is OK of activateIOPayment response
-        And save activateIOPayment response in activateIOPaymentResponse
+    Scenario: check activatePaymentNoticeV2 OK
+        Given the activatePaymentNoticeV2 scenario executed successfully
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response
 
     Scenario: check closePaymentV2
-        Given the check activateIOPayment OK scenario executed successfully
+        Given the check activatePaymentNoticeV2 OK scenario executed successfully
         And the closePaymentV2 scenario executed successfully
-        And paymentToken with $activateIOPaymentResponse.paymentToken in v2/closepayment
+        And paymentToken with $activatePaymentNoticeV2Response.paymentToken in v2/closepayment
         And totalAmount with 20 in v2/closepayment
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 404
@@ -248,32 +225,136 @@ Feature: semantic checks for closePaymentV2
         And check descrizione is Mismatched amount of v2/closepayment response
 
     # check future timestampOperation [SEM_CP_13]
-    Scenario: check activateIOPayment OK 2
-        Given the activateIOPayment scenario executed successfully
-        When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
-        Then check outcome is OK of activateIOPayment response
-        And save activateIOPayment response in activateIOPaymentResponse
+    Scenario: check activatePaymentNoticeV2 OK 2
+        Given the activatePaymentNoticeV2 scenario executed successfully
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response
 
     Scenario: check closePaymentV2 OK 2
-        Given the check activateIOPayment OK 2 scenario executed successfully
+        Given the check activatePaymentNoticeV2 OK 2 scenario executed successfully
         And the closePaymentV2 scenario executed successfully
-        And paymentToken with $activateIOPaymentResponse.paymentToken in v2/closepayment
+        And paymentToken with $activatePaymentNoticeV2Response.paymentToken in v2/closepayment
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check esito is OK of v2/closepayment response
 
     # check past timestampOperation [SEM_CP_14]
-    Scenario: check activateIOPayment OK 3
-        Given the activateIOPayment scenario executed successfully
-        When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
-        Then check outcome is OK of activateIOPayment response
-        And save activateIOPayment response in activateIOPaymentResponse
+    Scenario: check activatePaymentNoticeV2 OK 3
+        Given the activatePaymentNoticeV2 scenario executed successfully
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV23
 
     Scenario: check closePaymentV2 OK 3
-        Given the check activateIOPayment OK 3 scenario executed successfully
+        Given the check activatePaymentNoticeV2 OK 3 scenario executed successfully
         And the closePaymentV2 scenario executed successfully
-        And paymentToken with $activateIOPaymentResponse.paymentToken in v2/closepayment
+        And paymentToken with $activatePaymentNoticeV23Response.paymentToken in v2/closepayment
         And timestampOperation with 2018-04-23T18:25:43Z in v2/closepayment
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check esito is OK of v2/closepayment response
+
+    # check channel versione primitive 1 [SEM_CP_15]
+    Scenario: check activatePaymentNoticeV2 OK 4
+        Given the activatePaymentNoticeV2 scenario executed successfully
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV21
+
+    Scenario: check activatePaymentNoticeV2 OK 4_2
+        Given the check activatePaymentNoticeV2 OK 4 scenario executed successfully
+        And random iuv in context
+        And noticeNumber with 311$iuv in activatePaymentNoticeV2
+        And creditorReferenceId with 11$iuv in paGetPayment
+        And EC replies to nodo-dei-pagamenti with the paGetPayment
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV22
+
+    Scenario: closePaymentV2 4
+        Given the check activatePaymentNoticeV2 OK 4 scenario executed successfully
+        And the check activatePaymentNoticeV2 OK 4_2 scenario executed successfully
+        And initial JSON v2/closepayment
+            """
+            {
+                "paymentTokens": [
+                    "$activatePaymentNoticeV21Response.paymentToken",
+                    "$activatePaymentNoticeV22Response.paymentToken"
+                ],
+                "outcome": "OK",
+                "idPSP": "#psp#",
+                "idBrokerPSP": "60000000001",
+                "idChannel": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
+                "paymentMethod": "TPAY",
+                "transactionId": "#transaction_id#",
+                "totalAmount": 12,
+                "fee": 2,
+                "timestampOperation": "2033-04-23T18:25:43Z",
+                "additionalPaymentInformations": {
+                    "transactionId": "11435230",
+                    "outcomePaymentGateway": "EFF",
+                    "authorizationCode": "resOK"
+                }
+            }
+            """
+
+    Scenario: check closePaymentV2 OK 4
+        Given the closePaymentV2 4 scenario executed successfully
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 400
+        And check esito is KO of v2/closepayment response
+        And check descrizione is Wrong channel version of v2/closepayment response
+
+
+
+
+
+    # check channel versione primitive 1 e flag_IO = N [SEM_CP_17]
+    Scenario: check activatePaymentNoticeV2 OK 5
+        Given the activatePaymentNoticeV2 scenario executed successfully
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV25
+
+    Scenario: closePaymentV2 5
+        Given the check activatePaymentNoticeV2 OK 5 scenario executed successfully
+        And initial JSON v2/closepayment
+            """
+            {
+                "paymentTokens": [
+                    "$activatePaymentNoticeV25Response.paymentToken"
+                ],
+                "outcome": "OK",
+                "idPSP": "#psp#",
+                "idBrokerPSP": "60000000001",
+                "idChannel": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
+                "paymentMethod": "TPAY",
+                "transactionId": "#transaction_id#",
+                "totalAmount": 12,
+                "fee": 2,
+                "timestampOperation": "2033-04-23T18:25:43Z",
+                "additionalPaymentInformations": {
+                    "transactionId": "11435230",
+                    "outcomePaymentGateway": "EFF",
+                    "authorizationCode": "resOK"
+                }
+            }
+            """
+
+    Scenario: check closePaymentV2 OK 5
+        Given the closePaymentV2 5 scenario executed successfully
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 400
+        And check esito is KO of v2/closepayment response
+        And check descrizione is Invalid payment type of v2/closepayment response
+
+    # outcome alreay acquired [SEM_CP_18]
+    Scenario: check closePaymentV2 OK 6
+        Given the check activatePaymentNoticeV2 OK 3 scenario executed successfully
+        And the closePaymentV2 scenario executed successfully
+        And paymentToken with $activatePaymentNoticeV23Response.paymentToken in v2/closepayment
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 422
+        And check esito is KO of v2/closepayment response
+        And check descrizione is Outcome already acquired of v2/closepayment response
