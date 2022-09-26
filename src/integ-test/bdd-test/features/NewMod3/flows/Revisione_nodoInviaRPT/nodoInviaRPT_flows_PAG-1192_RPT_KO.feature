@@ -314,7 +314,6 @@ Feature: process tests for nodoInviaRPT [PAG-1192_KO_RPT]
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is KO of nodoInviaRPT response
         And check faultCode is PPT_SEMANTICA of nodoInviaRPT response
-        And check faultString is PPT_SEMANTICA of nodoInviaRPT response
 
         #DB-CHECK-RPT_ACTIVATIONS
         And verify 0 record for the table RPT_ACTIVATIONS retrived by the query payment_status on db nodo_online under macro NewMod3
