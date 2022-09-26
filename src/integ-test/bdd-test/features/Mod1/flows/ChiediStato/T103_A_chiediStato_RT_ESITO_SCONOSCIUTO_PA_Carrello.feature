@@ -528,7 +528,7 @@ Feature: process tests for T103_A_chiediStato_RT_ESITO_SCONOSCIUTO_PA_Carrello
         And check redirect is 0 of nodoChiediStatoRPT response
         And check url field not exists in nodoChiediStatoRPT response
 
-   Scenario: Execute second nodoInviaRT request
+   Scenario: Execute third nodoInviaRT request
         Given the Execute second nodoChiediStatoRPT request scenario executed successfully
         And initial XML nodoInviaRT
             """
@@ -571,7 +571,7 @@ Feature: process tests for T103_A_chiediStato_RT_ESITO_SCONOSCIUTO_PA_Carrello
         And checks the value RT_RICEVUTA_NODO,RT_ACCETTATA_NODO,RT_INVIATA_PA,RT_ESITO_SCONOSCIUTO_PA of the record at column STATUS of the table RE retrived by the query Re_2 on db re under macro Mod1
 
     Scenario: Execute third nodoChiediStatoRPT request
-        Given the Execute second nodoInviaRT request scenario executed successfully
+        Given the Execute third nodoInviaRT request scenario executed successfully
         And initial XML nodoChiediStatoRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -598,7 +598,7 @@ Feature: process tests for T103_A_chiediStato_RT_ESITO_SCONOSCIUTO_PA_Carrello
 
 
     Scenario: Execute fourth nodoChiediStatoRPT request
-        Given the Execute third nodoInviaRT request scenario executed successfully
+        Given the Execute third nodoChiediStatoRPT request scenario executed successfully
         And initial XML nodoChiediStatoRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -624,7 +624,7 @@ Feature: process tests for T103_A_chiediStato_RT_ESITO_SCONOSCIUTO_PA_Carrello
         And check url field not exists in nodoChiediStatoRPT response
 
     Scenario: Execute fifth nodoChiediStatoRPT request
-        Given the Execute fourth nodoInviaRT request scenario executed successfully
+        Given the Execute fourth nodoChiediStatoRPT request scenario executed successfully
         And initial XML nodoChiediStatoRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">

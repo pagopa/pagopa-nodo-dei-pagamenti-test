@@ -156,3 +156,36 @@ Feature: Syntax checks KO for nodoAttivaRPT
         Given bc:CodStazPA with Empty in nodoAttivaRPT
         When psp sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
         Then check faultCode is PPT_SINTASSI_XSD of nodoAttivaRPT response
+
+    Scenario Outline: Check faultCode PPT_PSP_SCONOSCIUTO on invalid body element value
+        Given <tag> with <value> in nodoAttivaRPT
+        When psp sends soap nodoAttivaRPT to nodo-dei-pagamenti
+        Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoAttivaRPT response
+        Examples:
+            | tag               | value                                |soapUI test|
+            | identificativoPSP | Empty                                ||
+            | identificativoPSP | QuestiSono36CaratteriAlfaNumericiTT1 ||
+
+    Scenario Outline: Check faultCode PPT_INTERMEDIARO_PSP_SCONOSCIUTO on invalid body element value
+        Given <tag> with <value> in nodoAttivaRPT
+        When psp sends soap nodoAttivaRPT to nodo-dei-pagamenti
+        Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoAttivaRPT response
+        Examples:
+            | tag                            | value                                |soapUI test|
+            | identificativoIntermediarioPSP | Empty                                ||
+            | identificativoIntermediarioPSP | QuestiSono36CaratteriAlfaNumericiTT1 ||
+
+    Scenario Outline: Check faultCode PPT_AUTENTICAZIONE on invalid body element value
+        Given <tag> with <value> in nodoAttivaRPT
+        When psp sends soap nodoAttivaRPT to nodo-dei-pagamenti
+        Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoAttivaRPT response
+        Examples:
+            | tag      | value            |soapUI test|
+            | password | Empty            ||
+            | password | Alpha_7          ||
+            | password | Alpha_16_Num_123 ||
+
+    Scenario: Check faultCode PPT_CANALE_SCONOSCIUTO on invalid body element value
+        Given identificativoCanale with Empty in nodoAttivaRPT
+        When psp sends soap nodoAttivaRPT to nodo-dei-pagamenti
+        Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoAttivaRPT response
