@@ -567,7 +567,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
         And random iuv in context
         And noticeNumber with 311$iuv in activatePaymentNotice
         And creditorReferenceId with 11$iuv in paGetPayment
-        And EC replies to nodo-dei-pagamenti with the paVerifyPaymentNotice
+        And EC replies to nodo-dei-pagamenti with the paGetPayment
         When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
         And saving activatePaymentNotice request in activatePaymentNoticeRequest2
