@@ -34,7 +34,7 @@ Feature: semantic checks for closePaymentV2
         And check description is Unknown token of v2/closepayment response
 
     # identificativoPsp value check
-    Scenario Outline: Check semantic error on identificativoPsp
+    Scenario Outline: Check semantic error on idPSP
         Given the closePaymentV2 scenario executed successfully
         And <elem> with <value> in v2/closepayment
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
@@ -42,12 +42,12 @@ Feature: semantic checks for closePaymentV2
         And check outcome is KO of v2/closepayment response
         And check description is The indicated PSP does not exist of v2/closepayment response
         Examples:
-            | elem              | value       | soapUI test |
-            | identificativoPsp | 12345678987 | SEM_CP_03   |
-            | identificativoPsp | NOT_ENABLED | SEM_CP_04   |
+            | elem  | value       | soapUI test |
+            | idPSP | 12345678987 | SEM_CP_03   |
+            | idPSP | NOT_ENABLED | SEM_CP_04   |
 
     # identificativoIntermediario value check
-    Scenario Outline: Check semantic error on identificativoIntermediario
+    Scenario Outline: Check semantic error on idBrokerPSP
         Given the closePaymentV2 scenario executed successfully
         And <elem> with <value> in v2/closepayment
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
@@ -55,9 +55,9 @@ Feature: semantic checks for closePaymentV2
         And check outcome is KO of v2/closepayment response
         And check description is The indicated brokerPSP does not exist of v2/closepayment response
         Examples:
-            | elem                        | value           | soapUI test |
-            | identificativoIntermediario | 12545678987     | SEM_CP_05   |
-            | identificativoIntermediario | INT_NOT_ENABLED | SEM_CP_06   |
+            | elem        | value           | soapUI test |
+            | idBrokerPSP | 12545678987     | SEM_CP_05   |
+            | idBrokerPSP | INT_NOT_ENABLED | SEM_CP_06   |
 
     # identificativoCanale value check
     Scenario Outline: Check semantic error on identificativoCanale
@@ -68,14 +68,14 @@ Feature: semantic checks for closePaymentV2
         And check outcome is KO of v2/closepayment response
         And check description is The indicated channel does not exist of v2/closepayment response
         Examples:
-            | elem                 | value              | soapUI test |
-            | identificativoCanale | 12345671234_09     | SEM_CP_07   |
-            | identificativoCanale | CANALE_NOT_ENABLED | SEM_CP_08   |
+            | elem      | value              | soapUI test |
+            | idChannel | 12345671234_09     | SEM_CP_07   |
+            | idChannel | CANALE_NOT_ENABLED | SEM_CP_08   |
 
     # identificativoCanale not associated to BPAY [SEM_CPV2_09]
     Scenario: Check identificativoCanale not associated to BPAY
         Given the closePaymentV2 scenario executed successfully
-        And identificativoCanale with 60000000001_06 in v2/closepayment
+        And idChannel with 60000000001_06 in v2/closepayment
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 404
         And check outcome is KO of v2/closepayment response
@@ -84,16 +84,16 @@ Feature: semantic checks for closePaymentV2
     # identificativoCanale with Modello di pagamento = ATTIVATO PRESSO PSP [SEM_CPV2_10]
     Scenario: Check identificativoCanale ATTIVATO_PRESSO_PSP
         Given the closePaymentV2 scenario executed successfully
-        And identificativoCanale with #canale_ATTIVATO_PRESSO_PSP# in v2/closepayment
+        And idChannel with #canale_ATTIVATO_PRESSO_PSP# in v2/closepayment
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 400
         And check outcome is KO of v2/closepayment response
         And check description is Invalid payment type of v2/closepayment response
 
     # identificativoIntermediario-identificativoCanale-identificativoPsp not associated [SEM_CPV2_11]
-    Scenario: Check "outcome":"KO" on identificativoPsp not associated to identificativoIntermediario and identificativoCanale
+    Scenario: identificativoIntermediario-identificativoCanale-identificativoPsp not associated
         Given the closePaymentV2 scenario executed successfully
-        And identificativoPsp with IDPSPFNZ in v2/closepayment
+        And idPSP with IDPSPFNZ in v2/closepayment
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 404
         And check outcome is KO of v2/closepayment response
@@ -220,7 +220,7 @@ Feature: semantic checks for closePaymentV2
         And paymentToken with $activatePaymentNoticeV2Response.paymentToken in v2/closepayment
         And totalAmount with 20 in v2/closepayment
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
-        Then verify the HTTP status code of v2/closepayment response is 404
+        Then verify the HTTP status code of v2/closepayment response is 400
         And check outcome is KO of v2/closepayment response
         And check description is Mismatched amount of v2/closepayment response
 
@@ -349,11 +349,26 @@ Feature: semantic checks for closePaymentV2
         And check outcome is KO of v2/closepayment response
         And check description is Invalid payment type of v2/closepayment response
 
-    # outcome alreay acquired [SEM_CP_18]
+    # outcome already acquired [SEM_CP_18]
+    Scenario: check activatePaymentNoticeV2 OK 6
+        Given the activatePaymentNoticeV2 scenario executed successfully
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV26
+
     Scenario: check closePaymentV2 OK 6
-        Given the check activatePaymentNoticeV2 OK 3 scenario executed successfully
+        Given the check activatePaymentNoticeV2 OK 6 scenario executed successfully
         And the closePaymentV2 scenario executed successfully
-        And paymentToken with $activatePaymentNoticeV23Response.paymentToken in v2/closepayment
+        And paymentToken with $activatePaymentNoticeV26Response.paymentToken in v2/closepayment
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 200
+        And check outcome is OK of v2/closepayment response
+
+    Scenario: check closePaymentV2 OK 6_2
+        Given the check activatePaymentNoticeV2 OK 6 scenario executed successfully
+        And the check closePaymentV2 OK 6 scenario executed successfully
+        And the closePaymentV2 scenario executed successfully
+        And paymentToken with $activatePaymentNoticeV26Response.paymentToken in v2/closepayment
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 422
         And check outcome is KO of v2/closepayment response
