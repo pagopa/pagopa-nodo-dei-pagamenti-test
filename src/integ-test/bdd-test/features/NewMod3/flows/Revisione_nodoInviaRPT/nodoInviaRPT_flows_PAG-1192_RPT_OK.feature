@@ -11,9 +11,9 @@ Feature: process tests for nodoInviaRPT [PAG-1192_OK_RPT]
             <soapenv:Header/>
             <soapenv:Body>
             <nod:activatePaymentNoticeReq>
-            <idPSP>40000000001</idPSP>
-            <idBrokerPSP>40000000001</idBrokerPSP>
-            <idChannel>40000000001_01</idChannel>
+            <idPSP>#psp#</idPSP>
+            <idBrokerPSP>#psp#</idBrokerPSP>
+            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
             <password>pwdpwdpwd</password>
             <qrCode>
             <fiscalCode>#creditor_institution_code_old#</fiscalCode>
@@ -25,7 +25,8 @@ Feature: process tests for nodoInviaRPT [PAG-1192_OK_RPT]
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+
+        When psp sends soap activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
 
     # test execution
@@ -110,7 +111,6 @@ Feature: process tests for nodoInviaRPT [PAG-1192_OK_RPT]
             </pay_i:RPT>
             """
 
-
     Scenario: Excecute nodoInviaRPT
         Given the Define RPT scenario executed successfully
         And initial XML nodoInviaRPT
@@ -118,9 +118,9 @@ Feature: process tests for nodoInviaRPT [PAG-1192_OK_RPT]
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
             <ppt:intestazionePPT>
-            <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
-            <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
-            <identificativoDominio>44444444444</identificativoDominio>
+            <identificativoIntermediarioPA>#codicePA_old#</identificativoIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
+            <identificativoDominio>#codicePA_old#</identificativoDominio>
             <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken</codiceContestoPagamento>
             </ppt:intestazionePPT>
@@ -154,13 +154,27 @@ Feature: process tests for nodoInviaRPT [PAG-1192_OK_RPT]
         And wait 10 seconds for expiration
         Then verify the HTTP status code of paInviaRT response is 200
 
-
-
-
-    Scenario: Execute activatePaymentNotice1 request
+    Scenario: Execute activatePaymentNotice3 request
         Given the Trigger paInviaRT scenario executed successfully
-        And expirationTime with None in activatePaymentNotice
-
+        And initial XML activatePaymentNotice
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <nod:activatePaymentNoticeReq>
+            <idPSP>$activatePaymentNotice.idPSP</idPSP>
+            <idBrokerPSP>$activatePaymentNotice.idBrokerPSP</idBrokerPSP>
+            <idChannel>$activatePaymentNotice.idChannel</idChannel>
+            <password>pwdpwdpwd</password>
+            <qrCode>
+            <fiscalCode>$activatePaymentNotice.fiscalCode</fiscalCode>
+            <noticeNumber>$activatePaymentNotice.noticeNumber</noticeNumber>
+            </qrCode>
+            <amount>7.00</amount>
+            </nod:activatePaymentNoticeReq>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
         And initial XML paaAttivaRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">
@@ -204,9 +218,8 @@ Feature: process tests for nodoInviaRPT [PAG-1192_OK_RPT]
         And through the query payment_status retrieve param paymentToken at position 0 and save it under the key paymentToken
 
 
-    # test execution
     Scenario: Define RPT3
-        Given the Execute activatePaymentNotice1 request scenario executed successfully
+        Given the Execute activatePaymentNotice3 request scenario executed successfully
         And RPT generation
 
             """
@@ -286,17 +299,16 @@ Feature: process tests for nodoInviaRPT [PAG-1192_OK_RPT]
             </pay_i:RPT>
             """
 
-
-    Scenario: Excecute nodoInviaRPT
+    Scenario: Excecute nodoInviaRPT3
         Given the Define RPT3 scenario executed successfully
         And initial XML nodoInviaRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
             <ppt:intestazionePPT>
-            <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
-            <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
-            <identificativoDominio>44444444444</identificativoDominio>
+            <identificativoIntermediarioPA>#codicePA_old#</identificativoIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
+            <identificativoDominio>#codicePA_old#</identificativoDominio>
             <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$paymentToken</codiceContestoPagamento>
             </ppt:intestazionePPT>
@@ -314,7 +326,10 @@ Feature: process tests for nodoInviaRPT [PAG-1192_OK_RPT]
             </soapenv:Envelope>
             """
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        And job paInviaRt triggered after 5 seconds
+        And wait 5 seconds for expiration
         Then check esito is OK of nodoInviaRPT response
+        And verify the HTTP status code of paInviaRt response is 200
 
         #DB-CHECK-RPT_ACTIVATIONS
         And verify 0 record for the table RPT_ACTIVATIONS retrived by the query payment_status on db nodo_online under macro NewMod3
