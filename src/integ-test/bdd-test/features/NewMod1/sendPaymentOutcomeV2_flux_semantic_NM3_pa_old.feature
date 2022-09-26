@@ -554,7 +554,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
       And the RPT scenario executed successfully
       And the nodoInviaRPT scenario executed successfully
       When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-      Then check outcome is OK of nodoInviaRPT response
+      Then check esito is OK of nodoInviaRPT response
    @wip
    Scenario: SEM_SPO_32 (part 3)
       Given the SEM_SPO_32 (part 2) scenario executed successfully
