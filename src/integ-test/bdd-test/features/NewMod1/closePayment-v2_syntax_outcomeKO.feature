@@ -149,7 +149,6 @@ Feature: syntax checks for closePaymentV2 outcome KO
         And check outcome is OK of v2/closepayment response
         Examples:
             | elem                          | value                                                                                                                                                                                                                                                            | soapUI test   |
-            | paymentTokens                 | None                                                                                                                                                                                                                                                             | SIN_CPV2_01   |
             | idPSP                         | None                                                                                                                                                                                                                                                             | SIN_CPV2_07   |
             | idPSP                         | Empty                                                                                                                                                                                                                                                            | SIN_CPV2_08   |
             | idPSP                         | 700000000017000000000170000000001700                                                                                                                                                                                                                             | SIN_CPV2_09   |
@@ -330,11 +329,11 @@ Feature: syntax checks for closePaymentV2 outcome KO
         And check outcome is OK of v2/closepayment response
 
     # syntax check - No error with only fields paymentTokens and outcome [SIN_CP_41]
-    Scenario: check activateIOPayment OK 2
-        Given the activateIOPayment scenario executed successfully
-        When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
-        Then check outcome is OK of activateIOPayment response
-        And save activateIOPayment response in activateIOPaymentResponse
+    Scenario: check activatePaymentNoticeV2 OK 2
+        Given the activatePaymentNoticeV2 scenario executed successfully
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV21
 
     Scenario: closePaymentV2 with paymentTokens and outcome
         Given the check activatePaymentNoticeV2 OK 2 scenario executed successfully
@@ -350,7 +349,7 @@ Feature: syntax checks for closePaymentV2 outcome KO
 
     Scenario: check closePaymentV2 OK with paymentTokens and outcome
         Given the closePaymentV2 with paymentTokens and outcome scenario executed successfully
-        And paymentToken with $activateIOPaymentResponse.paymentToken in v2/closepayment
+        And paymentToken with $activatePaymentNoticeV21Response.paymentToken in v2/closepayment
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
@@ -365,9 +364,10 @@ Feature: syntax checks for closePaymentV2 outcome KO
         And check outcome is KO of v2/closepayment response
         And check description is Invalid paymentTokens of v2/closepayment response
         Examples:
-            | elem         | value                                 | soapUI test |
-            | paymentToken | None                                  | SIN_CPV2_02 |
-            | paymentToken | 87cacaf799cadf9vs9s7vasdvs676cavv4574 | SIN_CPV2_03 |
+            | elem          | value                                 | soapUI test |
+            | paymentTokens | None                                  | SIN_CPV2_01 |
+            | paymentToken  | None                                  | SIN_CPV2_02 |
+            | paymentToken  | 87cacaf799cadf9vs9s7vasdvs676cavv4574 | SIN_CPV2_03 |
 
 
 
