@@ -420,7 +420,6 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
         And the activatePaymentNotice scenario executed successfully
         When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-        And saving activatePaymentNotice request in activatePaymentNoticeRequest
         And save activatePaymentNotice response in activatePaymentNotice_1
     @wip
     Scenario: SEM_SPO_31 (part 2)
@@ -430,7 +429,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcomeV2 response
         And check faultCode is PPT_PAGAMENTO_SCONOSCIUTO of sendPaymentOutcomeV2 response
-        And updates through the query update_noticeidrandom of the table POSITION_STATUS_SNAPSHOT the parameter NOTICE_ID with $activatePaymentNoticeRequest.noticeNumber under macro NewMod1 on db nodo_online
+        And updates through the query update_noticeidrandom of the table POSITION_STATUS_SNAPSHOT the parameter NOTICE_ID with $activatePaymentNotice.noticeNumber under macro NewMod1 on db nodo_online
 
     # SEM_SPO_32
 
