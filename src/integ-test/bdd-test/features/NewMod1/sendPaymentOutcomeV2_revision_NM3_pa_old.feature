@@ -311,8 +311,7 @@ Feature: revision checks for sendPaymentOutcomeV2
     # REV_SPO_03
 
     Scenario: REV_SPO_03 (part 1)
-        Given current date generation
-        And the verifyPaymentNotice scenario executed successfully
+        Given the verifyPaymentNotice scenario executed successfully
         And the activatePaymentNotice scenario executed successfully
         When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
@@ -326,6 +325,7 @@ Feature: revision checks for sendPaymentOutcomeV2
 
     Scenario: REV_SPO_03 (part 3)
         Given the REV_SPO_03 (part 2) scenario executed successfully
+        And current date generation
         And the sendPaymentOutcomeV2 scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
@@ -500,7 +500,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         And verify 0 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query select_activate on db nodo_online under macro NewMod1
         And verify 0 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query select_activate on db nodo_online under macro NewMod1
         And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO_MOD3,RPT_RISOLTA_KO,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
-        And verify 7 record for the table STATI_RPT retrived by the query select_activate on db nodo_online under macro NewMod1
+        And verify 7 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column ID of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column ID_SESSIONE of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value $activatePaymentNoticeResponse.paymentToken of the record at column CCP of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
@@ -569,7 +569,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         And verify 0 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query select_activate on db nodo_online under macro NewMod1
         And verify 0 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query select_activate on db nodo_online under macro NewMod1
         And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO_MOD3,RPT_ANNULLATA_NODO,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
-        And verify 7 record for the table STATI_RPT retrived by the query select_activate on db nodo_online under macro NewMod1
+        And verify 7 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column ID of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column ID_SESSIONE of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value $activatePaymentNoticeResponse.paymentToken of the record at column CCP of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
