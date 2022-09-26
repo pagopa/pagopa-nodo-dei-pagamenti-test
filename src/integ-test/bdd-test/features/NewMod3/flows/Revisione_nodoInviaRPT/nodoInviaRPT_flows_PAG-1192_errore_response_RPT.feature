@@ -154,7 +154,6 @@ Feature: process tests for nodoInviaRPT [PAG-1192_errore_response_RPT]
         And wait 10 seconds for expiration
         Then verify the HTTP status code of paInviaRt response is 200
 
-    @prova
     Scenario: Execute activatePaymentNotice3 request
         Given the Trigger paInviaRT scenario executed successfully
         And initial XML activatePaymentNotice
@@ -185,7 +184,6 @@ Feature: process tests for nodoInviaRPT [PAG-1192_errore_response_RPT]
             <paaAttivaRPTRisposta>
             <esito>OK</esito>
             <datiPagamentoPA>
-            <importoSingoloVersamento>2.00</importoSingoloVersamento>
             <ibanAccredito>IT96R0123454321000000012345</ibanAccredito>
             <bicAccredito>BSCTCH22</bicAccredito>
             <enteBeneficiario>
@@ -341,11 +339,9 @@ Feature: process tests for nodoInviaRPT [PAG-1192_errore_response_RPT]
         And checks the value $iuv of the record at column CREDITOR_REFERENCE_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
         And checks the value $paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
         And checks the value $activatePaymentNotice.fiscalCode of the record at column BROKER_PA_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
-        And checks the value 2 of the record at column STATION_VERSION of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
         And checks the value 15376371009 of the record at column PSP_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
         And checks the value 15376371009 of the record at column BROKER_PSP_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
         And checks the value 15376371009_01 of the record at column CHANNEL_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
-        And checks the value $activatePaymentNotice.idempotencyKey of the record at column IDEMPOTENCY_KEY of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
 
         And execution query payment_status to get value on the table POSITION_PAYMENT, with the columns AMOUNT under macro NewMod3 with db name nodo_online
         And through the query payment_status retrieve param SOMMA_VERSAMENTI at position 0 and save it under the key AMOUNT
@@ -435,9 +431,6 @@ Feature: process tests for nodoInviaRPT [PAG-1192_errore_response_RPT]
         When psp sends soap nodoChiediCopiaRT to nodo-dei-pagamenti
         Then check rt field exists in nodoChiediCopiaRT response
         And check ppt:nodoChiediCopiaRTRisposta field exists in nodoChiediCopiaRT response
-
-
-
 
     Scenario: Excecute nodoChiediCopiaRT2
         Given the Excecute nodoChiediCopiaRT scenario executed successfully
