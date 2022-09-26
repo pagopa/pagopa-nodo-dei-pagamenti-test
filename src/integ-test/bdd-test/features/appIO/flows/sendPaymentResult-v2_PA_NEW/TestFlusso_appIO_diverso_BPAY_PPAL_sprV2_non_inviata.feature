@@ -206,7 +206,7 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
          """
          {
             "paymentTokens": [
-               "$activateIOPaymentNoticeResponse.paymentToken"
+               "$activateIOPaymentResponse.paymentToken"
             ],
             "outcome": "OK",
             "idPSP": "#psp#",
