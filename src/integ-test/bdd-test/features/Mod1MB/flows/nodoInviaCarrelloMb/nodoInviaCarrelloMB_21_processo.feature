@@ -231,7 +231,12 @@ Feature: process tests for nodoInviaCarrelloMB
 
     Scenario: Generation of two more RPT
         Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
-        And nodo-dei-pagamenti has config parameter STATUS set to NOTIFIED
+        And replace pa content with #codicePA# content
+        And replace iuv content with $1iuv content
+        And replace noticeNumber content with $1noticeNumber content
+
+        And generic update through the query param_update_generic_where_condition of the table POSITION_STATUS_SNAPSHOT the parameter STATUS = 'NOTIFIED', with where condition NOTICE_ID = '$1noticeNumber' and PA_FISCAL_CODE='$pa' under macro update_query on db nodo_online
+
         And generate 1 cart with PA #codicePA# and notice number $1noticeNumber
         And RPT3 generation
             """
@@ -445,6 +450,5 @@ Feature: process tests for nodoInviaCarrelloMB
             """
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check faultCode is PPT_PAGAMENTO_DUPLICATO of nodoInviaCarrelloRPT response
-        And restore initial configurations
 
 

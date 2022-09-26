@@ -380,6 +380,12 @@ def step_impl(context, number):
     if '#date#' in payload:
         payload = payload.replace('#date#', date)
 
+    if '#tomorrow_date#' in payload:
+        tomorrow_date = datetime.date.today() - datetime.timedelta(days=1)
+        payload = payload.replace('#tomorrow_date#', tomorrow_date)
+        setattr(context, 'tomorrow_date', tomorrow_date)
+
+    
     if f'#IuV{number}#' in payload:
         IuV = '0' + str(random.randint(1000, 2000)) + str(random.randint(1000,
                                                                          2000)) + str(random.randint(1000, 2000)) + '00'
