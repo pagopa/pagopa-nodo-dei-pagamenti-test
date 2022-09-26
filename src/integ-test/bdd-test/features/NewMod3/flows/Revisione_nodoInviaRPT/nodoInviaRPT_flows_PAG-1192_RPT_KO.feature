@@ -185,7 +185,7 @@ Feature: process tests for nodoInviaRPT [PAG-1192_KO_RPT]
             <fault>
             <faultCode>PAA_FIRMA_INDISPONIBILE</faultCode>
             <faultString>gbyiua</faultString>
-            <id>#creditor_institution_code#</id>
+            <id>#creditor_institution_code_old#</id>
             <description>dfstf</description>
             <serial>1</serial>
             </fault>
