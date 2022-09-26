@@ -611,7 +611,7 @@ Feature: semantic checks for closePaymentV2
         Given the check nodoInviaRPT OK scenario executed successfully
         And the closePaymentV2 scenario executed successfully
         And paymentToken with $sessionToken in v2/closepayment
-        And totalAmount with 14 in in v2/closepayment
+        And totalAmount with 14 in v2/closepayment
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 400
         And check outcome is KO of v2/closepayment response
