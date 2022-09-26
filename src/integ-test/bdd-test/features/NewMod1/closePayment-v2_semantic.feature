@@ -28,7 +28,7 @@ Feature: semantic checks for closePaymentV2
     # paymentToken unknown [SEM_CP_01]
     Scenario: Check unknown paymentToken
         Given the closePaymentV2 scenario executed successfully
-        When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 404
         And check esito is KO of v2/closepayment response
         And check descrizione is Unknown token of v2/closepayment response
@@ -37,7 +37,7 @@ Feature: semantic checks for closePaymentV2
     Scenario Outline: Check semantic error on identificativoPsp
         Given the closePaymentV2 scenario executed successfully
         And <elem> with <value> in v2/closepayment
-        When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 404
         And check esito is KO of v2/closepayment response
         And check descrizione is The indicated PSP does not exist of v2/closepayment response
@@ -50,7 +50,7 @@ Feature: semantic checks for closePaymentV2
     Scenario Outline: Check semantic error on identificativoIntermediario
         Given the closePaymentV2 scenario executed successfully
         And <elem> with <value> in v2/closepayment
-        When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 404
         And check esito is KO of v2/closepayment response
         And check descrizione is The indicated brokerPSP does not exist of v2/closepayment response
@@ -63,7 +63,7 @@ Feature: semantic checks for closePaymentV2
     Scenario Outline: Check semantic error on identificativoCanale
         Given the closePaymentV2 scenario executed successfully
         And <elem> with <value> in v2/closepayment
-        When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 404
         And check esito is KO of v2/closepayment response
         And check descrizione is The indicated channel does not exist of v2/closepayment response
@@ -76,7 +76,7 @@ Feature: semantic checks for closePaymentV2
     Scenario: Check identificativoCanale not associated to BPAY
         Given the closePaymentV2 scenario executed successfully
         And identificativoCanale with 60000000001_06 in v2/closepayment
-        When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 404
         And check esito is KO of v2/closepayment response
         And check descrizione is Incorrect PSP-brokerPSP-Channel-Payment type configuration of v2/closepayment response
@@ -85,7 +85,7 @@ Feature: semantic checks for closePaymentV2
     Scenario: Check identificativoCanale ATTIVATO_PRESSO_PSP
         Given the closePaymentV2 scenario executed successfully
         And identificativoCanale with #canale_ATTIVATO_PRESSO_PSP# in v2/closepayment
-        When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 400
         And check esito is KO of v2/closepayment response
         And check descrizione is Invalid payment type of v2/closepayment response
@@ -94,7 +94,7 @@ Feature: semantic checks for closePaymentV2
     Scenario: Check "esito":"KO" on identificativoPsp not associated to identificativoIntermediario and identificativoCanale
         Given the closePaymentV2 scenario executed successfully
         And identificativoPsp with IDPSPFNZ in v2/closepayment
-        When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 404
         And check esito is KO of v2/closepayment response
         And check descrizione is The indicated channel does not exist of v2/closepayment response
@@ -242,7 +242,7 @@ Feature: semantic checks for closePaymentV2
         And the closePaymentV2 scenario executed successfully
         And paymentToken with $activateIOPaymentResponse.paymentToken in v2/closepayment
         And totalAmount with 20 in v2/closepayment
-        When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 404
         And check esito is KO of v2/closepayment response
         And check descrizione is Mismatched amount of v2/closepayment response
@@ -258,7 +258,7 @@ Feature: semantic checks for closePaymentV2
         Given the check activateIOPayment OK 2 scenario executed successfully
         And the closePaymentV2 scenario executed successfully
         And paymentToken with $activateIOPaymentResponse.paymentToken in v2/closepayment
-        When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check esito is OK of v2/closepayment response
 
@@ -274,6 +274,6 @@ Feature: semantic checks for closePaymentV2
         And the closePaymentV2 scenario executed successfully
         And paymentToken with $activateIOPaymentResponse.paymentToken in v2/closepayment
         And timestampOperation with 2018-04-23T18:25:43Z in v2/closepayment
-        When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check esito is OK of v2/closepayment response
