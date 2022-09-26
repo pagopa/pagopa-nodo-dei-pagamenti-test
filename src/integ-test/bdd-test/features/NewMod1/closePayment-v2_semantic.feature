@@ -598,7 +598,7 @@ Feature: semantic checks for closePaymentV2
     Scenario: check nodoAttivaRPT OK 
         Given the nodoAttivaRPT scenario executed successfully
         When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-        Then check outcome is OK of nodoAttivaRPT response
+        Then check esito is OK of nodoAttivaRPT response
         # And save nodoAttivaRPT response in nodoAttivaRPT1
 
     Scenario: check nodoInviaRPT OK 
