@@ -129,6 +129,7 @@
         "update_noticeid_activate1": "UPDATE table_name SET param = 'value' WHERE NOTICE_ID ='$activatePaymentNoticeRequest1.noticeNumber'",
         "update_noticeid_activate2": "UPDATE table_name SET param = 'value' WHERE NOTICE_ID ='$activatePaymentNoticeRequest2.noticeNumber'",
         "select_activate": "SELECT columns FROM table_name WHERE NOTICE_ID = '$activatePaymentNotice.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode'",
-        "update_activate": "UPDATE table_name SET param = 'value' WHERE NOTICE_ID = '$activatePaymentNotice.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode'"
+        "update_activate": "UPDATE table_name SET param = 'value' WHERE NOTICE_ID = '$activatePaymentNotice.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode'",
+        "iuv": "SELECT columns FROM table_name WHERE IUV = '$nodoInviaRPT.identificativoUnivocoVersamento'"
     }
 }
