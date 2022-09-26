@@ -252,5 +252,5 @@ Feature: process tests for nodoInviaCarrelloMb[NICM_DB_12]
         And checks the value MOD1 of the record at column PAYMENT_TYPE of the table POSITION_PAYMENT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
 
         And execution query by_notice_number_and_pa to get value on the table POSITION_PAYMENT, with the columns CARRELLO_ID under macro Mod1Mb with db name nodo_online
-        And through the query by_notice_number_and_pa retrieve param ID at position 0 and save it under the key DEBTOR_ID
-        And checks the value $DEBTOR_ID of the record at column ID of the table POSITION_SUBJECT retrived by the query by_position_subject on db nodo_online under macro Mod1Mb
+        And through the query by_notice_number_and_pa retrieve param FK_CARRELLO at position 0 and save it under the key CARRELLO_ID
+        And checks the value $CARRELLO_ID of the record at column FK_CARRELLO of the table RPT retrived by the query by_iuv_and_ident_dominio on db nodo_online under macro Mod1Mb
