@@ -599,10 +599,10 @@ Feature: semantic checks for closePaymentV2
         Given the nodoAttivaRPT scenario executed successfully
         When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoAttivaRPT response
-        # And save nodoAttivaRPT response in nodoAttivaRPT1
 
     Scenario: check nodoInviaRPT OK 
         Given the check nodoAttivaRPT OK scenario executed successfully
+        And the nodoInviaRPT scenario executed successfully
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
@@ -622,11 +622,11 @@ Feature: semantic checks for closePaymentV2
     Scenario: check nodoAttivaRPT OK 2
         Given the nodoAttivaRPT scenario executed successfully
         When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-        Then check outcome is OK of nodoAttivaRPT response
-        # And save nodoAttivaRPT response in nodoAttivaRPT1
+        Then check esito is OK of nodoAttivaRPT response
 
     Scenario: check nodoInviaRPT OK 2
         Given the check nodoAttivaRPT OK 2 scenario executed successfully
+        And the nodoInviaRPT scenario executed successfully
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
