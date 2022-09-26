@@ -414,14 +414,14 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
         Then check outcome is OK of sendPaymentOutcomeV2 response
 
     # SEM_SPO_31
-    
+
     Scenario: SEM_SPO_31 (part 1)
         Given the verifyPaymentNotice scenario executed successfully
         And the activatePaymentNotice scenario executed successfully
         When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
         And save activatePaymentNotice response in activatePaymentNotice_1
-    @wip
+
     Scenario: SEM_SPO_31 (part 2)
         Given the SEM_SPO_31 (part 1) scenario executed successfully
         And updates through the query update_activate of the table POSITION_STATUS_SNAPSHOT the parameter NOTICE_ID with 311011451292109621 under macro NewMod1 on db nodo_online
@@ -551,32 +551,32 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
         And check faultCode is PPT_SEMANTICA of sendPaymentOutcomeV2 response
         And check description is Outcome non accettabile per token multipli attivati presso il PSP of sendPaymentOutcomeV2 response
 
-# SEM_SPO_38
+    # SEM_SPO_38
 
-# Scenario: SEM_SPO_38 (part 1)
-#     Given the verifyPaymentNotice scenario executed successfully
-#     And the activatePaymentNotice scenario executed successfully
-#     And idempotencyKey with None in activatePaymentNotice
-#     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
-#     Then check outcome is OK of activatePaymentNotice response
-#     And saving activatePaymentNotice request in activatePaymentNoticeRequest1
-#     And save activatePaymentNotice response in activatePaymentNotice_1
+    Scenario: SEM_SPO_38 (part 1)
+        Given the verifyPaymentNotice scenario executed successfully
+        And the activatePaymentNotice scenario executed successfully
+        And idempotencyKey with None in activatePaymentNotice
+        When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNotice response
+        And saving activatePaymentNotice request in activatePaymentNoticeRequest1
+        And save activatePaymentNotice response in activatePaymentNotice_1
 
-# Scenario: SEM_SPO_38 (part 2)
-#     Given the SEM_SPO_38 (part 1) scenario executed successfully
-#     And random iuv in context
-#     And noticeNumber with 311$iuv in activatePaymentNotice
-#     And creditorReferenceId with 11$iuv in paGetPayment
-#     And EC replies to nodo-dei-pagamenti with the paVerifyPaymentNotice
-#     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
-#     Then check outcome is OK of activatePaymentNotice response
-#     And saving activatePaymentNotice request in activatePaymentNoticeRequest2
-
-# Scenario: SEM_SPO_38 (part 3)
-#     Given the SEM_SPO_38 (part 2) scenario executed successfully
-#     And updates through the query update_noticeid_activate2 of the table POSITION_STATUS_SNAPSHOT the parameter NOTICE_ID with $activatePaymentNoticeRequest1.noticeNumber under macro NewMod1 on db nodo_online
-#     And the sendPaymentOutcomeV2 scenario executed successfully
-#     When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
-#     Then check outcome is KO of sendPaymentOutcomeV2 response
-#     And check faultCode is PPT_PAGAMENTO_DUPLICATO of sendPaymentOutcomeV2 response
-#     And updates through the query update_noticeid_activate1 of the table POSITION_STATUS_SNAPSHOT the parameter NOTICE_ID with $activatePaymentNoticeRequest2.noticeNumber under macro NewMod1 on db nodo_online
+    Scenario: SEM_SPO_38 (part 2)
+        Given the SEM_SPO_38 (part 1) scenario executed successfully
+        And random iuv in context
+        And noticeNumber with 311$iuv in activatePaymentNotice
+        And creditorReferenceId with 11$iuv in paGetPayment
+        And EC replies to nodo-dei-pagamenti with the paVerifyPaymentNotice
+        When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNotice response
+        And saving activatePaymentNotice request in activatePaymentNoticeRequest2
+    @wip
+    Scenario: SEM_SPO_38 (part 3)
+        Given the SEM_SPO_38 (part 2) scenario executed successfully
+        And updates through the query update_noticeid_activate2 of the table POSITION_STATUS_SNAPSHOT the parameter NOTICE_ID with $activatePaymentNoticeRequest1.noticeNumber under macro NewMod1 on db nodo_online
+        And the sendPaymentOutcomeV2 scenario executed successfully
+        When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
+        Then check outcome is KO of sendPaymentOutcomeV2 response
+        And check faultCode is PPT_PAGAMENTO_DUPLICATO of sendPaymentOutcomeV2 response
+        And updates through the query update_noticeid_activate1 of the table POSITION_STATUS_SNAPSHOT the parameter NOTICE_ID with $activatePaymentNoticeRequest2.noticeNumber under macro NewMod1 on db nodo_online
