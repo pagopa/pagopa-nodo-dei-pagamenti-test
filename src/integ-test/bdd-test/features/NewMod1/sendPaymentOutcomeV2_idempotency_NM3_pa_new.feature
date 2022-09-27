@@ -362,7 +362,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2
         And checks the value NOTIFIED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query select_activate on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query select_activate on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_PAYMENT retrived by the query PAYMENT_TOKEN_spov2 on db nodo_online under macro NewMod1
-        And verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query idempotency_spov2 on db nodo_online under macro NewMod1
+        And verify 2 record for the table IDEMPOTENCY_CACHE retrived by the query idempotency_spov2 on db nodo_online under macro NewMod1
 
     # IDMP_SPO_16.2
 
@@ -586,6 +586,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2
     Scenario: IDMP_SPO_31 (part 2)
         Given the IDMP_SPO_31 (part 1) scenario executed successfully
         And expirationTime with None in activatePaymentNotice
+        And EC replies to nodo-dei-pagamenti with the paGetPayment
         When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
         And save activatePaymentNotice response in activatePaymentNotice_2
