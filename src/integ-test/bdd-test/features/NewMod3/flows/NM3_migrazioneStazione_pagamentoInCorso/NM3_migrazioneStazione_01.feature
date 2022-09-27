@@ -150,7 +150,7 @@ Feature: process tests for NM3 with station migration from V1 to V2
             <soapenv:Header>
             <ppt:intestazionePPT>
             <identificativoIntermediarioPA>$activatePaymentNotice.fiscalCode</identificativoIntermediarioPA>
-            <identificativoStazioneIntermediarioPA>$intermediarioPA</identificativoStazioneIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>#intermediarioPA#</identificativoStazioneIntermediarioPA>
             <identificativoDominio>$activatePaymentNotice.fiscalCode</identificativoDominio>
             <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken</codiceContestoPagamento>
