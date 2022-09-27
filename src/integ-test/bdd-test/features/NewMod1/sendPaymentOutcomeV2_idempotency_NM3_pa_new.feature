@@ -351,7 +351,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2
         And idChannel with 70000000001_01 in sendPaymentOutcomeV2
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcomeV2 response
-        And faultCode is PPT_TOKEN_SCONOSCIUTO of sendPaymentOutcomeV2 response
+        And check faultCode is PPT_TOKEN_SCONOSCIUTO of sendPaymentOutcomeV2 response
         And wait 5 seconds for expiration
         And checks the value PAYING,PAID,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activate on db nodo_online under macro NewMod1
         And verify 5 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activate on db nodo_online under macro NewMod1
@@ -383,7 +383,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2
         And paymentMethod with cash in sendPaymentOutcomeV2
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcomeV2 response
-        And faultCode is PPT_ERRORE_IDEMPOTENZA of sendPaymentOutcomeV2 response
+        And check faultCode is PPT_ERRORE_IDEMPOTENZA of sendPaymentOutcomeV2 response
         And wait 5 seconds for expiration
         And checks the value PAYING,PAID,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activate on db nodo_online under macro NewMod1
         And verify 5 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activate on db nodo_online under macro NewMod1
@@ -415,7 +415,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2
         And streetName with street3 in sendPaymentOutcomeV2
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcomeV2 response
-        And faultCode is PPT_ERRORE_IDEMPOTENZA of sendPaymentOutcomeV2 response
+        And check faultCode is PPT_ERRORE_IDEMPOTENZA of sendPaymentOutcomeV2 response
         And wait 5 seconds for expiration
         And checks the value PAYING,PAID,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activate on db nodo_online under macro NewMod1
         And verify 5 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activate on db nodo_online under macro NewMod1
@@ -461,7 +461,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2
         Given the IDMP_SPO_17 (part 2) scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcomeV2 response
-        And faultCode is PPT_ESITO_GIA_ACQUISITO of sendPaymentOutcomeV2 response
+        And check faultCode is PPT_ESITO_GIA_ACQUISITO of sendPaymentOutcomeV2 response
         And nodo-dei-pagamenti DEV has config parameter scheduler.jobName_idempotencyCacheClean.enabled set to true
         And checks the value NotNone of the record at column ID of the table IDEMPOTENCY_CACHE retrived by the query idempotency_spov2_timestamp_desc on db nodo_online under macro NewMod1
         And checks the value sendPaymentOutcomeV2 of the record at column PRIMITIVA of the table IDEMPOTENCY_CACHE retrived by the query idempotency_spov2_timestamp_desc on db nodo_online under macro NewMod1
@@ -499,10 +499,10 @@ Feature: idempotency checks for sendPaymentOutcomeV2
         When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
         And verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query idempotency_activate on db nodo_online under macro NewMod1
-        And nodo-dei-pagamenti DEV has config parameter useIdempotency set to false
 
     Scenario: IDMP_SPO_20 (part 2)
         Given the IDMP_SPO_20 (part 1) scenario executed successfully
+        And nodo-dei-pagamenti DEV has config parameter useIdempotency set to false
         And the sendPaymentOutcomeV2 scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
@@ -546,7 +546,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2
         And idempotencyKey with None in sendPaymentOutcomeV2
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-        And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query idempotency_spov2 on db nodo_online under macro NewMod1
+        And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query idempotency_activate on db nodo_online under macro NewMod1
 
     # IDMP_SPO_27
 
@@ -579,8 +579,8 @@ Feature: idempotency checks for sendPaymentOutcomeV2
         When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
         And save activatePaymentNotice response in activatePaymentNotice_1
-        And update through the query update_activate of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with CANCELLED under macro NewMod1 on db nodo_online
-        And update through the query update_activate of the table POSITION_STATUS_SNAPSHOT the parameter STATUS with INSERTED under macro NewMod1 on db nodo_online
+        And updates through the query update_activate of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with CANCELLED under macro NewMod1 on db nodo_online
+        And updates through the query update_activate of the table POSITION_STATUS_SNAPSHOT the parameter STATUS with INSERTED under macro NewMod1 on db nodo_online
         And wait 3 seconds for expiration
 
     Scenario: IDMP_SPO_31 (part 2)
