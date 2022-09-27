@@ -158,7 +158,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
                     "$activateIOPaymentResponse.paymentToken"
                 ],
                 "outcome": "OK",
-                "identificativoPSP": "#psp#",
+                "identificativoPsp": "#psp#",
                 "tipoVersamento": "BPAY",
                 "identificativoIntermediario": "#id_broker_psp#",
                 "identificativoCanale": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
@@ -167,9 +167,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
                 "fee": 2,
                 "timestampOperation": "2012-04-23T18:25:43Z",
                 "additionalPaymentInformations": {
-                    "transacionId": "#transaction_id#",
-                    "outcomePaymentGateway" : "EFF",
-                    "authorizationCode" : "resOK"
+                    "transactionId": "#transaction_id#",
                 }
             }
             """
