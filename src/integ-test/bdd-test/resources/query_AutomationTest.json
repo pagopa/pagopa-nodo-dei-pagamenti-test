@@ -132,5 +132,9 @@
         "select_activate": "SELECT columns FROM table_name WHERE NOTICE_ID = '$activatePaymentNotice.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode'",
         "update_activate": "UPDATE table_name SET param = 'value' WHERE NOTICE_ID = '$activatePaymentNotice.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode'",
         "iuv": "SELECT columns FROM table_name WHERE IUV = '$nodoInviaRPT.identificativoUnivocoVersamento'"
+    },
+    "Mod4": {
+        "update_id_intermediario_pa": "UPDATE table_name SET param = 'value' WHERE ID_INTERMEDIARIO_PA = '77777777777'",
+        "update_id_stazione": "UPDATE table_name SET param = 'value' WHERE ID_STAZIONE = '77777777777_01'"
     }
 }
