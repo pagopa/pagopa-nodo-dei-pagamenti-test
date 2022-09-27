@@ -126,15 +126,15 @@ Feature: process tests for chiediListaPSP
         And execution query getPspCarte to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
         And through the query getPspCarte retrieve param sizeCarte at position 0 and save it under the key sizeCarte
         And execution query getPspCarte to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
-        And through the query getPspCarte retrieve param listaCarte at position all and save it under the key listaCarte
+        And through the query getPspCarte retrieve param listaCarte at position -1 and save it under the key listaCarte
 
         And execution query getPspConto to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
         And through the query getPspConto retrieve param sizeConto at position 0 and save it under the key sizeConto
         And execution query getPspConto to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
-        And through the query getPspConto retrieve param listaConto at position all and save it under the key listaConto
+        And through the query getPspConto retrieve param listaConto at position -1 and save it under the key listaConto
 
         And execution query getPspAltro to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
-        And through the query getPspAltro retrieve param listaAltro at position all and save it under the key listaAltro
+        And through the query getPspAltro retrieve param listaAltro at position -1 and save it under the key listaAltro
 
 
     Scenario: execution nodoChiediListaPSP - altro
