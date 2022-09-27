@@ -181,14 +181,13 @@ Feature: process tests for nodoInviaRPT [PAG-1192_KO_RPT]
             <soapenv:Body>
             <ws:paaAttivaRPTRisposta>
             <paaAttivaRPTRisposta>
-            <esito>KO</esito>
             <fault>
-            <faultCode>PAA_FIRMA_INDISPONIBILE</faultCode>
-            <faultString>gbyiua</faultString>
+            <faultCode>PAA_SINTASSI_EXTRAXSD</faultCode>
+            <faultString>errore sintattico PA</faultString>
             <id>#creditor_institution_code_old#</id>
-            <description>dfstf</description>
-            <serial>1</serial>
+            <description>Errore sintattico emesso dalla PA</description>
             </fault>
+            <esito>KO</esito>
             </paaAttivaRPTRisposta>
             </ws:paaAttivaRPTRisposta>
             </soapenv:Body>
@@ -206,7 +205,6 @@ Feature: process tests for nodoInviaRPT [PAG-1192_KO_RPT]
     Scenario: Define RPT3
         Given the Execute activatePaymentNotice3 request scenario executed successfully
         And RPT generation
-
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
@@ -284,7 +282,7 @@ Feature: process tests for nodoInviaRPT [PAG-1192_KO_RPT]
             </pay_i:RPT>
             """
 
-
+    @prova
     Scenario: Excecute nodoInviaRPT3
         Given the Define RPT3 scenario executed successfully
         And initial XML nodoInviaRPT
@@ -296,7 +294,7 @@ Feature: process tests for nodoInviaRPT [PAG-1192_KO_RPT]
             <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
             <identificativoDominio>#codicePA_old#</identificativoDominio>
             <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken</codiceContestoPagamento>
+            <codiceContestoPagamento>$paymentToken</codiceContestoPagamento>
             </ppt:intestazionePPT>
             </soapenv:Header>
             <soapenv:Body>
@@ -314,7 +312,6 @@ Feature: process tests for nodoInviaRPT [PAG-1192_KO_RPT]
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is KO of nodoInviaRPT response
         And check faultCode is PPT_SEMANTICA of nodoInviaRPT response
-        And check faultString is PPT_SEMANTICA of nodoInviaRPT response
 
         #DB-CHECK-RPT_ACTIVATIONS
         And verify 0 record for the table RPT_ACTIVATIONS retrived by the query payment_status on db nodo_online under macro NewMod3

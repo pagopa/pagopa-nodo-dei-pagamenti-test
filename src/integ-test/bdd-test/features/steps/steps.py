@@ -731,6 +731,7 @@ def step_impl(context, job_name, seconds):
 def step_impl(context, tag, value, primitive):
     soap_response = getattr(context, primitive + RESPONSE)
     value = utils.replace_local_variables(value, context)
+    value = utils.replace_context_variables(value, context)
     value = utils.replace_global_variables(value, context)
     if 'xml' in soap_response.headers['content-type']:
         my_document = parseString(soap_response.content)
@@ -749,8 +750,8 @@ def step_impl(context, tag, value, primitive):
         node_response = getattr(context, primitive + RESPONSE)
         json_response = node_response.json()
         founded_value = jo.get_value_from_key(json_response, tag)
-        print(
-            f'check tag "{tag}" - expected: {value}, obtained: {json_response.get(tag)}')
+        print(founded_value)
+        print(f'check tag "{tag}" - expected: {value}, obtained: {json_response.get(tag)}')
         assert str(founded_value) == value
 
 
@@ -1411,8 +1412,12 @@ def step_impl(context, query_name, macro, db_name, table_name, columns):
 def step_impl(context, query_name, param, position, key):
     result_query = getattr(context, query_name)
     print(f'{query_name}: {result_query}')
-    selected_element = result_query[0][position]
-    print(f'{param}: {selected_element}')
+    if position == 0:
+        selected_element = result_query[0][position]
+        print(f'{param}: {selected_element}')
+    elif position == -1: # il -1 recupera tutti i record 
+        selected_element = [t[0] for t in result_query]
+        print(f'{param}: {selected_element}')
     setattr(context, key, selected_element)
 
 
