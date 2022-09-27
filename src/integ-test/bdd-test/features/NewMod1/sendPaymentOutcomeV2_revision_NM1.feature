@@ -186,6 +186,21 @@ Feature: revision checks for sendPaymentOutcomeV2
             </soapenv:Envelope>
             """
 
+    @skip
+    Scenario: pspNotifyPayment timeout
+        Given initial XML pspNotifyPayment
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:psp="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <psp:pspNotifyPaymentRes>
+            <delay>60000</delay>
+            </psp:pspNotifyPaymentRes>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And EC replies to nodo-dei-pagamenti with the pspNotifyPayment
+
     # REV_SPO_03
 
     Scenario: REV_SPO_03 (part 1)
@@ -325,31 +340,35 @@ Feature: revision checks for sendPaymentOutcomeV2
         And checks the value NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 3 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
-# test attualmente non eseguibile: manca la logica del timeout sul mock pa
-# REV_SPO_04
+    # REV_SPO_04
 
-# Scenario: REV_SPO_04 (part 1)
-#     Given the activatePaymentNoticeV2 scenario executed successfully
-#     And amount with 3.00 in activatePaymentNoticeV2
-#     When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-#     Then check outcome is OK of activatePaymentNoticeV2 response
-#     And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response
+    Scenario: REV_SPO_04 (part 1)
 
-# Scenario: REV_SPO_04 (part 2)
-#     Given the REV_SPO_04 (part 1) scenario executed successfully
-#     And the closePaymentV2 scenario executed successfully
-#     And totalAmount with 5.00 in closePaymentV2
-#     When PM sends closePaymentV2 to nodo-dei-pagamenti
-#     Then check outcome is OK of closePaymentV2 response
-#     And check faultCode is 200 of closePaymentV2 response
-#     And wait 25 seconds for expiration
+        Given the checkPosition scenario executed successfully
+        And the activatePaymentNoticeV2 scenario executed successfully
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
 
-# Scenario: REV_SPO_04 (part 3)
-#     Given the REV_SPO_04 (part 2) scenario executed successfully
-#     And the sendPaymentOutcomeV2 scenario executed successfully
-#     When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
-#     Then check outcome is OK of sendPaymentOutcomeV2 response
-#     And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_UNKNOWN,PAID,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-#     And checks the value NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-#     And checks the value PAYING,PAID,NOTIFIED of the record at column STATUS of the table POSITION_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-#     And checks the value NOTIFIED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    Scenario: REV_SPO_04 (part 2)
+        Given the REV_SPO_04 (part 1) scenario executed successfully
+        And the pspNotifyPayment timeout scenario executed successfully
+        And the closePaymentV2 scenario executed successfully
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 200
+        And check outcome is OK of v2/closepayment response
+        And wait 65 seconds for expiration
+
+    Scenario: REV_SPO_04 (part 3)
+        Given the REV_SPO_04 (part 2) scenario executed successfully
+        And the sendPaymentOutcomeV2 scenario executed successfully
+        When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of sendPaymentOutcomeV2 response
+        And wait 5 seconds for expiration
+        And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_UNKNOWN,PAID,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 8 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value PAYING,PAID,NOTIFIED of the record at column STATUS of the table POSITION_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 3 record for the table POSITION_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NOTIFIED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
