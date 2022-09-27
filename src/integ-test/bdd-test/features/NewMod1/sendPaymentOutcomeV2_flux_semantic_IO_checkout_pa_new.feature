@@ -155,7 +155,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
             """
             {
                 "paymentTokens": [
-                    "$activatePaymentNoticeV2_1Response.paymentToken"
+                    "$activateIOPaymentResponse.paymentToken"
                 ],
                 "outcome": "OK",
                 "idPSP": "#psp#",
@@ -228,7 +228,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
 
     Scenario: SEM_SPO_7.1 (part 1)
         Given the verifyPaymentNotice scenario executed successfully
-        And the activatePaymentNotice scenario executed successfully
+        And the activateIOPayment scenario executed successfully
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
 
@@ -256,7 +256,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
 
     Scenario: SEM_SPO_21 (part 1)
         Given the verifyPaymentNotice scenario executed successfully
-        And the activatePaymentNotice scenario executed successfully
+        And the activateIOPayment scenario executed successfully
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
 
@@ -291,7 +291,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
 
     Scenario: SEM_SPO_23 (part 1)
         Given the verifyPaymentNotice scenario executed successfully
-        And the activatePaymentNotice scenario executed successfully
+        And the activateIOPayment scenario executed successfully
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
 
@@ -326,7 +326,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
 
     Scenario: SEM_SPO_23.1 (part 1)
         Given the verifyPaymentNotice scenario executed successfully
-        And the activatePaymentNotice scenario executed successfully
+        And the activateIOPayment scenario executed successfully
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
 
@@ -361,7 +361,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
 
     Scenario: SEM_SPO_28 (part 1)
         Given the verifyPaymentNotice scenario executed successfully
-        And the activatePaymentNotice scenario executed successfully
+        And the activateIOPayment scenario executed successfully
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
 
@@ -391,7 +391,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
 
     Scenario: SEM_SPO_29 (part 1)
         Given the verifyPaymentNotice scenario executed successfully
-        And the activatePaymentNotice scenario executed successfully
+        And the activateIOPayment scenario executed successfully
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
 
@@ -420,7 +420,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
 
     Scenario: SEM_SPO_31 (part 1)
         Given the verifyPaymentNotice scenario executed successfully
-        And the activatePaymentNotice scenario executed successfully
+        And the activateIOPayment scenario executed successfully
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
 
@@ -450,7 +450,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
 
     Scenario: SEM_SPO_32 (part 1)
         Given the verifyPaymentNotice scenario executed successfully
-        And the activatePaymentNotice scenario executed successfully
+        And the activateIOPayment scenario executed successfully
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
 
@@ -479,7 +479,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
 
     Scenario: SEM_SPO_33 (part 1)
         Given the verifyPaymentNotice scenario executed successfully
-        And the activatePaymentNotice scenario executed successfully
+        And the activateIOPayment scenario executed successfully
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
 
@@ -507,7 +507,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
 
     Scenario: SEM_SPO_33.1 (part 1)
         Given the verifyPaymentNotice scenario executed successfully
-        And the activatePaymentNotice scenario executed successfully
+        And the activateIOPayment scenario executed successfully
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
 
@@ -536,7 +536,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
 
     Scenario: SEM_SPO_35.1 (part 1)
         Given the verifyPaymentNotice scenario executed successfully
-        And the activatePaymentNotice scenario executed successfully
+        And the activateIOPayment scenario executed successfully
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
 
@@ -566,7 +566,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
 
     Scenario: SEM_SPO_35.2 (part 1)
         Given the verifyPaymentNotice scenario executed successfully
-        And the activatePaymentNotice scenario executed successfully
+        And the activateIOPayment scenario executed successfully
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
 
@@ -596,7 +596,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
 
     Scenario: SEM_SPO_35.4 (part 1)
         Given the verifyPaymentNotice scenario executed successfully
-        And the activatePaymentNotice scenario executed successfully
+        And the activateIOPayment scenario executed successfully
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
 
@@ -626,7 +626,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
 
     Scenario: SEM_SPO_35.5 (part 1)
         Given the verifyPaymentNotice scenario executed successfully
-        And the activatePaymentNotice scenario executed successfully
+        And the activateIOPayment scenario executed successfully
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
 
@@ -656,7 +656,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
 
     Scenario: SEM_SPO_35.6 (part 1)
         Given the verifyPaymentNotice scenario executed successfully
-        And the activatePaymentNotice scenario executed successfully
+        And the activateIOPayment scenario executed successfully
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
 
@@ -686,7 +686,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
 
     Scenario: SEM_SPO_36 (part 1)
         Given the verifyPaymentNotice scenario executed successfully
-        And the activatePaymentNotice scenario executed successfully
+        And the activateIOPayment scenario executed successfully
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
 
@@ -715,7 +715,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
 
     Scenario: SEM_SPO_36.1 (part 1)
         Given the verifyPaymentNotice scenario executed successfully
-        And the activatePaymentNotice scenario executed successfully
+        And the activateIOPayment scenario executed successfully
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
 
