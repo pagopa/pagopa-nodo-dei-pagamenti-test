@@ -343,7 +343,6 @@ Feature: revision checks for sendPaymentOutcomeV2
     # REV_SPO_04
 
     Scenario: REV_SPO_04 (part 1)
-
         Given the checkPosition scenario executed successfully
         And the activatePaymentNoticeV2 scenario executed successfully
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
