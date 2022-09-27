@@ -167,7 +167,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
                 "fee": 2,
                 "timestampOperation": "2012-04-23T18:25:43Z",
                 "additionalPaymentInformations": {
-                    "transactionId": "#transaction_id#",
+                    "transactionId": "#transaction_id#"
                 }
             }
             """
