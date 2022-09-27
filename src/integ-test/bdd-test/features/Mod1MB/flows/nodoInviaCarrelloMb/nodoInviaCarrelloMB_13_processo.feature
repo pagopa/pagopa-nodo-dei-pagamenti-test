@@ -1,4 +1,4 @@
-Feature: process tests for nodoInviaCarrelloMB[nodoInviaCarrelloMB_14]
+Feature: process tests for nodoInviaCarrelloMB[nodoInviaCarrelloMB_13]
 
 
     Background:
@@ -187,7 +187,7 @@ Feature: process tests for nodoInviaCarrelloMB[nodoInviaCarrelloMB_14]
             <ppt:intestazioneCarrelloPPT>
             <identificativoIntermediarioPA>#codicePA#</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
-            <identificativoCarrello>$1carrello</identificativoCarrello>
+            <identificativoCarrello>$2carrello</identificativoCarrello>
             </ppt:intestazioneCarrelloPPT>
             </soapenv:Header>
             <soapenv:Body>
