@@ -10,7 +10,7 @@ Feature: process tests for NM3 with station migration from V1 to V2
             <nod:verifyPaymentNoticeReq>
             <idPSP>#psp#</idPSP>
             <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
-            <idChannel>70000000001_01</idChannel>
+            <idChannel>#canale_old#</idChannel>
             <password>pwdpwdpwd</password>
             <qrCode>
             <fiscalCode>#creditor_institution_code_old#</fiscalCode>
