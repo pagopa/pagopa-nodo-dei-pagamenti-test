@@ -1,11 +1,11 @@
-Feature: process tests for nodoInviaCarrelloMB
+Feature: process tests for nodoInviaCarrelloMB[nodoInviaCarrelloMB_15]
 
-    #[nodoInviaCarrelloMB_11]
+
     Background:
         Given systems up
     Scenario: RPT generation
         Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
-        And generate 1 cart with PA 77777777778 and notice number $1noticeNumber
+        And generate 1 cart with PA #codicePA# and notice number $1noticeNumber
         And RPT1 generation
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
@@ -66,15 +66,15 @@ Feature: process tests for nodoInviaCarrelloMB
             <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
             <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
             <pay_i:codiceContestoPagamento>$1carrello</pay_i:codiceContestoPagamento>
-            <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
+            <pay_i:ibanAddebito>II32A0769992100000070410007</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
             <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
             <pay_i:datiSingoloVersamento>
             <pay_i:importoSingoloVersamento>1.50</pay_i:importoSingoloVersamento>
             <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
-            <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
+            <pay_i:ibanAccredito>II32A0769992100000070410007</pay_i:ibanAccredito>
             <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
-            <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio>
+            <pay_i:ibanAppoggio>II32A0769992100000070410007</pay_i:ibanAppoggio>
             <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
             <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
             <pay_i:causaleVersamento>pagamento fotocopie pratica RPT</pay_i:causaleVersamento>
@@ -177,8 +177,6 @@ Feature: process tests for nodoInviaCarrelloMB
             </soapenv:Envelope>
             """
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
-        And generate 2 cart with PA #codicePA# and notice number $1noticeNumber
-
 
         And initial XML nodoInviaCarrelloRPT
             """
@@ -187,7 +185,7 @@ Feature: process tests for nodoInviaCarrelloMB
             <ppt:intestazioneCarrelloPPT>
             <identificativoIntermediarioPA>#codicePA#</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
-            <identificativoCarrello>$2carrello</identificativoCarrello>
+            <identificativoCarrello>$1carrello</identificativoCarrello>
             </ppt:intestazioneCarrelloPPT>
             </soapenv:Header>
             <soapenv:Body>
@@ -218,4 +216,4 @@ Feature: process tests for nodoInviaCarrelloMB
             """
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check faultCode is PPT_MULTI_BENEFICIARIO of nodoInviaCarrelloRPT response
-        And check description is I CCP delle RPT devono contenere l’idCarrello of nodoInviaCarrelloRPT response
+        And check description is Ogni RPT deve contenere solo iban dell’Ente riferito all’interno della RPT of nodoInviaCarrelloRPT response

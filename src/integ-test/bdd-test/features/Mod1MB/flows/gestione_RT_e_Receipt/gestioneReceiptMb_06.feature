@@ -1,4 +1,4 @@
-Feature: gestioneReceiptMb_05
+Feature: gestioneReceiptMb_06
 
     Background:
         Given systems up

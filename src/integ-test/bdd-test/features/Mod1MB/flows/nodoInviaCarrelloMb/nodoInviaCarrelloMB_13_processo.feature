@@ -1,6 +1,6 @@
-Feature: process tests for nodoInviaCarrelloMB
+Feature: process tests for nodoInviaCarrelloMB[nodoInviaCarrelloMB_13]
 
-    #[nodoInviaCarrelloMB_11]
+
     Background:
         Given systems up
     Scenario: RPT generation
@@ -66,7 +66,7 @@ Feature: process tests for nodoInviaCarrelloMB
             <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
             <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
             <pay_i:codiceContestoPagamento>$1carrello</pay_i:codiceContestoPagamento>
-            <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
+            <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
             <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
             <pay_i:datiSingoloVersamento>
@@ -83,6 +83,8 @@ Feature: process tests for nodoInviaCarrelloMB
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
+        And generate 2 cart with PA #codicePA# and notice number $1noticeNumber
+
         And RPT2 generation
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
@@ -142,7 +144,7 @@ Feature: process tests for nodoInviaCarrelloMB
             <pay_i:importoTotaleDaVersare>1.50</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
             <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
-            <pay_i:codiceContestoPagamento>$1carrello</pay_i:codiceContestoPagamento>
+            <pay_i:codiceContestoPagamento>$2carrello</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
             <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -177,8 +179,6 @@ Feature: process tests for nodoInviaCarrelloMB
             </soapenv:Envelope>
             """
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
-        And generate 2 cart with PA #codicePA# and notice number $1noticeNumber
-
 
         And initial XML nodoInviaCarrelloRPT
             """
@@ -206,7 +206,7 @@ Feature: process tests for nodoInviaCarrelloMB
             <elementoListaRPT>
             <identificativoDominio>90000000001</identificativoDominio>
             <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
+            <codiceContestoPagamento>$2carrello</codiceContestoPagamento>
             <rpt>$rpt2Attachment</rpt>
             </elementoListaRPT>
             </listaRPT>
