@@ -181,14 +181,13 @@ Feature: process tests for nodoInviaRPT [PAG-1192_KO_RPT]
             <soapenv:Body>
             <ws:paaAttivaRPTRisposta>
             <paaAttivaRPTRisposta>
-            <esito>KO</esito>
             <fault>
-            <faultCode>PAA_FIRMA_INDISPONIBILE</faultCode>
-            <faultString>gbyiua</faultString>
+            <faultCode>PAA_SINTASSI_EXTRAXSD</faultCode>
+            <faultString>errore sintattico PA</faultString>
             <id>#creditor_institution_code_old#</id>
-            <description>dfstf</description>
-            <serial>1</serial>
+            <description>Errore sintattico emesso dalla PA</description>
             </fault>
+            <esito>KO</esito>
             </paaAttivaRPTRisposta>
             </ws:paaAttivaRPTRisposta>
             </soapenv:Body>
