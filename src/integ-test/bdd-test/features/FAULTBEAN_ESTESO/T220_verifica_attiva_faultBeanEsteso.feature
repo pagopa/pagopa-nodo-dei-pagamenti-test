@@ -5,7 +5,6 @@ Feature: T220_verifica_attiva_faultBeanEsteso
 
     Scenario: Execute nodoVerificaRPT (Phase 1)
         Given generate 1 notice number and iuv with aux digit 3, segregation code 12 and application code -
-        And replace iuv content with $1iuv content
         And initial XML nodoVerificaRPT
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:bc="http://PuntoAccessoPSP.spcoop.gov.it/BarCode_GS1_128_Modified" xmlns:aim="http://PuntoAccessoPSP.spcoop.gov.it/Code_128_AIM_USS-128_tipo_C" xmlns:qrc="http://PuntoAccessoPSP.spcoop.gov.it/QrCode">
@@ -21,16 +20,38 @@ Feature: T220_verifica_attiva_faultBeanEsteso
                     <codiceIdRPT>
                         <qrc:QrCode>
                             <qrc:CF>#creditor_institution_code_old#</qrc:CF>
-                            <qrc:AuxDigit>0</qrc:AuxDigit>
-                            <qrc:CodIUV>$iuv</qrc:CodIUV>
+                            <qrc:CodStazPA>12</qrc:CodStazPA>
+                            <qrc:AuxDigit>3</qrc:AuxDigit>
+                            <qrc:CodIUV>$1iuv</qrc:CodIUV>
                         </qrc:QrCode>
                     </codiceIdRPT>
                 </ws:nodoVerificaRPT>
             </soapenv:Body>
         </soapenv:Envelope>
         """
+        And initial XML paaVerificaRPT
+        """
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/"   xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">
+            <soapenv:Header/>
+            <soapenv:Body>
+                <ws:paaVerificaRPTRisposta>
+                    <paaVerificaRPTRisposta>
+                        <fault>
+                        <faultCode>PAA_SEMANTICA</faultCode>
+                        <faultString>chiamata da rifiutare</faultString>
+                        <id>#creditor_institution_code_old#</id>
+                        </fault>
+                        <esito>KO</esito>
+                    </paaVerificaRPTRisposta>
+                </ws:paaVerificaRPTRisposta>
+            </soapenv:Body>
+        </soapenv:Envelope>
+        """
+        And EC replies to nodo-dei-pagamenti with the paaVerificaRPT
         When PSP sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
-        Then check esito is OK of nodoVerificaRPT response
+        Then check esito is KO of nodoVerificaRPT response
+        And check originalFaultCode field exists in nodoVerificaRPT response
+        And verify the HTTP status code of nodoVerificaRPT response is 400
 
     Scenario: Execute nodoAttivaRPT (Phase 2)
         Given the Execute nodoVerificaRPT (Phase 1) scenario executed successfully
@@ -108,5 +129,26 @@ Feature: T220_verifica_attiva_faultBeanEsteso
             </soapenv:Body>
         </soapenv:Envelope>
         """
+        And initial XML paaAttivaRPT
+        """
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">
+            <soapenv:Header/>
+            <soapenv:Body>
+                <ws:paaAttivaRPTRisposta>
+                    <paaAttivaRPTRisposta>
+                        <esito>KO</esito>
+                        <fault>
+                            <faultCode>PAA_FIRMA_INDISPONIBILE</faultCode>
+                            <faultString>gbyiua</faultString>
+                            <id>#creditor_institution_code_old#</id>
+                            <description>dfstf</description>
+                            <serial>1</serial>
+                        </fault>
+                    </paaAttivaRPTRisposta>
+                </ws:paaAttivaRPTRisposta>
+            </soapenv:Body>
+        </soapenv:Envelope>
+        """
+        And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
         When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoAttivaRPT response
