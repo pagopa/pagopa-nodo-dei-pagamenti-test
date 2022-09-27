@@ -153,7 +153,8 @@
     },
     "costanti":{
         "get_broadcast": "SELECT columns FROM PA p, table_name psp WHERE p.OBJ_ID = psp.FK_PA AND p.ID_DOMINIO = '$verifyPaymentNotice.fiscalCode' AND psp.SEGREGAZIONE = '#cod_segr#'",
-        "get_pa_id": "SELECT columns FROM table_name WHERE ID_DOMINIO = '$pa'"
+        "get_pa_id": "SELECT columns FROM table_name WHERE ID_DOMINIO = '$pa'",
+        "by_station_id": "SELECT columns FROM table_name WHERE ID_STAZIONE = '$station_id'"
     },
     "update_query":{
         "idempotency_update":"UPDATE IDEMPOTENCY_CACHE SET VALID_TO = TO_DATE('date', 'YYYY-MM-DD HH24:MI:SS') WHERE IDEMPOTENCY_KEY = '$sendPaymentOutcome.idempotencyKey' AND PSP_ID = '$sendPaymentOutcome.idPSP'",
