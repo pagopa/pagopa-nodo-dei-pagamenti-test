@@ -1775,6 +1775,8 @@ def step_impl(context, value1, condition, value2):
         assert value1 > value2, f"{value1} <= {value2}"
     elif condition == 'smaller than':
         assert value1 < value2, f"{value1} >= {value2}"
+    elif condition == 'not equal to':
+        assert value1 != value2, f"{value1} = {value2}"
     else:
         assert False
 
