@@ -245,7 +245,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
     #     And idChannel with #canale_versione_primitive_2# in v1/closepayment
     #     When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
     #     Then verify the HTTP status code of v1/closepayment response is 200
-    #     And check outcome is OK of v1/closepayment response
+    #     And check esito is OK of v1/closepayment response
     #     And wait 5 seconds for expiration
 
     # Scenario: SEM_SPO_7.1 (part 4)
@@ -273,7 +273,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
         And the closePayment scenario executed successfully
         When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v1/closepayment response is 200
-        And check outcome is OK of v1/closepayment response
+        And check esito is OK of v1/closepayment response
         And wait 5 seconds for expiration
 
     Scenario: SEM_SPO_21 (part 4)
@@ -309,7 +309,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
         And the closePayment scenario executed successfully
         When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v1/closepayment response is 200
-        And check outcome is OK of v1/closepayment response
+        And check esito is OK of v1/closepayment response
         And wait 5 seconds for expiration
 
     Scenario: SEM_SPO_23 (part 4)
@@ -343,7 +343,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
         And the closePayment scenario executed successfully
         When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v1/closepayment response is 200
-        And check outcome is OK of v1/closepayment response
+        And check esito is OK of v1/closepayment response
         And wait 5 seconds for expiration
 
     Scenario: SEM_SPO_23.1 (part 4)
@@ -377,7 +377,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
         And the closePayment scenario executed successfully
         When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v1/closepayment response is 200
-        And check outcome is OK of v1/closepayment response
+        And check esito is OK of v1/closepayment response
         And wait 5 seconds for expiration
 
     Scenario: SEM_SPO_28 (part 4)
@@ -407,7 +407,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
         And the closePayment scenario executed successfully
         When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v1/closepayment response is 200
-        And check outcome is OK of v1/closepayment response
+        And check esito is OK of v1/closepayment response
         And wait 5 seconds for expiration
 
     Scenario: SEM_SPO_29 (part 4)
@@ -435,7 +435,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
         And the closePayment scenario executed successfully
         When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v1/closepayment response is 200
-        And check outcome is OK of v1/closepayment response
+        And check esito is OK of v1/closepayment response
         And wait 5 seconds for expiration
 
     Scenario: SEM_SPO_31 (part 4)
@@ -465,7 +465,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
         And the closePayment scenario executed successfully
         When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v1/closepayment response is 200
-        And check outcome is OK of v1/closepayment response
+        And check esito is OK of v1/closepayment response
         And wait 5 seconds for expiration
 
     Scenario: SEM_SPO_32 (part 4)
@@ -494,7 +494,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
         And the closePayment scenario executed successfully
         When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v1/closepayment response is 200
-        And check outcome is OK of v1/closepayment response
+        And check esito is OK of v1/closepayment response
         And wait 5 seconds for expiration
 
     Scenario: SEM_SPO_33 (part 4)
@@ -522,7 +522,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
         And the closePayment scenario executed successfully
         When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v1/closepayment response is 200
-        And check outcome is OK of v1/closepayment response
+        And check esito is OK of v1/closepayment response
         And wait 5 seconds for expiration
 
     Scenario: SEM_SPO_33.1 (part 4)
@@ -551,7 +551,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
         And the closePayment scenario executed successfully
         When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v1/closepayment response is 200
-        And check outcome is OK of v1/closepayment response
+        And check esito is OK of v1/closepayment response
         And wait 5 seconds for expiration
 
     Scenario: SEM_SPO_35.1 (part 4)
@@ -581,7 +581,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
         And the closePayment scenario executed successfully
         When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v1/closepayment response is 200
-        And check outcome is OK of v1/closepayment response
+        And check esito is OK of v1/closepayment response
         And wait 5 seconds for expiration
 
     Scenario: SEM_SPO_35.2 (part 4)
@@ -611,7 +611,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
         And the closePayment scenario executed successfully
         When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v1/closepayment response is 200
-        And check outcome is OK of v1/closepayment response
+        And check esito is OK of v1/closepayment response
         And wait 5 seconds for expiration
 
     Scenario: SEM_SPO_35.4 (part 4)
@@ -641,7 +641,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
         And the closePayment scenario executed successfully
         When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v1/closepayment response is 200
-        And check outcome is OK of v1/closepayment response
+        And check esito is OK of v1/closepayment response
         And wait 5 seconds for expiration
 
     Scenario: SEM_SPO_35.5 (part 4)
@@ -671,7 +671,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
         And the closePayment scenario executed successfully
         When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v1/closepayment response is 200
-        And check outcome is OK of v1/closepayment response
+        And check esito is OK of v1/closepayment response
         And wait 5 seconds for expiration
 
     Scenario: SEM_SPO_35.6 (part 4)
@@ -701,7 +701,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
         And the closePayment scenario executed successfully
         When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v1/closepayment response is 200
-        And check outcome is OK of v1/closepayment response
+        And check esito is OK of v1/closepayment response
         And wait 5 seconds for expiration
 
     Scenario: SEM_SPO_36 (part 4)
@@ -730,7 +730,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
         And the closePayment scenario executed successfully
         When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v1/closepayment response is 200
-        And check outcome is OK of v1/closepayment response
+        And check esito is OK of v1/closepayment response
         And wait 5 seconds for expiration
 
     Scenario: SEM_SPO_36.1 (part 4)
