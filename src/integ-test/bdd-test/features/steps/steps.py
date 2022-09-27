@@ -1416,7 +1416,7 @@ def step_impl(context, query_name, param, position, key):
         selected_element = result_query[0][position]
         print(f'{param}: {selected_element}')
     elif position == -1: # il -1 recupera tutti i record 
-        selected_element = result_query
+        selected_element = [t[0] for t in result_query]
         print(f'{param}: {selected_element}')
     setattr(context, key, selected_element)
 
