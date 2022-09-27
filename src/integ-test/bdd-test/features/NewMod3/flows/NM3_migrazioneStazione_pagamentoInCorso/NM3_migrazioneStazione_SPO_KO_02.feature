@@ -236,8 +236,8 @@ Feature: process tests for NM3 with station migration from V1 to V2
         And with the query rt check assert beetwen elem CCP in position 1 and elem CCP with position 0 of the query rpt
         And with the query rt check assert beetwen elem IDENT_DOMINIO in position 2 and elem IDENT_DOMINIO with position 1 of the query rpt
         And with the query rt check assert beetwen elem IUV in position 3 and elem IUV with position 2 of the query rpt
-        And checks the value 0 of the record at column COD_ESITO of the table RT retrived by the query rt on db nodo_online under macro NewMod3
-        And checks the value ESEGUITO of the record at column ESITO of the table RT retrived by the query rt on db nodo_online under macro NewMod3
+        And checks the value 1 of the record at column COD_ESITO of the table RT retrived by the query rt on db nodo_online under macro NewMod3
+        And checks the value NON_ESEGUITO of the record at column ESITO of the table RT retrived by the query rt on db nodo_online under macro NewMod3
         And checks the value NotNone of the record at column ID_RICEVUTA of the table RT retrived by the query rt on db nodo_online under macro NewMod3
         And with the query rt check assert beetwen elem ID_RICHIESTA in position 8 and elem ID_MSG_RICH with position 3 of the query rpt
         And with the query rt check assert beetwen elem SOMMA_VERSAMENTI in position 9 and elem AMOUNT with position 0 of the query payment_status
