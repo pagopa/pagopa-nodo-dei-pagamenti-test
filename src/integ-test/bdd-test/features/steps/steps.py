@@ -750,8 +750,8 @@ def step_impl(context, tag, value, primitive):
         node_response = getattr(context, primitive + RESPONSE)
         json_response = node_response.json()
         founded_value = jo.get_value_from_key(json_response, tag)
-        print(
-            f'check tag "{tag}" - expected: {value}, obtained: {json_response.get(tag)}')
+        print(founded_value)
+        print(f'check tag "{tag}" - expected: {value}, obtained: {json_response.get(tag)}')
         assert str(founded_value) == value
 
 
