@@ -168,7 +168,6 @@ Feature: process tests for NM3 with station migration from V1 to V2
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        #  When psp sends SOAP nodoInviaRPT to nodo-dei-pagamenti using the token of the activate phase
         When psp sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
         And check redirect is 0 of nodoInviaRPT response
