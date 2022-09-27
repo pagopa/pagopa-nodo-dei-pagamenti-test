@@ -1408,15 +1408,15 @@ def step_impl(context, query_name, macro, db_name, table_name, columns):
 
 
 # step per salvare nel context una variabile key recuperata dal db tramite query query_name
-@step("through the query {query_name} retrieve param {param} at position {position:d} and save it under the key {key}")
+@step("through the query {query_name} retrieve param {param} at position {position} and save it under the key {key}")
 def step_impl(context, query_name, param, position, key):
     result_query = getattr(context, query_name)
     print(f'{query_name}: {result_query}')
-    if position == 0:
+    if int(position) == 0:
         selected_element = result_query[0][position]
         print(f'{param}: {selected_element}')
     elif position == 'all':
-        selected_element = result_query[0][:len(result_query)]
+        selected_element = result_query
         print(f'{param}: {selected_element}')
     setattr(context, key, selected_element)
 
