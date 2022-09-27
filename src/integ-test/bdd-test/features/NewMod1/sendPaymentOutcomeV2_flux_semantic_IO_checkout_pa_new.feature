@@ -240,6 +240,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
     Scenario: SEM_SPO_7.1 (part 3)
         Given the SEM_SPO_7.1 (part 2) scenario executed successfully
         And the closePaymentV2 scenario executed successfully
+        And idChannel with #canale_versione_primitive_2# in sendPaymentOutcomeV2
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
@@ -248,7 +249,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
     Scenario: SEM_SPO_7.1 (part 4)
         Given the SEM_SPO_7.1 (part 3) scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
-        And idChannel with 70000000001_08 in sendPaymentOutcomeV2
+        And idChannel with #canale_versione_primitive_2# in sendPaymentOutcomeV2
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
 
@@ -278,6 +279,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
         And the sendPaymentOutcomeV2 scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
+        And wait 5 seconds for expiration
         And checks the value PAYING,PAID,NOTIFIED of the record at column STATUS of the table POSITION_STATUS retrived by the query select_activateio on db nodo_online under macro NewMod1
         And checks the value NOTIFIED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query select_activateio on db nodo_online under macro NewMod1
         And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED,PAID,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activateio on db nodo_online under macro NewMod1
@@ -413,8 +415,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
         And the sendPaymentOutcomeV2 scenario executed successfully
         And fee with 3.00 in sendPaymentOutcomeV2
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
-        Then check outcome is KO of sendPaymentOutcomeV2 response
-        And check faultCode is PPT_SEMANTICA of sendPaymentOutcomeV2 response
+        Then check outcome is OK of sendPaymentOutcomeV2 response
 
     # SEM_SPO_31
 
@@ -444,7 +445,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcomeV2 response
         And check faultCode is PPT_PAGAMENTO_SCONOSCIUTO of sendPaymentOutcomeV2 response
-        And updates through the query update_noticeidrandom_pa of the table POSITION_STATUS_SNAPSHOT the parameter NOTICE_ID with $activateIOPayment.noticeNumber under macro NewMod1 on db nodo_online
+        And updates through the query update_noticeidrandom of the table POSITION_STATUS_SNAPSHOT the parameter NOTICE_ID with $activateIOPayment.noticeNumber under macro NewMod1 on db nodo_online
 
     # SEM_SPO_32
 
