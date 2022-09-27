@@ -240,7 +240,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
     Scenario: SEM_SPO_7.1 (part 3)
         Given the SEM_SPO_7.1 (part 2) scenario executed successfully
         And the closePaymentV2 scenario executed successfully
-        And idChannel with #canale_versione_primitive_2# in sendPaymentOutcomeV2
+        And idChannel with #canale_versione_primitive_2# in v2/closepayment
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
@@ -318,7 +318,6 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
 
     Scenario: SEM_SPO_23 (part 5)
         Given the SEM_SPO_23 (part 4) scenario executed successfully
-        And the sendPaymentOutcomeV2 scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcomeV2 response
         And check faultCode is PPT_ESITO_GIA_ACQUISITO of sendPaymentOutcomeV2 response
@@ -353,7 +352,6 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
 
     Scenario: SEM_SPO_23.1 (part 5)
         Given the SEM_SPO_23.1 (part 4) scenario executed successfully
-        And the sendPaymentOutcomeV2 scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcomeV2 response
         And check faultCode is PPT_ESITO_GIA_ACQUISITO of sendPaymentOutcomeV2 response
