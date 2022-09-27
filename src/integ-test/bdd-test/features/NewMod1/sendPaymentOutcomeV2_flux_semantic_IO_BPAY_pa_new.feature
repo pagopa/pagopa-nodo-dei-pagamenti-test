@@ -162,12 +162,14 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
                 "tipoVersamento": "BPAY",
                 "identificativoIntermediario": "#id_broker_psp#",
                 "identificativoCanale": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
-                "pspTransactionId": "#transaction_id#",
+                "pspTransactionId": "#psp_transaction_id#",
                 "totalAmount": 12,
                 "fee": 2,
                 "timestampOperation": "2012-04-23T18:25:43Z",
                 "additionalPaymentInformations": {
-                    "key": "12345678"
+                    "transacionId": "#transaction_id#",
+                    "outcomePaymentGateway" : "EFF",
+                    "authorizationCode" : "resOK"
                 }
             }
             """
