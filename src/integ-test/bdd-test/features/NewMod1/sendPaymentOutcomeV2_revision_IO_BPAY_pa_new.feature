@@ -344,7 +344,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         And checks the value NotNone of the record at column INSERTED_BY of the table POSITION_PAYMENT retrived by the query select_activateio on db nodo_online under macro NewMod1
         And checks the value sendPaymentOutcomeV2 of the record at column UPDATED_BY of the table POSITION_PAYMENT retrived by the query select_activateio on db nodo_online under macro NewMod1
         And checks the value $transaction_id of the record at column TRANSACTION_ID of the table POSITION_PAYMENT retrived by the query select_activateio on db nodo_online under macro NewMod1
-        And checks the value v2 of the record at column CLOSE_VERSION of the table POSITION_PAYMENT retrived by the query select_activateio on db nodo_online under macro NewMod1
+        And checks the value v1 of the record at column CLOSE_VERSION of the table POSITION_PAYMENT retrived by the query select_activateio on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_PAYMENT retrived by the query select_activateio on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column ID of the table POSITION_RECEIPT retrived by the query select_activateio on db nodo_online under macro NewMod1
         And checks the value $activateIOPaymentResponse.paymentToken of the record at column RECEIPT_ID of the table POSITION_RECEIPT retrived by the query select_activateio on db nodo_online under macro NewMod1
