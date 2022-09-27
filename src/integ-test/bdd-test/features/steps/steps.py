@@ -731,6 +731,7 @@ def step_impl(context, job_name, seconds):
 def step_impl(context, tag, value, primitive):
     soap_response = getattr(context, primitive + RESPONSE)
     value = utils.replace_local_variables(value, context)
+    value = utils.replace_context_variables(value, context)
     value = utils.replace_global_variables(value, context)
     if 'xml' in soap_response.headers['content-type']:
         my_document = parseString(soap_response.content)
