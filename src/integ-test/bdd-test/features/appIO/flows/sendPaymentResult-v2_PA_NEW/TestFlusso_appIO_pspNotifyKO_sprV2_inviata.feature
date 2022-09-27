@@ -195,38 +195,40 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
 
 
     # nodoChiediInformazioniPagamento phase
-    Scenario: Execute a nodoChiediInformazioniPagamento request
-        Given the Execute activateIOPayment request scenario executed successfully
-        When WISP sends rest GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
-        Then verify the HTTP status code of informazioniPagamento response is 200
-
-
-    # closePayment-v2 phase
-    Scenario: Execute a closePayment-v2 request
-        Given the Execute a nodoChiediInformazioniPagamento request scenario executed successfully
-        And initial json closePayment-v2
-            """
-            {
-                "paymentTokens": [
-                    "$activateIOPaymentNoticeResponse.paymentToken"
-                ],
-                "outcome": "OK",
-                "idPSP": "#psp#",
-                "idBrokerPSP": "60000000001",
-                "idChannel": "60000000001_03",
-                "paymentMethod": "TPAY",
-                "transactionId": "19392562",
-                "totalAmount": 12,
-                "fee": 2,
-                "timestampOperation": "2033-04-23T18:25:43Z",
-                "additionalPaymentInformations": {
-                    "key": "10793459"
-                }
+   Scenario: Execute a nodoChiediInformazioniPagamento request
+      Given the DB check scenario executed successfully
+      When WISP sends rest GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
+      Then verify the HTTP status code of informazioniPagamento response is 200
+	  
+	  # Define closePayment-v2
+   Scenario: closePaymentV2
+      Given initial JSON v2/closepayment
+         """
+         {
+            "paymentTokens": [
+               "token"
+            ],
+            "outcome": "OK",
+            "idPSP": "#psp#",
+            "idBrokerPSP": "60000000001",
+            "idChannel": "60000000001_03",
+            "paymentMethod": "TPAY",
+            "transactionId": "19392562",
+            "totalAmount": 12,
+            "fee": 2,
+            "timestampOperation": "2033-04-23T18:25:43Z",
+            "additionalPaymentInformations": {
+               "key": "10793459"
             }
+         }
+         """   
+        
+		
+		# define pspNotifyPayment
+    Scenario: pspNotifyPayment
+        Given initial xml pspNotifyPayment
             """
-        And initial xml pspNotifyPayment
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:psp="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
+           <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:psp="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
             <soapenv:Header/>
             <soapenv:Body>
             <psp:pspNotifyPaymentRes>
@@ -243,19 +245,28 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
-        When PM sends closePayment-v2 to nodo-dei-pagamenti
-        Then check outcome is OK of closePayment-v2
-        And verify the HTTP status code of closePayment-v2 response is 200
+			
+			
+		# closePayment-v2 phase
+    Scenario: Execute a closePayment-v2 request
+        Given the Execute a nodoChiediInformazioniPagamento request scenario executed successfully
+        And the pspNotifyPayment scenario executed successfully
+        And EC replies to nodo-dei-pagamenti with the pspNotifyPayment
+        And the closePaymentV2 scenario executed successfully
+        And paymentToken with $activateIOPaymentResponse.paymentToken in v2/closepayment
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then check outcome is OK of v2/closepayment response
+        And verify the HTTP status code of v2/closepayment response is 200
 
 
-
-
-# check db
-#Scenario: DB check1
-#Given the Execute sendPaymentOutcome request scenario executed successfully
-#Then verify 1 record for the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
-#And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_UNKNOWN,PAID of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
-#And checks the value NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
-
-# implementare gli altri DB check sugli stati e i check su RE per verificare che la sendPaymentResult-v2 sia inviata
+Scenario: DB check 1
+      Given the Execute a closePayment-v2 request scenario executed successfully
+      And wait 30 seconds for expiration
+      Then verify 2 record for the table RE retrived by the query select_sprV2_new on db re under macro sendPaymentResultV2
+      And checks the value REQ,RESP of the record at column SOTTO_TIPO_EVENTO of the table RE retrived by the query select_sprV2_new on db re under macro sendPaymentResultV2
+      And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_REFUSED,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
+      And checks the value CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
+      And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
+      And checks the value PAYING,INSERTED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
+      And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
+      And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
