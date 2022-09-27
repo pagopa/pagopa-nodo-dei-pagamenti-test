@@ -17,6 +17,7 @@
   },
   "global_configuration": {
     "canale":"60000000001_07",
+    "canale_old":"60000000001_01",
     "canale_versione_primitive_2": "60000000001_08",
     "id_station_old" : "66666666666_05",
     "creditor_institution_code": "66666666666",     
