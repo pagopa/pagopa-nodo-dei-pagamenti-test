@@ -138,7 +138,7 @@ Feature: process tests for chiediListaPSP
 
 
     Scenario: execution nodoChiediListaPSP - altro
-        Given the Execute nodoInviaRPT request scenario executed successfully
+        Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
         When WISP sends rest GET listaPSP?idPagamento=$sessionToken&percorsoPagamento=ALTRO&lingua=$lingua to nodo-dei-pagamenti
         Then verify the HTTP status code of listaPSP response is 200
 
