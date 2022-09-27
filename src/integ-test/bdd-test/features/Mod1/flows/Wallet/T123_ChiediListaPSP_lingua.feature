@@ -112,6 +112,40 @@ Feature: process tests for chiediListaPSP
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
 
-    Scenario: Check DB
+        # DB Check
+        And execution query version to get value on the table ELENCO_SERVIZI_PSP_SYNC_STATUS, with the columns SNAPSHOT_VERSION under macro Mod1 with db name nodo_offline
+        And through the query version retrieve param version at position 0 and save it under the key version
+
+        And replace lingua content with DE content
+        And replace importoTot content with 6.20 content
+
+        And execution query getPspCarte to get value on the table ELENCO_SERVIZI_PSP, with the columns SIZE under macro Mod1 with db name nodo_offline
+        And through the query getPspCarte retrieve param sizeCarte at position 0 and save it under the key sizeCarte
+        And execution query getPspCarte to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
+        And through the query getPspCarte retrieve param listaCarte at position 0 and save it under the key listaCarte
+
+        And execution query getPspConto to get value on the table ELENCO_SERVIZI_PSP, with the columns SIZE under macro Mod1 with db name nodo_offline
+        And through the query getPspConto retrieve param sizeConto at position 0 and save it under the key sizeConto
+        And execution query getPspConto to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
+        And through the query getPspConto retrieve param listaConto at position 0 and save it under the key listaConto
+
+        And execution query getPspAltro to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
+        And through the query getPspAltro retrieve param listaAltro at position 0 and save it under the key listaAltro
+
+
+    Scenario: execution nodoChiediListaPSP - altro
         Given the Execute nodoInviaRPT request scenario executed successfully
-        Then 
+        When WISP sends rest GET listaPSP?idPagamento=$sessionToken&percorsoPagamento=ALTRO&lingua=$lingua to nodo-dei-pagamenti
+        Then verify the HTTP status code of listaPSP response is 200
+
+    Scenario: execution nodoChiediListaPSP - carte
+        Given the execution nodoChiediListaPSP - altro scenario executed successfully
+        When WISP sends rest GET listaPSP?idPagamento=$sessionToken&percorsoPagamento=CARTE&lingua=$lingua to nodo-dei-pagamenti
+        Then verify the HTTP status code of listaPSP response is 200
+        And check totalRows is $sizeCarte of listaPSP response
+
+    Scenario: execution nodoChiediListaPSP - conto
+        Given the execution nodoChiediListaPSP - carte scenario executed successfully
+        When WISP sends rest GET listaPSP?idPagamento=$sessionToken&percorsoPagamento=CC&lingua=$lingua to nodo-dei-pagamenti
+        Then verify the HTTP status code of listaPSP response is 200
+        And check totalRows is $sizeConto of listaPSP response
