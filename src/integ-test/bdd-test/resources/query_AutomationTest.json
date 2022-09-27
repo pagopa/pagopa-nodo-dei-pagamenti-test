@@ -73,7 +73,8 @@
         "psp": "SELECT columns FROM table_name where ID_PSP = '$sendPaymentOutcome.idPSP'",
         "payment_status_1": "SELECT columns FROM table_name s where s.NOTICE_ID = $activateIOPayment.noticeNumber and s.PAYMENT_TOKEN= '$activateIOPaymentResponse.paymentToken'",
         "info_pagamento": "SELECT columns FROM CD_INFO_PAGAMENTO WHERE ID_SESSIONE='$sessionToken'",
-        "rpt_stati": "SELECT columns FROM table_name s WHERE s.IUV = '$iuv' ORDER BY INSERTED_TIMESTAMP ASC"
+        "rpt_stati": "SELECT columns FROM table_name s WHERE s.IUV = '$iuv' ORDER BY ID ASC",
+        "stato": "SELECT columns FROM table_name s WHERE s.IUV = '$iuv'"
     },
     "Mod1Mb": {
         "DB_INOLTRO_PAG_stati_carrello_napshot": "SELECT s.columns FROM table_name s WHERE s.IUV = '$nodoInoltraEsitoPagamentoCarte.noticenumber' and s.ID_DOMINIO = '$nodoInoltraEsitoPagamentoCarte.fiscalcode'",
