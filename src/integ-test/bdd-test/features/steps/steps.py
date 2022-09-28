@@ -626,22 +626,13 @@ def step_impl(context):
 @given('REND generation')
 def step_impl(context):
     payload = context.text or ""
-    payload = utils.replace_context_variables(payload, context)
     payload = utils.replace_local_variables(payload, context)
-    payload = utils.replace_global_variables(payload, context)
-    date = datetime.date.today().strftime("%Y-%m-%d")
-    timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
-    identificativoFlusso = date + context.config.userdata.get(
-        "global_configuration").get("psp") + "-" + str(random.randint(0, 10000))
-    iuv = "IUV" + str(random.randint(0, 10000)) + "-" + \
-        datetime.datetime.now().strftime("%Y-%m-%d-%H:%M:%S.%f")[:-3]
-    setattr(context, 'date', date)
-    setattr(context, 'timedate', timedate)
-    setattr(context, 'identificativoFlusso', identificativoFlusso)
-    setattr(context, 'iuv', iuv)
+
 
     if '#date#' in payload:
+        date = datetime.date.today().strftime("%Y-%m-%d")
         payload = payload.replace('#date#', date)
+        setattr(context, 'date', date)
 
     if '#timedate+1#' in payload:
         date = datetime.date.today() + datetime.timedelta(hours=1)
@@ -650,13 +641,24 @@ def step_impl(context):
         payload = payload.replace('#timedate+1#', timedate)
 
     if "#timedate#" in payload:
+        date = datetime.date.today().strftime("%Y-%m-%d")
+        timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
         payload = payload.replace('#timedate#', timedate)
+        setattr(context, 'timedate', timedate)
 
     if '#identificativoFlusso#' in payload:
+        date = datetime.date.today().strftime("%Y-%m-%d")
+        identificativoFlusso = date + context.config.userdata.get("global_configuration").get("psp") + "-" + str(random.randint(0, 10000))
         payload = payload.replace('#identificativoFlusso#', identificativoFlusso)
+        setattr(context, 'identificativoFlusso', identificativoFlusso)
 
     if '#iuv#' in payload:
+        iuv = "IUV" + str(random.randint(0, 10000)) + "-" + datetime.datetime.now().strftime("%Y-%m-%d-%H:%M:%S.%f")[:-3]
         payload = payload.replace('#iuv#', iuv)
+        setattr(context, 'iuv', iuv)
+
+    payload = utils.replace_context_variables(payload, context)
+    payload = utils.replace_global_variables(payload, context)
 
     payload_b = bytes(payload, 'ascii')
     payload_uni = b64.b64encode(payload_b)
@@ -740,9 +742,9 @@ def step_impl(context, tag, value, primitive):
                 'faultCode')[0].firstChild.data)
             print("fault string: ", my_document.getElementsByTagName(
                 'faultString')[0].firstChild.data)
-            if my_document.getElementsByTagName('description'):
-                print("description: ", my_document.getElementsByTagName(
-                    'description')[0].firstChild.data)
+            # if len(my_document.getElementsByTagName('description')[0])>0:
+            #     print("description: ", my_document.getElementsByTagName(
+            #         'description')[0].firstChild.data)
         data = my_document.getElementsByTagName(tag)[0].firstChild.data
         print(f'check tag "{tag}" - expected: {value}, obtained: {data}')
         assert value == data
@@ -1775,6 +1777,8 @@ def step_impl(context, value1, condition, value2):
         assert value1 > value2, f"{value1} <= {value2}"
     elif condition == 'smaller than':
         assert value1 < value2, f"{value1} >= {value2}"
+    elif condition == 'not equal to':
+        assert value1 != value2, f"{value1} = {value2}"
     else:
         assert False
 

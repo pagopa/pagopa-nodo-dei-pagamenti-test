@@ -163,5 +163,10 @@
         "param_update_in": "UPDATE table_name SET param = 'value' WHERE where_condition IN valore",
         "param_update_generic_where_condition" : "UPDATE table_name SET param WHERE where_condition"
 
+    },
+    "RendicontazioneFTPeBollo":{
+        "rendicontazione": "SELECT columns FROM table_name WHERE ID_FLUSSO = '$identificativoFlusso' AND DOMINIO = '$pa'",
+        "send_queue": "SELECT s.columns FROM table_name s JOIN RENDICONTAZIONE r ON s.ID = r.FK_SFTP_FILE WHERE r.ID_FLUSSO = '$identificativoFlusso' AND r.DOMINIO = '$pa' ",
+        "binary_file": "SELECT s.columns FROM table_name_FILE s JOIN RENDICONTAZIONE r ON s.ID = r.FK_BINARY_FILE WHERE r.ID_FLUSSO = '$identificativoFlusso' AND r.DOMINIO = '$pa' "
     }
 }
