@@ -102,10 +102,10 @@ Feature: NIFRFTP
             <soapenv:Header/>
             <soapenv:Body>
                 <ws:nodoChiediFlussoRendicontazione>
-                    <identificativoIntermediarioPA>$pa</identificativoIntermediarioPA>
+                    <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
                     <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
                     <password>pwdpwdpwd</password>
-                    <identificativoDominio>44444444444</identificativoDominio>
+                    <identificativoDominio>$pa</identificativoDominio>
                     <identificativoPSP>40000000001</identificativoPSP>
                     <identificativoFlusso>$identificativoFlusso</identificativoFlusso>
                 </ws:nodoChiediFlussoRendicontazione>
