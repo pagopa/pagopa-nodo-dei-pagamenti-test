@@ -182,7 +182,7 @@ Feature: process tests for NM3 with station migration from V1 to V2
     #refresh pa e stazioni
     Scenario: Execute refresh pa e stazioni
         Given the Execute station version update scenario executed successfully
-        Then refresh job PA triggered after 3 seconds
+        Then refresh job PA triggered after 10 seconds
 
     # mod3CancelV1 trigger
     Scenario: Execute mod3CancelV1
@@ -258,4 +258,4 @@ Feature: process tests for NM3 with station migration from V1 to V2
     #refresh pa e stazioni
     Scenario: Execute refresh pa e stazioni
         Given the Execute station version update 2 scenario executed successfully
-        Then refresh job PA triggered after 3 seconds
+        Then refresh job PA triggered after 10 seconds
