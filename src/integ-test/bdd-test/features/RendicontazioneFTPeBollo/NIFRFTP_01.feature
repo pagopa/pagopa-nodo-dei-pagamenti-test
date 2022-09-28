@@ -39,7 +39,8 @@ Feature: NCAP
             </pay_i:datiSingoliPagamenti>
             </pay_i:FlussoRiversamento>
             """
-        
+    Scenario: Execute nodoInviaFlussoRendicontazione request
+        Given the REND generation scenario executed successfully
         And initial XML nodoInviaFlussoRendicontazione
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
