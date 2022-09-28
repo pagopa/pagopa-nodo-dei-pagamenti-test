@@ -34,7 +34,7 @@ Feature: NIFRFTP
                 <pay_i:identificativoUnivocoRiscossione>$iuv</pay_i:identificativoUnivocoRiscossione>
                 <pay_i:indiceDatiSingoloPagamento>1</pay_i:indiceDatiSingoloPagamento>
                 <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
-                <pay_i:codiceEsitoSingoloPagamento>0</pay_i:codiceEsitoSingoloPagamento>
+                <pay_i:codiceEsitoSingoloPagamento>errore</pay_i:codiceEsitoSingoloPagamento>
                 <pay_i:dataEsitoSingoloPagamento>#date#</pay_i:dataEsitoSingoloPagamento>
             </pay_i:datiSingoliPagamenti>
             </pay_i:FlussoRiversamento>
