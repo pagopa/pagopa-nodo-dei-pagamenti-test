@@ -629,19 +629,11 @@ def step_impl(context):
     payload = utils.replace_context_variables(payload, context)
     payload = utils.replace_local_variables(payload, context)
     payload = utils.replace_global_variables(payload, context)
-    date = datetime.date.today().strftime("%Y-%m-%d")
-    timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
-    identificativoFlusso = date + context.config.userdata.get(
-        "global_configuration").get("psp") + "-" + str(random.randint(0, 10000))
-    iuv = "IUV" + str(random.randint(0, 10000)) + "-" + \
-        datetime.datetime.now().strftime("%Y-%m-%d-%H:%M:%S.%f")[:-3]
-    setattr(context, 'date', date)
-    setattr(context, 'timedate', timedate)
-    setattr(context, 'identificativoFlusso', identificativoFlusso)
-    setattr(context, 'iuv', iuv)
 
     if '#date#' in payload:
+        date = datetime.date.today().strftime("%Y-%m-%d")
         payload = payload.replace('#date#', date)
+        setattr(context, 'date', date)
 
     if '#timedate+1#' in payload:
         date = datetime.date.today() + datetime.timedelta(hours=1)
@@ -650,13 +642,21 @@ def step_impl(context):
         payload = payload.replace('#timedate+1#', timedate)
 
     if "#timedate#" in payload:
+        date = datetime.date.today().strftime("%Y-%m-%d")
+        timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
         payload = payload.replace('#timedate#', timedate)
+        setattr(context, 'timedate', timedate)
 
     if '#identificativoFlusso#' in payload:
+        date = datetime.date.today().strftime("%Y-%m-%d")
+        identificativoFlusso = date + context.config.userdata.get("global_configuration").get("psp") + "-" + str(random.randint(0, 10000))
         payload = payload.replace('#identificativoFlusso#', identificativoFlusso)
+        setattr(context, 'identificativoFlusso', identificativoFlusso)
 
     if '#iuv#' in payload:
+        iuv = "IUV" + str(random.randint(0, 10000)) + "-" + datetime.datetime.now().strftime("%Y-%m-%d-%H:%M:%S.%f")[:-3]
         payload = payload.replace('#iuv#', iuv)
+        setattr(context, 'iuv', iuv)
 
     payload_b = bytes(payload, 'ascii')
     payload_uni = b64.b64encode(payload_b)
