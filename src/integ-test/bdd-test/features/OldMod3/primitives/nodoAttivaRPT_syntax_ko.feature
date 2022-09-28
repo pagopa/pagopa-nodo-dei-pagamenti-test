@@ -152,12 +152,41 @@ Feature: Syntax checks KO for nodoAttivaRPT
             | pag:indirizzoVersante                   | RSSFNC50S01L781HARSSFNC50S01L781HARSSFNC50S01L781HARSSFNC50S01L781HAasd | ARPTSIN63   |
 
 
-    Scenario: Check faultCode PPT_SINTASSI_XSD on invalid body element value [ARPTSIN115]
+    Scenario: Check faultCode PPT_SINTASSI_EXTRAXSD on invalid body element value [ARPTSIN115]
         Given bc:CodStazPA with Empty in nodoAttivaRPT
         When psp sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-        Then check faultCode is PPT_SINTASSI_XSD of nodoAttivaRPT response
+        Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoAttivaRPT response
 
-    Scenario: Check faultCode PPT_PSP_SCONOSCIUTO on empty body element value [ARPTSIN7]
-        Given identificativoPSP with Empty in nodoAttivaRPT
+    Scenario Outline: Check faultCode PPT_SINTASSI_EXTRAXSD on invalid body element value
+        Given <tag> with <value> in nodoAttivaRPT
         When psp sends soap nodoAttivaRPT to nodo-dei-pagamenti
-        Then check faultCode is PPT_PSP_SCONOSCIUTO of nodoAttivaRPT response
+        Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoAttivaRPT response
+        Examples:
+            | tag               | value                                | soapUI test |
+            | identificativoPSP | Empty                                | ARPTSIN7    |
+            | identificativoPSP | QuestiSono36CaratteriAlfaNumericiTT1 | ARPTSIN8    |
+
+    Scenario Outline: Check faultCode PPT_SINTASSI_EXTRAXSD on invalid body element value
+        Given <tag> with <value> in nodoAttivaRPT
+        When psp sends soap nodoAttivaRPT to nodo-dei-pagamenti
+        Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoAttivaRPT response
+        Examples:
+            | tag                            | value                                | soapUI test |
+            | identificativoIntermediarioPSP | Empty                                | ARPTSIN10   |
+            | identificativoIntermediarioPSP | QuestiSono36CaratteriAlfaNumericiTT1 | ARPTSIN11   |
+
+    Scenario Outline: Check faultCode PPT_SINTASSI_EXTRAXSD on invalid body element value
+        Given <tag> with <value> in nodoAttivaRPT
+        When psp sends soap nodoAttivaRPT to nodo-dei-pagamenti
+        Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoAttivaRPT response
+            Examples:
+                | tag      | value            | soapUI test |
+                | password | Empty            | ARPTSIN16   |
+                | password | Alpha_7          | ARPTSIN17   |
+                | password | Alpha_16_Num_123 | ARPTSIN18   |
+
+    Scenario: Check faultCode PPT_SINTASSI_EXTRAXSD on invalid body element value [ARPTSIN13]
+        Given identificativoCanale with Empty in nodoAttivaRPT
+        When psp sends soap nodoAttivaRPT to nodo-dei-pagamenti
+        Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoAttivaRPT response
+

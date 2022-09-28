@@ -237,89 +237,88 @@ Feature: process tests for inoltropagamentoMb_03
          <soapenv:Body>
          <ws:pspInviaCarrelloRPTResponse>
          <pspInviaCarrelloRPTResponse>
-         <fault>
-         <faultCode>CANALE_RPT_RIFIUTATA</faultCode>
-         <faultString>fault esterno</faultString>
-         <id>700000000001</id>
-         <description>descrizione fault esterno</description>
-         </fault>
          <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+         <identificativoCarrello>$nodoInviaCarrelloRPT.identificativoCarrello</identificativoCarrello>
+         <parametriPagamentoImmediato>idBruciatura=$nodoInviaCarrelloRPT.identificativoCarrello</parametriPagamentoImmediato>
          </pspInviaCarrelloRPTResponse>
          </ws:pspInviaCarrelloRPTResponse>
          </soapenv:Body>
          </soapenv:Envelope>
          """
+
       And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
       When WISP sends REST POST inoltroEsito/mod2 to nodo-dei-pagamenti
 
          """
 
          {
+
             "idPagamento": "$sessionToken",
+
             "identificativoPsp": "#psp#",
+
             "tipoVersamento": "BBT",
+
             "identificativoIntermediario": "#psp#",
-            "identificativoCanale": "70000000001_04"
+
+            "identificativoCanale": "#canale_DIFFERITO_MOD2#"
+
          }
 
          """
       Then verify the HTTP status code of inoltroEsito/mod2 response is 200
       And check esito is OK of inoltroEsito/mod2 response
+      And check url field not exists in inoltroEsito/mod2 response
 
-   Scenario: Trigger paInviaRT
-      Given the Execute nodoInoltraPagamentoMod2 scenario executed successfully
-      When job paInviaRt triggered after 5 seconds
-      And wait 10 seconds for expiration
-      Then verify the HTTP status code of paInviaRt response is 200
 
+      And replace pa content with #codicePA# content
+      And replace iuv content with $1iuv content
+      And replace noticeNumber content with $1noticeNumber content
 
       #DB-CHECK-STATI_RPT
-      And replace iuv content with $1iuv content
-      And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO, RPT_INVIATA_A_PSP, RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT retrived by the query DB_GEST_ANN_stati_rpt on db nodo_online under macro Mod1Mb
-      And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO, RPT_INVIATA_A_PSP, RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT retrived by the query DB_GEST_ANN_stati_rpt_pa1 on db nodo_online under macro Mod1Mb
+      And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO, RPT_INVIATA_A_PSP, RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT retrived by the query by_iuv_and_id_dominio on db nodo_online under macro Mod1Mb
+      And replace pa content with 90000000001 content
+      And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO, RPT_INVIATA_A_PSP, RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT retrived by the query by_iuv_and_id_dominio on db nodo_online under macro Mod1Mb
 
       #DB-CHECK-STATI_RPT_SNAPSHOT
-      And checks the value RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query DB_GEST_ANN_stati_rpt on db nodo_online under macro Mod1Mb
-      And checks the value RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query DB_GEST_ANN_stati_rpt_pa1 on db nodo_online under macro Mod1Mb
+      And replace pa content with #codicePA# content
+      And checks the value RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query by_iuv_and_id_dominio on db nodo_online under macro Mod1Mb
+      And replace pa content with 90000000001 content
+      And checks the value RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query by_iuv_and_id_dominio on db nodo_online under macro Mod1Mb
 
       #DB-CHECK-STATI_CARRELLO
+      And replace pa content with #codicePA# content
       And checks the value CART_RICEVUTO_NODO, CART_ACCETTATO_NODO, CART_PARCHEGGIATO_NODO, CART_INVIATO_A_PSP, CART_ACCETTATO_PSP of the record at column STATO of the table STATI_CARRELLO retrived by the query DB_GEST_ANN_stati_payment_token on db nodo_online under macro Mod1Mb
 
       #DB-CHECK-STATI_CARRELLO_SNAPSHOT
       And checks the value CART_ACCETTATO_PSP of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query DB_GEST_ANN_stati_payment_token on db nodo_online under macro Mod1Mb
 
       #DB-CHECK-POSITION_PAYMENT
-      And replace pa content with #codicePA# content
-      And replace noticeNumber content with $1noticeNumber content
-
       And checks the value BBT of the record at column PAYMENT_METHOD of the table POSITION_PAYMENT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
       And checks the value WISP of the record at column PAYMENT_CHANNEL of the table POSITION_PAYMENT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
       And checks the value #psp# of the record at column PSP_ID of the table POSITION_PAYMENT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
       And checks the value #psp# of the record at column BROKER_PSP_ID of the table POSITION_PAYMENT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-      And checks the value #canale# of the record at column CHANNEL_ID of the table POSITION_PAYMENT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+      And checks the value #canale_DIFFERITO_MOD2# of the record at column CHANNEL_ID of the table POSITION_PAYMENT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
 
       #DB-CHECK-RPT
-      And replace pa content with #codicePA# content
-      And replace iuv content with $1iuv content
-
-      And checks the value #canale# of the record at column CANALE of the table RPT retrived by the query by_iuv_and_ident_dominio on db nodo_online under macro Mod1Mb
+      And checks the value #canale_DIFFERITO_MOD2# of the record at column CANALE of the table RPT retrived by the query by_iuv_and_ident_dominio on db nodo_online under macro Mod1Mb
       And checks the value #psp# of the record at column PSP of the table RPT retrived by the query by_iuv_and_ident_dominio on db nodo_online under macro Mod1Mb
       And checks the value #psp# of the record at column INTERMEDIARIOPSP of the table RPT retrived by the query by_iuv_and_ident_dominio on db nodo_online under macro Mod1Mb
       And checks the value BBT of the record at column TIPO_VERSAMENTO of the table RPT retrived by the query by_iuv_and_ident_dominio on db nodo_online under macro Mod1Mb
-      And checks the value Y of the record at column RICEVUTA_PM of the table RPT retrived by the query by_iuv_and_ident_dominio on db nodo_online under macro Mod1Mb
+      And checks the value N of the record at column RICEVUTA_PM of the table RPT retrived by the query by_iuv_and_ident_dominio on db nodo_online under macro Mod1Mb
       And checks the value Y of the record at column WISP_2 of the table RPT retrived by the query by_iuv_and_ident_dominio on db nodo_online under macro Mod1Mb
 
       And replace pa content with 90000000001 content
 
-      And checks the value #canale# of the record at column CANALE of the table RPT retrived by the query by_iuv_and_ident_dominio on db nodo_online under macro Mod1Mb
+      And checks the value #canale_DIFFERITO_MOD2# of the record at column CANALE of the table RPT retrived by the query by_iuv_and_ident_dominio on db nodo_online under macro Mod1Mb
       And checks the value #psp# of the record at column PSP of the table RPT retrived by the query by_iuv_and_ident_dominio on db nodo_online under macro Mod1Mb
       And checks the value #psp# of the record at column INTERMEDIARIOPSP of the table RPT retrived by the query by_iuv_and_ident_dominio on db nodo_online under macro Mod1Mb
       And checks the value BBT of the record at column TIPO_VERSAMENTO of the table RPT retrived by the query by_iuv_and_ident_dominio on db nodo_online under macro Mod1Mb
-      And checks the value Y of the record at column RICEVUTA_PM of the table RPT retrived by the query by_iuv_and_ident_dominio on db nodo_online under macro Mod1Mb
+      And checks the value N of the record at column RICEVUTA_PM of the table RPT retrived by the query by_iuv_and_ident_dominio on db nodo_online under macro Mod1Mb
       And checks the value Y of the record at column WISP_2 of the table RPT retrived by the query by_iuv_and_ident_dominio on db nodo_online under macro Mod1Mb
 
       #DB-CHECK-CARRELLO
-      And checks the value #canale# of the record at column CANALE of the table CARRELLO retrived by the query by_id_sessione on db nodo_online under macro Mod1Mb
+      And checks the value #canale_DIFFERITO_MOD2# of the record at column CANALE of the table CARRELLO retrived by the query by_id_sessione on db nodo_online under macro Mod1Mb
       And checks the value #psp# of the record at column PSP of the table CARRELLO retrived by the query by_id_sessione on db nodo_online under macro Mod1Mb
       And checks the value #psp# of the record at column INTERMEDIARIOPSP of the table CARRELLO retrived by the query by_id_sessione on db nodo_online under macro Mod1Mb
       And checks the value BBT of the record at column TIPO_VERSAMENTO of the table CARRELLO retrived by the query by_id_sessione on db nodo_online under macro Mod1Mb

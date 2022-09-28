@@ -274,26 +274,22 @@ def step_impl(context):
         setattr(context, 'carrello', carrello)
 
     if '#carrello1#' in payload:
-        carrello1 = pa + "311" + "0" + str(random.randint(1000, 2000)) + str(random.randint(
-            1000, 2000)) + str(random.randint(1000, 2000)) + "00" + utils.random_s()
+        carrello1 = pa + "311" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + utils.random_s()
         payload = payload.replace('#carrello1#', carrello1)
         setattr(context, 'carrello1', carrello1)
 
     if '#secCarrello#' in payload:
-        secCarrello = pa + "301" + "0" + str(random.randint(1000, 2000)) + str(random.randint(
-            1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+        secCarrello = pa + "301" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
         payload = payload.replace('#secCarrello#', secCarrello)
         setattr(context, 'secCarrello', secCarrello)
 
     if '#thrCarrello#' in payload:
-        thrCarrello = pa + "088" + "0" + str(random.randint(1000, 2000)) + str(random.randint(
-            1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+        thrCarrello = pa + "088" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
         payload = payload.replace('#thrCarrello#', thrCarrello)
         setattr(context, 'thrCarrello', thrCarrello)
 
     if '#carrNOTENABLED#' in payload:
-        carrNOTENABLED = "11111122223" + "311" + "0" + str(random.randint(1000, 2000)) + str(
-            random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+        carrNOTENABLED = "11111122223" + "311" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
         payload = payload.replace('#carrNOTENABLED#', carrNOTENABLED)
         setattr(context, 'carrNOTENABLED', carrNOTENABLED)
 
@@ -384,6 +380,12 @@ def step_impl(context, number):
     if '#date#' in payload:
         payload = payload.replace('#date#', date)
 
+    if '#tomorrow_date#' in payload:
+        tomorrow_date = datetime.date.today() - datetime.timedelta(days=1)
+        payload = payload.replace('#tomorrow_date#', tomorrow_date)
+        setattr(context, 'tomorrow_date', tomorrow_date)
+
+    
     if f'#IuV{number}#' in payload:
         IuV = '0' + str(random.randint(1000, 2000)) + str(random.randint(1000,
                                                                          2000)) + str(random.randint(1000, 2000)) + '00'
@@ -624,22 +626,13 @@ def step_impl(context):
 @given('REND generation')
 def step_impl(context):
     payload = context.text or ""
-    payload = utils.replace_context_variables(payload, context)
     payload = utils.replace_local_variables(payload, context)
-    payload = utils.replace_global_variables(payload, context)
-    date = datetime.date.today().strftime("%Y-%m-%d")
-    timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
-    identificativoFlusso = date + context.config.userdata.get(
-        "global_configuration").get("psp") + "-" + str(random.randint(0, 10000))
-    iuv = "IUV" + str(random.randint(0, 10000)) + "-" + \
-        datetime.datetime.now().strftime("%Y-%m-%d-%H:%M:%S.%f")[:-3]
-    setattr(context, 'date', date)
-    setattr(context, 'timedate', timedate)
-    setattr(context, 'identificativoFlusso', identificativoFlusso)
-    setattr(context, 'iuv', iuv)
+
 
     if '#date#' in payload:
+        date = datetime.date.today().strftime("%Y-%m-%d")
         payload = payload.replace('#date#', date)
+        setattr(context, 'date', date)
 
     if '#timedate+1#' in payload:
         date = datetime.date.today() + datetime.timedelta(hours=1)
@@ -648,13 +641,24 @@ def step_impl(context):
         payload = payload.replace('#timedate+1#', timedate)
 
     if "#timedate#" in payload:
+        date = datetime.date.today().strftime("%Y-%m-%d")
+        timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
         payload = payload.replace('#timedate#', timedate)
+        setattr(context, 'timedate', timedate)
 
     if '#identificativoFlusso#' in payload:
+        date = datetime.date.today().strftime("%Y-%m-%d")
+        identificativoFlusso = date + context.config.userdata.get("global_configuration").get("psp") + "-" + str(random.randint(0, 10000))
         payload = payload.replace('#identificativoFlusso#', identificativoFlusso)
+        setattr(context, 'identificativoFlusso', identificativoFlusso)
 
     if '#iuv#' in payload:
+        iuv = "IUV" + str(random.randint(0, 10000)) + "-" + datetime.datetime.now().strftime("%Y-%m-%d-%H:%M:%S.%f")[:-3]
         payload = payload.replace('#iuv#', iuv)
+        setattr(context, 'iuv', iuv)
+
+    payload = utils.replace_context_variables(payload, context)
+    payload = utils.replace_global_variables(payload, context)
 
     payload_b = bytes(payload, 'ascii')
     payload_uni = b64.b64encode(payload_b)
@@ -729,6 +733,7 @@ def step_impl(context, job_name, seconds):
 def step_impl(context, tag, value, primitive):
     soap_response = getattr(context, primitive + RESPONSE)
     value = utils.replace_local_variables(value, context)
+    value = utils.replace_context_variables(value, context)
     value = utils.replace_global_variables(value, context)
     if 'xml' in soap_response.headers['content-type']:
         my_document = parseString(soap_response.content)
@@ -737,9 +742,9 @@ def step_impl(context, tag, value, primitive):
                 'faultCode')[0].firstChild.data)
             print("fault string: ", my_document.getElementsByTagName(
                 'faultString')[0].firstChild.data)
-            if my_document.getElementsByTagName('description'):
-                print("description: ", my_document.getElementsByTagName(
-                    'description')[0].firstChild.data)
+            # if len(my_document.getElementsByTagName('description')[0])>0:
+            #     print("description: ", my_document.getElementsByTagName(
+            #         'description')[0].firstChild.data)
         data = my_document.getElementsByTagName(tag)[0].firstChild.data
         print(f'check tag "{tag}" - expected: {value}, obtained: {data}')
         assert value == data
@@ -747,8 +752,8 @@ def step_impl(context, tag, value, primitive):
         node_response = getattr(context, primitive + RESPONSE)
         json_response = node_response.json()
         founded_value = jo.get_value_from_key(json_response, tag)
-        print(
-            f'check tag "{tag}" - expected: {value}, obtained: {json_response.get(tag)}')
+        print(founded_value)
+        print(f'check tag "{tag}" - expected: {value}, obtained: {json_response.get(tag)}')
         assert str(founded_value) == value
 
 
@@ -1409,8 +1414,12 @@ def step_impl(context, query_name, macro, db_name, table_name, columns):
 def step_impl(context, query_name, param, position, key):
     result_query = getattr(context, query_name)
     print(f'{query_name}: {result_query}')
-    selected_element = result_query[0][position]
-    print(f'{param}: {selected_element}')
+    if position == 0:
+        selected_element = result_query[0][position]
+        print(f'{param}: {selected_element}')
+    elif position == -1: # il -1 recupera tutti i record 
+        selected_element = [t[0] for t in result_query]
+        print(f'{param}: {selected_element}')
     setattr(context, key, selected_element)
 
 
@@ -1768,6 +1777,8 @@ def step_impl(context, value1, condition, value2):
         assert value1 > value2, f"{value1} <= {value2}"
     elif condition == 'smaller than':
         assert value1 < value2, f"{value1} >= {value2}"
+    elif condition == 'not equal to':
+        assert value1 != value2, f"{value1} = {value2}"
     else:
         assert False
 

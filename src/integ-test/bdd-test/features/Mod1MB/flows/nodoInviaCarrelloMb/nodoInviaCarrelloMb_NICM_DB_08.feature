@@ -1,6 +1,6 @@
-Feature: process tests for nodoInviaCarrelloMb
+Feature: process tests for nodoInviaCarrelloMb[NICM_DB_08]
 
-    #[NICM_DB_03]
+
     Background:
         Given systems up
     Scenario: RPT generation
@@ -225,10 +225,10 @@ Feature: process tests for nodoInviaCarrelloMb
         And replace iuv content with $1iuv content
         And replace noticeNumber content with $1noticeNumber content
 
-        And generic update through the query param_update_generic_where_condition of the table POSITION_STATUS_SNAPSHOT the parameter STATUS = 'INSERTED', with where condition NOTICE_ID = '$noticeNumber' and PA_FISCAL_CODE='$pa' under macro update_query on db nodo_online
-        And generic update through the query param_update_generic_where_condition of the table POSITION_PAYMENT_STATUS the parameter STATUS = 'FAILED', with where condition NOTICE_ID = '$noticeNumber' and PA_FISCAL_CODE='$pa' under macro update_query on db nodo_online
-        And generic update through the query param_update_generic_where_condition of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS = 'FAILED', with where condition NOTICE_ID = '$noticeNumber' and PA_FISCAL_CODE='$pa' under macro update_query on db nodo_online
-        And generic update through the query param_update_generic_where_condition of the table POSITION_STATUS the parameter STATUS = 'INSERTED', with where condition NOTICE_ID = '$noticeNumber' and PA_FISCAL_CODE='$pa' under macro update_query on db nodo_online
+        And generic update through the query param_update_generic_where_condition of the table POSITION_STATUS_SNAPSHOT the parameter STATUS = 'INSERTED', with where condition NOTICE_ID = '$1noticeNumber' and PA_FISCAL_CODE='$pa' under macro update_query on db nodo_online
+        And generic update through the query param_update_generic_where_condition of the table POSITION_PAYMENT_STATUS the parameter STATUS = 'PAID', with where condition NOTICE_ID = '$1noticeNumber' and PA_FISCAL_CODE='$pa' under macro update_query on db nodo_online
+        And generic update through the query param_update_generic_where_condition of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS = 'PAID', with where condition NOTICE_ID = '$1noticeNumber' and PA_FISCAL_CODE='$pa' under macro update_query on db nodo_online
+        And generic update through the query param_update_generic_where_condition of the table POSITION_STATUS the parameter STATUS = 'INSERTED', with where condition NOTICE_ID = '$1noticeNumber' and PA_FISCAL_CODE='$pa' under macro update_query on db nodo_online
         And generate 1 cart with PA #codicePA# and notice number $1noticeNumber
         And RPT3 generation
             """
@@ -285,7 +285,7 @@ Feature: process tests for nodoInviaCarrelloMb
             <pay_i:nazioneBeneficiario>IT</pay_i:nazioneBeneficiario>
             </pay_i:enteBeneficiario>
             <pay_i:datiVersamento>
-            <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
+            <pay_i:dataEsecuzionePagamento>#timedate#</pay_i:dataEsecuzionePagamento>
             <pay_i:importoTotaleDaVersare>2.50</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
             <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
@@ -363,7 +363,7 @@ Feature: process tests for nodoInviaCarrelloMb
             <pay_i:nazioneBeneficiario>IT</pay_i:nazioneBeneficiario>
             </pay_i:enteBeneficiario>
             <pay_i:datiVersamento>
-            <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
+            <pay_i:dataEsecuzionePagamento>#timedate#</pay_i:dataEsecuzionePagamento>
             <pay_i:importoTotaleDaVersare>2.50</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
             <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
@@ -447,6 +447,7 @@ Feature: process tests for nodoInviaCarrelloMb
 
 
         #DB_CHECKS
+
         #POSITION_SUBJECT
         And checks the value DEBTOR of the record at column SUBJECT_TYPE of the table POSITION_SUBJECT retrived by the query by_position_subject on db nodo_online under macro Mod1Mb
         And checks the value F of the record at column ENTITY_UNIQUE_IDENTIFIER_TYPE of the table POSITION_SUBJECT retrived by the query by_position_subject on db nodo_online under macro Mod1Mb
@@ -461,6 +462,7 @@ Feature: process tests for nodoInviaCarrelloMb
         And checks the value gesualdo.riccitelli@poste.it of the record at column EMAIL of the table POSITION_SUBJECT retrived by the query by_position_subject on db nodo_online under macro Mod1Mb
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_SUBJECT retrived by the query by_position_subject on db nodo_online under macro Mod1Mb
         And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_SUBJECT retrived by the query by_position_subject on db nodo_online under macro Mod1Mb
+
 
         #POSITION_SERVICE
         And checks the value #codicePA# of the record at column PA_FISCAL_CODE of the table POSITION_SERVICE retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
@@ -477,29 +479,32 @@ Feature: process tests for nodoInviaCarrelloMb
         And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_SERVICE retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
 
 
+
         #POSITION_PAYMENT_PLAN
-        And checks the value #codicePA# of the record at column PA_FISCAL_CODE of the table POSITION_PAYMENT_PLAN retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        And checks the value $1noticeNumber of the record at column NOTICE_ID of the table POSITION_PAYMENT_PLAN retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        And checks the value $1iuv of the record at column CREDITOR_REFERENCE_ID of the table POSITION_PAYMENT_PLAN retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+        And replace iuv content with $1iuv content
+        And checks the value #codicePA#, #codicePA# of the record at column PA_FISCAL_CODE of the table POSITION_PAYMENT_PLAN retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+        And checks the value $1noticeNumber, $1noticeNumber of the record at column NOTICE_ID of the table POSITION_PAYMENT_PLAN retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+        And checks the value $1iuv, $1iuv of the record at column CREDITOR_REFERENCE_ID of the table POSITION_PAYMENT_PLAN retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value None of the record at column RETENTION_DATE of the table POSITION_PAYMENT_PLAN retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        And checks the value 3 of the record at column AMOUNT of the table POSITION_PAYMENT_PLAN retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        And checks the value N of the record at column FLAG_FINAL_PAYMENT of the table POSITION_PAYMENT_PLAN retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+        And checks the value 3, 5 of the record at column AMOUNT of the table POSITION_PAYMENT_PLAN retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+        And checks the value N, N of the record at column FLAG_FINAL_PAYMENT of the table POSITION_PAYMENT_PLAN retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_PAYMENT_PLAN retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_PAYMENT_PLAN retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value None of the record at column METADATA of the table POSITION_PAYMENT_PLAN retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
 
         #POSITION_TRANSFER
-        And checks the value $1noticeNumber, $1noticeNumber, $1noticeNumber, $1noticeNumber of the record at column NOTICE_ID of the table POSITION_TRANSFER retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        And checks the value $1iuv, $1iuv, $1iuv, $1iuv of the record at column CREDITOR_REFERENCE_ID of the table POSITION_TRANSFER retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        And checks the value #codicePA#, #codicePA#, #codicePA#, #codicePA# of the record at column PA_FISCAL_CODE of the table POSITION_TRANSFER retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        And checks the value #codicePA#, 90000000001, #codicePA#, 90000000001 of the record at column PA_FISCAL_CODE_SECONDARY of the table POSITION_TRANSFER retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        And checks the value 1.5, 1.5, 1.5, 1.5 of the record at column AMOUNT of the table POSITION_TRANSFER retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+        And checks the value $1noticeNumber, $1noticeNumber, $1noticeNumber, $1noticeNumber of the record at column NOTICE_ID of the table POSITION_TRANSFER retrived by the query by_position_transfer on db nodo_online under macro Mod1Mb
+        And checks the value $1iuv, $1iuv, $1iuv, $1iuv of the record at column CREDITOR_REFERENCE_ID of the table POSITION_TRANSFER retrived by the query by_position_transfer on db nodo_online under macro Mod1Mb
+        And checks the value #codicePA#, #codicePA#, #codicePA#, #codicePA# of the record at column PA_FISCAL_CODE of the table POSITION_TRANSFER retrived by the query by_position_transfer on db nodo_online under macro Mod1Mb
+        And checks the value #codicePA#, 90000000001, #codicePA#, 90000000001 of the record at column PA_FISCAL_CODE_SECONDARY of the table POSITION_TRANSFER retrived by the query by_position_transfer on db nodo_online under macro Mod1Mb
+        And checks the value 1.5, 1.5, 2.5, 2.5 of the record at column AMOUNT of the table POSITION_TRANSFER retrived by the query by_position_transfer on db nodo_online under macro Mod1Mb
         And checks the value pagamento fotocopie pratica, pagamento fotocopie pratica, pagamento fotocopie pratica, pagamento fotocopie pratica of the record at column REMITTANCE_INFORMATION of the table POSITION_TRANSFER retrived by the query by_position_transfer on db nodo_online under macro Mod1Mb
-        And checks the value 1/abc, 1/abc, 1/abc, 1/abc of the record at column TRANSFER_CATEGORY of the table POSITION_TRANSFER retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        And checks the value 1, 2, 1, 2 of the record at column TRANSFER_IDENTIFIER of the table POSITION_TRANSFER retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        And checks the value N, N, Y, Y of the record at column VALID of the table POSITION_TRANSFER retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_TRANSFER retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_TRANSFER retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+        And checks the value 1/abc, 1/abc, 1/abc, 1/abc of the record at column TRANSFER_CATEGORY of the table POSITION_TRANSFER retrived by the query by_position_transfer on db nodo_online under macro Mod1Mb
+        And checks the value 1, 2, 1, 2 of the record at column TRANSFER_IDENTIFIER of the table POSITION_TRANSFER retrived by the query by_position_transfer on db nodo_online under macro Mod1Mb
+        And checks the value Y, Y, Y, Y of the record at column VALID of the table POSITION_TRANSFER retrived by the query by_position_transfer on db nodo_online under macro Mod1Mb
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_TRANSFER retrived by the query by_position_transfer on db nodo_online under macro Mod1Mb
+        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_TRANSFER retrived by the query by_position_transfer on db nodo_online under macro Mod1Mb
+
 
         #POSITION_PAYMENT
         And checks the value #codicePA#, #codicePA# of the record at column PA_FISCAL_CODE of the table POSITION_PAYMENT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
@@ -513,7 +518,7 @@ Feature: process tests for nodoInviaCarrelloMb
         And checks the value $nodoInviaCarrelloRPT.identificativoIntermediarioPSP, $nodoInviaCarrelloRPT.identificativoIntermediarioPSP of the record at column BROKER_PSP_ID of the table POSITION_PAYMENT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value $nodoInviaCarrelloRPT.identificativoCanale, $nodoInviaCarrelloRPT.identificativoCanale of the record at column CHANNEL_ID of the table POSITION_PAYMENT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value None of the record at column IDEMPOTENCY_KEY of the table POSITION_PAYMENT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        And checks the value 3, 3 of the record at column AMOUNT of the table POSITION_PAYMENT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+        And checks the value 3, 5 of the record at column AMOUNT of the table POSITION_PAYMENT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value None of the record at column FEE of the table POSITION_PAYMENT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value None of the record at column OUTCOME of the table POSITION_PAYMENT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value None of the record at column PAYMENT_METHOD of the table POSITION_PAYMENT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
@@ -526,12 +531,14 @@ Feature: process tests for nodoInviaCarrelloMb
         And checks the value None of the record at column RPT_ID of the table POSITION_PAYMENT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value MOD1, MOD1 of the record at column PAYMENT_TYPE of the table POSITION_PAYMENT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
 
+
         #POSITION_STATUS
         And checks the value #codicePA#, #codicePA# of the record at column PA_FISCAL_CODE of the table POSITION_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value $1noticeNumber, $1noticeNumber of the record at column NOTICE_ID of the table POSITION_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value INSERTED, PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
 
+        
         #POSITION_STATUS_SNAPSHOT
         And checks the value #codicePA# of the record at column PA_FISCAL_CODE of the table POSITION_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value $1noticeNumber of the record at column NOTICE_ID of the table POSITION_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
@@ -545,14 +552,15 @@ Feature: process tests for nodoInviaCarrelloMb
         And checks the value $1iuv, $1iuv of the record at column CREDITOR_REFERENCE_ID of the table POSITION_PAYMENT_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value $1noticeNumber, $1noticeNumber of the record at column NOTICE_ID of the table POSITION_PAYMENT_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value $nodoInviaCarrelloRPT.identificativoCarrello, $nodoInviaCarrelloRPT.identificativoCarrello of the record at column PAYMENT_TOKEN of the table POSITION_PAYMENT_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        And checks the value FAILED, PAYING of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+        And checks the value PAID, PAYING of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_PAYMENT_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+
 
         #POSITION_PAYMENT_STATUS_SNAPSHOT
         And checks the value #codicePA#, #codicePA# of the record at column PA_FISCAL_CODE of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value $1noticeNumber, $1noticeNumber of the record at column NOTICE_ID of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value $1iuv, $1iuv of the record at column CREDITOR_REFERENCE_ID of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value $nodoInviaCarrelloRPT.identificativoCarrello, $nodoInviaCarrelloRPT.identificativoCarrello of the record at column PAYMENT_TOKEN of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        And checks the value FAILED, PAYING of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+        And checks the value PAYING, PAYING of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb

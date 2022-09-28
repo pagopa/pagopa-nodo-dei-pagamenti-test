@@ -138,9 +138,9 @@ Feature: check syntax KO for paaVerificaRPTRes
             <soapenv:Header/>
             <soapenv:Body>
             <ws:paaVerificaRPTRisposta>
-                <paaVerificaRPTRisposta>       
-                    <esito>KO</esito>
-                </paaVerificaRPTRisposta>
+            <paaVerificaRPTRisposta>
+            <esito>KO</esito>
+            </paaVerificaRPTRisposta>
             </ws:paaVerificaRPTRisposta>
             </soapenv:Body>
             </soapenv:Envelope>

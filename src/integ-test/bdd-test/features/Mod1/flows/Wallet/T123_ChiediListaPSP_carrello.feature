@@ -81,36 +81,40 @@ Feature: process tests for chiediListaPSP
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-
-    Scenario: Execute nodoInviaRPT request
+    Scenario: Execute nodoInviaCarrelloRPT request
         Given the RPT generation scenario executed successfully
-        And initial XML nodoInviaRPT
+        And initial XML nodoInviaCarrelloRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
-            <ppt:intestazionePPT>
-            <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
-            <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
-            <identificativoDominio>44444444444</identificativoDominio>
-            <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>CCD01</codiceContestoPagamento>
-            </ppt:intestazionePPT>
+                <ppt:intestazioneCarrelloPPT>
+                    <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
+                    <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
+                    <identificativoCarrello>$IUV</identificativoCarrello>
+                </ppt:intestazioneCarrelloPPT>
             </soapenv:Header>
             <soapenv:Body>
-            <ws:nodoInviaRPT>
-            <password>pwdpwdpwd</password>
-            <identificativoPSP>#psp_AGID#</identificativoPSP>
-            <identificativoIntermediarioPSP>97735020584</identificativoIntermediarioPSP>
-            <identificativoCanale>97735020584_02</identificativoCanale>
-            <tipoFirma></tipoFirma>
-            <rpt>$rptAttachment</rpt>
-            </ws:nodoInviaRPT>
+                <ws:nodoInviaCarrelloRPT>
+                    <password>pwdpwdpwd</password>
+                    <identificativoPSP>AGID_01</identificativoPSP>
+                    <identificativoIntermediarioPSP>97735020584</identificativoIntermediarioPSP>
+                    <identificativoCanale>97735020584_02</identificativoCanale>
+                    <listaRPT>
+                        <elementoListaRPT>
+                        <identificativoDominio>44444444444</identificativoDominio>
+                        <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
+                        <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+                        <rpt>$rptAttachment</rpt>
+                        </elementoListaRPT>
+                    </listaRPT>
+                </ws:nodoInviaCarrelloRPT>
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-        Then check esito is OK of nodoInviaRPT response
-        And retrieve session token from $nodoInviaRPTResponse.url
+        When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
+        Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
+        And check url contains acardste of nodoInviaCarrelloRPT response
+        And retrieve session token from $nodoInviaCarrelloRPTResponse.url
 
         # DB Check
         And execution query version to get value on the table ELENCO_SERVIZI_PSP_SYNC_STATUS, with the columns SNAPSHOT_VERSION under macro Mod1 with db name nodo_offline
@@ -134,7 +138,7 @@ Feature: process tests for chiediListaPSP
 
 
     Scenario: execution nodoChiediListaPSP - altro
-        Given the Execute nodoInviaRPT request scenario executed successfully
+        Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
         When WISP sends rest GET listaPSP?idPagamento=$sessionToken&percorsoPagamento=ALTRO&lingua=$lingua to nodo-dei-pagamenti
         Then verify the HTTP status code of listaPSP response is 200
 

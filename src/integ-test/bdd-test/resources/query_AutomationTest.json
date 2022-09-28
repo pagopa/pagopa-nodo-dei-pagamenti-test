@@ -102,7 +102,8 @@
         "DB_GEST_ANN_notice_number": "SELECT s.columns FROM table_name s WHERE s.NOTICE_ID = '$NOTICE_ID'",
         "DB_GEST_ANN_stati_position_status": "SELECT s.columns FROM table_name s WHERE s.NOTICE_ID = '311$iuv' and s.pa_fiscal_code= '$nodoInviaCarrelloRPT.identificativoDominio'",
         "by_notice_number_and_pa": "SELECT s.columns FROM table_name s WHERE s.NOTICE_ID = '$noticeNumber' and s.pa_fiscal_code= '$pa'",
-        "by_iuv_and_ident_dominio": "SELECT s.columns FROM table_name s WHERE s.IUV = '$iuv' and s.ID_DOMINIO = '$pa' ORDER BY INSERTED_TIMESTAMP",
+        "by_iuv_and_id_dominio": "SELECT s.columns FROM table_name s WHERE s.IUV = '$iuv' and s.ID_DOMINIO = '$pa' ORDER BY INSERTED_TIMESTAMP",
+        "by_iuv_and_ident_dominio": "SELECT s.columns FROM table_name s WHERE s.IUV = '$iuv' and s.IDENT_DOMINIO = '$pa'",
         "by_id_sessione":"SELECT s.columns FROM table_name s WHERE s.ID_SESSIONE = '$sessionToken'",
         "by_position_subject":"SELECT s.columns FROM table_name s JOIN POSITION_SERVICE pp ON pp.DEBTOR_ID = s.ID  where pp.notice_id = '$noticeNumber' and pp.pa_fiscal_code= '$pa'",
         "by_position_transfer":"SELECT s.columns FROM table_name s where s.NOTICE_ID = '$noticeNumber' and s.pa_fiscal_code= '$pa' order by s.id asc",
@@ -130,15 +131,22 @@
         "Retrieve_IdSession": "SELECT columns FROM table_name WHERE IUV = '$iuv' AND CCP = '$ccp'",
         "Retrieve_IdSession2": "SELECT columns FROM table_name WHERE IUV = '$2iuv' AND CCP = '$2ccp'",
         "rpt_stati": "SELECT columns FROM table_name s WHERE s.IUV = '$iuv' ORDER BY INSERTED_TIMESTAMP ASC",
+        "rpt_stati_pa": "SELECT columns FROM table_name s WHERE s.IUV = '$iuv' AND ID_DOMINIO = '$pa' ORDER BY INSERTED_TIMESTAMP ASC",
         "rt_stati": "SELECT columns FROM table_name s WHERE s.IUV = '$IUV' ORDER BY INSERTED_TIMESTAMP ASC",
-        "stati_carrello": "SELECT columns FROM table s WHERE s.ID_CARRELLO = '$nodoInviaCarrelloRPT.idCarrello' ORDER BY ID ASC",
-        "payment_status": "SELECT s.columns FROM table_name s WHERE s.NOTICE_ID ='$activateIOPayment.noticeNumber' AND s.PA_FISCAL_CODE = '$activateIOPayment.fiscalCode'"
+        "stati_carrello": "SELECT columns FROM table_name s WHERE s.ID_CARRELLO = '$nodoInviaCarrelloRPT.identificativoCarrello'",
+        "position_payment": "SELECT s.columns FROM table_name s WHERE s.NOTICE_ID = '$noticeNumber' and s.pa_fiscal_code= '$pa' ORDER BY ID ASC",
+        "payment_status": "SELECT s.columns FROM table_name s WHERE s.NOTICE_ID ='$activateIOPayment.noticeNumber' AND s.PA_FISCAL_CODE = '$activateIOPayment.fiscalCode'",
+        "version": "SELECT columns from table_name where ROWNUM = 1 AND VALID='Y' ORDER BY SNAPSHOT_VERSION desc",
+        "getPspCarte": "SELECT columns from table_name where FK_SNAPSHOT_VERSION = $version AND CANALE_APP = 'N' AND TIPO_VERS_COD in ('CP') AND CANALE_MOD_PAG in (0,1,2) AND CARRELLO_CARTE='Y' AND CODICE_LINGUA = '$lingua' AND IMPORTO_MINIMO < $importoTot AND IMPORTO_MASSIMO >= $importoTot AND CODICE_CONVENZIONE is null ",
+        "getPspConto": "SELECT columns from table_name where FK_SNAPSHOT_VERSION = $version AND CANALE_APP = 'N' AND TIPO_VERS_COD in ('BBT','BP','AD','MYBK') AND CANALE_MOD_PAG in (0,1,2) AND CODICE_LINGUA = '$lingua' AND IMPORTO_MINIMO < $importoTot AND IMPORTO_MASSIMO >= $importoTot AND CODICE_CONVENZIONE is null ",
+        "getPspAltro": "SELECT columns from table_name where FK_SNAPSHOT_VERSION = $version AND CANALE_APP = 'Y' AND CANALE_MOD_PAG in (0,1,2) AND CODICE_LINGUA = '$lingua' AND IMPORTO_MINIMO < $importoTot AND IMPORTO_MASSIMO >= $importoTot AND CODICE_CONVENZIONE is null "
         
     },
     "RTPull" : {
         "rpt_stati": "SELECT columns FROM table_name s WHERE s.IUV = '$iuv' ORDER BY INSERTED_TIMESTAMP ASC",
         "rpt_stati_IUV": "SELECT columns FROM table_name s WHERE s.IUV = '$IUV' ORDER BY INSERTED_TIMESTAMP ASC",
         "by_iuv": "SELECT columns FROM table_name s WHERE s.IUV = '$iuv'",
+        "by_iuv_and_ccp": "SELECT columns FROM table_name s WHERE s.IUV = '$iuv' AND s.ccp = '$ccp'",
         "getSchedulerPspRetryAckNegativePollerMaxRetry": "SELECT columns FROM table_name s WHERE s.CONFIG_KEY='scheduler.pspRetryAckNegativePollerMaxRetry'"
     },
     "faultBeanEsteso": {
@@ -146,13 +154,19 @@
     },
     "costanti":{
         "get_broadcast": "SELECT columns FROM PA p, table_name psp WHERE p.OBJ_ID = psp.FK_PA AND p.ID_DOMINIO = '$verifyPaymentNotice.fiscalCode' AND psp.SEGREGAZIONE = '#cod_segr#'",
-        "get_pa_id": "SELECT columns FROM table_name WHERE ID_DOMINIO = '$pa'"
+        "get_pa_id": "SELECT columns FROM table_name WHERE ID_DOMINIO = '$pa'",
+        "by_station_id": "SELECT columns FROM table_name WHERE ID_STAZIONE = '$station_id'"
     },
     "update_query":{
         "idempotency_update":"UPDATE IDEMPOTENCY_CACHE SET VALID_TO = TO_DATE('date', 'YYYY-MM-DD HH24:MI:SS') WHERE IDEMPOTENCY_KEY = '$sendPaymentOutcome.idempotencyKey' AND PSP_ID = '$sendPaymentOutcome.idPSP'",
         "param_update": "UPDATE table_name SET param = 'value' WHERE where_condition = 'valore'",
         "param_update_in": "UPDATE table_name SET param = 'value' WHERE where_condition IN valore",
         "param_update_generic_where_condition" : "UPDATE table_name SET param WHERE where_condition"
+
+    },
+    "RendicontazioneFTPeBollo":{
+        "rendicontazione": "SELECT columns FROM table_name WHERE ID_FLUSSO = '$identificativoFlusso' AND DOMINIO = '$pa'",
+        "send_queue": "SELECT s.columns FROM table_name s JOIN RENDICONTAZIONE r ON s.ID = r.FK_SFTP_FILE WHERE r.ID_FLUSSO = '$identificativoFlusso' AND r.DOMINIO = '$pa' "
 
     }
 }

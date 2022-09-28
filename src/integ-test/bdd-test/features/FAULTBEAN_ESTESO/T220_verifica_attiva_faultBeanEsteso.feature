@@ -4,33 +4,56 @@ Feature: T220_verifica_attiva_faultBeanEsteso
         Given systems up
 
     Scenario: Execute nodoVerificaRPT (Phase 1)
-        Given generate 1 notice number and iuv with aux digit 3, segregation code 12 and application code -
-        And replace iuv content with $1iuv content
+        Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
         And initial XML nodoVerificaRPT
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:bc="http://PuntoAccessoPSP.spcoop.gov.it/BarCode_GS1_128_Modified" xmlns:aim="http://PuntoAccessoPSP.spcoop.gov.it/Code_128_AIM_USS-128_tipo_C" xmlns:qrc="http://PuntoAccessoPSP.spcoop.gov.it/QrCode">
+        <soapenv:Header/>
+        <soapenv:Body>
+            <ws:nodoVerificaRPT>
+                <identificativoPSP>#psp#</identificativoPSP>
+                <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+                <identificativoCanale>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanale>
+                <password>pwdpwdpwd</password>
+                <codiceContestoPagamento>#ccp#</codiceContestoPagamento>
+                <codificaInfrastrutturaPSP>QR-CODE</codificaInfrastrutturaPSP>
+                <codiceIdRPT>
+                    <qrc:QrCode>
+                        <qrc:CF>#creditor_institution_code#</qrc:CF>
+                        <qrc:CodStazPA>02</qrc:CodStazPA>
+                        <qrc:AuxDigit>0</qrc:AuxDigit>
+                        <qrc:CodIUV>$1iuv</qrc:CodIUV>
+                    </qrc:QrCode>
+                </codiceIdRPT>
+            </ws:nodoVerificaRPT>
+        </soapenv:Body>
+        </soapenv:Envelope>
+        """
+        And initial XML paaVerificaRPT
+        """
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/"   xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">
             <soapenv:Header/>
             <soapenv:Body>
-                <ws:nodoVerificaRPT>
-                    <identificativoPSP>#psp#</identificativoPSP>
-                    <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-                    <identificativoCanale>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanale>
-                    <password>pwdpwdpwd</password>
-                    <codiceContestoPagamento>CCD01</codiceContestoPagamento>
-                    <codificaInfrastrutturaPSP>QR-CODE</codificaInfrastrutturaPSP>
-                    <codiceIdRPT>
-                        <qrc:QrCode>
-                            <qrc:CF>#creditor_institution_code_old#</qrc:CF>
-                            <qrc:AuxDigit>0</qrc:AuxDigit>
-                            <qrc:CodIUV>$iuv</qrc:CodIUV>
-                        </qrc:QrCode>
-                    </codiceIdRPT>
-                </ws:nodoVerificaRPT>
+                <ws:paaVerificaRPTRisposta>
+                    <paaVerificaRPTRisposta>
+                        <fault>
+                        <faultCode>PAA_SEMANTICA</faultCode>
+                        <faultString>chiamata da rifiutare</faultString>
+                        <id>#creditor_institution_code_old#</id>
+                        </fault>
+                        <esito>KO</esito>
+                    </paaVerificaRPTRisposta>
+                </ws:paaVerificaRPTRisposta>
             </soapenv:Body>
         </soapenv:Envelope>
         """
+        And EC replies to nodo-dei-pagamenti with the paaVerificaRPT
         When PSP sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
-        Then check esito is OK of nodoVerificaRPT response
+        Then check esito is KO of nodoVerificaRPT response
+        And check originalFaultCode field exists in nodoVerificaRPT response
+        And replace wrongFaultCode content with PAA_SOAPACTION content
+        And check value $nodoVerificaRPTResponse.originalFaultCode is not equal to value $wrongFaultCode
+        
 
     Scenario: Execute nodoAttivaRPT (Phase 2)
         Given the Execute nodoVerificaRPT (Phase 1) scenario executed successfully
@@ -42,13 +65,20 @@ Feature: T220_verifica_attiva_faultBeanEsteso
                 <ws:nodoAttivaRPT>
                     <identificativoPSP>#psp#</identificativoPSP>
                     <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-                    <identificativoCanale>#canale#</identificativoCanale>
+                    <identificativoCanale>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanale>
                     <password>pwdpwdpwd</password>
                     <codiceContestoPagamento>$nodoVerificaRPT.codiceContestoPagamento</codiceContestoPagamento>
-                    <identificativoIntermediarioPSPPagamento>#broker_AGID#</identificativoIntermediarioPSPPagamento>
-                    <identificativoCanalePagamento>#canale_AGID#</identificativoCanalePagamento>
-                    <codificaInfrastrutturaPSP>$nodoVerificaRPT.codificaInfrastruttura</codificaInfrastrutturaPSP>
-                    <codiceIdRPT>$nodoVerificaRPT.codiceIdRPT</codiceIdRPT>
+                    <identificativoIntermediarioPSPPagamento>#psp#</identificativoIntermediarioPSPPagamento>
+                    <identificativoCanalePagamento>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanalePagamento>
+                    <codificaInfrastrutturaPSP>$nodoVerificaRPT.codificaInfrastrutturaPSP</codificaInfrastrutturaPSP>
+                    <codiceIdRPT>
+                        <qrc:QrCode>
+                            <qrc:CF>#creditor_institution_code#</qrc:CF>
+                            <qrc:CodStazPA>02</qrc:CodStazPA>
+                            <qrc:AuxDigit>0</qrc:AuxDigit>
+                            <qrc:CodIUV>$1iuv</qrc:CodIUV>
+                        </qrc:QrCode>
+                    </codiceIdRPT>
                     <datiPagamentoPSP>
                         <importoSingoloVersamento>10.00</importoSingoloVersamento>
                         <!--Optional:-->
@@ -108,5 +138,27 @@ Feature: T220_verifica_attiva_faultBeanEsteso
             </soapenv:Body>
         </soapenv:Envelope>
         """
+        And initial XML paaAttivaRPT
+        """
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <ws:paaAttivaRPTRisposta>
+            <paaAttivaRPTRisposta>
+            <fault>
+            <faultCode>PAA_SEMANTICA_EXTRAXSD</faultCode>
+            <faultString>errore semantico PA</faultString>
+            <id>#creditor_institution_code#</id>
+            <description>Errore semantico emesso dalla PA</description>
+            </fault>
+            <esito>KO</esito>
+            </paaAttivaRPTRisposta>
+            </ws:paaAttivaRPTRisposta>
+            </soapenv:Body>
+            </soapenv:Envelope>
+        """
+        And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
         When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-        Then check esito is OK of nodoAttivaRPT response
+        Then check esito is KO of nodoAttivaRPT response
+        And check originalFaultCode field exists in nodoAttivaRPT response
+        And check id is #creditor_institution_code# of nodoAttivaRPT response

@@ -1,4 +1,6 @@
-Feature: process tests for inoltropagamentoMb_06
+Feature: process tests for nodoInviaCarrelloMB [nodoInviaCarrelloMB_07]
+
+
     Background:
         Given systems up
     Scenario: RPT generation
@@ -9,7 +11,7 @@ Feature: process tests for inoltropagamentoMb_06
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-            <pay_i:identificativoDominio>#codicePA#</pay_i:identificativoDominio>
+            <pay_i:identificativoDominio>90000000001</pay_i:identificativoDominio>
             <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
@@ -68,7 +70,18 @@ Feature: process tests for inoltropagamentoMb_06
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
             <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
             <pay_i:datiSingoloVersamento>
-            <pay_i:importoSingoloVersamento>1.50</pay_i:importoSingoloVersamento>
+            <pay_i:importoSingoloVersamento>1.00</pay_i:importoSingoloVersamento>
+            <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
+            <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
+            <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
+            <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio>
+            <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
+            <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
+            <pay_i:causaleVersamento>pagamento fotocopie pratica RPT</pay_i:causaleVersamento>
+            <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
+            </pay_i:datiSingoloVersamento>
+            <pay_i:datiSingoloVersamento>
+            <pay_i:importoSingoloVersamento>0.50</pay_i:importoSingoloVersamento>
             <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
             <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
             <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
@@ -81,14 +94,14 @@ Feature: process tests for inoltropagamentoMb_06
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-        And generate 2 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
+
         And RPT2 generation
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.1</pay_i:versioneOggetto>
             <pay_i:dominio>
             <pay_i:identificativoDominio>#codicePA#</pay_i:identificativoDominio>
-            <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
+            <pay_i:identificativoStazioneRichiedente>90000000001_01</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
             <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
@@ -140,7 +153,7 @@ Feature: process tests for inoltropagamentoMb_06
             <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
             <pay_i:importoTotaleDaVersare>1.50</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
-            <pay_i:identificativoUnivocoVersamento>$2iuv</pay_i:identificativoUnivocoVersamento>
+            <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
             <pay_i:codiceContestoPagamento>$1carrello</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
@@ -159,7 +172,6 @@ Feature: process tests for inoltropagamentoMb_06
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-
 
     Scenario: Execute nodoInviaCarrelloRPT request
         Given the RPT generation scenario executed successfully
@@ -196,132 +208,27 @@ Feature: process tests for inoltropagamentoMb_06
             <identificativoCanale>97735020584_02</identificativoCanale>
             <listaRPT>
             <elementoListaRPT>
-            <identificativoDominio>#codicePA#</identificativoDominio>
+            <identificativoDominio>90000000001</identificativoDominio>
             <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
             <rpt>$rpt1Attachment</rpt>
             </elementoListaRPT>
             <elementoListaRPT>
             <identificativoDominio>#codicePA#</identificativoDominio>
-            <identificativoUnivocoVersamento>$2iuv</identificativoUnivocoVersamento>
+            <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
             <rpt>$rpt2Attachment</rpt>
             </elementoListaRPT>
             </listaRPT>
             <requireLightPayment>01</requireLightPayment>
-            <multiBeneficiario>0</multiBeneficiario>
+            <multiBeneficiario>1</multiBeneficiario>
             </ws:nodoInviaCarrelloRPT>
             </soapenv:Body>
             </soapenv:Envelope>
             """
+
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
-        Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
-        Then retrieve session token from $nodoInviaCarrelloRPTResponse.url
-
-    Scenario: Execute nodoChiediInformazioniPagamento
-        Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
-        When WISP sends rest GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-        Then verify the HTTP status code of informazioniPagamento response is 200
-        And check importo field exists in informazioniPagamento response
-        And check email field exists in informazioniPagamento response
-        And check ragioneSociale field exists in informazioniPagamento response
-        And check oggettoPagamento field exists in informazioniPagamento response
-        And check urlRedirectEC field exists in informazioniPagamento response
-
-    Scenario: Execute nodoInoltraPagamentoMod2
-        Given the Execute nodoInviaCarrelloRPT scenario executed successfully
-        And initial XML pspInviaCarrelloRPT
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <ws:pspInviaCarrelloRPTResponse>
-            <pspInviaCarrelloRPTResponse>
-            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-            <identificativoCarrello>$nodoInviaCarrelloRPT.identificativoCarrello</identificativoCarrello>
-            <parametriPagamentoImmediato>idBruciatura=$nodoInviaCarrelloRPT.identificativoCarrello</parametriPagamentoImmediato>
-            </pspInviaCarrelloRPTResponse>
-            </ws:pspInviaCarrelloRPTResponse>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-
-        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
-        When WISP sends REST POST inoltroEsito/mod2 to nodo-dei-pagamenti
-
-            """
-
-            {
-
-                "idPagamento": "$sessionToken",
-
-                "identificativoPsp": "#psp#",
-
-                "tipoVersamento": "BBT",
-
-                "identificativoIntermediario": "#psp#",
-
-                "identificativoCanale": "#canale_DIFFERITO_MOD2#"
-
-            }
-
-            """
-        Then verify the HTTP status code of inoltroEsito/mod2 response is 200
-        And check esito is OK of inoltroEsito/mod2 response
-        And check url field not exists in inoltroEsito/mod2 response
-
-
-    Scenario: Trigger paInviaRT
-        Given the Execute nodoInoltraPagamentoMod2 scenario executed successfully
-        When job paInviaRt triggered after 5 seconds
-        And wait 10 seconds for expiration
-        Then verify the HTTP status code of paInviaRt response is 200
-
-        And replace pa content with #codicePA# content
-        And replace iuv content with $1iuv content
-        And replace noticeNumber content with $1noticeNumber content
-        #DB-CHECK-STATI_RPT
-        And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO, RPT_INVIATA_A_PSP, RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT retrived by the query DB_GEST_ANN_stati_rpt on db nodo_online under macro Mod1Mb
-        And replace iuv content with $2iuv content
-        And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO, RPT_INVIATA_A_PSP, RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT retrived by the query DB_GEST_ANN_stati_rpt on db nodo_online under macro Mod1Mb
-
-        #DB-CHECK-STATI_RPT_SNAPSHOT
-        And replace iuv content with $1iuv content
-        And checks the value RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query DB_GEST_ANN_stati_rpt on db nodo_online under macro Mod1Mb
-        And replace iuv content with $2iuv content
-        And checks the value RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query DB_GEST_ANN_stati_rpt on db nodo_online under macro Mod1Mb
-
-        #DB-CHECK-STATI_CARRELLO
-        And replace iuv content with $1iuv content
-        And checks the value CART_RICEVUTO_NODO, CART_ACCETTATO_NODO, CART_PARCHEGGIATO_NODO, CART_INVIATO_A_PSP, CART_ACCETTATO_PSP of the record at column STATO of the table STATI_CARRELLO retrived by the query DB_GEST_ANN_stati_payment_token on db nodo_online under macro Mod1Mb
-
-        #DB-CHECK-STATI_CARRELLO_SNAPSHOT
-        And checks the value CART_ACCETTATO_PSP of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query DB_GEST_ANN_stati_payment_token on db nodo_online under macro Mod1Mb
-
-        #DB-CHECK-POSITION_PAYMENT
-
-        And verify 0 record for the table POSITION_PAYMENT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-
-        #DB-CHECK-RPT
-        And checks the value #canale_DIFFERITO_MOD2# of the record at column CANALE of the table RPT retrived by the query by_iuv_and_ident_dominio on db nodo_online under macro Mod1Mb
-        And checks the value #psp# of the record at column PSP of the table RPT retrived by the query by_iuv_and_ident_dominio on db nodo_online under macro Mod1Mb
-        And checks the value #psp# of the record at column INTERMEDIARIOPSP of the table RPT retrived by the query by_iuv_and_ident_dominio on db nodo_online under macro Mod1Mb
-        And checks the value BBT of the record at column TIPO_VERSAMENTO of the table RPT retrived by the query by_iuv_and_ident_dominio on db nodo_online under macro Mod1Mb
-        And checks the value N of the record at column RICEVUTA_PM of the table RPT retrived by the query by_iuv_and_ident_dominio on db nodo_online under macro Mod1Mb
-        And checks the value Y of the record at column WISP_2 of the table RPT retrived by the query by_iuv_and_ident_dominio on db nodo_online under macro Mod1Mb
-
-        And replace iuv content with $2iuv content
-
-        And checks the value #canale_DIFFERITO_MOD2# of the record at column CANALE of the table RPT retrived by the query by_iuv_and_ident_dominio on db nodo_online under macro Mod1Mb
-        And checks the value #psp# of the record at column PSP of the table RPT retrived by the query by_iuv_and_ident_dominio on db nodo_online under macro Mod1Mb
-        And checks the value #psp# of the record at column INTERMEDIARIOPSP of the table RPT retrived by the query by_iuv_and_ident_dominio on db nodo_online under macro Mod1Mb
-        And checks the value BBT of the record at column TIPO_VERSAMENTO of the table RPT retrived by the query by_iuv_and_ident_dominio on db nodo_online under macro Mod1Mb
-        And checks the value N of the record at column RICEVUTA_PM of the table RPT retrived by the query by_iuv_and_ident_dominio on db nodo_online under macro Mod1Mb
-        And checks the value Y of the record at column WISP_2 of the table RPT retrived by the query by_iuv_and_ident_dominio on db nodo_online under macro Mod1Mb
-
-        #DB-CHECK-CARRELLO
-        And checks the value #canale_DIFFERITO_MOD2# of the record at column CANALE of the table CARRELLO retrived by the query by_id_sessione on db nodo_online under macro Mod1Mb
-        And checks the value #psp# of the record at column PSP of the table CARRELLO retrived by the query by_id_sessione on db nodo_online under macro Mod1Mb
-        And checks the value #psp# of the record at column INTERMEDIARIOPSP of the table CARRELLO retrived by the query by_id_sessione on db nodo_online under macro Mod1Mb
-        And checks the value BBT of the record at column TIPO_VERSAMENTO of the table CARRELLO retrived by the query by_id_sessione on db nodo_online under macro Mod1Mb
+        Then check faultCode is PPT_MULTI_BENEFICIARIO of nodoInviaCarrelloRPT response
+        And check description is L’idCarrello deve contenere idDominio e corrispondere al dominio della prima rpt of nodoInviaCarrelloRPT response
+        And check faultString is La chiamata non è compatibile con il nuovo modello PSP. of nodoInviaCarrelloRPT response
 

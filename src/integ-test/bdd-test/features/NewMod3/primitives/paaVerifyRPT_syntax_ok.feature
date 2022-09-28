@@ -62,7 +62,7 @@ Feature: check syntax OK for paaVerificaRPTRes
         And <tag> with <tag_value> in paaVerificaRPT
         And EC replies to nodo-dei-pagamenti with the paaVerificaRPT
         When psp sends soap verifyPaymentNotice to nodo-dei-pagamenti
-        Then check outcome is OK of verifyPaymentNotice response
+        Then check outcome is OK of verifyPaymentNotice response 
         Examples:
             | tag                            | tag_value | soapUI test   |
             | soapenv:Header                 | None      | SIN_PVRPTR_01 |
