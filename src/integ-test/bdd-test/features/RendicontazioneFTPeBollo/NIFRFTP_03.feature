@@ -49,9 +49,9 @@ Feature: NIFRFTP
             <soapenv:Header/>
             <soapenv:Body>
                 <ws:nodoInviaFlussoRendicontazione>
-                    <identificativoPSP>40000000001</identificativoPSP>
-                    <identificativoIntermediarioPSP>40000000001</identificativoIntermediarioPSP>
-                    <identificativoCanale>40000000001_03</identificativoCanale>
+                    <identificativoPSP>#psp#</identificativoPSP>
+                    <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+                    <identificativoCanale>#canale#</identificativoCanale>
                     <password>pwdpwdpwd</password>
                     <identificativoDominio>44444444445</identificativoDominio>
                     <identificativoFlusso>$identificativoFlusso</identificativoFlusso>
