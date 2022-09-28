@@ -1,11 +1,10 @@
-Feature: process tests for nodoInviaCarrelloMB[nodoInviaCarrelloMB_17]
+Feature: process tests for nodoInviaCarrelloMB[nodoInviaCarrelloMB_16]
 
 
     Background:
         Given systems up
-        And EC old version
     Scenario: RPT generation
-        Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr_old# and application code NA
+        Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
         And generate 1 cart with PA #codicePA# and notice number $1noticeNumber
         And RPT1 generation
             """
@@ -73,9 +72,9 @@ Feature: process tests for nodoInviaCarrelloMB[nodoInviaCarrelloMB_17]
             <pay_i:datiSingoloVersamento>
             <pay_i:importoSingoloVersamento>1.50</pay_i:importoSingoloVersamento>
             <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
-            <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
+            <pay_i:ibanAccredito>IT96R0123451234512345678904</pay_i:ibanAccredito>
             <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
-            <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio>
+            <pay_i:ibanAppoggio>IT96R0123451234512345678904</pay_i:ibanAppoggio>
             <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
             <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
             <pay_i:causaleVersamento>pagamento fotocopie pratica RPT</pay_i:causaleVersamento>
@@ -84,6 +83,7 @@ Feature: process tests for nodoInviaCarrelloMB[nodoInviaCarrelloMB_17]
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
+
         And RPT2 generation
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
@@ -144,15 +144,15 @@ Feature: process tests for nodoInviaCarrelloMB[nodoInviaCarrelloMB_17]
             <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
             <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
             <pay_i:codiceContestoPagamento>$1carrello</pay_i:codiceContestoPagamento>
-            <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
+            <pay_i:ibanAddebito>IT02L1234512345123456789012</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
             <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
             <pay_i:datiSingoloVersamento>
             <pay_i:importoSingoloVersamento>1.50</pay_i:importoSingoloVersamento>
             <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
-            <pay_i:ibanAccredito>IT45R0760103200000000001016</pay_i:ibanAccredito>
+            <pay_i:ibanAccredito>IT02L1234512345123456789012</pay_i:ibanAccredito>
             <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
-            <pay_i:ibanAppoggio>IT45R0760103200000000001016</pay_i:ibanAppoggio>
+            <pay_i:ibanAppoggio>IT02L1234512345123456789012</pay_i:ibanAppoggio>
             <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
             <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
             <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
@@ -217,4 +217,4 @@ Feature: process tests for nodoInviaCarrelloMB[nodoInviaCarrelloMB_17]
             """
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check faultCode is PPT_MULTI_BENEFICIARIO of nodoInviaCarrelloRPT response
-        And check description is Il numero Avviso deve contenere la stazione versione 2 of nodoInviaCarrelloRPT response
+        And check description is Ogni RPT deve contenere solo iban dell’Ente riferito all’interno della RPT of nodoInviaCarrelloRPT response

@@ -1,4 +1,4 @@
-Feature: process tests for nodoInviaCarrelloMB[nodoInviaCarrelloMB_22]
+Feature: process tests for nodoInviaCarrelloMB[nodoInviaCarrelloMB_24]
 
 
     Background:
@@ -236,8 +236,8 @@ Feature: process tests for nodoInviaCarrelloMB[nodoInviaCarrelloMB_22]
         And replace noticeNumber content with $1noticeNumber content
 
         And generic update through the query param_update_generic_where_condition of the table POSITION_STATUS_SNAPSHOT the parameter STATUS = 'INSERTED', with where condition NOTICE_ID = '$1noticeNumber' and PA_FISCAL_CODE='$pa' under macro update_query on db nodo_online
-        And generic update through the query param_update_generic_where_condition of the table POSITION_PAYMENT_STATUS the parameter STATUS = 'PAID', with where condition NOTICE_ID = '$1noticeNumber' and PA_FISCAL_CODE='$pa' under macro update_query on db nodo_online
-        And generic update through the query param_update_generic_where_condition of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS = 'PAID', with where condition NOTICE_ID = '$1noticeNumber' and PA_FISCAL_CODE='$pa' under macro update_query on db nodo_online
+        And generic update through the query param_update_generic_where_condition of the table POSITION_PAYMENT_STATUS the parameter STATUS = 'FAILED', with where condition NOTICE_ID = '$1noticeNumber' and PA_FISCAL_CODE='$pa' under macro update_query on db nodo_online
+        And generic update through the query param_update_generic_where_condition of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS = 'FAILED', with where condition NOTICE_ID = '$1noticeNumber' and PA_FISCAL_CODE='$pa' under macro update_query on db nodo_online
 
         And generate 1 cart with PA #codicePA# and notice number $1noticeNumber
         And RPT3 generation
@@ -295,7 +295,7 @@ Feature: process tests for nodoInviaCarrelloMB[nodoInviaCarrelloMB_22]
             <pay_i:nazioneBeneficiario>IT</pay_i:nazioneBeneficiario>
             </pay_i:enteBeneficiario>
             <pay_i:datiVersamento>
-            <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
+            <pay_i:dataEsecuzionePagamento>#tomorrow_date#</pay_i:dataEsecuzionePagamento>
             <pay_i:importoTotaleDaVersare>1.50</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
             <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
@@ -373,7 +373,7 @@ Feature: process tests for nodoInviaCarrelloMB[nodoInviaCarrelloMB_22]
             <pay_i:nazioneBeneficiario>IT</pay_i:nazioneBeneficiario>
             </pay_i:enteBeneficiario>
             <pay_i:datiVersamento>
-            <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
+            <pay_i:dataEsecuzionePagamento>#tomorrow_date#</pay_i:dataEsecuzionePagamento>
             <pay_i:importoTotaleDaVersare>1.50</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
             <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
@@ -451,6 +451,6 @@ Feature: process tests for nodoInviaCarrelloMB[nodoInviaCarrelloMB_22]
             </soapenv:Envelope>
             """
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
-        Then check faultCode is PPT_PAGAMENTO_DUPLICATO of nodoInviaCarrelloRPT response
+        Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
 
 
