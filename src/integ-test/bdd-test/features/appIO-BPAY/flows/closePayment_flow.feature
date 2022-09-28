@@ -3,59 +3,59 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
    Background:
       Given systems up
 
-   Scenario: verifyPaymentNotice
-      Given initial XML verifyPaymentNotice
-         """
-         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-         <soapenv:Header/>
-         <soapenv:Body>
-         <nod:verifyPaymentNoticeReq>
-         <idPSP>#psp#</idPSP>
-         <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
-         <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
-         <password>#password#</password>
-         <qrCode>
-         <fiscalCode>#creditor_institution_code#</fiscalCode>
-         <noticeNumber>311#iuv#</noticeNumber>
-         </qrCode>
-         </nod:verifyPaymentNoticeReq>
-         </soapenv:Body>
-         </soapenv:Envelope>
-         """
-      And initial XML paVerifyPaymentNotice
-         """
-         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
-         <soapenv:Header/>
-         <soapenv:Body>
-         <paf:paVerifyPaymentNoticeRes>
-         <outcome>OK</outcome>
-         <paymentList>
-         <paymentOptionDescription>
-         <amount>1.00</amount>
-         <options>EQ</options>
-         <!--Optional:-->
-         <dueDate>2021-12-31</dueDate>
-         <!--Optional:-->
-         <detailDescription>descrizione dettagliata lato PA</detailDescription>
-         <!--Optional:-->
-         <allCCP>false</allCCP>
-         </paymentOptionDescription>
-         </paymentList>
-         <!--Optional:-->
-         <paymentDescription>/RFB/00202200000217527/5.00/TXT/</paymentDescription>
-         <!--Optional:-->
-         <fiscalCodePA>$verifyPaymentNotice.fiscalCode</fiscalCodePA>
-         <!--Optional:-->
-         <companyName>company PA</companyName>
-         <!--Optional:-->
-         <officeName>office PA</officeName>
-         </paf:paVerifyPaymentNoticeRes>
-         </soapenv:Body>
-         </soapenv:Envelope>
-         """
-      And EC replies to nodo-dei-pagamenti with the paVerifyPaymentNotice
-      When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
-      Then check outcome is OK of verifyPaymentNotice response
+    Scenario: verifyPaymentNotice
+        Given initial XML verifyPaymentNotice
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <nod:verifyPaymentNoticeReq>
+            <idPSP>#psp#</idPSP>
+            <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
+            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
+            <password>#password#</password>
+            <qrCode>
+            <fiscalCode>#creditor_institution_code#</fiscalCode>
+            <noticeNumber>311#iuv#</noticeNumber>
+            </qrCode>
+            </nod:verifyPaymentNoticeReq>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And initial XML paVerifyPaymentNotice
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <paf:paVerifyPaymentNoticeRes>
+            <outcome>OK</outcome>
+            <paymentList>
+            <paymentOptionDescription>
+            <amount>1.00</amount>
+            <options>EQ</options>
+            <!--Optional:-->
+            <dueDate>2021-12-31</dueDate>
+            <!--Optional:-->
+            <detailDescription>descrizione dettagliata lato PA</detailDescription>
+            <!--Optional:-->
+            <allCCP>false</allCCP>
+            </paymentOptionDescription>
+            </paymentList>
+            <!--Optional:-->
+            <paymentDescription>/RFB/00202200000217527/5.00/TXT/</paymentDescription>
+            <!--Optional:-->
+            <fiscalCodePA>$verifyPaymentNotice.fiscalCode</fiscalCodePA>
+            <!--Optional:-->
+            <companyName>company PA</companyName>
+            <!--Optional:-->
+            <officeName>office PA</officeName>
+            </paf:paVerifyPaymentNoticeRes>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And EC replies to nodo-dei-pagamenti with the paVerifyPaymentNotice
+        When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
+        Then check outcome is OK of verifyPaymentNotice response
 
    @skip
    Scenario: activateIOPayment
@@ -65,9 +65,9 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
          <soapenv:Header/>
          <soapenv:Body>
          <nod:activateIOPaymentReq>
-         <idPSP>#psp#</idPSP>
-         <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
-         <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
+         <idPSP>#psp_AGID#</idPSP>
+         <idBrokerPSP>#broker_AGID#</idBrokerPSP>
+         <idChannel>#canale_AGID#</idChannel>
          <password>#password#</password>
          <qrCode>
          <fiscalCode>#creditor_institution_code#</fiscalCode>
@@ -159,7 +159,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
             "outcome": "OK",
             "identificativoPsp": "#psp#",
             "tipoVersamento": "BPAY",
-            "identificativoIntermediario": "#id_broker_psp#",
+            "identificativoIntermediario": "#id_broker_psp#",a
             "identificativoCanale": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
             "pspTransactionId": "#psp_transaction_id#",
             "totalAmount": 12,
@@ -264,7 +264,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
       And checks the value #id_broker_psp# of the record at column BROKER_PSP_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
       And checks the value #canale_IMMEDIATO_MULTIBENEFICIARIO# of the record at column CHANNEL_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
       And checks the value None of the record at column IDEMPOTENCY_KEY of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
-      And checks the value 12 of the record at column AMOUNT of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
+      And checks the value 10 of the record at column AMOUNT of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
       And checks the value 2 of the record at column FEE of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
       And checks the value None of the record at column OUTCOME of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
       And checks the value BPAY of the record at column PAYMENT_METHOD of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
