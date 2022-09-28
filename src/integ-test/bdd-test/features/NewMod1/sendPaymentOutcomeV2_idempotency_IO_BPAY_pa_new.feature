@@ -246,7 +246,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2
         And the closePayment scenario executed successfully
         When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v1/closepayment response is 200
-        And check outcome is OK of v1/closepayment response
+        And check esito is OK of v1/closepayment response
         And wait 5 seconds for expiration
 
     Scenario: IDMP_SPO_11 (part 4)
@@ -285,7 +285,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2
         And the closePayment scenario executed successfully
         When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v1/closepayment response is 200
-        And check outcome is OK of v1/closepayment response
+        And check esito is OK of v1/closepayment response
         And wait 5 seconds for expiration
 
     Scenario: IDMP_SPO_12 (part 4)
@@ -315,7 +315,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2
         And the closePayment scenario executed successfully
         When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v1/closepayment response is 200
-        And check outcome is OK of v1/closepayment response
+        And check esito is OK of v1/closepayment response
         And wait 5 seconds for expiration
 
     Scenario: IDMP_SPO_13 (part 4)
@@ -355,7 +355,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2
         And the closePayment scenario executed successfully
         When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v1/closepayment response is 200
-        And check outcome is OK of v1/closepayment response
+        And check esito is OK of v1/closepayment response
         And wait 5 seconds for expiration
 
     Scenario: IDMP_SPO_14 (part 4)
@@ -395,7 +395,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2
         And the closePayment scenario executed successfully
         When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v1/closepayment response is 200
-        And check outcome is OK of v1/closepayment response
+        And check esito is OK of v1/closepayment response
         And wait 5 seconds for expiration
 
     Scenario: IDMP_SPO_15 (part 4)
@@ -438,7 +438,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2
         And the closePayment scenario executed successfully
         When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v1/closepayment response is 200
-        And check outcome is OK of v1/closepayment response
+        And check esito is OK of v1/closepayment response
         And wait 5 seconds for expiration
 
     Scenario: IDMP_SPO_16.1 (part 4)
@@ -485,7 +485,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2
         And the closePayment scenario executed successfully
         When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v1/closepayment response is 200
-        And check outcome is OK of v1/closepayment response
+        And check esito is OK of v1/closepayment response
         And wait 5 seconds for expiration
 
     Scenario: IDMP_SPO_16.2 (part 4)
@@ -530,7 +530,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2
         And the closePayment scenario executed successfully
         When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v1/closepayment response is 200
-        And check outcome is OK of v1/closepayment response
+        And check esito is OK of v1/closepayment response
         And wait 5 seconds for expiration
 
     Scenario: IDMP_SPO_16.3 (part 4)
@@ -576,7 +576,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2
         And the closePayment scenario executed successfully
         When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v1/closepayment response is 200
-        And check outcome is OK of v1/closepayment response
+        And check esito is OK of v1/closepayment response
         And wait 5 seconds for expiration
 
     Scenario: IDMP_SPO_17 (part 4)
@@ -636,7 +636,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2
         And the closePayment scenario executed successfully
         When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v1/closepayment response is 200
-        And check outcome is OK of v1/closepayment response
+        And check esito is OK of v1/closepayment response
         And wait 5 seconds for expiration
 
     Scenario: IDMP_SPO_18 (part 4)
@@ -665,7 +665,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2
         And the closePayment scenario executed successfully
         When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v1/closepayment response is 200
-        And check outcome is OK of v1/closepayment response
+        And check esito is OK of v1/closepayment response
         And wait 5 seconds for expiration
 
     Scenario: IDMP_SPO_20 (part 4)
@@ -696,7 +696,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2
         And the closePayment scenario executed successfully
         When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v1/closepayment response is 200
-        And check outcome is OK of v1/closepayment response
+        And check esito is OK of v1/closepayment response
         And wait 5 seconds for expiration
 
     Scenario: IDMP_SPO_22 (part 4)
@@ -731,7 +731,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2
         And the closePayment scenario executed successfully
         When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v1/closepayment response is 200
-        And check outcome is OK of v1/closepayment response
+        And check esito is OK of v1/closepayment response
         And wait 5 seconds for expiration
 
     Scenario: IDMP_SPO_26 (part 4)
@@ -760,7 +760,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2
         And the closePayment scenario executed successfully
         When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v1/closepayment response is 200
-        And check outcome is OK of v1/closepayment response
+        And check esito is OK of v1/closepayment response
         And wait 5 seconds for expiration
 
     Scenario: IDMP_SPO_27 (part 4)
