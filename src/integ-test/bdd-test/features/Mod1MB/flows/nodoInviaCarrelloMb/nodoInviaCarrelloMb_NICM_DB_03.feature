@@ -489,7 +489,6 @@ Feature: process tests for nodoInviaCarrelloMb
         And checks the value None of the record at column METADATA of the table POSITION_PAYMENT_PLAN retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
 
         #POSITION_TRANSFER
-
         And checks the value $1noticeNumber, $1noticeNumber, $1noticeNumber, $1noticeNumber of the record at column NOTICE_ID of the table POSITION_TRANSFER retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value $1iuv, $1iuv, $1iuv, $1iuv of the record at column CREDITOR_REFERENCE_ID of the table POSITION_TRANSFER retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value #codicePA#, #codicePA#, #codicePA#, #codicePA# of the record at column PA_FISCAL_CODE of the table POSITION_TRANSFER retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb

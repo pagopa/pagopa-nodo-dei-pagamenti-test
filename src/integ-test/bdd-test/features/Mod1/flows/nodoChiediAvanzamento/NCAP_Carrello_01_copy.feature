@@ -9,6 +9,7 @@ Feature: NCAP
         Given nodo-dei-pagamenti has config parameter useCountChiediAvanzamento set to true
         And nodo-dei-pagamenti has config parameter maxChiediAvanzamento set to 3
         And generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
+        And generate 1 cart with PA #codicePA# and notice number $1noticeNumber
         And RPT generation
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
@@ -87,68 +88,71 @@ Feature: NCAP
             </pay_i:RPT>
             """
 
-    Scenario: Execute nodoInviaRPT request
-        Given the RPT generation scenario executed successfully
-        And initial XML pspInviaRPT
-        """
-        <soapenv:Envelope
-            xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-            xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header/>
-            <soapenv:Body>
-                <ws:pspInviaRPTResponse>
-                    <pspInviaRPTResponse>
-                        <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-                        <identificativoCarrello>$1iuv</identificativoCarrello>
-                        <parametriPagamentoImmediato>idBruciatura=$1iuv</parametriPagamentoImmediato>
-                    </pspInviaRPTResponse>
-                </ws:pspInviaRPTResponse>
-            </soapenv:Body>
-        </soapenv:Envelope>
-        """
-        And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
-        And initial XML nodoInviaRPT
+		And initial XML nodoInviaCarrelloRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
-            <ppt:intestazionePPT>
+            <ppt:intestazioneCarrelloPPT>
             <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
-            <identificativoDominio>44444444444</identificativoDominio>
-            <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>CCD01</codiceContestoPagamento>
-            </ppt:intestazionePPT>
+            <identificativoCarrello>$1carrello</identificativoCarrello>
+            </ppt:intestazioneCarrelloPPT>
             </soapenv:Header>
             <soapenv:Body>
-            <ws:nodoInviaRPT>
+            <ws:nodoInviaCarrelloRPT>
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp_AGID#</identificativoPSP>
             <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
             <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
-            <tipoFirma></tipoFirma>
+            <listaRPT>
+            <elementoListaRPT>
+            <identificativoDominio>44444444444</identificativoDominio>
+            <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>CCD01</codiceContestoPagamento>
             <rpt>$rptAttachment</rpt>
-            </ws:nodoInviaRPT>
+            </elementoListaRPT>
+            </listaRPT>
+            </ws:nodoInviaCarrelloRPT>
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-        Then check esito is OK of nodoInviaRPT response
-        And retrieve session token from $nodoInviaRPTResponse.url
-
+        And initial XML pspInviaCarrelloRPT
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+                <soapenv:Header/>
+                <soapenv:Body>
+                    <ws:pspInviaCarrelloRPTResponse>
+                        <pspInviaCarrelloRPTResponse>
+                            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+                            <identificativoCarrello>$1carrello</identificativoCarrello>
+                            <parametriPagamentoImmediato>idBruciatura=$1carrello</parametriPagamentoImmediato>
+                        </pspInviaCarrelloRPTResponse>
+                    </ws:pspInviaCarrelloRPTResponse>
+                </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
+        When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti 
+        Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
+        And retrieve session token from $nodoInviaCarrelloRPTResponse.url
         # check STATI_RPT table
         And replace iuv content with $1iuv content
         And replace pa content with 44444444444 content
-        And replace noticeNumber content with $1noticeNumber content
+        And replace noticeNumber content with $1carrello content
         And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
         And checks the value RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
+        #check STATI_CARRELLO table
+        And checks the value CART_RICEVUTO_NODO, CART_ACCETTATO_NODO, CART_PARCHEGGIATO_NODO of the record at column STATO of the table STATI_CARRELLO retrived by the query stati_carrello on db nodo_online under macro Mod1
+        And checks the value CART_PARCHEGGIATO_NODO of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query stati_carrello on db nodo_online under macro Mod1
         # check POSITION_PAYMENT
         And verify 0 record for the table POSITION_PAYMENT_STATUS retrived by the query position_payment on db nodo_online under macro Mod1
         And verify 0 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query position_payment on db nodo_online under macro Mod1
         And verify 0 record for the table POSITION_STATUS retrived by the query position_payment on db nodo_online under macro Mod1
         And verify 0 record for the table POSITION_STATUS_SNAPSHOT retrived by the query position_payment on db nodo_online under macro Mod1
 
+
     Scenario: Execute nodoChiediAvanzamentoPagamento
-        Given the Execute nodoInviaRPT request scenario executed successfully
+        Given the RPT generation scenario executed successfully
         When WISP sends REST GET avanzamentoPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of avanzamentoPagamento response is 200
         And check esito is PARKED of avanzamentoPagamento response
