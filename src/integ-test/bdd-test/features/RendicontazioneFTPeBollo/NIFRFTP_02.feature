@@ -14,7 +14,7 @@ Feature: NIFRFTP
             <pay_i:dataRegolamento>#date#</pay_i:dataRegolamento>
             <pay_i:istitutoMittente>
                 <pay_i:identificativoUnivocoMittente>
-                    <pay_i:tipoIdentificativoUnivoco>G</pay_i:tipoIdentificativoUnivoco>
+                    <pay_i:tipoIdentificativoUnivoco>A</pay_i:tipoIdentificativoUnivoco>
                     <pay_i:codiceIdentificativoUnivoco>IDPSPFNZ</pay_i:codiceIdentificativoUnivoco>
                 </pay_i:identificativoUnivocoMittente>
                 <pay_i:denominazioneMittente>denMitt_1</pay_i:denominazioneMittente>
@@ -53,7 +53,7 @@ Feature: NIFRFTP
                     <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
                     <identificativoCanale>#canale#</identificativoCanale>
                     <password>pwdpwdpwd</password>
-                    <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+                    <identificativoDominio>11111111111</identificativoDominio>
                     <identificativoFlusso>$identificativoFlusso</identificativoFlusso>
                     <dataOraFlusso>$timedate</dataOraFlusso>
                     <xmlRendicontazione>$rendAttachment</xmlRendicontazione>
@@ -64,7 +64,7 @@ Feature: NIFRFTP
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaFlussoRendicontazione response
 
-        And replace pa content with #creditor_institution_code# content
+        And replace pa content with 11111111111 content
 
         # Rendicontazione
         And checks the value 0 of the record at column OPTLOCK of the table RENDICONTAZIONE retrived by the query rendicontazione on db nodo_offline under macro RendicontazioneFTPeBollo
@@ -84,7 +84,7 @@ Feature: NIFRFTP
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RENDICONTAZIONE retrived by the query rendicontazione on db nodo_offline under macro RendicontazioneFTPeBollo
 
         # RENDICONTAZIONE_SFTP_SEND_QUEU
-        And checks the value $nodoInviaFlussoRendicontazione.identificativoFlusso.xml.zip of the record at column FILE_NAME of the table RENDICONTAZIONE_SFTP_SEND_QUEUE retrived by the query send_queue on db nodo_offline under macro RendicontazioneFTPeBollo
+        And checks the value $nodoInviaFlussoRendicontazione.identificativoFlusso.xml of the record at column FILE_NAME of the table RENDICONTAZIONE_SFTP_SEND_QUEUE retrived by the query send_queue on db nodo_offline under macro RendicontazioneFTPeBollo
         And checks the value UPLOADED of the record at column STATUS of the table RENDICONTAZIONE_SFTP_SEND_QUEUE retrived by the query send_queue on db nodo_offline under macro RendicontazioneFTPeBollo
         And checks the value NotNone of the record at column FILE_SIZE of the table RENDICONTAZIONE_SFTP_SEND_QUEUE retrived by the query send_queue on db nodo_offline under macro RendicontazioneFTPeBollo
         And checks the value 2 of the record at column SERVER_ID of the table RENDICONTAZIONE_SFTP_SEND_QUEUE retrived by the query send_queue on db nodo_offline under macro RendicontazioneFTPeBollo
@@ -108,10 +108,10 @@ Feature: NIFRFTP
             <soapenv:Header/>
             <soapenv:Body>
                 <ws:nodoChiediFlussoRendicontazione>
-                    <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
-                    <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
+                    <identificativoIntermediarioPA>$pa</identificativoIntermediarioPA>
+                    <identificativoStazioneIntermediarioPA>11111111111_01</identificativoStazioneIntermediarioPA>
                     <password>pwdpwdpwd</password>
-                    <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+                    <identificativoDominio>$pa</identificativoDominio>
                     <identificativoPSP>#psp#</identificativoPSP>
                     <identificativoFlusso>$identificativoFlusso</identificativoFlusso>
                 </ws:nodoChiediFlussoRendicontazione>
