@@ -29,7 +29,7 @@ Feature: T220_chiediNumeroAvviso_faultBeanEsteso
             <ws:paaChiediNumeroAvvisoRisposta>
                 <paaChiediNumeroAvvisoRisposta>
                     <fault>
-                    <faultCode>PAA_SEMANTICA_EXTRAXSD</faultCode>
+                    <faultCode>PAA_SEMANTICA</faultCode>
                     <faultString>errore semantico PA</faultString>
                     <id>#creditor_institution_code#</id>
                     <description>Errore semantico emesso dalla PA</description>
@@ -42,5 +42,5 @@ Feature: T220_chiediNumeroAvviso_faultBeanEsteso
         """
         And EC replies to nodo-dei-pagamenti with the paaChiediNumeroAvviso
         When PSP sends SOAP nodoChiediNumeroAvviso to nodo-dei-pagamenti
-        Then check esito is KO of nodoAttivaRPT response
-        And check originalFaultCode field exists in nodoChiediNumeroAvviso response
+        Then check esito is KO of nodoChiediNumeroAvviso response
+        And check faultCode field exists in nodoChiediNumeroAvviso response
