@@ -229,13 +229,29 @@ Feature: RPT-RT bollo
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canale#</identificativoCanale>
+            <identificativoCanale>#canaleRtPush#</identificativoCanale>
             <tipoFirma></tipoFirma>
             <rpt>$rptAttachment</rpt>
             </ws:nodoInviaRPT>
             </soapenv:Body>
             </soapenv:Envelope>
             """
+      And initial XML pspInviaRPT 
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+                <soapenv:Body>
+                    <ws:pspInviaRPTResponse>
+                        <pspInviaRPTResponse>
+                            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+                            <identificativoCarrello>$nodoInviaRPT.identificativoUnivocoVersamento</identificativoCarrello>
+                            <parametriPagamentoImmediato>idBruciatura=$nodoInviaRPT.identificativoUnivocoVersamento</parametriPagamentoImmediato>
+                        </pspInviaRPTResponse>
+                    </ws:pspInviaRPTResponse>
+                </soapenv:Body>
+            </soapenv:Envelope>
+            """
+      And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
       When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
       Then check esito is OK of nodoInviaRPT response
       And check redirect is 1 of nodoInviaRPT response
@@ -249,7 +265,7 @@ Feature: RPT-RT bollo
             <soapenv:Body>
                <ws:nodoInviaRT>
                   <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-                  <identificativoCanale>#canale#</identificativoCanale>
+                  <identificativoCanale>#canaleRtPush#</identificativoCanale>
                   <password>pwdpwdpwd</password>
                   <identificativoPSP>#psp#</identificativoPSP>
                   <identificativoDominio>#creditor_institution_code#</identificativoDominio>
