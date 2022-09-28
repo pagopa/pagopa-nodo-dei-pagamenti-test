@@ -248,8 +248,7 @@ def step_impl(context):
         setattr(context, '2iuv', iuv)
 
     if '#IUV#' in payload:
-        IUV = 'IUV' + str(random.randint(0, 10000)) + '-' + date + \
-            datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
+        IUV = 'IUV' + str(random.randint(0, 10000)) + '-' + date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
         payload = payload.replace('#IUV#', IUV)
         setattr(context, 'IUV', IUV)
 
