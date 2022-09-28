@@ -240,6 +240,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
 
    Scenario: FLUSSO_CP_01 (part 3)
       Given the FLUSSO_CP_01 (part 2) scenario executed successfully
+      And the FLUSSO_CP_01 (part 1) scenario executed successfully
       And the closePayment scenario executed successfully
       When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
       Then verify the HTTP status code of v1/closepayment response is 200
