@@ -179,10 +179,14 @@ Feature: process tests for NM3 with station migration from V1 to V2
         Given the Execute nodoInviaRPT request scenario executed successfully
         Then updates through the query stationUpdate of the table STAZIONI the parameter VERSIONE with 2 under macro sendPaymentResultV2 on db nodo_cfg
 
+    #refresh pa e stazioni
+    Scenario: Execute refresh pa e stazioni
+        Given the Execute station version update scenario executed successfully
+        Then refresh job PA triggered after 10 seconds
 
     # Payment Outcome Phase outcome KO
     Scenario: Execute sendPaymentOutcome request
-        Given the Execute station version update scenario executed successfully
+        Given the Execute refresh pa e stazioni scenario executed successfully
         And initial XML sendPaymentOutcome
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -269,7 +273,7 @@ Feature: process tests for NM3 with station migration from V1 to V2
         #POSITION_RECEIPT_TRANSFER
         And verify 0 record for the table POSITION_RECEIPT_TRANSFER retrived by the query position_receipt_transfer on db nodo_online under macro NewMod3
         #POSITION_RECEIPT_XML
-        And verify 0 record for the table POSITION_RECEIPT_XML retrived by the query position_receipt_xml on db nodo_online under macro NewMod3 
+        And verify 0 record for the table POSITION_RECEIPT_XML retrived by the query position_receipt_xml on db nodo_online under macro NewMod3
         #STATI_RPT/SNAPSHOT
         And wait 30 seconds for expiration
         And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO_MOD3,RPT_RISOLTA_KO,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro AppIO
@@ -287,3 +291,8 @@ Feature: process tests for NM3 with station migration from V1 to V2
     Scenario: Execute station version update 2
         Given the Execution test DB_GR_21 scenario executed successfully
         Then updates through the query stationUpdate of the table STAZIONI the parameter VERSIONE with 1 under macro sendPaymentResultV2 on db nodo_cfg
+
+    #refresh pa e stazioni
+    Scenario: Execute refresh pa e stazioni
+        Given the Execute station version update 2 scenario executed successfully
+        Then refresh job PA triggered after 10 seconds

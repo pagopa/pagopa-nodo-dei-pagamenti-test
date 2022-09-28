@@ -45,7 +45,7 @@ Feature: process tests for NM3 with station migration from V1 to V2
             <fiscalCode>#creditor_institution_code_old#</fiscalCode>
             <noticeNumber>002$iuv</noticeNumber>
             </qrCode>
-            <expirationTime>2000</expirationTime>
+            <!--expirationTime>60000</expirationTime-->
             <amount>10.00</amount>
             <dueDate>2021-12-31</dueDate>
             <paymentNote>causale</paymentNote>
