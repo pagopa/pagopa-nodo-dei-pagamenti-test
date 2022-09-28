@@ -109,7 +109,7 @@ Feature: NIFRFTP
             <soapenv:Body>
                 <ws:nodoChiediFlussoRendicontazione>
                     <identificativoIntermediarioPA>$pa</identificativoIntermediarioPA>
-                    <identificativoStazioneIntermediarioPA>$pa_01</identificativoStazioneIntermediarioPA>
+                    <identificativoStazioneIntermediarioPA>11111111111_01</identificativoStazioneIntermediarioPA>
                     <password>pwdpwdpwd</password>
                     <identificativoDominio>$pa</identificativoDominio>
                     <identificativoPSP>#psp#</identificativoPSP>
