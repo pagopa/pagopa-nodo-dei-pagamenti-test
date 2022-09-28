@@ -39,6 +39,8 @@ Feature: NCAP
             </pay_i:datiSingoliPagamenti>
             </pay_i:FlussoRiversamento>
             """
+
+
     Scenario: Execute nodoInviaFlussoRendicontazione request
         Given the REND generation scenario executed successfully
         And initial XML nodoInviaFlussoRendicontazione
@@ -81,7 +83,41 @@ Feature: NCAP
         And checks the value VALID of the record at column STATO of the table RENDICONTAZIONE retrived by the query rendicontazione on db nodo_offline under macro RendicontazioneFTPeBollo
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RENDICONTAZIONE retrived by the query rendicontazione on db nodo_offline under macro RendicontazioneFTPeBollo
 
+        # RENDICONTAZIONE_SFTP_SEND_QUEU
+        #
+        And checks the value UPLOADED of the record at column STATUS of the table RENDICONTAZIONE_SFTP_SEND_QUEUE retrived by the query send_queue on db nodo_offline under macro RendicontazioneFTPeBollo
+        And checks the value NotNone of the record at column FILE_SIZE of the table RENDICONTAZIONE_SFTP_SEND_QUEUE retrived by the query send_queue on db nodo_offline under macro RendicontazioneFTPeBollo
+        And checks the value 2 of the record at column SERVER_ID of the table RENDICONTAZIONE_SFTP_SEND_QUEUE retrived by the query send_queue on db nodo_offline under macro RendicontazioneFTPeBollo
+        And checks the value 10.6.97.46 of the record at column HOST_NAME of the table RENDICONTAZIONE_SFTP_SEND_QUEUE retrived by the query send_queue on db nodo_offline under macro RendicontazioneFTPeBollo
+        And checks the value 22 of the record at column PORT of the table RENDICONTAZIONE_SFTP_SEND_QUEUE retrived by the query send_queue on db nodo_offline under macro RendicontazioneFTPeBollo
+        And checks the value $pa of the record at column PATH of the table RENDICONTAZIONE_SFTP_SEND_QUEUE retrived by the query send_queue on db nodo_offline under macro RendicontazioneFTPeBollo
+        And checks the value NotNone of the record at column HASH of the table RENDICONTAZIONE_SFTP_SEND_QUEUE retrived by the query send_queue on db nodo_offline under macro RendicontazioneFTPeBollo
+        And checks the value NotNone of the record at column CONTENT of the table RENDICONTAZIONE_SFTP_SEND_QUEUE retrived by the query send_queue on db nodo_offline under macro RendicontazioneFTPeBollo
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RENDICONTAZIONE_SFTP_SEND_QUEUE retrived by the query send_queue on db nodo_offline under macro RendicontazioneFTPeBollo
+        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table RENDICONTAZIONE_SFTP_SEND_QUEUE retrived by the query send_queue on db nodo_offline under macro RendicontazioneFTPeBollo
+        And checks the value nodoInviaFlussoRendicontazione of the record at column INSERTED_BY of the table RENDICONTAZIONE_SFTP_SEND_QUEUE retrived by the query send_queue on db nodo_offline under macro RendicontazioneFTPeBollo
+        And checks the value ftp-sender of the record at column UPDATED_BY of the table RENDICONTAZIONE_SFTP_SEND_QUEUE retrived by the query send_queue on db nodo_offline under macro RendicontazioneFTPeBollo
+        And checks the value 0 of the record at column RETRY of the table RENDICONTAZIONE_SFTP_SEND_QUEUE retrived by the query send_queue on db nodo_offline under macro RendicontazioneFTPeBollo
 
 
-
+    Scenario: Execute nodoChiediFlussoRendicontazione primitive
+        Given the Execute nodoInviaFlussoRendicontazione request scenario executed successfully
+        And initial XML nodoChiediFlussoRendicontazione
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+                <ws:nodoChiediFlussoRendicontazione>
+                    <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
+                    <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
+                    <password>pwdpwdpwd</password>
+                    <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+                    <identificativoPSP>#psp#</identificativoPSP>
+                    <identificativoFlusso>$identificativoFlusso</identificativoFlusso>
+                </ws:nodoChiediFlussoRendicontazione>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        When EC sends SOAP nodoChiediFlussoRendicontazione to nodo-dei-pagamenti
+        Then check ppt:nodoChiediFlussoRendicontazioneRisposta field exists in nodoChiediFlussoRendicontazione response
 
