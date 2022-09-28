@@ -184,12 +184,11 @@ Feature: process tests for NM3 with station migration from V1 to V2
         Given the Execute station version update scenario executed successfully
         When job mod3CancelV1 triggered after 6 seconds
         Then verify the HTTP status code of mod3CancelV1 response is 200
-        And restore initial configurations
 
 
     # test execution
     Scenario: Execution db check
-        Given the Execute sendPaymentOutcome request scenario executed successfully
+        Given the Execute mod3CancelV1 scenario executed successfully
         And PSP waits 5 seconds for expiration
         #RT
         Then execution query rt to get value on the table RT, with the columns ID_SESSIONE,CCP,IDENT_DOMINIO,IUV,COD_ESITO,DATA_RICEVUTA,DATA_RICHIESTA,ID_RICEVUTA,ID_RICHIESTA,SOMMA_VERSAMENTI,INSERTED_TIMESTAMP,UPDATED_TIMESTAMP,CANALE,ID under macro NewMod3 with db name nodo_online
