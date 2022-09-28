@@ -81,7 +81,7 @@ Feature: NIFRFTP
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RENDICONTAZIONE retrived by the query rendicontazione on db nodo_offline under macro RendicontazioneFTPeBollo
 
         # BINARY_FILE
-        And verify 0 record for the table BINARY_FIL retrived by the query binary_file on db nodo_offline under macro RendicontazioneFTPeBollo 
+        And verify 0 record for the table BINARY_FILE retrived by the query binary_file on db nodo_offline under macro RendicontazioneFTPeBollo 
 
         # RENDICONTAZIONE_SFTP_SEND_QUEU
         And verify 0 record for the table RENDICONTAZIONE_SFTP_SEND_QUEUE retrived by the query send_queue on db nodo_offline under macro RendicontazioneFTPeBollo 
