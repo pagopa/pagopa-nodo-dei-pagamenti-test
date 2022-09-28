@@ -92,7 +92,7 @@ Feature: NIFRFTP
 
 
         # RENDICONTAZIONE_SFTP_SEND_QUEU
-        And checks the value 0 of the record at column ID of the table RENDICONTAZIONE_SFTP_SEND_QUEUE retrived by the query send_queue on db nodo_offline under macro RendicontazioneFTPeBollo
+        And checks the value None of the record at column ID of the table RENDICONTAZIONE_SFTP_SEND_QUEUE retrived by the query send_queue on db nodo_offline under macro RendicontazioneFTPeBollo
 
 
     Scenario: Execute nodoChiediFlussoRendicontazione primitive
