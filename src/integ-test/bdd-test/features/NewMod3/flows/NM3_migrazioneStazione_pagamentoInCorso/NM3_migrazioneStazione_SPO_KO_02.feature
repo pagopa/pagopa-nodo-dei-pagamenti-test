@@ -249,7 +249,7 @@ Feature: process tests for NM3 with station migration from V1 to V2
         And checks the value NotNone of the record at column ID of the table RT retrived by the query rt on db nodo_online under macro NewMod3
         And checks the value 1 of the record at column PROGRESSIVO of the table RT_VERSAMENTI retrived by the query rt_versamenti on db nodo_online under macro NewMod3
         And checks the value 0 of the record at column IMPORTO_RT of the table RT_VERSAMENTI retrived by the query rt_versamenti on db nodo_online under macro NewMod3
-        And checks the value NON_ESEGUITO of the record at column s.ESITO of the table RT_VERSAMENTI retrived by the query rt_versamenti on db nodo_online under macro NewMod3
+        And checks the value SENDPAYMENTOUTCOME:KO of the record at column s.ESITO of the table RT_VERSAMENTI retrived by the query rt_versamenti on db nodo_online under macro NewMod3
         And with the query rt_versamenti check assert beetwen elem CAUSALE_VERSAMENTO in position 3 and elem CAUSALE_VERSAMENTO with position 0 of the query rpt_versamenti
         And with the query rt_versamenti check assert beetwen elem DATI_SPECIFICI_RISCOSSIONE in position 4 and elem DATI_SPECIFICI_RISCOSSIONE with position 1 of the query rpt_versamenti
         And with the query rt_versamenti check assert beetwen elem COMMISSIONE_APPLICATE in position 5 and elem FEE with position 1 of the query payment_status
