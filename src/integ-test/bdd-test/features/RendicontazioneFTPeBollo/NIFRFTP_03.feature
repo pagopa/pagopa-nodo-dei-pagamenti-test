@@ -74,11 +74,11 @@ Feature: NIFRFTP
         And checks the value None of the record at column PASSWORD of the table RENDICONTAZIONE retrived by the query rendicontazione on db nodo_offline under macro RendicontazioneFTPeBollo
         And checks the value $pa of the record at column DOMINIO of the table RENDICONTAZIONE retrived by the query rendicontazione on db nodo_offline under macro RendicontazioneFTPeBollo
         And checks the value NotNone of the record at column DATA_ORA_FLUSSO of the table RENDICONTAZIONE retrived by the query rendicontazione on db nodo_offline under macro RendicontazioneFTPeBollo
-        And checks the value None of the record at column FK_BINARY_FILE of the table RENDICONTAZIONE retrived by the query rendicontazione on db nodo_offline under macro RendicontazioneFTPeBollo
+        And checks the value None of the record at column FK_SFTP_FILE of the table RENDICONTAZIONE retrived by the query rendicontazione on db nodo_offline under macro RendicontazioneFTPeBollo
         
-        And execution query rendicontazione to get value on the table RENDICONTAZIONE, with the columns FK_SFTP_FILE under macro RendicontazioneFTPeBollo with db name nodo_offline
-        And through the query rendicontazione retrieve param fkSftpFile at position 0 and save it under the key fkSftpFile
-        And checks the value $fkSftpFile of the record at column ID of the table RENDICONTAZIONE_SFTP_SEND_QUEUE retrived by the query send_queue on db nodo_offline under macro RendicontazioneFTPeBollo
+        And execution query rendicontazione to get value on the table RENDICONTAZIONE, with the columns FK_BINARY_FILE under macro RendicontazioneFTPeBollo with db name nodo_offline
+        And through the query rendicontazione retrieve param fkBinaryFile at position 0 and save it under the key fkBinaryFile
+        And checks the value $fkBinaryFile of the record at column ID of the table RENDICONTAZIONE_SFTP_SEND_QUEUE retrived by the query binary_file on db nodo_offline under macro RendicontazioneFTPeBollo
         
         And checks the value VALID of the record at column STATO of the table RENDICONTAZIONE retrived by the query rendicontazione on db nodo_offline under macro RendicontazioneFTPeBollo
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RENDICONTAZIONE retrived by the query rendicontazione on db nodo_offline under macro RendicontazioneFTPeBollo
