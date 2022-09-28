@@ -78,7 +78,7 @@ Feature: NIFRFTP
         
         And execution query rendicontazione to get value on the table RENDICONTAZIONE, with the columns FK_BINARY_FILE under macro RendicontazioneFTPeBollo with db name nodo_offline
         And through the query rendicontazione retrieve param fkBinaryFile at position 0 and save it under the key fkBinaryFile
-        And checks the value $fkBinaryFile of the record at column ID of the table RENDICONTAZIONE_SFTP_SEND_QUEUE retrived by the query binary_file on db nodo_offline under macro RendicontazioneFTPeBollo
+        And checks the value $fkBinaryFile of the record at column ID of the table BINARY_FILE retrived by the query binary_file on db nodo_offline under macro RendicontazioneFTPeBollo
         
         And checks the value VALID of the record at column STATO of the table RENDICONTAZIONE retrived by the query rendicontazione on db nodo_offline under macro RendicontazioneFTPeBollo
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RENDICONTAZIONE retrived by the query rendicontazione on db nodo_offline under macro RendicontazioneFTPeBollo
