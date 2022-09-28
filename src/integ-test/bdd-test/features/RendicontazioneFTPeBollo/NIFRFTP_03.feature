@@ -113,6 +113,5 @@ Feature: NIFRFTP
             </soapenv:Envelope>
             """
         When EC sends SOAP nodoChiediFlussoRendicontazione to nodo-dei-pagamenti
-        Then check xmlRendicontazione field exists in nodoChiediFlussoRendicontazione response
-        And check xmlRendicontazione contains $rendAttachment of nodoChiediFlussoRendicontazione response
+        Then check xmlRendicontazione contains $rendAttachment of nodoChiediFlussoRendicontazione response
 
