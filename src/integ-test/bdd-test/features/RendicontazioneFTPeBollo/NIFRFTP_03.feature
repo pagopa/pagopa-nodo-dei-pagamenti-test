@@ -87,7 +87,7 @@ Feature: NIFRFTP
         And checks the value NotNone of the record at column FILE_SIZE of the table BINARY_FILE retrived by the query binary_file on db nodo_offline under macro RendicontazioneFTPeBollo
         And checks the value NotNone of the record at column FILE_CONTENT of the table BINARY_FILE retrived by the query binary_file on db nodo_offline under macro RendicontazioneFTPeBollo
         And checks the value None of the record at column FILE_HASH of the table BINARY_FILE retrived by the query binary_file on db nodo_offline under macro RendicontazioneFTPeBollo
-        And checks the value None of the record at column SIGNATURE_TIPE of the table BINARY_FILE retrived by the query binary_file on db nodo_offline under macro RendicontazioneFTPeBollo
+        And checks the value None of the record at column SIGNATURE_TYPE of the table BINARY_FILE retrived by the query binary_file on db nodo_offline under macro RendicontazioneFTPeBollo
         And checks the value NotNone of the record at column XML_FILE_CONTENT of the table BINARY_FILE retrived by the query binary_file on db nodo_offline under macro RendicontazioneFTPeBollo
 
 
