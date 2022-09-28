@@ -165,8 +165,8 @@
 
     },
     "RendicontazioneFTPeBollo":{
-        "rendicontazione": "SELECT columns FROM table_name WHERE ID_FLUSSO = '$identificativoFlusso' AND DOMINIO = '$pa'",
-        "send_queue": "SELECT s.columns FROM table_name s JOIN RENDICONTAZIONE r ON s.ID = r.FK_SFTP_FILE WHERE r.ID_FLUSSO = '$identificativoFlusso' AND r.DOMINIO = '$pa' "
+        "rendicontazione": "SELECT columns FROM table_name WHERE ID_FLUSSO = '$idFlusso' AND DOMINIO = '$pa'",
+        "send_queue": "SELECT s.columns FROM table_name s JOIN RENDICONTAZIONE r ON s.ID = r.FK_SFTP_FILE WHERE r.ID_FLUSSO = '$idFlusso' AND r.DOMINIO = '$pa' "
 
     }
 }
