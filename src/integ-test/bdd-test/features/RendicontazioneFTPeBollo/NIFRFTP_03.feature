@@ -106,7 +106,7 @@ Feature: NIFRFTP
                     <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
                     <password>pwdpwdpwd</password>
                     <identificativoDominio>$pa</identificativoDominio>
-                    <identificativoPSP>40000000001</identificativoPSP>
+                    <identificativoPSP>#psp#</identificativoPSP>
                     <identificativoFlusso>$identificativoFlusso</identificativoFlusso>
                 </ws:nodoChiediFlussoRendicontazione>
             </soapenv:Body>
