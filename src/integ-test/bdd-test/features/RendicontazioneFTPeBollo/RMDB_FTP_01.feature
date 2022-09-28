@@ -9,7 +9,7 @@ Feature: RPT-RT bollo
          <marcaDaBollo xmlns="http://www.agenziaentrate.gov.it/2014/MarcaDaBollo" xmlns:ns2="http://www.w3.org/2000/09/xmldsig#">
             <PSP>
                <CodiceFiscale>12345678901</CodiceFiscale>
-               <Denominazione>#creditor_institution_code#</Denominazione>
+               <Denominazione>#psp#</Denominazione>
             </PSP>
             <IUBD>#iubd#</IUBD>
             <OraAcquisto>2015-02-06T15:00:44.659+01:00</OraAcquisto>
