@@ -179,10 +179,14 @@ Feature: process tests for NM3 with station migration from V1 to V2
         Given the Execute nodoInviaRPT request scenario executed successfully
         Then updates through the query stationUpdate of the table STAZIONI the parameter VERSIONE with 2 under macro sendPaymentResultV2 on db nodo_cfg
 
+    #refresh pa e stazioni
+    Scenario: Execute refresh pa e stazioni
+        Given the Execute station version update scenario executed successfully
+        Then refresh job PA triggered after 10 seconds
 
     # Payment Outcome Phase outcome OK
     Scenario: Execute sendPaymentOutcome request
-        Given the Execute station version update scenario executed successfully
+        Given the Execute refresh pa e stazioni scenario executed successfully
         And initial XML sendPaymentOutcome
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -336,3 +340,9 @@ Feature: process tests for NM3 with station migration from V1 to V2
     Scenario: Execute station version update 2
         Given the Execution test DB_GR_21 scenario executed successfully
         Then updates through the query stationUpdate of the table STAZIONI the parameter VERSIONE with 1 under macro sendPaymentResultV2 on db nodo_cfg
+
+
+    #refresh pa e stazioni
+    Scenario: Execute refresh pa e stazioni
+        Given the Execute station version update 2 scenario executed successfully
+        Then refresh job PA triggered after 10 seconds
