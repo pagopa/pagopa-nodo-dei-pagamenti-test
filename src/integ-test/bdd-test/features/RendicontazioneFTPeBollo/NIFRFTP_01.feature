@@ -84,7 +84,7 @@ Feature: NCAP
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RENDICONTAZIONE retrived by the query rendicontazione on db nodo_offline under macro RendicontazioneFTPeBollo
 
         # RENDICONTAZIONE_SFTP_SEND_QUEU
-        #
+        And checks the value $identificativoFlusso.xml.zip of the record at column FILE_NAME of the table RENDICONTAZIONE_SFTP_SEND_QUEUE retrived by the query send_queue on db nodo_offline under macro RendicontazioneFTPeBollo
         And checks the value UPLOADED of the record at column STATUS of the table RENDICONTAZIONE_SFTP_SEND_QUEUE retrived by the query send_queue on db nodo_offline under macro RendicontazioneFTPeBollo
         And checks the value NotNone of the record at column FILE_SIZE of the table RENDICONTAZIONE_SFTP_SEND_QUEUE retrived by the query send_queue on db nodo_offline under macro RendicontazioneFTPeBollo
         And checks the value 2 of the record at column SERVER_ID of the table RENDICONTAZIONE_SFTP_SEND_QUEUE retrived by the query send_queue on db nodo_offline under macro RendicontazioneFTPeBollo
