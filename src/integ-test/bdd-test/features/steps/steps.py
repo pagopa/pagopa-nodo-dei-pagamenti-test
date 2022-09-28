@@ -627,8 +627,7 @@ def step_impl(context):
 def step_impl(context):
     payload = context.text or ""
     payload = utils.replace_local_variables(payload, context)
-    payload = utils.replace_context_variables(payload, context)
-    payload = utils.replace_global_variables(payload, context)
+
 
     if '#date#' in payload:
         date = datetime.date.today().strftime("%Y-%m-%d")
@@ -657,6 +656,9 @@ def step_impl(context):
         iuv = "IUV" + str(random.randint(0, 10000)) + "-" + datetime.datetime.now().strftime("%Y-%m-%d-%H:%M:%S.%f")[:-3]
         payload = payload.replace('#iuv#', iuv)
         setattr(context, 'iuv', iuv)
+
+    payload = utils.replace_context_variables(payload, context)
+    payload = utils.replace_global_variables(payload, context)
 
     payload_b = bytes(payload, 'ascii')
     payload_uni = b64.b64encode(payload_b)
