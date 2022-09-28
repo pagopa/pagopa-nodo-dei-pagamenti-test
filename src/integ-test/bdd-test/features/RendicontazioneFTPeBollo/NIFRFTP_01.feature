@@ -45,29 +45,29 @@ Feature: NCAP
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header/>
             <soapenv:Body>
-            <ws:nodoInviaFlussoRendicontazione>
-            <identificativoPSP>40000000001</identificativoPSP>
-            <identificativoIntermediarioPSP>40000000001</identificativoIntermediarioPSP>
-            <identificativoCanale>40000000001_03</identificativoCanale>
-            <password>pwdpwdpwd</password>
-            <identificativoDominio>44444444444</identificativoDominio>
-            <identificativoFlusso>$identificativoFlusso</identificativoFlusso>
-            <dataOraFlusso>$timedate</dataOraFlusso>
-            <xmlRendicontazione>$rendAttachment</xmlRendicontazione>
-            </ws:nodoInviaFlussoRendicontazione>
+                <ws:nodoInviaFlussoRendicontazione>
+                    <identificativoPSP>#psp#</identificativoPSP>
+                    <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+                    <identificativoCanale>#canale#</identificativoCanale>
+                    <password>pwdpwdpwd</password>
+                    <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+                    <identificativoFlusso>$identificativoFlusso</identificativoFlusso>
+                    <dataOraFlusso>$timedate</dataOraFlusso>
+                    <xmlRendicontazione>$rendAttachment</xmlRendicontazione>
+                </ws:nodoInviaFlussoRendicontazione>
             </soapenv:Body>
             </soapenv:Envelope>
             """
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaFlussoRendicontazione response
 
-        And replace pa content with 44444444444 content
+        And replace pa content with #creditor_institution_code# content
 
         # Rendicontazione
         And checks the value 0 of the record at column OPTLOCK of the table RENDICONTAZIONE retrived by the query rendicontazione on db nodo_offline under macro RendicontazioneFTPeBollo
-        And checks the value 40000000001 of the record at column PSP of the table RENDICONTAZIONE retrived by the query rendicontazione on db nodo_offline under macro RendicontazioneFTPeBollo
-        And checks the value 40000000001 of the record at column INTERMEDIARIO of the table RENDICONTAZIONE retrived by the query rendicontazione on db nodo_offline under macro RendicontazioneFTPeBollo
-        And checks the value 40000000001_03 of the record at column CANALE of the table RENDICONTAZIONE retrived by the query rendicontazione on db nodo_offline under macro RendicontazioneFTPeBollo
+        And checks the value #psp# of the record at column PSP of the table RENDICONTAZIONE retrived by the query rendicontazione on db nodo_offline under macro RendicontazioneFTPeBollo
+        And checks the value #psp# of the record at column INTERMEDIARIO of the table RENDICONTAZIONE retrived by the query rendicontazione on db nodo_offline under macro RendicontazioneFTPeBollo
+        And checks the value #canale# of the record at column CANALE of the table RENDICONTAZIONE retrived by the query rendicontazione on db nodo_offline under macro RendicontazioneFTPeBollo
         And checks the value None of the record at column PASSWORD of the table RENDICONTAZIONE retrived by the query rendicontazione on db nodo_offline under macro RendicontazioneFTPeBollo
         And checks the value $pa of the record at column DOMINIO of the table RENDICONTAZIONE retrived by the query rendicontazione on db nodo_offline under macro RendicontazioneFTPeBollo
         And checks the value NotNone of the record at column DATA_ORA_FLUSSO of the table RENDICONTAZIONE retrived by the query rendicontazione on db nodo_offline under macro RendicontazioneFTPeBollo
