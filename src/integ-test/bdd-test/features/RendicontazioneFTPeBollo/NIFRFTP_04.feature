@@ -62,7 +62,7 @@ Feature: NIFRFTP
             </soapenv:Envelope>
             """
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
-        Then check error is PPT_SINTASSI_XSD of nodoInviaFlussoRendicontazione response
+        Then check faultCode is PPT_SINTASSI_XSD of nodoInviaFlussoRendicontazione response
 
         And replace pa content with #creditor_institution_code# content
 
@@ -105,5 +105,5 @@ Feature: NIFRFTP
             </soapenv:Envelope>
             """
         When EC sends SOAP nodoChiediFlussoRendicontazione to nodo-dei-pagamenti
-        Then check error is PPT_ID_FLUSSO_SCONOSCIUTO of nodoChiediFlussoRendicontazione response
+        Then check faultCode is PPT_ID_FLUSSO_SCONOSCIUTO of nodoChiediFlussoRendicontazione response
 
