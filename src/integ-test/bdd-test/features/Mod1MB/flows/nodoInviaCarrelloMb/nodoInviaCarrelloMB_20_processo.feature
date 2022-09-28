@@ -1,4 +1,4 @@
-Feature: process tests for nodoInviaCarrelloMB[nodoInviaCarrelloMB_22]
+Feature: process tests for nodoInviaCarrelloMB[nodoInviaCarrelloMB_20]
 
 
     Background:
@@ -235,9 +235,7 @@ Feature: process tests for nodoInviaCarrelloMB[nodoInviaCarrelloMB_22]
         And replace iuv content with $1iuv content
         And replace noticeNumber content with $1noticeNumber content
 
-        And generic update through the query param_update_generic_where_condition of the table POSITION_STATUS_SNAPSHOT the parameter STATUS = 'INSERTED', with where condition NOTICE_ID = '$1noticeNumber' and PA_FISCAL_CODE='$pa' under macro update_query on db nodo_online
-        And generic update through the query param_update_generic_where_condition of the table POSITION_PAYMENT_STATUS the parameter STATUS = 'PAID', with where condition NOTICE_ID = '$1noticeNumber' and PA_FISCAL_CODE='$pa' under macro update_query on db nodo_online
-        And generic update through the query param_update_generic_where_condition of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS = 'PAID', with where condition NOTICE_ID = '$1noticeNumber' and PA_FISCAL_CODE='$pa' under macro update_query on db nodo_online
+        And generic update through the query param_update_generic_where_condition of the table POSITION_STATUS_SNAPSHOT the parameter STATUS = 'PAID', with where condition NOTICE_ID = '$1noticeNumber' and PA_FISCAL_CODE='$pa' under macro update_query on db nodo_online
 
         And generate 1 cart with PA #codicePA# and notice number $1noticeNumber
         And RPT3 generation
