@@ -14,7 +14,7 @@ Feature: NCAP
             <pay_i:dataRegolamento>#date#</pay_i:dataRegolamento>
             <pay_i:istitutoMittente>
                 <pay_i:identificativoUnivocoMittente>
-                    <pay_i:tipoIdentificativoUnivoco>'+tipoIstMittente+'</pay_i:tipoIdentificativoUnivoco>
+                    <pay_i:tipoIdentificativoUnivoco>G</pay_i:tipoIdentificativoUnivoco>
                     <pay_i:codiceIdentificativoUnivoco>IDPSPFNZ</pay_i:codiceIdentificativoUnivoco>
                 </pay_i:identificativoUnivocoMittente>
                 <pay_i:denominazioneMittente>denMitt_1</pay_i:denominazioneMittente>
