@@ -155,7 +155,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2
             """
             {
                 "paymentTokens": [
-                    "$activateIOPayment_1Response.paymentToken"
+                    "$activateIOPaymentResponse.paymentToken"
                 ],
                 "outcome": "OK",
                 "idPSP": "#psp#",
@@ -186,7 +186,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2
             <password>#password#</password>
             <idempotencyKey>#idempotency_key#</idempotencyKey>
             <paymentTokens>
-            <paymentToken>$activateIOPayment_1Response.paymentToken</paymentToken>
+            <paymentToken>$activateIOPaymentResponse.paymentToken</paymentToken>
             </paymentTokens>
             <outcome>OK</outcome>
             <!--Optional:-->
