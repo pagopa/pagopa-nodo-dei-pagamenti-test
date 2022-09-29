@@ -281,7 +281,7 @@ Feature: process tests for generazioneRicevute [DB_GR_27]
             <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio>
             <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
             <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
-            <pay_i:causaleVersamento>pagamento fotocopie pratica RPT</pay_i:causaleVersamento>
+            <pay_i:causaleVersamento>pagamento fotocopie pratica RPT2</pay_i:causaleVersamento>
             <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
             </pay_i:datiSingoloVersamento>
             </pay_i:datiVersamento>

@@ -197,7 +197,7 @@ Feature: process tests for generazioneRicevute [DB_GR_27]
             <fiscalCode>#creditor_institution_code#</fiscalCode>
             <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
             </qrCode>
-            <expirationTime>6000</expirationTime>
+            <expirationTime>4000</expirationTime>
             <amount>10.00</amount>
             <paymentNote>causale</paymentNote>
             </nod:activatePaymentNoticeReq>
