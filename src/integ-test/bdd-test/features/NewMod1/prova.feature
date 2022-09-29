@@ -46,19 +46,19 @@ Feature: prova
         And initial XML paGetPaymentV2
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
-            <soapenv:Header />
+            <soapenv:Header/>
             <soapenv:Body>
             <paf:paGetPaymentV2Response>
             <outcome>OK</outcome>
             <data>
             <creditorReferenceId>10$iuv</creditorReferenceId>
             <paymentAmount>10.00</paymentAmount>
-            <dueDate>2021-12-31</dueDate>
+            <dueDate>2021-12-12</dueDate>
             <!--Optional:-->
-            <retentionDate>2021-12-31T12:12:12</retentionDate>
+            <retentionDate>2021-12-30T12:12:12</retentionDate>
             <!--Optional:-->
             <lastPayment>1</lastPayment>
-            <description>description</description>
+            <description>test</description>
             <!--Optional:-->
             <companyName>company</companyName>
             <!--Optional:-->
@@ -66,25 +66,10 @@ Feature: prova
             <debtor>
             <uniqueIdentifier>
             <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-            <entityUniqueIdentifierValue>77777777777</entityUniqueIdentifierValue>
+            <entityUniqueIdentifierValue>44444444444</entityUniqueIdentifierValue>
             </uniqueIdentifier>
-            <fullName>paGetPaymentName</fullName>
-            <!--Optional:-->
-            <streetName>paGetPaymentStreet</streetName>
-            <!--Optional:-->
-            <civicNumber>paGetPayment99</civicNumber>
-            <!--Optional:-->
-            <postalCode>20155</postalCode>
-            <!--Optional:-->
-            <city>paGetPaymentCity</city>
-            <!--Optional:-->
-            <stateProvinceRegion>paGetPaymentState</stateProvinceRegion>
-            <!--Optional:-->
-            <country>IT</country>
-            <!--Optional:-->
-            <e-mail>paGetPayment@test.it</e-mail>
+            <fullName>name</fullName>
             </debtor>
-            <!--Optional:-->
             <transferList>
             <!--1 to 5 repetitions:-->
             <transfer>
@@ -92,7 +77,7 @@ Feature: prova
             <transferAmount>10.00</transferAmount>
             <fiscalCodePA>$activatePaymentNoticeV2.fiscalCode</fiscalCodePA>
             <IBAN>IT45R0760103200000000001016</IBAN>
-            <remittanceInformation>testPaGetPayment</remittanceInformation>
+            <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
             <transferCategory>paGetPaymentTest</transferCategory>
             <!--Optional:-->
             <metadata>
