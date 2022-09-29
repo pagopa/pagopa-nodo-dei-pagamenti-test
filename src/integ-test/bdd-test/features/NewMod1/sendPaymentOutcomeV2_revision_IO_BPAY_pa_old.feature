@@ -396,7 +396,7 @@ Feature: revision checks for sendPaymentOutcomeV2
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
+        And EC replies to nodo-dei-pagamenti with the pspNotifyPayment
 
     # REV_SPO_03
 
@@ -435,7 +435,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         And checks the value $nodoAttivaRPT.importoSingoloVersamento of the record at column AMOUNT of the table POSITION_PAYMENT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
         And checks the value $sendPaymentOutcomeV2.fee of the record at column FEE of the table POSITION_PAYMENT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
         And checks the value $sendPaymentOutcomeV2.outcome of the record at column OUTCOME of the table POSITION_PAYMENT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
-        And checks the value TPAY of the record at column PAYMENT_METHOD of the table POSITION_PAYMENT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value BPAY of the record at column PAYMENT_METHOD of the table POSITION_PAYMENT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
         And checks the value WISP of the record at column PAYMENT_CHANNEL of the table POSITION_PAYMENT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
         And checks the value $sendPaymentOutcomeV2.transferDate of the record at column TRANSFER_DATE of the table POSITION_PAYMENT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
         And checks the value None of the record at column PAYER_ID of the table POSITION_PAYMENT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
@@ -473,7 +473,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         And checks the value #canale_IMMEDIATO_MULTIBENEFICIARIO# of the record at column CHANNEL_ID of the table POSITION_RECEIPT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
         And checks the value WISP of the record at column CHANNEL_DESCRIPTION of the table POSITION_RECEIPT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
         And checks the value None of the record at column PAYER_ID of the table POSITION_RECEIPT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
-        And checks the value TPAY of the record at column PAYMENT_METHOD of the table POSITION_RECEIPT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value BPAY of the record at column PAYMENT_METHOD of the table POSITION_RECEIPT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
         And checks the value $sendPaymentOutcomeV2.fee of the record at column FEE of the table POSITION_RECEIPT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column PAYMENT_DATE_TIME of the table POSITION_RECEIPT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
         And checks the value $sendPaymentOutcomeV2.applicationDate of the record at column APPLICATION_DATE of the table POSITION_RECEIPT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
