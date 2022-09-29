@@ -163,7 +163,7 @@ Feature: process tests for generazioneRicevute
         </soapenv:Envelope>
         """
         When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-        Then check outcome is KO of sendPaymentOutcome response
+        Then check outcome is OK of sendPaymentOutcome response
         And wait 5 seconds for expiration
 
         # DB Check
