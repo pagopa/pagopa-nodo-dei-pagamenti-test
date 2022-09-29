@@ -226,7 +226,6 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
             </soapenv:Envelope>
             """
     
-    @wip
     # SEM_SPO_7.1
 
     Scenario: SEM_SPO_7.1 (part 1)
