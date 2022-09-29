@@ -208,7 +208,8 @@ Feature: process tests for generazioneRicevute [DB_GR_27]
 
 
     Scenario: RPT2 generation
-        Given RPT2 generation
+        Given the Execute activatePaymentNotice request scenario executed successfully
+        And RPT2 generation
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
