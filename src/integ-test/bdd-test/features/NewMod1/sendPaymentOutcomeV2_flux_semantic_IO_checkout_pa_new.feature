@@ -223,35 +223,36 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
             </soapenv:Body>
             </soapenv:Envelope>
             """
-    # test al momento non eseguibile: manca il mock del psp in cloud
+    
+    @wip
     # SEM_SPO_7.1
 
-    # Scenario: SEM_SPO_7.1 (part 1)
-    #     Given the verifyPaymentNotice scenario executed successfully
-    #     And the activateIOPayment scenario executed successfully
-    #     When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
-    #     Then check outcome is OK of activateIOPayment response
+    Scenario: SEM_SPO_7.1 (part 1)
+        Given the verifyPaymentNotice scenario executed successfully
+        And the activateIOPayment scenario executed successfully
+        When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
+        Then check outcome is OK of activateIOPayment response
 
-    # Scenario: SEM_SPO_7.1 (part 2)
-    #     Given the SEM_SPO_7.1 (part 1) scenario executed successfully
-    #     When PM sends REST GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
-    #     Then verify the HTTP status code of informazioniPagamento response is 200
+    Scenario: SEM_SPO_7.1 (part 2)
+        Given the SEM_SPO_7.1 (part 1) scenario executed successfully
+        When PM sends REST GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
+        Then verify the HTTP status code of informazioniPagamento response is 200
 
-    # Scenario: SEM_SPO_7.1 (part 3)
-    #     Given the SEM_SPO_7.1 (part 2) scenario executed successfully
-    #     And the closePaymentV2 scenario executed successfully
-    #     And idChannel with #canale_versione_primitive_2# in v2/closepayment
-    #     When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
-    #     Then verify the HTTP status code of v2/closepayment response is 200
-    #     And check outcome is OK of v2/closepayment response
-    #     And wait 5 seconds for expiration
+    Scenario: SEM_SPO_7.1 (part 3)
+        Given the SEM_SPO_7.1 (part 2) scenario executed successfully
+        And the closePaymentV2 scenario executed successfully
+        And idChannel with #canale_versione_primitive_2# in v2/closepayment
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 200
+        And check outcome is OK of v2/closepayment response
+        And wait 5 seconds for expiration
 
-    # Scenario: SEM_SPO_7.1 (part 4)
-    #     Given the SEM_SPO_7.1 (part 3) scenario executed successfully
-    #     And the sendPaymentOutcomeV2 scenario executed successfully
-    #     And idChannel with #canale_versione_primitive_2# in sendPaymentOutcomeV2
-    #     When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
-    #     Then check outcome is OK of sendPaymentOutcomeV2 response
+    Scenario: SEM_SPO_7.1 (part 4)
+        Given the SEM_SPO_7.1 (part 3) scenario executed successfully
+        And the sendPaymentOutcomeV2 scenario executed successfully
+        And idChannel with #canale_versione_primitive_2# in sendPaymentOutcomeV2
+        When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of sendPaymentOutcomeV2 response
 
     # SEM_SPO_21
 
