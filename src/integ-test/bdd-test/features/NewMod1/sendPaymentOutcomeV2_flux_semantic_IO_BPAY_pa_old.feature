@@ -308,7 +308,7 @@ Feature: revision checks for sendPaymentOutcomeV2
             """
             {
                 "paymentTokens": [
-                    "$activateIOPaymentResponse.paymentToken"
+                    "$sessionToken"
                 ],
                 "outcome": "OK",
                 "identificativoPsp": "#psp#",
