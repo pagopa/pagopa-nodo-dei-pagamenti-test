@@ -174,3 +174,5 @@ Feature: process tests for generazioneRicevute [DB_GR_27]
         Given the Execute nodoInviaRPT request scenario executed successfully
         When job mod3CancelV1 triggered after 5 seconds
         Then verify the HTTP status code of mod3CancelV1 response is 200
+        And generic update through the query param_update_generic_where_condition of the table POSITION_PAYMENT_PLAN the parameter INSERTED_TIMESTAMP = '2022-09-20 23:12:12', with where condition NOTICE_ID = $1noticeNumber AND PA_FISCAL_CODE = #creditor_institution_code_old# under macro update_query on db nodo_online
+        And generic update through the query param_update_generic_where_condition of the table POSITION_PAYMENT_PLAN the parameter UPDATED_TIMESTAMP = '2022-09-20 23:12:12', with where condition NOTICE_ID = $1noticeNumber AND PA_FISCAL_CODE = #creditor_institution_code_old# under macro update_query on db nodo_online
