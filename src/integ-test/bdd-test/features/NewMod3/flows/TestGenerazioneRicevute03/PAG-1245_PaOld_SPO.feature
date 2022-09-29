@@ -342,7 +342,7 @@ Feature: process tests for generazioneRicevute [DB_GR_27]
                     <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
                     <entityUniqueIdentifierValue>77777777777_01</entityUniqueIdentifierValue>
                 </uniqueIdentifier>
-                <fullName>SPOname_$activateIOPaymentResponse.paymentToken</fullName>               
+                <fullName>SPOname_$activatePaymentNoticeResponse.paymentToken</fullName>               
                 <streetName>street</streetName>               
                 <civicNumber>civic</civicNumber>               
                 <postalCode>postal</postalCode>               
