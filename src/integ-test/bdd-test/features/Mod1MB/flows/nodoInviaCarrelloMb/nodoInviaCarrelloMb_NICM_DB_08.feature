@@ -285,7 +285,7 @@ Feature: process tests for nodoInviaCarrelloMb[NICM_DB_08]
             <pay_i:nazioneBeneficiario>IT</pay_i:nazioneBeneficiario>
             </pay_i:enteBeneficiario>
             <pay_i:datiVersamento>
-            <pay_i:dataEsecuzionePagamento>#timedate#</pay_i:dataEsecuzionePagamento>
+            <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
             <pay_i:importoTotaleDaVersare>2.50</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
             <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
@@ -363,7 +363,7 @@ Feature: process tests for nodoInviaCarrelloMb[NICM_DB_08]
             <pay_i:nazioneBeneficiario>IT</pay_i:nazioneBeneficiario>
             </pay_i:enteBeneficiario>
             <pay_i:datiVersamento>
-            <pay_i:dataEsecuzionePagamento>#timedate#</pay_i:dataEsecuzionePagamento>
+            <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
             <pay_i:importoTotaleDaVersare>2.50</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
             <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
