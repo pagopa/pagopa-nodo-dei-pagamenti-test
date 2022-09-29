@@ -350,7 +350,7 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
             <idBrokerPSP>60000000001</idBrokerPSP>
             <idChannel>#canale_IMMEDIATO_MULTIBENEFICIARIO#</idChannel>
             <password>pwdpwdpwd</password>
-            <paymentToken>$nodoVerificaRPT.ccp</paymentToken>
+            <paymentToken>$nodoVerificaRPT.codiceContestoPagamento</paymentToken>
             <outcome>OK</outcome>
             <!--Optional:-->
             <details>
@@ -364,7 +364,7 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
             <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
             <entityUniqueIdentifierValue>77777777777_01</entityUniqueIdentifierValue>
             </uniqueIdentifier>
-            <fullName>SPOname_$nodoVerificaRPT.ccp</fullName>
+            <fullName>SPOname_$nodoVerificaRPT.codiceContestoPagamento</fullName>
             <!--Optional:-->
             <streetName>SPOstreet</streetName>
             <!--Optional:-->
