@@ -430,7 +430,7 @@ Feature: process test for appIO_paypal with station migration from V1 to V2 betw
         And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table RT retrived by the query rt_1 on db nodo_online under macro NewMod3
         #RT_VERSAMENTI
         And execution query rt_versamenti_old to get value on the table RT_VERSAMENTI, with the columns s.ID,s.IMPORTO_RT,s.ESITO,s.CAUSALE_VERSAMENTO,s.DATI_SPECIFICI_RISCOSSIONE,s.COMMISSIONE_APPLICATE_PSP,s.FK_RT,s.INSERTED_TIMESTAMP,s.UPDATED_TIMESTAMP under macro NewMod3 with db name nodo_online
-        And checks the value NotNone of the record at column ID of the table RT_VeRSAMENTI retrived by the query rt_versamenti_old on db nodo_online under macro NewMod3
+        And checks the value NotNone of the record at column ID of the table RT_VERSAMENTI retrived by the query rt_versamenti_old on db nodo_online under macro NewMod3
         And checks the value 1 of the record at column PROGRESSIVO of the table RT_VERSAMENTI retrived by the query rt_versamenti_old on db nodo_online under macro NewMod3
         And with the query rt_versamenti_old check assert beetwen elem IMPORTO_RT in position 1 and elem AMOUNT with position 0 of the query payment_status
         And checks the value ESEGUITO of the record at column s.ESITO of the table RT_VERSAMENTI retrived by the query rt_versamenti_old on db nodo_online under macro NewMod3
