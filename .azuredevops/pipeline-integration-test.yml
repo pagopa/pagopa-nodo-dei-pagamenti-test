@@ -99,7 +99,7 @@ stages:
              #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/Mod1/primitives/SunnyDay/T016_nodoInviaRPT_Mod1_BBT.feature
              #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/NewMod3/flows/nodoInviaRPT_flows_NIRPT_08.feature
              #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/appIO-BPAY/flows/closePayment_flow.feature
-             behave --tags=-skip --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/appIO-BPAY/flows/closePayment_flow.feature
+             behave --tags=-skip --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/prove/test_pspNotifyPay.feature
              #behave --tags=wip --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/appIO-BPAY/flows/closePayment_flow.feature
             displayName: 'Run Behave Test Suite'
           - task: PublishTestResults@2
