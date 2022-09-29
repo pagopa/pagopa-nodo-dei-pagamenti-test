@@ -175,6 +175,7 @@ Feature: process tests for generazioneRicevute [DB_GR_27]
         When job mod3CancelV1 triggered after 5 seconds
         Then verify the HTTP status code of mod3CancelV1 response is 200
 
+        And replace pa content with #creditor_institution_code_old# content
         And update through the query inserted_timestamp with date Yesterday under macro update_query on db nodo_online
         And update through the query updated_timestamp with date Yesterday under macro update_query on db nodo_online
 
