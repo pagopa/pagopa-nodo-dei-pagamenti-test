@@ -166,43 +166,38 @@ Feature: process tests for generazioneRicevute
         Then check outcome is OK of sendPaymentOutcome response
         And wait 5 seconds for expiration
 
-        And verify 0 record for the table POSITION_RECEIPT_TRANSFER retrived by the query position_receipt_transfer on db nodo_online under macro NewMod3
-        And verify 0 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
-        And verify 0 record for the table POSITION_PAYMENT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
-        And verify 0 record for the table POSITION_RECEIPT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
+        # DB Check
+        And checks the value None of the record at column FK_POSITION_RECEIPT of the table POSITION_RECEIPT_TRANSFER retrived by the query position_receipt_transfer on db nodo_online under macro NewMod3
 
-        # # DB Check
-        # And checks the value None of the record at column FK_POSITION_RECEIPT of the table POSITION_RECEIPT_TRANSFER retrived by the query position_receipt_transfer on db nodo_online under macro NewMod3
-
-        # # DB check - POSITION_RECEIPT_RECIPIENT_PA_INTESTATARIA
-        # And checks the value None of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
-        # And checks the value None of the record at column NOTICE_ID of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
-        # And checks the value None of the record at column CREDITOR_REFERENCE_ID of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
-        # And checks the value None of the record at column PAYMENT_TOKEN of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
-        # And checks the value None of the record at column RECIPIENT_PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
-        # And checks the value None of the record at column RECIPIENT_BROKER_PA_ID of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
-        # And checks the value None of the record at column RECIPIENT_STATION_ID of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
-        # And checks the value None of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
-        # And checks the value None of the record at column FK_POSITION_RECEIPT of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
+        # DB check - POSITION_RECEIPT_RECIPIENT_PA_INTESTATARIA
+        And checks the value None of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
+        And checks the value None of the record at column NOTICE_ID of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
+        And checks the value None of the record at column CREDITOR_REFERENCE_ID of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
+        And checks the value None of the record at column PAYMENT_TOKEN of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
+        And checks the value None of the record at column RECIPIENT_PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
+        And checks the value None of the record at column RECIPIENT_BROKER_PA_ID of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
+        And checks the value None of the record at column RECIPIENT_STATION_ID of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
+        And checks the value None of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
+        And checks the value None of the record at column FK_POSITION_RECEIPT of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
         
-        # # DB check - POSITION_RECEIPT_RECIPIENT_PA_SECONDARIA1
-        # And checks the value None of the record at column PA_FISCAL_CODE of the table POSITION_PAYMENT retrived by the query position_status_1 on db nodo_online under macro NewMod3
-        # And checks the value None of the record at column NOTICE_ID of the table POSITION_PAYMENT retrived by the query position_status_1 on db nodo_online under macro NewMod3
-        # And checks the value None of the record at column CREDITOR_REFERENCE_ID of the table POSITION_PAYMENT retrived by the query position_status_1 on db nodo_online under macro NewMod3
-        # And checks the value None of the record at column PAYMENT_TOKEN of the table POSITION_PAYMENT retrived by the query position_status_1 on db nodo_online under macro NewMod3
-        # And checks the value None of the record at column RECIPIENT_PA_FISCAL_CODE of the table POSITION_PAYMENT retrived by the query position_status_1 on db nodo_online under macro NewMod3
-        # And checks the value None of the record at column RECIPIENT_BROKER_PA_ID of the table POSITION_PAYMENT retrived by the query position_status_1 on db nodo_online under macro NewMod3
-        # And checks the value None of the record at column RECIPIENT_STATION_ID of the table POSITION_PAYMENT retrived by the query position_status_1 on db nodo_online under macro NewMod3
-        # And checks the value None of the record at column STATUS of the table POSITION_PAYMENT retrived by the query position_status_1 on db nodo_online under macro NewMod3
-        # And checks the value None of the record at column FK_POSITION_RECEIPT of the table POSITION_PAYMENT retrived by the query position_status_1 on db nodo_online under macro NewMod3
+        # DB check - POSITION_RECEIPT_RECIPIENT_PA_SECONDARIA1
+        And checks the value None of the record at column PA_FISCAL_CODE of the table POSITION_PAYMENT retrived by the query position_receipt_recipient on db nodo_online under macro NewMod3
+        And checks the value None of the record at column NOTICE_ID of the table POSITION_PAYMENT retrived by the query position_receipt_recipient on db nodo_online under macro NewMod3
+        And checks the value None of the record at column CREDITOR_REFERENCE_ID of the table POSITION_PAYMENT retrived by the query position_receipt_recipient on db nodo_online under macro NewMod3
+        And checks the value None of the record at column PAYMENT_TOKEN of the table POSITION_PAYMENT retrived by the query position_receipt_recipient on db nodo_online under macro NewMod3
+        And checks the value None of the record at column RECIPIENT_PA_FISCAL_CODE of the table POSITION_PAYMENT retrived by the query position_receipt_recipient on db nodo_online under macro NewMod3
+        And checks the value None of the record at column RECIPIENT_BROKER_PA_ID of the table POSITION_PAYMENT retrived by the query position_receipt_recipient on db nodo_online under macro NewMod3
+        And checks the value None of the record at column RECIPIENT_STATION_ID of the table POSITION_PAYMENT retrived by the query position_receipt_recipient on db nodo_online under macro NewMod3
+        And checks the value None of the record at column STATUS of the table POSITION_PAYMENT retrived by the query position_receipt_recipient on db nodo_online under macro NewMod3
+        And checks the value None of the record at column FK_POSITION_RECEIPT of the table POSITION_PAYMENT retrived by the query position_receipt_recipient on db nodo_online under macro NewMod3
         
-        # # DB Check POSITION_RECEIPT_RECIPIENT_PA_SECONDARIA2
-        # And checks the value None of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT retrived by the query position_status_1 on db nodo_online under macro NewMod3
-        # And checks the value None of the record at column NOTICE_ID of the table POSITION_RECEIPT retrived by the query position_status_1 on db nodo_online under macro NewMod3
-        # And checks the value None of the record at column CREDITOR_REFERENCE_ID of the table POSITION_RECEIPT retrived by the query position_status_1 on db nodo_online under macro NewMod3
-        # And checks the value None of the record at column PAYMENT_TOKEN of the table POSITION_RECEIPT retrived by the query position_status_1 on db nodo_online under macro NewMod3
-        # And checks the value None of the record at column RECIPIENT_PA_FISCAL_CODE of the table POSITION_RECEIPT retrived by the query position_status_1 on db nodo_online under macro NewMod3
-        # And checks the value None of the record at column RECIPIENT_BROKER_PA_ID of the table POSITION_RECEIPT retrived by the query position_status_1 on db nodo_online under macro NewMod3
-        # And checks the value None of the record at column RECIPIENT_STATION_ID of the table POSITION_RECEIPT retrived by the query position_status_1 on db nodo_online under macro NewMod3
-        # And checks the value None of the record at column STATUS of the table POSITION_RECEIPT retrived by the query position_status_1 on db nodo_online under macro NewMod3
-        # And checks the value None of the record at column FK_POSITION_RECEIPT of the table POSITION_RECEIPT retrived by the query position_status_1 on db nodo_online under macro NewMod3
+        # DB Check POSITION_RECEIPT_RECIPIENT_PA_SECONDARIA2
+        And checks the value None of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT retrived by the query position_receipt_recipient on db nodo_online under macro NewMod3
+        And checks the value None of the record at column NOTICE_ID of the table POSITION_RECEIPT retrived by the query position_receipt_recipient on db nodo_online under macro NewMod3
+        And checks the value None of the record at column CREDITOR_REFERENCE_ID of the table POSITION_RECEIPT retrived by the query position_receipt_recipient on db nodo_online under macro NewMod3
+        And checks the value None of the record at column PAYMENT_TOKEN of the table POSITION_RECEIPT retrived by the query position_receipt_recipient on db nodo_online under macro NewMod3
+        And checks the value None of the record at column RECIPIENT_PA_FISCAL_CODE of the table POSITION_RECEIPT retrived by the query position_receipt_recipient on db nodo_online under macro NewMod3
+        And checks the value None of the record at column RECIPIENT_BROKER_PA_ID of the table POSITION_RECEIPT retrived by the query position_receipt_recipient on db nodo_online under macro NewMod3
+        And checks the value None of the record at column RECIPIENT_STATION_ID of the table POSITION_RECEIPT retrived by the query position_receipt_recipient on db nodo_online under macro NewMod3
+        And checks the value None of the record at column STATUS of the table POSITION_RECEIPT retrived by the query position_receipt_recipient on db nodo_online under macro NewMod3
+        And checks the value None of the record at column FK_POSITION_RECEIPT of the table POSITION_RECEIPT retrived by the query position_receipt_recipient on db nodo_online under macro NewMod3
