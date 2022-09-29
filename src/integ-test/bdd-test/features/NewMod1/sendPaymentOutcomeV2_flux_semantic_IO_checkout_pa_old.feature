@@ -79,7 +79,7 @@ Feature: revision checks for sendPaymentOutcomeV2
             <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
             <identificativoCanale>#canale_AGID#</identificativoCanale>
             <password>#password#</password>
-            <codiceContestoPagamento>$nodoVerificaRPT.codiceContestoPagamento</codiceContestoPagamento>
+            <codiceContestoPagamento>$ccp</codiceContestoPagamento>
             <identificativoIntermediarioPSPPagamento>#broker_AGID#</identificativoIntermediarioPSPPagamento>
             <identificativoCanalePagamento>#canale_AGID_02#</identificativoCanalePagamento>
             <codificaInfrastrutturaPSP>BARCODE-128-AIM</codificaInfrastrutturaPSP>
@@ -159,7 +159,7 @@ Feature: revision checks for sendPaymentOutcomeV2
             <paaAttivaRPTRisposta>
             <esito>OK</esito>
             <datiPagamentoPA>
-            <importoSingoloVersamento>10.00</importoSingoloVersamento>
+            <importoSingoloVersamento>$nodoAttivaRPT.importoSingoloVersamento</importoSingoloVersamento>
             <ibanAccredito>IT45R0760103200000000001016</ibanAccredito>
             <bicAccredito>BSCTCH22</bicAccredito>
             <enteBeneficiario>
@@ -191,10 +191,10 @@ Feature: revision checks for sendPaymentOutcomeV2
     Scenario: RPT
         Given RPT generation
             """
-            <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
+            <pay_i:RPT xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd " xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-            <pay_i:identificativoDominio>#codicePA_old#</pay_i:identificativoDominio>
+            <pay_i:identificativoDominio>#creditor_institution_code_old#</pay_i:identificativoDominio>
             <pay_i:identificativoStazioneRichiedente>#id_station_old#</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
@@ -245,22 +245,22 @@ Feature: revision checks for sendPaymentOutcomeV2
             </pay_i:enteBeneficiario>
             <pay_i:datiVersamento>
             <pay_i:dataEsecuzionePagamento>2016-09-16</pay_i:dataEsecuzionePagamento>
-            <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
+            <pay_i:importoTotaleDaVersare>$nodoAttivaRPT.importoSingoloVersamento</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>PO</pay_i:tipoVersamento>
             <pay_i:identificativoUnivocoVersamento>$iuv</pay_i:identificativoUnivocoVersamento>
-            <pay_i:codiceContestoPagamento>$nodoVerificaRPT.codiceContestoPagamento</pay_i:codiceContestoPagamento>
+            <pay_i:codiceContestoPagamento>$ccp</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
             <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
             <pay_i:datiSingoloVersamento>
-            <pay_i:importoSingoloVersamento>10.00</pay_i:importoSingoloVersamento>
+            <pay_i:importoSingoloVersamento>$nodoAttivaRPT.importoSingoloVersamento</pay_i:importoSingoloVersamento>
             <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
             <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
             <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
             <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio>
             <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
             <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
-            <pay_i:causaleVersamento>pagamento fotocopie pratica RPT</pay_i:causaleVersamento>
+            <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
             <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
             </pay_i:datiSingoloVersamento>
             </pay_i:datiVersamento>
@@ -278,7 +278,7 @@ Feature: revision checks for sendPaymentOutcomeV2
             <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
             <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
             <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>$nodoVerificaRPT.codiceContestoPagamento</codiceContestoPagamento>
+            <codiceContestoPagamento>$ccp</codiceContestoPagamento>
             </ppt:intestazionePPT>
             </soapenv:Header>
             <soapenv:Body>
@@ -330,7 +330,7 @@ Feature: revision checks for sendPaymentOutcomeV2
             <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
             <password>#password#</password>
             <paymentTokens>
-            <paymentToken>$nodoVerificaRPT.codiceContestoPagamento</paymentToken>
+            <paymentToken>$ccp</paymentToken>
             </paymentTokens>
             <outcome>OK</outcome>
             <!--Optional:-->
@@ -411,7 +411,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         Given the SEM_SPO_21 (part 1) scenario executed successfully
         And the RPT scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
-        When PSP sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
 
@@ -455,7 +455,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         Given the SEM_SPO_23 (part 1) scenario executed successfully
         And the RPT scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
-        When PSP sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
 
@@ -497,7 +497,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         Given the SEM_SPO_23.1 (part 1) scenario executed successfully
         And the RPT scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
-        When PSP sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
 
@@ -539,7 +539,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         Given the SEM_SPO_28 (part 1) scenario executed successfully
         And the RPT scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
-        When PSP sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
 
@@ -577,7 +577,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         Given the SEM_SPO_29 (part 1) scenario executed successfully
         And the RPT scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
-        When PSP sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
 
@@ -613,7 +613,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         Given the SEM_SPO_31 (part 1) scenario executed successfully
         And the RPT scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
-        When PSP sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
 
@@ -651,7 +651,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         Given the SEM_SPO_32 (part 1) scenario executed successfully
         And the RPT scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
-        When PSP sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
 
@@ -688,7 +688,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         Given the SEM_SPO_33 (part 1) scenario executed successfully
         And the RPT scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
-        When PSP sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
 
@@ -724,7 +724,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         Given the SEM_SPO_33.1 (part 1) scenario executed successfully
         And the RPT scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
-        When PSP sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
 
@@ -761,7 +761,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         Given the SEM_SPO_35.1 (part 1) scenario executed successfully
         And the RPT scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
-        When PSP sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
 
@@ -799,7 +799,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         Given the SEM_SPO_35.2 (part 1) scenario executed successfully
         And the RPT scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
-        When PSP sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
 
@@ -837,7 +837,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         Given the SEM_SPO_35.4 (part 1) scenario executed successfully
         And the RPT scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
-        When PSP sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
 
@@ -875,7 +875,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         Given the SEM_SPO_35.5 (part 1) scenario executed successfully
         And the RPT scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
-        When PSP sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
 
@@ -913,7 +913,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         Given the SEM_SPO_35.6 (part 1) scenario executed successfully
         And the RPT scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
-        When PSP sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
 
@@ -951,7 +951,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         Given the SEM_SPO_36 (part 1) scenario executed successfully
         And the RPT scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
-        When PSP sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
 
@@ -988,7 +988,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         Given the SEM_SPO_36.1 (part 1) scenario executed successfully
         And the RPT scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
-        When PSP sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
 
