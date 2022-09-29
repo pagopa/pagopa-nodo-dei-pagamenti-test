@@ -81,6 +81,12 @@
       "user": "WFESP_DEV",
       "password": "WEFSP_DEV",
       "port": "1522"
+    },
+    "mock-psp": {
+      "url": "https://api.dev.platform.pagopa.it/mock-psp-service/api/v1",
+      "healthcheck": "/info",
+      "soap_service": "",
+      "rest_service": ""
     }
   }
 }
