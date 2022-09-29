@@ -168,8 +168,8 @@ Feature: process tests for generazioneRicevute
 
         And verify 0 record for the table POSITION_RECEIPT_TRANSFER retrived by the query position_receipt_transfer on db nodo_online under macro NewMod3
         And verify 0 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
-        And verify 0 record for the table POSITION_PAYMENT retrived by the query position_status_1 on db nodo_online under macro NewMod3
-        And verify 0 record for the table POSITION_RECEIPT retrived by the query position_status_1 on db nodo_online under macro NewMod3
+        And verify 0 record for the table POSITION_PAYMENT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
+        And verify 0 record for the table POSITION_RECEIPT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
 
         # # DB Check
         # And checks the value None of the record at column FK_POSITION_RECEIPT of the table POSITION_RECEIPT_TRANSFER retrived by the query position_receipt_transfer on db nodo_online under macro NewMod3
