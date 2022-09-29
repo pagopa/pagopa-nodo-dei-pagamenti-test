@@ -191,9 +191,9 @@ Feature: process tests for nodoInviaRPT [PAG-781_irragiungibile]
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
             <ppt:intestazionePPT>
-            <identificativoIntermediarioPA>$activatePaymentNotice.idPSP</identificativoIntermediarioPA>
-            <identificativoStazioneIntermediarioPA>$activatePaymentNotice.idBrokerPSP</identificativoStazioneIntermediarioPA>
-            <identificativoDominio>$activatePaymentNotice.idPSP</identificativoDominio>
+            <identificativoIntermediarioPA>#codicePA_old#</identificativoIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
+            <identificativoDominio>#codicePA_old#</identificativoDominio>
             <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$paymentToken</codiceContestoPagamento>
             </ppt:intestazionePPT>
