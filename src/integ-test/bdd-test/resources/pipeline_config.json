@@ -16,8 +16,8 @@
     },
     "mock-psp": {
       "url": "https://api.dev.platform.pagopa.it/mock-psp-service/api/v1",
-      "healthcheck": "servizi/MockPSP/info",
-      "soap_service": "servizi/MockPSP",
+      "healthcheck": "/info",
+      "soap_service": "",
       "rest_service": ""
     }
   },
