@@ -390,7 +390,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         And the nodoAttivaRPT scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
         And the informazioniPagamento scenario executed successfully
-        And the closePaymentV2 scenario executed successfully
+        And the closePayment scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
         And idChannel with #canale_versione_primitive_2# in sendPaymentOutcomeV2
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -403,7 +403,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         And the nodoAttivaRPT scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
         And the informazioniPagamento scenario executed successfully
-        And the closePaymentV2 scenario executed successfully
+        And the closePayment scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
@@ -424,7 +424,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         And the nodoAttivaRPT scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
         And the informazioniPagamento scenario executed successfully
-        And the closePaymentV2 scenario executed successfully
+        And the closePayment scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
@@ -443,7 +443,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         And the nodoAttivaRPT scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
         And the informazioniPagamento scenario executed successfully
-        And the closePaymentV2 scenario executed successfully
+        And the closePayment scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
@@ -462,7 +462,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         And the nodoAttivaRPT scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
         And the informazioniPagamento scenario executed successfully
-        And the closePaymentV2 scenario executed successfully
+        And the closePayment scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
         And outcome with KO in sendPaymentOutcomeV2
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -478,7 +478,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         And the nodoAttivaRPT scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
         And the informazioniPagamento scenario executed successfully
-        And the closePaymentV2 scenario executed successfully
+        And the closePayment scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
         And fee with 3.00 in sendPaymentOutcomeV2
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -491,7 +491,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         And the nodoAttivaRPT scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
         And the informazioniPagamento scenario executed successfully
-        And the closePaymentV2 scenario executed successfully
+        And the closePayment scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
         And updates through the query update_notice_number_from_iuv of the table POSITION_STATUS_SNAPSHOT the parameter NOTICE_ID with 311011451292109621 under macro NewMod1 on db nodo_online
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -506,7 +506,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         And the nodoAttivaRPT scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
         And the informazioniPagamento scenario executed successfully
-        And the closePaymentV2 scenario executed successfully
+        And the closePayment scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
         And updates through the query update_notice_number_from_iuv of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with CANCELLED under macro NewMod1 on db nodo_online
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -520,7 +520,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         And the nodoAttivaRPT scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
         And the informazioniPagamento scenario executed successfully
-        And the closePaymentV2 scenario executed successfully
+        And the closePayment scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
         And updates through the query update_notice_number_from_iuv of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_ACCEPTED under macro NewMod1 on db nodo_online
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -533,7 +533,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         And the nodoAttivaRPT scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
         And the informazioniPagamento scenario executed successfully
-        And the closePaymentV2 scenario executed successfully
+        And the closePayment scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
         And updates through the query update_notice_number_from_iuv of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_UNKNOWN under macro NewMod1 on db nodo_online
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -547,7 +547,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         And the nodoAttivaRPT scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
         And the informazioniPagamento scenario executed successfully
-        And the closePaymentV2 scenario executed successfully
+        And the closePayment scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
         And updates through the query update_notice_number_from_iuv of the table POSITION_STATUS_SNAPSHOT the parameter ACTIVATION_PENDING with Y under macro NewMod1 on db nodo_online
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -562,7 +562,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         And the nodoAttivaRPT scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
         And the informazioniPagamento scenario executed successfully
-        And the closePaymentV2 scenario executed successfully
+        And the closePayment scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
         And updates through the query update_notice_number_from_iuv of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYING under macro NewMod1 on db nodo_online
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -577,7 +577,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         And the nodoAttivaRPT scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
         And the informazioniPagamento scenario executed successfully
-        And the closePaymentV2 scenario executed successfully
+        And the closePayment scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
         And updates through the query update_notice_number_from_iuv of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_SENT under macro NewMod1 on db nodo_online
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -592,7 +592,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         And the nodoAttivaRPT scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
         And the informazioniPagamento scenario executed successfully
-        And the closePaymentV2 scenario executed successfully
+        And the closePayment scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
         And updates through the query update_notice_number_from_iuv of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_SEND_ERROR under macro NewMod1 on db nodo_online
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -607,7 +607,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         And the nodoAttivaRPT scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
         And the informazioniPagamento scenario executed successfully
-        And the closePaymentV2 scenario executed successfully
+        And the closePayment scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
         And updates through the query update_notice_number_from_iuv of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_REFUSED under macro NewMod1 on db nodo_online
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -622,7 +622,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         And the nodoAttivaRPT scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
         And the informazioniPagamento scenario executed successfully
-        And the closePaymentV2 scenario executed successfully
+        And the closePayment scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
         And updates through the query update_notice_number_from_iuv of the table POSITION_STATUS_SNAPSHOT the parameter STATUS with PAID under macro NewMod1 on db nodo_online
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -636,7 +636,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         And the nodoAttivaRPT scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
         And the informazioniPagamento scenario executed successfully
-        And the closePaymentV2 scenario executed successfully
+        And the closePayment scenario executed successfully
         And updates through the query update_notice_number_from_iuv of the table POSITION_STATUS_SNAPSHOT the parameter STATUS with NOTIFIED under macro NewMod1 on db nodo_online
         And the sendPaymentOutcomeV2 scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
