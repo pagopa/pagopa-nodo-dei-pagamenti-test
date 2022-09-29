@@ -13,15 +13,22 @@ Feature: revision checks for sendPaymentOutcomeV2
             <identificativoPSP>#psp_AGID#</identificativoPSP>
             <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
             <identificativoCanale>#canale_AGID#</identificativoCanale>
-            <password>pwdpwdpwd</password>
+            <password>#password#</password>
             <codiceContestoPagamento>#ccp#</codiceContestoPagamento>
             <codificaInfrastrutturaPSP>BARCODE-128-AIM</codificaInfrastrutturaPSP>
-            <codiceIdRPT><aim:aim128> <aim:CCPost>#ccPoste#</aim:CCPost> <aim:CodStazPA>02</aim:CodStazPA> <aim:AuxDigit>0</aim:AuxDigit>  <aim:CodIUV>#iuv#</aim:CodIUV></aim:aim128></codiceIdRPT>
+            <codiceIdRPT>
+            <aim:aim128>
+            <aim:CCPost>#ccPoste#</aim:CCPost>
+            <aim:CodStazPA>02</aim:CodStazPA>
+            <aim:AuxDigit>0</aim:AuxDigit>
+            <aim:CodIUV>#iuv#</aim:CodIUV>
+            </aim:aim128>
+            </codiceIdRPT>
             </ws:nodoVerificaRPT>
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And initial xml paaVerificaRPT
+        And initial XML paaVerificaRPT
             """"
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">
             <soapenv:Header/>
@@ -62,7 +69,7 @@ Feature: revision checks for sendPaymentOutcomeV2
 
     @skip
     Scenario: nodoAttivaRPT
-        Given initial xml nodoAttivaRPT
+        Given initial XML nodoAttivaRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:bc="http://PuntoAccessoPSP.spcoop.gov.it/BarCode_GS1_128_Modified"  xmlns:aim="http://PuntoAccessoPSP.spcoop.gov.it/Code_128_AIM_USS-128_tipo_C" xmlns:qrc="http://PuntoAccessoPSP.spcoop.gov.it/QrCode">
             <soapenv:Header/>
@@ -71,12 +78,19 @@ Feature: revision checks for sendPaymentOutcomeV2
             <identificativoPSP>#psp_AGID#</identificativoPSP>
             <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
             <identificativoCanale>#canale_AGID#</identificativoCanale>
-            <password>pwdpwdpwd</password>
-            <codiceContestoPagamento>$nodoVerificaRPT.codiceContestoPagamento</codiceContestoPagamento>
+            <password>#password#</password>
+            <codiceContestoPagamento>$ccp</codiceContestoPagamento>
             <identificativoIntermediarioPSPPagamento>#broker_AGID#</identificativoIntermediarioPSPPagamento>
-            <identificativoCanalePagamento>97735020584_02</identificativoCanalePagamento>
+            <identificativoCanalePagamento>#canale_AGID_02#</identificativoCanalePagamento>
             <codificaInfrastrutturaPSP>BARCODE-128-AIM</codificaInfrastrutturaPSP>
-            <codiceIdRPT><aim:aim128> <aim:CCPost>#ccPoste#</aim:CCPost> <aim:CodStazPA>02</aim:CodStazPA> <aim:AuxDigit>0</aim:AuxDigit>  <aim:CodIUV>$iuv</aim:CodIUV></aim:aim128></codiceIdRPT>
+            <codiceIdRPT>
+            <aim:aim128>
+            <aim:CCPost>#ccPoste#</aim:CCPost>
+            <aim:CodStazPA>02</aim:CodStazPA>
+            <aim:AuxDigit>0</aim:AuxDigit>
+            <aim:CodIUV>$iuv</aim:CodIUV>
+            </aim:aim128>
+            </codiceIdRPT>
             <datiPagamentoPSP>
             <importoSingoloVersamento>10.00</importoSingoloVersamento>
             <!--Optional:-->
@@ -136,7 +150,7 @@ Feature: revision checks for sendPaymentOutcomeV2
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And initial xml paaAttivaRPT
+        And initial XML paaAttivaRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">
             <soapenv:Header/>
@@ -145,7 +159,7 @@ Feature: revision checks for sendPaymentOutcomeV2
             <paaAttivaRPTRisposta>
             <esito>OK</esito>
             <datiPagamentoPA>
-            <importoSingoloVersamento>10.00</importoSingoloVersamento>
+            <importoSingoloVersamento>$nodoAttivaRPT.importoSingoloVersamento</importoSingoloVersamento>
             <ibanAccredito>IT45R0760103200000000001016</ibanAccredito>
             <bicAccredito>BSCTCH22</bicAccredito>
             <enteBeneficiario>
@@ -154,7 +168,7 @@ Feature: revision checks for sendPaymentOutcomeV2
             <pag:codiceIdentificativoUnivoco>66666666666_05</pag:codiceIdentificativoUnivoco>
             </pag:identificativoUnivocoBeneficiario>
             <pag:denominazioneBeneficiario>97735020584</pag:denominazioneBeneficiario>
-            <pag:codiceUnitOperBeneficiario>97735020584_02</pag:codiceUnitOperBeneficiario>
+            <pag:codiceUnitOperBeneficiario>#canale_AGID_02#</pag:codiceUnitOperBeneficiario>
             <pag:denomUnitOperBeneficiario>uj</pag:denomUnitOperBeneficiario>
             <pag:indirizzoBeneficiario>"paaAttivaRPT"</pag:indirizzoBeneficiario>
             <pag:civicoBeneficiario>j</pag:civicoBeneficiario>
@@ -172,15 +186,17 @@ Feature: revision checks for sendPaymentOutcomeV2
             </soapenv:Envelope>
             """
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
+        When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
+        Then check esito is OK of nodoAttivaRPT response
 
     @skip
-    Scenario: RPT
+    Scenario: nodoInviaRPT
         Given RPT generation
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-            <pay_i:identificativoDominio>#codicePA_old#</pay_i:identificativoDominio>
+            <pay_i:identificativoDominio>#creditor_institution_code_old#</pay_i:identificativoDominio>
             <pay_i:identificativoStazioneRichiedente>#id_station_old#</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
@@ -231,15 +247,15 @@ Feature: revision checks for sendPaymentOutcomeV2
             </pay_i:enteBeneficiario>
             <pay_i:datiVersamento>
             <pay_i:dataEsecuzionePagamento>2016-09-16</pay_i:dataEsecuzionePagamento>
-            <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
+            <pay_i:importoTotaleDaVersare>$nodoAttivaRPT.importoSingoloVersamento</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>PO</pay_i:tipoVersamento>
             <pay_i:identificativoUnivocoVersamento>$iuv</pay_i:identificativoUnivocoVersamento>
-            <pay_i:codiceContestoPagamento>$nodoVerificaRPT.codiceContestoPagamento</pay_i:codiceContestoPagamento>
+            <pay_i:codiceContestoPagamento>$ccp</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
             <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
             <pay_i:datiSingoloVersamento>
-            <pay_i:importoSingoloVersamento>10.00</pay_i:importoSingoloVersamento>
+            <pay_i:importoSingoloVersamento>$nodoAttivaRPT.importoSingoloVersamento</pay_i:importoSingoloVersamento>
             <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
             <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
             <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
@@ -252,33 +268,38 @@ Feature: revision checks for sendPaymentOutcomeV2
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-
-    @skip
-    Scenario: nodoInviaRPT
-        Given initial XML nodoInviaRPT
+        And initial XML nodoInviaRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
             <ppt:intestazionePPT>
-            <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
-            <identificativoStazioneIntermediarioPA>#creditor_institution_code#_05</identificativoStazioneIntermediarioPA>
+            <identificativoIntermediarioPA>#id_broker_old#</identificativoIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>$nodoVerificaRPT.codiceContestoPagamento</codiceContestoPagamento>
+            <codiceContestoPagamento>$ccp</codiceContestoPagamento>
             </ppt:intestazionePPT>
             </soapenv:Header>
             <soapenv:Body>
             <ws:nodoInviaRPT>
-            <password>pwdpwdpwd</password>
+            <password>#password#</password>
             <identificativoPSP>#psp_AGID#</identificativoPSP>
             <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
-            <identificativoCanale>97735020584_02</identificativoCanale>
+            <identificativoCanale>#canale_AGID_02#</identificativoCanale>
             <tipoFirma></tipoFirma>
             <rpt>$rptAttachment</rpt>
             </ws:nodoInviaRPT>
             </soapenv:Body>
             </soapenv:Envelope>
             """
+        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        Then check esito is OK of nodoInviaRPT response
+        And retrieve session token from $nodoInviaRPTResponse.url
+
+    @skip
+    Scenario: informazioniPagamento
+        When WISP sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
+        Then verify the HTTP status code of informazioniPagamento response is 200
 
     @skip
     Scenario: closePaymentV2
@@ -302,6 +323,10 @@ Feature: revision checks for sendPaymentOutcomeV2
                 }
             }
             """
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 200
+        And check outcome is OK of v2/closepayment response
+        And wait 5 seconds for expiration
 
     @skip
     Scenario: sendPaymentOutcomeV2
@@ -386,36 +411,13 @@ Feature: revision checks for sendPaymentOutcomeV2
     #     Then check outcome is OK of sendPaymentOutcomeV2 response
 
     # SEM_SPO_21
-
-    Scenario: SEM_SPO_21 (part 1)
+@wip
+    Scenario: SEM_SPO_21
         Given the nodoVerificaRPT scenario executed successfully
         And the nodoAttivaRPT scenario executed successfully
-        When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-        Then check esito is OK of nodoAttivaRPT response
-
-    Scenario: SEM_SPO_21 (part 2)
-        Given the SEM_SPO_21 (part 1) scenario executed successfully
-        And the RPT scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
-        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-        Then check esito is OK of nodoInviaRPT response
-        And retrieve session token from $nodoInviaRPTResponse.url
-
-    Scenario: SEM_SPO_21 (part 3)
-        Given the SEM_SPO_21 (part 2) scenario executed successfully
-        When WISP sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-        Then verify the HTTP status code of informazioniPagamento response is 200
-
-    Scenario: SEM_SPO_21 (part 4)
-        Given the SEM_SPO_21 (part 3) scenario executed successfully
+        And the informazioniPagamento scenario executed successfully
         And the closePaymentV2 scenario executed successfully
-        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
-        Then verify the HTTP status code of v2/closepayment response is 200
-        And check outcome is OK of v2/closepayment response
-        And wait 5 seconds for expiration
-
-    Scenario: SEM_SPO_21 (part 5)
-        Given the SEM_SPO_21 (part 4) scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
