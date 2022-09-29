@@ -1373,7 +1373,7 @@ def step_impl(context, query_name, date, macro, db_name):
         date = datetime.datetime.today().strftime("%Y-%m-%d %H:%M:%S")
 
     if date == 'Yesterday':
-        date = datetime.date.today() - datetime.timedelta(days=1)
+        date = str(datetime.date.today() - datetime.timedelta(days=1))
 
     selected_query = utils.query_json(
         context, query_name, macro).replace('date', date)
