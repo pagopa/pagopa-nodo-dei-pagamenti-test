@@ -466,17 +466,17 @@ Feature: process test for appIO_paypal with station migration from V1 to V2 betw
         And with the query position_receipt_old check assert beetwen elem RT_ID in position 24 and elem METADATA with position 13 of the query rt
         And with the query position_receipt_old check assert beetwen elem FK_POSITION_PAYMENT in position 25 and elem METADATA with position 10 of the query payment_status
         #RT_XML
-        And execution query rt_xml to get value on the table RT_XML, with the columns ID,CCP,IDENT_DOMINIO,IUV,FK_RT,TIPO_FIRMA,XML_CONTENT,INSERTED_TIMESTAMP,UPDATED_TIMESTAMP,ID_SESSIONE under macro NewMod3 with db name nodo_online
-        And checks the value NotNone of the record at column ID of the table RT_XML retrived by the query rt_xml on db nodo_online under macro NewMod3
-        And with the query rt_xml check assert beetwen elem CCP in position 1 and elem CCP with position 0 of the query rpt
-        And with the query rt_xml check assert beetwen elem IDENT_DOMINIO in position 2 and elem IDENT_DOMINIO with position 1 of the query rpt
-        And with the query rt_xml check assert beetwen elem iuv in position 3 and elem iuv with position 2 of the query rpt
-        And with the query rt_xml check assert beetwen elem FK_RT in position 4 and elem iuv with position 13 of the query rt
-        And checks the value None of the record at column TIPO_FIRMA of the table RT_XML retrived by the query rt_xml on db nodo_online under macro NewMod3
-        And checks the value NotNone of the record at column XML_CONTENT of the table RT_XML retrived by the query rt_xml on db nodo_online under macro NewMod3
-        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RT_XML retrived by the query rt_xml on db nodo_online under macro NewMod3
-        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table RT_XML retrived by the query rt_xml on db nodo_online under macro NewMod3
-        And with the query rt_xml check assert beetwen elem ID_SESSIONE in position 9 and elem iuv with position 0 of the query rt
+        And execution query rt_1 to get value on the table RT_XML, with the columns ID,CCP,IDENT_DOMINIO,IUV,FK_RT,TIPO_FIRMA,XML_CONTENT,INSERTED_TIMESTAMP,UPDATED_TIMESTAMP,ID_SESSIONE under macro NewMod3 with db name nodo_online
+        And checks the value NotNone of the record at column ID of the table RT_XML retrived by the query rt_1 on db nodo_online under macro NewMod3
+        And with the query rt_1 check assert beetwen elem CCP in position 1 and elem CCP with position 0 of the query rpt
+        And with the query rt_1 check assert beetwen elem IDENT_DOMINIO in position 2 and elem IDENT_DOMINIO with position 1 of the query rpt
+        And with the query rt_1 check assert beetwen elem iuv in position 3 and elem iuv with position 2 of the query rpt
+        And with the query rt_1 check assert beetwen elem FK_RT in position 4 and elem iuv with position 13 of the query rt
+        And checks the value None of the record at column TIPO_FIRMA of the table RT_XML retrived by the query rt_1 on db nodo_online under macro NewMod3
+        And checks the value NotNone of the record at column XML_CONTENT of the table RT_XML retrived by the query rt_1 on db nodo_online under macro NewMod3
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RT_XML retrived by the query rt_1 on db nodo_online under macro NewMod3
+        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table RT_XML retrived by the query rt_1 on db nodo_online under macro NewMod3
+        And with the query rt_1 check assert beetwen elem ID_SESSIONE in position 9 and elem iuv with position 0 of the query rt
         #POSITION_RECEIPT_TRANSFER
         And execution query position_receipt_transfer to get value on the table POSITION_RECEIPT_TRANSFER, with the columns FK_POSITION_RECEIPT,s.FK_POSITION_TRANSFER under macro NewMod3 with db name nodo_online
         And execution query position_transfer to get value on the table POSITION_TRANSFER, with the columns ID under macro NewMod3 with db name nodo_online
