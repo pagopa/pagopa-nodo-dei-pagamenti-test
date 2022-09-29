@@ -172,6 +172,12 @@ Feature: process tests for generazioneRicevute
 
         # DB check - POSITION_RECEIPT_RECIPIENT_PA_INTESTATARIA
         And verify 0 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
+        And verify 0 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
+        And verify 0 record for the table POSITION_RECEIPT_XML retrived by the query pos_receipt_recipient_status_order_by on db nodo_online under macro NewMod3
+
+        
+        
+        
         # And checks the value None of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
         # And checks the value None of the record at column NOTICE_ID of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
         # And checks the value None of the record at column CREDITOR_REFERENCE_ID of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
