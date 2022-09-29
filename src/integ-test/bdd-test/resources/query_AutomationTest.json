@@ -164,8 +164,8 @@
         "param_update": "UPDATE table_name SET param = 'value' WHERE where_condition = 'valore'",
         "param_update_in": "UPDATE table_name SET param = 'value' WHERE where_condition IN valore",
         "param_update_generic_where_condition" : "UPDATE table_name SET param WHERE where_condition",
-        "inserted_timestamp" : "UPDATE POSITION_PAYMENT_PLAN SET INSERTED_TIMESTAMP = TO_DATE('date', 'YYYY-MM-DD HH24:MI:SS') WHERE NOTICE_ID = $1noticeNumber AND PA_FISCAL_CODE = $pa",
-        "updated_timestamp" : "UPDATE POSITION_PAYMENT_PLAN SET UPDATED_TIMESTAMP = TO_DATE('date', 'YYYY-MM-DD HH24:MI:SS') WHERE NOTICE_ID = $1noticeNumber AND PA_FISCAL_CODE = $pa"
+        "inserted_timestamp" : "UPDATE POSITION_PAYMENT_PLAN SET INSERTED_TIMESTAMP = TO_DATE('date', 'YYYY-MM-DD') WHERE NOTICE_ID = $1noticeNumber AND PA_FISCAL_CODE = $pa",
+        "updated_timestamp" : "UPDATE POSITION_PAYMENT_PLAN SET UPDATED_TIMESTAMP = TO_DATE('date', 'YYYY-MM-DD') WHERE NOTICE_ID = $1noticeNumber AND PA_FISCAL_CODE = $pa"
 
     },
     "RendicontazioneFTPeBollo":{
