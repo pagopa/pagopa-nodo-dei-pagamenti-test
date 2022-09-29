@@ -3,6 +3,7 @@ Feature: revision checks for sendPaymentOutcomeV2
     Background:
         Given systems up
 
+    @skip
     Scenario: nodoVerificaRPT
         Given initial XML nodoVerificaRPT
             """
@@ -380,38 +381,21 @@ Feature: revision checks for sendPaymentOutcomeV2
             </soapenv:Envelope>
             """
 
-    # test al momento non eseguibile: manca il mock del psp in cloud
     # SEM_SPO_7.1
 
-    # Scenario: SEM_SPO_7.1 (part 1)
-    #     Given the nodoVerificaRPT scenario executed successfully
-    #     And the nodoAttivaRPT scenario executed successfully
-    #     When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-    #     Then check esito is OK of nodoAttivaRPT response
-
-    # Scenario: SEM_SPO_7.1 (part 2)
-    #     Given the SEM_SPO_7.1 (part 1) scenario executed successfully
-    #     When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-    #     Then verify the HTTP status code of informazioniPagamento response is 200
-
-    # Scenario: SEM_SPO_7.1 (part 3)
-    #     Given the SEM_SPO_7.1 (part 2) scenario executed successfully
-    #     And the closePaymentV2 scenario executed successfully
-    #     And idChannel with #canale_versione_primitive_2# in v2/closepayment
-    #     When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
-    #     Then verify the HTTP status code of v2/closepayment response is 200
-    #     And check outcome is OK of v2/closepayment response
-    #     And wait 5 seconds for expiration
-
-    # Scenario: SEM_SPO_7.1 (part 4)
-    #     Given the SEM_SPO_7.1 (part 3) scenario executed successfully
-    #     And the sendPaymentOutcomeV2 scenario executed successfully
-    #     And idChannel with #canale_versione_primitive_2# in sendPaymentOutcomeV2
-    #     When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
-    #     Then check outcome is OK of sendPaymentOutcomeV2 response
+    Scenario: SEM_SPO_7.1
+        Given the nodoVerificaRPT scenario executed successfully
+        And the nodoAttivaRPT scenario executed successfully
+        And the nodoInviaRPT scenario executed successfully
+        And the informazioniPagamento scenario executed successfully
+        And the closePaymentV2 scenario executed successfully
+        And the sendPaymentOutcomeV2 scenario executed successfully
+        And idChannel with #canale_versione_primitive_2# in sendPaymentOutcomeV2
+        When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of sendPaymentOutcomeV2 response
 
     # SEM_SPO_21
-@wip
+    
     Scenario: SEM_SPO_21
         Given the nodoVerificaRPT scenario executed successfully
         And the nodoAttivaRPT scenario executed successfully
@@ -428,7 +412,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         And checks the value NOTICE_STORED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
         And verify 3 record for the table POSITION_STATUS retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
-        And verify 8 record for the table POSITION_PAYMENT_STATUS retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And verify 6 record for the table POSITION_PAYMENT_STATUS retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
 
     # SEM_SPO_23
@@ -436,38 +420,15 @@ Feature: revision checks for sendPaymentOutcomeV2
     Scenario: SEM_SPO_23 (part 1)
         Given the nodoVerificaRPT scenario executed successfully
         And the nodoAttivaRPT scenario executed successfully
-        When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-        Then check esito is OK of nodoAttivaRPT response
-
-    Scenario: SEM_SPO_23 (part 2)
-        Given the SEM_SPO_23 (part 1) scenario executed successfully
-        And the RPT scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
-        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-        Then check esito is OK of nodoInviaRPT response
-        And retrieve session token from $nodoInviaRPTResponse.url
-
-    Scenario: SEM_SPO_23 (part 3)
-        Given the SEM_SPO_23 (part 2) scenario executed successfully
-        When WISP sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-        Then verify the HTTP status code of informazioniPagamento response is 200
-
-    Scenario: SEM_SPO_23 (part 4)
-        Given the SEM_SPO_23 (part 3) scenario executed successfully
+        And the informazioniPagamento scenario executed successfully
         And the closePaymentV2 scenario executed successfully
-        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
-        Then verify the HTTP status code of v2/closepayment response is 200
-        And check outcome is OK of v2/closepayment response
-        And wait 5 seconds for expiration
-
-    Scenario: SEM_SPO_23 (part 5)
-        Given the SEM_SPO_23 (part 4) scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
 
-    Scenario: SEM_SPO_23 (part 6)
-        Given the SEM_SPO_23 (part 5) scenario executed successfully
+    Scenario: SEM_SPO_23 (part 2)
+        Given the SEM_SPO_23 (part 1) scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcomeV2 response
         And check faultCode is PPT_ESITO_GIA_ACQUISITO of sendPaymentOutcomeV2 response
@@ -478,38 +439,15 @@ Feature: revision checks for sendPaymentOutcomeV2
     Scenario: SEM_SPO_23.1 (part 1)
         Given the nodoVerificaRPT scenario executed successfully
         And the nodoAttivaRPT scenario executed successfully
-        When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-        Then check esito is OK of nodoAttivaRPT response
-
-    Scenario: SEM_SPO_23.1 (part 2)
-        Given the SEM_SPO_23.1 (part 1) scenario executed successfully
-        And the RPT scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
-        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-        Then check esito is OK of nodoInviaRPT response
-        And retrieve session token from $nodoInviaRPTResponse.url
-
-    Scenario: SEM_SPO_23.1 (part 3)
-        Given the SEM_SPO_23.1 (part 2) scenario executed successfully
-        When WISP sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-        Then verify the HTTP status code of informazioniPagamento response is 200
-
-    Scenario: SEM_SPO_23.1 (part 4)
-        Given the SEM_SPO_23.1 (part 3) scenario executed successfully
+        And the informazioniPagamento scenario executed successfully
         And the closePaymentV2 scenario executed successfully
-        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
-        Then verify the HTTP status code of v2/closepayment response is 200
-        And check outcome is OK of v2/closepayment response
-        And wait 5 seconds for expiration
-
-    Scenario: SEM_SPO_23.1 (part 5)
-        Given the SEM_SPO_23.1 (part 4) scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
 
-    Scenario: SEM_SPO_23.1 (part 6)
-        Given the SEM_SPO_23.1 (part 5) scenario executed successfully
+    Scenario: SEM_SPO_23.1 (part 2)
+        Given the SEM_SPO_23.1 (part 1) scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcomeV2 response
         And check faultCode is PPT_ESITO_GIA_ACQUISITO of sendPaymentOutcomeV2 response
@@ -517,35 +455,12 @@ Feature: revision checks for sendPaymentOutcomeV2
 
     # SEM_SPO_28
 
-    Scenario: SEM_SPO_28 (part 1)
+    Scenario: SEM_SPO_28
         Given the nodoVerificaRPT scenario executed successfully
         And the nodoAttivaRPT scenario executed successfully
-        When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-        Then check esito is OK of nodoAttivaRPT response
-
-    Scenario: SEM_SPO_28 (part 2)
-        Given the SEM_SPO_28 (part 1) scenario executed successfully
-        And the RPT scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
-        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-        Then check esito is OK of nodoInviaRPT response
-        And retrieve session token from $nodoInviaRPTResponse.url
-
-    Scenario: SEM_SPO_28 (part 3)
-        Given the SEM_SPO_28 (part 2) scenario executed successfully
-        When WISP sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-        Then verify the HTTP status code of informazioniPagamento response is 200
-
-    Scenario: SEM_SPO_28 (part 4)
-        Given the SEM_SPO_28 (part 3) scenario executed successfully
+        And the informazioniPagamento scenario executed successfully
         And the closePaymentV2 scenario executed successfully
-        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
-        Then verify the HTTP status code of v2/closepayment response is 200
-        And check outcome is OK of v2/closepayment response
-        And wait 5 seconds for expiration
-
-    Scenario: SEM_SPO_28 (part 5)
-        Given the SEM_SPO_28 (part 4) scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
         And outcome with KO in sendPaymentOutcomeV2
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -555,35 +470,13 @@ Feature: revision checks for sendPaymentOutcomeV2
 
     # SEM_SPO_29
 
-    Scenario: SEM_SPO_29 (part 1)
+    Scenario: SEM_SPO_29
+        Given the nodoVerificaRPT scenario executed successfully
         Given the nodoVerificaRPT scenario executed successfully
         And the nodoAttivaRPT scenario executed successfully
-        When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-        Then check esito is OK of nodoAttivaRPT response
-
-    Scenario: SEM_SPO_29 (part 2)
-        Given the SEM_SPO_29 (part 1) scenario executed successfully
-        And the RPT scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
-        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-        Then check esito is OK of nodoInviaRPT response
-        And retrieve session token from $nodoInviaRPTResponse.url
-
-    Scenario: SEM_SPO_29 (part 3)
-        Given the SEM_SPO_29 (part 2) scenario executed successfully
-        When WISP sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-        Then verify the HTTP status code of informazioniPagamento response is 200
-
-    Scenario: SEM_SPO_29 (part 4)
-        Given the SEM_SPO_29 (part 3) scenario executed successfully
+        And the informazioniPagamento scenario executed successfully
         And the closePaymentV2 scenario executed successfully
-        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
-        Then verify the HTTP status code of v2/closepayment response is 200
-        And check outcome is OK of v2/closepayment response
-        And wait 5 seconds for expiration
-
-    Scenario: SEM_SPO_29 (part 5)
-        Given the SEM_SPO_29 (part 4) scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
         And fee with 3.00 in sendPaymentOutcomeV2
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -591,37 +484,14 @@ Feature: revision checks for sendPaymentOutcomeV2
 
     # SEM_SPO_31
 
-    Scenario: SEM_SPO_31 (part 1)
+    Scenario: SEM_SPO_31
         Given the nodoVerificaRPT scenario executed successfully
         And the nodoAttivaRPT scenario executed successfully
-        When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-        Then check esito is OK of nodoAttivaRPT response
-
-    Scenario: SEM_SPO_31 (part 2)
-        Given the SEM_SPO_31 (part 1) scenario executed successfully
-        And the RPT scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
-        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-        Then check esito is OK of nodoInviaRPT response
-        And retrieve session token from $nodoInviaRPTResponse.url
-
-    Scenario: SEM_SPO_31 (part 3)
-        Given the SEM_SPO_31 (part 2) scenario executed successfully
-        When WISP sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-        Then verify the HTTP status code of informazioniPagamento response is 200
-
-    Scenario: SEM_SPO_31 (part 4)
-        Given the SEM_SPO_31 (part 3) scenario executed successfully
+        And the informazioniPagamento scenario executed successfully
         And the closePaymentV2 scenario executed successfully
-        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
-        Then verify the HTTP status code of v2/closepayment response is 200
-        And check outcome is OK of v2/closepayment response
-        And wait 5 seconds for expiration
-
-    Scenario: SEM_SPO_31 (part 5)
-        Given the SEM_SPO_31 (part 4) scenario executed successfully
-        And updates through the query update_notice_number_from_iuv of the table POSITION_STATUS_SNAPSHOT the parameter NOTICE_ID with 311011451292109621 under macro NewMod1 on db nodo_online
         And the sendPaymentOutcomeV2 scenario executed successfully
+        And updates through the query update_notice_number_from_iuv of the table POSITION_STATUS_SNAPSHOT the parameter NOTICE_ID with 311011451292109621 under macro NewMod1 on db nodo_online
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcomeV2 response
         And check faultCode is PPT_PAGAMENTO_SCONOSCIUTO of sendPaymentOutcomeV2 response
@@ -629,147 +499,55 @@ Feature: revision checks for sendPaymentOutcomeV2
 
     # SEM_SPO_32
 
-    Scenario: SEM_SPO_32 (part 1)
+    Scenario: SEM_SPO_32
         Given the nodoVerificaRPT scenario executed successfully
         And the nodoAttivaRPT scenario executed successfully
-        When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-        Then check esito is OK of nodoAttivaRPT response
-
-    Scenario: SEM_SPO_32 (part 2)
-        Given the SEM_SPO_32 (part 1) scenario executed successfully
-        And the RPT scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
-        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-        Then check esito is OK of nodoInviaRPT response
-        And retrieve session token from $nodoInviaRPTResponse.url
-
-    Scenario: SEM_SPO_32 (part 3)
-        Given the SEM_SPO_32 (part 2) scenario executed successfully
-        When WISP sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-        Then verify the HTTP status code of informazioniPagamento response is 200
-
-    Scenario: SEM_SPO_32 (part 4)
-        Given the SEM_SPO_32 (part 3) scenario executed successfully
+        And the informazioniPagamento scenario executed successfully
         And the closePaymentV2 scenario executed successfully
-        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
-        Then verify the HTTP status code of v2/closepayment response is 200
-        And check outcome is OK of v2/closepayment response
-        And wait 5 seconds for expiration
-
-    Scenario: SEM_SPO_32 (part 5)
-        Given the SEM_SPO_32 (part 4) scenario executed successfully
-        And updates through the query update_notice_number_from_iuv of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with CANCELLED under macro NewMod1 on db nodo_online
         And the sendPaymentOutcomeV2 scenario executed successfully
+        And updates through the query update_notice_number_from_iuv of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with CANCELLED under macro NewMod1 on db nodo_online
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcomeV2 response
         And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcomeV2 response
 
     # SEM_SPO_33
 
-    Scenario: SEM_SPO_33 (part 1)
+    Scenario: SEM_SPO_33
         Given the nodoVerificaRPT scenario executed successfully
         And the nodoAttivaRPT scenario executed successfully
-        When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-        Then check esito is OK of nodoAttivaRPT response
-
-    Scenario: SEM_SPO_33 (part 2)
-        Given the SEM_SPO_33 (part 1) scenario executed successfully
-        And the RPT scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
-        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-        Then check esito is OK of nodoInviaRPT response
-        And retrieve session token from $nodoInviaRPTResponse.url
-
-    Scenario: SEM_SPO_33 (part 3)
-        Given the SEM_SPO_33 (part 2) scenario executed successfully
-        When WISP sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-        Then verify the HTTP status code of informazioniPagamento response is 200
-
-    Scenario: SEM_SPO_33 (part 4)
-        Given the SEM_SPO_33 (part 3) scenario executed successfully
+        And the informazioniPagamento scenario executed successfully
         And the closePaymentV2 scenario executed successfully
-        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
-        Then verify the HTTP status code of v2/closepayment response is 200
-        And check outcome is OK of v2/closepayment response
-        And wait 5 seconds for expiration
-
-    Scenario: SEM_SPO_33 (part 5)
-        Given the SEM_SPO_33 (part 4) scenario executed successfully
-        And updates through the query update_notice_number_from_iuv of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_ACCEPTED under macro NewMod1 on db nodo_online
         And the sendPaymentOutcomeV2 scenario executed successfully
+        And updates through the query update_notice_number_from_iuv of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_ACCEPTED under macro NewMod1 on db nodo_online
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
 
     # SEM_SPO_33.1
 
-    Scenario: SEM_SPO_33.1 (part 1)
+    Scenario: SEM_SPO_33.1
         Given the nodoVerificaRPT scenario executed successfully
         And the nodoAttivaRPT scenario executed successfully
-        When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-        Then check esito is OK of nodoAttivaRPT response
-
-    Scenario: SEM_SPO_33.1 (part 2)
-        Given the SEM_SPO_33.1 (part 1) scenario executed successfully
-        And the RPT scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
-        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-        Then check esito is OK of nodoInviaRPT response
-        And retrieve session token from $nodoInviaRPTResponse.url
-
-    Scenario: SEM_SPO_33.1 (part 3)
-        Given the SEM_SPO_33.1 (part 2) scenario executed successfully
-        When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-        Then verify the HTTP status code of informazioniPagamento response is 200
-
-    Scenario: SEM_SPO_33.1 (part 4)
-        Given the SEM_SPO_33.1 (part 3) scenario executed successfully
+        And the informazioniPagamento scenario executed successfully
         And the closePaymentV2 scenario executed successfully
-        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
-        Then verify the HTTP status code of v2/closepayment response is 200
-        And check outcome is OK of v2/closepayment response
-        And wait 5 seconds for expiration
-
-    Scenario: SEM_SPO_33.1 (part 5)
-        Given the SEM_SPO_33.1 (part 4) scenario executed successfully
-        And updates through the query update_notice_number_from_iuv of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_UNKNOWN under macro NewMod1 on db nodo_online
         And the sendPaymentOutcomeV2 scenario executed successfully
+        And updates through the query update_notice_number_from_iuv of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_UNKNOWN under macro NewMod1 on db nodo_online
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
         And verify 0 record for the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
 
     # SEM_SPO_35.1
 
-    Scenario: SEM_SPO_35.1 (part 1)
+    Scenario: SEM_SPO_35.1
         Given the nodoVerificaRPT scenario executed successfully
         And the nodoAttivaRPT scenario executed successfully
-        When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-        Then check esito is OK of nodoAttivaRPT response
-
-    Scenario: SEM_SPO_35.1 (part 2)
-        Given the SEM_SPO_35.1 (part 1) scenario executed successfully
-        And the RPT scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
-        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-        Then check esito is OK of nodoInviaRPT response
-        And retrieve session token from $nodoInviaRPTResponse.url
-
-    Scenario: SEM_SPO_35.1 (part 3)
-        Given the SEM_SPO_35.1 (part 2) scenario executed successfully
-        When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-        Then verify the HTTP status code of informazioniPagamento response is 200
-
-    Scenario: SEM_SPO_35.1 (part 4)
-        Given the SEM_SPO_35.1 (part 3) scenario executed successfully
+        And the informazioniPagamento scenario executed successfully
         And the closePaymentV2 scenario executed successfully
-        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
-        Then verify the HTTP status code of v2/closepayment response is 200
-        And check outcome is OK of v2/closepayment response
-        And wait 5 seconds for expiration
-
-    Scenario: SEM_SPO_35.1 (part 5)
-        Given the SEM_SPO_35.1 (part 4) scenario executed successfully
-        And updates through the query update_notice_number_from_iuv of the table POSITION_STATUS_SNAPSHOT the parameter ACTIVATION_PENDING with Y under macro NewMod1 on db nodo_online
         And the sendPaymentOutcomeV2 scenario executed successfully
+        And updates through the query update_notice_number_from_iuv of the table POSITION_STATUS_SNAPSHOT the parameter ACTIVATION_PENDING with Y under macro NewMod1 on db nodo_online
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcomeV2 response
         And check faultCode is PPT_SEMANTICA of sendPaymentOutcomeV2 response
@@ -777,37 +555,14 @@ Feature: revision checks for sendPaymentOutcomeV2
 
     # SEM_SPO_35.2
 
-    Scenario: SEM_SPO_35.2 (part 1)
+    Scenario: SEM_SPO_35.2
         Given the nodoVerificaRPT scenario executed successfully
         And the nodoAttivaRPT scenario executed successfully
-        When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-        Then check esito is OK of nodoAttivaRPT response
-
-    Scenario: SEM_SPO_35.2 (part 2)
-        Given the SEM_SPO_35.2 (part 1) scenario executed successfully
-        And the RPT scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
-        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-        Then check esito is OK of nodoInviaRPT response
-        And retrieve session token from $nodoInviaRPTResponse.url
-
-    Scenario: SEM_SPO_35.2 (part 3)
-        Given the SEM_SPO_35.2 (part 2) scenario executed successfully
-        When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-        Then verify the HTTP status code of informazioniPagamento response is 200
-
-    Scenario: SEM_SPO_35.2 (part 4)
-        Given the SEM_SPO_35.2 (part 3) scenario executed successfully
+        And the informazioniPagamento scenario executed successfully
         And the closePaymentV2 scenario executed successfully
-        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
-        Then verify the HTTP status code of v2/closepayment response is 200
-        And check outcome is OK of v2/closepayment response
-        And wait 5 seconds for expiration
-
-    Scenario: SEM_SPO_35.2 (part 5)
-        Given the SEM_SPO_35.2 (part 4) scenario executed successfully
-        And updates through the query update_notice_number_from_iuv of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYING under macro NewMod1 on db nodo_online
         And the sendPaymentOutcomeV2 scenario executed successfully
+        And updates through the query update_notice_number_from_iuv of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYING under macro NewMod1 on db nodo_online
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcomeV2 response
         And check faultCode is PPT_SEMANTICA of sendPaymentOutcomeV2 response
@@ -815,37 +570,14 @@ Feature: revision checks for sendPaymentOutcomeV2
 
     # SEM_SPO_35.4
 
-    Scenario: SEM_SPO_35.4 (part 1)
+    Scenario: SEM_SPO_35.4
         Given the nodoVerificaRPT scenario executed successfully
         And the nodoAttivaRPT scenario executed successfully
-        When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-        Then check esito is OK of nodoAttivaRPT response
-
-    Scenario: SEM_SPO_35.4 (part 2)
-        Given the SEM_SPO_35.4 (part 1) scenario executed successfully
-        And the RPT scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
-        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-        Then check esito is OK of nodoInviaRPT response
-        And retrieve session token from $nodoInviaRPTResponse.url
-
-    Scenario: SEM_SPO_35.4 (part 3)
-        Given the SEM_SPO_35.4 (part 2) scenario executed successfully
-        When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-        Then verify the HTTP status code of informazioniPagamento response is 200
-
-    Scenario: SEM_SPO_35.4 (part 4)
-        Given the SEM_SPO_35.4 (part 3) scenario executed successfully
+        And the informazioniPagamento scenario executed successfully
         And the closePaymentV2 scenario executed successfully
-        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
-        Then verify the HTTP status code of v2/closepayment response is 200
-        And check outcome is OK of v2/closepayment response
-        And wait 5 seconds for expiration
-
-    Scenario: SEM_SPO_35.4 (part 5)
-        Given the SEM_SPO_35.4 (part 4) scenario executed successfully
-        And updates through the query update_notice_number_from_iuv of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_SENT under macro NewMod1 on db nodo_online
         And the sendPaymentOutcomeV2 scenario executed successfully
+        And updates through the query update_notice_number_from_iuv of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_SENT under macro NewMod1 on db nodo_online
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcomeV2 response
         And check faultCode is PPT_SEMANTICA of sendPaymentOutcomeV2 response
@@ -853,37 +585,14 @@ Feature: revision checks for sendPaymentOutcomeV2
 
     # SEM_SPO_35.5
 
-    Scenario: SEM_SPO_35.5 (part 1)
+    Scenario: SEM_SPO_35.5
         Given the nodoVerificaRPT scenario executed successfully
         And the nodoAttivaRPT scenario executed successfully
-        When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-        Then check esito is OK of nodoAttivaRPT response
-
-    Scenario: SEM_SPO_35.5 (part 2)
-        Given the SEM_SPO_35.5 (part 1) scenario executed successfully
-        And the RPT scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
-        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-        Then check esito is OK of nodoInviaRPT response
-        And retrieve session token from $nodoInviaRPTResponse.url
-
-    Scenario: SEM_SPO_35.5 (part 3)
-        Given the SEM_SPO_35.5 (part 2) scenario executed successfully
-        When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-        Then verify the HTTP status code of informazioniPagamento response is 200
-
-    Scenario: SEM_SPO_35.5 (part 4)
-        Given the SEM_SPO_35.5 (part 3) scenario executed successfully
+        And the informazioniPagamento scenario executed successfully
         And the closePaymentV2 scenario executed successfully
-        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
-        Then verify the HTTP status code of v2/closepayment response is 200
-        And check outcome is OK of v2/closepayment response
-        And wait 5 seconds for expiration
-
-    Scenario: SEM_SPO_35.5 (part 5)
-        Given the SEM_SPO_35.5 (part 4) scenario executed successfully
-        And updates through the query update_notice_number_from_iuv of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_SEND_ERROR under macro NewMod1 on db nodo_online
         And the sendPaymentOutcomeV2 scenario executed successfully
+        And updates through the query update_notice_number_from_iuv of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_SEND_ERROR under macro NewMod1 on db nodo_online
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcomeV2 response
         And check faultCode is PPT_SEMANTICA of sendPaymentOutcomeV2 response
@@ -891,37 +600,14 @@ Feature: revision checks for sendPaymentOutcomeV2
 
     # SEM_SPO_35.6
 
-    Scenario: SEM_SPO_35.6 (part 1)
+    Scenario: SEM_SPO_35.6
         Given the nodoVerificaRPT scenario executed successfully
         And the nodoAttivaRPT scenario executed successfully
-        When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-        Then check esito is OK of nodoAttivaRPT response
-
-    Scenario: SEM_SPO_35.6 (part 2)
-        Given the SEM_SPO_35.6 (part 1) scenario executed successfully
-        And the RPT scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
-        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-        Then check esito is OK of nodoInviaRPT response
-        And retrieve session token from $nodoInviaRPTResponse.url
-
-    Scenario: SEM_SPO_35.6 (part 3)
-        Given the SEM_SPO_35.6 (part 2) scenario executed successfully
-        When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-        Then verify the HTTP status code of informazioniPagamento response is 200
-
-    Scenario: SEM_SPO_35.6 (part 4)
-        Given the SEM_SPO_35.6 (part 3) scenario executed successfully
+        And the informazioniPagamento scenario executed successfully
         And the closePaymentV2 scenario executed successfully
-        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
-        Then verify the HTTP status code of v2/closepayment response is 200
-        And check outcome is OK of v2/closepayment response
-        And wait 5 seconds for expiration
-
-    Scenario: SEM_SPO_35.6 (part 5)
-        Given the SEM_SPO_35.6 (part 4) scenario executed successfully
-        And updates through the query update_notice_number_from_iuv of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_REFUSED under macro NewMod1 on db nodo_online
         And the sendPaymentOutcomeV2 scenario executed successfully
+        And updates through the query update_notice_number_from_iuv of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_REFUSED under macro NewMod1 on db nodo_online
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcomeV2 response
         And check faultCode is PPT_SEMANTICA of sendPaymentOutcomeV2 response
@@ -929,72 +615,26 @@ Feature: revision checks for sendPaymentOutcomeV2
 
     # SEM_SPO_36
 
-    Scenario: SEM_SPO_36 (part 1)
+    Scenario: SEM_SPO_36
         Given the nodoVerificaRPT scenario executed successfully
         And the nodoAttivaRPT scenario executed successfully
-        When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-        Then check esito is OK of nodoAttivaRPT response
-
-    Scenario: SEM_SPO_36 (part 2)
-        Given the SEM_SPO_36 (part 1) scenario executed successfully
-        And the RPT scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
-        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-        Then check esito is OK of nodoInviaRPT response
-        And retrieve session token from $nodoInviaRPTResponse.url
-
-    Scenario: SEM_SPO_36 (part 3)
-        Given the SEM_SPO_36 (part 2) scenario executed successfully
-        When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-        Then verify the HTTP status code of informazioniPagamento response is 200
-
-    Scenario: SEM_SPO_36 (part 4)
-        Given the SEM_SPO_36 (part 3) scenario executed successfully
+        And the informazioniPagamento scenario executed successfully
         And the closePaymentV2 scenario executed successfully
-        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
-        Then verify the HTTP status code of v2/closepayment response is 200
-        And check outcome is OK of v2/closepayment response
-        And wait 5 seconds for expiration
-
-    Scenario: SEM_SPO_36 (part 5)
-        Given the SEM_SPO_36 (part 4) scenario executed successfully
-        And updates through the query update_notice_number_from_iuv of the table POSITION_STATUS_SNAPSHOT the parameter STATUS with PAID under macro NewMod1 on db nodo_online
         And the sendPaymentOutcomeV2 scenario executed successfully
+        And updates through the query update_notice_number_from_iuv of the table POSITION_STATUS_SNAPSHOT the parameter STATUS with PAID under macro NewMod1 on db nodo_online
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcomeV2 response
         And check faultCode is PPT_PAGAMENTO_DUPLICATO of sendPaymentOutcomeV2 response
 
     # SEM_SPO_36.1
 
-    Scenario: SEM_SPO_36.1 (part 1)
+    Scenario: SEM_SPO_36.1
         Given the nodoVerificaRPT scenario executed successfully
         And the nodoAttivaRPT scenario executed successfully
-        When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-        Then check esito is OK of nodoAttivaRPT response
-
-    Scenario: SEM_SPO_36.1 (part 2)
-        Given the SEM_SPO_36.1 (part 1) scenario executed successfully
-        And the RPT scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
-        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-        Then check esito is OK of nodoInviaRPT response
-        And retrieve session token from $nodoInviaRPTResponse.url
-
-    Scenario: SEM_SPO_36.1 (part 3)
-        Given the SEM_SPO_36.1 (part 2) scenario executed successfully
-        When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-        Then verify the HTTP status code of informazioniPagamento response is 200
-
-    Scenario: SEM_SPO_36.1 (part 4)
-        Given the SEM_SPO_36.1 (part 3) scenario executed successfully
+        And the informazioniPagamento scenario executed successfully
         And the closePaymentV2 scenario executed successfully
-        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
-        Then verify the HTTP status code of v2/closepayment response is 200
-        And check outcome is OK of v2/closepayment response
-        And wait 5 seconds for expiration
-
-    Scenario: SEM_SPO_36.1 (part 5)
-        Given the SEM_SPO_36.1 (part 4) scenario executed successfully
         And updates through the query update_notice_number_from_iuv of the table POSITION_STATUS_SNAPSHOT the parameter STATUS with NOTIFIED under macro NewMod1 on db nodo_online
         And the sendPaymentOutcomeV2 scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
