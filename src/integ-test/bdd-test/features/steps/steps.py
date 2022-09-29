@@ -1413,12 +1413,12 @@ def step_impl(context, query_name, macro, db_name, table_name, columns):
 def step_impl(context, query_name, param, position, key):
     result_query = getattr(context, query_name)
     print(f'{query_name}: {result_query}')
-    if position == 0:
-        selected_element = result_query[0][position]
-        print(f'{param}: {selected_element}')
-    elif position == -1: # il -1 recupera tutti i record 
+
+    if position == -1: # il -1 recupera tutti i record
         selected_element = [t[0] for t in result_query]
-        print(f'{param}: {selected_element}')
+    else:
+        selected_element = result_query[0][position]
+    print(f'{param}: {selected_element}')
     setattr(context, key, selected_element)
 
 
