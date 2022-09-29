@@ -1,4 +1,4 @@
-Feature: process tests for nodoInviaCarrelloMb[NICM_DB_01]
+Feature: process tests for nodoInviaCarrelloMb
 
     Background:
         Given systems up
@@ -221,8 +221,9 @@ Feature: process tests for nodoInviaCarrelloMb[NICM_DB_01]
         And replace pa content with #codicePA# content
         And replace iuv content with $1iuv content
         And replace noticeNumber content with $1noticeNumber content
+       
         #DB_CHECKS
-        #POSITION_SUBJECT
+        #POSITION_SUBJECT [NICM_DB_01]
 
         And checks the value DEBTOR of the record at column SUBJECT_TYPE of the table POSITION_SUBJECT retrived by the query by_position_subject on db nodo_online under macro Mod1Mb
         And checks the value F of the record at column ENTITY_UNIQUE_IDENTIFIER_TYPE of the table POSITION_SUBJECT retrived by the query by_position_subject on db nodo_online under macro Mod1Mb
@@ -238,7 +239,7 @@ Feature: process tests for nodoInviaCarrelloMb[NICM_DB_01]
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_SUBJECT retrived by the query by_position_subject on db nodo_online under macro Mod1Mb
         And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_SUBJECT retrived by the query by_position_subject on db nodo_online under macro Mod1Mb
 
-        #POSITION_SERVICE
+        #POSITION_SERVICE [NICM_DB_04]
         And checks the value #codicePA# of the record at column PA_FISCAL_CODE of the table POSITION_SERVICE retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value $1noticeNumber of the record at column NOTICE_ID of the table POSITION_SERVICE retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value Pagamento multibeneficiario of the record at column DESCRIPTION of the table POSITION_SERVICE retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
@@ -252,7 +253,7 @@ Feature: process tests for nodoInviaCarrelloMb[NICM_DB_01]
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_SERVICE retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_SERVICE retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
 
-        #POSITION_PAYMENT_PLAN
+        #POSITION_PAYMENT_PLAN [NICM_DB_06]
         And checks the value #codicePA# of the record at column PA_FISCAL_CODE of the table POSITION_PAYMENT_PLAN retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value $1noticeNumber of the record at column NOTICE_ID of the table POSITION_PAYMENT_PLAN retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value $1iuv of the record at column CREDITOR_REFERENCE_ID of the table POSITION_PAYMENT_PLAN retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
@@ -268,7 +269,7 @@ Feature: process tests for nodoInviaCarrelloMb[NICM_DB_01]
         And checks the value $FK_POSITION_SERVICE of the record at column ID of the table POSITION_SERVICE retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
 
 
-        #POSITION_TRANSFER
+        #POSITION_TRANSFER [NICM_DB_10]
         And checks the value $1noticeNumber, $1noticeNumber of the record at column NOTICE_ID of the table POSITION_TRANSFER retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value $1iuv, $1iuv of the record at column CREDITOR_REFERENCE_ID of the table POSITION_TRANSFER retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value #codicePA#, #codicePA# of the record at column PA_FISCAL_CODE of the table POSITION_TRANSFER retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
@@ -281,7 +282,7 @@ Feature: process tests for nodoInviaCarrelloMb[NICM_DB_01]
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_TRANSFER retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_TRANSFER retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
 
-        #POSITION_PAYMENT
+        #POSITION_PAYMENT [NICM_DB_12]
         And checks the value #codicePA# of the record at column PA_FISCAL_CODE of the table POSITION_PAYMENT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value $1noticeNumber of the record at column NOTICE_ID of the table POSITION_PAYMENT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value $1iuv of the record at column CREDITOR_REFERENCE_ID of the table POSITION_PAYMENT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
@@ -306,20 +307,20 @@ Feature: process tests for nodoInviaCarrelloMb[NICM_DB_01]
         And checks the value None of the record at column RPT_ID of the table POSITION_PAYMENT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value MOD1 of the record at column PAYMENT_TYPE of the table POSITION_PAYMENT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
 
-        #POSITION_STATUS
+        #POSITION_STATUS[NICM_DB_13]
         And checks the value #codicePA# of the record at column PA_FISCAL_CODE of the table POSITION_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value $1noticeNumber of the record at column NOTICE_ID of the table POSITION_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
 
-        #POSITION_STATUS_SNAPSHOT
+        #POSITION_STATUS_SNAPSHOT [NICM_DB_14]
         And checks the value #codicePA# of the record at column PA_FISCAL_CODE of the table POSITION_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value $1noticeNumber of the record at column NOTICE_ID of the table POSITION_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
 
-        #POSITION_PAYMENT_STATUS
+        #POSITION_PAYMENT_STATUS [NICM_DB_16]
         And checks the value #codicePA# of the record at column PA_FISCAL_CODE of the table POSITION_PAYMENT_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value $1iuv of the record at column CREDITOR_REFERENCE_ID of the table POSITION_PAYMENT_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value $1noticeNumber of the record at column NOTICE_ID of the table POSITION_PAYMENT_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
@@ -327,7 +328,7 @@ Feature: process tests for nodoInviaCarrelloMb[NICM_DB_01]
         And checks the value PAYING of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_PAYMENT_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
 
-        #POSITION_PAYMENT_STATUS_SNAPSHOT
+        #POSITION_PAYMENT_STATUS_SNAPSHOT [NICM_DB_17]
         And checks the value #codicePA# of the record at column PA_FISCAL_CODE of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value $1noticeNumber of the record at column NOTICE_ID of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value $1iuv of the record at column CREDITOR_REFERENCE_ID of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
@@ -337,18 +338,3 @@ Feature: process tests for nodoInviaCarrelloMb[NICM_DB_01]
         And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
 
 
-    Scenario: Execute DB checks for position_service [NICM_DB_04]
-        Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
-        Then verify if the records for the table POSITION_SERVICE retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb are not null
-
-    Scenario: Execute DB checks for position_payment_plan [NICM_DB_06]
-        Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
-        Then verify 1 record for the table POSITION_PAYMENT_PLAN retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-
-    Scenario: Execute DB checks for position_transfer [NICM_DB_10]
-        Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
-        Then verify 2 record for the table POSITION_TRANSFER retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-
-    Scenario: Execute DB checks for position_status_snapshot [NICM_DB_14]
-        Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
-        Then verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
