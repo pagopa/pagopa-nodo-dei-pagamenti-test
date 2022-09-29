@@ -1372,6 +1372,9 @@ def step_impl(context, query_name, date, macro, db_name):
         #date = str(datetime.datetime.today())
         date = datetime.datetime.today().strftime("%Y-%m-%d %H:%M:%S")
 
+    if date == 'Yesterday':
+        date = datetime.date.today() - datetime.timedelta(days=1)
+
     selected_query = utils.query_json(
         context, query_name, macro).replace('date', date)
     conn = db.getConnection(db_selected.get('host'), db_selected.get(
