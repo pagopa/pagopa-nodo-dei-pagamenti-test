@@ -511,7 +511,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         And checks the value $nodoAttivaRPT.importoSingoloVersamento of the record at column SOMMA_VERSAMENTI of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
-        And checks the value $nodoInviaRPT.identificativoCanale of the record at column CANALE of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value #canale_IMMEDIATO_MULTIBENEFICIARIO# of the record at column CANALE of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value N of the record at column NOTIFICA_PROCESSATA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value NMP of the record at column GENERATA_DA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table RT retrived by the query iuv on db nodo_online under macro NewMod1
@@ -534,7 +534,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         And the informazioniPagamento scenario executed successfully
         And the pspNotifyPayment timeout scenario executed successfully
         And the closePaymentV2 scenario executed successfully
-        And wait 25 seconds for expiration
+        And wait 20 seconds for expiration
         And the sendPaymentOutcomeV2 scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
