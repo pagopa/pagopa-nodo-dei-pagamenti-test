@@ -260,7 +260,7 @@ Feature: revision checks for sendPaymentOutcomeV2
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And EC replies to nodo-dei-pagamenti with the pspNotifyPayment
+        And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
 
     # REV_SPO_03
 
