@@ -180,7 +180,7 @@ Feature: process tests for generazioneRicevute [DB_GR_27]
         And update through the query updated_timestamp with date Yesterday under macro update_query on db nodo_online
 
 
-    Scenario: Execute activatePaymentNotice request
+    Scenario: Execute second activatePaymentNotice request
         Given the trigger PollerAnnulli scenario executed successfully
         And initial XML activatePaymentNotice
             """
@@ -208,7 +208,7 @@ Feature: process tests for generazioneRicevute [DB_GR_27]
         Then check outcome is OK of activatePaymentNotice response
 
     Scenario: Execute sendPaymentOutcome
-        Given the Execute second nodoInviaRPT request scenario executed successfully
+        Given the Execute second activatePaymentNotice request scenario executed successfully
         And initial XML sendPaymentOutcome
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
