@@ -1,4 +1,4 @@
-Feature: process tests for generazioneRicevute [PAG-1245_PaOld_SPO]
+Feature: process tests for generazioneRicevute [DB_GR_27]
 
     Background:
         Given systems up
@@ -126,8 +126,9 @@ Feature: process tests for generazioneRicevute [PAG-1245_PaOld_SPO]
             <fiscalCode>#creditor_institution_code_old#</fiscalCode>
             <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
             </qrCode>
-            <expirationTime>2000</expirationTime>
+            <expirationTime>6000</expirationTime>
             <amount>10.00</amount>
+            <paymentNote>causale</paymentNote>
             </nod:activatePaymentNoticeReq>
             </soapenv:Body>
             </soapenv:Envelope>
@@ -166,7 +167,7 @@ Feature: process tests for generazioneRicevute [PAG-1245_PaOld_SPO]
         When psp sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
         And check redirect is 0 of nodoInviaRPT response
-        And wait 4 seconds for expiration
+        And wait 7 seconds for expiration
 
 
     Scenario: Execute Trigger mod3Cancel
@@ -198,6 +199,7 @@ Feature: process tests for generazioneRicevute [PAG-1245_PaOld_SPO]
             </qrCode>
             <expirationTime>6000</expirationTime>
             <amount>10.00</amount>
+            <paymentNote>causale</paymentNote>
             </nod:activatePaymentNoticeReq>
             </soapenv:Body>
             </soapenv:Envelope>
@@ -279,7 +281,7 @@ Feature: process tests for generazioneRicevute [PAG-1245_PaOld_SPO]
             <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio>
             <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
             <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
-            <pay_i:causaleVersamento>pagamento fotocopie pratica RPT2</pay_i:causaleVersamento>
+            <pay_i:causaleVersamento>pagamento fotocopie pratica RPT</pay_i:causaleVersamento>
             <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
             </pay_i:datiSingoloVersamento>
             </pay_i:datiVersamento>
@@ -317,44 +319,7 @@ Feature: process tests for generazioneRicevute [PAG-1245_PaOld_SPO]
         And check redirect is 0 of nodoInviaRPT response
 
 
-    Scenario: Execute sendPaymentOutcome
+    Scenario: Execute second Trigger mod3Cancel
         Given the Execute second nodoInviaRPT request scenario executed successfully
-        And initial XML sendPaymentOutcome
-        """
-        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-        <soapenv:Header/>
-        <soapenv:Body>
-            <nod:sendPaymentOutcomeReq>
-            <idPSP>#psp#</idPSP>
-            <idBrokerPSP>#psp#</idBrokerPSP>
-            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
-            <password>pwdpwdpwd</password>
-            <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
-            <outcome>OK</outcome>
-            <details>
-                <paymentMethod>creditCard</paymentMethod>              
-                <paymentChannel>app</paymentChannel>
-                <fee>2.00</fee>               
-                <payer>
-                <uniqueIdentifier>
-                    <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-                    <entityUniqueIdentifierValue>77777777777_01</entityUniqueIdentifierValue>
-                </uniqueIdentifier>
-                <fullName>SPOname_$activatePaymentNoticeResponse.paymentToken</fullName>               
-                <streetName>street</streetName>               
-                <civicNumber>civic</civicNumber>               
-                <postalCode>postal</postalCode>               
-                <city>city</city>              
-                <stateProvinceRegion>state</stateProvinceRegion>              
-                <country>IT</country>             
-                <e-mail>prova@test.it</e-mail>
-                </payer>
-                <applicationDate>2021-12-12</applicationDate>
-                <transferDate>2021-12-11</transferDate>
-            </details>
-            </nod:sendPaymentOutcomeReq>
-        </soapenv:Body>
-        </soapenv:Envelope>
-        """
-        When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-        Then check outcome is OK of sendPaymentOutcome response
+        When job mod3CancelV1 triggered after 5 seconds
+        Then verify the HTTP status code of mod3CancelV1 response is 200

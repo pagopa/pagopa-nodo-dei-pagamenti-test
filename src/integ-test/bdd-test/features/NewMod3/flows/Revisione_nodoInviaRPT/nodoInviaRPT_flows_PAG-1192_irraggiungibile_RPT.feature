@@ -154,7 +154,6 @@ Feature: process tests for nodoInviaRPT [PAG-1192_timeout_RPT]
         And wait 10 seconds for expiration
         Then verify the HTTP status code of paInviaRt response is 200
 
-    @prova
     Scenario: Execute activatePaymentNotice3 request
         Given the Trigger paInviaRT scenario executed successfully
         And initial XML activatePaymentNotice
@@ -299,7 +298,6 @@ Feature: process tests for nodoInviaRPT [PAG-1192_timeout_RPT]
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-    @prova
     Scenario: Excecute nodoInviaRPT3
         Given the Define RPT3 scenario executed successfully
         And initial XML nodoInviaRPT
