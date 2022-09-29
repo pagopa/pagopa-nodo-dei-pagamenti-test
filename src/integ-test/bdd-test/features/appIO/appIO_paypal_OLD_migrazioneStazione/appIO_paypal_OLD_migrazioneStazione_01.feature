@@ -434,8 +434,6 @@ Feature: process test for appIO_paypal with station migration from V1 to V2 betw
         And checks the value 1 of the record at column PROGRESSIVO of the table RT_VERSAMENTI retrived by the query rt_versamenti_old on db nodo_online under macro NewMod3
         And with the query rt_versamenti_old check assert beetwen elem IMPORTO_RT in position 1 and elem AMOUNT with position 0 of the query payment_status
         And checks the value ESEGUITO of the record at column s.ESITO of the table RT_VERSAMENTI retrived by the query rt_versamenti_old on db nodo_online under macro NewMod3
-        And checks the value NotNone of the record at column s.INSERTED_TIMESTAMP of the table RT_VERSAMENTI retrived by the query rt_versamenti_old on db nodo_online under macro NewMod3
-        And checks the value NotNone of the record at column s.UPDATED_TIMESTAMP of the table RT_VERSAMENTI retrived by the query rt_versamenti_old on db nodo_online under macro NewMod3
         #POSITION_RECEIPT
         And execution query position_receipt_old to get value on the table POSITION_RECEIPT, with the columns RECEIPT_ID,s.NOTICE_ID,s.PA_FISCAL_CODE,s.CREDITOR_REFERENCE_ID,s.PAYMENT_TOKEN,s.OUTCOME,s.PAYMENT_AMOUNT,s.DESCRIPTION,s.COMPANY_NAME,s.OFFICE_NAME,s.DEBTOR_ID,s.PSP_ID,s.PSP_COMPANY_NAME,s.PSP_FISCAL_CODE,s.PSP_VAT_NUMBER,s.CHANNEL_ID,s.CHANNEL_DESCRIPTION,s.PAYER_ID,s.PAYMENT_METHOD,s.FEE,s.PAYMENT_DATE_TIME,s.APPLICATION_DATE,s.TRANSFER_DATE,s.METADATA,s.RT_ID,s.FK_POSITION_PAYMENT,s.ID under macro NewMod3 with db name nodo_online
         And execution query position_service to get value on the table POSITION_SERVICE, with the columns DESCRIPTION,COMPANY_NAME,OFFICE_NAME,DEBTOR_ID under macro NewMod3 with db name nodo_online
@@ -452,7 +450,7 @@ Feature: process test for appIO_paypal with station migration from V1 to V2 betw
         And with the query position_receipt_old check assert beetwen elem COMPANY_NAME in position 8 and elem COMPANY_NAME with position 1 of the query position_service
         And with the query position_receipt_old check assert beetwen elem OFFICE_NAME in position 9 and elem OFFICE_NAME with position 2 of the query position_service
         And with the query position_receipt_old check assert beetwen elem DEBTOR_ID in position 10 and elem DEBTOR_ID with position 3 of the query position_service
-        And checks the value $activatePaymentNotice.idPSP of the record at column PSP_ID of the table POSITION_RECEIPT retrived by the query position_receipt_old on db nodo_online under macro NewMod3
+        And checks the value #psp# of the record at column PSP_ID of the table POSITION_RECEIPT retrived by the query position_receipt_old on db nodo_online under macro NewMod3
         And with the query position_receipt_old check assert beetwen elem PSP_COMPANY_NAME in position 12 and elem PSP_COMPANY_NAME with position 0 of the query psp
         And with the query position_receipt_old check assert beetwen elem PSP_FISCAL_CODE in position 13 and elem PSP_FISCAL_CODE with position 1 of the query psp
         And with the query position_receipt_old check assert beetwen elem PSP_VAT_NUMBER in position 14 and elem PSP_VAT_NUMBER with position 2 of the query psp
