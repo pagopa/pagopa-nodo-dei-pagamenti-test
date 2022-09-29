@@ -128,7 +128,6 @@ Feature: process tests for generazioneRicevute [DB_GR_27]
             </qrCode>
             <expirationTime>2000</expirationTime>
             <amount>10.00</amount>
-            <paymentNote>causale</paymentNote>
             </nod:activatePaymentNoticeReq>
             </soapenv:Body>
             </soapenv:Envelope>
@@ -199,7 +198,6 @@ Feature: process tests for generazioneRicevute [DB_GR_27]
             </qrCode>
             <expirationTime>6000</expirationTime>
             <amount>10.00</amount>
-            <paymentNote>causale</paymentNote>
             </nod:activatePaymentNoticeReq>
             </soapenv:Body>
             </soapenv:Envelope>
