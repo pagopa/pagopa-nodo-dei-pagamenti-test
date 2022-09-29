@@ -303,30 +303,32 @@ Feature: idempotency checks for sendPaymentOutcomeV2
         Then verify the HTTP status code of informazioniPagamento response is 200
 
     @skip
-    Scenario: closePaymentV2
-        Given initial JSON v2/closepayment
+    Scenario: closePayment
+        Given initial json v1/closepayment
             """
             {
                 "paymentTokens": [
                     "$sessionToken"
                 ],
                 "outcome": "OK",
-                "idPSP": "#psp#",
-                "idBrokerPSP": "#id_broker_psp#",
-                "idChannel": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
-                "paymentMethod": "TPAY",
-                "transactionId": "#transaction_id#",
+                "identificativoPsp": "#psp#",
+                "tipoVersamento": "BPAY",
+                "identificativoIntermediario": "#id_broker_psp#",
+                "identificativoCanale": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
+                "pspTransactionId": "#psp_transaction_id#",
                 "totalAmount": 12,
                 "fee": 2,
-                "timestampOperation": "2033-04-23T18:25:43Z",
+                "timestampOperation": "2012-04-23T18:25:43Z",
                 "additionalPaymentInformations": {
-                    "key": "10793459"
+                    "transactionId": "#transaction_id#",
+                    "outcomePaymentGateway": "EFF",
+                    "authorizationCode": "resOK"
                 }
             }
             """
-        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
-        Then verify the HTTP status code of v2/closepayment response is 200
-        And check outcome is OK of v2/closepayment response
+        When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v1/closepayment response is 200
+        And check esito is OK of v1/closepayment response
         And wait 5 seconds for expiration
 
     @skip
@@ -390,7 +392,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2
         And the nodoAttivaRPT scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
         And the informazioniPagamento scenario executed successfully
-        And the closePaymentV2 scenario executed successfully
+        And the closePayment scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
@@ -414,7 +416,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2
         And the nodoAttivaRPT scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
         And the informazioniPagamento scenario executed successfully
-        And the closePaymentV2 scenario executed successfully
+        And the closePayment scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
         And idPSP with Empty in sendPaymentOutcomeV2
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -429,7 +431,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2
         And the nodoAttivaRPT scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
         And the informazioniPagamento scenario executed successfully
-        And the closePaymentV2 scenario executed successfully
+        And the closePayment scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
         And paymentToken with 798c6a817ed9482fa5659c45f4a25f286 in sendPaymentOutcomeV2
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -454,7 +456,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2
         And the nodoAttivaRPT scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
         And the informazioniPagamento scenario executed successfully
-        And the closePaymentV2 scenario executed successfully
+        And the closePayment scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
         And idBrokerPSP with 70000000001 in sendPaymentOutcomeV2
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -479,7 +481,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2
         And the nodoAttivaRPT scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
         And the informazioniPagamento scenario executed successfully
-        And the closePaymentV2 scenario executed successfully
+        And the closePayment scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
@@ -507,7 +509,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2
         And the nodoAttivaRPT scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
         And the informazioniPagamento scenario executed successfully
-        And the closePaymentV2 scenario executed successfully
+        And the closePayment scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
@@ -539,7 +541,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2
         And the nodoAttivaRPT scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
         And the informazioniPagamento scenario executed successfully
-        And the closePaymentV2 scenario executed successfully
+        And the closePayment scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
@@ -569,7 +571,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2
         And the nodoAttivaRPT scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
         And the informazioniPagamento scenario executed successfully
-        And the closePaymentV2 scenario executed successfully
+        And the closePayment scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
@@ -600,7 +602,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2
         And the nodoAttivaRPT scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
         And the informazioniPagamento scenario executed successfully
-        And the closePaymentV2 scenario executed successfully
+        And the closePayment scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
@@ -645,7 +647,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2
         And the nodoAttivaRPT scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
         And the informazioniPagamento scenario executed successfully
-        And the closePaymentV2 scenario executed successfully
+        And the closePayment scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
@@ -665,7 +667,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2
         And the nodoAttivaRPT scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
         And the informazioniPagamento scenario executed successfully
-        And the closePaymentV2 scenario executed successfully
+        And the closePayment scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
         And idempotencyKey with None in sendPaymentOutcomeV2
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -679,7 +681,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2
         And the nodoAttivaRPT scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
         And the informazioniPagamento scenario executed successfully
-        And the closePaymentV2 scenario executed successfully
+        And the closePayment scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
