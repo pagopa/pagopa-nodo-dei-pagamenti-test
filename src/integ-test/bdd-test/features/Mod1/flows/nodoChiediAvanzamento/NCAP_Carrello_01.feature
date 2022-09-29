@@ -155,5 +155,5 @@ Feature: NCAP
         Given the RPT generation scenario executed successfully
         When WISP sends REST GET avanzamentoPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of avanzamentoPagamento response is 200
-        And check error is PARKED of avanzamentoPagamento response
-        #And restore initial configurations
+        And check esito is PARKED of avanzamentoPagamento response
+        And restore initial configurations

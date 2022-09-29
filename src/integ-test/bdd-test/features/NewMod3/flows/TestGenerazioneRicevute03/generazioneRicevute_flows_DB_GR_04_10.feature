@@ -163,11 +163,3 @@ Feature: process tests for generazioneRicevute
       </soapenv:Body>
       </soapenv:Envelope>
       """
-
-  # test execution
-  Scenario: Execution test DB_GR_01
-    Given the Execute sendPaymentOutcome (Phase 1) scenario executed successfully
-    When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-    Then check outcome is OK of sendPaymentOutcome response
-    #db check1
-    And check DB_GR_01
