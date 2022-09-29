@@ -326,7 +326,7 @@ Feature: process test for appIO_paypal with station migration from V1 to V2 betw
                 "idPagamento": "$sessionToken",
                 "identificativoIntermediario": "#psp#",
                 "identificativoPsp": "#psp#",
-                "identificativoCanale": "#canale#",
+                "identificativoCanale": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
                 "importoTotalePagato": 10,
                 "timestampOperazione": "2012-04-23T18:25:43Z"
             }
@@ -517,6 +517,6 @@ Feature: process test for appIO_paypal with station migration from V1 to V2 betw
 
 
     #refresh pa e stazioni
-    Scenario: Execute refresh pa e stazioni
+    Scenario: Execute refresh pa e stazioni 2
         Given the Execute station version update 2 scenario executed successfully
         Then refresh job PA triggered after 10 seconds
