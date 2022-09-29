@@ -483,7 +483,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         Then check outcome is OK of sendPaymentOutcomeV2 response
 
     # SEM_SPO_31
-@wip
+
     Scenario: SEM_SPO_31
         Given the nodoVerificaRPT scenario executed successfully
         And the nodoAttivaRPT scenario executed successfully
