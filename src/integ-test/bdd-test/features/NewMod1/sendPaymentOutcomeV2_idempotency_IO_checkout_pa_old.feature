@@ -659,7 +659,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2
         And nodo-dei-pagamenti DEV has config parameter useIdempotency set to true
 
     # IDMP_SPO_26
-
+@wip
     Scenario: IDMP_SPO_26
         Given the nodoVerificaRPT scenario executed successfully
         And the nodoAttivaRPT scenario executed successfully
