@@ -12,8 +12,8 @@ Feature: process tests for nodoInviaRPT [PAG-1192_timeout_RPT]
             <soapenv:Body>
             <nod:activatePaymentNoticeReq>
             <idPSP>#psp#</idPSP>
-            <idBrokerPSP>#id_broker#</idBrokerPSP>
-            <idChannel>#canale#</idChannel>
+            <idBrokerPSP>#psp#</idBrokerPSP>
+            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
             <password>pwdpwdpwd</password>
             <qrCode>
             <fiscalCode>#creditor_institution_code_old#</fiscalCode>
@@ -25,6 +25,7 @@ Feature: process tests for nodoInviaRPT [PAG-1192_timeout_RPT]
             </soapenv:Body>
             </soapenv:Envelope>
             """
+
         When psp sends soap activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
 
@@ -119,7 +120,7 @@ Feature: process tests for nodoInviaRPT [PAG-1192_timeout_RPT]
             <soapenv:Header>
             <ppt:intestazionePPT>
             <identificativoIntermediarioPA>#codicePA_old#</identificativoIntermediarioPA>
-            <identificativoStazioneIntermediarioPA>#canale#</identificativoStazioneIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
             <identificativoDominio>#codicePA_old#</identificativoDominio>
             <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken</codiceContestoPagamento>
@@ -149,10 +150,11 @@ Feature: process tests for nodoInviaRPT [PAG-1192_timeout_RPT]
 
     Scenario: Trigger paInviaRT
         Given the Trigger mod3Cancel scenario executed successfully
-        When job paInviaRT triggered after 5 seconds
+        When job paInviaRt triggered after 5 seconds
         And wait 10 seconds for expiration
-        Then verify the HTTP status code of paInviaRT response is 200
+        Then verify the HTTP status code of paInviaRt response is 200
 
+    @prova
     Scenario: Execute activatePaymentNotice3 request
         Given the Trigger paInviaRT scenario executed successfully
         And initial XML activatePaymentNotice
@@ -169,18 +171,55 @@ Feature: process tests for nodoInviaRPT [PAG-1192_timeout_RPT]
             <fiscalCode>$activatePaymentNotice.fiscalCode</fiscalCode>
             <noticeNumber>$activatePaymentNotice.noticeNumber</noticeNumber>
             </qrCode>
-            <amount>3.00</amount>
+            <amount>7.00</amount>
             </nod:activatePaymentNoticeReq>
             </soapenv:Body>
             </soapenv:Envelope>
             """
+        And initial XML paaAttivaRPT
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <ws:paaAttivaRPTRisposta>
+            <paaAttivaRPTRisposta>
+            <esito>KO</esito>
+            <irraggiungibile/>
+            <datiPagamentoPA>
+            <importoSingoloVersamento>2.00</importoSingoloVersamento>
+            <ibanAccredito>IT96R0123454321000000012345</ibanAccredito>
+            <bicAccredito>BSCTCH22</bicAccredito>
+            <enteBeneficiario>
+            <pag:identificativoUnivocoBeneficiario>
+            <pag:tipoIdentificativoUnivoco>G</pag:tipoIdentificativoUnivoco>
+            <pag:codiceIdentificativoUnivoco>11111111117</pag:codiceIdentificativoUnivoco>
+            </pag:identificativoUnivocoBeneficiario>
+            <pag:denominazioneBeneficiario>AZIENDA XXX</pag:denominazioneBeneficiario>
+            <pag:codiceUnitOperBeneficiario>123</pag:codiceUnitOperBeneficiario>
+            <pag:denomUnitOperBeneficiario>uj</pag:denomUnitOperBeneficiario>
+            <pag:indirizzoBeneficiario>y</pag:indirizzoBeneficiario>
+            <pag:civicoBeneficiario>j</pag:civicoBeneficiario>
+            <pag:capBeneficiario>gt</pag:capBeneficiario>
+            <pag:localitaBeneficiario>gw</pag:localitaBeneficiario>
+            <pag:provinciaBeneficiario>ds</pag:provinciaBeneficiario>
+            <pag:nazioneBeneficiario>UK</pag:nazioneBeneficiario>
+            </enteBeneficiario>
+            <credenzialiPagatore>i</credenzialiPagatore>
+            <causaleVersamento>pagamento fotocopie pratica RPT</causaleVersamento>
+            </datiPagamentoPA>
+            </paaAttivaRPTRisposta>
+            </ws:paaAttivaRPTRisposta>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
         When psp sends soap activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNotice response
         And check faultCode is PPT_STAZIONE_INT_PA_IRRAGGIUNGIBILE of activatePaymentNotice response
-        And execution query payment_status to get value on the table POSITION_ACTIVATE, with the columns PAYMENT_TOKEN under macro NewMod3 with db name nodo_online
+        And execution query payment_status to get value on the table RPT_ACTIVATIONS, with the columns PAYMENT_TOKEN under macro NewMod3 with db name nodo_online
         And through the query payment_status retrieve param paymentToken at position 0 and save it under the key paymentToken
 
-    Scenario: Define RPT3
+     Scenario: Define RPT3
         Given the Execute activatePaymentNotice3 request scenario executed successfully
         And RPT generation
 
@@ -260,8 +299,7 @@ Feature: process tests for nodoInviaRPT [PAG-1192_timeout_RPT]
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-
-
+    @prova
     Scenario: Excecute nodoInviaRPT3
         Given the Define RPT3 scenario executed successfully
         And initial XML nodoInviaRPT
@@ -270,7 +308,7 @@ Feature: process tests for nodoInviaRPT [PAG-1192_timeout_RPT]
             <soapenv:Header>
             <ppt:intestazionePPT>
             <identificativoIntermediarioPA>#codicePA_old#</identificativoIntermediarioPA>
-            <identificativoStazioneIntermediarioPA>#canale#</identificativoStazioneIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
             <identificativoDominio>#codicePA_old#</identificativoDominio>
             <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$paymentToken</codiceContestoPagamento>
@@ -289,7 +327,10 @@ Feature: process tests for nodoInviaRPT [PAG-1192_timeout_RPT]
             </soapenv:Envelope>
             """
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        And job paInviaRt triggered after 5 seconds
+        And wait 5 seconds for expiration
         Then check esito is OK of nodoInviaRPT response
+        And verify the HTTP status code of paInviaRt response is 200
 
         #CHECK2-RPT ACTIVATIONS
         And verify 0 record for the table RPT_ACTIVATIONS retrived by the query payment_status on db nodo_online under macro NewMod3
@@ -300,11 +341,10 @@ Feature: process tests for nodoInviaRPT [PAG-1192_timeout_RPT]
         And checks the value $iuv of the record at column CREDITOR_REFERENCE_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
         And checks the value $paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
         And checks the value $activatePaymentNotice.fiscalCode of the record at column BROKER_PA_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
-        And checks the value 1 of the record at column STATION_VERSION of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
         And checks the value 15376371009 of the record at column PSP_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
         And checks the value 15376371009 of the record at column BROKER_PSP_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
         And checks the value 15376371009_01 of the record at column CHANNEL_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
-        And checks the value None of the record at column IDEMPOTENCY_KEY of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
+       
 
         And execution query payment_status to get value on the table POSITION_PAYMENT, with the columns AMOUNT under macro NewMod3 with db name nodo_online
         And through the query payment_status retrieve param SOMMA_VERSAMENTI at position 0 and save it under the key AMOUNT

@@ -34,7 +34,7 @@ Feature: NIFRFTP
                 <pay_i:identificativoUnivocoRiscossione>$iuv</pay_i:identificativoUnivocoRiscossione>
                 <pay_i:indiceDatiSingoloPagamento>1</pay_i:indiceDatiSingoloPagamento>
                 <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
-                <pay_i:codiceEsitoSingoloPagamento>0</pay_i:codiceEsitoSingoloPagamento>
+                <pay_i:codiceEsitoSingoloPagamento>errore</pay_i:codiceEsitoSingoloPagamento>
                 <pay_i:dataEsitoSingoloPagamento>#date#</pay_i:dataEsitoSingoloPagamento>
             </pay_i:datiSingoliPagamenti>
             </pay_i:FlussoRiversamento>
@@ -53,7 +53,7 @@ Feature: NIFRFTP
                     <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
                     <identificativoCanale>#canale#</identificativoCanale>
                     <password>pwdpwdpwd</password>
-                    <identificativoDominio>44444444445</identificativoDominio>
+                    <identificativoDominio>#creditor_institution_code#</identificativoDominio>
                     <identificativoFlusso>$identificativoFlusso</identificativoFlusso>
                     <dataOraFlusso>$timedate</dataOraFlusso>
                     <xmlRendicontazione>$rendAttachment</xmlRendicontazione>
@@ -62,9 +62,9 @@ Feature: NIFRFTP
             </soapenv:Envelope>
             """
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
-        Then check esito is OK of nodoInviaFlussoRendicontazione response
+        Then check faultCode is PPT_SINTASSI_XSD of nodoInviaFlussoRendicontazione response
 
-        And replace pa content with 44444444445 content
+        And replace pa content with #creditor_institution_code# content
 
         # Rendicontazione
         And checks the value 0 of the record at column OPTLOCK of the table RENDICONTAZIONE retrived by the query rendicontazione on db nodo_offline under macro RendicontazioneFTPeBollo
@@ -75,21 +75,13 @@ Feature: NIFRFTP
         And checks the value $pa of the record at column DOMINIO of the table RENDICONTAZIONE retrived by the query rendicontazione on db nodo_offline under macro RendicontazioneFTPeBollo
         And checks the value NotNone of the record at column DATA_ORA_FLUSSO of the table RENDICONTAZIONE retrived by the query rendicontazione on db nodo_offline under macro RendicontazioneFTPeBollo
         And checks the value None of the record at column FK_SFTP_FILE of the table RENDICONTAZIONE retrived by the query rendicontazione on db nodo_offline under macro RendicontazioneFTPeBollo
+        And checks the value None of the record at column FK_BINARY_FILE of the table RENDICONTAZIONE retrived by the query rendicontazione on db nodo_offline under macro RendicontazioneFTPeBollo
         
-        And execution query rendicontazione to get value on the table RENDICONTAZIONE, with the columns FK_BINARY_FILE under macro RendicontazioneFTPeBollo with db name nodo_offline
-        And through the query rendicontazione retrieve param fkBinaryFile at position 0 and save it under the key fkBinaryFile
-        And checks the value $fkBinaryFile of the record at column ID of the table BINARY_FILE retrived by the query binary_file on db nodo_offline under macro RendicontazioneFTPeBollo
-        
-        And checks the value VALID of the record at column STATO of the table RENDICONTAZIONE retrived by the query rendicontazione on db nodo_offline under macro RendicontazioneFTPeBollo
+        And checks the value INVALID of the record at column STATO of the table RENDICONTAZIONE retrived by the query rendicontazione on db nodo_offline under macro RendicontazioneFTPeBollo
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RENDICONTAZIONE retrived by the query rendicontazione on db nodo_offline under macro RendicontazioneFTPeBollo
 
         # BINARY_FILE
-        And checks the value NotNone of the record at column FILE_SIZE of the table BINARY_FILE retrived by the query binary_file on db nodo_offline under macro RendicontazioneFTPeBollo
-        And checks the value NotNone of the record at column FILE_CONTENT of the table BINARY_FILE retrived by the query binary_file on db nodo_offline under macro RendicontazioneFTPeBollo
-        And checks the value None of the record at column FILE_HASH of the table BINARY_FILE retrived by the query binary_file on db nodo_offline under macro RendicontazioneFTPeBollo
-        And checks the value None of the record at column SIGNATURE_TYPE of the table BINARY_FILE retrived by the query binary_file on db nodo_offline under macro RendicontazioneFTPeBollo
-        And checks the value NotNone of the record at column XML_FILE_CONTENT of the table BINARY_FILE retrived by the query binary_file on db nodo_offline under macro RendicontazioneFTPeBollo
-
+        And verify 0 record for the table BINARY_FILE retrived by the query binary_file on db nodo_offline under macro RendicontazioneFTPeBollo 
 
         # RENDICONTAZIONE_SFTP_SEND_QUEU
         And verify 0 record for the table RENDICONTAZIONE_SFTP_SEND_QUEUE retrived by the query send_queue on db nodo_offline under macro RendicontazioneFTPeBollo 
@@ -102,10 +94,10 @@ Feature: NIFRFTP
             <soapenv:Header/>
             <soapenv:Body>
                 <ws:nodoChiediFlussoRendicontazione>
-                    <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
-                    <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
+                    <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
+                    <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
                     <password>pwdpwdpwd</password>
-                    <identificativoDominio>$pa</identificativoDominio>
+                    <identificativoDominio>#creditor_institution_code#</identificativoDominio>
                     <identificativoPSP>#psp#</identificativoPSP>
                     <identificativoFlusso>$identificativoFlusso</identificativoFlusso>
                 </ws:nodoChiediFlussoRendicontazione>
@@ -113,5 +105,5 @@ Feature: NIFRFTP
             </soapenv:Envelope>
             """
         When EC sends SOAP nodoChiediFlussoRendicontazione to nodo-dei-pagamenti
-        Then check xmlRendicontazione contains $rendAttachment of nodoChiediFlussoRendicontazione response
+        Then check faultCode is PPT_ID_FLUSSO_SCONOSCIUTO of nodoChiediFlussoRendicontazione response
 

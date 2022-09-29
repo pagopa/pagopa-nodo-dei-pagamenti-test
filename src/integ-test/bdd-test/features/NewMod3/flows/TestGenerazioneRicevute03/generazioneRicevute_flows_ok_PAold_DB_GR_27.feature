@@ -1,4 +1,4 @@
-Feature: process tests for generazioneRicevute [DB_GR_24]
+Feature: process tests for generazioneRicevute [DB_GR_27]
 
   Background:
     Given systems up
@@ -126,7 +126,7 @@ Feature: process tests for generazioneRicevute [DB_GR_24]
       <fiscalCode>#creditor_institution_code_old#</fiscalCode>
       <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
       </qrCode>
-      <expirationTime>60000</expirationTime>
+      <expirationTime>10000</expirationTime>
       <amount>10.00</amount>
       <paymentNote>causale</paymentNote>
       </nod:activatePaymentNoticeReq>
@@ -135,6 +135,7 @@ Feature: process tests for generazioneRicevute [DB_GR_24]
       """
     When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
+
 
   # nodoInviaRPT phase
   Scenario: Execute nodoInviaRPT request
@@ -182,7 +183,7 @@ Feature: process tests for generazioneRicevute [DB_GR_24]
       <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
       <password>pwdpwdpwd</password>
       <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
-      <outcome>OK</outcome>
+      <outcome>KO</outcome>
       <details>
       <paymentMethod>creditCard</paymentMethod>
       <paymentChannel>app</paymentChannel>
@@ -210,9 +211,74 @@ Feature: process tests for generazioneRicevute [DB_GR_24]
       """
     When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
-    And wait 10 seconds for expiration
-
-    
+    And wait 5 seconds for expiration
 
 
+  Scenario: Execute second activatePaymentNotice request
+    Given the Execute sendPaymentOutcome request scenario executed successfully
+    And initial XML activatePaymentNotice
+      """
+      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+      <soapenv:Header />
+      <soapenv:Body>
+      <nod:activatePaymentNoticeReq>
+      <idPSP>#psp#</idPSP>
+      <idBrokerPSP>#psp#</idBrokerPSP>
+      <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
+      <password>pwdpwdpwd</password>
+      <idempotencyKey>#idempotency_key#</idempotencyKey>
+      <qrCode>
+      <fiscalCode>#creditor_institution_code_old#</fiscalCode>
+      <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
+      </qrCode>
+      <expirationTime>2000</expirationTime>
+      <amount>10.00</amount>
+      <paymentNote>causale</paymentNote>
+      </nod:activatePaymentNoticeReq>
+      </soapenv:Body>
+      </soapenv:Envelope>
+      """
+    When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+    Then check outcome is OK of activatePaymentNotice response
+
+
+  Scenario: Execute mod3CancelV1 job
+    Given the Execute second activatePaymentNotice request scenario executed successfully
+    When job mod3CancelV1 triggered after 10 seconds
+    Then wait 10 seconds for expiration
+
+    #PA query
+    And replace pa content with #creditor_institution_code_old# content
+    And execution query get_pa_id to get value on the table PA, with the columns RAGIONE_SOCIALE under macro costanti with db name nodo_cfg
+    And through the query get_pa_id retrieve param pa_ragione_sociale at position 0 and save it under the key pa_ragione_sociale
+
+    #POSITION_SERVICE query
+    And execution query position_service to get value on the table POSITION_SERVICE, with the columns * under macro NewMod3 with db name nodo_online
+    And checks the value NotNone of the record at column ID of the table POSITION_SERVICE retrived by the query position_service on db nodo_online under macro NewMod3
+    And through the query position_service retrieve param ps_id at position 0 and save it under the key ps_id
+    And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table POSITION_SERVICE retrived by the query position_service on db nodo_online under macro NewMod3
+    And checks the value $verifyPaymentNotice.noticeNumber of the record at column NOTICE_ID of the table POSITION_SERVICE retrived by the query position_service on db nodo_online under macro NewMod3
+    And checks the value pagamento multibeneficiario of the record at column DESCRIPTION of the table POSITION_SERVICE retrived by the query position_service on db nodo_online under macro NewMod3
+    And checks the value $pa_ragione_sociale of the record at column COMPANY_NAME of the table POSITION_SERVICE retrived by the query position_service on db nodo_online under macro NewMod3
+    And checks the value None of the record at column OFFICE_NAME of the table POSITION_SERVICE retrived by the query position_service on db nodo_online under macro NewMod3
+    And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_SERVICE retrived by the query position_service on db nodo_online under macro NewMod3
+    And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_SERVICE retrived by the query position_service on db nodo_online under macro NewMod3
+
+    #POSITION_PAYMENT_PLAN query
+    And execution query position_service to get value on the table POSITION_PAYMENT_PLAN, with the columns * under macro NewMod3 with db name nodo_online
+    And checks the value NotNone of the record at column ID of the table POSITION_PAYMENT_PLAN retrived by the query position_service on db nodo_online under macro NewMod3
+    And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table POSITION_PAYMENT_PLAN retrived by the query position_service on db nodo_online under macro NewMod3
+    And checks the value $verifyPaymentNotice.noticeNumber of the record at column NOTICE_ID of the table POSITION_PAYMENT_PLAN retrived by the query position_service on db nodo_online under macro NewMod3
+    And checks the value #cod_segr_old#$nodoInviaRPT.identificativoUnivocoVersamento of the record at column CREDITOR_REFERENCE_ID of the table POSITION_PAYMENT_PLAN retrived by the query position_service on db nodo_online under macro NewMod3
+    And checks the value NotNone of the record at column DUE_DATE of the table POSITION_PAYMENT_PLAN retrived by the query position_service on db nodo_online under macro NewMod3
+    And checks the value None of the record at column RETENTION_DATE of the table POSITION_PAYMENT_PLAN retrived by the query position_service on db nodo_online under macro NewMod3
+    And checks the value 10.00 of the record at column AMOUNT of the table POSITION_PAYMENT_PLAN retrived by the query position_service on db nodo_online under macro NewMod3
+    And checks the value Y of the record at column FLAG_FINAL_PAYMENT of the table POSITION_PAYMENT_PLAN retrived by the query position_service on db nodo_online under macro NewMod3
+    And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_PAYMENT_PLAN retrived by the query position_service on db nodo_online under macro NewMod3
+    And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_PAYMENT_PLAN retrived by the query position_service on db nodo_online under macro NewMod3
+    And checks the value None of the record at column METADATA of the table POSITION_PAYMENT_PLAN retrived by the query position_service on db nodo_online under macro NewMod3
+    And checks the value $ps_id of the record at column FK_POSITION_SERVICE of the table POSITION_PAYMENT_PLAN retrived by the query position_service on db nodo_online under macro NewMod3
+
+    #POSITION_RECEIPT_XML query
+    And verify 0 record for the table POSITION_RECEIPT_XML retrived by the query position_receipt_xml on db nodo_online under macro NewMod3
     
