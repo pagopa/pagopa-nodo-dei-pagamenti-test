@@ -283,7 +283,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
         And wait 5 seconds for expiration
-@wip
+
     Scenario: SEM_SPO_7.1 (part 3)
         Given the SEM_SPO_7.1 (part 2) scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
