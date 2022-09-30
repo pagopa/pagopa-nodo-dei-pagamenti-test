@@ -65,10 +65,9 @@ def step_impl(context, primitive):
         my_document = parseString(payload)
         idBrokerPSP = "70000000001"
         if len(my_document.getElementsByTagName('idBrokerPSP')) > 0:
-            idBrokerPSP = my_document.getElementsByTagName('idBrokerPSP')[
-                0].firstChild.data
-        payload = payload.replace(
-            '#idempotency_key#', f"{idBrokerPSP}_{str(random.randint(1000000000, 9999999999))}")
+            idBrokerPSP = my_document.getElementsByTagName('idBrokerPSP')[0].firstChild.data
+        payload = payload.replace('#idempotency_key#', f"{idBrokerPSP}_{str(random.randint(1000000000, 9999999999))}")
+        payload = payload.replace('#idempotency_key_IOname#', "IOname" + "_" + str(random.randint(1000000000, 9999999999)))
 
     if "#timedate#" in payload:
         timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
@@ -762,12 +761,11 @@ def step_impl(context, tag, value, primitive):
         node_response = getattr(context, primitive + RESPONSE)
         json_response = node_response.json()
         founded_value = jo.get_value_from_key(json_response, tag)
-        print(founded_value)
-        print(f'check tag "{tag}" - expected: {value}, obtained: {json_response.get(tag)}')
+        print(f'check tag "{tag}" - expected: {value}, obtained: {founded_value}')
         assert str(founded_value) == value
 
 
-# controlla che il valore value sia una sottostringa del contentuo del tag
+# controlla che il valore value sia una sottostringa del contenuto del tag
 @then('check substring {value} in {tag} content of {primitive} response')
 def step_impl(context, tag, value, primitive):
     soap_response = getattr(context, primitive + RESPONSE)
@@ -828,6 +826,7 @@ def step_impl(context, tag, value, primitive):
         json_response = node_response.json()
         json_response = jo.convert_json_values_toString(json_response)
         print('>>>>>>>>>>>>>>', json_response)
+        print(value)
         find = jo.search_value(json_response, tag, value)
         assert find
 
