@@ -84,7 +84,7 @@ Feature: PRO_ANNULLO_00_PPALNEW
         Given the Execute activateIOPayment (Phase 2) scenario executed successfully
         When WISP sends rest GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200
-
+    @prova
     Scenario: Execute nodoInoltroEsitoPayPal (Phase 4)
         Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
         And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
@@ -94,8 +94,7 @@ Feature: PRO_ANNULLO_00_PPALNEW
             <soapenv:Body>
                 <psp:pspNotifyPaymentRes>
                 <outcome>OK</outcome>
-                <!--Optional:-->
-                <wait>20</wait>
+                <delay>60000</delay>
                 </psp:pspNotifyPaymentRes>
             </soapenv:Body>
         </soapenv:Envelope>
