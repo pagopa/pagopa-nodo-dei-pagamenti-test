@@ -281,7 +281,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
       And checks the value Y of the record at column FLAG_IO of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
       And checks the value Y of the record at column RICEVUTA_PM of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
       And checks the value N of the record at column FLAG_PAYPAL of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
-      And verify 1 record for the table PM_SESSION_DATA retrived by the query payment_status on db nodo_online under macro AppIO
+      And verify 1 record for the table PM_SESSION_DATA retrived by the query pm_session on db nodo_online under macro AppIO
 
    Scenario: FLUSSO_CP_01 (part 4)
       Given the FLUSSO_CP_01 (part 3) scenario executed successfully
