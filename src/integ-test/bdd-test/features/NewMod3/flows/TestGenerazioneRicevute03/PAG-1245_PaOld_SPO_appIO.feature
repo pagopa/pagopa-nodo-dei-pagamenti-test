@@ -197,7 +197,7 @@ Feature: process tests for generazioneRicevute [PAG-1245_PaOld_SPO_appIO]
             <identificativoIntermediarioPSPPagamento>#broker_AGID#</identificativoIntermediarioPSPPagamento>
             <identificativoCanalePagamento>97735020584_02</identificativoCanalePagamento>
             <codificaInfrastrutturaPSP>BARCODE-128-AIM</codificaInfrastrutturaPSP>
-            <codiceIdRPT><aim:aim128> <aim:CCPost>#ccPoste#</aim:CCPost> <aim:CodStazPA>#cod_segr#</aim:CodStazPA> <aim:AuxDigit>0</aim:AuxDigit>  <aim:CodIUV>$1iuv</aim:CodIUV></aim:aim128></codiceIdRPT>
+            <codiceIdRPT><aim:aim128> <aim:CCPost>#ccPoste#</aim:CCPost> <aim:CodStazPA>#cod_segr_old#</aim:CodStazPA> <aim:AuxDigit>0</aim:AuxDigit>  <aim:CodIUV>$1iuv</aim:CodIUV></aim:aim128></codiceIdRPT>
             <datiPagamentoPSP>
             <importoSingoloVersamento>10.00</importoSingoloVersamento>           
             <ibanAppoggio>IT96R0123454321000000012345</ibanAppoggio>           
@@ -364,7 +364,7 @@ Feature: process tests for generazioneRicevute [PAG-1245_PaOld_SPO_appIO]
         And check urlRedirectEC field exists in informazioniPagamento response
         And check bolloDigitale is False of informazioniPagamento response
         And check email is gesualdo.riccitelli@poste.it of informazioniPagamento response
-        #And check urlRedirectEC contains http://siapagopa.rf.gd/ec?qrstr=prova&idSession of informazioniPagamento response
+        And check urlRedirectEC contains http://siapagopa.rf.gd/ec?qrstr=prova&idSession=$activatePaymentNoticeResponse.paymentToken&idDominio=$activatePaymentNotice.fiscalCode of informazioniPagamento response
 
 
     Scenario: Execute nodoInoltraEsitoPagamentoPaypal request
@@ -403,7 +403,7 @@ Feature: process tests for generazioneRicevute [PAG-1245_PaOld_SPO_appIO]
                     <payer>
                     <uniqueIdentifier>
                         <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-                        <entityUniqueIdentifierValue>77777777777_01</entityUniqueIdentifierValue>
+                        <entityUniqueIdentifierValue>#id_station_old#</entityUniqueIdentifierValue>
                     </uniqueIdentifier>
                     <fullName>SPOname_$activatePaymentNoticeResponse.paymentToken</fullName>               
                     <streetName>street</streetName>               
