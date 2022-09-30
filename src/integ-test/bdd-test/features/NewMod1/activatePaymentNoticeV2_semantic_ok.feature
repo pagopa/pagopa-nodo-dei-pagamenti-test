@@ -3,7 +3,6 @@ Feature: semantic checks OK for activatePaymentNoticeV2Request
     Background:
         Given systems up
 
-    @skip
     Scenario: activatePaymentNoticeV2 with paGetPayment
         Given initial XML activatePaymentNoticeV2
             """
@@ -97,7 +96,6 @@ Feature: semantic checks OK for activatePaymentNoticeV2Request
             """
         And EC replies to nodo-dei-pagamenti with the paGetPayment
 
-    @skip
     Scenario: activatePaymentNoticeV2 with paGetPaymentV2
         Given initial XML activatePaymentNoticeV2
             """
