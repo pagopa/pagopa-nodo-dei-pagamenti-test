@@ -7,23 +7,23 @@ Feature: process tests for generazioneRicevute
     Scenario: Execute verifyPaymentNotice (Phase 1)
         Given update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with N, with where condition FK_PA and where value ('6','8') under macro update_query on db nodo_cfg
         And initial XML verifyPaymentNotice
-        """
-        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-        <soapenv:Header/>
-        <soapenv:Body>
-        <nod:verifyPaymentNoticeReq>
-        <idPSP>#psp#</idPSP>
-        <idBrokerPSP>#psp#</idBrokerPSP>
-        <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
-        <password>pwdpwdpwd</password>
-        <qrCode>
-        <fiscalCode>#creditor_institution_code#</fiscalCode>
-        <noticeNumber>#notice_number#</noticeNumber>
-        </qrCode>
-        </nod:verifyPaymentNoticeReq>
-        </soapenv:Body>
-        </soapenv:Envelope>
-        """
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <nod:verifyPaymentNoticeReq>
+            <idPSP>#psp#</idPSP>
+            <idBrokerPSP>#psp#</idBrokerPSP>
+            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
+            <password>pwdpwdpwd</password>
+            <qrCode>
+            <fiscalCode>#creditor_institution_code#</fiscalCode>
+            <noticeNumber>#notice_number#</noticeNumber>
+            </qrCode>
+            </nod:verifyPaymentNoticeReq>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
         When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of verifyPaymentNotice response
 
