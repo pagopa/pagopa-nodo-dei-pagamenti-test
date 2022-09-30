@@ -197,7 +197,7 @@ Feature: process tests for generazioneRicevute [PAG-1245_PaOld_SPO_appIO]
             <identificativoIntermediarioPSPPagamento>#broker_AGID#</identificativoIntermediarioPSPPagamento>
             <identificativoCanalePagamento>97735020584_02</identificativoCanalePagamento>
             <codificaInfrastrutturaPSP>BARCODE-128-AIM</codificaInfrastrutturaPSP>
-            <codiceIdRPT><aim:aim128> <aim:CCPost>#ccPoste#</aim:CCPost> <aim:CodStazPA>#cod_segr_old#</aim:CodStazPA> <aim:AuxDigit>0</aim:AuxDigit>  <aim:CodIUV>$1iuv</aim:CodIUV></aim:aim128></codiceIdRPT>
+            <codiceIdRPT><aim:aim128> <aim:CCPost>#ccPoste#</aim:CCPost> <aim:AuxDigit>0</aim:AuxDigit>  <aim:CodIUV>#cod_segr_old#$1iuv</aim:CodIUV></aim:aim128></codiceIdRPT>
             <datiPagamentoPSP>
             <importoSingoloVersamento>10.00</importoSingoloVersamento>           
             <ibanAppoggio>IT96R0123454321000000012345</ibanAppoggio>           
