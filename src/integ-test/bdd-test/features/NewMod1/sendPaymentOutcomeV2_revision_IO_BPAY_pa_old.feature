@@ -391,7 +391,7 @@ Feature: revision checks for sendPaymentOutcomeV2
             <soapenv:Header/>
             <soapenv:Body>
             <psp:pspNotifyPaymentRes>
-            <delay>25000</delay>
+            <delay>60000</delay>
             </psp:pspNotifyPaymentRes>
             </soapenv:Body>
             </soapenv:Envelope>
@@ -536,7 +536,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         And the informazioniPagamento scenario executed successfully
         And the pspNotifyPayment timeout scenario executed successfully
         And the closePayment scenario executed successfully
-        And wait 20 seconds for expiration
+        And wait 60 seconds for expiration
         And the sendPaymentOutcomeV2 scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
