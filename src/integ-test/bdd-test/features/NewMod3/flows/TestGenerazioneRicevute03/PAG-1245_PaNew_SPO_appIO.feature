@@ -191,7 +191,6 @@ Feature: process tests for generazioneRicevute [PAG-1245_PaNew_SPO_appIO]
         And check urlRedirectEC field exists in informazioniPagamento response
         And check bolloDigitale is False of informazioniPagamento response
         And check urlRedirectEC contains http://siapagopa.rf.gd/ec?qrstr=prova&idSession=$activateIOPaymentResponse.paymentToken of informazioniPagamento response
-        And check email is gesualdo.riccitelli@poste.it of informazioniPagamento response
         And check dettagli field exists in informazioniPagamento response
         And check IUV is $1iuv of informazioniPagamento response
         And check idDominio is #creditor_institution_code_old# of informazioniPagamento response
