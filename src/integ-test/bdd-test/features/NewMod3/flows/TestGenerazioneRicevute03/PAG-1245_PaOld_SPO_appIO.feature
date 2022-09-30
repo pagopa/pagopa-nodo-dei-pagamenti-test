@@ -389,3 +389,46 @@ Feature: process tests for generazioneRicevute [PAG-1245_PaOld_SPO_appIO]
             """
         Then check esito is OK of inoltroEsito/paypal response
         And activateIOPayment response and pspNotifyPayment request are consistent with paypal
+
+
+    Scenario: Execute sendPaymentOutcome
+        Given the Execute nodoInoltraEsitoPagamentoPaypal request scenario executed successfully
+        And initial XML sendPaymentOutcome
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+                <nod:sendPaymentOutcomeReq>
+                <idPSP>#psp#</idPSP>
+                <idBrokerPSP>#psp#</idBrokerPSP>
+                <idChannel>#canale#</idChannel>
+                <password>pwdpwdpwd</password>
+                <paymentToken>$ccp</paymentToken>
+                <outcome>OK</outcome>
+                <details>
+                    <paymentMethod>creditCard</paymentMethod>              
+                    <paymentChannel>app</paymentChannel>
+                    <fee>2.00</fee>               
+                    <payer>
+                    <uniqueIdentifier>
+                        <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
+                        <entityUniqueIdentifierValue>77777777777_01</entityUniqueIdentifierValue>
+                    </uniqueIdentifier>
+                    <fullName>SPOname_$activatePaymentNoticeResponse.paymentToken</fullName>               
+                    <streetName>street</streetName>               
+                    <civicNumber>civic</civicNumber>               
+                    <postalCode>postal</postalCode>               
+                    <city>city</city>              
+                    <stateProvinceRegion>state</stateProvinceRegion>              
+                    <country>IT</country>             
+                    <e-mail>prova@test.it</e-mail>
+                    </payer>
+                    <applicationDate>2021-12-12</applicationDate>
+                    <transferDate>2021-12-11</transferDate>
+                </details>
+                </nod:sendPaymentOutcomeReq>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+        Then check outcome is OK of sendPaymentOutcome response
