@@ -17,7 +17,7 @@ Feature: process tests for generazioneRicevute [PAG-1245_PaNew_SPO_appIO]
             <nod:verifyPaymentNoticeReq>
             <idPSP>#psp#</idPSP>
             <idBrokerPSP>#psp#</idBrokerPSP>
-            <idChannel>#canale#</idChannel>
+            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
             <password>pwdpwdpwd</password>
             <qrCode>
             <fiscalCode>#creditor_institution_code#</fiscalCode>
@@ -192,8 +192,8 @@ Feature: process tests for generazioneRicevute [PAG-1245_PaNew_SPO_appIO]
         And check bolloDigitale is False of informazioniPagamento response
         And check urlRedirectEC contains http://siapagopa.rf.gd/ec?qrstr=prova&idSession=$activateIOPaymentResponse.paymentToken of informazioniPagamento response
         And check dettagli field exists in informazioniPagamento response
-        And check IUV is $1iuv of informazioniPagamento response
-        And check idDominio is #creditor_institution_code_old# of informazioniPagamento response
+        # And check IUV is $1iuv of informazioniPagamento response
+        # And check idDominio is #creditor_institution_code_old# of informazioniPagamento response
         And check enteBeneficiario field exists in informazioniPagamento response
 
 
