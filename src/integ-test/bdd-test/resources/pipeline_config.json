@@ -46,7 +46,8 @@
     "channelPoste": "POSTE3",
     "psp_AGID": "AGID_01",
     "broker_AGID": "97735020584",
-    "canale_AGID": "97735020584_03"
+    "canale_AGID": "97735020584_03",
+    "canaleRtPush":"60000000001_03"
   },
   
   "db_configuration": {
