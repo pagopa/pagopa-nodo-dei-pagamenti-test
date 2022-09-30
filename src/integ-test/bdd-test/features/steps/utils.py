@@ -275,4 +275,16 @@ def threading(context, primitive_list):
     for thread in threads:
         thread.join()
 
+def threading_delayed(context, primitive_list, list_of_delays):
+    i = 0
+    threads = list()
+    while i < len(primitive_list):
+        t = Thread(target=single_thread, args=(context, primitive_list[i]))
+        threads.append(t)
+        time.sleep(list_of_delays[i]/1000)
+        t.start()
+        i += 1
+
+    for thread in threads:
+        thread.join()
 

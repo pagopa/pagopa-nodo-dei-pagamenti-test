@@ -2,6 +2,24 @@ Feature: DB checks for nodoChiediEsitoPagamento  - KO
 
     Background:
         Given systems up
+        And initial XML verifyPaymentNotice
+        """
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+           <soapenv:Header/>
+           <soapenv:Body>
+              <nod:verifyPaymentNoticeReq>
+                 <idPSP>${pspCD}</idPSP>
+                 <idBrokerPSP>${intermediarioPSPCD}</idBrokerPSP>
+                 <idChannel>${canaleCD}</idChannel>
+                 <password>${password}</password>
+                 <qrCode>
+                    <fiscalCode>${qrCodeCF}</fiscalCode>
+                    <noticeNumber>311${#TestCase#iuv}</noticeNumber>
+                 </qrCode>
+              </nod:verifyPaymentNoticeReq>
+           </soapenv:Body>
+        </soapenv:Envelope>
+        """
         And initial XML activateIOPayment
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd">
@@ -51,10 +69,8 @@ Feature: DB checks for nodoChiediEsitoPagamento  - KO
                 </soapenv:Body>
             </soapenv:Envelope>
             """
-        And initial XML nodoChiediEsitoPagamento
-            """
-            #SCRIVERE PRIMITIVA NON C'è NEL soapUI
-            """
+        When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
+        Then check outcome is OK of verifyPaymentNotice response
 
 
     Scenario: Execute activateIOPaymentReq request
@@ -62,10 +78,20 @@ Feature: DB checks for nodoChiediEsitoPagamento  - KO
         Then check outcome is OK of activateIOPayment response
 
 
-        Scenario: check db PAG_1163_Paypal_NM3_Setup
-        Given the Execute nodoChiediEsitoPagamentoReq request scenario executed successfully
-        And execute the sql PAG_1163_Paypal_NM3_Setup on db nodo_online under macro NewMod3
-        Then checks the XXX table is properly populated according to the query PAG_1163_Paypal_NM3_Setup and primitive
-        And checks the YYY table is proprly populated according to the query PAG_1163_Paypal_NM3_Setup and primitive
-
-
+    Scenario: Execute nodoChiediInformazioniPagamento request
+        Given the Execute activateIOPaymentReq request scenario executed successfully
+        When EC sends rest GET /informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
+        Then check importo field exists in /informazioniPagamento response
+        And check ragioneSociale field exists in /informazioniPagamento response
+        And check oggettoPagamento field exists in /informazioniPagamento response
+        And check redirect is redirectEC in /informazioniPagamento response
+        And check false field exists in /informazioniPagamento response
+        And check dettagli field exists in /informazioniPagamento response
+        And check iuv field exists in /informazioniPagamento response
+        And check ccp field exists in /informazioniPagamento response
+        And check pa field exists in /informazioniPagamento response
+        And check enteBeneficiario field exists in /informazioniPagamento response
+        And execution query pa_dbcheck_json to get value on the table PA, with the columns ragione_sociale under macro NewMod3 with db name nodo_cfg
+        And through the query pa_dbcheck_json retrieve param ragione_sociale at position 0 and save it under the key ragione_sociale
+        And check $ragione_sociale is enteBeneficiario in /informazioniPagamento response
+        And check $ragione_sociale is ragioneSociale in /informazioniPagamento response
