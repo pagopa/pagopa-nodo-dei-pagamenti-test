@@ -242,7 +242,7 @@ Feature: process tests for generazioneRicevute [PAG-1245_PaNew_SPO_appIO]
                         <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
                         <entityUniqueIdentifierValue>#id_station_old#</entityUniqueIdentifierValue>
                     </uniqueIdentifier>
-                    <fullName>SPOname_$activatePaymentNoticeResponse.paymentToken</fullName>               
+                    <fullName>name</fullName>               
                     <streetName>street</streetName>               
                     <civicNumber>civic</civicNumber>               
                     <postalCode>postal</postalCode>               
