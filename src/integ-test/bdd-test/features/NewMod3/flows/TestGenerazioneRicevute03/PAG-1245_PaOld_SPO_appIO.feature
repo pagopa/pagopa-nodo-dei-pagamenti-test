@@ -373,7 +373,7 @@ Feature: process tests for generazioneRicevute [PAG-1245_PaOld_SPO_appIO]
             """
             {"idTransazione": "responseOKSleep",
             "idTransazionePsp":"$activatePaymentNotice.idempotencyKey",
-            "idPagamento": "$activatePaymentNoticeResponse.paymentToken",
+            "idPagamento": "$sessionToken",
             "identificativoIntermediario": "#psp#",
             "identificativoPsp": "#psp#",
             "identificativoCanale": "#canale#",
