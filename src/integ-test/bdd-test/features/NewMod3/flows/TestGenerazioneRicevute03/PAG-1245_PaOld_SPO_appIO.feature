@@ -141,7 +141,7 @@ Feature: process tests for generazioneRicevute [PAG-1245_PaOld_SPO_appIO]
 
 
     Scenario: Execute nodoInviaRPT request
-        Given the RPT1 generation scenario executed successfully
+        Given the RPT generation scenario executed successfully
         And initial XML nodoInviaRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
