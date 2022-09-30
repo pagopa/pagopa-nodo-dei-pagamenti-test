@@ -501,7 +501,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         And check faultCode is PPT_PAGAMENTO_IN_CORSO of activatePaymentNoticeV2 response
         And nodo-dei-pagamenti DEV has config parameter useIdempotency set to true
         And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    @wip
+    
     # SEM_APNV2_26
     Scenario: semantic check 26
         Given the activatePaymentNoticeV2 + paGetPaymentV2 scenario executed successfully
@@ -613,32 +613,10 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
-# per questo test è necessaria la paGetPaymentV2, attualmente non disponibile sul mock pa
 # SEM_APNV2_27
 # Scenario: semantic check 27 (part 1)
-#     Given initial xml activatePaymentNoticeV2
-#         """
-#         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-#         xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-#         <soapenv:Header/>
-#         <soapenv:Body>
-#         <nod:activatePaymentNoticeV2Request>
-#         <idPSP>70000000001</idPSP>
-#         <idBrokerPSP>70000000001</idBrokerPSP>
-#         <idChannel>70000000001_01</idChannel>
-#         <password>pwdpwdpwd</password>
-#         <idempotencyKey>#idempotency_key#</idempotencyKey>
-#         <qrCode>
-#         <fiscalCode>#creditor_institution_code#</fiscalCode>
-#         <noticeNumber>310$iuv</noticeNumber>
-#         </qrCode>
-#         <amount>10.00</amount>
-#         <dueDate>2021-12-31</dueDate>
-#         <paymentNote>metadati10</paymentNote>
-#         </nod:activatePaymentNoticeV2Request>
-#         </soapenv:Body>
-#         </soapenv:Envelope>
-#         """
+#     Given the activatePaymentNoticeV2 + paGetPaymentV2 scenario executed successfully
+#     And paymentNote with metadati10 in activatePaymentNoticeV2
 #     When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
 #     Then check outcome is OK of activatePaymentNoticeV2 response
 #     And check metadata is Empty of activatePaymentNoticeV2 response
@@ -646,30 +624,8 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
 #     And controls the value chiaveok is contained in the record at column METADATA of the table POSITION_SERVICE JOIN POSITION_PAYMENT_PLAN ON (POSITION_PAYMENT_PLAN.FK_POSITION_SERVICE=POSITION_SERVICE.ID) JOIN POSITION_TRANSFER ON (POSITION_TRANSFER.FK_PAYMENT_PLAN=POSITION_PAYMENT_PLAN.ID) retrived by the query metadata on db nodo_online under macro NewMod1
 
 # Scenario: semantic check 27 (part 2)
-#     Given the semantic check 27 (part 1) executed successfully
-#     And initial xml activatePaymentNoticeV2
-#         """
-#         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-#         xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-#         <soapenv:Header/>
-#         <soapenv:Body>
-#         <nod:activatePaymentNoticeV2Request>
-#         <idPSP>70000000001</idPSP>
-#         <idBrokerPSP>70000000001</idBrokerPSP>
-#         <idChannel>70000000001_01</idChannel>
-#         <password>pwdpwdpwd</password>
-#         <idempotencyKey>#idempotency_key#</idempotencyKey>
-#         <qrCode>
-#         <fiscalCode>#creditor_institution_code#</fiscalCode>
-#         <noticeNumber>310$iuv</noticeNumber>
-#         </qrCode>
-#         <amount>10.00</amount>
-#         <dueDate>2021-12-31</dueDate>
-#         <paymentNote>metadati11</paymentNote>
-#         </nod:activatePaymentNoticeV2Request>
-#         </soapenv:Body>
-#         </soapenv:Envelope>
-#         """
+#     Given the activatePaymentNoticeV2 + paGetPaymentV2 scenario executed successfully
+#     And paymentNote with metadati11 in activatePaymentNoticeV2
 #     When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
 #     Then check outcome is OK of activatePaymentNoticeV2 response
 #     And check key is CHIAVEOKFINNULL of activatePaymentNoticeV2 response
@@ -677,30 +633,8 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
 #     And controls the value CHIAVEOKFINNULL is contained in the record at column METADATA of the table POSITION_SERVICE JOIN POSITION_PAYMENT_PLAN ON (POSITION_PAYMENT_PLAN.FK_POSITION_SERVICE=POSITION_SERVICE.ID) JOIN POSITION_TRANSFER ON (POSITION_TRANSFER.FK_PAYMENT_PLAN=POSITION_PAYMENT_PLAN.ID) retrived by the query metadata on db nodo_online under macro NewMod1
 
 # Scenario: semantic check 27 (part 3)
-#     Given the semantic check 27 (part 2) executed successfully
-#     And initial xml activatePaymentNoticeV2
-#         """
-#         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-#         xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-#         <soapenv:Header/>
-#         <soapenv:Body>
-#         <nod:activatePaymentNoticeV2Request>
-#         <idPSP>70000000001</idPSP>
-#         <idBrokerPSP>70000000001</idBrokerPSP>
-#         <idChannel>70000000001_01</idChannel>
-#         <password>pwdpwdpwd</password>
-#         <idempotencyKey>#idempotency_key#</idempotencyKey>
-#         <qrCode>
-#         <fiscalCode>#creditor_institution_code#</fiscalCode>
-#         <noticeNumber>310$iuv</noticeNumber>
-#         </qrCode>
-#         <amount>10.00</amount>
-#         <dueDate>2021-12-31</dueDate>
-#         <paymentNote>metadati12</paymentNote>
-#         </nod:activatePaymentNoticeV2Request>
-#         </soapenv:Body>
-#         </soapenv:Envelope>
-#         """
+#     Given the activatePaymentNoticeV2 + paGetPaymentV2 scenario executed successfully
+#     And paymentNote with metadati12 in activatePaymentNoticeV2
 #     When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
 #     Then check outcome is OK of activatePaymentNoticeV2 response
 #     And check metadata is Empty of activatePaymentNoticeV2 response
@@ -708,30 +642,8 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
 #     And controls the value CHIAVEOKFININF is contained in the record at column METADATA of the table POSITION_SERVICE JOIN POSITION_PAYMENT_PLAN ON (POSITION_PAYMENT_PLAN.FK_POSITION_SERVICE=POSITION_SERVICE.ID) JOIN POSITION_TRANSFER ON (POSITION_TRANSFER.FK_PAYMENT_PLAN=POSITION_PAYMENT_PLAN.ID) retrived by the query metadata on db nodo_online under macro NewMod1
 
 # Scenario: semantic check 27 (part 4)
-#     Given the semantic check 27 (part 3) executed successfully
-#     And initial xml activatePaymentNoticeV2
-#         """
-#         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-#         xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-#         <soapenv:Header/>
-#         <soapenv:Body>
-#         <nod:activatePaymentNoticeV2Request>
-#         <idPSP>70000000001</idPSP>
-#         <idBrokerPSP>70000000001</idBrokerPSP>
-#         <idChannel>70000000001_01</idChannel>
-#         <password>pwdpwdpwd</password>
-#         <idempotencyKey>#idempotency_key#</idempotencyKey>
-#         <qrCode>
-#         <fiscalCode>#creditor_institution_code#</fiscalCode>
-#         <noticeNumber>310$iuv</noticeNumber>
-#         </qrCode>
-#         <amount>10.00</amount>
-#         <dueDate>2021-12-31</dueDate>
-#         <paymentNote>metadati13</paymentNote>
-#         </nod:activatePaymentNoticeV2Request>
-#         </soapenv:Body>
-#         </soapenv:Envelope>
-#         """
+#     Given the activatePaymentNoticeV2 + paGetPaymentV2 scenario executed successfully
+#     And paymentNote with metadati13 in activatePaymentNoticeV2
 #     When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
 #     Then check outcome is OK of activatePaymentNoticeV2 response
 #     And check metadata is Empty of activatePaymentNoticeV2 response
@@ -739,30 +651,8 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
 #     And controls the value CHIAVEOKINIZSUP is contained in the record at column METADATA of the table POSITION_SERVICE JOIN POSITION_PAYMENT_PLAN ON (POSITION_PAYMENT_PLAN.FK_POSITION_SERVICE=POSITION_SERVICE.ID) JOIN POSITION_TRANSFER ON (POSITION_TRANSFER.FK_PAYMENT_PLAN=POSITION_PAYMENT_PLAN.ID) retrived by the query metadata on db nodo_online under macro NewMod1
 
 # Scenario: semantic check 27 (part 5)
-#     Given the semantic check 27 (part 4) executed successfully
-#     And initial xml activatePaymentNoticeV2
-#         """
-#         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-#         xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-#         <soapenv:Header/>
-#         <soapenv:Body>
-#         <nod:activatePaymentNoticeV2Request>
-#         <idPSP>70000000001</idPSP>
-#         <idBrokerPSP>70000000001</idBrokerPSP>
-#         <idChannel>70000000001_01</idChannel>
-#         <password>pwdpwdpwd</password>
-#         <idempotencyKey>#idempotency_key#</idempotencyKey>
-#         <qrCode>
-#         <fiscalCode>#creditor_institution_code#</fiscalCode>
-#         <noticeNumber>310$iuv</noticeNumber>
-#         </qrCode>
-#         <amount>10.00</amount>
-#         <dueDate>2021-12-31</dueDate>
-#         <paymentNote>metadati14</paymentNote>
-#         </nod:activatePaymentNoticeV2Request>
-#         </soapenv:Body>
-#         </soapenv:Envelope>
-#         """
+#     Given the activatePaymentNoticeV2 + paGetPaymentV2 scenario executed successfully
+#     And paymentNote with metadati14 in activatePaymentNoticeV2
 #     When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
 #     Then check outcome is OK of activatePaymentNoticeV2 response
 #     And check metadata is Empty of activatePaymentNoticeV2 response
@@ -770,62 +660,17 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
 #     And controls the value chiaveminuscola is contained in the record at column METADATA of the table POSITION_SERVICE JOIN POSITION_PAYMENT_PLAN ON (POSITION_PAYMENT_PLAN.FK_POSITION_SERVICE=POSITION_SERVICE.ID) JOIN POSITION_TRANSFER ON (POSITION_TRANSFER.FK_PAYMENT_PLAN=POSITION_PAYMENT_PLAN.ID) retrived by the query metadata on db nodo_online under macro NewMod1
 
 # Scenario: semantic check 27 (part 6)
-#     Given the semantic check 27 (part 5) executed successfully
-#     And initial xml activatePaymentNoticeV2
-#         """
-#         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-#         xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-#         <soapenv:Header/>
-#         <soapenv:Body>
-#         <nod:activatePaymentNoticeV2Request>
-#         <idPSP>70000000001</idPSP>
-#         <idBrokerPSP>70000000001</idBrokerPSP>
-#         <idChannel>70000000001_01</idChannel>
-#         <password>pwdpwdpwd</password>
-#         <idempotencyKey>#idempotency_key#</idempotencyKey>
-#         <qrCode>
-#         <fiscalCode>#creditor_institution_code#</fiscalCode>
-#         <noticeNumber>310$iuv</noticeNumber>
-#         </qrCode>
-#         <amount>10.00</amount>
-#         <dueDate>2021-12-31</dueDate>
-#         <paymentNote>metadati</paymentNote>
-#         </nod:activatePaymentNoticeV2Request>
-#         </soapenv:Body>
-#         </soapenv:Envelope>
-#         """
+#     Given the activatePaymentNoticeV2 + paGetPaymentV2 scenario executed successfully
+#     And paymentNote with metadati in activatePaymentNoticeV2
 #     When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
 #     Then check outcome is OK of activatePaymentNoticeV2 response
 #     And check key is CHIAVEOK of activatePaymentNoticeV2 response
 #     And controls the value CHIAVEOK is contained in the record at column METADATA of the table POSITION_SERVICE JOIN POSITION_PAYMENT_PLAN ON (POSITION_PAYMENT_PLAN.FK_POSITION_SERVICE=POSITION_SERVICE.ID) retrived by the query metadata on db nodo_online under macro NewMod1
 #     And controls the value CHIAVEOK is contained in the record at column METADATA of the table POSITION_SERVICE JOIN POSITION_PAYMENT_PLAN ON (POSITION_PAYMENT_PLAN.FK_POSITION_SERVICE=POSITION_SERVICE.ID) JOIN POSITION_TRANSFER ON (POSITION_TRANSFER.FK_PAYMENT_PLAN=POSITION_PAYMENT_PLAN.ID) retrived by the query metadata on db nodo_online under macro NewMod1
 
-# per questo test è necessaria la paGetPaymentV2, attualmente non disponibile sul mock pa
 # SEM_APNV2_28
 # Scenario: semantic check 28
-#     Given initial xml activatePaymentNoticeV2
-#         """
-#         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-#         xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-#         <soapenv:Header/>
-#         <soapenv:Body>
-#         <nod:activatePaymentNoticeV2Request>
-#         <idPSP>70000000001</idPSP>
-#         <idBrokerPSP>70000000001</idBrokerPSP>
-#         <idChannel>70000000001_01</idChannel>
-#         <password>pwdpwdpwd</password>
-#         <idempotencyKey>#idempotency_key#</idempotencyKey>
-#         <qrCode>
-#         <fiscalCode>#creditor_institution_code#</fiscalCode>
-#         <noticeNumber>310$iuv</noticeNumber>
-#         </qrCode>
-#         <amount>10.00</amount>
-#         <dueDate>2021-12-31</dueDate>
-#         <paymentNote>causale</paymentNote>
-#         </nod:activatePaymentNoticeV2Request>
-#         </soapenv:Body>
-#         </soapenv:Envelope>
-#         """
+#     Given the activatePaymentNoticeV2 + paGetPaymentV2 scenario executed successfully
 #     When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
 #     Then check outcome is OK of activatePaymentNoticeV2 response
 #     And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response
