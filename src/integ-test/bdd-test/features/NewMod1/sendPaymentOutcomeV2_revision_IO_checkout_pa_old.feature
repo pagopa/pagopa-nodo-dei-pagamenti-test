@@ -538,7 +538,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         And the sendPaymentOutcomeV2 scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-@wip
+
     Scenario: REV_SPO_04 (part 2)
         Given the REV_SPO_04 (part 1) scenario executed successfully
         When job paInviaRT triggered after 5 seconds
