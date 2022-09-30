@@ -65,10 +65,9 @@ def step_impl(context, primitive):
         my_document = parseString(payload)
         idBrokerPSP = "70000000001"
         if len(my_document.getElementsByTagName('idBrokerPSP')) > 0:
-            idBrokerPSP = my_document.getElementsByTagName('idBrokerPSP')[
-                0].firstChild.data
-        payload = payload.replace(
-            '#idempotency_key#', f"{idBrokerPSP}_{str(random.randint(1000000000, 9999999999))}")
+            idBrokerPSP = my_document.getElementsByTagName('idBrokerPSP')[0].firstChild.data
+        payload = payload.replace('#idempotency_key#', f"{idBrokerPSP}_{str(random.randint(1000000000, 9999999999))}")
+        payload = payload.replace('#idempotency_key_IOname#', "IOname" + "_" + str(random.randint(1000000000, 9999999999)))
 
     if "#timedate#" in payload:
         timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]

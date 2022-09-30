@@ -136,3 +136,128 @@ Feature: process tests for generazioneRicevute [PAG-1245_PaNew_SPO_appIO]
         And replace pa content with #creditor_institution_code# content
         And update through the query inserted_timestamp with date Yesterday under macro update_query on db nodo_online
         And update through the query updated_timestamp with date Yesterday under macro update_query on db nodo_online
+
+
+    Scenario: Execute activateIOPayment
+        Given the trigger PollerAnnulli scenario executed successfully
+        And initial XML activateIOPayment
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+                <nod:activateIOPaymentReq>
+                    <idPSP>#psp_AGID#</idPSP>
+                    <idBrokerPSP>#broker_AGID#</idBrokerPSP>
+                    <idChannel>#canale_AGID#</idChannel>
+                    <password>pwdpwdpwd</password>
+                    <idempotencyKey>$activatePaymentNotice.idempotencyKey</idempotencyKey>
+                    <qrCode>
+                        <fiscalCode>#creditor_institution_code#</fiscalCode>
+                        <noticeNumber>$1noticeNumber</noticeNumber>
+                    </qrCode>
+                    <expirationTime>60000</expirationTime>
+                    <amount>10.00</amount>
+                    <dueDate>2021-12-12</dueDate>
+                    <paymentNote>responseFull</paymentNote>
+                    <payer>
+                        <uniqueIdentifier>
+                        <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
+                        <entityUniqueIdentifierValue>#creditor_institution_code#</entityUniqueIdentifierValue>
+                        </uniqueIdentifier>
+                        <fullName>idempotency_key_IOname</fullName>
+                        <streetName>IOstreet</streetName>
+                        <civicNumber>IOcivic</civicNumber>
+                        <postalCode>IOcode</postalCode>
+                        <city>IOcity</city>
+                        <stateProvinceRegion>IOstate</stateProvinceRegion>
+                        <country>DE</country>
+                        <e-mail>IO.test.prova@gmail.com</e-mail>
+                    </payer>
+                </nod:activateIOPaymentReq>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
+        Then check outcome is OK of activateIOPayment response
+
+
+    Scenario: Execute nodoChiediInformazioniPagamento
+        Given the Execute activateIOPayment scenario executed successfully
+        When WISP sends rest GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
+        Then verify the HTTP status code of informazioniPagamento response is 200
+        And check importo field exists in informazioniPagamento response
+        And check ragioneSociale field exists in informazioniPagamento response
+        And check oggettoPagamento field exists in informazioniPagamento response
+        And check urlRedirectEC field exists in informazioniPagamento response
+        And check bolloDigitale is False of informazioniPagamento response
+        And check urlRedirectEC contains http://siapagopa.rf.gd/ec?idSession=$sessionToken&idDominio=$activatePaymentNotice.fiscalCode of informazioniPagamento response
+        And check email is gesualdo.riccitelli@poste.it of informazioniPagamento response
+        And check dettagli field exists in informazioniPagamento response
+        And check IUV is $1iuv of informazioniPagamento response
+        And check idDominio is #creditor_institution_code_old# of informazioniPagamento response
+        And check enteBeneficiario field exists in informazioniPagamento response
+
+
+    Scenario: Execute nodoInoltroEsitoCarta 
+        Given the Execute nodoChiediInformazioniPagamento scenario executed successfully
+        When WISP sends REST POST inoltroEsito/carta to nodo-dei-pagamenti
+            """
+
+            {
+            "idPagamento":"$activateIOPaymentResponse.paymentToken",
+            "RRN":13129173,
+            "identificativoPsp":"#psp#",
+            "tipoVersamento":"CP",
+            "identificativoIntermediario":"#psp#",
+            "identificativoCanale":"#canale#",
+            "importoTotalePagato":10.00,
+            "timestampOperazione":"2021-07-09T17:06:03.100+01:00",
+            "codiceAutorizzativo":"resOK",
+            "esitoTransazioneCarta":"00"
+            }
+            """
+        Then verify the HTTP status code of inoltroEsito/carta response is 200
+        And check esito is OK of inoltroEsito/carta response
+        And check url field not exists in informazioniPagamento response
+
+
+    Scenario: Execute sendPaymentOutcome
+        Given the Execute nodoInoltroEsitoCarta scenario executed successfully
+        And initial XML sendPaymentOutcome
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+                <nod:sendPaymentOutcomeReq>
+                <idPSP>#psp#</idPSP>
+                <idBrokerPSP>#psp#</idBrokerPSP>
+                <idChannel>#canale#</idChannel>
+                <password>pwdpwdpwd</password>
+                <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
+                <outcome>OK</outcome>
+                <details>
+                    <paymentMethod>creditCard</paymentMethod>              
+                    <fee>2.00</fee>               
+                    <payer>
+                    <uniqueIdentifier>
+                        <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
+                        <entityUniqueIdentifierValue>#id_station_old#</entityUniqueIdentifierValue>
+                    </uniqueIdentifier>
+                    <fullName>SPOname_$activatePaymentNoticeResponse.paymentToken</fullName>               
+                    <streetName>street</streetName>               
+                    <civicNumber>civic</civicNumber>               
+                    <postalCode>postal</postalCode>               
+                    <city>city</city>              
+                    <stateProvinceRegion>state</stateProvinceRegion>              
+                    <country>IT</country>             
+                    <e-mail>prova@test.it</e-mail>
+                    </payer>
+                    <applicationDate>2021-12-12</applicationDate>
+                    <transferDate>2021-12-11</transferDate>
+                </details>
+                </nod:sendPaymentOutcomeReq>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+        Then check outcome is OK of sendPaymentOutcome response
