@@ -230,7 +230,7 @@ Feature: process tests for generazioneRicevute [PAG-1245_PaNew_SPO_appIO]
                 <nod:sendPaymentOutcomeReq>
                 <idPSP>#psp#</idPSP>
                 <idBrokerPSP>#psp#</idBrokerPSP>
-                <idChannel>#canale#</idChannel>
+                <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
                 <password>pwdpwdpwd</password>
                 <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
                 <outcome>OK</outcome>
