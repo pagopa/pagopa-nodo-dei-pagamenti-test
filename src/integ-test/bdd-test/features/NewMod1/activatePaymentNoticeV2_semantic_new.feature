@@ -539,7 +539,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         And checks the value NotNone of the record at column POSITION_SUBJECT.UPDATED_TIMESTAMP of the table POSITION_SERVICE JOIN POSITION_SUBJECT ON (POSITION_SERVICE.DEBTOR_ID = POSITION_SUBJECT.ID) retrived by the query position_service on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_SERVICE JOIN POSITION_SUBJECT ON (POSITION_SERVICE.DEBTOR_ID = POSITION_SUBJECT.ID) retrived by the query position_service on db nodo_online under macro NewMod1
 
-        # old
+        # old, da cancellare se va ok dopo, cancellare query position_payment_plan in caso
 
         # And checks the value NotNone of the record at column POSITION_PAYMENT_PLAN.ID of the table POSITION_SERVICE JOIN POSITION_PAYMENT_PLAN ON (POSITION_PAYMENT_PLAN.FK_POSITION_SERVICE=POSITION_SERVICE.ID) retrived by the query position_payment_plan on db nodo_online under macro NewMod1
         # And checks the value $paGetPaymentV2.dueDate of the record at column TO_CHAR(DUE_DATE, 'yyyy-mm-dd') of the table POSITION_SERVICE JOIN POSITION_PAYMENT_PLAN ON (POSITION_PAYMENT_PLAN.FK_POSITION_SERVICE=POSITION_SERVICE.ID) retrived by the query position_payment_plan on db nodo_online under macro NewMod1
@@ -570,7 +570,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         # And checks the value N of the record at column ACTIVATION_PENDING of the table POSITION_STATUS_SNAPSHOT JOIN POSITION_SERVICE ON (POSITION_STATUS_SNAPSHOT.FK_POSITION_SERVICE = POSITION_SERVICE.ID) retrived by the query position_status_snapshot on db nodo_online under macro NewMod1
         # And verify 1 record for the table POSITION_STATUS_SNAPSHOT JOIN POSITION_SERVICE ON (POSITION_STATUS_SNAPSHOT.FK_POSITION_SERVICE = POSITION_SERVICE.ID) retrived by the query position_payment_plan on db nodo_online under macro NewMod1
 
-        # new
+        # new, da mantenere se va tutto ok
 
         And checks the value NotNone of the record at column POSITION_PAYMENT_PLAN.ID of the table POSITION_SERVICE JOIN POSITION_PAYMENT_PLAN ON (POSITION_PAYMENT_PLAN.FK_POSITION_SERVICE=POSITION_SERVICE.ID) retrived by the query position_service on db nodo_online under macro NewMod1
         And checks the value $paGetPaymentV2.dueDate of the record at column TO_CHAR(DUE_DATE, 'yyyy-mm-dd') of the table POSITION_SERVICE JOIN POSITION_PAYMENT_PLAN ON (POSITION_PAYMENT_PLAN.FK_POSITION_SERVICE=POSITION_SERVICE.ID) retrived by the query position_service on db nodo_online under macro NewMod1
