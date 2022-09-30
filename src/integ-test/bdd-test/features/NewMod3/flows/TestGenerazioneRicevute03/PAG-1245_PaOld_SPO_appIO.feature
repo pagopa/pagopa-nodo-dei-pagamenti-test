@@ -381,8 +381,6 @@ Feature: process tests for generazioneRicevute [PAG-1245_PaOld_SPO_appIO]
             "timestampOperazione": "2012-04-23T18:25:43Z"}
             """
         Then check esito is OK of inoltroEsito/paypal response
-        And activateIOPayment response and pspNotifyPayment request are consistent with paypal
-
 
     Scenario: Execute sendPaymentOutcome
         Given the Execute nodoInoltraEsitoPagamentoPaypal request scenario executed successfully
