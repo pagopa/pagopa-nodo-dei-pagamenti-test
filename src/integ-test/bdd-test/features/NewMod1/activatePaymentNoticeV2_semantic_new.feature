@@ -487,7 +487,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         And check faultCode is PPT_PAGAMENTO_IN_CORSO of activatePaymentNoticeV2 response
         And nodo-dei-pagamenti DEV has config parameter useIdempotency set to true
         And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-
+@wip
     # SEM_APNV2_26
     Scenario: semantic check 26
         Given the activatePaymentNoticeV2 + paGetPaymentV2 scenario executed successfully
@@ -506,7 +506,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         And checks the value NotNone of the record at column ID of the table POSITION_SERVICE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value $paGetPaymentV2.description of the record at column DESCRIPTION of the table POSITION_SERVICE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value $paGetPaymentV2.companyName of the record at column COMPANY_NAME of the table POSITION_SERVICE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value $paGetPaymentV2.companyName of the record at column OFFICE_NAME of the table POSITION_SERVICE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value $paGetPaymentV2.officeName of the record at column OFFICE_NAME of the table POSITION_SERVICE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column DEBTOR_ID of the table POSITION_SERVICE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_SERVICE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_SERVICE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
