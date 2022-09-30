@@ -183,101 +183,94 @@ Feature: process tests for generazioneRicevute [PAG-1245_PaOld_SPO_appIO]
 
     Scenario: Execute nodoAttivaRPT
         Given the Execute Trigger mod3Cancel scenario executed successfully
-        And initial XML paaVerificaRPT
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/"   xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">
-            <soapenv:Header/>
-            <soapenv:Body>
-                <ws:paaVerificaRPTRisposta>
-                    <paaVerificaRPTRisposta>
-                        <esito>OK</esito>
-                        <datiPagamentoPA>
-                        <importoSingoloVersamento>1.00</importoSingoloVersamento>
-                        <ibanAccredito>IT45R0760103200#ccPoste#</ibanAccredito>
-                        <bicAccredito>BSCTCH22</bicAccredito>
-                        <enteBeneficiario>
-                            <pag:identificativoUnivocoBeneficiario>
-                                <pag:tipoIdentificativoUnivoco>G</pag:tipoIdentificativoUnivoco>
-                                <pag:codiceIdentificativoUnivoco>44444444444_05</pag:codiceIdentificativoUnivoco>
-                            </pag:identificativoUnivocoBeneficiario>
-                            <pag:denominazioneBeneficiario>f6</pag:denominazioneBeneficiario>
-                            <pag:codiceUnitOperBeneficiario>r6</pag:codiceUnitOperBeneficiario>
-                            <pag:denomUnitOperBeneficiario>yr</pag:denomUnitOperBeneficiario>
-                            <pag:indirizzoBeneficiario>paaVerificaRPT</pag:indirizzoBeneficiario>
-                            <pag:civicoBeneficiario>ut</pag:civicoBeneficiario>
-                            <pag:capBeneficiario>jyr</pag:capBeneficiario>
-                            <pag:localitaBeneficiario>yj</pag:localitaBeneficiario>
-                            <pag:provinciaBeneficiario>h8</pag:provinciaBeneficiario>
-                            <pag:nazioneBeneficiario>IT</pag:nazioneBeneficiario>
-                        </enteBeneficiario>
-                        <credenzialiPagatore>of8</credenzialiPagatore>
-                        <causaleVersamento>prova/RFDB/019551233153100/TXT/</causaleVersamento>
-                        </datiPagamentoPA>
-                    </paaVerificaRPTRisposta>
-                </ws:paaVerificaRPTRisposta>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        And EC replies to nodo-dei-pagamenti with the paaVerificaRPT
+        # And initial XML paaVerificaRPT
+        #     """
+        #     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/"   xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">
+        #     <soapenv:Header/>
+        #     <soapenv:Body>
+        #         <ws:paaVerificaRPTRisposta>
+        #             <paaVerificaRPTRisposta>
+        #                 <esito>OK</esito>
+        #                 <datiPagamentoPA>
+        #                 <importoSingoloVersamento>1.00</importoSingoloVersamento>
+        #                 <ibanAccredito>IT45R0760103200#ccPoste#</ibanAccredito>
+        #                 <bicAccredito>BSCTCH22</bicAccredito>
+        #                 <enteBeneficiario>
+        #                     <pag:identificativoUnivocoBeneficiario>
+        #                         <pag:tipoIdentificativoUnivoco>G</pag:tipoIdentificativoUnivoco>
+        #                         <pag:codiceIdentificativoUnivoco>44444444444_05</pag:codiceIdentificativoUnivoco>
+        #                     </pag:identificativoUnivocoBeneficiario>
+        #                     <pag:denominazioneBeneficiario>f6</pag:denominazioneBeneficiario>
+        #                     <pag:codiceUnitOperBeneficiario>r6</pag:codiceUnitOperBeneficiario>
+        #                     <pag:denomUnitOperBeneficiario>yr</pag:denomUnitOperBeneficiario>
+        #                     <pag:indirizzoBeneficiario>paaVerificaRPT</pag:indirizzoBeneficiario>
+        #                     <pag:civicoBeneficiario>ut</pag:civicoBeneficiario>
+        #                     <pag:capBeneficiario>jyr</pag:capBeneficiario>
+        #                     <pag:localitaBeneficiario>yj</pag:localitaBeneficiario>
+        #                     <pag:provinciaBeneficiario>h8</pag:provinciaBeneficiario>
+        #                     <pag:nazioneBeneficiario>IT</pag:nazioneBeneficiario>
+        #                 </enteBeneficiario>
+        #                 <credenzialiPagatore>of8</credenzialiPagatore>
+        #                 <causaleVersamento>prova/RFDB/019551233153100/TXT/</causaleVersamento>
+        #                 </datiPagamentoPA>
+        #             </paaVerificaRPTRisposta>
+        #         </ws:paaVerificaRPTRisposta>
+        #     </soapenv:Body>
+        #     </soapenv:Envelope>
+        #     """
+        # And EC replies to nodo-dei-pagamenti with the paaVerificaRPT
         And initial XML nodoAttivaRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:bc="http://PuntoAccessoPSP.spcoop.gov.it/BarCode_GS1_128_Modified"  xmlns:aim="http://PuntoAccessoPSP.spcoop.gov.it/Code_128_AIM_USS-128_tipo_C" xmlns:qrc="http://PuntoAccessoPSP.spcoop.gov.it/QrCode">
-                <soapenv:Header/>
-                <soapenv:Body>
-                    <ws:nodoAttivaRPT>
-                        <identificativoPSP>#psp_AGID#</identificativoPSP>
-                        <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
-                        <identificativoCanale>#canale_AGID#</identificativoCanale>
-                        <password>pwdpwdpwd</password>
-                        <codiceContestoPagamento>#ccp#</codiceContestoPagamento>
-                        <identificativoIntermediarioPSPPagamento>#broker_AGID#</identificativoIntermediarioPSPPagamento>
-                        <identificativoCanalePagamento>97735020584_02</identificativoCanalePagamento>
-                        <codificaInfrastrutturaPSP>BARCODE-128-AIM</codificaInfrastrutturaPSP>
-                        <codiceIdRPT>
-                            <qrc:QrCode>
-                                <qrc:CF>#creditor_institution_code_old#</qrc:CF>
-                                <qrc:CodStazPA>#cod_segr#</qrc:CodStazPA>
-                                <qrc:AuxDigit>0</qrc:AuxDigit>
-                                <qrc:CodIUV>$1iuv</qrc:CodIUV>
-                            </qrc:QrCode>
-                        </codiceIdRPT>
-                        <datiPagamentoPSP>
-                            <importoSingoloVersamento>10.00</importoSingoloVersamento>
-                            <ibanAppoggio>IT96R0123454321000000012345</ibanAppoggio>
-                            <bicAppoggio>CCRTIT5TXXX</bicAppoggio>
-                            <soggettoVersante>
-                            <pag:identificativoUnivocoVersante>
-                                <pag:tipoIdentificativoUnivoco>F</pag:tipoIdentificativoUnivoco>
-                                <pag:codiceIdentificativoUnivoco>RSSFNC50S01L781H</pag:codiceIdentificativoUnivoco>
-                            </pag:identificativoUnivocoVersante>
-                            <pag:anagraficaVersante>Franco Rossi</pag:anagraficaVersante>
-                            <pag:indirizzoVersante>viale Monza</pag:indirizzoVersante>
-                            <pag:civicoVersante>1</pag:civicoVersante>
-                            <pag:capVersante>20125</pag:capVersante>
-                            <pag:localitaVersante>Milano</pag:localitaVersante>
-                            <pag:provinciaVersante>MI</pag:provinciaVersante>
-                            <pag:nazioneVersante>IT</pag:nazioneVersante>
-                            <pag:e-mailVersante>mail@mail.it</pag:e-mailVersante>
-                            </soggettoVersante>
-                            <ibanAddebito>IT96R0123454321000000012346</ibanAddebito>
-                            <bicAddebito>CCRTIT2TXXX</bicAddebito>
-                            <soggettoPagatore>
-                            <pag:identificativoUnivocoPagatore>
-                                <pag:tipoIdentificativoUnivoco>F</pag:tipoIdentificativoUnivoco>
-                                <pag:codiceIdentificativoUnivoco>RSSFNC50S01L781H</pag:codiceIdentificativoUnivoco>
-                            </pag:identificativoUnivocoPagatore>
-                            <pag:anagraficaPagatore>Franco Rossi</pag:anagraficaPagatore>
-                            <pag:indirizzoPagatore>viale Monza</pag:indirizzoPagatore>
-                            <pag:civicoPagatore>1</pag:civicoPagatore>
-                            <pag:capPagatore>20125</pag:capPagatore>
-                            <pag:localitaPagatore>Milano</pag:localitaPagatore>
-                            <pag:provinciaPagatore>MI</pag:provinciaPagatore>
-                            <pag:nazionePagatore>IT</pag:nazionePagatore>
-                            <pag:e-mailPagatore>mail@mail.it</pag:e-mailPagatore>
-                            </soggettoPagatore>
-                        </datiPagamentoPSP>
-                    </ws:nodoAttivaRPT>
-                </soapenv:Body>
+            <soapenv:Header/>
+            <soapenv:Body>
+            <ws:nodoAttivaRPT>
+            <identificativoPSP>#psp_AGID#</identificativoPSP>
+            <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canale_AGID#</identificativoCanale>
+            <password>pwdpwdpwd</password>
+            <codiceContestoPagamento>#ccp#</codiceContestoPagamento>
+            <identificativoIntermediarioPSPPagamento>#broker_AGID#</identificativoIntermediarioPSPPagamento>
+            <identificativoCanalePagamento>97735020584_02</identificativoCanalePagamento>
+            <codificaInfrastrutturaPSP>BARCODE-128-AIM</codificaInfrastrutturaPSP>
+            <codiceIdRPT><aim:aim128> <aim:CCPost>#ccPoste#</aim:CCPost> <aim:CodStazPA>#cod_segr#</aim:CodStazPA> <aim:AuxDigit>0</aim:AuxDigit>  <aim:CodIUV>$1iuv</aim:CodIUV></aim:aim128></codiceIdRPT>
+            <datiPagamentoPSP>
+            <importoSingoloVersamento>10.00</importoSingoloVersamento>           
+            <ibanAppoggio>IT96R0123454321000000012345</ibanAppoggio>           
+            <bicAppoggio>CCRTIT5TXXX</bicAppoggio>           
+            <soggettoVersante>
+            <pag:identificativoUnivocoVersante>
+            <pag:tipoIdentificativoUnivoco>F</pag:tipoIdentificativoUnivoco>
+            <pag:codiceIdentificativoUnivoco>RSSFNC50S01L781H</pag:codiceIdentificativoUnivoco>
+            </pag:identificativoUnivocoVersante>
+            <pag:anagraficaVersante>Franco Rossi</pag:anagraficaVersante>            
+            <pag:indirizzoVersante>viale Monza</pag:indirizzoVersante>           
+            <pag:civicoVersante>1</pag:civicoVersante>           
+            <pag:capVersante>20125</pag:capVersante>           
+            <pag:localitaVersante>Milano</pag:localitaVersante>           
+            <pag:provinciaVersante>MI</pag:provinciaVersante>           
+            <pag:nazioneVersante>IT</pag:nazioneVersante>           
+            <pag:e-mailVersante>mail@mail.it</pag:e-mailVersante>
+            </soggettoVersante>          
+            <ibanAddebito>IT96R0123454321000000012346</ibanAddebito>          
+            <bicAddebito>CCRTIT2TXXX</bicAddebito>
+            <soggettoPagatore>
+            <pag:identificativoUnivocoPagatore>
+            <pag:tipoIdentificativoUnivoco>F</pag:tipoIdentificativoUnivoco>
+            <pag:codiceIdentificativoUnivoco>RSSFNC50S01L781H</pag:codiceIdentificativoUnivoco>
+            </pag:identificativoUnivocoPagatore>
+            <pag:anagraficaPagatore>Franco Rossi</pag:anagraficaPagatore>           
+            <pag:indirizzoPagatore>viale Monza</pag:indirizzoPagatore>           
+            <pag:civicoPagatore>1</pag:civicoPagatore>           
+            <pag:capPagatore>20125</pag:capPagatore>           
+            <pag:localitaPagatore>Milano</pag:localitaPagatore>           
+            <pag:provinciaPagatore>MI</pag:provinciaPagatore>           
+            <pag:nazionePagatore>IT</pag:nazionePagatore>          
+            <pag:e-mailPagatore>mail@mail.it</pag:e-mailPagatore>
+            </soggettoPagatore>
+            </datiPagamentoPSP>
+            </ws:nodoAttivaRPT>
+            </soapenv:Body>
             </soapenv:Envelope>
             """
         When IO sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
