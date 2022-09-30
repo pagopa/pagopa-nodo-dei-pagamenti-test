@@ -828,6 +828,7 @@ def step_impl(context, tag, value, primitive):
         json_response = node_response.json()
         json_response = jo.convert_json_values_toString(json_response)
         print('>>>>>>>>>>>>>>', json_response)
+        print(value)
         find = jo.search_value(json_response, tag, value)
         assert find
 
