@@ -364,7 +364,7 @@ Feature: process tests for generazioneRicevute [PAG-1245_PaOld_SPO_appIO]
         And check urlRedirectEC field exists in informazioniPagamento response
         And check bolloDigitale is False of informazioniPagamento response
         And check email is gesualdo.riccitelli@poste.it of informazioniPagamento response
-        And check urlRedirectEC contains http://siapagopa.rf.gd/ec?qrstr=prova&idSession of informazioniPagamento response
+        #And check urlRedirectEC contains http://siapagopa.rf.gd/ec?qrstr=prova&idSession of informazioniPagamento response
 
 
     Scenario: Execute nodoInoltraEsitoPagamentoPaypal request
