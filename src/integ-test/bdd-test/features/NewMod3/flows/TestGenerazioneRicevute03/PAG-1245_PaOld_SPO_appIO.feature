@@ -372,7 +372,7 @@ Feature: process tests for generazioneRicevute [PAG-1245_PaOld_SPO_appIO]
         When WISP sends rest POST inoltroEsito/paypal to nodo-dei-pagamenti
             """
             {"idTransazione": "responseOKSleep",
-            "idTransazionePsp":"$activateIOPayment.idempotencyKey",
+            "idTransazionePsp":"$activatePaymentNotice.idempotencyKey",
             "idPagamento": "$activatePaymentNoticeResponse.paymentToken",
             "identificativoIntermediario": "#psp",
             "identificativoPsp": "#psp#",
