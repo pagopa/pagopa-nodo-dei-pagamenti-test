@@ -159,7 +159,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
             "outcome": "OK",
             "identificativoPsp": "#psp#",
             "tipoVersamento": "BPAY",
-            "identificativoIntermediario": "#id_broker_psp#",a
+            "identificativoIntermediario": "#id_broker_psp#",
             "identificativoCanale": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
             "pspTransactionId": "#psp_transaction_id#",
             "totalAmount": 12,
