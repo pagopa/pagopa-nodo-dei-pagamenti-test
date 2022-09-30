@@ -146,7 +146,21 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
             <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
             <entityUniqueIdentifierValue>44444444444</entityUniqueIdentifierValue>
             </uniqueIdentifier>
-            <fullName>name</fullName>
+            <fullName>paGetPaymentName</fullName>
+            <!--Optional:-->
+            <streetName>paGetPaymentStreet</streetName>
+            <!--Optional:-->
+            <civicNumber>paGetPayment99</civicNumber>
+            <!--Optional:-->
+            <postalCode>20155</postalCode>
+            <!--Optional:-->
+            <city>paGetPaymentCity</city>
+            <!--Optional:-->
+            <stateProvinceRegion>paGetPaymentState</stateProvinceRegion>
+            <!--Optional:-->
+            <country>IT</country>
+            <!--Optional:-->
+            <e-mail>paGetPayment@test.it</e-mail>
             </debtor>
             <transferList>
             <!--1 to 5 repetitions:-->
