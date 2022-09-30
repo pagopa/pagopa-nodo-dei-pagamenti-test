@@ -22,7 +22,11 @@ Feature: FLUSSO_APIO_29
             </soapenv:Body>
         </soapenv:Envelope>
         """
-        When AppIO sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
+        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '13' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1201' under macro update_query on db nodo_cfg
+        When refresh job PA triggered after 10 seconds
+        And wait 15 seconds for expiration
+        And AppIO sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of verifyPaymentNotice response
 
     Scenario: Execute activateIOPayment (Phase 2)
@@ -82,7 +86,7 @@ Feature: FLUSSO_APIO_29
                                 <transfer>
                                     <idTransfer>2</idTransfer>
                                     <transferAmount>3.00</transferAmount>
-                                    <fiscalCodePA>77777777777</fiscalCodePA>
+                                    <fiscalCodePA>90000000001</fiscalCodePA>
                                     <IBAN>IT45R0760103200000000001016</IBAN>
                                     <remittanceInformation>testPaGetPayment</remittanceInformation>
                                     <transferCategory>paGetPaymentTest</transferCategory>
@@ -90,7 +94,7 @@ Feature: FLUSSO_APIO_29
                                 <transfer>
                                     <idTransfer>3</idTransfer>
                                     <transferAmount>4.00</transferAmount>
-                                    <fiscalCodePA>77777777777</fiscalCodePA>
+                                    <fiscalCodePA>90000000001</fiscalCodePA>
                                     <IBAN>IT45R0760103200000000001016</IBAN>
                                     <remittanceInformation>testPaGetPayment</remittanceInformation>
                                     <transferCategory>paGetPaymentTest</transferCategory>
@@ -289,7 +293,7 @@ Feature: FLUSSO_APIO_29
         Then check outcome is OK of sendPaymentOutcome response
         And wait 5 seconds for expiration
         And checks the value PAYING, PAYMENT_SENT, PAYMENT_ACCEPTED, PAID, NOTICE_GENERATED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
-        And checks the value NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
+        #And checks the value NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value PAYING, PAID of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value NOTIFIED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
         # check correctness of POSITION_PAYMENT table
@@ -318,7 +322,7 @@ Feature: FLUSSO_APIO_29
         And checks the value Y of the record at column FLAG_IO of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value Y of the record at column RICEVUTA_PM of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
         # check POSITION_SUBJECT table
-        And verify 0 record for the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro AppIO
+        #And verify 0 record for the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro AppIO
         # extraction from POSITION_PAYMENT table
         And execution query payment_status to get value on the table POSITION_PAYMENT, with the columns * under macro AppIO with db name nodo_online
         And through the query payment_status retrieve param pa at position 1 and save it under the key pa
@@ -339,6 +343,14 @@ Feature: FLUSSO_APIO_29
         And checks the value $stationPA of the record at column RECIPIENT_STATION_ID of the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_1 on db nodo_online under macro AppIO
         And checks the value NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_1 on db nodo_online under macro AppIO
         # TODO: check correctness of POSITION_RECEIPT_RECIPIENT_STATUS table
+        And checks the value $pa of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_1 on db nodo_online under macro AppIO
+        And checks the value $noticeNumber of the record at column NOTICE_ID of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_1 on db nodo_online under macro AppIO
+        And checks the value $creditorReferenceId of the record at column CREDITOR_REFERENCE_ID of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_1 on db nodo_online under macro AppIO
+        And checks the value $paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_1 on db nodo_online under macro AppIO
+        And checks the value $pa of the record at column RECIPIENT_PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_1 on db nodo_online under macro AppIO
+        And checks the value $brokerPA of the record at column RECIPIENT_BROKER_PA_ID of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_1 on db nodo_online under macro AppIO
+        And checks the value $stationPA of the record at column RECIPIENT_STATION_ID of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_1 on db nodo_online under macro AppIO
+        And checks the value NOTICE_GENERATED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_1 on db nodo_online under macro AppIO
         #check correctness of POSITION_RECEIPT_XML table
         # extraction from POSITION_RECEIPT_RECIPIENT table
         And execution query payment_status to get value on the table POSITION_RECEIPT_RECIPIENT, with the columns * under macro AppIO with db name nodo_online
@@ -355,4 +367,6 @@ Feature: FLUSSO_APIO_29
         And checks the value $recipientStation of the record at column RECIPIENT_STATION_ID of the table POSITION_RECEIPT_XML retrived by the query payment_status_1 on db nodo_online under macro AppIO
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RECEIPT_XML retrived by the query payment_status_1 on db nodo_online under macro AppIO
         And checks the value NotNone of the record at column XML of the table POSITION_RECEIPT_XML retrived by the query payment_status_1 on db nodo_online under macro AppIO
-    
+        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'N', with where condition OBJ_ID = '13' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'N', with where condition OBJ_ID = '1201' under macro update_query on db nodo_cfg
+        And refresh job PA triggered after 10 seconds

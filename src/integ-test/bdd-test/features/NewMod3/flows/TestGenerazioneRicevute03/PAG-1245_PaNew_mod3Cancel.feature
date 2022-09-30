@@ -130,7 +130,8 @@ Feature: process tests for generazioneRicevute [PAG-1245_PaNew_SPO]
 
     Scenario: trigger PollerAnnulli
         Given the Execute activatePaymentNotice request scenario executed successfully
-        When job mod3CancelV2 triggered after 10 seconds
+        When job mod3CancelV2 triggered after 6 seconds
+        Then verify the HTTP status code of mod3CancelV2 response is 200
         Then wait 10 seconds for expiration
 
         And replace pa content with #creditor_institution_code# content
@@ -233,45 +234,7 @@ Feature: process tests for generazioneRicevute [PAG-1245_PaNew_SPO]
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
 
-
-    Scenario: Execute sendPaymentOutcome
+    Scenario: second trigger PollerAnnulli
         Given the Execute second activatePaymentNotice request scenario executed successfully
-        And initial XML sendPaymentOutcome
-        """
-        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-        <soapenv:Header/>
-        <soapenv:Body>
-            <nod:sendPaymentOutcomeReq>
-            <idPSP>#psp#</idPSP>
-            <idBrokerPSP>#psp#</idBrokerPSP>
-            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
-            <password>pwdpwdpwd</password>
-            <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
-            <outcome>OK</outcome>
-            <details>
-                <paymentMethod>creditCard</paymentMethod>              
-                <paymentChannel>app</paymentChannel>
-                <fee>2.00</fee>               
-                <payer>
-                <uniqueIdentifier>
-                    <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-                    <entityUniqueIdentifierValue>77777777777_01</entityUniqueIdentifierValue>
-                </uniqueIdentifier>
-                <fullName>SPOname_$activatePaymentNoticeResponse.paymentToken</fullName>               
-                <streetName>street</streetName>               
-                <civicNumber>civic</civicNumber>               
-                <postalCode>postal</postalCode>               
-                <city>city</city>              
-                <stateProvinceRegion>state</stateProvinceRegion>              
-                <country>IT</country>             
-                <e-mail>prova@test.it</e-mail>
-                </payer>
-                <applicationDate>2021-12-12</applicationDate>
-                <transferDate>2021-12-11</transferDate>
-            </details>
-            </nod:sendPaymentOutcomeReq>
-        </soapenv:Body>
-        </soapenv:Envelope>
-        """
-        When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-        Then check outcome is OK of sendPaymentOutcome response
+        When job mod3CancelV2 triggered after 6 seconds
+        Then verify the HTTP status code of mod3CancelV2 response is 200
