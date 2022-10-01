@@ -94,7 +94,7 @@ Feature: PRO_ANNULLO_00_PPALNEW
             <soapenv:Body>
                 <psp:pspNotifyPaymentRes>
                 <outcome>OK</outcome>
-                <delay>100000</delay>
+                <delay>1000000</delay>
                 <!--Optional:-->
                 <wait>20</wait>
                 </psp:pspNotifyPaymentRes>
