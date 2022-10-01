@@ -44,7 +44,7 @@ Feature: process tests for generazioneRicevute
                         <fiscalCode>#creditor_institution_code#</fiscalCode>
                         <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
                     </qrCode>
-                    <expirationTime>60000</expirationTime>
+                    <expirationTime>2000</expirationTime>
                     <amount>10.00</amount>
                     <paymentNote>responseFull3Transfers</paymentNote>
                 </nod:activatePaymentNoticeReq>
