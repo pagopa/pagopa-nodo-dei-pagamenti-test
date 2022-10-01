@@ -61,7 +61,7 @@ Feature: T218_RT_forzaControlloSegno_esito=1
             <pay_i:datiVersamento>
             <pay_i:dataEsecuzionePagamento>2016-09-16</pay_i:dataEsecuzionePagamento>
             <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
-            <pay_i:tipoVersamento>PO</pay_i:tipoVersamento>
+            <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
             <pay_i:identificativoUnivocoVersamento>#IUV1#</pay_i:identificativoUnivocoVersamento>
             <pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
@@ -192,25 +192,25 @@ Feature: T218_RT_forzaControlloSegno_esito=1
             </soapenv:Envelope>
             """
         And initial XML pspInviaRPT
-        """
-        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header/>
             <soapenv:Body>
-                <ws:pspInviaRPTResponse>
-                    <pspInviaRPTResponse>
-                        <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-                        <identificativoCarrello>$nodoInviaRPT.identificativoUnivocoVersamento</identificativoCarrello>
-                        <parametriPagamentoImmediato>idBruciatura=$nodoInviaRPT.identificativoUnivocoVersamento</parametriPagamentoImmediato>
-                    </pspInviaRPTResponse>
-                </ws:pspInviaRPTResponse>
+            <ws:pspInviaRPTResponse>
+            <pspInviaRPTResponse>
+            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+            <identificativoCarrello>$nodoInviaRPT.identificativoUnivocoVersamento</identificativoCarrello>
+            <parametriPagamentoImmediato>idBruciatura=$nodoInviaRPT.identificativoUnivocoVersamento</parametriPagamentoImmediato>
+            </pspInviaRPTResponse>
+            </ws:pspInviaRPTResponse>
             </soapenv:Body>
-        </soapenv:Envelope>
-        """
+            </soapenv:Envelope>
+            """
         And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
 
-    Scenario: Execute nodoInviaRT (Phase 2)
+    Scenario Outline: Execute nodoInviaRT (Phase 2)
         Given the Execute nodoInviaRPT (Phase 1) scenario executed successfully
         And initial XML nodoInviaRT
             """
@@ -232,5 +232,10 @@ Feature: T218_RT_forzaControlloSegno_esito=1
             </soapenv:Body>
             </soapenv:Envelope>
             """
+        And <tag> with <tag_value> in nodoInviaRT
         When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
+        Examples:
+            | tag                 | tag_value | test                        |
+            | -                   | -         | forzaControlloSegnoPresente |
+            | forzaControlloSegno | None      | forzaControlloSegnoAssente  |

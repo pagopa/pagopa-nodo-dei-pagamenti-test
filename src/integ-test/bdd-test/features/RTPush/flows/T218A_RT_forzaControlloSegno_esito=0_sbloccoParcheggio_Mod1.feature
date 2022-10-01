@@ -1,4 +1,4 @@
-Feature: T218A_RT_forzaControlloSegno_esito=0_Carte
+Feature: T218_RT_forzaControlloSegno_esito=0_sbloccoParcheggio_Mod1
 
     Background:
         Given systems up
@@ -211,29 +211,25 @@ Feature: T218A_RT_forzaControlloSegno_esito=0_Carte
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
 
-    Scenario: Execute nodoInoltraEsitoCarta (Phase 2)
+    Scenario: Execute nodoInoltroEsitoMod1 (Phase 2)
         Given the Execute nodoInviaRPT (Phase 1) scenario executed successfully
-        When WISP sends REST POST inoltroEsito/carta to nodo-dei-pagamenti
+        When WISP sends REST POST inoltroEsito/mod1 to nodo-dei-pagamenti
             """
             {
-                "RRN": 10026669,
-                "tipoVersamento": "CP",
                 "idPagamento": "$sessionToken",
-                "identificativoIntermediario": "#psp#",
                 "identificativoPsp": "#psp#",
-                "identificativoCanale": "#canaleRtPush#",
-                "importoTotalePagato": 10,
-                "timestampOperazione": "2021-07-09T17:06:03.100+01:00",
-                "codiceAutorizzativo": "resOK",
-                "esitoTransazioneCarta": "00"
+                "tipoVersamento": "BP",
+                "identificativoIntermediario": "#psp#",
+                "identificativoCanale": "#canale#",
+                "tipoOperazione": "web"
             }
             """
-        Then verify the HTTP status code of inoltroEsito/carta response is 200
-        And check esito is OK of inoltroEsito/carta response
+        Then verify the HTTP status code of inoltroEsito/mod1 response is 200
+        And check esito is OK of inoltroEsito/mod1 response
 
     Scenario Outline: Execute nodoInviaRT (Phase 3)
-        Given the Execute nodoInoltraEsitoCarta (Phase 2) scenario executed successfully
-        And initial XMl nodoInviaRT
+        Given the Execute nodoInoltroEsitoMod1 (Phase 2) scenario executed successfully
+        And initial XML nodoInviaRT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header/>
