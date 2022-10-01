@@ -73,6 +73,7 @@ stages:
     condition: succeeded()
     jobs:
       - job: test_execute
+        timeoutInMinutes: 0 # how long to run the job before automatically cancelling. When 0 is specified, the maximum limit is used
         displayName: "execute test suite (${{ parameters.env }})"
         pool: $(deploy-pool)
         steps:
@@ -113,7 +114,7 @@ stages:
              which behave
 
              #behave --help #Run behave
-             behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/appIO/flows/PagamentiAppIO
+             behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/appIO
              #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/appIO/flows/Annullo_PagamentoIO/PRO_ANNULLO_00_PPALNEW.feature --tags=prova
 
             displayName: 'Run Behave Test Suite'
