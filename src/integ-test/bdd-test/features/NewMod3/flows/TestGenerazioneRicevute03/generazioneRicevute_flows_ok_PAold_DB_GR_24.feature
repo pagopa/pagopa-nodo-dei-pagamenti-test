@@ -54,42 +54,6 @@ Feature: process tests for generazioneRicevute [DB_GR_24]
       </soapenv:Body>
       </soapenv:Envelope>
       """
-    And initial XML pspInviaRPT
-      """
-      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">   
-          <soapenv:Header/>   
-          <soapenv:Body>       
-              <ws:paaAttivaRPTRisposta>           
-                  <paaAttivaRPTRisposta>               
-                      <esito>OK</esito>               
-                      <datiPagamentoPA>                   
-                          <importoSingoloVersamento>10.00</importoSingoloVersamento>                   
-                          <ibanAccredito>IT45R0760103200000000001016</ibanAccredito>                   
-                          <bicAccredito>BSCTCH22</bicAccredito>                   
-                          <enteBeneficiario>                       
-                              <pag:identificativoUnivocoBeneficiario>                           
-                                  <pag:tipoIdentificativoUnivoco>G</pag:tipoIdentificativoUnivoco>                           
-                                  <pag:codiceIdentificativoUnivoco>#id_station_old#</pag:codiceIdentificativoUnivoco>                       
-                              </pag:identificativoUnivocoBeneficiario>                       
-                              <pag:denominazioneBeneficiario>15376371009</pag:denominazioneBeneficiario>                       
-                              <pag:codiceUnitOperBeneficiario>15376371009_01</pag:codiceUnitOperBeneficiario>                       
-                              <pag:denomUnitOperBeneficiario>uj</pag:denomUnitOperBeneficiario>                       
-                              <pag:indirizzoBeneficiario>\"paaAttivaRPT\"</pag:indirizzoBeneficiario>                       
-                              <pag:civicoBeneficiario>j</pag:civicoBeneficiario>                       
-                              <pag:capBeneficiario>gt</pag:capBeneficiario>                       
-                              <pag:localitaBeneficiario>gw</pag:localitaBeneficiario>                       
-                              <pag:provinciaBeneficiario>ds</pag:provinciaBeneficiario>                       
-                              <pag:nazioneBeneficiario>UK</pag:nazioneBeneficiario>                   
-                          </enteBeneficiario>                   
-                          <credenzialiPagatore>i</credenzialiPagatore>                   
-                          <causaleVersamento>prova/RFDB/$1iuv/TXT/</causaleVersamento>               
-                      </datiPagamentoPA>           
-                  </paaAttivaRPTRisposta>       
-              </ws:paaAttivaRPTRisposta>   
-          </soapenv:Body>
-      </soapenv:Envelope>
-      """
-    And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
     When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
 
@@ -198,21 +162,21 @@ Feature: process tests for generazioneRicevute [DB_GR_24]
         </soapenv:Envelope>
       """
     And initial XML pspInviaRPT
-    """
-    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-    <soapenv:Header/>
-    <soapenv:Body>
-    <ws:pspInviaRPTResponse>
-    <pspInviaRPTResponse>
-    <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-    <identificativoCarrello>$activatePaymentNoticeResponse.paymentToken</identificativoCarrello>
-    <parametriPagamentoImmediato>idBruciatura=$activatePaymentNoticeResponse.paymentToken</parametriPagamentoImmediato>
-    </pspInviaRPTResponse>
-    </ws:pspInviaRPTResponse>
-    </soapenv:Body>
-    </soapenv:Envelope>
-    """
-    And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
+      """
+      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+      <soapenv:Header/>
+      <soapenv:Body>
+      <ws:pspInviaRPTResponse>
+      <pspInviaRPTResponse>
+      <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+      <identificativoCarrello>$activatePaymentNoticeResponse.paymentToken</identificativoCarrello>
+      <parametriPagamentoImmediato>idBruciatura=$activatePaymentNoticeResponse.paymentToken</parametriPagamentoImmediato>
+      </pspInviaRPTResponse>
+      </ws:pspInviaRPTResponse>
+      </soapenv:Body>
+      </soapenv:Envelope>
+      """
+    #And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
     When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
     Then check esito is OK of nodoInviaRPT response
     And check redirect is 0 of nodoInviaRPT response
