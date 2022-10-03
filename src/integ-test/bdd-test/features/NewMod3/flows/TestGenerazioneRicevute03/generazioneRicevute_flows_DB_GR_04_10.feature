@@ -163,3 +163,32 @@ Feature: process tests for generazioneRicevute
       </soapenv:Body>
       </soapenv:Envelope>
       """
+    When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+    Then check outcome is OK of sendPaymentOutcome response
+    And wait 5 seconds for expiration
+
+    # DB Check POSITION_RECEIPT_RECIPIENT_PA
+    And execution query position_receipt_recipient_status to get value on the table POSITION_RECEIPT_RECIPIENT, with the columns * under macro NewMod3 with db name nodo_online
+    And through the query position_receipt_recipient_status retrieve param pa_fiscal_code at position 1 and save it under the key pa_fiscal_code
+    And through the query position_receipt_recipient_status retrieve param notice_id at position 2 and save it under the key notice_id
+    And through the query position_receipt_recipient_status retrieve param creditor_reference_id at position 3 and save it under the key creditor_reference_id
+    And through the query position_receipt_recipient_status retrieve param payment_token at position 4 and save it under the key payment_token
+    And through the query position_receipt_recipient_status retrieve param recipient_pa_fiscal_code at position 5 and save it under the key recipient_pa_fiscal_code
+    And through the query position_receipt_recipient_status retrieve param recipient_broker_pa_id at position 6 and save it under the key recipient_broker_pa_id
+    And through the query position_receipt_recipient_status retrieve param recipient_station_id at position 7 and save it under the key recipient_station_id
+    And through the query position_receipt_recipient_status retrieve param status at position 8 and save it under the key status
+    #And through the query position_receipt_recipient_status retrieve param inserted_timestamp at position 9 and save it under the key inserted_timestamp
+    And through the query position_receipt_recipient_status retrieve param fk_position_receip at position 10 and save it under the key fk_position_receip
+
+    And checks the value $pa_fiscal_code of the record at column PA_FISCAL_CODE of the table POSITION_PAYMENT retrived by the query position_status_n on db nodo_online under macro NewMod3
+    And checks the value $notice_id of the record at column NOTICE_ID of the table POSITION_PAYMENT retrived by the query position_status_n on db nodo_online under macro NewMod3
+    And checks the value $creditor_reference_id of the record at column CREDITOR_REFERENCE_ID of the table POSITION_PAYMENT retrived by the query position_status_n on db nodo_online under macro NewMod3
+    And checks the value $payment_token of the record at column PAYMENT_TOKEN of the table POSITION_PAYMENT retrived by the query position_status_n on db nodo_online under macro NewMod3
+    And checks the value $recipient_pa_fiscal_code of the record at column PA_FISCAL_CODE of the table POSITION_PAYMENT retrived by the query position_status_n on db nodo_online under macro NewMod3
+    And checks the value $recipient_broker_pa_id of the record at column BROKER_PA_ID of the table POSITION_PAYMENT retrived by the query position_status_n on db nodo_online under macro NewMod3
+    And checks the value $recipient_station_id of the record at column STATION_ID of the table POSITION_PAYMENT retrived by the query position_status_n on db nodo_online under macro NewMod3
+    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIEN retrived by the query position_status_n on db nodo_online under macro NewMod3
+    And checks the value $pa_fiscal_code of the record at column PA_FISCAL_CODE of the table POSITION_PAYMENT retrived by the query position_status_n on db nodo_online under macro NewMod3
+
+
+
