@@ -861,6 +861,31 @@ def step_impl(context, mock, destination, primitive):
     assert response_status_code == 200
 
 
+@given('{mock} {primitive} response with {status_code}')
+def step_impl(context, mock, primitive, status_code):
+    # if context.text:
+    #     pa_verify_payment_notice_res = context.text
+    # else:
+    #     pa_verify_payment_notice_res = getattr(context, primitive)
+    # pa_verify_payment_notice_res = str(pa_verify_payment_notice_res).replace("#fiscalCodePA#",
+    #                                                                          context.config.userdata.get(
+    #                                                                              "global_configuration").get(
+    #                                                                              "creditor_institution_code"))
+
+    # if '$iuv' in pa_verify_payment_notice_res:
+    #     pa_verify_payment_notice_res = pa_verify_payment_notice_res.replace(
+    #         '$iuv', getattr(context, 'iuv'))
+
+    # setattr(context, primitive, pa_verify_payment_notice_res)
+    # print(pa_verify_payment_notice_res)
+    if mock == 'GEC':
+        print(utils.get_rest_mock_gec(context))
+        response_status_code = utils.save_rest_action_gec(utils.get_rest_mock_gec(context), primitive,
+                                                      status_code, override=True)
+
+    assert response_status_code == status_code
+
+
 @given('{mock} wait for {sec} seconds at {action}')
 def step_impl(context, mock, sec, action):
     # TODO configure mock to wait x seconds at action

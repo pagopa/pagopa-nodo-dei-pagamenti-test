@@ -116,12 +116,30 @@ def get_rest_mock_psp(context):
         return ""
 
 
+def get_rest_mock_gec(context):
+    if context.config.userdata.get("services").get("mock-gec").get("rest_service") is not None:
+        return context.config.userdata.get("services").get("mock-gec").get("url") \
+            + context.config.userdata.get("services").get("mock-gec").get("rest_service")
+    else:
+        return ""
+
+
 def save_soap_action(mock, primitive, soap_action, override=False):
     # set what your server accepts
     headers = {'Content-Type': 'application/xml'}
     print(f'{mock}/response/{primitive}?override={override}')
     response = requests.post(
         f"{mock}/response/{primitive}?override={override}", soap_action, headers=headers, verify=False)
+    print(response.content, response.status_code)
+    return response.status_code
+
+
+def save_rest_action_gec(mock, primitive, header, override=False):
+    # set what your server accepts
+    headers = {'Ocp-Apim-Subscription-Key':'6e508a628317485ea1241e57cde7602d', 'Ocp-Apim-Error-Code':f'{header}'}
+    print(f'{mock}/response/{primitive}?override={override}')
+    response = requests.get(
+        f"{mock}/response/{primitive}?override={override}", headers=headers, verify=False)
     print(response.content, response.status_code)
     return response.status_code
 
