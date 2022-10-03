@@ -37,14 +37,13 @@ def step_impl(context):
     responses = True
 
     for row in context.table:
-        if (row.get('name') != 'mock-gec'):
-            print(f"calling: {row.get('name')} -> {row.get('url')}")
-            url = row.get("url") + row.get("healthcheck")
-            print(f"calling -> {url}")
-            headers = {'Host': 'api.dev.platform.pagopa.it:443'}
-            resp = requests.get(url, headers=headers, verify=False)
-            print(f"response: {resp.status_code}")
-            responses &= (resp.status_code == 200)
+        print(f"calling: {row.get('name')} -> {row.get('url')}")
+        url = row.get("url") + row.get("healthcheck")
+        print(f"calling -> {url}")
+        headers = {'Host': 'api.dev.platform.pagopa.it:443'}
+        resp = requests.get(url, headers=headers, verify=False)
+        print(f"response: {resp.status_code}")
+        responses &= (resp.status_code == 200)
 
     assert responses
 
@@ -882,7 +881,7 @@ def step_impl(context, mock, primitive, status_code):
     if mock == 'GEC':
         print(utils.get_rest_mock_gec(context))
         response_status_code = utils.save_rest_action_gec(utils.get_rest_mock_gec(context), primitive,
-                                                      status_code)
+                                                      status_code, override=True)
 
     assert response_status_code == status_code
 

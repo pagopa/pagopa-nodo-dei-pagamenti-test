@@ -3,13 +3,13 @@ Feature: prova getFees
     Background:
         Given systems up
 
-    Scenario: verifyPaymentNotice
-        Given initial XML verifyPaymentNotice
+    Scenario: activatePaymentNoticeV2
+        Given initial XML activatePaymentNoticeV2
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
             <soapenv:Header/>
             <soapenv:Body>
-            <nod:verifyPaymentNoticeReq>
+            <nod:activatePaymentNoticeV2Request>
             <idPSP>#psp#</idPSP>
             <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
             <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
@@ -18,64 +18,9 @@ Feature: prova getFees
             <fiscalCode>#creditor_institution_code#</fiscalCode>
             <noticeNumber>310#iuv#</noticeNumber>
             </qrCode>
-            </nod:verifyPaymentNoticeReq>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        And initial XML paVerifyPaymentNotice
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <paf:paVerifyPaymentNoticeRes>
-            <outcome>OK</outcome>
-            <paymentList>
-            <paymentOptionDescription>
-            <amount>1.00</amount>
-            <options>EQ</options>
-            <!--Optional:-->
-            <dueDate>2021-12-31</dueDate>
-            <!--Optional:-->
-            <detailDescription>descrizione dettagliata lato PA</detailDescription>
-            <!--Optional:-->
-            <allCCP>false</allCCP>
-            </paymentOptionDescription>
-            </paymentList>
-            <!--Optional:-->
-            <paymentDescription>/RFB/00202200000217527/5.00/TXT/</paymentDescription>
-            <!--Optional:-->
-            <fiscalCodePA>$verifyPaymentNotice.fiscalCode</fiscalCodePA>
-            <!--Optional:-->
-            <companyName>company PA</companyName>
-            <!--Optional:-->
-            <officeName>office PA</officeName>
-            </paf:paVerifyPaymentNoticeRes>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        And EC replies to nodo-dei-pagamenti with the paVerifyPaymentNotice
-        When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
-        Then check outcome is OK of verifyPaymentNotice response
-
-    @skip
-    Scenario: activatePaymentNotice
-        Given initial XML activatePaymentNotice
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <nod:activatePaymentNoticeReq>
-            <idPSP>#psp#</idPSP>
-            <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
-            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
-            <password>#password#</password>
-            <qrCode>
-            <fiscalCode>#creditor_institution_code#</fiscalCode>
-            <noticeNumber>310$iuv</noticeNumber>
-            </qrCode>
             <amount>10.00</amount>
             <paymentNote>responseFull</paymentNote>
-            </nod:activatePaymentNoticeReq>
+            </nod:activatePaymentNoticeV2Request>
             </soapenv:Body>
             </soapenv:Envelope>
             """
@@ -153,10 +98,8 @@ Feature: prova getFees
             </soapenv:Envelope>
             """
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
-        And GEC fees response with 400 
 
     Scenario: Execute activate
-        Given the verifyPaymentNotice scenario executed successfully
-        And the activatePaymentNotice scenario executed successfully
-        When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
-        Then check outcome is OK of activatePaymentNotice response
+        Given the activatePaymentNoticeV2 scenario executed successfully
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
