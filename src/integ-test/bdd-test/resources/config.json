@@ -21,7 +21,7 @@
       "rest_service": ""
     },
     "mock-gec": {
-      "url": "https://api.dev.platform.pagopa.it/afm/node/calculator-service/v1/",
+      "url": "https://api.dev.platform.pagopa.it/afm/node/calculator-service/v1",
       "healthcheck": "/info",
       "soap_service": "",
       "rest_service": ""

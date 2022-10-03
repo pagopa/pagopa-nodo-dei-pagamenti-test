@@ -40,7 +40,10 @@ def step_impl(context):
         print(f"calling: {row.get('name')} -> {row.get('url')}")
         url = row.get("url") + row.get("healthcheck")
         print(f"calling -> {url}")
-        headers = {'Host': 'api.dev.platform.pagopa.it:443'}
+        if (row.get('name') == 'mock-gec'):
+            headers = {'Host': 'api.dev.platform.pagopa.it:443','Ocp-Apim-Subscription-Key':'6e508a628317485ea1241e57cde7602d'}
+        else:
+            headers = {'Host': 'api.dev.platform.pagopa.it:443'}
         resp = requests.get(url, headers=headers, verify=False)
         print(f"response: {resp.status_code}")
         responses &= (resp.status_code == 200)
