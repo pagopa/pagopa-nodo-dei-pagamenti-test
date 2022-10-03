@@ -7,7 +7,9 @@ Feature: flow checks for verificaBollettino - EC old [TF_POSTE_01]
 
     # verificaBollettinoReq phase
     Scenario: Execute verificaBollettino request
-        Given initial XML paaVerificaRPT
+        Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
+        And generate 1 cart with PA #creditor_institution_code_old# and notice number $1noticeNumber
+        And initial XML paaVerificaRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/"   xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">
             <soapenv:Header/>
@@ -17,7 +19,7 @@ Feature: flow checks for verificaBollettino - EC old [TF_POSTE_01]
             <esito>OK</esito>
             <datiPagamentoPA>
             <importoSingoloVersamento>1.00</importoSingoloVersamento>
-            <ibanAccredito>IT45R0760103200000000001016</ibanAccredito>
+            <ibanAccredito>IT45R0760103200#ccPoste#</ibanAccredito>
             <bicAccredito>BSCTCH22</bicAccredito>
             <enteBeneficiario>
             <pag:identificativoUnivocoBeneficiario>
@@ -53,8 +55,8 @@ Feature: flow checks for verificaBollettino - EC old [TF_POSTE_01]
                     <idBrokerPSP>#psp#</idBrokerPSP>
                     <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
                     <password>pwdpwdpwd</password>
-                    <ccPost>666666666666</ccPost>
-                    <noticeNumber>#notice_number_old#</noticeNumber>
+                    <ccPost>#ccPoste#</ccPost>
+                    <noticeNumber>$1noticeNumber</noticeNumber>
                 </nod:verificaBollettinoReq>
             </soapenv:Body>
             </soapenv:Envelope>
@@ -62,18 +64,70 @@ Feature: flow checks for verificaBollettino - EC old [TF_POSTE_01]
         When PSP sends SOAP verificaBollettino to nodo-dei-pagamenti
         Then check outcome is OK of verificaBollettino response
         And wait 5 seconds for expiration
-        And checks the value #creditor_institution_code# of the record at column PA_FISCAL_CODE of the table VERIFICA_BOLLETTINO retrived by the query verifica_bollettino on db nodo_online under macro NewMod3
+        And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table VERIFICA_BOLLETTINO retrived by the query verifica_bollettino on db nodo_online under macro NewMod3
 
 
-    Scenario: Define RPT
+    # activatePaymentNoticeReq phase
+    Scenario: Execute activatePaymentNotice request
         Given the Execute verificaBollettino request scenario executed successfully
+        And initial XML paaAttivaRPT
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <ws:paaAttivaRPTRisposta>
+                <paaAttivaRPTRisposta>
+                    <esito>OK</esito>
+                    <datiPagamentoPA>
+                        <importoSingoloVersamento>10.00</importoSingoloVersamento>
+                        <ibanAccredito>IT45R0760103200#ccPoste#</ibanAccredito>
+                        <enteBeneficiario>
+                            <pag:identificativoUnivocoBeneficiario>
+                            <pag:tipoIdentificativoUnivoco>G</pag:tipoIdentificativoUnivoco>
+                            <pag:codiceIdentificativoUnivoco>#creditor_institution_code_old#</pag:codiceIdentificativoUnivoco>
+                            </pag:identificativoUnivocoBeneficiario>
+                            <pag:denominazioneBeneficiario>Pa Gabri</pag:denominazioneBeneficiario>
+                        </enteBeneficiario>
+                        <credenzialiPagatore>tizio caio</credenzialiPagatore>
+                        <causaleVersamento>12345$1iuv</causaleVersamento>
+                    </datiPagamentoPA>
+                </paaAttivaRPTRisposta>
+            </ws:paaAttivaRPTRisposta>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
+        And initial XML activatePaymentNotice
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+                <nod:activatePaymentNoticeReq>
+                    <idPSP>#psp#</idPSP>
+                    <idBrokerPSP>#psp#</idBrokerPSP>
+                    <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
+                    <password>pwdpwdpwd</password>
+                    <qrCode>
+                        <fiscalCode>#creditor_institution_code_old#</fiscalCode>
+                        <noticeNumber>$verificaBollettino.noticeNumber</noticeNumber>
+                    </qrCode>
+                    <amount>10.00</amount>
+                </nod:activatePaymentNoticeReq>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNotice response
+
+    Scenario: RPT generation
+        Given the Execute activatePaymentNotice request scenario executed successfully
         And RPT generation
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-            <pay_i:identificativoDominio>#codicePA#</pay_i:identificativoDominio>
-            <pay_i:identificativoStazioneRichiedente>#codicePA#</pay_i:identificativoStazioneRichiedente>
+            <pay_i:identificativoDominio>#creditor_institution_code_old#</pay_i:identificativoDominio>
+            <pay_i:identificativoStazioneRichiedente>#id_station_old#</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
             <pay_i:dataOraMessaggioRichiesta>2016-09-16T11:24:10</pay_i:dataOraMessaggioRichiesta>
@@ -125,8 +179,8 @@ Feature: flow checks for verificaBollettino - EC old [TF_POSTE_01]
             <pay_i:dataEsecuzionePagamento>2016-09-16</pay_i:dataEsecuzionePagamento>
             <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>BP</pay_i:tipoVersamento>
-            <pay_i:identificativoUnivocoVersamento>$iuv</pay_i:identificativoUnivocoVersamento>
-            <pay_i:codiceContestoPagamento>#ccp#</pay_i:codiceContestoPagamento>
+            <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
+            <pay_i:codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
             <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -144,83 +198,29 @@ Feature: flow checks for verificaBollettino - EC old [TF_POSTE_01]
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-
-
-    # activatePaymentNoticeReq phase
-    Scenario: Execute activatePaymentNotice request
-        Given the Define RPT scenario executed successfully
-        And initial XML paaAttivaRPT
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <ws:paaAttivaRPTRisposta>
-                <paaAttivaRPTRisposta>
-                    <esito>OK</esito>
-                    <datiPagamentoPA>
-                        <importoSingoloVersamento>10.00</importoSingoloVersamento>
-                        <ibanAccredito>IT45R0760103200#ccPoste#</ibanAccredito>
-                        <enteBeneficiario>
-                            <pag:identificativoUnivocoBeneficiario>
-                            <pag:tipoIdentificativoUnivoco>G</pag:tipoIdentificativoUnivoco>
-                            <pag:codiceIdentificativoUnivoco>#creditor_institution_code#</pag:codiceIdentificativoUnivoco>
-                            </pag:identificativoUnivocoBeneficiario>
-                            <pag:denominazioneBeneficiario>Pa Gabri</pag:denominazioneBeneficiario>
-                        </enteBeneficiario>
-                        <credenzialiPagatore>tizio caio</credenzialiPagatore>
-                        <causaleVersamento>$ccp</causaleVersamento>
-                    </datiPagamentoPA>
-                </paaAttivaRPTRisposta>
-            </ws:paaAttivaRPTRisposta>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
-        And initial XML activatePaymentNotice
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-            <soapenv:Header/>
-            <soapenv:Body>
-                <nod:activatePaymentNoticeReq>
-                    <idPSP>#psp#</idPSP>
-                    <idBrokerPSP>#psp#</idBrokerPSP>
-                    <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
-                    <password>pwdpwdpwd</password>
-                    <qrCode>
-                        <fiscalCode>#creditor_institution_code_old#</fiscalCode>
-                        <noticeNumber>$verificaBollettino.noticeNumber</noticeNumber>
-                    </qrCode>
-                    <amount>10.00</amount>
-                </nod:activatePaymentNoticeReq>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
-        Then check outcome is OK of activatePaymentNotice response
-        And checks the value IT45R0760103200666666666666 of the record at column IBAN of the table POSITION_TRANSFER retrived by the query position_transfer on db nodo_online under macro NewMod3
-
+        And checks the value IT45R0760103200#ccPoste# of the record at column IBAN of the table POSITION_TRANSFER retrived by the query position_transfer on db nodo_online under macro NewMod3
 
     # nodoInviaRPT phase
     Scenario: Execute nodoInviaRPT request
-        Given the Execute activatePaymentNotice request scenario executed successfully
+        Given the RPT generation scenario executed successfully
         And initial XML nodoInviaRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
                 <ppt:intestazionePPT>
-                    <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
-                    <identificativoStazioneIntermediarioPA>77777777777_05</identificativoStazioneIntermediarioPA>
-                    <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-                    <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
-                    <codiceContestoPagamento>$ccp</codiceContestoPagamento>
+                    <identificativoIntermediarioPA>#id_broker_old#</identificativoIntermediarioPA>
+                    <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
+                    <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
+                    <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
+                    <codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken</codiceContestoPagamento>
                 </ppt:intestazionePPT>
             </soapenv:Header>
             <soapenv:Body>
                 <ws:nodoInviaRPT>
                     <password>pwdpwdpwd</password>
-                    <identificativoPSP>#psp#</identificativoPSP>
-                    <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-                    <identificativoCanale>#canale#</identificativoCanale>
+                    <identificativoPSP>15376371009</identificativoPSP>
+                    <identificativoIntermediarioPSP>15376371009</identificativoIntermediarioPSP>
+                    <identificativoCanale>15376371009_01</identificativoCanale>
                     <tipoFirma></tipoFirma>
                     <rpt>$rptAttachment</rpt>
                 </ws:nodoInviaRPT>
@@ -230,10 +230,9 @@ Feature: flow checks for verificaBollettino - EC old [TF_POSTE_01]
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
         And check redirect is 0 of nodoInviaRPT response
-        And checks the value PAYING, PAID_NORPT of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
-        And checks the value PAID_NORPT of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro NewMod3
-        And checks the value PAYING, PAID of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
-        And checks the value PAID of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro NewMod3
+        And checks the value PAYING, PAYING_RPT of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
+        And checks the value PAYING_RPT of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro NewMod3
+        And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
+        And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro NewMod3
         And checks the value NotNone of the record at column ID of the table POSITION_PAYMENT retrived by the query position_payment on db nodo_online under macro NewMod3
         And checks the value NotNone of the record at column ID of the table POSITION_SERVICE retrived by the query position_service on db nodo_online under macro NewMod3
-

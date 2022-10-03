@@ -492,11 +492,11 @@ Feature: process tests for nodoInviaRPT [REV_NIRPT_01]
         And through the query payment_status_pay retrieve param FEE at position 12 and save it under the key FEE
         
         #psp
-        And execution query psp to get value on the table PSP, with the columns RAGIONE_SOCIALE under macro NewMod3 with db name nodo_cfg
+        And execution query psp to get value on the table PSP, with the columns RAGIONE_SOCIALE, ID_PSP under macro NewMod3 with db name nodo_cfg
         And through the query psp retrieve param RAGIONE_SOCIALE at position 0 and save it under the key RAGIONE_SOCIALE
 
         And through the query psp retrieve param PSP_ID at position 1 and save it under the key PSP_ID
-        And through the query psp retrieve param RAGIONE_SOCIALE at position 6 and save it under the key RAGIONE_SOCIALE
+        #And through the query psp retrieve param RAGIONE_SOCIALE at position 6 and save it under the key RAGIONE_SOCIALE
 
         #checks on XML
         And check value $xml_rt.identificativoDominio is equal to value $xml_rpt.identificativoDominio
