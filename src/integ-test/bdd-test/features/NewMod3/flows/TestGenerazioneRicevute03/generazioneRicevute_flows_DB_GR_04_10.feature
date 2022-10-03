@@ -119,7 +119,7 @@ Feature: process tests for generazioneRicevute
       </soapenv:Body>
       </soapenv:Envelope>
       """
-    And And EC replies to nodo-dei-pagamenti with the paGetPayment
+    And EC replies to nodo-dei-pagamenti with the paGetPayment
     When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
 
