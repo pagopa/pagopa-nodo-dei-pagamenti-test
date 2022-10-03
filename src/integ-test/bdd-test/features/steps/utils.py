@@ -136,8 +136,8 @@ def save_soap_action(mock, primitive, soap_action, override=False):
 
 def save_rest_action_gec(mock, primitive, header):
     # set what your server accepts
-    headers = {'Ocp-Apim-Error-Code':f'{header}'}
-    print(f'{mock}/response/{primitive}')
+    headers = {'Ocp-Apim-Subscription-Key':'6e508a628317485ea1241e57cde7602d','Ocp-Apim-Error-Code':f'{header}'}
+    print(f'{mock}/{primitive}')
     response = requests.post(
         f"{mock}/{primitive}", headers=headers, verify=False)
     print(response.content, response.status_code)
