@@ -153,7 +153,7 @@ Feature: prova getFees
             </soapenv:Envelope>
             """
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
-        And GEC fees response with 200 
+        And GEC fees response with 400 
 
     Scenario: Execute activate
         Given the verifyPaymentNotice scenario executed successfully

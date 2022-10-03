@@ -882,7 +882,7 @@ def step_impl(context, mock, primitive, status_code):
     if mock == 'GEC':
         print(utils.get_rest_mock_gec(context))
         response_status_code = utils.save_rest_action_gec(utils.get_rest_mock_gec(context), primitive,
-                                                      status_code, override=True)
+                                                      status_code)
 
     assert response_status_code == status_code
 
