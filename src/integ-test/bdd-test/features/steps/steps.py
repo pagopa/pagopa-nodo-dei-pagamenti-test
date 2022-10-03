@@ -37,16 +37,14 @@ def step_impl(context):
     responses = True
 
     for row in context.table:
-        print(f"calling: {row.get('name')} -> {row.get('url')}")
-        url = row.get("url") + row.get("healthcheck")
-        print(f"calling -> {url}")
-        if (row.get('name') == 'mock-gec'):
-            headers = {'Host': 'api.dev.platform.pagopa.it:443','Ocp-Apim-Subscription-Key':'6e508a628317485ea1241e57cde7602d'}
-        else:
+        if (row.get('name') != 'mock-gec'):
+            print(f"calling: {row.get('name')} -> {row.get('url')}")
+            url = row.get("url") + row.get("healthcheck")
+            print(f"calling -> {url}")
             headers = {'Host': 'api.dev.platform.pagopa.it:443'}
-        resp = requests.get(url, headers=headers, verify=False)
-        print(f"response: {resp.status_code}")
-        responses &= (resp.status_code == 200)
+            resp = requests.get(url, headers=headers, verify=False)
+            print(f"response: {resp.status_code}")
+            responses &= (resp.status_code == 200)
 
     assert responses
 
