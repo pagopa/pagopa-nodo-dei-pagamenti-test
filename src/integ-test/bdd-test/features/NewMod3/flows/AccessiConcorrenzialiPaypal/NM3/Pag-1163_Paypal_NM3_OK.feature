@@ -1,4 +1,4 @@
-Feature: Checks for concorrential access of Paypal payments
+Feature: Checks for concorrential access of Paypal payments OK
 
     Background:
         Given systems up
@@ -97,8 +97,8 @@ Feature: Checks for concorrential access of Paypal payments
         And check $ragione_sociale is ragioneSociale in /informazioniPagamento response
 
 
-    Background:
-        Given systems up
+    Scenario: Node handling of nodoInoltraEsitoPagamentoPaypal and sendPaymentOutcome OK
+        Given the Execute nodoChiediInformazioniPagamento request scenario executed successfully
         And initial XML sendPaymentOutcome
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -109,7 +109,7 @@ Feature: Checks for concorrential access of Paypal payments
                  <idBrokerPSP>${intermediarioPSP}</idBrokerPSP>
                  <idChannel>${canale}</idChannel>
                  <password>${password}</password>
-                 <paymentToken>${#Project#payTok_1a}</paymentToken>
+                 <paymentToken>$activateIOPaymentResponse.paymentToken</paymentToken>
                  <outcome>OK</outcome>
                  <!--Optional:-->
                  <details>
@@ -147,8 +147,6 @@ Feature: Checks for concorrential access of Paypal payments
         </soapenv:Envelope>
         """
 
-    Scenario: Node handling of nodoInoltraEsitoPagamentoPaypal and sendPaymentOutcome OK
-        Given the Execute nodoChiediInformazioniPagamento request scenario executed successfully
         When PSP sends rest POST /inoltroEsito/paypal to nodo-dei-pagamenti
         """
         {"idTransazione": "responseOKSleep",
@@ -160,6 +158,7 @@ Feature: Checks for concorrential access of Paypal payments
         "importoTotalePagato": 10.00,
         "timestampOperazione": "2012-04-23T18:25:43Z"}
         """
-
-        Then check esito is OK of nodoInoltraEsitoPagamento response
-        And check outcome is OK of sendPaymentOutcome response
+        And wait 4 seconds for expiration
+        And psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+        Then check esito is OK in /inoltroEsito/paypal response
+        And check outcome is OK in sendPaymentOutcome response
