@@ -212,7 +212,77 @@ Feature: process tests for generazioneRicevute [DB_GR_24]
     Then check outcome is OK of sendPaymentOutcome response
     And wait 10 seconds for expiration
 
+    And execution query position_status_n to get value on the table POSITION_RECEIPT, with the columns * under macro NewMod3 with db name nodo_online
+    And through the query position_status_n retrieve param receipt_id at position 1 and save it under the key receipt_id
+    And through the query position_status_n retrieve param notice_id at position 2 and save it under the key notice_id
+    And through the query position_status_n retrieve param pa_fiscal_code at position 3 and save it under the key pa_fiscal_code
+    And through the query position_status_n retrieve param creditor_reference_id at position 4 and save it under the key creditor_reference_id
+    And through the query position_status_n retrieve param payment_token at position 5 and save it under the key payment_token
+    And through the query position_status_n retrieve param outcome at position 6 and save it under the key outcome
+    And through the query position_status_n retrieve param payment_amount at position 7 and save it under the key payment_amount
+    And through the query position_status_n retrieve param description at position 8 and save it under the key description
+    And through the query position_status_n retrieve param company_name at position 9 and save it under the key company_name
+    And through the query position_status_n retrieve param office_name at position 10 and save it under the key office_name
+    And through the query position_status_n retrieve param debtor_id at position 11 and save it under the key debtor_id
+   # And through the query position_status_n retrieve param psp_id at position 0 and save it under the key psp_id
+    And through the query position_status_n retrieve param psp_company_name at position 15 and save it under the key psp_company_name
+    And through the query position_status_n retrieve param psp_fiscal_code at position 13 and save it under the key psp_fiscal_code
+    And through the query position_status_n retrieve param psp_vat_number at position 14 and save it under the key psp_vat_number
+    And through the query position_status_n retrieve param channel_id at position 16 and save it under the key channel_id
+    And through the query position_status_n retrieve param channel_description at position 17 and save it under the key channel_description
+    And through the query position_status_n retrieve param payer_id at position 18 and save it under the key payer_id
+    And through the query position_status_n retrieve param payment_method at position 19 and save it under the key payment_method
+    And through the query position_status_n retrieve param fee at position 20 and save it under the key fee
+    #And through the query position_status_n retrieve param payment_date_time at position 0 and save it under the key payment_date_time
+    And through the query position_status_n retrieve param application_date at position 22 and save it under the key application_date
+    #And through the query position_status_n retrieve param transfer_date at position 0 and save it under the key transfer_date
+    And through the query position_status_n retrieve param metadata at position 24 and save it under the key metadata
+    And through the query position_status_n retrieve param rt_id at position 25 and save it under the key rt_id
+    And through the query position_status_n retrieve param fk_position_payment at position 26 and save it under the key fk_position_payment
+
+    And checks the value $receipt_id of the record at column PAYMENT_TOKEN of the table POSITION_PAYMENT retrived by the query position_status_n on db nodo_online under macro NewMod3
+    And checks the value $notice_id of the record at column NOTICE_ID of the table POSITION_PAYMENT retrived by the query position_status_n on db nodo_online under macro NewMod3
+    And checks the value $pa_fiscal_code of the record at column PA_FISCAL_CODE of the table POSITION_PAYMENT retrived by the query position_status_n on db nodo_online under macro NewMod3
+    And checks the value $creditor_reference_id of the record at column CREDITOR_REFERENCE_ID of the table POSITION_PAYMENT retrived by the query position_status_n on db nodo_online under macro NewMod3
+    And checks the value $payment_token of the record at column PAYMENT_TOKEN of the table POSITION_PAYMENT retrived by the query position_status_n on db nodo_online under macro NewMod3
+    And checks the value $outcome of the record at column OUTCOME of the table POSITION_PAYMENT retrived by the query position_status_n on db nodo_online under macro NewMod3
+    And checks the value $payment_amount of the record at column AMOUNT of the table POSITION_PAYMENT retrived by the query position_status_n on db nodo_online under macro NewMod3
+    And checks the value $description of the record at column DESCRIPTION of the table POSITION_SERVICE retrived by the query position_status_n on db nodo_online under macro NewMod3
+    And checks the value $company_name of the record at column COMPANY_NAME of the table POSITION_SERVICE retrived by the query position_status_n on db nodo_online under macro NewMod3
+    And checks the value $office_name of the record at column OFFICE_NAME of the table POSITION_SERVICE retrived by the query position_status_n on db nodo_online under macro NewMod3
+    And checks the value $debtor_id of the record at column DEBTOR_ID of the table POSITION_SERVICE retrived by the query position_status_n on db nodo_online under macro NewMod3
+    And checks the value $sendPaymentOutcome.idPSP of the record at column PSP_ID of the table POSITION_RECEIPT retrived by the query position_status_n on db nodo_online under macro NewMod3
+    And checks the value $psp_company_name of the record at column RAGIONE_SOCIALE of the table PSP retrived by the query psp on db nodo_online under macro NewMod3
+    And checks the value $psp_fiscal_code of the record at column CODICE_FISCALE of the table PSP retrived by the query psp on db nodo_online under macro NewMod3
+    And checks the value $psp_vat_number of the record at column VAT_NUMBER of the table PSP retrived by the query psp on db nodo_online under macro NewMod3
+    And checks the value $channel_id of the record at column CHANNEL_ID of the table POSITION_PAYMENT retrived by the query position_status_n on db nodo_online under macro NewMod3
+    And checks the value NA of the record at column PAYMENT_CHANNEL of the table POSITION_PAYMENT retrived by the query position_status_n on db nodo_online under macro NewMod3
+    And checks the value $payer_id of the record at column PAYER_ID of the table POSITION_PAYMENT retrived by the query position_status_n on db nodo_online under macro NewMod3
+    And checks the value $payment_method of the record at column PAYMENT_METHOD of the table POSITION_PAYMENT retrived by the query position_status_n on db nodo_online under macro NewMod3
+    And checks the value $fee of the record at column FEE of the table POSITION_PAYMENT retrived by the query position_status_n on db nodo_online under macro NewMod3
+    And checks the value $metadata of the record at column METADATA of the table POSITION_PAYMENT_PLAN retrived by the query position_status_n on db nodo_online under macro NewMod3
     
+    And checks the value NotNone of the record at column PAYMENT_DATE_TIME of the table POSITION_RECEIPT retrived by the query position_status_n on db nodo_online under macro NewMod3
+    And checks the value NotNone of the record at column TRANSFER_DATE of the table POSITION_RECEIPT retrived by the query position_status_n on db nodo_online under macro NewMod3
+    
+    And checks the value $application_date of the record at column APPLICATION_DATE of the table POSITION_PAYMENT retrived by the query position_status_n on db nodo_online under macro NewMod3
+    And checks the value $rt_id of the record at column ID of the table POSITION_PAYMENT retrived by the query position_status_n on db nodo_online under macro NewMod3
+    And checks the value $fk_position_payment of the record at column ID of the table RT retrived by the query rpt_id on db nodo_online under macro NewMod3
+
+
+
+
+    # And execution query position_status_n to get value on the table POSITION_PAYMENT, with the columns * under macro NewMod3 with db name nodo_online
+    # And execution query position_status_n to get value on the table POSITION_SERVICE, with the columns DESCRIPTION under macro NewMod3 with db name nodo_online
+    # And execution query position_status_n to get value on the table POSITION_SERVICE, with the columns COMPANY_NAME under macro NewMod3 with db name nodo_online
+    # And execution query position_status_n to get value on the table POSITION_SERVICE, with the columns OFFICE_NAME under macro NewMod3 with db name nodo_online
+    # And execution query position_status_n to get value on the table POSITION_SERVICE, with the columns DEBTOR_ID under macro NewMod3 with db name nodo_online
+    # And execution query psp to get value on the table PSP, with the columns DEBTOR_ID under macro NewMod3 with db name nodo_online
+    # And execution query psp to get value on the table PSP, with the columns DEBTOR_ID under macro NewMod3 with db name nodo_online
+    # And execution query psp to get value on the table PSP, with the columns DEBTOR_ID under macro NewMod3 with db name nodo_online
+    # And execution query position_status_n to get value on the table POSITION_PAYMENT_PLAN, with the columns DEBTOR_ID under macro NewMod3 with db name nodo_online
+
+
 
 
     
