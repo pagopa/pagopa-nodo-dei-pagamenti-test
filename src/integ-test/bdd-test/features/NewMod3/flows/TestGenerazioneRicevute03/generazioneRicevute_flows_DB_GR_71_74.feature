@@ -217,6 +217,8 @@ Feature: generazioneRicevute_flows_DB_GR_71_74
             </soapenv:Envelope>
             """
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+        And job paInviaRt triggered after 5 seconds
+        And wait 5 seconds for expiration
         Then check outcome is OK of sendPaymentOutcome response
 
         #DB CHECK-POSITION_RECEIPT_XML [DB_GR_71]
@@ -295,14 +297,14 @@ Feature: generazioneRicevute_flows_DB_GR_71_74
         And checks the value NotNone of the record at column XML of the table RT_XML retrived by the query rt_xml on db nodo_online under macro NewMod3
         And checks the value $sessionToken of the record at column ID_SESSIONE of the table RT_XMl retrived by the query rt_xml on db nodo_online under macro NewMod3
 
-    Scenario: Execute TriggerPollerAnnulli (Phase 3)
-        Given the Execute nodoInviaRPT (Phase 2) scenario executed successfully
+    Scenario: Execute TriggerPollerAnnulli (Phase 4)
+        Given the Execute nodoInviaRPT (Phase 3) scenario executed successfully
         And wait $activatePaymentNotice.expirationTime seconds for expiration
-        When job mod3CancelV1 triggered after 5 seconds
+        When job mod3CancelV2 triggered after 5 seconds
         And wait 5 seconds for expiration
         
         #DB CHECK-RT_XML [DB_GR_74]
-        And checks the value $1ccp of the record at column CCP of the table RT_XML retrived by the query rt_xml on db nodo_online under macro NewMod3
+        Then checks the value $1ccp of the record at column CCP of the table RT_XML retrived by the query rt_xml on db nodo_online under macro NewMod3
         And checks the value #creditor_institution_code_old# of the record at column IDENT_DOMINIO of the table RT_XML retrived by the query rt_xml on db nodo_online under macro NewMod3
         And checks the value $1iuv of the record at column IUV of the table RT_XML retrived by the query rt_xml on db nodo_online under macro NewMod3
         And checks the value NotNone of the record at column XML of the table RT_XML retrived by the query rt_xml on db nodo_online under macro NewMod3
