@@ -17,7 +17,7 @@ Feature: prova getFees
             <password>#password#</password>
             <qrCode>
             <fiscalCode>#creditor_institution_code#</fiscalCode>
-            <noticeNumber>310#iuv#</noticeNumber>
+            <noticeNumber>311#iuv#</noticeNumber>
             </qrCode>
             <amount>10.00</amount>
             <paymentNote>responseFull</paymentNote>
@@ -27,14 +27,14 @@ Feature: prova getFees
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And initial XML paGetPaymentV2
+        And initial XML paGetPayment
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
             <soapenv:Body>
-            <paf:paGetPaymentV2Response>
+            <paf:paGetPaymentRes>
             <outcome>OK</outcome>
             <data>
-            <creditorReferenceId>10$iuv</creditorReferenceId>
+            <creditorReferenceId>11$iuv</creditorReferenceId>
             <paymentAmount>10.00</paymentAmount>
             <dueDate>2021-12-30</dueDate>
             <!--Optional:-->
@@ -65,7 +65,7 @@ Feature: prova getFees
             <!--Optional:-->
             <country>DE</country>
             <!--Optional:-->
-            <e-mail>paGetPaymentV2@test.it</e-mail>
+            <e-mail>paGetPayment@test.it</e-mail>
             </debtor>
             <!--Optional:-->
             <transferList>
@@ -88,11 +88,11 @@ Feature: prova getFees
             </transfer>
             </transferList>
             </data>
-            </paf:paGetPaymentV2Response>
+            </paf:paGetPaymentRes>
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
+        And EC replies to nodo-dei-pagamenti with the paGetPayment
 
     # sunny day
     Scenario: Execute activate 1
@@ -144,15 +144,15 @@ Feature: prova getFees
         And verify 1 record for the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value $activatePaymentNoticeV2.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value None of the record at column PAYMENT_METHOD of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value None of the record at column TOUCHPOINT of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value PO of the record at column PAYMENT_METHOD of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value ATM of the record at column TOUCHPOINT of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value None of the record at column SUGGESTED_IDBUNDLE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value None of the record at column SUGGESTED_IDCIBUNDLE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value None of the record at column SUGGESTED_USER_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value None of the record at column SUGGESTED_PA_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
-    # paGetPaymentV2 response not OK --> fees not triggered
-    Scenario: activatePaymentNoticeV2 paGetPaymentV2 KO
+    # paGetPayment response not OK --> fees not triggered
+    Scenario: activatePaymentNoticeV2 paGetPayment KO
         Given initial XML activatePaymentNoticeV2
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -165,7 +165,7 @@ Feature: prova getFees
             <password>#password#</password>
             <qrCode>
             <fiscalCode>#creditor_institution_code#</fiscalCode>
-            <noticeNumber>310#iuv#</noticeNumber>
+            <noticeNumber>311#iuv#</noticeNumber>
             </qrCode>
             <amount>10.00</amount>
             <paymentNote>responseFull</paymentNote>
@@ -175,12 +175,12 @@ Feature: prova getFees
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And initial XML paGetPaymentV2
+        And initial XML paGetPayment
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
             <soapenv:Header/>
             <soapenv:Body>
-            <paf:paGetPaymentV2Response>
+            <paf:paGetPaymentRes>
             <outcome>KO</outcome>
             <!--Optional:-->
             <fault>
@@ -190,22 +190,22 @@ Feature: prova getFees
             <!--Optional:-->
             <description>chiamata rifiutata</description>
             </fault>
-            </paf:paGetPaymentV2Response>
+            </paf:paGetPaymentRes>
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
+        And EC replies to nodo-dei-pagamenti with the paGetPayment
 
     Scenario: Execute activate 4
-        Given the activatePaymentNoticeV2 paGetPaymentV2 KO scenario executed successfully
+        Given the activatePaymentNoticeV2 paGetPayment KO scenario executed successfully
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-        Then check outcome is OK of activatePaymentNoticeV2 response
+        Then check outcome is KO of activatePaymentNoticeV2 response
         And wait 30 seconds for expiration
         And verify 0 record for the table RE retrived by the query select_fees on db re under macro getFees
         And verify 1 record for the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value $activatePaymentNoticeV2.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value None of the record at column PAYMENT_METHOD of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value None of the record at column TOUCHPOINT of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value PO of the record at column PAYMENT_METHOD of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value ATM of the record at column TOUCHPOINT of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value None of the record at column SUGGESTED_IDBUNDLE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value None of the record at column SUGGESTED_IDCIBUNDLE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value None of the record at column SUGGESTED_USER_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
@@ -222,8 +222,8 @@ Feature: prova getFees
         And verify 1 record for the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value $activatePaymentNoticeV2.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value None of the record at column PAYMENT_METHOD of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value None of the record at column TOUCHPOINT of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value PO of the record at column PAYMENT_METHOD of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value ATM of the record at column TOUCHPOINT of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value None of the record at column SUGGESTED_IDBUNDLE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value None of the record at column SUGGESTED_IDCIBUNDLE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value None of the record at column SUGGESTED_USER_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
