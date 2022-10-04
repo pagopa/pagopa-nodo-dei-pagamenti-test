@@ -1,4 +1,4 @@
-Feature: syntax checks for pspNotifyPaymentReq - payPal [T_01]
+Feature: semantic checks for pspNotifyPaymentReq - payPal [T_01]
 
   Background:
     Given systems up
@@ -72,7 +72,7 @@ Feature: syntax checks for pspNotifyPaymentReq - payPal [T_01]
     {"idTransazione": "responseOK",
     "idTransazionePsp":"$activateIOPayment.idempotencyKey",
     "idPagamento": "$activateIOPaymentResponse.paymentToken",
-    "identificativoIntermediario": "#psp",
+    "identificativoIntermediario": "#psp#",
     "identificativoPsp": "#psp#",
     "identificativoCanale": "#canale#",
     "importoTotalePagato": 10.00,
