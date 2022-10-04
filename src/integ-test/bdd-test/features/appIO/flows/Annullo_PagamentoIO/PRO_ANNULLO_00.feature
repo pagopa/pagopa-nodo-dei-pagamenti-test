@@ -115,6 +115,7 @@ Feature: PRO_ANNULLO_00
         "esitoTransazioneCarta":"00"
         }
         """
+        And wait 10 seconds for expiration
         And job mod3CancelV2 triggered after 10 seconds
         And wait 6 seconds for expiration
         Then verify the HTTP status code of inoltroEsito/carta response is 408
