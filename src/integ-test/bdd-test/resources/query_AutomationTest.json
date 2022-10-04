@@ -135,8 +135,17 @@
         "select_activateio": "SELECT columns FROM table_name WHERE NOTICE_ID = '$activateIOPayment.noticeNumber' AND PA_FISCAL_CODE = '$activateIOPayment.fiscalCode'",
         "update_activateio": "UPDATE table_name SET param = 'value' WHERE NOTICE_ID = '$activateIOPayment.noticeNumber' AND PA_FISCAL_CODE = '$activateIOPayment.fiscalCode'"
     },
+    "sendPaymentResultV2": {
+        "select_sprV2_old": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN = '$ccp' AND TIPO_EVENTO = 'sendPaymentResult-v2' ORDER BY ID ASC",
+        "pspUpdate": "UPDATE table_name SET param = 'value' where ID_CANALE = '#canale_IMMEDIATO_MULTIBENEFICIARIO#'",
+        "select_sprV2_new": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN = '$activateIOPaymentResponse.paymentToken' AND TIPO_EVENTO = 'sendPaymentResult-v2' ORDER BY ID ASC",
+        "stationUpdate": "UPDATE table_name SET param = 'value' where ID_STAZIONE = '#id_station_old#'"
+    },
     "Mod4": {
         "update_id_intermediario_pa": "UPDATE table_name SET param = 'value' WHERE ID_INTERMEDIARIO_PA = '77777777777'",
         "update_id_stazione": "UPDATE table_name SET param = 'value' WHERE ID_STAZIONE = '77777777777_01'"
+    },
+    "getFees": {
+        "select_fees": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN = '$activatePaymentNoticeV2Response.paymentToken' AND TIPO_EVENTO = 'fees' ORDER BY ID ASC"
     }
 }
