@@ -115,7 +115,7 @@ stages:
 
              #behave --help #Run behave
              #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/RTPull/RTPull_flows.feature --tags=ok
-             behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/appIO/primitives/pspNotifyPaymentResponse_Header_syntax_ok.feature
+             behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/appIO/primitives/pspNotifyPaymentResponse_syntax_ko.feature
              #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/PrimitiveAccessorie/flows/pspInviaRPT_timeout_chiediAvanzamento_sconosciuta.feature
 
             displayName: 'Run Behave Test Suite'
