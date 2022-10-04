@@ -1,4 +1,4 @@
-Feature: DB checks for nodoChiediEsitoPagamento  - KO
+Feature: DB checks for nodoChiediEsitoPagamento NCAP
 
     Background:
         Given systems up
@@ -8,13 +8,13 @@ Feature: DB checks for nodoChiediEsitoPagamento  - KO
            <soapenv:Header/>
            <soapenv:Body>
               <nod:verifyPaymentNoticeReq>
-                 <idPSP>${pspCD}</idPSP>
-                 <idBrokerPSP>${intermediarioPSPCD}</idBrokerPSP>
-                 <idChannel>${canaleCD}</idChannel>
-                 <password>${password}</password>
+                 <idPSP>AGID_01</idPSP>
+                 <idBrokerPSP>97735020584</idBrokerPSP>
+                 <idChannel>97735020584_03</idChannel>
+                 <password>pwdpwdpwd</password>
                  <qrCode>
-                    <fiscalCode>${qrCodeCF}</fiscalCode>
-                    <noticeNumber>311${#TestCase#iuv}</noticeNumber>
+                    <fiscalCode>77777777777</fiscalCode>
+                    <noticeNumber>311$iuv</noticeNumber>
                  </qrCode>
               </nod:verifyPaymentNoticeReq>
            </soapenv:Body>
@@ -31,9 +31,9 @@ Feature: DB checks for nodoChiediEsitoPagamento  - KO
                         <idChannel>70000000001_01</idChannel>
                         <password>pwdpwdpwd</password>
                         <!--Optional:-->
-                        <idempotencyKey>#idempotency_key#</idempotencyKey>
+                        <idempotencyKey>$idempotenza</idempotencyKey>
                         <qrCode>
-                            <fiscalCode>#creditor_institution_code#</fiscalCode>
+                            <fiscalCode>#fiscalCodePA#</fiscalCode>
                             <noticeNumber>#notice_number#</noticeNumber>
                         </qrCode>
                         <!--Optional:-->
@@ -69,26 +69,24 @@ Feature: DB checks for nodoChiediEsitoPagamento  - KO
                 </soapenv:Body>
             </soapenv:Envelope>
             """
-        When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
-        Then check outcome is OK of verifyPaymentNotice response
-
+            When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
+            Then check outcome is OK of verifyPaymentNotice response
 
     Scenario: Execute activateIOPaymentReq request
         When psp sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
 
-
     Scenario: Execute nodoChiediInformazioniPagamento request
         Given the Execute activateIOPaymentReq request scenario executed successfully
-        When EC sends rest GET /informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
+        When EC sends rest GET /informazioniPagamento?idPagamento=$idPagamento to nodo-dei-pagamenti
         Then check importo field exists in /informazioniPagamento response
         And check ragioneSociale field exists in /informazioniPagamento response
         And check oggettoPagamento field exists in /informazioniPagamento response
-        And check redirect is redirectEC in /informazioniPagamento response
+        And check redirect is redirectEC of /informazioniPagamento response
         And check false field exists in /informazioniPagamento response
         And check dettagli field exists in /informazioniPagamento response
-        And check iuv field exists in /informazioniPagamento response
-        And check ccp field exists in /informazioniPagamento response
+        And check iuv is &iuv of /informazioniPagamento response
+        And check ccp is $ccp of /informazioniPagamento response
         And check pa field exists in /informazioniPagamento response
         And check enteBeneficiario field exists in /informazioniPagamento response
         And execution query pa_dbcheck_json to get value on the table PA, with the columns ragione_sociale under macro NewMod3 with db name nodo_cfg
