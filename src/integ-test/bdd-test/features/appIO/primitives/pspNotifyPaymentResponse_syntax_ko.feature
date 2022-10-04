@@ -145,10 +145,10 @@ Feature: Syntax checks for pspNotifyPaymentResponse - KO
     Then verify the HTTP status code of inoltroEsito/carta response is 408
     Examples:
       | elem                    | value        | soapUI test |
-      | Body                    | Empty        | T_05        |
-      | Body                    | None         | T_06        |
-      | Body                    | RemoveParent | T_07        |
-      | pspNotifyPaymentRes     | RemoveParent | T_08        |
+      | soapenv:Body            | Empty        | T_05        |
+      | soapenv:Body            | None         | T_06        |
+      | soapenv:Body            | RemoveParent | T_07        |
+      | psp:pspNotifyPaymentRes | RemoveParent | T_08        |
       | psp:pspNotifyPaymentRes | Empty        | T_09        |
       | outcome                 | None         | T_10        |
       | outcome                 | Empty        | T_11        |
