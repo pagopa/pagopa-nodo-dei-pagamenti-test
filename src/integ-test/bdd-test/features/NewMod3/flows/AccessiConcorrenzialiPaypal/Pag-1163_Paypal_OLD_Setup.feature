@@ -8,10 +8,10 @@ Feature: DB checks for nodoInoltraEsitoPagamentoPaypal on old PA
            <soapenv:Header/>
            <soapenv:Body>
               <ws:nodoVerificaRPT>
-                 <identificativoPSP>${pspCD}</identificativoPSP>
-                 <identificativoIntermediarioPSP>${intermediarioPSPCD}</identificativoIntermediarioPSP>
-                 <identificativoCanale>${canaleCD}</identificativoCanale>
-                 <password>${password}</password>
+                 <identificativoPSP>AGID_01</identificativoPSP>
+                 <identificativoIntermediarioPSP>97735020584</identificativoIntermediarioPSP>
+                 <identificativoCanale>70000000001_07</identificativoCanale>
+                 <password>pwdpwdpwd</password>
                  <codiceContestoPagamento>$ccp</codiceContestoPagamento>
                  <codificaInfrastrutturaPSP>$codifica</codificaInfrastrutturaPSP>
                  <codiceIdRPT>$barcode</codiceIdRPT>
@@ -25,13 +25,13 @@ Feature: DB checks for nodoInoltraEsitoPagamentoPaypal on old PA
            <soapenv:Header/>
            <soapenv:Body>
               <ws:nodoAttivaRPT>
-                 <identificativoPSP>${pspCD}</identificativoPSP>
-                 <identificativoIntermediarioPSP>${intermediarioPSPCD}</identificativoIntermediarioPSP>
-                 <identificativoCanale>${canaleCD}</identificativoCanale>
-                 <password>${password}</password>
+                 <identificativoPSP>AGID_01</identificativoPSP>
+                 <identificativoIntermediarioPSP>97735020584</identificativoIntermediarioPSP>
+                 <identificativoCanale>70000000001_07</identificativoCanale>
+                 <password>pwdpwdpwd</password>
                  <codiceContestoPagamento>$ccp</codiceContestoPagamento>
-                 <identificativoIntermediarioPSPPagamento>${intermediarioPSPAgid}</identificativoIntermediarioPSPPagamento>
-                 <identificativoCanalePagamento>${canaleAgID}</identificativoCanalePagamento>
+                 <identificativoIntermediarioPSPPagamento>97735020584</identificativoIntermediarioPSPPagamento>
+                 <identificativoCanalePagamento>97735020584_03</identificativoCanalePagamento>
                  <codificaInfrastrutturaPSP>$codifica</codificaInfrastrutturaPSP>
                  <codiceIdRPT>$barcode</codiceIdRPT>
                  <datiPagamentoPSP>
@@ -98,18 +98,18 @@ Feature: DB checks for nodoInoltraEsitoPagamentoPaypal on old PA
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
            <soapenv:Header>
               <ppt:intestazionePPT>
-                 <identificativoIntermediarioPA>${intermediarioPA}</identificativoIntermediarioPA>
-                 <identificativoStazioneIntermediarioPA>${stazioneAux03}</identificativoStazioneIntermediarioPA>
-                 <identificativoDominio>${pa}</identificativoDominio>
+                 <identificativoIntermediarioPA>77777777777</identificativoIntermediarioPA>
+                 <identificativoStazioneIntermediarioPA>44444444444_05</identificativoStazioneIntermediarioPA>
+                 <identificativoDominio>44444444444</identificativoDominio>
                  <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
                  <codiceContestoPagamento>$ccp</codiceContestoPagamento>
               </ppt:intestazionePPT>
            </soapenv:Header>
            <soapenv:Body>
               <ws:nodoInviaRPT>
-                 <password>${password}</password>
-                 <identificativoPSP>${pspAgid}</identificativoPSP>
-                 <identificativoIntermediarioPSP>${intermediarioPSPAgid}</identificativoIntermediarioPSP>
+                 <password>pwdpwdpwd</password>
+                 <identificativoPSP>AGID_01</identificativoPSP>
+                 <identificativoIntermediarioPSP>97735020584</identificativoIntermediarioPSP>
                  <identificativoCanale>97735020584_02</identificativoCanale>
                  <tipoFirma></tipoFirma>
                  <rpt>$rptAttachment</rpt>

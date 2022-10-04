@@ -1,4 +1,4 @@
-Feature: Checks for concorrential access of Paypal payments OK on old PA
+Feature: DB checks for nodoInoltraEsitoPagamentoPaypal on old PA
 
     Background:
         Given systems up
@@ -8,10 +8,10 @@ Feature: Checks for concorrential access of Paypal payments OK on old PA
            <soapenv:Header/>
            <soapenv:Body>
               <ws:nodoVerificaRPT>
-                 <identificativoPSP>${pspCD}</identificativoPSP>
-                 <identificativoIntermediarioPSP>${intermediarioPSPCD}</identificativoIntermediarioPSP>
-                 <identificativoCanale>${canaleCD}</identificativoCanale>
-                 <password>${password}</password>
+                 <identificativoPSP>AGID_01</identificativoPSP>
+                 <identificativoIntermediarioPSP>97735020584</identificativoIntermediarioPSP>
+                 <identificativoCanale>70000000001_07</identificativoCanale>
+                 <password>pwdpwdpwd</password>
                  <codiceContestoPagamento>$ccp</codiceContestoPagamento>
                  <codificaInfrastrutturaPSP>$codifica</codificaInfrastrutturaPSP>
                  <codiceIdRPT>$barcode</codiceIdRPT>
@@ -25,13 +25,13 @@ Feature: Checks for concorrential access of Paypal payments OK on old PA
            <soapenv:Header/>
            <soapenv:Body>
               <ws:nodoAttivaRPT>
-                 <identificativoPSP>${pspCD}</identificativoPSP>
-                 <identificativoIntermediarioPSP>${intermediarioPSPCD}</identificativoIntermediarioPSP>
-                 <identificativoCanale>${canaleCD}</identificativoCanale>
-                 <password>${password}</password>
+                 <identificativoPSP>AGID_01</identificativoPSP>
+                 <identificativoIntermediarioPSP>97735020584</identificativoIntermediarioPSP>
+                 <identificativoCanale>70000000001_07</identificativoCanale>
+                 <password>pwdpwdpwd</password>
                  <codiceContestoPagamento>$ccp</codiceContestoPagamento>
-                 <identificativoIntermediarioPSPPagamento>${intermediarioPSPAgid}</identificativoIntermediarioPSPPagamento>
-                 <identificativoCanalePagamento>${canaleAgID}</identificativoCanalePagamento>
+                 <identificativoIntermediarioPSPPagamento>97735020584</identificativoIntermediarioPSPPagamento>
+                 <identificativoCanalePagamento>97735020584_03</identificativoCanalePagamento>
                  <codificaInfrastrutturaPSP>$codifica</codificaInfrastrutturaPSP>
                  <codiceIdRPT>$barcode</codiceIdRPT>
                  <datiPagamentoPSP>
@@ -98,18 +98,18 @@ Feature: Checks for concorrential access of Paypal payments OK on old PA
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
            <soapenv:Header>
               <ppt:intestazionePPT>
-                 <identificativoIntermediarioPA>${intermediarioPA}</identificativoIntermediarioPA>
-                 <identificativoStazioneIntermediarioPA>${stazioneAux03}</identificativoStazioneIntermediarioPA>
-                 <identificativoDominio>${pa}</identificativoDominio>
+                 <identificativoIntermediarioPA>77777777777</identificativoIntermediarioPA>
+                 <identificativoStazioneIntermediarioPA>44444444444_05</identificativoStazioneIntermediarioPA>
+                 <identificativoDominio>44444444444</identificativoDominio>
                  <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
                  <codiceContestoPagamento>$ccp</codiceContestoPagamento>
               </ppt:intestazionePPT>
            </soapenv:Header>
            <soapenv:Body>
               <ws:nodoInviaRPT>
-                 <password>${password}</password>
-                 <identificativoPSP>${pspAgid}</identificativoPSP>
-                 <identificativoIntermediarioPSP>${intermediarioPSPAgid}</identificativoIntermediarioPSP>
+                 <password>pwdpwdpwd</password>
+                 <identificativoPSP>AGID_01</identificativoPSP>
+                 <identificativoIntermediarioPSP>97735020584</identificativoIntermediarioPSP>
                  <identificativoCanale>97735020584_02</identificativoCanale>
                  <tipoFirma></tipoFirma>
                  <rpt>$rptAttachment</rpt>
@@ -146,7 +146,7 @@ Feature: Checks for concorrential access of Paypal payments OK on old PA
         And through the query pa_dbcheck_json retrieve param ragione_sociale at position 0 and save it under the key ragione_sociale
         And check $ragione_sociale is ragioneSociale in /informazioniPagamento response
 
-    Scenario: Node handling of nodoInoltraEsitoPagamentoPaypal and sendPaymentOutcome OK old PA
+    Scenario: Node handling of nodoInoltraEsitoPagamentoPaypal and sendPaymentOutcome error on old PA
         Given the Execute nodoChiediInformazioniPagamento request scenario executed successfully
         And initial XML sendPaymentOutcome
         """
@@ -154,10 +154,10 @@ Feature: Checks for concorrential access of Paypal payments OK on old PA
            <soapenv:Header/>
            <soapenv:Body>
               <nod:sendPaymentOutcomeReq>
-                 <idPSP>${psp}</idPSP>
-                 <idBrokerPSP>${intermediarioPSP}</idBrokerPSP>
-                 <idChannel>${canale}</idChannel>
-                 <password>${password}</password>
+                 <idPSP>70000000001</idPSP>
+                 <idBrokerPSP>40000000001</idBrokerPSP>
+                 <idChannel>70000000001_07</idChannel>
+                 <password>pwdpwdpwd</password>
                  <paymentToken>$ccp_2a</paymentToken>
                  <outcome>OK</outcome>
                  <!--Optional:-->
@@ -197,16 +197,16 @@ Feature: Checks for concorrential access of Paypal payments OK on old PA
         """
         When PSP sends rest POST /inoltroEsito/paypal to nodo-dei-pagamenti
         """
-        {"idTransazione": "responseOKSleep",
+        {"idTransazione": "responseMalformataSleep",
         "idTransazionePsp":"$idempotenza",
         "idPagamento": "$idPagamento_2a",
-        "identificativoIntermediario": "${intermediarioPSP}",
-        "identificativoPsp": "${psp}",
-        "identificativoCanale": "${canale}",
+        "identificativoIntermediario": "40000000001",
+        "identificativoPsp": "70000000001",
+        "identificativoCanale": "97735020584_02",
         "importoTotalePagato": 10.00,
         "timestampOperazione": "2012-04-23T18:25:43Z"}
         """
         And wait 4 seconds for expiration
         And psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-        Then check esito is OK in /inoltroEsito/paypal response
-        And check outcome is OK in sendPaymentOutcome response
+        Then check error is Operazione in timeout in /inoltroEsito/paypal response
+        And check outcome is OK of sendPaymentOutcome response

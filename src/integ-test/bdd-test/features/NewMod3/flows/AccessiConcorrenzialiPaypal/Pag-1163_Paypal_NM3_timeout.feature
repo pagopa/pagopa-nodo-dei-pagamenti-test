@@ -1,4 +1,4 @@
-Feature: Checks for concorrential access of Paypal payments KO
+Feature: Checks for concorrential access of Paypal payments timeout
 
     Background:
         Given systems up
@@ -8,13 +8,13 @@ Feature: Checks for concorrential access of Paypal payments KO
            <soapenv:Header/>
            <soapenv:Body>
               <nod:verifyPaymentNoticeReq>
-                 <idPSP>${pspCD}</idPSP>
-                 <idBrokerPSP>${intermediarioPSPCD}</idBrokerPSP>
-                 <idChannel>${canaleCD}</idChannel>
-                 <password>${password}</password>
+                 <idPSP>AGID_01</idPSP>
+                 <idBrokerPSP>97735020584</idBrokerPSP>
+                 <idChannel>97735020584_03</idChannel>
+                 <password>pwdpwdpwd</password>
                  <qrCode>
-                    <fiscalCode>${qrCodeCF}</fiscalCode>
-                    <noticeNumber>311${#TestCase#iuv}</noticeNumber>
+                    <fiscalCode>77777777777</fiscalCode>
+                    <noticeNumber>311$iuv</noticeNumber>
                  </qrCode>
               </nod:verifyPaymentNoticeReq>
            </soapenv:Body>
@@ -31,9 +31,9 @@ Feature: Checks for concorrential access of Paypal payments KO
                         <idChannel>70000000001_01</idChannel>
                         <password>pwdpwdpwd</password>
                         <!--Optional:-->
-                        <idempotencyKey>#idempotency_key#</idempotencyKey>
+                        <idempotencyKey>$idempotenza</idempotencyKey>
                         <qrCode>
-                            <fiscalCode>#creditor_institution_code#</fiscalCode>
+                            <fiscalCode>#fiscalCodePA#</fiscalCode>
                             <noticeNumber>#notice_number#</noticeNumber>
                         </qrCode>
                         <!--Optional:-->
@@ -97,7 +97,7 @@ Feature: Checks for concorrential access of Paypal payments KO
         And check $ragione_sociale is ragioneSociale in /informazioniPagamento response
 
 
-    Scenario: Node handling of nodoInoltraEsitoPagamentoPaypal and sendPaymentOutcome KO
+    Scenario: Node handling of nodoInoltraEsitoPagamentoPaypal and sendPaymentOutcome timeout
         Given the Execute nodoChiediInformazioniPagamento request scenario executed successfully
         And initial XML sendPaymentOutcome
         """
@@ -105,11 +105,11 @@ Feature: Checks for concorrential access of Paypal payments KO
            <soapenv:Header/>
            <soapenv:Body>
               <nod:sendPaymentOutcomeReq>
-                 <idPSP>${psp}</idPSP>
-                 <idBrokerPSP>${intermediarioPSP}</idBrokerPSP>
-                 <idChannel>${canale}</idChannel>
-                 <password>${password}</password>
-                 <paymentToken>${#Project#payTok_1a}</paymentToken>
+                 <idPSP>#psp#</idPSP>
+                 <idBrokerPSP>70000000001</idBrokerPSP>
+                 <idChannel>70000000001_07</idChannel>
+                 <password>pwdpwdpwd</password>
+                 <paymentToken>$activateIOPaymentResponse.paymentToken</paymentToken>
                  <outcome>OK</outcome>
                  <!--Optional:-->
                  <details>
@@ -149,17 +149,16 @@ Feature: Checks for concorrential access of Paypal payments KO
 
         When PSP sends rest POST /inoltroEsito/paypal to nodo-dei-pagamenti
         """
-        {"idTransazione": "responseKOSleep",
+        {"idTransazione": "responseTimeout",
         "idTransazionePsp":"$activateIOPayment.idempotencyKey",
-        "idPagamento": "${#Project#idPagamento_1a}",
-        "identificativoIntermediario": "${intermediarioPSP}",
-        "identificativoPsp": "${psp}",
-        "identificativoCanale": "${canale}",
+        "idPagamento": "$idPagamento_1a",
+        "identificativoIntermediario": "70000000001",
+        "identificativoPsp": "#psp#",
+        "identificativoCanale": "70000000001_07",
         "importoTotalePagato": 10.00,
         "timestampOperazione": "2012-04-23T18:25:43Z"}
         """
-        And wait 5 seconds for expiration
+        And wait 4 seconds for expiration
         And psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-        Then check esito is KO in /inoltroEsito/paypal response
-        And check RIFPSP is Risposta negativa del Canale in /inoltroEsito/paypal response
-        And check faultCode is PPT_SEMANTICA of sendPaymentOutcome response
+        Then check error is Operazione in timeout in /inoltroEsito/paypal response
+        And check outcome is OK of sendPaymentOutcome response
