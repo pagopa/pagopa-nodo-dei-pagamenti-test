@@ -1,4 +1,4 @@
-Feature: pspInviaCarrelloRPT_timeout_chiediAvanzamento
+Feature: pspInviaCarrelloRPT_malformata_chiediAvanzamento
 
     Background:
         Given systems up
@@ -122,8 +122,7 @@ Feature: pspInviaCarrelloRPT_timeout_chiediAvanzamento
                 <soapenv:Body>
                     <ws:pspInviaCarrelloRPTResponse>
                         <pspInviaCarrelloRPTResponse>
-                            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-                            <delay>10000</delay>
+                            <esitoComplessivoOperazione>malformata</esitoComplessivoOperazione>
                             <identificativoCarrello>$nodoInviaCarrelloRPT.identificativoCarrello</identificativoCarrello>
                             <parametriPagamentoImmediato>idBruciatura=$nodoInviaCarrelloRPT.identificativoCarrello</parametriPagamentoImmediato>
                         </pspInviaCarrelloRPTResponse>
@@ -134,7 +133,7 @@ Feature: pspInviaCarrelloRPT_timeout_chiediAvanzamento
         And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
-        And check faultCode is PPT_CANALE_TIMEOUT of nodoInviaCarrelloRPT response
+        And check faultCode is PPT_CANALE_ERRORE_RESPONSE of nodoInviaCarrelloRPT response
 
         # DB Check
         And replace iuv content with $1iuv content
@@ -165,27 +164,3 @@ Feature: pspInviaCarrelloRPT_timeout_chiediAvanzamento
         And wait 10 seconds for expiration
         Then checks the value RPT_ESITO_SCONOSCIUTO_PSP,RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT retrived by the query rpt on db nodo_online under macro Primitive_accessorie
         And checks the value RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt on db nodo_online under macro Primitive_accessorie
-
-
-    # [pspChiediAvanzamentoRPT -> timeout]
-    Scenario: Execute job pspChiediAvanzamentoRPT
-        Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
-        And initial XML pspChiediAvanzamentoRPT
-            """
-                <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-                <soapenv:Header/>
-                <soapenv:Body>
-                    <ws:pspChiediAvanzamentoRPTResponse>
-                        <pspChiediAvanzamentoRPTResponse>
-                            <delay>10000</delay>
-                        </pspChiediAvanzamentoRPTResponse>
-                    </ws:pspChiediAvanzamentoRPTResponse>
-                </soapenv:Body>
-                </soapenv:Envelope>
-            """
-        And PSP replies to nodo-dei-pagamenti with the pspChiediAvanzamentoRPT
-        When job pspChiediAvanzamentoRpt triggered after 5 seconds
-        And wait 10 seconds for expiration
-        Then checks the value RPT_ESITO_SCONOSCIUTO_PSP,RPT_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_RPT retrived by the query rpt on db nodo_online under macro Primitive_accessorie
-        And checks the value RPT_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt on db nodo_online under macro Primitive_accessorie
-
