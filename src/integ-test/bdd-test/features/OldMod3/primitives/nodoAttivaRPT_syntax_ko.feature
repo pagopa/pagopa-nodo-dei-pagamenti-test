@@ -189,3 +189,4 @@ Feature: Syntax checks KO for nodoAttivaRPT
         Given identificativoCanale with Empty in nodoAttivaRPT
         When psp sends soap nodoAttivaRPT to nodo-dei-pagamenti
         Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoAttivaRPT response
+
