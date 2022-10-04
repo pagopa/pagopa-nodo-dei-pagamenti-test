@@ -52,11 +52,11 @@ Feature: Syntax checks for activateIOPaymentReq - OK
             </soapenv:Envelope>
             """
 
-    Scenario: Check PPT_SINTASSI_EXTRAXSD error on invalid wsdl namespace
+    Scenario: Check OK of activateIOPayment response
         When psp sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
 
-    Scenario Outline: Check PPT_SINTASSI_EXTRASXSD error on invalid body element value
+    Scenario Outline: Check OK of activateIOPayment response (phase 2)
         Given <elem> with <value> in activateIOPayment
         When psp sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
