@@ -138,8 +138,8 @@ Feature: DB checks for nodoInoltraEsitoPagamentoPaypal on old PA
         And check redirect is redirectEC in /informazioniPagamento response
         And check false field exists in /informazioniPagamento response
         And check dettagli field exists in /informazioniPagamento response
-        And check iuv field exists in /informazioniPagamento response
-        And check ccp field exists in /informazioniPagamento response
+        And check iuv is $iuv of /informazioniPagamento response
+        And check ccp id $ccp of /informazioniPagamento response
         And check pa field exists in /informazioniPagamento response
         And check enteBeneficiario is AZIENDA XXX in /informazioniPagamento response
         And execution query pa_dbcheck_json to get value on the table PA, with the columns ragione_sociale under macro NewMod3 with db name nodo_cfg

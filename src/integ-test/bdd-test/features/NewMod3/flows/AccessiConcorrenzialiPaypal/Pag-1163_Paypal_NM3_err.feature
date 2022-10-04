@@ -80,15 +80,15 @@ Feature: Checks for concorrential access of Paypal payments err
 
     Scenario: Execute nodoChiediInformazioniPagamento request
         Given the Execute activateIOPaymentReq request scenario executed successfully
-        When EC sends rest GET /informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
+        When EC sends rest GET /informazioniPagamento?idPagamento=$idPagamento to nodo-dei-pagamenti
         Then check importo field exists in /informazioniPagamento response
         And check ragioneSociale field exists in /informazioniPagamento response
         And check oggettoPagamento field exists in /informazioniPagamento response
-        And check redirect is redirectEC in /informazioniPagamento response
+        And check redirect is redirectEC of /informazioniPagamento response
         And check false field exists in /informazioniPagamento response
         And check dettagli field exists in /informazioniPagamento response
-        And check iuv field exists in /informazioniPagamento response
-        And check ccp field exists in /informazioniPagamento response
+        And check iuv is &iuv of /informazioniPagamento response
+        And check ccp is $ccp of /informazioniPagamento response
         And check pa field exists in /informazioniPagamento response
         And check enteBeneficiario field exists in /informazioniPagamento response
         And execution query pa_dbcheck_json to get value on the table PA, with the columns ragione_sociale under macro NewMod3 with db name nodo_cfg
