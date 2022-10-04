@@ -1,4 +1,4 @@
-Feature: pspInviaRPT_timeout_chiediAvanzamento
+Feature: pspInviaRPT_malformata_chiediAvanzamento
 
     Background:
         Given systems up
@@ -116,8 +116,7 @@ Feature: pspInviaRPT_timeout_chiediAvanzamento
                 <soapenv:Body>
                     <ws:pspInviaRPTResponse>
                         <pspInviaRPTResponse>
-                            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-                            <delay>10000</delay>
+                            <esitoComplessivoOperazione>malformata</esitoComplessivoOperazione>
                             <identificativoCarrello>$nodoInviaRPT.identificativoUnivocoVersamento</identificativoCarrello>
                             <parametriPagamentoImmediato>idBruciatura=$nodoInviaRPT.identificativoUnivocoVersamento</parametriPagamentoImmediato>
                         </pspInviaRPTResponse>
@@ -159,68 +158,3 @@ Feature: pspInviaRPT_timeout_chiediAvanzamento
         And wait 10 seconds for expiration
         Then checks the value RPT_ESITO_SCONOSCIUTO_PSP,RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT retrived by the query rpt on db nodo_online under macro Primitive_accessorie
         And checks the value RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt on db nodo_online under macro Primitive_accessorie
-
-
-    # [pspChiediAvanzamentoRPT -> timeout]
-    Scenario: Execute job pspChiediAvanzamentoRPT
-        Given the Execute nodoInviaRPT request scenario executed successfully
-        And initial XML pspChiediAvanzamentoRPT
-            """
-                <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-                <soapenv:Header/>
-                <soapenv:Body>
-                    <ws:pspChiediAvanzamentoRPTResponse>
-                        <pspChiediAvanzamentoRPTResponse>
-                            <delay>10000</delay>
-                        </pspChiediAvanzamentoRPTResponse>
-                    </ws:pspChiediAvanzamentoRPTResponse>
-                </soapenv:Body>
-                </soapenv:Envelope>
-            """
-        And PSP replies to nodo-dei-pagamenti with the pspChiediAvanzamentoRPT
-        When job pspChiediAvanzamentoRpt triggered after 5 seconds
-        And wait 10 seconds for expiration
-        Then checks the value RPT_ESITO_SCONOSCIUTO_PSP,RPT_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_RPT retrived by the query rpt on db nodo_online under macro Primitive_accessorie
-        And checks the value RPT_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt on db nodo_online under macro Primitive_accessorie
-
-
-"""
-<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-   <soapenv:Header/>
-   <soapenv:Body>
-      <ws:pspChiediAvanzamentoRPTResponse>
-         <pspChiediAvanzamentoRPTResponse>
-            ${response}
-         </pspChiediAvanzamentoRPTResponse>
-      </ws:pspChiediAvanzamentoRPTResponse>
-   </soapenv:Body>
-</soapenv:Envelope>
-  if (iuv=='avanzaKO') {
-    response = """<fault>
-               <faultCode>CANALE_RPT_RIFIUTATA</faultCode>
-               <faultString>RPT arrivata al PSP e rifiutata</faultString>
-               <id>${psp}</id>
-               <description>RPT rifiutata dal PSP</description>
-            </fault>"""
-    } else if (iuv=='avanzaSconosciuta') {
-        response = """<fault>
-               <faultCode>CANALE_RPT_SCONOSCIUTA</faultCode>
-               <faultString>RPT mai arrivata al PSP</faultString>
-               <id>${psp}</id>
-               <description>RPT sconosciuta per il PSP</description>
-            </fault>"""} 
-     else if (iuv=='avanzaErrResponse' || iuv=='avanzaErrResponse2') {
-        response = """<fault>
-               <faultLE_RPT_SCONOSCIUTA</faultCode>
-               <faultString>RPT mai arrivata al PSP</faultString>
-               <id>${psp}</id>
-               <description>RPT sconosciuta per il PSP</description>
-            </fault>"""} 
-     else if (iuv=='avanzaTimeout' || iuv=='timeoutPSP' || iuv=='timeoutPsp') {
-        sleep(14000)
-        response = """<value>OK</value>"""} 
-     else if (iuv=='avanzaIrraggiungibile') {
-        response = """"""} 
-    else {response = """<value>OK</value>"""}
-context.response = response
-"""
