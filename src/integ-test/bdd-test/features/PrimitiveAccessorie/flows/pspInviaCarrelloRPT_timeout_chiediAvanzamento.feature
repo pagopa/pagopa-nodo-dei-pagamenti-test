@@ -88,54 +88,53 @@ Feature: pspInviaCarrelloRPT_timeout_chiediAvanzamento
     Scenario: Execute nodoInviaCarrelloRPT request
         Given the RPT1 generation scenario executed successfully
         And initial XML nodoInviaCarrelloRPT
-
-        """
-        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-        <soapenv:Header>
-            <ppt:intestazioneCarrelloPPT>
-                <identificativoIntermediarioPA>#id_broker#</identificativoIntermediarioPA>
-                <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
-                <identificativoCarrello>$1carrello</identificativoCarrello>
-            </ppt:intestazioneCarrelloPPT>
-        </soapenv:Header>
-        <soapenv:Body>
-            <ws:nodoInviaCarrelloRPT>
-                <password>pwdpwdpwd</password>
-                <identificativoPSP>#psp#</identificativoPSP>
-                <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-                <identificativoCanale>#canale#</identificativoCanale>
-                <listaRPT>
-                    <elementoListaRPT>
-                        <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-                        <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
-                        <codiceContestoPagamento>$1CCP</codiceContestoPagamento>
-                        <rpt>$rpt1Attachment</rpt>
-                    </elementoListaRPT>
-                </listaRPT>
-            </ws:nodoInviaCarrelloRPT>
-        </soapenv:Body>
-        </soapenv:Envelope>
-        """
-        And initial XML pspInviaCarrelloRPT
-        """
-        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header/>
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header>
+                <ppt:intestazioneCarrelloPPT>
+                    <identificativoIntermediarioPA>#id_broker#</identificativoIntermediarioPA>
+                    <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
+                    <identificativoCarrello>$1carrello</identificativoCarrello>
+                </ppt:intestazioneCarrelloPPT>
+            </soapenv:Header>
             <soapenv:Body>
-                <ws:pspInviaCarrelloRPTResponse>
-                    <pspInviaCarrelloRPTResponse>
-                        <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-                        <delay>10000</delay>
-                        <identificativoCarrello>$nodoInviaCarrelloRPT.identificativoCarrello</identificativoCarrello>
-                        <parametriPagamentoImmediato>idBruciatura=$nodoInviaCarrelloRPT.identificativoCarrello</parametriPagamentoImmediato>
-                    </pspInviaCarrelloRPTResponse>
-                </ws:pspInviaCarrelloRPTResponse>
+                <ws:nodoInviaCarrelloRPT>
+                    <password>pwdpwdpwd</password>
+                    <identificativoPSP>#psp#</identificativoPSP>
+                    <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+                    <identificativoCanale>#canale#</identificativoCanale>
+                    <listaRPT>
+                        <elementoListaRPT>
+                            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+                            <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
+                            <codiceContestoPagamento>$1CCP</codiceContestoPagamento>
+                            <rpt>$rpt1Attachment</rpt>
+                        </elementoListaRPT>
+                    </listaRPT>
+                </ws:nodoInviaCarrelloRPT>
             </soapenv:Body>
-        </soapenv:Envelope>
-        """
+            </soapenv:Envelope>
+            """
+        And initial XML pspInviaCarrelloRPT
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+                <soapenv:Header/>
+                <soapenv:Body>
+                    <ws:pspInviaCarrelloRPTResponse>
+                        <pspInviaCarrelloRPTResponse>
+                            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+                            <delay>10000</delay>
+                            <identificativoCarrello>$nodoInviaCarrelloRPT.identificativoCarrello</identificativoCarrello>
+                            <parametriPagamentoImmediato>idBruciatura=$nodoInviaCarrelloRPT.identificativoCarrello</parametriPagamentoImmediato>
+                        </pspInviaCarrelloRPTResponse>
+                    </ws:pspInviaCarrelloRPTResponse>
+                </soapenv:Body>
+            </soapenv:Envelope>
+            """
         And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
-        And check faultCode is PPT_CANALE_TIMEOUT of nodoInviaRPT response
+        And check faultCode is PPT_CANALE_TIMEOUT of nodoInviaCarrelloRPT response
 
         # DB Check
         And replace iuv content with $1iuv content
@@ -147,7 +146,7 @@ Feature: pspInviaCarrelloRPT_timeout_chiediAvanzamento
 
     # [pspChiediAvanzamentoRPT -> OK]
     Scenario: Execute job pspChiediAvanzamentoRPT
-        Given the Execute nodoInviaRPT request scenario executed successfully
+        Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
         And initial XML pspChiediAvanzamentoRPT
             """
                 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -170,7 +169,7 @@ Feature: pspInviaCarrelloRPT_timeout_chiediAvanzamento
 
     # [pspChiediAvanzamentoRPT -> timeout]
     Scenario: Execute job pspChiediAvanzamentoRPT
-        Given the Execute nodoInviaRPT request scenario executed successfully
+        Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
         And initial XML pspChiediAvanzamentoRPT
             """
                 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
