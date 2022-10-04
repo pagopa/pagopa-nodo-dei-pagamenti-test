@@ -65,7 +65,7 @@ Feature: pspInviaCarrelloRPT_timeout_chiediAvanzamento_sconosciuta
             <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
             <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
-            <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
+            <pay_i:identificativoUnivocoVersamento>avanzaErrResponse</pay_i:identificativoUnivocoVersamento>
             <pay_i:codiceContestoPagamento>#CCP1#</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
@@ -106,7 +106,7 @@ Feature: pspInviaCarrelloRPT_timeout_chiediAvanzamento_sconosciuta
                     <listaRPT>
                         <elementoListaRPT>
                             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-                            <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
+                            <identificativoUnivocoVersamento>avanzaErrResponse</identificativoUnivocoVersamento>
                             <codiceContestoPagamento>$1CCP</codiceContestoPagamento>
                             <rpt>$rpt1Attachment</rpt>
                         </elementoListaRPT>
@@ -137,7 +137,7 @@ Feature: pspInviaCarrelloRPT_timeout_chiediAvanzamento_sconosciuta
         And check faultCode is PPT_CANALE_TIMEOUT of nodoInviaCarrelloRPT response
 
         # DB Check
-        And replace iuv content with $1iuv content
+        And replace iuv content with avanzaErrResponse content
         And replace ccp content with $1CCP content
 
         And checks the value RPT_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_RPT retrived by the query rpt on db nodo_online under macro Primitive_accessorie
