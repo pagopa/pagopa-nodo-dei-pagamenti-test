@@ -46,7 +46,6 @@ Feature: process tests for retryAtokenScaduto
       <fiscalCode>$verifyPaymentNotice.fiscalCode</fiscalCode>
       <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
       </qrCode>
-      <expirationTime>2000</expirationTime>
       <amount>10.00</amount>
       <dueDate>2021-12-31</dueDate>
       <paymentNote>causale</paymentNote>
@@ -204,7 +203,6 @@ Feature: process tests for retryAtokenScaduto
   #   Given the Execute paInviaRT scenario executed successfully
   #   Then checks the value RT_ESITO_SCONOSCIUTO_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query stati_rpt on db nodo_online under macro NewMod3
 
-  @prova
   # Payment Outcome Phase outcome OK
   Scenario: Execute sendPaymentOutcome request
     Given the Execute paInviaRT scenario executed successfully
