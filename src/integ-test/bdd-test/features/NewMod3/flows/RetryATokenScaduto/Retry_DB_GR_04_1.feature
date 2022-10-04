@@ -1,4 +1,4 @@
-Feature: process tests for Retry_DB_GR_07
+Feature: process tests for Retry_DB_GR_04_1
 
   Background:
     Given systems up
