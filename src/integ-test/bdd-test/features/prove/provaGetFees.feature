@@ -85,10 +85,11 @@ Feature: prova getFees
             """
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
 
-    Scenario: Execute activate
+    Scenario: Execute activate 1
         Given the activatePaymentNoticeV2 scenario executed successfully
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
+        And wait 30 seconds for expiration
         And verify 2 record for the table RE retrived by the query select_fees on db re under macro getFees
         And verify 1 record for the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
