@@ -129,7 +129,7 @@ Feature: Process checks for activateIOPayment request
             <paf:paGetPaymentRes>
             <outcome>OK</outcome>
             <data>
-            <creditorReferenceId>$iuv</creditorReferenceId>
+            <creditorReferenceId>$1iuv</creditorReferenceId>
             <paymentAmount>10.00</paymentAmount>
             <dueDate>2021-12-31</dueDate>
             <!--Optional:-->
