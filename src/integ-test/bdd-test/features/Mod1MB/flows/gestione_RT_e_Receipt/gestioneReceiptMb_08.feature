@@ -3,7 +3,29 @@ Feature: gestioneReceiptMb_08
     Background:
         Given systems up
 
+    Scenario: Execute paSendRT
+        Given EC replies to nodo-dei-pagamenti with the paSendRT
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
+            <soapenv:Header />
+            <soapenv:Body>
+            <paf:paSendRTRes>
+            <outcome>KO</outcome>
+            <fault>
+            <faultCode>PAA_ERRORE_MOCK</faultCode>
+            <faultString>Errore semantico</faultString>
+            <id>1</id>
+            </fault>
+            </paf:paSendRTRes>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        When psp sends SOAP verificaBollettino to nodo-dei-pagamenti
+        Then check outcome is KO of verificaBollettino response
+
+
     Scenario: Execute nodoInviaCarrelloRPT (Phase 1)
+        Given the Execute paSendRT scenario executed successfully 
         Given generate 1 notice number and iuv with aux digit 3, segregation code 02 and application code -
         And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
         And replace pa1 content with 90000000001 content
@@ -336,48 +358,48 @@ Feature: gestioneReceiptMb_08
         And initial XML nodoInviaCarrelloRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-                <soapenv:Header>
-                    <ppt:intestazioneCarrelloPPT>
-                        <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
-                        <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
-                        <identificativoCarrello>$1carrello</identificativoCarrello>
-                    </ppt:intestazioneCarrelloPPT>
-                </soapenv:Header>
-                <soapenv:Body>
-                    <ws:nodoInviaCarrelloRPT>
-                        <password>pwdpwdpwd</password>
-                        <identificativoPSP>#psp_AGID#</identificativoPSP>
-                        <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
-                        <identificativoCanale>97735020584_02</identificativoCanale>
-                        <listaRPT>
-                            <elementoListaRPT>
-                                <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-                                <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
-                                <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
-                                <rpt>$rpt1Attachment</rpt>
-                            </elementoListaRPT>
-                            <elementoListaRPT>
-                                <identificativoDominio>$pa1</identificativoDominio>
-                                <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
-                                <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
-                                <rpt>$rpt2Attachment</rpt>
-                            </elementoListaRPT>
-                        </listaRPT>
-                        <requireLightPayment>01</requireLightPayment>
-                        <multiBeneficiario>1</multiBeneficiario>
-                    </ws:nodoInviaCarrelloRPT>
-                </soapenv:Body>
+            <soapenv:Header>
+            <ppt:intestazioneCarrelloPPT>
+            <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
+            <identificativoCarrello>$1carrello</identificativoCarrello>
+            </ppt:intestazioneCarrelloPPT>
+            </soapenv:Header>
+            <soapenv:Body>
+            <ws:nodoInviaCarrelloRPT>
+            <password>pwdpwdpwd</password>
+            <identificativoPSP>#psp_AGID#</identificativoPSP>
+            <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
+            <identificativoCanale>97735020584_02</identificativoCanale>
+            <listaRPT>
+            <elementoListaRPT>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+            <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
+            <rpt>$rpt1Attachment</rpt>
+            </elementoListaRPT>
+            <elementoListaRPT>
+            <identificativoDominio>$pa1</identificativoDominio>
+            <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
+            <rpt>$rpt2Attachment</rpt>
+            </elementoListaRPT>
+            </listaRPT>
+            <requireLightPayment>01</requireLightPayment>
+            <multiBeneficiario>1</multiBeneficiario>
+            </ws:nodoInviaCarrelloRPT>
+            </soapenv:Body>
             </soapenv:Envelope>
             """
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
         And retrieve session token from $nodoInviaCarrelloRPTResponse.url
-        
+
         And replace pa content with #creditor_institution_code# content
         And execution query get_pa_id to get value on the table PA, with the columns OBJ_ID under macro costanti with db name nodo_cfg
         And through the query get_pa_id retrieve param objId at position 0 and save it under the key objId
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition FK_PA = $objId under macro update_query on db nodo_cfg
-        
+
         And replace pa content with $pa1 content
         And execution query get_pa_id to get value on the table PA, with the columns OBJ_ID under macro costanti with db name nodo_cfg
         And through the query get_pa_id retrieve param objId at position 0 and save it under the key objId
@@ -386,7 +408,7 @@ Feature: gestioneReceiptMb_08
         And execution query by_station_id to get value on the table STAZIONI, with the columns OBJ_ID under macro costanti with db name nodo_cfg
         And through the query by_station_id retrieve param stationID at position 0 and save it under the key stationID
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition FK_PA = $objId AND FK_STAZIONE = $stationID under macro update_query on db nodo_cfg
-        
+
         And refresh job PA triggered after 10 seconds
         And wait 5 seconds for expiration
 
@@ -398,30 +420,30 @@ Feature: gestioneReceiptMb_08
     Scenario: Execute nodoInoltroEsitoMod1 (Phase 3)
         Given the Execute nodoChiediInformazioniPagamento (Phase 2) scenario executed successfully
         And initial XML pspInviaCarrelloRPT
-        """
-        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header/>
             <soapenv:Body>
-                <ws:pspInviaCarrelloRPTResponse>
-                    <pspInviaCarrelloRPTResponse>
-                        <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-                        <identificativoCarrello>$nodoInviaCarrelloRPT.identificativoCarrello</identificativoCarrello>
-                        <parametriPagamentoImmediato>idBruciatura=$nodoInviaCarrelloRPT.identificativoCarrello</parametriPagamentoImmediato>
-                    </pspInviaCarrelloRPTResponse>
-                </ws:pspInviaCarrelloRPTResponse>
+            <ws:pspInviaCarrelloRPTResponse>
+            <pspInviaCarrelloRPTResponse>
+            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+            <identificativoCarrello>$nodoInviaCarrelloRPT.identificativoCarrello</identificativoCarrello>
+            <parametriPagamentoImmediato>idBruciatura=$nodoInviaCarrelloRPT.identificativoCarrello</parametriPagamentoImmediato>
+            </pspInviaCarrelloRPTResponse>
+            </ws:pspInviaCarrelloRPTResponse>
             </soapenv:Body>
-        </soapenv:Envelope>
-        """
+            </soapenv:Envelope>
+            """
         And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
         When WISP sends REST POST inoltroEsito/mod1 to nodo-dei-pagamenti
             """
             {
-                "idPagamento":"$sessionToken",
-                "identificativoPsp":"40000000001",
-                "tipoVersamento":"BP", 
-                "identificativoIntermediario":"40000000001",
-                "identificativoCanale":"40000000001_03",
-                "tipoOperazione":"web"
+                "idPagamento": "$sessionToken",
+                "identificativoPsp": "40000000001",
+                "tipoVersamento": "BP",
+                "identificativoIntermediario": "40000000001",
+                "identificativoCanale": "40000000001_03",
+                "tipoOperazione": "web"
             }
             """
         Then verify the HTTP status code of inoltroEsito/mod1 response is 200
@@ -434,18 +456,18 @@ Feature: gestioneReceiptMb_08
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header/>
             <soapenv:Body>
-                <ws:nodoInviaRT>
-                    <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-                    <identificativoCanale>#canale#</identificativoCanale>
-                    <password>pwdpwdpwd</password>
-                    <identificativoPSP>#psp#</identificativoPSP>
-                    <identificativoDominio>$pa1</identificativoDominio>
-                    <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
-                    <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
-                    <tipoFirma></tipoFirma>
-                    <forzaControlloSegno>1</forzaControlloSegno>
-                    <rt>$rt2Attachment</rt>
-                </ws:nodoInviaRT>
+            <ws:nodoInviaRT>
+            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canale#</identificativoCanale>
+            <password>pwdpwdpwd</password>
+            <identificativoPSP>#psp#</identificativoPSP>
+            <identificativoDominio>$pa1</identificativoDominio>
+            <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
+            <tipoFirma></tipoFirma>
+            <forzaControlloSegno>1</forzaControlloSegno>
+            <rt>$rt2Attachment</rt>
+            </ws:nodoInviaRT>
             </soapenv:Body>
             </soapenv:Envelope>
             """
@@ -456,7 +478,7 @@ Feature: gestioneReceiptMb_08
         And execution query get_pa_id to get value on the table PA, with the columns OBJ_ID under macro costanti with db name nodo_cfg
         And through the query get_pa_id retrieve param objId at position 0 and save it under the key objId
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'N', with where condition FK_PA = $objId under macro update_query on db nodo_cfg
-        
+
         And replace pa content with $pa1 content
         And execution query get_pa_id to get value on the table PA, with the columns OBJ_ID under macro costanti with db name nodo_cfg
         And through the query get_pa_id retrieve param objId at position 0 and save it under the key objId
@@ -570,7 +592,7 @@ Feature: gestioneReceiptMb_08
         # And through the query by_notice_number_and_payment_token retrieve param recipientBroker2 at position 6 in the row 1 and save it under the key recipientBroker2
         # And through the query by_notice_number_and_payment_token retrieve param recipientStation2 at position 7 in the row 1 and save it under the key recipientStation2
         # And through the query by_notice_number_and_payment_token retrieve param status2 at position 8 in the row 1 and save it under the key status2
-        
+
 
         #checks
         And check value $paFiscalCode1 is equal to value $expFiscalCode
@@ -617,16 +639,16 @@ Feature: gestioneReceiptMb_08
         And check value $recipientBroker1 is equal to value $pa1
         And check value $recipientStation1 is equal to value 90000000001_06
 
-        # And check value $paFiscalCode2 is equal to value $expFiscalCode
-        # And check value $noticeID2 is equal to value $expNoticeID
-        # And check value $creditorReferenceId2 is equal to value $expCreditorReferenceID
-        # And check value $paymentToken2 is equal to value $expPaymentToken
-        # And check value $recipientPA2 is equal to value $pa1
-        # And check value $recipientBroker2 is equal to value $pa1
-        # And check value $recipientStation2 is equal to value 90000000001_09
-        # #And verify 0 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query by_notice_number_and_payment_token on db nodo_online under macro Mod1Mb
-        #And verify 0 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query by_notice_number_and_payment_token on db nodo_online under macro Mod1Mb
-        # And checks the value PAYING, PAID, NOTICE_GENERATED, NOTICE_SENT, NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        # And checks the value NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        # And checks the value PAYING, PAID, NOTIFIED of the record at column STATUS of the table POSITION_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        # And checks the value NOTIFIED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+# And check value $paFiscalCode2 is equal to value $expFiscalCode
+# And check value $noticeID2 is equal to value $expNoticeID
+# And check value $creditorReferenceId2 is equal to value $expCreditorReferenceID
+# And check value $paymentToken2 is equal to value $expPaymentToken
+# And check value $recipientPA2 is equal to value $pa1
+# And check value $recipientBroker2 is equal to value $pa1
+# And check value $recipientStation2 is equal to value 90000000001_09
+# #And verify 0 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query by_notice_number_and_payment_token on db nodo_online under macro Mod1Mb
+#And verify 0 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query by_notice_number_and_payment_token on db nodo_online under macro Mod1Mb
+# And checks the value PAYING, PAID, NOTICE_GENERATED, NOTICE_SENT, NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+# And checks the value NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+# And checks the value PAYING, PAID, NOTIFIED of the record at column STATUS of the table POSITION_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+# And checks the value NOTIFIED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
