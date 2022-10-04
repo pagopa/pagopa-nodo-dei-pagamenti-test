@@ -1,9 +1,9 @@
-Feature: T218A_RT_forzaControlloSegno_esito=0_Carte
+Feature: T218A_RT_forzaControlloSegno_esito=1_carrello_mod2
 
     Background:
         Given systems up
 
-    Scenario: Execute nodoInviaRPT (Phase 1)
+    Scenario: Execute nodoInviaCarrelloRPT (Phase 1)
         Given RPT1 generation
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
@@ -152,13 +152,13 @@ Feature: T218A_RT_forzaControlloSegno_esito=0_Carte
             <pay_i:e-mailPagatore>gesualdo.riccitelli@poste.it</pay_i:e-mailPagatore>
             </pay_i:soggettoPagatore>
             <pay_i:datiPagamento>
-            <pay_i:codiceEsitoPagamento>0</pay_i:codiceEsitoPagamento>
-            <pay_i:importoTotalePagato>10.00</pay_i:importoTotalePagato>
+            <pay_i:codiceEsitoPagamento>1</pay_i:codiceEsitoPagamento>
+            <pay_i:importoTotalePagato>0.00</pay_i:importoTotalePagato>
             <pay_i:identificativoUnivocoVersamento>$1IUV</pay_i:identificativoUnivocoVersamento>
             <pay_i:CodiceContestoPagamento>CCD01</pay_i:CodiceContestoPagamento>
             <pay_i:datiSingoloPagamento>
-            <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
-            <pay_i:esitoSingoloPagamento>TUTTO_OK</pay_i:esitoSingoloPagamento>
+            <pay_i:singoloImportoPagato>0.00</pay_i:singoloImportoPagato>
+            <pay_i:esitoSingoloPagamento>NON_PAGATO</pay_i:esitoSingoloPagamento>
             <pay_i:dataEsitoSingoloPagamento>2012-03-02</pay_i:dataEsitoSingoloPagamento>
             <pay_i:identificativoUnivocoRiscossione>$1IUV</pay_i:identificativoUnivocoRiscossione>
             <pay_i:causaleVersamento>causale RT pull</pay_i:causaleVersamento>
@@ -167,80 +167,63 @@ Feature: T218A_RT_forzaControlloSegno_esito=0_Carte
             </pay_i:datiPagamento>
             </pay_i:RT>
             """
-        And initial XML nodoInviaRPT
+        And initial XML nodoInviaCarrelloRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
-            <ppt:intestazionePPT>
+            <ppt:intestazioneCarrelloPPT>
             <identificativoIntermediarioPA>#creditor_institution_code_old#</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
+            <identificativoCarrello>$1IUV</identificativoCarrello>
+            </ppt:intestazioneCarrelloPPT>
+            </soapenv:Header>
+            <soapenv:Body>
+            <ws:nodoInviaCarrelloRPT>
+            <password>pwdpwdpwd</password>
+            <identificativoPSP>#psp#</identificativoPSP>
+            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canale_DIFFERITO_MOD2#</identificativoCanale>
+            <listaRPT>
+            <elementoListaRPT>
             <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
             <identificativoUnivocoVersamento>$1IUV</identificativoUnivocoVersamento>
             <codiceContestoPagamento>CCD01</codiceContestoPagamento>
-            </ppt:intestazionePPT>
-            </soapenv:Header>
-            <soapenv:Body>
-            <ws:nodoInviaRPT>
-            <password>pwdpwdpwd</password>
-            <identificativoPSP>#psp_AGID#</identificativoPSP>
-            <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
-            <tipoFirma></tipoFirma>
             <rpt>$rpt1Attachment</rpt>
-            </ws:nodoInviaRPT>
+            </elementoListaRPT>
+            </listaRPT>
+            </ws:nodoInviaCarrelloRPT>
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And initial XML pspInviaRPT
+        And initial XML pspInviaCarrelloRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header/>
             <soapenv:Body>
-            <ws:pspInviaRPTResponse>
-            <pspInviaRPTResponse>
+            <ws:pspInviaCarrelloRPTResponse>
+            <pspInviaCarrelloRPTResponse>
             <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-            <identificativoCarrello>$nodoInviaRPT.identificativoUnivocoVersamento</identificativoCarrello>
-            <parametriPagamentoImmediato>idBruciatura=$nodoInviaRPT.identificativoUnivocoVersamento</parametriPagamentoImmediato>
-            </pspInviaRPTResponse>
-            </ws:pspInviaRPTResponse>
+            <identificativoCarrello>$nodoInviaCarrelloRPT.identificativoCarrello</identificativoCarrello>
+            <parametriPagamentoImmediato>idBruciatura=$nodoInviaCarrelloRPT.identificativoCarrello</parametriPagamentoImmediato>
+            </pspInviaCarrelloRPTResponse>
+            </ws:pspInviaCarrelloRPTResponse>
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
-        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-        Then check esito is OK of nodoInviaRPT response
-        And retrieve session token from $nodoInviaRPTResponse.url
+        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
+        When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
+        Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
 
-    Scenario: Execute nodoInoltraEsitoCarta (Phase 2)
-        Given the Execute nodoInviaRPT (Phase 1) scenario executed successfully
-        When WISP sends REST POST inoltroEsito/carta to nodo-dei-pagamenti
-            """
-            {
-                "RRN": 10026669,
-                "tipoVersamento": "CP",
-                "idPagamento": "$sessionToken",
-                "identificativoIntermediario": "#psp#",
-                "identificativoPsp": "#psp#",
-                "identificativoCanale": "#canaleRtPush#",
-                "importoTotalePagato": 10,
-                "timestampOperazione": "2021-07-09T17:06:03.100+01:00",
-                "codiceAutorizzativo": "resOK",
-                "esitoTransazioneCarta": "00"
-            }
-            """
-        Then verify the HTTP status code of inoltroEsito/carta response is 200
-        And check esito is OK of inoltroEsito/carta response
-
-    Scenario Outline: Execute nodoInviaRT (Phase 3)
-        Given the Execute nodoInoltraEsitoCarta (Phase 2) scenario executed successfully
-        And initial XMl nodoInviaRT
+    Scenario Outline: Execute nodoInviaRT (Phase 2)
+        Given the Execute nodoInviaCarrelloRPT (Phase 1) scenario executed successfully
+        And initial XML nodoInviaRT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header/>
             <soapenv:Body>
             <ws:nodoInviaRT>
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canaleRtPush#</identificativoCanale>
+            <identificativoCanale>#canale_DIFFERITO_MOD2#</identificativoCanale>
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>

@@ -61,7 +61,7 @@ Feature: T218_RT_forzaControlloSegno_esito=1_carrello
             <pay_i:datiVersamento>
             <pay_i:dataEsecuzionePagamento>2016-09-16</pay_i:dataEsecuzionePagamento>
             <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
-            <pay_i:tipoVersamento>PO</pay_i:tipoVersamento>
+            <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
             <pay_i:identificativoUnivocoVersamento>#IUV1#</pay_i:identificativoUnivocoVersamento>
             <pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
@@ -170,51 +170,51 @@ Feature: T218_RT_forzaControlloSegno_esito=1_carrello
         And initial XML nodoInviaCarrelloRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-                <soapenv:Header>
-                    <ppt:intestazioneCarrelloPPT>
-                        <identificativoIntermediarioPA>#creditor_institution_code_old#</identificativoIntermediarioPA>
-                        <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
-                        <identificativoCarrello>$1IUV</identificativoCarrello>
-                    </ppt:intestazioneCarrelloPPT>
-                </soapenv:Header>
-                <soapenv:Body>
-                    <ws:nodoInviaCarrelloRPT>
-                        <password>pwdpwdpwd</password>
-                        <identificativoPSP>#psp#</identificativoPSP>
-                        <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-                        <identificativoCanale>#canaleRtPush#</identificativoCanale>
-                        <listaRPT>
-                            <elementoListaRPT>
-                                <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
-                                <identificativoUnivocoVersamento>$1IUV</identificativoUnivocoVersamento>
-                                <codiceContestoPagamento>CCD01</codiceContestoPagamento>
-                                <rpt>$rpt1Attachment</rpt>
-                            </elementoListaRPT>
-                        </listaRPT>
-                    </ws:nodoInviaCarrelloRPT>
-                </soapenv:Body>
+            <soapenv:Header>
+            <ppt:intestazioneCarrelloPPT>
+            <identificativoIntermediarioPA>#creditor_institution_code_old#</identificativoIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
+            <identificativoCarrello>$1IUV</identificativoCarrello>
+            </ppt:intestazioneCarrelloPPT>
+            </soapenv:Header>
+            <soapenv:Body>
+            <ws:nodoInviaCarrelloRPT>
+            <password>pwdpwdpwd</password>
+            <identificativoPSP>#psp#</identificativoPSP>
+            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canaleRtPush#</identificativoCanale>
+            <listaRPT>
+            <elementoListaRPT>
+            <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
+            <identificativoUnivocoVersamento>$1IUV</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+            <rpt>$rpt1Attachment</rpt>
+            </elementoListaRPT>
+            </listaRPT>
+            </ws:nodoInviaCarrelloRPT>
+            </soapenv:Body>
             </soapenv:Envelope>
             """
         And initial XML pspInviaCarrelloRPT
-        """
-        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header/>
             <soapenv:Body>
-                <ws:pspInviaCarrelloRPTResponse>
-                    <pspInviaCarrelloRPTResponse>
-                        <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-                        <identificativoCarrello>$nodoInviaCarrelloRPT.identificativoCarrello</identificativoCarrello>
-                        <parametriPagamentoImmediato>idBruciatura=$nodoInviaCarrelloRPT.identificativoCarrello</parametriPagamentoImmediato>
-                    </pspInviaCarrelloRPTResponse>
-                </ws:pspInviaCarrelloRPTResponse>
+            <ws:pspInviaCarrelloRPTResponse>
+            <pspInviaCarrelloRPTResponse>
+            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+            <identificativoCarrello>$nodoInviaCarrelloRPT.identificativoCarrello</identificativoCarrello>
+            <parametriPagamentoImmediato>idBruciatura=$nodoInviaCarrelloRPT.identificativoCarrello</parametriPagamentoImmediato>
+            </pspInviaCarrelloRPTResponse>
+            </ws:pspInviaCarrelloRPTResponse>
             </soapenv:Body>
-        </soapenv:Envelope>
-        """
+            </soapenv:Envelope>
+            """
         And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
 
-    Scenario: Execute nodoInviaRT (Phase 2)
+    Scenario Outline: Execute nodoInviaRT (Phase 2)
         Given the Execute nodoInviaCarrelloRPT (Phase 1) scenario executed successfully
         And initial XML nodoInviaRT
             """
@@ -236,5 +236,10 @@ Feature: T218_RT_forzaControlloSegno_esito=1_carrello
             </soapenv:Body>
             </soapenv:Envelope>
             """
+        And <tag> with <tag_value> in nodoInviaRT
         When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
+        Examples:
+            | tag                 | tag_value | test                        |
+            | -                   | -         | forzaControlloSegnoPresente |
+            | forzaControlloSegno | None      | forzaControlloSegnoAssente  |

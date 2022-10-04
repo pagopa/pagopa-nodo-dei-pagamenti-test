@@ -5,7 +5,7 @@ Feature: process tests for generazioneRicevute
 
     # Verify phase
     Scenario: Execute verifyPaymentNotice (Phase 1)
-        Given update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with N, with where condition FK_PA and where value ('6','8') under macro update_query on db nodo_cfg
+        Given update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with Y, with where condition FK_PA and where value ('6','8') under macro update_query on db nodo_cfg
         And initial XML verifyPaymentNotice
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -123,14 +123,51 @@ Feature: process tests for generazioneRicevute
         Then check outcome is OK of activatePaymentNotice response
 
 
-    Scenario: trigger PollerAnnulli
-        Given the Execute activatePaymentNotice (Phase 2) scenario executed successfully
-        When job mod3CancelV2 triggered after 4 seconds
-        Then wait 5 seconds for expiration
-        And verify the HTTP status code of mod3CancelV2 response is 200
+  Scenario: Execute sendPaymentOutcome (Phase 1)
+    Given the Execute activatePaymentNotice (Phase 2) scenario executed successfully
+    And initial XML sendPaymentOutcome
+        """
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+        <soapenv:Header/>
+        <soapenv:Body>
+            <nod:sendPaymentOutcomeReq>
+                <idPSP>#psp#</idPSP>
+                <idBrokerPSP>#psp#</idBrokerPSP>
+                <idChannel>#canale#</idChannel>
+                <password>pwdpwdpwd</password>
+                <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
+                <outcome>KO</outcome>
+                <details>
+                    <paymentMethod>creditCard</paymentMethod>
+                    <paymentChannel>app</paymentChannel>
+                    <fee>2.00</fee>
+                    <payer>
+                    <uniqueIdentifier>
+                        <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
+                        <entityUniqueIdentifierValue>#id_station_old#</entityUniqueIdentifierValue>
+                    </uniqueIdentifier>
+                    <fullName>name</fullName>
+                    <streetName>street</streetName>
+                    <civicNumber>civic</civicNumber>
+                    <postalCode>postal</postalCode>
+                    <city>city</city>
+                    <stateProvinceRegion>state</stateProvinceRegion>
+                    <country>IT</country>
+                    <e-mail>prova@test.it</e-mail>
+                    </payer>
+                    <applicationDate>2021-12-12</applicationDate>
+                    <transferDate>2021-12-11</transferDate>
+                </details>
+            </nod:sendPaymentOutcomeReq>
+        </soapenv:Body>
+        </soapenv:Envelope>
+        """
+        When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+        Then check outcome is OK of sendPaymentOutcome response
+        And wait 5 seconds for expiration
+        And update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with N, with where condition FK_PA and where value ('6','8') under macro update_query on db nodo_cfg
 
         # DB Check
-        #And checks the value None of the record at column FK_POSITION_RECEIPT of the table POSITION_RECEIPT_TRANSFER retrived by the query position_receipt_transfer on db nodo_online under macro NewMod3
         And verify 0 record for the table POSITION_RECEIPT_TRANSFER retrived by the query position_receipt_transfer on db nodo_online under macro NewMod3
 
         # DB check - POSITION_RECEIPT_RECIPIENT_PA_INTESTATARIA

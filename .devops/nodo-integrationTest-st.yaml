@@ -73,6 +73,7 @@ stages:
     condition: succeeded()
     jobs:
       - job: test_execute
+        timeoutInMinutes: 0 # how long to run the job before automatically cancelling. When 0 is specified, the maximum limit is used
         displayName: "execute test suite (${{ parameters.env }})"
         pool: $(deploy-pool)
         steps:

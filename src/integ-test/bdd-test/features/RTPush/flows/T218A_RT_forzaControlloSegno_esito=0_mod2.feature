@@ -1,4 +1,4 @@
-Feature: T218A_RT_forzaControlloSegno_esito=0_Carte
+Feature: T218A_RT_forzaControlloSegno_esito=0_mod2
 
     Background:
         Given systems up
@@ -182,9 +182,9 @@ Feature: T218A_RT_forzaControlloSegno_esito=0_Carte
             <soapenv:Body>
             <ws:nodoInviaRPT>
             <password>pwdpwdpwd</password>
-            <identificativoPSP>#psp_AGID#</identificativoPSP>
-            <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
+            <identificativoPSP>#psp#</identificativoPSP>
+            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canale_DIFFERITO_MOD2#</identificativoCanale>
             <tipoFirma></tipoFirma>
             <rpt>$rpt1Attachment</rpt>
             </ws:nodoInviaRPT>
@@ -209,38 +209,17 @@ Feature: T218A_RT_forzaControlloSegno_esito=0_Carte
         And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
-        And retrieve session token from $nodoInviaRPTResponse.url
 
-    Scenario: Execute nodoInoltraEsitoCarta (Phase 2)
+    Scenario Outline: Execute nodoInviaRT (Phase 2)
         Given the Execute nodoInviaRPT (Phase 1) scenario executed successfully
-        When WISP sends REST POST inoltroEsito/carta to nodo-dei-pagamenti
-            """
-            {
-                "RRN": 10026669,
-                "tipoVersamento": "CP",
-                "idPagamento": "$sessionToken",
-                "identificativoIntermediario": "#psp#",
-                "identificativoPsp": "#psp#",
-                "identificativoCanale": "#canaleRtPush#",
-                "importoTotalePagato": 10,
-                "timestampOperazione": "2021-07-09T17:06:03.100+01:00",
-                "codiceAutorizzativo": "resOK",
-                "esitoTransazioneCarta": "00"
-            }
-            """
-        Then verify the HTTP status code of inoltroEsito/carta response is 200
-        And check esito is OK of inoltroEsito/carta response
-
-    Scenario Outline: Execute nodoInviaRT (Phase 3)
-        Given the Execute nodoInoltraEsitoCarta (Phase 2) scenario executed successfully
-        And initial XMl nodoInviaRT
+        And initial XML nodoInviaRT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header/>
             <soapenv:Body>
             <ws:nodoInviaRT>
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canaleRtPush#</identificativoCanale>
+            <identificativoCanale>#canale_DIFFERITO_MOD2#</identificativoCanale>
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
