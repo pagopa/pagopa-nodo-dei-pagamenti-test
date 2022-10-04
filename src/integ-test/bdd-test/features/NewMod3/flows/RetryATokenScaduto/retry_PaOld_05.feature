@@ -281,7 +281,7 @@ Feature: process tests for retryAtokenScaduto
       </pay_i:datiVersamento>
       </pay_i:RPT>
       """
-
+  @prova
   Scenario: Excecute nodoInviaRPT3
     Given the Define RPT3 scenario executed successfully
     And initial XML nodoInviaRPT
