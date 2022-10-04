@@ -41,7 +41,7 @@ Feature: process tests for nodoInviaRPT [PAG-835_KO]
             <fault>
             <faultCode>PAA_SEMANTICA_EXTRAXSD</faultCode>
             <faultString>errore semantico PA</faultString>
-            <id>${pa}</id>
+            <id>pa</id>
             <description>Errore semantico emesso dalla PA</description>
             </fault>
             <esito>KO</esito>

@@ -1,4 +1,4 @@
-Feature: pspInviaCarrelloRPT_timeout_chiediAvanzamento_sconosciuta
+Feature: pspInviaCarrelloRPT_timeout_chiediAvanzamento_KO
 
     Background:
         Given systems up
@@ -65,7 +65,7 @@ Feature: pspInviaCarrelloRPT_timeout_chiediAvanzamento_sconosciuta
             <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
             <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
-            <pay_i:identificativoUnivocoVersamento>avanzaErrResponse</pay_i:identificativoUnivocoVersamento>
+            <pay_i:identificativoUnivocoVersamento>avanzaKO</pay_i:identificativoUnivocoVersamento>
             <pay_i:codiceContestoPagamento>#CCP1#</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
@@ -106,7 +106,7 @@ Feature: pspInviaCarrelloRPT_timeout_chiediAvanzamento_sconosciuta
                     <listaRPT>
                         <elementoListaRPT>
                             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-                            <identificativoUnivocoVersamento>avanzaErrResponse</identificativoUnivocoVersamento>
+                            <identificativoUnivocoVersamento>avanzaKO</identificativoUnivocoVersamento>
                             <codiceContestoPagamento>$1CCP</codiceContestoPagamento>
                             <rpt>$rpt1Attachment</rpt>
                         </elementoListaRPT>
@@ -137,14 +137,14 @@ Feature: pspInviaCarrelloRPT_timeout_chiediAvanzamento_sconosciuta
         And check faultCode is PPT_CANALE_TIMEOUT of nodoInviaCarrelloRPT response
 
         # DB Check
-        And replace iuv content with avanzaErrResponse content
+        And replace iuv content with avanzaKO content
         And replace ccp content with $1CCP content
 
         And checks the value RPT_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_RPT retrived by the query rpt on db nodo_online under macro Primitive_accessorie
         And checks the value RPT_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt on db nodo_online under macro Primitive_accessorie
 
 
-    # [pspChiediAvanzamentoRPT -> sconosciuta]
+    # [pspChiediAvanzamentoRPT -> KO]
     Scenario: Execute job pspChiediAvanzamentoRPT
         Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
         And initial XML pspChiediAvanzamentoRPT
@@ -155,10 +155,10 @@ Feature: pspInviaCarrelloRPT_timeout_chiediAvanzamento_sconosciuta
             <ws:pspChiediAvanzamentoRPTResponse>
             <pspChiediAvanzamentoRPTResponse>
             <fault>
-               <faultCode>CANALE_RPT_SCONOSCIUTA</faultCode>
-               <faultString>RPT mai arrivata al PSP</faultString>
-               <id>#psp#</id>
-               <description>RPT sconosciuta per il PSP</description>
+            <faultCode>CANALE_RPT_RIFIUTATA</faultCode>
+            <faultString>RPT arrivata al PSP e rifiutata</faultString>
+            <id>#psp#</id>
+            <description>RPT rifiutata dal PSP</description>
             </fault>
             </pspChiediAvanzamentoRPTResponse>
             </ws:pspChiediAvanzamentoRPTResponse>
@@ -168,7 +168,5 @@ Feature: pspInviaCarrelloRPT_timeout_chiediAvanzamento_sconosciuta
         And PSP replies to nodo-dei-pagamenti with the pspChiediAvanzamentoRPT
         When job pspChiediAvanzamentoRpt triggered after 5 seconds
         And wait 10 seconds for expiration
-        Then checks the value RPT_ESITO_SCONOSCIUTO_PSP,RPT_ERRORE_INVIO_A_PSP of the record at column STATO of the table STATI_RPT retrived by the query rpt on db nodo_online under macro Primitive_accessorie
-        And checks the value RPT_ERRORE_INVIO_A_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt on db nodo_online under macro Primitive_accessorie
-
-
+        Then checks the value RPT_ESITO_SCONOSCIUTO_PSP,RPT_RIFIUTATA_PSP of the record at column STATO of the table STATI_RPT retrived by the query rpt on db nodo_online under macro Primitive_accessorie
+        And checks the value RPT_RIFIUTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt on db nodo_online under macro Primitive_accessorie
