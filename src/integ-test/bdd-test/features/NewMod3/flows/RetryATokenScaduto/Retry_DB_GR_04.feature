@@ -139,7 +139,7 @@ Feature: process tests for Retry_DB_GR_04
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-      
+        
     # Payment Outcome Phase outcome OK
     Scenario: Execute sendPaymentOutcome request
         Given the Execute activatePaymentNotice request scenario executed successfully
