@@ -26,6 +26,7 @@ Feature: generazioneRicevute_flows_DB_GR_71_74
         When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of verifyPaymentNotice response
 
+
     Scenario: Execute activatePaymentNotice (Phase 2)
         Given the Execute verifyPaymentNotice (Phase 1) scenario executed successfully
         And initial XML activatePaymentNotice
@@ -53,6 +54,7 @@ Feature: generazioneRicevute_flows_DB_GR_71_74
             """
         When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
+
 
     Scenario: Execute nodoInviaRPT (Phase 3)
         Given the Execute activatePaymentNotice (Phase 2) scenario executed successfully
@@ -148,34 +150,18 @@ Feature: generazioneRicevute_flows_DB_GR_71_74
             <soapenv:Body>
             <ws:nodoInviaRPT>
             <password>pwdpwdpwd</password>
-            <identificativoPSP>#psp#</identificativoPSP>
-            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canale#</identificativoCanale>
+            <identificativoPSP>15376371009</identificativoPSP>
+            <identificativoIntermediarioPSP>15376371009</identificativoIntermediarioPSP>
+            <identificativoCanale>15376371009_01</identificativoCanale>
             <tipoFirma></tipoFirma>
             <rpt>$rpt1Attachment</rpt>
             </ws:nodoInviaRPT>
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And initial XML pspInviaRPT
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <ws:pspInviaRPTResponse>
-            <pspInviaRPTResponse>
-            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-            <identificativoCarrello>$activatePaymentNoticeResponse.paymentToken</identificativoCarrello>
-            <parametriPagamentoImmediato>idBruciatura=$activatePaymentNoticeResponse.paymentToken</parametriPagamentoImmediato>
-            </pspInviaRPTResponse>
-            </ws:pspInviaRPTResponse>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
-        And retrieve session token from $nodoInviaRPTResponse.url
+
 
     Scenario: Execute sendPaymentOutcome - OK (Phase 4) [DB_GR_71-72]
         Given the Execute nodoInviaRPT (Phase 3) scenario executed successfully
@@ -224,26 +210,26 @@ Feature: generazioneRicevute_flows_DB_GR_71_74
         #DB CHECK-POSITION_RECEIPT_XML [DB_GR_71]
         And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT_XML retrived by the query payment_status on db nodo_online under macro NewMod3
         And checks the value $1noticeNumber of the record at column NOTICE_ID of the table POSITION_RECEIPT_XML retrived by the query payment_status on db nodo_online under macro NewMod3
-        And checks the value $iuv of the record at column CREDITOR_REFERENCE_ID of the table POSITION_RECEIPT_XML retrived by the query payment_status on db nodo_online under macro NewMod3
+        And checks the value $nodoInviaRPT.identificativoUnivocoVersamento of the record at column CREDITOR_REFERENCE_ID of the table POSITION_RECEIPT_XML retrived by the query payment_status on db nodo_online under macro NewMod3
         And checks the value $activatePaymentNoticeResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_RECEIPT_XML retrived by the query payment_status on db nodo_online under macro NewMod3
-        And checks the value NotNone of the record at column XML of the table POSITION_RECEIPT_XML retrived by the query payment_status_2 on db nodo_online under macro NewMod3
+        And checks the value NotNone of the record at column XML of the table POSITION_RECEIPT_XML retrived by the query payment_status on db nodo_online under macro NewMod3
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RECEIPT_XML retrived by the query payment_status on db nodo_online under macro NewMod3
         And checks the value #creditor_institution_code_old# of the record at column RECIPIENT_PA_FISCAL_CODE of the table POSITION_RECEIPT_XML retrived by the query payment_status on db nodo_online under macro NewMod3
         And checks the value #creditor_institution_code_old# of the record at column RECIPIENT_BROKER_PA_ID of the table POSITION_RECEIPT_XML retrived by the query payment_status on db nodo_online under macro NewMod3
         And checks the value #id_station_old# of the record at column RECIPIENT_STATION_ID of the table POSITION_RECEIPT_XML retrived by the query payment_status on db nodo_online under macro NewMod3
 
         #DB CHECK-RT_XML [DB_GR_72]
-        And checks the value $1ccp of the record at column CCP of the table RT_XML retrived by the query rt_xml on db nodo_online under macro NewMod3
+        And replace iuv content with $1iuv content
+        And checks the value $activatePaymentNoticeResponse.paymentToken of the record at column CCP of the table RT_XML retrived by the query rt_xml on db nodo_online under macro NewMod3
         And checks the value #creditor_institution_code_old# of the record at column IDENT_DOMINIO of the table RT_XML retrived by the query rt_xml on db nodo_online under macro NewMod3
-        And checks the value $1iuv of the record at column IUV of the table RT_XML retrived by the query rt_xml on db nodo_online under macro NewMod3
+        And checks the value $nodoInviaRPT.identificativoUnivocoVersamento of the record at column IUV of the table RT_XML retrived by the query rt_xml on db nodo_online under macro NewMod3
         And checks the value NotNone of the record at column XML_CONTENT of the table RT_XML retrived by the query rt_xml on db nodo_online under macro NewMod3
-        And checks the value $sessionToken of the record at column ID_SESSIONE of the table RT_XMl retrived by the query rt_xml on db nodo_online under macro NewMod3
         
     Scenario: Execute sendPaymentOutcome - KO (Phase 3) [DB_GR_73]
         Given the Execute nodoInviaRPT (Phase 3) scenario executed successfully
         And initial XML sendPaymentOutcome
             """
-            soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
             <soapenv:Header/>
             <soapenv:Body>
             <nod:sendPaymentOutcomeReq>
@@ -288,24 +274,25 @@ Feature: generazioneRicevute_flows_DB_GR_71_74
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        Then check esito is OK of sendPaymentOutcome response
+        When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+        Then check outcome is OK of sendPaymentOutcome response
         
         #DB CHECK-RT_XML [DB_GR_73]
-        And checks the value $1ccp of the record at column CCP of the table RT_XML retrived by the query rt_xml on db nodo_online under macro NewMod3
+        And replace iuv content with $1iuv content
+        And checks the value $activatePaymentNoticeResponse.paymentToken of the record at column CCP of the table RT_XML retrived by the query rt_xml on db nodo_online under macro NewMod3
         And checks the value #creditor_institution_code_old# of the record at column IDENT_DOMINIO of the table RT_XML retrived by the query rt_xml on db nodo_online under macro NewMod3
-        And checks the value $1iuv of the record at column IUV of the table RT_XML retrived by the query rt_xml on db nodo_online under macro NewMod3
+        And checks the value $nodoInviaRPT.identificativoUnivocoVersamento of the record at column IUV of the table RT_XML retrived by the query rt_xml on db nodo_online under macro NewMod3
         And checks the value NotNone of the record at column XML_CONTENT of the table RT_XML retrived by the query rt_xml on db nodo_online under macro NewMod3
-        And checks the value $sessionToken of the record at column ID_SESSIONE of the table RT_XMl retrived by the query rt_xml on db nodo_online under macro NewMod3
 
     Scenario: Execute TriggerPollerAnnulli (Phase 4)
         Given the Execute nodoInviaRPT (Phase 3) scenario executed successfully
-        And wait $activatePaymentNotice.expirationTime seconds for expiration
-        When job mod3CancelV2 triggered after 5 seconds
+        And wait 7 seconds for expiration
+        When job mod3CancelV1 triggered after 5 seconds
         And wait 5 seconds for expiration
         
         #DB CHECK-RT_XML [DB_GR_74]
-        Then checks the value $1ccp of the record at column CCP of the table RT_XML retrived by the query rt_xml on db nodo_online under macro NewMod3
+        And replace iuv content with $1iuv content
+        Then checks the value $activatePaymentNoticeResponse.paymentToken of the record at column CCP of the table RT_XML retrived by the query rt_xml on db nodo_online under macro NewMod3
         And checks the value #creditor_institution_code_old# of the record at column IDENT_DOMINIO of the table RT_XML retrived by the query rt_xml on db nodo_online under macro NewMod3
-        And checks the value $1iuv of the record at column IUV of the table RT_XML retrived by the query rt_xml on db nodo_online under macro NewMod3
+        And checks the value $nodoInviaRPT.identificativoUnivocoVersamento of the record at column IUV of the table RT_XML retrived by the query rt_xml on db nodo_online under macro NewMod3
         And checks the value NotNone of the record at column XML_CONTENT of the table RT_XML retrived by the query rt_xml on db nodo_online under macro NewMod3
-        And checks the value $sessionToken of the record at column ID_SESSIONE of the table RT_XMl retrived by the query rt_xml on db nodo_online under macro NewMod3
