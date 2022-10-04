@@ -130,3 +130,11 @@ Feature: pspInviaRPT_timeout_chiediAvanzamento_OK
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is KO of nodoInviaRPT response
         And check faultCode is PPT_CANALE_TIMEOUT of nodoInviaRPT response
+
+        # DB Check
+        And replace iuv content with $IUV content
+        And replace ccp content with $1ccp content
+
+        And checks the value RPT_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_RPT retrived by the query rpt on db nodo_online under macro Primitive_accessorie
+        And checks the value RPT_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt on db nodo_online under macro Primitive_accessorie
+
