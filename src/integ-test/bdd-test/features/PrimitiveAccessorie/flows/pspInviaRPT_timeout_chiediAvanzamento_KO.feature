@@ -150,7 +150,7 @@ Feature: pspInviaRPT_timeout_chiediAvanzamento_KO
             <fault>
             <faultCode>CANALE_RPT_RIFIUTATA</faultCode>
             <faultString>RPT arrivata al PSP e rifiutata</faultString>
-            <id>${psp}</id>
+            <id>#psp#</id>
             <description>RPT rifiutata dal PSP</description>
             </fault>
             </pspChiediAvanzamentoRPTResponse>
