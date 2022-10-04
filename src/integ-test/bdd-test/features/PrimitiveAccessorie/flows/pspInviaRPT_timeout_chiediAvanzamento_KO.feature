@@ -147,7 +147,6 @@ Feature: pspInviaRPT_timeout_chiediAvanzamento_KO
             <soapenv:Body>
             <ws:pspChiediAvanzamentoRPTResponse>
             <pspChiediAvanzamentoRPTResponse>
-            <value>KO</value>
             <fault>
             <faultCode>CANALE_RPT_RIFIUTATA</faultCode>
             <faultString>RPT arrivata al PSP e rifiutata</faultString>
