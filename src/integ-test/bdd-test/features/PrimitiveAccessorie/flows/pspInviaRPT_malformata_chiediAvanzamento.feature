@@ -127,7 +127,7 @@ Feature: pspInviaRPT_malformata_chiediAvanzamento
         And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is KO of nodoInviaRPT response
-        And check faultCode is PPT_CANALE_TIMEOUT of nodoInviaRPT response
+        And check faultCode is PPT_CANALE_ERRORE_RESPONSE of nodoInviaRPT response
 
         # DB Check
         And replace iuv content with $IUV content
