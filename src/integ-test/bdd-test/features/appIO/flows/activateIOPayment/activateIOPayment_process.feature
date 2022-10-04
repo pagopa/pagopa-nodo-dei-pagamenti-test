@@ -124,7 +124,7 @@ Feature: Process checks for activateIOPayment request
                                 <transfer>
                                     <idTransfer>1</idTransfer>
                                     <transferAmount>10.00</transferAmount>
-                                    <fiscalCodePA>77777777777</fiscalCodePA>
+                                    <fiscalCodePA>#codicePA#</fiscalCodePA>
                                     <IBAN>IT45R0760103200000000001016</IBAN>
                                     <remittanceInformation>testPaGetPayment</remittanceInformation>
                                     <transferCategory>paGetPaymentTest</transferCategory>
