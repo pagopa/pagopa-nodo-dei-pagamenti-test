@@ -252,11 +252,11 @@ Feature: process tests for retryAtokenScaduto
     #POSITION_PAYMENT
     And verify 2 record for the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
     #RETRY_PA_ATTIVA_RPT & RETRY_PA_INVIA_RT
-    And check the value $activatePaymentNotice.fiscalCode of the record at column pa_fiscal_code of the table RETRY_PA_ATTIVA_RPT retrived by the query stati_rpt on db nodo_online under macro NewMod3
-    And check the value $activatePaymentNoticeresponse.paymentToken-v2 of the record at column token of the table RETRY_PA_ATTIVA_RPT retrived by the query stati_rpt on db nodo_online under macro NewMod3
-    And check the value 0 of the record at column retry of the table RETRY_PA_ATTIVA_RPT retrived by the query stati_rpt on db nodo_online under macro NewMod3
-    And check the value NotNone of the record at column inserted_timestamp of the table RETRY_PA_ATTIVA_RPT retrived by the query stati_rpt on db nodo_online under macro NewMod3
-    And check the value NotNone of the record at column updated_timestamp of the table RETRY_PA_ATTIVA_RPT retrived by the query stati_rpt on db nodo_online under macro NewMod3
-    And check the value $iuv of the record at column iuv of the table RETRY_PA_ATTIVA_RPT retrived by the query stati_rpt on db nodo_online under macro NewMod3
-    And check the value N of the record at column ready of the table RETRY_PA_ATTIVA_RPT retrived by the query stati_rpt on db nodo_online under macro NewMod3
+    And checks the value $activatePaymentNotice.fiscalCode of the record at column pa_fiscal_code of the table RETRY_PA_ATTIVA_RPT retrived by the query stati_rpt on db nodo_online under macro NewMod3
+    And checks the value $activatePaymentNoticeresponse.paymentToken-v2 of the record at column token of the table RETRY_PA_ATTIVA_RPT retrived by the query stati_rpt on db nodo_online under macro NewMod3
+    And checks the value 0 of the record at column retry of the table RETRY_PA_ATTIVA_RPT retrived by the query stati_rpt on db nodo_online under macro NewMod3
+    And checks the value NotNone of the record at column inserted_timestamp of the table RETRY_PA_ATTIVA_RPT retrived by the query stati_rpt on db nodo_online under macro NewMod3
+    And checks the value NotNone of the record at column updated_timestamp of the table RETRY_PA_ATTIVA_RPT retrived by the query stati_rpt on db nodo_online under macro NewMod3
+    And checks the value $iuv of the record at column iuv of the table RETRY_PA_ATTIVA_RPT retrived by the query stati_rpt on db nodo_online under macro NewMod3
+    And checks the value N of the record at column ready of the table RETRY_PA_ATTIVA_RPT retrived by the query stati_rpt on db nodo_online under macro NewMod3
     And verify 0 record for the table RETRY_PA_INVIA_RT retrived by the query stati_rpt on db nodo_online under macro NewMod3
