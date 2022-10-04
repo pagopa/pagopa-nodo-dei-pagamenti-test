@@ -140,7 +140,7 @@ Feature: process tests for nodoInviaCarrelloMB[nodoInviaCarrelloMB_12]
             <pay_i:nazioneBeneficiario>IT</pay_i:nazioneBeneficiario>
             </pay_i:enteBeneficiario>
             <pay_i:datiVersamento>
-            <pay_i:dataEsecuzionePagamento>2021-03-09</pay_i:dataEsecuzionePagamento>
+            <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
             <pay_i:importoTotaleDaVersare>1.50</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
             <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>

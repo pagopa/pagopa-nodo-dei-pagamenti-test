@@ -123,8 +123,8 @@ Feature: PRO_ANNULLO_06_PPALOLD
                     <identificativoCanale>$nodoVerificaRPT.identificativoCanale</identificativoCanale>
                     <password>$nodoVerificaRPT.password</password>
                     <codiceContestoPagamento>$nodoVerificaRPT.codiceContestoPagamento</codiceContestoPagamento>
-                    <identificativoIntermediarioPSPPagamento>97735020584</identificativoIntermediarioPSPPagamento>
-                    <identificativoCanalePagamento>97735020584_02</identificativoCanalePagamento>
+                    <identificativoIntermediarioPSPPagamento>#broker_AGID#</identificativoIntermediarioPSPPagamento>
+                    <identificativoCanalePagamento>#canale_AGID_BBT#</identificativoCanalePagamento>
                     <codificaInfrastrutturaPSP>QR-CODE</codificaInfrastrutturaPSP>
                     <codiceIdRPT>
                         <qrc:QrCode>
@@ -215,7 +215,7 @@ Feature: PRO_ANNULLO_06_PPALOLD
                     <password>pwdpwdpwd</password>
                     <identificativoPSP>#psp_AGID#</identificativoPSP>
                     <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
-                    <identificativoCanale>97735020584_02</identificativoCanale>
+                    <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
                     <tipoFirma></tipoFirma>
                     <rpt>$rptAttachment</rpt>
                 </ws:nodoInviaRPT>
@@ -225,16 +225,25 @@ Feature: PRO_ANNULLO_06_PPALOLD
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
     
-    Scenario: Execute job praticheSospese (Phase 4)
+     Scenario: update column valid_to UPDATED_TIMESTAMP
         Given the Execute nodoInviaRPT (Phase 3) scenario executed successfully
         And wait 80 seconds for expiration
-        #TODO: MODIFICA TIMESTAMP
-        When job annullamentoRptMaiRichiestaDaPm triggered after 0 seconds
+        And change date Today to remove minutes 15
+        Then update through the query DB_GEST_ANN_update1 with date $date under macro AppIO on db nodo_online
+        And wait 10 seconds for expiration
+      
+    Scenario: Trigger annullamentoRptMaiRichiesteDaPm
+      Given the update column valid_to UPDATED_TIMESTAMP scenario executed successfully
+      When job annullamentoRptMaiRichiesteDaPm triggered after 0 seconds
+      Then verify the HTTP status code of annullamentoRptMaiRichiesteDaPm response is 200
+
+    Scenario: check DB  
+      Given the Trigger annullamentoRptMaiRichiesteDaPm scenario executed successfully
         And wait 15 seconds for expiration
-        Then checks the value None of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-        And checks the value None of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-        And checks the value None of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-        And checks the value None of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+        Then verify 0 record for the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+        And verify 0 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+        And verify 0 record for the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+        And verify 0 record for the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
         #check correctness STATI_RPT table
         And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro AppIO
         #check correctness STATI_RPT_SNAPSHOT table

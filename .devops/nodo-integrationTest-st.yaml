@@ -73,6 +73,7 @@ stages:
     condition: succeeded()
     jobs:
       - job: test_execute
+        timeoutInMinutes: 0 # how long to run the job before automatically cancelling. When 0 is specified, the maximum limit is used
         displayName: "execute test suite (${{ parameters.env }})"
         pool: $(deploy-pool)
         steps:
@@ -114,7 +115,8 @@ stages:
 
              #behave --help #Run behave
              #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/RTPull/RTPull_flows.feature --tags=ok
-             behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/RendicontazioneFTPeBollo/NIFRFTP_01.feature
+             #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/appIO/primitives/pspNotifyPaymentResponse_syntax_ko.feature
+             behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/PrimitiveAccessorie/flows/pspInviaCarrelloRPT_timeout_chiediAvanzamento_sconosciuta.feature
 
             displayName: 'Run Behave Test Suite'
           - task: PublishTestResults@2

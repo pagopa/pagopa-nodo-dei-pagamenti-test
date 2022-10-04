@@ -5,15 +5,15 @@ Feature: process tests for nodoInviaCarrelloMB[nodoInviaCarrelloMB_17]
         Given systems up
         And EC old version
     Scenario: RPT generation
-        Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
-        And generate 1 cart with PA #codicePA_old# and notice number $1noticeNumber
+        Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr_old# and application code NA
+        And generate 1 cart with PA #codicePA# and notice number $1noticeNumber
         And RPT1 generation
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-            <pay_i:identificativoDominio>#codicePA_old#</pay_i:identificativoDominio>
-            <pay_i:identificativoStazioneRichiedente>#id_station_old#</pay_i:identificativoStazioneRichiedente>
+            <pay_i:identificativoDominio>#codicePA#</pay_i:identificativoDominio>
+            <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
             <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
@@ -184,8 +184,8 @@ Feature: process tests for nodoInviaCarrelloMB[nodoInviaCarrelloMB_17]
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
             <ppt:intestazioneCarrelloPPT>
-            <identificativoIntermediarioPA>#codicePA_old#</identificativoIntermediarioPA>
-            <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
+            <identificativoIntermediarioPA>#codicePA#</identificativoIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
             <identificativoCarrello>$1carrello</identificativoCarrello>
             </ppt:intestazioneCarrelloPPT>
             </soapenv:Header>
@@ -197,7 +197,7 @@ Feature: process tests for nodoInviaCarrelloMB[nodoInviaCarrelloMB_17]
             <identificativoCanale>97735020584_02</identificativoCanale>
             <listaRPT>
             <elementoListaRPT>
-            <identificativoDominio>#codicePA_old#</identificativoDominio>
+            <identificativoDominio>#codicePA#</identificativoDominio>
             <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
             <rpt>$rpt1Attachment</rpt>

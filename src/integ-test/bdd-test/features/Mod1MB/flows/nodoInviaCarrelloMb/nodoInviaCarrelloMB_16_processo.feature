@@ -1,4 +1,4 @@
-Feature: process tests for nodoInviaCarrelloMb[NICM_DB_17]
+Feature: process tests for nodoInviaCarrelloMB[nodoInviaCarrelloMB_16]
 
 
     Background:
@@ -72,9 +72,9 @@ Feature: process tests for nodoInviaCarrelloMb[NICM_DB_17]
             <pay_i:datiSingoloVersamento>
             <pay_i:importoSingoloVersamento>1.50</pay_i:importoSingoloVersamento>
             <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
-            <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
+            <pay_i:ibanAccredito>IT96R0123451234512345678904</pay_i:ibanAccredito>
             <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
-            <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio>
+            <pay_i:ibanAppoggio>IT96R0123451234512345678904</pay_i:ibanAppoggio>
             <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
             <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
             <pay_i:causaleVersamento>pagamento fotocopie pratica RPT</pay_i:causaleVersamento>
@@ -144,15 +144,15 @@ Feature: process tests for nodoInviaCarrelloMb[NICM_DB_17]
             <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
             <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
             <pay_i:codiceContestoPagamento>$1carrello</pay_i:codiceContestoPagamento>
-            <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
+            <pay_i:ibanAddebito>IT02L1234512345123456789012</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
             <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
             <pay_i:datiSingoloVersamento>
             <pay_i:importoSingoloVersamento>1.50</pay_i:importoSingoloVersamento>
             <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
-            <pay_i:ibanAccredito>IT45R0760103200000000001016</pay_i:ibanAccredito>
+            <pay_i:ibanAccredito>IT02L1234512345123456789012</pay_i:ibanAccredito>
             <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
-            <pay_i:ibanAppoggio>IT45R0760103200000000001016</pay_i:ibanAppoggio>
+            <pay_i:ibanAppoggio>IT02L1234512345123456789012</pay_i:ibanAppoggio>
             <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
             <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
             <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
@@ -216,25 +216,5 @@ Feature: process tests for nodoInviaCarrelloMb[NICM_DB_17]
             </soapenv:Envelope>
             """
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
-        Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
-        Then retrieve session token from $nodoInviaCarrelloRPTResponse.url
-
-
-        #DB_CHECKS
-        #POSITION_PAYMENT_STATUS_SNAPSHOT
-        And replace pa content with #codicePA# content
-        And replace iuv content with $1iuv content
-        And replace noticeNumber content with $1noticeNumber content
-
-        And checks the value $1noticeNumber of the record at column NOTICE_ID of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        And checks the value #codicePA# of the record at column PA_FISCAL_CODE of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        And checks the value $1iuv of the record at column CREDITOR_REFERENCE_ID of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        And checks the value $nodoInviaCarrelloRPT.identificativoCarrello of the record at column PAYMENT_TOKEN of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        And checks the value PAYING of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-
-        And execution query by_notice_number_and_pa to get value on the table POSITION_PAYMENT_STATUS_SNAPSHOT, with the columns FK_POSITION_PAYMENT under macro Mod1Mb with db name nodo_online
-        And through the query by_notice_number_and_pa retrieve param ID at position 0 and save it under the key FK_POSITION_PAYMENT
-        And checks the value $FK_POSITION_PAYMENT of the record at column ID of the table POSITION_PAYMENT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-
+        Then check faultCode is PPT_MULTI_BENEFICIARIO of nodoInviaCarrelloRPT response
+        And check description is Ogni RPT deve contenere solo iban dell’Ente riferito all’interno della RPT of nodoInviaCarrelloRPT response

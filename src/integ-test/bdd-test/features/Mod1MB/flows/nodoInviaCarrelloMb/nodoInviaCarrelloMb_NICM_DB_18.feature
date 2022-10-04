@@ -1,5 +1,4 @@
-Feature: process tests for nodoInviaCarrelloMb[NICM_DB_12]
-
+Feature: process tests for nodoInviaCarrelloMb[NICM_DB_18_multibeneficiario=false]
 
     Background:
         Given systems up
@@ -65,12 +64,34 @@ Feature: process tests for nodoInviaCarrelloMb[NICM_DB_12]
             <pay_i:importoTotaleDaVersare>1.50</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
             <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
-            <pay_i:codiceContestoPagamento>$1carrello</pay_i:codiceContestoPagamento>
+            <pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
             <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
             <pay_i:datiSingoloVersamento>
-            <pay_i:importoSingoloVersamento>1.50</pay_i:importoSingoloVersamento>
+            <pay_i:importoSingoloVersamento>0.50</pay_i:importoSingoloVersamento>
+            <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
+            <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
+            <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
+            <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio>
+            <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
+            <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
+            <pay_i:causaleVersamento>pagamento fotocopie pratica RPT</pay_i:causaleVersamento>
+            <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
+            </pay_i:datiSingoloVersamento>
+            <pay_i:datiSingoloVersamento>
+            <pay_i:importoSingoloVersamento>0.50</pay_i:importoSingoloVersamento>
+            <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
+            <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
+            <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
+            <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio>
+            <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
+            <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
+            <pay_i:causaleVersamento>pagamento fotocopie pratica RPT</pay_i:causaleVersamento>
+            <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
+            </pay_i:datiSingoloVersamento>
+            <pay_i:datiSingoloVersamento>
+            <pay_i:importoSingoloVersamento>0.50</pay_i:importoSingoloVersamento>
             <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
             <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
             <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
@@ -83,14 +104,14 @@ Feature: process tests for nodoInviaCarrelloMb[NICM_DB_12]
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-
+        And generate 2 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
         And RPT2 generation
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.1</pay_i:versioneOggetto>
             <pay_i:dominio>
-            <pay_i:identificativoDominio>90000000001</pay_i:identificativoDominio>
-            <pay_i:identificativoStazioneRichiedente>90000000001_01</pay_i:identificativoStazioneRichiedente>
+            <pay_i:identificativoDominio>#codicePA#</pay_i:identificativoDominio>
+            <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
             <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
@@ -142,13 +163,35 @@ Feature: process tests for nodoInviaCarrelloMb[NICM_DB_12]
             <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
             <pay_i:importoTotaleDaVersare>1.50</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
-            <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
-            <pay_i:codiceContestoPagamento>$1carrello</pay_i:codiceContestoPagamento>
+            <pay_i:identificativoUnivocoVersamento>$2iuv</pay_i:identificativoUnivocoVersamento>
+            <pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
             <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
             <pay_i:datiSingoloVersamento>
-            <pay_i:importoSingoloVersamento>1.50</pay_i:importoSingoloVersamento>
+            <pay_i:importoSingoloVersamento>0.50</pay_i:importoSingoloVersamento>
+            <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
+            <pay_i:ibanAccredito>IT45R0760103200000000001016</pay_i:ibanAccredito>
+            <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
+            <pay_i:ibanAppoggio>IT45R0760103200000000001016</pay_i:ibanAppoggio>
+            <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
+            <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
+            <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
+            <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
+            </pay_i:datiSingoloVersamento>
+            <pay_i:datiSingoloVersamento>
+            <pay_i:importoSingoloVersamento>0.50</pay_i:importoSingoloVersamento>
+            <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
+            <pay_i:ibanAccredito>IT45R0760103200000000001016</pay_i:ibanAccredito>
+            <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
+            <pay_i:ibanAppoggio>IT45R0760103200000000001016</pay_i:ibanAppoggio>
+            <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
+            <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
+            <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
+            <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
+            </pay_i:datiSingoloVersamento>
+            <pay_i:datiSingoloVersamento>
+            <pay_i:importoSingoloVersamento>0.50</pay_i:importoSingoloVersamento>
             <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
             <pay_i:ibanAccredito>IT45R0760103200000000001016</pay_i:ibanAccredito>
             <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
@@ -199,18 +242,17 @@ Feature: process tests for nodoInviaCarrelloMb[NICM_DB_12]
             <elementoListaRPT>
             <identificativoDominio>#codicePA#</identificativoDominio>
             <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
+            <codiceContestoPagamento>CCD01</codiceContestoPagamento>
             <rpt>$rpt1Attachment</rpt>
             </elementoListaRPT>
             <elementoListaRPT>
-            <identificativoDominio>90000000001</identificativoDominio>
-            <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
+            <identificativoDominio>#codicePA#</identificativoDominio>
+            <identificativoUnivocoVersamento>$2iuv</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>CCD01</codiceContestoPagamento>
             <rpt>$rpt2Attachment</rpt>
             </elementoListaRPT>
             </listaRPT>
-            <requireLightPayment>01</requireLightPayment>
-            <multiBeneficiario>1</multiBeneficiario>
+            <multiBeneficiario>0</multiBeneficiario>
             </ws:nodoInviaCarrelloRPT>
             </soapenv:Body>
             </soapenv:Envelope>
@@ -219,38 +261,36 @@ Feature: process tests for nodoInviaCarrelloMb[NICM_DB_12]
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
         Then retrieve session token from $nodoInviaCarrelloRPTResponse.url
 
-        #DB_CHECKS
-
         And replace pa content with #codicePA# content
         And replace iuv content with $1iuv content
         And replace noticeNumber content with $1noticeNumber content
 
+        #DB_CHECKS
+        #POSITION_SUBJECT [NICM_DB_01_bis]
+        And verify 0 record for the table POSITION_SUBJECT retrived by the query by_position_subject on db nodo_online under macro Mod1Mb
 
-        #POSITION_PAYMENT
-        And checks the value #codicePA# of the record at column PA_FISCAL_CODE of the table POSITION_PAYMENT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        And checks the value $1noticeNumber of the record at column NOTICE_ID of the table POSITION_PAYMENT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        And checks the value $1iuv of the record at column CREDITOR_REFERENCE_ID of the table POSITION_PAYMENT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        And checks the value $nodoInviaCarrelloRPT.identificativoCarrello of the record at column PAYMENT_TOKEN of the table POSITION_PAYMENT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        And checks the value #codicePA# of the record at column BROKER_PA_ID of the table POSITION_PAYMENT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        And checks the value #codicePA#_01 of the record at column STATION_ID of the table POSITION_PAYMENT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        And checks the value 2 of the record at column STATION_VERSION of the table POSITION_PAYMENT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        And checks the value $nodoInviaCarrelloRPT.identificativoPSP of the record at column PSP_ID of the table POSITION_PAYMENT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        And checks the value $nodoInviaCarrelloRPT.identificativoIntermediarioPSP of the record at column BROKER_PSP_ID of the table POSITION_PAYMENT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        And checks the value $nodoInviaCarrelloRPT.identificativoCanale of the record at column CHANNEL_ID of the table POSITION_PAYMENT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        And checks the value None of the record at column IDEMPOTENCY_KEY of the table POSITION_PAYMENT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        And checks the value 3 of the record at column AMOUNT of the table POSITION_PAYMENT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        And checks the value None of the record at column FEE of the table POSITION_PAYMENT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        And checks the value None of the record at column OUTCOME of the table POSITION_PAYMENT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        And checks the value None of the record at column PAYMENT_METHOD of the table POSITION_PAYMENT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        And checks the value None of the record at column PAYMENT_CHANNEL of the table POSITION_PAYMENT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        And checks the value None of the record at column TRANSFER_DATE of the table POSITION_PAYMENT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        And checks the value None of the record at column PAYER_ID of the table POSITION_PAYMENT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        And checks the value None of the record at column APPLICATION_DATE of the table POSITION_PAYMENT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_PAYMENT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_PAYMENT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        And checks the value None of the record at column RPT_ID of the table POSITION_PAYMENT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        And checks the value MOD1 of the record at column PAYMENT_TYPE of the table POSITION_PAYMENT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+        #POSITION_SERVICE [NICM_DB_04_bis]
+        And verify 0 record for the table POSITION_SERVICE retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
 
-        And execution query by_notice_number_and_pa to get value on the table POSITION_PAYMENT, with the columns CARRELLO_ID under macro Mod1Mb with db name nodo_online
-        And through the query by_notice_number_and_pa retrieve param FK_CARRELLO at position 0 and save it under the key CARRELLO_ID
-        And checks the value $CARRELLO_ID of the record at column FK_CARRELLO of the table RPT retrived by the query by_iuv_and_ident_dominio on db nodo_online under macro Mod1Mb
+        #POSITION_PAYMENT_PLAN
+        And verify 0 record for the table POSITION_PAYMENT_PLAN retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+
+
+        #POSITION_TRANSFER [NICM_DB_10_bis]
+        And verify 0 record for the table POSITION_TRANSFER retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+
+        #POSITION_PAYMENT [NICM_DB_12_bis]
+        And verify 0 record for the table POSITION_PAYMENT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+
+        #POSITION_STATUS[NICM_DB_13_bis]
+        And verify 0 record for the table POSITION_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+
+        #POSITION_STATUS_SNAPSHOT
+        And verify 0 record for the table POSITION_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+
+        #POSITION_PAYMENT_STATUS [NICM_DB_16_bis]
+        And verify 0 record for the table POSITION_PAYMENT_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+
+        #POSITION_PAYMENT_STATUS_SNAPSHOT [NICM_DB_17_bis]
+        And verify 0 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+

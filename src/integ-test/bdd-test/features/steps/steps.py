@@ -65,10 +65,9 @@ def step_impl(context, primitive):
         my_document = parseString(payload)
         idBrokerPSP = "70000000001"
         if len(my_document.getElementsByTagName('idBrokerPSP')) > 0:
-            idBrokerPSP = my_document.getElementsByTagName('idBrokerPSP')[
-                0].firstChild.data
-        payload = payload.replace(
-            '#idempotency_key#', f"{idBrokerPSP}_{str(random.randint(1000000000, 9999999999))}")
+            idBrokerPSP = my_document.getElementsByTagName('idBrokerPSP')[0].firstChild.data
+        payload = payload.replace('#idempotency_key#', f"{idBrokerPSP}_{str(random.randint(1000000000, 9999999999))}")
+        payload = payload.replace('#idempotency_key_IOname#', "IOname" + "_" + str(random.randint(1000000000, 9999999999)))
 
     if "#timedate#" in payload:
         timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
@@ -248,8 +247,7 @@ def step_impl(context):
         setattr(context, '2iuv', iuv)
 
     if '#IUV#' in payload:
-        IUV = 'IUV' + str(random.randint(0, 10000)) + '-' + date + \
-            datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
+        IUV = 'IUV' + str(random.randint(0, 10000)) + '-' + date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
         payload = payload.replace('#IUV#', IUV)
         setattr(context, 'IUV', IUV)
 
@@ -380,12 +378,23 @@ def step_impl(context, number):
     if '#date#' in payload:
         payload = payload.replace('#date#', date)
 
-    if '#tomorrow_date#' in payload:
-        tomorrow_date = datetime.date.today() - datetime.timedelta(days=1)
-        payload = payload.replace('#tomorrow_date#', tomorrow_date)
+        """
+    if "#tomorrow_date#" in payload:
+        tomorrow_date = datetime.date.today() + datetime.timedelta(days=1)
+        payload = payload.replace('#tomorrow_date#', 'tomorrow_date')
         setattr(context, 'tomorrow_date', tomorrow_date)
+        """
 
-    
+    if '$date+1' in payload:
+        date = getattr(context, 'date')
+        date = datetime.datetime.strptime(date, '%Y-%m-%dT%H:%M:%S.%f')
+        date = date + datetime.timedelta(hours=1)
+        date = date.strftime("%Y-%m-%dT%H:%M:%S.%f")
+        print('####', date)
+        payload = payload.replace('$date+1', date)
+        setattr(context, '$date+1', date)
+
+   
     if f'#IuV{number}#' in payload:
         IuV = '0' + str(random.randint(1000, 2000)) + str(random.randint(1000,
                                                                          2000)) + str(random.randint(1000, 2000)) + '00'
@@ -752,12 +761,11 @@ def step_impl(context, tag, value, primitive):
         node_response = getattr(context, primitive + RESPONSE)
         json_response = node_response.json()
         founded_value = jo.get_value_from_key(json_response, tag)
-        print(founded_value)
-        print(f'check tag "{tag}" - expected: {value}, obtained: {json_response.get(tag)}')
+        print(f'check tag "{tag}" - expected: {value}, obtained: {founded_value}')
         assert str(founded_value) == value
 
 
-# controlla che il valore value sia una sottostringa del contentuo del tag
+# controlla che il valore value sia una sottostringa del contenuto del tag
 @then('check substring {value} in {tag} content of {primitive} response')
 def step_impl(context, tag, value, primitive):
     soap_response = getattr(context, primitive + RESPONSE)
@@ -818,6 +826,7 @@ def step_impl(context, tag, value, primitive):
         json_response = node_response.json()
         json_response = jo.convert_json_values_toString(json_response)
         print('>>>>>>>>>>>>>>', json_response)
+        print(value)
         find = jo.search_value(json_response, tag, value)
         assert find
 
@@ -1362,6 +1371,9 @@ def step_impl(context, query_name, date, macro, db_name):
         #date = str(datetime.datetime.today())
         date = datetime.datetime.today().strftime("%Y-%m-%d %H:%M:%S")
 
+    if date == 'Yesterday':
+        date = str(datetime.date.today() - datetime.timedelta(days=1))
+
     selected_query = utils.query_json(
         context, query_name, macro).replace('date', date)
     conn = db.getConnection(db_selected.get('host'), db_selected.get(
@@ -1414,12 +1426,12 @@ def step_impl(context, query_name, macro, db_name, table_name, columns):
 def step_impl(context, query_name, param, position, key):
     result_query = getattr(context, query_name)
     print(f'{query_name}: {result_query}')
-    if position == 0:
-        selected_element = result_query[0][position]
-        print(f'{param}: {selected_element}')
-    elif position == -1: # il -1 recupera tutti i record 
+
+    if position == -1: # il -1 recupera tutti i record
         selected_element = [t[0] for t in result_query]
-        print(f'{param}: {selected_element}')
+    else:
+        selected_element = result_query[0][position]
+    print(f'{param}: {selected_element}')
     setattr(context, key, selected_element)
 
 

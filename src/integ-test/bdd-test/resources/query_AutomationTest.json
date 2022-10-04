@@ -10,6 +10,7 @@
         "payment_status_pay_act1":"SELECT columns FROM table_name WHERE NOTICE_ID ='$activatePaymentNotice.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode' AND PAYMENT_TOKEN ='$activatePaymentNotice1Response.paymentToken'",
         "payment_status_pay_only_act1":"SELECT columns FROM table_name WHERE NOTICE_ID ='$activatePaymentNotice1.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNotice1.fiscalCode' AND PAYMENT_TOKEN ='$activatePaymentNotice1Response.paymentToken'",
         "payment_status_orderby":"SELECT columns FROM table_name WHERE NOTICE_ID ='$activatePaymentNotice.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode' ORDER BY ID ASC",
+        "payment_status_orderbydesc":"SELECT columns FROM table_name WHERE NOTICE_ID ='$activatePaymentNotice.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode' ORDER BY ID DESC",
         "position_payment": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN ='$activatePaymentNoticeResponse.paymentToken'",
         "position_payment_noticeNumb" : "SELECT columns FROM table_name WHERE NOTICE_ID ='$activatePaymentNotice.noticeNumber' AND PAYMENT_TOKEN = '$activatePaymentNoticeResponse.paymentToken'",
         "payment_status_retry_05_token1":"SELECT s.columns FROM table_name s WHERE s.NOTICE_ID ='$activatePaymentNotice1.noticeNumber' AND s.PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode'",
@@ -23,6 +24,7 @@
         "position_receipt_recipient_2pa": "SELECT s.columns FROM table_name s where s.NOTICE_ID = '$activatePaymentNotice.noticeNumber' and s.PAYMENT_TOKEN= '$activatePaymentNoticeResponse.paymentToken' and s.RECIPIENT_STATION_ID = '$paStationId'",
         "position_receipt_xml" : "SELECT s.columns FROM table_name s where s.NOTICE_ID = '$activatePaymentNotice.noticeNumber' AND s.PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode'",
         "position_receipt_recipient_status": "SELECT s.columns FROM table_name s where s.NOTICE_ID = '$activatePaymentNotice.noticeNumber' and s.PAYMENT_TOKEN= '$activatePaymentNoticeResponse.paymentToken'",
+        "pos_receipt_recipient_status_order_by": "SELECT s.columns FROM table_name s where s.NOTICE_ID = '$activatePaymentNotice.noticeNumber' and s.PAYMENT_TOKEN= '$activatePaymentNoticeResponse.paymentToken' ORDER BY s.ID ASC",
         "position_receipt_transfer" : "SELECT s.columns FROM table_name s JOIN POSITION_TRANSFER pt ON pt.ID = s.FK_POSITION_TRANSFER WHERE pt.NOTICE_ID = '$activatePaymentNotice.noticeNumber' AND pt.PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode'",
         "position_payment_status_1" :"SELECT s.columns FROM table_name s WHERE s.NOTICE_ID ='$activatePaymentNotice1.noticeNumber' AND s.PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode' AND s.PAYMENT_TOKEN = '$activatePaymentNotice1Response.paymentToken'",
         "position_payment_status_2" :"SELECT s.columns FROM table_name s WHERE s.NOTICE_ID ='$activatePaymentNotice2.noticeNumber' AND s.PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode' AND s.PAYMENT_TOKEN = '$activatePaymentNotice2Response.paymentToken'",
@@ -86,7 +88,10 @@
         "psp": "SELECT columns FROM table_name where ID_PSP = '$sendPaymentOutcome.idPSP'",
         "payment_status_1": "SELECT columns FROM table_name s where s.NOTICE_ID = $activateIOPayment.noticeNumber and s.PAYMENT_TOKEN= '$activateIOPaymentResponse.paymentToken'",
         "info_pagamento": "SELECT columns FROM CD_INFO_PAGAMENTO WHERE ID_SESSIONE='$sessionToken'",
-        "rpt_stati": "SELECT columns FROM table_name s WHERE s.IUV = '$iuv' ORDER BY INSERTED_TIMESTAMP ASC"
+        "rpt_stati": "SELECT columns FROM table_name s WHERE s.IUV = '$iuv' ORDER BY INSERTED_TIMESTAMP ASC",
+        "getPspCarte": "SELECT columns FROM table_name WHERE FK_SNAPSHOT_VERSION = $version AND CANALE_APP = 'N' AND TIPO_VERS_COD in ('CP') AND CANALE_MOD_PAG in (0,1) AND CARRELLO_CARTE='Y' AND IMPORTO_MINIMO < $importoTot AND IMPORTO_MASSIMO >= $importoTot AND CODICE_CONVENZIONE is null AND FLAG_IO = 'Y' AND CODICE_ABI <> '07061'",
+        "getPspCarte_poste": "SELECT columns FROM table_name WHERE FK_SNAPSHOT_VERSION = $version AND CANALE_APP = 'N' AND TIPO_VERS_COD in ('CP') AND CANALE_MOD_PAG in (0,1) AND CARRELLO_CARTE='Y' AND IMPORTO_MINIMO < $importoTot AND IMPORTO_MASSIMO >= $importoTot AND CODICE_CONVENZIONE is null AND FLAG_IO = 'Y'",
+        "DB_GEST_ANN_update1": "UPDATE RPT SET UPDATED_TIMESTAMP = TO_DATE('date', 'YYYY-MM-DD HH24:MI:SS') WHERE IUV = '$iuv' AND IDENT_DOMINIO = '$nodoInviaRPT.identificativoDominio'"
     },
     "AppIOold":{
         "cd_info_pagamento": "SELECT s.columns FROM table_name s WHERE s.IUV = '$nodoInviaRPT.identificativoUnivocoVersamento' AND s.IDENT_DOMINIO = '#codicePA#'"
@@ -162,12 +167,17 @@
         "idempotency_update":"UPDATE IDEMPOTENCY_CACHE SET VALID_TO = TO_DATE('date', 'YYYY-MM-DD HH24:MI:SS') WHERE IDEMPOTENCY_KEY = '$sendPaymentOutcome.idempotencyKey' AND PSP_ID = '$sendPaymentOutcome.idPSP'",
         "param_update": "UPDATE table_name SET param = 'value' WHERE where_condition = 'valore'",
         "param_update_in": "UPDATE table_name SET param = 'value' WHERE where_condition IN valore",
-        "param_update_generic_where_condition" : "UPDATE table_name SET param WHERE where_condition"
+        "param_update_generic_where_condition" : "UPDATE table_name SET param WHERE where_condition",
+        "inserted_timestamp" : "UPDATE POSITION_PAYMENT_PLAN SET INSERTED_TIMESTAMP = TO_DATE('date', 'YYYY-MM-DD') WHERE NOTICE_ID = $1noticeNumber AND PA_FISCAL_CODE = $pa",
+        "updated_timestamp" : "UPDATE POSITION_PAYMENT_PLAN SET UPDATED_TIMESTAMP = TO_DATE('date', 'YYYY-MM-DD') WHERE NOTICE_ID = $1noticeNumber AND PA_FISCAL_CODE = $pa"
 
     },
     "RendicontazioneFTPeBollo":{
         "rendicontazione": "SELECT columns FROM table_name WHERE ID_FLUSSO = '$identificativoFlusso' AND DOMINIO = '$pa'",
-        "send_queue": "SELECT s.columns FROM table_name s JOIN RENDICONTAZIONE r ON s.ID = r.FK_SFTP_FILE WHERE r.ID_FLUSSO = '$identificativoFlusso' AND r.DOMINIO = '$pa' "
-
+        "send_queue": "SELECT s.columns FROM table_name s JOIN RENDICONTAZIONE r ON s.ID = r.FK_SFTP_FILE WHERE r.ID_FLUSSO = '$identificativoFlusso' AND r.DOMINIO = '$pa' ",
+        "binary_file": "SELECT s.columns FROM table_name s JOIN RENDICONTAZIONE r ON s.ID = r.FK_BINARY_FILE WHERE r.ID_FLUSSO = '$identificativoFlusso' AND r.DOMINIO = '$pa' "
+    },
+    "Primitive_accessorie":{
+        "rpt": "SELECT columns FROM table_name WHERE IUV = '$iuv' AND CCP= '$ccp'"
     }
 }
