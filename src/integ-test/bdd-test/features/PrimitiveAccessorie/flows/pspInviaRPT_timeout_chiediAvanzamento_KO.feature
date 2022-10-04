@@ -1,4 +1,4 @@
-Feature: pspInviaRPT_timeout_chiediAvanzamento_OK
+Feature: pspInviaRPT_timeout_chiediAvanzamento_KO
 
     Background:
         Given systems up
@@ -63,7 +63,7 @@ Feature: pspInviaRPT_timeout_chiediAvanzamento_OK
             <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
             <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
-            <pay_i:identificativoUnivocoVersamento>#IUV#</pay_i:identificativoUnivocoVersamento>
+            <pay_i:identificativoUnivocoVersamento>avanzaKO</pay_i:identificativoUnivocoVersamento>
             <pay_i:codiceContestoPagamento>#ccp1#</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
@@ -93,7 +93,7 @@ Feature: pspInviaRPT_timeout_chiediAvanzamento_OK
             <identificativoIntermediarioPA>#id_broker#</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-            <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
+            <identificativoUnivocoVersamento>avanzaKO</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
             </ppt:intestazionePPT>
             </soapenv:Header>
@@ -109,20 +109,20 @@ Feature: pspInviaRPT_timeout_chiediAvanzamento_OK
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And initial XML pspInviaRPT 
+        And initial XML pspInviaRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header/>
-                <soapenv:Body>
-                    <ws:pspInviaRPTResponse>
-                        <pspInviaRPTResponse>
-                            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-                            <delay>10000</delay>
-                            <identificativoCarrello>$nodoInviaRPT.identificativoUnivocoVersamento</identificativoCarrello>
-                            <parametriPagamentoImmediato>idBruciatura=$nodoInviaRPT.identificativoUnivocoVersamento</parametriPagamentoImmediato>
-                        </pspInviaRPTResponse>
-                    </ws:pspInviaRPTResponse>
-                </soapenv:Body>
+            <soapenv:Body>
+            <ws:pspInviaRPTResponse>
+            <pspInviaRPTResponse>
+            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+            <delay>10000</delay>
+            <identificativoCarrello>$nodoInviaRPT.identificativoUnivocoVersamento</identificativoCarrello>
+            <parametriPagamentoImmediato>idBruciatura=$nodoInviaRPT.identificativoUnivocoVersamento</parametriPagamentoImmediato>
+            </pspInviaRPTResponse>
+            </ws:pspInviaRPTResponse>
+            </soapenv:Body>
             </soapenv:Envelope>
             """
         And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
@@ -131,114 +131,37 @@ Feature: pspInviaRPT_timeout_chiediAvanzamento_OK
         And check faultCode is PPT_CANALE_TIMEOUT of nodoInviaRPT response
 
         # DB Check
-        And replace iuv content with $IUV content
+        And replace iuv content with avanzaKO content
         And replace ccp content with $1ccp content
 
         And checks the value RPT_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_RPT retrived by the query rpt on db nodo_online under macro Primitive_accessorie
         And checks the value RPT_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt on db nodo_online under macro Primitive_accessorie
 
-
-    # [pspChiediAvanzamentoRPT -> OK]
+    # [pspChiediAvanzamentoRPT -> KO]
     Scenario: Execute job pspChiediAvanzamentoRPT
         Given the Execute nodoInviaRPT request scenario executed successfully
         And initial XML pspChiediAvanzamentoRPT
             """
-                <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-                <soapenv:Header/>
-                <soapenv:Body>
-                    <ws:pspChiediAvanzamentoRPTResponse>
-                        <pspChiediAvanzamentoRPTResponse>
-                            <value>OK</value>
-                        </pspChiediAvanzamentoRPTResponse>
-                    </ws:pspChiediAvanzamentoRPTResponse>
-                </soapenv:Body>
-                </soapenv:Envelope>
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <ws:pspChiediAvanzamentoRPTResponse>
+            <pspChiediAvanzamentoRPTResponse>
+            <value>KO</value>
+            <fault>
+            <faultCode>CANALE_RPT_RIFIUTATA</faultCode>
+            <faultString>RPT arrivata al PSP e rifiutata</faultString>
+            <id>${psp}</id>
+            <description>RPT rifiutata dal PSP</description>
+            </fault>
+            </pspChiediAvanzamentoRPTResponse>
+            </ws:pspChiediAvanzamentoRPTResponse>
+            </soapenv:Body>
+            </soapenv:Envelope>
             """
         And PSP replies to nodo-dei-pagamenti with the pspChiediAvanzamentoRPT
         When job pspChiediAvanzamentoRpt triggered after 5 seconds
         And wait 10 seconds for expiration
-        Then checks the value RPT_ESITO_SCONOSCIUTO_PSP,RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT retrived by the query rpt on db nodo_online under macro Primitive_accessorie
-        And checks the value RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt on db nodo_online under macro Primitive_accessorie
+        Then checks the value RPT_ESITO_SCONOSCIUTO_PSP,RPT_RIFIUTATA_PSP of the record at column STATO of the table STATI_RPT retrived by the query rpt on db nodo_online under macro Primitive_accessorie
+        And checks the value RPT_RIFIUTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt on db nodo_online under macro Primitive_accessorie
 
-
-
-    # # [pspChiediAvanzamentoRPT -> KO]
-    # Scenario: Execute job pspChiediAvanzamentoRPT
-    #     Given the Execute nodoInviaRPT request scenario executed successfully
-    #     And initial XML pspChiediAvanzamentoRPT
-    #         """
-    #         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-    #         <soapenv:Header/>
-    #         <soapenv:Body>
-    #             <ws:pspChiediAvanzamentoRPTResponse>
-    #                 <pspChiediAvanzamentoRPTResponse>
-    #                     <value>KO</value>
-    #                     <fault>
-    #                         <faultCode>CANALE_RPT_RIFIUTATA</faultCode>
-    #                         <faultString>Errore semantico dal psp</faultString>
-    #                         <id>1</id>
-    #                         <description>Errore dal psp</description>
-    #                     </fault>
-    #                 </pspChiediAvanzamentoRPTResponse>
-    #             </ws:pspChiediAvanzamentoRPTResponse>
-    #         </soapenv:Body>
-    #         </soapenv:Envelope>
-    #         """
-    #     And PSP replies to nodo-dei-pagamenti with the pspChiediAvanzamentoRPT
-    #     When job pspChiediAvanzamentoRpt triggered after 5 seconds
-    #     And wait 10 seconds for expiration
-    #     Then checks the value RPT_ESITO_SCONOSCIUTO_PSP,RPT_RIFIUTATA_PSP of the record at column STATO of the table STATI_RPT retrived by the query rpt on db nodo_online under macro Primitive_accessorie
-    #     And checks the value RPT_RIFIUTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt on db nodo_online under macro Primitive_accessorie
-
-
-    # # [pspChiediAvanzamentoRPT -> sconosciuta]
-    # Scenario: Execute job pspChiediAvanzamentoRPT
-    #     Given the Execute nodoInviaRPT request scenario executed successfully
-    #     And initial XML pspChiediAvanzamentoRPT
-    #         """
-    #         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-    #         <soapenv:Header/>
-    #         <soapenv:Body>
-    #             <ws:pspChiediAvanzamentoRPTResponse>
-    #                 <pspChiediAvanzamentoRPTResponse>
-    #                     <value>SCONOSCIUTA</value>
-    #                     <fault>
-    #                         <faultCode>CANALE_RPT_SCONOSCIUTA</faultCode>
-    #                         <faultString>Errore semantico dal psp</faultString>
-    #                         <id>1</id>
-    #                         <description>Errore dal psp</description>
-    #                     </fault>
-    #                 </pspChiediAvanzamentoRPTResponse>
-    #             </ws:pspChiediAvanzamentoRPTResponse>
-    #         </soapenv:Body>
-    #         </soapenv:Envelope>
-    #         """
-    #     And PSP replies to nodo-dei-pagamenti with the pspChiediAvanzamentoRPT
-    #     When job pspChiediAvanzamentoRpt triggered after 5 seconds
-    #     And wait 10 seconds for expiration
-    #     Then checks the value RPT_ESITO_SCONOSCIUTO_PSP,RPT_ERRORE_INVIO_A_PSP of the record at column STATO of the table STATI_RPT retrived by the query rpt on db nodo_online under macro Primitive_accessorie
-    #     And checks the value RPT_ERRORE_INVIO_A_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt on db nodo_online under macro Primitive_accessorie
-
-
-
-    # [pspChiediAvanzamentoRPT -> timeout]
-    Scenario: Execute job pspChiediAvanzamentoRPT
-        Given the Execute nodoInviaRPT request scenario executed successfully
-        And initial XML pspChiediAvanzamentoRPT
-            """
-                <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-                <soapenv:Header/>
-                <soapenv:Body>
-                    <ws:pspChiediAvanzamentoRPTResponse>
-                        <pspChiediAvanzamentoRPTResponse>
-                            <delay>10000</delay>
-                        </pspChiediAvanzamentoRPTResponse>
-                    </ws:pspChiediAvanzamentoRPTResponse>
-                </soapenv:Body>
-                </soapenv:Envelope>
-            """
-        And PSP replies to nodo-dei-pagamenti with the pspChiediAvanzamentoRPT
-        When job pspChiediAvanzamentoRpt triggered after 5 seconds
-        And wait 10 seconds for expiration
-        Then checks the value RPT_ESITO_SCONOSCIUTO_PSP,RPT_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_RPT retrived by the query rpt on db nodo_online under macro Primitive_accessorie
-        And checks the value RPT_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt on db nodo_online under macro Primitive_accessorie
