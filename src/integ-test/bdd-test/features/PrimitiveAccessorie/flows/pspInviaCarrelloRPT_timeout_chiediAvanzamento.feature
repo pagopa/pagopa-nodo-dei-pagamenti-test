@@ -3,10 +3,9 @@ Feature: pspInviaCarrelloRPT_timeout_chiediAvanzamento
     Background:
         Given systems up
 
-    Scenario: RPT generation
+    Scenario: RPT1 generation
         Given nodo-dei-pagamenti has config parameter scheduler.pspChiediAvanzamentoRptPollerMaxRetry set to 1
         And generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr_old# and application code NA
-        And generate 2 notice number and iuv with aux digit 3, segregation code #cod_segr_old# and application code NA
         And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
         And RPT1 generation
             """
