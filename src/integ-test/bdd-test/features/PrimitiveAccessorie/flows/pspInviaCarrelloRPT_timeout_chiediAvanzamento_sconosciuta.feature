@@ -1,11 +1,13 @@
-Feature: pspInviaRPT_timeout_chiediAvanzamento_sconosciuta
+Feature: pspInviaCarrelloRPT_timeout_chiediAvanzamento_sconosciuta
 
     Background:
         Given systems up
 
-    Scenario: RPT generation
+    Scenario: RPT1 generation
         Given nodo-dei-pagamenti has config parameter scheduler.pspChiediAvanzamentoRptPollerMaxRetry set to 1
-        And RPT generation
+        And generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr_old# and application code NA
+        And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
+        And RPT1 generation
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
@@ -63,8 +65,8 @@ Feature: pspInviaRPT_timeout_chiediAvanzamento_sconosciuta
             <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
             <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
-            <pay_i:identificativoUnivocoVersamento>avanzaSconosciuta</pay_i:identificativoUnivocoVersamento>
-            <pay_i:codiceContestoPagamento>#ccp1#</pay_i:codiceContestoPagamento>
+            <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
+            <pay_i:codiceContestoPagamento>#CCP1#</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
             <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -83,63 +85,68 @@ Feature: pspInviaRPT_timeout_chiediAvanzamento_sconosciuta
             </pay_i:RPT>
             """
 
-    Scenario: Execute nodoInviaRPT request
-        Given the RPT generation scenario executed successfully
-        And initial XML nodoInviaRPT
+    Scenario: Execute nodoInviaCarrelloRPT request
+        Given the RPT1 generation scenario executed successfully
+        And initial XML nodoInviaCarrelloRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
-            <ppt:intestazionePPT>
-            <identificativoIntermediarioPA>#id_broker#</identificativoIntermediarioPA>
-            <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
-            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-            <identificativoUnivocoVersamento>avanzaSconosciuta</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
-            </ppt:intestazionePPT>
+                <ppt:intestazioneCarrelloPPT>
+                    <identificativoIntermediarioPA>#id_broker#</identificativoIntermediarioPA>
+                    <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
+                    <identificativoCarrello>$1carrello</identificativoCarrello>
+                </ppt:intestazioneCarrelloPPT>
             </soapenv:Header>
             <soapenv:Body>
-            <ws:nodoInviaRPT>
-            <password>pwdpwdpwd</password>
-            <identificativoPSP>#psp#</identificativoPSP>
-            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canale#</identificativoCanale>
-            <tipoFirma></tipoFirma>
-            <rpt>$rptAttachment</rpt>
-            </ws:nodoInviaRPT>
+                <ws:nodoInviaCarrelloRPT>
+                    <password>pwdpwdpwd</password>
+                    <identificativoPSP>#psp#</identificativoPSP>
+                    <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+                    <identificativoCanale>#canale#</identificativoCanale>
+                    <listaRPT>
+                        <elementoListaRPT>
+                            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+                            <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
+                            <codiceContestoPagamento>$1CCP</codiceContestoPagamento>
+                            <rpt>$rpt1Attachment</rpt>
+                        </elementoListaRPT>
+                    </listaRPT>
+                </ws:nodoInviaCarrelloRPT>
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And initial XML pspInviaRPT
+        And initial XML pspInviaCarrelloRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <ws:pspInviaRPTResponse>
-            <pspInviaRPTResponse>
-            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-            <delay>10000</delay>
-            <identificativoCarrello>$nodoInviaRPT.identificativoUnivocoVersamento</identificativoCarrello>
-            <parametriPagamentoImmediato>idBruciatura=$nodoInviaRPT.identificativoUnivocoVersamento</parametriPagamentoImmediato>
-            </pspInviaRPTResponse>
-            </ws:pspInviaRPTResponse>
-            </soapenv:Body>
+                <soapenv:Header/>
+                <soapenv:Body>
+                    <ws:pspInviaCarrelloRPTResponse>
+                        <pspInviaCarrelloRPTResponse>
+                            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+                            <delay>10000</delay>
+                            <identificativoCarrello>$nodoInviaCarrelloRPT.identificativoCarrello</identificativoCarrello>
+                            <parametriPagamentoImmediato>idBruciatura=$nodoInviaCarrelloRPT.identificativoCarrello</parametriPagamentoImmediato>
+                        </pspInviaCarrelloRPTResponse>
+                    </ws:pspInviaCarrelloRPTResponse>
+                </soapenv:Body>
             </soapenv:Envelope>
             """
-        And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
-        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-        Then check esito is KO of nodoInviaRPT response
-        And check faultCode is PPT_CANALE_TIMEOUT of nodoInviaRPT response
+        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
+        When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
+        Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
+        And check faultCode is PPT_CANALE_TIMEOUT of nodoInviaCarrelloRPT response
 
         # DB Check
-        And replace iuv content with avanzaSconosciuta content
-        And replace ccp content with $1ccp content
+        And replace iuv content with $1iuv content
+        And replace ccp content with $1CCP content
 
         And checks the value RPT_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_RPT retrived by the query rpt on db nodo_online under macro Primitive_accessorie
         And checks the value RPT_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt on db nodo_online under macro Primitive_accessorie
 
+
     # [pspChiediAvanzamentoRPT -> sconosciuta]
     Scenario: Execute job pspChiediAvanzamentoRPT
-        Given the Execute nodoInviaRPT request scenario executed successfully
+        Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
         And initial XML pspChiediAvanzamentoRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -163,4 +170,5 @@ Feature: pspInviaRPT_timeout_chiediAvanzamento_sconosciuta
         And wait 10 seconds for expiration
         Then checks the value RPT_ESITO_SCONOSCIUTO_PSP,RPT_ERRORE_INVIO_A_PSP of the record at column STATO of the table STATI_RPT retrived by the query rpt on db nodo_online under macro Primitive_accessorie
         And checks the value RPT_ERRORE_INVIO_A_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt on db nodo_online under macro Primitive_accessorie
+
 
