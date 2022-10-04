@@ -222,6 +222,7 @@ Feature: process tests for generazioneRicevute [DB_GR_24]
       </soapenv:Body>
       </soapenv:Envelope>
       """
+    And paymentChannel with None in sendPaymentOutcome
     When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
     And wait 10 seconds for expiration
