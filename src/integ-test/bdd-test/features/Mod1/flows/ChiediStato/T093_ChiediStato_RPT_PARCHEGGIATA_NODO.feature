@@ -1,18 +1,17 @@
 Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO
 
     Background:
-
         Given systems up
+
 
     Scenario: RPT generation
         Given RPT generation
-      		# RPT 
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-            <pay_i:identificativoDominio>#codicePA#</pay_i:identificativoDominio>
-            <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
+            <pay_i:identificativoDominio>#creditor_institution_code_old#</pay_i:identificativoDominio>
+            <pay_i:identificativoStazioneRichiedente>#id_station_old#</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
             <pay_i:dataOraMessaggioRichiesta>2016-09-16T11:24:10</pay_i:dataOraMessaggioRichiesta>
@@ -82,21 +81,19 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO
             </pay_i:datiSingoloVersamento>
             </pay_i:datiVersamento>
             </pay_i:RPT>
-
             """
         
-        ##### nodoInviaRPT
+
 	Scenario: Execute nodoInviaRPT
 		Given the RPT generation scenario executed successfully
 		And initial XML nodoInviaRPT
-
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
                 <ppt:intestazionePPT>
-                    <identificativoIntermediarioPA>77777777777</identificativoIntermediarioPA>
-                    <identificativoStazioneIntermediarioPA>77777777777_03</identificativoStazioneIntermediarioPA>
-                    <identificativoDominio>77777777777</identificativoDominio>
+                    <identificativoIntermediarioPA>#creditor_institution_code_old#</identificativoIntermediarioPA>
+                    <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
+                    <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
                     <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
                     <codiceContestoPagamento>CCD01</codiceContestoPagamento>
                 </ppt:intestazionePPT>
@@ -113,40 +110,31 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO
             </soapenv:Body>
             </soapenv:Envelope>
             """
-
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
 	    Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
-
-
-    
-         
-    
-    # retrive information from the DB
-    Scenario: Execute check stati rpt
-        Given the Execute nodoInviaRPT scenario executed successfully
-        #Then select through the query rpt_gen from the table STATI_RPT where condition_1 IUV in $iuv and where condition_2 CCP in CCD01 and where condition_3 ID_DOMINIO in $nodoInviaRPT.identificativoDominio, and check value of record is RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO, and check number of record is 3, under macro Mod1 on db nodo_online
-        Then checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query rpt_pos on db nodo_online under macro Mod1
-        And verify 3 record for the table STATI_RPT retrived by the query rpt_pos on db nodo_online under macro Mod1
-        And checks the value $sessionToken of the record at column ID_SESSIONE of the table STATI_RPT retrived by the query rpt_pos on db nodo_online under macro Mod1
-        And checks the value nodoInviaRPT of the record at column INSERTED_BY of the table STATI_RPT retrived by the query rpt_pos on db nodo_online under macro Mod1 
-        And checks the value RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_pos on db nodo_online under macro Mod1
+        And replace iuv2 content with $iuv content
+        And replace 2CCP content with CCD01 content
+        And replace pa content with #creditor_institution_code_old# content
+        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query stati_RPT_new on db nodo_online under macro Mod1
+        And verify 3 record for the table STATI_RPT retrived by the query stati_RPT_new on db nodo_online under macro Mod1
+        And checks the value $sessionToken of the record at column ID_SESSIONE of the table STATI_RPT retrived by the query stati_RPT_new on db nodo_online under macro Mod1
+        And checks the value nodoInviaRPT of the record at column INSERTED_BY of the table STATI_RPT retrived by the query stati_RPT_new on db nodo_online under macro Mod1 
+        And checks the value RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query stati_RPT_new on db nodo_online under macro Mod1
 	    
        
-
     Scenario: Execute nodoChiediStatoRPT
-        Given the Execute check stati rpt scenario executed successfully
+        Given the Execute nodoInviaRPT scenario executed successfully
         And initial XML nodoChiediStatoRPT
-        
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
         <soapenv:Header/>
         <soapenv:Body>
             <ws:nodoChiediStatoRPT>
-                <identificativoIntermediarioPA>77777777777</identificativoIntermediarioPA>
-                <identificativoStazioneIntermediarioPA>77777777777_03</identificativoStazioneIntermediarioPA>
+                <identificativoIntermediarioPA>#creditor_institution_code_old#</identificativoIntermediarioPA>
+                <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
                 <password>pwdpwdpwd</password>
-                <identificativoDominio>77777777777</identificativoDominio>
+                <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
                 <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
                 <codiceContestoPagamento>CCD01</codiceContestoPagamento>
             </ws:nodoChiediStatoRPT>
@@ -158,18 +146,16 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO
         Then check redirect is 1 of nodoChiediStatoRPT response
 
         
-        ##### nodoInviaRPT Duplicato
 	Scenario: Execute nodoInviaRPT Duplicato
 		Given the Execute nodoChiediStatoRPT scenario executed successfully
 		And initial XML nodoInviaRPT
-
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
                 <ppt:intestazionePPT>
-                    <identificativoIntermediarioPA>77777777777</identificativoIntermediarioPA>
-                    <identificativoStazioneIntermediarioPA>77777777777_03</identificativoStazioneIntermediarioPA>
-                    <identificativoDominio>77777777777</identificativoDominio>
+                    <identificativoIntermediarioPA>#creditor_institution_code_old#</identificativoIntermediarioPA>
+                    <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
+                    <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
                     <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
                     <codiceContestoPagamento>CCD01</codiceContestoPagamento>
                 </ppt:intestazionePPT>
@@ -186,7 +172,6 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO
             </soapenv:Body>
             </soapenv:Envelope>
             """
-
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is KO of nodoInviaRPT response
 	    Then check faultCode is PPT_RPT_DUPLICATA of nodoInviaRPT response
@@ -200,10 +185,10 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO
         <soapenv:Header/>
         <soapenv:Body>
             <ws:nodoChiediStatoRPT>
-                <identificativoIntermediarioPA>77777777777</identificativoIntermediarioPA>
-                <identificativoStazioneIntermediarioPA>77777777777_03</identificativoStazioneIntermediarioPA>
+                <identificativoIntermediarioPA>#creditor_institution_code_old#</identificativoIntermediarioPA>
+                <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
                 <password>pwdpwdpwd</password>
-                <identificativoDominio>77777777777</identificativoDominio>
+                <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
                 <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
                 <codiceContestoPagamento>CCD01</codiceContestoPagamento>
             </ws:nodoChiediStatoRPT>
@@ -211,10 +196,7 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO
         </soapenv:Envelope>
        """
         When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
-	    Then check stato is RPT_RIFIUTATA_NODO of nodoChiediStatoRPT response
+        Then checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
+        And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
+        And checks stato contains RPT_RIFIUTATA_NODO of nodoChiediStatoRPT response
         
-
-
-
-
-   
