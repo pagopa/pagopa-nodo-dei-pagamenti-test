@@ -477,19 +477,19 @@ Feature: process tests for nodoInviaRPT [REV_NIRPT_01]
        
         #position_payment
         And execution query payment_status_pay to get value on the table POSITION_PAYMENT, with the columns * under macro NewMod3 with db name nodo_online
-        And through the query payment_status_pay retrieve param BROKER_PA_ID at position 0 and save it under the key BROKER_PA_ID
-        And through the query payment_status_pay retrieve param STATION_ID at position 1 and save it under the key STATION_ID
-        And through the query payment_status_pay retrieve param PAYMENT_TOKEN at position 2 and save it under the key PAYMENT_TOKEN
-        And through the query payment_status_pay retrieve param NOTICE_ID at position 3 and save it under the key NOTICE_ID
-        And through the query payment_status_pay retrieve param PA_FISCAL_CODE at position 4 and save it under the key PA_FISCAL_CODE
-        And through the query payment_status_pay retrieve param OUTCOME at position 5 and save it under the key OUTCOME
-        And through the query payment_status_pay retrieve param CREDITOR_REFERENCE_ID at position 6 and save it under the key CREDITOR_REFERENCE_ID
-        And through the query payment_status_pay retrieve param AMOUNT at position 7 and save it under the key AMOUNT
+        And through the query payment_status_pay retrieve param BROKER_PA_ID at position 5 and save it under the key BROKER_PA_ID
+        And through the query payment_status_pay retrieve param STATION_ID at position 6 and save it under the key STATION_ID
+        And through the query payment_status_pay retrieve param PAYMENT_TOKEN at position 4 and save it under the key PAYMENT_TOKEN
+        And through the query payment_status_pay retrieve param NOTICE_ID at position 2 and save it under the key NOTICE_ID
+        And through the query payment_status_pay retrieve param PA_FISCAL_CODE at position 1 and save it under the key PA_FISCAL_CODE
+        And through the query payment_status_pay retrieve param OUTCOME at position 14 and save it under the key OUTCOME
+        And through the query payment_status_pay retrieve param CREDITOR_REFERENCE_ID at position 3 and save it under the key CREDITOR_REFERENCE_ID
+        And through the query payment_status_pay retrieve param AMOUNT at position 12 and save it under the key AMOUNT
         And through the query payment_status_pay retrieve param PSP_ID at position 8 and save it under the key PSP_ID
-        And through the query payment_status_pay retrieve param CHANNEL_ID at position 9 and save it under the key CHANNEL_ID
-        And through the query payment_status_pay retrieve param PAYMENT_CHANNEL at position 10 and save it under the key PAYMENT_CHANNEL
-        And through the query payment_status_pay retrieve param PAYMENT_METHOD at position 11 and save it under the key PAYMENT_METHOD
-        And through the query payment_status_pay retrieve param FEE at position 12 and save it under the key FEE
+        And through the query payment_status_pay retrieve param CHANNEL_ID at position 10 and save it under the key CHANNEL_ID
+        And through the query payment_status_pay retrieve param PAYMENT_CHANNEL at position 16 and save it under the key PAYMENT_CHANNEL
+        And through the query payment_status_pay retrieve param PAYMENT_METHOD at position 15 and save it under the key PAYMENT_METHOD
+        And through the query payment_status_pay retrieve param FEE at position 13 and save it under the key FEE
         
         #psp
         And execution query psp to get value on the table PSP, with the columns RAGIONE_SOCIALE, ID_PSP under macro NewMod3 with db name nodo_cfg
@@ -502,7 +502,7 @@ Feature: process tests for nodoInviaRPT [REV_NIRPT_01]
         And check value $xml_rt.identificativoDominio is equal to value $xml_rpt.identificativoDominio
         And check value $xml_rt.riferimentoMessaggioRichiesta is equal to value $xml_rpt.identificativoMessaggioRichiesta
         And check value $xml_rt.codiceIdentificativoUnivoco is equal to value $PSP_ID
-        And check value $xml_rt.tipoIdentificativoUnivoco is equal to value $xml_rpt.tipoIdentificativoUnivoco
+        #And check value $xml_rt.tipoIdentificativoUnivoco is equal to value $xml_rpt.tipoIdentificativoUnivoco
         And check value $xml_rt.denominazioneBeneficiario is equal to value $xml_rpt.denominazioneBeneficiario
         And check value $xml_rt.anagraficaPagatore is equal to value $xml_rpt.anagraficaPagatore
         #And check value $xml_rt.importoTotalePagato is equal to value $AMOUNT
