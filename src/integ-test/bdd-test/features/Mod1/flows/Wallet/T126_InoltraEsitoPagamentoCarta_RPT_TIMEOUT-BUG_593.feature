@@ -9,8 +9,8 @@ Feature: process tests for InoltroEsitoCartaCarrello_RPT_TIMEOUT-BUG_593
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-                <pay_i:identificativoDominio>44444444444</pay_i:identificativoDominio>
-                <pay_i:identificativoStazioneRichiedente>44444444444_01</pay_i:identificativoStazioneRichiedente>
+                <pay_i:identificativoDominio>#codicePA#</pay_i:identificativoDominio>
+                <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
             <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
@@ -89,9 +89,9 @@ Feature: process tests for InoltroEsitoCartaCarrello_RPT_TIMEOUT-BUG_593
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
             <ppt:intestazionePPT>
-            <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
-            <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
-            <identificativoDominio>44444444444</identificativoDominio>
+            <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
+            <identificativoDominio>#codicePA#</identificativoDominio>
             <identificativoUnivocoVersamento>avanzaErrResponse</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
             </ppt:intestazionePPT>
@@ -99,9 +99,9 @@ Feature: process tests for InoltroEsitoCartaCarrello_RPT_TIMEOUT-BUG_593
             <soapenv:Body>
             <ws:nodoInviaRPT>
             <password>pwdpwdpwd</password>
-            <identificativoPSP>AGID_01</identificativoPSP>
-            <identificativoIntermediarioPSP>97735020584</identificativoIntermediarioPSP>
-            <identificativoCanale>97735020584_02</identificativoCanale>
+            <identificativoPSP>#psp_AGID#</identificativoPSP>
+            <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
             <tipoFirma></tipoFirma>
             <rpt>$rptAttachment</rpt>
             </ws:nodoInviaRPT>
@@ -109,38 +109,38 @@ Feature: process tests for InoltroEsitoCartaCarrello_RPT_TIMEOUT-BUG_593
             </soapenv:Envelope>
             """
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-        And check esito is OK of nodoInviaRPT response
+        Then check esito is OK of nodoInviaRPT response
         And check url contains acards of nodoInviaRPT response
-        Then retrieve session token from $nodoInviaRPTResponse.url
+        And retrieve session token from $nodoInviaRPTResponse.url
 
     Scenario: Execution Esito Carta
         Given the Execute nodoInviaRPT request scenario executed successfully
-        And initial XML pspInviaRPT 
+        And initial XML pspInviaCarrelloRPTCarte 
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header/>
+                <soapenv:Header/>
                 <soapenv:Body>
-                    <ws:pspInviaRPTResponse>
-                        <pspInviaRPTResponse>
+                    <ws:pspInviaCarrelloRPTCarteResponse>
+                        <pspInviaCarrelloRPTResponse>
+                            <delay>10000</delay>
                             <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-                            <wait>timeout</wait>
-                            <identificativoCarrello>$nodoInviaRPT.identificativoUnivocoVersamento</identificativoCarrello>
-                            <parametriPagamentoImmediato>idBruciatura=$nodoInviaRPT.identificativoUnivocoVersamento</parametriPagamentoImmediato>
-                        </pspInviaRPTResponse>
-                    </ws:pspInviaRPTResponse>
+                            <identificativoCarrello>CART_1636705689274_PROVA_RES</identificativoCarrello>
+                            <parametriPagamentoImmediato>idBruciatura=1636705689274</parametriPagamentoImmediato>
+                        </pspInviaCarrelloRPTResponse>
+                    </ws:pspInviaCarrelloRPTCarteResponse>
                 </soapenv:Body>
             </soapenv:Envelope>
             """
-        And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
+        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte
         When WISP sends REST POST inoltroEsito/carta to nodo-dei-pagamenti
             """
             {
             "idPagamento":"$sessionToken",
             "RRN":10026669,
-            "identificativoPsp":"40000000001",
+            "identificativoPsp":"70000000001",
             "tipoVersamento":"CP",
-            "identificativoIntermediario":"40000000001",
-            "identificativoCanale":"40000000001_03",
+            "identificativoIntermediario":"70000000001",
+            "identificativoCanale":"70000000001_03",
             "importoTotalePagato":12.31,
             "timestampOperazione":"2018-02-08T17:06:03.100+01:00",
             "codiceAutorizzativo":"123456",
@@ -149,7 +149,7 @@ Feature: process tests for InoltroEsitoCartaCarrello_RPT_TIMEOUT-BUG_593
              """
         Then verify the HTTP status code of inoltroEsito/carta response is 408
         And check url field not exists in inoltroEsito/carta response
-        And check error is timeout of inoltroEsito/carta response
+        And check error is Operazione in timeout of inoltroEsito/carta response
 
     Scenario: Execute nodoNotificaAnnullamento
         Given the Execution Esito Carta scenario executed successfully
@@ -165,11 +165,11 @@ Feature: process tests for InoltroEsitoCartaCarrello_RPT_TIMEOUT-BUG_593
         <soapenv:Header/>
         <soapenv:Body>
             <ws:nodoChiediStatoRPT>
-                <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
-                <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
+                <identificativoIntermediarioPA>#codicePA#</identificativoIntermediarioPA>
+                <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
                 <password>pwdpwdpwd</password>
-                <identificativoDominio>44444444444</identificativoDominio>
-                <identificativoUnivocoVersamento>RPTdaRifSintassiPsp</identificativoUnivocoVersamento>
+                <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+                <identificativoUnivocoVersamento>avanzaErrResponse</identificativoUnivocoVersamento>
                 <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
             </ws:nodoChiediStatoRPT>
         </soapenv:Body>
@@ -214,10 +214,10 @@ Feature: process tests for InoltroEsitoCartaCarrello_RPT_TIMEOUT-BUG_593
             {
             "idPagamento":"$sessionToken",
             "RRN":10026669,
-            "identificativoPsp":"40000000001",
+            "identificativoPsp":"70000000001",
             "tipoVersamento":"CP",
-            "identificativoIntermediario":"40000000001",
-            "identificativoCanale":"40000000001_03",
+            "identificativoIntermediario":"70000000001",
+            "identificativoCanale":"70000000001_03",
             "importoTotalePagato":12.31,
             "timestampOperazione":"2018-02-08T17:06:03.100+01:00",
             "codiceAutorizzativo":"123456",
@@ -226,4 +226,4 @@ Feature: process tests for InoltroEsitoCartaCarrello_RPT_TIMEOUT-BUG_593
              """
         Then verify the HTTP status code of inoltroEsito/carta response is 408
         And check url field not exists in inoltroEsito/carta response
-        And check error is timeout of inoltroEsito/carta response
+        And check error is Operazione in timeout of inoltroEsito/carta response
