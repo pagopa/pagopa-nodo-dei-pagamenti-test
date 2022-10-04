@@ -2,13 +2,58 @@ Feature: Syntax checks for pspNotifyPaymentResponse - OK
 
   Background:
     Given systems up
+    And generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
+    And initial XML paGetPayment
+    """
+    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
+        <soapenv:Header/>
+        <soapenv:Body>
+            <paf:paGetPaymentRes>
+                <outcome>OK</outcome>
+                <data>
+                    <creditorReferenceId>#cod_segr#$1iuv</creditorReferenceId>
+                    <paymentAmount>10.00</paymentAmount>
+                    <dueDate>2021-07-31</dueDate>
+                    <description>TARI 2021</description>
+                    <companyName>company PA</companyName>
+                    <officeName>office PA</officeName>
+                    <debtor>
+                        <uniqueIdentifier>
+                            <entityUniqueIdentifierType>F</entityUniqueIdentifierType>
+                            <entityUniqueIdentifierValue>JHNDOE00A01F205N</entityUniqueIdentifierValue>
+                        </uniqueIdentifier>
+                        <fullName>John Doe</fullName>
+                        <streetName>street</streetName>
+                        <civicNumber>12</civicNumber>
+                        <postalCode>89020</postalCode>
+                        <city>city</city>
+                        <stateProvinceRegion>MI</stateProvinceRegion>
+                        <country>IT</country>
+                        <e-mail>john.doe@test.it</e-mail>
+                    </debtor>
+                    <transferList>
+                        <transfer>
+                            <idTransfer>1</idTransfer>
+                            <transferAmount>10.00</transferAmount>
+                            <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
+                            <IBAN>IT96R0123454321000000012345</IBAN>
+                            <remittanceInformation>TARI Comune EC_TE</remittanceInformation>
+                            <transferCategory>0101101IM</transferCategory>
+                        </transfer>
+                    </transferList>
+                </data>
+            </paf:paGetPaymentRes>
+        </soapenv:Body>
+    </soapenv:Envelope>
+    """
+    And EC replies to nodo-dei-pagamenti with the paGetPayment
     And initial XML activateIOPayment
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd">
         <soapenv:Header/>
         <soapenv:Body>
           <nod:activateIOPaymentReq>
-            <idPSP>#psp_AGID##</idPSP>
+            <idPSP>#psp_AGID#</idPSP>
             <idBrokerPSP>#broker_AGID#</idBrokerPSP>
             <idChannel>#canale_AGID#</idChannel>
             <password>pwdpwdpwd</password>
@@ -16,7 +61,7 @@ Feature: Syntax checks for pspNotifyPaymentResponse - OK
             <idempotencyKey>#idempotency_key#</idempotencyKey>
             <qrCode>
               <fiscalCode>#creditor_institution_code#</fiscalCode>
-              <noticeNumber>#notice_number#</noticeNumber>
+              <noticeNumber>$1noticeNumber</noticeNumber>
             </qrCode>
             <!--Optional:-->
             <expirationTime>6000</expirationTime>
@@ -29,7 +74,7 @@ Feature: Syntax checks for pspNotifyPaymentResponse - OK
             <payer>
               <uniqueIdentifier>
                 <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-                <entityUniqueIdentifierValue>77777777777</entityUniqueIdentifierValue>
+                <entityUniqueIdentifierValue>#creditor_institution_code#</entityUniqueIdentifierValue>
               </uniqueIdentifier>
               <fullName>name</fullName>
               <!--Optional:-->
@@ -57,6 +102,7 @@ Feature: Syntax checks for pspNotifyPaymentResponse - OK
     When IO sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is OK of activateIOPayment response
 
+
   # nodoChiediInformazioniPagamento phase
   Scenario: Execute nodoChiediInformazioniPagamento request
     Given the Execute activateIOPaymentReq request scenario executed successfully
@@ -65,32 +111,34 @@ Feature: Syntax checks for pspNotifyPaymentResponse - OK
 
 
   # nodoInoltraEsitoPagamentoCarte phase
-  Scenario Outline: Execute nodoInoltraEsitoPagamentoCarte request
+  Scenario: Execute nodoInoltraEsitoPagamentoCarte request
     Given the Execute nodoChiediInformazioniPagamento request scenario executed successfully
     And initial XML pspNotifyPayment
-      """
-      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:psp="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
-      <soapenv:Header/>
-      <soapenv:Body>
-      <psp:pspNotifyPaymentRes>
-      <outcome>#outcome#</outcome>
-      <fault>
-      <faultCode>#faultCode#</faultCode>
-      <faultString>#faultString#</faultString>
-      <id>#id#</id>
-      <description>#description#</description>
-      </fault>
-      </psp:pspNotifyPaymentRes>
-      </soapenv:Body>
-      </soapenv:Envelope>
-      """
-    And <elem> with <value> in pspNotifyPayment
-    And if outcome is KO set fault to None in pspNotifyPayment
+        """
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:psp="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
+            <soapenv:Body>
+                <psp:pspNotifyPaymentRes>
+                <outcome>OK</outcome>
+                </psp:pspNotifyPaymentRes>
+            </soapenv:Body>
+        </soapenv:Envelope>
+        """
     And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
     When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
-    Then check outcome is OK of InformazioniPagamento response
-    Examples:
-      | elem           | value | soapUI test |
-      | soapenv:Header | None  | T_04        |
+        """
+        {
+        "idPagamento":"$activateIOPaymentResponse.paymentToken",
+        "RRN":10026669,
+        "tipoVersamento":"CP",
+        "identificativoIntermediario":"#psp#",
+        "identificativoPsp":"#psp#",
+        "identificativoCanale":"#canale#",
+        "importoTotalePagato":10.00,
+        "timestampOperazione":"2021-07-09T17:06:03.100+01:00",
+        "codiceAutorizzativo":"resOK",
+        "esitoTransazioneCarta":"00"
+        }
+        """
+    Then check esito is OK of inoltroEsito/carta response
 
 

@@ -127,10 +127,10 @@ Feature: T220_RPT_Mod1_faultBeanEsteso
                 <pspInviaRPTResponse>
             <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
                 <listaErroriRPT>
-                <fault>
-                    <faultCode>CANALE_RPT_DA_RIFIUTARE</faultCode>
-                    <faultString>RPT da Rifiutare lato PSP</faultString>
-                    <id>40000000001</id>
+                    <fault>
+                        <faultCode>CANALE_RPT_DA_RIFIUTARE</faultCode>
+                        <faultString>RPT da Rifiutare lato PSP</faultString>
+                        <id>40000000001</id>
                     </fault>
                 </listaErroriRPT>
                 </pspInviaRPTResponse>
