@@ -115,10 +115,7 @@ Feature: BUG_PAG_1533_02
             <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
                 <listaErroriRPT>
                 <fault>
-                    <faultCode>CANALE_RPT_DA_RIFIUTARE</faultCode>
-                    <faultString>RPT da Rifiutare lato PSP</faultString>
-                    <id>40000000001</id>
-                    </fault>
+                </fault>
                 </listaErroriRPT>
                 </pspInviaRPTResponse>
             </ws:pspInviaRPTResponse>
@@ -136,8 +133,25 @@ Feature: BUG_PAG_1533_02
         
     Scenario: Execute job (Phase 2)
         Given the Execute nodoInviaRPT (Phase 1) scenario executed successfully
+        And initial XML pspChiediListaRT
+        """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <ws:pspChiediListaRTResponse>
+            <pspChiediListaRTResponse>
+            <elementoListaRTResponse>
+            <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
+            <identificativoUnivocoVersamento>IUV8554-2022-10-04-15:10:50.195</identificativoUnivocoVersamento>
+            </elementoListaRTResponse>
+            </pspChiediListaRTResponse>
+            </ws:pspChiediListaRTResponse>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And PSP replies to nodo-dei-pagamenti with the pspChiediListaRT
         When job pspChiediListaAndChiediRt triggered after 5 seconds
         And wait 10 seconds for expiration
-        Then checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_INVIATA_A_PSP, RPT_ESITO_SCONOSCIUTO_PSP, RPT_ESITO_SCONOSCIUTO_PSP, RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro RTPull
-        And checks the value RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro RTPull
+        Then checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_INVIATA_A_PSP, RPT_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro RTPull
+        And checks the value RPT_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro RTPull
         
