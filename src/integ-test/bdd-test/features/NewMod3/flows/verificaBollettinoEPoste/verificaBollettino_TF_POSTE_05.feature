@@ -12,6 +12,7 @@ Feature: flow checks for verificaBollettino - EC old [TF_POSTE_05]
     Scenario: Execute verificaBollettino request
         Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
         And generate 1 cart with PA #creditor_institution_code_old# and notice number $1noticeNumber
+        And nodo-dei-pagamenti has config parameter verificabollettino.validity.minutes set to 1
         And initial XML paaVerificaRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/"   xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">
@@ -121,7 +122,8 @@ Feature: flow checks for verificaBollettino - EC old [TF_POSTE_05]
         And wait 62 seconds for expiration
         When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-
+        And restore initial configurations
+        
     Scenario: RPT generation
         Given the Execute activatePaymentNotice request scenario executed successfully
         And RPT generation
@@ -201,9 +203,6 @@ Feature: flow checks for verificaBollettino - EC old [TF_POSTE_05]
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-        #DB UPDATE1
-        #And wait 10 seconds for expiration
-        #And checks the value None of the record at column IBAN of the table POSITION_TRANSFER retrived by the query position_transfer on db nodo_online under macro NewMod3
 
 # nodoInviaRPT phase
     Scenario: Execute nodoInviaRPT request
@@ -242,4 +241,4 @@ Feature: flow checks for verificaBollettino - EC old [TF_POSTE_05]
         #And checks the value None of the record at column ID of the table POSITION_PAYMENT retrived by the query position_payment on db nodo_online under macro NewMod3
         #And checks the value None of the record at column ID of the table POSITION_SERVICE retrived by the query position_service on db nodo_online under macro NewMod3
         And checks the value RPT_RICEVUTA_NODO, RPT_RIFIUTATA_NODO of the record at column STATUS of the table STATI_RPT retrived by the query retry_pa_invia_rpt on db nodo_online under macro NewMod3
-
+        
