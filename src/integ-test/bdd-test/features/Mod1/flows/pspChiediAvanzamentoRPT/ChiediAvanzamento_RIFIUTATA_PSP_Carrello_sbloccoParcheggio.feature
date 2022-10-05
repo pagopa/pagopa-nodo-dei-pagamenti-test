@@ -189,7 +189,7 @@ Feature: process tests for ChiediAvanzamento_RIFIUTATA_PSP_Carrello_sbloccoParch
                     <rpt>$rptAttachment</rpt>
                     </elementoListaRPT>
                     <elementoListaRPT>
-                    <identificativoDominio>44444444445</identificativoDominio>
+                    <identificativoDominio>66666666665</identificativoDominio>
                     <identificativoUnivocoVersamento>avanzaKO</identificativoUnivocoVersamento>
                     <codiceContestoPagamento>$2CCP</codiceContestoPagamento>
                     <rpt>$rpt2Attachment</rpt>
