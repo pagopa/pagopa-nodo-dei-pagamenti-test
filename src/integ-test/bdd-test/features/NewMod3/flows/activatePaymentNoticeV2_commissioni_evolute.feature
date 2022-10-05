@@ -3,7 +3,6 @@ Feature: activatePaymentNoticeV2 - Commissioni evolute process
 
     Background:
         Given systems up
-        And nodo-dei-pagamenti DEV has config parameter gec.enabled set to false
 
     Scenario: activatePaymentNoticeV2
         Given initial XML activatePaymentNoticeV2
@@ -152,7 +151,8 @@ Feature: activatePaymentNoticeV2 - Commissioni evolute process
 
     # gec disabled --> fees not triggered
     Scenario: Execute activate 1
-        Given the activatePaymentNoticeV2 scenario executed successfully
+        Given nodo-dei-pagamenti DEV has config parameter gec.enabled set to false
+        And the activatePaymentNoticeV2 scenario executed successfully
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         And wait 30 seconds for expiration
@@ -371,10 +371,10 @@ Feature: activatePaymentNoticeV2 - Commissioni evolute process
     # # DA COMPLETARE retry - 400   (aggiungere TC anche per gli altri codici errore e caso in cui a una certa risponde ok)
     # Scenario: Execute activate 9
     #     Given the activatePaymentNoticeV2 scenario executed successfully
-        # And paymentAmount with 400 in activatePaymentNoticeV2
-        # And touchPoint with ANY in activatePaymentNoticeV2
-        # And paymentAmount with 400 in paGetPayment
-        # And transfer.transferAmount with 200 in paGetPayment
+    # And paymentAmount with 400 in activatePaymentNoticeV2
+    # And touchPoint with ANY in activatePaymentNoticeV2
+    # And paymentAmount with 400 in paGetPayment
+    # And transfer.transferAmount with 200 in paGetPayment
     #     When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
     #     # Then check outcome is OK of activatePaymentNoticeV2 response
     #     And wait 30 seconds for expiration
@@ -411,11 +411,4 @@ Feature: activatePaymentNoticeV2 - Commissioni evolute process
         And checks the value $sendPaymentOutcomeV2.primaryCiIncurredFee of the record at column FEE_PA of the table POSITION_RECEIPT retrived by the query PAYMENT_TOKEN_spov2 on db nodo_online under macro NewMod1
         And checks the value $sendPaymentOutcomeV2.idBundle of the record at column BUNDLE_ID of the table POSITION_RECEIPT retrived by the query PAYMENT_TOKEN_spov2 on db nodo_online under macro NewMod1
         And checks the value $sendPaymentOutcomeV2.idCiBundle of the record at column BUNDLE_PA_ID of the table POSITION_RECEIPT retrived by the query PAYMENT_TOKEN_spov2 on db nodo_online under macro NewMod1
-# verify paSendRTV2 is sent with fields receipt.fee = POSITION_RECEIPT.FEE, receipt.primaryCiIncurredFee = POSITION_RECEIPT.FEE_PA, receipt.idBundle = POSITION_RECEIPT.BUNDLE_ID, receipt.idCiBundle = POSITION_RECEIPT.BUNDLE_PA_ID
-
-
-
-# <fee>2.00</fee>
-# <primaryCiIncurredFee>$activatePaymentNoticeV2Response.suggestedPaFee</primaryCiIncurredFee>
-# <idBundle>$activatePaymentNoticeV2Response.suggestedIdBundle</idBundle>
-# <idCiBundle>$activatePaymentNoticeV2Response.suggestedIdCiBundle</idCiBundle>
+        # verify paSendRTV2 is sent with fields receipt.fee = POSITION_RECEIPT.FEE, receipt.primaryCiIncurredFee = POSITION_RECEIPT.FEE_PA, receipt.idBundle = POSITION_RECEIPT.BUNDLE_ID, receipt.idCiBundle = POSITION_RECEIPT.BUNDLE_PA_ID
