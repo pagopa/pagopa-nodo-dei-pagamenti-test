@@ -38,7 +38,7 @@ Feature: process tests for paSendRT
                     <paf:paGetPaymentRes>
                         <outcome>OK</outcome>
                         <data>
-                            <creditorReferenceId>$1iuv</creditorReferenceId>
+                            <creditorReferenceId>#cod_segr#$1iuv</creditorReferenceId>
                             <paymentAmount>10.00</paymentAmount>
                             <dueDate>2021-12-31</dueDate>
                             <!--Optional:-->
@@ -76,7 +76,7 @@ Feature: process tests for paSendRT
                                 <!--1 to 5 repetitions:-->
                                 <transfer>
                                     <idTransfer>1</idTransfer>
-                                    <transferAmount>3.00</transferAmount>
+                                    <transferAmount>10.00</transferAmount>
                                     <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
                                     <IBAN>IT45R0760103200000000001016</IBAN>
                                     <remittanceInformation>testPaGetPayment</remittanceInformation>
@@ -123,7 +123,8 @@ Feature: process tests for paSendRT
 
 
         Scenario: Define sendPaymentOutcome
-        Given initial XML paSendRT
+        Given the Execute activatePaymentNotice request scenario executed successfully
+        And initial XML paSendRT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
                 <soapenv:Header/>
