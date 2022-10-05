@@ -9,7 +9,7 @@ Feature: process checks for VerifyPaymentNoticeReq - EC old
          <soapenv:Body>
             <nod:verifyPaymentNoticeReq>
                <idPSP>#psp#</idPSP>
-               <idBrokerPSP>#psp#</idBrokerPSP>
+               <idBrokerPSP>#id_broker#</idBrokerPSP>
                <idChannel>#canale#</idChannel>
                <password>pwdpwdpwd</password>
                <qrCode>
