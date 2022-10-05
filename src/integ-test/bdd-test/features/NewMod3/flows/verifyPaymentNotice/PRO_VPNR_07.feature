@@ -8,12 +8,12 @@ Feature: process checks for VerifyPaymentNoticeReq - EC old
          <soapenv:Header/>
          <soapenv:Body>
             <nod:verifyPaymentNoticeReq>
-               <idPSP>70000000001</idPSP>
-               <idBrokerPSP>70000000001</idBrokerPSP>
-               <idChannel>70000000001_01</idChannel>
+               <idPSP>#psp#</idPSP>
+               <idBrokerPSP>#psp#</idBrokerPSP>
+               <idChannel>#canale#</idChannel>
                <password>pwdpwdpwd</password>
                <qrCode>
-                  <fiscalCode>44444444444</fiscalCode>
+                  <fiscalCode>#creditor_institution_code_old#</fiscalCode>
                   <noticeNumber>#notice_number_old#</noticeNumber>
                </qrCode>
             </nod:verifyPaymentNoticeReq>
