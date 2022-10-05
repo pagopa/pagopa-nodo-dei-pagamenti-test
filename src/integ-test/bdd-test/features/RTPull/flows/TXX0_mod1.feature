@@ -1,13 +1,11 @@
-Feature: BUG - PAG-1533-01
+Feature: TXX0_RT-PULL_CARRELLO 1 RPT EsitoSconosciutoPSP MOD1
 
     Background:
         Given systems up
 
-    Scenario: Execute nodoInviaRPT (Phase 1)
-        Given generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTPS', with where condition ID_CANALE like '7000%' AND ID_CANALE <> '#canaleRtPull#' under macro update_query on db nodo_cfg
-        And refresh job PSP triggered after 10 seconds
-        And wait 10 seconds for expiration
-        And RPT1 generation
+    Scenario: Execute nodoInviaCarrelloRPT (Phase 1)
+        Given generate 1 notice number 
+        Given RPT1 generation
         """
         <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
         <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
@@ -84,67 +82,82 @@ Feature: BUG - PAG-1533-01
         </pay_i:datiVersamento>
         </pay_i:RPT>
         """
-        And initial XML nodoInviaRPT
+        And initial XML nodoInviaCarrelloRPT
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
-                <ppt:intestazionePPT>
+                <ppt:intestazioneCarrelloPPT>
                     <identificativoIntermediarioPA>#creditor_institution_code_old#</identificativoIntermediarioPA>
                     <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
-                    <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
-                    <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
-                    <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
-                </ppt:intestazionePPT>
+                    <identificativoCarrello>$1carrello</identificativoCarrello>
+                </ppt:intestazioneCarrelloPPT>
             </soapenv:Header>
             <soapenv:Body>
-                <ws:nodoInviaRPT>
+                <ws:nodoInviaCarrelloRPT>
                     <password>pwdpwdpwd</password>
                     <identificativoPSP>#psp#</identificativoPSP>
                     <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
                     <identificativoCanale>#canaleRtPull#</identificativoCanale>
-                    <tipoFirma></tipoFirma>
-                    <rpt>$rpt1Attachment</rpt>
-                </ws:nodoInviaRPT>
+                    <listaRPT>
+                        <elementoListaRPT>
+                            <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
+                            <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
+                            <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
+                            <rpt>$rpt1Attachment</rpt>
+                        </elementoListaRPT>
+                    </listaRPT>
+                    <requireLightPayment>01</requireLightPayment>
+                    <multiBeneficiario>1</multiBeneficiario>
+                </ws:nodoInviaCarrelloRPT>
             </soapenv:Body>
         </soapenv:Envelope>
         """
-        And initial XML pspInviaRPT
+        And initial XML pspInviaCarrelloRPT
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-        <soapenv:Header/>
-        <soapenv:Body>
-            <ws:pspInviaRPTResponse>
-                <pspInviaRPTResponse>
-                    <esitoComplessivoOperazione>Malformed</esitoComplessivoOperazione>
-                    <listaErroriRPT>
-                    <fault>
-                        <faultCode>CANALE_SYSTEM_ERROR</faultCode>
-                        <faultString>system error</faultString>
-                        <id>wrapper</id>
-                    </fault>
-                    </listaErroriRPT>
-                </pspInviaRPTResponse>
-            </ws:pspInviaRPTResponse>
-        </soapenv:Body>
+            <soapenv:Header/>
+            <soapenv:Body>
+                <ws:pspInviaCarrelloRPTResponse>
+                    <pspInviaCarrelloRPTResponse>
+                        <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+                        <identificativoCarrello>$nodoInviaCarrelloRPT.identificativoCarrello</identificativoCarrello>
+                        <parametriPagamentoImmediato>idBruciatura=$nodoInviaCarrelloRPT.identificativoCarrello</parametriPagamentoImmediato>
+                    </pspInviaCarrelloRPTResponse>
+                </ws:pspInviaCarrelloRPTResponse>
+            </soapenv:Body>
         </soapenv:Envelope>
         """
-        And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
-        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-        Then check esito is KO of nodoInviaRPT response
-        And check faultCode is PPT_CANALE_ERRORE_RESPONSE of nodoInviaRPT response
+        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
+        When EC sends nodoInviaCarrelloRPT to nodo-dei-pagamenti
+        Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
+        And check faultCode is PPT_CANALE_ERRORE_RESPONSE of nodoInviaCarrelloRPT response
         And replace iuv content with $1iuv content
         And replace pa content with #creditor_institution_code_old# content
         And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_INVIATA_A_PSP, RPT_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro RTPull
         And checks the value RPT_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro RTPull
         
     Scenario: Execute job (Phase 2)
-        Given the Execute nodoInviaRPT (Phase 1) scenario executed successfully
+        Given the Execute nodoInviaCarrelloRPT (Phase 1) scenario executed successfully
+        And initial XML pspChiediListaRT
+        """
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+                <ws:pspChiediListaRTResponse>
+                    <pspChiediListaRTResponse>
+                        <elementoListaRTResponse>
+                            <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
+                            <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
+                            <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
+                        </elementoListaRTResponse>
+                    </pspChiediListaRTResponse>
+                </ws:pspChiediListaRTResponse>
+            </soapenv:Body>
+        </soapenv:Envelope>
+        """
+        And PSP replies to nodo-dei-pagamenti with the pspChiediListaRT
         When job pspChiediListaAndChiediRt triggered after 5 seconds
-        And job pspChiediAvanzamentoRpt triggered after 5 seconds
         And wait 20 seconds for expiration
-        And generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTP', with where condition ID_CANALE like '7000%' under macro update_query on db nodo_cfg
-        And refresh job PSP triggered after 10 seconds
-        And wait 10 seconds for expiration
-        Then checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_INVIATA_A_PSP, RPT_ESITO_SCONOSCIUTO_PSP, RPT_ESITO_SCONOSCIUTO_PSP, RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro RTPull
-        And checks the value RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro RTPull
-        
+        Then checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_INVIATA_A_PSP, RPT_ESITO_SCONOSCIUTO_PSP, RPT_ESITO_SCONOSCIUTO_PSP, RT_RICEVUTA_NODO, RT_ACCETTATA_NODO, RT_INVIATA_PA, RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro RTPull
+        And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro RTPull
+        And verify 0 record for the table RETRY_PA_INVIA_RT retrived by the query rpt_stati on db nodo_online under macro RTPull
