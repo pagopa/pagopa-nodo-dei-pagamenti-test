@@ -8,20 +8,19 @@ Feature: process checks for VerifyPaymentNoticeReq - EC old
          <soapenv:Header/>
          <soapenv:Body>
             <nod:verifyPaymentNoticeReq>
-               <idPSP>70000000001</idPSP>
-               <idBrokerPSP>70000000001</idBrokerPSP>
-               <idChannel>70000000001_01</idChannel>
+               <idPSP>#psp#</idPSP>
+               <idBrokerPSP>#psp#</idBrokerPSP>
+               <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
                <password>pwdpwdpwd</password>
                <qrCode>
-                  <fiscalCode>#creditor_institution_code#</fiscalCode>
-                  <noticeNumber>#notice_number#</noticeNumber>
+                  <fiscalCode>#creditor_institution_code_old#</fiscalCode>
+                  <noticeNumber>#notice_number_old#</noticeNumber>
                </qrCode>
             </nod:verifyPaymentNoticeReq>
          </soapenv:Body>
       </soapenv:Envelope>
       """
     And EC old version
-    And idChannel with USE_NEW_FAULT_CODE=N
    # verifyPaymentNotice KO - EC old [PRO_VPNR_07]
 
   Scenario: Check PPT_STAZIONE_INT_PA_TIMEOUT error when paVerifyPaymentRes is in timeout
