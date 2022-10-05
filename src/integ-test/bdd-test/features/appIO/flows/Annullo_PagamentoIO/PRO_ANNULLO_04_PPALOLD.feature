@@ -11,7 +11,7 @@ Feature: PRO_ANNULLO_04_PPALOLD
         <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
         <pay_i:dominio>
         <pay_i:identificativoDominio>44444444444</pay_i:identificativoDominio>
-        <pay_i:identificativoStazioneRichiedente>#intermediarioPA#</pay_i:identificativoStazioneRichiedente>
+        <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
         </pay_i:dominio>
         <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
         <pay_i:dataOraMessaggioRichiesta>2016-09-16T11:24:10</pay_i:dataOraMessaggioRichiesta>
@@ -97,7 +97,7 @@ Feature: PRO_ANNULLO_04_PPALOLD
                 <codiceIdRPT>
                     <qrc:QrCode>
                         <qrc:CF>#creditor_institution_code_old#</qrc:CF>
-                        <qrc:CodStazPA>#cod_segr#</qrc:CodStazPA>
+                        <qrc:CodStazPA>#cod_segr_old#</qrc:CodStazPA>
                         <qrc:AuxDigit>0</qrc:AuxDigit>
                         <qrc:CodIUV>$iuv</qrc:CodIUV>
                     </qrc:QrCode>
@@ -128,7 +128,7 @@ Feature: PRO_ANNULLO_04_PPALOLD
                     <codiceIdRPT>
                         <qrc:QrCode>
                             <qrc:CF>#creditor_institution_code_old#</qrc:CF>
-                            <qrc:CodStazPA>#cod_segr#</qrc:CodStazPA>
+                            <qrc:CodStazPA>#cod_segr_old#</qrc:CodStazPA>
                             <qrc:AuxDigit>0</qrc:AuxDigit>
                             <qrc:CodIUV>$iuv</qrc:CodIUV>
                         </qrc:QrCode>
