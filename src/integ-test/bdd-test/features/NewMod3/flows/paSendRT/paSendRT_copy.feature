@@ -1,33 +1,34 @@
 Feature: process tests for paSendRT
 
-  Background:
-    Given systems up
+    Background:
+        Given systems up
 
     Scenario: Execute verifyPaymentNotice request
         Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
         And generate 1 cart with PA #creditor_institution_code_old# and notice number $1noticeNumber  
         And initial XML verifyPaymentNotice
-        """
-        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-            <soapenv:Header/>
-            <soapenv:Body>
-                <nod:verifyPaymentNoticeReq>
-                <idPSP>#psp#</idPSP>
-                <idBrokerPSP>#psp#</idBrokerPSP>
-                <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
-                <password>pwdpwdpwd</password>
-                <qrCode>
-                    <fiscalCode>#creditor_institution_code#</fiscalCode>
-                    <noticeNumber>$1noticeNumber</noticeNumber>
-                </qrCode>
-                </nod:verifyPaymentNoticeReq>
-            </soapenv:Body>
-        </soapenv:Envelope>
-        """
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+                <soapenv:Header/>
+                <soapenv:Body>
+                    <nod:verifyPaymentNoticeReq>
+                    <idPSP>#psp#</idPSP>
+                    <idBrokerPSP>#psp#</idBrokerPSP>
+                    <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
+                    <password>pwdpwdpwd</password>
+                    <qrCode>
+                        <fiscalCode>#creditor_institution_code#</fiscalCode>
+                        <noticeNumber>$1noticeNumber</noticeNumber>
+                    </qrCode>
+                    </nod:verifyPaymentNoticeReq>
+                </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And EC new version
         When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of verifyPaymentNotice response
 
-    Scenario: Execute activatePaymentNotice request
+        Scenario: Execute activatePaymentNotice request
         Given the Execute verifyPaymentNotice request scenario executed successfully
         And initial XML paGetPayment
             """
@@ -121,7 +122,7 @@ Feature: process tests for paSendRT
         Then check outcome is OK of activatePaymentNotice response
 
 
-    Scenario: Define sendPaymentOutcome
+        Scenario: Define sendPaymentOutcome
         Given initial XML paSendRT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
