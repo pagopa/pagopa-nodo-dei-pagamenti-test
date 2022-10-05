@@ -1,7 +1,7 @@
 Feature: process tests for paSendRT
 
-  Background:
-    Given systems up
+    Background:
+        Given systems up
 
     Scenario: Execute verifyPaymentNotice request
         Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
@@ -27,7 +27,7 @@ Feature: process tests for paSendRT
         When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of verifyPaymentNotice response
 
-    Scenario: Execute activatePaymentNotice request
+        Scenario: Execute activatePaymentNotice request
         Given the Execute verifyPaymentNotice request scenario executed successfully
         And initial XML paGetPayment
             """
@@ -121,7 +121,7 @@ Feature: process tests for paSendRT
         Then check outcome is OK of activatePaymentNotice response
 
 
-    Scenario: Define sendPaymentOutcome
+        Scenario: Define sendPaymentOutcome
         Given initial XML paSendRT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
