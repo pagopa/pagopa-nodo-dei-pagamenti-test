@@ -31,7 +31,7 @@ Feature: syntax checks OK for activatePaymentNoticeV2Request
         And initial XML paGetPayment
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
-            <soapenv:Header />
+            <soapenv:Header/>
             <soapenv:Body>
             <paf:paGetPaymentRes>
             <outcome>OK</outcome>
@@ -105,14 +105,14 @@ Feature: syntax checks OK for activatePaymentNoticeV2Request
         When psp sends soap activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         Examples:
-            | elem           | value | soapUI test          |
-            | idempotencyKey | None  | SIN_APNV2_18         |
-            | expirationTime | None  | SIN_APNV2_35         |
-            | dueDate        | None  | SIN_APNV2_44         |
-            | paymentNote    | None  | SIN_APNV2_47         |
-            | paymentMethod  | None  | #commissioni evolute |
-            | touchPoint     | None  | #commissioni evolute |
- 
+            | elem           | value | soapUI test            |
+            | idempotencyKey | None  | SIN_APNV2_18           |
+            | expirationTime | None  | SIN_APNV2_35           |
+            | dueDate        | None  | SIN_APNV2_44           |
+            | paymentNote    | None  | SIN_APNV2_47           |
+            | paymentMethod  | None  | #commissioni evolute 1 |
+            | touchPoint     | None  | #commissioni evolute 2 |
+
     Scenario Outline: Check OK response on missing optional fields (stazione con versione primitive 2)
         Given <elem> with <value> in activatePaymentNoticeV2
         When psp sends soap activatePaymentNoticeV2 to nodo-dei-pagamenti
