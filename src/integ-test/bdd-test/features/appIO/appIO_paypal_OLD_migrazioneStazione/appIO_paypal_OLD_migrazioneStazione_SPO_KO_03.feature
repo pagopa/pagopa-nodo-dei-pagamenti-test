@@ -376,7 +376,8 @@ Feature: process test for appIO_paypal with station migration from V1 to V2 betw
             </soapenv:Envelope>
             """
         When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-        Then check outcome is OK of sendPaymentOutcome response
+        Then check outcome is KO of sendPaymentOutcome response
+        And check faultCode is PPT_SEMANTICA of sendPaymentOutcome response
 
     #DB Check
     Scenario: Execute DB check
