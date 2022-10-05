@@ -10,7 +10,7 @@ Feature: process checks for VerifyPaymentNoticeReq - EC old
             <nod:verifyPaymentNoticeReq>
                <idPSP>#psp#</idPSP>
                <idBrokerPSP>#psp#</idBrokerPSP>
-               <idChannel>#canale#</idChannel>
+               <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
                <password>pwdpwdpwd</password>
                <qrCode>
                   <fiscalCode>#creditor_institution_code_old#</fiscalCode>
