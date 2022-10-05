@@ -13,7 +13,7 @@ Feature: process checks for VerifyPaymentNoticeReq - EC old
                <idChannel>70000000001_01</idChannel>
                <password>pwdpwdpwd</password>
                <qrCode>
-                  <fiscalCode>#creditor_institution_code_old#</fiscalCode>
+                  <fiscalCode>44444444444</fiscalCode>
                   <noticeNumber>#notice_number_old#</noticeNumber>
                </qrCode>
             </nod:verifyPaymentNoticeReq>
