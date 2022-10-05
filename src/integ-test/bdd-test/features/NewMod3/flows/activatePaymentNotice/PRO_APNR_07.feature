@@ -8,9 +8,9 @@ Feature: process check for activatePaymentNotice - KO
       <soapenv:Header/>
       <soapenv:Body>
         <nod:activatePaymentNoticeReq>
-          <idPSP>#psp#</idPSP>
-          <idBrokerPSP>#psp#</idBrokerPSP>
-          <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
+          <idPSP>70000000001</idPSP>
+          <idBrokerPSP>70000000001</idBrokerPSP>
+          <idChannel>70000000001_01</idChannel>
           <password>pwdpwdpwd</password>
           <idempotencyKey>#idempotency_key#</idempotencyKey>
           <qrCode>
@@ -27,25 +27,9 @@ Feature: process check for activatePaymentNotice - KO
     """
     And EC old version
 
-  # KO from PA [PRO_APNR_05]
-  Scenario: Check PPT_ERRORE_EMESSO_DA_PAA error when paGetPaymentRes contains KO outcome
-    Given EC replies to nodo-dei-pagamenti with the paGetPayment
-    """
-    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
-      <soapenv:Header/>
-      <soapenv:Body>
-        <paf:paGetPaymentRes>
-          <outcome>KO</outcome>
-          <fault>
-            <faultCode>PAA_SINTASSI_EXTRAXSD</faultCode>
-            <faultString>errore sintattico PA</faultString>
-            <id>1</id>
-            <description>Errore sintattico emesso dalla PA</description>
-          </fault>
-        </paf:paGetPaymentRes>
-      </soapenv:Body>
-    </soapenv:Envelope>
-    """
+    # Timeout from PA [PRO_APNR_07]
+  Scenario: Check PPT_STAZIONE_INT_PA_TIMEOUT error when paGetPaymentRes is in timeout
+    Given EC wait for 30 seconds at paGetPayment 
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is KO of activatePaymentNotice response
-    And check faultCode is PPT_ERRORE_EMESSO_DA_PAA of activatePaymentNotice response
+    And check faultCode is PPT_STAZIONE_INT_PA_TIMEOUT of activatePaymentNotice response
