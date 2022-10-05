@@ -213,7 +213,7 @@ Feature: activatePaymentNoticeV2 - Commissioni evolute process
         Given the activatePaymentNoticeV2 scenario executed successfully
         And paymentAmount with 7001 in activatePaymentNoticeV2
         And touchPoint with ANY in activatePaymentNoticeV2
-        And paymentAmount with 7001 in paGetPayment
+        And amount with 7001 in paGetPayment
         And transfer.transferAmount with 6801 in paGetPayment
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
@@ -262,7 +262,7 @@ Feature: activatePaymentNoticeV2 - Commissioni evolute process
     # 2 psp in fees response, first different from activate request second the same --> fields related to fee retrieved by fees populated with the fields from the same psp
     Scenario: Execute activate 6
         Given the activatePaymentNoticeV2 scenario executed successfully
-        And paymentAmount with 7002 in activatePaymentNoticeV2
+        And amount with 7002 in activatePaymentNoticeV2
         And touchPoint with ANY in activatePaymentNoticeV2
         And paymentAmount with 7002 in paGetPayment
         And transfer.transferAmount with 6802 in paGetPayment
@@ -371,10 +371,10 @@ Feature: activatePaymentNoticeV2 - Commissioni evolute process
     # # DA COMPLETARE retry - 400   (aggiungere TC anche per gli altri codici errore e caso in cui a una certa risponde ok)
     # Scenario: Execute activate 9
     #     Given the activatePaymentNoticeV2 scenario executed successfully
-    # And paymentAmount with 400 in activatePaymentNoticeV2
-    # And touchPoint with ANY in activatePaymentNoticeV2
-    # And paymentAmount with 400 in paGetPayment
-    # And transfer.transferAmount with 200 in paGetPayment
+    #     And amount with 400 in activatePaymentNoticeV2
+    #     And touchPoint with ANY in activatePaymentNoticeV2
+    #     And paymentAmount with 400 in paGetPayment
+    #     And transfer.transferAmount with 200 in paGetPayment
     #     When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
     #     # Then check outcome is OK of activatePaymentNoticeV2 response
     #     And wait 30 seconds for expiration
