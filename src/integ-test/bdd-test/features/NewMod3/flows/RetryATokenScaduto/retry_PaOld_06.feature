@@ -191,10 +191,9 @@ Feature: process tests for retryAtokenScaduto
     And EC replies to nodo-dei-pagamenti with the paaInviaRT
     When job paInviaRt triggered after 0 seconds
     Then verify the HTTP status code of paInviaRt response is 200
+    And wait 5 seconds for expiration
     And checks the value RT_ERRORE_INVIO_A_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query stati_rpt on db nodo_online under macro NewMod3
-    And generic update through the query param_update_generic_where_condition of the table STATI_RPT_SNAPSHOT the parameter STATO = 'RT_INVIATA_PA', with where condition ID_DOMINIO='$activatePaymentNotice.fiscalCode' AND IUV='$iuv' under macro update_query on db nodo_online
 
-  @prova
   # Payment Outcome Phase outcome OK
   Scenario: Execute sendPaymentOutcome request
     Given the DB check scenario executed successfully
@@ -239,7 +238,25 @@ Feature: process tests for retryAtokenScaduto
     Then check outcome is KO of sendPaymentOutcome response
     And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcome response
 
-  Scenario: check position_payment_status
+  @prova
+  Scenario: check position_payment
     Given the Execute sendPaymentOutcome request scenario executed successfully
-    Then checks the value PAYING,PAYING_RPT,CANCELLED,PAID_NORPT of the record at column status of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
+    And wait 5 seconds for expiration
+    #STATI
+    Then checks the value PAYING,INSERTED,PAID of the record at column status of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
+    And checks the value PAID of the record at column status of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro NewMod3
+    And checks the value PAYING,PAYING_RPT,CANCELLED,PAID_NORPT of the record at column status of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
+    And checks the value CANCELLED,PAID_NORPT of the record at column status of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro NewMod3
+    And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO_MOD3,RPT_ANNULLATA_NODO,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ERRORE_INVIO_A_PA of the record at column stato of the table STATI_RPT retrived by the query stati_rpt on db nodo_online under macro NewMod3
+    And checks the value RT_ERRORE_INVIO_A_PA of the record at column stato of the table STATI_RPT_SNAPSHOT retrived by the query stati_rpt on db nodo_online under macro NewMod3
+    #POSITION_PAYMENT
+    And verify 2 record for the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
+    #RETRY_PA_ATTIVA_RPT & RETRY_PA_INVIA_RT
+    And checks the value $activatePaymentNotice.fiscalCode of the record at column pa_fiscal_code of the table RETRY_PA_ATTIVA_RPT retrived by the query stati_rpt on db nodo_online under macro NewMod3
+    And checks the value $activatePaymentNoticeresponse.paymentToken-v2 of the record at column token of the table RETRY_PA_ATTIVA_RPT retrived by the query stati_rpt on db nodo_online under macro NewMod3
+    And checks the value 0 of the record at column retry of the table RETRY_PA_ATTIVA_RPT retrived by the query stati_rpt on db nodo_online under macro NewMod3
+    And checks the value NotNone of the record at column inserted_timestamp of the table RETRY_PA_ATTIVA_RPT retrived by the query stati_rpt on db nodo_online under macro NewMod3
+    And checks the value NotNone of the record at column updated_timestamp of the table RETRY_PA_ATTIVA_RPT retrived by the query stati_rpt on db nodo_online under macro NewMod3
+    And checks the value $iuv of the record at column iuv of the table RETRY_PA_ATTIVA_RPT retrived by the query stati_rpt on db nodo_online under macro NewMod3
+    And checks the value N of the record at column ready of the table RETRY_PA_ATTIVA_RPT retrived by the query stati_rpt on db nodo_online under macro NewMod3
     And verify 0 record for the table RETRY_PA_INVIA_RT retrived by the query stati_rpt on db nodo_online under macro NewMod3

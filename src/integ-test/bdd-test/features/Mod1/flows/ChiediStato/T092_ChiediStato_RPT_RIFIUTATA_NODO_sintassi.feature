@@ -1,13 +1,11 @@
 Feature: process tests for ChiediStato_RPT_RIFIUTATA_NODO_sintassi 
 
     Background:
-
         Given systems up
 
     
     Scenario: RPT generation
         Given RPT generation
-        # RPT 
             """
                 <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
                 <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
@@ -85,11 +83,10 @@ Feature: process tests for ChiediStato_RPT_RIFIUTATA_NODO_sintassi
                 </pay_i:RPT>
             """
         
-        ##### nodoInviaRPT
+
 	Scenario: Execute nodoInviaRPT
 		Given the RPT generation scenario executed successfully
 		And initial XML nodoInviaRPT
-
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
@@ -113,21 +110,16 @@ Feature: process tests for ChiediStato_RPT_RIFIUTATA_NODO_sintassi
             </soapenv:Body>
             </soapenv:Envelope>
             """
-
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check faultCode is PPT_SINTASSI_XSD of nodoInviaRPT response
-
-
-    
-         # retrive information from the DB
-
-    Scenario: Execute check stati rpt
-        Given the Execute nodoInviaRPT scenario executed successfully
-        Then verify None record for the table STATI_RPT retrived by the query rpt_pos on db nodo_online under macro Mod1
+        And replace iuv2 content with $iuv content
+        And replace 2CCP content with $ccp content
+        And replace pa content with #codicePA# content
+        And verify 0 record for the table STATI_RPT retrived by the query stati_RPT_new on db nodo_online under macro Mod1
         
 
     Scenario: Execute nodoChiediStatoRPT
-        Given the Execute check stati rpt scenario executed successfully
+        Given the Execute nodoInviaRPT scenario executed successfully
         And initial XML nodoChiediStatoRPT
        """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -145,15 +137,12 @@ Feature: process tests for ChiediStato_RPT_RIFIUTATA_NODO_sintassi
         </soapenv:Envelope>
        """
         When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
-	    #Then check esito is KO of nodoChiediStatoRPT response
         Then check faultCode is PPT_RPT_SCONOSCIUTA of nodoChiediStatoRPT response
        
 
-        ##### nodoInviaRPT_duplicato
 	Scenario: Execute nodoInviaRPT Duplicato
 		Given the Execute nodoChiediStatoRPT scenario executed successfully
 		And initial XML nodoInviaRPT
-
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
         <soapenv:Header>
@@ -177,6 +166,5 @@ Feature: process tests for ChiediStato_RPT_RIFIUTATA_NODO_sintassi
         </soapenv:Body>
         </soapenv:Envelope>
         """
-
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
 	    Then check faultCode is PPT_SINTASSI_XSD of nodoInviaRPT response
