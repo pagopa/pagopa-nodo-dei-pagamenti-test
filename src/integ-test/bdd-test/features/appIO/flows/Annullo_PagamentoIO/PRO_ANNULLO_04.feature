@@ -19,7 +19,7 @@ Feature: PRO_ANNULLO_04
                 <password>pwdpwdpwd</password>
                 <qrCode>
                     <fiscalCode>#creditor_institution_code#</fiscalCode>
-                    <noticeNumber>$1noticenumber#</noticeNumber>
+                    <noticeNumber>$1noticenumber</noticeNumber>
                 </qrCode>
             </nod:verifyPaymentNoticeReq>
             </soapenv:Body>
