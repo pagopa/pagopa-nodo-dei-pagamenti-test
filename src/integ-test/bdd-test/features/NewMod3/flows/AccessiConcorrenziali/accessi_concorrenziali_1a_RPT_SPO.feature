@@ -8,28 +8,97 @@ Feature: process tests for accessiConCorrenziali [1a - RPT+SPO]
     Scenario: Execute activatePaymentNotice request
         Given initial XML activatePaymentNotice
         And generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr_old# and application code NA
-        And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <nod:activatePaymentNoticeReq>
-            <idPSP>#psp#</idPSP>
-            <idBrokerPSP>#psp#</idBrokerPSP>
-            <idChannel>#canale#</idChannel>
-            <password>pwdpwdpwd</password>
-            <idempotencyKey>#idempotency_key#</idempotencyKey>
-            <qrCode>
-            <fiscalCode>#creditor_institution_code_old#</fiscalCode>
-            <noticeNumber>$1noticeNumber</noticeNumber>
-            </qrCode>
-            <amount>10.00</amount>
-            </nod:activatePaymentNoticeReq>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
+        And generate 1 cart with PA #creditor_institution_code_old# and notice number $1noticeNumber
 
-        When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+        """
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+        <soapenv:Header />
+        <soapenv:Body>
+        <nod:activatePaymentNoticeReq>
+        <idPSP>#psp#</idPSP>
+        <idBrokerPSP>#psp#</idBrokerPSP>
+        <idChannel>#canale#</idChannel>
+        <password>pwdpwdpwd</password>
+        <idempotencyKey>#idempotency_key#</idempotencyKey>
+        <qrCode>
+        <fiscalCode>#creditor_institution_code_old#</fiscalCode>
+        <noticeNumber>$1noticeNumber</noticeNumber>
+        </qrCode>
+        <amount>10.00</amount>
+        </nod:activatePaymentNoticeReq>
+        </soapenv:Body>
+        </soapenv:Envelope>
+        """
+        And initial XML paGetPayment
+
+        """
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+        xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
+        <soapenv:Header/>
+        <soapenv:Body>
+        <paf:paGetPaymentRes>
+        <outcome>OK</outcome>
+        <data>
+        <creditorReferenceId>$1iuv</creditorReferenceId>
+        <paymentAmount>10.00</paymentAmount>
+        <dueDate>2021-12-31</dueDate>
+        <!--Optional:-->
+        <retentionDate>2021-12-31T12:12:12</retentionDate>
+        <!--Optional:-->
+        <lastPayment>1</lastPayment>
+        <description>description</description>
+        <!--Optional:-->
+        <companyName>company</companyName>
+        <!--Optional:-->
+        <officeName>office</officeName>
+        <debtor>
+        <uniqueIdentifier>
+        <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
+        <entityUniqueIdentifierValue>#creditor_institution_code_old#</entityUniqueIdentifierValue>
+        </uniqueIdentifier>
+        <fullName>paGetPaymentName</fullName>
+        <!--Optional:-->
+        <streetName>paGetPaymentStreet</streetName>
+        <!--Optional:-->
+        <civicNumber>paGetPayment99</civicNumber>
+        <!--Optional:-->
+        <postalCode>20155</postalCode>
+        <!--Optional:-->
+        <city>paGetPaymentCity</city>
+        <!--Optional:-->
+        <stateProvinceRegion>paGetPaymentState</stateProvinceRegion>
+        <!--Optional:-->
+        <country>IT</country>
+        <!--Optional:-->
+        <e-mail>paGetPayment@test.it</e-mail>
+        </debtor>
+        <!--Optional:-->
+        <transferList>
+        <!--1 to 5 repetitions:-->
+        <transfer>
+        <idTransfer>1</idTransfer>
+        <transferAmount>70.00</transferAmount>
+        <fiscalCodePA>#creditor_institution_code_old#</fiscalCodePA>
+        <IBAN>IT45R0760103200000000001016</IBAN>
+        <remittanceInformation>testPaGetPayment</remittanceInformation>
+        <transferCategory>paGetPaymentTest</transferCategory>
+        </transfer>
+        </transferList>
+        <!--Optional:-->
+        <metadata>
+        <!--1 to 10 repetitions:-->
+        <mapEntry>
+        <key>1</key>
+        <value>22</value>
+        </mapEntry>
+        </metadata>
+        </data>
+        </paf:paGetPaymentRes>
+        </soapenv:Body>
+        </soapenv:Envelope>
+        """
+        And EC replies to nodo-dei-pagamenti with the paGetPayment
+        When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
 
 
