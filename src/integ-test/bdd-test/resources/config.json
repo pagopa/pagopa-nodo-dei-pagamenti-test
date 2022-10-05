@@ -13,6 +13,12 @@
       "healthcheck": "/info",
       "soap_service": "",
       "rest_service": ""
+    },
+    "mock-psp": {
+      "url": "https://api.dev.platform.pagopa.it/mock-psp-service/api/v1",
+      "healthcheck": "/info",
+      "soap_service": "",
+      "rest_service": ""
     }
   },
   "global_configuration": {
@@ -31,6 +37,7 @@
 	  "canale_ATTIVATO_PRESSO_PSP": "60000000001_01",
     "canale_IMMEDIATO_MULTIBENEFICIARIO": "60000000001_03",
     "canale_versione_primitive_2": "60000000001_08",
+    "stazione_versione_primitive_2": "66666666666_08",
 	  "intermediarioPSP2": "60000000002",
 	  "canale32": "60000000002_01",
     "id_broker_old": "66666666666",
@@ -43,6 +50,7 @@
     "psp_AGID": "AGID_01",
     "broker_AGID": "97735020584",
     "canale_AGID": "97735020584_03",
+    "canale_AGID_02": "97735020584_02",
     "password": "pwdpwdpwd"
   },
   

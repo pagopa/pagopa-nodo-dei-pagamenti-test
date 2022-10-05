@@ -112,7 +112,7 @@ Feature: syntax checks OK for activatePaymentNoticeV2Request
             | paymentNote    | None  | SIN_APNV2_47         |
             | paymentMethod  | None  | #commissioni evolute |
             | touchPoint     | None  | #commissioni evolute |
-
+ 
     Scenario Outline: Check OK response on missing optional fields (stazione con versione primitive 2)
         Given <elem> with <value> in activatePaymentNoticeV2
         When psp sends soap activatePaymentNoticeV2 to nodo-dei-pagamenti
