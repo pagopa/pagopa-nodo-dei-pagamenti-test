@@ -21,7 +21,7 @@ Feature: process checks for VerifyPaymentNoticeReq - EC old
       </soapenv:Envelope>
       """
     And EC old version
-    And idChannel with USE_NEW_FAULT_CODE=Y
+    And idChannel with USE_NEW_FAULT_CODE=N
    # verifyPaymentNotice KO - EC old [PRO_VPNR_07]
 
   Scenario: Check PPT_STAZIONE_INT_PA_TIMEOUT error when paVerifyPaymentRes is in timeout
