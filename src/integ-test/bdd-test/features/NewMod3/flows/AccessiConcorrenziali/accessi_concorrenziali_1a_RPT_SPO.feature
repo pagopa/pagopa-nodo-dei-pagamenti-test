@@ -29,7 +29,7 @@ Feature: process tests for accessiConCorrenziali [1a - RPT+SPO]
             </soapenv:Envelope>
             """
 
-        When PSP sends soap activatePaymentNotice to nodo-dei-pagamenti
+        When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
 
 
