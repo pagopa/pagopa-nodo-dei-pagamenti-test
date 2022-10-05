@@ -1,7 +1,6 @@
 Feature: Process checks for activateIOPayment request
 
     Background:
-    Background:
         Given systems up
         And generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
         And initial XML paGetPayment
@@ -130,7 +129,7 @@ Feature: Process checks for activateIOPayment request
             <paf:paGetPaymentRes>
             <outcome>OK</outcome>
             <data>
-            <creditorReferenceId>$iuv</creditorReferenceId>
+            <creditorReferenceId>$1iuv</creditorReferenceId>
             <paymentAmount>10.00</paymentAmount>
             <dueDate>2021-12-31</dueDate>
             <!--Optional:-->

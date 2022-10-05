@@ -113,6 +113,7 @@ Feature: FLUSSO_APIO_04_PPALNEW
             "timestampOperazione": "2012-04-23T18:25:43Z"
         }
         """
+        And wait 10 seconds for expiration
         And job mod3CancelV2 triggered after 10 seconds
         And wait 17 seconds for expiration
         Then verify the HTTP status code of inoltroEsito/paypal response is 408
