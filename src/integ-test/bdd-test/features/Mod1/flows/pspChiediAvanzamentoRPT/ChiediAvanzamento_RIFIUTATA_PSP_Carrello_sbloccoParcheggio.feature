@@ -183,7 +183,7 @@ Feature: process tests for ChiediAvanzamento_RIFIUTATA_PSP_Carrello_sbloccoParch
                 <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
                 <listaRPT>
                     <elementoListaRPT>
-                    <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
+                    <identificativoDominio>#creditor_institution_code#</identificativoDominio>
                     <identificativoUnivocoVersamento>avanzaKO</identificativoUnivocoVersamento>
                     <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
                     <rpt>$rptAttachment</rpt>
