@@ -4,7 +4,7 @@ Feature: process checks for VerifyPaymentNoticeReq - EC old
     Given systems up
    # verifyPaymentNotice KO - EC old [PRO_VPNR_07]
    Scenario: Execute verifyPaymentNotice request OLD KO
-     Given EC wait for 30 seconds at paVerifyPaymentNotice
+     Given EC wait for 30 seconds at paVerifyPaymentNoticeRes
         And initial XML verifyPaymentNotice
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
