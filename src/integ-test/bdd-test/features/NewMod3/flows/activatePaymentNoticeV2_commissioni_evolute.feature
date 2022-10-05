@@ -412,3 +412,30 @@ Feature: activatePaymentNoticeV2 - Commissioni evolute process
         And checks the value $sendPaymentOutcomeV2.idBundle of the record at column BUNDLE_ID of the table POSITION_RECEIPT retrived by the query PAYMENT_TOKEN_spov2 on db nodo_online under macro NewMod1
         And checks the value $sendPaymentOutcomeV2.idCiBundle of the record at column BUNDLE_PA_ID of the table POSITION_RECEIPT retrived by the query PAYMENT_TOKEN_spov2 on db nodo_online under macro NewMod1
         # verify paSendRTV2 is sent with fields receipt.fee = POSITION_RECEIPT.FEE, receipt.primaryCiIncurredFee = POSITION_RECEIPT.FEE_PA, receipt.idBundle = POSITION_RECEIPT.BUNDLE_ID, receipt.idCiBundle = POSITION_RECEIPT.BUNDLE_PA_ID
+
+
+    # sendPaymentOutcome - no fee information in sendPaymentOutcomeV2 request
+    Scenario: Execute activate 11
+        Given the activatePaymentNoticeV2 scenario executed successfully
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+
+    Scenario: Execute sendPaymentOutcomeV2 2
+        Given the Execute activate 11 scenario executed successfully
+        And the sendPaymentOutcomeV2 scenario executed successfully
+        And primaryCiIncurredFee with None in sendPaymentOutcomeV2
+        And idBundle with None in sendPaymentOutcomeV2
+        And idCiBundle with None in sendPaymentOutcomeV2
+        When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of sendPaymentOutcomeV2 response
+        And verify 1 record for the table POSITION_PAYMENT retrived by the query PAYMENT_TOKEN_spov2 on db nodo_online under macro NewMod1
+        And checks the value $sendPaymentOutcomeV2.fee of the record at column FEE of the table POSITION_PAYMENT retrived by the query PAYMENT_TOKEN_spov2 on db nodo_online under macro NewMod1
+        And checks the value None of the record at column FEE_PA of the table POSITION_PAYMENT retrived by the query PAYMENT_TOKEN_spov2 on db nodo_online under macro NewMod1
+        And checks the value None of the record at column BUNDLE_ID of the table POSITION_PAYMENT retrived by the query PAYMENT_TOKEN_spov2 on db nodo_online under macro NewMod1
+        And checks the value None of the record at column BUNDLE_PA_ID of the table POSITION_PAYMENT retrived by the query PAYMENT_TOKEN_spov2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_RECEIPT retrived by the query PAYMENT_TOKEN_spov2 on db nodo_online under macro NewMod1
+        And checks the value $sendPaymentOutcomeV2.fee of the record at column FEE of the table POSITION_RECEIPT retrived by the query PAYMENT_TOKEN_spov2 on db nodo_online under macro NewMod1
+        And checks the value None of the record at column FEE_PA of the table POSITION_RECEIPT retrived by the query PAYMENT_TOKEN_spov2 on db nodo_online under macro NewMod1
+        And checks the value None of the record at column BUNDLE_ID of the table POSITION_RECEIPT retrived by the query PAYMENT_TOKEN_spov2 on db nodo_online under macro NewMod1
+        And checks the value None of the record at column BUNDLE_PA_ID of the table POSITION_RECEIPT retrived by the query PAYMENT_TOKEN_spov2 on db nodo_online under macro NewMod1
+        # verify paSendRTV2 is sent without fields receipt.primaryCiIncurredFee, receipt.idBundle, receipt.idCiBundle
