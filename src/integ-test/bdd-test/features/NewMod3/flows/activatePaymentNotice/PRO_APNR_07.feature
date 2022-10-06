@@ -8,9 +8,9 @@ Feature: process check for activatePaymentNotice - KO
       <soapenv:Header/>
       <soapenv:Body>
         <nod:activatePaymentNoticeReq>
-          <idPSP>70000000001</idPSP>
-          <idBrokerPSP>70000000001</idBrokerPSP>
-          <idChannel>70000000001_01</idChannel>
+          <idPSP>#psp#</idPSP>
+          <idBrokerPSP>#psp#</idBrokerPSP>
+          <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
           <password>pwdpwdpwd</password>
           <idempotencyKey>#idempotency_key#</idempotencyKey>
           <qrCode>
@@ -29,7 +29,7 @@ Feature: process check for activatePaymentNotice - KO
 
     # Timeout from PA [PRO_APNR_07]
   Scenario: Check PPT_STAZIONE_INT_PA_TIMEOUT error when paGetPaymentRes is in timeout
-    Given EC wait for 130 seconds at paGetPaymentRes 
+    Given EC wait for 30 seconds at paGetPayment
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is KO of activatePaymentNotice response
     And check faultCode is PPT_STAZIONE_INT_PA_TIMEOUT of activatePaymentNotice response
