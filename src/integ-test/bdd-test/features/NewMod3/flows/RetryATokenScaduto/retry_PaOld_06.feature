@@ -22,6 +22,8 @@ Feature: process tests for retryAtokenScaduto
       </soapenv:Envelope>
       """
     And EC old version
+    When job paInviaRt triggered after 5 seconds
+    Then verify the HTTP status code of paInviaRt response is 200
 
   # Verify phase
   Scenario: Execute verifyPaymentNotice request
@@ -171,8 +173,8 @@ Feature: process tests for retryAtokenScaduto
     Given the Execute nodoInviaRPT request scenario executed successfully
     When job mod3CancelV1 triggered after 4 seconds
     Then verify the HTTP status code of mod3CancelV1 response is 200
-
-  Scenario: DB check
+  @prova
+  Scenario: Trigger paInviaRT
     Given the Execute poller Annulli scenario executed successfully
     And initial XML paaInviaRT
       """
@@ -189,14 +191,14 @@ Feature: process tests for retryAtokenScaduto
       </soapenv:Envelope>
       """
     And EC replies to nodo-dei-pagamenti with the paaInviaRT
-    When job paInviaRt triggered after 0 seconds
+    When job paInviaRt triggered after 5 seconds
     Then verify the HTTP status code of paInviaRt response is 200
     And wait 5 seconds for expiration
     And checks the value RT_ERRORE_INVIO_A_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query stati_rpt on db nodo_online under macro NewMod3
 
   # Payment Outcome Phase outcome OK
   Scenario: Execute sendPaymentOutcome request
-    Given the DB check scenario executed successfully
+    Given the Trigger paInviaRT scenario executed successfully
     And initial XML sendPaymentOutcome
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -238,11 +240,11 @@ Feature: process tests for retryAtokenScaduto
     Then check outcome is KO of sendPaymentOutcome response
     And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcome response
 
-  @prova
   Scenario: check position_payment
     Given the Execute sendPaymentOutcome request scenario executed successfully
     And wait 5 seconds for expiration
     #STATI
+
     Then checks the value PAYING,INSERTED,PAID of the record at column status of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
     And checks the value PAID of the record at column status of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro NewMod3
     And checks the value PAYING,PAYING_RPT,CANCELLED,PAID_NORPT of the record at column status of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
