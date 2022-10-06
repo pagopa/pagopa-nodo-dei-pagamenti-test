@@ -175,6 +175,7 @@ Feature: process tests for nodoInviaRPT [REV_NIRPT_13]
             <!--Optional:-->
             <e-mail>prova@test.it</e-mail>
             </payer>
+            <applicationDate></applicationDate>
             <transferDate>2021-12-11</transferDate>
             </details>
             </nod:sendPaymentOutcomeReq>
