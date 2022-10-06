@@ -120,13 +120,13 @@ Feature: Syntax checks for pspNotifyPaymentResponse - KO
       <soapenv:Body>
       <psp:pspNotifyPaymentRes>
       <delay>10000</delay>
-      <outcome>OK</outcome>
+      <outcome>KO</outcome>
       </psp:pspNotifyPaymentRes>
       </soapenv:Body>
       </soapenv:Envelope>
       """
     And <elem> with <value> in pspNotifyPayment
-    And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
+    #And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
     When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
       """
       {
