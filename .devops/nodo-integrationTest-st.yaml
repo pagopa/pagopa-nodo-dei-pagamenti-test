@@ -128,7 +128,11 @@ stages:
              behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/appIO/flows/GestioneDelToken/GT_02.feture
              
              # Marisa
+<<<<<<< HEAD
              #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/NewMod3/flows/activatePaymentNotice/PRO_APNR_07.feature
+=======
+             behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/NewMod3/flows/verifyPaymentNotice/PRO_VPNR_07.feature
+>>>>>>> 71b84f4cc6e2acd2c43c86db71892f020bb8a1b2
              
 
              # Redis

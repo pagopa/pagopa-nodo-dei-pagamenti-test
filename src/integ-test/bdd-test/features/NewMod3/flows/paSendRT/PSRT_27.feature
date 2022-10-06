@@ -77,7 +77,7 @@ Feature: process tests for paSendRT [PSRT_27]
                                 <!--1 to 5 repetitions:-->
                                 <transfer>
                                     <idTransfer>1</idTransfer>
-                                    <transferAmount>10.00</transferAmount>
+                                    <transferAmount>15.00</transferAmount>
                                     <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
                                     <IBAN>IT45R0760103200000000001016</IBAN>
                                     <remittanceInformation>testPaGetPayment</remittanceInformation>
