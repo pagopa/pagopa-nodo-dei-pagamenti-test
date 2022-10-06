@@ -25,7 +25,7 @@ Feature: process checks for VerifyPaymentNoticeReq - EC old
 
   Scenario: Check PPT_STAZIONE_INT_PA_TIMEOUT error when paVerifyPaymentRes is in timeout
     Given EC replies to nodo-dei-pagamenti with the paVerifyPaymentNotice
-        """
+      """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
       <soapenv:Header />
       <soapenv:Body>
@@ -48,7 +48,7 @@ Feature: process checks for VerifyPaymentNoticeReq - EC old
         </paf:paVerifyPaymentNoticeRes>
       </soapenv:Body>
       </soapenv:Envelope>
-        """
+      """
     #And EC wait for 30 seconds at paVerifyPaymentNoticeRes    
     When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
     Then check outcome is KO of verifyPaymentNotice response
