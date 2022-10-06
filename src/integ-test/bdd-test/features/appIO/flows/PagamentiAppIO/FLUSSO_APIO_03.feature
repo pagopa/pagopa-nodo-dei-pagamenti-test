@@ -191,7 +191,7 @@ Feature: FLUSSO_APIO_03
             <password>pwdpwdpwd</password>
             <idempotencyKey>#idempotency_key#</idempotencyKey>
             <paymentToken>$activateIOPaymentResponse.paymentToken</paymentToken>
-            <outcome>OK</outcome>
+            <outcome>KO</outcome>
             <!--Optional:-->
             <details>
             <paymentMethod>creditCard</paymentMethod>
