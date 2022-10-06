@@ -4,10 +4,6 @@ Feature: flow checks for verificaBollettino - EC old [TF_POSTE_05]
         Given systems up
         And EC old version
 
-    #DB UPDATE 
-    #assert getRC == 200 
-    #TO BE DONE
-
     # verificaBollettinoReq phase
     Scenario: Execute verificaBollettino request
         Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
@@ -204,7 +200,7 @@ Feature: flow checks for verificaBollettino - EC old [TF_POSTE_05]
             </pay_i:RPT>
             """
 
-# nodoInviaRPT phase
+    # nodoInviaRPT phase
     Scenario: Execute nodoInviaRPT request
         Given the RPT generation scenario executed successfully
         And initial XML nodoInviaRPT
