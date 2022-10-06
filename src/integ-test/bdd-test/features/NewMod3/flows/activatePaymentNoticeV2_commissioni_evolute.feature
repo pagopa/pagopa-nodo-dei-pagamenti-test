@@ -214,7 +214,7 @@ Feature: activatePaymentNoticeV2 - Commissioni evolute process
         And amount with 7001 in activatePaymentNoticeV2
         And touchPoint with None in activatePaymentNoticeV2
         And paymentAmount with 7001 in paGetPayment
-        And transfer.transferAmount with 6801 in paGetPayment
+        And transferAmount with 6801 in paGetPayment
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
@@ -264,7 +264,7 @@ Feature: activatePaymentNoticeV2 - Commissioni evolute process
         And amount with 7002 in activatePaymentNoticeV2
         And touchPoint with None in activatePaymentNoticeV2
         And paymentAmount with 7002 in paGetPayment
-        And transfer.transferAmount with 6802 in paGetPayment
+        And transferAmount with 6802 in paGetPayment
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
@@ -373,7 +373,7 @@ Feature: activatePaymentNoticeV2 - Commissioni evolute process
     #     And amount with 400 in activatePaymentNoticeV2
     #     And touchPoint with None in activatePaymentNoticeV2
     #     And paymentAmount with 400 in paGetPayment
-    #     And transfer.transferAmount with 200 in paGetPayment
+    #     And transferAmount with 200 in paGetPayment
     #     When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
     #     # Then check outcome is OK of activatePaymentNoticeV2 response
     #     And wait 30 seconds for expiration
