@@ -2,14 +2,16 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
 
    Background:
       Given systems up
-      And initial XML nodoInviaCarrelloRPT
+
+   Scenario Outline: Check errors on nodoInviaCarrelloRPT
+      Given initial XML nodoInviaCarrelloRPT
          """
          <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
          <soapenv:Header>
          <ppt:intestazioneCarrelloPPT>
          <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
          <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
-         <identificativoCarrello>CARRELLO-2022-05-25-14:15:59.098</identificativoCarrello>
+         <identificativoCarrello>{identificativoCarrello}</identificativoCarrello>
          </ppt:intestazioneCarrelloPPT>
          </soapenv:Header>
          <soapenv:Body>
@@ -32,52 +34,26 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          </soapenv:Body>
          </soapenv:Envelope>
          """
-
-   # idCarrello value check: idCarrello not in db [SEM_Mb_01]
-   Scenario Outline: Check PPT_MULTIBENEFICIARIO error on non-existent psp
-      Given <tag> with <value> in nodoInviaCarrelloRPT
-      When psp sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
+      And identificativoCarrello with <identificativoCarrello_value> in nodoInviaCarrelloRPT
+      And identificativoDominio with <identificativoDominio_value> in nodoInviaCarrelloRPT
+      When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
       Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
-      And check faultCode is <fault_code> of nodoInviaCarrelloRPT response
+      And check faultCode is <error> of nodoInviaCarrelloRPT response
       Examples:
-         | tag        | value             | fault_code              | soapUI test |
-         | idCarrello | idCarrelloUnknown | PPT_MULTIBENEFICIARIO   | SEM_MB_01   |
-         | idDominio  | idDominioUnknown  | PPT_DOMINIO_SCONOSCIUTO | SEM_MB_02   |
-
-
-
-
-   # station value check: combination idDominio-noticeNumber identifies a station not present inside column ID_CARRELLO in NODO4_CFG.STAZIONI table of nodo-dei-pagamenti database [SEM_Mb_11]
-   Scenario Outline: Check PPT_STAZIONE_INT_PA_SCONOSCIUTA error on non-existent station
-      Given identificativoDominio with 77777777777 in nodoInviaCarrelloRPT
-      And noticeNumber with <value> in nodoInviaCarrelloRPT
-      When psp sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
-      Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
-      And check faultCode is PPT_STAZIONE_INT_PA_SCONOSCIUTA of nodoInviaCarrelloRPT response
-      Examples:
-         | value              | soapUI test                                            |
-         | 5                  | SEM_AIPR_12 - auxDigit inesistente                     |
-         | 011456789012345678 | SEM_AIPR_12 - auxDigit 0 - progressivo inesistente     |
-         | 316456789012345678 | SEM_AIPR_12 - auxDigit 3 - segregationCode inesistente |
-
-
-   # station value check: combination idDominio-noticeNumber identifies a station corresponding to an ID_STAZIONE value with field ENABLED = N in NODO4_CFG.STAZIONI table of nodo-dei-pagamenti database [SEM_Mb_12]
-   Scenario: Check PPT_STAZIONE_INT_PA_DISABILITATA error on disabled station
-      Given identificativoDominio with 77777777777 in nodoInviaCarrelloRPT
-      And noticeNumber with 088456789012345678 in nodoInviaCarrelloRPT
-      When psp sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
-      Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
-      And check faultCode is PPT_STAZIONE_INT_PA_DISABILITATA of nodoInviaCarrelloRPT response
-
-
-   # pa broker value check: combination idDominio-noticeNumber identifies a pa broker corresponding to an ID_INTERMEDIARIO_PA value with field ENABLED = N in NODO4_CFG.INTERMEDIARI_PA table of nodo-dei-pagamenti database [SEM_Mb_13]
-   Scenario: Check PPT_INTERMEDIARIO_PA_DISABILITATO error on disabled pa broker
-      Given identificativoDominio with 77777777777 in nodoInviaCarrelloRPT
-      And noticeNumber with 088456789012345678 in nodoInviaCarrelloRPT
-      When psp sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
-      Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
-      And check faultCode is PPT_INTERMEDIARIO_PA_DISABILITATO of nodoInviaCarrelloRPT response
-
-
-
-
+         | identificativoCarrello_value        | identificativoDominio_value | error                            | soapUI test | test description                                    |
+         | 4444444444431101233155019590029004  | -                           | PPT_MULTI_BENEFICIARIO           | SEM_MB_01   | nessun trattino                                     |
+         | 90000000001311012331550195900-15623 | -                           | PPT_MULTI_BENEFICIARIO           | SEM_MB_01   | idDominioRPT2                                       |
+         | 44444444444311012331550195900-43788 | -                           | PPT_MULTI_BENEFICIARIO           | SEM_MB_01   | idDominioNessunaRPT                                 |
+         | 7777777777311012331550195900-76431  | -                           | PPT_MULTI_BENEFICIARIO           | SEM_MB_01   | lunghezza inferiore                                 |
+         | 31101233155019590044444444444-59412 | -                           | PPT_DOMINIO_SCONOSCIUTO          | SEM_MB_01   | ordine invertito                                    |
+         | 09812374659311017301288149100-42521 | 90000000001                 | PPT_DOMINIO_SCONOSCIUTO          | SEM_MB_02   | idCarrello sconosciuto = idDominio RPT1 sconosciuto |
+         | 09812374659311014031638179900-09700 | 90000000001                 | PPT_DOMINIO_SCONOSCIUTO          | SEM_MB_03   | idDominio != idDominio RPT1 known                   |
+         | 44444444444311013021679164600-14644 | 09871234560                 | PPT_DOMINIO_SCONOSCIUTO          | SEM_MB_04   | -                                                   |
+         | 44444444444311013471374161700-63449 | 4444444445                  | PPT_MULTI_BENEFICIARIO           | SEM_MB_05   | -                                                   |
+         | 44444444444311010291971155500-39600 | 09871234560                 | PPT_SEMANTICA                    | SEM_MB_06   | -                                                   |
+         | 44444444444311013031150153900-60544 | 77777777778                 | PPT_SEMANTICA                    | SEM_MB_07   | -                                                   |
+         | 11111122223311017481266177700-97665 | -                           | PPT_DOMINIO_DISABILITATO         | SEM_MB_08   | -                                                   |
+         | 11111122223311015351424164700-14054 | 90000000001                 | PPT_DOMINIO_DISABILITATO         | SEM_MB_09   | -                                                   |
+         | 44444444444311017171314170600-90879 | 11111122222                 | PPT_DOMINIO_DISABILITATO         | SEM_MB_10   | -                                                   |
+         | 44444444444301018501090155500-56833 | -                           | PPT_STAZIONE_INT_PA_SCONOSCIUTA  | SEM_MB_11   | -                                                   |
+         | 44444444444311019531585125200-85243 | -                           | PPT_STAZIONE_INT_PA_DISABILITATA | SEM_MB_12   | -                                                   |

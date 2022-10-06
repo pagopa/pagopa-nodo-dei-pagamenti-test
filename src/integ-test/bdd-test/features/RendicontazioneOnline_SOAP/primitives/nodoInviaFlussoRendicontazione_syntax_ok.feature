@@ -3,7 +3,6 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - OK
     Background:
         Given systems up
 
-
     Scenario: Generazione rendicontazione
         Given REND generation
             """

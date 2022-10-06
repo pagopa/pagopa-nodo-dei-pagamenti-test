@@ -173,10 +173,7 @@ Feature: process tests for paSendRT
     </soapenv:Envelope>
     """
     
- 
-
-
-
+  @test
   # Activate phase [PSRT_04]
   Scenario: Execute activatePaymentNotice request with lastPayment to 1
     Given the Execute verifyPaymentNotice request scenario executed successfully
@@ -185,7 +182,8 @@ Feature: process tests for paSendRT
     And the Define activatePaymentNotice scenario executed successfully
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
-    
+
+  @test
   # Send Payment Outcome phase
   Scenario: Execute sendPaymentOutcome request with lastPayment to 1
     Given the Execute activatePaymentNotice request with lastPayment to 1 scenario executed successfully
@@ -193,8 +191,8 @@ Feature: process tests for paSendRT
     And paymentToken with $activatePaymentNoticeResponse.paymentToken in sendPaymentOutcome
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
-    And check EC receives paSendRT properly with noticeNumber $activatePaymentNotice.noticeNumber
-    And check EC receives paSendRT properly having in the receipt $activatePaymentNotice.fiscalCode as fiscalcode
+    #And check EC receives paSendRT properly with noticeNumber $activatePaymentNotice.noticeNumber
+    #And check EC receives paSendRT properly having in the receipt $activatePaymentNotice.fiscalCode as fiscalcode
 
   # Activate phase [PSRT_03]
   Scenario: Execute activatePaymentNotice request with lastPayment to 0

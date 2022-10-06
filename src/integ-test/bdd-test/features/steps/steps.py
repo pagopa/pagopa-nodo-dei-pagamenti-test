@@ -33,7 +33,7 @@ def step_impl(context):
             - pagopa-api-config ( used in tests to set DB's nodo-dei-pagamenti correctly according to input test ))
     """
     responses = True
-     
+    
     for row in context.table:
         print(f"calling: {row.get('name')} -> {row.get('url')}")
         url = row.get("url") + row.get("healthcheck")
@@ -72,6 +72,20 @@ def step_impl(context, primitive):
         payload = payload.replace('#notice_number_old#', notice_number)
         setattr(context, "iuv", notice_number[1:])
 
+    if '#identificativoFlusso#' in payload:
+        date = datetime.date.today().strftime("%Y-%m-%d")
+        identificativoFlusso = date + context.config.userdata.get("global_configuration").get("psp") + "-" + str(random.randint(0, 10000))
+        setattr(context,'identificativoFlusso', identificativoFlusso)
+        payload = payload.replace('#identificativoFlusso#', identificativoFlusso)
+    """
+    if '$timedate+1' in payload:
+        timedate = getattr(context, 'timedate')
+        timedate = datetime.datetime.strptime(timedate, '%Y-%m-%dT%H:%M:%S.%f')
+        timedate = timedate + datetime.timedelta(hours=1)
+        timedate = timedate.strftime("%Y-%m-%dT%H:%M:%S.%f")
+        payload = payload.replace('$timedate+1', timedate)
+    """
+    
     if '$iuv' in payload:
         payload = payload.replace('$iuv', getattr(context, 'iuv'))
 
@@ -114,15 +128,34 @@ def step_impl(context):
         intermediarioPA = "44444444444_05"
         payload = payload.replace('#intermediarioPA#', intermediarioPA)
         setattr(context,"intermediarioPA", intermediarioPA)
+    
+    if "nodoVerificaRPT_IUV" in payload:
+        nodoVerificaRPT = getattr(context, 'nodoVerificaRPT')
+        my_document = parseString(nodoVerificaRPT.content)
+        aux_digit = my_document.getElementsByTagName('AuxDigit')
+        if aux_digit == '0' or aux_digit == '1' or aux_digit == '2':
+             iuv = ''+random.randint(10000, 20000)+random.randint(10000, 20000)+random.randint(10000, 20000)
+        elif aux_digit == '3':
+            #per pa_old
+             iuv = '11' + (int)(random.randint(10000, 20000))+(int)(random.randint(10000, 20000))+(int)(random.randint(10000, 20000))
+        payload = payload.replace('iuv', iuv)
+        setattr(context,'iuv', iuv)
+
+    if "$ccp" in payload:
+        ccp = ''+random.randint(10000, 20000)+random.randint(10000, 20000)+random.randint(10000, 20000)
+        payload = payload.replace('ccp',ccp )
+        setattr(context, "ccp", ccp)
 
     if '$iuv' in payload:
         payload = payload.replace('$iuv', getattr(context, 'iuv'))
-
+    
+    print("RPT generato: ", payload)
     setattr(context,'rptAttachment', payload)
 
 @given('REND generation')
 def step_impl(context):
     payload = context.text or ""
+    payload = utils.replace_context_variables(payload, context)
     payload = utils.replace_local_variables(payload, context)
     payload = utils.replace_global_variables(payload, context)
     date = datetime.date.today().strftime("%Y-%m-%d")
@@ -136,6 +169,12 @@ def step_impl(context):
 
     if '#date#' in payload:
         payload = payload.replace('#date#', date)
+    
+    if '#timedate+1#' in payload:
+        date = datetime.date.today() + datetime.timedelta(hours=1)
+        date = date.strftime("%Y-%m-%d")
+        timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
+        payload = payload.replace('#timedate+1#', timedate)
 
     if "#timedate#" in payload:     
         payload = payload.replace('#timedate#', timedate)
@@ -146,6 +185,7 @@ def step_impl(context):
     if '#iuv#' in payload:
         payload = payload.replace('#iuv#', iuv)
 
+    print("REND generata: ", payload)
     setattr(context,'rendAttachment', payload)
 
 @given('{elem} with {value} in {action}')
@@ -504,6 +544,7 @@ def step_impl(context):
 @step('save {primitive} response in {new_primitive}')
 def step_impl(context, primitive, new_primitive):
     soap_response = getattr(context, primitive + RESPONSE)
+    print(new_primitive + RESPONSE)
     setattr(context, new_primitive + RESPONSE, soap_response)
 
 @step('saving {primitive} request in {new_primitive}')
@@ -617,11 +658,13 @@ def step_impl(context, primitive):
                                        f"30211{str(random.randint(1000000000000, 9999999999999))}")
     setattr(context, primitive, xml)
 
-@given("nodo-dei-pagamenti has config parameter {param} set to {value}")
+@step("nodo-dei-pagamenti has config parameter {param} set to {value}")
 def step_impl(context, param, value):
     db_selected = context.config.userdata.get("db_configuration").get('nodo_cfg')
     selected_query = utils.query_json(context, 'update_config', 'configurations').replace('value', value).replace('key', param)
     conn = db.getConnection(db_selected.get('host'), db_selected.get('database'),db_selected.get('user'),db_selected.get('password'),db_selected.get('port'))
+
+    setattr(context,param, value)
 
     exec_query = db.executeQuery(conn, selected_query)
     if exec_query is not None:
@@ -636,9 +679,10 @@ def step_impl(context, param, value):
 @step("update through the query {query_name} with date {date} under macro {macro} on db {db_name}")
 def step_impl(context, query_name, date, macro, db_name):
     db_selected = context.config.userdata.get("db_configuration").get(db_name)
+    
     if date == 'Today':
         date = str(datetime.datetime.today())
-    
+
     selected_query = utils.query_json(context, query_name, macro).replace('date', date)
     conn = db.getConnection(db_selected.get('host'), db_selected.get('database'),db_selected.get('user'),db_selected.get('password'),db_selected.get('port'))
 
@@ -676,7 +720,6 @@ def step_impl(context, query_name, macro, db_name,table_name,columns):
     if exec_query is not None:
         print(f'executed query: {exec_query}')
     setattr(context, query_name, exec_query)
-
 
 
 @step("with the query {query_name1} check assert beetwen elem {elem1} in position {position1:d} and elem {elem2} with position {position2:d} of the query {query_name2}")
@@ -767,7 +810,6 @@ def step_impl(context, seconds):
     #  sendPaymentOutcome record
     pass
 
-
 @step(u"checks the value {value} of the record at column {column} of the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
 def step_impl(context, value, column, query_name, table_name, db_name, name_macro):
     db_config = context.config.userdata.get("db_configuration")
@@ -808,30 +850,86 @@ def step_impl(context, value, column, query_name, table_name, db_name, name_macr
 
     db.closeConnection(conn)
 
+@step("update through the query {query_name} of the table {table_name} the parameter {param} with {value}, with where condition {where_condition} and where value {valore} under macro {macro} on db {db_name}")
+def step_impl(context, query_name, table_name, param, value, where_condition, valore, macro, db_name):
+    db_selected = context.config.userdata.get("db_configuration").get(db_name)
+    selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('param', param).replace('value', value).replace('where_condition', where_condition).replace('valore', valore)
+    selected_query = utils.replace_context_variables(selected_query, context)
+    selected_query = utils.replace_local_variables(selected_query, context)
+    conn = db.getConnection(db_selected.get('host'), db_selected.get('database'),db_selected.get('user'),db_selected.get('password'),db_selected.get('port'))
+    exec_query = db.executeQuery(conn, selected_query)
+    db.closeConnection(conn)
 
-@step(u"check datetime plus number of date {number:d} of the record at column {column} of the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
+@step(u"check datetime plus number of date {number} of the record at column {column} of the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
 def step_impl(context, column, query_name, table_name, db_name, name_macro, number):
     db_config = context.config.userdata.get("db_configuration")
     db_selected = db_config.get(db_name)
-
     conn = db.getConnection(db_selected.get('host'), db_selected.get('database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
 
-    selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
-   
-    exec_query = db.executeQuery(conn, selected_query)
-    
-    query_result = [t[0] for t in exec_query]
-    print('query_result: ', query_result)
-    
-    
-    value = (datetime.datetime.today()+datetime.timedelta(days= number)).strftime('%Y-%m-%d') 
-
-    elem = query_result[0].strftime('%Y-%m-%d')
+    if number == 'default_token_duration_validity_millis':
+        default = int(getattr(context, 'default_token_duration_validity_millis')) / 60000
+        value = (datetime.datetime.today()+datetime.timedelta(minutes= default)).strftime('%Y-%m-%d %H:%M')    
+        selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
+        exec_query = db.executeQuery(conn, selected_query)
+        query_result = [t[0] for t in exec_query]
+        print('query_result: ', query_result)
+        elem = query_result[0].strftime('%Y-%m-%d %H:%M')
+    elif number == 'default_idempotency_key_validity_minutes':
+        default = int(getattr(context, 'default_idempotency_key_validity_minutes'))
+        value = (datetime.datetime.today()+datetime.timedelta(minutes= default)).strftime('%Y-%m-%d %H:%M')    
+        selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
+        exec_query = db.executeQuery(conn, selected_query)
+        query_result = [t[0] for t in exec_query]
+        print('query_result: ', query_result)
+        elem = query_result[0].strftime('%Y-%m-%d %H:%M')
+    elif number == 'Today':
+        value = (datetime.datetime.today()).strftime('%Y-%m-%d')
+        selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
+        exec_query = db.executeQuery(conn, selected_query)
+        query_result = [t[0] for t in exec_query]
+        print('query_result: ', query_result)
+        elem = query_result[0].strftime('%Y-%m-%d')
+    elif 'minutes:' in number :
+        min = int(number.split(':')[1]) / 60000
+        value = (datetime.datetime.today()+datetime.timedelta(minutes= min)).strftime('%Y-%m-%d %H:%M')    
+        selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
+        exec_query = db.executeQuery(conn, selected_query)
+        query_result = [t[0] for t in exec_query]
+        print('query_result: ', query_result)
+        elem = query_result[0].strftime('%Y-%m-%d %H:%M')
+    else:
+        number = int(number)
+        value = (datetime.datetime.today()+datetime.timedelta(days= number)).strftime('%Y-%m-%d')
+        selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
+        exec_query = db.executeQuery(conn, selected_query)
+        query_result = [t[0] for t in exec_query]
+        print('query_result: ', query_result)
+        elem = query_result[0].strftime('%Y-%m-%d')
+         
+    db.closeConnection(conn)
     
     print(f"check expected element: {value}, obtained: {elem}")
     assert elem == value
 
+@step(u"verify datetime plus number of minutes {number} of the record at column {column} of the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
+def step_impl(context, column, query_name, table_name, db_name, name_macro, number):
+    db_config = context.config.userdata.get("db_configuration")
+    db_selected = db_config.get(db_name)
+    conn = db.getConnection(db_selected.get('host'), db_selected.get('database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+
+    number = int(number) / 60000
+    value = (datetime.datetime.today()+datetime.timedelta(minutes= number)).strftime('%Y-%m-%d %H:%M')
+    selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
+    exec_query = db.executeQuery(conn, selected_query)
+    query_result = [t[0] for t in exec_query]
+    print('query_result: ', query_result)
+    elem = query_result[0].strftime('%Y-%m-%d %H:%M')
+
+         
     db.closeConnection(conn)
+    
+    print(f"check expected element: {value}, obtained: {elem}")
+    assert elem == value
 
 @step(u"verify {number:d} record for the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
 def step_impl(context, query_name, table_name, db_name, name_macro, number):

@@ -1,6 +1,7 @@
 from concurrent.futures import thread
 import math
 import re, json, os, datetime
+from turtle import update
 from xml.dom.minidom import parseString
 
 import time
@@ -82,7 +83,8 @@ def get_rest_mock_ec(context):
 
 def get_soap_mock_ec(context):
     if context.config.userdata.get("services").get("mock-ec").get("soap_service") is not None:
-        return context.config.userdata.get("services").get("mock-ec").get("url")
+        return context.config.userdata.get("services").get("mock-ec").get("url") \
+               + context.config.userdata.get("services").get("mock-ec").get("soap_service")
     else:
         return ""
 
@@ -158,7 +160,6 @@ def replace_context_variables(body, context):
     pattern = re.compile('\\$\\w+')
     match = pattern.findall(body)
     for field in match:
-        print(field)
         saved_elem = getattr(context, field.replace('$', ''))
         value = saved_elem
         body = body.replace(field, value)
@@ -202,11 +203,9 @@ def get_history(rest_mock, notice_number, primitive):
 def query_json(context, name_query, name_macro):
     query = json.load(open(os.path.join(context.config.base_dir + "/../resources/query_AutomationTest.json")))
     selected_query = query.get(name_macro).get(name_query)
-    
     if '$' in selected_query:
         selected_query = replace_local_variables(selected_query, context)
         selected_query = replace_context_variables(selected_query, context)
-        
     return selected_query
 
 
@@ -224,7 +223,7 @@ def single_thread(context, soap_primitive):
     print("single_thread")
     primitive = soap_primitive.split("_")[0]
     print(soap_primitive.split("_")[1])
-    headers = {'Content-Type': 'application/xml', "SOAPAction": primitive}  # set what your server accepts
+    headers = {'Content-Type': 'application/xml', "SOAPAction": primitive}
     url_nodo = get_soap_url_nodo(context, primitive)
     print("nodo soap_request sent >>>", getattr(context, soap_primitive.split("_")[1]))
     soap_response = requests.post(url_nodo, getattr(context, soap_primitive.split("_")[1]), headers=headers)
