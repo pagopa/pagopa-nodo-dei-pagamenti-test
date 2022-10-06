@@ -185,13 +185,13 @@ Feature: FLUSSO_APIO_03
             <soapenv:Header/>
             <soapenv:Body>
             <nod:sendPaymentOutcomeReq>
-            <idPSP>40000000001</idPSP>
-            <idBrokerPSP>40000000001</idBrokerPSP>
-            <idChannel>40000000001_06</idChannel>
+            <idPSP>#psp#</idPSP>
+            <idBrokerPSP>#psp#</idBrokerPSP>
+            <idChannel>#canale#</idChannel>
             <password>pwdpwdpwd</password>
             <idempotencyKey>#idempotency_key#</idempotencyKey>
             <paymentToken>$activateIOPaymentResponse.paymentToken</paymentToken>
-            <outcome>KO</outcome>
+            <outcome>OK</outcome>
             <!--Optional:-->
             <details>
             <paymentMethod>creditCard</paymentMethod>
