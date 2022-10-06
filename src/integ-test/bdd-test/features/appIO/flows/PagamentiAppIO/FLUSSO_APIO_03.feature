@@ -98,7 +98,7 @@ Feature: FLUSSO_APIO_03
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
+        # And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
         When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
             """
             {
