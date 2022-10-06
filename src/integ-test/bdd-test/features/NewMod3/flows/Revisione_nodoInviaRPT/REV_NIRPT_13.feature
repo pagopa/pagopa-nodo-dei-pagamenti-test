@@ -175,13 +175,14 @@ Feature: process tests for nodoInviaRPT [REV_NIRPT_13]
             <!--Optional:-->
             <e-mail>prova@test.it</e-mail>
             </payer>
-            <applicationDate></applicationDate>
+            <applicationDate>2021-12-11</applicationDate>
             <transferDate>2021-12-11</transferDate>
             </details>
             </nod:sendPaymentOutcomeReq>
             </soapenv:Body>
             </soapenv:Envelope>
             """
+        And applicationDate with None in sendPaymentOutcome    
         When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
 
@@ -213,4 +214,5 @@ Feature: process tests for nodoInviaRPT [REV_NIRPT_13]
             """
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
+        And checks the value RT_GENERATA_NODO, RT_INVIATA_PA of the record at column STATO of the table STATI_RPT retrived by the query stati_rpt on db nodo_online under macro NewMod3
         #And checks the value NotNone of the record at column DATA_RICEVUTA of the table RT retrived by the query rt on db nodo_online under macro NewMod3
