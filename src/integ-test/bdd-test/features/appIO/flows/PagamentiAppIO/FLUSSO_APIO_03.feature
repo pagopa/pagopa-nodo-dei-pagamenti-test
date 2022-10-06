@@ -115,7 +115,7 @@ Feature: FLUSSO_APIO_03
                 "idPagamento": "$activateIOPaymentResponse.paymentToken",
                 "identificativoIntermediario": "40000000001",
                 "identificativoPsp": "40000000001",
-                "identificativoCanale": "40000000001_06",
+                "identificativoCanale": "#canale#",
                 "importoTotalePagato": 10,
                 "timestampOperazione": "2021-07-09T17:06:03.100+01:00",
                 "codiceAutorizzativo": "resOK",
