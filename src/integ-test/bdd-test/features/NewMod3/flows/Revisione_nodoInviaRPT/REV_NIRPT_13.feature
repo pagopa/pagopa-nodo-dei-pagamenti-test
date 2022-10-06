@@ -147,42 +147,10 @@ Feature: process tests for nodoInviaRPT [REV_NIRPT_13]
             <password>pwdpwdpwd</password>
             <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
             <outcome>OK</outcome>
-            <!--Optional:-->
-            <details>
-            <paymentMethod>creditCard</paymentMethod>
-            <!--Optional:-->
-            <paymentChannel>app</paymentChannel>
-            <fee>2.00</fee>
-            <!--Optional:-->
-            <payer>
-            <uniqueIdentifier>
-            <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-            <entityUniqueIdentifierValue>RCCGLD09P09H501E</entityUniqueIdentifierValue>
-            </uniqueIdentifier>
-            <fullName>Gesualdo;Riccitelli</fullName>
-            <!--Optional:-->
-            <streetName>via del gesu</streetName>
-            <!--Optional:-->
-            <civicNumber>11</civicNumber>
-            <!--Optional:-->
-            <postalCode>00186</postalCode>
-            <!--Optional:-->
-            <city>Roma</city>
-            <!--Optional:-->
-            <stateProvinceRegion>RM</stateProvinceRegion>
-            <!--Optional:-->
-            <country>IT</country>
-            <!--Optional:-->
-            <e-mail>prova@test.it</e-mail>
-            </payer>
-            <applicationDate>2021-12-11</applicationDate>
-            <transferDate>2021-12-11</transferDate>
-            </details>
             </nod:sendPaymentOutcomeReq>
             </soapenv:Body>
             </soapenv:Envelope>
-            """
-        And applicationDate with None in sendPaymentOutcome    
+            """  
         When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
 
