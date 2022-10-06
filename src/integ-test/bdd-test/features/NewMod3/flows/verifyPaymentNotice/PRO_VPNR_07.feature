@@ -34,14 +34,14 @@ Feature: process checks for VerifyPaymentNoticeReq - EC old
                  <fault>
                     <faultCode>PPT_STAZIONE_INT_PA_TIMEOUT</faultCode>
                     <faultString>Timeout risposta dalla stazione</faultString>
-                    <id>1</id>
+                    <id>66666666666</id>
                     <description>Timeout risposta dalla stazione</description> 
                  </fault>
               </paf:paVerifyPaymentNoticeRes>
            </soapenv:Body>
         </soapenv:Envelope>
         """
-    And EC wait for 30 seconds at paVerifyPaymentNoticeRes    
+    #And EC wait for 30 seconds at paVerifyPaymentNoticeRes    
     When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
     Then check outcome is KO of verifyPaymentNotice response
     And check faultCode is PPT_STAZIONE_INT_PA_TIMEOUT of verifyPaymentNotice response

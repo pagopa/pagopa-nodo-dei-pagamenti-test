@@ -29,7 +29,7 @@ Feature: process check for activatePaymentNotice - KO
 
     # Timeout from PA [PRO_APNR_07]
   Scenario: Check PPT_STAZIONE_INT_PA_TIMEOUT error when paGetPaymentRes is in timeout
-    Given EC wait for 130 seconds at paGetPayment 
+    Given EC wait for 130 seconds at paGetPaymentRes 
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is KO of activatePaymentNotice response
     And check faultCode is PPT_STAZIONE_INT_PA_TIMEOUT of activatePaymentNotice response
