@@ -4,8 +4,9 @@ Feature: TXX0_RT-PULL_CARRELLO 1 RPT EsitoSconosciutoPSP MOD1
         Given systems up
 
     Scenario: Execute nodoInviaCarrelloRPT (Phase 1)
-        Given generate 1 notice number 
-        Given RPT1 generation
+        Given generate 1 notice number and iuv with aux digit 3, segregation code 12 and application code NA
+        And generate 1 cart with PA #creditor_institution_code_old# and notice number $1noticeNumber
+        And RPT1 generation
         """
         <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
         <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
@@ -63,7 +64,7 @@ Feature: TXX0_RT-PULL_CARRELLO 1 RPT EsitoSconosciutoPSP MOD1
         <pay_i:dataEsecuzionePagamento>2016-09-16</pay_i:dataEsecuzionePagamento>
         <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
         <pay_i:tipoVersamento>PO</pay_i:tipoVersamento>
-        <pay_i:identificativoUnivocoVersamento>#iuv1#</pay_i:identificativoUnivocoVersamento>
+        <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
         <pay_i:codiceContestoPagamento>#ccp1#</pay_i:codiceContestoPagamento>
         <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
         <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
@@ -106,8 +107,6 @@ Feature: TXX0_RT-PULL_CARRELLO 1 RPT EsitoSconosciutoPSP MOD1
                             <rpt>$rpt1Attachment</rpt>
                         </elementoListaRPT>
                     </listaRPT>
-                    <requireLightPayment>01</requireLightPayment>
-                    <multiBeneficiario>1</multiBeneficiario>
                 </ws:nodoInviaCarrelloRPT>
             </soapenv:Body>
         </soapenv:Envelope>
@@ -115,20 +114,23 @@ Feature: TXX0_RT-PULL_CARRELLO 1 RPT EsitoSconosciutoPSP MOD1
         And initial XML pspInviaCarrelloRPT
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header/>
+        <soapenv:Header/>
             <soapenv:Body>
                 <ws:pspInviaCarrelloRPTResponse>
                     <pspInviaCarrelloRPTResponse>
-                        <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-                        <identificativoCarrello>$nodoInviaCarrelloRPT.identificativoCarrello</identificativoCarrello>
-                        <parametriPagamentoImmediato>idBruciatura=$nodoInviaCarrelloRPT.identificativoCarrello</parametriPagamentoImmediato>
+                        <fault>
+                        <faultCode>CANALE_SYSTEM_ERROR</faultCode>
+                        <faultString>system error</faultString>
+                        <id>wrapper</id>
+                        </fault>
+                        <esitoComplessivoOperazione>Malformed</esitoComplessivoOperazione>
                     </pspInviaCarrelloRPTResponse>
                 </ws:pspInviaCarrelloRPTResponse>
             </soapenv:Body>
         </soapenv:Envelope>
         """
         And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
-        When EC sends nodoInviaCarrelloRPT to nodo-dei-pagamenti
+        When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
         And check faultCode is PPT_CANALE_ERRORE_RESPONSE of nodoInviaCarrelloRPT response
         And replace iuv content with $1iuv content

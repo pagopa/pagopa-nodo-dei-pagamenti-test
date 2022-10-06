@@ -119,6 +119,7 @@ Feature: Syntax checks for pspNotifyPaymentResponse - KO
       <soapenv:Header/>
       <soapenv:Body>
       <psp:pspNotifyPaymentRes>
+      <delay>10000</delay>
       <outcome>OK</outcome>
       </psp:pspNotifyPaymentRes>
       </soapenv:Body>

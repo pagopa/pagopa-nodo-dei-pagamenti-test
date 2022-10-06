@@ -38,6 +38,7 @@ def executeQuery(conn, query:str) -> list:
             return rows
         elif 'UPDATE' in query:
             conn.commit()
+            print("Update executed successfully")
 
     except:
         print('Error executed query')
