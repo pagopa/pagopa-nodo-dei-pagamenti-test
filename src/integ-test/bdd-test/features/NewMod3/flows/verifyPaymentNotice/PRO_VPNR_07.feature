@@ -24,13 +24,13 @@ Feature: process checks for VerifyPaymentNoticeReq - EC old
    # verifyPaymentNotice KO - EC old [PRO_VPNR_07]
 
   Scenario: Check PPT_STAZIONE_INT_PA_TIMEOUT error when paVerifyPaymentRes is in timeout
-    Given EC replies to nodo-dei-pagamenti with the paVerifyPaymentNoticeRes
+    Given EC replies to nodo-dei-pagamenti with the paVerifyPaymentNotice
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
            <soapenv:Header/>
            <soapenv:Body>
               <paf:paVerifyPaymentNoticeRes>
-                 <outcome>KO</outcome>
+                 <outcome>timeout</outcome>
                  <fault>
                     <faultCode>PPT_STAZIONE_INT_PA_TIMEOUT</faultCode>
                     <faultString>Timeout risposta dalla stazione</faultString>
