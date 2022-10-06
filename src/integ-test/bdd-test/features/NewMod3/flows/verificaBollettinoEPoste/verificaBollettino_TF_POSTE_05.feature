@@ -231,11 +231,17 @@ Feature: flow checks for verificaBollettino - EC old [TF_POSTE_05]
         Then check esito is OK of nodoInviaRPT response
         #And check redirect is 0 of nodoInviaRPT response
         #And checks the value None of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
+        And verify 0 record for the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
         #And checks the value None of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro NewMod3
+        And verify 0 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro NewMod3
         #And checks the value None of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
+        And verify 0 record for the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
         #And checks the value None of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro NewMod3
+        And verify 0 record for the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro NewMod3
         #And checks the value None of the record at column ID of the table POSITION_PAYMENT retrived by the query position_payment on db nodo_online under macro NewMod3
+        And verify 0 record for the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
         #And checks the value None of the record at column ID of the table POSITION_SERVICE retrived by the query position_service on db nodo_online under macro NewMod3
+        And verify 0 record for the table POSITION_SERVICE retrived by the query position_service on db nodo_online under macro NewMod3
         And checks the value RPT_RICEVUTA_NODO, RPT_RIFIUTATA_NODO of the record at column STATUS of the table STATI_RPT retrived by the query retry_pa_invia_rpt on db nodo_online under macro NewMod3
 
         
