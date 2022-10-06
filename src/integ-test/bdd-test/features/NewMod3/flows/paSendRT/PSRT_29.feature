@@ -178,7 +178,7 @@ Feature: process tests for paSendRT [PSRT_29]
                     <paymentMethod>creditCard</paymentMethod>
                     <!--Optional:-->
                     <paymentChannel>app</paymentChannel>
-                    <fee>2.00</fee>
+                    <fee>8.00</fee>
                     <!--Optional:-->
                     <payer>
                     <uniqueIdentifier>
@@ -211,7 +211,8 @@ Feature: process tests for paSendRT [PSRT_29]
         When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         #And job paSendRt triggered after 6 seconds
         And wait 10 seconds for expiration
-        Then check outcome is OK of sendPaymentOutcome response
+        Then check outcome is KO of sendPaymentOutcome response
+        And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcome response
 
         # DB Check
         And checks the value NOTICE_GENERATED,NOTICE_SENT,NOTICE_PENDING of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_transfer on db nodo_online under macro NewMod3
