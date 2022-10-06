@@ -93,7 +93,15 @@ Feature: FLUSSO_APIO_03
             <soapenv:Header/>
             <soapenv:Body>
             <psp:pspNotifyPaymentRes>
-            <outcome>OK</outcome>
+            <outcome>KO</outcome>
+            <!--Optional:-->
+            <fault>
+            <faultCode>CANALE_SEMANTICA</faultCode>
+            <faultString>Errore semantico dal psp</faultString>
+            <id>1</id>
+            <!--Optional:-->
+            <description>Errore dal psp</description>
+            </fault>
             </psp:pspNotifyPaymentRes>
             </soapenv:Body>
             </soapenv:Envelope>
