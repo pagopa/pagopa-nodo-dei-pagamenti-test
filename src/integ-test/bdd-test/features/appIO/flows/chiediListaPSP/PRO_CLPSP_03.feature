@@ -12,7 +12,7 @@ Background:
         <soapenv:Body>
         <nod:verifyPaymentNoticeReq>
             <idPSP>#psp_AGID#</idPSP>
-            <idBrokerPSP>broker_AGID#</idBrokerPSP>
+            <idBrokerPSP>#broker_AGID#</idBrokerPSP>
             <idChannel>#canale_AGID#</idChannel>
             <password>pwdpwdpwd</password>
             <qrCode>
