@@ -152,7 +152,7 @@ Feature: process tests for nodoInviaRPT [REV_NIRPT_15]
             </soapenv:Envelope>
             """  
         When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-        Then check outcome is KO of sendPaymentOutcome response
+        Then check outcome is OK of sendPaymentOutcome response
 
     Scenario: Excecute nodoInviaRPT
         Given the Execute sendPaymentOutcome request scenario executed successfully
