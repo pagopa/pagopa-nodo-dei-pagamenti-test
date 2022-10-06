@@ -5,6 +5,8 @@ Feature: process tests for paSendRT [PSRT_29]
 
     Scenario: Execute verifyPaymentNotice request
         Given update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with N, with where condition FK_PA and where value ('6','8') under macro update_query on db nodo_cfg
+        And refresh job PA triggered after 10 seconds
+        And wait 5 seconds for expiration
         And generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
         And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber  
         And initial XML verifyPaymentNotice
@@ -77,7 +79,23 @@ Feature: process tests for paSendRT [PSRT_29]
                                 <!--1 to 5 repetitions:-->
                                 <transfer>
                                     <idTransfer>1</idTransfer>
-                                    <transferAmount>10.00</transferAmount>
+                                    <transferAmount>5.00</transferAmount>
+                                    <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
+                                    <IBAN>IT45R0760103200000000001016</IBAN>
+                                    <remittanceInformation>testPaGetPayment</remittanceInformation>
+                                    <transferCategory>paGetPaymentTest</transferCategory>
+                                </transfer>
+                                <transfer>
+                                    <idTransfer>1</idTransfer>
+                                    <transferAmount>3.00</transferAmount>
+                                    <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
+                                    <IBAN>IT45R0760103200000000001016</IBAN>
+                                    <remittanceInformation>testPaGetPayment</remittanceInformation>
+                                    <transferCategory>paGetPaymentTest</transferCategory>
+                                </transfer>
+                                <transfer>
+                                    <idTransfer>1</idTransfer>
+                                    <transferAmount>2.00</transferAmount>
                                     <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
                                     <IBAN>IT45R0760103200000000001016</IBAN>
                                     <remittanceInformation>testPaGetPayment</remittanceInformation>
@@ -125,7 +143,7 @@ Feature: process tests for paSendRT [PSRT_29]
 
     Scenario: trigger PollerAnnulli
         Given the Execute activatePaymentNotice request scenario executed successfully
-        When job mod3CancelV2 triggered after 5 seconds
+        When job mod3CancelV2 triggered after 4 seconds
         Then wait 5 seconds for expiration
 
     Scenario: Define sendPaymentOutcome
