@@ -225,7 +225,7 @@ Feature: process tests for generazioneRicevute [DB_GR_24]
     Then check outcome is OK of sendPaymentOutcome response
     And wait 10 seconds for expiration
 
-    And execution query position_status_n to get value on the table POSITION_RECEIPT, with the columns * under macro NewMod3 with db name nodo_online
+    And execution query position_payment to get value on the table POSITION_RECEIPT, with the columns * under macro NewMod3 with db name nodo_online
     And through the query position_status_n retrieve param receipt_id at position 1 and save it under the key receipt_id
     And through the query position_status_n retrieve param notice_id at position 2 and save it under the key notice_id
     And through the query position_status_n retrieve param pa_fiscal_code at position 3 and save it under the key pa_fiscal_code
