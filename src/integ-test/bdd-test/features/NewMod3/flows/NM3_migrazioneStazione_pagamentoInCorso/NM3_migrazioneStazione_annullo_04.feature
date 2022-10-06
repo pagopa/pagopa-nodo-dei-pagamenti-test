@@ -184,11 +184,11 @@ Feature: process tests for NM3 with station migration from V1 to V2
         Given the Execute station version update scenario executed successfully
         Then refresh job PA triggered after 10 seconds
 
-    # mod3CancelV1 trigger
-    Scenario: Execute mod3CancelV1
+    # mod3CancelV2 trigger
+    Scenario: Execute mod3CancelV2
         Given the Execute refresh pa e stazioni scenario executed successfully
-        When job mod3CancelV1 triggered after 6 seconds
-        Then verify the HTTP status code of mod3CancelV1 response is 200
+        When job mod3CancelV2 triggered after 6 seconds
+        Then verify the HTTP status code of mod3CancelV2 response is 200
 
 
     # test execution
