@@ -73,7 +73,7 @@ Feature: semantic checks for pspNotifyPaymentReq - CreditCard [T_02]
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:psp="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
       <soapenv:Body>
       <psp:pspNotifyPaymentRes>
-      <outcome>OK</outcome>
+      <outcome>KO</outcome>
       </psp:pspNotifyPaymentRes>
       </soapenv:Body>
       </soapenv:Envelope>
