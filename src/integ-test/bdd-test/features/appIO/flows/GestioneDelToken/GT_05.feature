@@ -79,7 +79,7 @@ Feature: GT_05
             """
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
-        And check token validity
+        And check token_valid_to is equal to token_valid_from plus default_durata_token_IO
 
     Scenario: Execute nodoChiediInformazioniPagamento (Phase 3)
         Given the Execute activateIOPayment (Phase 2) scenario executed successfully
@@ -112,10 +112,10 @@ Feature: GT_05
         {
             "idPagamento": "$activateIOPaymentResponse.paymentToken",
             "RRN": 18865881,
-            "identificativoPsp": "40000000001",
+            "identificativoPsp": "#psp#",
             "tipoVersamento": "CP",
-            "identificativoIntermediario": "40000000001",
-            "identificativoCanale": "40000000001_06",
+            "identificativoIntermediario": "#psp#",
+            "identificativoCanale": "#canale#",
             "importoTotalePagato": 10,
             "timestampOperazione": "2021-07-09T17:06:03.100+01:00",
             "codiceAutorizzativo": "resOK",
@@ -128,7 +128,7 @@ Feature: GT_05
 
     Scenario: Execute nodoNotificaAnnullamento (Phase 4)
         Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
-        When WISP sends rest GET notificaAnnullamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
+        When WISP sends rest GET notificaAnnullamento?idPagamento=$activateIOPaymentResponse.paymentToken&motivoAnnullamento=SESSCA to nodo-dei-pagamenti
         Then verify the HTTP status code of notificaAnnullamento response is 200
         And checks the value nodoNotificaAnnullamento of the record at column UPDATED_BY of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
         And restore initial configurations

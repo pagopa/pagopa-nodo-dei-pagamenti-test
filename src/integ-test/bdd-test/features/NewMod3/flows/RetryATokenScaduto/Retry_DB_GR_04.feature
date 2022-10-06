@@ -5,12 +5,12 @@ Feature: process tests for Retry_DB_GR_04
         And initial XML verifyPaymentNotice
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-            <soapenv:Header/>
+            <soapenv:Header />
             <soapenv:Body>
             <nod:verifyPaymentNoticeReq>
-            <idPSP>70000000001</idPSP>
-            <idBrokerPSP>70000000001</idBrokerPSP>
-            <idChannel>70000000001_01</idChannel>
+            <idPSP>#psp#</idPSP>
+            <idBrokerPSP>#psp#</idBrokerPSP>
+            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
             <password>pwdpwdpwd</password>
             <qrCode>
             <fiscalCode>#creditor_institution_code#</fiscalCode>
@@ -27,24 +27,23 @@ Feature: process tests for Retry_DB_GR_04
         When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of verifyPaymentNotice response
 
-
+    #activate phase
     Scenario: Execute activatePaymentNotice request
         Given the Execute verifyPaymentNotice request scenario executed successfully
         And initial XML activatePaymentNotice
             """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-            xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
             <soapenv:Header/>
             <soapenv:Body>
             <nod:activatePaymentNoticeReq>
-            <idPSP>70000000001</idPSP>
-            <idBrokerPSP>70000000001</idBrokerPSP>
-            <idChannel>70000000001_01</idChannel>
+            <idPSP>$verifyPaymentNotice.idPSP</idPSP>
+            <idBrokerPSP>$verifyPaymentNotice.idBrokerPSP</idBrokerPSP>
+            <idChannel>$verifyPaymentNotice.idChannel</idChannel>
             <password>pwdpwdpwd</password>
             <idempotencyKey>#idempotency_key#</idempotencyKey>
             <qrCode>
-            <fiscalCode>#creditor_institution_code#</fiscalCode>
-            <noticeNumber>#notice_number#</noticeNumber>
+            <fiscalCode>$verifyPaymentNotice.fiscalCode</fiscalCode>
+            <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
             </qrCode>
             <expirationTime>2000</expirationTime>
             <amount>10.00</amount>
@@ -140,67 +139,51 @@ Feature: process tests for Retry_DB_GR_04
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-
-    #sleep phase
-    Scenario: Execute sleep phase
-        Given the Execute activatePaymentNotice request scenario executed successfully
-        Then wait 2.2 second for expiration
-
+        
     # Payment Outcome Phase outcome OK
     Scenario: Execute sendPaymentOutcome request
-        Given the Execute sleep phase scenario executed successfully
+        Given the Execute activatePaymentNotice request scenario executed successfully
+        And wait 3 seconds for expiration
         And initial XML sendPaymentOutcome
-
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
             <soapenv:Header/>
             <soapenv:Body>
             <nod:sendPaymentOutcomeReq>
-            <idPSP>${psp}</idPSP>
-            <idBrokerPSP>${intermediarioPSP}</idBrokerPSP>
-            <idChannel>${canale3}</idChannel>
-            <password>${password}</password>
-            <paymentToken>${#TestCase#token}</paymentToken>
+            <idPSP>$activatePaymentNotice.idPSP</idPSP>
+            <idBrokerPSP>$activatePaymentNotice.idBrokerPSP</idBrokerPSP>
+            <idChannel>$activatePaymentNotice.idChannel</idChannel>
+            <password>pwdpwdpwd</password>
+            <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
             <outcome>OK</outcome>
-            <!--Optional:-->
             <details>
             <paymentMethod>creditCard</paymentMethod>
-            <!--Optional:-->
             <paymentChannel>app</paymentChannel>
             <fee>2.00</fee>
-            <!--Optional:-->
             <payer>
             <uniqueIdentifier>
-            <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-            <entityUniqueIdentifierValue>77777777777_01</entityUniqueIdentifierValue>
+            <entityUniqueIdentifierType>F</entityUniqueIdentifierType>
+            <entityUniqueIdentifierValue>JHNDOE00A01F205N</entityUniqueIdentifierValue>
             </uniqueIdentifier>
-            <fullName>name</fullName>
-            <!--Optional:-->
+            <fullName>John Doe</fullName>
             <streetName>street</streetName>
-            <!--Optional:-->
-            <civicNumber>civic</civicNumber>
-            <!--Optional:-->
-            <postalCode>postal</postalCode>
-            <!--Optional:-->
+            <civicNumber>12</civicNumber>
+            <postalCode>89020</postalCode>
             <city>city</city>
-            <!--Optional:-->
-            <stateProvinceRegion>state</stateProvinceRegion>
-            <!--Optional:-->
+            <stateProvinceRegion>MI</stateProvinceRegion>
             <country>IT</country>
-            <!--Optional:-->
-            <e-mail>prova@test.it</e-mail>
+            <e-mail>john.doe@test.it</e-mail>
             </payer>
-            <applicationDate>2021-12-12</applicationDate>
-            <transferDate>2021-12-11</transferDate>
+            <applicationDate>2021-10-01</applicationDate>
+            <transferDate>2021-10-02</transferDate>
             </details>
             </nod:sendPaymentOutcomeReq>
             </soapenv:Body>
             </soapenv:Envelope>
             """
         When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-        Then check outcome is KO of sendPaymentOutcome response
-        And checks the value $paGetPayment.idTransfer of the record at column TRANSFER_IDENTIFIER of the table POSITION_RECEIPT_TRANSFER retrived by the query position_receipt_transfer_Retry_DB_GR_04 on db nodo_online under macro NewMod3
-
+        Then check outcome is OK of sendPaymentOutcome response
+        And verify 3 record for the table POSITION_RECEIPT_TRANSFER retrived by the query position_transfer_2 on db nodo_online under macro NewMod3
 
 
 

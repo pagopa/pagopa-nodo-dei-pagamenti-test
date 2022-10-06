@@ -1,76 +1,83 @@
-Feature: check syntax KO for paaAttivaRPT
+Feature: check syntax OK for paaAttivaRPT
 
     Background:
         Given systems up
         Given initial XML activatePaymentNotice
-        """
-        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-        xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+            xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
             <soapenv:Header/>
             <soapenv:Body>
-                <nod:activatePaymentNoticeReq>
-                    <idPSP>70000000001</idPSP>
-                    <idBrokerPSP>70000000001</idBrokerPSP>
-                    <idChannel>70000000001_01</idChannel>
-                    <password>pwdpwdpwd</password>
-                    <idempotencyKey>#idempotency_key#</idempotencyKey>
-                    <qrCode>
-                        <fiscalCode>#creditor_institution_code#</fiscalCode>
-                        <noticeNumber>#notice_number#</noticeNumber>
-                    </qrCode>
-                    <amount>10.00</amount>
-                    <dueDate>2021-12-31</dueDate>
-                    <paymentNote>causale</paymentNote>
-                </nod:activatePaymentNoticeReq>
+            <nod:activatePaymentNoticeReq>
+            <idPSP>70000000001</idPSP>
+            <idBrokerPSP>70000000001</idBrokerPSP>
+            <idChannel>70000000001_01</idChannel>
+            <password>pwdpwdpwd</password>
+            <idempotencyKey>#idempotency_key#</idempotencyKey>
+            <qrCode>
+            <fiscalCode>#creditor_institution_code_old#</fiscalCode>
+            <noticeNumber>#notice_number_old#</noticeNumber>
+            </qrCode>
+            <amount>10.00</amount>
+            <dueDate>2021-12-31</dueDate>
+            <paymentNote>causale</paymentNote>
+            </nod:activatePaymentNoticeReq>
             </soapenv:Body>
-        </soapenv:Envelope>
-        """
-        Given EC old version
+            </soapenv:Envelope>
+            """
+        And EC old version
 
     Scenario Outline:
         Given initial XML paaAttivaRPT
-        # MODIFICARE IL TIPO DI RISPOSTA (https://pagopa.atlassian.net/wiki/spaces/PAG/pages/493617751/Analisi+paaAttivaRPT)
-        """
-        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-        xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">
             <soapenv:Header/>
             <soapenv:Body>
-                <nod:paaAttivaRPTRisposta>
-                    <esito>OK</esito>
-                    <datiPagamento>
-                        <importoSingoloVersamento>importo_singolo_versamento</importoSingoloVersamento>
-                        <ibanAccredito>iban_accredito</ibanAccredito>
-                        <bicAccredito>bic_accredito</bicAccredito>
-                        <enteBeneficiario>ente_beneficiario</enteBeneficiario>
-                        <credenzialiPagatore>credenziali_pagatore</credenzialiPagatore>
-                        <causaleVersamento>causale_versamento</causaleVersamento>
-                        <spezzoniCausaleVersamento>
-                            <spezzoneCausaleVersamento>spezzone_causale_versamento</spezzoneCausaleVersamento>
-                            <spezzoneStrutturaCausaleVersamento>
-                                <causaleSpezzone>causale_spezzone</causaleSpezzone>
-                                <importoSpezzone>importo_spezzone</importoSpezzone>
-                            </spezzoneStrutturaCausaleVersamento>
-                        </spezzoniCausaleVersamento>
-                    </datiPagamento>
-                </nod:paaAttivaRPTRisposta>
+            <ws:paaAttivaRPTRisposta>
+            <paaAttivaRPTRisposta>
+            <esito>OK</esito>
+            <datiPagamentoPA>
+            <importoSingoloVersamento>2.00</importoSingoloVersamento>
+            <ibanAccredito>IT45R0760103200000000001016</ibanAccredito>
+            <bicAccredito>BSCTCH22</bicAccredito>
+            <enteBeneficiario>
+            <pag:identificativoUnivocoBeneficiario>
+            <pag:tipoIdentificativoUnivoco>G</pag:tipoIdentificativoUnivoco>
+            <pag:codiceIdentificativoUnivoco>${stz}</pag:codiceIdentificativoUnivoco>
+            </pag:identificativoUnivocoBeneficiario>
+            <pag:denominazioneBeneficiario>${intermPsp}</pag:denominazioneBeneficiario>
+            <pag:codiceUnitOperBeneficiario>${can}</pag:codiceUnitOperBeneficiario>
+            <pag:denomUnitOperBeneficiario>uj</pag:denomUnitOperBeneficiario>
+            <pag:indirizzoBeneficiario>y</pag:indirizzoBeneficiario>
+            <pag:civicoBeneficiario>j</pag:civicoBeneficiario>
+            <pag:capBeneficiario>gt</pag:capBeneficiario>
+            <pag:localitaBeneficiario>gw</pag:localitaBeneficiario>
+            <pag:provinciaBeneficiario>ds</pag:provinciaBeneficiario>
+            <pag:nazioneBeneficiario>UK</pag:nazioneBeneficiario>
+            </enteBeneficiario>
+            <credenzialiPagatore>i</credenzialiPagatore>
+            <causaleVersamento>${causale}</causaleVersamento>
+            </datiPagamentoPA>
+            </paaAttivaRPTRisposta>
+            </ws:paaAttivaRPTRisposta>
             </soapenv:Body>
-        </soapenv:Envelope>
-        """
-        And <tag> with <tag_value> paaAttivaRPT
+            </soapenv:Envelope>
+            """
+        And <tag> with <tag_value> in paaAttivaRPT
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
         When psp sends soap activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
         Examples:
-            | tag                        | tag_value | soapUI test   |
-            | soapenv:Header             | None      | SIN_PARPTR_01 |
-            | bicAccredito               | None      | SIN_PARPTR_22 |
-            | enteBeneficiario           | None      | SIN_PARPTR_25 |
-            | codiceUnitOperBeneficiario | None      | SIN_PARPTR_41 |
-            | denomUnitOperBeneficiario  | None      | SIN_PARPTR_44 |
-            | indirizzoBeneficiario      | None      | SIN_PARPTR_47 |
-            | civicoBeneficiario         | None      | SIN_PARPTR_50 |
-            | capBeneficiario            | None      | SIN_PARPTR_53 |
-            | localitaBeneficiario       | None      | SIN_PARPTR_56 |
-            | provinciaBeneficiario      | None      | SIN_PARPTR_59 |
-            | nazioneBeneficiario        | None      | SIN_PARPTR_62 |
-            | credenzialiPagatore        | None      | SIN_PARPTR_65 |
+            | tag                            | tag_value | soapUI test   |
+            | soapenv:Header                 | None      | SIN_PARPTR_01 |
+            | bicAccredito                   | None      | SIN_PARPTR_22 |
+            | enteBeneficiario               | None      | SIN_PARPTR_25 |
+            | pag:codiceUnitOperBeneficiario | None      | SIN_PARPTR_41 |
+            | pag:denomUnitOperBeneficiario  | None      | SIN_PARPTR_44 |
+            | pag:indirizzoBeneficiario      | None      | SIN_PARPTR_47 |
+            | pag:civicoBeneficiario         | None      | SIN_PARPTR_50 |
+            | pag:capBeneficiario            | None      | SIN_PARPTR_53 |
+            | pag:localitaBeneficiario       | None      | SIN_PARPTR_56 |
+            | pag:provinciaBeneficiario      | None      | SIN_PARPTR_59 |
+            | pag:nazioneBeneficiario        | None      | SIN_PARPTR_62 |
+            | credenzialiPagatore            | None      | SIN_PARPTR_65 |

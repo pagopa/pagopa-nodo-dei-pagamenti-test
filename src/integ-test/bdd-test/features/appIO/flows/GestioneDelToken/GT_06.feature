@@ -1,4 +1,4 @@
-Feature: GT_05
+Feature: GT_06
 
     Background:
         Given systems up
@@ -12,9 +12,9 @@ Feature: GT_05
                 <soapenv:Header/>
                 <soapenv:Body>
                     <nod:verifyPaymentNoticeReq>
-                        <idPSP>AGID_01</idPSP>
-                        <idBrokerPSP>97735020584</idBrokerPSP>
-                        <idChannel>97735020584_03</idChannel>
+                        <idPSP>#psp_AGID#</idPSP>
+                        <idBrokerPSP>#broker_AGID#</idBrokerPSP>
+                        <idChannel>#canale_AGID#</idChannel>
                         <password>pwdpwdpwd</password>
                         <qrCode>
                             <fiscalCode>#creditor_institution_code#</fiscalCode>
@@ -37,14 +37,14 @@ Feature: GT_05
                 <soapenv:Header/>
                 <soapenv:Body>
                     <nod:activateIOPaymentReq>
-                        <idPSP>AGID_01</idPSP>
-                        <idBrokerPSP>97735020584</idBrokerPSP>
-                        <idChannel>97735020584_03</idChannel>
+                        <idPSP>$verifyPaymentNotice.idPSP</idPSP>
+                        <idBrokerPSP>$verifyPaymentNotice.idBrokerPSP</idBrokerPSP>
+                        <idChannel>$verifyPaymentNotice.idChannel</idChannel>
                         <password>pwdpwdpwd</password>
                         <!--Optional:-->
                         <qrCode>
                             <fiscalCode>#creditor_institution_code#</fiscalCode>
-                            <noticeNumber>#notice_number#</noticeNumber>
+                            <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
                         </qrCode>
                         <!--Optional:-->
                         <expirationTime>12345</expirationTime>
@@ -82,4 +82,5 @@ Feature: GT_05
         And expirationTime with 10000 in activateIOPayment 
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
-        And check token validity
+        And check token_valid_to is equal to token_valid_from plus default_durata_token_IO
+        And restore initial configurations

@@ -1,16 +1,16 @@
-Feature: process tests for Retry_DB_GR_07
+Feature: process tests for Retry_DB_GR_04_1
 
   Background:
     Given systems up
     And initial XML verifyPaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-      <soapenv:Header/>
+      <soapenv:Header />
       <soapenv:Body>
       <nod:verifyPaymentNoticeReq>
-      <idPSP>70000000001</idPSP>
-      <idBrokerPSP>70000000001</idBrokerPSP>
-      <idChannel>70000000001_01</idChannel>
+      <idPSP>#psp#</idPSP>
+      <idBrokerPSP>#psp#</idBrokerPSP>
+      <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
       <password>pwdpwdpwd</password>
       <qrCode>
       <fiscalCode>#creditor_institution_code#</fiscalCode>
@@ -27,24 +27,23 @@ Feature: process tests for Retry_DB_GR_07
     When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of verifyPaymentNotice response
 
-
+  #activate phase
   Scenario: Execute activatePaymentNotice request
     Given the Execute verifyPaymentNotice request scenario executed successfully
     And initial XML activatePaymentNotice
       """
-      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-      xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
       <soapenv:Header/>
       <soapenv:Body>
       <nod:activatePaymentNoticeReq>
-      <idPSP>70000000001</idPSP>
-      <idBrokerPSP>70000000001</idBrokerPSP>
-      <idChannel>70000000001_01</idChannel>
+      <idPSP>$verifyPaymentNotice.idPSP</idPSP>
+      <idBrokerPSP>$verifyPaymentNotice.idBrokerPSP</idBrokerPSP>
+      <idChannel>$verifyPaymentNotice.idChannel</idChannel>
       <password>pwdpwdpwd</password>
       <idempotencyKey>#idempotency_key#</idempotencyKey>
       <qrCode>
-      <fiscalCode>#creditor_institution_code#</fiscalCode>
-      <noticeNumber>#notice_number#</noticeNumber>
+      <fiscalCode>$verifyPaymentNotice.fiscalCode</fiscalCode>
+      <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
       </qrCode>
       <expirationTime>2000</expirationTime>
       <amount>10.00</amount>
@@ -137,14 +136,15 @@ Feature: process tests for Retry_DB_GR_07
   Scenario: Execute sendPaymentOutcome request
     Given the Poller Annulli Scenario executed successfully
     And initial XML sendPaymentOutcome
+    And initial XML sendPaymentOutcome
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
       <soapenv:Header/>
       <soapenv:Body>
       <nod:sendPaymentOutcomeReq>
-      <idPSP>70000000001</idPSP>
-      <idBrokerPSP>70000000001</idBrokerPSP>
-      <idChannel>70000000001_01</idChannel>
+      <idPSP>$activatePaymentNotice.idPSP</idPSP>
+      <idBrokerPSP>$activatePaymentNotice.idBrokerPSP</idBrokerPSP>
+      <idChannel>$activatePaymentNotice.idChannel</idChannel>
       <password>pwdpwdpwd</password>
       <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
       <outcome>OK</outcome>
@@ -174,5 +174,7 @@ Feature: process tests for Retry_DB_GR_07
       </soapenv:Envelope>
       """
     When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+    And wait 5 seconds for expiration
     Then check outcome is KO of sendPaymentOutcome response
-    And wait 5 second for expiration
+    And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcome response
+    And verify 1 record for the table POSITION_RECEIPT_TRANSFER retrived by the query position_transfer_2 on db nodo_online under macro NewMod3

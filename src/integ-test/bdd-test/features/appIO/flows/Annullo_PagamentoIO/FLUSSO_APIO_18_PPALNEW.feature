@@ -10,9 +10,9 @@ Feature: FLUSSO_APIO_18_PPALNEW
             <soapenv:Header/>
             <soapenv:Body>
             <nod:verifyPaymentNoticeReq>
-                <idPSP>AGID_01</idPSP>
-                <idBrokerPSP>97735020584</idBrokerPSP>
-                <idChannel>97735020584_03</idChannel>
+                <idPSP>#psp_AGID#</idPSP>
+                <idBrokerPSP>#broker_AGID#</idBrokerPSP>
+                <idChannel>#canale_AGID#</idChannel>
                 <password>pwdpwdpwd</password>
                 <qrCode>
                     <fiscalCode>#creditor_institution_code#</fiscalCode>
@@ -41,7 +41,7 @@ Feature: FLUSSO_APIO_18_PPALNEW
                 <idempotencyKey>#idempotency_key#</idempotencyKey>
                 <qrCode>
                     <fiscalCode>#creditor_institution_code#</fiscalCode>
-                    <noticeNumber>#notice_number#</noticeNumber>
+                    <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
                 </qrCode>
                 <!--Optional:-->
                 <expirationTime>6000</expirationTime>
@@ -84,8 +84,8 @@ Feature: FLUSSO_APIO_18_PPALNEW
         When WISP sends rest GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200
 
-    Scenario: Execute nodoInoltroEsitoPayPal (Phase 3)
-        Given the Execute activateIOPayment (Phase 2) scenario executed successfully
+    Scenario: Execute nodoInoltroEsitoPayPal (Phase 3.1)
+        Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
         When WISP sends REST POST inoltroEsito/paypal to nodo-dei-pagamenti
         """
         {
@@ -93,7 +93,7 @@ Feature: FLUSSO_APIO_18_PPALNEW
             "idTransazionePsp":"$activateIOPayment.idempotencyKey",
             "idPagamento": "$activateIOPaymentResponse.paymentToken",
             "identificativoIntermediario": "irraggiungibile",
-            "identificativoPsp": "irraggiungibile",
+            "identificativoPsp": "#psp#",
             "identificativoCanale": "irraggiungibile",
             "importoTotalePagato": 10.00,
             "timestampOperazione": "2012-04-23T18:25:43Z"
@@ -104,8 +104,8 @@ Feature: FLUSSO_APIO_18_PPALNEW
         And check errorCode is CONPSP of inoltroEsito/paypal response
         
     Scenario: Execute nodoNotificaAnnullamentoPagamento (Phase 4)
-        Given the Execute nodoInoltroEsitoPayPal (Phase 3) scenario executed successfully
-        When WISP sends rest GET notificaAnnullamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
+        Given the Execute nodoInoltroEsitoPayPal (Phase 3.1) scenario executed successfully
+        When WISP sends rest GET notificaAnnullamento?idPagamento=$activateIOPaymentResponse.paymentToken&motivoAnnullamento=CONPSP to nodo-dei-pagamenti
         And wait 5 seconds for expiration
         Then verify the HTTP status code of notificaAnnullamento response is 200
         And checks the value PAYING, PAYMENT_SENT, PAYMENT_SEND_ERROR, CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
@@ -117,9 +117,9 @@ Feature: FLUSSO_APIO_18_PPALNEW
         And checks the value $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value $activateIOPaymentResponse.fiscalCodePA of the record at column BROKER_PA_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value 2 of the record at column STATION_VERSION of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
-        And checks the value 40000000001 of the record at column PSP_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
-        And checks the value 40000000001 of the record at column BROKER_PSP_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
-        And checks the value 40000000001_03 of the record at column CHANNEL_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
+        And checks the value #psp# of the record at column PSP_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
+        And checks the value irraggiungibile of the record at column BROKER_PSP_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
+        And checks the value irraggiungibile of the record at column CHANNEL_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value $activateIOPayment.idempotencyKey of the record at column IDEMPOTENCY_KEY of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value $activateIOPaymentResponse.totalAmount of the record at column AMOUNT of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value None of the record at column FEE of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO

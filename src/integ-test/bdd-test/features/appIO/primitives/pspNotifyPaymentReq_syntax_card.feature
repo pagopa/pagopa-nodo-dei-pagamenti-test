@@ -8,9 +8,9 @@ Feature: syntax checks for pspNotifyPaymentReq - CreditCard [T_01]
             <soapenv:Header/>
             <soapenv:Body>
                 <nod:activateIOPaymentReq>
-                     <idPSP>70000000001</idPSP>
-                     <idBrokerPSP>70000000001</idBrokerPSP>
-                     <idChannel>70000000001_01</idChannel>
+                     <idPSP>#psp_AGID#</idPSP>
+                     <idBrokerPSP>#broker_AGID#</idBrokerPSP>
+                     <idChannel>#canale_AGID#</idChannel>
                      <password>pwdpwdpwd</password>
                      <!--Optional:-->
                      <idempotencyKey>#idempotency_key#</idempotencyKey>
@@ -73,9 +73,9 @@ Feature: syntax checks for pspNotifyPaymentReq - CreditCard [T_01]
         "RRN":10026669,
         "tipoVersamento":"CP",
         "idPagamento":"$activateIOPaymentResponse.paymentToken",
-        "identificativoIntermediario":"40000000001",
-        "identificativoPsp":"40000000001",
-        "identificativoCanale":"40000000001_06",
+        "identificativoIntermediario":"#psp#",
+        "identificativoPsp":"#psp#",
+        "identificativoCanale":"#canale#",
         "importoTotalePagato":10.00,
         "timestampOperazione":"2021-07-09T17:06:03.100+01:00",
         "codiceAutorizzativo":"resOK",

@@ -14,9 +14,9 @@ Feature: GT_08
             <soapenv:Header/>
             <soapenv:Body>
                 <nod:verifyPaymentNoticeReq>
-                    <idPSP>AGID_01</idPSP>
-                    <idBrokerPSP>97735020584</idBrokerPSP>
-                    <idChannel>97735020584_03</idChannel>
+                    <idPSP>#psp_AGID#</idPSP>
+                    <idBrokerPSP>#broker_AGID#</idBrokerPSP>
+                    <idChannel>#canale_AGID#</idChannel>
                     <password>pwdpwdpwd</password>
                     <qrCode>
                         <fiscalCode>#creditor_institution_code#</fiscalCode>
@@ -37,15 +37,15 @@ Feature: GT_08
             <soapenv:Header/>
             <soapenv:Body>
                 <nod:activateIOPaymentReq>
-                    <idPSP>AGID_01</idPSP>
-                    <idBrokerPSP>97735020584</idBrokerPSP>
-                    <idChannel>97735020584_03</idChannel>
+                    <idPSP>$verifyPaymentNotice.idPSP</idPSP>
+                    <idBrokerPSP>$verifyPaymentNotice.idBrokerPSP</idBrokerPSP>
+                    <idChannel>$verifyPaymentNotice.idChannel</idChannel>
                     <password>pwdpwdpwd</password>
                     <!--Optional:-->
                     <idempotencyKey>#idempotency_key#</idempotencyKey>
                     <qrCode>
                         <fiscalCode>#creditor_institution_code#</fiscalCode>
-                        <noticeNumber>#notice_number#</noticeNumber>
+                        <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
                     </qrCode>
                     <!--Optional:-->
                     <expirationTime>12345</expirationTime>
@@ -89,7 +89,8 @@ Feature: GT_08
         And checks the value $activateIOPaymentResponse.paymentToken of the record at column TOKEN of the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value NotNone of the record at column VALID_TO of the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value NotNone of the record at column TOKEN_VALID_FROM of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
-        And check token validity
+        And check token_valid_to is equal to token_valid_from plus default_durata_token_IO
+        
 
     Scenario: Execute nodoChiediInformazioniPagamento (Phase 3)
         Given the Execute activateIOPayment (Phase 2) scenario executed successfully
@@ -99,23 +100,34 @@ Feature: GT_08
 
     Scenario: Execute nodoInoltraEsitoPagamentoCarta (Phase 4)
         Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
+        And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
+        """
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:psp="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+                <psp:pspNotifyPaymentRes>
+                    <outcome>Response malformata</outcome>
+                </psp:pspNotifyPaymentRes>
+            </soapenv:Body>
+        </soapenv:Envelope>
+        """
         When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
             """
             {
                 "idPagamento": "$activateIOPaymentResponse.paymentToken",
                 "RRN": 18865881,
-                "identificativoPsp": "40000000001",
+                "identificativoPsp": "#psp#",
                 "tipoVersamento": "CP",
-                "identificativoIntermediario": "40000000001",
-                "identificativoCanale": "40000000001_06",
+                "identificativoIntermediario": "#psp#",
+                "identificativoCanale": "#canale#",
                 "importoTotalePagato": 10.00,
                 "timestampOperazione": "2021-07-09T17:06:03.100+01:00",
                 "codiceAutorizzativo": "resOK",
                 "esitoTransazioneCarta": "00"
             }
             """
-        Then verify the HTTP status code of inoltroEsito/carta response is 200
-        And check esito is OK of inoltroEsito/carta response
+        Then verify the HTTP status code of inoltroEsito/carta response is 408
+        And check error is Operazione in timeout of inoltroEsito/carta response
 
     Scenario: Execute sendPaymentOutcome (Phase 5)
         Given the Execute nodoInoltraEsitoPagamentoCarta (Phase 4) scenario executed successfully
@@ -125,9 +137,9 @@ Feature: GT_08
             <soapenv:Header/>
             <soapenv:Body>
                 <nod:sendPaymentOutcomeReq>
-                    <idPSP>40000000001</idPSP>
-                    <idBrokerPSP>40000000001</idBrokerPSP>
-                    <idChannel>40000000001_06</idChannel>
+                    <idPSP>#psp#</idPSP>
+                    <idBrokerPSP>#psp#</idBrokerPSP>
+                    <idChannel>#canale#</idChannel>
                     <password>pwdpwdpwd</password>
                     <idempotencyKey>#idempotency_key#</idempotencyKey>
                     <paymentToken>$activateIOPaymentResponse.paymentToken</paymentToken>
@@ -168,12 +180,13 @@ Feature: GT_08
         </soapenv:Envelope>
         """
         When job mod3CancelV2 triggered after 15 seconds
+        And wait 10 seconds for expiration
         And PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcome response
         And check faultCode is PPT_SEMANTICA of sendPaymentOutcome response
         And restore initial configurations
     
     Scenario: activateIOPayment1
-        Given the sendPaymentOutcome scenario executed successfully
+        Given the sendPaymentOutcome (Phase 5) scenario executed successfully
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response

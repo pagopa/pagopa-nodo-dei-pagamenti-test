@@ -81,7 +81,7 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - use
     Given nodo-dei-pagamenti has config parameter default_idempotency_key_validity_minutes set to 10
     And the Execute activatePaymentNotice request scenario executed successfully
     And PSP waits expirationTime of activatePaymentNotice expires
-    And expirationTime with 6000 in activatePaymentNotice
+    And expirationTime with 8000 in activatePaymentNotice
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is KO of activatePaymentNotice response
     And check faultCode is PPT_PAGAMENTO_IN_CORSO of activatePaymentNotice response
@@ -98,14 +98,6 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - use
     Examples:
       | minutes |
       | 10      |
-
-  # Activate Phase 2 - PPT_PAGAMENTO_IN_CORSO [SEM_APNR_23]
-  Scenario: Execute again activatePaymentNotice request changing only idempotencyKey
-    Given the Execute activatePaymentNotice request scenario executed successfully
-    And random idempotencyKey having 70000000001 as idPSP in activatePaymentNotice
-    When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
-    Then check outcome is KO of activatePaymentNotice response
-    And check faultCode is PPT_PAGAMENTO_IN_CORSO of activatePaymentNotice response
 
   # Activate Phase 2 - PPT_PAGAMENTO_IN_CORSO [SEM_APNR_23.1]
   Scenario: Execute agin activatePaymentNotice request except for missing idempotencyKey

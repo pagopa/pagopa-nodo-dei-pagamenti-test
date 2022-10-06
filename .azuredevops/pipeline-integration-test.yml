@@ -19,6 +19,8 @@ variables:
 stages:
   - stage: prepare_env
     displayName: "Prepare env (${{ parameters.env }} )"
+    variables:
+      - group: nodo-integration-test-${{ parameters.env }}
     jobs:
       - job: 
         displayName: "Prepare env (${{ parameters.env }})"

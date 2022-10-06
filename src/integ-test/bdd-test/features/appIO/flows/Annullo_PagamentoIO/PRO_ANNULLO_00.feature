@@ -11,9 +11,9 @@ Feature: PRO_ANNULLO_00
             <soapenv:Header/>
             <soapenv:Body>
             <nod:verifyPaymentNoticeReq>
-                <idPSP>AGID_01</idPSP>
-                <idBrokerPSP>97735020584</idBrokerPSP>
-                <idChannel>97735020584_03</idChannel>
+                <idPSP>#psp_AGID#</idPSP>
+                <idBrokerPSP>#broker_AGID#</idBrokerPSP>
+                <idChannel>#canale_AGID#</idChannel>
                 <password>pwdpwdpwd</password>
                 <qrCode>
                     <fiscalCode>#creditor_institution_code#</fiscalCode>
@@ -42,7 +42,7 @@ Feature: PRO_ANNULLO_00
                 <idempotencyKey>#idempotency_key#</idempotencyKey>
                 <qrCode>
                     <fiscalCode>#creditor_institution_code#</fiscalCode>
-                    <noticeNumber>#notice_number#</noticeNumber>
+                    <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
                 </qrCode>
                 <!--Optional:-->
                 <expirationTime>6000</expirationTime>
@@ -106,15 +106,16 @@ Feature: PRO_ANNULLO_00
         "idPagamento":"$activateIOPaymentResponse.paymentToken",
         "RRN":10026669,
         "tipoVersamento":"CP",
-        "identificativoIntermediario":"40000000001",
-        "identificativoPsp":"40000000001",
-        "identificativoCanale":"40000000001_06",
+        "identificativoIntermediario":"#psp#",
+        "identificativoPsp":"#psp#",
+        "identificativoCanale":"#canale#",
         "importoTotalePagato":10.00,
         "timestampOperazione":"2021-07-09T17:06:03.100+01:00",
         "codiceAutorizzativo":"resOK",
         "esitoTransazioneCarta":"00"
         }
         """
+        And wait 10 seconds for expiration
         And job mod3CancelV2 triggered after 10 seconds
         And wait 6 seconds for expiration
         Then verify the HTTP status code of inoltroEsito/carta response is 408
@@ -128,9 +129,9 @@ Feature: PRO_ANNULLO_00
         And checks the value $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value $activateIOPaymentResponse.fiscalCodePA of the record at column BROKER_PA_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value 2 of the record at column STATION_VERSION of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
-        And checks the value 40000000001 of the record at column PSP_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
-        And checks the value 40000000001 of the record at column BROKER_PSP_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
-        And checks the value 40000000001_06 of the record at column CHANNEL_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
+        And checks the value #psp# of the record at column PSP_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
+        And checks the value #psp# of the record at column BROKER_PSP_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
+        And checks the value #canale# of the record at column CHANNEL_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value $activateIOPayment.idempotencyKey of the record at column IDEMPOTENCY_KEY of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value $activateIOPaymentResponse.totalAmount of the record at column AMOUNT of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value None of the record at column FEE of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
@@ -173,3 +174,4 @@ Feature: PRO_ANNULLO_00
         And checks the value PAYING, INSERTED, PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value Y, N of the record at column VALID of the table POSITION_TRANSFER retrived by the query payment_status on db nodo_online under macro AppIO
+        And restore initial configurations
