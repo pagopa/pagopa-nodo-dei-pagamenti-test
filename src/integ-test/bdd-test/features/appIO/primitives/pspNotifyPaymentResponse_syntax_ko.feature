@@ -114,24 +114,17 @@ Feature: Syntax checks for pspNotifyPaymentResponse - KO
   Scenario Outline: Execute nodoInoltraEsitoPagamentoCarte request
     Given the Execute nodoChiediInformazioniPagamento request scenario executed successfully
     And initial XML pspNotifyPayment
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:psp="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <psp:pspNotifyPaymentRes>
-            <outcome>KO</outcome>
-            <!--Optional:-->
-            <fault>
-            <faultCode>CANALE_SEMANTICA</faultCode>
-            <faultString>Errore semantico dal psp</faultString>
-            <id>1</id>
-            <!--Optional:-->
-            <description>Errore dal psp</description>
-            </fault>
-            </psp:pspNotifyPaymentRes>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
+      """
+      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:psp="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
+      <soapenv:Header/>
+      <soapenv:Body>
+      <psp:pspNotifyPaymentRes>
+      <delay>10000</delay>
+      <outcome>KO</outcome>
+      </psp:pspNotifyPaymentRes>
+      </soapenv:Body>
+      </soapenv:Envelope>
+      """
     And <elem> with <value> in pspNotifyPayment
     And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
     When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
