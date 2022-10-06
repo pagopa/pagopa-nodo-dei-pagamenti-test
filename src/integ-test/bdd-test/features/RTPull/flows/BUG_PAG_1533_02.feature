@@ -4,7 +4,10 @@ Feature: BUG_PAG_1533_02
         Given systems up
 
     Scenario: Execute nodoInviaRPT (Phase 1)
-        Given RPT1 generation
+        Given generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTPS', with where condition ID_CANALE like '7000%' AND ID_CANALE <> '#canaleRtPull#' under macro update_query on db nodo_cfg
+        And refresh job PSP triggered after 10 seconds
+        And wait 10 seconds for expiration
+        And RPT1 generation
         """
         <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
         <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
@@ -151,6 +154,9 @@ Feature: BUG_PAG_1533_02
             """
         And PSP replies to nodo-dei-pagamenti with the pspChiediListaRT
         When job pspChiediListaAndChiediRt triggered after 5 seconds
+        And wait 10 seconds for expiration
+        And generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTP', with where condition ID_CANALE like '7000%' under macro update_query on db nodo_cfg
+        And refresh job PSP triggered after 10 seconds
         And wait 10 seconds for expiration
         Then checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_INVIATA_A_PSP, RPT_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro RTPull
         And checks the value RPT_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro RTPull
