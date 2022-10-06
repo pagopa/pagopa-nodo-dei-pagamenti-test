@@ -41,7 +41,7 @@ Feature: process checks for VerifyPaymentNoticeReq - EC old
            </soapenv:Body>
         </soapenv:Envelope>
         """
-    And EC wait for 130 seconds at paVerifyPaymentNoticeRes    
+    And EC wait for 30 seconds at paVerifyPaymentNoticeRes    
     When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
     Then check outcome is KO of verifyPaymentNotice response
     And check faultCode is PPT_STAZIONE_INT_PA_TIMEOUT of verifyPaymentNotice response
