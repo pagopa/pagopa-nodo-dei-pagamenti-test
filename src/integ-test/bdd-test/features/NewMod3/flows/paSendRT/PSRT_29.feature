@@ -126,7 +126,7 @@ Feature: process tests for paSendRT [PSRT_29]
     Scenario: trigger PollerAnnulli
         Given the Execute activatePaymentNotice request scenario executed successfully
         When job mod3CancelV2 triggered after 5 seconds
-        Then wait 15 seconds for expiration
+        Then wait 10 seconds for expiration
 
     Scenario: Define sendPaymentOutcome
         Given the trigger PollerAnnulli scenario executed successfully
