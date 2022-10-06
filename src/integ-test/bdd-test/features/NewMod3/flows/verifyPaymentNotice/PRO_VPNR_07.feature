@@ -26,20 +26,28 @@ Feature: process checks for VerifyPaymentNoticeReq - EC old
   Scenario: Check PPT_STAZIONE_INT_PA_TIMEOUT error when paVerifyPaymentRes is in timeout
     Given EC replies to nodo-dei-pagamenti with the paVerifyPaymentNotice
         """
-        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
-           <soapenv:Header/>
-           <soapenv:Body>
-              <paf:paVerifyPaymentNoticeRes>
-                 <outcome>timeout</outcome>
-                 <fault>
-                    <faultCode>PPT_STAZIONE_INT_PA_TIMEOUT</faultCode>
-                    <faultString>Timeout risposta dalla stazione</faultString>
-                    <id>66666666666</id>
-                    <description>Timeout risposta dalla stazione</description> 
-                 </fault>
-              </paf:paVerifyPaymentNoticeRes>
-           </soapenv:Body>
-        </soapenv:Envelope>
+      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
+      <soapenv:Header />
+      <soapenv:Body>
+         <paf:paVerifyPaymentNoticeRes>
+            <delay>10000</delay>
+            <outcome>OK</outcome>
+            <paymentList>
+               <paymentOptionDescription>
+                  <amount>10.00</amount>
+                  <options>EQ</options>
+                  <dueDate>2021-07-31</dueDate>
+                  <detailDescription>pagamentoTest</detailDescription>
+                  <allCCP>false</allCCP>
+               </paymentOptionDescription>
+            </paymentList>
+            <paymentDescription>Pagamento di Test</paymentDescription>
+            <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
+            <companyName>companyName</companyName>
+            <officeName>officeName</officeName>
+        </paf:paVerifyPaymentNoticeRes>
+      </soapenv:Body>
+      </soapenv:Envelope>
         """
     #And EC wait for 30 seconds at paVerifyPaymentNoticeRes    
     When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
