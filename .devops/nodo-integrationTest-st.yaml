@@ -122,7 +122,7 @@ stages:
              #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/NewMod3/flows/verificaBollettinoEPoste/verificaBollettino_TF_POSTE_05.feature
              
              # Lorenzo  
-             behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/NewMod3/flows/paSendRT/PSRT_26.feature
+             behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/NewMod3/flows/paSendRT/PSRT_27.feature
              
              # Alessandro
              #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/appIO/primitives/activateIOPayment_semantic_ko.feature
