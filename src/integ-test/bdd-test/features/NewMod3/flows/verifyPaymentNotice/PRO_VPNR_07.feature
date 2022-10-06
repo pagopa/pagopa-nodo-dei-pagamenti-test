@@ -34,7 +34,7 @@ Feature: process checks for VerifyPaymentNoticeReq - EC old
                  <fault>
                     <faultCode>PPT_STAZIONE_INT_PA_TIMEOUT</faultCode>
                     <faultString>Timeout risposta dalla stazione</faultString>
-                    <id>1</id>
+                    <id>66666666666</id>
                     <description>Timeout risposta dalla stazione</description> 
                  </fault>
               </paf:paVerifyPaymentNoticeRes>
