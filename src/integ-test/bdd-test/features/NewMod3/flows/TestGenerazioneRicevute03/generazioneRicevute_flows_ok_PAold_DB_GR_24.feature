@@ -152,9 +152,9 @@ Feature: process tests for generazioneRicevute [DB_GR_24]
         <soapenv:Body>
             <ws:nodoInviaRPT>
                 <password>pwdpwdpwd</password>
-                <identificativoPSP>15376371009</identificativoPSP>
-                <identificativoIntermediarioPSP>15376371009</identificativoIntermediarioPSP>
-                <identificativoCanale>15376371009_01</identificativoCanale>
+                <identificativoPSP>#psp#</identificativoPSP>
+                <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+                <identificativoCanale>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanale>
                 <tipoFirma></tipoFirma>
                 <rpt>$rpt1Attachment</rpt>
             </ws:nodoInviaRPT>
