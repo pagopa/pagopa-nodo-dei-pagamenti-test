@@ -181,6 +181,8 @@ Feature: process tests for nodoInviaRPT [REV_NIRPT_13]
             </soapenv:Envelope>
             """
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        And job paInviaRt triggered after 5 seconds
+        And wait 5 seconds for expiration
         Then check esito is OK of nodoInviaRPT response
         And checks the value RT_GENERATA_NODO, RT_INVIATA_PA of the record at column STATO of the table STATI_RPT retrived by the query stati_rpt on db nodo_online under macro NewMod3
         #And checks the value NotNone of the record at column DATA_RICEVUTA of the table RT retrived by the query rt on db nodo_online under macro NewMod3
