@@ -146,6 +146,6 @@
         "update_id_stazione": "UPDATE table_name SET param = 'value' WHERE ID_STAZIONE = '77777777777_01'"
     },
     "getFees": {
-        "select_fees": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN = '$activatePaymentNoticeV2Response.paymentToken' AND TIPO_EVENTO = 'fees' ORDER BY ID ASC"
+        "select_fees": "SELECT columns FROM table_name WHERE NOTICE_ID = '$activatePaymentNoticeV2.noticeNumber' AND IDENTIFICATIVO_DOMINIO = '$activatePaymentNoticeV2.fiscalCode' AND TIPO_EVENTO = 'fees' ORDER BY ID ASC"
     }
 }
