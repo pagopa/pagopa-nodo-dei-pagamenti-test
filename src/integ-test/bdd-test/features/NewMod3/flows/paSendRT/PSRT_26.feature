@@ -191,9 +191,7 @@ Feature: process tests for paSendRT [PSRT_26]
         And wait 10 seconds for expiration
         Then check outcome is OK of sendPaymentOutcome response
 
-
-    Scenario: DB Check
-        Given update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with N, with where condition OBJ_ID and where value ('1201') under macro update_query on db nodo_cfg
+        And update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with N, with where condition OBJ_ID and where value ('1201') under macro update_query on db nodo_cfg
 
         # DB Check
         And execution query position_transfer to get value on the table POSITION_RECEIPT_RECIPIENT_STATUS, with the columns STATUS under macro NewMod3 with db name nodo_online
@@ -219,7 +217,7 @@ Feature: process tests for paSendRT [PSRT_26]
         And checks the value $activatePaymentNotice.noticeNumber of the record at column NOTICE_ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
 
     Scenario: clean paSendRt queue
-        Given the DB Check scenario executed successfully
+        Given the Define sendPaymentOutcome executed successfully
         When job paSendRt triggered after 5 seconds
         And wait 10 seconds for expiration
 
