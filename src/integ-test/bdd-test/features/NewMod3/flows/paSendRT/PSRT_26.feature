@@ -187,7 +187,7 @@ Feature: process tests for paSendRT [PSRT_26]
             </soapenv:Envelope>
             """
         When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-        And job paSendRt triggered after 6 seconds
+        #And job paSendRt triggered after 6 seconds
         And wait 10 seconds for expiration
         Then check outcome is OK of sendPaymentOutcome response
 
