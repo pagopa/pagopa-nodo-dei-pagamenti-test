@@ -167,6 +167,6 @@ Feature: DB checks for nodoChiediEsitoPagamento
         And check enteBeneficiario field exists in informazioniPagamento response
 
         And execution query dbcheck_json to get value on the table PA, with the columns RAGIONE_SOCIALE under macro NewMod3 with db name nodo_cfg
-        And through the query dbcheck_json retrieve param ragione_sociale at position 0 and save it under the key ragione_sociale
+        And through the query dbcheck_json retrieve param ragione_sociale at position 1 and save it under the key ragione_sociale
         And check enteBeneficiario is $ragione_sociale of informazioniPagamento response
         And check ragioneSociale is $ragione_sociale of informazioniPagamento response
