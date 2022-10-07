@@ -41,7 +41,7 @@ Feature: Semantic checks for nodoChiediStatoRPT - KO
         Given identificativoIntermediario with #intermediario_stz_disabled# in nodoChiediStatoRPT
         And identificativoStazioneIntermediarioPA with #id_station_disabled# in nodoChiediStatoRPT
         When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
-        Then check faultCode is PPT_STAZIONE_INT_PA_DISABILITATA
+        Then check faultCode is PPT_STAZIONE_INT_PA_DISABILITATA of nodoChiediStatoRPT response
 
 
     Scenario Outline: Check semantic errors for nodoChiediStatoRPT primitive
