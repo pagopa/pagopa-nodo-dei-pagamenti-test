@@ -3,6 +3,8 @@ Feature: DB checks for nodoChiediEsitoPagamento
     Background:
         Given systems up
         And initial XML verifyPaymentNotice
+        And generate 1 notice number and iuv with aux digit 3, segregation code 11 and application code NA
+        And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
            <soapenv:Header/>
@@ -13,8 +15,8 @@ Feature: DB checks for nodoChiediEsitoPagamento
                  <idChannel>60000000001_07</idChannel>
                  <password>pwdpwdpwd</password>
                  <qrCode>
-                    <fiscalCode>66666666666</fiscalCode>
-                    <noticeNumber>311$iuv</noticeNumber>
+                    <fiscalCode>#creditor_institution_code#</fiscalCode>
+                    <noticeNumber>$1noticeNumber</noticeNumber>
                  </qrCode>
               </nod:verifyPaymentNoticeReq>
            </soapenv:Body>
@@ -33,8 +35,8 @@ Feature: DB checks for nodoChiediEsitoPagamento
                         <!--Optional:-->
                         <idempotencyKey>$idempotenza</idempotencyKey>
                         <qrCode>
-                            <fiscalCode>#fiscalCodePA#</fiscalCode>
-                            <noticeNumber>#notice_number#</noticeNumber>
+                            <fiscalCode>#creditor_institution_code#</fiscalCode>
+                            <noticeNumber>$1noticeNumber</noticeNumber>
                         </qrCode>
                         <!--Optional:-->
                         <expirationTime>12345</expirationTime>
