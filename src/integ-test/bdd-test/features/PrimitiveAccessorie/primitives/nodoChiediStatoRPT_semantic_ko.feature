@@ -38,7 +38,7 @@ Feature: Semantic checks for nodoChiediStatoRPT - KO
 
     # [CSRPTSEM4]
     Scenario: Check semantic errors for nodoChiediStatoRPT primitive
-        Given identificativoIntermediario with #intermediario_stz_disabled# in nodoChiediStatoRPT
+        Given identificativoIntermediarioPA with #intermediario_stz_disabled# in nodoChiediStatoRPT
         And identificativoStazioneIntermediarioPA with #id_station_disabled# in nodoChiediStatoRPT
         When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
         Then check faultCode is PPT_STAZIONE_INT_PA_DISABILITATA of nodoChiediStatoRPT response
