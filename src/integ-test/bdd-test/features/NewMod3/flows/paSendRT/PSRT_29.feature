@@ -1,10 +1,12 @@
-Feature: process tests for paSendRT [PSRT_22]
+Feature: process tests for paSendRT [PSRT_29]
 
     Background:
         Given systems up
 
     Scenario: Execute verifyPaymentNotice request
         Given update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with N, with where condition FK_PA and where value ('6','8') under macro update_query on db nodo_cfg
+        And refresh job PA triggered after 10 seconds
+        And wait 5 seconds for expiration
         And generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
         And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber  
         And initial XML verifyPaymentNotice
@@ -77,7 +79,23 @@ Feature: process tests for paSendRT [PSRT_22]
                                 <!--1 to 5 repetitions:-->
                                 <transfer>
                                     <idTransfer>1</idTransfer>
-                                    <transferAmount>10.00</transferAmount>
+                                    <transferAmount>5.00</transferAmount>
+                                    <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
+                                    <IBAN>IT45R0760103200000000001016</IBAN>
+                                    <remittanceInformation>testPaGetPayment</remittanceInformation>
+                                    <transferCategory>paGetPaymentTest</transferCategory>
+                                </transfer>
+                                <transfer>
+                                    <idTransfer>1</idTransfer>
+                                    <transferAmount>3.00</transferAmount>
+                                    <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
+                                    <IBAN>IT45R0760103200000000001016</IBAN>
+                                    <remittanceInformation>testPaGetPayment</remittanceInformation>
+                                    <transferCategory>paGetPaymentTest</transferCategory>
+                                </transfer>
+                                <transfer>
+                                    <idTransfer>1</idTransfer>
+                                    <transferAmount>2.00</transferAmount>
                                     <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
                                     <IBAN>IT45R0760103200000000001016</IBAN>
                                     <remittanceInformation>testPaGetPayment</remittanceInformation>
@@ -123,9 +141,13 @@ Feature: process tests for paSendRT [PSRT_22]
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
 
+    Scenario: trigger PollerAnnulli
+        Given the Execute activatePaymentNotice request scenario executed successfully
+        When job mod3CancelV2 triggered after 6 seconds
+        Then wait 5 seconds for expiration
 
     Scenario: Define sendPaymentOutcome
-        Given the Execute activatePaymentNotice request scenario executed successfully
+        Given the trigger PollerAnnulli scenario executed successfully
         And initial XML paSendRT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
@@ -156,7 +178,7 @@ Feature: process tests for paSendRT [PSRT_22]
                     <paymentMethod>creditCard</paymentMethod>
                     <!--Optional:-->
                     <paymentChannel>app</paymentChannel>
-                    <fee>2.00</fee>
+                    <fee>8.00</fee>
                     <!--Optional:-->
                     <payer>
                     <uniqueIdentifier>
@@ -189,21 +211,16 @@ Feature: process tests for paSendRT [PSRT_22]
         When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         #And job paSendRt triggered after 6 seconds
         And wait 10 seconds for expiration
-        Then check outcome is OK of sendPaymentOutcome response
+        Then check outcome is KO of sendPaymentOutcome response
+        And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcome response
 
         # DB Check
-        And execution query position_transfer to get value on the table POSITION_RECEIPT_RECIPIENT_STATUS, with the columns STATUS under macro NewMod3 with db name nodo_online
         And checks the value NOTICE_GENERATED,NOTICE_SENT,NOTICE_PENDING of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_transfer on db nodo_online under macro NewMod3
-
-        And execution query position_status_n to get value on the table POSITION_RECEIPT_RECIPIENT, with the columns STATUS under macro NewMod3 with db name nodo_online
         And checks the value NOTICE_PENDING of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_status_n on db nodo_online under macro NewMod3
-
-        And execution query position_transfer to get value on the table POSITION_PAYMENT_STATUS, with the columns STATUS under macro NewMod3 with db name nodo_online
-        And checks the value NOTICE_GENERATED,NOTICE_SENT,PAYING,PAID of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query position_status_n on db nodo_online under macro NewMod3
-
-        And execution query position_transfer to get value on the table POSITION_PAYMENT_STATUS_SNAPSHOT, with the columns STATUS under macro NewMod3 with db name nodo_online
+        And checks the value NOTICE_GENERATED,NOTICE_SENT,PAYING,PAID,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query position_status_n on db nodo_online under macro NewMod3
         And checks the value NOTICE_SENT of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query position_status_n on db nodo_online under macro NewMod3
-
+        And checks the value PAYING,INSERTED,PAID of the record at column STATUS of the table POSITION_STATUS retrived by the query position_transfer on db nodo_online under macro NewMod3
+        And checks the value PAID of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query position_status_n on db nodo_online under macro NewMod3
         And checks the value NotNone of the record at column ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
         And checks the value $activatePaymentNotice.fiscalCode of the record at column PA_FISCAL_CODE of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
         And checks the value $activatePaymentNotice.noticeNumber of the record at column NOTICE_ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
