@@ -119,7 +119,7 @@ stages:
              #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/RTPull/RTPull_flows.feature --tags=ok
              
              # Nicolò
-             behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/FAULTBEAN_ESTESO
+             behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/PrimitiveAccessorie
              
              # Lorenzo  
              #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/NewMod3/flows/paSendRT/PSRT_30.feature
