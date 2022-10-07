@@ -130,7 +130,6 @@ Feature: process tests for paSendRT [PSRT_30]
                 <soapenv:Header/>
                 <soapenv:Body>
                 <paf:paSendRTRes>
-                    <outcome>malformata</outcome>
                 </paf:paSendRTRes>
                 </soapenv:Body>
             </soapenv:Envelope>
@@ -226,7 +225,6 @@ Feature: process tests for paSendRT [PSRT_30]
                 <soapenv:Header/>
                 <soapenv:Body>
                 <paf:paSendRTRes>
-                    <outcome>malformata</outcome>
                 </paf:paSendRTRes>
                 </soapenv:Body>
             </soapenv:Envelope>
