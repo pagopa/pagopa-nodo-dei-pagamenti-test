@@ -148,22 +148,17 @@ stages:
               sudo ldconfig
 
             displayName: 'Linux ldconfig Command for Oracle Instant Client'
-
+            
           - script: |
               export PATH=/usr/bin:/usr/local/bin:$PATH #Add environment variables
               echo 'Install Behave'
-
               sudo pip3 install behave 
               sudo pip3 install -U -r $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/requirements.txt #Install Requirements
               whereis behave
               which behave
-              export PATH=/usr/local/bin/behave:/usr/bin:/usr/local/bin:$PATH #Add environment variables 
-              
-            displayName: 'Append /usr/local/bin at PATH and install beahve'
-
-          - script: |
+              export PATH=/usr/local/bin/behave:/usr/bin:/usr/local/bin:$PATH #Add environment variables
               behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/appIO/flows/Annullo_PagamentoIO/PRO_ANNULLO_01.feature
-              #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/appIO/flows/PagamentiAppIO/FLUSSO_APIO_07.feature
+              
             displayName: 'Run integration test'
         
           - task: PublishTestResults@2
