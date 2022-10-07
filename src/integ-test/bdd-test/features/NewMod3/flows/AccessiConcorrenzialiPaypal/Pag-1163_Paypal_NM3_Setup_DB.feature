@@ -93,11 +93,11 @@ Feature: DB checks for nodoChiediEsitoPagamento
         And check ragioneSociale field exists in informazioniPagamento response
         And check oggettoPagamento field exists in informazioniPagamento response
         And check urlRedirectEC field exists in informazioniPagamento response
-        #And check bolloDigitale is false of informazioniPagamento response
-        #And check email is IO.test.prova@gmail.com of informazioniPagamento response
+        And check bolloDigitale is false of informazioniPagamento response
+        And check email is IO.test.prova@gmail.com of informazioniPagamento response
         And check dettagli field exists in informazioniPagamento response
-        And check IUV is $1iuv of /informazioniPagamento response
-        And check CCP is $ccp of /informazioniPagamento response
+        And check IUV is $1iuv of informazioniPagamento response
+        And check CCP is $ccp of informazioniPagamento response
         And check idDominio is $verifyPaymentNotice.fiscalCode of informazioniPagamento response
         And check enteBeneficiario field exists in informazioniPagamento response
 
