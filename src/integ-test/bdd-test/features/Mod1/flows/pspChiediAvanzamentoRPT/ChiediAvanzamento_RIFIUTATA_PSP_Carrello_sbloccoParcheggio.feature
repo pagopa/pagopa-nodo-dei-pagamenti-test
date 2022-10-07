@@ -199,19 +199,6 @@ Feature: process tests for ChiediAvanzamento_RIFIUTATA_PSP_Carrello_sbloccoParch
         </soapenv:Body>
         </soapenv:Envelope>
         """
-        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte 
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-                <soapenv:Header/>
-                <soapenv:Body>
-                    <ws:pspInviaCarrelloRPTCarteResponse>
-                        <pspInviaCarrelloRPTResponse>
-                            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-                        </pspInviaCarrelloRPTResponse>
-                    </ws:pspInviaCarrelloRPTCarteResponse>
-                </soapenv:Body>
-            </soapenv:Envelope>
-            """
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
         And check url contains acardste of nodoInviaCarrelloRPT response
