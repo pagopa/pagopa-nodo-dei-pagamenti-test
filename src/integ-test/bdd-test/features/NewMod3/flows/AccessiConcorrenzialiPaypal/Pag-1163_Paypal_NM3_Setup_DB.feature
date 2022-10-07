@@ -2,9 +2,9 @@ Feature: DB checks for nodoChiediEsitoPagamento
 
     Background:
         Given systems up
-        And initial XML verifyPaymentNotice
         And generate 1 notice number and iuv with aux digit 3, segregation code 11 and application code NA
         And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
+        And initial XML verifyPaymentNotice
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
            <soapenv:Header/>
@@ -16,7 +16,7 @@ Feature: DB checks for nodoChiediEsitoPagamento
                  <password>pwdpwdpwd</password>
                  <qrCode>
                     <fiscalCode>#creditor_institution_code#</fiscalCode>
-                    <noticeNumber>$1noticeNumber</noticeNumber>
+                    <noticeNumber>$1noticeNumber</noticeNumbermaro>
                  </qrCode>
               </nod:verifyPaymentNoticeReq>
            </soapenv:Body>
@@ -82,18 +82,18 @@ Feature: DB checks for nodoChiediEsitoPagamento
 
     Scenario: Execute nodoChiediInformazioniPagamento request
         Given the Execute activateIOPaymentReq request scenario executed successfully
-        When EC sends rest GET /informazioniPagamento?idPagamento=$idPagamento to nodo-dei-pagamenti
-        Then check importo field exists in /informazioniPagamento response
-        And check ragioneSociale field exists in /informazioniPagamento response
-        And check oggettoPagamento field exists in /informazioniPagamento response
-        And check redirect is redirectEC of /informazioniPagamento response
-        And check false field exists in /informazioniPagamento response
-        And check dettagli field exists in /informazioniPagamento response
-        And check iuv is &iuv of /informazioniPagamento response
-        And check ccp is $ccp of /informazioniPagamento response
-        And check pa field exists in /informazioniPagamento response
-        And check enteBeneficiario field exists in /informazioniPagamento response
+        When WISP sends rest GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
+        Then check importo field exists in informazioniPagamento response
+        And check ragioneSociale field exists in informazioniPagamento response
+        And check oggettoPagamento field exists in informazioniPagamento response
+        And check redirect is redirectEC of informazioniPagamento response
+        And check false field exists in informazioniPagamento response
+        And check dettagli field exists in informazioniPagamento response
+        And check iuv is &1iuv of informazioniPagamento response
+        And check ccp field exists informazioniPagamento response
+        And check pa field exists in informazioniPagamento response
+        And check enteBeneficiario field exists in informazioniPagamento response
         And execution query pa_dbcheck_json to get value on the table PA, with the columns ragione_sociale under macro NewMod3 with db name nodo_cfg
         And through the query pa_dbcheck_json retrieve param ragione_sociale at position 0 and save it under the key ragione_sociale
-        And check $ragione_sociale is enteBeneficiario of /informazioniPagamento response
-        And check $ragione_sociale is ragioneSociale of /informazioniPagamento response
+        And check $ragione_sociale is enteBeneficiario of informazioniPagamento response
+        And check $ragione_sociale is ragioneSociale of informazioniPagamento response
