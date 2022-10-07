@@ -2,6 +2,7 @@ Feature:  block checks for verifyPaymentReq - position status in INSERTED (mod3C
 
   Background:
     Given systems up
+    And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
     And initial XML verifyPaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -14,7 +15,7 @@ Feature:  block checks for verifyPaymentReq - position status in INSERTED (mod3C
                <password>pwdpwdpwd</password>
                <qrCode>
                   <fiscalCode>#creditor_institution_code_old#</fiscalCode>
-                  <noticeNumber>#notice_number_old#</noticeNumber>
+                  <noticeNumber>$1noticeNumber</noticeNumber>
                </qrCode>
             </nod:verifyPaymentNoticeReq>
          </soapenv:Body>
@@ -47,8 +48,8 @@ Feature:  block checks for verifyPaymentReq - position status in INSERTED (mod3C
                   <fiscalCode>#creditor_institution_code_old#</fiscalCode>
                   <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
                </qrCode>
-               <expirationTime>2000</expirationTime>
-               <amount>120.00</amount>
+               <expirationTime>6000</expirationTime>
+               <amount>10.00</amount>
             </nod:activatePaymentNoticeReq>
          </soapenv:Body>
       </soapenv:Envelope>
@@ -119,7 +120,7 @@ Feature:  block checks for verifyPaymentReq - position status in INSERTED (mod3C
       <pay_i:dataEsecuzionePagamento>2016-09-16</pay_i:dataEsecuzionePagamento>
       <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
       <pay_i:tipoVersamento>PO</pay_i:tipoVersamento>
-      <pay_i:identificativoUnivocoVersamento>$iuv</pay_i:identificativoUnivocoVersamento>
+      <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
       <pay_i:codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken</pay_i:codiceContestoPagamento>
       <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
       <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
@@ -150,16 +151,16 @@ Feature:  block checks for verifyPaymentReq - position status in INSERTED (mod3C
          <identificativoIntermediarioPA>#id_broker_old#</identificativoIntermediarioPA>
          <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
          <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
-         <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
+         <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
          <codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken</codiceContestoPagamento>
          </ppt:intestazionePPT>
          </soapenv:Header>
          <soapenv:Body>
          <ws:nodoInviaRPT>
          <password>pwdpwdpwd</password>
-         <identificativoPSP>#psp#</identificativoPSP>
-         <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-         <identificativoCanale>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanale>
+         <identificativoPSP>15376371009</identificativoPSP>
+         <identificativoIntermediarioPSP>15376371009</identificativoIntermediarioPSP>
+         <identificativoCanale>15376371009_01</identificativoCanale>
          <tipoFirma></tipoFirma>
          <rpt>$rptAttachment</rpt>
          </ws:nodoInviaRPT>
