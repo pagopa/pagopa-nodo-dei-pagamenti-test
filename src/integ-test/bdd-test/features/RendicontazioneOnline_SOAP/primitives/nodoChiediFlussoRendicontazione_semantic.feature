@@ -49,7 +49,7 @@ Feature: Semantic checks for nodoChiediFlussoRendicontazione
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
             <identificativoCanale>#canale#</identificativoCanale>
             <password>pwdpwdpwd</password>
-            <identificativoDominio>#codicePA#</identificativoDominio>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoFlusso>$identificativoFlusso</identificativoFlusso>
             <dataOraFlusso>$timedate</dataOraFlusso>
             <xmlRendicontazione>$rendAttachment</xmlRendicontazione>
@@ -71,7 +71,7 @@ Feature: Semantic checks for nodoChiediFlussoRendicontazione
             <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
             <password>pwdpwdpwd</password>
-            <identificativoDominio>#codicePA#</identificativoDominio>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoFlusso>$identificativoFlusso</identificativoFlusso>
             </ws:nodoChiediFlussoRendicontazione>
@@ -109,7 +109,7 @@ Feature: Semantic checks for nodoChiediFlussoRendicontazione
             <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
             <password>pwdpwdpwd</password>
-            <identificativoDominio>#codicePA#</identificativoDominio>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoFlusso>$identificativoFlusso</identificativoFlusso>
             </ws:nodoChiediFlussoRendicontazione>
@@ -138,7 +138,7 @@ Feature: Semantic checks for nodoChiediFlussoRendicontazione
             <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
             <password>pwdpwdpwd</password>
-            <identificativoDominio>#codicePA#</identificativoDominio>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoFlusso>$identificativoFlusso</identificativoFlusso>
             </ws:nodoChiediFlussoRendicontazione>
@@ -189,7 +189,7 @@ Feature: Semantic checks for nodoChiediFlussoRendicontazione
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
             <identificativoCanale>#canale#</identificativoCanale>
             <password>pwdpwdpwd</password>
-            <identificativoDominio>#codicePA#</identificativoDominio>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoFlusso>$identificativoFlusso</identificativoFlusso>
             <dataOraFlusso>$timedate</dataOraFlusso>
             <xmlRendicontazione>$rendAttachment</xmlRendicontazione>
@@ -216,7 +216,7 @@ Feature: Semantic checks for nodoChiediFlussoRendicontazione
             <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
             <password>pwdpwdpwd</password>
-            <identificativoDominio>#codicePA#</identificativoDominio>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoFlusso>$identificativoFlusso</identificativoFlusso>
             </ws:nodoChiediFlussoRendicontazione>
@@ -243,7 +243,7 @@ Feature: Semantic checks for nodoChiediFlussoRendicontazione
             <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
             <password>pwdpwdpwd</password>
-            <identificativoDominio>#codicePA#</identificativoDominio>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoFlusso>$identificativoFlusso</identificativoFlusso>
             </ws:nodoChiediFlussoRendicontazione>

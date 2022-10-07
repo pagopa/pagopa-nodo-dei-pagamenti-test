@@ -53,7 +53,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - OK
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
             <identificativoCanale>#canale#</identificativoCanale>
             <password>pwdpwdpwd</password>
-            <identificativoDominio>#codicePA#</identificativoDominio>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoFlusso>$identificativoFlusso</identificativoFlusso>
             <dataOraFlusso>$timedate</dataOraFlusso>
             <xmlRendicontazione>$rendAttachment</xmlRendicontazione>
@@ -115,7 +115,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - OK
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
             <identificativoCanale>#canale#</identificativoCanale>
             <password>pwdpwdpwd</password>
-            <identificativoDominio>#codicePA#</identificativoDominio>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoFlusso>$identificativoFlusso</identificativoFlusso>
             <dataOraFlusso>$timedate</dataOraFlusso>
             <xmlRendicontazione>$rendAttachment</xmlRendicontazione>
@@ -174,7 +174,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - OK
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
             <identificativoCanale>#canale#</identificativoCanale>
             <password>pwdpwdpwd</password>
-            <identificativoDominio>#codicePA#</identificativoDominio>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoFlusso>$identificativoFlusso</identificativoFlusso>
             <dataOraFlusso>2021-10-24T12:14:29.176</dataOraFlusso>
             <xmlRendicontazione>$rendAttachment</xmlRendicontazione>
@@ -296,7 +296,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - OK
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
             <identificativoCanale>#canale#</identificativoCanale>
             <password>pwdpwdpwd</password>
-            <identificativoDominio>#codicePA#</identificativoDominio>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoFlusso>$identificativoFlusso</identificativoFlusso>
             <dataOraFlusso>$timedate</dataOraFlusso>
             <xmlRendicontazione>$rendAttachment</xmlRendicontazione>
@@ -357,7 +357,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - OK
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
             <identificativoCanale>#canale#</identificativoCanale>
             <password>pwdpwdpwd</password>
-            <identificativoDominio>#codicePA#</identificativoDominio>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoFlusso>$identificativoFlusso</identificativoFlusso>
             <dataOraFlusso>$timedate</dataOraFlusso>
             <xmlRendicontazione>$rendAttachment</xmlRendicontazione>
@@ -381,7 +381,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - OK
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
             <identificativoCanale>#canale#</identificativoCanale>
             <password>pwdpwdpwd</password>
-            <identificativoDominio>#codicePA#</identificativoDominio>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoFlusso>$identificativoFlusso</identificativoFlusso>
             <dataOraFlusso>$timedate+01:00</dataOraFlusso>
             <xmlRendicontazione>$rendAttachment</xmlRendicontazione>
@@ -442,7 +442,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - OK
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
             <identificativoCanale>#canale#</identificativoCanale>
             <password>pwdpwdpwd</password>
-            <identificativoDominio>#codicePA#</identificativoDominio>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoFlusso>$identificativoFlusso</identificativoFlusso>
             <dataOraFlusso>2022-01-13T12:52:06.936</dataOraFlusso>
             <xmlRendicontazione>$rendAttachment</xmlRendicontazione>
@@ -504,7 +504,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - OK
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
             <identificativoCanale>#canale#</identificativoCanale>
             <password>pwdpwdpwd</password>
-            <identificativoDominio>#codicePA#</identificativoDominio>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoFlusso>$identificativoFlusso</identificativoFlusso>
             <dataOraFlusso>2923-01-13T12:52:06.936</dataOraFlusso>
             <xmlRendicontazione>$rendAttachment</xmlRendicontazione>
@@ -528,7 +528,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - OK
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
             <identificativoCanale>#canale#</identificativoCanale>
             <password>pwdpwdpwd</password>
-            <identificativoDominio>#codicePA#</identificativoDominio>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoFlusso>$identificativoFlusso</identificativoFlusso>
             <dataOraFlusso>$timedate</dataOraFlusso>
             <xmlRendicontazione>$rendAttachment</xmlRendicontazione>

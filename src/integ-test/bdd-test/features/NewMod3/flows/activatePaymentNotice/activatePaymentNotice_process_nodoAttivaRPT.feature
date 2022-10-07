@@ -101,7 +101,7 @@ Feature: Process for activatePaymentNoticeReq
       <identificativoIntermediarioPSPPagamento>#intermediarioPSP2#</identificativoIntermediarioPSPPagamento>
       <identificativoCanalePagamento>#canale32#</identificativoCanalePagamento>
       <codificaInfrastrutturaPSP>QR-CODE</codificaInfrastrutturaPSP>
-      <codiceIdRPT><qrc:QrCode><qrc:CF>#codicePA#</qrc:CF><qrc:AuxDigit>3</qrc:AuxDigit><qrc:CodIUV>#cod_segr##iuv#</qrc:CodIUV></qrc:QrCode></codiceIdRPT>
+      <codiceIdRPT><qrc:QrCode><qrc:CF>#creditor_institution_code#</qrc:CF><qrc:AuxDigit>3</qrc:AuxDigit><qrc:CodIUV>#cod_segr##iuv#</qrc:CodIUV></qrc:QrCode></codiceIdRPT>
       <datiPagamentoPSP>
       <importoSingoloVersamento>10.00</importoSingoloVersamento>
       <!--Optional:-->

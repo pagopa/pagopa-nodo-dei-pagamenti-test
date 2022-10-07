@@ -24,8 +24,7 @@
   "global_configuration": {
     "creditor_institution_code": "66666666666",	    
     "creditor_institution_code_old": "66666666666",	    
-    "psp":"60000000001",	    
-    "codicePA": "66666666666",	    
+    "psp":"60000000001",	       
     "intermediarioPA":"66666666666",	   
 	  "intermediarioPAOld":"66666666666",									      
     "fiscalCodePA": "12345678901",	

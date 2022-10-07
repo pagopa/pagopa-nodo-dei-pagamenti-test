@@ -95,7 +95,7 @@
         "DB_GEST_ANN_update1": "UPDATE RPT SET UPDATED_TIMESTAMP = TO_DATE('date', 'YYYY-MM-DD HH24:MI:SS') WHERE IUV = '$iuv' AND IDENT_DOMINIO = '$nodoInviaRPT.identificativoDominio'"
     },
     "AppIOold":{
-        "cd_info_pagamento": "SELECT s.columns FROM table_name s WHERE s.IUV = '$nodoInviaRPT.identificativoUnivocoVersamento' AND s.IDENT_DOMINIO = '#codicePA#'"
+        "cd_info_pagamento": "SELECT s.columns FROM table_name s WHERE s.IUV = '$nodoInviaRPT.identificativoUnivocoVersamento' AND s.IDENT_DOMINIO = '#creditor_institution_code#'"
     },
     "Mod1Mb":{
         "DB_GEST_ANN_stati_rpt": "SELECT s.columns FROM table_name s WHERE s.IUV = '$iuv' and s.ID_DOMINIO = '$nodoInviaCarrelloRPT.identificativoDominio'",
