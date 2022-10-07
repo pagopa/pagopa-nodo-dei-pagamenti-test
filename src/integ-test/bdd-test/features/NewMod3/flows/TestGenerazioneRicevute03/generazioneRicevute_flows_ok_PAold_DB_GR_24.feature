@@ -175,10 +175,11 @@ Feature: process tests for generazioneRicevute [DB_GR_24]
       </soapenv:Body>
       </soapenv:Envelope>
       """
-    #And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
+    And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
     When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
     Then check esito is OK of nodoInviaRPT response
     And check redirect is 0 of nodoInviaRPT response
+    And wait 7 seconds for expiration
 
 
   # Payment Outcome Phase outcome OK
@@ -222,7 +223,7 @@ Feature: process tests for generazioneRicevute [DB_GR_24]
       """
     When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
-    And  psp wait 10 seconds for expiration
+    And wait 10 seconds for expiration
     And execution query position_payment to get value on the table POSITION_RECEIPT, with the columns * under macro NewMod3 with db name nodo_online
     And through the query position_payment retrieve param receipt_id at position 1 and save it under the key receipt_id
     And through the query position_payment retrieve param notice_id at position 2 and save it under the key notice_id
