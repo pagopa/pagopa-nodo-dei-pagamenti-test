@@ -13,7 +13,7 @@ Feature: Syntax checks OK for nodoChiediElencoFlussiRendicontazione
                         <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
                         <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
                         <password>pwdpwdpwd</password>
-                        <identificativoDominio>#codicePA#</identificativoDominio>
+                        <identificativoDominio>#creditor_institution_code#</identificativoDominio>
                         <identificativoPSP>#psp#</identificativoPSP>
                     </ws:nodoChiediElencoFlussiRendicontazione>
                 </soapenv:Body>

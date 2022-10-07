@@ -90,7 +90,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
          <soapenv:Header>
          <ppt:intestazioneCarrelloPPT>
-         <identificativoIntermediarioPA>#codicePA#</identificativoIntermediarioPA>
+         <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
          <identificativoStazioneIntermediarioPA>11111122222_01</identificativoStazioneIntermediarioPA>
          <identificativoCarrello>$carrNOTENABLED</identificativoCarrello>
          </ppt:intestazioneCarrelloPPT>
@@ -103,7 +103,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          <identificativoCanale>97735020584_02</identificativoCanale>
          <listaRPT>
          <elementoListaRPT>
-         <identificativoDominio>#codicePA#</identificativoDominio>
+         <identificativoDominio>#creditor_institution_code#</identificativoDominio>
          <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
          <codiceContestoPagamento>$carrNOTENABLED</codiceContestoPagamento>
          <rpt>$rptAttachment</rpt>

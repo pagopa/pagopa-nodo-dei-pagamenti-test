@@ -219,7 +219,7 @@ Feature: process tests for RPT-RT bollo
             <ppt:intestazionePPT>
             <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
-            <identificativoDominio>#codicePA#</identificativoDominio>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
             <codiceContestoPagamento>CCD01</codiceContestoPagamento>
             </ppt:intestazionePPT>
@@ -251,7 +251,7 @@ Feature: process tests for RPT-RT bollo
                   <identificativoCanale>#canale#</identificativoCanale>
                   <password>pwdpwdpwd</password>
                   <identificativoPSP>#psp#</identificativoPSP>
-                  <identificativoDominio>#codicePA#</identificativoDominio>
+                  <identificativoDominio>#creditor_institution_code#</identificativoDominio>
                   <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
                   <codiceContestoPagamento>CCD01</codiceContestoPagamento>
                   <tipoFirma></tipoFirma>

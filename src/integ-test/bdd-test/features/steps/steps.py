@@ -205,7 +205,7 @@ def step_impl(context):
     payload = utils.replace_local_variables(payload, context)
     payload = utils.replace_context_variables(payload, context)
 
-    pa = context.config.userdata.get('global_configuration').get('codicePA')
+    pa = context.config.userdata.get('global_configuration').get('creditor_institution_code')
 
 
     if "#iuv#" in payload:

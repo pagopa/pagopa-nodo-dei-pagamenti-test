@@ -12,7 +12,7 @@ Feature: syntax checks for paVerifyPaymentNotice - KO
           <idBrokerPSP>BANCOPOSTA</idBrokerPSP>
           <idChannel>POSTE3</idChannel>
           <password>pwdpwdpwd</password>
-          <ccPost>#codicePA#</ccPost>
+          <ccPost>#creditor_institution_code#</ccPost>
           <noticeNumber>#notice_number#</noticeNumber>
         </nod:verificaBollettinoReq>
       </soapenv:Body>

@@ -123,7 +123,7 @@ Feature: process tests for retry on a NOTICE_STORED transaction with different t
          <ppt:intestazionePPT>
          <identificativoIntermediarioPA>#id_broker_old#</identificativoIntermediarioPA>
          <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
-         <identificativoDominio>#codicePA_old#</identificativoDominio>
+         <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
          <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
          <codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken</codiceContestoPagamento>
          </ppt:intestazionePPT>

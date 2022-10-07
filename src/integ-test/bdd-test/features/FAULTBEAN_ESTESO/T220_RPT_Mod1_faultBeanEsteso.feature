@@ -143,10 +143,10 @@ Feature: T220_RPT_Mod1_faultBeanEsteso
         """
         {
             "idPagamento":"$sessionToken",
-            "identificativoPsp":"40000000001",
+            "identificativoPsp":"#psp#",
             "tipoVersamento":"BBT", 
-            "identificativoIntermediario":"40000000001",
-            "identificativoCanale":"40000000001_03",
+            "identificativoIntermediario":"#psp#",
+            "identificativoCanale":"#canale#",
             "tipoOperazione":"web"
         }
         """

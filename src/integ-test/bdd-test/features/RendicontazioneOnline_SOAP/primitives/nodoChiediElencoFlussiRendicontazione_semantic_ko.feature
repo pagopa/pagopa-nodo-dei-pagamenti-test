@@ -10,10 +10,10 @@ Feature: Semantic checks for nodoChiediElencoFlussiRendicontazione - KO
             <soapenv:Header />
             <soapenv:Body>
             <ws:nodoChiediElencoFlussiRendicontazione>
-            <identificativoIntermediarioPA>#codicePA#</identificativoIntermediarioPA>
+            <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
             <password>pwdpwdpwd</password>
-            <identificativoDominio>#codicePA#</identificativoDominio>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoPSP>#psp#</identificativoPSP>
             </ws:nodoChiediElencoFlussiRendicontazione>
             </soapenv:Body>

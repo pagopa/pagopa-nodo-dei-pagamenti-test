@@ -17,7 +17,7 @@ Feature: Syntax checks for nodoChiediFlussoRendicontazione
          <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
          <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
          <password>pwdpwdpwd</password>
-         <identificativoDominio>#codicePA#</identificativoDominio>
+         <identificativoDominio>#creditor_institution_code#</identificativoDominio>
          <identificativoPSP>#psp#</identificativoPSP>
          <identificativoFlusso>#identificativoFlusso#</identificativoFlusso>
          </ws:nodoChiediFlussoRendicontazione>
@@ -41,7 +41,7 @@ Feature: Syntax checks for nodoChiediFlussoRendicontazione
          <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
          <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
          <password>pwdpwdpwd</password>
-         <identificativoDominio>#codicePA#</identificativoDominio>
+         <identificativoDominio>#creditor_institution_code#</identificativoDominio>
          <identificativoPSP>#psp#</identificativoPSP>
          <identificativoFlusso>#identificativoFlusso#</identificativoFlusso>
          </ws:nodoChiediFlussoRendicontazione>
@@ -62,7 +62,7 @@ Feature: Syntax checks for nodoChiediFlussoRendicontazione
          <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
          <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
          <password>pwdpwdpwd</password>
-         <identificativoDominio>#codicePA#</identificativoDominio>
+         <identificativoDominio>#creditor_institution_code#</identificativoDominio>
          <identificativoPSP>#psp#</identificativoPSP>
          <identificativoFlusso>#identificativoFlusso#</identificativoFlusso>
          </ws:nodoChiediFlussoRendicontazione>
@@ -90,7 +90,7 @@ Feature: Syntax checks for nodoChiediFlussoRendicontazione
    #      <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
    #      <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
    #      <password>pwdpwdpwd</password>
-   #      <identificativoDominio>#codicePA#</identificativoDominio>
+   #      <identificativoDominio>#creditor_institution_code#</identificativoDominio>
    #      <identificativoPSP>#psp#</identificativoPSP>
    #      <identificativoFlusso>#identificativoFlusso#</identificativoFlusso>
    #      </ppt:nodoChiediFlussoRendicontazione>
@@ -112,7 +112,7 @@ Feature: Syntax checks for nodoChiediFlussoRendicontazione
          <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
          <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
          <password>pwdpwdpwd</password>
-         <identificativoDominio>#codicePA#</identificativoDominio>
+         <identificativoDominio>#creditor_institution_code#</identificativoDominio>
          <identificativoPSP>#psp#</identificativoPSP>
          <identificativoFlusso>#identificativoFlusso#</identificativoFlusso>
          </ws:nodoChiediFlussoRendicontazione>
@@ -150,7 +150,7 @@ Feature: Syntax checks for nodoChiediFlussoRendicontazione
          <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
          <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
          <password>pwdpwdpwd</password>
-         <identificativoDominio>#codicePA#</identificativoDominio>
+         <identificativoDominio>#creditor_institution_code#</identificativoDominio>
          <identificativoPSP>#psp#</identificativoPSP>
          <identificativoFlusso>${#TestSuite#flussoPsp1}</identificativoFlusso>
          </ws:nodoChiediFlussoRendicontazione>
@@ -198,7 +198,7 @@ Feature: Syntax checks for nodoChiediFlussoRendicontazione
          <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
          <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
          <password>pwdpwdpwd</password>
-         <identificativoDominio>#codicePA#</identificativoDominio>
+         <identificativoDominio>#creditor_institution_code#</identificativoDominio>
          <identificativoPSP>#psp#</identificativoPSP>
          <identificativoFlusso></identificativoFlusso>
          </ws:nodoChiediFlussoRendicontazione>
@@ -220,7 +220,7 @@ Feature: Syntax checks for nodoChiediFlussoRendicontazione
          <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
          <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
          <password>pwdpwdpwd</password>
-         <identificativoDominio>#codicePA#</identificativoDominio>
+         <identificativoDominio>#creditor_institution_code#</identificativoDominio>
          <identificativoPSP>#psp#</identificativoPSP>
          <identificativoFlusso>#identificativoFlusso#</identificativoFlusso>
          <rpt>ciao</rpt>
@@ -244,7 +244,7 @@ Feature: Syntax checks for nodoChiediFlussoRendicontazione
    #      <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
    #      <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
    #      <password>pwdpwdpwd
-   #      <identificativoDominio>#codicePA#</identificativoDominio>
+   #      <identificativoDominio>#creditor_institution_code#</identificativoDominio>
    #      <identificativoPSP>#psp#</identificativoPSP>
    #      <identificativoFlusso>#identificativoFlusso#</identificativoFlusso>
    #      </ws:nodoChiediFlussoRendicontazione>
