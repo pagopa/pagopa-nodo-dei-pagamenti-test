@@ -10,9 +10,9 @@ Feature: DB checks for nodoChiediEsitoPagamento
            <soapenv:Header/>
            <soapenv:Body>
               <nod:verifyPaymentNoticeReq>
-                 <idPSP>AGID_01</idPSP>
-                 <idBrokerPSP>66666666666</idBrokerPSP>
-                 <idChannel>60000000001_07</idChannel>
+                 <idPSP>#psp#</idPSP>
+                 <idBrokerPSP>#psp#</idBrokerPSP>
+                 <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
                  <password>pwdpwdpwd</password>
                  <qrCode>
                     <fiscalCode>#creditor_institution_code#</fiscalCode>
@@ -28,9 +28,9 @@ Feature: DB checks for nodoChiediEsitoPagamento
                 <soapenv:Header/>
                 <soapenv:Body>
                     <nod:activateIOPaymentReq>
-                        <idPSP>66666666666</idPSP>
-                        <idBrokerPSP>66666666666</idBrokerPSP>
-                        <idChannel>60000000001_07</idChannel>
+                        <idPSP>#psp#</idPSP>
+                        <idBrokerPSP>#psp#</idBrokerPSP>
+                        <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
                         <password>pwdpwdpwd</password>
                         <!--Optional:-->
                         <idempotencyKey>#idempotency_key#</idempotencyKey>
