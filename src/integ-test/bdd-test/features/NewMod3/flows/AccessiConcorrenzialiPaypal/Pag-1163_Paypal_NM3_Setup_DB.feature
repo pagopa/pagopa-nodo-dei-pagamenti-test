@@ -9,11 +9,11 @@ Feature: DB checks for nodoChiediEsitoPagamento
            <soapenv:Body>
               <nod:verifyPaymentNoticeReq>
                  <idPSP>AGID_01</idPSP>
-                 <idBrokerPSP>97735020584</idBrokerPSP>
-                 <idChannel>97735020584_03</idChannel>
+                 <idBrokerPSP>66666666666</idBrokerPSP>
+                 <idChannel>60000000001_07</idChannel>
                  <password>pwdpwdpwd</password>
                  <qrCode>
-                    <fiscalCode>77777777777</fiscalCode>
+                    <fiscalCode>66666666666</fiscalCode>
                     <noticeNumber>311$iuv</noticeNumber>
                  </qrCode>
               </nod:verifyPaymentNoticeReq>
@@ -26,9 +26,9 @@ Feature: DB checks for nodoChiediEsitoPagamento
                 <soapenv:Header/>
                 <soapenv:Body>
                     <nod:activateIOPaymentReq>
-                        <idPSP>70000000001</idPSP>
-                        <idBrokerPSP>70000000001</idBrokerPSP>
-                        <idChannel>70000000001_01</idChannel>
+                        <idPSP>66666666666</idPSP>
+                        <idBrokerPSP>66666666666</idBrokerPSP>
+                        <idChannel>60000000001_07</idChannel>
                         <password>pwdpwdpwd</password>
                         <!--Optional:-->
                         <idempotencyKey>$idempotenza</idempotencyKey>
