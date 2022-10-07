@@ -16,7 +16,7 @@ Feature: flow checks for verificaBollettino - EC new
       <codificaInfrastrutturaPSP>BARCODE-128-AIM</codificaInfrastrutturaPSP>
       <codiceIdRPT>
       <aim:aim128>
-      <aim:CCPost>#codicePA#</aim:CCPost>
+      <aim:CCPost>#creditor_institution_code#</aim:CCPost>
       <aim:AuxDigit>3</aim:AuxDigit>
       <aim:CodIUV>11192051789512983</aim:CodIUV>
       </aim:aim128>
@@ -47,7 +47,7 @@ Feature: flow checks for verificaBollettino - EC new
       <idBrokerPSP>BANCOPOSTA</idBrokerPSP>
       <idChannel>POSTE3</idChannel>
       <password>pwdpwdpwd</password>
-      <ccPost>#codicePA#</ccPost>
+      <ccPost>#creditor_institution_code#</ccPost>
       <noticeNumber>#notice_number#</noticeNumber>
       </nod:verificaBollettinoReq>
       </soapenv:Body>

@@ -1,4 +1,4 @@
-Feature: process tests for nodoInviaRPT [REV_NIRPT_13]
+Feature: process tests for nodoInviaRPT [REV_NIRPT_15]
 
     Background:
         Given systems up
@@ -146,7 +146,7 @@ Feature: process tests for nodoInviaRPT [REV_NIRPT_13]
             <idChannel>$verifyPaymentNotice.idChannel</idChannel>
             <password>pwdpwdpwd</password>
             <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
-            <outcome>OK</outcome>
+            <outcome>KO</outcome>
             </nod:sendPaymentOutcomeReq>
             </soapenv:Body>
             </soapenv:Envelope>

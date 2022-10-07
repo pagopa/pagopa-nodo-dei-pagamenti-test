@@ -1,4 +1,4 @@
-Feature: process tests for nodoInviaRPT [REV_NIRPT_13]
+Feature: process tests for nodoInviaRPT [REV_NIRPT_14]
 
     Background:
         Given systems up
@@ -132,30 +132,8 @@ Feature: process tests for nodoInviaRPT [REV_NIRPT_13]
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-    # Payment Outcome Phase outcome OK
-    Scenario: Execute sendPaymentOutcome request
+   Scenario: Excecute nodoInviaRPT
         Given the Define RPT scenario executed successfully
-        And initial XML sendPaymentOutcome
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <nod:sendPaymentOutcomeReq>
-            <idPSP>$verifyPaymentNotice.idPSP</idPSP>
-            <idBrokerPSP>$verifyPaymentNotice.idBrokerPSP</idBrokerPSP>
-            <idChannel>$verifyPaymentNotice.idChannel</idChannel>
-            <password>pwdpwdpwd</password>
-            <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
-            <outcome>OK</outcome>
-            </nod:sendPaymentOutcomeReq>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """  
-        When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-        Then check outcome is OK of sendPaymentOutcome response
-
-    Scenario: Excecute nodoInviaRPT
-        Given the Execute sendPaymentOutcome request scenario executed successfully
         And initial XML nodoInviaRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -181,8 +159,33 @@ Feature: process tests for nodoInviaRPT [REV_NIRPT_13]
             </soapenv:Envelope>
             """
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        Then check esito is OK of nodoInviaRPT response
+        
+    # Payment Outcome Phase outcome OK
+    Scenario: Execute sendPaymentOutcome request
+        Given the Excecute nodoInviaRPT scenario executed successfully
+        And initial XML sendPaymentOutcome
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <nod:sendPaymentOutcomeReq>
+            <idPSP>$verifyPaymentNotice.idPSP</idPSP>
+            <idBrokerPSP>$verifyPaymentNotice.idBrokerPSP</idBrokerPSP>
+            <idChannel>$verifyPaymentNotice.idChannel</idChannel>
+            <password>pwdpwdpwd</password>
+            <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
+            <outcome>KO</outcome>
+            </nod:sendPaymentOutcomeReq>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """  
+        When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         And job paInviaRt triggered after 5 seconds
         And wait 5 seconds for expiration
-        Then check esito is OK of nodoInviaRPT response
-        And checks the value RT_GENERATA_NODO, RT_INVIATA_PA of the record at column STATO of the table STATI_RPT retrived by the query stati_rpt on db nodo_online under macro NewMod3
-        #And checks the value NotNone of the record at column DATA_RICEVUTA of the table RT retrived by the query rt on db nodo_online under macro NewMod3
+        Then check outcome is OK of sendPaymentOutcome response
+        And checks the value RT_GENERATA_NODO, RT_INVIATA_PA of the record at column STATO of the table STATI_RPT retrived by the query stati_rpt on db nodo_online under macro NewMod3       
+
+
+ 
+

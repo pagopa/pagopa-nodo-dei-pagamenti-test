@@ -170,8 +170,8 @@ Feature: process tests for ChiediAvanzamento_RIFIUTATA_PSP_Carrello_sbloccoParch
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
         <soapenv:Header>
             <ppt:intestazioneCarrelloPPT>
-                <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
-                <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
+                <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
+                <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
                 <identificativoCarrello>$1ccp</identificativoCarrello>
             </ppt:intestazioneCarrelloPPT>
         </soapenv:Header>
@@ -180,10 +180,10 @@ Feature: process tests for ChiediAvanzamento_RIFIUTATA_PSP_Carrello_sbloccoParch
                 <password>pwdpwdpwd</password>
                 <identificativoPSP>#psp_AGID#</identificativoPSP>
                 <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
-                <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
+                <identificativoCanale>97735020584_02</identificativoCanale>
                 <listaRPT>
                     <elementoListaRPT>
-                    <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+                    <identificativoDominio>44444444444</identificativoDominio>
                     <identificativoUnivocoVersamento>avanzaKO</identificativoUnivocoVersamento>
                     <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
                     <rpt>$rptAttachment</rpt>
