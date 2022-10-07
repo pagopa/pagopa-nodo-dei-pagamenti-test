@@ -5,14 +5,14 @@ Feature: DB checks for nodoChiediEsitoPagamento
 
 
     Scenario: Execute verifyPaymentNotice request
+        Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
+        And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber  
         And initial XML verifyPaymentNotice
-        And generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
-        And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-            <soapenv:Header/>
-            <soapenv:Body>
-                <nod:verifyPaymentNoticeReq>
+                <soapenv:Header/>
+                <soapenv:Body>
+                    <nod:verifyPaymentNoticeReq>
                     <idPSP>#psp_AGID#</idPSP>
                     <idBrokerPSP>#broker_AGID#</idBrokerPSP>
                     <idChannel>#canale_AGID#</idChannel>
@@ -21,11 +21,12 @@ Feature: DB checks for nodoChiediEsitoPagamento
                         <fiscalCode>#creditor_institution_code#</fiscalCode>
                         <noticeNumber>$1noticeNumber</noticeNumber>
                     </qrCode>
-                </nod:verifyPaymentNoticeReq>
-            </soapenv:Body>
+                    </nod:verifyPaymentNoticeReq>
+                </soapenv:Body>
             </soapenv:Envelope>
             """
-        When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
+        And EC new version
+        When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of verifyPaymentNotice response
 
     Scenario: Execute activateIOPayment request
