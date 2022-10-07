@@ -116,10 +116,10 @@ function Collapsible_expandAllFailed()
         <div id="summary">
           <p id="totals">
             <p id="feature_totals">Features: passed: 1</p>
-            <p id="scenario_totals">Scenarios: skipped: 4, passed: 1</p>
-            <p id="step_totals">Steps: skipped: 20, passed: 11</p>
+            <p id="scenario_totals">Scenarios: skipped: 8, passed: 1</p>
+            <p id="step_totals">Steps: skipped: 29, passed: 104</p>
           </p>
-          <p id="duration">Finished in 43.9 seconds</p>
+          <p id="duration">Finished in 52.6 seconds</p>
           <div id="expand-collapse">
             <a id="expander" href="#" onclick="Collapsible_expandAll('scenario_steps')">Expand All</a>
             <span> | </span>
@@ -131,7 +131,7 @@ function Collapsible_expandAllFailed()
       </div>
       <div class="feature">
         <h2>
-          <span class="val">Feature: PRO_ANNULLO_00_PPALNEW</span>
+          <span class="val">Feature: process tests for retryAtokenScaduto</span>
         </h2>
         <span/>
       </div>
@@ -143,41 +143,81 @@ function Collapsible_expandAllFailed()
         <span/>
       </div>
       <div class="scenario">
-        <span class="scenario_file">src/integ-test/bdd-test/features/appIO/flows/Annullo_PagamentoIO/PRO_ANNULLO_00_PPALNEW.feature:6</span>
+        <span class="scenario_file">src/integ-test/bdd-test/features/NewMod3/flows/RetryATokenScaduto/retry_PaOld_15_2.feature:26</span>
         <h3 onclick="Collapsible_toggle('scenario_0')">
-          <span class="val">Scenario: Execute verifyPaymentNotice (Phase 1)</span>
+          <span class="val">Scenario: Execute verifyPaymentNotice request</span>
         </h3>
         <ol class="scenario_steps" id="scenario_0"/>
         <span/>
       </div>
       <div class="scenario">
-        <span class="scenario_file">src/integ-test/bdd-test/features/appIO/flows/Annullo_PagamentoIO/PRO_ANNULLO_00_PPALNEW.feature:29</span>
+        <span class="scenario_file">src/integ-test/bdd-test/features/NewMod3/flows/RetryATokenScaduto/retry_PaOld_15_2.feature:31</span>
         <h3 onclick="Collapsible_toggle('scenario_1')">
-          <span class="val">Scenario: Execute activateIOPayment (Phase 2)</span>
+          <span class="val">Scenario: Execute activatePaymentNotice request</span>
         </h3>
         <ol class="scenario_steps" id="scenario_1"/>
         <span/>
       </div>
       <div class="scenario">
-        <span class="scenario_file">src/integ-test/bdd-test/features/appIO/flows/Annullo_PagamentoIO/PRO_ANNULLO_00_PPALNEW.feature:83</span>
+        <span class="scenario_file">src/integ-test/bdd-test/features/NewMod3/flows/RetryATokenScaduto/retry_PaOld_15_2.feature:59</span>
         <h3 onclick="Collapsible_toggle('scenario_2')">
-          <span class="val">Scenario: Execute nodoChiediInformazioniPagamento (Phase 3)</span>
+          <span class="val">Scenario: Define RPT</span>
         </h3>
         <ol class="scenario_steps" id="scenario_2"/>
         <span/>
       </div>
       <div class="scenario">
-        <span class="scenario_file">src/integ-test/bdd-test/features/appIO/flows/Annullo_PagamentoIO/PRO_ANNULLO_00_PPALNEW.feature:88</span>
-        <span class="tag">@prova</span>
+        <span class="scenario_file">src/integ-test/bdd-test/features/NewMod3/flows/RetryATokenScaduto/retry_PaOld_15_2.feature:139</span>
         <h3 onclick="Collapsible_toggle('scenario_3')">
-          <span class="val">Scenario: Execute nodoInoltroEsitoPayPal (Phase 4)</span>
+          <span class="val">Scenario: Execute nodoInviaRPT request</span>
         </h3>
-        <ol class="scenario_steps" id="scenario_3">
+        <ol class="scenario_steps" id="scenario_3"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/NewMod3/flows/RetryATokenScaduto/retry_PaOld_15_2.feature:169</span>
+        <h3 onclick="Collapsible_toggle('scenario_4')">
+          <span class="val">Scenario: Execute poller Annulli</span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_4"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/NewMod3/flows/RetryATokenScaduto/retry_PaOld_15_2.feature:174</span>
+        <h3 onclick="Collapsible_toggle('scenario_5')">
+          <span class="val">Scenario: DB update</span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_5"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/NewMod3/flows/RetryATokenScaduto/retry_PaOld_15_2.feature:179</span>
+        <h3 onclick="Collapsible_toggle('scenario_6')">
+          <span class="val">Scenario: trigger paInviaRT + DB check</span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_6"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/NewMod3/flows/RetryATokenScaduto/retry_PaOld_15_2.feature:187</span>
+        <h3 onclick="Collapsible_toggle('scenario_7')">
+          <span class="val">Scenario: Execute sendPaymentOutcome request</span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_7"/>
+        <span/>
+      </div>
+      <div class="scenario">
+        <span class="scenario_file">src/integ-test/bdd-test/features/NewMod3/flows/RetryATokenScaduto/retry_PaOld_15_2.feature:231</span>
+        <span class="tag">@prova</span>
+        <h3 onclick="Collapsible_toggle('scenario_8')">
+          <span class="val">Scenario: check position_payment</span>
+        </h3>
+        <ol class="scenario_steps" id="scenario_8">
           <li class="step passed">
             <div class="step_name">
               <span class="keyword">Given </span>
               <span class="step val">systems up</span>
-              <small class="step_duration">(0.142s)</small>
+              <small class="step_duration">(0.242s)</small>
             </div>
             <div class="step_file">
               <span>src/integ-test/bdd-test/features/steps/steps.py:29</span>
@@ -216,100 +256,64 @@ function Collapsible_expandAllFailed()
           </li>
           <li class="step passed">
             <div class="step_name">
-              <span class="keyword">Given </span>
-              <span class="step val">
-                <span>the </span>
-                <b>Execute nodoChiediInformazioniPagamento (Phase 3)</b>
-                <span> scenario executed successfully</span>
-              </span>
-              <small class="step_duration">(14.333s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:974</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
               <span class="keyword">And </span>
               <span class="step val">
-                <span/>
-                <b>PSP</b>
-                <span> replies to </span>
-                <b>nodo-dei-pagamenti</b>
-                <span> with the </span>
-                <b>pspNotifyPayment</b>
+                <span>initial XML </span>
+                <b>verifyPaymentNotice</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.026s)</small>
+              <small class="step_duration">(0.017s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1021</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:57</span>
             </div>
             <span class="embed"/>
             <div class="message">
-              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:psp=&quot;http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd&quot;&gt;
-    &lt;soapenv:Header/&gt;
-    &lt;soapenv:Body&gt;
-        &lt;psp:pspNotifyPaymentRes&gt;
-        &lt;delay&gt;60000&lt;/delay&gt;
-        &lt;outcome&gt;OK&lt;/outcome&gt;
-        &lt;!--Optional:--&gt;
-        &lt;wait&gt;20&lt;/wait&gt;
-        &lt;/psp:pspNotifyPaymentRes&gt;
-    &lt;/soapenv:Body&gt;
+              <pre>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:nod=&quot;http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd&quot;&gt;
+&lt;soapenv:Header /&gt;
+&lt;soapenv:Body&gt;
+&lt;nod:verifyPaymentNoticeReq&gt;
+&lt;idPSP&gt;#psp#&lt;/idPSP&gt;
+&lt;idBrokerPSP&gt;#psp#&lt;/idBrokerPSP&gt;
+&lt;idChannel&gt;#canale_ATTIVATO_PRESSO_PSP#&lt;/idChannel&gt;
+&lt;password&gt;pwdpwdpwd&lt;/password&gt;
+&lt;qrCode&gt;
+&lt;fiscalCode&gt;#creditor_institution_code_old#&lt;/fiscalCode&gt;
+&lt;noticeNumber&gt;#notice_number_old#&lt;/noticeNumber&gt;
+&lt;/qrCode&gt;
+&lt;/nod:verifyPaymentNoticeReq&gt;
+&lt;/soapenv:Body&gt;
 &lt;/soapenv:Envelope&gt;
 </pre>
             </div>
           </li>
           <li class="step passed">
             <div class="step_name">
-              <span class="keyword">When </span>
+              <span class="keyword">And </span>
               <span class="step val">
-                <span/>
-                <b>WISP</b>
-                <span> sends REST </span>
-                <b>POST</b>
-                <span> </span>
-                <b>inoltroEsito/paypal</b>
-                <span> to </span>
-                <b>nodo-dei-pagamenti</b>
-                <span/>
+                <span>EC </span>
+                <b>old</b>
+                <span> version</span>
               </span>
-              <small class="step_duration">(11.870s)</small>
+              <small class="step_duration">(0.000s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:983</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:51</span>
             </div>
             <span class="embed"/>
-            <div class="message">
-              <pre>{
-    &quot;idTransazione&quot;: &quot;responseKO&quot;,
-    &quot;idTransazionePsp&quot;:&quot;$activateIOPayment.idempotencyKey&quot;,
-    &quot;idPagamento&quot;: &quot;$activateIOPaymentResponse.paymentToken&quot;,
-    &quot;identificativoIntermediario&quot;: &quot;#psp#&quot;,
-    &quot;identificativoPsp&quot;: &quot;#psp#&quot;,
-    &quot;identificativoCanale&quot;: &quot;#canale#&quot;,
-    &quot;importoTotalePagato&quot;: 10.00,
-    &quot;timestampOperazione&quot;: &quot;2012-04-23T18:25:43Z&quot;
-}
-</pre>
-            </div>
           </li>
           <li class="step passed">
             <div class="step_name">
-              <span class="keyword">And </span>
+              <span class="keyword">Given </span>
               <span class="step val">
-                <span>job </span>
-                <b>mod3CancelV2</b>
-                <span> triggered after </span>
-                <b>10</b>
-                <span> seconds</span>
+                <span>the </span>
+                <b>Execute sendPaymentOutcome request</b>
+                <span> scenario executed successfully</span>
               </span>
-              <small class="step_duration">(10.583s)</small>
+              <small class="step_duration">(34.047s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:730</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:973</span>
             </div>
             <span class="embed"/>
           </li>
@@ -318,13 +322,13 @@ function Collapsible_expandAllFailed()
               <span class="keyword">And </span>
               <span class="step val">
                 <span>wait </span>
-                <b>6</b>
+                <b>5</b>
                 <span> seconds for expiration</span>
               </span>
-              <small class="step_duration">(6.010s)</small>
+              <small class="step_duration">(5.012s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1537</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1536</span>
             </div>
             <span class="embed"/>
           </li>
@@ -332,96 +336,10 @@ function Collapsible_expandAllFailed()
             <div class="step_name">
               <span class="keyword">Then </span>
               <span class="step val">
-                <span>verify the HTTP status code of </span>
-                <b>inoltroEsito/paypal</b>
-                <span> response is </span>
-                <b>408</b>
-                <span/>
-              </span>
-              <small class="step_duration">(0.002s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1014</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
-                <span>check </span>
-                <b>error</b>
-                <span> is </span>
-                <b>Operazione in timeout</b>
-                <span> of </span>
-                <b>inoltroEsito/paypal</b>
-                <span> response</span>
-              </span>
-              <small class="step_duration">(0.006s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:742</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
                 <span>checks the value </span>
-                <b>PAYING, PAYMENT_SENT, PAYMENT_UNKNOWN, CANCELLED</b>
+                <b>PAYING,INSERTED,PAID</b>
                 <span> of the record at column </span>
-                <b>STATUS</b>
-                <span> of the table </span>
-                <b>POSITION_PAYMENT_STATUS</b>
-                <span> retrived by the query </span>
-                <b>payment_status</b>
-                <span> on db </span>
-                <b>nodo_online</b>
-                <span> under macro </span>
-                <b>AppIO</b>
-                <span/>
-              </span>
-              <small class="step_duration">(0.313s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1559</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
-                <span>checks the value </span>
-                <b>CANCELLED</b>
-                <span> of the record at column </span>
-                <b>STATUS</b>
-                <span> of the table </span>
-                <b>POSITION_PAYMENT_STATUS_SNAPSHOT</b>
-                <span> retrived by the query </span>
-                <b>payment_status</b>
-                <span> on db </span>
-                <b>nodo_online</b>
-                <span> under macro </span>
-                <b>AppIO</b>
-                <span/>
-              </span>
-              <small class="step_duration">(0.172s)</small>
-            </div>
-            <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1559</span>
-            </div>
-            <span class="embed"/>
-          </li>
-          <li class="step passed">
-            <div class="step_name">
-              <span class="keyword">And </span>
-              <span class="step val">
-                <span>checks the value </span>
-                <b>PAYING, INSERTED</b>
-                <span> of the record at column </span>
-                <b>STATUS</b>
+                <b>status</b>
                 <span> of the table </span>
                 <b>POSITION_STATUS</b>
                 <span> retrived by the query </span>
@@ -429,13 +347,13 @@ function Collapsible_expandAllFailed()
                 <span> on db </span>
                 <b>nodo_online</b>
                 <span> under macro </span>
-                <b>AppIO</b>
+                <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.205s)</small>
+              <small class="step_duration">(0.133s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1559</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
             </div>
             <span class="embed"/>
           </li>
@@ -444,9 +362,9 @@ function Collapsible_expandAllFailed()
               <span class="keyword">And </span>
               <span class="step val">
                 <span>checks the value </span>
-                <b>INSERTED</b>
+                <b>PAID</b>
                 <span> of the record at column </span>
-                <b>STATUS</b>
+                <b>status</b>
                 <span> of the table </span>
                 <b>POSITION_STATUS_SNAPSHOT</b>
                 <span> retrived by the query </span>
@@ -454,25 +372,2491 @@ function Collapsible_expandAllFailed()
                 <span> on db </span>
                 <b>nodo_online</b>
                 <span> under macro </span>
-                <b>AppIO</b>
+                <b>NewMod3</b>
                 <span/>
               </span>
-              <small class="step_duration">(0.210s)</small>
+              <small class="step_duration">(0.117s)</small>
             </div>
             <div class="step_file">
-              <span>src/integ-test/bdd-test/features/steps/steps.py:1559</span>
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>PAYING,PAYING_RPT,CANCELLED,PAID_NORPT</b>
+                <span> of the record at column </span>
+                <b>status</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT_STATUS</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.122s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>CANCELLED,PAID_NORPT</b>
+                <span> of the record at column </span>
+                <b>status</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT_STATUS_SNAPSHOT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.114s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO_MOD3,RPT_ANNULLATA_NODO,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA</b>
+                <span> of the record at column </span>
+                <b>stato</b>
+                <span> of the table </span>
+                <b>STATI_RPT</b>
+                <span> retrived by the query </span>
+                <b>stati_rpt</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.185s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>RT_ACCETTATA_PA</b>
+                <span> of the record at column </span>
+                <b>stato</b>
+                <span> of the table </span>
+                <b>STATI_RPT_SNAPSHOT</b>
+                <span> retrived by the query </span>
+                <b>stati_rpt</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.121s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>$activatePaymentNotice.fiscalCode</b>
+                <span> of the record at column </span>
+                <b>pa_fiscal_code</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.132s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>$activatePaymentNotice.noticeNumber</b>
+                <span> of the record at column </span>
+                <b>notice_id</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.145s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>$iuv</b>
+                <span> of the record at column </span>
+                <b>creditor_reference_id</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.143s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>$activatePaymentNoticeResponse.paymentToken</b>
+                <span> of the record at column </span>
+                <b>payment_token</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.141s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>$activatePaymentNotice.fiscalCode</b>
+                <span> of the record at column </span>
+                <b>broker_pa_id</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.124s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>1</b>
+                <span> of the record at column </span>
+                <b>station_version</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.155s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>$activatePaymentNotice.idPSP</b>
+                <span> of the record at column </span>
+                <b>psp_id</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.160s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>$activatePaymentNotice.idBrokerPSP</b>
+                <span> of the record at column </span>
+                <b>broker_psp_id</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.162s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>$activatePaymentNotice.idempotencyKey</b>
+                <span> of the record at column </span>
+                <b>idempotency_key</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.146s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>10</b>
+                <span> of the record at column </span>
+                <b>amount</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.117s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>None</b>
+                <span> of the record at column </span>
+                <b>fee</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.138s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>None</b>
+                <span> of the record at column </span>
+                <b>payment_method</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.125s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>NA</b>
+                <span> of the record at column </span>
+                <b>payment_channel</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.140s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>None</b>
+                <span> of the record at column </span>
+                <b>transfer_date</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.146s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>None</b>
+                <span> of the record at column </span>
+                <b>payer_id</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.127s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>None</b>
+                <span> of the record at column </span>
+                <b>application_date</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.126s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>NotNone</b>
+                <span> of the record at column </span>
+                <b>inserted_timestamp</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.123s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>NotNone</b>
+                <span> of the record at column </span>
+                <b>updated_timestamp</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.186s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>MOD3</b>
+                <span> of the record at column </span>
+                <b>payment_type</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.132s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>None</b>
+                <span> of the record at column </span>
+                <b>carrello_id</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.126s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>None</b>
+                <span> of the record at column </span>
+                <b>original_payment_token</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.146s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>$activatePaymentNotice.fiscalCode</b>
+                <span> of the record at column </span>
+                <b>pa_fiscal_code</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status_v2</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.119s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>$activatePaymentNotice.noticeNumber</b>
+                <span> of the record at column </span>
+                <b>notice_id</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status_v2</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.138s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>$iuv</b>
+                <span> of the record at column </span>
+                <b>creditor_reference_id</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status_v2</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.139s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>$activatePaymentNoticeResponse.paymentToken-v2</b>
+                <span> of the record at column </span>
+                <b>payment_token</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status_v2</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.115s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>$activatePaymentNotice.fiscalCode</b>
+                <span> of the record at column </span>
+                <b>broker_pa_id</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status_v2</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.144s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>1</b>
+                <span> of the record at column </span>
+                <b>station_version</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status_v2</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.156s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>$activatePaymentNotice.idPSP</b>
+                <span> of the record at column </span>
+                <b>psp_id</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status_v2</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.125s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>$activatePaymentNotice.idBrokerPSP</b>
+                <span> of the record at column </span>
+                <b>broker_psp_id</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status_v2</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.116s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>$activatePaymentNotice.idempotencyKey</b>
+                <span> of the record at column </span>
+                <b>idempotency_key</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status_v2</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.130s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>10</b>
+                <span> of the record at column </span>
+                <b>amount</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status_v2</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.145s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>2</b>
+                <span> of the record at column </span>
+                <b>fee</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status_v2</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.112s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>creditCard</b>
+                <span> of the record at column </span>
+                <b>payment_method</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status_v2</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.125s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>app</b>
+                <span> of the record at column </span>
+                <b>payment_channel</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status_v2</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.151s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>NotNone</b>
+                <span> of the record at column </span>
+                <b>transfer_date</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status_v2</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.113s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>NotNone</b>
+                <span> of the record at column </span>
+                <b>payer_id</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status_v2</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.156s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>NotNone</b>
+                <span> of the record at column </span>
+                <b>application_date</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status_v2</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.123s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>NotNone</b>
+                <span> of the record at column </span>
+                <b>inserted_timestamp</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status_v2</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.135s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>NotNone</b>
+                <span> of the record at column </span>
+                <b>updated_timestamp</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status_v2</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.127s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>MOD3</b>
+                <span> of the record at column </span>
+                <b>payment_type</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status_v2</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.119s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>None</b>
+                <span> of the record at column </span>
+                <b>carrello_id</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status_v2</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.146s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>$activatePaymentNoticeResponse.paymentToken</b>
+                <span> of the record at column </span>
+                <b>original_payment_token</b>
+                <span> of the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span> retrived by the query </span>
+                <b>payment_status_v2</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.119s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>$activatePaymentNotice.fiscalCode</b>
+                <span> of the record at column </span>
+                <b>pa_fiscal_code</b>
+                <span> of the table </span>
+                <b>POSITION_ACTIVATE</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.180s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>$activatePaymentNotice.noticeNumber</b>
+                <span> of the record at column </span>
+                <b>notice_id</b>
+                <span> of the table </span>
+                <b>POSITION_ACTIVATE</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.132s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>$iuv</b>
+                <span> of the record at column </span>
+                <b>creditor_reference_id</b>
+                <span> of the table </span>
+                <b>POSITION_ACTIVATE</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.149s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>$activatePaymentNotice.idempotencyKey</b>
+                <span> of the record at column </span>
+                <b>idempotency_key</b>
+                <span> of the table </span>
+                <b>POSITION_ACTIVATE</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.173s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>$activatePaymentNoticeResponse.paymentToken</b>
+                <span> of the record at column </span>
+                <b>payment_token</b>
+                <span> of the table </span>
+                <b>POSITION_ACTIVATE</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.111s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>NotNone</b>
+                <span> of the record at column </span>
+                <b>token_valid_from</b>
+                <span> of the table </span>
+                <b>POSITION_ACTIVATE</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.123s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>NotNone</b>
+                <span> of the record at column </span>
+                <b>token_valid_to</b>
+                <span> of the table </span>
+                <b>POSITION_ACTIVATE</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.131s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>5</b>
+                <span> of the record at column </span>
+                <b>amount</b>
+                <span> of the table </span>
+                <b>POSITION_ACTIVATE</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.141s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>$activatePaymentNotice.fiscalCode</b>
+                <span> of the record at column </span>
+                <b>pa_fiscal_code</b>
+                <span> of the table </span>
+                <b>POSITION_ACTIVATE</b>
+                <span> retrived by the query </span>
+                <b>payment_status_v2</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.123s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>$activatePaymentNotice.noticeNumber</b>
+                <span> of the record at column </span>
+                <b>notice_id</b>
+                <span> of the table </span>
+                <b>POSITION_ACTIVATE</b>
+                <span> retrived by the query </span>
+                <b>payment_status_v2</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.131s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>$iuv</b>
+                <span> of the record at column </span>
+                <b>creditor_reference_id</b>
+                <span> of the table </span>
+                <b>POSITION_ACTIVATE</b>
+                <span> retrived by the query </span>
+                <b>payment_status_v2</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.152s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>None</b>
+                <span> of the record at column </span>
+                <b>idempotency_key</b>
+                <span> of the table </span>
+                <b>POSITION_ACTIVATE</b>
+                <span> retrived by the query </span>
+                <b>payment_status_v2</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.147s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>$activatePaymentNoticeResponse.paymentToken-v2</b>
+                <span> of the record at column </span>
+                <b>payment_token</b>
+                <span> of the table </span>
+                <b>POSITION_ACTIVATE</b>
+                <span> retrived by the query </span>
+                <b>payment_status_v2</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.166s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>NotNone</b>
+                <span> of the record at column </span>
+                <b>token_valid_from</b>
+                <span> of the table </span>
+                <b>POSITION_ACTIVATE</b>
+                <span> retrived by the query </span>
+                <b>payment_status_v2</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.153s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>NotNone</b>
+                <span> of the record at column </span>
+                <b>token_valid_to</b>
+                <span> of the table </span>
+                <b>POSITION_ACTIVATE</b>
+                <span> retrived by the query </span>
+                <b>payment_status_v2</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.158s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>5</b>
+                <span> of the record at column </span>
+                <b>amount</b>
+                <span> of the table </span>
+                <b>POSITION_ACTIVATE</b>
+                <span> retrived by the query </span>
+                <b>payment_status_v2</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.149s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>$activatePaymentNotice.fiscalCode</b>
+                <span> of the record at column </span>
+                <b>pa_fiscal_code</b>
+                <span> of the table </span>
+                <b>TOKEN_UTILITY</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.156s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>$activatePaymentNotice.noticeNumber</b>
+                <span> of the record at column </span>
+                <b>notice_id</b>
+                <span> of the table </span>
+                <b>TOKEN_UTILITY</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.140s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>$iuv</b>
+                <span> of the record at column </span>
+                <b>creditor_reference_id</b>
+                <span> of the table </span>
+                <b>TOKEN_UTILITY</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.158s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>$activatePaymentNoticeResponse.paymentToken</b>
+                <span> of the record at column </span>
+                <b>token1</b>
+                <span> of the table </span>
+                <b>TOKEN_UTILITY</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.151s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>$activatePaymentNoticeResponse.paymentToken-v2</b>
+                <span> of the record at column </span>
+                <b>token2</b>
+                <span> of the table </span>
+                <b>TOKEN_UTILITY</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.131s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>execution query </span>
+                <b>payment_status</b>
+                <span> to get value on the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span>, with the columns </span>
+                <b>id</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span> with db name </span>
+                <b>nodo_online</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.149s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1406</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>through the query </span>
+                <b>payment_status</b>
+                <span> retrieve param </span>
+                <b>id</b>
+                <span> at position </span>
+                <b>0</b>
+                <span> and save it under the key </span>
+                <b>id0</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.002s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1425</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>execution query </span>
+                <b>payment_status_v2</b>
+                <span> to get value on the table </span>
+                <b>POSITION_PAYMENT</b>
+                <span>, with the columns </span>
+                <b>id</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span> with db name </span>
+                <b>nodo_online</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.141s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1406</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>through the query </span>
+                <b>payment_status_v2</b>
+                <span> retrieve param </span>
+                <b>id</b>
+                <span> at position </span>
+                <b>0</b>
+                <span> and save it under the key </span>
+                <b>id1</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.002s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1425</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>$id0</b>
+                <span> of the record at column </span>
+                <b>fk_payment1</b>
+                <span> of the table </span>
+                <b>TOKEN_UTILITY</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.117s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>$id1</b>
+                <span> of the record at column </span>
+                <b>fk_payment2</b>
+                <span> of the table </span>
+                <b>TOKEN_UTILITY</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.134s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>execution query </span>
+                <b>rt_stati</b>
+                <span> to get value on the table </span>
+                <b>RPT</b>
+                <span>, with the columns </span>
+                <b>id</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span> with db name </span>
+                <b>nodo_online</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.136s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1406</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>through the query </span>
+                <b>rt_stati</b>
+                <span> retrieve param </span>
+                <b>id</b>
+                <span> at position </span>
+                <b>0</b>
+                <span> and save it under the key </span>
+                <b>fk_rptid0</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.001s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1425</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>$fk_rptid0</b>
+                <span> of the record at column </span>
+                <b>fk_rpt1</b>
+                <span> of the table </span>
+                <b>TOKEN_UTILITY</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.139s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>None</b>
+                <span> of the record at column </span>
+                <b>fk_rpt2</b>
+                <span> of the table </span>
+                <b>TOKEN_UTILITY</b>
+                <span> retrived by the query </span>
+                <b>payment_status</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.149s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>execution query </span>
+                <b>rt_stati</b>
+                <span> to get value on the table </span>
+                <b>RPT</b>
+                <span>, with the columns </span>
+                <b>ID_MSG_RICH</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span> with db name </span>
+                <b>nodo_online</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.131s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1406</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>through the query </span>
+                <b>rt_stati</b>
+                <span> retrieve param </span>
+                <b>ID_MSG_RICH</b>
+                <span> at position </span>
+                <b>0</b>
+                <span> and save it under the key </span>
+                <b>id_richiesta</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.001s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1425</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>NotNone</b>
+                <span> of the record at column </span>
+                <b>id_sessione</b>
+                <span> of the table </span>
+                <b>RT</b>
+                <span> retrived by the query </span>
+                <b>rt_stati</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.122s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>$activatePaymentNoticeResponse.paymentToken</b>
+                <span> of the record at column </span>
+                <b>ccp</b>
+                <span> of the table </span>
+                <b>RT</b>
+                <span> retrived by the query </span>
+                <b>rt_stati</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.124s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>$activatePaymentNotice.fiscalCode</b>
+                <span> of the record at column </span>
+                <b>ident_dominio</b>
+                <span> of the table </span>
+                <b>RT</b>
+                <span> retrived by the query </span>
+                <b>rt_stati</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.133s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>$iuv</b>
+                <span> of the record at column </span>
+                <b>iuv</b>
+                <span> of the table </span>
+                <b>RT</b>
+                <span> retrived by the query </span>
+                <b>rt_stati</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.148s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>1</b>
+                <span> of the record at column </span>
+                <b>cod_esito</b>
+                <span> of the table </span>
+                <b>RT</b>
+                <span> retrived by the query </span>
+                <b>rt_stati</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.123s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>NON_ESEGUITO</b>
+                <span> of the record at column </span>
+                <b>esito</b>
+                <span> of the table </span>
+                <b>RT</b>
+                <span> retrived by the query </span>
+                <b>rt_stati</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.118s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>NotNone</b>
+                <span> of the record at column </span>
+                <b>data_ricevuta</b>
+                <span> of the table </span>
+                <b>RT</b>
+                <span> retrived by the query </span>
+                <b>rt_stati</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.111s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>NotNone</b>
+                <span> of the record at column </span>
+                <b>data_richiesta</b>
+                <span> of the table </span>
+                <b>RT</b>
+                <span> retrived by the query </span>
+                <b>rt_stati</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.109s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>NotNone</b>
+                <span> of the record at column </span>
+                <b>id_ricevuta</b>
+                <span> of the table </span>
+                <b>RT</b>
+                <span> retrived by the query </span>
+                <b>rt_stati</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.138s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>$id_richiesta</b>
+                <span> of the record at column </span>
+                <b>id_richiesta</b>
+                <span> of the table </span>
+                <b>RT</b>
+                <span> retrived by the query </span>
+                <b>rt_stati</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.122s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>0</b>
+                <span> of the record at column </span>
+                <b>somma_versamenti</b>
+                <span> of the table </span>
+                <b>RT</b>
+                <span> retrived by the query </span>
+                <b>rt_stati</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.138s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>NotNone</b>
+                <span> of the record at column </span>
+                <b>inserted_timestamp</b>
+                <span> of the table </span>
+                <b>RT</b>
+                <span> retrived by the query </span>
+                <b>rt_stati</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.117s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>NotNone</b>
+                <span> of the record at column </span>
+                <b>updated_timestamp</b>
+                <span> of the table </span>
+                <b>RT</b>
+                <span> retrived by the query </span>
+                <b>rt_stati</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.150s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>15376371009_01</b>
+                <span> of the record at column </span>
+                <b>canale</b>
+                <span> of the table </span>
+                <b>RT</b>
+                <span> retrived by the query </span>
+                <b>rt_stati</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.116s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>N</b>
+                <span> of the record at column </span>
+                <b>notifica_processata</b>
+                <span> of the table </span>
+                <b>RT</b>
+                <span> retrived by the query </span>
+                <b>rt_stati</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.119s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>$iuv</b>
+                <span> of the record at column </span>
+                <b>creditor_reference_id</b>
+                <span> of the table </span>
+                <b>RPT_ACTIVATIONS</b>
+                <span> retrived by the query </span>
+                <b>payment_token_v2</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.123s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>$activatePaymentNoticeResponse.paymentToken-v2</b>
+                <span> of the record at column </span>
+                <b>payment_token</b>
+                <span> of the table </span>
+                <b>RPT_ACTIVATIONS</b>
+                <span> retrived by the query </span>
+                <b>payment_token_v2</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.114s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>Y</b>
+                <span> of the record at column </span>
+                <b>PAAATTIVARPTRESP</b>
+                <span> of the table </span>
+                <b>RPT_ACTIVATIONS</b>
+                <span> retrived by the query </span>
+                <b>payment_token_v2</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.127s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>N</b>
+                <span> of the record at column </span>
+                <b>NODOINVIARPTREQ</b>
+                <span> of the table </span>
+                <b>RPT_ACTIVATIONS</b>
+                <span> retrived by the query </span>
+                <b>payment_token_v2</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.127s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>checks the value </span>
+                <b>NotNone</b>
+                <span> of the record at column </span>
+                <b>INSERTED_TIMESTAMP</b>
+                <span> of the table </span>
+                <b>RPT_ACTIVATIONS</b>
+                <span> retrived by the query </span>
+                <b>payment_token_v2</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.132s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1558</span>
+            </div>
+            <span class="embed"/>
+          </li>
+          <li class="step passed">
+            <div class="step_name">
+              <span class="keyword">And </span>
+              <span class="step val">
+                <span>verify </span>
+                <b>0</b>
+                <span> record for the table </span>
+                <b>RETRY_PA_ATTIVA_RPT</b>
+                <span> retrived by the query </span>
+                <b>retry_pa_invia_rpt</b>
+                <span> on db </span>
+                <b>nodo_online</b>
+                <span> under macro </span>
+                <b>NewMod3</b>
+                <span/>
+              </span>
+              <small class="step_duration">(0.125s)</small>
+            </div>
+            <div class="step_file">
+              <span>src/integ-test/bdd-test/features/steps/steps.py:1718</span>
             </div>
             <span class="embed"/>
           </li>
         </ol>
-        <span/>
-      </div>
-      <div class="scenario">
-        <span class="scenario_file">src/integ-test/bdd-test/features/appIO/flows/Annullo_PagamentoIO/PRO_ANNULLO_00_PPALNEW.feature:126</span>
-        <h3 onclick="Collapsible_toggle('scenario_4')">
-          <span class="val">Scenario: Execute activateIOPayment (Phase 5)</span>
-        </h3>
-        <ol class="scenario_steps" id="scenario_4"/>
         <span/>
       </div>
     </div>
