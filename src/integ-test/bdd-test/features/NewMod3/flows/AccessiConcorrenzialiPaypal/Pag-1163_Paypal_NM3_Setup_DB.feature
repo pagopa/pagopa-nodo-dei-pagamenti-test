@@ -33,7 +33,7 @@ Feature: DB checks for nodoChiediEsitoPagamento
                         <idChannel>60000000001_07</idChannel>
                         <password>pwdpwdpwd</password>
                         <!--Optional:-->
-                        <idempotencyKey>$idempotenza</idempotencyKey>
+                        <idempotencyKey>#idempotency_key#</idempotencyKey>
                         <qrCode>
                             <fiscalCode>#creditor_institution_code#</fiscalCode>
                             <noticeNumber>$1noticeNumber</noticeNumber>
