@@ -88,7 +88,7 @@ Feature: DB checks for nodoChiediEsitoPagamento
                     <paf:paGetPaymentRes>
                         <outcome>OK</outcome>
                         <data>
-                            <creditorReferenceId>$1iuv</creditorReferenceId>
+                            <creditorReferenceId>#cod_segr#$1iuv</creditorReferenceId>
                             <paymentAmount>10.00</paymentAmount>
                             <dueDate>2021-12-31</dueDate>
                             <!--Optional:-->
@@ -166,7 +166,7 @@ Feature: DB checks for nodoChiediEsitoPagamento
         And check idDominio is $verifyPaymentNotice.fiscalCode of informazioniPagamento response
         And check enteBeneficiario field exists in informazioniPagamento response
 
-        # And execution query pa_dbcheck_json to get value on the table PA, with the columns ragione_sociale under macro NewMod3 with db name nodo_cfg
-        # And through the query pa_dbcheck_json retrieve param ragione_sociale at position 0 and save it under the key ragione_sociale
-        # And check $ragione_sociale is enteBeneficiario of /informazioniPagamento response
-        # And check $ragione_sociale is ragioneSociale of /informazioniPagamento response
+        And execution query pa_dbcheck_json to get value on the table PA, with the columns RAGIONE_SOCIALE under macro NewMod3 with db name nodo_cfg
+        And through the query pa_dbcheck_json retrieve param ragione_sociale at position 0 and save it under the key ragione_sociale
+        And check enteBeneficiario is $ragione_sociale of informazioniPagamento response
+        And check ragioneSociale is $ragione_sociale of informazioniPagamento response
