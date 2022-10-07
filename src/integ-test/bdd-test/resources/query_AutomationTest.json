@@ -46,6 +46,7 @@
         "rt_xml": "SELECT columns FROM table_name where IUV = '$iuv' and IDENT_DOMINIO= '$activatePaymentNotice.fiscalCode' and CCP = '$activatePaymentNoticeResponse.paymentToken'",
         "stati_rpt": "SELECT s.columns FROM table_name s where s.IUV = '$iuv' and s.ID_DOMINIO= '$activatePaymentNotice.fiscalCode'",
         "pa_dbcheck_json": "SELECT columns FROM table_name where ID_DOMINIO= '$activatePaymentNotice.fiscalCode'",
+        "dbcheck_json": "SELECT columns FROM table_name where ID_DOMINIO= '$activateIOPaymentResponse.paymentToken'",
         "stati_rpt_2iuv_codpaold": "SELECT s.columns FROM table_name s where s.IUV = '$2iuv' and s.ID_DOMINIO= '#creditor_institution_code_old#'",
         "rpt_id":"SELECT columns FROM table_name  where IUV = '$iuv' and IDENT_DOMINIO= '$activatePaymentNotice.fiscalCode'",
         "payment_token_v2":"SELECT columns FROM table_name where PAYMENT_TOKEN = '$activatePaymentNoticeResponse.paymentToken-v2'",

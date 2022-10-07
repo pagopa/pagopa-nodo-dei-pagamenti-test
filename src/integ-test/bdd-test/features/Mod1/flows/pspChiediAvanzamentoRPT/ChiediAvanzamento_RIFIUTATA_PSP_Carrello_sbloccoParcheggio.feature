@@ -9,7 +9,7 @@ Feature: process tests for ChiediAvanzamento_RIFIUTATA_PSP_Carrello_sbloccoParch
         <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
         <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
         <pay_i:dominio>
-        <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
+        <pay_i:identificativoDominio>44444444444</pay_i:identificativoDominio>
         <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
         </pay_i:dominio>
         <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
@@ -199,19 +199,6 @@ Feature: process tests for ChiediAvanzamento_RIFIUTATA_PSP_Carrello_sbloccoParch
         </soapenv:Body>
         </soapenv:Envelope>
         """
-        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte 
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-                <soapenv:Header/>
-                <soapenv:Body>
-                    <ws:pspInviaCarrelloRPTCarteResponse>
-                        <pspInviaCarrelloRPTResponse>
-                            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-                        </pspInviaCarrelloRPTResponse>
-                    </ws:pspInviaCarrelloRPTCarteResponse>
-                </soapenv:Body>
-            </soapenv:Envelope>
-            """
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
         And check url contains acardste of nodoInviaCarrelloRPT response
