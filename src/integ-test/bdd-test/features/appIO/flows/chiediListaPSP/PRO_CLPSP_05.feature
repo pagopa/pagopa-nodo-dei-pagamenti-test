@@ -3,7 +3,7 @@ Feature: PRO_CLPSP_05
 Background:
  Given systems up
  And EC new version
-
+@runnable
  Scenario: Execute verifyPaymentNotice (Phase 1)
     Given nodo-dei-pagamenti has config parameter default_durata_token_IO set to 4000
     Given initial XML verifyPaymentNotice
@@ -26,7 +26,7 @@ Background:
     """
     When AppIO sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of verifyPaymentNotice response
-
+@runnable
 Scenario: Execute activateIOPayment (Phase 2)
     Given the Execute verifyPaymentNotice (Phase 1) scenario executed successfully
     And initial XML activateIOPayment
@@ -163,17 +163,17 @@ Scenario: Execute activateIOPayment (Phase 2)
     And EC replies to nodo-dei-pagamenti with the paGetPayment
     When AppIO sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is OK of activateIOPayment response
-
+@runnable
 Scenario: Execute nodoChiediInformazioniPagamento (Phase 3)
     Given the Execute activateIOPayment (Phase 2) scenario executed successfully
     When WISP sends rest GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
     Then verify the HTTP status code of informazioniPagamento response is 200
-
+@runnable
 Scenario: trigger PollerAnnulli
    Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
    When job mod3CancelV2 triggered after 10 seconds
    Then wait 15 seconds for expiration
-
+@runnable
 Scenario: Execute activateIOPayment1 (Phase 4)
     Given the trigger PollerAnnulli scenario executed successfully
     #And PSP waits expirationTime of activateIOPayment expires
@@ -265,7 +265,7 @@ Scenario: Execute activateIOPayment1 (Phase 4)
     And EC replies to nodo-dei-pagamenti with the paGetPayment
     When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is OK of activateIOPayment response
-
+@runnable
 Scenario: Check PSP list
     Given the Execute activateIOPayment1 scenario executed successfully
     When WISP sends rest GET listaPSP?idPagamento=$activateIOPaymentResponse.paymentToken&percorsoPagamento=CARTE to nodo-dei-pagamenti

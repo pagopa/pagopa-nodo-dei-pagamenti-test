@@ -2,7 +2,7 @@ Feature: PRO_ANNULLO_12
 
     Background:
         Given systems up
-
+@runnable
     Scenario: Execute verifyPaymentNotice (Phase 1)
         Given nodo-dei-pagamenti has config parameter scheduler.cancelIOPaymentActorMinutesToBack set to 1
         And initial XML verifyPaymentNotice
@@ -25,7 +25,7 @@ Feature: PRO_ANNULLO_12
         """
         When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of verifyPaymentNotice response
-
+@runnable
     Scenario: Execute activateIOPayment (Phase 2)
         Given the Execute verifyPaymentNotice (Phase 1) scenario executed successfully
         And initial XML activateIOPayment
@@ -79,7 +79,7 @@ Feature: PRO_ANNULLO_12
         """
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
-    
+ @runnable   
     Scenario: Execute nodoInoltroEsitoPagamentoCarta (Phase 3)
         Given the Execute activateIOPayment (Phase 2) scenario executed successfully
         When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
@@ -99,7 +99,7 @@ Feature: PRO_ANNULLO_12
         """
         Then verify the HTTP status code of inoltroEsito/carta response is 200
         And check esito is OK of inoltroEsito/carta response
-
+@runnable
     Scenario: Execute sendPaymentOutcome (Phase 4)
         Given the Execute nodoInoltroEsitoPagamentoCarta (Phase 3) scenario executed successfully
         And initial XML sendPaymentOutcome

@@ -145,13 +145,13 @@ Feature: Syntax checks for pspNotifyPaymentResponse - KO
     #       And identificativoCanale with SERVIZIO_NMP
     Then verify the HTTP status code of inoltroEsito/carta response is 408
     Examples:
-      | elem                    | value        | soapUI test |
-      | soapenv:Body            | Empty        | T_05        |
-      | soapenv:Body            | None         | T_06        |
-      | soapenv:Body            | RemoveParent | T_07        |
-      | psp:pspNotifyPaymentRes | RemoveParent | T_08        |
-      | psp:pspNotifyPaymentRes | Empty        | T_09        |
-      | outcome                 | None         | T_10        |
-      | outcome                 | Empty        | T_11        |
-      | outcome                 | PP           | T_12        |
-      | outcome                 | KO           | T_13        |
+      | elem                    | value        | soapUI test | chorusTags |
+      | soapenv:Body            | Empty        | T_05        |            |
+      | soapenv:Body            | None         | T_06        |            |
+      | soapenv:Body            | RemoveParent | T_07        |            |
+      | psp:pspNotifyPaymentRes | RemoveParent | T_08        |            |
+      | psp:pspNotifyPaymentRes | Empty        | T_09        | @runnable  |
+      | outcome                 | None         | T_10        | @runnable  |
+      | outcome                 | Empty        | T_11        | @runnable  |
+      | outcome                 | PP           | T_12        | @runnable  |
+      | outcome                 | KO           | T_13        | @runnable  |
