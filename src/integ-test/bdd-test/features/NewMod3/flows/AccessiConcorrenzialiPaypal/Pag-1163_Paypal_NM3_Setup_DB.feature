@@ -85,7 +85,7 @@ Feature: DB checks for nodoChiediEsitoPagamento
 
 
     Scenario: Execute nodoChiediInformazioniPagamento request
-        Given the Execute activateIOPaymentReq request scenario executed successfully
+        Given the Execute activateIOPayment request scenario executed successfully
         When WISP sends rest GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti      
         Then verify the HTTP status code of informazioniPagamento response is 200
 
