@@ -92,7 +92,7 @@ Feature: DB checks for nodoChiediEsitoPagamento
         And check importo field exists in informazioniPagamento response
         And check ragioneSociale field exists in informazioniPagamento response
         And check oggettoPagamento field exists in informazioniPagamento response
-        And check urlRedirectEC is redirectEC of informazioniPagamento response
+        And check urlRedirectEC field exists in informazioniPagamento response
         And check bolloDigitale is False of informazioniPagamento response
         And check email is test.prova@gmail.com of informazioniPagamento response
         And check dettagli field exists in informazioniPagamento response
