@@ -155,6 +155,9 @@ stages:
 
               sudo pip3 install behave 
               sudo pip3 install -U -r $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/requirements.txt #Install Requirements
+              whereis behave
+              which behave
+              
             displayName: 'Append /usr/local/bin at PATH and install beahve'
 
           - script: |
