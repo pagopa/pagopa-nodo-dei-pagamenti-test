@@ -15,6 +15,7 @@ parameters:
 variables:
   archiveName: nodo-dei-pagamenti-NRT.zip
   destinationFolderExtractArtifact: nodo/extracted
+  deploy-pool: nodopagamenti-agent-pool-sit
 
 stages:
   - stage: prepare_env
@@ -90,7 +91,18 @@ stages:
               replace $file ".db_configuration.wfesp.port"      $(db-wfesp-port-${{ parameters.env }})
 
               jq . $file
-            displayName: 'Configure DB'
+            displayName: 'Configure Global Properties'
+            
+          - script: |
+              sudo apt-get install build-essential unzip
+              mkdir $(Build.SourcesDirectory)/oracle
+              cd $(Build.SourcesDirectory)/oracle
+              sudo wget https://download.oracle.com/otn_software/linux/instantclient/216000/instantclient-basic-linux.x64-21.6.0.0.0dbru.zip
+              sudo unzip instantclient-basic-linux.x64-21.6.0.0.0dbru.zip
+              sudo apt update
+              sudo apt install libaio1
+
+            displayName: 'Install Oracle Instant Client'
           
           - task: ArchiveFiles@2
             displayName: 'Zip $(archiveName)'
@@ -109,10 +121,11 @@ stages:
     displayName: "Run integration test (${{ parameters.env }})"
     dependsOn:
       - prepare_env
-    pool: $(deploy-pool-${{ parameters.env }})
+    pool: $(deploy-pool)
     jobs:
       - job: 
         displayName: "Run integration test (${{ parameters.env }})"
+        timeoutInMinutes: 0 # how long to run the job before automatically cancelling. When 0 is specified, the maximum limit is used
         steps:
           - checkout: none 
 
@@ -131,22 +144,13 @@ stages:
               overwriteExistingFiles: false
 
           - script: |
-              rm -rf $(Pipeline.Workspace)/oracle-lib
-              mkdir -p $(Pipeline.Workspace)/oracle-lib
-              cd $(Pipeline.Workspace)/oracle-lib
+              sudo sh -c "echo $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/oracle/instantclient_21_6 > /etc/ld.so.conf.d/oracle-instantclient.conf"
+              sudo ldconfig
 
-              wget https://download.oracle.com/otn_software/linux/instantclient/215000/instantclient-basic-linux.x64-21.5.0.0.0dbru.zip
-              
-              unzip instantclient-basic-linux.x64-21.5.0.0.0dbru.zip
-
-              rm -rf instantclient-basic-linux.x64-21.5.0.0.0dbru.zip*
-              
-              echo "##vso[task.prependpath]$(Pipeline.Workspace)/oracle-lib/instantclient_21_5"
-              echo "##vso[task.setvariable variable=LD_LIBRARY_PATH;isOutput=false]$(Pipeline.Workspace)/oracle-lib/instantclient_21_5"
-            displayName: 'Install Oracle Instant Client and append to PATH'
+            displayName: 'Linux ldconfig Command for Oracle Instant Client'
 
           - script: |
-              echo "##vso[task.prependpath]/usr/local/bin"
+              export PATH=/usr/bin:/usr/local/bin:$PATH #Add environment variables
 
               sudo pip3 install behave 
               sudo pip3 install -U -r $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/requirements.txt #Install Requirements
