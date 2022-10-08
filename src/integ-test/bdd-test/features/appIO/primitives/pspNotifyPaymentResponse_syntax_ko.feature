@@ -4,7 +4,7 @@ Feature: Syntax checks for pspNotifyPaymentResponse - KO
     Given systems up
     And EC new version
 
-  @runnable
+  
   Scenario: Execute activateIOPaymentReq request
     Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
     And initial XML paGetPayment
@@ -103,7 +103,7 @@ Feature: Syntax checks for pspNotifyPaymentResponse - KO
     When IO sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is OK of activateIOPayment response
 
-  @runnable
+  
   # nodoChiediInformazioniPagamento phase
   Scenario: Execute nodoChiediInformazioniPagamento request
     Given the Execute activateIOPaymentReq request scenario executed successfully
