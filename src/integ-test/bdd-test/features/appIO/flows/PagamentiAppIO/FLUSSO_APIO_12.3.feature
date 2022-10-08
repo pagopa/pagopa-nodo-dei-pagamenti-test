@@ -83,7 +83,7 @@ Scenario: Execute activateIOPayment (Phase 2)
 Scenario: Execute nodoChiediInformazioniPagamento (Phase 3)
     Given the Execute activateIOPayment (Phase 2) scenario executed successfully
     When WISP sends rest GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
-    Then verify the HTTP status code of informazioniPagamento response is 200
+    Then verify the HTTP status code of informazioniPagamento response is 404
 
 Scenario: Execute nodoInoltroEsitoCarta (Phase 4) 
     Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
