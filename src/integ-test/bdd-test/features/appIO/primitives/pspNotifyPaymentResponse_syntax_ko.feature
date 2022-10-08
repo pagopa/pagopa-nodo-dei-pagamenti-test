@@ -97,7 +97,7 @@ Feature: Syntax checks for pspNotifyPaymentResponse - KO
       </soapenv:Envelope>
       """
   @runnable
-  Scenario: Check OK of activateIOPayment response
+  Scenario: Execute activateIOPaymentReq request
     When psp sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is OK of activateIOPayment response
 
