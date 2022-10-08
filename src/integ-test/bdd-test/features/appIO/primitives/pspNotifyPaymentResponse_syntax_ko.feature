@@ -96,9 +96,9 @@ Feature: Syntax checks for pspNotifyPaymentResponse - KO
       </soapenv:Body>
       </soapenv:Envelope>
       """
-
+      And EC new version
   Scenario: Execute activateIOPaymentReq request
-    When psp sends SOAP activateIOPayment to nodo-dei-pagamenti
+    When IO sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is OK of activateIOPayment response
 
 
