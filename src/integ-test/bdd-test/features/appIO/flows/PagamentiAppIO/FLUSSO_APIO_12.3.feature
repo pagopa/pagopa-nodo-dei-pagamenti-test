@@ -83,29 +83,29 @@ Scenario: Execute activateIOPayment (Phase 2)
 Scenario: Execute nodoChiediInformazioniPagamento (Phase 3)
     Given the Execute activateIOPayment (Phase 2) scenario executed successfully
     When WISP sends rest GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
-    Then verify the HTTP status code of informazioniPagamento response is 404
+    Then verify the HTTP status code of informazioniPagamento response is 200
 
 Scenario: Execute nodoInoltroEsitoCarta (Phase 4) 
     Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
-    # And EC replies to nodo-dei-pagamenti with the pspNotifyPayment
-    # """
-    # <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:psp="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
-    #     <soapenv:Header/>
-    #     <soapenv:Body>
-    #         <psp:pspNotifyPaymentRes>
-    #             <outcome>KO</outcome>
-    #             <!--Optional:-->
-    #             <fault>
-    #                 <faultCode>CANALE_SEMANTICA</faultCode>
-    #                 <faultString>Errore semantico dal psp</faultString>
-    #                 <id>1</id>
-    #                 <!--Optional:-->
-    #                 <description>Errore dal psp</description>
-    #             </fault>
-    #         </psp:pspNotifyPaymentRes>
-    #     </soapenv:Body>
-    # </soapenv:Envelope>
-    # """
+    And EC replies to nodo-dei-pagamenti with the pspNotifyPayment
+    """
+    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:psp="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
+        <soapenv:Header/>
+        <soapenv:Body>
+            <psp:pspNotifyPaymentRes>
+                <outcome>KO</outcome>
+                <!--Optional:-->
+                <fault>
+                    <faultCode>CANALE_SEMANTICA</faultCode>
+                    <faultString>Errore semantico dal psp</faultString>
+                    <id>1</id>
+                    <!--Optional:-->
+                    <description>Errore dal psp</description>
+                </fault>
+            </psp:pspNotifyPaymentRes>
+        </soapenv:Body>
+    </soapenv:Envelope>
+    """
     When WISP sends REST POST inoltroEsito/carta to nodo-dei-pagamenti
     """
     {
