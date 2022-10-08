@@ -5,12 +5,13 @@ Feature: process tests for ChiediAvanzamento_RIFIUTATA_PSP_Carrello_sbloccoParch
 
     Scenario: RPT generation
         Given RPT generation
+
         """
         <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
         <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
         <pay_i:dominio>
         <pay_i:identificativoDominio>44444444444</pay_i:identificativoDominio>
-        <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
+        <pay_i:identificativoStazioneRichiedente>44444444444_01</pay_i:identificativoStazioneRichiedente>
         </pay_i:dominio>
         <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
         <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
@@ -62,7 +63,7 @@ Feature: process tests for ChiediAvanzamento_RIFIUTATA_PSP_Carrello_sbloccoParch
         <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
         <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
         <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
-        <pay_i:identificativoUnivocoVersamento>avanzaKO</pay_i:identificativoUnivocoVersamento>
+        <pay_i:identificativoUnivocoVersamento>avanzaOK</pay_i:identificativoUnivocoVersamento>
         <pay_i:codiceContestoPagamento>#ccp1#</pay_i:codiceContestoPagamento>
         <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
         <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
@@ -91,7 +92,7 @@ Feature: process tests for ChiediAvanzamento_RIFIUTATA_PSP_Carrello_sbloccoParch
         <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
         <pay_i:dominio>
             <pay_i:identificativoDominio>44444444445</pay_i:identificativoDominio>
-            <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
+            <pay_i:identificativoStazioneRichiedente>44444444444_01</pay_i:identificativoStazioneRichiedente>
         </pay_i:dominio>
         <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
         <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
@@ -143,7 +144,7 @@ Feature: process tests for ChiediAvanzamento_RIFIUTATA_PSP_Carrello_sbloccoParch
             <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
             <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
-            <pay_i:identificativoUnivocoVersamento>avanzaKO</pay_i:identificativoUnivocoVersamento>
+            <pay_i:identificativoUnivocoVersamento>avanzaOK</pay_i:identificativoUnivocoVersamento>
             <pay_i:codiceContestoPagamento>#CCP2#</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
@@ -178,19 +179,19 @@ Feature: process tests for ChiediAvanzamento_RIFIUTATA_PSP_Carrello_sbloccoParch
         <soapenv:Body>
             <ws:nodoInviaCarrelloRPT>
                 <password>pwdpwdpwd</password>
-                <identificativoPSP>#psp_AGID#</identificativoPSP>
-                <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
+                <identificativoPSP>AGID_01</identificativoPSP>
+                <identificativoIntermediarioPSP>97735020584</identificativoIntermediarioPSP>
                 <identificativoCanale>97735020584_02</identificativoCanale>
                 <listaRPT>
                     <elementoListaRPT>
                     <identificativoDominio>44444444444</identificativoDominio>
-                    <identificativoUnivocoVersamento>avanzaKO</identificativoUnivocoVersamento>
+                    <identificativoUnivocoVersamento>avanzaOK</identificativoUnivocoVersamento>
                     <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
                     <rpt>$rptAttachment</rpt>
                     </elementoListaRPT>
                     <elementoListaRPT>
                     <identificativoDominio>44444444445</identificativoDominio>
-                    <identificativoUnivocoVersamento>avanzaKO</identificativoUnivocoVersamento>
+                    <identificativoUnivocoVersamento>avanzaOK</identificativoUnivocoVersamento>
                     <codiceContestoPagamento>$2CCP</codiceContestoPagamento>
                     <rpt>$rpt2Attachment</rpt>
                     </elementoListaRPT>
@@ -325,7 +326,7 @@ Feature: process tests for ChiediAvanzamento_RIFIUTATA_PSP_Carrello_sbloccoParch
             "codiceAutorizzativo": "123212"
         }
         """
-        Then verify the HTTP status code of inoltroEsito/carta response is 200
+        Then verify the HTTP status code of inoltroEsito/carta response is 408
         And check error is KO of inoltroEsito/carta response
         And check url field not exists in inoltroEsito/carta response
 
