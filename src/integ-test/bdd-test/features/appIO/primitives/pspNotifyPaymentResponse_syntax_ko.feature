@@ -99,7 +99,7 @@ Feature: Syntax checks for pspNotifyPaymentResponse - KO
     And EC new version
 @runnable
   Scenario: Execute activateIOPaymentReq request
-    When IO sends SOAP activateIOPayment to nodo-dei-pagamenti
+    When psp sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is OK of activateIOPayment response
 
 @runnable
