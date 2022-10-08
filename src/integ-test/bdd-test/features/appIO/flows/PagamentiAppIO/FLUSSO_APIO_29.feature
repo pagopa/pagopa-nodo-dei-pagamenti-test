@@ -5,6 +5,8 @@ Feature: FLUSSO_APIO_29
 
     Scenario: Execute verifyPaymentNotice (Phase 1)
         Given initial XML verifyPaymentNotice
+        And generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
+
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
             <soapenv:Header/>
@@ -16,7 +18,7 @@ Feature: FLUSSO_APIO_29
                 <password>pwdpwdpwd</password>
                 <qrCode>
                     <fiscalCode>#creditor_institution_code#</fiscalCode>
-                    <noticeNumber>#notice_number#</noticeNumber>
+                    <noticeNumber>$1noticeNumber</noticeNumber>
                 </qrCode>
             </nod:verifyPaymentNoticeReq>
             </soapenv:Body>
