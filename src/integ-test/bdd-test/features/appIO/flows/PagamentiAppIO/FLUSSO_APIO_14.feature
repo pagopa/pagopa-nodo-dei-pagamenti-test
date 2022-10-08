@@ -212,8 +212,8 @@ Feature: FLUSSO_APIO_14
         When job mod3CancelV2 triggered after 7 seconds
         And wait 6 seconds for expiration
         And PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-        Then check outcome is KO of sendPaymentOutcome response
-        And check faultCode is PPT_SEMANTICA of sendPaymentOutcome response
+        #Then check outcome is KO of sendPaymentOutcome response
+        Then check faultCode is PPT_SEMANTICA of sendPaymentOutcome response
         And checks the value PAYING, PAYMENT_SENT, PAYMENT_UNKNOWN, CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value PAYING, INSERTED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
