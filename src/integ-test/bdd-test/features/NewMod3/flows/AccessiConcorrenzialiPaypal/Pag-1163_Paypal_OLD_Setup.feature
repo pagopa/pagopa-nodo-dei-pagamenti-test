@@ -8,25 +8,24 @@ Feature: DB checks for nodoInoltraEsitoPagamentoPaypal on old PA
          And generate 1 cart with PA #creditor_institution_code_old# and notice number $1noticeNumber  
          And initial XML verifyPaymentNotice
             """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-                <soapenv:Header/>
-                <soapenv:Body>
-                    <nod:verifyPaymentNoticeReq>
-                    <idPSP>#psp_AGID#</idPSP>
-                    <idBrokerPSP>#broker_AGID#</idBrokerPSP>
-                    <idChannel>#canale_AGID#</idChannel>
-                    <password>pwdpwdpwd</password>
-                    <qrCode>
-                        <fiscalCode>#creditor_institution_code_old#</fiscalCode>
-                        <noticeNumber>$1noticeNumber</noticeNumber>
-                    </qrCode>
-                    </nod:verifyPaymentNoticeReq>
-                </soapenv:Body>
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:bc="http://PuntoAccessoPSP.spcoop.gov.it/BarCode_GS1_128_Modified" xmlns:aim="http://PuntoAccessoPSP.spcoop.gov.it/Code_128_AIM_USS-128_tipo_C" xmlns:qrc="http://PuntoAccessoPSP.spcoop.gov.it/QrCode">
+               <soapenv:Header/>
+               <soapenv:Body>
+                  <ws:nodoVerificaRPT>
+                     <identificativoPSP>#psp_AGID#</identificativoPSP>
+                     <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
+                     <identificativoCanale>#canale_AGID#</identificativoCanale>
+                     <password>pwdpwdpwd</password>
+                     <codiceContestoPagamento>#ccp#</codiceContestoPagamento>
+                     <codificaInfrastrutturaPSP>BARCODE-128-AIM</codificaInfrastrutturaPSP>
+                     <codiceIdRPT><aim:aim128> <aim:CCPost>#ccPoste#</aim:CCPost> <aim:CodStazPA>#cod_segr_old#</aim:CodStazPA> <aim:AuxDigit>0</aim:AuxDigit>  <aim:CodIUV>$1iuv</aim:CodIUV></aim:aim128></codiceIdRPT>
+                  </ws:nodoVerificaRPT>
+               </soapenv:Body>
             </soapenv:Envelope>
             """
-        And EC old version
-        When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
-        Then check outcome is OK of verifyPaymentNotice response
+         And EC old version
+         When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
+         Then check outcome is OK of verifyPaymentNotice response
 
       Scenario: Execute nodoAttivaRPT request
          Given the Execute verifyPaymentNotice request scenario executed successfully
@@ -40,7 +39,7 @@ Feature: DB checks for nodoInoltraEsitoPagamentoPaypal on old PA
                      <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
                      <identificativoCanale>#canale_AGID#</identificativoCanale>
                      <password>pwdpwdpwd</password>
-                     <codiceContestoPagamento>#ccp#</codiceContestoPagamento>
+                     <codiceContestoPagamento>$ccp</codiceContestoPagamento>
                      <identificativoIntermediarioPSPPagamento>#broker_AGID#</identificativoIntermediarioPSPPagamento>
                      <identificativoCanalePagamento>#canale_AGID_BBT#</identificativoCanalePagamento>
                      <codificaInfrastrutturaPSP>BARCODE-128-AIM</codificaInfrastrutturaPSP>
@@ -210,26 +209,26 @@ Feature: DB checks for nodoInoltraEsitoPagamentoPaypal on old PA
                </soapenv:Body>
             </soapenv:Envelope>
             """
-        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-        Then check esito is OK of nodoInviaRPT response
+         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+         Then check esito is OK of nodoInviaRPT response
          And retrieve session token from $nodoInviaRPTResponse.url 
 
-    Scenario: Execute nodoChiediInformazioniPagamento request
-        Given the RPT generation scenario executed successfully
-        When WISP sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-        Then verify the HTTP status code of informazioniPagamento response is 200
-        And check importo field exists in informazioniPagamento response
-        And check ragioneSociale field exists in informazioniPagamento response
-        And check oggettoPagamento field exists in informazioniPagamento response
-        And check urlRedirectEC field exists in informazioniPagamento response
-        And check bolloDigitale is False of informazioniPagamento response
-        And check dettagli field exists in informazioniPagamento response
-        And check IUV is $1iuv of informazioniPagamento response
-        And check CCP id $ccp of informazioniPagamento response
-        And check idDominio is $verifyPaymentNotice.fiscalCode of informazioniPagamento response
-        And check enteBeneficiario is AZIENDA XXX in informazioniPagamento response
+      Scenario: Execute nodoChiediInformazioniPagamento request
+         Given the RPT generation scenario executed successfully
+         When WISP sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
+         Then verify the HTTP status code of informazioniPagamento response is 200
+         And check importo field exists in informazioniPagamento response
+         And check ragioneSociale field exists in informazioniPagamento response
+         And check oggettoPagamento field exists in informazioniPagamento response
+         And check urlRedirectEC field exists in informazioniPagamento response
+         And check bolloDigitale is False of informazioniPagamento response
+         And check dettagli field exists in informazioniPagamento response
+         And check IUV is $1iuv of informazioniPagamento response
+         And check CCP id $ccp of informazioniPagamento response
+         And check idDominio is $verifyPaymentNotice.fiscalCode of informazioniPagamento response
+         And check enteBeneficiario is AZIENDA XXX in informazioniPagamento response
 
-        And execution query dbcheck_json to get value on the table PA, with the columns RAGIONE_SOCIALE under macro NewMod3 with db name nodo_cfg
-        And through the query dbcheck_json retrieve param ragione_sociale at position 0 and save it under the key ragione_sociale
-        And check enteBeneficiario is AZIENDA XXX of informazioniPagamento response
-        And check ragioneSociale is $ragione_sociale of informazioniPagamento response
+         And execution query dbcheck_json to get value on the table PA, with the columns RAGIONE_SOCIALE under macro NewMod3 with db name nodo_cfg
+         And through the query dbcheck_json retrieve param ragione_sociale at position 0 and save it under the key ragione_sociale
+         And check enteBeneficiario is AZIENDA XXX of informazioniPagamento response
+         And check ragioneSociale is $ragione_sociale of informazioniPagamento response
