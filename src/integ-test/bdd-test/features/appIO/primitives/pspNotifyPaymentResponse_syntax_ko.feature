@@ -4,7 +4,7 @@ Feature: Syntax checks for pspNotifyPaymentResponse - KO
     Given systems up
 @runnable
   Scenario: Execute activateIOPayment request
-    And generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
+    Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
     And initial XML paGetPayment
     """
     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
