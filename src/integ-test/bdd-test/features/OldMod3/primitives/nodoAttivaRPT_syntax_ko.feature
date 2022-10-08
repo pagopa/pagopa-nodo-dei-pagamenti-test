@@ -12,7 +12,7 @@ Feature: Syntax checks KO for nodoAttivaRPT
             <identificativoCanale>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanale>
             <password>pwdpwdpwd</password>
             <codiceContestoPagamento>#ccp#</codiceContestoPagamento>
-            <identificativoIntermediarioPSPPagamento>97735020584</identificativoIntermediarioPSPPagamento>
+            <identificativoIntermediarioPSPPagamento>#psp#</identificativoIntermediarioPSPPagamento>
             <identificativoCanalePagamento>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanalePagamento>
             <codificaInfrastrutturaPSP>QR-CODE</codificaInfrastrutturaPSP>
             <codiceIdRPT><bc:BarCode><bc:Gln>1234567890122</bc:Gln><bc:CodStazPA>01</bc:CodStazPA><bc:AuxDigit>0</bc:AuxDigit><bc:CodIUV>112222222222222</bc:CodIUV></bc:BarCode></codiceIdRPT>
@@ -167,27 +167,43 @@ Feature: Syntax checks KO for nodoAttivaRPT
             | pag:nazioneVersante                     | Empty                                                                   | ARPTSIN72   |
             | pag:nazioneVersante                     | ITT                                                                     | ARPTSIN73   |
             | pag:e-mailVersante                      | Empty                                                                   | ARPTSIN74   |
-            | pag:e-mailVersante                      | DDDDDDDDDDDDDDDDDDDDDDDDDDDDFFFFFFFFFFFFFFDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDFDDDmail@mail.it  | ARPTSIN75   |
+            | pag:e-mailVersante                      | 257DDDDDDDDDDDDDDDDDDDDDDDDDFFFFFFFFFFFFFFDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDFDDDmail@mail.it  | ARPTSIN75   |
             | ibanAddebito                            | Empty                                                                   | ARPTSIN76   |
             | ibanAddebito                            | QuestiSono36CaratteriAlfaNumericiTT1                                    | ARPTSIN77   |
             | ibanAddebito                            | X596R0123454321000000012345                                             | ARPTSIN78   |
             | bicAddebito                             | Empty                                                                   | ARPTSIN79   |
             | bicAddebito                             | CCRTIT                                                                  | ARPTSIN80   |
             | bicAddebito                             | CCRTIT2TXXXX                                                            | ARPTSIN81   |
+            | bicAddebito                             | U2CRITMM                                                                | ARPTSIN82 - oggi   | 
+            | pag:codiceIdentificativoUnivoco         | Empty                                                                   | ARPTSIN91   |
+            | pag:codiceIdentificativoUnivoco         | QuestiSono36CaratteriAlfaNumericiTT1                                    | ARPTSIN92   |
+            | pag:anagraficaPagatore                  | Empty                                                                   | ARPTSIN94   |
+            | pag:anagraficaPagatore                  | QuestiSono71CaratteriAlfaNumericiQuestiSono71CaratteriAlfaNumerici12345 | ARPTSIN95   |
+            | pag:indirizzoPagatore                   | Empty                                                                   | ARPTSIN96   |
+            | pag:indirizzoPagatore                   | QuestiSono71CaratteriAlfaNumericiQuestiSono71CaratteriAlfaNumerici12345 | ARPTSIN97   |
+            | pag:civicoPagatore                      | Empty                                                                   | ARPTSIN98   |
+            | pag:civicoPagatore                      | Sono17CaratteAlfa                                                       | ARPTSIN99   |
+            | pag:capPagatore                         | Empty                                                                   | ARPTSIN100  |
+            | pag:capPagatore                         | Sono17CaratteAlfa                                                       | ARPTSIN101  |
+            | pag:localitaPagatore                    | Empty                                                                   | ARPTSIN102  |
+            | pag:localitaPagatore                    | QuestiSono36CaratteriAlfaNumericiTT1                                    | ARPTSIN103  |
+            | pag:provinciaPagatore                   | Empty                                                                   | ARPTSIN104  |
+            | pag:provinciaPagatore                   | QuestiSono36CaratteriAlfaNumericiTT1                                    | ARPTSIN105  |
+            | pag:nazionePagatore                     | Empty                                                                   | ARPTSIN106  |
+            | pag:nazionePagatore                     | ITT                                                                     | ARPTSIN107  |
+            | pag:e-mailPagatore                      | Empty                                                                   | ARPTSIN109  |
+            | pag:e-mailPagatore                      | 257DDDDDDDDDDDDDDDDDDDDDDDDDFFFFFFFFFFFFFFDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDFDDDmail@mail.it | ARPTSIN110  |
 
 
-
-
-
-
-
-
-
-
-    Scenario: Check faultCode PPT_SINTASSI_XSD on invalid body element value [ARPTSIN115]
-        Given bc:CodStazPA with Empty in nodoAttivaRPT
+    Scenario Outline: Check faultCode PPT_SINTASSI_XSD on invalid body element value
+        Given <tag> with <value> in nodoAttivaRPT
         When psp sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
         Then check faultCode is PPT_SINTASSI_XSD of nodoAttivaRPT response
+        Examples:
+        | tag                    | value                   | SoapUI Test |
+        # | bc:CodStazPA           | None                    | ARPTSIN110  |
+        | bc:CodStazPA           | Empty                   | ARPTSIN115  |
+
 
     Scenario Outline: Check faultCode PPT_SINTASSI_EXTRAXSD on invalid body element value
         Given <tag> with <value> in nodoAttivaRPT
@@ -221,9 +237,8 @@ Feature: Syntax checks KO for nodoAttivaRPT
         Given identificativoCanale with Empty in nodoAttivaRPT
         When psp sends soap nodoAttivaRPT to nodo-dei-pagamenti
         Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoAttivaRPT response
-
  
-    Scenario: Check faultCode PPT_AUTORIZZAZIONE error on invalid body element value [ARPTSIN29]
-        Given codificaInfrastrutturaPSP with empty in nodoAttivaRPT
-        When psp sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-        Then check faultCode is PPT_AUTORIZZAZIONE of nodoAttivaRPT response
+    # Scenario: Check faultCode PPT_AUTORIZZAZIONE error on invalid body element value [ARPTSIN29]
+    #     Given codificaInfrastrutturaPSP with empty in nodoAttivaRPT
+    #     When psp sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
+    #     Then check faultCode is PPT_AUTORIZZAZIONE of nodoAttivaRPT response
