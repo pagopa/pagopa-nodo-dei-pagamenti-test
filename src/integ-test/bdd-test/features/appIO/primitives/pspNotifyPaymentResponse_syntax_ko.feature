@@ -61,7 +61,7 @@ Feature: Syntax checks for pspNotifyPaymentResponse - KO
       <idempotencyKey>#idempotency_key#</idempotencyKey>
       <qrCode>
       <fiscalCode>#creditor_institution_code#</fiscalCode>
-      <noticeNumber>$1noticeNumber</noticeNumber>
+      <noticeNumber>#notice_number#</noticeNumber>
       </qrCode>
       <!--Optional:-->
       <expirationTime>12345</expirationTime>
