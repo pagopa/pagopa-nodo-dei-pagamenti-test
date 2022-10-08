@@ -4,7 +4,7 @@ Feature: Syntax checks for pspNotifyPaymentResponse - KO
     Given systems up
     And EC new version
 
-@runnable
+
   Scenario: Execute activateIOPaymentReq request
     Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
     And initial XML paGetPayment
