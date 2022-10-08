@@ -130,7 +130,7 @@ Feature: FLUSSO_APIO_29
                         <idempotencyKey>#idempotency_key#</idempotencyKey>
                         <qrCode>
                             <fiscalCode>#creditor_institution_code#</fiscalCode>
-                            <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
+                            <noticeNumber>$1noticeNumber</noticeNumber>
                         </qrCode>
                         <!--Optional:-->
                         <expirationTime>12345</expirationTime>
