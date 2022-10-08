@@ -121,7 +121,7 @@ Scenario: Execute nodoInoltroEsitoCarta (Phase 4)
         "esitoTransazioneCarta":"00"
         }
     """
-    Then verify the HTTP status code of inoltroEsito/carta response is 404
+    Then verify the HTTP status code of inoltroEsito/carta response is 200
     And check esito is KO of inoltroEsito/carta response
     And check errorCode is RIFPSP of inoltroEsito/carta response
 
