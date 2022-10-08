@@ -5,8 +5,6 @@ Feature: FLUSSO_APIO_29
 
     Scenario: Execute verifyPaymentNotice (Phase 1)
         Given initial XML verifyPaymentNotice
-        And generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
-
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
             <soapenv:Header/>
@@ -18,7 +16,7 @@ Feature: FLUSSO_APIO_29
                 <password>pwdpwdpwd</password>
                 <qrCode>
                     <fiscalCode>#creditor_institution_code#</fiscalCode>
-                    <noticeNumber>$1noticeNumber</noticeNumber>
+                    <noticeNumber>#notice_number#</noticeNumber>
                 </qrCode>
             </nod:verifyPaymentNoticeReq>
             </soapenv:Body>
@@ -26,8 +24,8 @@ Feature: FLUSSO_APIO_29
         """
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '13' under macro update_query on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1201' under macro update_query on db nodo_cfg
-        When refresh job PA triggered after 10 seconds
-        And wait 15 seconds for expiration
+        #When refresh job CONFIG triggered after 10 seconds
+        #And wait 15 seconds for expiration
         And AppIO sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of verifyPaymentNotice response
 
@@ -130,7 +128,7 @@ Feature: FLUSSO_APIO_29
                         <idempotencyKey>#idempotency_key#</idempotencyKey>
                         <qrCode>
                             <fiscalCode>#creditor_institution_code#</fiscalCode>
-                            <noticeNumber>$1noticeNumber</noticeNumber>
+                            <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
                         </qrCode>
                         <!--Optional:-->
                         <expirationTime>12345</expirationTime>
