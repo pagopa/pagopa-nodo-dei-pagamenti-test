@@ -2,6 +2,8 @@ Feature: Syntax checks for pspNotifyPaymentResponse - KO
 
   Background:
     Given systems up
+    And EC new version
+
 @runnable
   Scenario: Execute activateIOPayment request
     Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
@@ -98,7 +100,6 @@ Feature: Syntax checks for pspNotifyPaymentResponse - KO
       </soapenv:Body>
       </soapenv:Envelope>
       """
-    And EC new version
     When IO sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is OK of activateIOPayment response
 
