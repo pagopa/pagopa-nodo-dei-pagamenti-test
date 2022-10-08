@@ -1,7 +1,7 @@
 Feature: DB checks for nodoInoltraEsitoPagamentoPaypal on old PA
 
       Background:
-        Given systems up
+         Given systems up
 
       Scenario: Execute verifyPaymentNotice request
          Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr_old#
