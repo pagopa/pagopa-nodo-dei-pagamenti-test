@@ -18,7 +18,7 @@ Feature: PRO_ANNULLO_08_PPALNEW
                 <password>pwdpwdpwd</password>
                 <qrCode>
                     <fiscalCode>#creditor_institution_code#</fiscalCode>
-                    <noticeNumber>£1noticeNumber</noticeNumber>
+                    <noticeNumber>$1noticeNumber</noticeNumber>
                 </qrCode>
             </nod:verifyPaymentNoticeReq>
             </soapenv:Body>
