@@ -5,6 +5,8 @@ Feature: FLUSSO_APIO_04_PPALNEW
 
     Scenario: Execute verifyPaymentNotice (Phase 1)
         Given nodo-dei-pagamenti has config parameter default_durata_token_IO set to 8000
+        And generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
+
         And initial XML verifyPaymentNotice
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -17,7 +19,7 @@ Feature: FLUSSO_APIO_04_PPALNEW
             <password>pwdpwdpwd</password>
             <qrCode>
             <fiscalCode>#creditor_institution_code#</fiscalCode>
-            <noticeNumber>#notice_number#</noticeNumber>
+            <noticeNumber>$1noticeNumber</noticeNumber>
             </qrCode>
             </nod:verifyPaymentNoticeReq>
             </soapenv:Body>
