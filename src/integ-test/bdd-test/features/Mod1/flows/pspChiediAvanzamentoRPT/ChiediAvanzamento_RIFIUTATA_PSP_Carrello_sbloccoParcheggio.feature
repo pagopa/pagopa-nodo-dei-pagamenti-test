@@ -254,7 +254,7 @@ Feature: process tests for ChiediAvanzamento_RIFIUTATA_PSP_Carrello_sbloccoParch
             "codiceAutorizzativo": "123212"
         }
         """
-        Then verify the HTTP status code of inoltroEsito/carta response is 408
+        Then verify the HTTP status code of inoltroEsito/carta response is 200
         And check error is Operazione in timeout of inoltroEsito/carta response
         And check url field not exists in inoltroEsito/carta response
 
