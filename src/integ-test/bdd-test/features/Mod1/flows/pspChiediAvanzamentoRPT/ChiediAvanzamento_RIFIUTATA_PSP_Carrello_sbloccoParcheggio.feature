@@ -247,17 +247,17 @@ Feature: process tests for ChiediAvanzamento_RIFIUTATA_PSP_Carrello_sbloccoParch
         {
             "idPagamento": "$sessionToken",
             "RRN":123456789,
-            "identificativoPsp": "70000000001",
+            "identificativoPsp": "#psp#",
             "tipoVersamento": "CP",
-            "identificativoIntermediario": "70000000001",
-            "identificativoCanale": "70000000001_03",
+            "identificativoIntermediario": "#psp#",
+            "identificativoCanale": "#canale#",
             "esitoTransazioneCarta": "123456", 
             "importoTotalePagato": 11.11,
             "timestampOperazione": "2012-04-23T18:25:43.001Z",
             "codiceAutorizzativo": "123212"
         }
         """
-        Then verify the HTTP status code of inoltroEsito/carta response is 200
+        Then verify the HTTP status code of inoltroEsito/carta response is 408
         And check error is Operazione in timeout of inoltroEsito/carta response
         And check url field not exists in inoltroEsito/carta response
 
