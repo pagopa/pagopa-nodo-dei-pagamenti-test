@@ -48,7 +48,6 @@ Feature: DB checks for nodoChiediEsitoPagamento
                         <noticeNumber>$1noticeNumber</noticeNumber>
                     </qrCode>
                     <!--Optional:-->
-                    <expirationTime>6000</expirationTime>
                     <amount>10.00</amount>
                     <!--Optional:-->
                     <dueDate>2021-12-12</dueDate>
