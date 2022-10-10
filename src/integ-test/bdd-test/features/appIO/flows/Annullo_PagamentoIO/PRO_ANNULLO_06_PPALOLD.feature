@@ -4,7 +4,7 @@ Feature: PRO_ANNULLO_06_PPALOLD
         Given systems up
         And EC old version
 
-
+@runnable
     Scenario: Execute nodoVerificaRPT (Phase 1)
         Given nodo-dei-pagamenti has config parameter default_durata_token_IO set to 6000
         And nodo-dei-pagamenti has config parameter scheduler.cancelIOPaymentActorMinutesToBack set to 1
@@ -111,7 +111,7 @@ Feature: PRO_ANNULLO_06_PPALOLD
         """
         When IO sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoVerificaRPT response
-
+@runnable
     Scenario: Execute nodoAttivaRPT (Phase 2)
         Given the Execute nodoVerificaRPT (Phase 1) scenario executed successfully
         And initial XML nodoAttivaRPT
@@ -197,7 +197,7 @@ Feature: PRO_ANNULLO_06_PPALOLD
         """
         When IO sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoAttivaRPT response
-        
+ @runnable       
         Scenario: Execute nodoInviaRPT (Phase 3)
         Given the Execute nodoAttivaRPT (Phase 2) scenario executed successfully
         And initial XML nodoInviaRPT
@@ -226,19 +226,19 @@ Feature: PRO_ANNULLO_06_PPALOLD
         """
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
-    
+ @runnable   
      Scenario: update column valid_to UPDATED_TIMESTAMP
         Given the Execute nodoInviaRPT (Phase 3) scenario executed successfully
         And wait 80 seconds for expiration
         And change date Today to remove minutes 15
         Then update through the query DB_GEST_ANN_update1 with date $date under macro AppIO on db nodo_online
         And wait 10 seconds for expiration
-      
+ @runnable     
     Scenario: Trigger annullamentoRptMaiRichiesteDaPm
       Given the update column valid_to UPDATED_TIMESTAMP scenario executed successfully
       When job annullamentoRptMaiRichiesteDaPm triggered after 0 seconds
       Then verify the HTTP status code of annullamentoRptMaiRichiesteDaPm response is 200
-
+@runnable
     Scenario: check DB  
       Given the Trigger annullamentoRptMaiRichiesteDaPm scenario executed successfully
         And wait 15 seconds for expiration
