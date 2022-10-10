@@ -260,7 +260,7 @@ def single_thread(context, soap_primitive):
     print("nodo soap_response: ", soap_response.content)
     print(soap_primitive.split("_")[1] + "Response")
     setattr(context, soap_primitive.split("_")[
-            1] + "Response", soap_response.content)
+            1] + "Response", soap_response)
 
 
 def threading(context, primitive_list):
