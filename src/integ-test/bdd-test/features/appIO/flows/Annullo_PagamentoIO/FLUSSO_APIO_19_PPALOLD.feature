@@ -3,7 +3,7 @@ Feature: FLUSSO_APIO_19_PPALOLD
     Background:
         Given systems up
         And EC old version
-
+@runnable
     Scenario: Execute nodoVerificaRPT (Phase 1)
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 2000
         And RPT generation
@@ -109,7 +109,7 @@ Feature: FLUSSO_APIO_19_PPALOLD
         """
         When IO sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoVerificaRPT response
-
+@runnable
     Scenario: Execute nodoAttivaRPT (Phase 2)
         Given the Execute nodoVerificaRPT (Phase 1) scenario executed successfully
         And initial XML nodoAttivaRPT
@@ -195,7 +195,7 @@ Feature: FLUSSO_APIO_19_PPALOLD
         """
         When IO sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoAttivaRPT response
-        
+ @runnable       
     Scenario: Execute nodoInviaRPT (Phase 3)
         Given the Execute nodoAttivaRPT (Phase 2) scenario executed successfully
         And initial XML nodoInviaRPT
@@ -226,12 +226,12 @@ Feature: FLUSSO_APIO_19_PPALOLD
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
         And verify 1 record for the table CD_INFO_PAGAMENTO retrived by the query info_pagamento on db nodo_online under macro AppIO
-
+@runnable
     Scenario: Execute nodoChiediInformazioniPagamento (Phase 4)
         Given the Execute nodoInviaRPT (Phase 3) scenario executed successfully
         When WISP sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200
-
+@runnable
     Scenario: Execute nodoInoltroEsitoPayPal (Phase 5) - OK
         Given the Execute nodoChiediInformazioniPagamento (Phase 4) scenario executed successfully
         When WISP sends REST POST inoltroEsito/paypal to nodo-dei-pagamenti
@@ -249,7 +249,7 @@ Feature: FLUSSO_APIO_19_PPALOLD
         """
         Then verify the HTTP status code of inoltroEsito/paypal response is 200
         And check esito is OK of inoltroEsito/paypal response
-
+@runnable
     Scenario: Execute nodoNotificaAnnullamentoPagamento (Phase 6)
         Given the Execute nodoInoltroEsitoPayPal (Phase 5) - OK scenario executed successfully
         When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken to nodo-dei-pagamenti
