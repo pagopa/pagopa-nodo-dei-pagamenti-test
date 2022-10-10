@@ -266,7 +266,7 @@ Feature: process tests for accessiConCorrenziali [1a - RPT+SPO]
     Scenario: parallel calls and test scenario
         Given the Excecute second primitives request scenario executed successfully
         And calling primitive sendPaymentOutcome_sendPaymentOutcome and nodoInviaRPT_nodoInviaRPT in parallel
-        Then check outcome is OK of nodoInviaRPT response
+        Then check esito is OK of nodoInviaRPT response
         And check outcome is OK of sendPaymentOutcome response
 
         # #DB CHECK-POSITION_PAYMENT_STATUS
