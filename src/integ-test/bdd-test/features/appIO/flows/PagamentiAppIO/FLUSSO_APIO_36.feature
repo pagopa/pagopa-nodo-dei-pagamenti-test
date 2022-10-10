@@ -92,7 +92,7 @@ Feature: FLUSSO_APIO_36
         When job annullamentoRptMaiRichiesteDaPm triggered after 70 seconds
         And wait 15 seconds for expiration
         And PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
-        Then check outcome is KO of activateIOPayment response
+        #Then check outcome is KO of activateIOPayment response
         And check faultCode is PPT_PAGAMENTO_IN_CORSO of activateIOPayment response
         And wait 5 seconds for expiration
         And checks the value PAYING of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
