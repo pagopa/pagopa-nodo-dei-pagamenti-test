@@ -14,16 +14,15 @@ Feature: Semantic checks KO for nodoVerificaRPT
             <codiceContestoPagamento>CCD01</codiceContestoPagamento>
             <codificaInfrastrutturaPSP>QR-CODE</codificaInfrastrutturaPSP>
             <codiceIdRPT><qrc:QrCode>
-            <qrc:CF>11111122223</qrc:CF>
-            <qrc:CodStazPA>02</qrc:CodStazPA>
+            <qrc:CF>#id_broker#</qrc:CF>
+            <qrc:CodStazPA>#cod_segr#</qrc:CodStazPA>
             <qrc:AuxDigit>0</qrc:AuxDigit>
-            <qrc:CodIUV>010481670134400</qrc:CodIUV>
+            <qrc:CodIUV>#iuv#</qrc:CodIUV>
             </qrc:QrCode></codiceIdRPT>
             </ws:nodoVerificaRPT>
             </soapenv:Body>
             </soapenv:Envelope>
             """
-
     Scenario Outline: Check faultCode error on non-existent or invalid field
         Given <field> with <value> in nodoVerificaRPT
         When psp sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
@@ -57,3 +56,17 @@ Feature: Semantic checks KO for nodoVerificaRPT
             | field         | value       | resp_error              | soapUI test |
             | qrc:CF        | 11111122222 | PPT_DOMINIO_SCONOSCIUTO | VRPTSEM18   |
             | qrc:CodStazPA | None        | PPT_SEMANTICA           | VRPTSEM19   |
+    
+    Scenario Outline: Check faultCode error on invalid iuv
+        Given <field_1> with <value_1> in nodoVerificaRPT
+        And <field_2> with <value_2> in nodoVerificaRPT
+        And <field_3> with <value_3> in nodoVerificaRPT
+        And <field_4> with <value_4> in nodoVerificaRPT
+        When psp sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
+        Then check faultCode is <resp_error> of nodoVerificaRPT response
+        Examples:
+            | field_1      | value_1 | field_2         | value_2    | field_3          |value_3          |field_4 |value_4 | resp_error                       |soapUI test |
+            | qrc:AuxDigit | 3       | qrc:CodStazPA   | None       |   qrc:CodIUV     |00012711162144900|qrc:CF |#id_broker_old#|PPT_STAZIONE_INT_PA_SCONOSCIUTA  |VRPTSEM11   |
+            # | qrc:AuxDigit | 0       | qrc:CodStazPA   | 02       |   codiceContestoPagamento | irraggiungibile|qrc:CF |#id_broker_old#|PPT_STAZIONE_INT_PA_IRRAGGIUNGIBILE  |VRPTSEM14   |
+            # | qrc:AuxDigit | 0       | qrc:CodStazPA   | 98       |   codiceContestoPagamento | 122331398916990|qrc:CF |#id_broker#|PPT_STAZIONE_INT_PA_IRRAGGIUNGIBILE  |VRPTSEM15   |
+
