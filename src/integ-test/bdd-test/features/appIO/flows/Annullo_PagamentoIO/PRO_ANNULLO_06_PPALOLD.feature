@@ -2,6 +2,8 @@ Feature: PRO_ANNULLO_06_PPALOLD
 
     Background:
         Given systems up
+        And EC old version
+
 
     Scenario: Execute nodoVerificaRPT (Phase 1)
         Given nodo-dei-pagamenti has config parameter default_durata_token_IO set to 6000
@@ -11,8 +13,8 @@ Feature: PRO_ANNULLO_06_PPALOLD
         <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
         <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
         <pay_i:dominio>
-        <pay_i:identificativoDominio>44444444444</pay_i:identificativoDominio>
-        <pay_i:identificativoStazioneRichiedente>#intermediarioPA#</pay_i:identificativoStazioneRichiedente>
+        <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
+        <pay_i:identificativoStazioneRichiedente>#id_station_old#</pay_i:identificativoStazioneRichiedente>
         </pay_i:dominio>
         <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
         <pay_i:dataOraMessaggioRichiesta>2016-09-16T11:24:10</pay_i:dataOraMessaggioRichiesta>
