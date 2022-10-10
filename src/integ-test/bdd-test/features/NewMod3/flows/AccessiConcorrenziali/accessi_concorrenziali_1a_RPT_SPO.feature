@@ -209,7 +209,11 @@ Feature: process tests for accessiConCorrenziali [1a - RPT+SPO]
             </soapenv:Body>
             </soapenv:Envelope>
             """
+        Then saving nodoInviaRPT request in nodoInviaRPT
 
+
+    Scenario: Excecute second primitives request
+        Given the Excecute primitives request scenario executed successfully
         And initial XML sendPaymentOutcome
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -257,13 +261,12 @@ Feature: process tests for accessiConCorrenziali [1a - RPT+SPO]
             </soapenv:Body>
             </soapenv:Envelope>
             """
-
+        Then saving sendPaymentOutcome request in sendPaymentOutcome
 
     Scenario: parallel calls and test scenario
-        Given the Excecute primitives request scenario executed successfully
+        Given the Excecute second primitives request scenario executed successfully
         And calling primitive nodoInviaRPT_nodoInviaRPT and sendPaymentOutcome_sendPaymentOutcome in parallel
-        Then check esito is OK of nodoInviaRPT response
-        And check outcome is OK of sendPaymentOutcome response
+        Then check primitive response nodoInviaRPTResponse and primitive response sendPaymentOutcomeResponse
 
 
         # #DB CHECK-POSITION_PAYMENT_STATUS
