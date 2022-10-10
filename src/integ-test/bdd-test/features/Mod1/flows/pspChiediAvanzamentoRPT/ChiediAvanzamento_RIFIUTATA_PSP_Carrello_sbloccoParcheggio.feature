@@ -247,10 +247,10 @@ Feature: process tests for ChiediAvanzamento_RIFIUTATA_PSP_Carrello_sbloccoParch
         {
             "idPagamento": "$sessionToken",
             "RRN":123456789,
-            "identificativoPsp": "#psp_AGID#",
+            "identificativoPsp": "40000000001",
             "tipoVersamento": "CP",
-            "identificativoIntermediario": "#psp_AGID#",
-            "identificativoCanale": "97735020584_02",
+            "identificativoIntermediario": "40000000001",
+            "identificativoCanale": "40000000001_03",
             "esitoTransazioneCarta": "123456", 
             "importoTotalePagato": 11.11,
             "timestampOperazione": "2012-04-23T18:25:43.001Z",
