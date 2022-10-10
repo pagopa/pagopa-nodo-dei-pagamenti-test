@@ -39,7 +39,7 @@ Feature: process tests for accessiConCorrenziali [1a - RPT+SPO]
         <paf:paGetPaymentRes>
         <outcome>OK</outcome>
         <data>
-        <creditorReferenceId>$1iuv</creditorReferenceId>
+        <creditorReferenceId>#cod_segr_old#$1iuv</creditorReferenceId>
         <paymentAmount>10.00</paymentAmount>
         <dueDate>2021-12-31</dueDate>
         <!--Optional:-->
@@ -77,7 +77,7 @@ Feature: process tests for accessiConCorrenziali [1a - RPT+SPO]
         <!--1 to 5 repetitions:-->
         <transfer>
         <idTransfer>1</idTransfer>
-        <transferAmount>70.00</transferAmount>
+        <transferAmount>10.00</transferAmount>
         <fiscalCodePA>#creditor_institution_code_old#</fiscalCodePA>
         <IBAN>IT45R0760103200000000001016</IBAN>
         <remittanceInformation>testPaGetPayment</remittanceInformation>
