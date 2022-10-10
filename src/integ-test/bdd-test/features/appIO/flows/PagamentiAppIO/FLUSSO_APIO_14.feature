@@ -3,7 +3,7 @@ Feature: FLUSSO_APIO_14
     Background:
         Given systems up
         And EC new version
-
+@runnable
     Scenario: Execute verifyPaymentNotice (Phase 1)
     Given initial XML verifyPaymentNotice
     """
@@ -25,7 +25,7 @@ Feature: FLUSSO_APIO_14
     """
     When AppIO sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of verifyPaymentNotice response
-
+@runnable
     Scenario: Execute activateIOPayment (Phase 2)
         Given the Execute verifyPaymentNotice (Phase 1) scenario executed successfully
         And initial XML activateIOPayment
