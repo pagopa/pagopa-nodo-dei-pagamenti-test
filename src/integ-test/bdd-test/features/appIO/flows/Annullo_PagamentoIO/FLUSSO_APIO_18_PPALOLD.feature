@@ -3,7 +3,7 @@ Feature: FLUSSO_APIO_18_PPALOLD
     Background:
         Given systems up
         And EC old version
-
+@runnable
     Scenario: Execute nodoVerificaRPT (Phase 1)
         Given RPT generation
         """
@@ -108,7 +108,7 @@ Feature: FLUSSO_APIO_18_PPALOLD
         """
         When IO sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoVerificaRPT response
-
+@runnable
     Scenario: Execute nodoAttivaRPT (Phase 2)
         Given the Execute nodoVerificaRPT (Phase 1) scenario executed successfully
         And initial XML nodoAttivaRPT
@@ -194,7 +194,7 @@ Feature: FLUSSO_APIO_18_PPALOLD
         """
         When IO sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoAttivaRPT response
-        
+@runnable        
     Scenario: Execute nodoInviaRPT (Phase 3)
         Given the Execute nodoAttivaRPT (Phase 2) scenario executed successfully
         And initial XML nodoInviaRPT
@@ -225,12 +225,12 @@ Feature: FLUSSO_APIO_18_PPALOLD
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
         And verify 1 record for the table CD_INFO_PAGAMENTO retrived by the query info_pagamento on db nodo_online under macro AppIO
-
+@runnable
     Scenario: Execute nodoChiediInformazioniPagamento (Phase 4)
         Given the Execute nodoInviaRPT (Phase 3) scenario executed successfully
         When WISP sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200
-
+@runnable
     Scenario: Execute nodoInoltroEsitoPayPal (Phase 5) - KO (CONPSP)
         Given the Execute nodoChiediInformazioniPagamento (Phase 4) scenario executed successfully
         When WISP sends REST POST inoltroEsito/paypal to nodo-dei-pagamenti
@@ -249,7 +249,7 @@ Feature: FLUSSO_APIO_18_PPALOLD
         Then verify the HTTP status code of inoltroEsito/paypal response is 200
         And check esito is KO of inoltroEsito/paypal response
         And check errorCode is CONPSP of inoltroEsito/paypal response
-
+@runnable
     Scenario: Execute nodoNotificaAnnullamentoPagamento (Phase 6)
         Given the Execute nodoInoltroEsitoPayPal (Phase 5) - KO (CONPSP) scenario executed successfully
         When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken&motivoAnnullamento=CONPSP to nodo-dei-pagamenti
