@@ -191,18 +191,21 @@ Feature: Syntax checks KO for nodoAttivaRPT
             | pag:provinciaPagatore                   | QuestiSono36CaratteriAlfaNumericiTT1                                    | ARPTSIN105  |
             | pag:nazionePagatore                     | Empty                                                                   | ARPTSIN106  |
             | pag:nazionePagatore                     | ITT                                                                     | ARPTSIN107  |
-            | pag:e-mailPagatore                      | Empty                                                                   | ARPTSIN109  |
-            | pag:e-mailPagatore                      | 257DDDDDDDDDDDDDDDDDDDDDDDDDFFFFFFFFFFFFFFDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDFDDDmail@mail.it | ARPTSIN110  |
-
+            | pag:e-mailPagatore                      | Empty                                                                   | ARPTSIN108  |
+            | pag:e-mailPagatore                      | 257DDDDDDDDDDDDDDDDDDDDDDDDDFFFFFFFFFFFFFFDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDFDDDmail@mail.it | ARPTSIN109  |
 
     Scenario Outline: Check faultCode PPT_SINTASSI_XSD on invalid body element value
         Given <tag> with <value> in nodoAttivaRPT
         When psp sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
         Then check faultCode is PPT_SINTASSI_XSD of nodoAttivaRPT response
         Examples:
-        | tag                    | value                   | SoapUI Test |
-        # | bc:CodStazPA           | None                    | ARPTSIN110  |
-        | bc:CodStazPA           | Empty                   | ARPTSIN115  |
+        | tag                    | value                    | SoapUI Test |
+        | bc:AuxDigit            | Empty                    | ARPTSIN110  |
+        # | bc:AuxDigit            | 3                        | ARPTSIN111  |
+        | bc:AuxDigit            | 8                        | ARPTSIN112  |
+        | bc:CodIUV              | Empty                    | ARPTSIN113  |
+        | bc:CodIUV              | Sono16CaratteAlf         | ARPTSIN114  |
+        | bc:CodStazPA           | Empty                    | ARPTSIN115  |
 
 
     Scenario Outline: Check faultCode PPT_SINTASSI_EXTRAXSD on invalid body element value
