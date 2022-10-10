@@ -226,18 +226,18 @@ Feature: process tests for ChiediAvanzamento_RIFIUTATA_PSP_Carrello_sbloccoParch
     Scenario: Execution Esito Carta
         Given the Execute check DB-RPT scenario executed successfully
         And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte 
-            """
-           <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-                <soapenv:Header/>
-                <soapenv:Body>
-                    <ws:pspInviaCarrelloRPTCarteResponse>
-                        <pspInviaCarrelloRPTResponse>
-                            <esitoComplessivoOperazione>timeout</esitoComplessivoOperazione>
-                        </pspInviaCarrelloRPTResponse>
-                    </ws:pspInviaCarrelloRPTCarteResponse>
-                </soapenv:Body>
-            </soapenv:Envelope>
-            """
+        """
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+                <ws:pspInviaCarrelloRPTCarteResponse>
+                    <pspInviaCarrelloRPTResponse>
+                    <esitoComplessivoOperazione>timeout</esitoComplessivoOperazione>
+                    </pspInviaCarrelloRPTResponse>
+                </ws:pspInviaCarrelloRPTCarteResponse>
+            </soapenv:Body>
+        </soapenv:Envelope>
+        """
         When WISP sends REST POST inoltroEsito/carta to nodo-dei-pagamenti
 
         """
