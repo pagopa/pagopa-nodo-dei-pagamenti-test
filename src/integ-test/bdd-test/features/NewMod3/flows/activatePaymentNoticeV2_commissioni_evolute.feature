@@ -262,7 +262,7 @@ Feature: activatePaymentNoticeV2 - Commissioni evolute process
     Scenario: Execute activate 6
         Given the activatePaymentNoticeV2 scenario executed successfully
         And amount with 7002.00 in activatePaymentNoticeV2
-        And touchPoint with None in activatePaymentNoticeV2
+        And touchPoint with ANY in activatePaymentNoticeV2
         And paymentAmount with 7002.00 in paGetPayment
         And transferAmount with 6802.00 in paGetPayment
         And EC replies to nodo-dei-pagamenti with the paGetPayment
@@ -278,7 +278,7 @@ Feature: activatePaymentNoticeV2 - Commissioni evolute process
         And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value $activatePaymentNoticeV2.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value PO of the record at column PAYMENT_METHOD of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value None of the record at column TOUCHPOINT of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value ANY of the record at column TOUCHPOINT of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value $activatePaymentNoticeV2Response.suggestedIdBundle of the record at column SUGGESTED_IDBUNDLE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value $activatePaymentNoticeV2Response.suggestedIdCiBundle of the record at column SUGGESTED_IDCIBUNDLE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value $activatePaymentNoticeV2Response.suggestedUserFee of the record at column SUGGESTED_USER_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
@@ -371,7 +371,7 @@ Feature: activatePaymentNoticeV2 - Commissioni evolute process
     # Scenario: Execute activate 9
     #     Given the activatePaymentNoticeV2 scenario executed successfully
     #     And amount with 400.00 in activatePaymentNoticeV2
-    #     And touchPoint with None in activatePaymentNoticeV2
+    #     And touchPoint with ANY in activatePaymentNoticeV2
     #     And paymentAmount with 400.00 in paGetPayment
     #     And transferAmount with 200.00 in paGetPayment
     #     When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
@@ -382,7 +382,7 @@ Feature: activatePaymentNoticeV2 - Commissioni evolute process
     #     And verify 1 record for the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
     #     And checks the value $activatePaymentNoticeV2.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
     #     And checks the value PO of the record at column PAYMENT_METHOD of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    #     And checks the value None of the record at column TOUCHPOINT of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value ANY of the record at column TOUCHPOINT of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
     #     And checks the value None of the record at column SUGGESTED_IDBUNDLE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
     #     And checks the value None of the record at column SUGGESTED_IDCIBUNDLE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
     #     And checks the value None of the record at column SUGGESTED_USER_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
