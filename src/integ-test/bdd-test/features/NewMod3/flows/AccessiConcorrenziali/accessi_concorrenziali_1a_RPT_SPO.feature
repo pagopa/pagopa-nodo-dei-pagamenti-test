@@ -266,8 +266,8 @@ Feature: process tests for accessiConCorrenziali [1a - RPT+SPO]
     Scenario: parallel calls and test scenario
         Given the Excecute second primitives request scenario executed successfully
         And calling primitive nodoInviaRPT_nodoInviaRPT and sendPaymentOutcome_sendPaymentOutcome in parallel
-        Then check primitive response nodoInviaRPTResponse and primitive response sendPaymentOutcomeResponse
-
+        Then check outcome is OK of nodoInviaRPT response
+        And check outcome is OK of sendPaymentOutcome response
 
         # #DB CHECK-POSITION_PAYMENT_STATUS
         # And checks the value PAYING, PAYING_RPT, PAID, NOTICE_GENERATED, NOTICE_STORED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
