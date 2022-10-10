@@ -6,6 +6,8 @@ Feature: process tests for generazioneRicevute
   # Verify phase
   Scenario: Execute verifyPaymentNotice (Phase 1)
     Given update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with N, with where condition FK_PA and where value ('6','8') under macro update_query on db nodo_cfg
+    And generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
+    And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber  
     And initial XML verifyPaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -17,8 +19,8 @@ Feature: process tests for generazioneRicevute
       <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
       <password>pwdpwdpwd</password>
       <qrCode>
-      <fiscalCode>#creditor_institution_code_old#</fiscalCode>
-      <noticeNumber>#notice_number_old#</noticeNumber>
+      <fiscalCode>#creditor_institution_code#</fiscalCode>
+      <noticeNumber>#notice_number#</noticeNumber>
       </qrCode>
       </nod:verifyPaymentNoticeReq>
       </soapenv:Body>
@@ -41,18 +43,17 @@ Feature: process tests for generazioneRicevute
       <password>pwdpwdpwd</password>
       <idempotencyKey>#idempotency_key#</idempotencyKey>
       <qrCode>
-      <fiscalCode>#creditor_institution_code_old#</fiscalCode>
+      <fiscalCode>#creditor_institution_code#</fiscalCode>
       <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
       </qrCode>
       <expirationTime>6000</expirationTime>
-      <amount>70.00</amount>
-      <dueDate>2021-12-31</dueDate>
-      <paymentNote>causale</paymentNote>
+      <amount>10.00</amount>
+      <paymentNote>responseFull3Transfers</paymentNote>
       </nod:activatePaymentNoticeReq>
       </soapenv:Body>
       </soapenv:Envelope>
       """
-    Given initial XML paGetPayment
+    And initial XML paGetPayment
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
       xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
@@ -61,8 +62,8 @@ Feature: process tests for generazioneRicevute
       <paf:paGetPaymentRes>
       <outcome>OK</outcome>
       <data>
-      <creditorReferenceId>$iuv</creditorReferenceId>
-      <paymentAmount>70.00</paymentAmount>
+      <creditorReferenceId>#cod_segr#$1iuv</creditorReferenceId>
+      <paymentAmount>10.00</paymentAmount>
       <dueDate>2021-12-31</dueDate>
       <!--Optional:-->
       <retentionDate>2021-12-31T12:12:12</retentionDate>
@@ -76,7 +77,7 @@ Feature: process tests for generazioneRicevute
       <debtor>
       <uniqueIdentifier>
       <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-      <entityUniqueIdentifierValue>77777777777</entityUniqueIdentifierValue>
+      <entityUniqueIdentifierValue>#creditor_institution_code#</entityUniqueIdentifierValue>
       </uniqueIdentifier>
       <fullName>paGetPaymentName</fullName>
       <!--Optional:-->
@@ -99,8 +100,8 @@ Feature: process tests for generazioneRicevute
       <!--1 to 5 repetitions:-->
       <transfer>
       <idTransfer>1</idTransfer>
-      <transferAmount>70.00</transferAmount>
-      <fiscalCodePA>77777777777</fiscalCodePA>
+      <transferAmount>10.00</transferAmount>
+      <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
       <IBAN>IT45R0760103200000000001016</IBAN>
       <remittanceInformation>testPaGetPayment</remittanceInformation>
       <transferCategory>paGetPaymentTest</transferCategory>
@@ -134,7 +135,7 @@ Feature: process tests for generazioneRicevute
       <nod:sendPaymentOutcomeReq>
       <idPSP>#psp#</idPSP>
       <idBrokerPSP>#psp#</idBrokerPSP>
-      <idChannel>#canale#</idChannel>
+      <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
       <password>pwdpwdpwd</password>
       <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
       <outcome>OK</outcome>
@@ -145,7 +146,7 @@ Feature: process tests for generazioneRicevute
       <payer>
       <uniqueIdentifier>
       <entityUniqueIdentifierType>F</entityUniqueIdentifierType>
-      <entityUniqueIdentifierValue>JHNDOE00A01F205N</entityUniqueIdentifierValue>
+      <entityUniqueIdentifierValue>#creditor_institution_code#</entityUniqueIdentifierValue>
       </uniqueIdentifier>
       <fullName>John Doe</fullName>
       <streetName>street</streetName>
