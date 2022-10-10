@@ -201,11 +201,11 @@ Feature: FLUSSO_APIO_13_PPALOLD
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
                 <ppt:intestazionePPT>
-                    <identificativoIntermediarioPA>$nodoVerificaRPT.identificativoPSP</identificativoIntermediarioPA>
-                    <identificativoStazioneIntermediarioPA>$nodoVerificaRPT.identificativoIntermediarioPSP</identificativoStazioneIntermediarioPA>
-                    <identificativoDominio>$nodoVerificaRPT.identificativoCanale</identificativoDominio>
+                    <identificativoIntermediarioPA>#id_broker_old#</identificativoIntermediarioPA>
+                    <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
+                    <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
                     <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
-                    <codiceContestoPagamento>$nodoAttivaRPT.codiceContestoPagamento</codiceContestoPagamento>
+                    <codiceContestoPagamento>$nodoVerificaRPT.codiceContestoPagamento</codiceContestoPagamento>
                 </ppt:intestazionePPT>
             </soapenv:Header>
             <soapenv:Body>
