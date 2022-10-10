@@ -251,7 +251,7 @@ def single_thread(context, soap_primitive):
     print("single_thread")
     primitive = soap_primitive.split("_")[0]
     print(soap_primitive.split("_")[1])
-    headers = {'Content-Type': 'application/xml', "SOAPAction": primitive, 'Host': 'api.dev.platform.pagopa.it:443'}
+    headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}
     url_nodo = get_soap_url_nodo(context, primitive)
     print("nodo soap_request sent >>>", getattr(
         context, soap_primitive.split("_")[1]))

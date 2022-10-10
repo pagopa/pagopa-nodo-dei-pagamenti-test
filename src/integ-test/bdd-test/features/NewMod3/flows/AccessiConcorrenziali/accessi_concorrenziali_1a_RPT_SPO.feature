@@ -39,7 +39,7 @@ Feature: process tests for accessiConCorrenziali [1a - RPT+SPO]
         <paf:paGetPaymentRes>
         <outcome>OK</outcome>
         <data>
-        <creditorReferenceId>$1iuv</creditorReferenceId>
+        <creditorReferenceId>#cod_segr_old#$1iuv</creditorReferenceId>
         <paymentAmount>10.00</paymentAmount>
         <dueDate>2021-12-31</dueDate>
         <!--Optional:-->
@@ -77,7 +77,7 @@ Feature: process tests for accessiConCorrenziali [1a - RPT+SPO]
         <!--1 to 5 repetitions:-->
         <transfer>
         <idTransfer>1</idTransfer>
-        <transferAmount>70.00</transferAmount>
+        <transferAmount>10.00</transferAmount>
         <fiscalCodePA>#creditor_institution_code_old#</fiscalCodePA>
         <IBAN>IT45R0760103200000000001016</IBAN>
         <remittanceInformation>testPaGetPayment</remittanceInformation>
@@ -209,7 +209,11 @@ Feature: process tests for accessiConCorrenziali [1a - RPT+SPO]
             </soapenv:Body>
             </soapenv:Envelope>
             """
+        Then saving nodoInviaRPT request in nodoInviaRPT
 
+
+    Scenario: Excecute second primitives request
+        Given the Excecute primitives request scenario executed successfully
         And initial XML sendPaymentOutcome
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -257,14 +261,13 @@ Feature: process tests for accessiConCorrenziali [1a - RPT+SPO]
             </soapenv:Body>
             </soapenv:Envelope>
             """
-
+        Then saving sendPaymentOutcome request in sendPaymentOutcome
 
     Scenario: parallel calls and test scenario
-        Given the Excecute primitives request scenario executed successfully
-        And calling primitive nodoInviaRPT_nodoInviaRPT and sendPaymentOutcome_sendPaymentOutcome in parallel
+        Given the Excecute second primitives request scenario executed successfully
+        And calling primitive sendPaymentOutcome_sendPaymentOutcome and nodoInviaRPT_nodoInviaRPT in parallel
         Then check esito is OK of nodoInviaRPT response
         And check outcome is OK of sendPaymentOutcome response
-
 
         # #DB CHECK-POSITION_PAYMENT_STATUS
         # And checks the value PAYING, PAYING_RPT, PAID, NOTICE_GENERATED, NOTICE_STORED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
