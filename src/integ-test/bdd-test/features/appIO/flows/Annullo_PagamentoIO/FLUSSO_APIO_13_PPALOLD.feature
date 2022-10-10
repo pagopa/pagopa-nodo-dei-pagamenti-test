@@ -2,6 +2,7 @@ Feature: FLUSSO_APIO_13_PPALOLD
 
     Background:
         Given systems up
+        And EC old version
 
     Scenario: Execute nodoVerificaRPT (Phase 1)
         Given RPT generation
@@ -205,7 +206,7 @@ Feature: FLUSSO_APIO_13_PPALOLD
                     <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
                     <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
                     <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
-                    <codiceContestoPagamento>$nodoVerificaRPT.codiceContestoPagamento</codiceContestoPagamento>
+                    <codiceContestoPagamento>$nodoAttivaRPT.codiceContestoPagamento</codiceContestoPagamento>
                 </ppt:intestazionePPT>
             </soapenv:Header>
             <soapenv:Body>
