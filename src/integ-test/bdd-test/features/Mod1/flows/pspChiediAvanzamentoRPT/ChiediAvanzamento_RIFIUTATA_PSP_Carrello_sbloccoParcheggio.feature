@@ -247,7 +247,7 @@ Feature: process tests for ChiediAvanzamento_RIFIUTATA_PSP_Carrello_sbloccoParch
             "identificativoPsp": "40000000001",
             "tipoVersamento": "CP",
             "identificativoIntermediario": "40000000001",
-            "identificativoCanale": "40000000001_03",
+            "identificativoCanale": "40000000001_06",
             "esitoTransazioneCarta": "123456", 
             "importoTotalePagato": 11.11,
             "timestampOperazione": "2012-04-23T18:25:43.001Z",
