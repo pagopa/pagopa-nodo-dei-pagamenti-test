@@ -232,7 +232,7 @@ Feature: Syntax checks KO for nodoAttivaRPT
                 | password | Empty            | ARPTSIN16   |
                 | password | Alpha_7          | ARPTSIN17   |
                 | password | Alpha_16_Num_123 | ARPTSIN18   |
-
+    
     Scenario: Check faultCode PPT_SINTASSI_EXTRAXSD on invalid body element value [ARPTSIN13]
         Given identificativoCanale with Empty in nodoAttivaRPT
         When psp sends soap nodoAttivaRPT to nodo-dei-pagamenti

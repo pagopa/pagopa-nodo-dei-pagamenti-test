@@ -20,7 +20,7 @@ Feature: process tests for generazioneRicevute
       <password>pwdpwdpwd</password>
       <qrCode>
       <fiscalCode>#creditor_institution_code#</fiscalCode>
-      <noticeNumber>#notice_number#</noticeNumber>
+      <noticeNumber>$1noticeNumber</noticeNumber>
       </qrCode>
       </nod:verifyPaymentNoticeReq>
       </soapenv:Body>
@@ -46,7 +46,7 @@ Feature: process tests for generazioneRicevute
       <fiscalCode>#creditor_institution_code#</fiscalCode>
       <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
       </qrCode>
-      <expirationTime>6000</expirationTime>
+      <expirationTime>60000</expirationTime>
       <amount>10.00</amount>
       <paymentNote>responseFull3Transfers</paymentNote>
       </nod:activatePaymentNoticeReq>
@@ -100,7 +100,23 @@ Feature: process tests for generazioneRicevute
       <!--1 to 5 repetitions:-->
       <transfer>
       <idTransfer>1</idTransfer>
-      <transferAmount>10.00</transferAmount>
+      <transferAmount>5.00</transferAmount>
+      <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
+      <IBAN>IT45R0760103200000000001016</IBAN>
+      <remittanceInformation>testPaGetPayment</remittanceInformation>
+      <transferCategory>paGetPaymentTest</transferCategory>
+      </transfer>
+      <transfer>
+      <idTransfer>2</idTransfer>
+      <transferAmount>3.00</transferAmount>
+      <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
+      <IBAN>IT45R0760103200000000001016</IBAN>
+      <remittanceInformation>testPaGetPayment</remittanceInformation>
+      <transferCategory>paGetPaymentTest</transferCategory>
+      </transfer>
+      <transfer>
+      <idTransfer>3</idTransfer>
+      <transferAmount>2.00</transferAmount>
       <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
       <IBAN>IT45R0760103200000000001016</IBAN>
       <remittanceInformation>testPaGetPayment</remittanceInformation>
