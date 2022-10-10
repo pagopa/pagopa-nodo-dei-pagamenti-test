@@ -209,8 +209,8 @@ Feature: FLUSSO_APIO_14
         </soapenv:Body>
         </soapenv:Envelope>
         """
-        When job mod3CancelV2 triggered after 7 seconds
-        And wait 10 seconds for expiration
+        When job mod3CancelV2 triggered after 3 seconds
+        And wait 6 seconds for expiration
         And PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcome response
         And check faultCode is PPT_SEMANTICA of sendPaymentOutcome response
