@@ -225,7 +225,7 @@ Feature: process tests for ChiediAvanzamento_RIFIUTATA_PSP_Carrello_sbloccoParch
 
     Scenario: Execution Esito Carta
         Given the Execute check DB-RPT scenario executed successfully
-        And initial XML pspInviaCarrelloRPTCarte 
+        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte 
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header/>
@@ -250,7 +250,7 @@ Feature: process tests for ChiediAvanzamento_RIFIUTATA_PSP_Carrello_sbloccoParch
             "identificativoPsp": "40000000001",
             "tipoVersamento": "CP",
             "identificativoIntermediario": "40000000001",
-            "identificativoCanale": "40000000001_06",
+            "identificativoCanale": "40000000001_03",
             "esitoTransazioneCarta": "123456", 
             "importoTotalePagato": 11.11,
             "timestampOperazione": "2012-04-23T18:25:43.001Z",
