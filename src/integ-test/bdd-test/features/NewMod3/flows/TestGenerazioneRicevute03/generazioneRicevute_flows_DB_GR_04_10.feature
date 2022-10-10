@@ -220,7 +220,7 @@ Feature: process tests for generazioneRicevute
     And through the query position_receipt_recipient_status retrieve param 1recipient_broker_pa_id at position 6 and save it under the key 1recipient_broker_pa_id
     And through the query position_receipt_recipient_status retrieve param 1recipient_station_id at position 7 and save it under the key 1recipient_station_id
     And through the query position_receipt_recipient_status retrieve param 1status at position 8 and save it under the key 1status
-    And through the query position_receipt_recipient_status retrieve param 1fk_position_receipt_recipient at position 11 and save it under the key 1fk_position_receipt_recipient
+    And through the query position_receipt_recipient_status retrieve param 1fk_position_receipt_recipient at position 10 and save it under the key 1fk_position_receipt_recipient
 
     And checks the value $1pa_fiscal_code of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
     And checks the value $1notice_id of the record at column NOTICE_ID of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
