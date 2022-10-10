@@ -227,15 +227,12 @@ Feature: process tests for ChiediAvanzamento_RIFIUTATA_PSP_Carrello_sbloccoParch
         Given the Execute check DB-RPT scenario executed successfully
         And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte 
             """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+           <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
                 <soapenv:Header/>
                 <soapenv:Body>
                     <ws:pspInviaCarrelloRPTCarteResponse>
                         <pspInviaCarrelloRPTResponse>
-                            <delay>10000</delay>
                             <esitoComplessivoOperazione>timeout</esitoComplessivoOperazione>
-                            <identificativoCarrello>$1ccp</identificativoCarrello>
-                            <parametriPagamentoImmediato>idBruciatura=1636705689274</parametriPagamentoImmediato>
                         </pspInviaCarrelloRPTResponse>
                     </ws:pspInviaCarrelloRPTCarteResponse>
                 </soapenv:Body>
