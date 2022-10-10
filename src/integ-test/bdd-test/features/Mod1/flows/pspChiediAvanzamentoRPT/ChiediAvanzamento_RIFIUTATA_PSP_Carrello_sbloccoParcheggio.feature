@@ -250,7 +250,7 @@ Feature: process tests for ChiediAvanzamento_RIFIUTATA_PSP_Carrello_sbloccoParch
             "identificativoPsp": "#psp#",
             "tipoVersamento": "CP",
             "identificativoIntermediario": "#psp#",
-            "identificativoCanale": "#canaleRtPush#",
+            "identificativoCanale": "#canale_ATTIVATO_PRESSO_PSP#",
             "esitoTransazioneCarta": "123456", 
             "importoTotalePagato": 11.11,
             "timestampOperazione": "2012-04-23T18:25:43.001Z",
