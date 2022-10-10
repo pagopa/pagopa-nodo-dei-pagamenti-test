@@ -211,7 +211,7 @@ Feature: process tests for ChiediAvanzamento_RIFIUTATA_PSP_Carrello_sbloccoParch
         And replace iuv2 content with avanzaKO content
         And replace 3CCP content with $2CCP content
         And replace 2CCP content with $1ccp content
-        And replace pa content with #creditor_institution_code# content
+        And replace pa content with 44444444444 content
         Then checks the value $sessionToken of the record at column ID_SESSIONE of the table STATI_RPT retrived by the query stati_RPT_new on db nodo_online under macro Mod1
         And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query stati_RPT_new on db nodo_online under macro Mod1
         And checks the value nodoInviaCarrelloRPT of the record at column INSERTED_BY of the table STATI_RPT retrived by the query stati_RPT_new on db nodo_online under macro Mod1
@@ -232,7 +232,10 @@ Feature: process tests for ChiediAvanzamento_RIFIUTATA_PSP_Carrello_sbloccoParch
                 <soapenv:Body>
                     <ws:pspInviaCarrelloRPTCarteResponse>
                         <pspInviaCarrelloRPTResponse>
+                            <delay>10000</delay>
                             <esitoComplessivoOperazione>timeout</esitoComplessivoOperazione>
+                            <identificativoCarrello>$1ccp</identificativoCarrello>
+                            <parametriPagamentoImmediato>idBruciatura=1636705689274</parametriPagamentoImmediato>
                         </pspInviaCarrelloRPTResponse>
                     </ws:pspInviaCarrelloRPTCarteResponse>
                 </soapenv:Body>
@@ -244,10 +247,10 @@ Feature: process tests for ChiediAvanzamento_RIFIUTATA_PSP_Carrello_sbloccoParch
         {
             "idPagamento": "$sessionToken",
             "RRN":123456789,
-            "identificativoPsp": "70000000001",
+            "identificativoPsp": "40000000001",
             "tipoVersamento": "CP",
-            "identificativoIntermediario": "70000000001",
-            "identificativoCanale": "70000000001_03",
+            "identificativoIntermediario": "40000000001",
+            "identificativoCanale": "40000000001_03",
             "esitoTransazioneCarta": "123456", 
             "importoTotalePagato": 11.11,
             "timestampOperazione": "2012-04-23T18:25:43.001Z",
@@ -264,7 +267,7 @@ Feature: process tests for ChiediAvanzamento_RIFIUTATA_PSP_Carrello_sbloccoParch
         Then checks the value CART_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query motivo_annullamento on db nodo_online under macro Mod1
         And checks the value avanzaKO of the record at column IUV of the table RETRY_RPT retrived by the query motivo_annullamento_originale on db nodo_online under macro Mod1
         And checks the value $1ccp of the record at column CCP of the table RETRY_RPT retrived by the query motivo_annullamento_originale on db nodo_online under macro Mod1
-        And checks the value 77777777777 of the record at column ID_DOMINIO of the table RETRY_RPT retrived by the query motivo_annullamento_originale on db nodo_online under macro Mod1
+        And checks the value 44444444444 of the record at column ID_DOMINIO of the table RETRY_RPT retrived by the query motivo_annullamento_originale on db nodo_online under macro Mod1
         And checks the value 0 of the record at column RETRY of the table RETRY_RPT retrived by the query motivo_annullamento_originale on db nodo_online under macro Mod1
         And verify 1 record for the table RETRY_RPT retrived by the query motivo_annullamento_originale on db nodo_online under macro Mod1
         And wait 5 seconds for expiration
