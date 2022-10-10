@@ -158,7 +158,8 @@ Scenario: Execute activateIOPayment (Phase 2)
                     </paf:paGetPaymentRes>
                 </soapenv:Body>
             </soapenv:Envelope>
-            """    And EC replies to nodo-dei-pagamenti with the paGetPayment
+            """    
+    And EC replies to nodo-dei-pagamenti with the paGetPayment
     When AppIO sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is KO of activateIOPayment response
 
