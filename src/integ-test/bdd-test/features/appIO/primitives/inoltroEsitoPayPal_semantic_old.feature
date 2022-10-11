@@ -5,7 +5,7 @@ Feature: Semantic checks on inoltroEsitoPayPal primitive for old EC
         And EC old version
 
 ################################################## PARTE 1 ########################################################################################################
-
+@runnable
     Scenario: Execute nodoVerificaRPT (Phase 1)
         Given RPT generation
         """
@@ -110,7 +110,7 @@ Feature: Semantic checks on inoltroEsitoPayPal primitive for old EC
         """
         When IO sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoVerificaRPT response
-
+@runnable
     Scenario: Execute nodoAttivaRPT (Phase 2)
         Given the Execute nodoVerificaRPT (Phase 1) scenario executed successfully
         And initial XML nodoAttivaRPT
@@ -196,7 +196,7 @@ Feature: Semantic checks on inoltroEsitoPayPal primitive for old EC
         """
         When IO sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoAttivaRPT response
-
+@runnable
     Scenario: Execute nodoInviaRPT (Phase 3)
         Given the Execute nodoAttivaRPT (Phase 2) scenario executed successfully
         And initial XML nodoInviaRPT
@@ -227,13 +227,13 @@ Feature: Semantic checks on inoltroEsitoPayPal primitive for old EC
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
         And verify 1 record for the table CD_INFO_PAGAMENTO retrived by the query info_pagamento on db nodo_online under macro AppIO
-
+@runnable
      Scenario: Execute nodoChiediInformazioniPagamento (Phase 4)
          Given the Execute nodoInviaRPT (Phase 3) scenario executed successfully
          When WISP sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
          Then verify the HTTP status code of informazioniPagamento response is 200
 
-
+@runnable
       Scenario: Execute nodoInoltroEsitoPayPal (Phase 5) - OK
           Given the Execute nodoChiediInformazioniPagamento (Phase 4) scenario executed successfully
           When WISP sends REST POST inoltroEsito/paypal to nodo-dei-pagamenti
@@ -292,7 +292,7 @@ Feature: Semantic checks on inoltroEsitoPayPal primitive for old EC
           And checks the value None of the record at column CODICE_AUTORIZZATIVO_PAYPAL of the table PM_SESSION_DATA retrived by the query pm_session_old on db nodo_online under macro AppIO
           And checks the value 153016btAE of the record at column ID_TRANSAZIONE_PSP_PAYPAL of the table PM_SESSION_DATA retrived by the query pm_session_old on db nodo_online under macro AppIO
           And checks the value responseOK of the record at column ID_TRANSAZIONE_PM_PAYPAL of the table PM_SESSION_DATA retrived by the query pm_session_old on db nodo_online under macro AppIO 
-
+@runnable
     Scenario: Execute nodoInoltroEsitoPaypal (Phase 5) - KO (RIFPSP)
         Given the Execute nodoChiediInformazioniPagamento (Phase 4) scenario executed successfully
         And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
@@ -372,7 +372,7 @@ Feature: Semantic checks on inoltroEsitoPayPal primitive for old EC
         And checks the value None of the record at column CODICE_AUTORIZZATIVO_PAYPAL of the table PM_SESSION_DATA retrived by the query pm_session_old on db nodo_online under macro AppIO
         #And checks the value $activateIOPayment.idempotencyKey of the record at column ID_TRANSAZIONE_PSP_PAYPAL of the table PM_SESSION_DATA retrived by the query pm_session on db nodo_online under macro AppIO
         And checks the value responseKO of the record at column ID_TRANSAZIONE_PM_PAYPAL of the table PM_SESSION_DATA retrived by the query pm_session_old on db nodo_online under macro AppIO
- 
+ @runnable
     Scenario: Execute nodoInoltroEsitoPaypal (Phase 5) - KO (CONPSP)
         Given the Execute nodoChiediInformazioniPagamento (Phase 4) scenario executed successfully
         When WISP sends REST POST inoltroEsito/paypal to nodo-dei-pagamenti
@@ -433,7 +433,7 @@ Feature: Semantic checks on inoltroEsitoPayPal primitive for old EC
         And checks the value None of the record at column CODICE_AUTORIZZATIVO_PAYPAL of the table PM_SESSION_DATA retrived by the query pm_session_old on db nodo_online under macro AppIO
         #And checks the value $activateIOPayment.idempotencyKey of the record at column ID_TRANSAZIONE_PSP_PAYPAL of the table PM_SESSION_DATA retrived by the query pm_session on db nodo_online under macro AppIO
         And checks the value responseKO of the record at column ID_TRANSAZIONE_PM_PAYPAL of the table PM_SESSION_DATA retrived by the query pm_session_old on db nodo_online under macro AppIO
-
+@runnable
     Scenario: Execute nodoInoltroEsitoPaypal (Phase 5) - Timeout
         Given the Execute nodoChiediInformazioniPagamento (Phase 4) scenario executed successfully
         And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
@@ -506,7 +506,7 @@ Feature: Semantic checks on inoltroEsitoPayPal primitive for old EC
         And checks the value responseMalformata of the record at column ID_TRANSAZIONE_PM_PAYPAL of the table PM_SESSION_DATA retrived by the query pm_session_old on db nodo_online under macro AppIO
 
 ######################################################################################################################################################################################
-
+@runnable
     # [SEM_NIEPP_07]
     Scenario: Execute sendPaymentOutcome (Phase 6) [SEM_NIEPP_07]
         Given the Execute nodoInoltroEsitoPayPal (Phase 5) - OK scenario executed successfully
@@ -590,7 +590,7 @@ Feature: Semantic checks on inoltroEsitoPayPal primitive for old EC
         And checks the value None of the record at column ORIGINAL_PAYMENT_TOKEN of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
         And checks the value Y of the record at column FLAG_IO of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
         And checks the value Y of the record at column RICEVUTA_PM of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-
+@runnable
     Scenario: Execute nodoInoltroEsitoPaypal (Phase 7) [SEM_NIEPP_07]
         Given the Execute sendPaymentOutcome (Phase 6) scenario executed successfully
         When WISP sends REST POST inoltroEsito/paypal to nodo-dei-pagamenti
@@ -723,7 +723,7 @@ Feature: Semantic checks on inoltroEsitoPayPal primitive for old EC
         #And checks the value $activateIOPayment.idempotencyKey of the record at column ID_TRANSAZIONE_PSP_PAYPAL of the table PM_SESSION_DATA retrived by the query pm_session on db nodo_online under macro AppIO
         And checks the value responseMalformata of the record at column ID_TRANSAZIONE_PM_PAYPAL of the table PM_SESSION_DATA retrived by the query pm_session_old on db nodo_online under macro AppIO
         And restore initial configurations
-
+@runnable
      # [SEM_NIEPP_09]
      Scenario: Execute nodoInoltroEsitoPaypal1 (Phase 6) [SEM_NIEPP_09]
         Given the Execute nodoInoltroEsitoPayPal (Phase 5) - OK scenario executed successfully
@@ -785,7 +785,7 @@ Feature: Semantic checks on inoltroEsitoPayPal primitive for old EC
         And checks the value None of the record at column CODICE_AUTORIZZATIVO_PAYPAL of the table PM_SESSION_DATA retrived by the query pm_session_old on db nodo_online under macro AppIO
         #And checks the value $activateIOPayment.idempotencyKey of the record at column ID_TRANSAZIONE_PSP_PAYPAL of the table PM_SESSION_DATA retrived by the query pm_session on db nodo_online under macro AppIO
         And checks the value responseOK of the record at column ID_TRANSAZIONE_PM_PAYPAL of the table PM_SESSION_DATA retrived by the query pm_session_old on db nodo_online under macro AppIO
-
+@runnable
     # [SEM_NIEPP_10]
     Scenario: Execute nodoInoltroEsitoPaypal1 (Phase 6) [SEM_NIEPP_10]
         Given the Execute nodoInoltroEsitoPaypal (Phase 5) - Timeout scenario executed successfully
@@ -850,7 +850,7 @@ Feature: Semantic checks on inoltroEsitoPayPal primitive for old EC
         And checks the value responseMalformata of the record at column ID_TRANSAZIONE_PM_PAYPAL of the table PM_SESSION_DATA retrived by the query pm_session_old on db nodo_online under macro AppIO
         # check correctness STATI_RPT_SNAPSHOT
         And checks the value RPT_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro AppIO
-
+@runnable
     # [SEM_NIEPP_11]
     Scenario: Execute nodoInoltroEsitoPayPal1 (Phase 6) [SEM_NIEPP_11]
         Given the Execute nodoInoltroEsitoPaypal (Phase 5) - KO (RIFPSP) scenario executed successfully
@@ -916,7 +916,7 @@ Feature: Semantic checks on inoltroEsitoPayPal primitive for old EC
         And checks the value responseKO of the record at column ID_TRANSAZIONE_PM_PAYPAL of the table PM_SESSION_DATA retrived by the query pm_session_old on db nodo_online under macro AppIO
         # check correctness STATI_RPT_SNAPSHOT
         And checks the value RPT_RIFIUTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro AppIO
-
+@runnable
     # [SEM_NIEPP_12]
     Scenario: Execute nodoInoltroEsitoPaypal1 (Phase 6) [SEM_NIEPP_12]
         Given the Execute nodoInoltroEsitoPaypal (Phase 5) - KO (CONPSP) scenario executed successfully
