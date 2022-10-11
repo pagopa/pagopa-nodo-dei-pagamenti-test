@@ -187,7 +187,7 @@ Feature: Commissioni evolute process
         And checks the value $activatePaymentNoticeV2Response.suggestedUserFee of the record at column SUGGESTED_USER_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value $activatePaymentNoticeV2Response.suggestedPaFee of the record at column SUGGESTED_PA_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
-
+     @skip
     # activate without paymentMethod and touchPoint --> fees request with paymentMethod = ANY and touchPoint = PSP -->
     # psp in fees response, same of psp in activate request --> fields related to fee retrieved by fees populated with the first occurrence
     Scenario: Execute activate 3
@@ -244,7 +244,7 @@ Feature: Commissioni evolute process
         And checks the value None of the record at column SUGGESTED_USER_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value None of the record at column SUGGESTED_PA_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
-
+    @skip
     # 2 psp in fees response, first different from activate request, second the same --> fields related to fee retrieved by fees populated with the fields from the same psp
     Scenario: Execute activate 5
         Given the activatePaymentNoticeV2 scenario executed successfully
@@ -378,34 +378,34 @@ Feature: Commissioni evolute process
         And checks the value None of the record at column SUGGESTED_PA_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
 
-    # # DA COMPLETARE retry - 400   (aggiungere TC anche per gli altri codici errore e caso in cui a una certa risponde ok)
-    # Scenario: Execute activate 9
-    #     Given the activatePaymentNoticeV2 scenario executed successfully
-    #     And amount with 400.00 in activatePaymentNoticeV2
-    #     And touchPoint with ANY in activatePaymentNoticeV2
-    #     And paymentAmount with 400.00 in paGetPayment
-    #     And transferAmount with 200.00 in paGetPayment
-    #     When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-    #     # Then check outcome is OK of activatePaymentNoticeV2 response
-    #     And wait 30 seconds for expiration
-    #     # verify fees retry in RE table
-    #     # And verify 2 record for the table RE retrived by the query select_fees on db re under macro getFees
-    #     And verify 1 record for the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    #     And checks the value $activatePaymentNoticeV2.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    #     And checks the value PO of the record at column PAYMENT_METHOD of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    #     And checks the value ANY of the record at column TOUCHPOINT of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    #     And checks the value None of the record at column SUGGESTED_IDBUNDLE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    #     And checks the value None of the record at column SUGGESTED_IDCIBUNDLE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    #     And checks the value None of the record at column SUGGESTED_USER_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    #     And checks the value None of the record at column SUGGESTED_PA_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    # retry - 400   (aggiungere TC anche per gli altri codici errore e caso in cui a una certa risponde ok)
+    Scenario: Execute activate 9
+        Given the activatePaymentNoticeV2 scenario executed successfully
+        And amount with 400.00 in activatePaymentNoticeV2
+        And touchPoint with PSP in activatePaymentNoticeV2
+        And paymentAmount with 400.00 in paGetPayment
+        And transferAmount with 200.00 in paGetPayment
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        # Then check outcome is OK of activatePaymentNoticeV2 response
+        And wait 60 seconds for expiration
+        # verify fees retry in RE table
+        # And verify 2 record for the table RE retrived by the query select_fees on db re under macro getFees
+        And verify 1 record for the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value PO of the record at column PAYMENT_METHOD of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value PSP of the record at column TOUCHPOINT of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value None of the record at column SUGGESTED_IDBUNDLE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value None of the record at column SUGGESTED_IDCIBUNDLE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value None of the record at column SUGGESTED_USER_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value None of the record at column SUGGESTED_PA_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
-    @skip
+    
     # sendPaymentOutcome - sunny day
     Scenario: Execute activate 12
         Given the activatePaymentNoticeV2 scenario executed successfully
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-    @skip
+  
     Scenario: Execute sendPaymentOutcomeV2
         Given the Execute activate 12 scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
@@ -423,13 +423,13 @@ Feature: Commissioni evolute process
         And checks the value $sendPaymentOutcomeV2.idCiBundle of the record at column BUNDLE_PA_ID of the table POSITION_RECEIPT retrived by the query PAYMENT_TOKEN_spov2 on db nodo_online under macro NewMod1
         # verify paSendRTV2 is sent with fields receipt.fee = POSITION_RECEIPT.FEE, receipt.primaryCiIncurredFee = POSITION_RECEIPT.FEE_PA, receipt.idBundle = POSITION_RECEIPT.BUNDLE_ID, receipt.idCiBundle = POSITION_RECEIPT.BUNDLE_PA_ID
 
-    @skip
+
     # sendPaymentOutcome - no fee information in sendPaymentOutcomeV2 request
     Scenario: Execute activate 13
         Given the activatePaymentNoticeV2 scenario executed successfully
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-    @skip
+    
     Scenario: Execute sendPaymentOutcomeV2 2
         Given the Execute activate 13 scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
