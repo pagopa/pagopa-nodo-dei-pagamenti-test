@@ -118,7 +118,7 @@ Feature: process tests for Gestione Accessi Concorrenziali
       <soapenv:Body>
       <ws:pspInviaRPTResponse>
       <pspInviaRPTResponse>
-      <delay>10000</delay>
+      <delay>5000</delay>
       <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
       <identificativoCarrello>$nodoInviaRPT.identificativoUnivocoVersamento</identificativoCarrello>
       <parametriPagamentoImmediato>idBruciatura=$nodoInviaRPT.identificativoUnivocoVersamento</parametriPagamentoImmediato>
@@ -152,4 +152,5 @@ Feature: process tests for Gestione Accessi Concorrenziali
     Given the EsitoMod1_OK+notificaAnnullamento_KO (part 2) scenario executed successfully
     Then checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_INVIATA_A_PSP,RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT retrived by the query stati_rpt_IUV on db nodo_online under macro NewMod3
     And verify 5 record for the table STATI_RPT retrived by the query stati_rpt_IUV on db nodo_online under macro NewMod3
-# continuare db check
+    Then checks the value nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,nodoInoltraPagamentoMod1,nodoInoltraPagamentoMod1,pspInviaRPT,nodoNotificaAnnullamento,pspInviaRPT,nodoInoltraPagamentoMod1,nodoInoltraPagamentoMod1,nodoNotificaAnnullamento of the record at column STATO of the table RE retrived by the query id_sessione_originale on db re under macro NewMod3
+    And verify 13 record for the table RE retrived by the query id_sessione_originale on db re under macro NewMod3
