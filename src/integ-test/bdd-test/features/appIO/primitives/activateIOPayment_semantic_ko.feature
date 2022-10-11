@@ -444,7 +444,7 @@ Feature: Semantic checks for activateIOPayment - KO
       | noticeNumber | 302119138889055636 | SEM_AIPR_22 |
       #| fiscalCode   | 90000000001        | SEM_AIPR_22 |
 
-
+@runnable
   Scenario Outline: Check PPT_PAGAMENTO_IN_CORSO error on idempotencyKey validity
     Given nodo-dei-pagamenti has config parameter useIdempotency set to false
     And the Execute activateIOPayment (Phase 1) scenario executed successfully
