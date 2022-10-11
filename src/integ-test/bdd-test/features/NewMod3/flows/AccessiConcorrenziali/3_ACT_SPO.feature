@@ -32,7 +32,7 @@ Feature: process tests for accessiConCorrenziali [3_ACT_SPO]
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
         And wait 3 seconds for expiration
-        And save activatePaymentNotice request in activatePaymentNotice1
+        And save activatePaymentNotice response in activatePaymentNotice1
 
     Scenario: trigger poller annulli
         Given the Execute activatePaymentNotice request scenario executed successfully
