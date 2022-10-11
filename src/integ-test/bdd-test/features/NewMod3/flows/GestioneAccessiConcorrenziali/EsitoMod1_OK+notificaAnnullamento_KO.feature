@@ -135,7 +135,7 @@ Feature: process tests for Gestione Accessi Concorrenziali
         "identificativoPsp": "#psp#",
         "tipoVersamento": "BBT",
         "identificativoIntermediario": "#psp#",
-        "identificativoCanale": "#canale_BBT#",
+        "identificativoCanale": "#canaleRtPush#",
         "tipoOperazione": "mobile",
         "mobileToken": "sleepOK"
       }

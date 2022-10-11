@@ -83,7 +83,8 @@
         "position_subject_service": "SELECT columns FROM table_name su JOIN POSITION_SERVICE se ON su.ID = se.DEBTOR_ID WHERE se.PA_FISCAL_CODE='$activatePaymentNotice.fiscalCode' and se.NOTICE_ID='$activatePaymentNotice.noticeNumber' and su.SUBJECT_TYPE='DEBTOR'",
         "get_receipt": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN ='$activatePaymentNoticeResponse.paymentToken' and RECIPIENT_STATION_ID ='$recipientStationId' and NOTICE_ID='$activatePaymentNotice.noticeNumber'",
         "position_transfer_2":"SELECT p.* FROM table_name p WHERE p.fk_position_receipt = (SELECT s.ID FROM POSITION_RECEIPT s WHERE s.NOTICE_ID ='$activatePaymentNotice.noticeNumber' and s.PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode')",
-        "stati_rpt_IUV": "SELECT columns FROM table_name WHERE IUV = '$IUV' order by id asc"
+        "stati_rpt_IUV": "SELECT columns FROM table_name WHERE IUV = '$IUV' order by id asc",
+        "id_sessione_originale": "SELECT columns FROM table_name WHERE ID_SESSIONE_ORIGINALE = '$sessionToken' OR INFO like '%$sessionToken%' order by DATA_ORA_EVENTO asc"
     },
     "AppIO":{
         "payment_status":"SELECT s.columns FROM table_name s WHERE s.NOTICE_ID ='$activateIOPayment.noticeNumber' AND s.PA_FISCAL_CODE = '$activateIOPayment.fiscalCode'",
