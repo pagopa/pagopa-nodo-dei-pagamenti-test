@@ -1810,9 +1810,13 @@ def step_impl(context, primitive1, primitive2, delay1):
 
 @then("check primitive response {primitive1} and primitive response {primitive2}")
 def step_impl(context, primitive1, primitive2):
-    response_primitive1 = parseString(getattr(context, primitive1))
+    primitive1 = getattr(context, primitive1)
+    primitive2 = getattr(context, primitive2)
+    primitive1_content = primitive1.content
+    primitive2_content = primitive2.content
+    response_primitive1 = parseString(primitive1_content)
     print(response_primitive1)
-    response_primitive2 = parseString(getattr(context, primitive2))
+    response_primitive2 = parseString(primitive2_content)
     print(response_primitive2)
 
     outcome1 = response_primitive1.getElementsByTagName('outcome')[
