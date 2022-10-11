@@ -179,7 +179,7 @@ Feature: Semantic checks for activateIOPayment - KO
     Then check outcome is KO of activateIOPayment response
     And check faultCode is PPT_AUTORIZZAZIONE of activateIOPayment response
     #And check description is Il canale non è di tipo 'ATTIVATO_PRESSO_PSP' of activateIOPayment response
-
+@runnable
   # idBrokerPSP-idPSP value check: idBrokerPSP not associated to idPSP [SEM_AIPR_11]
   Scenario: Check PPT_AUTORIZZAZIONE error on psp broker not associated to psp
     Given initial XML activateIOPayment
@@ -236,7 +236,7 @@ Feature: Semantic checks for activateIOPayment - KO
     Then check outcome is KO of activateIOPayment response
     And check faultCode is PPT_AUTORIZZAZIONE of activateIOPayment response
     And check description is Configurazione intermediario-canale non corretta of activateIOPayment response
-
+@runnable
   Scenario: Execute activateIOPayment (Phase 1)
     Given initial XML activateIOPayment
       """
