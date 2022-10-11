@@ -65,7 +65,8 @@ Feature: flow checks for verificaBollettino - EC old [TF_POSTE_05]
         Then check outcome is OK of verificaBollettino response
         And wait 5 seconds for expiration
         And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table VERIFICA_BOLLETTINO retrived by the query verifica_bollettino on db nodo_online under macro NewMod3
-
+        And wait 62 seconds for expiration
+        
     # activatePaymentNoticeReq phase
     Scenario: Execute activatePaymentNotice request
         Given the Execute verificaBollettino request scenario executed successfully
@@ -115,9 +116,11 @@ Feature: flow checks for verificaBollettino - EC old [TF_POSTE_05]
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And wait 62 seconds for expiration
         When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNotice response
+        And check faultCode is PPT_IBAN_ACCREDITO of activatePaymentNotice response
+        And check faultString is Iban accredito non disponibile of activatePaymentNotice response
+        And check description is Verifica non completata of activatePaymentNotice response
         And restore initial configurations
         
     Scenario: RPT generation
