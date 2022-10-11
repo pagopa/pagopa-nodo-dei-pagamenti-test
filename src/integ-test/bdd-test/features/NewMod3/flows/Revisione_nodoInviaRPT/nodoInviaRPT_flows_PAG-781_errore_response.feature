@@ -232,8 +232,8 @@ Feature: process tests for nodoInviaRPT [PAG-781_errore_response]
         And checks the value $activatePaymentNotice.idempotencyKey of the record at column IDEMPOTENCY_KEY of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
 
         And execution query payment_status to get value on the table POSITION_PAYMENT, with the columns AMOUNT under macro NewMod3 with db name nodo_online
-        And through the query payment_status retrieve param SOMMA_VERSAMENTI at position 0 and save it under the key AMOUNT
-        And checks the value $AMOUNT of the record at column SOMMA_VERSAMENTI of the table RPT retrived by the query rt_stati on db nodo_online under macro NewMod3
+        And through the query payment_status retrieve param SOMMA_VERSAMENTI at position 0 and save it under the key AMOUNT1
+        And checks the value $AMOUNT1 of the record at column SOMMA_VERSAMENTI of the table RPT retrived by the query rt_stati on db nodo_online under macro NewMod3
         And checks the value None of the record at column FEE of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
         And checks the value None of the record at column OUTCOME of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
         And checks the value None of the record at column PAYMENT_METHOD of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
