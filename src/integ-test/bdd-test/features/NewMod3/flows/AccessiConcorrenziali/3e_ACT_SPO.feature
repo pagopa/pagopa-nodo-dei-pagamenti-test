@@ -1,10 +1,10 @@
-Feature: process tests for accessiConCorrenziali [3a_ACT_SPO]
+Feature: process tests for accessiConCorrenziali [3e_ACT_SPO]
 
     Background:
         Given systems up
         And EC old version
 
-    # 3_ACT_SPO
+    # 3e_ACT_SPO
     Scenario: Execute activatePaymentNotice request
         Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr_old# and application code NA
         And generate 1 cart with PA #creditor_institution_code_old# and notice number $1noticeNumber  
@@ -38,33 +38,10 @@ Feature: process tests for accessiConCorrenziali [3a_ACT_SPO]
         When job mod3CancelV1 triggered after 3 seconds
         And wait 3 seconds for expiration
         Then verify the HTTP status code of mod3CancelV1 response is 200
-    
-    Scenario: Execute paaAttivaRPT request
-        Given the trigger poller annulli scenario executed successfully
-        And initial XML paaAttivaRPT
-        """
-        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">
-        <soapenv:Header/>
-        <soapenv:Body>
-        <ws:paaAttivaRPTRisposta>
-        <paaAttivaRPTRisposta>
-        <fault>
-        <faultCode>PAA_SINTASSI_EXTRAXSD</faultCode>
-        <faultString>errore sintattico PA</faultString>
-        <id>#creditor_institution_code_old#</id>
-        <description>Errore sintattico emesso dalla PA</description>
-        </fault>
-        <esito>KO</esito>
-        </paaAttivaRPTRisposta>
-        </ws:paaAttivaRPTRisposta>
-        </soapenv:Body>
-        </soapenv:Envelope>
-        """
-        And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
 
 
     Scenario: Execute second activatePaymentNotice request
-        Given the Execute paaAttivaRPT request scenario executed successfully
+        Given the trigger poller annulli scenario executed successfully
         And initial XML activatePaymentNotice
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -141,5 +118,25 @@ Feature: process tests for accessiConCorrenziali [3a_ACT_SPO]
 
     Scenario: parallel calls and test scenario
         Given the Excecute sendPaymentOutcome request scenario executed successfully
+        And initial XML paaAttivaRPT
+        """
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">
+        <soapenv:Header/>
+        <soapenv:Body>
+        <ws:paaAttivaRPTRisposta>
+        <paaAttivaRPTRisposta>
+        <fault>
+        <faultCode>PAA_SINTASSI_EXTRAXSD</faultCode>
+        <faultString>errore sintattico PA</faultString>
+        <id>#creditor_institution_code_old#</id>
+        <description>Errore sintattico emesso dalla PA</description>
+        </fault>
+        <esito>KO</esito>
+        </paaAttivaRPTRisposta>
+        </ws:paaAttivaRPTRisposta>
+        </soapenv:Body>
+        </soapenv:Envelope>
+        """
+        And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
         And calling primitive activatePaymentNotice_activatePaymentNotice2 and sendPaymentOutcome_sendPaymentOutcome1 in parallel
         Then check primitive response activatePaymentNotice2Response and primitive response sendPaymentOutcome1Response
