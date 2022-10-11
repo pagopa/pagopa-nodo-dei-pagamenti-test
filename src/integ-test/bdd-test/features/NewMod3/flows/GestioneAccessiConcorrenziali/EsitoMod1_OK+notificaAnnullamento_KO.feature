@@ -62,7 +62,7 @@ Feature: process tests for Gestione Accessi Concorrenziali
       <pay_i:dataEsecuzionePagamento>2016-09-16</pay_i:dataEsecuzionePagamento>
       <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
       <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
-      <pay_i:identificativoUnivocoVersamento>#iuv2#</pay_i:identificativoUnivocoVersamento>
+      <pay_i:identificativoUnivocoVersamento>#IUV#</pay_i:identificativoUnivocoVersamento>
       <pay_i:codiceContestoPagamento>sleepOK</pay_i:codiceContestoPagamento>
       <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
       <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
@@ -89,7 +89,7 @@ Feature: process tests for Gestione Accessi Concorrenziali
       <identificativoIntermediarioPA>#creditor_institution_code_old#</identificativoIntermediarioPA>
       <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
       <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
-      <identificativoUnivocoVersamento>$2iuv</identificativoUnivocoVersamento>
+      <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
       <codiceContestoPagamento>sleepOK</codiceContestoPagamento>
       </ppt:intestazionePPT>
       </soapenv:Header>
@@ -150,6 +150,6 @@ Feature: process tests for Gestione Accessi Concorrenziali
 
   Scenario: EsitoMod1_OK+notificaAnnullamento_KO (part 3)
     Given the EsitoMod1_OK+notificaAnnullamento_KO (part 2) scenario executed successfully
-    Then checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_INVIATA_A_PSP,RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT retrived by the query stati_rpt_2iuv_codpaold on db nodo_online under macro NewMod3
-    And verify 5 record for the table STATI_RPT retrived by the query stati_rpt_2iuv_codpaold on db nodo_online under macro NewMod3
+    Then checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_INVIATA_A_PSP,RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT retrived by the query stati_rpt_IUV on db nodo_online under macro NewMod3
+    And verify 5 record for the table STATI_RPT retrived by the query stati_rpt_IUV on db nodo_online under macro NewMod3
 # continuare db check
