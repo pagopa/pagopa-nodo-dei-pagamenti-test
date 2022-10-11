@@ -1855,7 +1855,7 @@ def step_impl(context, primitive1, primitive2):
     elif outcome1 == 'KO' and faultCode1 == 'PPT_TOKEN_SCADUTO' and outcome2 == 'KO' and faultCode2 == 'PPT_PAGAMENTO_DUPLICATO':
         assert True
     # AccessiConcorrenziali 3b_ACT_SPO
-    elif outcome1 == 'KO' and faultCode1 == 'PPT_TOKEN_SCADUTO' and outcome2 == 'OK':
+    elif outcome2 == 'KO' and faultCode1 == 'PPT_TOKEN_SCADUTO' and outcome1 == 'OK':
         assert True
 
     else:
