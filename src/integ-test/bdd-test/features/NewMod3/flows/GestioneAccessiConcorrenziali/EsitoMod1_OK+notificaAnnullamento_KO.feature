@@ -124,7 +124,7 @@ Feature: process tests for Gestione Accessi Concorrenziali
       }
       """
     And wait 2 seconds for expiration
-    And PM sends rest GET notificaAnnullamento?idPagamento=$sessionToken to nodo-dei-pagamenti
+    And PM sends rest GET notificaAnnullamento?idPagamento=$sessionToken&motivoAnnullamento=RIFPSP to nodo-dei-pagamenti
     Then verify the HTTP status code of inoltroEsito/mod1 response is 200
     And check esito is OK of inoltroEsito/mod1 response is 200
     # check contains url
