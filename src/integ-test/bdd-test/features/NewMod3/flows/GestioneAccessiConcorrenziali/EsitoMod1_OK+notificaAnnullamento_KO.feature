@@ -144,8 +144,8 @@ Feature: process tests for Gestione Accessi Concorrenziali
     And PM sends rest GET notificaAnnullamento?idPagamento=$sessionToken&motivoAnnullamento=RIFPSP to nodo-dei-pagamenti
     Then verify the HTTP status code of inoltroEsito/mod1 response is 200
     And check esito is OK of inoltroEsito/mod1 response
-    # check contains url
-    # check contains ${wfesp}
+    And check urlRedirectPSP field exists in inoltroEsito/mod1 response
+    And check urlRedirectPSP contains wfesp of inoltroEsito/mod1 response
     And check error is Il Pagamento indicato non esiste of notificaAnnullamento response
 
   Scenario: EsitoMod1_OK+notificaAnnullamento_KO (part 3)
