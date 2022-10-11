@@ -185,7 +185,7 @@ Feature: process tests for accessiConCorrenziali [1c - RPT+SPO]
             """
 
     #Test Suit 1b
-    Scenario: Excecute primitives request
+    Scenario: Excecute nodoInviaRPT
         Given the Define RPT scenario executed successfully
         And initial XML nodoInviaRPT
             """
@@ -266,7 +266,7 @@ Feature: process tests for accessiConCorrenziali [1c - RPT+SPO]
         Then saving sendPaymentOutcome request in sendPaymentOutcome
 
     Scenario: parallel calls and test scenario
-        Given the Excecute second primitives request scenario executed successfully
+        Given the Excecute sendPaymentOutcome request scenario executed successfully
         And calling primitive sendPaymentOutcome_sendPaymentOutcome and nodoInviaRPT_nodoInviaRPT in parallel
         Then check outcome is KO of sendPaymentOutcome response
         And check faultCode is PPT_SINTASSI_EXTRAXSD of sendPaymentOutcome response
