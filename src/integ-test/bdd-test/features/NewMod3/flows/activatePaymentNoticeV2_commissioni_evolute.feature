@@ -385,6 +385,7 @@ Feature: Commissioni evolute process
         And touchPoint with PSP in activatePaymentNoticeV2
         And paymentAmount with 400.00 in paGetPayment
         And transferAmount with 200.00 in paGetPayment
+        And EC replies to nodo-dei-pagamenti with the paGetPayment
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         And wait 60 seconds for expiration
         Then check outcome is OK of activatePaymentNoticeV2 response
