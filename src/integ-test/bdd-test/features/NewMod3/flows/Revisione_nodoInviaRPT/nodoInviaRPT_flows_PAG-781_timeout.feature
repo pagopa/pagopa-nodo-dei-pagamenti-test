@@ -292,7 +292,7 @@ Feature: process tests for nodoInviaRPT [PAG-781_timeout]
             <password>pwdpwdpwd</password>
             <identificativoDominio>44444444444</identificativoDominio>
             <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>$paymentToken</codiceContestoPagamento>
+            <codiceContestoPagamento>$nodoInviaRPT.codiceContestoPagamento</codiceContestoPagamento>
             </ws:nodoChiediStatoRPT>
             </soapenv:Body>
             </soapenv:Envelope>
@@ -314,7 +314,7 @@ Feature: process tests for nodoInviaRPT [PAG-781_timeout]
             <password>pwdpwdpwd</password>
             <identificativoDominio>44444444444</identificativoDominio>
             <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>$paymentToken</codiceContestoPagamento>
+            <codiceContestoPagamento>$nodoInviaRPT.codiceContestoPagamento</codiceContestoPagamento>
             </ws:nodoChiediCopiaRT>
             </soapenv:Body>
             </soapenv:Envelope>
