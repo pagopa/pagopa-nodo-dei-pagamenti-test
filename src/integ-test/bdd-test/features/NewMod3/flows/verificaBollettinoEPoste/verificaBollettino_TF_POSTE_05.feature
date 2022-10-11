@@ -9,7 +9,6 @@ Feature: flow checks for verificaBollettino - EC old [TF_POSTE_05]
         Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
         And generate 1 cart with PA #creditor_institution_code_old# and notice number $1noticeNumber
         And nodo-dei-pagamenti has config parameter verificabollettino.validity.minutes set to 1
-        And refresh job CONFIG triggered after 4 seconds
         # #And initial XML paaVerificaRPT
         #     """
         #     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/"   xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">
@@ -64,9 +63,9 @@ Feature: flow checks for verificaBollettino - EC old [TF_POSTE_05]
             """
         When PSP sends SOAP verificaBollettino to nodo-dei-pagamenti
         Then check outcome is OK of verificaBollettino response
-        And wait 5 seconds for expiration
-        And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table VERIFICA_BOLLETTINO retrived by the query verifica_bollettino on db nodo_online under macro NewMod3
         And wait 62 seconds for expiration
+        And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table VERIFICA_BOLLETTINO retrived by the query verifica_bollettino on db nodo_online under macro NewMod3
+        
 
     # activatePaymentNoticeReq phase
     Scenario: Execute activatePaymentNotice request
@@ -122,7 +121,7 @@ Feature: flow checks for verificaBollettino - EC old [TF_POSTE_05]
         And check faultCode is PPT_IBAN_ACCREDITO of activatePaymentNotice response
         And check faultString is Iban accredito non disponibile of activatePaymentNotice response
         And check description is Verifica non completata of activatePaymentNotice response
-        And restore initial configurations
+        
         
     Scenario: RPT generation
         Given the Execute activatePaymentNotice request scenario executed successfully
@@ -231,7 +230,7 @@ Feature: flow checks for verificaBollettino - EC old [TF_POSTE_05]
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        When PSP sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
         #And check redirect is 0 of nodoInviaRPT response
         #And checks the value None of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
@@ -248,5 +247,5 @@ Feature: flow checks for verificaBollettino - EC old [TF_POSTE_05]
         #And verify 0 record for the table POSITION_SERVICE retrived by the query position_service on db nodo_online under macro NewMod3
         And checks the value RPT_RICEVUTA_NODO, RPT_RIFIUTATA_NODO of the record at column STATUS of the table STATI_RPT retrived by the query retry_pa_invia_rpt on db nodo_online under macro NewMod3
         And checks the value None of the record at column IBAN of the table POSITION_TRANSFER retrived by the query position_transfer on db nodo_online under macro NewMod3
-
+        And restore initial configurations
         
