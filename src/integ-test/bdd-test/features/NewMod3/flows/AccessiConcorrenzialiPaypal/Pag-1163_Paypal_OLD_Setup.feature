@@ -4,7 +4,7 @@ Feature: DB checks for nodoInoltraEsitoPagamentoPaypal on old PA
          Given systems up
 
       Scenario: Execute verifyPaymentNotice request
-         Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr_old#
+         Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr#
          And generate 1 cart with PA #creditor_institution_code_old# and notice number $1noticeNumber  
          And initial XML verifyPaymentNotice
             """
@@ -18,7 +18,7 @@ Feature: DB checks for nodoInoltraEsitoPagamentoPaypal on old PA
                      <password>pwdpwdpwd</password>
                      <codiceContestoPagamento>#ccp#</codiceContestoPagamento>
                      <codificaInfrastrutturaPSP>BARCODE-128-AIM</codificaInfrastrutturaPSP>
-                     <codiceIdRPT><aim:aim128> <aim:CCPost>#ccPoste#</aim:CCPost> <aim:CodStazPA>#cod_segr_old#</aim:CodStazPA> <aim:AuxDigit>0</aim:AuxDigit>  <aim:CodIUV>$1iuv</aim:CodIUV></aim:aim128></codiceIdRPT>
+                     <codiceIdRPT><aim:aim128> <aim:CCPost>#ccPoste#</aim:CCPost> <aim:CodStazPA>#cod_segr#</aim:CodStazPA> <aim:AuxDigit>0</aim:AuxDigit>  <aim:CodIUV>$1iuv</aim:CodIUV></aim:aim128></codiceIdRPT>
                   </ws:nodoVerificaRPT>
                </soapenv:Body>
             </soapenv:Envelope>
@@ -43,7 +43,7 @@ Feature: DB checks for nodoInoltraEsitoPagamentoPaypal on old PA
                      <identificativoIntermediarioPSPPagamento>#broker_AGID#</identificativoIntermediarioPSPPagamento>
                      <identificativoCanalePagamento>#canale_AGID_BBT#</identificativoCanalePagamento>
                      <codificaInfrastrutturaPSP>BARCODE-128-AIM</codificaInfrastrutturaPSP>
-                     <codiceIdRPT><aim:aim128> <aim:CCPost>#ccPoste#</aim:CCPost> <aim:CodStazPA>#cod_segr_old#</aim:CodStazPA> <aim:AuxDigit>0</aim:AuxDigit>  <aim:CodIUV>$1iuv</aim:CodIUV></aim:aim128></codiceIdRPT>
+                     <codiceIdRPT><aim:aim128> <aim:CCPost>#ccPoste#</aim:CCPost> <aim:CodStazPA>#cod_segr#</aim:CodStazPA> <aim:AuxDigit>0</aim:AuxDigit>  <aim:CodIUV>$1iuv</aim:CodIUV></aim:aim128></codiceIdRPT>
                      <datiPagamentoPSP>
                         <importoSingoloVersamento>10.00</importoSingoloVersamento>
                         <!--Optional:-->
