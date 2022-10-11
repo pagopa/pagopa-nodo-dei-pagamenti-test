@@ -207,7 +207,8 @@ Feature: process tests for Retry_DB_GR_13
     And update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with N, with where condition OBJ_ID and where value ('13','1201') under macro update_query on db nodo_cfg
 
   Scenario: job refresh pa (2)
-    Given the DB check + db update scenario executed successfully
+    #Given the DB check + db update scenario executed successfully
+    Given the trigger jobs paSendRt scenario executed successfully
     Then refresh job PA triggered after 10 seconds
 
 
