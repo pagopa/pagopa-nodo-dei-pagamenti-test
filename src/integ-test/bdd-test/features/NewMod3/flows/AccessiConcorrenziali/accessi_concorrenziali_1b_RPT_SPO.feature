@@ -257,7 +257,7 @@ Feature: process tests for accessiConCorrenziali [1b - RPT+SPO]
                         <applicationDate>2021-12-12</applicationDate>
                         <transferDate>2021-12-11</transferDate>
                     </details>
-                </nod:sendPaymentOutcome>
+                </nod:sendPaymentOutcomeReq>
             </soapenv:Body>
             </soapenv:Envelope>
             """
@@ -267,4 +267,4 @@ Feature: process tests for accessiConCorrenziali [1b - RPT+SPO]
         Given the Excecute second primitives request scenario executed successfully
         And calling primitive sendPaymentOutcome_sendPaymentOutcome and nodoInviaRPT_nodoInviaRPT in parallel
         Then check esito is OK of nodoInviaRPT response
-        And check outcome is KO of sendPaymentOutcome response
+        And check outcome is OK of sendPaymentOutcome response
