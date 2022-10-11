@@ -287,10 +287,10 @@ Feature: process tests for nodoInviaRPT [PAG-781_timeout]
             <soapenv:Header/>
             <soapenv:Body>
             <ws:nodoChiediStatoRPT>
-            <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
-            <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
+            <identificativoIntermediarioPA>$activatePaymentNotice.fiscalCode</identificativoIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>$intermediarioPA</identificativoStazioneIntermediarioPA>
             <password>pwdpwdpwd</password>
-            <identificativoDominio>44444444444</identificativoDominio>
+            <identificativoDominio>$activatePaymentNotice.fiscalCode</identificativoDominio>
             <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$paymentToken</codiceContestoPagamento>
             </ws:nodoChiediStatoRPT>
@@ -309,10 +309,10 @@ Feature: process tests for nodoInviaRPT [PAG-781_timeout]
             <soapenv:Header/>
             <soapenv:Body>
             <ws:nodoChiediCopiaRT>
-            <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
-            <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
+            <identificativoIntermediarioPA>$activatePaymentNotice.fiscalCode</identificativoIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>$intermediarioPA</identificativoStazioneIntermediarioPA>
             <password>pwdpwdpwd</password>
-            <identificativoDominio>44444444444</identificativoDominio>
+            <identificativoDominio>$activatePaymentNotice.fiscalCode</identificativoDominio>
             <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$paymentToken</codiceContestoPagamento>
             </ws:nodoChiediCopiaRT>
