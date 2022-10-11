@@ -4,7 +4,7 @@ Feature: process tests for accessiConCorrenziali [3b_ACT_SPO]
         Given systems up
         And EC old version
 
-    # 3_ACT_SPO
+    # 3b_ACT_SPO
     Scenario: Execute activatePaymentNotice request
         Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr_old# and application code NA
         And generate 1 cart with PA #creditor_institution_code_old# and notice number $1noticeNumber  
