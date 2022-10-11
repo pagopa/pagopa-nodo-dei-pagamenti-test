@@ -180,8 +180,8 @@ Feature: flow checks for verificaBollettino - EC old [TF_POSTE_05]
             <pay_i:dataEsecuzionePagamento>2016-09-16</pay_i:dataEsecuzionePagamento>
             <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>BP</pay_i:tipoVersamento>
-            <pay_i:identificativoUnivocoVersamento>013661938155500</pay_i:identificativoUnivocoVersamento>
-            <pay_i:codiceContestoPagamento>b194ac590a6848f7923c70b05869774c</pay_i:codiceContestoPagamento>
+            <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
+            <pay_i:codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
             <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -208,11 +208,11 @@ Feature: flow checks for verificaBollettino - EC old [TF_POSTE_05]
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
                 <ppt:intestazionePPT>
-                    <identificativoIntermediarioPA>#id_broker_old#</identificativoIntermediarioPA>
+                    <identificativoIntermediarioPA>#creditor_institution_code_old#</identificativoIntermediarioPA>
                     <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
                     <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
-                    <identificativoUnivocoVersamento>013661938155500</identificativoUnivocoVersamento>
-                    <codiceContestoPagamento>b194ac590a6848f7923c70b05869774c</codiceContestoPagamento>
+                    <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
+                    <codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken</codiceContestoPagamento>
                 </ppt:intestazionePPT>
             </soapenv:Header>
             <soapenv:Body>
@@ -243,5 +243,6 @@ Feature: flow checks for verificaBollettino - EC old [TF_POSTE_05]
         #And checks the value None of the record at column ID of the table POSITION_SERVICE retrived by the query position_service on db nodo_online under macro NewMod3
         #And verify 0 record for the table POSITION_SERVICE retrived by the query position_service on db nodo_online under macro NewMod3
         And checks the value RPT_RICEVUTA_NODO, RPT_RIFIUTATA_NODO of the record at column STATUS of the table STATI_RPT retrived by the query retry_pa_invia_rpt on db nodo_online under macro NewMod3
+        And checks the value None of the record at column IBAN of the table POSITION_TRANSFER retrived by the query position_transfer on db nodo_online under macro NewMod3
 
         

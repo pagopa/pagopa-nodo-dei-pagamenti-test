@@ -6,6 +6,7 @@ Feature: TXX
     Scenario: Initialize all mock responses
         Given generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTPS', with where condition ID_CANALE like '7000%' AND ID_CANALE <> '#canaleRtPull#' under macro update_query on db nodo_cfg
         And refresh job PSP triggered after 10 seconds
+        And refresh job PSP triggered after 10 seconds
         And wait 10 seconds for expiration
         And initial XML pspInviaAckRT
             """
@@ -222,7 +223,7 @@ Feature: TXX
             </soapenv:Body>
             </soapenv:Envelope>
             """
-             And initial XML pspInviaRPT
+            And initial XML pspInviaRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header/>
@@ -363,6 +364,7 @@ Feature: TXX
             <pay_i:datiSingoloVersamento>
             <pay_i:importoSingoloVersamento>10.00</pay_i:importoSingoloVersamento>
             <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
+            <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
             <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
             <pay_i:ibanAppoggio>IT45R0760103200000000001016</pay_i:ibanAppoggio>
             <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
@@ -462,6 +464,9 @@ Feature: TXX
         And rpt with $rpt2Attachment in nodoInviaRPT
         And rt with $rt2Attachment in pspChiediRT
         And identificativoUnivocoVersamento with $2iuv in nodoChiediStatoRPT
+        And identificativoCarrello with $2iuv in pspInviaRPT
+        And parametriPagamentoImmediato with idBruciatura=$2iuv in pspInviaRPT
+        And identificativoUnivocoVersamento with $2iuv in pspChiediListaRT
         And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
         And PSP replies to nodo-dei-pagamenti with the pspChiediListaRT
         And PSP replies to nodo-dei-pagamenti with the pspChiediRT
@@ -473,6 +478,11 @@ Feature: TXX
         And wait 10 seconds for expiration
         Then check esito is OK of nodoInviaRPT response
         And check stato is RPT_ACCETTATA_PSP of nodoChiediStatoRPT response
+        And generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTP', with where condition ID_CANALE like '7000%' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTPS', with where condition ID_CANALE like '7000%' AND ID_CANALE <> '#canaleRtPush#' under macro update_query on db nodo_cfg
+        And refresh job PSP triggered after 10 seconds
+        And refresh job PSP triggered after 10 seconds
+        And wait 10 seconds for expiration
         
     Scenario: Execute nodoInviaRPT3 (Phase 3)
         Given the Execute nodoInviaRPT2 (Phase 2) scenario executed successfully
@@ -540,6 +550,7 @@ Feature: TXX
             <pay_i:datiSingoloVersamento>
             <pay_i:importoSingoloVersamento>10.00</pay_i:importoSingoloVersamento>
             <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
+            <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
             <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
             <pay_i:ibanAppoggio>IT45R0760103200000000001016</pay_i:ibanAppoggio>
             <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
@@ -635,11 +646,19 @@ Feature: TXX
             </pay_i:datiPagamento>
             </pay_i:RT>
             """
+
         And identificativoUnivocoVersamento with $3iuv in nodoInviaRPT
-        And rpt with $rpt3Attachment in nodoInviaRPT
-        And rt with $rt3attachment in pspChiediRT
-        And identificativoUnivocoVersamento with $3iuv in nodoChiediStatoRPT
         And identificativoCanale with #canaleRtPush# in nodoInviaRPT
+        And rpt with $rpt3Attachment in nodoInviaRPT
+        And rt with $rt3Attachment in pspChiediRT
+        And identificativoUnivocoVersamento with $3iuv in nodoChiediStatoRPT
+        And identificativoCarrello with $3iuv in pspInviaRPT
+        And parametriPagamentoImmediato with idBruciatura=$3iuv in pspInviaRPT
+        And identificativoUnivocoVersamento with $3iuv in pspChiediListaRT
+        And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
+        And PSP replies to nodo-dei-pagamenti with the pspChiediListaRT
+        And PSP replies to nodo-dei-pagamenti with the pspChiediRT
+        And wait 10 seconds for expiration
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         And EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
         And job pspChiediListaAndChiediRt triggered after 5 seconds
@@ -707,7 +726,7 @@ Feature: TXX
             <pay_i:dataEsecuzionePagamento>2016-09-16</pay_i:dataEsecuzionePagamento>
             <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
-            <pay_i:identificativoUnivocoVersamento>#iuv3#</pay_i:identificativoUnivocoVersamento>
+            <pay_i:identificativoUnivocoVersamento>#iuv4#</pay_i:identificativoUnivocoVersamento>
             <pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT45R0760103200000000001016</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
@@ -715,6 +734,7 @@ Feature: TXX
             <pay_i:datiSingoloVersamento>
             <pay_i:importoSingoloVersamento>10.00</pay_i:importoSingoloVersamento>
             <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
+            <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
             <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
             <pay_i:ibanAppoggio>IT45R0760103200000000001016</pay_i:ibanAppoggio>
             <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
@@ -797,27 +817,32 @@ Feature: TXX
             <pay_i:datiPagamento>
             <pay_i:codiceEsitoPagamento>0</pay_i:codiceEsitoPagamento>
             <pay_i:importoTotalePagato>10.00</pay_i:importoTotalePagato>
-            <pay_i:identificativoUnivocoVersamento>$3iuv</pay_i:identificativoUnivocoVersamento>
+            <pay_i:identificativoUnivocoVersamento>$4iuv</pay_i:identificativoUnivocoVersamento>
             <pay_i:CodiceContestoPagamento>CCD01</pay_i:CodiceContestoPagamento>
             <pay_i:datiSingoloPagamento>
             <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
             <pay_i:esitoSingoloPagamento>Pagamento effettuato</pay_i:esitoSingoloPagamento>
             <pay_i:dataEsitoSingoloPagamento>2012-03-02</pay_i:dataEsitoSingoloPagamento>
-            <pay_i:identificativoUnivocoRiscossione>$3iuv</pay_i:identificativoUnivocoRiscossione>
+            <pay_i:identificativoUnivocoRiscossione>$4iuv</pay_i:identificativoUnivocoRiscossione>
             <pay_i:causaleVersamento>pagamento fotocopie pratica RT</pay_i:causaleVersamento>
             <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
-            <pay_i:allegatoRicevuta>
-            <pay_i:tipoAllegatoRicevuta>BD</pay_i:tipoAllegatoRicevuta>
-            <pay_i:testoAllegato>$bollo</pay_i:testoAllegato>
-            </pay_i:allegatoRicevuta>
             </pay_i:datiSingoloPagamento>
             </pay_i:datiPagamento>
             </pay_i:RT>
             """
+        
         And identificativoUnivocoVersamento with $4iuv in nodoInviaRPT
+        And identificativoCanale with #canaleRtPush# in nodoInviaRPT
         And rpt with $rpt4Attachment in nodoInviaRPT
         And rt with $rt4Attachment in pspChiediRT
         And identificativoUnivocoVersamento with $4iuv in nodoChiediStatoRPT
+        And identificativoCarrello with $4iuv in pspInviaRPT
+        And parametriPagamentoImmediato with idBruciatura=$4iuv in pspInviaRPT
+        And identificativoUnivocoVersamento with $4iuv in pspChiediListaRT
+        And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
+        And PSP replies to nodo-dei-pagamenti with the pspChiediListaRT
+        And PSP replies to nodo-dei-pagamenti with the pspChiediRT
+        And wait 10 seconds for expiration
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         And EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
         And job pspChiediListaAndChiediRt triggered after 5 seconds
@@ -827,8 +852,10 @@ Feature: TXX
         And check stato is RPT_ACCETTATA_PSP of nodoChiediStatoRPT response
         And generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTP', with where condition ID_CANALE like '7000%' under macro update_query on db nodo_cfg
         And refresh job PSP triggered after 10 seconds
+        And refresh job PSP triggered after 10 seconds
         And wait 10 seconds for expiration
         # check correctness STATI_RPT 1
+        And replace iuv content with $1iuv content
         And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_INVIATA_A_PSP, RPT_ACCETTATA_PSP, RT_RICEVUTA_NODO, RT_ACCETTATA_NODO, RT_INVIATA_PA, RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro RTPull
         And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro RTPull
         And verify 0 record for the table RETRY_PA_INVIA_RT retrived by the query rpt_stati on db nodo_online under macro RTPull
@@ -839,12 +866,11 @@ Feature: TXX
         And verify 0 record for the table RETRY_PA_INVIA_RT retrived by the query rpt_stati on db nodo_online under macro RTPull
         # check correctness STATI_RPT 3
         And replace iuv content with $3iuv content
-        And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_INVIATA_A_PSP, RPT_ACCETTATA_PSP, RT_RICEVUTA_NODO, RT_ACCETTATA_NODO, RT_INVIATA_PA, RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro RTPull
-        And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro RTPull
+        And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_INVIATA_A_PSP, RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro RTPull
+        And checks the value RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro RTPull
         And verify 0 record for the table RETRY_PA_INVIA_RT retrived by the query rpt_stati on db nodo_online under macro RTPull
         # check correctness STATI_RPT 4
         And replace iuv content with $4iuv content
-        And verify 0 record for the table RPT_STATI retrived by the query rpt_stati on db nodo_online under macro RTPull
         And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_INVIATA_A_PSP, RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro RTPull
-        And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro RTPull
+        And checks the value RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro RTPull
         And verify 0 record for the table RETRY_PA_INVIA_RT retrived by the query rpt_stati on db nodo_online under macro RTPull
