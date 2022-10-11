@@ -168,7 +168,7 @@ Feature: Checks for concorrential access of Paypal payments KO
         </soapenv:Envelope>
         """
         And saving inoltroEsito/paypalJSON request in inoltroEsito/paypal
-        When calling primitive sendPaymentOutcome_sendPaymentOutcome and inoltroEsito/paypal_inoltroEsito/paypal with 4000 ms delay
+        When calling primitive inoltroEsito/paypal_inoltroEsito/paypal and sendPaymentOutcome_sendPaymentOutcome with 4000 ms delay
         Then verify the HTTP status code of inoltroEsito/paypal response is 200
         And check esito is KO of inoltroEsito/paypal response
         And check errorCode is RIFPSP of inoltroEsito/paypal response
