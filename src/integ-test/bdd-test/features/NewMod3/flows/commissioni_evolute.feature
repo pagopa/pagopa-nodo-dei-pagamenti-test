@@ -3,7 +3,7 @@ Feature: Commissioni evolute process
 
     Background:
         Given systems up
-    @wip
+
     Scenario: activatePaymentNoticeV2
         Given initial XML activatePaymentNoticeV2
             """
@@ -34,7 +34,7 @@ Feature: Commissioni evolute process
             <paf:paGetPaymentV2Response>
             <outcome>OK</outcome>
             <data>
-            <creditorReferenceId>11$iuv</creditorReferenceId>
+            <creditorReferenceId>10$iuv</creditorReferenceId>
             <paymentAmount>7001.00</paymentAmount>
             <dueDate>2021-12-30</dueDate>
             <!--Optional:-->
@@ -149,7 +149,7 @@ Feature: Commissioni evolute process
             </soapenv:Envelope>
             """
 
-
+    @skip
     # gec disabled --> fees not triggered
     Scenario: Execute activate 1
         Given nodo-dei-pagamenti DEV has config parameter gec.enabled set to false
@@ -168,7 +168,7 @@ Feature: Commissioni evolute process
         And checks the value None of the record at column SUGGESTED_USER_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value None of the record at column SUGGESTED_PA_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
-   
+    @skip
     # sunny day
     Scenario: Execute activate 2
         Given nodo-dei-pagamenti DEV has config parameter gec.enabled set to true
@@ -187,7 +187,7 @@ Feature: Commissioni evolute process
         And checks the value $activatePaymentNoticeV2Response.suggestedUserFee of the record at column SUGGESTED_USER_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value $activatePaymentNoticeV2Response.suggestedPaFee of the record at column SUGGESTED_PA_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
-    
+    @skip
     # activate without paymentMethod and touchPoint --> fees request with paymentMethod = ANY and touchPoint = PSP -->
     # psp in fees response, same of psp in activate request --> fields related to fee retrieved by fees populated with the first occurrence
     Scenario: Execute activate 3
@@ -216,7 +216,7 @@ Feature: Commissioni evolute process
         And checks the value $activatePaymentNoticeV2Response.suggestedUserFee of the record at column SUGGESTED_USER_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value $activatePaymentNoticeV2Response.suggestedPaFee of the record at column SUGGESTED_PA_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
-    
+    @skip
     # psp in fees response different from psp in activate request --> fields related to fee retrieved by fees not populated
     Scenario: Execute activate 4
         Given the activatePaymentNoticeV2 scenario executed successfully
@@ -244,7 +244,7 @@ Feature: Commissioni evolute process
         And checks the value None of the record at column SUGGESTED_USER_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value None of the record at column SUGGESTED_PA_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
-    
+    @skip
     # 2 psp in fees response, first different from activate request, second the same --> fields related to fee retrieved by fees populated with the fields from the same psp
     Scenario: Execute activate 5
         Given the activatePaymentNoticeV2 scenario executed successfully
@@ -272,7 +272,7 @@ Feature: Commissioni evolute process
         And checks the value $activatePaymentNoticeV2Response.suggestedUserFee of the record at column SUGGESTED_USER_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value $activatePaymentNoticeV2Response.suggestedPaFee of the record at column SUGGESTED_PA_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
-    
+    @skip
     # fees mock replies with an empty list --> fields related to fees empty in POSITION_ACTIVATE
     Scenario: Execute activate 6
         Given the activatePaymentNoticeV2 scenario executed successfully
@@ -295,7 +295,7 @@ Feature: Commissioni evolute process
         And checks the value None of the record at column SUGGESTED_USER_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value None of the record at column SUGGESTED_PA_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
-    
+    @skip
     # activate with idPsp = AGID_01 --> fees not triggered
     Scenario: Execute activate 7
         Given the activatePaymentNoticeV2 scenario executed successfully
@@ -316,7 +316,7 @@ Feature: Commissioni evolute process
         And checks the value None of the record at column SUGGESTED_USER_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value None of the record at column SUGGESTED_PA_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
-    
+    @skip
     # paGetPaymentV2 response not OK --> fees not triggered
     Scenario: activatePaymentNoticeV2 paGetPaymentV2 KO
         Given initial XML activatePaymentNoticeV2
@@ -361,7 +361,7 @@ Feature: Commissioni evolute process
             </soapenv:Envelope>
             """
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
-    
+    @skip
     Scenario: Execute activate 8
         Given the activatePaymentNoticeV2 paGetPaymentV2 KO scenario executed successfully
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
@@ -377,7 +377,7 @@ Feature: Commissioni evolute process
         And checks the value None of the record at column SUGGESTED_USER_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value None of the record at column SUGGESTED_PA_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
-    
+    @skip
     # retry fees - 400
     Scenario: Execute activate 9
         Given nodo-dei-pagamenti DEV has config parameter gec.fees.maxRetry set to 3
@@ -400,7 +400,7 @@ Feature: Commissioni evolute process
         And checks the value None of the record at column SUGGESTED_USER_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value None of the record at column SUGGESTED_PA_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
-    
+    @skip
     # retry fees - 401
     Scenario: Execute activate 9.1
         Given the activatePaymentNoticeV2 scenario executed successfully
@@ -422,7 +422,7 @@ Feature: Commissioni evolute process
         And checks the value None of the record at column SUGGESTED_USER_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value None of the record at column SUGGESTED_PA_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
-
+    @skip
     # retry fees - 429 
     Scenario: Execute activate 9.2
         Given the activatePaymentNoticeV2 scenario executed successfully
@@ -444,7 +444,7 @@ Feature: Commissioni evolute process
         And checks the value None of the record at column SUGGESTED_USER_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value None of the record at column SUGGESTED_PA_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
- 
+    @skip
     # retry fees - 500
     Scenario: Execute activate 9.3
         Given the activatePaymentNoticeV2 scenario executed successfully
@@ -466,7 +466,7 @@ Feature: Commissioni evolute process
         And checks the value None of the record at column SUGGESTED_USER_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value None of the record at column SUGGESTED_PA_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
-    @wip
+
     # sendPaymentOutcome - sunny day
     Scenario: Execute activate 10
         Given the activatePaymentNoticeV2 scenario executed successfully
@@ -490,7 +490,7 @@ Feature: Commissioni evolute process
         And checks the value $sendPaymentOutcomeV2.idCiBundle of the record at column BUNDLE_PA_ID of the table POSITION_RECEIPT retrived by the query PAYMENT_TOKEN_spov2 on db nodo_online under macro NewMod1
         # verify paSendRTV2 is sent with fields receipt.fee = POSITION_RECEIPT.FEE, receipt.primaryCiIncurredFee = POSITION_RECEIPT.FEE_PA, receipt.idBundle = POSITION_RECEIPT.BUNDLE_ID, receipt.idCiBundle = POSITION_RECEIPT.BUNDLE_PA_ID
 
-    @wip  
+    
     # sendPaymentOutcome - no fee information in sendPaymentOutcomeV2 request
     Scenario: Execute activate 11
         Given the activatePaymentNoticeV2 scenario executed successfully
