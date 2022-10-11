@@ -122,13 +122,13 @@ stages:
              #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/PrimitiveAccessorie
              
              # Lorenzo  
-             #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/NewMod3/flows/AccessiConcorrenziali/3e_ACT_SPO.feature
+             behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/NewMod3/flows/AccessiConcorrenziali/3e_ACT_SPO.feature
              
              # Alessandro
              #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/appIO/flows/PagamentiAppIO/FLUSSO_APIO_08.feature
              
              # Marisa
-             behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/NewMod3/flows/verificaBollettinoEPoste/verificaBollettino_TF_POSTE_05.feature
+             #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/NewMod3/flows/verificaBollettinoEPoste/verificaBollettino_TF_POSTE_05.feature
              
              # Redis
              #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/Mod1/flows/pspChiediAvanzamentoRPT/ChiediAvanzamento_ACCETTATA_PSP_Carrello_sbloccoParcheggio.feature

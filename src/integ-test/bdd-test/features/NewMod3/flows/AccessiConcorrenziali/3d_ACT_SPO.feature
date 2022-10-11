@@ -1,10 +1,10 @@
-Feature: process tests for accessiConCorrenziali [3c_ACT_SPO]
+Feature: process tests for accessiConCorrenziali [3d_ACT_SPO]
 
     Background:
         Given systems up
         And EC new version
 
-    # 3c_ACT_SPO
+    # 3d_ACT_SPO
     Scenario: Execute activatePaymentNotice request
         Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
         And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber  
