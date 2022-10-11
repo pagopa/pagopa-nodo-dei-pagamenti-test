@@ -191,11 +191,11 @@ Feature: Commissioni evolute process
     # psp in fees response, same of psp in activate request --> fields related to fee retrieved by fees populated with the first occurrence
     Scenario: Execute activate 3
         Given the activatePaymentNoticeV2 scenario executed successfully
-        And amount with 7005.00 in activatePaymentNoticeV2
+        And amount with 7002.00 in activatePaymentNoticeV2
         And paymentMethod with None in activatePaymentNoticeV2
         And touchPoint with None in activatePaymentNoticeV2
-        And paymentAmount with 7005.00 in paGetPayment
-        And transferAmount with 6805.00 in paGetPayment
+        And paymentAmount with 7002.00 in paGetPayment
+        And transferAmount with 6802.00 in paGetPayment
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
@@ -227,10 +227,10 @@ Feature: Commissioni evolute process
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        And check suggestedIdBundle is None of activatePaymentNoticeV2 response
-        And check suggestedIdCiBundle is None of activatePaymentNoticeV2 response
-        And check suggestedUserFee is None of activatePaymentNoticeV2 response
-        And check suggestedPaFee is None of activatePaymentNoticeV2 response
+        And check suggestedIdBundle field not exists in activatePaymentNoticeV2 response
+        And check suggestedIdCiBundle field not exists in activatePaymentNoticeV2 response
+        And check suggestedUserFee field not exists in activatePaymentNoticeV2 response
+        And check suggestedPaFee field not exists in activatePaymentNoticeV2 response
         And wait 30 seconds for expiration
         And verify 2 record for the table RE retrived by the query select_fees on db re under macro getFees
         And verify 1 record for the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
@@ -244,7 +244,7 @@ Feature: Commissioni evolute process
         And checks the value None of the record at column SUGGESTED_PA_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
 
-    # 2 psp in fees response, first different from activate request second the same --> fields related to fee retrieved by fees populated with the fields from the same psp
+    # 2 psp in fees response, first different from activate request, second the same --> fields related to fee retrieved by fees populated with the fields from the same psp
     Scenario: Execute activate 5
         Given the activatePaymentNoticeV2 scenario executed successfully
         And amount with 7005.00 in activatePaymentNoticeV2
