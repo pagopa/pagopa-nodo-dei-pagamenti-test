@@ -2,52 +2,52 @@ Feature: Semantic checks for activateIOPayment - KO
 
   Background:
     Given systems up
-@runnable
+  @runnable
   Scenario Outline: Check errors on activateIOPayment
     And generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
     And initial XML paGetPayment
-    """
-    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
-        <soapenv:Header/>
-        <soapenv:Body>
-            <paf:paGetPaymentRes>
-                <outcome>OK</outcome>
-                <data>
-                    <creditorReferenceId>#cod_segr#$1iuv</creditorReferenceId>
-                    <paymentAmount>10.00</paymentAmount>
-                    <dueDate>2021-07-31</dueDate>
-                    <description>TARI 2021</description>
-                    <companyName>company PA</companyName>
-                    <officeName>office PA</officeName>
-                    <debtor>
-                        <uniqueIdentifier>
-                            <entityUniqueIdentifierType>F</entityUniqueIdentifierType>
-                            <entityUniqueIdentifierValue>JHNDOE00A01F205N</entityUniqueIdentifierValue>
-                        </uniqueIdentifier>
-                        <fullName>John Doe</fullName>
-                        <streetName>street</streetName>
-                        <civicNumber>12</civicNumber>
-                        <postalCode>89020</postalCode>
-                        <city>city</city>
-                        <stateProvinceRegion>MI</stateProvinceRegion>
-                        <country>IT</country>
-                        <e-mail>john.doe@test.it</e-mail>
-                    </debtor>
-                    <transferList>
-                        <transfer>
-                            <idTransfer>1</idTransfer>
-                            <transferAmount>10.00</transferAmount>
-                            <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
-                            <IBAN>IT96R0123454321000000012345</IBAN>
-                            <remittanceInformation>TARI Comune EC_TE</remittanceInformation>
-                            <transferCategory>0101101IM</transferCategory>
-                        </transfer>
-                    </transferList>
-                </data>
-            </paf:paGetPaymentRes>
-        </soapenv:Body>
-    </soapenv:Envelope>
-    """
+      """
+      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
+      <soapenv:Header/>
+      <soapenv:Body>
+      <paf:paGetPaymentRes>
+      <outcome>OK</outcome>
+      <data>
+      <creditorReferenceId>#cod_segr#$1iuv</creditorReferenceId>
+      <paymentAmount>10.00</paymentAmount>
+      <dueDate>2021-07-31</dueDate>
+      <description>TARI 2021</description>
+      <companyName>company PA</companyName>
+      <officeName>office PA</officeName>
+      <debtor>
+      <uniqueIdentifier>
+      <entityUniqueIdentifierType>F</entityUniqueIdentifierType>
+      <entityUniqueIdentifierValue>JHNDOE00A01F205N</entityUniqueIdentifierValue>
+      </uniqueIdentifier>
+      <fullName>John Doe</fullName>
+      <streetName>street</streetName>
+      <civicNumber>12</civicNumber>
+      <postalCode>89020</postalCode>
+      <city>city</city>
+      <stateProvinceRegion>MI</stateProvinceRegion>
+      <country>IT</country>
+      <e-mail>john.doe@test.it</e-mail>
+      </debtor>
+      <transferList>
+      <transfer>
+      <idTransfer>1</idTransfer>
+      <transferAmount>10.00</transferAmount>
+      <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
+      <IBAN>IT96R0123454321000000012345</IBAN>
+      <remittanceInformation>TARI Comune EC_TE</remittanceInformation>
+      <transferCategory>0101101IM</transferCategory>
+      </transfer>
+      </transferList>
+      </data>
+      </paf:paGetPaymentRes>
+      </soapenv:Body>
+      </soapenv:Envelope>
+      """
     And EC replies to nodo-dei-pagamenti with the paGetPayment
     And initial XML activateIOPayment
       """
@@ -104,24 +104,24 @@ Feature: Semantic checks for activateIOPayment - KO
     Then check outcome is KO of activateIOPayment response
     And check faultCode is <error> of activateIOPayment response
     Examples:
-      | tag          | tag_value          | error                               | soapUI test                                            |
-      | idPSP        | pspUnknown         | PPT_PSP_SCONOSCIUTO                 | SEM_AIPR_01                                            |
-      | idPSP        | NOT_ENABLED        | PPT_PSP_DISABILITATO                | SEM_AIPR_02                                            |
-      | idBrokerPSP  | brokerPspUnknown   | PPT_INTERMEDIARIO_PSP_SCONOSCIUTO   | SEM_AIPR_03                                            |
-      | idBrokerPSP  | INT_NOT_ENABLED    | PPT_INTERMEDIARIO_PSP_DISABILITATO  | SEM_AIPR_04                                            |
-      | idChannel    | channelUnknown     | PPT_CANALE_SCONOSCIUTO              | SEM_AIPR_05                                            |
-      | idChannel    | CANALE_NOT_ENABLED | PPT_CANALE_DISABILITATO             | SEM_AIPR_06                                            |
-      | password     | wrongPassword      | PPT_AUTENTICAZIONE                  | SEM_AIPR_08                                            |
-      | fiscalCode   | 10000000000        | PPT_DOMINIO_SCONOSCIUTO             | SEM_AIPR_09                                            |
-      | fiscalCode   | 11111122223        | PPT_DOMINIO_DISABILITATO            | SEM_AIPR_10                                            |
-      | noticeNumber | 511456789012345678 | PPT_STAZIONE_INT_PA_SCONOSCIUTA     | SEM_AIPR_12 - auxDigit inesistente                     |
-      | noticeNumber | 011456789012345678 | PPT_STAZIONE_INT_PA_SCONOSCIUTA     | SEM_AIPR_12 - auxDigit 0 - progressivo inesistente     |
-      | noticeNumber | 323134567890787583 | PPT_STAZIONE_INT_PA_SCONOSCIUTA     | SEM_AIPR_12 - auxDigit 3 - segregationCode inesistente |
-      | noticeNumber | 316456789012345678 | PPT_STAZIONE_INT_PA_DISABILITATA    | SEM_AIPR_13                                            |
+      | tag          | tag_value          | error                              | soapUI test                                            |
+      | idPSP        | pspUnknown         | PPT_PSP_SCONOSCIUTO                | SEM_AIPR_01                                            |
+      | idPSP        | NOT_ENABLED        | PPT_PSP_DISABILITATO               | SEM_AIPR_02                                            |
+      | idBrokerPSP  | brokerPspUnknown   | PPT_INTERMEDIARIO_PSP_SCONOSCIUTO  | SEM_AIPR_03                                            |
+      | idBrokerPSP  | INT_NOT_ENABLED    | PPT_INTERMEDIARIO_PSP_DISABILITATO | SEM_AIPR_04                                            |
+      | idChannel    | channelUnknown     | PPT_CANALE_SCONOSCIUTO             | SEM_AIPR_05                                            |
+      | idChannel    | CANALE_NOT_ENABLED | PPT_CANALE_DISABILITATO            | SEM_AIPR_06                                            |
+      | password     | wrongPassword      | PPT_AUTENTICAZIONE                 | SEM_AIPR_08                                            |
+      | fiscalCode   | 10000000000        | PPT_DOMINIO_SCONOSCIUTO            | SEM_AIPR_09                                            |
+      | fiscalCode   | 11111122223        | PPT_DOMINIO_DISABILITATO           | SEM_AIPR_10                                            |
+      | noticeNumber | 511456789012345678 | PPT_STAZIONE_INT_PA_SCONOSCIUTA    | SEM_AIPR_12 - auxDigit inesistente                     |
+      | noticeNumber | 011456789012345678 | PPT_STAZIONE_INT_PA_SCONOSCIUTA    | SEM_AIPR_12 - auxDigit 0 - progressivo inesistente     |
+      | noticeNumber | 323134567890787583 | PPT_STAZIONE_INT_PA_SCONOSCIUTA    | SEM_AIPR_12 - auxDigit 3 - segregationCode inesistente |
+      | noticeNumber | 316456789012345678 | PPT_STAZIONE_INT_PA_DISABILITATA   | SEM_AIPR_13                                            |
       #| noticeNumber | 314134567890787583 | PPT_STAZIONE_INT_PA_DISABILITATA    | SEM_AIPR_13                                            |
       #| noticeNumber | 099456789012345678 | PPT_STAZIONE_INT_PA_IRRAGGIUNGIBILE | SEM_AIRP_14                                            |
-      | noticeNumber | 312456789012345678 | PPT_MULTI_BENEFICIARIO              | SEM_AIPR_15                                            |
-      #| noticeNumber | 088456789012345678 | PPT_INTERMEDIARIO_PA_DISABILITATO   | SEM_AIPR_16                                            |
+      | noticeNumber | 312456789012345678 | PPT_MULTI_BENEFICIARIO             | SEM_AIPR_15                                            |
+  #| noticeNumber | 088456789012345678 | PPT_INTERMEDIARIO_PA_DISABILITATO   | SEM_AIPR_16                                            |
 
   # idChannel value check: idChannel with value in NODO4_CFG.CANALI whose field MODELLO_PAGAMENTO in NODO4_CFG.CANALI_NODO table of nodo-dei-pagamenti database does not contain value 'ATTIVATO_PRESSO_PSP' (e.g. contains 'IMMEDIATO_MULTIBENEFICIARIO') [SEM_AIPR_07]
   Scenario: Check PPT_AUTORIZZAZIONE error on psp channel not enabled for payment model 3
@@ -178,7 +178,7 @@ Feature: Semantic checks for activateIOPayment - KO
     When psp sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is KO of activateIOPayment response
     And check faultCode is PPT_AUTORIZZAZIONE of activateIOPayment response
-    #And check description is Il canale non è di tipo 'ATTIVATO_PRESSO_PSP' of activateIOPayment response
+  #And check description is Il canale non è di tipo 'ATTIVATO_PRESSO_PSP' of activateIOPayment response
 
   # idBrokerPSP-idPSP value check: idBrokerPSP not associated to idPSP [SEM_AIPR_11]
   Scenario: Check PPT_AUTORIZZAZIONE error on psp broker not associated to psp
@@ -236,7 +236,7 @@ Feature: Semantic checks for activateIOPayment - KO
     Then check outcome is KO of activateIOPayment response
     And check faultCode is PPT_AUTORIZZAZIONE of activateIOPayment response
     And check description is Configurazione intermediario-canale non corretta of activateIOPayment response
-@runnable
+  @runnable
   Scenario: Execute activateIOPayment (Phase 1)
     Given initial XML activateIOPayment
       """
@@ -287,9 +287,93 @@ Feature: Semantic checks for activateIOPayment - KO
       </soapenv:Body>
       </soapenv:Envelope>
       """
+    And initial XML paGetPayment
+      """
+      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
+      <soapenv:Header />
+      <soapenv:Body>
+      <paf:paGetPaymentRes>
+      <outcome>OK</outcome>
+      <data>
+      <creditorReferenceId>$iuv</creditorReferenceId>
+      <paymentAmount>10.00</paymentAmount>
+      <dueDate>2021-12-31</dueDate>
+      <!--Optional:-->
+      <retentionDate>2021-12-31T12:12:12</retentionDate>
+      <!--Optional:-->
+      <lastPayment>1</lastPayment>
+      <description>description</description>
+      <!--Optional:-->
+      <companyName>company</companyName>
+      <!--Optional:-->
+      <officeName>office</officeName>
+      <debtor>
+      <uniqueIdentifier>
+      <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
+      <entityUniqueIdentifierValue>77777777777</entityUniqueIdentifierValue>
+      </uniqueIdentifier>
+      <fullName>paGetPaymentName</fullName>
+      <!--Optional:-->
+      <streetName>paGetPaymentStreet</streetName>
+      <!--Optional:-->
+      <civicNumber>paGetPayment99</civicNumber>
+      <!--Optional:-->
+      <postalCode>20155</postalCode>
+      <!--Optional:-->
+      <city>paGetPaymentCity</city>
+      <!--Optional:-->
+      <stateProvinceRegion>paGetPaymentState</stateProvinceRegion>
+      <!--Optional:-->
+      <country>IT</country>
+      <!--Optional:-->
+      <e-mail>paGetPayment@test.it</e-mail>
+      </debtor>
+      <!--Optional:-->
+      <transferList>
+      <!--1 to 5 repetitions:-->
+      <transfer>
+      <idTransfer>1</idTransfer>
+      <transferAmount>3.00</transferAmount>
+      <fiscalCodePA>77777777777</fiscalCodePA>
+      <IBAN>IT45R0760103200000000001016</IBAN>
+      <remittanceInformation>testPaGetPayment</remittanceInformation>
+      <transferCategory>paGetPaymentTest</transferCategory>
+      </transfer>
+      <transfer>
+      <idTransfer>2</idTransfer>
+      <transferAmount>3.00</transferAmount>
+      <fiscalCodePA>77777777777</fiscalCodePA>
+      <IBAN>IT45R0760103200000000001016</IBAN>
+      <remittanceInformation>testPaGetPayment</remittanceInformation>
+      <transferCategory>paGetPaymentTest</transferCategory>
+      </transfer>
+      <transfer>
+      <idTransfer>3</idTransfer>
+      <transferAmount>4.00</transferAmount>
+      <fiscalCodePA>77777777777</fiscalCodePA>
+      <IBAN>IT45R0760103200000000001016</IBAN>
+      <remittanceInformation>testPaGetPayment</remittanceInformation>
+      <transferCategory>paGetPaymentTest</transferCategory>
+      </transfer>
+      </transferList>
+      <!--Optional:-->
+      <metadata>
+      <!--1 to 10 repetitions:-->
+      <mapEntry>
+      <key>1</key>
+      <value>22</value>
+      </mapEntry>
+      </metadata>
+      </data>
+      </paf:paGetPaymentRes>
+      </soapenv:Body>
+      </soapenv:Envelope>
+      """
+    And EC replies to nodo-dei-pagamenti with the paGetPayment
+
     When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is OK of activateIOPayment response
-  
+
   # [SEM_AIPR_20]
   Scenario: Check second activateIOPayment is equal to the first
     Given nodo-dei-pagamenti has config parameter useIdempotency set to false
@@ -360,7 +444,7 @@ Feature: Semantic checks for activateIOPayment - KO
       | noticeNumber | 302119138889055636 | SEM_AIPR_22 |
       | fiscalCode   | 90000000001        | SEM_AIPR_22 |
 
-  
+
   Scenario Outline: Check PPT_PAGAMENTO_IN_CORSO error on idempotencyKey validity
     Given nodo-dei-pagamenti has config parameter useIdempotency set to false
     And the Execute activateIOPayment (Phase 1) scenario executed successfully
