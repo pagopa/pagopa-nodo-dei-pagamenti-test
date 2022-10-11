@@ -373,7 +373,7 @@ Feature: Semantic checks for activateIOPayment - KO
 
     When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is OK of activateIOPayment response
-
+@runnable
   # [SEM_AIPR_20]
   Scenario: Check second activateIOPayment is equal to the first
     Given nodo-dei-pagamenti has config parameter useIdempotency set to false
