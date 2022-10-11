@@ -31,13 +31,12 @@ Feature: process tests for accessiConCorrenziali [3_ACT_SPO]
         """
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-        And wait 3 seconds for expiration
         And save activatePaymentNotice response in activatePaymentNotice1
 
     Scenario: trigger poller annulli
         Given the Execute activatePaymentNotice request scenario executed successfully
         When job mod3CancelV1 triggered after 3 seconds
-        And wait 5 seconds for expiration
+        And wait 3 seconds for expiration
         Then verify the HTTP status code of mod3CancelV1 response is 200
 
 
@@ -120,4 +119,4 @@ Feature: process tests for accessiConCorrenziali [3_ACT_SPO]
     Scenario: parallel calls and test scenario
         Given the Excecute sendPaymentOutcome request scenario executed successfully
         And calling primitive activatePaymentNotice_activatePaymentNotice2 and sendPaymentOutcome_sendPaymentOutcome1 in parallel
-        And check primitive response activatePaymentNotice2 and primitive response sendPaymentOutcome1
+        Then check primitive response activatePaymentNotice2 and primitive response sendPaymentOutcome1
