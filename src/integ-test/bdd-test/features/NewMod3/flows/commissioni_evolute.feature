@@ -1,9 +1,10 @@
 Feature: Commissioni evolute process
     # Reference document: https://pagopa.atlassian.net/wiki/spaces/PAG/pages/544276823/A.T.+Gestione+Evoluta+delle+Commissioni
 
+    @wip
     Background:
         Given systems up
-
+    @wip
     Scenario: activatePaymentNoticeV2
         Given initial XML activatePaymentNoticeV2
             """
@@ -466,7 +467,31 @@ Feature: Commissioni evolute process
         And checks the value None of the record at column SUGGESTED_USER_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value None of the record at column SUGGESTED_PA_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
-    
+    @wip
+    Scenario: Execute activate 9.4
+        Given nodo-dei-pagamenti DEV has config parameter gec.fees.maxRetry set to 12
+        And the activatePaymentNoticeV2 scenario executed successfully
+        And amount with 500.00 in activatePaymentNoticeV2
+        And touchPoint with PSP in activatePaymentNoticeV2
+        And paymentAmount with 500.00 in paGetPayment
+        And transferAmount with 300.00 in paGetPayment
+        And EC replies to nodo-dei-pagamenti with the paGetPayment
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        And wait 10 seconds for expiration
+        And updates through the query update_activatev2 of the table POSITION_ACTIVATE the parameter AMOUNT with 7001 under macro NewMod1 on db nodo_online
+        And updates through the query update_activatev2 of the table POSITION_ACTIVATE the parameter TOUCHPOINT with ATM under macro NewMod1 on db nodo_online
+        And wait 10 seconds for expiration
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        #And verify 8 record for the table RE retrived by the query select_fees on db re under macro getFees
+        And verify 1 record for the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value PO of the record at column PAYMENT_METHOD of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value ATM of the record at column TOUCHPOINT of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2Response.suggestedIdBundle of the record at column SUGGESTED_IDBUNDLE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2Response.suggestedIdCiBundle of the record at column SUGGESTED_IDCIBUNDLE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2Response.suggestedUserFee of the record at column SUGGESTED_USER_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2Response.suggestedPaFee of the record at column SUGGESTED_PA_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
     # sendPaymentOutcome - sunny day
     Scenario: Execute activate 10
         Given the activatePaymentNoticeV2 scenario executed successfully
