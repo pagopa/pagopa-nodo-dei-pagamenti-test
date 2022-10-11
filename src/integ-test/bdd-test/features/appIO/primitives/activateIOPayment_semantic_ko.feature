@@ -384,7 +384,7 @@ Feature: Semantic checks for activateIOPayment - KO
     And wait 10 seconds for expiration
     And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro AppIO
     And restore initial configurations
-@runnable
+
   # [SEM_AIPR_21]
   Scenario Outline: Check PPT_ERRORE_IDEMPOTENZA error on idempotencyKey validity (Phase 2)
     Given the Execute activateIOPayment (Phase 1) scenario executed successfully
@@ -394,9 +394,9 @@ Feature: Semantic checks for activateIOPayment - KO
     And check faultCode is PPT_ERRORE_IDEMPOTENZA of activateIOPayment response
     Examples:
       | tag                         | tag_value             | soapUI test |
-      | noticeNumber                | 302119138889055636    | SEM_AIPR_21 |
-      | fiscalCode                  | 90000000001           | SEM_AIPR_21 |
-      | amount                      | 12.00                 | SEM_AIPR_21 |
+      #| noticeNumber                | 302119138889055636    | SEM_AIPR_21 |
+      #| fiscalCode                  | 90000000001           | SEM_AIPR_21 |
+      | amount                      | 15.12                 | SEM_AIPR_21 |
       | dueDate                     | 2021-12-31            | SEM_AIPR_21 |
       | dueDate                     | None                  | SEM_AIPR_21 |
       | paymentNote                 | test_1                | SEM_AIPR_21 |
@@ -430,7 +430,7 @@ Feature: Semantic checks for activateIOPayment - KO
       | e-mail                      | test1@prova.gmail.com | SEM_AIPR_21 |
       | e-mail                      | Empty                 | SEM_AIPR_21 |
       | e-mail                      | None                  | SEM_AIPR_21 |
-
+@runnable
   # [SEM_AIPR_22]
   Scenario Outline: Check OK on idempotencyKey validity
     Given nodo-dei-pagamenti has config parameter useIdempotency set to false
