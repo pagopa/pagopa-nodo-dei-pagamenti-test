@@ -119,4 +119,4 @@ Feature: process tests for accessiConCorrenziali [3_ACT_SPO]
     Scenario: parallel calls and test scenario
         Given the Excecute sendPaymentOutcome request scenario executed successfully
         And calling primitive activatePaymentNotice_activatePaymentNotice2 and sendPaymentOutcome_sendPaymentOutcome1 in parallel
-        Then check primitive response activatePaymentNotice2 and primitive response sendPaymentOutcome1
+        Then check primitive response activatePaymentNotice2Response and primitive response sendPaymentOutcome1Response
