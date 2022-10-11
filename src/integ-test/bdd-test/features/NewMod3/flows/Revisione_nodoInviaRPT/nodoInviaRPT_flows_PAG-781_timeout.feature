@@ -14,7 +14,7 @@ Feature: process tests for nodoInviaRPT [PAG-781_timeout]
             <idChannel>40000000001_01</idChannel>
             <password>pwdpwdpwd</password>
             <qrCode>
-            <fiscalCode>#creditor_institution_code_old#</fiscalCode>
+            <fiscalCode>44444444444</fiscalCode>
             <noticeNumber>#notice_number_old#</noticeNumber>
             </qrCode>
             </nod:verifyPaymentNoticeReq>
@@ -42,7 +42,7 @@ Feature: process tests for nodoInviaRPT [PAG-781_timeout]
             <password>pwdpwdpwd</password>
             <idempotencyKey>#idempotency_key#</idempotencyKey>
             <qrCode>
-            <fiscalCode>#creditor_institution_code_old#</fiscalCode>
+            <fiscalCode>44444444444</fiscalCode>
             <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
             </qrCode>
             <!--expirationTime>60000</expirationTime-->
@@ -60,6 +60,7 @@ Feature: process tests for nodoInviaRPT [PAG-781_timeout]
             <ws:paaAttivaRPTRisposta>
             <paaAttivaRPTRisposta>
             <esito>KO</esito>
+             <delay>60000</delay>
             <datiPagamentoPA>
             <importoSingoloVersamento>2.00</importoSingoloVersamento>
             <ibanAccredito>IT96R0123454321000000012345</ibanAccredito>
@@ -107,13 +108,12 @@ Feature: process tests for nodoInviaRPT [PAG-781_timeout]
     Scenario: Define RPT
         Given the Execute activatePaymentNotice request scenario executed successfully
         And RPT generation
-
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-            <pay_i:identificativoDominio>#creditor_institution_code_old#</pay_i:identificativoDominio>
-            <pay_i:identificativoStazioneRichiedente>#id_station_old#</pay_i:identificativoStazioneRichiedente>
+            <pay_i:identificativoDominio>44444444444</pay_i:identificativoDominio>
+            <pay_i:identificativoStazioneRichiedente>44444444444_05</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
             <pay_i:dataOraMessaggioRichiesta>2016-09-16T11:24:10</pay_i:dataOraMessaggioRichiesta>
@@ -212,9 +212,9 @@ Feature: process tests for nodoInviaRPT [PAG-781_timeout]
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        When PSP sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
-        And wait 30 seconds for expiration
+        And wait 60 seconds for expiration
 
         #CHECK2-RPT ACTIVATIONS
         And verify 0 record for the table RPT_ACTIVATIONS retrived by the query payment_status on db nodo_online under macro NewMod3
@@ -232,8 +232,8 @@ Feature: process tests for nodoInviaRPT [PAG-781_timeout]
         And checks the value $activatePaymentNotice.idempotencyKey of the record at column IDEMPOTENCY_KEY of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
 
         And execution query payment_status to get value on the table POSITION_PAYMENT, with the columns AMOUNT under macro NewMod3 with db name nodo_online
-        And through the query payment_status retrieve param SOMMA_VERSAMENTI at position 0 and save it under the key AMOUNT
-        And checks the value $AMOUNT of the record at column SOMMA_VERSAMENTI of the table RPT retrived by the query rt_stati on db nodo_online under macro NewMod3
+        #And through the query payment_status retrieve param SOMMA_VERSAMENTI at position 0 and save it under the key AMOUNT
+        #And checks the value $AMOUNT of the record at column SOMMA_VERSAMENTI of the table RPT retrived by the query rt on db nodo_online under macro NewMod3
         And checks the value None of the record at column FEE of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
         And checks the value None of the record at column OUTCOME of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
         And checks the value None of the record at column PAYMENT_METHOD of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
@@ -256,7 +256,7 @@ Feature: process tests for nodoInviaRPT [PAG-781_timeout]
 
         And checks the value $verifyPaymentNotice.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro NewMod3
 
-        And checks the value 7 of the record at column AMOUNT of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro NewMod3
+        #And checks the value 7 of the record at column AMOUNT of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro NewMod3
 
         #CHECK2-POSITION_TRANSFER
         And checks the value $activatePaymentNotice.fiscalCode of the record at column PA_FISCAL_CODE of the table POSITION_TRANSFER retrived by the query payment_status on db nodo_online under macro NewMod3
@@ -292,7 +292,7 @@ Feature: process tests for nodoInviaRPT [PAG-781_timeout]
             <password>pwdpwdpwd</password>
             <identificativoDominio>44444444444</identificativoDominio>
             <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>$paymentToken</codiceContestoPagamento>
+            <codiceContestoPagamento>$nodoInviaRPT.codiceContestoPagamento</codiceContestoPagamento>
             </ws:nodoChiediStatoRPT>
             </soapenv:Body>
             </soapenv:Envelope>
@@ -314,7 +314,7 @@ Feature: process tests for nodoInviaRPT [PAG-781_timeout]
             <password>pwdpwdpwd</password>
             <identificativoDominio>44444444444</identificativoDominio>
             <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>$paymentToken</codiceContestoPagamento>
+            <codiceContestoPagamento>$nodoInviaRPT.codiceContestoPagamento</codiceContestoPagamento>
             </ws:nodoChiediCopiaRT>
             </soapenv:Body>
             </soapenv:Envelope>
@@ -357,7 +357,7 @@ Feature: process tests for nodoInviaRPT [PAG-781_timeout]
             <password>pwdpwdpwd</password>
             <idempotencyKey>#idempotency_key#</idempotencyKey>
             <qrCode>
-            <fiscalCode>#creditor_institution_code_old#</fiscalCode>
+            <fiscalCode>44444444444</fiscalCode>
             <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
             </qrCode>
             <!--expirationTime>60000</expirationTime-->
