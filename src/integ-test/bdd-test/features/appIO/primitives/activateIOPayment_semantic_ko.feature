@@ -112,12 +112,12 @@ Feature: Semantic checks for activateIOPayment - KO
       | idChannel    | channelUnknown     | PPT_CANALE_SCONOSCIUTO              | SEM_AIPR_05                                            |
       | idChannel    | CANALE_NOT_ENABLED | PPT_CANALE_DISABILITATO             | SEM_AIPR_06                                            |
       | password     | wrongPassword      | PPT_AUTENTICAZIONE                  | SEM_AIPR_08                                            |
-      #| fiscalCode   | 10000000000        | PPT_DOMINIO_SCONOSCIUTO             | SEM_AIPR_09                                            |
+      | fiscalCode   | 10000000000        | PPT_DOMINIO_SCONOSCIUTO             | SEM_AIPR_09                                            |
       | fiscalCode   | 11111122223        | PPT_DOMINIO_DISABILITATO            | SEM_AIPR_10                                            |
       | noticeNumber | 511456789012345678 | PPT_STAZIONE_INT_PA_SCONOSCIUTA     | SEM_AIPR_12 - auxDigit inesistente                     |
       | noticeNumber | 011456789012345678 | PPT_STAZIONE_INT_PA_SCONOSCIUTA     | SEM_AIPR_12 - auxDigit 0 - progressivo inesistente     |
-      #| noticeNumber | 316456789012345678 | PPT_STAZIONE_INT_PA_SCONOSCIUTA     | SEM_AIPR_12 - auxDigit 3 - segregationCode inesistente |
-      #| noticeNumber | 323134567890787583 | PPT_STAZIONE_INT_PA_DISABILITATA    | SEM_AIPR_13                                            |
+      | noticeNumber | 323134567890787583 | PPT_STAZIONE_INT_PA_SCONOSCIUTA     | SEM_AIPR_12 - auxDigit 3 - segregationCode inesistente |
+      | noticeNumber | 316456789012345678 | PPT_STAZIONE_INT_PA_DISABILITATA    | SEM_AIPR_13                                            |
       #| noticeNumber | 314134567890787583 | PPT_STAZIONE_INT_PA_DISABILITATA    | SEM_AIPR_13                                            |
       #| noticeNumber | 099456789012345678 | PPT_STAZIONE_INT_PA_IRRAGGIUNGIBILE | SEM_AIRP_14                                            |
       | noticeNumber | 312456789012345678 | PPT_MULTI_BENEFICIARIO              | SEM_AIPR_15                                            |
