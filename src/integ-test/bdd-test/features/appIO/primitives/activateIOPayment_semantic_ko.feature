@@ -525,7 +525,7 @@ Feature: Semantic checks for activateIOPayment - KO
     And check faultCode is PPT_PAGAMENTO_IN_CORSO of activateIOPayment response
     And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro AppIO
     And restore initial configurations
-
+@runnable
   # [SEM_AIPR_27]
   Scenario: Check reuse of idempotencyKey with expired idempotencyKey validity
     Given nodo-dei-pagamenti has config parameter default_idempotency_key_validity_minutes set to 1
@@ -536,7 +536,7 @@ Feature: Semantic checks for activateIOPayment - KO
     Then check outcome is KO of activateIOPayment response
     And check faultCode is PPT_PAGAMENTO_IN_CORSO of activateIOPayment response
     And restore initial configurations
-
+@runnable
   # [SEM_AIPR_28]
   Scenario: [SEM_AIPR_28]
     Given nodo-dei-pagamenti has config parameter useIdempotency set to false
@@ -549,7 +549,7 @@ Feature: Semantic checks for activateIOPayment - KO
     And check faultCode is PPT_PAGAMENTO_IN_CORSO of activateIOPayment response
     And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro AppIO
     And restore initial configurations
-
+@runnable
   # [SEM_AIPR_29]
   Scenario: Check PPT_PAGAMENTO_IN_CORSO error with PAYING debtor position
     Given the Execute activateIOPayment (Phase 1) scenario executed successfully
@@ -559,7 +559,7 @@ Feature: Semantic checks for activateIOPayment - KO
     When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is KO of activateIOPayment response
     And check faultCode is PPT_PAGAMENTO_IN_CORSO of activateIOPayment response
-
+@runnable
   # [SEM_AIPR_30]
   Scenario: Check PPT_PAGAMENTO_IN_CORSO error with PAYING debtor position and without idempotencyKey
     Given the Execute activateIOPayment (Phase 1) scenario executed successfully
