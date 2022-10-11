@@ -1811,12 +1811,16 @@ def step_impl(context, primitive1, primitive2, delay1):
 @then("check primitive response {primitive1} and primitive response {primitive2}")
 def step_impl(context, primitive1, primitive2):
     response_primitive1 = parseString(getattr(context, primitive1))
+    print(response_primitive1)
     response_primitive2 = parseString(getattr(context, primitive2))
+    print(response_primitive2)
 
     outcome1 = response_primitive1.getElementsByTagName('outcome')[
         0].firstChild.data
+    print(outcome1)
     outcome2 = response_primitive2.getElementsByTagName('outcome')[
         0].firstChild.data
+    print(outcome2)
 
     if outcome1 == 'KO':
         faultCode1 = response_primitive1.getElementsByTagName('faultCode')[
@@ -1846,7 +1850,7 @@ def step_impl(context, primitive1, primitive2):
     # AccessiConcorrenziali 3_ACT_SPO
     elif outcome1 == 'KO' and faultCode1 == 'PPT_TOKEN_SCADUTO' and outcome2 == 'KO' and faultCode2 == 'PPT_PAGAMENTO_DUPLICATO':
         assert True
-        
+
     else:
         assert False
 
