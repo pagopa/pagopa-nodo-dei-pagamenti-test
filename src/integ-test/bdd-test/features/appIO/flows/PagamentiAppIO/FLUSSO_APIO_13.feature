@@ -3,7 +3,7 @@ Feature: FLUSSO_APIO_13
 Background:
  Given systems up
  And EC new version
-
+@runnable
  Scenario: Execute verifyPaymentNotice (Phase 1)
     Given initial XML verifyPaymentNotice
     """
@@ -25,7 +25,7 @@ Background:
     """
     When AppIO sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of verifyPaymentNotice response
-
+@runnable
 Scenario: Execute activateIOPayment (Phase 2)
     Given the Execute verifyPaymentNotice (Phase 1) scenario executed successfully
     And initial XML activateIOPayment
@@ -79,12 +79,12 @@ Scenario: Execute activateIOPayment (Phase 2)
     """
     When AppIO sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is OK of activateIOPayment response
-
+@runnable
 Scenario: Execute nodoChiediInformazioniPagamento (Phase 3)
     Given the Execute activateIOPayment (Phase 2) scenario executed successfully
     When WISP sends rest GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
     Then verify the HTTP status code of informazioniPagamento response is 200
-
+@runnable
 Scenario: Check nodoNotificaAnnullamento after nodoChiediInformazioniPagamento, and check correctness of database tables
     Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
     And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro AppIO

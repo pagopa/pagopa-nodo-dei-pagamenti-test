@@ -3,7 +3,7 @@ Feature: FLUSSO_APIO_35
 Background:
  Given systems up
  And EC new version
-
+@runnable
  Scenario: Execute verifyPaymentNotice (Phase 1)
     Given initial XML verifyPaymentNotice
     """
@@ -25,7 +25,7 @@ Background:
     """
     When AppIO sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of verifyPaymentNotice response
-
+@runnable
 Scenario: Execute activateIOPayment (Phase 2)
     Given the Execute verifyPaymentNotice (Phase 1) scenario executed successfully
     And initial XML activateIOPayment
@@ -97,7 +97,7 @@ Scenario: Execute activateIOPayment (Phase 2)
     And EC replies to nodo-dei-pagamenti with the paGetPayment
     When AppIO sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is KO of activateIOPayment response
-
+@runnable
 Scenario: Execute nodoChiediInformazioniPagamento (Phase 3)
     Given the Execute activateIOPayment (Phase 2) scenario executed successfully
     And execution query payment_status to get value on the table POSITION_ACTIVATE, with the columns PAYMENT_TOKEN under macro AppIO with db name nodo_online
@@ -105,7 +105,7 @@ Scenario: Execute nodoChiediInformazioniPagamento (Phase 3)
     When WISP sends rest GET informazioniPagamento?idPagamento=$paymentToken to nodo-dei-pagamenti
     Then verify the HTTP status code of informazioniPagamento response is 404
     And check error is Il pagamento non esiste of informazioniPagamento response
-
+@runnable
 Scenario: Execute nodoInoltroEsitoCarta (Phase 4) 
     Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
     When WISP sends REST POST inoltroEsito/carta to nodo-dei-pagamenti
@@ -125,7 +125,7 @@ Scenario: Execute nodoInoltroEsitoCarta (Phase 4)
     """
     Then verify the HTTP status code of inoltroEsito/carta response is 404
     And check error is Il Pagamento indicato non esiste of inoltroEsito/carta response
-
+@runnable
 Scenario: Check sendPaymentOutcome response after nodoInoltroEsitoPaypal primitive and the correctness of column values
     Given the Execute nodoInoltroEsitoCarta (Phase 4) scenario executed successfully
     And initial XML sendPaymentOutcome
