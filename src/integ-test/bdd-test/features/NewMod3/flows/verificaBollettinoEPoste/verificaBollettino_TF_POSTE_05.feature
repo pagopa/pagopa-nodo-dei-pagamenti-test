@@ -116,6 +116,7 @@ Feature: flow checks for verificaBollettino - EC old [TF_POSTE_05]
             </soapenv:Body>
             </soapenv:Envelope>
             """
+        And refresh job CONFIG triggered after 10 seconds
         And wait 62 seconds for expiration
         When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNotice response
