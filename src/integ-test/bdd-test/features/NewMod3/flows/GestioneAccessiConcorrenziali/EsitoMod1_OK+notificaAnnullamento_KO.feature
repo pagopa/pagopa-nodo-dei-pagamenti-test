@@ -2,7 +2,9 @@ Feature: process tests for Gestione Accessi Concorrenziali
 
   Background:
     Given systems up
-    And RPT generation
+
+  Scenario: EsitoMod1_OK+notificaAnnullamento_KO - Setup
+    Given RPT generation
       """
       <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
       <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
@@ -79,9 +81,7 @@ Feature: process tests for Gestione Accessi Concorrenziali
       </pay_i:datiVersamento>
       </pay_i:RPT>
       """
-
-  Scenario: Execute nodoInviaRPT request
-    Given initial XML nodoInviaRPT
+    And initial XML nodoInviaRPT
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
       <soapenv:Header>
@@ -105,31 +105,33 @@ Feature: process tests for Gestione Accessi Concorrenziali
       </soapenv:Body>
       </soapenv:Envelope>
       """
-    When psp sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+    When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
     Then check esito is OK of nodoInviaRPT response
+    And retrieve session token from $nodoInviaRPTResponse.url
 
-  Scenario: DB check
-    Given the Execute nodoInviaRPT request scenario executed successfully
-    Then checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query stati_rpt_2iuv_codpaold on db nodo_online under macro NewMod3
-
-  Scenario: Execute nodoInoltraEsitoMod1
-    Given the DB check scenario executed successfully
+  Scenario: EsitoMod1_OK+notificaAnnullamento_KO
+    Given the EsitoMod1_OK+notificaAnnullamento_KO - Setup scenario executed successfully
     When PM sends rest POST inoltroEsito/mod1 to nodo-dei-pagamenti
       """
       {
-        "idPagamento": "ea403cbd-f7a5-45a5-a6eb-65c4fc64d19c",
-        "identificativoPsp": "40000000001",
+        "idPagamento": "$sessionToken",
+        "identificativoPsp": "#psp#",
         "tipoVersamento": "BBT",
-        "identificativoIntermediario": "40000000001",
+        "identificativoIntermediario": "#psp#",
         "identificativoCanale": "#canale_BBT#",
         "tipoOperazione": "mobile",
         "mobileToken": "sleepOK"
       }
       """
-  #Then
-
-  Scenario: Execute nodoNotificaAnnullamento
-    Given the Execute nodoInoltraEsitoMod1 scenario executed successfully
     And wait 2 seconds for expiration
-    When PM sends rest GET notificaAnnullamento?idPagamento=ea403cbd-f7a5-45a5-a6eb-65c4fc64d19c&motivoAnnullamento=RIFPSP to nodo-dei-pagamenti
-    Then check error is Il Pagamento indicato non esiste of notificaAnnullamento response
+    And PM sends rest GET notificaAnnullamento?idPagamento=$sessionToken to nodo-dei-pagamenti
+    Then verify the HTTP status code of inoltroEsito/mod1 response is 200
+    And check esito is OK of inoltroEsito/mod1 response is 200
+    # check contains url
+    # check contains ${wfesp}
+    And check error is Il Pagamento indicato non esiste of notificaAnnullamento response
+
+  Scenario: EsitoMod1_OK+notificaAnnullamento_KO - DB_Check
+    Given the EsitoMod1_OK+notificaAnnullamento_KO scenario executed successfully
+    Then checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_INVIATA_A_PSP,RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT retrived by the query stati_rpt_2iuv_codpaold on db nodo_online under macro NewMod3
+    # continuare db check
