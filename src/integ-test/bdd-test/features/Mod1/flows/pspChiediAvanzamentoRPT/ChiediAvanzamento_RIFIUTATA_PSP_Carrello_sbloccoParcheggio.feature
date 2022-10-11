@@ -278,10 +278,11 @@ Feature: process tests for ChiediAvanzamento_RIFIUTATA_PSP_Carrello_sbloccoParch
         <soapenv:Body>
             <ws:pspChiediAvanzamentoRPTResponse>
                 <pspChiediAvanzamentoRPTResponse>
+                    <value>KO</value>
                     <fault>
                     <faultCode>CANALE_RPT_RIFIUTATA</faultCode>
                     <faultString>RPT arrivata al PSP e rifiutata</faultString>
-                    <id>#psp#</id>
+                    <id>44444444444</id>
                     <description>RPT rifiutata dal PSP</description>
                     </fault>
                 </pspChiediAvanzamentoRPTResponse>
@@ -291,7 +292,7 @@ Feature: process tests for ChiediAvanzamento_RIFIUTATA_PSP_Carrello_sbloccoParch
         """
         And PSP replies to nodo-dei-pagamenti with the pspChiediAvanzamentoRPT
         When job pspChiediAvanzamentoRpt triggered after 5 seconds
-        And wait 20 seconds for expiration
+        And wait 10 seconds for expiration
         Then checks the value CART_RIFIUTATO_PSP of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query motivo_annullamento on db nodo_online under macro Mod1
 
     Scenario: Execution retry Esito Carta
