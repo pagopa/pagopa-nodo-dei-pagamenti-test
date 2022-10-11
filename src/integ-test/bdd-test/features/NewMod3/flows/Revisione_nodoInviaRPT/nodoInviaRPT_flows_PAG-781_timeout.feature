@@ -60,6 +60,7 @@ Feature: process tests for nodoInviaRPT [PAG-781_timeout]
             <ws:paaAttivaRPTRisposta>
             <paaAttivaRPTRisposta>
             <esito>KO</esito>
+             <delay>60000</delay>
             <datiPagamentoPA>
             <importoSingoloVersamento>2.00</importoSingoloVersamento>
             <ibanAccredito>IT96R0123454321000000012345</ibanAccredito>
