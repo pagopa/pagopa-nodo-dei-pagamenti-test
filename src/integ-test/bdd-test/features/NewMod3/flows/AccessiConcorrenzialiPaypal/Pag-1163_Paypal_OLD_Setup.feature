@@ -225,7 +225,7 @@ Feature: DB checks for nodoInoltraEsitoPagamentoPaypal on old PA
          And check dettagli field exists in informazioniPagamento response
          And check IUV is $1iuv of informazioniPagamento response
          And check CCP is $ccp of informazioniPagamento response
-         And check idDominio is $verifyPaymentNotice.fiscalCode of informazioniPagamento response
+         And check idDominio is $nodoInviaRPT.identificativoDominio of informazioniPagamento response
          And check enteBeneficiario is AZIENDA XXX in informazioniPagamento response
 
          And execution query dbcheck_json to get value on the table PA, with the columns RAGIONE_SOCIALE under macro NewMod3 with db name nodo_cfg
