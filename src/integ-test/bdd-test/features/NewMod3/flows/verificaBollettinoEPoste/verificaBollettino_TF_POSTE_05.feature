@@ -7,7 +7,7 @@ Feature: flow checks for verificaBollettino - EC old [TF_POSTE_05]
     # verificaBollettinoReq phase
     Scenario: Execute verificaBollettino request
         Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
-        And generate 1 cart with PA 44444444444 and notice number $1noticeNumber
+        And generate 1 cart with PA #creditor_institution_code_old# and notice number $1noticeNumber
         And nodo-dei-pagamenti has config parameter verificabollettino.validity.minutes set to 1
         # #And initial XML paaVerificaRPT
         #     """
@@ -127,7 +127,7 @@ Feature: flow checks for verificaBollettino - EC old [TF_POSTE_05]
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-            <pay_i:identificativoDominio>44444444444</pay_i:identificativoDominio>
+            <pay_i:identificativoDominio>#creditor_institution_code_old#</pay_i:identificativoDominio>
             <pay_i:identificativoStazioneRichiedente>#id_station_old#</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
@@ -180,8 +180,8 @@ Feature: flow checks for verificaBollettino - EC old [TF_POSTE_05]
             <pay_i:dataEsecuzionePagamento>2016-09-16</pay_i:dataEsecuzionePagamento>
             <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>BP</pay_i:tipoVersamento>
-            <pay_i:identificativoUnivocoVersamento>013661938155500</pay_i:identificativoUnivocoVersamento>
-            <pay_i:codiceContestoPagamento>b194ac590a6848f7923c70b05869774c</pay_i:codiceContestoPagamento>
+            <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
+            <pay_i:codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
             <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -208,11 +208,11 @@ Feature: flow checks for verificaBollettino - EC old [TF_POSTE_05]
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
                 <ppt:intestazionePPT>
-                    <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
-                    <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
-                    <identificativoDominio>44444444444</identificativoDominio>
-                    <identificativoUnivocoVersamento>013661938155500</identificativoUnivocoVersamento>
-                    <codiceContestoPagamento>b194ac590a6848f7923c70b05869774c</codiceContestoPagamento>
+                    <identificativoIntermediarioPA>#creditor_institution_code_old#</identificativoIntermediarioPA>
+                    <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
+                    <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
+                    <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
+                    <codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken</codiceContestoPagamento>
                 </ppt:intestazionePPT>
             </soapenv:Header>
             <soapenv:Body>
