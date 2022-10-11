@@ -3,7 +3,7 @@ Feature: process tests for Gestione Accessi Concorrenziali
   Background:
     Given systems up
 
-  Scenario: EsitoMod1_OK+notificaAnnullamento_KO - Setup
+  Scenario: EsitoMod1_OK+notificaAnnullamento_KO (part 1)
     Given RPT generation
       """
       <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
@@ -109,8 +109,25 @@ Feature: process tests for Gestione Accessi Concorrenziali
     Then check esito is OK of nodoInviaRPT response
     And retrieve session token from $nodoInviaRPTResponse.url
 
-  Scenario: EsitoMod1_OK+notificaAnnullamento_KO
-    Given the EsitoMod1_OK+notificaAnnullamento_KO - Setup scenario executed successfully
+  Scenario: EsitoMod1_OK+notificaAnnullamento_KO (part 2)
+    Given the EsitoMod1_OK+notificaAnnullamento_KO (part 1) scenario executed successfully
+    And initial XML pspInviaRPT
+      """
+      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+      <soapenv:Header/>
+      <soapenv:Body>
+      <ws:pspInviaRPTResponse>
+      <pspInviaRPTResponse>
+      <delay>10000</delay>
+      <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+      <identificativoCarrello>$nodoInviaRPT.identificativoUnivocoVersamento</identificativoCarrello>
+      <parametriPagamentoImmediato>idBruciatura=$nodoInviaRPT.identificativoUnivocoVersamento</parametriPagamentoImmediato>
+      </pspInviaRPTResponse>
+      </ws:pspInviaRPTResponse>
+      </soapenv:Body>
+      </soapenv:Envelope>
+      """
+    And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
     When PM sends rest POST inoltroEsito/mod1 to nodo-dei-pagamenti
       """
       {
@@ -126,12 +143,13 @@ Feature: process tests for Gestione Accessi Concorrenziali
     And wait 2 seconds for expiration
     And PM sends rest GET notificaAnnullamento?idPagamento=$sessionToken&motivoAnnullamento=RIFPSP to nodo-dei-pagamenti
     Then verify the HTTP status code of inoltroEsito/mod1 response is 200
-    And check esito is OK of inoltroEsito/mod1 response is 200
+    And check esito is OK of inoltroEsito/mod1 response
     # check contains url
     # check contains ${wfesp}
     And check error is Il Pagamento indicato non esiste of notificaAnnullamento response
 
-  Scenario: EsitoMod1_OK+notificaAnnullamento_KO - DB_Check
-    Given the EsitoMod1_OK+notificaAnnullamento_KO scenario executed successfully
+  Scenario: EsitoMod1_OK+notificaAnnullamento_KO (part 3)
+    Given the EsitoMod1_OK+notificaAnnullamento_KO (part 2) scenario executed successfully
     Then checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_INVIATA_A_PSP,RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT retrived by the query stati_rpt_2iuv_codpaold on db nodo_online under macro NewMod3
-    # continuare db check
+    And verify 5 record for the table STATI_RPT retrived by the query stati_rpt_2iuv_codpaold on db nodo_online under macro NewMod3
+# continuare db check
