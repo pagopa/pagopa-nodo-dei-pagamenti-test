@@ -3,10 +3,10 @@ Feature: DB checks for nodoInoltraEsitoPagamentoPaypal on old PA
       Background:
          Given systems up
 
-      Scenario: Execute verifyPaymentNotice request
+      Scenario: Execute nodoVerificaRPT request
          Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr#
          And generate 1 cart with PA #creditor_institution_code_old# and notice number $1noticeNumber  
-         And initial XML verifyPaymentNotice
+         And initial XML nodoVerificaRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:bc="http://PuntoAccessoPSP.spcoop.gov.it/BarCode_GS1_128_Modified" xmlns:aim="http://PuntoAccessoPSP.spcoop.gov.it/Code_128_AIM_USS-128_tipo_C" xmlns:qrc="http://PuntoAccessoPSP.spcoop.gov.it/QrCode">
                <soapenv:Header/>
@@ -24,8 +24,8 @@ Feature: DB checks for nodoInoltraEsitoPagamentoPaypal on old PA
             </soapenv:Envelope>
             """
          And EC old version
-         When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
-         Then check outcome is OK of verifyPaymentNotice response
+         When PSP sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
+         Then check esito is OK of nodoVerificaRPT response
 
       Scenario: Execute nodoAttivaRPT request
          Given the Execute verifyPaymentNotice request scenario executed successfully
