@@ -386,8 +386,8 @@ Feature: Commissioni evolute process
         And paymentAmount with 400.00 in paGetPayment
         And transferAmount with 200.00 in paGetPayment
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-        # Then check outcome is OK of activatePaymentNoticeV2 response
         And wait 60 seconds for expiration
+        Then check outcome is OK of activatePaymentNoticeV2 response
         # verify fees retry in RE table
         # And verify 2 record for the table RE retrived by the query select_fees on db re under macro getFees
         And verify 1 record for the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
@@ -399,13 +399,13 @@ Feature: Commissioni evolute process
         And checks the value None of the record at column SUGGESTED_USER_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value None of the record at column SUGGESTED_PA_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
-    
+    @skip
     # sendPaymentOutcome - sunny day
     Scenario: Execute activate 12
         Given the activatePaymentNoticeV2 scenario executed successfully
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-  
+    @skip
     Scenario: Execute sendPaymentOutcomeV2
         Given the Execute activate 12 scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
@@ -423,13 +423,13 @@ Feature: Commissioni evolute process
         And checks the value $sendPaymentOutcomeV2.idCiBundle of the record at column BUNDLE_PA_ID of the table POSITION_RECEIPT retrived by the query PAYMENT_TOKEN_spov2 on db nodo_online under macro NewMod1
         # verify paSendRTV2 is sent with fields receipt.fee = POSITION_RECEIPT.FEE, receipt.primaryCiIncurredFee = POSITION_RECEIPT.FEE_PA, receipt.idBundle = POSITION_RECEIPT.BUNDLE_ID, receipt.idCiBundle = POSITION_RECEIPT.BUNDLE_PA_ID
 
-
+    @skip   
     # sendPaymentOutcome - no fee information in sendPaymentOutcomeV2 request
     Scenario: Execute activate 13
         Given the activatePaymentNoticeV2 scenario executed successfully
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-    
+    @skip
     Scenario: Execute sendPaymentOutcomeV2 2
         Given the Execute activate 13 scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
