@@ -394,8 +394,8 @@ Feature: Semantic checks for activateIOPayment - KO
     And check faultCode is PPT_ERRORE_IDEMPOTENZA of activateIOPayment response
     Examples:
       | tag                         | tag_value             | soapUI test |
-      #| noticeNumber                | 302119138889055636    | SEM_AIPR_21 |
-      #| fiscalCode                  | 90000000001           | SEM_AIPR_21 |
+      | noticeNumber                | 302119138889055636    | SEM_AIPR_21 |
+      | fiscalCode                  | 90000000001           | SEM_AIPR_21 |
       | amount                      | 15.12                 | SEM_AIPR_21 |
       | dueDate                     | 2021-12-31            | SEM_AIPR_21 |
       | dueDate                     | None                  | SEM_AIPR_21 |
@@ -480,7 +480,7 @@ Feature: Semantic checks for activateIOPayment - KO
       | country                     | None                  | SEM_AIPR_22 |
       | e-mail                      | test1@prova.gmail.com | SEM_AIPR_22 |
       | e-mail                      | None                  | SEM_AIPR_22 |
-
+@runnable
   # [SEM_AIPR_23]
   Scenario: Check reuse of idempotencyKey with expired paymentToken
     Given the Execute activateIOPayment (Phase 1) scenario executed successfully
@@ -489,7 +489,7 @@ Feature: Semantic checks for activateIOPayment - KO
     When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is KO of activateIOPayment response
     And check faultCode is PPT_PAGAMENTO_IN_CORSO of activateIOPayment response
-
+@runnable
   # [SEM_AIPR_24]
   Scenario: [SEM_AIPR_24]
     Given nodo-dei-pagamenti has config parameter default_durata_token_IO set to 15000
@@ -500,7 +500,7 @@ Feature: Semantic checks for activateIOPayment - KO
     When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is KO of activateIOPayment response
     And check faultCode is PPT_PAGAMENTO_IN_CORSO of activateIOPayment response
-
+@runnable
   # [SEM_AIPR_25]
   Scenario: [SEM_AIPR_25]
     Given nodo-dei-pagamenti has config parameter useIdempotency set to false
@@ -512,7 +512,7 @@ Feature: Semantic checks for activateIOPayment - KO
     And check faultCode is PPT_PAGAMENTO_IN_CORSO of activateIOPayment response
     And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro AppIO
     And restore initial configurations
-
+@runnable
   # [SEM_AIPR_26]
   Scenario: [SEM_AIPR_26]
     Given nodo-dei-pagamenti has config parameter useIdempotency set to false
