@@ -1832,6 +1832,7 @@ def step_impl(context, primitive1, primitive2):
     list_of_primitive = [primitive1, primitive2]
     utils.threading(context, list_of_primitive)
 
+#2 primitives called in parallel, with delay1 applied to primitive2
 @step("calling primitive {primitive1} and {primitive2} with {delay1:d} ms delay")
 def step_impl(context, primitive1, primitive2, delay1):
     list_of_primitive = [primitive1, primitive2]
