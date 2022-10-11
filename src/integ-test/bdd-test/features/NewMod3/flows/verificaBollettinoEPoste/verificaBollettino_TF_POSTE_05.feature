@@ -9,7 +9,6 @@ Feature: flow checks for verificaBollettino - EC old [TF_POSTE_05]
         Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
         And generate 1 cart with PA #creditor_institution_code_old# and notice number $1noticeNumber
         And nodo-dei-pagamenti has config parameter verificabollettino.validity.minutes set to 1
-        And refresh job CONFIG triggered after 4 seconds
         # #And initial XML paaVerificaRPT
         #     """
         #     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/"   xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">
@@ -66,7 +65,7 @@ Feature: flow checks for verificaBollettino - EC old [TF_POSTE_05]
         Then check outcome is OK of verificaBollettino response
         And wait 5 seconds for expiration
         And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table VERIFICA_BOLLETTINO retrived by the query verifica_bollettino on db nodo_online under macro NewMod3
-        And wait 62 seconds for expiration
+        
 
     # activatePaymentNoticeReq phase
     Scenario: Execute activatePaymentNotice request
@@ -117,6 +116,7 @@ Feature: flow checks for verificaBollettino - EC old [TF_POSTE_05]
             </soapenv:Body>
             </soapenv:Envelope>
             """
+        And wait 62 seconds for expiration
         When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNotice response
         And check faultCode is PPT_IBAN_ACCREDITO of activatePaymentNotice response
