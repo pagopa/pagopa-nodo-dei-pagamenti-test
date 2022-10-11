@@ -193,6 +193,36 @@ def step_impl(context, primitive):
 
     setattr(context, primitive, payload)
 
+@given('initial JSON {primitive}')
+def step_impl(context, primitive):
+    payload = context.text or ""
+    payload = utils.replace_local_variables(payload, context)
+    payload = utils.replace_context_variables(payload, context)
+    payload = utils.replace_global_variables(payload, context)
+    setattr(context, f"{primitive}JSON", payload)
+
+    jsonDict = json.loads(payload)
+    payload = utils.json2xml(jsonDict)
+    payload = '<root>' + payload + '</root>'
+    if "#iuv#" in payload:
+        iuv = str(random.randint(100000000000000, 999999999999999))
+        payload = payload.replace('#iuv#', iuv)
+        setattr(context, "iuv", iuv)
+    if '#transaction_id#' in payload:
+        transaction_id = str(random.randint(10000000, 99999999))
+        payload = payload.replace('#transaction_id#', transaction_id)
+        setattr(context, 'transaction_id', transaction_id)
+    if '#psp_transaction_id#' in payload:
+        psp_transaction_id = str(random.randint(10000000, 99999999))
+        payload = payload.replace('#psp_transaction_id#', psp_transaction_id)
+        setattr(context, 'psp_transaction_id', psp_transaction_id)
+    if '$iuv' in payload:
+        payload = payload.replace('$iuv', getattr(context, 'iuv'))
+    if '$transaction_id' in payload:
+        payload = payload.replace('$transaction_id', getattr(context, 'transaction_id'))
+    if '$psp_transaction_id' in payload:
+        payload = payload.replace('$psp_transaction_id', getattr(context, 'psp_transaction_id'))
+    setattr(context, primitive, payload)
 
 @given('RPT generation')
 def step_impl(context):
@@ -1173,6 +1203,7 @@ def step_impl(context, primitive, new_primitive):
 @step('saving {primitive} request in {new_primitive}')
 def step_impl(context, primitive, new_primitive):
     soap_request = getattr(context, primitive)
+    print("###########################################################################", soap_request)
     setattr(context, new_primitive, soap_request)
 
 @step('random iuv in context')
@@ -1801,7 +1832,7 @@ def step_impl(context, primitive1, primitive2):
     list_of_primitive = [primitive1, primitive2]
     utils.threading(context, list_of_primitive)
 
-@step("calling primitive {primitive1} and {primitive2} with {delay1} ms delay")
+@step("calling primitive {primitive1} and {primitive2} with {delay1:d} ms delay")
 def step_impl(context, primitive1, primitive2, delay1):
     list_of_primitive = [primitive1, primitive2]
     list_of_delays = [0, delay1]
