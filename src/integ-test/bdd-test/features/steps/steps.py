@@ -1862,7 +1862,10 @@ def step_impl(context, primitive1, primitive2):
         assert True
      # AccessiConcorrenziali 3d_ACT_SPO
     elif outcome1 == 'OK' and outcome2 == 'KO' and faultCode2 == 'PPT_TOKEN_SCADUTO':
-        assert True       
+        assert True  
+    # AccessiConcorrenziali 3e_ACT_SPO
+    elif outcome1 == 'KO' and faultCode2 == 'PPT_SEMANTICA' and description2 == 'Activation pending on position':
+        assert True     
      # AccessiConcorrenziali 3e_ACT_SPO
     elif outcome1 == 'KO' and outcome2 == 'KO' and faultCode2 == 'PPT_TOKEN_SCADUTO':
         assert True  
