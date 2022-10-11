@@ -1839,6 +1839,14 @@ def step_impl(context, primitive1, primitive2):
     elif outcome2 == 'OK' and faultCode1 == 'PPT_PAGAMENTO_IN_CORSO' and faultString1 == 'Pagamento in attesa risulta in corso al sistema pagoPA' \
             and description1 == 'Pagamento in attesa risulta in corso al sistema pagoPA':
         assert True
+
+    # AccessiConcorrenziali 3_ACT_SPO
+    elif outcome1 == 'OK' and faultCode2 == 'PPT_SEMANTICA' and description2 == 'Activation pending on position':
+        assert True
+    # AccessiConcorrenziali 3_ACT_SPO
+    elif outcome1 == 'KO' and faultCode1 == 'PPT_TOKEN_SCADUTO' and outcome2 == 'KO' and faultCode2 == 'PPT_PAGAMENTO_DUPLICATO':
+        assert True
+        
     else:
         assert False
 
