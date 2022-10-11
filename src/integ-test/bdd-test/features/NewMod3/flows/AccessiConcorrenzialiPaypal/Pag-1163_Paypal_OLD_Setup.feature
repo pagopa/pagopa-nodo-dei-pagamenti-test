@@ -224,7 +224,7 @@ Feature: DB checks for nodoInoltraEsitoPagamentoPaypal on old PA
          And check bolloDigitale is False of informazioniPagamento response
          And check dettagli field exists in informazioniPagamento response
          And check IUV is $1iuv of informazioniPagamento response
-         And check CCP id $ccp of informazioniPagamento response
+         And check CCP is $ccp of informazioniPagamento response
          And check idDominio is $verifyPaymentNotice.fiscalCode of informazioniPagamento response
          And check enteBeneficiario is AZIENDA XXX in informazioniPagamento response
 
