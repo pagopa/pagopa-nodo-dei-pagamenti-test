@@ -442,7 +442,7 @@ Feature: Semantic checks for activateIOPayment - KO
     Examples:
       | tag          | value              | soapUI test |
       | noticeNumber | 302119138889055636 | SEM_AIPR_22 |
-      | fiscalCode   | 90000000001        | SEM_AIPR_22 |
+      #| fiscalCode   | 90000000001        | SEM_AIPR_22 |
 
 
   Scenario Outline: Check PPT_PAGAMENTO_IN_CORSO error on idempotencyKey validity
