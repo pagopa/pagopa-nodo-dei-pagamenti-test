@@ -236,7 +236,7 @@ Feature: Semantic checks for activateIOPayment - KO
     Then check outcome is KO of activateIOPayment response
     And check faultCode is PPT_AUTORIZZAZIONE of activateIOPayment response
     And check description is Configurazione intermediario-canale non corretta of activateIOPayment response
-
+@runnable
   Scenario: Execute activateIOPayment (Phase 1)
     Given initial XML activateIOPayment
       """
