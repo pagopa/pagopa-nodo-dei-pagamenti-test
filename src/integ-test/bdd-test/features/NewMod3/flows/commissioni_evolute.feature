@@ -1,7 +1,6 @@
 Feature: Commissioni evolute process
     # Reference document: https://pagopa.atlassian.net/wiki/spaces/PAG/pages/544276823/A.T.+Gestione+Evoluta+delle+Commissioni
 
-    @wip
     Background:
         Given systems up
     @wip
