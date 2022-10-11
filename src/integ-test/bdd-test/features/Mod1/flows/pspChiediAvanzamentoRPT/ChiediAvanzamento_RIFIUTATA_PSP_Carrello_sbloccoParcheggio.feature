@@ -228,18 +228,15 @@ Feature: process tests for ChiediAvanzamento_RIFIUTATA_PSP_Carrello_sbloccoParch
         And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte 
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header/>
-            <soapenv:Body>
-                 <ws:pspInviaCarrelloRPTCarteResponse>
-                    <pspInviaCarrelloRPTResponse>
-                        <delay>10000</delay>
-                        <esitoComplessivoOperazione>timeout</esitoComplessivoOperazione>
-                        <identificativoCarrello>$nodoInviaCarrelloRPT.identificativoCarrello</identificativoCarrello>
-                        <parametriPagamentoImmediato>idBruciatura=$nodoInviaCarrelloRPT.identificativoCarrello</parametriPagamentoImmediato>
-                    </pspInviaCarrelloRPTResponse>
-                </ws:pspInviaCarrelloRPTCarteResponse>
-            </soapenv:Body>
-        </soapenv:Envelope>
+                <soapenv:Header/>
+                <soapenv:Body>
+                    <ws:pspInviaCarrelloRPTCarteResponse>
+                        <pspInviaCarrelloRPTResponse>
+                            <esitoComplessivoOperazione>timeout</esitoComplessivoOperazione>
+                        </pspInviaCarrelloRPTResponse>
+                    </ws:pspInviaCarrelloRPTCarteResponse>
+                </soapenv:Body>
+            </soapenv:Envelope>
         """
         When WISP sends REST POST inoltroEsito/carta to nodo-dei-pagamenti
 
@@ -318,10 +315,10 @@ Feature: process tests for ChiediAvanzamento_RIFIUTATA_PSP_Carrello_sbloccoParch
         {
             "idPagamento": "$sessionToken",
             "RRN":123456789,
-            "identificativoPsp": "70000000001",
+            "identificativoPsp": "40000000001",
             "tipoVersamento": "CP",
-            "identificativoIntermediario": "70000000001",
-            "identificativoCanale": "70000000001_03",
+            "identificativoIntermediario": "40000000001",
+            "identificativoCanale": "40000000001_03",
             "esitoTransazioneCarta": "123456", 
             "importoTotalePagato": 11.11,
             "timestampOperazione": "2012-04-23T18:25:43.001Z",
