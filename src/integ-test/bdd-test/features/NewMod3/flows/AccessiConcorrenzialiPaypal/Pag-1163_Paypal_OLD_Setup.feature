@@ -28,7 +28,7 @@ Feature: DB checks for nodoInoltraEsitoPagamentoPaypal on old PA
          Then check esito is OK of nodoVerificaRPT response
 
       Scenario: Execute nodoAttivaRPT request
-         Given the Execute verifyPaymentNotice request scenario executed successfully
+         Given the Execute nodoVerificaRPT request scenario executed successfully
          And initial XML nodoAttivaRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:bc="http://PuntoAccessoPSP.spcoop.gov.it/BarCode_GS1_128_Modified"  xmlns:aim="http://PuntoAccessoPSP.spcoop.gov.it/Code_128_AIM_USS-128_tipo_C" xmlns:qrc="http://PuntoAccessoPSP.spcoop.gov.it/QrCode">
