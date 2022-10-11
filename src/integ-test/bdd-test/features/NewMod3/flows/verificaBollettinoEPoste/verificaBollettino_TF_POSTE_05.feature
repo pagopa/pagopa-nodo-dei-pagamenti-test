@@ -203,9 +203,9 @@ Feature: flow checks for verificaBollettino - EC old [TF_POSTE_05]
             </pay_i:RPT>
             """
 
-    # nodoInviaRPT phase
-    #Scenario: Execute nodoInviaRPT request
-        #Given the RPT generation scenario executed successfully
+    nodoInviaRPT phase
+    Scenario: Execute nodoInviaRPT request
+        Given the RPT generation scenario executed successfully
         And initial XML nodoInviaRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -230,7 +230,7 @@ Feature: flow checks for verificaBollettino - EC old [TF_POSTE_05]
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        When PSP sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
         #And check redirect is 0 of nodoInviaRPT response
         #And checks the value None of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
