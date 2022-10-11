@@ -257,7 +257,7 @@ Feature: process tests for accessiConCorrenziali [1b - RPT+SPO]
                         <applicationDate>2021-12-12</applicationDate>
                         <transferDate>2021-12-11</transferDate>
                     </details>
-                </nod:sendPaymentOutcomeReq>
+                </nod:sendPaymentOutcome>
             </soapenv:Body>
             </soapenv:Envelope>
             """
