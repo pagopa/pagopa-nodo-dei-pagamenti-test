@@ -204,14 +204,14 @@ Feature: flow checks for verificaBollettino - EC old [TF_POSTE_05]
             """
 
     # nodoInviaRPT phase
-    Scenario: Execute nodoInviaRPT request
-        Given the RPT generation scenario executed successfully
+    #Scenario: Execute nodoInviaRPT request
+        #Given the RPT generation scenario executed successfully
         And initial XML nodoInviaRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
                 <ppt:intestazionePPT>
-                    <identificativoIntermediarioPA>#creditor_institution_code_old#</identificativoIntermediarioPA>
+                    <identificativoIntermediarioPA>#id_broker_old#</identificativoIntermediarioPA>
                     <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
                     <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
                     <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
