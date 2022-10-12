@@ -3,7 +3,7 @@ Feature: process tests for Gestione Accessi Concorrenziali
   Background:
     Given systems up
 
-  Scenario: EsitoMod1_KO+notificaAnnullamento_OK (part 1)
+  Scenario: EsitoMod1_Timeout+notificaAnnullamento_KO (part 1)
     Given RPT generation
       """
       <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
@@ -63,7 +63,7 @@ Feature: process tests for Gestione Accessi Concorrenziali
       <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
       <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
       <pay_i:identificativoUnivocoVersamento>#IUV#</pay_i:identificativoUnivocoVersamento>
-      <pay_i:codiceContestoPagamento>sleepKO</pay_i:codiceContestoPagamento>
+      <pay_i:codiceContestoPagamento>timeout</pay_i:codiceContestoPagamento>
       <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
       <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
       <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -90,7 +90,7 @@ Feature: process tests for Gestione Accessi Concorrenziali
       <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
       <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
       <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
-      <codiceContestoPagamento>sleepKO</codiceContestoPagamento>
+      <codiceContestoPagamento>timeout</codiceContestoPagamento>
       </ppt:intestazionePPT>
       </soapenv:Header>
       <soapenv:Body>
@@ -109,8 +109,8 @@ Feature: process tests for Gestione Accessi Concorrenziali
     Then check esito is OK of nodoInviaRPT response
     And retrieve session token from $nodoInviaRPTResponse.url
 
-  Scenario: EsitoMod1_KO+notificaAnnullamento_OK (part 2)
-    Given the EsitoMod1_KO+notificaAnnullamento_OK (part 1) scenario executed successfully
+  Scenario: EsitoMod1_Timeout+notificaAnnullamento_KO (part 2)
+    Given the EsitoMod1_Timeout+notificaAnnullamento_KO (part 1) scenario executed successfully
     And initial XML pspInviaRPT
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -118,15 +118,7 @@ Feature: process tests for Gestione Accessi Concorrenziali
       <soapenv:Body>
       <ws:pspInviaRPTResponse>
       <pspInviaRPTResponse>
-      <delay>8000</delay>
-      <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
-      <listaErroriRPT>
-      <fault>
-      <faultCode>CANALE_RPT_DA_RIFIUTARE</faultCode>
-      <faultString>RPT da Rifiutare lato PSP</faultString>
-      <id>#psp#</id>
-      </fault>
-      </listaErroriRPT>
+      <delay>9000</delay>
       </pspInviaRPTResponse>
       </ws:pspInviaRPTResponse>
       </soapenv:Body>
@@ -142,12 +134,12 @@ Feature: process tests for Gestione Accessi Concorrenziali
         "identificativoIntermediario": "#psp#",
         "identificativoCanale": "#canaleRtPush#",
         "tipoOperazione": "mobile",
-        "mobileToken": "123456"
+        "mobileToken": "123455"
       }
       """
     And wait 2 seconds for expiration
     And PM sends rest GET notificaAnnullamento?idPagamento=$sessionToken&motivoAnnullamento=RIFPSP to nodo-dei-pagamenti
     Then verify the HTTP status code of inoltroEsito/mod1 response is 200
     And check esito is KO of inoltroEsito/mod1 response
-    And check descrizione is Risposta negativa del Canale of inoltroEsito/mod1 response
-    And check esito is OK of notificaAnnullamento response
+    And check descrizione is Operazione in timeout of inoltroEsito/mod1 response
+    And check error is Il Pagamento indicato non esiste of notificaAnnullamento response
