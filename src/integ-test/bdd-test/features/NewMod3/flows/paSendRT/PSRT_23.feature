@@ -29,7 +29,7 @@ Feature: process tests for paSendRT [PSRT_21]
                 </soapenv:Body>
             </soapenv:Envelope>
             """
-        And EC new version
+        #And EC new version
         When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of verifyPaymentNotice response
 
@@ -135,6 +135,7 @@ Feature: process tests for paSendRT [PSRT_21]
             </qrCode>
             <expirationTime>6000</expirationTime>
             <amount>17.00</amount>
+            <paymentNote>responseFull3Transfers</paymentNote>
             </nod:activatePaymentNoticeReq>
             </soapenv:Body>
             </soapenv:Envelope>
