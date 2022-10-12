@@ -77,24 +77,6 @@ Feature: FLUSSO_APIO_12.3
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And initial XML paGetPayment
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <paf:paGetPaymentRes>
-            <outcome>KO</outcome>
-            <fault>
-            <faultCode>PAA_SEMANTICA</faultCode>
-            <faultString>errore semantico PA</faultString>
-            <id>$activateIOPayment.fiscalCode</id>
-            <description>Errore semantico emesso dalla PA</description>
-            </fault>
-            </paf:paGetPaymentRes>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        And EC replies to nodo-dei-pagamenti with the paGetPayment
 
         When AppIO sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
