@@ -246,5 +246,6 @@ Feature: process tests for accessiConCorrenziali [PAG-1163_Carta_NM3_err]
         And saving inoltroEsito/cartaJSON request in inoltroEsito/carta
         When calling primitive inoltroEsito/carta_inoltroEsito/carta and sendPaymentOutcome_sendPaymentOutcome with 4000 ms delay
         Then verify the HTTP status code of inoltroEsito/carta response is 408
-        And check esito is Operazione in timeout of inoltroEsito/carta response
+        And check esito is KO of inoltroEsito/carta response
+        And check description is Operazione in timeout of inoltroEsito/carta response
         And check outcome is OK of sendPaymentOutcome response
