@@ -63,7 +63,7 @@ Feature: process tests for Gestione Accessi Concorrenziali
       <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
       <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
       <pay_i:identificativoUnivocoVersamento>#IUV#</pay_i:identificativoUnivocoVersamento>
-      <pay_i:codiceContestoPagamento>sleepOK</pay_i:codiceContestoPagamento>
+      <pay_i:codiceContestoPagamento>sleepKO</pay_i:codiceContestoPagamento>
       <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
       <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
       <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
