@@ -351,7 +351,7 @@ Feature: syntax checks for closePaymentV2 outcome OK
         Given the check activatePaymentNoticeV2 OK 4 scenario executed successfully
         And the closePaymentV2 scenario executed successfully
         And paymentToken with $activatePaymentNoticeV21Response.paymentToken in v2/closepayment
-        And <elem> with <value> in v2/closepaymentF
+        And <elem> with <value> in v2/closepayment
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
