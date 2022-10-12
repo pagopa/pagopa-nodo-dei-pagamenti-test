@@ -110,7 +110,6 @@ Feature: FLUSSO_APIO_12.3
         When WISP sends REST POST inoltroEsito/carta to nodo-dei-pagamenti
             """
             {
-                "idPagamento":"$activateIOPaymentResponse.paymentToken",
                 "RRN": 10026669,
                 "tipoVersamento": "CP",
                 "idPagamento": "$activateIOPaymentResponse.paymentToken",
@@ -119,7 +118,7 @@ Feature: FLUSSO_APIO_12.3
                 "identificativoCanale": "#canale#",
                 "importoTotalePagato": 10,
                 "timestampOperazione": "2021-07-09T17:06:03.100+01:00",
-                "codiceAutorizzativo": "resKO",
+                "codiceAutorizzativo": "resMal",
                 "esitoTransazioneCarta": "00"
             }
             """
@@ -208,8 +207,8 @@ Feature: FLUSSO_APIO_12.3
             }
             """
         Then verify the HTTP status code of inoltroEsito/carta response is 200
-        #And check esito is KO of inoltroEsito/carta response
-        #And check errorCode is RIFPSP of inoltroEsito/carta response
+        And check esito is KO of inoltroEsito/carta response
+        And check errorCode is RIFPSP of inoltroEsito/carta response
         And checks the value PAYING, PAYMENT_SENT, PAYMENT_REFUSED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value PAYMENT_REFUSED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
