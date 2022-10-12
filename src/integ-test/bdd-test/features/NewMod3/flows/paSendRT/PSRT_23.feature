@@ -67,7 +67,7 @@ Feature: process tests for paSendRT [PSRT_21]
                     <paf:paGetPaymentRes>
                         <outcome>OK</outcome>
                         <data>
-                            <creditorReferenceId>$1iuv</creditorReferenceId>
+                            <creditorReferenceId>$iuv</creditorReferenceId>
                             <paymentAmount>10.00</paymentAmount>
                             <dueDate>2021-12-31</dueDate>
                             <!--Optional:-->
