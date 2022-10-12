@@ -117,7 +117,7 @@ Feature: Checks for concorrential access of Paypal payments OK
             <payer>
             <uniqueIdentifier>
             <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-            <entityUniqueIdentifierValue>77777777777_01</entityUniqueIdentifierValue>
+            <entityUniqueIdentifierValue>#creditor_institution_code#</entityUniqueIdentifierValue>
             </uniqueIdentifier>
             <fullName>SPOname</fullName>
             <!--Optional:-->
@@ -163,7 +163,7 @@ Feature: Checks for concorrential access of Paypal payments OK
             <psp:pspNotifyPaymentRes>
             <outcome>OK</outcome>
             <!--Optional:-->
-            <delay>8000</delay>
+            <delay>5000</delay>
             </psp:pspNotifyPaymentRes>
             </soapenv:Body>
             </soapenv:Envelope>
