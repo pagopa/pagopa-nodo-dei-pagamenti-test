@@ -92,7 +92,7 @@ Feature: PRO_ANNULLO_12_PPALNEW
         {
             "idTransazione": "responseOK",
             "idTransazionePsp":"153016btAE",
-            "idPagamento": "$sessionToken",
+            "idPagamento": "$activateIOPaymentResponse.paymentToken",
             "identificativoIntermediario": "#psp#",
             "identificativoPsp": "#psp#",
             "identificativoCanale": "#canale#",
