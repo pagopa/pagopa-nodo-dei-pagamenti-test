@@ -3,10 +3,10 @@ Feature: DB checks for nodoInoltraEsitoPagamentoPaypal on old PA
       Background:
          Given systems up
 
-      Scenario: Execute verifyPaymentNotice request
-         Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr_old#
+      Scenario: Execute nodoVerificaRPT request
+         Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr#
          And generate 1 cart with PA #creditor_institution_code_old# and notice number $1noticeNumber  
-         And initial XML verifyPaymentNotice
+         And initial XML nodoVerificaRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:bc="http://PuntoAccessoPSP.spcoop.gov.it/BarCode_GS1_128_Modified" xmlns:aim="http://PuntoAccessoPSP.spcoop.gov.it/Code_128_AIM_USS-128_tipo_C" xmlns:qrc="http://PuntoAccessoPSP.spcoop.gov.it/QrCode">
                <soapenv:Header/>
@@ -18,17 +18,24 @@ Feature: DB checks for nodoInoltraEsitoPagamentoPaypal on old PA
                      <password>pwdpwdpwd</password>
                      <codiceContestoPagamento>#ccp#</codiceContestoPagamento>
                      <codificaInfrastrutturaPSP>BARCODE-128-AIM</codificaInfrastrutturaPSP>
-                     <codiceIdRPT><aim:aim128> <aim:CCPost>#ccPoste#</aim:CCPost> <aim:CodStazPA>#cod_segr_old#</aim:CodStazPA> <aim:AuxDigit>0</aim:AuxDigit>  <aim:CodIUV>$1iuv</aim:CodIUV></aim:aim128></codiceIdRPT>
+                     <codiceIdRPT>
+                        <aim:aim128>
+                           <aim:CCPost>#ccPoste#</aim:CCPost>
+                           <aim:CodStazPA>#cod_segr#</aim:CodStazPA>
+                           <aim:AuxDigit>0</aim:AuxDigit>
+                           <aim:CodIUV>$1iuv</aim:CodIUV>
+                        </aim:aim128>
+                     </codiceIdRPT>
                   </ws:nodoVerificaRPT>
                </soapenv:Body>
             </soapenv:Envelope>
             """
          And EC old version
-         When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
-         Then check outcome is OK of verifyPaymentNotice response
+         When PSP sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
+         Then check esito is OK of nodoVerificaRPT response
 
       Scenario: Execute nodoAttivaRPT request
-         Given the Execute verifyPaymentNotice request scenario executed successfully
+         Given the Execute nodoVerificaRPT request scenario executed successfully
          And initial XML nodoAttivaRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:bc="http://PuntoAccessoPSP.spcoop.gov.it/BarCode_GS1_128_Modified"  xmlns:aim="http://PuntoAccessoPSP.spcoop.gov.it/Code_128_AIM_USS-128_tipo_C" xmlns:qrc="http://PuntoAccessoPSP.spcoop.gov.it/QrCode">
@@ -43,7 +50,7 @@ Feature: DB checks for nodoInoltraEsitoPagamentoPaypal on old PA
                      <identificativoIntermediarioPSPPagamento>#broker_AGID#</identificativoIntermediarioPSPPagamento>
                      <identificativoCanalePagamento>#canale_AGID_BBT#</identificativoCanalePagamento>
                      <codificaInfrastrutturaPSP>BARCODE-128-AIM</codificaInfrastrutturaPSP>
-                     <codiceIdRPT><aim:aim128> <aim:CCPost>#ccPoste#</aim:CCPost> <aim:CodStazPA>#cod_segr_old#</aim:CodStazPA> <aim:AuxDigit>0</aim:AuxDigit>  <aim:CodIUV>$1iuv</aim:CodIUV></aim:aim128></codiceIdRPT>
+                     <codiceIdRPT><aim:aim128> <aim:CCPost>#ccPoste#</aim:CCPost> <aim:CodStazPA>#cod_segr#</aim:CodStazPA> <aim:AuxDigit>0</aim:AuxDigit>  <aim:CodIUV>$1iuv</aim:CodIUV></aim:aim128></codiceIdRPT>
                      <datiPagamentoPSP>
                         <importoSingoloVersamento>10.00</importoSingoloVersamento>
                         <!--Optional:-->
@@ -224,11 +231,11 @@ Feature: DB checks for nodoInoltraEsitoPagamentoPaypal on old PA
          And check bolloDigitale is False of informazioniPagamento response
          And check dettagli field exists in informazioniPagamento response
          And check IUV is $1iuv of informazioniPagamento response
-         And check CCP id $ccp of informazioniPagamento response
-         And check idDominio is $verifyPaymentNotice.fiscalCode of informazioniPagamento response
-         And check enteBeneficiario is AZIENDA XXX in informazioniPagamento response
-
-         And execution query dbcheck_json to get value on the table PA, with the columns RAGIONE_SOCIALE under macro NewMod3 with db name nodo_cfg
-         And through the query dbcheck_json retrieve param ragione_sociale at position 0 and save it under the key ragione_sociale
+         And check CCP is $ccp of informazioniPagamento response
+         And check idDominio is #creditor_institution_code_old# of informazioniPagamento response
+         And check enteBeneficiario is AZIENDA XXX of informazioniPagamento response
+         And replace pa content with #creditor_institution_code_old# content
+         And execution query get_pa_id to get value on the table PA, with the columns RAGIONE_SOCIALE under macro costanti with db name nodo_cfg
+         And through the query get_pa_id retrieve param ragione_sociale at position 0 and save it under the key ragione_sociale
          And check enteBeneficiario is AZIENDA XXX of informazioniPagamento response
          And check ragioneSociale is $ragione_sociale of informazioniPagamento response

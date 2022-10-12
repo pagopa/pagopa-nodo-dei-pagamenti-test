@@ -467,7 +467,7 @@ Feature: process tests for nodoInviaRPT [REV_NIRPT_01]
         And checks the value NotNone of the record at column inserted_timestamp of the table POSITION_RECEIPT_XML retrived by the query position_status_n on db nodo_online under macro NewMod3											
 
         #check xml rt 
-        # Assigning XML_CONTENT query result to xml_rt
+        # Assigning XML_CONTENT query result to xml_rt 
         And execution query rt_xml to get value on the table RT_XML, with the columns XML_CONTENT under macro NewMod3 with db name nodo_online
         And through the query rt_xml retrieve xml_no_decode XML_CONTENT at position 0 and save it under the key xml_rt
         

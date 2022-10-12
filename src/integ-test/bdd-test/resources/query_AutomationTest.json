@@ -44,8 +44,9 @@
         "position_service":"SELECT columns FROM table_name WHERE NOTICE_ID ='$activatePaymentNotice.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode'",
         "position_payment_plan":"SELECT columns FROM table_name WHERE NOTICE_ID ='$activatePaymentNotice.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode'",
         "rt_xml": "SELECT columns FROM table_name where IUV = '$iuv' and IDENT_DOMINIO= '$activatePaymentNotice.fiscalCode' and CCP = '$activatePaymentNoticeResponse.paymentToken'",
+        "rt_xml_v2": "SELECT columns FROM table_name where IUV = '$iuv' and IDENT_DOMINIO= '$activatePaymentNotice.fiscalCode' and CCP = '$activatePaymentNoticeResponse.paymentToken-v2'",
         "receipt_xml": "SELECT columns as blob FROM POSITION_RECEIPT_XML WHERE PAYMENT_TOKEN ='$activatePaymentNoticeResponse.paymentToken' and PA_FISCAL_CODE='$activatePaymentNotice.fiscalCode' and NOTICE_ID='$activatePaymentNotice.noticeNumber'",
-        "receipt_xml_v2": "SELECT columns as blob FROM POSITION_RECEIPT_XML WHERE PAYMENT_TOKEN ='$activatePaymentNoticeResponse.paymentToken-v2' and PA_FISCAL_CODE='$activatePaymentNotice.fiscalCode' and NOTICE_ID='$activatePaymentNotice.noticeNumber'",
+        "receipt_xml_v2": "SELECT columns as blob FROM table_name WHERE PAYMENT_TOKEN ='$activatePaymentNoticeResponse.paymentToken-v2' and PA_FISCAL_CODE='$activatePaymentNotice.fiscalCode' and NOTICE_ID='$activatePaymentNotice.noticeNumber'",
         "stati_rpt": "SELECT s.columns FROM table_name s where s.IUV = '$iuv' and s.ID_DOMINIO= '$activatePaymentNotice.fiscalCode'",
         "pa_dbcheck_json": "SELECT columns FROM table_name where ID_DOMINIO= '$activatePaymentNotice.fiscalCode'",
         "dbcheck_json": "SELECT columns FROM table_name where ID_DOMINIO= '$activateIOPayment.fiscalCode'",
@@ -67,6 +68,8 @@
         "idempotency_cache_paymentToken2" : "SELECT columns FROM table_name WHERE IDEMPOTENCY_KEY = '$activatePaymentNotice2.idempotencyKey' AND PSP_ID = '$activatePaymentNotice2.idPSP' AND TOKEN = '$activatePaymentNotice2Response.paymentToken'",
         "idempotency_paymentToken" : "SELECT columns FROM table_name WHERE TOKEN = '$activatePaymentNoticeResponse.paymentToken'",
         "verifica_bollettino":"SELECT columns FROM table_name WHERE NOTICE_ID ='$verificaBollettino.noticeNumber' AND CCPOST = '$verificaBollettino.ccPost'",
+        "pos_subj_deb": "SELECT columns FROM table_name su JOIN POSITION_SERVICE se ON su.ID = se.DEBTOR_ID WHERE se.PA_FISCAL_CODE='$activatePaymentNotice.fiscalCode' and se.NOTICE_ID='$activatePaymentNotice.noticeNumber' and su.SUBJECT_TYPE='DEBTOR'",
+        "pos_subj_payer": "SELECT columns FROM table_name su JOIN POSITION_SERVICE se ON su.ID = se.DEBTOR_ID WHERE se.PA_FISCAL_CODE='$activatePaymentNotice.fiscalCode' and se.NOTICE_ID='$activatePaymentNotice.noticeNumber' and su.SUBJECT_TYPE='PAYER'",
         "position_subject_2":"SELECT s.columns FROM POSITION_SUBJECT s JOIN POSITION_SERVICE pp ON pp.DEBTOR_ID = $DEBTOR_ID where pp.notice_id = '$activatePaymentNotice.noticeNumber' and pp.pa_fiscal_code= '$activatePaymentNotice.fiscalCode'",
         "retry_pa_invia_rt_only_ccp": "SELECT columns FROM table_name  where CCP = '$activatePaymentNoticeResponse.paymentToken'",
         "retry_pa_invia_rt": "SELECT columns FROM table_name WHERE IUV = '$iuv' AND ID_DOMINIO= '$activatePaymentNotice.fiscalCode' ORDER BY ID ASC",
@@ -79,7 +82,12 @@
         "position_subject_3":"SELECT s.columns FROM POSITION_SUBJECT s JOIN POSITION_SERVICE pp ON pp.DEBTOR_ID = s.ID where pp.notice_id = '$activatePaymentNotice.noticeNumber' and pp.pa_fiscal_code= '$activatePaymentNotice.fiscalCode'",
         "position_subject_service": "SELECT columns FROM table_name su JOIN POSITION_SERVICE se ON su.ID = se.DEBTOR_ID WHERE se.PA_FISCAL_CODE='$activatePaymentNotice.fiscalCode' and se.NOTICE_ID='$activatePaymentNotice.noticeNumber' and su.SUBJECT_TYPE='DEBTOR'",
         "get_receipt": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN ='$activatePaymentNoticeResponse.paymentToken' and RECIPIENT_STATION_ID ='$recipientStationId' and NOTICE_ID='$activatePaymentNotice.noticeNumber'",
-        "position_transfer_2":"SELECT p.* FROM table_name p WHERE p.fk_position_receipt = (SELECT s.ID FROM POSITION_RECEIPT s WHERE s.NOTICE_ID ='$activatePaymentNotice.noticeNumber' and s.PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode')"
+        "position_transfer_2":"SELECT p.* FROM table_name p WHERE p.fk_position_receipt = (SELECT s.ID FROM POSITION_RECEIPT s WHERE s.NOTICE_ID ='$activatePaymentNotice.noticeNumber' and s.PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode')",
+        "stati_rpt_IUV": "SELECT columns FROM table_name WHERE IUV = '$IUV' order by id asc",
+        "id_sessione_originale": "SELECT columns FROM table_name WHERE ID_SESSIONE_ORIGINALE = '$sessionToken' OR INFO like '%$sessionToken%' order by DATA_ORA_EVENTO asc",
+        "position_recipient_transfer": "SELECT s.* FROM POSITION_RECEIPT_TRANSFER s JOIN POSITION_TRANSFER pt ON pt.ID = s.FK_POSITION_TRANSFER WHERE pt.NOTICE_ID = '$activatePaymentNotice.noticeNumber' AND pt.PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode'",
+        "position_receipt1": "SELECT s.ID FROM POSITION_RECEIPT s WHERE s.NOTICE_ID ='$activatePaymentNotice.noticeNumber' AND s.PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode'",
+        "position_transfer1": "SELECT s.ID FROM POSITION_TRANSFER s WHERE s.NOTICE_ID ='$activatePaymentNotice.noticeNumber' AND s.PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode'"
     },
     "AppIO":{
         "payment_status":"SELECT s.columns FROM table_name s WHERE s.NOTICE_ID ='$activateIOPayment.noticeNumber' AND s.PA_FISCAL_CODE = '$activateIOPayment.fiscalCode'",
