@@ -247,7 +247,7 @@ def isDate(string: str):
         return False
 
 
-def single_thread(context, soap_primitive):
+def single_thread(context, soap_primitive, type):
     print("single_thread")
     primitive = soap_primitive.split("_")[0]
     print(soap_primitive.split("_")[1])
@@ -256,19 +256,23 @@ def single_thread(context, soap_primitive):
     print(url_nodo)
     print("nodo soap_request sent >>>", getattr(
         context, soap_primitive.split("_")[1]))
-    soap_response = requests.post(url_nodo, getattr(
-        context, soap_primitive.split("_")[1]), headers=headers, verify=False)
+    if type == 'GET':
+        soap_response = requests.get(url_nodo, getattr(
+            context, soap_primitive.split("_")[1]), headers=headers, verify=False)
+    elif type == 'POST':
+        soap_response = requests.post(url_nodo, getattr(
+            context, soap_primitive.split("_")[1]), headers=headers, verify=False)
     print("nodo soap_response: ", soap_response.content)
     print(soap_primitive.split("_")[1] + "Response")
     setattr(context, soap_primitive.split("_")[
             1] + "Response", soap_response)
 
 
-def threading(context, primitive_list):
+def threading(context, primitive_list, list_of_type):
     i = 0
     threads = list()
     while i < len(primitive_list):
-        t = Thread(target=single_thread, args=(context, primitive_list[i]))
+        t = Thread(target=single_thread, args=(context, primitive_list[i], list_of_type[i]))
         threads.append(t)
         t.start()
         i += 1
