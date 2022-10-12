@@ -48,10 +48,10 @@ Feature: process tests for paSendRT [PSRT_21]
                 <password>pwdpwdpwd</password>
                 <idempotencyKey>#idempotency_key#</idempotencyKey>
                 <qrCode>
-                    <fiscalCode>#creditor_institution_code#</fiscalCode>
+                    <fiscalCode>$verifyPaymentNotice.fiscalCode</fiscalCode>
                     <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
                 </qrCode>
-                <expirationTime>6000</expirationTime>
+                <expirationTime>60000</expirationTime>
                 <amount>17.00</amount>
                 <dueDate>2021-12-31</dueDate>
                 <paymentNote>responseFull3Transfers</paymentNote>
