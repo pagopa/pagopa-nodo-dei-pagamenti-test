@@ -94,7 +94,7 @@ Feature: Commissioni evolute process
             """
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
 
-    
+    @skip
     Scenario: sendPaymentOutcomeV2
         Given initial XML sendPaymentOutcomeV2
             """
