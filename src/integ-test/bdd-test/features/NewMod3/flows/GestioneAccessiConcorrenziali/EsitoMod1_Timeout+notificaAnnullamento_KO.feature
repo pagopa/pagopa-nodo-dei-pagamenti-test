@@ -118,7 +118,7 @@ Feature: process tests for Gestione Accessi Concorrenziali
       <soapenv:Body>
       <ws:pspInviaRPTResponse>
       <pspInviaRPTResponse>
-      <delay>9000</delay>
+      <delay>10000</delay>
       </pspInviaRPTResponse>
       </ws:pspInviaRPTResponse>
       </soapenv:Body>
