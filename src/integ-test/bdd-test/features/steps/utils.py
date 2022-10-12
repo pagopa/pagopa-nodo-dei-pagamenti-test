@@ -250,6 +250,9 @@ def isDate(string: str):
 def single_thread(context, soap_primitive, type):
     print("single_thread")
     primitive = soap_primitive.split("_")[0]
+    primitive = replace_local_variables(primitive, context)
+    primitive = replace_context_variables(primitive, context)
+    primitive = replace_global_variables(primitive, context)
     print(soap_primitive.split("_")[1])
     headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}
     url_nodo = get_soap_url_nodo(context, primitive) if 'xml' in getattr(context, primitive) else f"{get_rest_url_nodo(context)}/{primitive}"
@@ -258,7 +261,7 @@ def single_thread(context, soap_primitive, type):
         context, soap_primitive.split("_")[1]))
     if type == 'GET':
         soap_response = requests.get(url_nodo, getattr(
-            context, soap_primitive.split("_")[1]), headers=headers, verify=False)
+            context, primitive), headers=headers, verify=False)
     elif type == 'POST':
         soap_response = requests.post(url_nodo, getattr(
             context, soap_primitive.split("_")[1]), headers=headers, verify=False)
