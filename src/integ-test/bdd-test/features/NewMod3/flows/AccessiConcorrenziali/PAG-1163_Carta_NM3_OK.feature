@@ -238,7 +238,7 @@ Feature: process tests for accessiConCorrenziali [PAG-1163_Carta_NM3_OK]
             <soapenv:Body>
             <psp:pspNotifyPaymentRes>
             <outcome>OK</outcome>
-            <delay>8000</delay>
+            <delay>5000</delay>
             </psp:pspNotifyPaymentRes>
             </soapenv:Body>
             </soapenv:Envelope>
