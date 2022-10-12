@@ -240,3 +240,9 @@ Feature: process tests for generazioneRicevute
     And checks the value $activatePaymentNotice.fiscalCode of the record at column RECIPIENT_BROKER_PA_ID of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
     And checks the value $recipient_station_id of the record at column RECIPIENT_STATION_ID of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
     And checks the value NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
+# DB Check POSITION_RECEIPT_TRANSFER
+     And execution query position_recipient_transfer to get value on the table POSITION_RECEIPT_TRANSFER, with the columns * under macro NewMod3 with db name nodo_online
+     And through the query position_recipient_transfer retrieve param fk_position_receipt at position 0 and save it under the key fk_position_receipt
+     And through the query position_recipient_transfer retrieve param fk_position_transfer at position 1 and save it under the key fk_position_transfer
+     And checks the value $fk_position_receipt of the record at column ID of the table POSITION_RECEIPT retrived by the query position_receipt1 on db nodo_online under macro NewMod3
+     And checks the value $fk_position_transfer of the record at column ID of the table POSITION_TRANSFER retrived by the query position_transfer1 on db nodo_online under macro NewMod3
