@@ -157,14 +157,19 @@ Feature: Checks for concorrential access of Paypal payments KO
         And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:psp="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
-            <soapenv:Header/>
-            <soapenv:Body>
-                <psp:pspNotifyPaymentRes>
-                <outcome>KO</outcome>
-                <!--Optional:-->
+        <soapenv:Header/>
+        <soapenv:Body>
+            <psp:pspNotifyPaymentRes>
                 <delay>8000</delay>
-                </psp:pspNotifyPaymentRes>
-            </soapenv:Body>
+                <outcome>KO</outcome>
+                <fault>
+                    <faultCode>CANALE_SEMANTICA</faultCode>
+                    <faultString>Errore semantico dal psp</faultString>
+                    <id>1</id>
+                    <description>Errore dal psp</description>
+                </fault>
+            </psp:pspNotifyPaymentRes>
+        </soapenv:Body>
         </soapenv:Envelope>
         """
         And saving inoltroEsito/paypalJSON request in inoltroEsito/paypal
@@ -172,6 +177,6 @@ Feature: Checks for concorrential access of Paypal payments KO
         Then verify the HTTP status code of inoltroEsito/paypal response is 200
         And check esito is KO of inoltroEsito/paypal response
         And check errorCode is RIFPSP of inoltroEsito/paypal response
-        And check descrizione is Risposta negativa del canale of inoltroEsito/paypal response
+        And check descrizione is Risposta negativa del Canale of inoltroEsito/paypal response
         And check outcome is KO of sendPaymentOutcome response
         And check faultCode is PPT_SEMANTICA of sendPaymentOutcome response
