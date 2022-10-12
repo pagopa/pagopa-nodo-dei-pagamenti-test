@@ -1,4 +1,4 @@
-Feature: process tests for accessiConCorrenziali [PAG-1163_Carta_NM3_KO]
+Feature: process tests for accessiConCorrenziali [PAG-1163_Carta_NM3_err]
 
     Background:
         Given systems up
@@ -174,45 +174,45 @@ Feature: process tests for accessiConCorrenziali [PAG-1163_Carta_NM3_KO]
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
             <soapenv:Header/>
             <soapenv:Body>
-                <nod:sendPaymentOutcomeReq>
-                    <idPSP>#psp#</idPSP>
-                    <idBrokerPSP>#psp#</idBrokerPSP>
-                    <idChannel>#canale#</idChannel>
-                    <password>pwdpwdpwd</password>
-                    <paymentToken>$activateIOPaymentResponse.paymentToken</paymentToken>
-                    <outcome>OK</outcome>
-                    <!--Optional:-->
-                    <details>
-                        <paymentMethod>creditCard</paymentMethod>
-                        <!--Optional:-->
-                        <paymentChannel>app</paymentChannel>
-                        <fee>2.00</fee>
-                        <!--Optional:-->
-                        <payer>
-                        <uniqueIdentifier>
-                            <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-                            <entityUniqueIdentifierValue>#creditor_institution_code#</entityUniqueIdentifierValue>
-                        </uniqueIdentifier>
-                        <fullName>SPOname</fullName>
-                        <!--Optional:-->
-                        <streetName>SPOstreet</streetName>
-                        <!--Optional:-->
-                        <civicNumber>SPOcivic</civicNumber>
-                        <!--Optional:-->
-                        <postalCode>SPOpostal</postalCode>
-                        <!--Optional:-->
-                        <city>city</city>
-                        <!--Optional:-->
-                        <stateProvinceRegion>SPOstate</stateProvinceRegion>
-                        <!--Optional:-->
-                        <country>IT</country>
-                        <!--Optional:-->
-                        <e-mail>SPOprova@test.it</e-mail>
-                        </payer>
-                        <applicationDate>2021-12-12</applicationDate>
-                        <transferDate>2021-12-11</transferDate>
-                    </details>
-                </nod:sendPaymentOutcomeReq>
+            <nod:sendPaymentOutcomeReq>
+            <idPSP>#psp#</idPSP>
+            <idBrokerPSP>#psp#</idBrokerPSP>
+            <idChannel>#canale#</idChannel>
+            <password>pwdpwdpwd</password>
+            <paymentToken>$activateIOPaymentResponse.paymentToken</paymentToken>
+            <outcome>OK</outcome>
+            <!--Optional:-->
+            <details>
+            <paymentMethod>creditCard</paymentMethod>
+            <!--Optional:-->
+            <paymentChannel>app</paymentChannel>
+            <fee>2.00</fee>
+            <!--Optional:-->
+            <payer>
+            <uniqueIdentifier>
+            <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
+            <entityUniqueIdentifierValue>#creditor_institution_code#</entityUniqueIdentifierValue>
+            </uniqueIdentifier>
+            <fullName>SPOname</fullName>
+            <!--Optional:-->
+            <streetName>SPOstreet</streetName>
+            <!--Optional:-->
+            <civicNumber>SPOcivic</civicNumber>
+            <!--Optional:-->
+            <postalCode>SPOpostal</postalCode>
+            <!--Optional:-->
+            <city>city</city>
+            <!--Optional:-->
+            <stateProvinceRegion>SPOstate</stateProvinceRegion>
+            <!--Optional:-->
+            <country>IT</country>
+            <!--Optional:-->
+            <e-mail>SPOprova@test.it</e-mail>
+            </payer>
+            <applicationDate>2021-12-12</applicationDate>
+            <transferDate>2021-12-11</transferDate>
+            </details>
+            </nod:sendPaymentOutcomeReq>
             </soapenv:Body>
             </soapenv:Envelope>
             """
@@ -227,7 +227,7 @@ Feature: process tests for accessiConCorrenziali [PAG-1163_Carta_NM3_KO]
             "identificativoCanale":"#canale#",
             "importoTotalePagato":10.00,
             "timestampOperazione":"2021-07-09T17:06:03.100+01:00",
-            "codiceAutorizzativo":"sleeKO",
+            "codiceAutorizzativo":"sleMal",
             "esitoTransazioneCarta":"00"
             }
             """
@@ -236,25 +236,15 @@ Feature: process tests for accessiConCorrenziali [PAG-1163_Carta_NM3_KO]
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:psp="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
             <soapenv:Header/>
             <soapenv:Body>
-                <psp:pspNotifyPaymentRes>
-                <delay>6000</delay>
-                <outcome>KO</outcome>
-                <!--Optional:-->
-                <fault>
-                    <faultCode>CANALE_SEMANTICA</faultCode>
-                    <faultString>Errore semantico dal psp</faultString>
-                    <id>1</id>
-                    <!--Optional:-->
-                    <description>Errore dal psp</description>
-                </fault>
-                </psp:pspNotifyPaymentRes>
+            <psp:pspNotifyPaymentRes>
+            <outcome>malformata</outcome>
+            <delay>5000</delay>
+            </psp:pspNotifyPaymentRes>
             </soapenv:Body>
             </soapenv:Envelope>
             """
         And saving inoltroEsito/cartaJSON request in inoltroEsito/carta
-        When calling primitive inoltroEsito/carta_inoltroEsito/carta and sendPaymentOutcome_sendPaymentOutcome with 5000 ms delay
+        When calling primitive inoltroEsito/carta_inoltroEsito/carta and sendPaymentOutcome_sendPaymentOutcome with 4000 ms delay
         Then verify the HTTP status code of inoltroEsito/carta response is 200
-        And check esito is KO of inoltroEsito/carta response
-        And check outcome is KO of sendPaymentOutcome response
-        And check faultCode is PPT_SEMANTICA of sendPaymentOutcome response
-        And check description is Payment sconosciuto of sendPaymentOutcome response
+        And check esito is Operazione in timeout of inoltroEsito/carta response
+        And check outcome is OK of sendPaymentOutcome response
