@@ -110,6 +110,7 @@ Feature: FLUSSO_APIO_12.3
         When WISP sends REST POST inoltroEsito/carta to nodo-dei-pagamenti
             """
             {
+                "idPagamento":"$activateIOPaymentResponse.paymentToken",
                 "RRN": 10026669,
                 "tipoVersamento": "CP",
                 "idPagamento": "$activateIOPaymentResponse.paymentToken",
