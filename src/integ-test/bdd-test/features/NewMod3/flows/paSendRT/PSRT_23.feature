@@ -10,6 +10,7 @@ Feature: process tests for paSendRT [PSRT_23]
 
     Scenario: Execute verifyPaymentNotice request
         Given the job refresh pa (1) scenario executed successfully
+        And wait 5 seconds for expiration 
         And generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
         And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber  
         And initial XML verifyPaymentNotice
@@ -45,7 +46,7 @@ Feature: process tests for paSendRT [PSRT_23]
                         <outcome>OK</outcome>
                         <data>
                             <creditorReferenceId>#cod_segr#$1iuv</creditorReferenceId>
-                            <paymentAmount>10.00</paymentAmount>
+                            <paymentAmount>17.00</paymentAmount>
                             <dueDate>2021-12-31</dueDate>
                             <!--Optional:-->
                             <retentionDate>2021-12-31T12:12:12</retentionDate>
@@ -59,7 +60,7 @@ Feature: process tests for paSendRT [PSRT_23]
                             <debtor>
                                 <uniqueIdentifier>
                                     <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-                                    <entityUniqueIdentifierValue>#creditor_institution_code#</entityUniqueIdentifierValue>
+                                    <entityUniqueIdentifierValue>77777777777777</entityUniqueIdentifierValue>
                                 </uniqueIdentifier>
                             <fullName>paGetPaymentName</fullName>
                             <!--Optional:-->
@@ -125,23 +126,23 @@ Feature: process tests for paSendRT [PSRT_23]
             <soapenv:Header />
             <soapenv:Body>
             <nod:activatePaymentNoticeReq>
-            <idPSP>#psp#</idPSP>
-            <idBrokerPSP>#psp#</idBrokerPSP>
-            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
+            <idPSP>$verifyPaymentNotice.idPSP</idPSP>
+            <idBrokerPSP>$verifyPaymentNotice.idBrokerPSP</idBrokerPSP>
+            <idChannel>$verifyPaymentNotice.idChannel</idChannel>
             <password>pwdpwdpwd</password>
             <idempotencyKey>#idempotency_key#</idempotencyKey>
             <qrCode>
             <fiscalCode>#creditor_institution_code#</fiscalCode>
-            <noticeNumber>$1noticeNumber</noticeNumber>
+            <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
             </qrCode>
-            <expirationTime>6000</expirationTime>
+            <expirationTime>60000</expirationTime>
             <amount>17.00</amount>
             <paymentNote>responseFull3Transfers</paymentNote>
             </nod:activatePaymentNoticeReq>
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+        When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
 
 
