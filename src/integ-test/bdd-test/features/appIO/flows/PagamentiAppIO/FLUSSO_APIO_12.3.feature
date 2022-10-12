@@ -206,7 +206,7 @@ Feature: FLUSSO_APIO_12.3
                 "esitoTransazioneCarta": "00"
             }
             """
-        Then verify the HTTP status code of inoltroEsito/carta response is 200
+        Then verify the HTTP status code of inoltroEsito/carta response is 404
         And check esito is KO of inoltroEsito/carta response
         And check errorCode is RIFPSP of inoltroEsito/carta response
         And checks the value PAYING, PAYMENT_SENT, PAYMENT_REFUSED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
