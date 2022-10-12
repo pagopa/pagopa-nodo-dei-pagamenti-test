@@ -27,8 +27,8 @@ Feature: syntax checks for closePaymentV2 outcome KO
             "fullName" : "John Doe",
             "type": "F",
             "fiscalCode": "JHNDOE00A01F205N",
-            "notificationEmail" :"john.doe@mail.it"
-            "userId": 1234
+            "notificationEmail" :"john.doe@mail.it",
+            "userId": 1234,
             "userStatus": 11,
             "userStatusDescription": "REGISTERED_SPID"
             }
@@ -255,8 +255,8 @@ Feature: syntax checks for closePaymentV2 outcome KO
             "fullName" : "John Doe",
             "type": "F",
             "fiscalCode": "JHNDOE00A01F205N",
-            "notificationEmail" :"john.doe@mail.it"
-            "userId": 1234
+            "notificationEmail" :"john.doe@mail.it",
+            "userId": 1234,
             "userStatus": 11,
             "userStatusDescription": "REGISTERED_SPID"
             }
@@ -312,8 +312,8 @@ Feature: syntax checks for closePaymentV2 outcome KO
             "fullName" : "John Doe",
             "type": "F",
             "fiscalCode": "JHNDOE00A01F205N",
-            "notificationEmail" :"john.doe@mail.it"
-            "userId": 1234
+            "notificationEmail" :"john.doe@mail.it",
+            "userId": 1234,
             "userStatus": 11,
             "userStatusDescription": "REGISTERED_SPID"
             }
@@ -359,8 +359,8 @@ Feature: syntax checks for closePaymentV2 outcome KO
             "fullName" : "John Doe",
             "type": "F",
             "fiscalCode": "JHNDOE00A01F205N",
-            "notificationEmail" :"john.doe@mail.it"
-            "userId": 1234
+            "notificationEmail" :"john.doe@mail.it",
+            "userId": 1234,
             "userStatus": 11,
             "userStatusDescription": "REGISTERED_SPID"
             }
