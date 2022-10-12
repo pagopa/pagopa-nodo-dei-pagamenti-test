@@ -121,7 +121,8 @@ Feature: flow checks for verificaBollettino - EC old [TF_POSTE_05]
         And check faultCode is PPT_IBAN_ACCREDITO of activatePaymentNotice response
         And check faultString is Iban accredito non disponibile of activatePaymentNotice response
         And check description is Verifica non completata of activatePaymentNotice response
-        
+        And execution query payment_status to get value on the table RPT_ACTIVATIONS, with the columns PAYMENT_TOKEN under macro NewMod3 with db name nodo_online
+        And through the query payment_status retrieve param paymentToken at position 0 and save it under the key paymentToken
         
     Scenario: RPT generation
         Given the Execute activatePaymentNotice request scenario executed successfully
@@ -184,7 +185,7 @@ Feature: flow checks for verificaBollettino - EC old [TF_POSTE_05]
             <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>PO</pay_i:tipoVersamento>
             <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
-            <pay_i:codiceContestoPagamento>$1carrello</pay_i:codiceContestoPagamento>
+            <pay_i:codiceContestoPagamento>$paymentToken</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
             <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -213,7 +214,7 @@ Feature: flow checks for verificaBollettino - EC old [TF_POSTE_05]
                     <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
                     <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
                     <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
-                    <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
+                    <codiceContestoPagamento>$paymentToken</codiceContestoPagamento>
                 </ppt:intestazionePPT>
             </soapenv:Header>
             <soapenv:Body>
