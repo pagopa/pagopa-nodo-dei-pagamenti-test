@@ -191,7 +191,7 @@ Feature: flow checks for verificaBollettino - EC old [TF_POSTE_05]
             <pay_i:datiSingoloVersamento>
             <pay_i:importoSingoloVersamento>10.00</pay_i:importoSingoloVersamento>
             <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
-            <!--pay_i:ibanAccredito>IT45R0760103200000000001016</pay_i:ibanAccredito-->
+            <pay_i:ibanAccredito>IT45R0760103200000000001016</pay_i:ibanAccredito>
             <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
             <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio>
             <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
@@ -211,7 +211,7 @@ Feature: flow checks for verificaBollettino - EC old [TF_POSTE_05]
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
                 <ppt:intestazionePPT>
-                    <identificativoIntermediarioPA>#id_broker_old#</identificativoIntermediarioPA>
+                    <identificativoIntermediarioPA>#intermediarioPAOld#</identificativoIntermediarioPA>
                     <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
                     <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
                     <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
