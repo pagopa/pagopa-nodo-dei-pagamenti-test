@@ -121,7 +121,7 @@ Feature: flow checks for closePaymentV2
             "outcome": "OK",
             "idPSP": "#psp#",
             "idBrokerPSP": "60000000001",
-            "idChannel": "#canale_versione_primitive_2#",
+            "idChannel": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
             "paymentMethod": "TPAY",
             "transactionId": "#transaction_id#",
             "totalAmount": 12,
@@ -207,7 +207,7 @@ Feature: flow checks for closePaymentV2
       When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
       Then verify the HTTP status code of v2/closepayment response is 200
       And check outcome is OK of v2/closepayment response
-      And wait 5 seconds for expiration
+      And wait 2 seconds for expiration
 
    Scenario: FLUSSO_CP_01 (part 4)
       Given the FLUSSO_CP_01 (part 3) scenario executed successfully
