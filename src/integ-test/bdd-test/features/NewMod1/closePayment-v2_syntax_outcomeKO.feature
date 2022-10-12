@@ -7,21 +7,32 @@ Feature: syntax checks for closePaymentV2 outcome KO
         Given initial JSON v2/closepayment
             """
             {
-                "paymentTokens": [
-                    "a3738f8bff1f4a32998fc197bd0a6b05"
-                ],
-                "outcome": "KO",
-                "idPSP": "#psp#",
-                "idBrokerPSP": "60000000001",
-                "idChannel": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
-                "paymentMethod": "TPAY",
-                "transactionId": "#transaction_id#",
-                "totalAmount": 12,
-                "fee": 2,
-                "timestampOperation": "2033-04-23T18:25:43Z",
-                "additionalPaymentInformations": {
-                    "key": "#psp_transaction_id#"
-                }
+            "paymentTokens": [
+            "a3738f8bff1f4a32998fc197bd0a6b05"
+            ],
+            "outcome": "KO",
+            "idPSP": "#psp#",
+            "idBrokerPSP": "60000000001",
+            "idChannel": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
+            "paymentMethod": "TPAY",
+            "transactionId": "#transaction_id#",
+            "totalAmount": 12,
+            "fee": 2,
+            "timestampOperation": "2033-04-23T18:25:43Z",
+            "additionalPaymentInformations": {
+            "key": "#psp_transaction_id#"
+            },
+            "additionalPMInfo": {
+            "user":{
+            "fullName" : "John Doe",
+            "type": "F",
+            "fiscalCode": "JHNDOE00A01F205N",
+            "notificationEmail" :"john.doe@mail.it"
+            "userId": 1234
+            "userStatus": 11,
+            "userStatusDescription": "REGISTERED_SPID"
+            }
+            }
             }
             """
 
@@ -148,48 +159,50 @@ Feature: syntax checks for closePaymentV2 outcome KO
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
         Examples:
-            | elem                          | value                                                                                                                                                                                                                                                            | soapUI test   |
-            | idPSP                         | None                                                                                                                                                                                                                                                             | SIN_CPV2_07   |
-            | idPSP                         | Empty                                                                                                                                                                                                                                                            | SIN_CPV2_08   |
-            | idPSP                         | 700000000017000000000170000000001700                                                                                                                                                                                                                             | SIN_CPV2_09   |
-            | paymentMethod                 | None                                                                                                                                                                                                                                                             | SIN_CPV2_10   |
-            | paymentMethod                 | Empty                                                                                                                                                                                                                                                            | SIN_CPV2_11   |
-            | paymentMethod                 | OBEP                                                                                                                                                                                                                                                             | SIN_CPV2_12   |
-            | paymentMethod                 | CP                                                                                                                                                                                                                                                               | SIN_CPV2_12   |
-            | idBrokerPSP                   | None                                                                                                                                                                                                                                                             | SIN_CPV2_13   |
-            | idBrokerPSP                   | Empty                                                                                                                                                                                                                                                            | SIN_CPV2_14   |
-            | idBrokerPSP                   | 700000000017000000000170000000001700                                                                                                                                                                                                                             | SIN_CPV2_15   |
-            | idChannel                     | None                                                                                                                                                                                                                                                             | SIN_CPV2_16   |
-            | idChannel                     | Empty                                                                                                                                                                                                                                                            | SIN_CPV2_17   |
-            | idChannel                     | 70000000001_0370000000001_0370000000                                                                                                                                                                                                                             | SIN_CPV2_18   |
-            | transactionId                 | None                                                                                                                                                                                                                                                             | SIN_CPV2_19   |
-            | transactionId                 | Empty                                                                                                                                                                                                                                                            | SIN_CPV2_20   |
-            | transactionId                 | abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fgh | SIN_CPV2_21   |
-            | totalAmount                   | None                                                                                                                                                                                                                                                             | SIN_CPV2_22   |
-            | totalAmount                   | Empty                                                                                                                                                                                                                                                            | SIN_CPV2_23   |
+            | elem                          | value                                                                                                                                                                                                                                                            | soapUI test      |
+            | idPSP                         | None                                                                                                                                                                                                                                                             | SIN_CPV2_07      |
+            | idPSP                         | Empty                                                                                                                                                                                                                                                            | SIN_CPV2_08      |
+            | idPSP                         | 700000000017000000000170000000001700                                                                                                                                                                                                                             | SIN_CPV2_09      |
+            | paymentMethod                 | None                                                                                                                                                                                                                                                             | SIN_CPV2_10      |
+            | paymentMethod                 | Empty                                                                                                                                                                                                                                                            | SIN_CPV2_11      |
+            | paymentMethod                 | OBEP                                                                                                                                                                                                                                                             | SIN_CPV2_12      |
+            | paymentMethod                 | CP                                                                                                                                                                                                                                                               | SIN_CPV2_12      |
+            | idBrokerPSP                   | None                                                                                                                                                                                                                                                             | SIN_CPV2_13      |
+            | idBrokerPSP                   | Empty                                                                                                                                                                                                                                                            | SIN_CPV2_14      |
+            | idBrokerPSP                   | 700000000017000000000170000000001700                                                                                                                                                                                                                             | SIN_CPV2_15      |
+            | idChannel                     | None                                                                                                                                                                                                                                                             | SIN_CPV2_16      |
+            | idChannel                     | Empty                                                                                                                                                                                                                                                            | SIN_CPV2_17      |
+            | idChannel                     | 70000000001_0370000000001_0370000000                                                                                                                                                                                                                             | SIN_CPV2_18      |
+            | transactionId                 | None                                                                                                                                                                                                                                                             | SIN_CPV2_19      |
+            | transactionId                 | Empty                                                                                                                                                                                                                                                            | SIN_CPV2_20      |
+            | transactionId                 | abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fgh | SIN_CPV2_21      |
+            | totalAmount                   | None                                                                                                                                                                                                                                                             | SIN_CPV2_22      |
+            | totalAmount                   | Empty                                                                                                                                                                                                                                                            | SIN_CPV2_23      |
             # | totalAmount                 | 12,21 | SIN_CPV2_24   |   gestione della virgola non previsto nello step when(u'{sender} sends rest {method:Method} {service} to {receiver}')
-            | totalAmount                   | 12.0                                                                                                                                                                                                                                                             | SIN_CPV2_25   |
-            | totalAmount                   | 12.321                                                                                                                                                                                                                                                           | SIN_CPV2_25.1 |
-            | totalAmount                   | 12                                                                                                                                                                                                                                                               | SIN_CPV2_25.2 |
-            | totalAmount                   | 1234567890.12                                                                                                                                                                                                                                                    | SIN_CPV2_26   |
-            | fee                           | None                                                                                                                                                                                                                                                             | SIN_CPV2_27   |
-            | fee                           | Empty                                                                                                                                                                                                                                                            | SIN_CPV2_28   |
+            | totalAmount                   | 12.0                                                                                                                                                                                                                                                             | SIN_CPV2_25      |
+            | totalAmount                   | 12.321                                                                                                                                                                                                                                                           | SIN_CPV2_25.1    |
+            | totalAmount                   | 12                                                                                                                                                                                                                                                               | SIN_CPV2_25.2    |
+            | totalAmount                   | 1234567890.12                                                                                                                                                                                                                                                    | SIN_CPV2_26      |
+            | fee                           | None                                                                                                                                                                                                                                                             | SIN_CPV2_27      |
+            | fee                           | Empty                                                                                                                                                                                                                                                            | SIN_CPV2_28      |
             # | fee                         | 12,32 | SIN_CPV2_29   |   gestione della virgola non previsto nello step when(u'{sender} sends rest {method:Method} {service} to {receiver}')
-            | fee                           | 2.0                                                                                                                                                                                                                                                              | SIN_CPV2_30   |
-            | fee                           | 12.321                                                                                                                                                                                                                                                           | SIN_CPV2_30.1 |
-            | fee                           | 2                                                                                                                                                                                                                                                                | SIN_CPV2_30.2 |
-            | fee                           | 1234567890.12                                                                                                                                                                                                                                                    | SIN_CPV2_31   |
-            | fee                           | 20                                                                                                                                                                                                                                                               | SIN_CPV2_31.1 |
-            | timestampOperation            | None                                                                                                                                                                                                                                                             | SIN_CPV2_32   |
-            | timestampOperation            | Empty                                                                                                                                                                                                                                                            | SIN_CPV2_33   |
-            | timestampOperation            | 2012-04-23                                                                                                                                                                                                                                                       | SIN_CPV2_34   |
-            | timestampOperation            | 2012-04-23T18:25:43                                                                                                                                                                                                                                              | SIN_CPV2_34   |
-            | timestampOperation            | 2012-04-23T18:25                                                                                                                                                                                                                                                 | SIN_CPV2_34   |
-            | timestampOperation            | 2033-04-23T18:25:43.372+01:00                                                                                                                                                                                                                                    | SIN_CPV2_34.3 |
-            | additionalPaymentInformations | None                                                                                                                                                                                                                                                             | SIN_CPV2_35   |
-            | additionalPaymentInformations | Empty                                                                                                                                                                                                                                                            | SIN_CPV2_36   |
-            | key                           | Empty                                                                                                                                                                                                                                                            | SIN_CPV2_37   |
-            | key                           | Valore                                                                                                                                                                                                                                                           | SIN_CPV2_40   |
+            | fee                           | 2.0                                                                                                                                                                                                                                                              | SIN_CPV2_30      |
+            | fee                           | 12.321                                                                                                                                                                                                                                                           | SIN_CPV2_30.1    |
+            | fee                           | 2                                                                                                                                                                                                                                                                | SIN_CPV2_30.2    |
+            | fee                           | 1234567890.12                                                                                                                                                                                                                                                    | SIN_CPV2_31      |
+            | fee                           | 20                                                                                                                                                                                                                                                               | SIN_CPV2_31.1    |
+            | timestampOperation            | None                                                                                                                                                                                                                                                             | SIN_CPV2_32      |
+            | timestampOperation            | Empty                                                                                                                                                                                                                                                            | SIN_CPV2_33      |
+            | timestampOperation            | 2012-04-23                                                                                                                                                                                                                                                       | SIN_CPV2_34      |
+            | timestampOperation            | 2012-04-23T18:25:43                                                                                                                                                                                                                                              | SIN_CPV2_34      |
+            | timestampOperation            | 2012-04-23T18:25                                                                                                                                                                                                                                                 | SIN_CPV2_34      |
+            | timestampOperation            | 2033-04-23T18:25:43.372+01:00                                                                                                                                                                                                                                    | SIN_CPV2_34.3    |
+            | additionalPaymentInformations | None                                                                                                                                                                                                                                                             | SIN_CPV2_35      |
+            | additionalPaymentInformations | Empty                                                                                                                                                                                                                                                            | SIN_CPV2_36      |
+            | additionalPMInfo              | None                                                                                                                                                                                                                                                             | additionalPMInfo |
+            | additionalPMInfo              | Empty                                                                                                                                                                                                                                                            | additionalPMInfo |
+            | key                           | Empty                                                                                                                                                                                                                                                            | SIN_CPV2_37      |
+            | key                           | Valore                                                                                                                                                                                                                                                           | SIN_CPV2_40      |
 
     # No error with fee 0 [SIN_CPV2_31.2]
     Scenario: check activatePaymentNoticeV2 OK 2
@@ -220,23 +233,34 @@ Feature: syntax checks for closePaymentV2 outcome KO
         And initial JSON v2/closepayment
             """
             {
-                "paymentTokens": [
-                    "$activatePaymentNoticeV21Response.paymentToken"
-                ],
-                "outcome": "KO",
-                "idPSP": "#psp#",
-                "idBrokerPSP": "60000000001",
-                "idChannel": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
-                "paymentMethod": "TPAY",
-                "transactionId": "#transaction_id#",
-                "totalAmount": 12,
-                "fee": 2,
-                "timestampOperation": "2033-04-23T18:25:43Z",
-                "additionalPaymentInformations": {
-                    "transactionId": "11435230",
-                    "outcomePaymentGateway": "EFF",
-                    "authorizationCode": "resOK"
-                }
+            "paymentTokens": [
+            "$activatePaymentNoticeV21Response.paymentToken"
+            ],
+            "outcome": "KO",
+            "idPSP": "#psp#",
+            "idBrokerPSP": "60000000001",
+            "idChannel": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
+            "paymentMethod": "TPAY",
+            "transactionId": "#transaction_id#",
+            "totalAmount": 12,
+            "fee": 2,
+            "timestampOperation": "2033-04-23T18:25:43Z",
+            "additionalPaymentInformations": {
+            "transactionId": "11435230",
+            "outcomePaymentGateway": "EFF",
+            "authorizationCode": "resOK"
+            },
+            "additionalPMInfo": {
+            "user":{
+            "fullName" : "John Doe",
+            "type": "F",
+            "fiscalCode": "JHNDOE00A01F205N",
+            "notificationEmail" :"john.doe@mail.it"
+            "userId": 1234
+            "userStatus": 11,
+            "userStatusDescription": "REGISTERED_SPID"
+            }
+            }
             }
             """
 
@@ -258,31 +282,42 @@ Feature: syntax checks for closePaymentV2 outcome KO
         And initial JSON v2/closepayment
             """
             {
-                "paymentTokens": [
-                    "$activatePaymentNoticeV21Response.paymentToken"
-                ],
-                "outcome": "KO",
-                "idPSP": "#psp#",
-                "idBrokerPSP": "60000000001",
-                "idChannel": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
-                "paymentMethod": "TPAY",
-                "transactionId": "#transaction_id#",
-                "totalAmount": 12,
-                "fee": 2,
-                "timestampOperation": "2033-04-23T18:25:43Z",
-                "additionalPaymentInformations": {
-                    "transactionId": "11435230",
-                    "outcomePaymentGateway": "EFF",
-                    "authorizationCode": "resOK",
-                    "key": "114352304",
-                    "valore": "EFF",
-                    "chiave": "resOK",
-                    "campo": "114352305",
-                    "field": "EFF",
-                    "tag": "resOK",
-                    "key1": "EFF",
-                    "prova": "resOK"
-                }
+            "paymentTokens": [
+            "$activatePaymentNoticeV21Response.paymentToken"
+            ],
+            "outcome": "KO",
+            "idPSP": "#psp#",
+            "idBrokerPSP": "60000000001",
+            "idChannel": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
+            "paymentMethod": "TPAY",
+            "transactionId": "#transaction_id#",
+            "totalAmount": 12,
+            "fee": 2,
+            "timestampOperation": "2033-04-23T18:25:43Z",
+            "additionalPaymentInformations": {
+            "transactionId": "11435230",
+            "outcomePaymentGateway": "EFF",
+            "authorizationCode": "resOK",
+            "key": "114352304",
+            "valore": "EFF",
+            "chiave": "resOK",
+            "campo": "114352305",
+            "field": "EFF",
+            "tag": "resOK",
+            "key1": "EFF",
+            "prova": "resOK"
+            },
+            "additionalPMInfo": {
+            "user":{
+            "fullName" : "John Doe",
+            "type": "F",
+            "fiscalCode": "JHNDOE00A01F205N",
+            "notificationEmail" :"john.doe@mail.it"
+            "userId": 1234
+            "userStatus": 11,
+            "userStatusDescription": "REGISTERED_SPID"
+            }
+            }
             }
             """
 
@@ -304,21 +339,32 @@ Feature: syntax checks for closePaymentV2 outcome KO
         And initial JSON v2/closepayment
             """
             {
-                "paymentTokens": [
-                    "$activatePaymentNoticeV21Response.paymentToken"
-                ],
-                "outcome": "KO",
-                "idPSP": "#psp#",
-                "idBrokerPSP": "60000000001",
-                "idChannel": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
-                "paymentMethod": "TPAY",
-                "transactionId": "#transaction_id#",
-                "totalAmount": 12,
-                "fee": 2,
-                "timestampOperation": "2033-04-23T18:25:43Z",
-                "additionalPaymentInformations": {
-                    "transactionId": "#transaction_id#"
-                }
+            "paymentTokens": [
+            "$activatePaymentNoticeV21Response.paymentToken"
+            ],
+            "outcome": "KO",
+            "idPSP": "#psp#",
+            "idBrokerPSP": "60000000001",
+            "idChannel": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
+            "paymentMethod": "TPAY",
+            "transactionId": "#transaction_id#",
+            "totalAmount": 12,
+            "fee": 2,
+            "timestampOperation": "2033-04-23T18:25:43Z",
+            "additionalPaymentInformations": {
+            "transactionId": "#transaction_id#"
+            },
+            "additionalPMInfo": {
+            "user":{
+            "fullName" : "John Doe",
+            "type": "F",
+            "fiscalCode": "JHNDOE00A01F205N",
+            "notificationEmail" :"john.doe@mail.it"
+            "userId": 1234
+            "userStatus": 11,
+            "userStatusDescription": "REGISTERED_SPID"
+            }
+            }
             }
             """
 
