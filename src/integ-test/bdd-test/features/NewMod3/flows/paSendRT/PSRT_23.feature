@@ -140,7 +140,7 @@ Feature: process tests for paSendRT [PSRT_21]
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+        When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
 
 
