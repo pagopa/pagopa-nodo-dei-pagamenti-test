@@ -87,12 +87,12 @@ Feature: PRO_ANNULLO_12_PPALNEW
     
     Scenario: Execute nodoInoltroEsitoPaypal (Phase 4)
         Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
-        When WISP sends rest POST inoltroEsito/paypal to nodo-dei-pagamenti
+        When WISP sends REST POST inoltroEsito/paypal to nodo-dei-pagamenti
         """
         {
             "idTransazione": "responseOK",
-            "idTransazionePsp":"$activateIOPayment.idempotencyKey",
-            "idPagamento": "$activateIOPaymentResponse.paymentToken",
+            "idTransazionePsp":"153016btAE",
+            "idPagamento": "$sessionToken",
             "identificativoIntermediario": "#psp#",
             "identificativoPsp": "#psp#",
             "identificativoCanale": "#canale#",
