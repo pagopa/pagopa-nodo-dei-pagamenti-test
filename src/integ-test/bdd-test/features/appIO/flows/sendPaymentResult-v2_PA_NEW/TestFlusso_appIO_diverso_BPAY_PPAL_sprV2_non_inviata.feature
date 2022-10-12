@@ -235,24 +235,24 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
          """
 
    # define pspNotifyPayment
-   Scenario: pspNotifyPayment
-      Given initial xml pspNotifyPayment
-         """
-         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:psp="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
-         <soapenv:Header/>
-         <soapenv:Body>
-         <psp:pspNotifyPaymentRes>
-         <outcome>OK</outcome>
-         </psp:pspNotifyPaymentRes>
-         </soapenv:Body>
-         </soapenv:Envelope>
-         """
+   # Scenario: pspNotifyPayment
+   #    Given initial xml pspNotifyPayment
+   #       """
+   #       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:psp="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
+   #       <soapenv:Header/>
+   #       <soapenv:Body>
+   #       <psp:pspNotifyPaymentRes>
+   #       <outcome>OK</outcome>
+   #       </psp:pspNotifyPaymentRes>
+   #       </soapenv:Body>
+   #       </soapenv:Envelope>
+   #       """
 
    # closePayment-v2 phase
    Scenario: Execute a closePayment-v2 request
       Given the Execute a nodoChiediInformazioniPagamento request scenario executed successfully
-      And the pspNotifyPayment scenario executed successfully
-      And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
+      # And the pspNotifyPayment scenario executed successfully
+      # And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
       And the closePaymentV2 scenario executed successfully
       And paymentToken with $activateIOPaymentResponse.paymentToken in v2/closepayment
       When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
