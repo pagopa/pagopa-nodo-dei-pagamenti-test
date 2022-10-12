@@ -35,6 +35,30 @@ Feature: process tests for paSendRT [PSRT_21]
 
     Scenario: Execute activatePaymentNotice request
         Given the Execute verifyPaymentNotice request scenario executed successfully
+        And initial XML activatePaymentNotice
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+            xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+                <nod:activatePaymentNoticeReq>
+                <idPSP>#psp#</idPSP>
+                <idBrokerPSP>60000000001</idBrokerPSP>
+                <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
+                <password>pwdpwdpwd</password>
+                <idempotencyKey>#idempotency_key#</idempotencyKey>
+                <qrCode>
+                    <fiscalCode>#creditor_institution_code#</fiscalCode>
+                    <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
+                </qrCode>
+                <expirationTime>6000</expirationTime>
+                <amount>17.00</amount>
+                <dueDate>2021-12-31</dueDate>
+                <paymentNote>responseFull3Transfers</paymentNote>
+                </nod:activatePaymentNoticeReq>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
         And initial XML paGetPayment
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
@@ -117,31 +141,7 @@ Feature: process tests for paSendRT [PSRT_21]
                 </soapenv:Body>
             </soapenv:Envelope>
             """
-        And EC replies to nodo-dei-pagamenti with the paGetPayment
-        And initial XML activatePaymentNotice
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-            xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-            <soapenv:Header/>
-            <soapenv:Body>
-                <nod:activatePaymentNoticeReq>
-                <idPSP>#psp#</idPSP>
-                <idBrokerPSP>60000000001</idBrokerPSP>
-                <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
-                <password>pwdpwdpwd</password>
-                <idempotencyKey>#idempotency_key#</idempotencyKey>
-                <qrCode>
-                    <fiscalCode>#creditor_institution_code#</fiscalCode>
-                    <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
-                </qrCode>
-                <expirationTime>6000</expirationTime>
-                <amount>17.00</amount>
-                <dueDate>2021-12-31</dueDate>
-                <paymentNote>responseFull3Transfers</paymentNote>
-                </nod:activatePaymentNoticeReq>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
+        And EC replies to nodo-dei-pagamenti with the paGetPayment    
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
 
