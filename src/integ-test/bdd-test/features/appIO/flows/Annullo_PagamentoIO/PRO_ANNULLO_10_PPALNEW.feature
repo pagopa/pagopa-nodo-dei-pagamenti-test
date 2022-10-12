@@ -120,7 +120,7 @@ Feature: PRO_ANNULLO_10_PPALNEW
         }
         """
         And job annullamentoRptMaiRichiesteDaPm triggered after 65 seconds
-        And wait 15 seconds for expiration
+        And wait 20 seconds for expiration
         Then verify the HTTP status code of inoltroEsito/paypal response is 200
         And check esito is KO of inoltroEsito/paypal response
         And check errorCode is CONPSP of inoltroEsito/paypal response
