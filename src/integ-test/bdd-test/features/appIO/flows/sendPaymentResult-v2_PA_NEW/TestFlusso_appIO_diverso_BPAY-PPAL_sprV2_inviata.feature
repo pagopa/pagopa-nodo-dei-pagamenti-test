@@ -201,34 +201,64 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
         Then verify the HTTP status code of informazioniPagamento response is 200
 
 
-    # closePayment-v2 phase
-    Scenario: Execute a closePayment-v2 request
-        Given the Execute a nodoChiediInformazioniPagamento request scenario executed successfully
-        And initial json closePayment-v2
+    # define closePaymentV2
+    Scenario: closePayment-v2
+        Given initial JSON v2/closepayment
             """
             {
                 "paymentTokens": [
-                    "$activateIOPaymentNoticeResponse.paymentToken"
+                    "token"
                 ],
                 "outcome": "OK",
                 "idPSP": "#psp#",
                 "idBrokerPSP": "60000000001",
                 "idChannel": "60000000001_03",
                 "paymentMethod": "TPAY",
-                "transactionId": "19392562",
+                "transactionId": "#transaction_id#",
                 "totalAmount": 12,
                 "fee": 2,
                 "timestampOperation": "2033-04-23T18:25:43Z",
                 "additionalPaymentInformations": {
                     "key": "10793459"
+                },
+                "additionalPMInfo": {
+                    "user": {
+                        "fullName": "John Doe",
+                        "type": "F",
+                        "fiscalCode": "JHNDOE00A01F205N",
+                        "notificationEmail": "john.doe@mail.it",
+                        "userId": 1234,
+                        "userStatus": 11,
+                        "userStatusDescription": "REGISTERED_SPID"
+                    }
                 }
             }
             """
 
-        When PM sends closePayment-v2 to nodo-dei-pagamenti
-        And psp sends pspNotifyPayment-v2 Response in late
-        Then check outcome is OK of closePayment-v2
-        And verify the HTTP status code of closePayment-v2 response is 200
+    # define pspNotifyPayment timeout
+    Scenario: pspNotifyPayment timeout
+        Given initial XML pspNotifyPayment
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:psp="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <psp:pspNotifyPaymentRes>
+            <delay>60000</delay>
+            </psp:pspNotifyPaymentRes>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
+
+    # closePayment-v2 phase
+    Scenario: Execute a closePayment-v2 request
+        Given the Execute a nodoChiediInformazioniPagamento request scenario executed successfully
+        And the pspNotifyPayment timeout scenario executed successfully
+        And the closePayment-v2 scenario executed successfully
+        And paymentToken with $activateIOPaymentResponse.paymentToken in v2/closepayment
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then check outcome is OK of v2/closepayment response
+        And verify the HTTP status code of v2/closepayment response is 200
 
 
     # sendPaymentOutcome phase
