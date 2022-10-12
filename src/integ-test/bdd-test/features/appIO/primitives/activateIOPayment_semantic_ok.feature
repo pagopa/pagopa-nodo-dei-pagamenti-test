@@ -71,7 +71,7 @@ Feature: Semantic checks for activateIOPaymentReq - OK
     Scenario: Check second activateIOPayment is equal to the first
         Given the Execute activateIOPayment (Phase 1) scenario executed successfully
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
-        Then activateIOPayment_first response is equal to activateIOPayment response
+        Then check outcome is OK of activateIOPayment_first response
         And verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro AppIO
         And restore initial configurations
 
