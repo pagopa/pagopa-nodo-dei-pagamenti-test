@@ -1,4 +1,4 @@
-Feature: process tests for paSendRT [PSRT_21]
+Feature: process tests for paSendRT [PSRT_23]
 
     Background:
         Given systems up
@@ -29,7 +29,7 @@ Feature: process tests for paSendRT [PSRT_21]
                 </soapenv:Body>
             </soapenv:Envelope>
             """
-        #And EC new version
+        And EC new version
         When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of verifyPaymentNotice response
 
@@ -131,7 +131,7 @@ Feature: process tests for paSendRT [PSRT_21]
             <idempotencyKey>#idempotency_key#</idempotencyKey>
             <qrCode>
             <fiscalCode>#creditor_institution_code#</fiscalCode>
-            <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
+            <noticeNumber>$1noticeNumber</noticeNumber>
             </qrCode>
             <expirationTime>6000</expirationTime>
             <amount>17.00</amount>
