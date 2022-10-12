@@ -225,7 +225,7 @@ Feature: process tests for Retry_DB_GR_13
     And checks the value NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_status_n on db nodo_online under macro NewMod3
     And checks the value $fk_position_receipt of the record at column ID of the table POSITION_RECEIPT retrived by the query position_status_n on db nodo_online under macro NewMod3
    # DB Check POSITION_RECEIPT_RECIPIENT_STATUS
-    And execution query position_receipt_recipient_status to get value on the table POSITION_RECEIPT_RECIPIENT_STATUS, with the columns PA_FISCAL_CODE under macro NewMod3 with db name nodo_online
+    And execution query position_receipt_recipient_status to get value on the table POSITION_RECEIPT_RECIPIENT_STATUS, with the columns * under macro NewMod3 with db name nodo_online
     And through the query position_receipt_recipient_status retrieve param 1pa_fiscal_code at position 1 and save it under the key 1pa_fiscal_code
     And through the query position_receipt_recipient_status retrieve param 1notice_id at position 2 and save it under the key 1notice_id
     And through the query position_receipt_recipient_status retrieve param 1creditor_reference_id at position 3 and save it under the key 1creditor_reference_id
