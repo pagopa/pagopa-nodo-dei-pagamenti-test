@@ -255,7 +255,6 @@ def single_thread(context, soap_primitive, type):
     primitive = replace_global_variables(primitive, context)
     print(soap_primitive.split("_")[1])
     headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}
-    print(url_nodo)
     print("nodo soap_request sent >>>", getattr(
         context, soap_primitive.split("_")[1]))
     if type == 'GET':
