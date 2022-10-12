@@ -10,10 +10,10 @@ Feature: syntax checks for closePaymentV2 outcome OK
                 "paymentTokens": [
                     "a3738f8bff1f4a32998fc197bd0a6b05"
                 ],
-                "outcome": "KO",
+                "outcome": "OK",
                 "idPSP": "#psp#",
                 "idBrokerPSP": "60000000001",
-                "idChannel": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
+                "idChannel": "#canale_versione_primitive_2#",
                 "paymentMethod": "TPAY",
                 "transactionId": "#transaction_id#",
                 "totalAmount": 12,
