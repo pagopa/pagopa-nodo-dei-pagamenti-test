@@ -184,19 +184,6 @@ Feature: DB checks for nodoChiediEsitoPagamento
             "esitoTransazioneCarta":"00"
             }
             """
-        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte 
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-                <soapenv:Header/>
-                <soapenv:Body>
-                    <ws:pspInviaCarrelloRPTCarteResponse>
-                        <pspInviaCarrelloRPTResponse>
-                            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-                        </pspInviaCarrelloRPTResponse>
-                    </ws:pspInviaCarrelloRPTCarteResponse>
-                </soapenv:Body>
-            </soapenv:Envelope>
-            """
         And saving inoltroEsito/cartaJSON request in inoltroEsito/carta
 
         When calling primitive inoltroEsito/carta_inoltroEsito/carta POST and avanzamentoPagamento?idPagamento=$activateIOPaymentResponse.paymentToken_avanzamentoPagamento GET with 4000 ms delay
