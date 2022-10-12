@@ -1,4 +1,4 @@
-Feature: process tests for accessiConCorrenziali [PAG-1163_Carta_NM3_err]
+Feature: process tests for accessiConCorrenziali [PAG-1163_Carta_NM3_timeout]
 
     Background:
         Given systems up
@@ -227,7 +227,7 @@ Feature: process tests for accessiConCorrenziali [PAG-1163_Carta_NM3_err]
             "identificativoCanale":"#canale#",
             "importoTotalePagato":10.00,
             "timestampOperazione":"2021-07-09T17:06:03.100+01:00",
-            "codiceAutorizzativo":"sleMal",
+            "codiceAutorizzativo":"resTim",
             "esitoTransazioneCarta":"00"
             }
             """
@@ -237,8 +237,8 @@ Feature: process tests for accessiConCorrenziali [PAG-1163_Carta_NM3_err]
             <soapenv:Header/>
             <soapenv:Body>
             <psp:pspNotifyPaymentRes>
-            <outcome>malformata</outcome>
-            <delay>5000</delay>
+            <outcome>OK</outcome>
+            <delay>10000</delay>
             </psp:pspNotifyPaymentRes>
             </soapenv:Body>
             </soapenv:Envelope>
