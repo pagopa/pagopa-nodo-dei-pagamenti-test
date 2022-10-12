@@ -260,8 +260,7 @@ def single_thread(context, soap_primitive, type):
     print("nodo soap_request sent >>>", getattr(
         context, soap_primitive.split("_")[1]))
     if type == 'GET':
-        soap_response = requests.get(url_nodo, getattr(
-            context, primitive), headers=headers, verify=False)
+        soap_response = requests.get(url_nodo, headers=headers, verify=False)
     elif type == 'POST':
         soap_response = requests.post(url_nodo, getattr(
             context, soap_primitive.split("_")[1]), headers=headers, verify=False)
