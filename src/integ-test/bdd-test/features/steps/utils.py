@@ -247,28 +247,34 @@ def isDate(string: str):
         return False
 
 
-def single_thread(context, soap_primitive):
+def single_thread(context, soap_primitive, type):
     print("single_thread")
     primitive = soap_primitive.split("_")[0]
+    primitive = replace_local_variables(primitive, context)
+    primitive = replace_context_variables(primitive, context)
+    primitive = replace_global_variables(primitive, context)
     print(soap_primitive.split("_")[1])
     headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}
-    url_nodo = get_soap_url_nodo(context, primitive) if 'xml' in getattr(context, primitive) else f"{get_rest_url_nodo(context)}/{primitive}"
-    print(url_nodo)
     print("nodo soap_request sent >>>", getattr(
         context, soap_primitive.split("_")[1]))
-    soap_response = requests.post(url_nodo, getattr(
-        context, soap_primitive.split("_")[1]), headers=headers, verify=False)
+    if type == 'GET':
+        url_nodo = f"{get_rest_url_nodo(context)}/{primitive}"
+        soap_response = requests.get(url_nodo, headers=headers, verify=False)
+    elif type == 'POST':
+        url_nodo = get_soap_url_nodo(context, primitive)
+        soap_response = requests.post(url_nodo, getattr(
+            context, soap_primitive.split("_")[1]), headers=headers, verify=False)
     print("nodo soap_response: ", soap_response.content)
     print(soap_primitive.split("_")[1] + "Response")
     setattr(context, soap_primitive.split("_")[
             1] + "Response", soap_response)
 
 
-def threading(context, primitive_list):
+def threading(context, primitive_list, list_of_type):
     i = 0
     threads = list()
     while i < len(primitive_list):
-        t = Thread(target=single_thread, args=(context, primitive_list[i]))
+        t = Thread(target=single_thread, args=(context, primitive_list[i], list_of_type[i]))
         threads.append(t)
         t.start()
         i += 1
@@ -276,11 +282,11 @@ def threading(context, primitive_list):
     for thread in threads:
         thread.join()
 
-def threading_delayed(context, primitive_list, list_of_delays):
+def threading_delayed(context, primitive_list, list_of_delays, list_of_type):
     i = 0
     threads = list()
     while i < len(primitive_list):
-        t = Thread(target=single_thread, args=(context, primitive_list[i]))
+        t = Thread(target=single_thread, args=(context, primitive_list[i], list_of_type[i]))
         threads.append(t)
         time.sleep(list_of_delays[i]/1000)
         t.start()

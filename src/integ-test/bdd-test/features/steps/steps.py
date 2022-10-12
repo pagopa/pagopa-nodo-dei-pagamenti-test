@@ -1827,17 +1827,19 @@ def step_impl(context, value1, condition, value2):
         assert False
 
 
-@step("calling primitive {primitive1} and {primitive2} in parallel")
-def step_impl(context, primitive1, primitive2):
+@step("calling primitive {primitive1} {restType1} and {primitive2} {restType2} in parallel")
+def step_impl(context, primitive1, primitive2, restType1, restType2):
     list_of_primitive = [primitive1, primitive2]
-    utils.threading(context, list_of_primitive)
+    list_of_type= [restType1, restType2]
+    utils.threading(context, list_of_primitive, list_of_type)
 
 #2 primitives called in parallel, with delay1 applied to primitive2
-@step("calling primitive {primitive1} and {primitive2} with {delay1:d} ms delay")
-def step_impl(context, primitive1, primitive2, delay1):
+@step("calling primitive {primitive1} {restType1} and {primitive2} {restType2} with {delay1:d} ms delay")
+def step_impl(context, primitive1, primitive2, delay1, restType1, restType2):
     list_of_primitive = [primitive1, primitive2]
+    list_of_type= [restType1, restType2]
     list_of_delays = [0, delay1]
-    utils.threading_delayed(context, list_of_primitive, list_of_delays)
+    utils.threading_delayed(context, list_of_primitive, list_of_delays, list_of_type)
 
 
 @then("check primitive response {primitive1} and primitive response {primitive2}")
@@ -1887,7 +1889,7 @@ def step_impl(context, primitive1, primitive2):
     elif outcome1 == 'KO' and faultCode1 == 'PPT_TOKEN_SCADUTO' and outcome2 == 'KO' and faultCode2 == 'PPT_PAGAMENTO_DUPLICATO':
         assert True
     # AccessiConcorrenziali 3b_ACT_SPO
-    elif outcome2 == 'KO' and faultCode1 == 'PPT_TOKEN_SCADUTO' and outcome1 == 'OK':
+    elif outcome2 == 'KO' and faultCode2 == 'PPT_TOKEN_SCADUTO' and outcome1 == 'OK':
         assert True
     # AccessiConcorrenziali 3c_ACT_SPO
     elif outcome1 == 'KO' and faultCode1 == 'PPT_PAGAMENTO_DUPLICATO' and outcome2 == 'KO' and faultCode2 == 'PPT_TOKEN_SCADUTO':

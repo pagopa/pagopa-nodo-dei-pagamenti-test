@@ -160,11 +160,10 @@ Feature: Checks for concorrential access of Paypal payments OK
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:psp="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
             <soapenv:Header/>
             <soapenv:Body>
-            <psp:pspNotifyPaymentRes>
-            <outcome>OK</outcome>
-            <!--Optional:-->
-            <delay>8000</delay>
-            </psp:pspNotifyPaymentRes>
+                <psp:pspNotifyPaymentRes>
+                    <delay>8000</delay>
+                    <outcome>OK</outcome>
+                </psp:pspNotifyPaymentRes>
             </soapenv:Body>
             </soapenv:Envelope>
             """
