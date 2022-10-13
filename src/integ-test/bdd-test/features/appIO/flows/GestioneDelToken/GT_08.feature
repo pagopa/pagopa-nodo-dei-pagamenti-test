@@ -106,7 +106,9 @@ Feature: GT_08
             <soapenv:Header/>
             <soapenv:Body>
                 <psp:pspNotifyPaymentRes>
-                    <outcome>Response malformata</outcome>
+                <outcome>OK</outcome>
+                <!--Optional:-->
+                <wait>20</wait>
                 </psp:pspNotifyPaymentRes>
             </soapenv:Body>
         </soapenv:Envelope>
