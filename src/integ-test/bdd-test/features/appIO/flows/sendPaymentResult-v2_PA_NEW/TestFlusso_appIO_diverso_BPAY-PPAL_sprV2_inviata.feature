@@ -242,9 +242,9 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:psp="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
             <soapenv:Header/>
             <soapenv:Body>
-            <pfn:pspNotifyPaymentRes>
+            <psp:pspNotifyPaymentRes>
             <delay>60000</delay>
-            </pfn:pspNotifyPaymentRes>
+            </psp:pspNotifyPaymentRes>
             </soapenv:Body>
             </soapenv:Envelope>
             """
