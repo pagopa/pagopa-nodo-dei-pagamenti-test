@@ -48,6 +48,8 @@ Feature: process tests for REGR_retryTokenScaduto_OK
         </qrCode>
         <expirationTime>1000</expirationTime>
         <amount>12.34</amount>
+        <dueDate>#date#</dueDate>
+        <paymentNote>causale/$1noticeNumber/nuovoMod3</paymentNote>
         </nod:activatePaymentNoticeReq>
         </soapenv:Body>
         </soapenv:Envelope>
@@ -213,6 +215,7 @@ Feature: process tests for REGR_retryTokenScaduto_OK
         <outcome>OK</outcome>
         <details>
         <paymentMethod>creditCard</paymentMethod>
+        paymentChannel>app</paymentChannel>
         <fee>2.00</fee>
         <payer>
         <uniqueIdentifier>
