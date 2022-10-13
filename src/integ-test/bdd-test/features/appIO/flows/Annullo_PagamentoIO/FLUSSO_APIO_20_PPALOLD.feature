@@ -225,7 +225,7 @@ Feature: FLUSSO_APIO_20_PPALOLD
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
         And verify 1 record for the table CD_INFO_PAGAMENTO retrived by the query info_pagamento on db nodo_online under macro AppIO
-
+@runnable
     Scenario: Execute nodoChiediInformazioniPagamento (Phase 4)
         Given the Execute nodoInviaRPT (Phase 3) scenario executed successfully
         When WISP sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
