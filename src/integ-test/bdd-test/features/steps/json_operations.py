@@ -16,7 +16,7 @@ def search_tag(json_file: dict, tag: str) -> bool:
 def search_value(json_file: dict, tag: str, value) -> bool:
     find = False
     for dict_key, dict_value in json_file.items():
-        if dict_key == tag and dict_value == value: return True
+        if dict_key == tag and (dict_value == value or value in dict_value): return True
         if isinstance(dict_value, dict):
             find = search_value(dict_value, tag, value)
         elif isinstance(dict_value, list):
