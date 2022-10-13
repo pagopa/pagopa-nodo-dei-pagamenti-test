@@ -185,5 +185,5 @@ Feature: process tests for accessiConCorrenziali [3f_ACT_SPO]
         </soapenv:Envelope>
         """
         And EC replies to nodo-dei-pagamenti with the paGetPayment
-        And calling primitive activatePaymentNotice_activatePaymentNotice2 and sendPaymentOutcome_sendPaymentOutcome1 in parallel
+        And calling primitive activatePaymentNotice_activatePaymentNotice2 POST and sendPaymentOutcome_sendPaymentOutcome1 POST in parallel
         Then check primitive response activatePaymentNotice2Response and primitive response sendPaymentOutcome1Response
