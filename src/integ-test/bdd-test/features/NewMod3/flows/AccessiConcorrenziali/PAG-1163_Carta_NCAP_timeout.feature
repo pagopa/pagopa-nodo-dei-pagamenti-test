@@ -184,18 +184,16 @@ Feature: DB checks for nodoChiediEsitoPagamento
             "esitoTransazioneCarta":"00"
             }
             """
-        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte 
-             """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-                <soapenv:Header/>
-                <soapenv:Body>
-                    <ws:pspInviaCarrelloRPTCarteResponse>
-                        <pspInviaCarrelloRPTResponse>
-                            <delay>10000</delay>
-                            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-                        </pspInviaCarrelloRPTResponse>
-                    </ws:pspInviaCarrelloRPTCarteResponse>
-                </soapenv:Body>
+        And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment 
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:psp="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+                <psp:pspNotifyPaymentRes>
+                    <delay>10000</delay>
+                    <outcome>OK</outcome>
+                </psp:pspNotifyPaymentRes>
+            </soapenv:Body>
             </soapenv:Envelope>
             """
         And saving inoltroEsito/cartaJSON request in inoltroEsito/carta
