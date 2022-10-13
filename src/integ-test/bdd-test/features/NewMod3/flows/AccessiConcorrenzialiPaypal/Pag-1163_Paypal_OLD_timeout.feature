@@ -305,7 +305,7 @@ Feature: Pag-1163_Paypal_OLD_timeout
             <soapenv:Header/>
             <soapenv:Body>
                 <psp:pspNotifyPaymentRes>
-                    <delay>20000</delay>
+                    <delay>10000</delay>
                     <outcome>OK</outcome>
                 </psp:pspNotifyPaymentRes>
             </soapenv:Body>

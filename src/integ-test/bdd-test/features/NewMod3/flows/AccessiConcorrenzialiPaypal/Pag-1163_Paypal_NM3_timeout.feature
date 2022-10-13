@@ -163,7 +163,7 @@ Feature: Pag-1163_Paypal_NM3_timeout
             <psp:pspNotifyPaymentRes>
             <outcome>OK</outcome>
             <!--Optional:-->
-            <delay>20000</delay>
+            <delay>10000</delay>
             </psp:pspNotifyPaymentRes>
             </soapenv:Body>
             </soapenv:Envelope>
