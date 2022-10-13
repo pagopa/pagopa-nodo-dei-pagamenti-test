@@ -230,7 +230,7 @@ Feature: FLUSSO_APIO_20_PPALOLD
         Given the Execute nodoInviaRPT (Phase 3) scenario executed successfully
         When WISP sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200
-
+@runnable
     Scenario: Execute nodoInoltroEsitoPayPal (Phase 5) - OK
         Given the Execute nodoChiediInformazioniPagamento (Phase 4) scenario executed successfully
         When WISP sends REST POST inoltroEsito/paypal to nodo-dei-pagamenti
