@@ -125,7 +125,7 @@ Feature: PRO_ANNULLO_13_PPALNEW
         And check esito is KO of inoltroEsito/paypal response
         And check errorCode is RIFPSP of inoltroEsito/paypal response
         And checks the value PAYING, PAYMENT_SENT, PAYMENT_REFUSED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
-        #And checks the value PAYMENT_REFUSED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
+        And checks the value PAYMENT_REFUSED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
         And restore initial configurations
