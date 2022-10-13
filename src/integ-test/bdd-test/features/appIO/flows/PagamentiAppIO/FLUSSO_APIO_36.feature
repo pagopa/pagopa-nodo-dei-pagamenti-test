@@ -88,7 +88,7 @@ Feature: FLUSSO_APIO_36
         Given nodo-dei-pagamenti has config parameter scheduler.cancelIOPaymentActorMinutesToBack set to 1
         And nodo-dei-pagamenti has config parameter default_durata_token_IO set to 50000
         And the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
-        And save activateIOPayment response in activateIOPayment1
+        #And save activateIOPayment response in activateIOPayment1
         And initial XML paGetPayment
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
