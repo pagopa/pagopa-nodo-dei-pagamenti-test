@@ -2,7 +2,7 @@ Feature: FLUSSO_APIO_36
 
     Background:
         Given systems up
-@runnable
+    @runnable
     Scenario: Execute verifyPaymentNotice (Phase 1)
         Given initial XML verifyPaymentNotice
             """
@@ -24,7 +24,7 @@ Feature: FLUSSO_APIO_36
             """
         When AppIO sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of verifyPaymentNotice response
-@runnable
+    @runnable
     Scenario: Execute activateIOPayment (Phase 2)
         Given the Execute verifyPaymentNotice (Phase 1) scenario executed successfully
         And initial XML activateIOPayment
@@ -78,20 +78,39 @@ Feature: FLUSSO_APIO_36
             """
         When AppIO sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
-@runnable
+    @runnable
     Scenario: Execute nodoChiediInformazioniPagamento (Phase 3)
         Given the Execute activateIOPayment (Phase 2) scenario executed successfully
         When WISP sends rest GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200
-@runnable
+    @runnable
     Scenario: Execute activateIOPayment1 (Phase 4)
         Given nodo-dei-pagamenti has config parameter scheduler.cancelIOPaymentActorMinutesToBack set to 1
         And nodo-dei-pagamenti has config parameter default_durata_token_IO set to 50000
         And the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
         And save activateIOPayment response in activateIOPayment1
+        And initial XML paGetPayment
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <paf:paGetPaymentRes>
+            <outcome>KO</outcome>
+            <fault>
+            <faultCode>PAA_SEMANTICA</faultCode>
+            <faultString>errore semantico PA</faultString>
+            <id>$activateIOPayment.fiscalCode</id>
+            <description>Errore semantico emesso dalla PA</description>
+            </fault>
+            </paf:paGetPaymentRes>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+
         When job annullamentoRptMaiRichiesteDaPm triggered after 70 seconds
         And wait 15 seconds for expiration
         And PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
+
         Then check outcome is KO of activateIOPayment response
         And check faultCode is PPT_PAGAMENTO_IN_CORSO of activateIOPayment response
         And wait 5 seconds for expiration
