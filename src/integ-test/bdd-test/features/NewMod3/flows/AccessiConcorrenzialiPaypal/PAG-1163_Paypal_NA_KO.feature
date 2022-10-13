@@ -207,6 +207,6 @@ Feature: PAG-1163_Paypal_NA_KO
         When calling primitive inoltroEsito/paypal_inoltroEsito/paypal POST and notificaAnnullamento?idPagamento=$activateIOPaymentResponse.paymentToken_notificaAnnullamento GET with 4000 ms delay
         Then verify the HTTP status code of inoltroEsito/paypal response is 200
         And check errorCode is RIFPSP of inoltroEsito/paypal response
-        And check description is Risposta negativa del Canale of inoltroEsito/paypal response
+        And check descrizione is Risposta negativa del Canale of inoltroEsito/paypal response
         And verify the HTTP status code of notificaAnnullamento response is 200
         And check esito is OK of notificaAnnullamento response
