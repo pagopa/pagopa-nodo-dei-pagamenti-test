@@ -230,7 +230,7 @@ Feature: FLUSSO_APIO_20_PPALOLD
         Given the Execute nodoInviaRPT (Phase 3) scenario executed successfully
         When WISP sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200
-@runnable
+
     Scenario: Execute nodoInoltroEsitoPayPal (Phase 5) - OK
         Given the Execute nodoChiediInformazioniPagamento (Phase 4) scenario executed successfully
         When WISP sends REST POST inoltroEsito/paypal to nodo-dei-pagamenti
@@ -248,7 +248,7 @@ Feature: FLUSSO_APIO_20_PPALOLD
         """
         Then verify the HTTP status code of inoltroEsito/paypal response is 200
         And check esito is OK of inoltroEsito/paypal response
-@runnable
+
     Scenario: Execute sendPaymentOutcome (Phase 6)
         Given the Execute nodoInoltroEsitoPayPal (Phase 5) - OK scenario executed successfully
         And initial XML sendPaymentOutcome
@@ -301,7 +301,7 @@ Feature: FLUSSO_APIO_20_PPALOLD
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
         And wait 3 seconds for expiration
-@runnable
+
     Scenario: Execute nodoNotificaAnnullamentoPagamento (Phase 7)
         Given the Execute sendPaymentOutcome (Phase 6) scenario executed successfully
         When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken to nodo-dei-pagamenti
