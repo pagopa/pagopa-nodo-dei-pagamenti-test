@@ -58,7 +58,7 @@ Feature: process PAG-590_01
 
     Scenario: parallel calls and test scenario
         Given the Initial activatePaymentNotice2 request scenario executed successfully
-        And calling primitive activatePaymentNotice_activatePaymentNotice1 and activatePaymentNotice_activatePaymentNotice2 in parallel
+        And calling primitive activatePaymentNotice_activatePaymentNotice1 POST and activatePaymentNotice_activatePaymentNotice2 POST in parallel
         Then check primitive response activatePaymentNotice1Response and primitive response activatePaymentNotice2Response
         And check db PAG-590_01
         And checks the value PAYING of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3

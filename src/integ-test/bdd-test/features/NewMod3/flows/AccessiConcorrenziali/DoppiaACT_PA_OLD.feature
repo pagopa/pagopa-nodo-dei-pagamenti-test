@@ -58,5 +58,5 @@ Feature: process DoppiaACT_PA OLD
 
     Scenario: parallel calls and test scenario
         Given the Initial activatePaymentNotice2 request scenario executed successfully
-        And calling primitive activatePaymentNotice_activatePaymentNotice1 and activatePaymentNotice_activatePaymentNotice2 in parallel
+        And calling primitive activatePaymentNotice_activatePaymentNotice1 POST and activatePaymentNotice_activatePaymentNotice2 POST in parallel
         Then check primitive response activatePaymentNotice1Response and primitive response activatePaymentNotice2Response
