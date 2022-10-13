@@ -251,7 +251,7 @@ Feature: process tests for retry a token scaduto
       </pay_i:soggettoVersante>
       <pay_i:soggettoPagatore>
       <pay_i:identificativoUnivocoPagatore>
-      <pay_i:tipoIdentificativoUnivoco>F</pay_i:tipoIdentificativoUnivoco>
+      <pay_i:tipoIdentificativoUnivoco>G</pay_i:tipoIdentificativoUnivoco>
       <pay_i:codiceIdentificativoUnivoco>RCCGLD09P09H501E</pay_i:codiceIdentificativoUnivoco>
       </pay_i:identificativoUnivocoPagatore>
       <pay_i:anagraficaPagatore>Gesualdo;Riccitelli</pay_i:anagraficaPagatore>
@@ -301,7 +301,7 @@ Feature: process tests for retry a token scaduto
       </pay_i:datiVersamento>
       </pay_i:RPT>
       """
-      
+
   Scenario: Execute nodoInviaRPT2 request
     Given the Define RPT2 scenario executed successfully
     And initial XML nodoInviaRPT
@@ -309,10 +309,10 @@ Feature: process tests for retry a token scaduto
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
       <soapenv:Header>
       <ppt:intestazionePPT>
-      <identificativoIntermediarioPA>66666666666</identificativoIntermediarioPA>
-      <identificativoStazioneIntermediarioPA>66666666666_06</identificativoStazioneIntermediarioPA>
-      <identificativoDominio>66666666666</identificativoDominio>
-      <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
+      <identificativoIntermediarioPA>$activatePaymentNotice.fiscalCode</identificativoIntermediarioPA>
+      <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
+      <identificativoDominio>$activatePaymentNotice.fiscalCode</identificativoDominio>
+      <identificativoUnivocoVersamento>11012461577123200</identificativoUnivocoVersamento>
       <codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken-v2</codiceContestoPagamento>
       </ppt:intestazionePPT>
       </soapenv:Header>
@@ -332,7 +332,7 @@ Feature: process tests for retry a token scaduto
     Then check esito is KO of nodoInviaRPT response
     And check faultCode is PPT_SEMANTICA of nodoInviaRPT response
 
- Scenario: DB check
+  Scenario: DB check
     Given the Execute nodoInviaRPT2 request scenario executed successfully
     And wait 5 seconds for expiration
     #STATI
