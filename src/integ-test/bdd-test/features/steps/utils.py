@@ -264,6 +264,7 @@ def single_thread(context, soap_primitive, type):
         body = getattr(context,primitive)
         if 'xml' in getattr(context,primitive):
             headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}
+            url_nodo = get_soap_url_nodo(context, primitive)
         else:
             headers = {'Content-Type': 'application/json', 'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}
             url_nodo = f"{get_rest_url_nodo(context)}/{primitive}"

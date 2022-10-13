@@ -1,4 +1,4 @@
-Feature: DB checks for nodoInoltraEsitoPagamentoPaypal on old PA KO
+Feature: Pag-1163_Paypal_OLD_KO
 
    Background:
       Given systems up
@@ -305,6 +305,7 @@ Feature: DB checks for nodoInoltraEsitoPagamentoPaypal on old PA KO
          <soapenv:Header/>
          <soapenv:Body>
          <psp:pspNotifyPaymentRes>
+         <delay>8000</delay>
          <outcome>KO</outcome>
          <!--Optional:-->
          <fault>
@@ -319,7 +320,7 @@ Feature: DB checks for nodoInoltraEsitoPagamentoPaypal on old PA KO
          </soapenv:Envelope>
          """
       And saving inoltroEsito/paypalJSON request in inoltroEsito/paypal
-      When calling primitive inoltroEsito/paypal_inoltroEsito/paypal and sendPaymentOutcome_sendPaymentOutcome with 4000 ms delay
+      When calling primitive inoltroEsito/paypal_inoltroEsito/paypal POST and sendPaymentOutcome_sendPaymentOutcome POST with 4000 ms delay
       Then verify the HTTP status code of inoltroEsito/paypal response is 200
       And check esito is KO of inoltroEsito/paypal response
       And check errorCode is RIFPSP of inoltroEsito/paypal response

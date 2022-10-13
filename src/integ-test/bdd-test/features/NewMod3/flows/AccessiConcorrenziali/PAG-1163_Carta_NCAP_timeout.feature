@@ -1,10 +1,10 @@
-Feature: Pag-1163_Paypal_NCAP_KO
+Feature: DB checks for nodoChiediEsitoPagamento
 
     Background:
         Given systems up
 
 
-    Scenario: Execute verifyPaymentNotice (Phase 1)
+    Scenario: Execute verifyPaymentNotice request
         Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
         And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber  
         And initial XML verifyPaymentNotice
@@ -29,8 +29,8 @@ Feature: Pag-1163_Paypal_NCAP_KO
         When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of verifyPaymentNotice response
 
-    Scenario: Execute activateIOPayment (Phase 2)
-        Given the Execute verifyPaymentNotice (Phase 1) scenario executed successfully
+    Scenario: Execute activateIOPayment request
+        Given the Execute verifyPaymentNotice request scenario executed successfully
         And initial XML activateIOPayment
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd">
@@ -151,8 +151,8 @@ Feature: Pag-1163_Paypal_NCAP_KO
         Then check outcome is OK of activateIOPayment response
 
 
-    Scenario: Execute nodoChiediInformazioniPagamento (Phase 3)
-        Given the Execute activateIOPayment (Phase 2) scenario executed successfully
+    Scenario: Execute nodoChiediInformazioniPagamento request
+        Given the Execute activateIOPayment request scenario executed successfully
         When WISP sends rest GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti      
         Then verify the HTTP status code of informazioniPagamento response is 200
 
@@ -166,49 +166,42 @@ Feature: Pag-1163_Paypal_NCAP_KO
         And check idDominio is $verifyPaymentNotice.fiscalCode of informazioniPagamento response
         And check enteBeneficiario field exists in informazioniPagamento response
 
-        And execution query dbcheck_json to get value on the table PA, with the columns RAGIONE_SOCIALE under macro NewMod3 with db name nodo_cfg
-        And through the query dbcheck_json retrieve param ragione_sociale at position 0 and save it under the key ragione_sociale
-        And check enteBeneficiario is $ragione_sociale of informazioniPagamento response
-        And check ragioneSociale is $ragione_sociale of informazioniPagamento response
 
-    Scenario: Node handling of nodoInoltraEsitoPagamentoPaypal and avanzamentoPagamento error on PA
-        Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
-        And initial JSON inoltroEsito/paypal
+    Scenario: Execute nodoInoltraEsitoPagamentoCarta
+        Given the Execute nodoChiediInformazioniPagamento request scenario executed successfully
+        And initial JSON inoltroEsito/carta
             """
             {
-                "idTransazione": "responseKO",
-                "idTransazionePsp": "$activateIOPayment.idempotencyKey",
-                "idPagamento": "$activateIOPaymentResponse.paymentToken",
-                "identificativoIntermediario": "#psp#",
-                "identificativoPsp": "#psp#",
-                "identificativoCanale": "#canale#",
-                "importoTotalePagato": 10,
-                "timestampOperazione": "2012-04-23T18:25:43Z"
+            "idPagamento":"$activateIOPaymentResponse.paymentToken",
+            "RRN":18199444,
+            "identificativoPsp":"#psp#",
+            "tipoVersamento":"CP",
+            "identificativoIntermediario":"#psp#",
+            "identificativoCanale":"#canale#",
+            "importoTotalePagato":10.00,
+            "timestampOperazione":"2021-07-09T17:06:03.100+01:00",
+            "codiceAutorizzativo":"resTim",
+            "esitoTransazioneCarta":"00"
             }
             """
-        And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:psp="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
-            <soapenv:Header/>
-            <soapenv:Body>
-                <psp:pspNotifyPaymentRes>
-                    <delay>8000</delay>
-                    <outcome>KO</outcome>
-                    <fault>
-                        <faultCode>CANALE_SEMANTICA</faultCode>
-                        <faultString>Errore semantico dal psp</faultString>
-                        <id>1</id>
-                        <description>Errore dal psp</description>
-                    </fault>
-                </psp:pspNotifyPaymentRes>
-            </soapenv:Body>
+        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte 
+             """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+                <soapenv:Header/>
+                <soapenv:Body>
+                    <ws:pspInviaCarrelloRPTCarteResponse>
+                        <pspInviaCarrelloRPTResponse>
+                            <delay>10000</delay>
+                            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+                        </pspInviaCarrelloRPTResponse>
+                    </ws:pspInviaCarrelloRPTCarteResponse>
+                </soapenv:Body>
             </soapenv:Envelope>
             """
-        And saving inoltroEsito/paypalJSON request in inoltroEsito/paypal
-        When calling primitive inoltroEsito/paypal_inoltroEsito/paypal POST and avanzamentoPagamento?idPagamento=$activateIOPaymentResponse.paymentToken_avanzamentoPagamento GET with 4000 ms delay
-        Then verify the HTTP status code of inoltroEsito/paypal response is 200
-        And check esito is KO of inoltroEsito/paypal response
-        And check errorCode is RIFPSP of inoltroEsito/paypal response
-        And check descrizione is Risposta negativa del Canale of inoltroEsito/paypal response
-        And verify the HTTP status code of avanzamentoPagamento response is 200
-        And check esito is KO of avanzamentoPagamento response
+        And saving inoltroEsito/cartaJSON request in inoltroEsito/carta
+
+        When calling primitive inoltroEsito/carta_inoltroEsito/carta POST and avanzamentoPagamento?idPagamento=$activateIOPaymentResponse.paymentToken_avanzamentoPagamento GET with 4000 ms delay
+        Then verify the HTTP status code of avanzamentoPagamento response is 200
+        And verify the HTTP status code of inoltroEsito/carta response is 408
+        And check error is Operazione in timeout of inoltroEsito/carta response
+        And check esito is ACK_UNKNOWN of avanzamentoPagamento response
