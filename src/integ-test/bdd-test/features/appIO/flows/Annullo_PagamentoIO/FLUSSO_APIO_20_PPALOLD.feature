@@ -194,7 +194,7 @@ Feature: FLUSSO_APIO_20_PPALOLD
         """
         When IO sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoAttivaRPT response
-     
+ @runnable    
     Scenario: Execute nodoInviaRPT (Phase 3)
         Given the Execute nodoAttivaRPT (Phase 2) scenario executed successfully
         And initial XML nodoInviaRPT
