@@ -1,4 +1,4 @@
-Feature: Pag-1163_Paypal_NCAP_KO
+Feature: PAG-1163_Paypal_NA_timeout
 
     Background:
         Given systems up
@@ -48,7 +48,6 @@ Feature: Pag-1163_Paypal_NCAP_KO
                         <noticeNumber>$1noticeNumber</noticeNumber>
                     </qrCode>
                     <!--Optional:-->
-                    <expirationTime>6000</expirationTime>
                     <amount>10.00</amount>
                     <!--Optional:-->
                     <dueDate>2021-12-12</dueDate>
@@ -171,12 +170,12 @@ Feature: Pag-1163_Paypal_NCAP_KO
         And check enteBeneficiario is $ragione_sociale of informazioniPagamento response
         And check ragioneSociale is $ragione_sociale of informazioniPagamento response
 
-    Scenario: Node handling of nodoInoltraEsitoPagamentoPaypal and avanzamentoPagamento error on PA
+    Scenario: Node handling of nodoInoltraEsitoPagamentoPaypal and nodoNotificaAnnullamento
         Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
         And initial JSON inoltroEsito/paypal
             """
             {
-                "idTransazione": "responseKO",
+                "idTransazione": "responseOK",
                 "idTransazionePsp": "$activateIOPayment.idempotencyKey",
                 "idPagamento": "$activateIOPaymentResponse.paymentToken",
                 "identificativoIntermediario": "#psp#",
@@ -192,23 +191,15 @@ Feature: Pag-1163_Paypal_NCAP_KO
             <soapenv:Header/>
             <soapenv:Body>
                 <psp:pspNotifyPaymentRes>
-                    <delay>8000</delay>
-                    <outcome>KO</outcome>
-                    <fault>
-                        <faultCode>CANALE_SEMANTICA</faultCode>
-                        <faultString>Errore semantico dal psp</faultString>
-                        <id>1</id>
-                        <description>Errore dal psp</description>
-                    </fault>
+                    <delay>20000</delay>
+                    <outcome>Timeout</outcome>
                 </psp:pspNotifyPaymentRes>
             </soapenv:Body>
             </soapenv:Envelope>
             """
         And saving inoltroEsito/paypalJSON request in inoltroEsito/paypal
-        When calling primitive inoltroEsito/paypal_inoltroEsito/paypal POST and avanzamentoPagamento?idPagamento=$activateIOPaymentResponse.paymentToken_avanzamentoPagamento GET with 4000 ms delay
-        Then verify the HTTP status code of inoltroEsito/paypal response is 200
-        And check esito is KO of inoltroEsito/paypal response
-        And check errorCode is RIFPSP of inoltroEsito/paypal response
-        And check descrizione is Risposta negativa del Canale of inoltroEsito/paypal response
-        And verify the HTTP status code of avanzamentoPagamento response is 200
-        And check esito is KO of avanzamentoPagamento response
+        When calling primitive inoltroEsito/paypal_inoltroEsito/paypal POST and notificaAnnullamento?idPagamento=$activateIOPaymentResponse.paymentToken_notificaAnnullamento GET with 4000 ms delay
+        Then verify the HTTP status code of inoltroEsito/paypal response is 408
+        And check error is Operazione in timeout of inoltroEsito/paypal response
+        And verify the HTTP status code of notificaAnnullamento response is 404
+        And check error is Il Pagamento indicato non esiste of notificaAnnullamento response

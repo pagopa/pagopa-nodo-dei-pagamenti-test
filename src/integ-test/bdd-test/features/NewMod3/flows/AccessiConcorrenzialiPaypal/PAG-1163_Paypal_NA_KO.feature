@@ -1,4 +1,4 @@
-Feature: DB checks for nodoChiediEsitoPagamento KO
+Feature: PAG-1163_Paypal_NA_KO
 
     Background:
         Given systems up
@@ -48,7 +48,6 @@ Feature: DB checks for nodoChiediEsitoPagamento KO
                         <noticeNumber>$1noticeNumber</noticeNumber>
                     </qrCode>
                     <!--Optional:-->
-                    <expirationTime>6000</expirationTime>
                     <amount>10.00</amount>
                     <!--Optional:-->
                     <dueDate>2021-12-12</dueDate>
@@ -171,12 +170,12 @@ Feature: DB checks for nodoChiediEsitoPagamento KO
         And check enteBeneficiario is $ragione_sociale of informazioniPagamento response
         And check ragioneSociale is $ragione_sociale of informazioniPagamento response
 
-    Scenario: Node handling of nodoInoltraEsitoPagamentoPaypal and avanzamentoPagamento error on PA
+    Scenario: Node handling of nodoInoltraEsitoPagamentoPaypal and nodoNotificaAnnullamento
         Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
         And initial JSON inoltroEsito/paypal
             """
             {
-                "idTransazione": "responseKO",
+                "idTransazione": "responseOK",
                 "idTransazionePsp": "$activateIOPayment.idempotencyKey",
                 "idPagamento": "$activateIOPaymentResponse.paymentToken",
                 "identificativoIntermediario": "#psp#",
@@ -205,8 +204,9 @@ Feature: DB checks for nodoChiediEsitoPagamento KO
             </soapenv:Envelope>
             """
         And saving inoltroEsito/paypalJSON request in inoltroEsito/paypal
-        When calling primitive inoltroEsito/paypal_inoltroEsito/paypal and avanzamentoPagamento?idPagamento=$activateIOPaymentResponse.paymentToken_avanzamentoPagamento with 4000 ms delay
+        When calling primitive inoltroEsito/paypal_inoltroEsito/paypal POST and notificaAnnullamento?idPagamento=$activateIOPaymentResponse.paymentToken_notificaAnnullamento GET with 4000 ms delay
         Then verify the HTTP status code of inoltroEsito/paypal response is 200
-        And check esito is KO of inoltroEsito/paypal response
-        And verify the HTTP status code of avanzamentoPagamento response is 200
-        And check esito is KO of avanzamentoPagamento response
+        And check errorCode is RIFPSP of inoltroEsito/paypal response
+        And check description is Risposta negativa del Canale of inoltroEsito/paypal response
+        And verify the HTTP status code of notificaAnnullamento response is 200
+        And check esito is OK of notificaAnnullamento response

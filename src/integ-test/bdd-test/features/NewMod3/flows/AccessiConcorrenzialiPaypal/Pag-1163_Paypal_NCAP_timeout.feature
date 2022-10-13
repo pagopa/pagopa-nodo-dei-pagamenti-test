@@ -1,4 +1,4 @@
-Feature: DB checks for nodoChiediEsitoPagamento OK
+Feature: Pag-1163_Paypal_NCAP_timeout
 
     Background:
         Given systems up
@@ -199,8 +199,8 @@ Feature: DB checks for nodoChiediEsitoPagamento OK
             </soapenv:Envelope>
             """
         And saving inoltroEsito/paypalJSON request in inoltroEsito/paypal
-        When calling primitive inoltroEsito/paypal_inoltroEsito/paypal and avanzamentoPagamento?idPagamento=$activateIOPaymentResponse.paymentToken_avanzamentoPagamento with 4000 ms delay
-        Then verify the HTTP status code of inoltroEsito/paypal response is 200
-        And check esito is OK of inoltroEsito/paypal response
+        When calling primitive inoltroEsito/paypal_inoltroEsito/paypal POST and avanzamentoPagamento?idPagamento=$activateIOPaymentResponse.paymentToken_avanzamentoPagamento GET with 4000 ms delay
+        Then verify the HTTP status code of inoltroEsito/paypal response is 408
+        And check error is Operazione in timeout of inoltroEsito/paypal response
         And verify the HTTP status code of avanzamentoPagamento response is 200
-        And check esito is OK of avanzamentoPagamento response
+        And check esito is ACK_UNKNOWN of avanzamentoPagamento response
