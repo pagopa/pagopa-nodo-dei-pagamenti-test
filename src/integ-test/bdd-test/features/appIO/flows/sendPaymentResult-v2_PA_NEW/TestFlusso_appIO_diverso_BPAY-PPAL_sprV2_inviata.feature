@@ -248,12 +248,12 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
 
     # closePayment-v2 phase
     Scenario: Execute a closePayment-v2 request
         Given the Execute a nodoChiediInformazioniPagamento request scenario executed successfully
         And the pspNotifyPayment timeout scenario executed successfully
+        And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
         And the closePayment-v2 scenario executed successfully
         And paymentToken with $activateIOPaymentResponse.paymentToken in v2/closepayment
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
