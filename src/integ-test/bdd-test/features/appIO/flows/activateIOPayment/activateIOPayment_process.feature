@@ -120,7 +120,7 @@ Feature: Process checks for activateIOPayment request
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is KO of activateIOPayment response
         And check faultCode is PPT_ERRORE_EMESSO_DA_PAA of activateIOPayment response
-
+@runnable
     Scenario: Check PPT_STAZIONE_INT_PA_ERRORE_RESPONSE error [PRO_AIPR_03]
         Given initial XML paGetPayment
             """
@@ -188,7 +188,7 @@ Feature: Process checks for activateIOPayment request
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And soapenv:Body with None in paGetPayment
+        #And soapenv:Body with None in paGetPayment
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is KO of activateIOPayment response
