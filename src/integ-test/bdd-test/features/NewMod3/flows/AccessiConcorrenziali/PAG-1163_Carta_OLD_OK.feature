@@ -290,7 +290,7 @@ Feature: process tests for accessiConCorrenziali [PAG-1163_Carta_OLD_OK]
         And initial JSON inoltroEsito/carta
             """
             {
-            "idPagamento":"$ccp",
+            "idPagamento":"$sessionToken",
             "RRN":18199444,
             "identificativoPsp":"#psp#",
             "tipoVersamento":"CP",
