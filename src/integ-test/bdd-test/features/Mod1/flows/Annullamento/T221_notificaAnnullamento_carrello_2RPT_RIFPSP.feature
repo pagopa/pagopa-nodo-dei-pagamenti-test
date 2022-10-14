@@ -5,6 +5,8 @@ Feature: process tests for NotificaAnnullamento_RPT_CONPSP
 @runnable
     Scenario: RPT generation
         Given RPT generation
+        And generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
+        And generate 1 cart with PA CARRELLO and notice number $1noticeNumber
 
         """
         <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
@@ -63,7 +65,7 @@ Feature: process tests for NotificaAnnullamento_RPT_CONPSP
         <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
         <pay_i:importoTotaleDaVersare>15.00</pay_i:importoTotaleDaVersare>
         <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
-        <pay_i:identificativoUnivocoVersamento>#IUV#</pay_i:identificativoUnivocoVersamento>
+        <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
         <pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
         <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
         <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
@@ -85,6 +87,8 @@ Feature: process tests for NotificaAnnullamento_RPT_CONPSP
 @runnable
     Scenario: RPT2 generation
         Given the RPT generation scenario executed successfully
+        And generate 2 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
+
         And RPT2 generation
 
         """
@@ -144,7 +148,7 @@ Feature: process tests for NotificaAnnullamento_RPT_CONPSP
             <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
             <pay_i:importoTotaleDaVersare>15.00</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
-            <pay_i:identificativoUnivocoVersamento>#IUV2#</pay_i:identificativoUnivocoVersamento>
+            <pay_i:identificativoUnivocoVersamento>$2iuv</pay_i:identificativoUnivocoVersamento>
             <pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
@@ -174,7 +178,7 @@ Feature: process tests for NotificaAnnullamento_RPT_CONPSP
             <ppt:intestazioneCarrelloPPT>
                 <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
                 <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
-                <identificativoCarrello>CARRELLO16213</identificativoCarrello>
+                <identificativoCarrello>$1carrello</identificativoCarrello>
             </ppt:intestazioneCarrelloPPT>
         </soapenv:Header>
         <soapenv:Body>
@@ -186,13 +190,13 @@ Feature: process tests for NotificaAnnullamento_RPT_CONPSP
                 <listaRPT>
                     <elementoListaRPT>
                     <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-                    <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
+                    <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
                     <codiceContestoPagamento>CCD01</codiceContestoPagamento>
-                    <rpt>$rptAttachment</rpt>
+                    <rpt>$rpt1Attachment</rpt>
                     </elementoListaRPT>
                     <elementoListaRPT>
                     <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-                    <identificativoUnivocoVersamento>$2IUV</identificativoUnivocoVersamento>
+                    <identificativoUnivocoVersamento>$2iuv</identificativoUnivocoVersamento>
                     <codiceContestoPagamento>CCD01</codiceContestoPagamento>
                     <rpt>$rpt2Attachment</rpt>
                     </elementoListaRPT>
