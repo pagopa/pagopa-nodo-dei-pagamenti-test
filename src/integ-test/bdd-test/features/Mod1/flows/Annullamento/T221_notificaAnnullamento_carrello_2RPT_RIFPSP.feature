@@ -2,7 +2,7 @@ Feature: process tests for NotificaAnnullamento_RPT_CONPSP
 
     Background:
         Given systems up
-
+@runnable
     Scenario: RPT generation
         Given RPT generation
 
@@ -82,7 +82,7 @@ Feature: process tests for NotificaAnnullamento_RPT_CONPSP
         </pay_i:datiVersamento>
         </pay_i:RPT>
         """
-
+@runnable
     Scenario: RPT2 generation
         Given the RPT generation scenario executed successfully
         And RPT2 generation
@@ -163,7 +163,7 @@ Feature: process tests for NotificaAnnullamento_RPT_CONPSP
         </pay_i:datiVersamento>
         </pay_i:RPT>
         """
-
+@runnable
     Scenario: Execute nodoInviaCarrelloRPT request
         Given the RPT2 generation scenario executed successfully
         And initial XML nodoInviaCarrelloRPT
@@ -206,14 +206,14 @@ Feature: process tests for NotificaAnnullamento_RPT_CONPSP
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
         And retrieve session token from $nodoInviaCarrelloRPTResponse.url
 
-    
+@runnable    
     Scenario: Execute nodoNotificaAnnullamento
         Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
         When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken&motivoAnnullamento=RIFPSP to nodo-dei-pagamenti
         Then verify the HTTP status code of notificaAnnullamento response is 200
         #And check esito is OK of notificaAnnullamento response
 
-
+@runnable 
     Scenario: Execution test T221_notificaAnnullamento_carrello_2RPT_RIFPSP
         Given the Execute nodoNotificaAnnullamento scenario executed successfully
         When job paInviaRt triggered after 5 seconds
