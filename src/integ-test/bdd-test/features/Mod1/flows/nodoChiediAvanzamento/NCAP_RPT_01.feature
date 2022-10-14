@@ -4,7 +4,7 @@ Feature: NCAP
 
     Background:
         Given systems up
-@runnable
+
     Scenario: RPT generation
         Given nodo-dei-pagamenti has config parameter useCountChiediAvanzamento set to true
         And nodo-dei-pagamenti has config parameter maxChiediAvanzamento set to 3
@@ -86,7 +86,7 @@ Feature: NCAP
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-@runnable
+
     Scenario: Execute nodoInviaRPT request
         Given the RPT generation scenario executed successfully
         And initial XML pspInviaRPT
@@ -146,7 +146,7 @@ Feature: NCAP
         And verify 0 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query position_payment on db nodo_online under macro Mod1
         And verify 0 record for the table POSITION_STATUS retrived by the query position_payment on db nodo_online under macro Mod1
         And verify 0 record for the table POSITION_STATUS_SNAPSHOT retrived by the query position_payment on db nodo_online under macro Mod1
-@runnable
+
     Scenario: Execute nodoChiediAvanzamentoPagamento
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends REST GET avanzamentoPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti

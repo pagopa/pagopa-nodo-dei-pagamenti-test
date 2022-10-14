@@ -2,7 +2,7 @@ Feature: process tests for NotificaAnnullamento_RPT_CONPSP
 
     Background:
         Given systems up
-    @runnable
+
     Scenario: RPT1 generation
         Given RPT1 generation
         And generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
@@ -84,7 +84,7 @@ Feature: process tests for NotificaAnnullamento_RPT_CONPSP
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-    @runnable
+  
     Scenario: RPT2 generation
         Given the RPT1 generation scenario executed successfully
         And generate 2 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
@@ -166,7 +166,7 @@ Feature: process tests for NotificaAnnullamento_RPT_CONPSP
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-    @runnable
+
     Scenario: Execute nodoInviaCarrelloRPT request
         Given the RPT2 generation scenario executed successfully
         And initial XML nodoInviaCarrelloRPT
