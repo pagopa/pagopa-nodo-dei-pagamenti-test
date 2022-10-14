@@ -189,6 +189,17 @@ Feature: revision checks for sendPaymentOutcomeV2
                 "timestampOperation": "2033-04-23T18:25:43Z",
                 "additionalPaymentInformations": {
                     "key": "12345678"
+                },
+                "additionalPMInfo": {
+                    "user": {
+                        "fullName": "John Doe",
+                        "type": "F",
+                        "fiscalCode": "JHNDOE00A01F205N",
+                        "notificationEmail": "john.doe@mail.it",
+                        "userId": 1234,
+                        "userStatus": 11,
+                        "userStatusDescription": "REGISTERED_SPID"
+                    }
                 }
             }
             """
