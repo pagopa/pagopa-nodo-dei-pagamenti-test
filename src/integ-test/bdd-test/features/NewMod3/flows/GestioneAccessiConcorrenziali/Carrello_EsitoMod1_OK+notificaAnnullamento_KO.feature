@@ -90,8 +90,8 @@ Feature: process tests for Gestione Accessi Concorrenziali
       <pspInviaCarrelloRPTResponse>
       <delay>8000</delay>
       <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-      <identificativoCarrello>$nodoInviaCarrelloRPT.identificativoUnivocoVersamento</identificativoCarrello>
-      <parametriPagamentoImmediato>idBruciatura=$nodoInviaCarrelloRPT.identificativoUnivocoVersamento</parametriPagamentoImmediato>
+      <identificativoCarrello>$IUV</identificativoCarrello>
+      <parametriPagamentoImmediato>idBruciatura=$IUV</parametriPagamentoImmediato>
       </pspInviaCarrelloRPTResponse>
       </ws:pspInviaCarrelloRPTResponse>
       </soapenv:Body>
