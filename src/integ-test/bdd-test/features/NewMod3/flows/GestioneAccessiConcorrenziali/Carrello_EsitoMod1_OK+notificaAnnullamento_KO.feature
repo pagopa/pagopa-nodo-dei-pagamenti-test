@@ -127,7 +127,7 @@ Feature: process tests for Gestione Accessi Concorrenziali
       </soapenv:Envelope>
       """
     When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
-    Then check esito is OK of nodoInviaCarrelloRPT response
+    Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
     And retrieve session token from $nodoInviaCarrelloRPTResponse.url
     And check substring acardste in url content of nodoInviaCarrelloRPT response
 
