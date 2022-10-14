@@ -10,10 +10,10 @@ Feature: process tests for nodoPAChiediInformativaPA
             <soapenv:Header/>
             <soapenv:Body>
                 <ws:nodoPAChiediInformativaPA>
-                    <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
-                    <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
+                    <identificativoIntermediarioPA>90000000001</identificativoIntermediarioPA>
+                    <identificativoStazioneIntermediarioPA>90000000001_01</identificativoStazioneIntermediarioPA>
                     <password>pwdpwdpwd</password>
-                    <identificativoDominio>#intermediarioPA#</identificativoDominio>
+                    <identificativoDominio>90000000001</identificativoDominio>
                 </ws:nodoPAChiediInformativaPA>
             </soapenv:Body>
             </soapenv:Envelope>
