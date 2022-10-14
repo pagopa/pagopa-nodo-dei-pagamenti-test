@@ -147,23 +147,23 @@ Feature: process tests for DB_GR_27
     When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
 
-  Scenario: Poller Annulli
-    Given the Execute activatePaymentNotice request scenario executed successfully
-    When job mod3CancelV2 triggered after 3 seconds
-    Then verify the HTTP status code of mod3CancelV2 response is 200
+ # Scenario: Poller Annulli
+    #Given the Execute activatePaymentNotice request scenario executed successfully
+    #When job mod3CancelV2 triggered after 3 seconds
+    #Then verify the HTTP status code of mod3CancelV2 response is 200
 
   # Payment Outcome Phase outcome OK
   Scenario: Execute sendPaymentOutcome request
-    Given the Poller Annulli scenario executed successfully
+    Given the Execute activatePaymentNotice request scenario executed successfully
     And initial XML sendPaymentOutcome
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
       <soapenv:Header/>
       <soapenv:Body>
       <nod:sendPaymentOutcomeReq>
-      <idPSP>#psp#</idPSP>
-      <idBrokerPSP>60000000001</idBrokerPSP>
-      <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
+      <idPSP>70000000001</idPSP>
+      <idBrokerPSP>70000000001</idBrokerPSP>
+      <idChannel>70000000001_01</idChannel>
       <password>pwdpwdpwd</password>
       <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
       <outcome>OK</outcome>
@@ -196,13 +196,13 @@ Feature: process tests for DB_GR_27
     Then check outcome is KO of sendPaymentOutcome response
     
 
-   Scenario: trigger jobs paSendRt
-    Given the Execute sendPaymentOutcome request scenario executed successfully
-    When job paSendRt triggered after 5 seconds
-    Then verify the HTTP status code of paSendRt response is 200
+   #Scenario: trigger jobs paSendRt
+    #Given the Execute sendPaymentOutcome request scenario executed successfully
+    #When job paSendRt triggered after 5 seconds
+    #Then verify the HTTP status code of paSendRt response is 200
 
   Scenario: DB check + db update
-    Given the trigger jobs paSendRt scenario executed successfully
+    Given the Execute sendPaymentOutcome request executed successfully
     And verify 0 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
     And update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with N, with where condition OBJ_ID and where value ('13','1201') under macro update_query on db nodo_cfg
     
