@@ -155,5 +155,5 @@ Feature: process tests for Gestione Accessi Concorrenziali
     Then verify the HTTP status code of inoltroEsito/mod1 response is 200
     And check esito is KO of inoltroEsito/mod1 response
     And check descrizione is Risposta negativa del Canale of inoltroEsito/mod1 response
-    And check substring RIFPSP in url content of inoltroEsito/mod1 response
+    And check errorCode is RIFPSP of inoltroEsito/mod1 response
     And check esito is OK of notificaAnnullamento response
