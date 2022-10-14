@@ -111,7 +111,6 @@ Feature: process tests for DB_GR_19
       <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
       <transferCategory>paGetPaymentTest</transferCategory>
       </transfer>
-      <transfer>
       </transferList>
       <!--Optional:-->
       <metadata>
