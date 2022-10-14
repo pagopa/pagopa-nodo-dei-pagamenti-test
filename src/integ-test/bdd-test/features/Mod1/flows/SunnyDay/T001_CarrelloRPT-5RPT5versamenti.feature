@@ -2,7 +2,7 @@ Feature: process tests for 5 RPT 5 Versamenti
 
     Background:
         Given systems up
-
+@runnable
     Scenario: RPT generation
         Given RPT generation
             """
@@ -125,7 +125,7 @@ Feature: process tests for 5 RPT 5 Versamenti
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-
+@runnable
     Scenario: RPT2 generation
         Given the RPT generation scenario executed successfully
         And RPT2 generation
@@ -250,7 +250,7 @@ Feature: process tests for 5 RPT 5 Versamenti
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-
+@runnable
     Scenario: RPT3 generation
         Given the RPT2 generation scenario executed successfully
         And RPT3 generation
@@ -375,7 +375,7 @@ Feature: process tests for 5 RPT 5 Versamenti
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-
+@runnable
     Scenario: RPT4 generation
         Given the RPT3 generation scenario executed successfully
         And RPT4 generation
@@ -499,7 +499,7 @@ Feature: process tests for 5 RPT 5 Versamenti
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-
+@runnable
     Scenario: RPT5 generation
         Given the RPT4 scenario executed successfully
         And RPT5 generation
@@ -623,7 +623,7 @@ Feature: process tests for 5 RPT 5 Versamenti
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-
+@runnable
     Scenario: Execute nodoInviaCarrelloRPT request
         Given the RPT5 generation scenario executed successfully
         And initial XML nodoInviaCarrelloRPT
