@@ -56,7 +56,7 @@ Feature: process tests for Retry_DB_GR_29
       <expirationTime>6000</expirationTime>
       <amount>17.00</amount>
       <dueDate>2021-12-31</dueDate>
-      <paymentNote>responseFull3Transfers</paymentNote>
+      <paymentNote>responseFull2Transfers</paymentNote>
       </nod:activatePaymentNoticeReq>
       </soapenv:Body>
       </soapenv:Envelope>
@@ -122,14 +122,6 @@ Feature: process tests for Retry_DB_GR_29
       <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
       <transferCategory>paGetPaymentTest</transferCategory>
       </transfer>
-      <transfer>
-      <idTransfer>3</idTransfer>
-      <transferAmount>4.00</transferAmount>
-      <fiscalCodePA>90000000001</fiscalCodePA>
-      <IBAN>IT45R0760103200000000001016</IBAN>
-      <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
-      <transferCategory>paGetPaymentTest</transferCategory>
-      </transfer>
       </transferList>
       <!--Optional:-->
       <metadata>
@@ -150,7 +142,7 @@ Feature: process tests for Retry_DB_GR_29
 
   Scenario: Poller Annulli
     Given the Execute activatePaymentNotice request scenario executed successfully
-    When job mod3CancelV2 triggered after 6 seconds
+    When job mod3CancelV2 triggered after 3 seconds
     Then verify the HTTP status code of mod3CancelV2 response is 200
 
   # Payment Outcome Phase outcome OK
