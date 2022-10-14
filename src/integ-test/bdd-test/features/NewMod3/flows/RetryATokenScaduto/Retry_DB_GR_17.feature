@@ -220,7 +220,6 @@ Feature: process tests for Retry_DB_GR_17
     And checks the value $creditor_reference_id of the record at column CREDITOR_REFERENCE_ID of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_status_n on db nodo_online under macro NewMod3
     And checks the value $payment_token of the record at column PAYMENT_TOKEN of the table POSITION_PAYMENT retrived by the query position_status_n on db nodo_online under macro NewMod3
     And checks the value $recipient_pa_fiscal_code of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_status_n on db nodo_online under macro NewMod3
-    And checks the value $recipient_broker_pa_id of the record at column BROKER_PA_ID of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_status_n on db nodo_online under macro NewMod3
     And checks the value $recipient_station_id of the record at column STATION_ID of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_status_n on db nodo_online under macro NewMod3
     
    
