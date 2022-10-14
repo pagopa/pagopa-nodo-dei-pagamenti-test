@@ -5,7 +5,7 @@ Feature: process tests for REGR_retryTokenScaduto_OK
     And EC old version
 
   Scenario: Execute verifyPaymentNotice request
-      Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 00
+      Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
       And generate 1 cart with PA #creditor_institution_code_old# and notice number $1noticeNumber
       And initial XML verifyPaymentNotice
         """
@@ -31,6 +31,42 @@ Feature: process tests for REGR_retryTokenScaduto_OK
 
   Scenario: Execute activatePaymentNotice request
     Given the Execute verifyPaymentNotice request scenario executed successfully
+    And initial XML paaAttivaRPT
+    """
+    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">   
+        <soapenv:Header/>   
+        <soapenv:Body>       
+            <ws:paaAttivaRPTRisposta>           
+                <paaAttivaRPTRisposta>               
+                    <esito>OK</esito>               
+                    <datiPagamentoPA>                   
+                        <importoSingoloVersamento>12.34</importoSingoloVersamento>                   
+                        <ibanAccredito>IT45R0760103200000000001016</ibanAccredito>                   
+                        <bicAccredito>BSCTCH22</bicAccredito>                   
+                        <enteBeneficiario>                       
+                            <pag:identificativoUnivocoBeneficiario>                           
+                                <pag:tipoIdentificativoUnivoco>G</pag:tipoIdentificativoUnivoco>                           
+                                <pag:codiceIdentificativoUnivoco>#id_station_old#</pag:codiceIdentificativoUnivoco>                       
+                            </pag:identificativoUnivocoBeneficiario>                       
+                            <pag:denominazioneBeneficiario>15376371009</pag:denominazioneBeneficiario>                       
+                            <pag:codiceUnitOperBeneficiario>15376371009_01</pag:codiceUnitOperBeneficiario>                       
+                            <pag:denomUnitOperBeneficiario>uj</pag:denomUnitOperBeneficiario>                       
+                            <pag:indirizzoBeneficiario>\"paaAttivaRPT\"</pag:indirizzoBeneficiario>                       
+                            <pag:civicoBeneficiario>j</pag:civicoBeneficiario>                       
+                            <pag:capBeneficiario>gt</pag:capBeneficiario>                       
+                            <pag:localitaBeneficiario>gw</pag:localitaBeneficiario>                       
+                            <pag:provinciaBeneficiario>ds</pag:provinciaBeneficiario>                       
+                            <pag:nazioneBeneficiario>UK</pag:nazioneBeneficiario>                   
+                        </enteBeneficiario>                   
+                        <credenzialiPagatore>i</credenzialiPagatore>                   
+                        <causaleVersamento>prova/RFDB/$1iuv/TXT/</causaleVersamento>               
+                    </datiPagamentoPA>           
+                </paaAttivaRPTRisposta>       
+            </ws:paaAttivaRPTRisposta>   
+        </soapenv:Body>
+    </soapenv:Envelope>
+    """
+    And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
     And initial XML activatePaymentNotice
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -64,20 +100,6 @@ Feature: process tests for REGR_retryTokenScaduto_OK
 
   Scenario: Execute nodoInviaRPT request
     Given the trigger poller annulli scenario executed successfully
-    And initial XML paaAttivaRPT 
-        """
-        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">
-            <soapenv:Header/>
-            <soapenv:Body>
-                <ws:paaAttivaRPTRisposta>
-                    <paaAttivaRPTRisposta>
-                        <esito>OK</esito>
-                    </paaAttivaRPTRisposta>
-                </ws:paaAttivaRPTRisposta>
-            </soapenv:Body>
-        </soapenv:Envelope>
-        """
-    And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
     And RPT1 generation
         """
         <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
@@ -215,7 +237,7 @@ Feature: process tests for REGR_retryTokenScaduto_OK
         <outcome>OK</outcome>
         <details>
         <paymentMethod>creditCard</paymentMethod>
-        paymentChannel>app</paymentChannel>
+        <paymentChannel>app</paymentChannel>
         <fee>2.00</fee>
         <payer>
         <uniqueIdentifier>
@@ -243,8 +265,9 @@ Feature: process tests for REGR_retryTokenScaduto_OK
     And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcome response
     And wait 5 seconds for expiration
 
-    And checks the value Y of the record at column PAAATTIVARPTRESP of the table RPT_ACTIVATIONS retrived by the query token on db nodo_cfg under macro NewMod3
-    And checks the value N of the record at column NODOINVIARPTREQ of the table RPT_ACTIVATIONS retrived by the query token on db nodo_cfg under macro NewMod3
+    And replace token content with $activatePaymentNoticeResponse.paymentToken-v2 content
+    And checks the value Y of the record at column PAAATTIVARPTRESP of the table RPT_ACTIVATIONS retrived by the query token on db nodo_online under macro NewMod3
+    And checks the value N of the record at column NODOINVIARPTREQ of the table RPT_ACTIVATIONS retrived by the query token on db nodo_online under macro NewMod3
 
 
   Scenario: RPT2 generation
