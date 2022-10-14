@@ -250,7 +250,7 @@ Feature: process tests for accessiConCorrenziali [PAG-1163_Carta_OLD_OK]
             <idBrokerPSP>#psp#</idBrokerPSP>
             <idChannel>#canale#</idChannel>
             <password>pwdpwdpwd</password>
-            <paymentToken>$activateIOPaymentResponse.paymentToken</paymentToken>
+            <paymentToken>$sessionToken</paymentToken>
             <outcome>OK</outcome>
             <!--Optional:-->
             <details>
@@ -290,7 +290,7 @@ Feature: process tests for accessiConCorrenziali [PAG-1163_Carta_OLD_OK]
         And initial JSON inoltroEsito/carta
             """
             {
-            "idPagamento":"$activateIOPaymentResponse.paymentToken",
+            "idPagamento":"$sessionToken",
             "RRN":18199444,
             "identificativoPsp":"#psp#",
             "tipoVersamento":"CP",
