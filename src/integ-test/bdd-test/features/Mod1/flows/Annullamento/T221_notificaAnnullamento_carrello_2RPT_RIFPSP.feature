@@ -174,7 +174,7 @@ Feature: process tests for NotificaAnnullamento_RPT_CONPSP
             <ppt:intestazioneCarrelloPPT>
                 <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
                 <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
-                <identificativoCarrello>#CARRELLO1#</identificativoCarrello>
+                <identificativoCarrello>CARRELLO16213</identificativoCarrello>
             </ppt:intestazioneCarrelloPPT>
         </soapenv:Header>
         <soapenv:Body>
