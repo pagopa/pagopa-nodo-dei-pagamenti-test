@@ -3,8 +3,8 @@ Feature: process tests for NotificaAnnullamento_RPT_CONPSP
     Background:
         Given systems up
 @runnable
-    Scenario: RPT generation
-        Given RPT generation
+    Scenario: RPT1 generation
+        Given RPT1 generation
         And generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
         And generate 1 cart with PA CARRELLO and notice number $1noticeNumber
 
@@ -86,9 +86,8 @@ Feature: process tests for NotificaAnnullamento_RPT_CONPSP
         """
 @runnable
     Scenario: RPT2 generation
-        Given the RPT generation scenario executed successfully
+        Given the RPT1 generation scenario executed successfully
         And generate 2 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
-        And generate 1 cart with PA CARRELLO and notice number $1noticeNumber
         And RPT2 generation
 
         """
