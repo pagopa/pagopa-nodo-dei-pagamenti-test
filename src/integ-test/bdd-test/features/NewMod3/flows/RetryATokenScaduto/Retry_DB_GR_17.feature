@@ -55,7 +55,7 @@ Feature: process tests for Retry_DB_GR_17
       <expirationTime>6000</expirationTime>
       <amount>17.00</amount>
       <dueDate>2021-12-31</dueDate>
-      <paymentNote>mandatory</paymentNote>
+      <paymentNote>responseFull3Transfers</paymentNote>
       </nod:activatePaymentNoticeReq>
       </soapenv:Body>
       </soapenv:Envelope>
