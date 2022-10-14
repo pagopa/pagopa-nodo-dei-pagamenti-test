@@ -54,7 +54,7 @@ Feature: process tests for Retry_DB_GR_29
       <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
       </qrCode>
       <expirationTime>6000</expirationTime>
-      <amount>17.00</amount>
+      <amount>13.00</amount>
       <dueDate>2021-12-31</dueDate>
       <paymentNote>responseFull2Transfers</paymentNote>
       </nod:activatePaymentNoticeReq>
@@ -71,7 +71,7 @@ Feature: process tests for Retry_DB_GR_29
       <outcome>OK</outcome>
       <data>
       <creditorReferenceId>$iuv</creditorReferenceId>
-      <paymentAmount>17.00</paymentAmount>
+      <paymentAmount>13.00</paymentAmount>
       <dueDate>2021-12-31</dueDate>
       <!--Optional:-->
       <retentionDate>2021-12-31T12:12:12</retentionDate>
