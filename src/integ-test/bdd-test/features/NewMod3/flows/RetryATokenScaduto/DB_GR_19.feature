@@ -1,15 +1,13 @@
-Feature: process tests for DB_GR_26
+Feature: process tests for DB_GR_19
 
   Background:
     Given systems up
-    And update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with Y, with where condition OBJ_ID and where value ('13','1201') under macro update_query on db nodo_cfg
+    
 
-  Scenario: job refresh pa (1)
-    Given refresh job PA triggered after 10 seconds
+
 
   Scenario: initial verifyPaymentNotice
-    Given the job refresh pa (1) scenario executed successfully
-    And initial XML verifyPaymentNotice
+    Given initial XML verifyPaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
       <soapenv:Header/>
@@ -55,7 +53,7 @@ Feature: process tests for DB_GR_26
       <expirationTime>6000</expirationTime>
       <amount>17.00</amount>
       <dueDate>2021-12-31</dueDate>
-      <paymentNote>responseFull3Transfers</paymentNote>
+      <paymentNote>mandatory1</paymentNote>
       </nod:activatePaymentNoticeReq>
       </soapenv:Body>
       </soapenv:Envelope>
@@ -107,28 +105,13 @@ Feature: process tests for DB_GR_26
       <!--1 to 5 repetitions:-->
       <transfer>
       <idTransfer>1</idTransfer>
-      <transferAmount>10.00</transferAmount>
-      <fiscalCodePA>66666666666</fiscalCodePA>
-      <IBAN>IT45R0760103200000000001016</IBAN>
-      <remittanceInformation>testPaGetPayment</remittanceInformation>
-      <transferCategory>paGetPaymentTest</transferCategory>
-      </transfer>
-      <transfer>
-      <idTransfer>2</idTransfer>
-      <transferAmount>3.00</transferAmount>
+      <transferAmount>17.00</transferAmount>
       <fiscalCodePA>90000000001</fiscalCodePA>
       <IBAN>IT45R0760103200000000001016</IBAN>
       <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
       <transferCategory>paGetPaymentTest</transferCategory>
       </transfer>
       <transfer>
-      <idTransfer>3</idTransfer>
-      <transferAmount>4.00</transferAmount>
-      <fiscalCodePA>90000000002</fiscalCodePA>
-      <IBAN>IT45R0760103200000000001016</IBAN>
-      <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
-      <transferCategory>paGetPaymentTest</transferCategory>
-      </transfer>
       </transferList>
       <!--Optional:-->
       <metadata>
@@ -203,8 +186,7 @@ Feature: process tests for DB_GR_26
 
   Scenario: DB check + db update
     Given the trigger jobs paSendRt scenario executed successfully
-    And verify 3 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
-    And update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with N, with where condition OBJ_ID and where value ('13','1201') under macro update_query on db nodo_cfg
+    And verify 1 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
     And execution query position_receipt_recipient_status to get value on the table POSITION_RECEIPT_RECIPIENT, with the columns * under macro NewMod3 with db name nodo_online
     And through the query position_receipt_recipient_status retrieve param pa_fiscal_code at position 1 and save it under the key pa_fiscal_code
     And through the query position_receipt_recipient_status retrieve param notice_id at position 2 and save it under the key notice_id
@@ -252,12 +234,10 @@ Feature: process tests for DB_GR_26
     And checks the value $activatePaymentNotice.fiscalCode of the record at column RECIPIENT_BROKER_PA_ID of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
     And checks the value $recipient_station_id of the record at column RECIPIENT_STATION_ID of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
     And checks the value NOTICE_GENERATED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
-    And verify 3 record for the table POSITION_RECEIPT_XML retrived by the query payment_status on db nodo_online under macro NewMod3
+    And verify 1 record for the table POSITION_RECEIPT_XML retrived by the query payment_status on db nodo_online under macro NewMod3
   
   
-  Scenario: job refresh pa (2)
-    Given the DB check + db update scenario executed successfully
-    Then refresh job PA triggered after 10 seconds
+  
 
 
 
