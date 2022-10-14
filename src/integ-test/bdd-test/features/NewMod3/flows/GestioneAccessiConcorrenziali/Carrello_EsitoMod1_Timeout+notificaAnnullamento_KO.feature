@@ -147,5 +147,5 @@ Feature: process tests for Gestione Accessi Concorrenziali
     Then verify the HTTP status code of inoltroEsito/mod1 response is 200
     And check esito is KO of inoltroEsito/mod1 response
     And check descrizione is Operazione in timeout of inoltroEsito/mod1 response
-    And check error field exists in inoltroEsito/mod1 response
+    And check errorCode field exists in inoltroEsito/mod1 response
     And check error is Il Pagamento indicato non esiste of notificaAnnullamento response
