@@ -396,12 +396,12 @@ Feature: revision checks for sendPaymentOutcomeV2
     Scenario: pspNotifyPayment timeout
         Given initial XML pspNotifyPayment
             """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:psp="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pfn="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
             <soapenv:Header/>
             <soapenv:Body>
-            <psp:pspNotifyPaymentRes>
-            <delay>60000</delay>
-            </psp:pspNotifyPaymentRes>
+            <pfn:pspNotifyPaymentRes>
+            <delay>10000</delay>
+            </pfn:pspNotifyPaymentRes>
             </soapenv:Body>
             </soapenv:Envelope>
             """
@@ -545,7 +545,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         And the informazioniPagamento scenario executed successfully
         And the pspNotifyPayment timeout scenario executed successfully
         And the closePaymentV2 scenario executed successfully
-        And wait 60 seconds for expiration
+        And wait 15 seconds for expiration
         And the sendPaymentOutcomeV2 scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
