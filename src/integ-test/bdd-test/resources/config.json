@@ -7,7 +7,8 @@
         "soap_service": "/webservices/input",
         "rest_service": "",
         "refresh_config_service": "/config/refresh/CONFIG"
-      }, 
+      },
+
       "mock-ec": {
          "url": "http://localhost:8089/",
          "healthcheck": "servizi/PagamentiTelematiciRPT/info",
