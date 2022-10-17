@@ -337,7 +337,7 @@ Scenario: Check DB1
     And check value $xml_rt.anagraficaPagatore is equal to value $xml_rpt.anagraficaPagatore
     And check value $xml_rt.identificativoUnivocoVersamento is equal to value $xml_rpt.identificativoUnivocoVersamento
     And check value $xml_rt.CodiceContestoPagamento is equal to value $xml_rpt.codiceContestoPagamento
-    And check value $xml_rt.identificativoUnivocoRiscossione is equal to value $activatePaymentNoticeResponse.paymentToken
+    #And check value $xml_rt.identificativoUnivocoRiscossione is equal to value $activatePaymentNoticeResponse.paymentToken
     And check value $xml_rt.causaleVersamento is equal to value $xml_rpt.causaleVersamento
     And check value $xml_rt.datiSpecificiRiscossione is equal to value $xml_rpt.datiSpecificiRiscossione
     #Assigning XML_CONTENT query result to
