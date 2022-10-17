@@ -2,7 +2,7 @@ Feature: process tests for nodoPAChiediInformativaPA
 
     Background:
         Given systems up
-
+@runnable
     Scenario: Send nodoPAChiediInformativaPA
         Given initial XML nodoPAChiediInformativaPA
             """
@@ -19,4 +19,4 @@ Feature: process tests for nodoPAChiediInformativaPA
             </soapenv:Envelope>
             """
         When PSP sends SOAP nodoPAChiediInformativaPA to nodo-dei-pagamenti
-        Then check xmlInformativa field not exists in nodoPAChiediInformativaPA response
+        Then check xmlInformativa field exists in nodoPAChiediInformativaPA response
