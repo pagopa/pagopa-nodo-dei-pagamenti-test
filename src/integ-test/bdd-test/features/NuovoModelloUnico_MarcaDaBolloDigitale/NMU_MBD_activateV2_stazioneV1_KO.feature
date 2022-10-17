@@ -14,7 +14,7 @@ Feature: activatePaymentNoticeV2Request with MBD flow OK
                 "positionslist": [
                     {
                         "fiscalCode": "#creditor_institution_code#",
-                        "noticeNumber": "311#iuv#"
+                        "noticeNumber": "310#iuv#"
                     }
                 ]
             }
@@ -32,9 +32,9 @@ Feature: activatePaymentNoticeV2Request with MBD flow OK
             <soapenv:Header/>
             <soapenv:Body>
             <nod:activatePaymentNoticeV2Request>
-            <idPSP>#psp#</idPSP>
-            <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
-            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
+            <idPSP>#pspEcommerce#</idPSP>
+            <idBrokerPSP>#brokerEcommerce#</idBrokerPSP>
+            <idChannel>#canaleEcommerce#</idChannel>
             <password>#password#</password>
             <idempotencyKey>#idempotency_key#</idempotencyKey>
             <qrCode>
