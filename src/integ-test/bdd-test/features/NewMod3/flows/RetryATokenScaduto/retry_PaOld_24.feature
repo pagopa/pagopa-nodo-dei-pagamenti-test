@@ -229,7 +229,7 @@ Feature: process tests for retry a token scaduto (retry_PaOd_24)
   # test execution
   Scenario: Execution test rety_PaOld_24
     Given the Execute nodoInviaRPT request scenario executed successfully
-    And wait 10 seconds
+    And wait 10 seconds for expiration
     Then execution query payment_status to get value on the table POSITION_PAYMENT, with the columns FK_PAYMENT_PLAN,RPT_ID,AMOUNT,CHANNEL_ID,PAYMENT_CHANNEL,PAYER_ID,PAYMENT_METHOD,FEE,INSERTED_TIMESTAMP,APPLICATION_DATE,TRANSFER_DATE under macro NewMod3 with db name nodo_online
     And execution query rpt_id to get value on the table RPT, with the columns ID under macro NewMod3 with db name nodo_online
     And execution query position_receipt to get value on the table POSITION_PAYMENT_PLAN, with the columns ID,METADATA under macro NewMod3 with db name nodo_online
