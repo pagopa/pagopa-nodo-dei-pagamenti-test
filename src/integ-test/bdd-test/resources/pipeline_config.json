@@ -9,7 +9,7 @@
       "refresh_config_service": "/config/refresh/CONFIG"
     },
     "mock-ec": {
-      "url": "https://api.dev.platform.pagopa.it/mock-ec/api/v1",
+      "url": "http://10.70.66.200/secondary-mock-ec-sit/servizi/PagamentiTelematiciRPT",
       "healthcheck": "/info",
       "soap_service": "",
       "rest_service": ""

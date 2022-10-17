@@ -358,7 +358,7 @@ Feature: process tests for REGR_retryTokenScaduto_OK
                   <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
                   <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
                   <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
-                  <codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken</codiceContestoPagamento>
+                  <codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken-v2</codiceContestoPagamento>
               </ppt:intestazionePPT>
           </soapenv:Header>
           <soapenv:Body>
