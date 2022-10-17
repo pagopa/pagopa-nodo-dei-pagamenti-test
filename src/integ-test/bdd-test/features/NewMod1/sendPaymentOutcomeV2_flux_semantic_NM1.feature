@@ -40,7 +40,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
             <fiscalCode>#creditor_institution_code#</fiscalCode>
             <noticeNumber>311$iuv</noticeNumber>
             </qrCode>
-            <expirationTime>60000</expirationTime>
+            <expirationTime>120000</expirationTime>
             <amount>10.00</amount>
             <paymentNote>responseFull</paymentNote>
             </nod:activatePaymentNoticeV2Request>
