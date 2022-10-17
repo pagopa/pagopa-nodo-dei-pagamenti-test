@@ -39,7 +39,7 @@ Feature: activatePaymentNoticeV2Request with MBD flow OK
             <idempotencyKey>#idempotency_key#</idempotencyKey>
             <qrCode>
             <fiscalCode>#creditor_institution_code#</fiscalCode>
-            <noticeNumber>311$iuv</noticeNumber>
+            <noticeNumber>310$iuv</noticeNumber>
             </qrCode>
             <expirationTime>6000</expirationTime>
             <amount>10.00</amount>
@@ -55,7 +55,7 @@ Feature: activatePaymentNoticeV2Request with MBD flow OK
             <paf:paGetPaymentV2Response>
             <outcome>OK</outcome>
             <data>
-            <creditorReferenceId>11$iuv</creditorReferenceId>
+            <creditorReferenceId>10$iuv</creditorReferenceId>
             <paymentAmount>10.00</paymentAmount>
             <dueDate>2021-12-30</dueDate>
             <!--Optional:-->
