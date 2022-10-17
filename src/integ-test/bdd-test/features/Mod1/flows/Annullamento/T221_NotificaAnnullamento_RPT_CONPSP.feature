@@ -81,7 +81,7 @@ Feature: process tests for NotificaAnnullamento_RPT_CONPSP
       </pay_i:RPT>
       """
 
-@runnable
+
     Scenario: Execute nodoInviaRPT request
         Given initial XML nodoInviaRPT
 

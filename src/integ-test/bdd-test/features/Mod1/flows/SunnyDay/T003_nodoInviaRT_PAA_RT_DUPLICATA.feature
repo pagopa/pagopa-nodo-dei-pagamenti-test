@@ -2,7 +2,7 @@ Feature: process tests for nodoInviaRT_PAA_RT_DUPLICATA
 
     Background:
         Given systems up
-
+@runnable
     Scenario: RPT generation
         Given RPT generation
             """
@@ -81,7 +81,7 @@ Feature: process tests for nodoInviaRT_PAA_RT_DUPLICATA
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-
+@runnable
     Scenario: Execute nodoInviaRPT request
         Given the RPT generation scenario executed successfully
         And initial XML nodoInviaRPT
@@ -127,7 +127,7 @@ Feature: process tests for nodoInviaRT_PAA_RT_DUPLICATA
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
 
-
+@runnable
     Scenario: RT generation
         Given the Execute nodoInviaRPT request scenario executed successfully
         And RT generation
@@ -217,7 +217,7 @@ Feature: process tests for nodoInviaRT_PAA_RT_DUPLICATA
             </pay_i:datiPagamento>
             </pay_i:RT>
             """
-
+@runnable
     Scenario: Execute nodoInviaRT request
         Given the RT generation scenario executed successfully
         And initial XML nodoInviaRT
