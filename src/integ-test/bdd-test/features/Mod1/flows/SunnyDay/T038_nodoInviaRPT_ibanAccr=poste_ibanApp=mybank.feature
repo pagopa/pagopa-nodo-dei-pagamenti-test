@@ -123,6 +123,7 @@ Feature: process tests for nodoInviaRT_ibanAccr_ibanAdd
             </soapenv:Body>
             </soapenv:Envelope>
             """
+        And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
 
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
