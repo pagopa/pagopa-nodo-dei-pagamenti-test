@@ -187,7 +187,9 @@ Feature: process tests for retry a token scaduto (retry_PaOld_30)
 
 Scenario: Check DB1
     Given the Execute paInviaRT scenario executed successfully
-    Then checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query stati_rpt_snapshot on db nodo_online under macro NewMod3
+    Then execution query stati_rpt_snapshot to get value on the table STATI_RPT_SNAPSHOT, with the columns STATO under macro NewMod3 with db name nodo_online
+    And through the query stati_rpt_snapshot retrieve param STATO at position 0 and save it under the key STATO
+    And check value RT_ACCETTATA_PA is equal to value $STATO
 
 
   # Payment Outcome Phase outcome KO
@@ -238,7 +240,7 @@ Scenario: Check DB1
   
 
   # test execution
-  Scenario: Execution test rety_PaOld_24
+  Scenario: Execution test rety_PaOld_30
     Given the Execute sendPaymentOutcome request scenario executed successfully
     And wait 5 seconds for expiration
     Then execution query payment_status to get value on the table POSITION_PAYMENT, with the columns FK_PAYMENT_PLAN,RPT_ID,AMOUNT,CHANNEL_ID,PAYMENT_CHANNEL,PAYER_ID,PAYMENT_METHOD,FEE,INSERTED_TIMESTAMP,APPLICATION_DATE,TRANSFER_DATE under macro NewMod3 with db name nodo_online
