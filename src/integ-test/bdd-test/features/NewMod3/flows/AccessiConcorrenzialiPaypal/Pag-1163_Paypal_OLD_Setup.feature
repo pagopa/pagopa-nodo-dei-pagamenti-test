@@ -1,4 +1,4 @@
-Feature: DB checks for nodoInoltraEsitoPagamentoPaypal on old PA
+Feature: Pag-1163_Paypal_OLD_Setup
 
       Background:
          Given systems up

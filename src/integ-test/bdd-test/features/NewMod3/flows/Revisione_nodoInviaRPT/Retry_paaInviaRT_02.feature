@@ -413,7 +413,6 @@ Feature: process tests for nodoInviaRPT [Retry_paaInviaRT_02]
         And check value $prx_xml.fiscalCode is equal to value $pp1_pa_fiscal_code
         And check value $prx_xml.outcome is equal to value $pp1_outcome
         And check value $prx_xml.creditorReferenceId is equal to value $pp1_creditor_reference_id
-        #And check value $prx_xml.paymentAmount is equal to value $pp1_amount
         And check value $prx_xml.description is equal to value $ps_description
         And check value $prx_xml.companyName is equal to value $ps_company_name
         And check value $prx_xml.entityUniqueIdentifierType is equal to value $pss_entity_unique_identifier_type
@@ -425,9 +424,7 @@ Feature: process tests for nodoInviaRPT [Retry_paaInviaRT_02]
         And check value $prx_xml.city is equal to value $pss_city
         And check value $prx_xml.stateProvinceRegion is equal to value $pss_state_province_region
         And check value $prx_xml.country is equal to value $pss_country
-        #And check value $prx_xml.e-mail is equal to value $pss_email
         And check value $prx_xml.idTransfer is equal to value $pt_transfer_identifier
-        #And check value $prx_xml.transferAmount is equal to value $pt_amount
         And check value $prx_xml.fiscalCodePA is equal to value $pt_pa_fiscal_code_secondary
         And check value $prx_xml.IBAN is equal to value $pt_iban
         And check value $prx_xml.remittanceInformation is equal to value $pt_remittance_information

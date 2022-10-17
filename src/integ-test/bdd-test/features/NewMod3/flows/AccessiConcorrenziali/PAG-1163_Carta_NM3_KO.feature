@@ -252,7 +252,7 @@ Feature: process tests for accessiConCorrenziali [PAG-1163_Carta_NM3_KO]
             </soapenv:Envelope>
             """
         And saving inoltroEsito/cartaJSON request in inoltroEsito/carta
-        When calling primitive inoltroEsito/carta_inoltroEsito/carta and sendPaymentOutcome_sendPaymentOutcome with 5000 ms delay
+        When calling primitive inoltroEsito/carta_inoltroEsito/carta POST and sendPaymentOutcome_sendPaymentOutcome POST with 5000 ms delay
         Then verify the HTTP status code of inoltroEsito/carta response is 200
         And check esito is KO of inoltroEsito/carta response
         And check outcome is KO of sendPaymentOutcome response

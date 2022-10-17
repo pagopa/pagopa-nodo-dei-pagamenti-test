@@ -302,7 +302,6 @@ Feature: process tests for retry a token scaduto
       </pay_i:RPT>
       """
       
-  @prova
   Scenario: Execute nodoInviaRPT2 request
     Given the Define RPT2 scenario executed successfully
     And initial XML nodoInviaRPT
@@ -310,9 +309,9 @@ Feature: process tests for retry a token scaduto
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
       <soapenv:Header>
       <ppt:intestazionePPT>
-      <identificativoIntermediarioPA>$activatePaymentNotice.fiscalCode</identificativoIntermediarioPA>
-      <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
-      <identificativoDominio>$activatePaymentNotice.fiscalCode</identificativoDominio>
+      <identificativoIntermediarioPA>66666666666</identificativoIntermediarioPA>
+      <identificativoStazioneIntermediarioPA>66666666666_06</identificativoStazioneIntermediarioPA>
+      <identificativoDominio>66666666666</identificativoDominio>
       <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
       <codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken-v2</codiceContestoPagamento>
       </ppt:intestazionePPT>
@@ -333,8 +332,8 @@ Feature: process tests for retry a token scaduto
     Then check esito is KO of nodoInviaRPT response
     And check faultCode is PPT_SEMANTICA of nodoInviaRPT response
 
-  Scenario: DB check
-    Given the Execute sendPaymentOutcome request scenario executed successfully
+ Scenario: DB check
+    Given the Execute nodoInviaRPT2 request scenario executed successfully
     And wait 5 seconds for expiration
     #STATI
     Then checks the value PAYING,PAYING_RPT,CANCELLED of the record at column status of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3

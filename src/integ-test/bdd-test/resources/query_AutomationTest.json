@@ -87,7 +87,9 @@
         "id_sessione_originale": "SELECT columns FROM table_name WHERE ID_SESSIONE_ORIGINALE = '$sessionToken' OR INFO like '%$sessionToken%' order by DATA_ORA_EVENTO asc",
         "position_recipient_transfer": "SELECT s.* FROM POSITION_RECEIPT_TRANSFER s JOIN POSITION_TRANSFER pt ON pt.ID = s.FK_POSITION_TRANSFER WHERE pt.NOTICE_ID = '$activatePaymentNotice.noticeNumber' AND pt.PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode'",
         "position_receipt1": "SELECT s.ID FROM POSITION_RECEIPT s WHERE s.NOTICE_ID ='$activatePaymentNotice.noticeNumber' AND s.PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode'",
-        "position_transfer1": "SELECT s.ID FROM POSITION_TRANSFER s WHERE s.NOTICE_ID ='$activatePaymentNotice.noticeNumber' AND s.PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode'"
+        "position_transfer1": "SELECT s.ID FROM POSITION_TRANSFER s WHERE s.NOTICE_ID ='$activatePaymentNotice.noticeNumber' AND s.PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode'",
+        "token": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN = '$token'",
+        "stati_rpt_snapshot": "SELECT columns FROM table_name WHERE ID_SESSIONE = '$activatePaymentNoticeResponse.paymentToken'"
     },
     "AppIO":{
         "payment_status":"SELECT s.columns FROM table_name s WHERE s.NOTICE_ID ='$activateIOPayment.noticeNumber' AND s.PA_FISCAL_CODE = '$activateIOPayment.fiscalCode'",
@@ -183,7 +185,6 @@
         "param_update_generic_where_condition" : "UPDATE table_name SET param WHERE where_condition",
         "inserted_timestamp" : "UPDATE POSITION_PAYMENT_PLAN SET INSERTED_TIMESTAMP = TO_DATE('date', 'YYYY-MM-DD') WHERE NOTICE_ID = $1noticeNumber AND PA_FISCAL_CODE = $pa",
         "updated_timestamp" : "UPDATE POSITION_PAYMENT_PLAN SET UPDATED_TIMESTAMP = TO_DATE('date', 'YYYY-MM-DD') WHERE NOTICE_ID = $1noticeNumber AND PA_FISCAL_CODE = $pa"
-
     },
     "RendicontazioneFTPeBollo":{
         "rendicontazione": "SELECT columns FROM table_name WHERE ID_FLUSSO = '$identificativoFlusso' AND DOMINIO = '$pa'",

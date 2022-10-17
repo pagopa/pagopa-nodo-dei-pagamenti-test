@@ -1,4 +1,4 @@
-Feature: DB checks for nodoChiediEsitoPagamento
+Feature: Pag-1163_Paypal_NM3_Setup
 
     Background:
         Given systems up

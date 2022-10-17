@@ -1,4 +1,4 @@
-Feature: DB checks for nodoInoltraEsitoPagamentoPaypal on old PA OK
+Feature: Pag-1163_Paypal_OLD_timeout
 
    Background:
       Given systems up
@@ -305,14 +305,14 @@ Feature: DB checks for nodoInoltraEsitoPagamentoPaypal on old PA OK
             <soapenv:Header/>
             <soapenv:Body>
                 <psp:pspNotifyPaymentRes>
-                    <delay>20000</delay>
+                    <delay>10000</delay>
                     <outcome>OK</outcome>
                 </psp:pspNotifyPaymentRes>
             </soapenv:Body>
             </soapenv:Envelope>
             """
         And saving inoltroEsito/paypalJSON request in inoltroEsito/paypal
-        When calling primitive inoltroEsito/paypal_inoltroEsito/paypal and sendPaymentOutcome_sendPaymentOutcome with 4000 ms delay
+        When calling primitive inoltroEsito/paypal_inoltroEsito/paypal POST and sendPaymentOutcome_sendPaymentOutcome POST with 4000 ms delay
         Then verify the HTTP status code of inoltroEsito/paypal response is 408
         And check error is Operazione in timeout of inoltroEsito/paypal response
         And check outcome is OK of sendPaymentOutcome response

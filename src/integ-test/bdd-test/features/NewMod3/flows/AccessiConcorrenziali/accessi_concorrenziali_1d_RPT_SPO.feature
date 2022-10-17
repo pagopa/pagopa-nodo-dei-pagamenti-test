@@ -196,7 +196,7 @@ Feature: process tests for accessiConCorrenziali [1d - RPT+SPO]
 
     Scenario: parallel calls and test scenario
         Given the Excecute second primitives request scenario executed successfully
-        And calling primitive sendPaymentOutcome_sendPaymentOutcome and nodoInviaRPT_nodoInviaRPT in parallel
+        And calling primitive sendPaymentOutcome_sendPaymentOutcome POST and nodoInviaRPT_nodoInviaRPT POST in parallel
         Then check esito is KO of nodoInviaRPT response
         And check faultCode is PPT_SINTASSI_XSD of nodoInviaRPT response
         And check outcome is OK of sendPaymentOutcome response
