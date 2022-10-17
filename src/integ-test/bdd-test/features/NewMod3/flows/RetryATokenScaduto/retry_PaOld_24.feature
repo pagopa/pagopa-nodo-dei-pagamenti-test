@@ -302,6 +302,10 @@ Feature: process tests for retry a token scaduto (retry_PaOd_24)
     And with the query position_receipt check assert beetwen elem OFFICE_NAME in position 2 and elem OFFICE_NAME with position 2 of the query position_service
     And with the query position_receipt check assert beetwen elem DEBTOR_ID in position 3 and elem DEBTOR_ID with position 3 of the query position_service
 
+    And execution query psp to get value on the table PSP, with the columns RAGIONE_SOCIALE, ID_PSP under macro NewMod3 with db name nodo_cfg
+    And through the query psp retrieve param RAGIONE_SOCIALE at position 0 and save it under the key RAGIONE_SOCIALE
+    And through the query psp retrieve param PSP_ID at position 1 and save it under the key PSP_ID
+
     # Assigning XML_CONTENT query result to
     And execution query rt_xml to get value on the table RT_XML, with the columns XML_CONTENT under macro NewMod3 with db name nodo_online
     And through the query rt_xml retrieve xml_no_decode XML_CONTENT at position 0 and save it under the key xml_rt
