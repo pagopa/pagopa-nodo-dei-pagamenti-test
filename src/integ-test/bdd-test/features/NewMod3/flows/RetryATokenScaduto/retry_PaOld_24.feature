@@ -229,6 +229,7 @@ Feature: process tests for retry a token scaduto (retry_PaOd_24)
   # test execution
   Scenario: Execution test rety_PaOld_24
     Given the Execute nodoInviaRPT request scenario executed successfully
+    And wait 10 seconds
     Then execution query payment_status to get value on the table POSITION_PAYMENT, with the columns FK_PAYMENT_PLAN,RPT_ID,AMOUNT,CHANNEL_ID,PAYMENT_CHANNEL,PAYER_ID,PAYMENT_METHOD,FEE,INSERTED_TIMESTAMP,APPLICATION_DATE,TRANSFER_DATE under macro NewMod3 with db name nodo_online
     And execution query rpt_id to get value on the table RPT, with the columns ID under macro NewMod3 with db name nodo_online
     And execution query position_receipt to get value on the table POSITION_PAYMENT_PLAN, with the columns ID,METADATA under macro NewMod3 with db name nodo_online
@@ -260,7 +261,7 @@ Feature: process tests for retry a token scaduto (retry_PaOd_24)
     #And verify 0 record for the table RPT retrived by the query rpt_id on db nodo_online under macro NewMod3
     And checks the value PAYING,CANCELLED_NORPT,PAID_NORPT,PAID,NOTICE_GENERATED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
     And verify 0 record for the table RPT_ACTIVATIONS retrived by the query payment_token_v2 on db nodo_online under macro NewMod3
-    And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO_MOD3,RPT_RISOLTA_OK,RPT_RISOLTA_OK,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query stati_rpt on db nodo_online under macro NewMod3
+    And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO_MOD3,RPT_RISOLTA_OK,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query stati_rpt on db nodo_online under macro NewMod3
     And checks the value PAYING,INSERTED,PAID,NOTICE_STORED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
     And checks the value NotNone of the record at column ID of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro NewMod3
     And checks the value $activatePaymentNotice.fiscalCode of the record at column PA_FISCAL_CODE of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro NewMod3
