@@ -95,7 +95,6 @@ Feature: activatePaymentNoticeV2Request with MBD flow OK
             <idTransfer>1</idTransfer>
             <transferAmount>10.00</transferAmount>
             <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
-            <!--IBAN>IT45R0760103200000000001016</IBAN-->
             <richiestaMarcaDaBollo>
             <hashDocumento>ciao</hashDocumento>
             <tipoBollo>01</tipoBollo>
