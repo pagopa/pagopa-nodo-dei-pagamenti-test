@@ -118,6 +118,7 @@
         "select_sprV2_old": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN = '$ccp' AND TIPO_EVENTO = 'sendPaymentResult-v2' ORDER BY ID ASC",
         "pspUpdate": "UPDATE table_name SET param = 'value' where ID_CANALE = '#canale_IMMEDIATO_MULTIBENEFICIARIO#'",
         "select_sprV2_new": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN = '$activateIOPaymentResponse.paymentToken' AND TIPO_EVENTO = 'sendPaymentResult-v2' ORDER BY ID ASC",
-        "stationUpdate": "UPDATE table_name SET param = 'value' where ID_STAZIONE = '#id_station_old#'"
+        "stationUpdate": "UPDATE table_name SET param = 'value' where ID_STAZIONE = '#id_station_old#'",
+        "position_transfer_nmu": "SELECT columns FROM table_name WHERE NOTICE_ID ='$activatePaymentNoticeV2.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNoticeV2.fiscalCode' ORDER BY ID ASC"
     }
 }
