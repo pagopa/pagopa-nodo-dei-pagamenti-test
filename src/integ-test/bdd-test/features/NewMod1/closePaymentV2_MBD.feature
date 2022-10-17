@@ -9,9 +9,9 @@ Feature: flux tests for closePaymentV2 MBD
             <soapenv:Header/>
             <soapenv:Body>
             <nod:activatePaymentNoticeV2Request>
-            <idPSP>#psp#</idPSP>
-            <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
-            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
+            <idPSP>#pspEcommerce#</idPSP>
+            <idBrokerPSP>#brokerEcommerce#</idBrokerPSP>
+            <idChannel>#canaleEcommerce#</idChannel>
             <password>#password#</password>
             <idempotencyKey>#idempotency_key#</idempotencyKey>
             <qrCode>
@@ -169,8 +169,34 @@ Feature: flux tests for closePaymentV2 MBD
             }
             """
 
-    Scenario: prova
+    Scenario: Sunny Day
         Given the closePaymentV2 scenario executed successfully
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
+
+    Scenario: Channel with VERSIONE_PRIMITIVE != 2
+        Given the closePaymentV2 scenario executed successfully
+        And idChannel with #canale_IMMEDIATO_MULTIBENEFICIARIO# in v2/closepayment
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 400
+        And check outcome is KO of v2/closepayment response
+        And check description is Invalid Canale for MBD of v2/closepayment response
+
+    # Scenario: Psp with MARCA_BOLLO_DIGITALE != 1
+        # updates through the query update_id_intermediario_pa of the table INTERMEDIARI_PA the parameter ENABLED with N under macro Mod4 on db nodo_cfg
+        # And the closePaymentV2 scenario executed successfully
+        # When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        # Then verify the HTTP status code of v2/closepayment response is 400
+        # And check outcome is KO of v2/closepayment response
+        # And check description is Invalid PSP for MBD of v2/closepayment response
+        # updates through the query update_id_intermediario_pa of the table INTERMEDIARI_PA the parameter ENABLED with N under macro Mod4 on db nodo_cfg
+
+    # Scenario: Channel with MARCA_BOLLO_DIGITALE != Y
+        # updates through the query update_id_intermediario_pa of the table INTERMEDIARI_PA the parameter ENABLED with N under macro Mod4 on db nodo_cfg
+        # And the closePaymentV2 scenario executed successfully
+        # When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        # Then verify the HTTP status code of v2/closepayment response is 400
+        # And check outcome is KO of v2/closepayment response
+        # And check description is Invalid Canale for MBD of v2/closepayment response
+        # updates through the query update_id_intermediario_pa of the table INTERMEDIARI_PA the parameter ENABLED with N under macro Mod4 on db nodo_cfg
