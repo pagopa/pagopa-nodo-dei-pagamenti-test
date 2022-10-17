@@ -136,6 +136,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2
                     "key": "12345678"
                 },
                 "additionalPMInfo": {
+                    "origin": "",
                     "user": {
                         "fullName": "John Doe",
                         "type": "F",
@@ -144,6 +145,33 @@ Feature: idempotency checks for sendPaymentOutcomeV2
                         "userId": 1234,
                         "userStatus": 11,
                         "userStatusDescription": "REGISTERED_SPID"
+                    },
+                    "walletItem": {
+                        "idWallet": 1234,
+                        "walletType": "CARD",
+                        "enableableFunctions": [],
+                        "pagoPa": false,
+                        "onboardingChannel": "",
+                        "favourite": false,
+                        "createDate": "",
+                        "info": {
+                            "type": "",
+                            "blurredNumber": "",
+                            "holder": "Mario Rossi",
+                            "expireMonth": "",
+                            "expireYear": "",
+                            "brand": "",
+                            "issuerAbi": "",
+                            "issuerName": "Intesa",
+                            "label": "********234"
+                        },
+                        "authRequest": {
+                            "authOutcome": "KO",
+                            "guid": "77e1c83b-7bb0-437b-bc50-a7a58e5660ac",
+                            "correlationId": "f864d987-3ae2-44a3-bdcb-075554495841",
+                            "error": "Not Authorized",
+                            "auth_code": "99"
+                        }
                     }
                 }
             }
@@ -171,6 +199,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2
                     "key": "12345678"
                 },
                 "additionalPMInfo": {
+                    "origin": "",
                     "user": {
                         "fullName": "John Doe",
                         "type": "F",
@@ -179,6 +208,33 @@ Feature: idempotency checks for sendPaymentOutcomeV2
                         "userId": 1234,
                         "userStatus": 11,
                         "userStatusDescription": "REGISTERED_SPID"
+                    },
+                    "walletItem": {
+                        "idWallet": 1234,
+                        "walletType": "CARD",
+                        "enableableFunctions": [],
+                        "pagoPa": false,
+                        "onboardingChannel": "",
+                        "favourite": false,
+                        "createDate": "",
+                        "info": {
+                            "type": "",
+                            "blurredNumber": "",
+                            "holder": "Mario Rossi",
+                            "expireMonth": "",
+                            "expireYear": "",
+                            "brand": "",
+                            "issuerAbi": "",
+                            "issuerName": "Intesa",
+                            "label": "********234"
+                        },
+                        "authRequest": {
+                            "authOutcome": "KO",
+                            "guid": "77e1c83b-7bb0-437b-bc50-a7a58e5660ac",
+                            "correlationId": "f864d987-3ae2-44a3-bdcb-075554495841",
+                            "error": "Not Authorized",
+                            "auth_code": "99"
+                        }
                     }
                 }
             }
