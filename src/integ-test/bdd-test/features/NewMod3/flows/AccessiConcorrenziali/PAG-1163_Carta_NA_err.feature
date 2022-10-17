@@ -190,7 +190,7 @@ Feature: DB checks for nodoChiediEsitoPagamento
             <soapenv:Header/>
             <soapenv:Body>
                 <psp:pspNotifyPaymentRes>
-                    <delay>8000</delay>
+                    <delay>7500</delay>
                 </psp:pspNotifyPaymentRes>
             </soapenv:Body>
             </soapenv:Envelope>
@@ -201,4 +201,4 @@ Feature: DB checks for nodoChiediEsitoPagamento
         Then verify the HTTP status code of notificaAnnullamento response is 404
         And verify the HTTP status code of inoltroEsito/carta response is 408
         And check error is Operazione in timeout of inoltroEsito/carta response
-        And check error is Il pagamento indicato non esiste of notificaAnnullamento response
+        And check error is Il Pagamento indicato non esiste of notificaAnnullamento response

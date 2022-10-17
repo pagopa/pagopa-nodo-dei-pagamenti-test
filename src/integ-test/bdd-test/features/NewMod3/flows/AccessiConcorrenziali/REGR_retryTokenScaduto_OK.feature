@@ -4,56 +4,92 @@ Feature: process tests for REGR_retryTokenScaduto_OK
     Given systems up
     And EC old version
 
-
-  # Verify phase
   Scenario: Execute verifyPaymentNotice request
       Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr_old#
       And generate 1 cart with PA #creditor_institution_code_old# and notice number $1noticeNumber
       And initial XML verifyPaymentNotice
-      """
-      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-      <soapenv:Header/>
-      <soapenv:Body>
-      <nod:verifyPaymentNoticeReq>
-      <idPSP>#psp#</idPSP>
-      <idBrokerPSP>#psp#</idBrokerPSP>
-      <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
-      <password>pwdpwdpwd</password>
-      <qrCode>
-      <fiscalCode>#creditor_institution_code_old#</fiscalCode>
-      <noticeNumber>$1noticeNumber</noticeNumber>
-      </qrCode>
-      </nod:verifyPaymentNoticeReq>
-      </soapenv:Body>
-      </soapenv:Envelope>
-      """
+        """
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+        <soapenv:Header/>
+        <soapenv:Body>
+        <nod:verifyPaymentNoticeReq>
+        <idPSP>#psp#</idPSP>
+        <idBrokerPSP>#psp#</idBrokerPSP>
+        <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
+        <password>pwdpwdpwd</password>
+        <qrCode>
+        <fiscalCode>#creditor_institution_code_old#</fiscalCode>
+        <noticeNumber>$1noticeNumber</noticeNumber>
+        </qrCode>
+        </nod:verifyPaymentNoticeReq>
+        </soapenv:Body>
+        </soapenv:Envelope>
+        """
     When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of verifyPaymentNotice response
 
 
   Scenario: Execute activatePaymentNotice request
     Given the Execute verifyPaymentNotice request scenario executed successfully
+    And initial XML paaAttivaRPT
+    """
+    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">   
+        <soapenv:Header/>   
+        <soapenv:Body>       
+            <ws:paaAttivaRPTRisposta>           
+                <paaAttivaRPTRisposta>               
+                    <esito>OK</esito>               
+                    <datiPagamentoPA>                   
+                        <importoSingoloVersamento>12.34</importoSingoloVersamento>                   
+                        <ibanAccredito>IT45R0760103200000000001016</ibanAccredito>                   
+                        <bicAccredito>BSCTCH22</bicAccredito>                   
+                        <enteBeneficiario>                       
+                            <pag:identificativoUnivocoBeneficiario>                           
+                                <pag:tipoIdentificativoUnivoco>G</pag:tipoIdentificativoUnivoco>                           
+                                <pag:codiceIdentificativoUnivoco>#id_station_old#</pag:codiceIdentificativoUnivoco>                       
+                            </pag:identificativoUnivocoBeneficiario>                       
+                            <pag:denominazioneBeneficiario>15376371009</pag:denominazioneBeneficiario>                       
+                            <pag:codiceUnitOperBeneficiario>15376371009_01</pag:codiceUnitOperBeneficiario>                       
+                            <pag:denomUnitOperBeneficiario>uj</pag:denomUnitOperBeneficiario>                       
+                            <pag:indirizzoBeneficiario>\"paaAttivaRPT\"</pag:indirizzoBeneficiario>                       
+                            <pag:civicoBeneficiario>j</pag:civicoBeneficiario>                       
+                            <pag:capBeneficiario>gt</pag:capBeneficiario>                       
+                            <pag:localitaBeneficiario>gw</pag:localitaBeneficiario>                       
+                            <pag:provinciaBeneficiario>ds</pag:provinciaBeneficiario>                       
+                            <pag:nazioneBeneficiario>UK</pag:nazioneBeneficiario>                   
+                        </enteBeneficiario>                   
+                        <credenzialiPagatore>i</credenzialiPagatore>                   
+                        <causaleVersamento>prova/RFDB/$1iuv/TXT/</causaleVersamento>               
+                    </datiPagamentoPA>           
+                </paaAttivaRPTRisposta>       
+            </ws:paaAttivaRPTRisposta>   
+        </soapenv:Body>
+    </soapenv:Envelope>
+    """
+    And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
     And initial XML activatePaymentNotice
-      """
-      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-      <soapenv:Header/>
-      <soapenv:Body>
-      <nod:activatePaymentNoticeReq>
-      <idPSP>#psp#</idPSP>
-      <idBrokerPSP>#psp#</idBrokerPSP>
-      <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
-      <password>pwdpwdpwd</password>
-      <idempotencyKey>#idempotency_key#</idempotencyKey>
-      <qrCode>
-      <fiscalCode>#creditor_institution_code_old#</fiscalCode>
-      <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
-      </qrCode>
-      <expirationTime>1000</expirationTime>
-      <amount>12.34</amount>
-      </nod:activatePaymentNoticeReq>
-      </soapenv:Body>
-      </soapenv:Envelope>
-      """
+        """
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+        <soapenv:Header/>
+        <soapenv:Body>
+        <nod:activatePaymentNoticeReq>
+        <idPSP>#psp#</idPSP>
+        <idBrokerPSP>#psp#</idBrokerPSP>
+        <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
+        <password>pwdpwdpwd</password>
+        <idempotencyKey>#idempotency_key#</idempotencyKey>
+        <qrCode>
+        <fiscalCode>#creditor_institution_code_old#</fiscalCode>
+        <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
+        </qrCode>
+        <expirationTime>1000</expirationTime>
+        <amount>12.34</amount>
+        <dueDate>#date#</dueDate>
+        <paymentNote>causale/$1noticeNumber/nuovoMod3</paymentNote>
+        </nod:activatePaymentNoticeReq>
+        </soapenv:Body>
+        </soapenv:Envelope>
+        """
     When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
 
   Scenario: trigger poller annulli
@@ -62,23 +98,8 @@ Feature: process tests for REGR_retryTokenScaduto_OK
     And wait 7 seconds for expiration
     Then verify the HTTP status code of mod3CancelV1 response is 200
 
-  # nodoInviaRPT phase
   Scenario: Execute nodoInviaRPT request
     Given the trigger poller annulli scenario executed successfully
-    And initial XML paaAttivaRPT 
-    """
-    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">
-        <soapenv:Header/>
-        <soapenv:Body>
-            <ws:paaAttivaRPTRisposta>
-                <paaAttivaRPTRisposta>
-                    <esito>OK</esito>
-                </paaAttivaRPTRisposta>
-            </ws:paaAttivaRPTRisposta>
-        </soapenv:Body>
-    </soapenv:Envelope>
-    """
-    And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
     And RPT1 generation
         """
         <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
@@ -157,95 +178,96 @@ Feature: process tests for REGR_retryTokenScaduto_OK
         </pay_i:RPT>
         """
     And initial XML nodoInviaRPT
-      """
-        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-        <soapenv:Header>
-            <ppt:intestazionePPT>
-                <identificativoIntermediarioPA>#id_broker_old#</identificativoIntermediarioPA>
-                <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
-                <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
-                <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
-                <codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken</codiceContestoPagamento>
-            </ppt:intestazionePPT>
-        </soapenv:Header>
+        """
+          <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+          <soapenv:Header>
+              <ppt:intestazionePPT>
+                  <identificativoIntermediarioPA>#id_broker_old#</identificativoIntermediarioPA>
+                  <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
+                  <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
+                  <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
+                  <codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken</codiceContestoPagamento>
+              </ppt:intestazionePPT>
+          </soapenv:Header>
+          <soapenv:Body>
+              <ws:nodoInviaRPT>
+                  <password>pwdpwdpwd</password>
+                  <identificativoPSP>15376371009</identificativoPSP>
+                  <identificativoIntermediarioPSP>15376371009</identificativoIntermediarioPSP>
+                  <identificativoCanale>15376371009_01</identificativoCanale>
+                  <tipoFirma></tipoFirma>
+                  <rpt>$rpt1Attachment</rpt>
+              </ws:nodoInviaRPT>
+          </soapenv:Body>
+          </soapenv:Envelope>
+        """
+    And initial XML pspInviaRPT
+        """
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+        <soapenv:Header/>
         <soapenv:Body>
-            <ws:nodoInviaRPT>
-                <password>pwdpwdpwd</password>
-                <identificativoPSP>15376371009</identificativoPSP>
-                <identificativoIntermediarioPSP>15376371009</identificativoIntermediarioPSP>
-                <identificativoCanale>15376371009_01</identificativoCanale>
-                <tipoFirma></tipoFirma>
-                <rpt>$rpt1Attachment</rpt>
-            </ws:nodoInviaRPT>
+        <ws:pspInviaRPTResponse>
+        <pspInviaRPTResponse>
+        <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+        <identificativoCarrello>$activatePaymentNoticeResponse.paymentToken</identificativoCarrello>
+        <parametriPagamentoImmediato>idBruciatura=$activatePaymentNoticeResponse.paymentToken</parametriPagamentoImmediato>
+        </pspInviaRPTResponse>
+        </ws:pspInviaRPTResponse>
         </soapenv:Body>
         </soapenv:Envelope>
-      """
-    And initial XML pspInviaRPT
-      """
-      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-      <soapenv:Header/>
-      <soapenv:Body>
-      <ws:pspInviaRPTResponse>
-      <pspInviaRPTResponse>
-      <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-      <identificativoCarrello>$activatePaymentNoticeResponse.paymentToken</identificativoCarrello>
-      <parametriPagamentoImmediato>idBruciatura=$activatePaymentNoticeResponse.paymentToken</parametriPagamentoImmediato>
-      </pspInviaRPTResponse>
-      </ws:pspInviaRPTResponse>
-      </soapenv:Body>
-      </soapenv:Envelope>
-      """
+        """
     And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
     When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
     Then check esito is OK of nodoInviaRPT response
 
 
-  # Payment Outcome Phase outcome OK
   Scenario: Execute sendPaymentOutcome request
     Given the Execute nodoInviaRPT request scenario executed successfully
     And initial XML sendPaymentOutcome
-      """
-      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-      <soapenv:Header/>
-      <soapenv:Body>
-      <nod:sendPaymentOutcomeReq>
-      <idPSP>#psp#</idPSP>
-      <idBrokerPSP>#psp#</idBrokerPSP>
-      <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
-      <password>pwdpwdpwd</password>
-      <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
-      <outcome>OK</outcome>
-      <details>
-      <paymentMethod>creditCard</paymentMethod>
-      <fee>2.00</fee>
-      <payer>
-      <uniqueIdentifier>
-      <entityUniqueIdentifierType>F</entityUniqueIdentifierType>
-      <entityUniqueIdentifierValue>CF payer</entityUniqueIdentifierValue>
-      </uniqueIdentifier>
-      <fullName>John Doe</fullName>
-      <streetName>street</streetName>
-      <civicNumber>12</civicNumber>
-      <postalCode>89020</postalCode>
-      <city>city</city>
-      <stateProvinceRegion>MI</stateProvinceRegion>
-      <country>IT</country>
-      <e-mail>john.doe@test.it</e-mail>
-      </payer>
-      <applicationDate>2021-10-01</applicationDate>
-      <transferDate>2021-10-02</transferDate>
-      </details>
-      </nod:sendPaymentOutcomeReq>
-      </soapenv:Body>
-      </soapenv:Envelope>
-      """
+        """
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+        <soapenv:Header/>
+        <soapenv:Body>
+        <nod:sendPaymentOutcomeReq>
+        <idPSP>#psp#</idPSP>
+        <idBrokerPSP>#psp#</idBrokerPSP>
+        <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
+        <password>pwdpwdpwd</password>
+        <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
+        <outcome>OK</outcome>
+        <details>
+        <paymentMethod>creditCard</paymentMethod>
+        <paymentChannel>app</paymentChannel>
+        <fee>2.00</fee>
+        <payer>
+        <uniqueIdentifier>
+        <entityUniqueIdentifierType>F</entityUniqueIdentifierType>
+        <entityUniqueIdentifierValue>CF payer</entityUniqueIdentifierValue>
+        </uniqueIdentifier>
+        <fullName>John Doe</fullName>
+        <streetName>street</streetName>
+        <civicNumber>12</civicNumber>
+        <postalCode>89020</postalCode>
+        <city>city</city>
+        <stateProvinceRegion>MI</stateProvinceRegion>
+        <country>IT</country>
+        <e-mail>john.doe@test.it</e-mail>
+        </payer>
+        <applicationDate>2021-10-01</applicationDate>
+        <transferDate>2021-10-02</transferDate>
+        </details>
+        </nod:sendPaymentOutcomeReq>
+        </soapenv:Body>
+        </soapenv:Envelope>
+        """
     When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is KO of sendPaymentOutcome response
     And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcome response
     And wait 5 seconds for expiration
 
-    And checks the value Y of the record at column PAAATTIVARPTRESP of the table RPT_ACTIVATIONS retrived by the query token on db nodo_cfg under macro NewMod3
-    And checks the value N of the record at column NODOINVIARPTREQ of the table RPT_ACTIVATIONS retrived by the query token on db nodo_cfg under macro NewMod3
+    And replace token content with $activatePaymentNoticeResponse.paymentToken-v2 content
+    And checks the value Y of the record at column PAAATTIVARPTRESP of the table RPT_ACTIVATIONS retrived by the query token on db nodo_online under macro NewMod3
+    And checks the value N of the record at column NODOINVIARPTREQ of the table RPT_ACTIVATIONS retrived by the query token on db nodo_online under macro NewMod3
 
 
   Scenario: RPT2 generation
@@ -328,44 +350,44 @@ Feature: process tests for REGR_retryTokenScaduto_OK
         </pay_i:RPT>
         """ 
     And initial XML nodoInviaRPT
-      """
-        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-        <soapenv:Header>
-            <ppt:intestazionePPT>
-                <identificativoIntermediarioPA>#id_broker_old#</identificativoIntermediarioPA>
-                <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
-                <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
-                <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
-                <codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken</codiceContestoPagamento>
-            </ppt:intestazionePPT>
-        </soapenv:Header>
+        """
+          <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+          <soapenv:Header>
+              <ppt:intestazionePPT>
+                  <identificativoIntermediarioPA>#id_broker_old#</identificativoIntermediarioPA>
+                  <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
+                  <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
+                  <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
+                  <codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken</codiceContestoPagamento>
+              </ppt:intestazionePPT>
+          </soapenv:Header>
+          <soapenv:Body>
+              <ws:nodoInviaRPT>
+                  <password>pwdpwdpwd</password>
+                  <identificativoPSP>15376371009</identificativoPSP>
+                  <identificativoIntermediarioPSP>15376371009</identificativoIntermediarioPSP>
+                  <identificativoCanale>15376371009_01</identificativoCanale>
+                  <tipoFirma></tipoFirma>
+                  <rpt>$rpt1Attachment</rpt>
+              </ws:nodoInviaRPT>
+          </soapenv:Body>
+          </soapenv:Envelope>
+        """
+    And initial XML pspInviaRPT
+        """
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+        <soapenv:Header/>
         <soapenv:Body>
-            <ws:nodoInviaRPT>
-                <password>pwdpwdpwd</password>
-                <identificativoPSP>15376371009</identificativoPSP>
-                <identificativoIntermediarioPSP>15376371009</identificativoIntermediarioPSP>
-                <identificativoCanale>15376371009_01</identificativoCanale>
-                <tipoFirma></tipoFirma>
-                <rpt>$rpt1Attachment</rpt>
-            </ws:nodoInviaRPT>
+        <ws:pspInviaRPTResponse>
+        <pspInviaRPTResponse>
+        <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+        <identificativoCarrello>$activatePaymentNoticeResponse.paymentToken</identificativoCarrello>
+        <parametriPagamentoImmediato>idBruciatura=$activatePaymentNoticeResponse.paymentToken</parametriPagamentoImmediato>
+        </pspInviaRPTResponse>
+        </ws:pspInviaRPTResponse>
         </soapenv:Body>
         </soapenv:Envelope>
-      """
-    And initial XML pspInviaRPT
-      """
-      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-      <soapenv:Header/>
-      <soapenv:Body>
-      <ws:pspInviaRPTResponse>
-      <pspInviaRPTResponse>
-      <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-      <identificativoCarrello>$activatePaymentNoticeResponse.paymentToken</identificativoCarrello>
-      <parametriPagamentoImmediato>idBruciatura=$activatePaymentNoticeResponse.paymentToken</parametriPagamentoImmediato>
-      </pspInviaRPTResponse>
-      </ws:pspInviaRPTResponse>
-      </soapenv:Body>
-      </soapenv:Envelope>
-      """
+        """
     And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
     When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
     Then check esito is OK of nodoInviaRPT response

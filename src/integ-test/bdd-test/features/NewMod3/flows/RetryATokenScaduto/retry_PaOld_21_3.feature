@@ -252,7 +252,7 @@ Feature: process tests for retry a token scaduto
       <pay_i:soggettoPagatore>
       <pay_i:identificativoUnivocoPagatore>
       <pay_i:tipoIdentificativoUnivoco>F</pay_i:tipoIdentificativoUnivoco>
-      <pay_i:codiceIdentificativoUnivoco>RCCGLD09P09H501E</pay_i:codiceIdentificativoUnivoco>
+      <pay_i:codiceIdentificativoUnivoco>FDCRLD06P89H521E</pay_i:codiceIdentificativoUnivoco>
       </pay_i:identificativoUnivocoPagatore>
       <pay_i:anagraficaPagatore>Gesualdo;Riccitelli</pay_i:anagraficaPagatore>
       <pay_i:indirizzoPagatore>via del gesu</pay_i:indirizzoPagatore>

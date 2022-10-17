@@ -3,7 +3,7 @@ Feature: process tests for Gestione Accessi Concorrenziali
   Background:
     Given systems up
 
-  Scenario: EsitoMod1_OK+notificaAnnullamento_KO (part 1)
+  Scenario: Carrello_EsitoMod1_KO+notificaAnnullamento_OK (part 1)
     Given RPT generation
       """
       <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
@@ -63,7 +63,7 @@ Feature: process tests for Gestione Accessi Concorrenziali
       <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
       <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
       <pay_i:identificativoUnivocoVersamento>#IUV#</pay_i:identificativoUnivocoVersamento>
-      <pay_i:codiceContestoPagamento>sleepOK</pay_i:codiceContestoPagamento>
+      <pay_i:codiceContestoPagamento>sleepKO</pay_i:codiceContestoPagamento>
       <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
       <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
       <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -81,53 +81,63 @@ Feature: process tests for Gestione Accessi Concorrenziali
       </pay_i:datiVersamento>
       </pay_i:RPT>
       """
-    And initial XML nodoInviaRPT
-      """
-      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-      <soapenv:Header>
-      <ppt:intestazionePPT>
-      <identificativoIntermediarioPA>#creditor_institution_code_old#</identificativoIntermediarioPA>
-      <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
-      <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
-      <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
-      <codiceContestoPagamento>sleepOK</codiceContestoPagamento>
-      </ppt:intestazionePPT>
-      </soapenv:Header>
-      <soapenv:Body>
-      <ws:nodoInviaRPT>
-      <password>pwdpwdpwd</password>
-      <identificativoPSP>#psp_AGID#</identificativoPSP>
-      <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
-      <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
-      <tipoFirma/>
-      <rpt>$rptAttachment</rpt>
-      </ws:nodoInviaRPT>
-      </soapenv:Body>
-      </soapenv:Envelope>
-      """
-    When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-    Then check esito is OK of nodoInviaRPT response
-    And retrieve session token from $nodoInviaRPTResponse.url
-
-  Scenario: EsitoMod1_OK+notificaAnnullamento_KO (part 2)
-    Given the EsitoMod1_OK+notificaAnnullamento_KO (part 1) scenario executed successfully
-    And initial XML pspInviaRPT
+    And initial XML pspInviaCarrelloRPT
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
       <soapenv:Header/>
       <soapenv:Body>
-      <ws:pspInviaRPTResponse>
-      <pspInviaRPTResponse>
+      <ws:pspInviaCarrelloRPTResponse>
+      <pspInviaCarrelloRPTResponse>
       <delay>8000</delay>
-      <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-      <identificativoCarrello>$nodoInviaRPT.identificativoUnivocoVersamento</identificativoCarrello>
-      <parametriPagamentoImmediato>idBruciatura=$nodoInviaRPT.identificativoUnivocoVersamento</parametriPagamentoImmediato>
-      </pspInviaRPTResponse>
-      </ws:pspInviaRPTResponse>
+      <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
+      <listaErroriRPT>
+      <fault>
+      <faultCode>CANALE_RPT_DA_RIFIUTARE</faultCode>
+      <faultString>fault interno</faultString>
+      <id>#psp#</id>
+      </fault>
+      </listaErroriRPT>
+      </pspInviaCarrelloRPTResponse>
+      </ws:pspInviaCarrelloRPTResponse>
       </soapenv:Body>
       </soapenv:Envelope>
       """
-    And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
+    And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
+    And initial XML nodoInviaCarrelloRPT
+      """
+      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+      <soapenv:Header>
+      <ppt:intestazioneCarrelloPPT>
+      <identificativoIntermediarioPA>#creditor_institution_code_old#</identificativoIntermediarioPA>
+      <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
+      <identificativoCarrello>#CARRELLO#</identificativoCarrello>
+      </ppt:intestazioneCarrelloPPT>
+      </soapenv:Header>
+      <soapenv:Body>
+      <ws:nodoInviaCarrelloRPT>
+      <password>pwdpwdpwd</password>
+      <identificativoPSP>#psp_AGID#</identificativoPSP>
+      <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
+      <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
+      <listaRPT>
+      <elementoListaRPT>
+      <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
+      <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
+      <codiceContestoPagamento>sleepKO</codiceContestoPagamento>
+      <rpt>$rptAttachment</rpt>
+      </elementoListaRPT>
+      </listaRPT>
+      </ws:nodoInviaCarrelloRPT>
+      </soapenv:Body>
+      </soapenv:Envelope>
+      """
+    When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
+    Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
+    And retrieve session token from $nodoInviaCarrelloRPTResponse.url
+    And check substring acardste in url content of nodoInviaCarrelloRPT response
+
+  Scenario: Carrello_EsitoMod1_KO+notificaAnnullamento_OK (part 2)
+    Given the Carrello_EsitoMod1_KO+notificaAnnullamento_OK (part 1) scenario executed successfully
     When PM sends rest POST inoltroEsito/mod1 to nodo-dei-pagamenti
       """
       {
@@ -137,18 +147,13 @@ Feature: process tests for Gestione Accessi Concorrenziali
         "identificativoIntermediario": "#psp#",
         "identificativoCanale": "#canaleRtPush#",
         "tipoOperazione": "mobile",
-        "mobileToken": "sleepOK"
+        "mobileToken": "123456"
       }
       """
     And wait 2 seconds for expiration
     And PM sends rest GET notificaAnnullamento?idPagamento=$sessionToken&motivoAnnullamento=RIFPSP to nodo-dei-pagamenti
     Then verify the HTTP status code of inoltroEsito/mod1 response is 200
-    And check esito is OK of inoltroEsito/mod1 response
-    And check urlRedirectPSP field exists in inoltroEsito/mod1 response
-    And check substring wfesp-sit-npa-wfesp.ocp-tst-npaspc.sia.eu in urlRedirectPSP content of inoltroEsito/mod1 response
-    And check error is Il Pagamento indicato non esiste of notificaAnnullamento response
-
-  Scenario: EsitoMod1_OK+notificaAnnullamento_KO (part 3)
-    Given the EsitoMod1_OK+notificaAnnullamento_KO (part 2) scenario executed successfully
-    Then checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_INVIATA_A_PSP,RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT retrived by the query stati_rpt_IUV on db nodo_online under macro NewMod3
-    And verify 5 record for the table STATI_RPT retrived by the query stati_rpt_IUV on db nodo_online under macro NewMod3
+    And check esito is KO of inoltroEsito/mod1 response
+    And check descrizione is Risposta negativa del Canale of inoltroEsito/mod1 response
+    And check errorCode is RIFPSP of inoltroEsito/mod1 response
+    And check esito is OK of notificaAnnullamento response

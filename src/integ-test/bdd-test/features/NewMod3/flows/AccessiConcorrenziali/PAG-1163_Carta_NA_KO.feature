@@ -190,7 +190,7 @@ Feature: DB checks for nodoChiediEsitoPagamento
             <soapenv:Header/>
             <soapenv:Body>
                 <psp:pspNotifyPaymentRes>
-                    <delay>8000</delay>
+                    <delay>7500</delay>
                     <outcome>KO</outcome>
                     <fault>
                         <faultCode>CANALE_SEMANTICA</faultCode>
@@ -208,4 +208,5 @@ Feature: DB checks for nodoChiediEsitoPagamento
         Then verify the HTTP status code of notificaAnnullamento response is 200
         And verify the HTTP status code of inoltroEsito/carta response is 200
         And check esito is KO of inoltroEsito/carta response
+        And check descrizione is Risposta negativa del Canale of inoltroEsito/carta response
         And check esito is OK of notificaAnnullamento response
