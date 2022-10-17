@@ -293,9 +293,9 @@ Feature: process tests for retry a token scaduto (retry_PaOd_24)
     And execution query position_service to get value on the table POSITION_SERVICE, with the columns DESCRIPTION,COMPANY_NAME,OFFICE_NAME,DEBTOR_ID under macro NewMod3 with db name nodo_online
     And execution query psp to get value on the table PSP, with the columns CODICE_FISCALE,VAT_NUMBER,RAGIONE_SOCIALE under macro NewMod3 with db name nodo_cfg
     And execution query position_receipt to get value on the table POSITION_RECEIPT, with the columns PSP_FISCAL_CODE,PSP_VAT_NUMBER,PSP_COMPANY_NAME,CHANNEL_ID,CHANNEL_DESCRIPTION,PAYER_ID,PAYMENT_METHOD,FEE,PAYMENT_DATE_TIME,APPLICATION_DATE,TRANSFER_DATE,METADATA under macro NewMod3 with db name nodo_online
-    And with the query position_receipt check assert beetwen elem PSP_FISCAL_CODE in position 0 and elem CODICE_FISCALE with position 0 of the query PSP
-    And with the query position_receipt check assert beetwen elem PSP_VAT_NUMBER in position 1 and elem VAT_NUMBER with position 1 of the query PSP
-    And with the query position_receipt check assert beetwen elem PSP_COMPANY_NAME in position 2 and elem RAGIONE_SOCIALE with position 2 of the query PSP
+    And with the query position_receipt check assert beetwen elem PSP_FISCAL_CODE in position 0 and elem CODICE_FISCALE with position 0 of the query psp
+    And with the query position_receipt check assert beetwen elem PSP_VAT_NUMBER in position 1 and elem VAT_NUMBER with position 1 of the query psp
+    And with the query position_receipt check assert beetwen elem PSP_COMPANY_NAME in position 2 and elem RAGIONE_SOCIALE with position 2 of the query psp
     #And with the query position_receipt check assert beetwen elem CHANNEL_ID in posisition 3 and elem CHANNEL_ID with position 0 of the query PSP
 #da completare
 
