@@ -129,7 +129,7 @@ Feature: process tests for ChiediStato_RPT_RIFIUTATA_NODO_sintassi
                 <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
                 <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
                 <password>pwdpwdpwd</password>
-                <identificativoDominio>#codicePA#</identificativoDominio>
+                <identificativoDominio>#creditor_institution_code#</identificativoDominio>
                 <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
                 <codiceContestoPagamento>$ccp</codiceContestoPagamento>
             </ws:nodoChiediStatoRPT>
