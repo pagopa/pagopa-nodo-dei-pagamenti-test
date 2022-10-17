@@ -3,14 +3,14 @@ Feature: process tests for ChiediStato_RPT_RIFIUTATA_NODO_sintassi
     Background:
         Given systems up
 
-    
+@runnable   
     Scenario: RPT generation
         Given RPT generation
             """
                 <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
                 <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
                 <pay_i:dominio>
-                <pay_i:identificativoDominio>#codicePA#</pay_i:identificativoDominio>
+                <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
                 <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
                 </pay_i:dominio>
                 <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
@@ -83,7 +83,7 @@ Feature: process tests for ChiediStato_RPT_RIFIUTATA_NODO_sintassi
                 </pay_i:RPT>
             """
         
-
+@runnable 
 	Scenario: Execute nodoInviaRPT
 		Given the RPT generation scenario executed successfully
 		And initial XML nodoInviaRPT
@@ -93,7 +93,7 @@ Feature: process tests for ChiediStato_RPT_RIFIUTATA_NODO_sintassi
             <ppt:intestazionePPT>
                 <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
                 <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
-                <identificativoDominio>#codicePA#</identificativoDominio>
+                <identificativoDominio>#creditor_institution_code#</identificativoDominio>
                 <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
                 <codiceContestoPagamento>$ccp</codiceContestoPagamento>
             </ppt:intestazionePPT>
@@ -114,10 +114,10 @@ Feature: process tests for ChiediStato_RPT_RIFIUTATA_NODO_sintassi
         Then check faultCode is PPT_SINTASSI_XSD of nodoInviaRPT response
         And replace iuv2 content with $iuv content
         And replace 2CCP content with $ccp content
-        And replace pa content with #codicePA# content
+        And replace pa content with #creditor_institution_code# content
         And verify 0 record for the table STATI_RPT retrived by the query stati_RPT_new on db nodo_online under macro Mod1
         
-
+@runnable 
     Scenario: Execute nodoChiediStatoRPT
         Given the Execute nodoInviaRPT scenario executed successfully
         And initial XML nodoChiediStatoRPT
@@ -139,7 +139,7 @@ Feature: process tests for ChiediStato_RPT_RIFIUTATA_NODO_sintassi
         When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
         Then check faultCode is PPT_RPT_SCONOSCIUTA of nodoChiediStatoRPT response
        
-
+@runnable 
 	Scenario: Execute nodoInviaRPT Duplicato
 		Given the Execute nodoChiediStatoRPT scenario executed successfully
 		And initial XML nodoInviaRPT
@@ -147,9 +147,9 @@ Feature: process tests for ChiediStato_RPT_RIFIUTATA_NODO_sintassi
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
         <soapenv:Header>
         <ppt:intestazionePPT>
-            <identificativoIntermediarioPA>#codicePA#</identificativoIntermediarioPA>
+            <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
-            <identificativoDominio>#codicePA#</identificativoDominio>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$ccp</codiceContestoPagamento>
         </ppt:intestazionePPT>
