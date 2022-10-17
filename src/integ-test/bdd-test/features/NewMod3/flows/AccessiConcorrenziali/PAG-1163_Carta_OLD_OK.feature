@@ -111,12 +111,12 @@ Feature: process tests for accessiConCorrenziali [PAG-1163_Carta_OLD_OK]
                </soapenv:Body>
             </soapenv:Envelope>
             """
-         When IO sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
+         When EC sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
          Then check esito is OK of nodoAttivaRPT response
 
       Scenario: RPT generation
          Given the Execute nodoAttivaRPT request scenario executed successfully
-         And RPT generation
+         And RPT1 generation
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
@@ -212,7 +212,7 @@ Feature: process tests for accessiConCorrenziali [PAG-1163_Carta_OLD_OK]
                      <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
                      <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
                      <tipoFirma></tipoFirma>
-                     <rpt>$rptAttachment</rpt>
+                     <rpt>$rpt1Attachment</rpt>
                   </ws:nodoInviaRPT>
                </soapenv:Body>
             </soapenv:Envelope>
