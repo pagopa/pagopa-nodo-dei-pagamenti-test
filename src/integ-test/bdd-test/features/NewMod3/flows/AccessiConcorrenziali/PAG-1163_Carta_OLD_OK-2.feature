@@ -310,7 +310,6 @@ Feature: Pag-1163_Paypal_OLD_OK
             <soapenv:Body>
             <ws:pspInviaCarrelloRPTCarteResponse>
             <pspInviaCarrelloRPTResponse>
-            <delay>7500</delay>
             <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
             <identificativoCarrello>$1iuv</identificativoCarrello>
             <parametriPagamentoImmediato>idBruciatura=$1iuv</parametriPagamentoImmediato>
