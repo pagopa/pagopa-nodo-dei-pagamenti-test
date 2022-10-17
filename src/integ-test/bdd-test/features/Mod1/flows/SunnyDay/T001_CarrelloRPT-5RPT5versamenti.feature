@@ -641,7 +641,7 @@ Feature: process tests for 5 RPT 5 Versamenti
         <password>pwdpwdpwd</password>
         <identificativoPSP>40000000001</identificativoPSP>
         <identificativoIntermediarioPSP>40000000001</identificativoIntermediarioPSP>
-        <identificativoCanale>90000000001_03</identificativoCanale>
+        <identificativoCanale>#canale#</identificativoCanale>
         <listaRPT>
             <elementoListaRPT>
                 <identificativoDominio>44444444444</identificativoDominio>
