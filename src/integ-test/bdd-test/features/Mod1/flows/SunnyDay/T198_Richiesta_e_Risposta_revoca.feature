@@ -62,7 +62,7 @@ Feature: process tests for nodoInviaRT
                 <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
                 <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
                 <pay_i:identificativoUnivocoVersamento>#IUV#</pay_i:identificativoUnivocoVersamento>
-                <pay_i:codiceContestoPagamento>#ccp1#</pay_i:codiceContestoPagamento>
+                <pay_i:codiceContestoPagamento>#1ccp#</pay_i:codiceContestoPagamento>
                 <pay_i:ibanAddebito>IT45R0760103200000000001016</pay_i:ibanAddebito>
                 <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
                 <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -157,7 +157,7 @@ Feature: process tests for nodoInviaRT
                 <pay_i:codiceEsitoPagamento>0</pay_i:codiceEsitoPagamento>
                 <pay_i:importoTotalePagato>10.00</pay_i:importoTotalePagato>
                 <pay_i:identificativoUnivocoVersamento>$IUV</pay_i:identificativoUnivocoVersamento>
-                <pay_i:CodiceContestoPagamento>$ccp1</pay_i:CodiceContestoPagamento>
+                <pay_i:CodiceContestoPagamento>$1ccp</pay_i:CodiceContestoPagamento>
                 <pay_i:datiSingoloPagamento>
                     <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
                     <pay_i:esitoSingoloPagamento>ACCEPTED</pay_i:esitoSingoloPagamento>
@@ -228,7 +228,7 @@ Feature: process tests for nodoInviaRT
             <pay_i:datiRevoca>
                 <pay_i:importoTotaleRevocato>10.00</pay_i:importoTotaleRevocato>
                 <pay_i:identificativoUnivocoVersamento>$IUV</pay_i:identificativoUnivocoVersamento>
-                <pay_i:codiceContestoPagamento>$ccp1</pay_i:codiceContestoPagamento>
+                <pay_i:codiceContestoPagamento>$1ccp</pay_i:codiceContestoPagamento>
                 <pay_i:tipoRevoca>1</pay_i:tipoRevoca>
                 <pay_i:datiSingolaRevoca>
                     <pay_i:singoloImportoRevocato>10.00</pay_i:singoloImportoRevocato>
@@ -300,7 +300,7 @@ Feature: process tests for nodoInviaRT
             <pay_i:datiRevoca>
                 <pay_i:importoTotaleRevocato>10.00</pay_i:importoTotaleRevocato>
                 <pay_i:identificativoUnivocoVersamento>$IUV</pay_i:identificativoUnivocoVersamento>
-                <pay_i:codiceContestoPagamento>$ccp1</pay_i:codiceContestoPagamento>
+                <pay_i:codiceContestoPagamento>$1ccp</pay_i:codiceContestoPagamento>
                 <pay_i:datiSingolaRevoca>
                     <pay_i:singoloImportoRevocato>10.00</pay_i:singoloImportoRevocato>
                     <pay_i:identificativoUnivocoRiscossione>$IUV</pay_i:identificativoUnivocoRiscossione>
@@ -322,7 +322,7 @@ Feature: process tests for nodoInviaRT
             <identificativoStazioneIntermediarioPA>66666666666_01</identificativoStazioneIntermediarioPA>
             <identificativoDominio>66666666666</identificativoDominio>
             <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>$ccp1</codiceContestoPagamento>
+            <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
             </ppt:intestazionePPT>
             </soapenv:Header>
             <soapenv:Body>
@@ -371,7 +371,7 @@ Feature: process tests for nodoInviaRT
                     <identificativoPSP>60000000001</identificativoPSP>
                     <identificativoDominio>66666666666</identificativoDominio>
                     <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
-                    <codiceContestoPagamento>$ccp1</codiceContestoPagamento>
+                    <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
                     <tipoFirma></tipoFirma>
                     <forzaControlloSegno>1</forzaControlloSegno>
                     <rt>$rtAttachment</rt>
@@ -396,7 +396,7 @@ Feature: process tests for nodoInviaRT
                     <password>pwdpwdpwd</password>
                     <identificativoDominio>66666666666</identificativoDominio>
                     <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
-                    <codiceContestoPagamento>$ccp1</codiceContestoPagamento>
+                    <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
                     <rr>$rrAttachment</rr>
                 </ws:nodoInviaRichiestaRevoca>
             </soapenv:Body>
@@ -418,7 +418,7 @@ Feature: process tests for nodoInviaRT
                     <password>pwdpwdpwd</password>
                     <identificativoDominio>66666666666</identificativoDominio>
                     <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
-                    <codiceContestoPagamento>$ccp1</codiceContestoPagamento>
+                    <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
                     <er>$erAttachment</er>
                 </ws:nodoInviaRispostaRevoca>
             </soapenv:Body>
