@@ -136,7 +136,9 @@
         "select_activateio": "SELECT columns FROM table_name WHERE NOTICE_ID = '$activateIOPayment.noticeNumber' AND PA_FISCAL_CODE = '$activateIOPayment.fiscalCode'",
         "update_activateio": "UPDATE table_name SET param = 'value' WHERE NOTICE_ID = '$activateIOPayment.noticeNumber' AND PA_FISCAL_CODE = '$activateIOPayment.fiscalCode'",
         "notice_number_from_iuv": "SELECT columns FROM table_name WHERE NOTICE_ID = '002$iuv' AND PA_FISCAL_CODE = '$nodoInviaRPT.identificativoDominio'",
-        "update_notice_number_from_iuv": "UPDATE table_name SET param = 'value' WHERE NOTICE_ID = '002$iuv' AND PA_FISCAL_CODE = '$nodoInviaRPT.identificativoDominio'"
+        "update_notice_number_from_iuv": "UPDATE table_name SET param = 'value' WHERE NOTICE_ID = '002$iuv' AND PA_FISCAL_CODE = '$nodoInviaRPT.identificativoDominio'",
+        "update_id_psp": "UPDATE table_name SET param = 'value' WHERE ID_PSP = '#psp#'",
+        "update_obj_id_fk_canali_nodo": "UPDATE table_name SET param = 'value' WHERE OBJ_ID = 'SELECT FK_CANALI_NODO FROM CANALI WHERE ID_CANALE = '#canale_versione_primitive_2#''"
     },
     "Mod4": {
         "update_id_intermediario_pa": "UPDATE table_name SET param = 'value' WHERE ID_INTERMEDIARIO_PA = '77777777777'",
