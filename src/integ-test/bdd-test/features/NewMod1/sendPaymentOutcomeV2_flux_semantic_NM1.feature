@@ -717,7 +717,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
         And wait 5 seconds for expiration
-    @wip
+    
     Scenario: SEM_SPO_32 (part 4)
         Given the SEM_SPO_32 (part 3) scenario executed successfully
         And updates through the query update_PAYMENT_TOKEN_1 of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with CANCELLED under macro NewMod1 on db nodo_online
@@ -824,7 +824,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
         And wait 5 seconds for expiration
-    @wip
+    
     Scenario: SEM_SPO_35 (part 4)
         Given the SEM_SPO_35 (part 3) scenario executed successfully
         And updates through the query update_PAYMENT_TOKEN_1 of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_SENT under macro NewMod1 on db nodo_online
@@ -897,7 +897,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
         And wait 5 seconds for expiration
-    @wip
+    
     Scenario: SEM_SPO_35.2 (part 4)
         Given the SEM_SPO_35.2 (part 3) scenario executed successfully
         And updates through the query update_PAYMENT_TOKEN_1 of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYING under macro NewMod1 on db nodo_online
@@ -934,7 +934,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
         And wait 5 seconds for expiration
-    @wip
+    
     Scenario: SEM_SPO_35.3 (part 4)
         Given the SEM_SPO_35.3 (part 3) scenario executed successfully
         And updates through the query update_PAYMENT_TOKEN_1 of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_RESERVED under macro NewMod1 on db nodo_online
@@ -971,7 +971,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
         And wait 5 seconds for expiration
-    @wip
+    
     Scenario: SEM_SPO_35.4 (part 4)
         Given the SEM_SPO_35.4 (part 3) scenario executed successfully
         And updates through the query update_PAYMENT_TOKEN_1 of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_SENT under macro NewMod1 on db nodo_online
@@ -1008,7 +1008,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
         And wait 5 seconds for expiration
-    @wip
+    
     Scenario: SEM_SPO_35.5 (part 4)
         Given the SEM_SPO_35.5 (part 3) scenario executed successfully
         And updates through the query update_PAYMENT_TOKEN_1 of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_SEND_ERROR under macro NewMod1 on db nodo_online
@@ -1045,7 +1045,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
         And wait 5 seconds for expiration
-    @wip
+    
     Scenario: SEM_SPO_35.6 (part 4)
         Given the SEM_SPO_35.6 (part 3) scenario executed successfully
         And updates through the query update_PAYMENT_TOKEN_1 of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_REFUSED under macro NewMod1 on db nodo_online
