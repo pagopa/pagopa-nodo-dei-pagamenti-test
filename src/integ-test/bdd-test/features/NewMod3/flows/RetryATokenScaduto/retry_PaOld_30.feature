@@ -177,7 +177,7 @@ Feature: process tests for retry a token scaduto (retry_PaOld_30)
     When psp sends SOAP nodoInviaRPT to nodo-dei-pagamenti
     Then check esito is OK of nodoInviaRPT response
     And check redirect is 0 of nodoInviaRPT response
-    And retrieve session token from $nodoInviaRPTResponse.url
+
 
  Scenario: Execute paInviaRT
     Given the Execute nodoInviaRPT request scenario executed successfully
