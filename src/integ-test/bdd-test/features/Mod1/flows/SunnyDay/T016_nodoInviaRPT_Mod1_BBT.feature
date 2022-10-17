@@ -101,7 +101,7 @@ Feature: process tests for nodoInviaRT_Mod1_BBT
             <password>pwdpwdpwd</password>
             <identificativoPSP>40000000001</identificativoPSP>
             <identificativoIntermediarioPSP>40000000001</identificativoIntermediarioPSP>
-            <identificativoCanale>97735020584_03</identificativoCanale>
+            <identificativoCanale>97735020584_02</identificativoCanale>
             <tipoFirma></tipoFirma>
             <rpt>$rptAttachment</rpt>
             </ws:nodoInviaRPT>
