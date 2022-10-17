@@ -303,14 +303,14 @@ Feature: process tests for retry a token scaduto (retry_PaOd_24)
     And with the query position_receipt check assert beetwen elem DEBTOR_ID in position 3 and elem DEBTOR_ID with position 3 of the query position_service
 
     # Assigning XML_CONTENT query result to
-    And execution query rt_xml_v2 to get value on the table RT_XML, with the columns XML_CONTENT under macro NewMod3 with db name nodo_online
-    And through the query rt_xml_v2 retrieve xml_no_decode XML_CONTENT at position 0 and save it under the key xml_rt
+    And execution query rt_xml to get value on the table RT_XML, with the columns XML_CONTENT under macro NewMod3 with db name nodo_online
+    And through the query rt_xml retrieve xml_no_decode XML_CONTENT at position 0 and save it under the key xml_rt
     # Assigning XML_CONTENT query result to
-    And execution query rt_xml_v2 to get value on the table RPT_XML, with the columns XML_CONTENT under macro NewMod3 with db name nodo_online
-    And through the query rt_xml_v2 retrieve xml_no_decode XML_CONTENT at position 0 and save it under the key xml_rpt
+    And execution query rt_xml to get value on the table RPT_XML, with the columns XML_CONTENT under macro NewMod3 with db name nodo_online
+    And through the query rt_xml retrieve xml_no_decode XML_CONTENT at position 0 and save it under the key xml_rpt
     # Assigning XML_CONTENT query result to receipt
-    And execution query receipt_xml_v2 to get value on the table POSITION_RECEIPT_XML, with the columns XML under macro NewMod3 with db name nodo_online
-    And through the query receipt_xml_v2 retrieve xml XML_CONTENT at position 0 and save it under the key xml_receipt
+    And execution query receipt_xml to get value on the table POSITION_RECEIPT_XML, with the columns XML under macro NewMod3 with db name nodo_online
+    And through the query receipt_xml retrieve xml XML_CONTENT at position 0 and save it under the key xml_receipt
     #checks on XML
     And check value $xml_rt.identificativoDominio is equal to value $xml_rpt.identificativoDominio
     And check value $xml_rt.riferimentoMessaggioRichiesta is equal to value $xml_rpt.identificativoMessaggioRichiesta
@@ -323,8 +323,8 @@ Feature: process tests for retry a token scaduto (retry_PaOd_24)
     And check value $xml_rt.causaleVersamento is equal to value $xml_rpt.causaleVersamento
     And check value $xml_rt.datiSpecificiRiscossione is equal to value $xml_rpt.datiSpecificiRiscossione
     #Assigning XML_CONTENT query result to
-    And execution query receipt_xml_v2 to get value on the table POSITION_RECEIPT_XML, with the columns XML under macro NewMod3 with db name nodo_online
-    And through the query receipt_xml_v2 retrieve xml XML at position 0 and save it under the key xml_receipt
+    And execution query receipt_xml to get value on the table POSITION_RECEIPT_XML, with the columns XML under macro NewMod3 with db name nodo_online
+    And through the query receipt_xml retrieve xml XML at position 0 and save it under the key xml_receipt
     #POSITION_PAYMENT
     And execution query payment_status_pay to get value on the table POSITION_PAYMENT, with the columns * under macro NewMod3 with db name nodo_online
     And through the query payment_status_pay retrieve param BROKER_PA_ID at position 5 and save it under the key BROKER_PA_ID
