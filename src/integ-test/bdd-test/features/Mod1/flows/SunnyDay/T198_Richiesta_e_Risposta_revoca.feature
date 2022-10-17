@@ -357,7 +357,7 @@ Feature: process tests for nodoInviaRT
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
         And check redirect is 1 of nodoInviaRPT response
-
+@runnable
     Scenario: Execute nodoInviaRT request
         Given the Execute nodoInviaRPT request scenario executed successfully
         And initial XML nodoInviaRT
