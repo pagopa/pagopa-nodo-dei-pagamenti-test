@@ -310,7 +310,7 @@ Feature: process tests for retry a token scaduto (retry_PaOd_24)
     And through the query rt_xml retrieve xml_no_decode XML_CONTENT at position 0 and save it under the key xml_rpt
     # Assigning XML_CONTENT query result to receipt
     And execution query receipt_xml to get value on the table POSITION_RECEIPT_XML, with the columns XML under macro NewMod3 with db name nodo_online
-    And through the query receipt_xml retrieve xml XML_CONTENT at position 0 and save it under the key xml_receipt
+    And through the query receipt_xml retrieve xml XML at position 0 and save it under the key xml_receipt
     #checks on XML
     And check value $xml_rt.identificativoDominio is equal to value $xml_rpt.identificativoDominio
     And check value $xml_rt.riferimentoMessaggioRichiesta is equal to value $xml_rpt.identificativoMessaggioRichiesta
