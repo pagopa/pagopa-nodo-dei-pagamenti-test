@@ -101,7 +101,7 @@ Feature: process tests for nodoInviaRT_Mod2_AD
             <password>pwdpwdpwd</password>
             <identificativoPSP>60000000001</identificativoPSP>
             <identificativoIntermediarioPSP>60000000001</identificativoIntermediarioPSP>
-            <identificativoCanale>60000000001_04</identificativoCanale>
+            <identificativoCanale>#canale_DIFFERITO_MOD2#</identificativoCanale>
             <tipoFirma></tipoFirma>
             <rpt>$rptAttachment</rpt>
             </ws:nodoInviaRPT>
