@@ -188,9 +188,7 @@ Feature: process tests for retry a token scaduto (retry_PaOld_30)
 
 Scenario: Check DB1
     Given the Execute paInviaRT scenario executed successfully
-    Then execution query stati_rpt_snapshot to get value on the table STATI_RPT_SNAPSHOT, with the columns STATO under macro NewMod3 with db name nodo_online
-    And through the query stati_rpt_snapshot retrieve param STATO at position 0 and save it under the key STATO
-    And check value RT_ACCETTATA_PA is equal to value $STATO
+    And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query stati_rpt on db nodo_online under macro NewMod3
 
 
   # Payment Outcome Phase outcome KO
