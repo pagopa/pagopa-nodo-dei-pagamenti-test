@@ -2,7 +2,7 @@ Feature: process tests for nodoChiediCopiaRT
 
     Background:
         Given systems up
-
+@runnable
     Scenario: RPT generation
         Given RPT generation
             """
@@ -81,7 +81,7 @@ Feature: process tests for nodoChiediCopiaRT
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-
+@runnable
     Scenario: Execute nodoInviaRPT request
         Given the RPT generation scenario executed successfully
         And initial XML nodoInviaRPT
@@ -126,7 +126,7 @@ Feature: process tests for nodoChiediCopiaRT
         And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
-
+@runnable
     Scenario: RT generation
         Given the Execute nodoInviaRPT request scenario executed successfully
         And RT generation
@@ -215,7 +215,7 @@ Feature: process tests for nodoChiediCopiaRT
             </pay_i:datiPagamento>
             </pay_i:RT>
             """
-
+@runnable
     Scenario: Execute nodoInviaRT request
         Given the RT generation scenario executed successfully
         And initial XML nodoInviaRT
@@ -240,7 +240,7 @@ Feature: process tests for nodoChiediCopiaRT
             """
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
-
+@runnable
     Scenario: Execute nodoChiediCopiaRT
         Given the Execute nodoInviaRT request scenario executed successfully
         And initial XML nodoChiediCopiaRT
