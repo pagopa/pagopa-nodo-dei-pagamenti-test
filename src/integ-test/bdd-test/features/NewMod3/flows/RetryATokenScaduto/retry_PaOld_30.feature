@@ -332,7 +332,7 @@ Scenario: Check DB1
     #checks on XML
     And check value $xml_rt.identificativoDominio is equal to value $xml_rpt.identificativoDominio
     And check value $xml_rt.riferimentoMessaggioRichiesta is equal to value $xml_rpt.identificativoMessaggioRichiesta
-    And check value $xml_rt.codiceIdentificativoUnivoco is equal to value $PSP_ID
+    #And check value $xml_rt.codiceIdentificativoUnivoco is equal to value $PSP_ID
     And check value $xml_rt.denominazioneBeneficiario is equal to value $xml_rpt.denominazioneBeneficiario
     And check value $xml_rt.anagraficaPagatore is equal to value $xml_rpt.anagraficaPagatore
     And check value $xml_rt.identificativoUnivocoVersamento is equal to value $xml_rpt.identificativoUnivocoVersamento
