@@ -196,8 +196,8 @@ Feature: flux tests for closePaymentV2 MBD
         Then verify the HTTP status code of v2/closepayment response is 400
         And check outcome is KO of v2/closepayment response
         And check description is Invalid PSP/Canale for MBD of v2/closepayment response
-        And refresh job PSP triggered after 10 seconds
         And updates through the query update_obj_id of the table CANALI_NODO the parameter MARCA_BOLLO_DIGITALE with Y under macro NewMod1 on db nodo_cfg
+        And refresh job PSP triggered after 10 seconds
 
     Scenario: Sunny Day
         Given the closePaymentV2 scenario executed successfully
