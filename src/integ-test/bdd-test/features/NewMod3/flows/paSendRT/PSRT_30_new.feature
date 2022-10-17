@@ -130,11 +130,6 @@ Feature: process tests for paSendRT [PSRT_30]
             <soapenv:Header/>
             <soapenv:Body>
             <paf:paSendRTRes>
-            <outcome>OK</outcome>
-            <fault>
-            <faultString>response malformata</faultString>
-            <id>14</id>
-            </fault>
             </paf:paSendRTRes>
             </soapenv:Body>
             </soapenv:Envelope>
@@ -230,11 +225,6 @@ Feature: process tests for paSendRT [PSRT_30]
             <soapenv:Header/>
             <soapenv:Body>
             <paf:paSendRTRes>
-            <outcome>OK</outcome>
-            <fault>
-            <faultString>response malformata</faultString>
-            <id>14</id>
-            </fault>
             </paf:paSendRTRes>
             </soapenv:Body>
             </soapenv:Envelope>
@@ -377,18 +367,13 @@ Feature: process tests for paSendRT [PSRT_30]
 
 
     Scenario: Define sendPaymentOutcome 22
-        Given the Execute activatePaymentNotice 22 request scenario executed successfully
+        Given the Execute activatePaymentNotice request 22 scenario executed successfully
         And initial XML paSendRT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
             <soapenv:Header/>
             <soapenv:Body>
             <paf:paSendRTRes>
-            <outcome>OK</outcome>
-            <fault>
-            <faultString>response malformata</faultString>
-            <id>14</id>
-            </fault>
             </paf:paSendRTRes>
             </soapenv:Body>
             </soapenv:Envelope>
@@ -477,11 +462,6 @@ Feature: process tests for paSendRT [PSRT_30]
             <soapenv:Header/>
             <soapenv:Body>
             <paf:paSendRTRes>
-            <outcome>OK</outcome>
-            <fault>
-            <faultString>response malformata</faultString>
-            <id>14</id>
-            </fault>
             </paf:paSendRTRes>
             </soapenv:Body>
             </soapenv:Envelope>
@@ -653,11 +633,6 @@ Feature: process tests for paSendRT [PSRT_30]
             <soapenv:Header/>
             <soapenv:Body>
             <paf:paSendRTRes>
-            <outcome>OK</outcome>
-            <fault>
-            <faultString>response malformata</faultString>
-            <id>14</id>
-            </fault>
             </paf:paSendRTRes>
             </soapenv:Body>
             </soapenv:Envelope>
@@ -899,11 +874,6 @@ Feature: process tests for paSendRT [PSRT_30]
             <soapenv:Header/>
             <soapenv:Body>
             <paf:paSendRTRes>
-            <outcome>OK</outcome>
-            <fault>
-            <faultString>response malformata</faultString>
-            <id>14</id>
-            </fault>
             </paf:paSendRTRes>
             </soapenv:Body>
             </soapenv:Envelope>
@@ -1158,11 +1128,6 @@ Feature: process tests for paSendRT [PSRT_30]
             <soapenv:Header/>
             <soapenv:Body>
             <paf:paSendRTRes>
-            <outcome>OK</outcome>
-            <fault>
-            <faultString>response malformata</faultString>
-            <id>14</id>
-            </fault>
             </paf:paSendRTRes>
             </soapenv:Body>
             </soapenv:Envelope>
@@ -1261,11 +1226,6 @@ Feature: process tests for paSendRT [PSRT_30]
             <soapenv:Header/>
             <soapenv:Body>
             <paf:paSendRTRes>
-            <outcome>OK</outcome>
-            <fault>
-            <faultString>response malformata</faultString>
-            <id>14</id>
-            </fault>
             </paf:paSendRTRes>
             </soapenv:Body>
             </soapenv:Envelope>
@@ -1420,11 +1380,6 @@ Feature: process tests for paSendRT [PSRT_30]
             <soapenv:Header/>
             <soapenv:Body>
             <paf:paSendRTRes>
-            <outcome>OK</outcome>
-            <fault>
-            <faultString>response malformata</faultString>
-            <id>14</id>
-            </fault>
             </paf:paSendRTRes>
             </soapenv:Body>
             </soapenv:Envelope>
@@ -1505,11 +1460,6 @@ Feature: process tests for paSendRT [PSRT_30]
             <soapenv:Header/>
             <soapenv:Body>
             <paf:paSendRTRes>
-            <outcome>OK</outcome>
-            <fault>
-            <faultString>response malformata</faultString>
-            <id>14</id>
-            </fault>
             </paf:paSendRTRes>
             </soapenv:Body>
             </soapenv:Envelope>
@@ -1680,11 +1630,6 @@ Feature: process tests for paSendRT [PSRT_30]
             <soapenv:Header/>
             <soapenv:Body>
             <paf:paSendRTRes>
-            <outcome>OK</outcome>
-            <fault>
-            <faultString>response malformata</faultString>
-            <id>14</id>
-            </fault>
             </paf:paSendRTRes>
             </soapenv:Body>
             </soapenv:Envelope>
@@ -1768,11 +1713,6 @@ Feature: process tests for paSendRT [PSRT_30]
             <soapenv:Header/>
             <soapenv:Body>
             <paf:paSendRTRes>
-            <outcome>OK</outcome>
-            <fault>
-            <faultString>response malformata</faultString>
-            <id>14</id>
-            </fault>
             </paf:paSendRTRes>
             </soapenv:Body>
             </soapenv:Envelope>
