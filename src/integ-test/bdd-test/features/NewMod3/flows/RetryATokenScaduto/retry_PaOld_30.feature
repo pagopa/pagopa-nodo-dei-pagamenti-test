@@ -327,8 +327,8 @@ Scenario: Check DB1
     And execution query rt_xml to get value on the table RPT_XML, with the columns XML_CONTENT under macro NewMod3 with db name nodo_online
     And through the query rt_xml retrieve xml_no_decode XML_CONTENT at position 0 and save it under the key xml_rpt
     # Assigning XML_CONTENT query result to receipt
-    And execution query receipt_xml to get value on the table POSITION_RECEIPT_XML, with the columns XML under macro NewMod3 with db name nodo_online
-    And through the query receipt_xml retrieve xml XML at position 0 and save it under the key xml_receipt
+    #And execution query receipt_xml to get value on the table POSITION_RECEIPT_XML, with the columns XML under macro NewMod3 with db name nodo_online
+    #And through the query receipt_xml retrieve xml XML at position 0 and save it under the key xml_receipt
     #checks on XML
     And check value $xml_rt.identificativoDominio is equal to value $xml_rpt.identificativoDominio
     And check value $xml_rt.riferimentoMessaggioRichiesta is equal to value $xml_rpt.identificativoMessaggioRichiesta
@@ -341,8 +341,8 @@ Scenario: Check DB1
     And check value $xml_rt.causaleVersamento is equal to value $xml_rpt.causaleVersamento
     And check value $xml_rt.datiSpecificiRiscossione is equal to value $xml_rpt.datiSpecificiRiscossione
     #Assigning XML_CONTENT query result to
-    And execution query receipt_xml to get value on the table POSITION_RECEIPT_XML, with the columns XML under macro NewMod3 with db name nodo_online
-    And through the query receipt_xml retrieve xml XML at position 0 and save it under the key xml_receipt
+    #And execution query receipt_xml to get value on the table POSITION_RECEIPT_XML, with the columns XML under macro NewMod3 with db name nodo_online
+    #And through the query receipt_xml retrieve xml XML at position 0 and save it under the key xml_receipt
     #POSITION_PAYMENT
     And execution query payment_status_pay to get value on the table POSITION_PAYMENT, with the columns * under macro NewMod3 with db name nodo_online
     And through the query payment_status_pay retrieve param BROKER_PA_ID at position 5 and save it under the key BROKER_PA_ID
@@ -376,22 +376,22 @@ Scenario: Check DB1
     And through the query psp retrieve param RAGIONE_SOCIALE at position 0 and save it under the key RAGIONE_SOCIALE
     And through the query psp retrieve param CODICE_FISCALE at position 1 and save it under the key CODICE_FISCALE
     #checks on XML
-    And check value $xml_receipt.idPA is equal to value $PA_FISCAL_CODE
-    And check value $xml_receipt.idBrokerPA is equal to value $BROKER_PA_ID
-    And check value $xml_receipt.noticeNumber is equal to value $NOTICE_ID
-    And check value $xml_receipt.fiscalCode is equal to value $PA_FISCAL_CODE
-    And check value $xml_receipt.creditorReferenceId is equal to value $CREDITOR_REFERENCE_ID
-    And check value $xml_receipt.description is equal to value $DESCRIPTION
-    And check value $xml_receipt.companyName is equal to value $COMPANY_NAME
-    And check value $xml_receipt.idTransfer is equal to value $TRANSFER_IDENTIFIER
-    And check value $xml_receipt.fiscalCodePA is equal to value $PA_FISCAL_CODE_SECONDARY
-    And check value $xml_receipt.IBAN is equal to value $IBAN
-    And check value $xml_receipt.remittanceInformation is equal to value $REMITTANCE_INFORMATION
-    And check value $xml_receipt.transferCategory is equal to value $TRANSFER_CATEGORY
-    And check value $xml_receipt.idPSP is equal to value $PSP_ID
-    And check value $xml_receipt.pspFiscalCode is equal to value $CODICE_FISCALE
-    And check value $xml_receipt.PSPCompanyName is equal to value $RAGIONE_SOCIALE
-    And check value $xml_receipt.idChannel is equal to value $CHANNEL_ID
+    #And check value $xml_receipt.idPA is equal to value $PA_FISCAL_CODE
+    #And check value $xml_receipt.idBrokerPA is equal to value $BROKER_PA_ID
+    #And check value $xml_receipt.noticeNumber is equal to value $NOTICE_ID
+    #And check value $xml_receipt.fiscalCode is equal to value $PA_FISCAL_CODE
+    #And check value $xml_receipt.creditorReferenceId is equal to value $CREDITOR_REFERENCE_ID
+    #And check value $xml_receipt.description is equal to value $DESCRIPTION
+    #And check value $xml_receipt.companyName is equal to value $COMPANY_NAME
+    #And check value $xml_receipt.idTransfer is equal to value $TRANSFER_IDENTIFIER
+    #And check value $xml_receipt.fiscalCodePA is equal to value $PA_FISCAL_CODE_SECONDARY
+    #And check value $xml_receipt.IBAN is equal to value $IBAN
+    #And check value $xml_receipt.remittanceInformation is equal to value $REMITTANCE_INFORMATION
+    #And check value $xml_receipt.transferCategory is equal to value $TRANSFER_CATEGORY
+    #And check value $xml_receipt.idPSP is equal to value $PSP_ID
+    #And check value $xml_receipt.pspFiscalCode is equal to value $CODICE_FISCALE
+    #And check value $xml_receipt.PSPCompanyName is equal to value $RAGIONE_SOCIALE
+    #And check value $xml_receipt.idChannel is equal to value $CHANNEL_ID
 # TOKEN_UTILITY
     And checks the value $activatePaymentNotice.fiscalCode of the record at column pa_fiscal_code of the table TOKEN_UTILITY retrived by the query payment_status on db nodo_online under macro NewMod3
     And checks the value $activatePaymentNotice.noticeNumber of the record at column notice_id of the table TOKEN_UTILITY retrived by the query payment_status on db nodo_online under macro NewMod3
