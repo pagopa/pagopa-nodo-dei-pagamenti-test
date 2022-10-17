@@ -233,7 +233,7 @@ Feature: process tests for retry a token scaduto (retry_PaOld_24.1)
     #And verify 0 record for the table RPT retrived by the query rpt_id on db nodo_online under macro NewMod3
     And checks the value PAYING,CANCELLED_NORPT,PAID_NORPT,PAID,NOTICE_GENERATED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
     #And verify 0 record for the table RPT_ACTIVATIONS retrived by the query payment_token_v2 on db nodo_online under macro NewMod3
-    And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO_MOD3,RPT_RISOLTA_OK,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query stati_rpt on db nodo_online under macro NewMod3
+    And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO_MOD3,RPT_RISOLTA_OK,RT_GENERATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query stati_rpt on db nodo_online under macro NewMod3
     And checks the value PAYING,INSERTED,PAID,NOTICE_STORED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
     And checks the value ESEGUITO of the record at column ESITO of the table RT retrived by the query rt on db nodo_online under macro NewMod3
     #And checks the value NotNone of the record at column ID of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro NewMod3
