@@ -631,16 +631,16 @@ Feature: process tests for 5 RPT 5 Versamenti
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
         <soapenv:Header>
         <ppt:intestazioneCarrelloPPT>
-        <pay_i:identificativoDominio>#intermediarioPA#</pay_i:identificativoDominio>
-        <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
+        <pay_i:identificativoDominio>66666666666</pay_i:identificativoDominio>
+        <pay_i:identificativoStazioneRichiedente>66666666666_01</pay_i:identificativoStazioneRichiedente>
         <identificativoCarrello>#CARRELLO#</identificativoCarrello>
         </ppt:intestazioneCarrelloPPT>
         </soapenv:Header>
         <soapenv:Body>
         <ws:nodoInviaCarrelloRPT>
         <password>pwdpwdpwd</password>
-        <identificativoPSP>#psp#</identificativoPSP>
-        <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+        <identificativoPSP>60000000001</identificativoPSP>
+        <identificativoIntermediarioPSP>60000000001</identificativoIntermediarioPSP>
         <identificativoCanale>60000000001_03</identificativoCanale>
         <listaRPT>
             <elementoListaRPT>
