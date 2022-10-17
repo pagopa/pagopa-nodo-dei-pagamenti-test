@@ -101,7 +101,7 @@ Feature: process tests for nodoInviaRT_PAA_RT_DUPLICATA
             <password>pwdpwdpwd</password>
             <identificativoPSP>40000000001</identificativoPSP>
             <identificativoIntermediarioPSP>40000000001</identificativoIntermediarioPSP>
-            <identificativoCanale>#canale_AGID#</identificativoCanale>
+            <identificativoCanale>40000000001_03</identificativoCanale>
             <tipoFirma></tipoFirma>
             <rpt>$rptAttachment</rpt>
             </ws:nodoInviaRPT>
@@ -227,7 +227,7 @@ Feature: process tests for nodoInviaRT_PAA_RT_DUPLICATA
             <soapenv:Body>
             <ws:nodoInviaRT>
             <identificativoIntermediarioPSP>40000000001</identificativoIntermediarioPSP>
-            <identificativoCanale>#canale_AGID#</identificativoCanale>
+            <identificativoCanale>40000000001_03</identificativoCanale>
             <password>pwdpwdpwd</password>
             <identificativoPSP>40000000001</identificativoPSP>
             <identificativoDominio>44444444444</identificativoDominio>
