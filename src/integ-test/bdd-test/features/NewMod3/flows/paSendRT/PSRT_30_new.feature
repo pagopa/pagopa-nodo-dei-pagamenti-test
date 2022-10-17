@@ -2,7 +2,7 @@ Feature: process tests for paSendRT [PSRT_30]
 
     Background:
         Given systems up
-
+@wip
     Scenario: Execute verifyPaymentNotice request 21
         Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
         And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
@@ -27,7 +27,7 @@ Feature: process tests for paSendRT [PSRT_30]
         And EC new version
         When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of verifyPaymentNotice response
-
+@wip
     Scenario: Execute activatePaymentNotice request 21
         Given the Execute verifyPaymentNotice request 21 scenario executed successfully
         And initial XML paGetPayment
@@ -121,7 +121,7 @@ Feature: process tests for paSendRT [PSRT_30]
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
 
-
+@wip
     Scenario: Define sendPaymentOutcome 21
         Given the Execute activatePaymentNotice request 21 scenario executed successfully
         And initial XML paSendRT
@@ -210,13 +210,13 @@ Feature: process tests for paSendRT [PSRT_30]
         And checks the value $activatePaymentNotice.fiscalCode of the record at column PA_FISCAL_CODE of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
         And checks the value $activatePaymentNotice.noticeNumber of the record at column NOTICE_ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
 
-
+@wip
     Scenario: clean paSendRt queue 21
         Given the Define sendPaymentOutcome 21 scenario executed successfully
         When job paSendRt triggered after 5 seconds
         And wait 10 seconds for expiration
 
-
+@wip
     Scenario: job paSendRt 21
         Given the Define sendPaymentOutcome 21 scenario executed successfully
         And initial XML paSendRT
@@ -980,7 +980,7 @@ Feature: process tests for paSendRT [PSRT_30]
 
 
 
-
+@wip
     Scenario: Execute verifyPaymentNotice request 26
         Given update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with Y, with where condition OBJ_ID and where value ('1201') under macro update_query on db nodo_cfg
         And refresh job PA triggered after 10 seconds
@@ -1008,7 +1008,7 @@ Feature: process tests for paSendRT [PSRT_30]
         And EC new version
         When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of verifyPaymentNotice response
-
+@wip
     Scenario: Execute activatePaymentNotice request 26
         Given the Execute verifyPaymentNotice request 26 scenario executed successfully
         And initial XML paGetPayment
@@ -1119,7 +1119,7 @@ Feature: process tests for paSendRT [PSRT_30]
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
 
-
+@wip
     Scenario: Define sendPaymentOutcome 26
         Given the Execute activatePaymentNotice request 26 scenario executed successfully
         And initial XML paSendRT
@@ -1211,13 +1211,13 @@ Feature: process tests for paSendRT [PSRT_30]
         And checks the value NotNone of the record at column ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
         And checks the value $activatePaymentNotice.fiscalCode of the record at column PA_FISCAL_CODE of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
         And checks the value $activatePaymentNotice.noticeNumber of the record at column NOTICE_ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
-
+@wip
     Scenario: clean paSendRt queue 26
         Given the Define sendPaymentOutcome 26 scenario executed successfully
         When job paSendRt triggered after 5 seconds
         And wait 10 seconds for expiration
 
-
+@wip
     Scenario: job paSendRt 26
         Given the Define sendPaymentOutcome 26 scenario executed successfully
         And initial XML paSendRT
@@ -1248,7 +1248,7 @@ Feature: process tests for paSendRT [PSRT_30]
 
 
 
-
+@wip
     Scenario: Execute verifyPaymentNotice request 27
         Given update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with N, with where condition FK_PA and where value ('6') under macro update_query on db nodo_cfg
         And refresh job PA triggered after 10 seconds
@@ -1276,7 +1276,7 @@ Feature: process tests for paSendRT [PSRT_30]
         And EC new version
         When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of verifyPaymentNotice response
-
+@wip
     Scenario: Execute activatePaymentNotice request 27
         Given the Execute verifyPaymentNotice request 27 scenario executed successfully
         And initial XML paGetPayment
@@ -1371,7 +1371,7 @@ Feature: process tests for paSendRT [PSRT_30]
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
 
-
+@wip
     Scenario: Define sendPaymentOutcome 27
         Given the Execute activatePaymentNotice request 27 scenario executed successfully
         And initial XML paSendRT
@@ -1445,13 +1445,13 @@ Feature: process tests for paSendRT [PSRT_30]
         And checks the value NotNone of the record at column ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
         And checks the value $activatePaymentNotice.fiscalCode of the record at column PA_FISCAL_CODE of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
         And checks the value $activatePaymentNotice.noticeNumber of the record at column NOTICE_ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
-
+@wip
     Scenario: clean paSendRt queue 27
         Given the Define sendPaymentOutcome 27 scenario executed successfully
         When job paSendRt triggered after 5 seconds
         And wait 10 seconds for expiration
 
-
+@wip
     Scenario: job paSendRt 27
         Given the Define sendPaymentOutcome 27 scenario executed successfully
         And initial XML paSendRT
@@ -1478,7 +1478,7 @@ Feature: process tests for paSendRT [PSRT_30]
 
 
 
-
+@wip
     Scenario: Execute verifyPaymentNotice request 29
         Given update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with N, with where condition FK_PA and where value ('6','8') under macro update_query on db nodo_cfg
         And refresh job PA triggered after 10 seconds
@@ -1506,7 +1506,7 @@ Feature: process tests for paSendRT [PSRT_30]
         And EC new version
         When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of verifyPaymentNotice response
-
+@wip
     Scenario: Execute activatePaymentNotice request 29
         Given the Execute verifyPaymentNotice request 29 scenario executed successfully
         And initial XML paGetPayment
@@ -1616,12 +1616,12 @@ Feature: process tests for paSendRT [PSRT_30]
             """
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-
+@wip
     Scenario: trigger PollerAnnulli 29
         Given the Execute activatePaymentNotice request 29 scenario executed successfully
         When job mod3CancelV2 triggered after 6 seconds
         Then wait 5 seconds for expiration
-
+@wip
     Scenario: Define sendPaymentOutcome 29
         Given the trigger PollerAnnulli 29 scenario executed successfully
         And initial XML paSendRT
@@ -1698,13 +1698,13 @@ Feature: process tests for paSendRT [PSRT_30]
         And checks the value NotNone of the record at column ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
         And checks the value $activatePaymentNotice.fiscalCode of the record at column PA_FISCAL_CODE of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
         And checks the value $activatePaymentNotice.noticeNumber of the record at column NOTICE_ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
-
+@wip
     Scenario: clean paSendRt queue 29
         Given the Define sendPaymentOutcome 29 scenario executed successfully
         When job paSendRt triggered after 5 seconds
         And wait 10 seconds for expiration
 
-
+@wip
     Scenario: job paSendRt 29
         Given the Define sendPaymentOutcome 29 scenario executed successfully
         And initial XML paSendRT
