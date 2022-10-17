@@ -116,8 +116,8 @@ Feature: activatePaymentNoticeV2Request with MBD flow OK
             <transferAmount>1.00</transferAmount>
             <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
             <IBAN>IT45R0760103200000000001016</IBAN>
-            <remittanceInformation>?</remittanceInformation>
-            <transferCategory>?</transferCategory>
+            <remittanceInformation>remittanceInfo</remittanceInformation>
+            <transferCategory>category</transferCategory>
             </transfer>
             </transferList>
             <!--Optional:-->
