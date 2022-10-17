@@ -179,21 +179,25 @@ Feature: flux tests for closePaymentV2 MBD
 
     Scenario: Psp with MARCA_BOLLO_DIGITALE != 1
         Given updates through the query update_id_psp of the table PSP the parameter MARCA_BOLLO_DIGITALE with 0 under macro NewMod1 on db nodo_cfg
+        And refresh job PSP triggered after 10 seconds
         And the closePaymentV2 scenario executed successfully
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 400
         And check outcome is KO of v2/closepayment response
         And check description is Invalid PSP/Canale for MBD of v2/closepayment response
         And updates through the query update_id_psp of the table PSP the parameter MARCA_BOLLO_DIGITALE with 1 under macro NewMod1 on db nodo_cfg
+        And refresh job PSP triggered after 10 seconds
 
     Scenario: Channel with MARCA_BOLLO_DIGITALE != Y
-        Given updates through the query update_obj_id_fk_canali_nodo of the table CANALI_NODO the parameter MARCA_BOLLO_DIGITALE with N under macro NewMod1 on db nodo_cfg
+        Given updates through the query update_obj_id of the table CANALI_NODO the parameter MARCA_BOLLO_DIGITALE with N under macro NewMod1 on db nodo_cfg
+        And refresh job PSP triggered after 10 seconds
         And the closePaymentV2 scenario executed successfully
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 400
         And check outcome is KO of v2/closepayment response
         And check description is Invalid PSP/Canale for MBD of v2/closepayment response
-        Given updates through the query update_obj_id_fk_canali_nodo of the table CANALI_NODO the parameter MARCA_BOLLO_DIGITALE with Y under macro NewMod1 on db nodo_cfg
+        And refresh job PSP triggered after 10 seconds
+        And updates through the query update_obj_id of the table CANALI_NODO the parameter MARCA_BOLLO_DIGITALE with Y under macro NewMod1 on db nodo_cfg
 
     Scenario: Sunny Day
         Given the closePaymentV2 scenario executed successfully
