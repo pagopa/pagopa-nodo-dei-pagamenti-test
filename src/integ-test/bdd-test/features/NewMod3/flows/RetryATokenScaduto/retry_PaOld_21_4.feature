@@ -251,8 +251,8 @@ Feature: process tests for retry a token scaduto
       </pay_i:soggettoVersante>
       <pay_i:soggettoPagatore>
       <pay_i:identificativoUnivocoPagatore>
-      <pay_i:tipoIdentificativoUnivoco>G</pay_i:tipoIdentificativoUnivoco>
-      <pay_i:codiceIdentificativoUnivoco>RCCGLD09P09H501E</pay_i:codiceIdentificativoUnivoco>
+      <pay_i:tipoIdentificativoUnivoco>F</pay_i:tipoIdentificativoUnivoco>
+      <pay_i:codiceIdentificativoUnivoco>FDCRLD06P89H521E</pay_i:codiceIdentificativoUnivoco>
       </pay_i:identificativoUnivocoPagatore>
       <pay_i:anagraficaPagatore>Gesualdo;Riccitelli</pay_i:anagraficaPagatore>
       <pay_i:indirizzoPagatore>via del gesu</pay_i:indirizzoPagatore>
@@ -283,7 +283,7 @@ Feature: process tests for retry a token scaduto
       <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
       <pay_i:tipoVersamento>PO</pay_i:tipoVersamento>
       <pay_i:identificativoUnivocoVersamento>$iuv</pay_i:identificativoUnivocoVersamento>
-      <pay_i:codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken-v2</pay_i:codiceContestoPagamento>
+      <pay_i:codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken-v3</pay_i:codiceContestoPagamento>
       <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
       <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
       <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -305,15 +305,15 @@ Feature: process tests for retry a token scaduto
   Scenario: Execute nodoInviaRPT2 request
     Given the Define RPT2 scenario executed successfully
     And initial XML nodoInviaRPT
-      """
+     """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
       <soapenv:Header>
       <ppt:intestazionePPT>
       <identificativoIntermediarioPA>$activatePaymentNotice.fiscalCode</identificativoIntermediarioPA>
       <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
       <identificativoDominio>$activatePaymentNotice.fiscalCode</identificativoDominio>
-      <identificativoUnivocoVersamento>11012461577123200</identificativoUnivocoVersamento>
-      <codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken-v2</codiceContestoPagamento>
+      <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
+      <codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken-v3</codiceContestoPagamento>
       </ppt:intestazionePPT>
       </soapenv:Header>
       <soapenv:Body>

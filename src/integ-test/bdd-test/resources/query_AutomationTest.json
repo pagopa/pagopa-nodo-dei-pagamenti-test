@@ -88,7 +88,8 @@
         "position_recipient_transfer": "SELECT s.* FROM POSITION_RECEIPT_TRANSFER s JOIN POSITION_TRANSFER pt ON pt.ID = s.FK_POSITION_TRANSFER WHERE pt.NOTICE_ID = '$activatePaymentNotice.noticeNumber' AND pt.PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode'",
         "position_receipt1": "SELECT s.ID FROM POSITION_RECEIPT s WHERE s.NOTICE_ID ='$activatePaymentNotice.noticeNumber' AND s.PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode'",
         "position_transfer1": "SELECT s.ID FROM POSITION_TRANSFER s WHERE s.NOTICE_ID ='$activatePaymentNotice.noticeNumber' AND s.PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode'",
-        "token": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN = '$token'"
+        "token": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN = '$token'",
+        "stati_rpt_snapshot": "SELECT columns FROM table_name WHERE IUV='$iuv2' AND ID_DOMINIO='$pa'"
     },
     "AppIO":{
         "payment_status":"SELECT s.columns FROM table_name s WHERE s.NOTICE_ID ='$activateIOPayment.noticeNumber' AND s.PA_FISCAL_CODE = '$activateIOPayment.fiscalCode'",
