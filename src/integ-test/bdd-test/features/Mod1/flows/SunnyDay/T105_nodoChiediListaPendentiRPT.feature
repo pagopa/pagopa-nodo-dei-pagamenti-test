@@ -14,6 +14,7 @@ Feature: process tests for nodoChiediListaPendentiRPT
                 <password>pwdpwdpwd</password>
                 <identificativoDominio>66666666666</identificativoDominio>
                 <rangeDa>#yesterday_date#</rangeDa>
+                <!--rangeA>#timedate#</rangeA-->
                 <dimensioneLista>5</dimensioneLista>
             </ws:nodoChiediListaPendentiRPT>
         </soapenv:Body>
