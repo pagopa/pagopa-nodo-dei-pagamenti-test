@@ -292,12 +292,102 @@ Feature: process tests for retry a token scaduto (retry_PaOd_24)
     And checks the value $activatePaymentNotice.idPSP of the record at column PSP_ID of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
     And execution query position_service to get value on the table POSITION_SERVICE, with the columns DESCRIPTION,COMPANY_NAME,OFFICE_NAME,DEBTOR_ID under macro NewMod3 with db name nodo_online
     And execution query psp to get value on the table PSP, with the columns CODICE_FISCALE,VAT_NUMBER,RAGIONE_SOCIALE under macro NewMod3 with db name nodo_cfg
-    And execution query position_receipt to get value on the table POSITION_RECEIPT, with the columns PSP_FISCAL_CODE,PSP_VAT_NUMBER,PSP_COMPANY_NAME,CHANNEL_ID,CHANNEL_DESCRIPTION,PAYER_ID,PAYMENT_METHOD,FEE,PAYMENT_DATE_TIME,APPLICATION_DATE,TRANSFER_DATE,METADATA under macro NewMod3 with db name nodo_online
+    And execution query position_receipt to get value on the table POSITION_RECEIPT, with the columns PSP_FISCAL_CODE,PSP_VAT_NUMBER,PSP_COMPANY_NAME under macro NewMod3 with db name nodo_online
     And with the query position_receipt check assert beetwen elem PSP_FISCAL_CODE in position 0 and elem CODICE_FISCALE with position 0 of the query psp
     And with the query position_receipt check assert beetwen elem PSP_VAT_NUMBER in position 1 and elem VAT_NUMBER with position 1 of the query psp
     And with the query position_receipt check assert beetwen elem PSP_COMPANY_NAME in position 2 and elem RAGIONE_SOCIALE with position 2 of the query psp
-    #And with the query position_receipt check assert beetwen elem CHANNEL_ID in posisition 3 and elem CHANNEL_ID with position 0 of the query PSP
-#da completare
-
-
+    And execution query position_receipt to get value on the table POSITION_RECEIPT, with the columns DESCRIPTION,COMPANY_NAME,OFFICE_NAME,DEBTOR_ID under macro NewMod3 with db name nodo_online
+    And with the query position_receipt check assert beetwen elem DESCRIPTION in position 0 and elem DESCRIPTION with position 0 of the query position_service
+    And with the query position_receipt check assert beetwen elem COMPANY_NAME in position 1 and elem COMPANY_NAME with position 1 of the query position_service
+    And with the query position_receipt check assert beetwen elem OFFICE_NAME in position 2 and elem OFFICE_NAME with position 2 of the query position_service
+    And with the query position_receipt check assert beetwen elem DEBTOR_ID in position 3 and elem DEBTOR_ID with position 3 of the query position_service
+# Assigning XML_CONTENT query result to
+    And execution query rt_xml to get value on the table RT_XML, with the columns XML_CONTENT under macro NewMod3 with db name nodo_online
+    And through the query rt_xml retrieve xml_no_decode XML_CONTENT at position 0 and save it under the key xml_rt
+    # Assigning XML_CONTENT query result to
+    And execution query rt_xml to get value on the table RPT_XML, with the columns XML_CONTENT under macro NewMod3 with db name nodo_online
+    And through the query rt_xml retrieve xml_no_decode XML_CONTENT at position 0 and save it under the key xml_rpt
+#checks on XML
+    And check value $xml_rt.identificativoDominio is equal to value $xml_rpt.identificativoDominio
+    And check value $xml_rt.riferimentoMessaggioRichiesta is equal to value $xml_rpt.identificativoMessaggioRichiesta
+    And check value $xml_rt.codiceIdentificativoUnivoco is equal to value 15376371009
+    And check value $xml_rt.denominazioneBeneficiario is equal to value $xml_rpt.denominazioneBeneficiario
+    And check value $xml_rt.anagraficaPagatore is equal to value $xml_rpt.anagraficaPagatore
+    And check value $xml_rt.identificativoUnivocoVersamento is equal to value $xml_rpt.identificativoUnivocoVersamento
+    And check value $xml_rt.CodiceContestoPagamento is equal to value $xml_rpt.codiceContestoPagamento
+    And check value $xml_rt.identificativoUnivocoRiscossione is equal to value 0
+    And check value $xml_rt.causaleVersamento is equal to value $xml_rpt.causaleVersamento
+    And check value $xml_rt.datiSpecificiRiscossione is equal to value $xml_rpt.datiSpecificiRiscossione
+    # Assigning XML_CONTENT query result to
+    And execution query rt_xml_v2 to get value on the table RT_XML, with the columns XML_CONTENT under macro NewMod3 with db name nodo_online
+    And through the query rt_xml_v2 retrieve xml_no_decode XML_CONTENT at position 0 and save it under the key xml_rt
+    # Assigning XML_CONTENT query result to
+    And execution query rt_xml_v2 to get value on the table RPT_XML, with the columns XML_CONTENT under macro NewMod3 with db name nodo_online
+    And through the query rt_xml_v2 retrieve xml_no_decode XML_CONTENT at position 0 and save it under the key xml_rpt
+    # Assigning XML_CONTENT query result to receipt
+    And execution query receipt_xml_v2 to get value on the table POSITION_RECEIPT_XML, with the columns XML under macro NewMod3 with db name nodo_online
+    And through the query receipt_xml_v2 retrieve xml XML_CONTENT at position 0 and save it under the key xml_receipt
+    #checks on XML
+    And check value $xml_rt.identificativoDominio is equal to value $xml_rpt.identificativoDominio
+    And check value $xml_rt.riferimentoMessaggioRichiesta is equal to value $xml_rpt.identificativoMessaggioRichiesta
+    And check value $xml_rt.codiceIdentificativoUnivoco is equal to value $PSP_ID
+    And check value $xml_rt.denominazioneBeneficiario is equal to value $xml_rpt.denominazioneBeneficiario
+    And check value $xml_rt.anagraficaPagatore is equal to value $xml_rpt.anagraficaPagatore
+    And check value $xml_rt.identificativoUnivocoVersamento is equal to value $xml_rpt.identificativoUnivocoVersamento
+    And check value $xml_rt.CodiceContestoPagamento is equal to value $xml_rpt.codiceContestoPagamento
+    And check value $xml_rt.identificativoUnivocoRiscossione is equal to value $PAYMENT_TOKEN
+    And check value $xml_rt.causaleVersamento is equal to value $xml_rpt.causaleVersamento
+    And check value $xml_rt.datiSpecificiRiscossione is equal to value $xml_rpt.datiSpecificiRiscossione
+    #Assigning XML_CONTENT query result to
+    And execution query receipt_xml_v2 to get value on the table POSITION_RECEIPT_XML, with the columns XML under macro NewMod3 with db name nodo_online
+    And through the query receipt_xml_v2 retrieve xml XML at position 0 and save it under the key xml_receipt
+    #POSITION_PAYMENT
+    And execution query payment_status_pay to get value on the table POSITION_PAYMENT, with the columns * under macro NewMod3 with db name nodo_online
+    And through the query payment_status_pay retrieve param BROKER_PA_ID at position 5 and save it under the key BROKER_PA_ID
+    And through the query payment_status_pay retrieve param STATION_ID at position 6 and save it under the key STATION_ID
+    And through the query payment_status_pay retrieve param PAYMENT_TOKEN at position 4 and save it under the key PAYMENT_TOKEN
+    And through the query payment_status_pay retrieve param NOTICE_ID at position 2 and save it under the key NOTICE_ID
+    And through the query payment_status_pay retrieve param PA_FISCAL_CODE at position 1 and save it under the key PA_FISCAL_CODE
+    And through the query payment_status_pay retrieve param OUTCOME at position 14 and save it under the key OUTCOME
+    And through the query payment_status_pay retrieve param CREDITOR_REFERENCE_ID at position 3 and save it under the key CREDITOR_REFERENCE_ID
+    And through the query payment_status_pay retrieve param AMOUNT at position 12 and save it under the key AMOUNT
+    And through the query payment_status_pay retrieve param PSP_ID at position 8 and save it under the key PSP_ID
+    And through the query payment_status_pay retrieve param CHANNEL_ID at position 10 and save it under the key CHANNEL_ID
+    And through the query payment_status_pay retrieve param PAYMENT_CHANNEL at position 16 and save it under the key PAYMENT_CHANNEL
+    And through the query payment_status_pay retrieve param PAYMENT_METHOD at position 15 and save it under the key PAYMENT_METHOD
+    And through the query payment_status_pay retrieve param FEE at position 13 and save it under the key FEE
+    #POSITION_SERVICE
+    And execution query payment_status to get value on the table POSITION_SERVICE, with the columns DESCRIPTION, COMPANY_NAME, OFFICE_NAME under macro NewMod3 with db name nodo_online
+    And through the query payment_status retrieve param DESCRIPTION at position 0 and save it under the key DESCRIPTION
+    And through the query payment_status retrieve param COMPANY_NAME at position 1 and save it under the key COMPANY_NAME
+    And through the query payment_status retrieve param OFFICE_NAME at position 2 and save it under the key OFFICE_NAME
+    #POSITION_TRANSFER
+    And execution query payment_status to get value on the table POSITION_TRANSFER, with the columns TRANSFER_IDENTIFIER, AMOUNT, PA_FISCAL_CODE_SECONDARY, IBAN, REMITTANCE_INFORMATION, TRANSFER_CATEGORY under macro NewMod3 with db name nodo_online
+    And through the query payment_status retrieve param TRANSFER_IDENTIFIER at position 0 and save it under the key TRANSFER_IDENTIFIER
+    And through the query payment_status retrieve param AMOUNT at position 1 and save it under the key AMOUNT
+    And through the query payment_status retrieve param PA_FISCAL_CODE_SECONDARY at position 2 and save it under the key PA_FISCAL_CODE_SECONDARY
+    And through the query payment_status retrieve param IBAN at position 3 and save it under the key IBAN
+    And through the query payment_status retrieve param REMITTANCE_INFORMATION at position 4 and save it under the key REMITTANCE_INFORMATION
+    And through the query payment_status retrieve param TRANSFER_CATEGORY at position 5 and save it under the key TRANSFER_CATEGORY
+    #psp
+    And execution query psp to get value on the table PSP, with the columns RAGIONE_SOCIALE, CODICE_FISCALE under macro NewMod3 with db name nodo_cfg
+    And through the query psp retrieve param RAGIONE_SOCIALE at position 0 and save it under the key RAGIONE_SOCIALE
+    And through the query psp retrieve param CODICE_FISCALE at position 1 and save it under the key CODICE_FISCALE
+    #checks on XML
+    And check value $xml_receipt.idPA is equal to value $PA_FISCAL_CODE
+    And check value $xml_receipt.idBrokerPA is equal to value $BROKER_PA_ID
+    And check value $xml_receipt.noticeNumber is equal to value $NOTICE_ID
+    And check value $xml_receipt.fiscalCode is equal to value $PA_FISCAL_CODE
+    And check value $xml_receipt.creditorReferenceId is equal to value $CREDITOR_REFERENCE_ID
+    And check value $xml_receipt.description is equal to value $DESCRIPTION
+    And check value $xml_receipt.companyName is equal to value $COMPANY_NAME
+    And check value $xml_receipt.idTransfer is equal to value $TRANSFER_IDENTIFIER
+    And check value $xml_receipt.fiscalCodePA is equal to value $PA_FISCAL_CODE_SECONDARY
+    And check value $xml_receipt.IBAN is equal to value $IBAN
+    And check value $xml_receipt.remittanceInformation is equal to value $REMITTANCE_INFORMATION
+    And check value $xml_receipt.transferCategory is equal to value $TRANSFER_CATEGORY
+    And check value $xml_receipt.idPSP is equal to value $PSP_ID
+    And check value $xml_receipt.pspFiscalCode is equal to value $CODICE_FISCALE
+    And check value $xml_receipt.PSPCompanyName is equal to value $RAGIONE_SOCIALE
+    And check value $xml_receipt.idChannel is equal to value $CHANNEL_ID
 
