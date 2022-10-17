@@ -1,6 +1,7 @@
 Feature: process tests for nodoInviaRT
     Background:
         Given systems up
+@runnable
     # [T034_nodoInviaRPT_tipoCont=0]
     Scenario: RPT generation
         Given RPT generation
@@ -80,6 +81,7 @@ Feature: process tests for nodoInviaRT
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
+@runnable
     Scenario: Execute nodoInviaRPT request
         Given the RPT generation scenario executed successfully
         And initial XML nodoInviaRPT
@@ -125,6 +127,7 @@ Feature: process tests for nodoInviaRT
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
         And check url field exists in nodoInviaRPT response
+@runnable
     # [T037_nodoInviaRPT_tipoCont=9]
     Scenario: RPT2 generation
         Given RPT generation
@@ -204,6 +207,7 @@ Feature: process tests for nodoInviaRT
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
+@runnable
     Scenario: Execute second nodoInviaRPT request
         Given the RPT2 generation scenario executed successfully
         And initial XML nodoInviaRPT
