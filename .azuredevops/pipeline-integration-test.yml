@@ -157,7 +157,7 @@ stages:
               whereis behave
               which behave
               export PATH=/usr/local/bin/behave:/usr/bin:/usr/local/bin:$PATH #Add environment variables
-              behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/Mod1/flows/SunnyDay/T001A_DYNAMIC-RPT-RT_Bollo_mod3.feature               
+              behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/Mod1/flows/SunnyDay/T001D_DYNAMIC-CarrelloconBollo-RT+-bollo_noBollo-noBollo_bollo.feature               
             displayName: 'Run integration test'
         
           - task: PublishTestResults@2
