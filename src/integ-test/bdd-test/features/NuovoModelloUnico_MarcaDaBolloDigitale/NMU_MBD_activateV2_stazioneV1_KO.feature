@@ -70,7 +70,7 @@ Feature: activatePaymentNoticeV2Request with MBD flow OK
             <debtor>
             <uniqueIdentifier>
             <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-            <entityUniqueIdentifierValue>${pa}</entityUniqueIdentifierValue>
+            <entityUniqueIdentifierValue>#creditor_institution_code#</entityUniqueIdentifierValue>
             </uniqueIdentifier>
             <fullName>paGetPaymentName</fullName>
             <!--Optional:-->
@@ -93,8 +93,8 @@ Feature: activatePaymentNoticeV2Request with MBD flow OK
             <!--1 to 5 repetitions:-->
             <transfer>
             <idTransfer>1</idTransfer>
-            <transferAmount>${amount}</transferAmount>
-            <fiscalCodePA>${pa}</fiscalCodePA>
+            <transferAmount>10.00</transferAmount>
+            <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <richiestaMarcaDaBollo>
             <hashDocumento>ciao</hashDocumento>
