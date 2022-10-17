@@ -29,7 +29,7 @@ Feature: Pag-1163_Paypal_OLD_OK
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        When EC sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
+        When PSP sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoVerificaRPT response
 
     Scenario: Execute nodoAttivaRPT (Phase 2)
@@ -221,7 +221,7 @@ Feature: Pag-1163_Paypal_OLD_OK
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        When psp sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
 
@@ -312,8 +312,8 @@ Feature: Pag-1163_Paypal_OLD_OK
             <pspInviaCarrelloRPTResponse>
             <delay>7500</delay>
             <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-            <identificativoCarrello>$ccp</identificativoCarrello>
-            <parametriPagamentoImmediato>idBruciatura=$ccp</parametriPagamentoImmediato>
+            <identificativoCarrello>$1iuv</identificativoCarrello>
+            <parametriPagamentoImmediato>idBruciatura=$1iuv</parametriPagamentoImmediato>
             </pspInviaCarrelloRPTResponse>
             </ws:pspInviaCarrelloRPTCarteResponse>
             </soapenv:Body>
