@@ -265,9 +265,9 @@ Feature: process tests for REGR_retryTokenScaduto_OK
     And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcome response
     And wait 5 seconds for expiration
 
-    And replace token content with $activatePaymentNoticeResponse.paymentToken-v2 content
-    And checks the value Y of the record at column PAAATTIVARPTRESP of the table RPT_ACTIVATIONS retrived by the query token on db nodo_online under macro NewMod3
-    And checks the value N of the record at column NODOINVIARPTREQ of the table RPT_ACTIVATIONS retrived by the query token on db nodo_online under macro NewMod3
+    # And replace token content with $activatePaymentNoticeResponse.paymentToken-v2 content
+    # And checks the value Y of the record at column PAAATTIVARPTRESP of the table RPT_ACTIVATIONS retrived by the query token on db nodo_online under macro NewMod3
+    # And checks the value N of the record at column NODOINVIARPTREQ of the table RPT_ACTIVATIONS retrived by the query token on db nodo_online under macro NewMod3
 
 
   Scenario: RPT2 generation
