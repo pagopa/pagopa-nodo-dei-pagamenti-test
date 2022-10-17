@@ -31,7 +31,6 @@ Feature: process tests for accessiConCorrenziali [PAG-1163_Carta_OLD_OK]
                </soapenv:Body>
             </soapenv:Envelope>
             """
-         And EC old version
          When PSP sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
          Then check esito is OK of nodoVerificaRPT response
 
