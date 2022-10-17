@@ -251,8 +251,8 @@ Feature: process tests for retry a token scaduto
       </pay_i:soggettoVersante>
       <pay_i:soggettoPagatore>
       <pay_i:identificativoUnivocoPagatore>
-      <pay_i:tipoIdentificativoUnivoco>G</pay_i:tipoIdentificativoUnivoco>
-      <pay_i:codiceIdentificativoUnivoco>RCCGLD09P09H501E</pay_i:codiceIdentificativoUnivoco>
+      <pay_i:tipoIdentificativoUnivoco>F</pay_i:tipoIdentificativoUnivoco>
+      <pay_i:codiceIdentificativoUnivoco>FDCRLD06P89H521E</pay_i:codiceIdentificativoUnivoco>
       </pay_i:identificativoUnivocoPagatore>
       <pay_i:anagraficaPagatore>Gesualdo;Riccitelli</pay_i:anagraficaPagatore>
       <pay_i:indirizzoPagatore>via del gesu</pay_i:indirizzoPagatore>
@@ -312,7 +312,7 @@ Feature: process tests for retry a token scaduto
       <identificativoIntermediarioPA>$activatePaymentNotice.fiscalCode</identificativoIntermediarioPA>
       <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
       <identificativoDominio>$activatePaymentNotice.fiscalCode</identificativoDominio>
-      <identificativoUnivocoVersamento>11012461577123200</identificativoUnivocoVersamento>
+      <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
       <codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken-v2</codiceContestoPagamento>
       </ppt:intestazionePPT>
       </soapenv:Header>
