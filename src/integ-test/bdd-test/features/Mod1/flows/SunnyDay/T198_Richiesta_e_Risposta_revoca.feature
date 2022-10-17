@@ -8,8 +8,8 @@ Feature: process tests for nodoInviaRT
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-                <pay_i:identificativoDominio>44444444444</pay_i:identificativoDominio>
-                <pay_i:identificativoStazioneRichiedente>44444444444_01</pay_i:identificativoStazioneRichiedente>
+                <pay_i:identificativoDominio>66666666666</pay_i:identificativoDominio>
+                <pay_i:identificativoStazioneRichiedente>66666666666_01</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
             <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
@@ -88,8 +88,8 @@ Feature: process tests for nodoInviaRT
             <pay_i:RT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>6.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-                <pay_i:identificativoDominio>44444444444</pay_i:identificativoDominio>
-                <pay_i:identificativoStazioneRichiedente>44444444444_01</pay_i:identificativoStazioneRichiedente>
+                <pay_i:identificativoDominio>66666666666</pay_i:identificativoDominio>
+                <pay_i:identificativoStazioneRichiedente>66666666666_01</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRicevuta>IdentificativoMessaggioRicevuta</pay_i:identificativoMessaggioRicevuta>
             <pay_i:dataOraMessaggioRicevuta>#timedate#</pay_i:dataOraMessaggioRicevuta>
@@ -177,8 +177,8 @@ Feature: process tests for nodoInviaRT
             <pay_i:RR xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/Revoche/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/Revoche/ RR_ER_6_0_1.xsd ">
             <pay_i:versioneOggetto>6.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-                <pay_i:identificativoDominio>44444444444</pay_i:identificativoDominio>
-                <pay_i:identificativoStazioneRichiedente>44444444444_01</pay_i:identificativoStazioneRichiedente>
+                <pay_i:identificativoDominio>66666666666</pay_i:identificativoDominio>
+                <pay_i:identificativoStazioneRichiedente>66666666666_01</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRevoca>1</pay_i:identificativoMessaggioRevoca>
             <pay_i:dataOraMessaggioRevoca>#timedate#</pay_i:dataOraMessaggioRevoca>
@@ -247,8 +247,8 @@ Feature: process tests for nodoInviaRT
             <pay_i:ER xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/Revoche/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/Revoche/ RR_ER_6_0_1.xsd ">
             <pay_i:versioneOggetto>6.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-                <pay_i:identificativoDominio>44444444444</pay_i:identificativoDominio>
-                <pay_i:identificativoStazioneRichiedente>44444444444_01</pay_i:identificativoStazioneRichiedente>
+                <pay_i:identificativoDominio>66666666666</pay_i:identificativoDominio>
+                <pay_i:identificativoStazioneRichiedente>66666666666_01</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioEsito>1</pay_i:identificativoMessaggioEsito>
             <pay_i:dataOraMessaggioEsito>#timedate#</pay_i:dataOraMessaggioEsito>
@@ -318,9 +318,9 @@ Feature: process tests for nodoInviaRT
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
             <ppt:intestazionePPT>
-            <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
-            <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
-            <identificativoDominio>44444444444</identificativoDominio>
+            <identificativoIntermediarioPA>66666666666</identificativoIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>66666666666_01</identificativoStazioneIntermediarioPA>
+            <identificativoDominio>66666666666</identificativoDominio>
             <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$ccp1</codiceContestoPagamento>
             </ppt:intestazionePPT>
@@ -328,9 +328,9 @@ Feature: process tests for nodoInviaRT
             <soapenv:Body>
             <ws:nodoInviaRPT>
             <password>pwdpwdpwd</password>
-            <identificativoPSP>40000000001</identificativoPSP>
-            <identificativoIntermediarioPSP>40000000001</identificativoIntermediarioPSP>
-            <identificativoCanale>40000000001_03</identificativoCanale>
+            <identificativoPSP>60000000001</identificativoPSP>
+            <identificativoIntermediarioPSP>60000000001</identificativoIntermediarioPSP>
+            <identificativoCanale>60000000001_03</identificativoCanale>
             <tipoFirma></tipoFirma>
             <rpt>$rptAttachment</rpt>
             </ws:nodoInviaRPT>
@@ -365,11 +365,11 @@ Feature: process tests for nodoInviaRT
             <soapenv:Header/>
             <soapenv:Body>
                 <ws:nodoInviaRT>
-                    <identificativoIntermediarioPSP>40000000001</identificativoIntermediarioPSP>
-                    <identificativoCanale>40000000001_03</identificativoCanale>
+                    <identificativoIntermediarioPSP>60000000001</identificativoIntermediarioPSP>
+                    <identificativoCanale>60000000001_03</identificativoCanale>
                     <password>pwdpwdpwd</password>
-                    <identificativoPSP>40000000001</identificativoPSP>
-                    <identificativoDominio>44444444444</identificativoDominio>
+                    <identificativoPSP>60000000001</identificativoPSP>
+                    <identificativoDominio>66666666666</identificativoDominio>
                     <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
                     <codiceContestoPagamento>$ccp1</codiceContestoPagamento>
                     <tipoFirma></tipoFirma>
@@ -390,11 +390,11 @@ Feature: process tests for nodoInviaRT
             <soapenv:Header/>
             <soapenv:Body>
                 <ws:nodoInviaRichiestaRevoca>
-                    <identificativoPSP>40000000001</identificativoPSP>
-                    <identificativoIntermediarioPSP>40000000001</identificativoIntermediarioPSP>
-                    <identificativoCanale>40000000001_03</identificativoCanale>
+                    <identificativoPSP>60000000001</identificativoPSP>
+                    <identificativoIntermediarioPSP>60000000001</identificativoIntermediarioPSP>
+                    <identificativoCanale>60000000001_03</identificativoCanale>
                     <password>pwdpwdpwd</password>
-                    <identificativoDominio>44444444444</identificativoDominio>
+                    <identificativoDominio>66666666666</identificativoDominio>
                     <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
                     <codiceContestoPagamento>$ccp1</codiceContestoPagamento>
                     <rr>$rrAttachment</rr>
@@ -413,10 +413,10 @@ Feature: process tests for nodoInviaRT
             <soapenv:Header/>
             <soapenv:Body>
                 <ws:nodoInviaRispostaRevoca>
-                    <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
-                    <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
+                    <identificativoIntermediarioPA>66666666666</identificativoIntermediarioPA>
+                    <identificativoStazioneIntermediarioPA>66666666666_01</identificativoStazioneIntermediarioPA>
                     <password>pwdpwdpwd</password>
-                    <identificativoDominio>44444444444</identificativoDominio>
+                    <identificativoDominio>66666666666</identificativoDominio>
                     <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
                     <codiceContestoPagamento>$ccp1</codiceContestoPagamento>
                     <er>$erAttachment</er>
