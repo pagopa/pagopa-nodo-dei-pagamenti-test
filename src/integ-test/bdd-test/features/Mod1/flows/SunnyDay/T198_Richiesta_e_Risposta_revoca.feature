@@ -1,7 +1,7 @@
 Feature: process tests for nodoInviaRT
     Background:
         Given systems up
-    
+@runnable   
     Scenario: RPT generation
         Given RPT generation
             """
@@ -80,7 +80,7 @@ Feature: process tests for nodoInviaRT
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-
+@runnable
     Scenario: RT generation
         Given the RPT generation scenario executed successfully
         And RT generation
@@ -169,7 +169,7 @@ Feature: process tests for nodoInviaRT
             </pay_i:datiPagamento>
             </pay_i:RT>
             """
-
+@runnable
     Scenario: RR generation
         Given the RT generation scenario executed successfully
         And RR generation 
@@ -239,7 +239,8 @@ Feature: process tests for nodoInviaRT
             </pay_i:datiRevoca>
             </pay_i:RR>
             """
-            # controllare <pay_i:identificativoUnivocoRiscossione>idRiscossioneRR</pay_i:identificativoUnivocoRiscossione> con Mascia
+ @runnable          
+  # controllare <pay_i:identificativoUnivocoRiscossione>idRiscossioneRR</pay_i:identificativoUnivocoRiscossione> con Mascia
     Scenario: ER generation
         Given the RR generation scenario executed successfully
         And ER generation
@@ -310,7 +311,7 @@ Feature: process tests for nodoInviaRT
             </pay_i:datiRevoca>
             </pay_i:ER>
             """
-
+@runnable
     Scenario: Execute nodoInviaRPT request
         Given the ER generation scenario executed successfully
         And initial XML nodoInviaRPT
