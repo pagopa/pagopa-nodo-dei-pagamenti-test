@@ -269,7 +269,7 @@ Scenario: Check DB1
     #And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
     And checks the value None of the record at column CARRELLO_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
     And checks the value None of the record at column ORIGINAL_PAYMENT_TOKEN of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
-    And with the query payment_status check assert beetwen elem FK_PAYMENT_PLAN in position 0 and elem ID with position 0 of the query position_receipt
+    #And with the query payment_status check assert beetwen elem FK_PAYMENT_PLAN in position 0 and elem ID with position 0 of the query position_receipt
     #And verify 0 record for the table RPT retrived by the query rpt_id on db nodo_online under macro NewMod3
     And checks the value PAYING,CANCELLED_NORPT,CANCELLED,PAID_NORPT of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
     #And verify 0 record for the table RPT_ACTIVATIONS retrived by the query payment_token_v2 on db nodo_online under macro NewMod3
@@ -307,9 +307,9 @@ Scenario: Check DB1
     #And execution query position_service to get value on the table POSITION_SERVICE, with the columns DESCRIPTION,COMPANY_NAME,OFFICE_NAME,DEBTOR_ID under macro NewMod3 with db name nodo_online
     And execution query psp to get value on the table PSP, with the columns CODICE_FISCALE,VAT_NUMBER,RAGIONE_SOCIALE under macro NewMod3 with db name nodo_cfg
     #And execution query position_receipt to get value on the table POSITION_RECEIPT, with the columns PSP_FISCAL_CODE,PSP_VAT_NUMBER,PSP_COMPANY_NAME under macro NewMod3 with db name nodo_online
-    And with the query position_receipt check assert beetwen elem PSP_FISCAL_CODE in position 0 and elem CODICE_FISCALE with position 0 of the query psp
-    And with the query position_receipt check assert beetwen elem PSP_VAT_NUMBER in position 1 and elem VAT_NUMBER with position 1 of the query psp
-    And with the query position_receipt check assert beetwen elem PSP_COMPANY_NAME in position 2 and elem RAGIONE_SOCIALE with position 2 of the query psp
+    #And with the query position_receipt check assert beetwen elem PSP_FISCAL_CODE in position 0 and elem CODICE_FISCALE with position 0 of the query psp
+    #And with the query position_receipt check assert beetwen elem PSP_VAT_NUMBER in position 1 and elem VAT_NUMBER with position 1 of the query psp
+    #And with the query position_receipt check assert beetwen elem PSP_COMPANY_NAME in position 2 and elem RAGIONE_SOCIALE with position 2 of the query psp
     #And execution query position_receipt to get value on the table POSITION_RECEIPT, with the columns DESCRIPTION,COMPANY_NAME,OFFICE_NAME,DEBTOR_ID under macro NewMod3 with db name nodo_online
     #And with the query position_receipt check assert beetwen elem DESCRIPTION in position 0 and elem DESCRIPTION with position 0 of the query position_service
     #And with the query position_receipt check assert beetwen elem COMPANY_NAME in position 1 and elem COMPANY_NAME with position 1 of the query position_service
