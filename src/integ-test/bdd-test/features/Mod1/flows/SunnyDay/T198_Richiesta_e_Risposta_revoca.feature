@@ -405,7 +405,7 @@ Feature: process tests for nodoInviaRT
             """
         When EC sends SOAP nodoInviaRichiestaRevoca to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRichiestaRevoca response
-
+@runnable
     Scenario: Execute nodoInviaER request
         Given the Execute nodoInviaRR request scenario executed successfully
         And initial XML nodoInviaRispostaRevoca
