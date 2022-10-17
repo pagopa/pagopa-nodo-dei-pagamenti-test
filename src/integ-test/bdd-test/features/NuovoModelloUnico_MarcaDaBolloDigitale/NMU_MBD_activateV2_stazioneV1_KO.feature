@@ -55,7 +55,7 @@ Feature: activatePaymentNoticeV2Request with MBD flow OK
             <paf:paGetPaymentV2Response>
             <outcome>OK</outcome>
             <data>
-            <creditorReferenceId>$iuv</creditorReferenceId>
+            <creditorReferenceId>11$iuv</creditorReferenceId>
             <paymentAmount>10.00</paymentAmount>
             <dueDate>2021-12-30</dueDate>
             <!--Optional:-->
