@@ -1,6 +1,7 @@
 Feature: process tests for nodoChiediListaPendentiRPT
     Background:
         Given systems up
+    @runnable
     Scenario: Execute nodoChiediListaPendentiRPT request
         Given initial XML nodoChiediListaPendentiRPT
         """
@@ -8,10 +9,10 @@ Feature: process tests for nodoChiediListaPendentiRPT
         <soapenv:Header/>
         <soapenv:Body>
             <ws:nodoChiediListaPendentiRPT>
-                <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
-                <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
+                <identificativoIntermediarioPA>66666666666</identificativoIntermediarioPA>
+                <identificativoStazioneIntermediarioPA>66666666666_01</identificativoStazioneIntermediarioPA>
                 <password>pwdpwdpwd</password>
-                <identificativoDominio>44444444444</identificativoDominio>
+                <identificativoDominio>66666666666</identificativoDominio>
                 <rangeDa>#yesterday_date#</rangeDa>
                 <rangeA>#timedate#</rangeA>
                 <dimensioneLista>5</dimensioneLista>
