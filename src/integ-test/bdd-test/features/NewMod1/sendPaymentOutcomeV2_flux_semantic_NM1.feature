@@ -649,7 +649,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
     @wip
     Scenario: SEM_SPO_30 (part 5)
         Given the SEM_SPO_30 (part 4) scenario executed successfully
-        And updates through the query update_PAYMENT_TOKEN of the table POSITION_PAYMENT the parameter OUTCOME with OO under macro NewMod1 on db nodo_online
+        And updates through the query update_PAYMENT_TOKEN_1 of the table POSITION_PAYMENT the parameter OUTCOME with OO under macro NewMod1 on db nodo_online
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcomeV2 response
         And check faultCode is PPT_SEMANTICA of sendPaymentOutcomeV2 response
@@ -720,8 +720,8 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
     @wip
     Scenario: SEM_SPO_32 (part 4)
         Given the SEM_SPO_32 (part 3) scenario executed successfully
-        And updates through the query update_PAYMENT_TOKEN of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with CANCELLED under macro NewMod1 on db nodo_online
         And updates through the query update_PAYMENT_TOKEN_1 of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with CANCELLED under macro NewMod1 on db nodo_online
+        And updates through the query update_PAYMENT_TOKEN_2 of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with CANCELLED under macro NewMod1 on db nodo_online
         And the sendPaymentOutcomeV2 with 2 paymentToken scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcomeV2 response
@@ -756,8 +756,8 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
     @wip
     Scenario: SEM_SPO_33 (part 4)
         Given the SEM_SPO_33 (part 3) scenario executed successfully
-        And updates through the query update_PAYMENT_TOKEN of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_ACCEPTED under macro NewMod1 on db nodo_online
         And updates through the query update_PAYMENT_TOKEN_1 of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_ACCEPTED under macro NewMod1 on db nodo_online
+        And updates through the query update_PAYMENT_TOKEN_2 of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_ACCEPTED under macro NewMod1 on db nodo_online
         And the sendPaymentOutcomeV2 with 2 paymentToken scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
@@ -791,8 +791,8 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
     @wip
     Scenario: SEM_SPO_33.1 (part 4)
         Given the SEM_SPO_33.1 (part 3) scenario executed successfully
-        And updates through the query update_PAYMENT_TOKEN of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_UNKNOWN under macro NewMod1 on db nodo_online
         And updates through the query update_PAYMENT_TOKEN_1 of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_UNKNOWN under macro NewMod1 on db nodo_online
+        And updates through the query update_PAYMENT_TOKEN_2 of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_UNKNOWN under macro NewMod1 on db nodo_online
         And the sendPaymentOutcomeV2 with 2 paymentToken scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
@@ -827,8 +827,8 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
     @wip
     Scenario: SEM_SPO_35 (part 4)
         Given the SEM_SPO_35 (part 3) scenario executed successfully
-        And updates through the query update_PAYMENT_TOKEN of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_SENT under macro NewMod1 on db nodo_online
-        And updates through the query update_PAYMENT_TOKEN_1 of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_RESERVED under macro NewMod1 on db nodo_online
+        And updates through the query update_PAYMENT_TOKEN_1 of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_SENT under macro NewMod1 on db nodo_online
+        And updates through the query update_PAYMENT_TOKEN_2 of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_RESERVED under macro NewMod1 on db nodo_online
         And the sendPaymentOutcomeV2 with 2 paymentToken scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcomeV2 response
@@ -900,8 +900,8 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
     @wip
     Scenario: SEM_SPO_35.2 (part 4)
         Given the SEM_SPO_35.2 (part 3) scenario executed successfully
-        And updates through the query update_PAYMENT_TOKEN of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYING under macro NewMod1 on db nodo_online
         And updates through the query update_PAYMENT_TOKEN_1 of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYING under macro NewMod1 on db nodo_online
+        And updates through the query update_PAYMENT_TOKEN_2 of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYING under macro NewMod1 on db nodo_online
         And the sendPaymentOutcomeV2 with 2 paymentToken scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcomeV2 response
@@ -937,8 +937,8 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
     @wip
     Scenario: SEM_SPO_35.3 (part 4)
         Given the SEM_SPO_35.3 (part 3) scenario executed successfully
-        And updates through the query update_PAYMENT_TOKEN of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_RESERVED under macro NewMod1 on db nodo_online
         And updates through the query update_PAYMENT_TOKEN_1 of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_RESERVED under macro NewMod1 on db nodo_online
+        And updates through the query update_PAYMENT_TOKEN_2 of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_RESERVED under macro NewMod1 on db nodo_online
         And the sendPaymentOutcomeV2 with 2 paymentToken scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcomeV2 response
@@ -974,8 +974,8 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
     @wip
     Scenario: SEM_SPO_35.4 (part 4)
         Given the SEM_SPO_35.4 (part 3) scenario executed successfully
-        And updates through the query update_PAYMENT_TOKEN of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_SENT under macro NewMod1 on db nodo_online
         And updates through the query update_PAYMENT_TOKEN_1 of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_SENT under macro NewMod1 on db nodo_online
+        And updates through the query update_PAYMENT_TOKEN_2 of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_SENT under macro NewMod1 on db nodo_online
         And the sendPaymentOutcomeV2 with 2 paymentToken scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcomeV2 response
@@ -1011,8 +1011,8 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
     @wip
     Scenario: SEM_SPO_35.5 (part 4)
         Given the SEM_SPO_35.5 (part 3) scenario executed successfully
-        And updates through the query update_PAYMENT_TOKEN of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_SEND_ERROR under macro NewMod1 on db nodo_online
         And updates through the query update_PAYMENT_TOKEN_1 of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_SEND_ERROR under macro NewMod1 on db nodo_online
+        And updates through the query update_PAYMENT_TOKEN_2 of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_SEND_ERROR under macro NewMod1 on db nodo_online
         And the sendPaymentOutcomeV2 with 2 paymentToken scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcomeV2 response
@@ -1048,8 +1048,8 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
     @wip
     Scenario: SEM_SPO_35.6 (part 4)
         Given the SEM_SPO_35.6 (part 3) scenario executed successfully
-        And updates through the query update_PAYMENT_TOKEN of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_REFUSED under macro NewMod1 on db nodo_online
         And updates through the query update_PAYMENT_TOKEN_1 of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_REFUSED under macro NewMod1 on db nodo_online
+        And updates through the query update_PAYMENT_TOKEN_2 of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_REFUSED under macro NewMod1 on db nodo_online
         And the sendPaymentOutcomeV2 with 2 paymentToken scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcomeV2 response
