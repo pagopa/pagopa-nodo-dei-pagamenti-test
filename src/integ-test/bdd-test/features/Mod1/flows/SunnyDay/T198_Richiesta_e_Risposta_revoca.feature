@@ -62,7 +62,7 @@ Feature: process tests for nodoInviaRT
                 <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
                 <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
                 <pay_i:identificativoUnivocoVersamento>#IUV#</pay_i:identificativoUnivocoVersamento>
-                <pay_i:codiceContestoPagamento>#1ccp#</pay_i:codiceContestoPagamento>
+                <pay_i:codiceContestoPagamento>#ccp1#</pay_i:codiceContestoPagamento>
                 <pay_i:ibanAddebito>IT45R0760103200000000001016</pay_i:ibanAddebito>
                 <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
                 <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
