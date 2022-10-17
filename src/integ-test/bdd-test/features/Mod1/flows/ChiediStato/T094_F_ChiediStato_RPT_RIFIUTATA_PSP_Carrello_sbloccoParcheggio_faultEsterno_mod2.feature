@@ -9,8 +9,8 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
                 <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
                 <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
                 <pay_i:dominio>
-                <pay_i:identificativoDominio>44444444444</pay_i:identificativoDominio>
-                <pay_i:identificativoStazioneRichiedente>44444444444_01</pay_i:identificativoStazioneRichiedente>
+                <pay_i:identificativoDominio>66666666666</pay_i:identificativoDominio>
+                <pay_i:identificativoStazioneRichiedente>66666666666_01</pay_i:identificativoStazioneRichiedente>
                 </pay_i:dominio>
                 <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
                 <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
@@ -88,7 +88,7 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
                 <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
                 <pay_i:dominio>
                 <pay_i:identificativoDominio>44444444445</pay_i:identificativoDominio>
-                <pay_i:identificativoStazioneRichiedente>44444444444_01</pay_i:identificativoStazioneRichiedente>
+                <pay_i:identificativoStazioneRichiedente>66666666666_01</pay_i:identificativoStazioneRichiedente>
                 </pay_i:dominio>
                 <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
                 <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
@@ -168,8 +168,8 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
             <ppt:intestazioneCarrelloPPT>
-            <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
-            <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
+            <identificativoIntermediarioPA>66666666666</identificativoIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>66666666666_01</identificativoStazioneIntermediarioPA>
             <identificativoCarrello>$1ccp</identificativoCarrello>
             </ppt:intestazioneCarrelloPPT>
             </soapenv:Header>
@@ -181,7 +181,7 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
             <identificativoCanale>97735020584_02</identificativoCanale>
             <listaRPT>
             <elementoListaRPT>
-            <identificativoDominio>44444444444</identificativoDominio>
+            <identificativoDominio>66666666666</identificativoDominio>
             <identificativoUnivocoVersamento>RPTdaRifPsp_faultEsterno</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
             <rpt>$rptAttachment</rpt>
@@ -222,7 +222,7 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
             <fault>
                <faultCode>CANALE_RPT_RIFIUTATA</faultCode>
                <faultString>fault esterno</faultString>
-               <id>400000000001</id>
+               <id>600000000001</id>
                <description>descrizione fault esterno</description>
             </fault>
             <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
@@ -237,10 +237,10 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
             """
             {
             "idPagamento": "$sessionToken",
-            "identificativoPsp": "40000000001",
+            "identificativoPsp": "60000000001",
             "tipoVersamento": "BBT",
-            "identificativoIntermediario": "40000000001",
-            "identificativoCanale": "40000000001_04"
+            "identificativoIntermediario": "60000000001",
+            "identificativoCanale": "60000000001_04"
             }
              """
         Then check esito is KO of inoltroEsito/mod2 response
@@ -256,10 +256,10 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
         <soapenv:Header/>
         <soapenv:Body>
             <ws:nodoChiediStatoRPT>
-                <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
-                <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
+                <identificativoIntermediarioPA>66666666666</identificativoIntermediarioPA>
+                <identificativoStazioneIntermediarioPA>66666666666_01</identificativoStazioneIntermediarioPA>
                 <password>pwdpwdpwd</password>
-                <identificativoDominio>44444444444</identificativoDominio>
+                <identificativoDominio>66666666666</identificativoDominio>
                 <identificativoUnivocoVersamento>RPTdaRifPsp_faultEsterno</identificativoUnivocoVersamento>
                 <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
             </ws:nodoChiediStatoRPT>
@@ -280,8 +280,8 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
             <ppt:intestazioneCarrelloPPT>
-            <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
-            <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
+            <identificativoIntermediarioPA>66666666666</identificativoIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>66666666666_01</identificativoStazioneIntermediarioPA>
             <identificativoCarrello>$1ccp</identificativoCarrello>
             </ppt:intestazioneCarrelloPPT>
             </soapenv:Header>
@@ -293,7 +293,7 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
             <identificativoCanale>97735020584_02</identificativoCanale>
             <listaRPT>
             <elementoListaRPT>
-            <identificativoDominio>44444444444</identificativoDominio>
+            <identificativoDominio>66666666666</identificativoDominio>
             <identificativoUnivocoVersamento>RPTdaRifPsp_faultEsterno</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
             <rpt>$rptAttachment</rpt>
@@ -321,8 +321,8 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
             <soapenv:Header/>
             <soapenv:Body>
                 <ws:nodoChiediStatoRPT>
-                    <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
-                    <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
+                    <identificativoIntermediarioPA>66666666666</identificativoIntermediarioPA>
+                    <identificativoStazioneIntermediarioPA>66666666666_01</identificativoStazioneIntermediarioPA>
                     <password>pwdpwdpwd</password>
                     <identificativoDominio>44444444445</identificativoDominio>
                     <identificativoUnivocoVersamento>RPTdaRifPsp_faultEsterno</identificativoUnivocoVersamento>
