@@ -301,23 +301,7 @@ Feature: process tests for retry a token scaduto (retry_PaOd_24)
     And with the query position_receipt check assert beetwen elem COMPANY_NAME in position 1 and elem COMPANY_NAME with position 1 of the query position_service
     And with the query position_receipt check assert beetwen elem OFFICE_NAME in position 2 and elem OFFICE_NAME with position 2 of the query position_service
     And with the query position_receipt check assert beetwen elem DEBTOR_ID in position 3 and elem DEBTOR_ID with position 3 of the query position_service
-# Assigning XML_CONTENT query result to
-    And execution query rt_xml to get value on the table RT_XML, with the columns XML_CONTENT under macro NewMod3 with db name nodo_online
-    And through the query rt_xml retrieve xml_no_decode XML_CONTENT at position 0 and save it under the key xml_rt
-    # Assigning XML_CONTENT query result to
-    And execution query rt_xml to get value on the table RPT_XML, with the columns XML_CONTENT under macro NewMod3 with db name nodo_online
-    And through the query rt_xml retrieve xml_no_decode XML_CONTENT at position 0 and save it under the key xml_rpt
-#checks on XML
-    And check value $xml_rt.identificativoDominio is equal to value $xml_rpt.identificativoDominio
-    And check value $xml_rt.riferimentoMessaggioRichiesta is equal to value $xml_rpt.identificativoMessaggioRichiesta
-    And check value $xml_rt.codiceIdentificativoUnivoco is equal to value 15376371009
-    And check value $xml_rt.denominazioneBeneficiario is equal to value $xml_rpt.denominazioneBeneficiario
-    And check value $xml_rt.anagraficaPagatore is equal to value $xml_rpt.anagraficaPagatore
-    And check value $xml_rt.identificativoUnivocoVersamento is equal to value $xml_rpt.identificativoUnivocoVersamento
-    And check value $xml_rt.CodiceContestoPagamento is equal to value $xml_rpt.codiceContestoPagamento
-    And check value $xml_rt.identificativoUnivocoRiscossione is equal to value 0
-    And check value $xml_rt.causaleVersamento is equal to value $xml_rpt.causaleVersamento
-    And check value $xml_rt.datiSpecificiRiscossione is equal to value $xml_rpt.datiSpecificiRiscossione
+
     # Assigning XML_CONTENT query result to
     And execution query rt_xml_v2 to get value on the table RT_XML, with the columns XML_CONTENT under macro NewMod3 with db name nodo_online
     And through the query rt_xml_v2 retrieve xml_no_decode XML_CONTENT at position 0 and save it under the key xml_rt
