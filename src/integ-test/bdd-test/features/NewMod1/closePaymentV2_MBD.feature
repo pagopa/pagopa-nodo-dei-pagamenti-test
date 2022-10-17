@@ -208,7 +208,7 @@ Feature: flux tests for closePaymentV2 MBD
     Scenario: prova
         Given initial XML pspNotifyPaymentV2
             """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:psp="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pfn="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
             <soapenv:Header/>
             <soapenv:Body>
             <pfn:pspNotifyPaymentV2Res>
