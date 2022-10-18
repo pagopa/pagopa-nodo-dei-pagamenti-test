@@ -386,7 +386,8 @@ Feature: idempotency checks for sendPaymentOutcomeV2
     # IDMP_SPO_11.1
 
     Scenario: IDMP_SPO_11.1 (part 1)
-        Given the activatePaymentNoticeV2 scenario executed successfully
+        Given the checkPosition scenario executed successfully
+        And the activatePaymentNoticeV2 scenario executed successfully
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2Request
@@ -457,7 +458,8 @@ Feature: idempotency checks for sendPaymentOutcomeV2
     # IDMP_SPO_12.1
 
     Scenario: IDMP_SPO_12.1 (part 1)
-        Given the activatePaymentNoticeV2 scenario executed successfully
+        Given the checkPosition scenario executed successfully
+        And the activatePaymentNoticeV2 scenario executed successfully
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response
@@ -784,7 +786,8 @@ Feature: idempotency checks for sendPaymentOutcomeV2
     # IDMP_SPO_18
 
     Scenario: IDMP_SPO_18 (part 1)
-        Given the activatePaymentNoticeV2 scenario executed successfully
+        Given the checkPosition scenario executed successfully
+        And the activatePaymentNoticeV2 scenario executed successfully
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2_1Request
@@ -822,7 +825,8 @@ Feature: idempotency checks for sendPaymentOutcomeV2
     # IDMP_SPO_20
 
     Scenario: IDMP_SPO_20 (part 1)
-        Given the activatePaymentNoticeV2 scenario executed successfully
+        Given the checkPosition scenario executed successfully
+        And the activatePaymentNoticeV2 scenario executed successfully
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2_1Request
