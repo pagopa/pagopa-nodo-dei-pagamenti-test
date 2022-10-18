@@ -143,7 +143,7 @@ Feature: activatePaymentNoticeV2Request with MBD flow OK
         Given the activatePaymentNoticeV2 scenario executed successfully
         And wait 10 seconds for expiration
         Then verify 2 record for the table POSITION_TRANSFER retrived by the query position_transfer_nmu on db nodo_online under macro sendPaymentResultV2
-        And checks the value 10$iuv,10$iuv of the record at column CREDITOR_REFERENCE_ID of the table POSITION_TRANSFER retrived by the query position_transfer_nmu on db nodo_online under macro sendPaymentResultV2
+        # And checks the value 10$iuv,10$iuv of the record at column CREDITOR_REFERENCE_ID of the table POSITION_TRANSFER retrived by the query position_transfer_nmu on db nodo_online under macro sendPaymentResultV2
         And checks the value None,IT45R0760103200000000001016 of the record at column IBAN of the table POSITION_TRANSFER retrived by the query position_transfer_nmu on db nodo_online under macro sendPaymentResultV2
         And checks the value 9,1 of the record at column AMOUNT of the table POSITION_TRANSFER retrived by the query position_transfer_nmu on db nodo_online under macro sendPaymentResultV2
         And checks the value /RFB/00202200000217527/5.00/TXT/,remittanceInfo of the record at column REMITTANCE_INFORMATION  of the table POSITION_TRANSFER retrived by the query position_transfer_nmu on db nodo_online under macro sendPaymentResultV2
