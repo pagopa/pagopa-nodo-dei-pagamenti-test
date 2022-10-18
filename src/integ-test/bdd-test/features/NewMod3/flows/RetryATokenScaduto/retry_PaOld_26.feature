@@ -178,13 +178,13 @@ Feature: process tests for retry a token scaduto
     When job mod3CancelV1 triggered after 5 seconds
     Then verify the HTTP status code of mod3CancelV1 response is 200
 
-  Scenario: Execute paaInviaRT
-    Given the Execute Poller Annulli scenario executed successfully
-    When job paInviaRt triggered after 5 seconds
-    Then verify the HTTP status code of paInviaRt response is 200
+  #Scenario: Execute paaInviaRT
+    #Given the Execute Poller Annulli scenario executed successfully
+    #When job paInviaRt triggered after 5 seconds
+    #Then verify the HTTP status code of paInviaRt response is 200
 
   Scenario: DB check
-    Given the Execute paaInviaRT scenario executed successfully
+    Given the Execute Poller Annulli scenario executed successfully
     And psp waits 3 seconds for expiration
     And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query stati_rpt on db nodo_online under macro NewMod3
   
@@ -257,8 +257,7 @@ Feature: process tests for retry a token scaduto
       </nod:sendPaymentOutcomeReq>
       </soapenv:Body>
       </soapenv:Envelope>
-      """
-    And checks the value $activatePaymentNotice1Response.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
+      """   
     When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is KO of sendPaymentOutcome response
     And check faultCode is PPT_PAGAMENTO_DUPLICATO of sendPaymentOutcome response
