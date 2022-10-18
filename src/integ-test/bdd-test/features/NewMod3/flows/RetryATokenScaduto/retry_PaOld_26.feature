@@ -180,7 +180,7 @@ Feature: process tests for retry a token scaduto
 
   Scenario: Execute paaInviaRT
     Given the Execute Poller Annulli scenario executed successfully
-    When job paInviaRt triggered after 0 seconds
+    When job paInviaRt triggered after 5 seconds
     Then verify the HTTP status code of paInviaRt response is 200
 
   Scenario: DB check
@@ -214,14 +214,13 @@ Feature: process tests for retry a token scaduto
       """
     When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
-     And save activatePaymentNotice response in activatePaymentNotice2
-    And saving activatePaymentNotice request in activatePaymentNotice2
+    And save activatePaymentNotice response in activatePaymentNotice2
+
 
 
   # Payment Outcome Phase outcome KO
   Scenario: Execute sendPaymentOutcome request
     Given the Execute activatePaymentNotice1 request scenario executed successfully
-    And PSP waits 5 seconds for expiration
     And initial XML sendPaymentOutcome
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
