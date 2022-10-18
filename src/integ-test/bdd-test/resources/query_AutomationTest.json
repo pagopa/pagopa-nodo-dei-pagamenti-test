@@ -123,7 +123,7 @@
     "Mod1": {
         "esito": "SELECT v.columns FROM table_name r JOIN RT_VERSAMENTI v ON v.FK_RT=r.ID WHERE r.IUV='$iuv' AND r.CCP= '$nodoInviaRPT.codiceContestoPagamento' AND r.IDENT_DOMINIO='$nodoInviaRPT.identificativoDominio'",
         "esito_2iuv": "SELECT v.columns FROM table_name r JOIN RT_VERSAMENTI v ON v.FK_RT=r.ID WHERE r.IUV=('$IUV','$IUV2') AND r.CCP= '$nodoInviaRPT.codiceContestoPagamento' AND r.IDENT_DOMINIO='$nodoInviaRPT.identificativoDominio'",
-        "esito_3iuv": "SELECT v.columns FROM table_name r JOIN RT_VERSAMENTI v ON v.FK_RT=r.ID WHERE r.IUV=('$iuv','$2iuv') AND r.CCP= '$nodoInviaCarrelloRPT.codiceContestoPagamento' AND r.IDENT_DOMINIO='$nodoInviaCarrelloRPT.identificativoDominio'",
+        "esito_3iuv": "SELECT v.columns FROM table_name r JOIN RT_VERSAMENTI v ON v.FK_RT=r.ID WHERE r.IUV in ('$iuv','$2iuv') AND r.CCP= '$nodoInviaCarrelloRPT.codiceContestoPagamento' AND r.IDENT_DOMINIO='$nodoInviaCarrelloRPT.identificativoDominio'",
         "motivo_annullamento": "SELECT columns FROM table_name WHERE ID_SESSIONE = '$sessionToken'",
         "motivo_annullamento_originale": "SELECT columns FROM table_name WHERE ID_SESSIONE_ORIGINALE = '$sessionToken'",
         "stati_RPT": "SELECT columns FROM table_name WHERE IUV='$iuv' AND CCP= '$1ccp' AND ID_DOMINIO='44444444444' ORDER BY INSERTED_TIMESTAMP",
