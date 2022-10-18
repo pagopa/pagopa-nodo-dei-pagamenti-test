@@ -2296,7 +2296,7 @@ def step_impl(context, primitive):
     setattr(context, primitive, payload)
 
 
-@given('MDB generation')
+@given('MBD generation')
 def step_impl(context):
     payload = context.text or ""
     date = datetime.date.today().strftime("%Y-%m-%d")
@@ -2305,20 +2305,17 @@ def step_impl(context):
     setattr(context, 'timedate', timedate)
     payload = utils.replace_local_variables(payload, context)
     payload = utils.replace_context_variables(payload, context)
-    
-
-    pa = context.config.userdata.get('global_configuration').get('codicePA')
 
     if "#iubd#" in payload:
         iubd = f"10{str(random.randint(100000000000, 999999999999))}"
-        setattr(context, 'iubd', iubd)
         payload = payload.replace('#iubd#', iubd)
+        setattr(context, 'iubd', iubd)
 
     payload = utils.replace_global_variables(payload, context)
 
-    print('payload MDB: ', payload)
+    print('payload MBD: ', payload)
     payload_b = bytes(payload, 'ascii')
     payload_uni = b64.b64encode(payload_b)
     payload = f"{payload_uni}".split("'")[1]
 
-    setattr(context, 'mdbAttachment', payload)
+    setattr(context, 'mbdAttachment', payload)

@@ -145,15 +145,15 @@ Feature: flow tests for sendPaymentOutcomeV2 - Marca da bollo
          """
 
    @skip
-   Scenario: Define MDB
-      Given MDB generation
+   Scenario: Define MBD
+      Given MBD generation
          """
          <marcaDaBollo xmlns="http://www.agenziaentrate.gov.it/2014/MarcaDaBollo" xmlns:ns2="http://www.w3.org/2000/09/xmldsig#">
          <PSP>
          <CodiceFiscale>CF60000000006</CodiceFiscale>
          <Denominazione>#psp#</Denominazione>
          </PSP>
-         <IUBD>$iubd</IUBD>
+         <IUBD>#iubd#</IUBD>
          <OraAcquisto>2022-02-06T15:00:44.659+01:00</OraAcquisto>
          <Importo>10.00</Importo>
          <TipoBollo>01</TipoBollo>
@@ -227,7 +227,7 @@ Feature: flow tests for sendPaymentOutcomeV2 - Marca da bollo
          <marcheDaBollo>
          <paymentToken>$activatePaymentNoticeV2Response.paymentToken</paymentToken>
          <idTransfer>1</idTransfer>
-         <MBDAttachment></MBDAttachment>
+         <MBDAttachment>$mbdAttachment</MBDAttachment>
          </marcheDaBollo>
          </details>
          </nod:sendPaymentOutcomeV2Request>
@@ -250,7 +250,7 @@ Feature: flow tests for sendPaymentOutcomeV2 - Marca da bollo
 
    Scenario: execute sendPaymentOutcomeV2 1
       Given the execute closePaymentV2 1 scenario executed successfully
-      And the Define MDB scenario executed successfully
+      And the Define MBD scenario executed successfully
       When psp sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
       Then check outcome is OK of sendPaymentOutcomeV2 response
 
