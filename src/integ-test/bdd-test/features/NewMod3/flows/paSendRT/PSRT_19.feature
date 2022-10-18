@@ -135,7 +135,7 @@ Feature: process tests for paSendRT
       <idBrokerPSP>70000000001</idBrokerPSP>
       <idChannel>70000000001_01</idChannel>
       <password>pwdpwdpwd</password>
-      <paymentToken></paymentToken>
+      <paymentToken>token</paymentToken>
       <outcome>OK</outcome>
       <!--Optional:-->
       <details>
@@ -742,8 +742,8 @@ Feature: process tests for paSendRT
       </soapenv:Envelope>
       """
     And EC replies to nodo-dei-pagamenti with the paSendRT
-    When job mod3Cancel triggered after 3 seconds
-    Then verify the HTTP status code of mod3Cancel response is 200
+    When job mod3CancelV2 triggered after 3 seconds
+    Then verify the HTTP status code of mod3CancelV2 response is 200
   #And check EC receives paSendRT not properly with noticeNumber $activatePaymentNotice.noticeNumber
 
 
@@ -768,8 +768,8 @@ Feature: process tests for paSendRT
       </soapenv:Envelope>
       """
     And EC replies to nodo-dei-pagamenti with the paSendRT
-    When job mod3Cancel triggered after 3 seconds
-    Then verify the HTTP status code of mod3Cancel response is 200
+    When job mod3CancelV2 triggered after 3 seconds
+    Then verify the HTTP status code of mod3CancelV2 response is 200
   #And check EC receives paSendRT not properly with noticeNumber $activatePaymentNotice.noticeNumber
 
 
@@ -813,6 +813,6 @@ Feature: process tests for paSendRT
       </soapenv:Envelope>
       """
     And EC replies to nodo-dei-pagamenti with the paSendRT
-    When job mod3Cancel triggered after 3 seconds
-    Then verify the HTTP status code of mod3Cancel response is 200
+    When job mod3CancelV2 triggered after 3 seconds
+    Then verify the HTTP status code of mod3CancelV2 response is 200
 #And check EC receives paSendRT not properly with noticeNumber $activatePaymentNotice.noticeNumber
