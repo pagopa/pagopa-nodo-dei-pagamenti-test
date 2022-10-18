@@ -121,7 +121,7 @@ Feature: check syntax KO for paGetPaymentV2 with MBD
         And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of activatePaymentNoticeV2 response
         Examples:
             | tag                                   | tag_value                                                                                                                                     
-            | soapenv:Body                          | None                                                                                                                                          
+            | Body                                  | None                                                                                                                                          
             | soapenv:Body                          | Empty                                                                                                                                         
             | paf:paGetPaymentV2Response            | None                                                                                                                                          
             | paf:paGetPaymentV2Response            | RemoveParent                                                                                                                                  
