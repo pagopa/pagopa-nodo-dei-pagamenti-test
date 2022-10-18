@@ -120,41 +120,107 @@ Feature: check syntax KO for paGetPaymentV2 with MBD
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of activatePaymentNoticeV2 response
         Examples:
-            | tag                                   | value                                                                                                                                     
-            | soapenv:Body                          | None                                                                                                                                          
-            | soapenv:Body                          | Empty                                                                                                                                         
-            | paf:paGetPaymentV2Response            | None                                                                                                                                          
-            | paf:paGetPaymentV2Response            | RemoveParent                                                                                                                                  
-            | paf:paGetPaymentV2Response            | Empty                                                                                                                                         
+            | tag                                   | value                                                                                                                                         
             | outcome                               | None                                                                                                                                          
             | outcome                               | Empty                                                                                                                                         
-            | outcome                               | prova                                                                                                                                        
-            | data                                  | None                                                                                                                                         
-            | data                                  | RemoveParent                                                                                                                                 
-            | data                                  | Empty                                                                                                                                        
+            | outcome                               | prova                                                                                                                                          
             | creditorReferenceId                   | None                                                                                                                                          
-            | creditorReferenceId                   | Empty     
+            | creditorReferenceId                   | Empty 
+            | creditorReferenceId                   | 123456789012345678901234567890123456
             | paymentAmount                         | None
-            | paymentAmount                         | Empty                                                                               
+            | paymentAmount                         | Empty
+            | paymentAmount                         | 0.00                                                                               
             | paymentAmount                         | 105,12                                                                                                                                      
             | paymentAmount                         | 105.2                                                                                                                                         
             | paymentAmount                         | 105.256                                                                                                                                       
             | paymentAmount                         | 12ad45rtyu78hj56.44  
+            | paymentAmount                         | 1000000000.00
             | dueDate                               | None
             | dueDate                               | Empty
             | dueDate                               | 20-12-2022
+            | dueDate                               | 12-20-2022
+            | dueDate                               | 2022-12-12T12:23:000
             | retentionDate                         | Empty
-            | richiestaMarcaDaBollo                 | None
-            | richiestaMarcaDaBollo                 | Empty
+            | retentionDate                         | 20-12-2022
+            | retentionDate                         | 2021-12-30T
+            | retentionDate                         | 12-20-2022
+            | lastPayment                           | Empty
+            | lastPayment                           | 3
+            | description                           | None
+            | description                           | Empty
+            | description                           | sanoei38932nfdiou%&ncdoaifer9eukvmpweuw9tunfgadkvaifuewtudnvahv89u3e37572efnsfigt609w3ut0592uhngpisdugw09tutwjeodngvgeriyrw8t29762f9qef0qfurf
+            | companyName                           | Empty
+            | companyName                           | sanoei38932nfdiou%&ncdoaifer9eukvmpweuw9tunfgadkvaifuewtudnvahv89u3e37572efnsfigt609w3ut0592uhngpisdugw09tutwjeodngvgeriyrw8t29762f9qef0qfurf
+            | officeName                            | Empty
+            | officeName                            | sanoei38932nfdiou%&ncdoaifer9eukvmpweuw9tunfgadkvaifuewtudnvahv89u3e37572efnsfigt609w3ut0592uhngpisdugw09tutwjeodngvgeriyrw8t29762f9qef0qfurf
+            | entityUniqueIdentifierType            | None
+            | entityUniqueIdentifierType            | Empty
+            | entityUniqueIdentifierType            | P
+            | entityUniqueIdentifierValue           | None
+            | entityUniqueIdentifierValue           | Empty
+            | entityUniqueIdentifierValue           | 12ftr4567dghfi89k
+            | fullName                              | None
+            | fullName                              | Empty
+            | fullName                              | sanoei38932nfdiou%&ncdoaifer9eukvmpweuw9tunfgadkvaifuewtudnvahv89u3e375
+            | streetName                            | Empty
+            | streetName                            | sanoei38932nfdiou%&ncdoaifer9eukvmpweuw9tunfgadkvaifuewtudnvahv89u3e375
+            | civicNumber                           | Empty
+            | civicNumber                           | 12ftr4567dghfi89k
+            | postalCode                            | Empty
+            | postalCode                            | 12ftr4567dghfi89k
+            | city                                  | Empty
+            | city                                  | 123456mklo12345678901234567890123456
+            | stateProvinceRegion                   | Empty
+            | stateProvinceRegion                   | 123456mklo12345678901234567890123456
+            | country                               | Empty
+            | country                               | ITA
+            | country                               | de
+            | e-mail                                | Empty
+            | e-mail                                | @prova.it
+            | e-mail                                | noei38932nfdiou%&ncdoaifer9eukvmpweuw9tunfgadkvaifuewtudnvahv89u3e375sanoei38932nfdiou%&ncdoaifer9eukvmpweuw9tunfgadkvaifuewtudnvahv89u3e375sanoei38932nfdiou%&ncdoaifer9eukvmpweuw9tunfgadkvaifuewtudnvahv89u3e375sanoei38932nfdiou%&ncdoaifer9eukvmptu@prova.it
+            | idTransfer                            | Empty
+            | idTransfer                            | None
+            | idTransfer                            | a
+            | idTransfer                            | 23
+            | idTransfer                            | 6
+            | transferAmount                        | None
+            | transferAmount                        | Empty
+            | transferAmount                        | 0.00
+            | transferAmount                        | 10,89
+            | transferAmount                        | 12.456
+            | transferAmount                        | 1.1
+            | transferAmount                        | 1000000000.00
+            | fiscalCodePA                          | None
+            | fiscalCodePA                          | Empty
+            | fiscalCodePA                          | 123409857635
+            | fiscalCodePA                          | 123456789rf
+            | fiscalCodePA                          | 152436%$789
             | hashDocumento                         | None
             | hashDocumento                         | Empty
             | hashDocumento                         | 10hjkrt
+            | hashDocumento                         | noei38932nfdioul&ncdoaifer9eukvmpweuw9tunfgadkvaifuewtudnvahv23234fssdafqffd
             | tipoBollo                             | 123
             | tipoBollo                             | None
             | tipoBollo                             | Empty
             | tipoBollo                             | TB
+            | tipoBollo                             | 22
             | provinciaResidenza                    | None
             | provinciaResidenza                    | Empty
             | provinciaResidenza                    | MIL
             | provinciaResidenza                    | M
             | provinciaResidenza                    | 12
+            | provinciaResidenza                    | rc
+            | remittanceInformation                 | None
+            | remittanceInformation                 | Empty
+            | remittanceInformation                 | noei38932nfdioul&ncdoaifer9eukvmpweuw9tunfgadkvaifuewtudnvahv23234fssdafqffdnoei38932nfdioul&ncdoaifer9eukvmpweuw9tunfgadkvaifuewtudnvahvd452
+            | transferCategory                      | None
+            | transferCategory                      | Empty
+            | transferCategory                      | noei38932nfdioul&ncdoaifer9eukvmpweuw9tunfgadkvaifuewtudnvahv23234fssdafqffdnoei38932nfdioul&ncdoaifer9eukvmpweuw9tunfgadkvaifuewtudnvahvd452
+            | key                                   | None
+            | key                                   | Empty
+            | value                                 | None
+            | value                                 | Empty
+            | IBAN                                  | None
+            | IBAN                                  | Empty
+            | IBAN                                  | 123456789012345678901234567890123456
+            | IBAN                                  | IT45R07601032000000000018888
