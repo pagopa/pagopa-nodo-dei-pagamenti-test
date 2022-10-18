@@ -89,7 +89,7 @@ Feature: syntax checks for sendPaymentOutcomeV2
          <transferDate>2021-12-11</transferDate>
          <marcheDaBollo>
          <marcaDaBollo>
-         <paymentToken>$activatePaymentNoticeV2Response.paymentToken</paymentToken>
+         <paymentToken>12345678901234567890123456789012</paymentToken>
          <idTransfer>1</idTransfer>
          <MBDAttachment>$mbdAttachment</MBDAttachment>
          </marcaDaBollo>
