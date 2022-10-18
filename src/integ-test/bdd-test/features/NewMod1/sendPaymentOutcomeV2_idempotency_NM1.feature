@@ -190,7 +190,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2
                 "idPSP": "#psp#",
                 "paymentMethod": "TPAY",
                 "idBrokerPSP": "#id_broker_psp#",
-                "idChannel": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
+                "idChannel": "#canale_versione_primitive_2#",
                 "transactionId": "#transaction_id#",
                 "totalAmount": 22,
                 "fee": 2,
@@ -462,7 +462,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2
         And the activatePaymentNoticeV2 scenario executed successfully
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_1
 
     Scenario: IDMP_SPO_12.1 (part 2)
         Given the IDMP_SPO_12.1 (part 1) scenario executed successfully
@@ -472,7 +472,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2
         And random idempotencyKey having $activatePaymentNoticeV2.idPSP as idPSP in activatePaymentNoticeV2
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response1
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_2
 
     Scenario: IDMP_SPO_12.1 (part 3)
         Given the IDMP_SPO_12.1 (part 2) scenario executed successfully
