@@ -2,15 +2,15 @@ Feature: process tests for nodoInviaRT_esito=1
 
     Background:
         Given systems up
-
+@runnable
     Scenario: RPT generation
         Given RPT generation
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-            <pay_i:identificativoDominio>66666666666</pay_i:identificativoDominio>
-            <pay_i:identificativoStazioneRichiedente>66666666666_01</pay_i:identificativoStazioneRichiedente>
+            <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
+            <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
             <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
@@ -81,7 +81,7 @@ Feature: process tests for nodoInviaRT_esito=1
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-
+@runnable
     Scenario: Execute nodoInviaRPT request
         Given the RPT generation scenario executed successfully
         And initial XML nodoInviaRPT
@@ -89,9 +89,9 @@ Feature: process tests for nodoInviaRT_esito=1
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
             <ppt:intestazionePPT>
-            <identificativoIntermediarioPA>66666666666</identificativoIntermediarioPA>
-            <identificativoStazioneIntermediarioPA>66666666666_01</identificativoStazioneIntermediarioPA>
-            <identificativoDominio>66666666666</identificativoDominio>
+            <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoUnivocoVersamento>$2iuv</identificativoUnivocoVersamento>
             <codiceContestoPagamento>CCD01</codiceContestoPagamento>
             </ppt:intestazionePPT>
@@ -99,9 +99,9 @@ Feature: process tests for nodoInviaRT_esito=1
             <soapenv:Body>
             <ws:nodoInviaRPT>
             <password>pwdpwdpwd</password>
-            <identificativoPSP>60000000001</identificativoPSP>
-            <identificativoIntermediarioPSP>60000000001</identificativoIntermediarioPSP>
-            <identificativoCanale>60000000001_07</identificativoCanale>
+            <identificativoPSP>#psp#</identificativoPSP>
+            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canale#</identificativoCanale>
             <tipoFirma></tipoFirma>
             <rpt>$rptAttachment</rpt>
             </ws:nodoInviaRPT>
@@ -110,7 +110,7 @@ Feature: process tests for nodoInviaRT_esito=1
             """
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
-
+@runnable
     Scenario: RT generation
         Given the Execute nodoInviaRPT request scenario executed successfully
         And RT generation
@@ -118,8 +118,8 @@ Feature: process tests for nodoInviaRT_esito=1
             <pay_i:RT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>6.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-            <pay_i:identificativoDominio>66666666666</pay_i:identificativoDominio>
-            <pay_i:identificativoStazioneRichiedente>66666666666_01</pay_i:identificativoStazioneRichiedente>
+            <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
+            <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRicevuta>IdentificativoMessaggioRicevuta</pay_i:identificativoMessaggioRicevuta>
             <pay_i:dataOraMessaggioRicevuta>#timedate#</pay_i:dataOraMessaggioRicevuta>
@@ -199,7 +199,7 @@ Feature: process tests for nodoInviaRT_esito=1
             </pay_i:datiPagamento>
             </pay_i:RT>
             """
-
+@runnable
     Scenario: Execute nodoInviaRT request
         Given the RT generation scenario executed successfully
         And initial XML nodoInviaRT
@@ -208,11 +208,11 @@ Feature: process tests for nodoInviaRT_esito=1
             <soapenv:Header/>
             <soapenv:Body>
             <ws:nodoInviaRT>
-            <identificativoIntermediarioPSP>60000000001</identificativoIntermediarioPSP>
-            <identificativoCanale>60000000001_07</identificativoCanale>
+            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canale#</identificativoCanale>
             <password>pwdpwdpwd</password>
-            <identificativoPSP>60000000001</identificativoPSP>
-            <identificativoDominio>66666666666</identificativoDominio>
+            <identificativoPSP>#psp#</identificativoPSP>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoUnivocoVersamento>$2iuv</identificativoUnivocoVersamento>
             <codiceContestoPagamento>CCD01</codiceContestoPagamento>
             <tipoFirma></tipoFirma>
@@ -224,7 +224,7 @@ Feature: process tests for nodoInviaRT_esito=1
             """
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
-
+@runnable
     Scenario: Execute second nodoInviaRT request
         Given the Execute nodoInviaRT request scenario executed successfully
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
