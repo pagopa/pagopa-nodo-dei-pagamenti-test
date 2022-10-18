@@ -2,14 +2,14 @@ Feature: process tests for RPT-RT bollo
 
    Background:
       Given systems up
-
+@runnable
    Scenario: MB generation
       Given MB generation
          """
          <marcaDaBollo xmlns="http://www.agenziaentrate.gov.it/2014/MarcaDaBollo" xmlns:ns2="http://www.w3.org/2000/09/xmldsig#">
             <PSP>
                <CodiceFiscale>12345678901</CodiceFiscale>
-               <Denominazione>40000000001</Denominazione>
+               <Denominazione>60000000001</Denominazione>
             </PSP>
             <IUBD>#iubd#</IUBD>
             <OraAcquisto>2015-02-06T15:00:44.659+01:00</OraAcquisto>
@@ -238,7 +238,7 @@ Feature: process tests for RPT-RT bollo
             """
       When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
       Then check faultCode is PPT_CANALE_SERVIZIO_NONATTIVO of nodoInviaRPT response
-
+@runnable
    Scenario: Execute nodoInviaRT
       Given the MB generation scenario executed successfully
       And initial XML nodoInviaRT
