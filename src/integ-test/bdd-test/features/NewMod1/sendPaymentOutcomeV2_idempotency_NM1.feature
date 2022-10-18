@@ -852,7 +852,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2
         And wait 5 seconds for expiration
         And verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache_1 on db nodo_online under macro NewMod1
         And verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache_2 on db nodo_online under macro NewMod1
-    @wip
+    
     Scenario: IDMP_SPO_20 (part 4)
         Given the IDMP_SPO_20 (part 3) scenario executed successfully
         And nodo-dei-pagamenti DEV has config parameter useIdempotency set to false
