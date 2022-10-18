@@ -14,9 +14,9 @@ Feature: DB checks for PAG-579_OK
                 <soapenv:Header/>
                 <soapenv:Body>
                     <nod:verifyPaymentNoticeReq>
-                    <idPSP>#psp_AGID#</idPSP>
-                    <idBrokerPSP>#broker_AGID#</idBrokerPSP>
-                    <idChannel>#canale_AGID#</idChannel>
+                    <idPSP>#psp#</idPSP>
+                    <idBrokerPSP>#psp#</idBrokerPSP>
+                    <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
                     <password>pwdpwdpwd</password>
                     <qrCode>
                         <fiscalCode>#creditor_institution_code_old#</fiscalCode>
