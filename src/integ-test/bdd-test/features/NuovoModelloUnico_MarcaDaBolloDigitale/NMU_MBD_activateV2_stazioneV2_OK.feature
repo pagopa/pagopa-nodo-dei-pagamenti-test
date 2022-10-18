@@ -130,3 +130,20 @@ Feature: activatePaymentNoticeV2Request with MBD flow OK
         Then check outcome is OK of activatePaymentNoticeV2 response
 
 
+    #DB check
+    Scenario: DB check
+        Given the activatePaymentNoticeV2 scenario executed successfully
+        And wait 10 seconds for expiration
+        # POSITION_TRANSFER
+        Then verify 1 record for the table POSITION_TRANSFER retrived by the query position_transfer_nmu_asc on db nodo_online under macro sendPaymentResultV2
+        And checks the value $paGetPaymentV2.creditorReferenceId of the record at column CREDITOR_REFERENCE_ID of the table POSITION_TRANSFER retrived by the query position_transfer_nmu_asc on db nodo_online under macro sendPaymentResultV2
+        And checks the value None of the record at column IBAN of the table POSITION_TRANSFER retrived by the query position_transfer_nmu_asc on db nodo_online under macro sendPaymentResultV2
+        And checks the value 10 of the record at column AMOUNT of the table POSITION_TRANSFER retrived by the query position_transfer_nmu_asc on db nodo_online under macro sendPaymentResultV2
+        And checks the value /RFB/00202200000217527/5.00/TXT/ of the record at column REMITTANCE_INFORMATION  of the table POSITION_TRANSFER retrived by the query position_transfer_nmu_asc on db nodo_online under macro sendPaymentResultV2
+        And checks the value 01 of the record at column REQ_TIPO_BOLLO of the table POSITION_TRANSFER retrived by the query position_transfer_nmu_asc on db nodo_online under macro sendPaymentResultV2
+        And checks the value ciao of the record at column REQ_HASH_DOCUMENTO of the table POSITION_TRANSFER retrived by the query position_transfer_nmu_asc on db nodo_online under macro sendPaymentResultV2
+        And checks the value MI of the record at column REQ_PROVINCIA_RESIDENZA of the table POSITION_TRANSFER retrived by the query position_transfer_nmu_asc on db nodo_online under macro sendPaymentResultV2
+        # POSITION_TRANSFER_MBD
+        And verify 0 record for the table POSITION_TRANSFER_MBD retrived by the query position_transfer_mbd on db nodo_online under macro sendPaymentResultV2
+        # POSITION_PAYMENT
+        And checks the value Y of the record at column MBD of the table POSITION_PAYMENT retrived by the query position_transfer_nmu_asc on db nodo_online under macro sendPaymentResultV2
