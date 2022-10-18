@@ -251,6 +251,7 @@ Feature: flow tests for sendPaymentOutcomeV2 - Marca da bollo
    Scenario: execute sendPaymentOutcomeV2 1
       Given the execute closePaymentV2 1 scenario executed successfully
       And the Define MBD scenario executed successfully
+      And the sendPaymentOutcomeV2 scenario executed successfully
       When psp sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
       Then check outcome is OK of sendPaymentOutcomeV2 response
 
