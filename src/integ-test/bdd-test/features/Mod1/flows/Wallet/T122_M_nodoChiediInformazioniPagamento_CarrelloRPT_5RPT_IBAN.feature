@@ -640,7 +640,7 @@ Feature: process tests for 5 RPT 5 Versamenti
         <ws:nodoInviaCarrelloRPT>
         <password>pwdpwdpwd</password>
         <identificativoPSP>#psp_AGID#</identificativoPSP>
-        <identificativoIntermediarioPSP>#psp_AGID#</identificativoIntermediarioPSP>
+        <identificativoIntermediarioPSP>97735020584</identificativoIntermediarioPSP>
         <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
         <listaRPT>
             <elementoListaRPT>
