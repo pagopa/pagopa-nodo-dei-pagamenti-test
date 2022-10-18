@@ -481,7 +481,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
         And wait 5 seconds for expiration
-    @wip
+    
     Scenario: IDMP_SPO_12.1 (part 4)
         Given the IDMP_SPO_12.1 (part 3) scenario executed successfully
         And the sendPaymentOutcomeV2 with 2 paymentToken scenario executed successfully
