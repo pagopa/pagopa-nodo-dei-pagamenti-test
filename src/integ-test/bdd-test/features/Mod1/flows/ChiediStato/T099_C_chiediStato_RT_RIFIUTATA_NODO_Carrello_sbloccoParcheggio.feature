@@ -397,10 +397,10 @@ Feature: process tests for T099_C_chiediStato_RT_RIFIUTATA_NODO_Carrello_sblocco
             """
             {
             "idPagamento":"$sessionToken",
-            "identificativoPsp":"40000000001",
+            "identificativoPsp":"#psp#",
             "tipoVersamento":"BBT",
-            "identificativoIntermediario":"40000000001",
-            "identificativoCanale":"40000000001_03",
+            "identificativoIntermediario":"#psp#",
+            "identificativoCanale":"#canale#",
             "tipoOperazione":"web"
             }
             """
