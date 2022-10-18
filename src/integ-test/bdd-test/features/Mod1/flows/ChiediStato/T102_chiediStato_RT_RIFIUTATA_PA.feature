@@ -2,7 +2,7 @@ Feature: process tests for T102_chiediStato_RT_RIFIUTATA_PA
 
     Background:
         Given systems up
-
+@runnable
     Scenario: RPT generation
         Given RPT generation
             """
@@ -168,7 +168,7 @@ Feature: process tests for T102_chiediStato_RT_RIFIUTATA_PA
             </pay_i:datiPagamento>
             </pay_i:RT>
             """
-
+@runnable
     Scenario: Execute nodoInviaRPT request
         Given the RPT generation scenario executed successfully
         And initial XML pspInviaRPT
@@ -215,7 +215,7 @@ Feature: process tests for T102_chiediStato_RT_RIFIUTATA_PA
             """
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
-
+@runnable
     Scenario: Execute nodoInviaRT request
         Given the Execute nodoInviaRPT request scenario executed successfully
         And initial XML paaInviaRT
@@ -260,7 +260,7 @@ Feature: process tests for T102_chiediStato_RT_RIFIUTATA_PA
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
         And wait 10 seconds for expiration
-
+@runnable
     Scenario: Execute nodoChiediStatoRPT request
         Given the Execute nodoInviaRT request scenario executed successfully
         And initial XML nodoChiediStatoRPT
@@ -287,7 +287,7 @@ Feature: process tests for T102_chiediStato_RT_RIFIUTATA_PA
         And checks stato contains RT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RT_ACCETTATA_NODO of nodoChiediStatoRPT response
         And check url field not exists in nodoChiediStatoRPT response
-
+@runnable
    Scenario: Execute second nodoInviaRT request
         Given the Execute nodoChiediStatoRPT request scenario executed successfully
         And initial XML nodoInviaRT
@@ -313,7 +313,7 @@ Feature: process tests for T102_chiediStato_RT_RIFIUTATA_PA
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is KO of nodoInviaRT response
         And check faultCode is PPT_RT_DUPLICATA of nodoInviaRT response
-
+@runnable
     Scenario: Execute nodoChiediStatoRPT request
         Given the Execute second nodoInviaRT request scenario executed successfully
         And initial XML nodoChiediStatoRPT

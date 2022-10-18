@@ -9,8 +9,8 @@ Feature: process tests for T102_D_chiediStato_RT_RIFIUTATA_PA_Annullamento
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-                <pay_i:identificativoDominio>44444444444</pay_i:identificativoDominio>
-                <pay_i:identificativoStazioneRichiedente>44444444444_01</pay_i:identificativoStazioneRichiedente>
+                <pay_i:identificativoDominio>66666666666</pay_i:identificativoDominio>
+                <pay_i:identificativoStazioneRichiedente>66666666666_01</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
             <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
@@ -87,8 +87,8 @@ Feature: process tests for T102_D_chiediStato_RT_RIFIUTATA_PA_Annullamento
             <pay_i:RT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>6.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-                <pay_i:identificativoDominio>44444444444</pay_i:identificativoDominio>
-                <pay_i:identificativoStazioneRichiedente>44444444444_01</pay_i:identificativoStazioneRichiedente>
+                <pay_i:identificativoDominio>66666666666</pay_i:identificativoDominio>
+                <pay_i:identificativoStazioneRichiedente>66666666666_01</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRicevuta>IdentificativoMessaggioRicevuta</pay_i:identificativoMessaggioRicevuta>
             <pay_i:dataOraMessaggioRicevuta>$timedate</pay_i:dataOraMessaggioRicevuta>
@@ -176,9 +176,9 @@ Feature: process tests for T102_D_chiediStato_RT_RIFIUTATA_PA_Annullamento
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
             <ppt:intestazionePPT>
-            <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
-            <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
-            <identificativoDominio>44444444444</identificativoDominio>
+            <identificativoIntermediarioPA>66666666666</identificativoIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>66666666666_01</identificativoStazioneIntermediarioPA>
+            <identificativoDominio>66666666666</identificativoDominio>
             <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$timedate</codiceContestoPagamento>
             </ppt:intestazionePPT>
@@ -221,7 +221,7 @@ Feature: process tests for T102_D_chiediStato_RT_RIFIUTATA_PA_Annullamento
                     <fault>
                     <faultCode>PAA_RT_DUPLICATA</faultCode>
                     <faultString>tegba</faultString>
-                    <id>44444444444</id>
+                    <id>66666666666</id>
                     </fault>
                     <esito>KO</esito>
                 </paaInviaRTRisposta>
@@ -242,10 +242,10 @@ Feature: process tests for T102_D_chiediStato_RT_RIFIUTATA_PA_Annullamento
             <soapenv:Header/>
             <soapenv:Body>
                 <ws:nodoChiediStatoRPT>
-                    <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
-                    <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
+                    <identificativoIntermediarioPA>66666666666</identificativoIntermediarioPA>
+                    <identificativoStazioneIntermediarioPA>66666666666_01</identificativoStazioneIntermediarioPA>
                     <password>pwdpwdpwd</password>
-                    <identificativoDominio>44444444444</identificativoDominio>
+                    <identificativoDominio>66666666666</identificativoDominio>
                     <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
                     <codiceContestoPagamento>$timedate</codiceContestoPagamento>
                 </ws:nodoChiediStatoRPT>
