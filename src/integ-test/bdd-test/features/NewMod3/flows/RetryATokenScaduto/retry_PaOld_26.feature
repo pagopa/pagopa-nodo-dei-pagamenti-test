@@ -150,7 +150,7 @@ Feature: process tests for retry a token scaduto
       <soapenv:Header>
       <ppt:intestazionePPT>
       <identificativoIntermediarioPA>$activatePaymentNotice.fiscalCode</identificativoIntermediarioPA>
-      <identificativoStazioneIntermediarioPA>$intermediarioPA</identificativoStazioneIntermediarioPA>
+      <identificativoStazioneIntermediarioPA>#intermediarioPAOld#</identificativoStazioneIntermediarioPA>
       <identificativoDominio>$activatePaymentNotice.fiscalCode</identificativoDominio>
       <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
       <codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken</codiceContestoPagamento>
@@ -174,7 +174,7 @@ Feature: process tests for retry a token scaduto
     And check redirect is 0 of nodoInviaRPT response
 
   Scenario: Execute Poller Annulli
-    Given the Execute sendPaymentOutcome request scenario executed successfully
+    Given the Execute nodoInviaRPT request scenario executed successfully
     When job mod3CancelV1 triggered after 5 seconds
     Then verify the HTTP status code of mod3CancelV1 response is 200
 
