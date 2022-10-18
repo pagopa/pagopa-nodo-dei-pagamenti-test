@@ -92,14 +92,6 @@ Feature: check syntax KO for paGetPaymentV2 with MBD
             </mapEntry>
             </metadata>
             </transfer>
-            <transfer>
-            <idTransfer>2</idTransfer>
-            <transferAmount>1.00</transferAmount>
-            <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
-            <IBAN>IT45R0760103200000000001016</IBAN>
-            <remittanceInformation>remittanceInfo</remittanceInformation>
-            <transferCategory>category</transferCategory>
-            </transfer>
             </transferList>
             <!--Optional:-->
             <metadata>
