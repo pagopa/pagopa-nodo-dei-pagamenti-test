@@ -219,9 +219,6 @@ Feature: process tests for paSendRT
     Given the Execute verifyPaymentNotice request scenario executed successfully
     And the Define paGetPayment scenario executed successfully
     And EC replies to nodo-dei-pagamenti with the paGetPayment
-    And the Define activatePaymentNotice scenario executed successfully
-    When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
-    Then check outcome is OK of activatePaymentNotice response
     And initial XML paSendRT
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
@@ -240,6 +237,9 @@ Feature: process tests for paSendRT
       </soapenv:Envelope>
       """
     And EC replies to nodo-dei-pagamenti with the paSendRT
+    And the Define activatePaymentNotice scenario executed successfully
+    When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+    Then check outcome is OK of activatePaymentNotice response
 
 
   # Activate phase - 3 transfers in paGetPayment transferList and broadcast false for all stations [PSRT_05]
