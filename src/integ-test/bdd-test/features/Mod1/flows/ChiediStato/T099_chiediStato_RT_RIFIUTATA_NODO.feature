@@ -260,7 +260,6 @@ Feature: process tests for T099_chiediStato_RT_RIFIUTATA_NODO
         </soapenv:Envelope>
         """
         When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
-        When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
         Then checks stato contains RPT_ACCETTATA_PSP of nodoChiediStatoRPT response
         And checks stato contains RT_RIFIUTATA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
