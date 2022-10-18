@@ -167,12 +167,18 @@ Feature: DB checks for PAG-579_OK
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
 
+    Scenario: trigger paInviaRT
+        Given the Execute nodoInviaRPT request scenario executed successfully
+        When job paInviaRt triggered after 3 seconds
+        Then verify the HTTP status code of paInviaRt response is 200
+        And wait 5 seconds for expiration
+
         And checks the value N of the record at column PAAATTIVARPTRESP of the table RPT_ACTIVATIONS retrived by the query num_avviso on db nodo_online under macro NewMod3
         And checks the value Y of the record at column NODOINVIARPTREQ of the table RPT_ACTIVATIONS retrived by the query num_avviso on db nodo_online under macro NewMod3
         And wait 10 seconds for expiration
 
     Scenario: Excecute sendPaymentOutcome request
-        Given the Excecute nodoInviaRPT request scenario executed successfully
+        Given the trigger paInviaRT scenario executed successfully
         And initial XML sendPaymentOutcome
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
