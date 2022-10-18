@@ -641,7 +641,7 @@ Feature: process tests for 5 RPT 5 Versamenti
         <password>pwdpwdpwd</password>
         <identificativoPSP>#psp_AGID#</identificativoPSP>
         <identificativoIntermediarioPSP>97735020584</identificativoIntermediarioPSP>
-        <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
+        <identificativoCanale>#canale_AGID#</identificativoCanale>
         <listaRPT>
             <elementoListaRPT>
                 <identificativoDominio>#creditor_institution_code#</identificativoDominio>
