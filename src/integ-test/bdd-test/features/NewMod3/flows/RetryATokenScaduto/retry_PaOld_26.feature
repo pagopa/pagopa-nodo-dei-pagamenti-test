@@ -153,7 +153,7 @@ Feature: process tests for retry a token scaduto
       <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
       <identificativoDominio>$activatePaymentNotice.fiscalCode</identificativoDominio>
       <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
-      <codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken</codiceContestoPagamento>
+      <codiceContestoPagamento>$activatePaymentNotice1Response.paymentToken</codiceContestoPagamento>
       </ppt:intestazionePPT>
       </soapenv:Header>
       <soapenv:Body>
@@ -185,7 +185,7 @@ Feature: process tests for retry a token scaduto
 
   Scenario: DB check
     Given the Execute paaInviaRT scenario executed successfully
-    And psp waits 3 seconds for expiration
+    And psp waits 8 seconds for expiration
     And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query stati_rpt on db nodo_online under macro NewMod3
   
   Scenario: Execute activatePaymentNotice1 request
@@ -203,7 +203,7 @@ Feature: process tests for retry a token scaduto
       <idempotencyKey>#idempotency_key#</idempotencyKey>
       <qrCode>
       <fiscalCode>#creditor_institution_code_old#</fiscalCode>
-      <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
+      <noticeNumber>#notice_number_old#</noticeNumber>
       </qrCode>
       <expirationTime>2000</expirationTime>
       <amount>10.00</amount>
