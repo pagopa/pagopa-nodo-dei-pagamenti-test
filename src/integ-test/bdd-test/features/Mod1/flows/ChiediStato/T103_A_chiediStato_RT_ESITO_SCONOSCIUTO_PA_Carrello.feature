@@ -2,7 +2,7 @@ Feature: process tests for T103_A_chiediStato_RT_ESITO_SCONOSCIUTO_PA_Carrello
 
     Background:
         Given systems up
-        
+@runnable       
     Scenario: RPT generation
         Given RPT generation
             """
@@ -333,7 +333,7 @@ Feature: process tests for T103_A_chiediStato_RT_ESITO_SCONOSCIUTO_PA_Carrello
             </pay_i:datiPagamento>
             </pay_i:RT>
             """
-
+@runnable  
     Scenario: Execute nodoInviaCarrelloRPT
 		Given the RPT generation scenario executed successfully
 		And initial XML nodoInviaCarrelloRPT
@@ -388,7 +388,7 @@ Feature: process tests for T103_A_chiediStato_RT_ESITO_SCONOSCIUTO_PA_Carrello
         And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check url field exists in nodoInviaCarrelloRPT response
-
+@runnable  
     Scenario: Execute nodoInviaRT request
         Given the Execute nodoInviaCarrelloRPT scenario executed successfully
         And initial XML paaInviaRT
@@ -429,7 +429,7 @@ Feature: process tests for T103_A_chiediStato_RT_ESITO_SCONOSCIUTO_PA_Carrello
         Then check esito is OK of nodoInviaRT response
         And wait 5 seconds for expiration
 
-
+@runnable  
     Scenario: Execute second nodoInviaRT request
         Given the Execute nodoInviaRT request scenario executed successfully
         And initial XML paaInviaRT
@@ -469,8 +469,7 @@ Feature: process tests for T103_A_chiediStato_RT_ESITO_SCONOSCIUTO_PA_Carrello
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
         And wait 5 seconds for expiration
-
-
+@runnable  
     Scenario: Execute nodoChiediStatoRPT request
         Given the Execute second nodoInviaRT request scenario executed successfully
         And initial XML nodoChiediStatoRPT
@@ -499,7 +498,7 @@ Feature: process tests for T103_A_chiediStato_RT_ESITO_SCONOSCIUTO_PA_Carrello
         And check redirect is 0 of nodoChiediStatoRPT response
         And check url field not exists in nodoChiediStatoRPT response
 
-
+@runnable  
     Scenario: Execute second nodoChiediStatoRPT request
         Given the Execute nodoChiediStatoRPT request scenario executed successfully
         And initial XML nodoChiediStatoRPT
@@ -527,7 +526,7 @@ Feature: process tests for T103_A_chiediStato_RT_ESITO_SCONOSCIUTO_PA_Carrello
         And checks stato contains RT_ACCETTATA_NODO of nodoChiediStatoRPT response
         And check redirect is 0 of nodoChiediStatoRPT response
         And check url field not exists in nodoChiediStatoRPT response
-
+@runnable  
    Scenario: Execute third nodoInviaRT request
         Given the Execute second nodoChiediStatoRPT request scenario executed successfully
         And initial XML nodoInviaRT
@@ -569,7 +568,7 @@ Feature: process tests for T103_A_chiediStato_RT_ESITO_SCONOSCIUTO_PA_Carrello
         And checks the value RICEVUTA,CAMBIO_STATO,CAMBIO_STATO,INVIATA,CAMBIO_STATO,INVIATA,RICEVUTA,CAMBIO_STATO of the record at column ESITO of the table RE retrived by the query Re_2 on db re under macro Mod1
         And checks the value RT_RICEVUTA_NODO,RT_ACCETTATA_NODO,RT_INVIATA_PA,RT_ESITO_SCONOSCIUTO_PA of the record at column STATUS of the table RE retrived by the query Re on db re under macro Mod1
         And checks the value RT_RICEVUTA_NODO,RT_ACCETTATA_NODO,RT_INVIATA_PA,RT_ESITO_SCONOSCIUTO_PA of the record at column STATUS of the table RE retrived by the query Re_2 on db re under macro Mod1
-
+@runnable  
     Scenario: Execute third nodoChiediStatoRPT request
         Given the Execute third nodoInviaRT request scenario executed successfully
         And initial XML nodoChiediStatoRPT
@@ -596,7 +595,7 @@ Feature: process tests for T103_A_chiediStato_RT_ESITO_SCONOSCIUTO_PA_Carrello
         And check redirect is 0 of nodoChiediStatoRPT response
         And check url field not exists in nodoChiediStatoRPT response
 
-
+@runnable  
     Scenario: Execute fourth nodoChiediStatoRPT request
         Given the Execute third nodoChiediStatoRPT request scenario executed successfully
         And initial XML nodoChiediStatoRPT
@@ -622,7 +621,7 @@ Feature: process tests for T103_A_chiediStato_RT_ESITO_SCONOSCIUTO_PA_Carrello
         And checks stato contains RT_INVIATA_PA of nodoChiediStatoRPT response
         And check redirect is 0 of nodoChiediStatoRPT response
         And check url field not exists in nodoChiediStatoRPT response
-
+@runnable  
     Scenario: Execute fifth nodoChiediStatoRPT request
         Given the Execute fourth nodoChiediStatoRPT request scenario executed successfully
         And initial XML nodoChiediStatoRPT
