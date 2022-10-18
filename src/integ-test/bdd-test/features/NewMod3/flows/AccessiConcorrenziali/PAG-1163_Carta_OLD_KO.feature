@@ -1,4 +1,4 @@
-Feature: Pag-1163_Carta_OLD_OK
+Feature: Pag-1163_Carta_OLD_KO
 
     Background:
         Given systems up
@@ -237,45 +237,8 @@ Feature: Pag-1163_Carta_OLD_OK
         And check CCP is $ccp of informazioniPagamento response
         And check enteBeneficiario field exists in informazioniPagamento response
 
-    Scenario: Node handling of nodoInoltraEsitoPagamentoCarta and sendPaymentOutcome ok on old PA
+    Scenario: Execute parallel request
         Given the Execute nodoChiediInformazioniPagamento (Phase 4) scenario executed successfully
-        #And initial XML sendPaymentOutcome
-        #    """
-        #    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-        #    <soapenv:Header/>
-        #    <soapenv:Body>
-        #    <nod:sendPaymentOutcomeReq>
-        #    <idPSP>#psp#</idPSP>
-        #    <idBrokerPSP>#psp#</idBrokerPSP>
-        #    <idChannel>#canale#</idChannel>
-        #    <password>pwdpwdpwd</password>
-        #    <paymentToken>$ccp</paymentToken>
-        #    <outcome>OK</outcome>
-        #    <details>
-        #    <paymentMethod>creditCard</paymentMethod>
-        #    <paymentChannel>app</paymentChannel>
-        #    <fee>2.00</fee>
-        #    <payer>
-        #    <uniqueIdentifier>
-        #    <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-        #    <entityUniqueIdentifierValue>#id_station_old#</entityUniqueIdentifierValue>
-        #    </uniqueIdentifier>
-        #    <fullName>SPOname</fullName>
-        #    <streetName>SPOstreet</streetName>
-        #    <civicNumber>SPOcivic</civicNumber>
-        #    <postalCode>SPOpostal</postalCode>
-        #    <city>city</city>
-        #    <stateProvinceRegion>SPOstate</stateProvinceRegion>
-        #    <country>IT</country>
-        #    <e-mail>SPOprova@test.it</e-mail>
-        #    </payer>
-        #    <applicationDate>2021-12-12</applicationDate>
-        #    <transferDate>2021-12-11</transferDate>
-        #    </details>
-        #    </nod:sendPaymentOutcomeReq>
-        #    </soapenv:Body>
-        #    </soapenv:Envelope>
-        #    """
         And RT generation
             """
             <pay_i:RT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
@@ -399,26 +362,26 @@ Feature: Pag-1163_Carta_OLD_OK
             """
         And initial XML pspInviaCarrelloRPTCarte
             """
-            <soapenv:Envelope
-            xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-            xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <ws:pspInviaCarrelloRPTCarteResponse>
-            <pspInviaCarrelloRPTResponse>
-            <delay>7000</delay>
-            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-            <identificativoCarrello>$ccp</identificativoCarrello>
-            <parametriPagamentoImmediato>idBruciatura=$ccp</parametriPagamentoImmediato>
-            </pspInviaCarrelloRPTResponse>
-            </ws:pspInviaCarrelloRPTCarteResponse>
-            </soapenv:Body>
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+                <soapenv:Header/>
+                <soapenv:Body>
+                    <ws:pspInviaCarrelloRPTCarteResponse>
+                        <pspInviaCarrelloRPTResponse>
+                            <delay>7000</delay>
+                            <fault>
+                            <faultCode>CANALE_RPT_DUPLICATA</faultCode>
+                            <faultString>bgdhbazhyt</faultString>
+                            <id>idPsp1</id>
+                            </fault>
+                            <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
+                        </pspInviaCarrelloRPTResponse>
+                    </ws:pspInviaCarrelloRPTCarteResponse>
+                </soapenv:Body>
             </soapenv:Envelope>
             """
         And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte
         And saving inoltroEsito/cartaJSON request in inoltroEsito/carta
-        #When calling primitive inoltroEsito/carta_inoltroEsito/carta POST and sendPaymentOutcome_sendPaymentOutcome POST with 4000 ms delay
         When calling primitive inoltroEsito/carta_inoltroEsito/carta POST and nodoInviaRT_nodoInviaRT POST with 4000 ms delay
         Then verify the HTTP status code of inoltroEsito/carta response is 200
         And check esito is OK of inoltroEsito/carta response
-        And check esito is OK of nodoInviaRT response
+        And check esito is KO of nodoInviaRT response
