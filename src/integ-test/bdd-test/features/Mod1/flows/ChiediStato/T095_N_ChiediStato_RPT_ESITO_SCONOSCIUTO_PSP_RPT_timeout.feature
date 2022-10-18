@@ -11,7 +11,7 @@ Feature: process tests for T095_N_ChiediStato_RPT_ESITO_SCONOSCIUTO_PSP_RPT_time
         <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
         <pay_i:dominio>
         <pay_i:identificativoDominio>44444444444</pay_i:identificativoDominio>
-        <pay_i:identificativoStazioneRichiedente>44444444444_01</pay_i:identificativoStazioneRichiedente>
+        <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
         </pay_i:dominio>
         <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
         <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
@@ -91,7 +91,7 @@ Feature: process tests for T095_N_ChiediStato_RPT_ESITO_SCONOSCIUTO_PSP_RPT_time
             <soapenv:Header>
             <ppt:intestazionePPT>
             <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
-            <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
             <identificativoDominio>44444444444</identificativoDominio>
             <identificativoUnivocoVersamento>timeoutPsp</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
@@ -100,9 +100,9 @@ Feature: process tests for T095_N_ChiediStato_RPT_ESITO_SCONOSCIUTO_PSP_RPT_time
             <soapenv:Body>
             <ws:nodoInviaRPT>
             <password>pwdpwdpwd</password>
-            <identificativoPSP>40000000001</identificativoPSP>
-            <identificativoIntermediarioPSP>40000000001</identificativoIntermediarioPSP>
-            <identificativoCanale>40000000001_03</identificativoCanale>
+            <identificativoPSP>#psp#</identificativoPSP>
+            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canale#</identificativoCanale>
             <tipoFirma></tipoFirma>
             <rpt>$rptAttachment</rpt>
             </ws:nodoInviaRPT>
@@ -122,7 +122,7 @@ Feature: process tests for T095_N_ChiediStato_RPT_ESITO_SCONOSCIUTO_PSP_RPT_time
             <soapenv:Body>
                 <ws:nodoChiediStatoRPT>
                     <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
-                    <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
+                    <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
                     <password>pwdpwdpwd</password>
                     <identificativoDominio>44444444444</identificativoDominio>
                     <identificativoUnivocoVersamento>timeoutPsp</identificativoUnivocoVersamento>
@@ -146,7 +146,7 @@ Feature: process tests for T095_N_ChiediStato_RPT_ESITO_SCONOSCIUTO_PSP_RPT_time
             <soapenv:Header>
             <ppt:intestazionePPT>
             <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
-            <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
             <identificativoDominio>44444444444</identificativoDominio>
             <identificativoUnivocoVersamento>timeoutPsp</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
@@ -155,9 +155,9 @@ Feature: process tests for T095_N_ChiediStato_RPT_ESITO_SCONOSCIUTO_PSP_RPT_time
             <soapenv:Body>
             <ws:nodoInviaRPT>
             <password>pwdpwdpwd</password>
-            <identificativoPSP>40000000001</identificativoPSP>
-            <identificativoIntermediarioPSP>40000000001</identificativoIntermediarioPSP>
-            <identificativoCanale>40000000001_03</identificativoCanale>
+            <identificativoPSP>#psp#</identificativoPSP>
+            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canale#</identificativoCanale>
             <tipoFirma></tipoFirma>
             <rpt>$rptAttachment</rpt>
             </ws:nodoInviaRPT>
