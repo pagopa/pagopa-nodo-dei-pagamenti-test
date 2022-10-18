@@ -251,7 +251,7 @@ Feature: process tests for RPT-RT bollo
                   <identificativoCanale>#canale#</identificativoCanale>
                   <password>pwdpwdpwd</password>
                   <identificativoPSP>#psp#</identificativoPSP>
-                  <identificativoDominio>#codicePA#</identificativoDominio>
+                  <identificativoDominio>#intermediarioPA#</identificativoDominio>
                   <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
                   <codiceContestoPagamento>CCD01</codiceContestoPagamento>
                   <tipoFirma></tipoFirma>
