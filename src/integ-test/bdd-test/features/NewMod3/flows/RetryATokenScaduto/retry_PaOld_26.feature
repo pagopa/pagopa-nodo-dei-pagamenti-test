@@ -36,17 +36,18 @@ Feature: process tests for retry a token scaduto
       <soapenv:Header/>
       <soapenv:Body>
       <nod:activatePaymentNoticeReq>
-      <idPSP>70000000001</idPSP>
-      <idBrokerPSP>70000000001</idBrokerPSP>
-      <idChannel>70000000001_01</idChannel>
+      <idPSP>$verifyPaymentNotice.idPSP</idPSP>
+      <idBrokerPSP>$verifyPaymentNotice.idBrokerPSP</idBrokerPSP>
+      <idChannel>$verifyPaymentNotice.idChannel</idChannel>
       <password>pwdpwdpwd</password>
       <idempotencyKey>#idempotency_key#</idempotencyKey>
       <qrCode>
-      <fiscalCode>#creditor_institution_code_old#</fiscalCode>
-      <noticeNumber>#notice_number_old#</noticeNumber>
+      <fiscalCode>$verifyPaymentNotice.fiscalCode</fiscalCode>
+      <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
       </qrCode>
       <expirationTime>2000</expirationTime>
-      <amount>10.00</amount>
+      <amount>8.00</amount>
+      <dueDate>2021-12-31</dueDate>
       <paymentNote>causale</paymentNote>
       </nod:activatePaymentNoticeReq>
       </soapenv:Body>
@@ -59,8 +60,8 @@ Feature: process tests for retry a token scaduto
     #And checks the value N of the record at column NODOINVIARPTREQ of the table RPT_ACTIVATIONS retrived by the query rpt_activision on db nodo_online under macro NewMod3
     #And checks the value Y of the record at column PAAATTIVARPTRESP of the table RPT_ACTIVATIONS retrived by the query rpt_activision on db nodo_online under macro NewMod3
     #And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RPT_ACTIVATIONS retrived by the query rpt_activision on db nodo_online under macro NewMod3
-    And save activatePaymentNotice response in activatePaymentNotice1
     And saving activatePaymentNotice request in activatePaymentNotice1
+    And save activatePaymentNotice response in activatePaymentNotice1
 
   Scenario: Define RPT
     Given the Execute activatePaymentNotice request scenario executed successfully
@@ -153,7 +154,7 @@ Feature: process tests for retry a token scaduto
       <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
       <identificativoDominio>$activatePaymentNotice.fiscalCode</identificativoDominio>
       <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
-      <codiceContestoPagamento>$activatePaymentNotice1Response.paymentToken</codiceContestoPagamento>
+      <codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken</codiceContestoPagamento>
       </ppt:intestazionePPT>
       </soapenv:Header>
       <soapenv:Body>
@@ -180,33 +181,33 @@ Feature: process tests for retry a token scaduto
 
   Scenario: Execute paaInviaRT
     Given the Execute Poller Annulli scenario executed successfully
-    When job paInviaRt triggered after 5 seconds
+    When job paInviaRt triggered after 3 seconds
     Then verify the HTTP status code of paInviaRt response is 200
 
   Scenario: DB check
     Given the Execute paaInviaRT scenario executed successfully
-    And psp waits 8 seconds for expiration
+    And wait 5 seconds for expiration
     And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query stati_rpt on db nodo_online under macro NewMod3
   
   Scenario: Execute activatePaymentNotice1 request
     Given the DB check scenario executed successfully
     And initial XML activatePaymentNotice
       """
-      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
       <soapenv:Header/>
       <soapenv:Body>
       <nod:activatePaymentNoticeReq>
-      <idPSP>70000000001</idPSP>
-      <idBrokerPSP>70000000001</idBrokerPSP>
-      <idChannel>70000000001_01</idChannel>
+      <idPSP>$verifyPaymentNotice.idPSP</idPSP>
+      <idBrokerPSP>$verifyPaymentNotice.idBrokerPSP</idBrokerPSP>
+      <idChannel>$verifyPaymentNotice.idChannel</idChannel>
       <password>pwdpwdpwd</password>
       <idempotencyKey>#idempotency_key#</idempotencyKey>
       <qrCode>
-      <fiscalCode>#creditor_institution_code_old#</fiscalCode>
-      <noticeNumber>$activatePaymentNotice1.noticeNumber</noticeNumber>
+      <fiscalCode>$verifyPaymentNotice.fiscalCode</fiscalCode>
+      <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
       </qrCode>
-      <expirationTime>6000</expirationTime>
       <amount>10.00</amount>
+      <dueDate>2021-12-31</dueDate>
       <paymentNote>causale</paymentNote>
       </nod:activatePaymentNoticeReq>
       </soapenv:Body>
@@ -215,6 +216,7 @@ Feature: process tests for retry a token scaduto
     When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
     And save activatePaymentNotice response in activatePaymentNotice2
+    And saving activatePaymentNotice request in activatePaymentNotice2
 
 
 
@@ -227,9 +229,9 @@ Feature: process tests for retry a token scaduto
       <soapenv:Header/>
       <soapenv:Body>
       <nod:sendPaymentOutcomeReq>
-      <idPSP>70000000001</idPSP>
-      <idBrokerPSP>70000000001</idBrokerPSP>
-      <idChannel>70000000001_01</idChannel>
+      <idPSP>$activatePaymentNotice.idPSP</idPSP>
+      <idBrokerPSP>$activatePaymentNotice.idBrokerPSP</idBrokerPSP>
+      <idChannel>$activatePaymentNotice.idChannel</idChannel>
       <password>pwdpwdpwd</password>
       <paymentToken>$activatePaymentNotice1Response.paymentToken</paymentToken>
       <outcome>OK</outcome>
@@ -240,19 +242,19 @@ Feature: process tests for retry a token scaduto
       <payer>
       <uniqueIdentifier>
       <entityUniqueIdentifierType>F</entityUniqueIdentifierType>
-      <entityUniqueIdentifierValue>RCCGLD09P09H501E</entityUniqueIdentifierValue>
+      <entityUniqueIdentifierValue>JHNDOE00A01F205N</entityUniqueIdentifierValue>
       </uniqueIdentifier>
-      <fullName>Gesualdo;Riccitelli</fullName>
-      <streetName>via del gesu</streetName>
-      <civicNumber>11</civicNumber>
-      <postalCode>00186</postalCode>
-      <city>Roma</city>
-      <stateProvinceRegion>RM</stateProvinceRegion>
+      <fullName>John Doe</fullName>
+      <streetName>street</streetName>
+      <civicNumber>12</civicNumber>
+      <postalCode>89020</postalCode>
+      <city>city</city>
+      <stateProvinceRegion>MI</stateProvinceRegion>
       <country>IT</country>
-      <e-mail>gesualdo.riccitelli@poste.it</e-mail>
+      <e-mail>john.doe@test.it</e-mail>
       </payer>
-      <applicationDate>2021-12-12</applicationDate>
-      <transferDate>2021-12-11</transferDate>
+      <applicationDate>2021-10-01</applicationDate>
+      <transferDate>2021-10-02</transferDate>
       </details>
       </nod:sendPaymentOutcomeReq>
       </soapenv:Body>
