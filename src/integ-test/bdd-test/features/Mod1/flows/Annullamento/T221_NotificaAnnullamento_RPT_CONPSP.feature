@@ -91,7 +91,7 @@ Feature: process tests for NotificaAnnullamento_RPT_CONPSP
             <ppt:intestazionePPT>
                 <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
                 <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
-                <identificativoDominio>#codicePA#</identificativoDominio>
+                <identificativoDominio>#creditor_institution_code#</identificativoDominio>
                 <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
                 <codiceContestoPagamento>CCD01</codiceContestoPagamento>             
             </ppt:intestazionePPT>
