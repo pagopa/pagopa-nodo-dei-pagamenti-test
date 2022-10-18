@@ -2,7 +2,7 @@ Feature: process tests for T102_D_chiediStato_RT_RIFIUTATA_PA_Annullamento
 
     Background:
         Given systems up
-
+@runnable
     Scenario: RPT generation
         Given RPT generation
             """
@@ -168,7 +168,7 @@ Feature: process tests for T102_D_chiediStato_RT_RIFIUTATA_PA_Annullamento
             </pay_i:datiPagamento>
             </pay_i:RT>
             """
-
+@runnable
     Scenario: Execute nodoInviaRPT request
         Given the RPT generation scenario executed successfully
         And initial XML nodoInviaRPT
@@ -200,7 +200,7 @@ Feature: process tests for T102_D_chiediStato_RT_RIFIUTATA_PA_Annullamento
         And check url contains acards of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
 
-
+@runnable
     Scenario: Execute nodoNotificaAnnullamento
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken to nodo-dei-pagamenti
@@ -208,7 +208,7 @@ Feature: process tests for T102_D_chiediStato_RT_RIFIUTATA_PA_Annullamento
         And check esito is OK of notificaAnnullamento response
         And wait 10 seconds for expiration
 
-
+@runnable
     Scenario: Execute paInviaRT job
         Given the Execute nodoNotificaAnnullamento scenario executed successfully
         And initial XML paaInviaRT
@@ -233,7 +233,7 @@ Feature: process tests for T102_D_chiediStato_RT_RIFIUTATA_PA_Annullamento
         When job paInviaRt triggered after 20 seconds
         Then wait 20 seconds for expiration
 
-
+@runnable
     Scenario: Execute nodoChiediStatoRPT request
         Given the Execute paInviaRT job scenario executed successfully
         And initial XML nodoChiediStatoRPT
