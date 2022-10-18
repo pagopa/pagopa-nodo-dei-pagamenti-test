@@ -5,7 +5,7 @@ Feature: process tests for REGR_retryTokenScaduto_OK
     And EC old version
 
   Scenario: Execute verifyPaymentNotice request
-      Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
+      Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr_old#
       And generate 1 cart with PA #creditor_institution_code_old# and notice number $1noticeNumber
       And initial XML verifyPaymentNotice
         """
