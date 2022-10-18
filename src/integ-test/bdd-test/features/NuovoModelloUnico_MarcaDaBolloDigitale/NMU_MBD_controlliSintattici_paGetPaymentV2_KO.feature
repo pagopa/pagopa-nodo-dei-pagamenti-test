@@ -114,14 +114,14 @@ Feature: check syntax KO for paGetPaymentV2 with MBD
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And <tag> with <tag_value> in paGetPaymentV2
+        And <tag> with <value> in paGetPaymentV2
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends soap activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of activatePaymentNoticeV2 response
         Examples:
-            | tag                                   | tag_value                                                                                                                                     
-            | Body                                  | None                                                                                                                                          
+            | tag                                   | value                                                                                                                                     
+            | soapenv:Body                          | None                                                                                                                                          
             | soapenv:Body                          | Empty                                                                                                                                         
             | paf:paGetPaymentV2Response            | None                                                                                                                                          
             | paf:paGetPaymentV2Response            | RemoveParent                                                                                                                                  
