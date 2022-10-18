@@ -101,8 +101,8 @@ Feature: process tests for nodoInviaRT_esito=1
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canaleRtPush#</identificativoCanale>
-            <tipoFirma></tipoFirma>
+            <identificativoCanale>#canale#</identificativoCanale>
+            <!--tipoFirma></tipoFirma-->
             <rpt>$rptAttachment</rpt>
             </ws:nodoInviaRPT>
             </soapenv:Body>
