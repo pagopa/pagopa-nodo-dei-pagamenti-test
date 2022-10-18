@@ -383,46 +383,50 @@ Feature: idempotency checks for sendPaymentOutcomeV2
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table IDEMPOTENCY_CACHE retrived by the query idempotency_spov2 on db nodo_online under macro NewMod1
         And verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query idempotency_spov2 on db nodo_online under macro NewMod1
 
-    # test al momento non eseguibile: manca il mock del psp in cloud
     # IDMP_SPO_11.1
 
-    # Scenario: IDMP_SPO_11.1 (part 1)
-    #     Given the activatePaymentNoticeV2 scenario executed successfully
-    #     When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-    #     Then check outcome is OK of activatePaymentNoticeV2 response
-    #     And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response
+    Scenario: IDMP_SPO_11.1 (part 1)
+        Given the activatePaymentNoticeV2 scenario executed successfully
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2Request
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_1
 
-    # Scenario: IDMP_SPO_11.1 (part 2)
-    #     Given the IDMP_SPO_11.1 (part 1) scenario executed successfully
-    #     And the activatePaymentNoticeV2 scenario executed successfully
-    #     And idempotencyKey with #idempotency_key1# in activatePaymentNoticeV2
-    #     When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-    #     Then check outcome is OK of activatePaymentNoticeV2 response
-    #     And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response1
+    Scenario: IDMP_SPO_11.1 (part 2)
+        Given the IDMP_SPO_11.1 (part 1) scenario executed successfully
+        And noticeNumber with 311$iuv1 in activatePaymentNoticeV2
+        And creditorReferenceId with 11$iuv1 in paGetPayment
+        And EC replies to nodo-dei-pagamenti with the paGetPayment
+        And random idempotencyKey having $activatePaymentNoticeV2.idPSP as idPSP in activatePaymentNoticeV2
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_2
 
-    # Scenario: IDMP_SPO_11.1 (part 3)
-    #     Given the IDMP_SPO_11.1 (part 2) scenario executed successfully
-    #     And the closePaymentV2 scenario executed successfully
-    #     When PM sends closePaymentV2 to nodo-dei-pagamenti
-    #     Then check outcome is OK of closePaymentV2 response
-    #     And check faultCode is 200 of closePaymentV2 response
-    #     And wait 5 seconds for expiration
-
-    # Scenario: IDMP_SPO_11.1 (part 4)
-    #     Given the IDMP_SPO_11.1 (part 3) scenario executed successfully
-    #     And the sendPaymentOutcomeV2 scenario executed successfully
-    #     When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
-    #     Then check outcome is OK of sendPaymentOutcomeV2 response
-    #     And checks the value NotNone,None of the record at column ID of the table IDEMPOTENCY_CACHE retrived by the query idempotency_spov2 on db nodo_online under macro NewMod1
-    #     And checks the value sendPaymentOutcomeV2 of the record at column PRIMITIVA of the table IDEMPOTENCY_CACHE retrived by the query idempotency_spov2 on db nodo_online under macro NewMod1
-    #     And checks the value $activatePaymentNoticeV2.idPSP of the record at column PSP_ID of the table IDEMPOTENCY_CACHE retrived by the query idempotency_spov2 on db nodo_online under macro NewMod1
-    #     And checks the value $activatePaymentNoticeV2.fiscalCode of the record at column PA_FISCAL_CODE of the table IDEMPOTENCY_CACHE retrived by the query idempotency_spov2 on db nodo_online under macro NewMod1
-    #     And checks the value $activatePaymentNoticeV2.noticeNumber of the record at column NOTICE_ID of the table IDEMPOTENCY_CACHE retrived by the query idempotency_spov2 on db nodo_online under macro NewMod1
-    #     And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column TOKEN of the table IDEMPOTENCY_CACHE retrived by the query idempotency_spov2 on db nodo_online under macro NewMod1
-    #     And checks the value NotNone of the record at column VALID_TO of the table IDEMPOTENCY_CACHE retrived by the query idempotency_spov2 on db nodo_online under macro NewMod1
-    #     And checks the value NotNone of the record at column HASH_REQUEST of the table IDEMPOTENCY_CACHE retrived by the query idempotency_spov2 on db nodo_online under macro NewMod1
-    #     And checks the value NotNone of the record at column RESPONSE of the table IDEMPOTENCY_CACHE retrived by the query idempotency_spov2 on db nodo_online under macro NewMod1
-    #     And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table IDEMPOTENCY_CACHE retrived by the query idempotency_spov2 on db nodo_online under macro NewMod1
+    Scenario: IDMP_SPO_11.1 (part 3)
+        Given the IDMP_SPO_11.1 (part 2) scenario executed successfully
+        And the closePaymentV2 with 2 paymentToken scenario executed successfully
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 200
+        And check outcome is OK of v2/closepayment response
+        And wait 5 seconds for expiration
+    @wip
+    Scenario: IDMP_SPO_11.1 (part 4)
+        Given the IDMP_SPO_11.1 (part 3) scenario executed successfully
+        And the sendPaymentOutcomeV2 with 2 paymentToken scenario executed successfully
+        When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of sendPaymentOutcomeV2 response
+        And wait 5 seconds for expiration
+        And checks the value NotNone of the record at column ID of the table IDEMPOTENCY_CACHE retrived by the query idempotency_spov2 on db nodo_online under macro NewMod1
+        And checks the value sendPaymentOutcomeV2 of the record at column PRIMITIVA of the table IDEMPOTENCY_CACHE retrived by the query idempotency_spov2 on db nodo_online under macro NewMod1
+        And checks the value $sendPaymentOutcomeV2.idPSP of the record at column PSP_ID of the table IDEMPOTENCY_CACHE retrived by the query idempotency_spov2 on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2.fiscalCode of the record at column PA_FISCAL_CODE of the table IDEMPOTENCY_CACHE retrived by the query idempotency_spov2 on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2Request.noticeNumber of the record at column NOTICE_ID of the table IDEMPOTENCY_CACHE retrived by the query idempotency_spov2 on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2_1Response.paymentToken of the record at column TOKEN of the table IDEMPOTENCY_CACHE retrived by the query idempotency_spov2 on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column VALID_TO of the table IDEMPOTENCY_CACHE retrived by the query idempotency_spov2 on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column HASH_REQUEST of the table IDEMPOTENCY_CACHE retrived by the query idempotency_spov2 on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column RESPONSE of the table IDEMPOTENCY_CACHE retrived by the query idempotency_spov2 on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table IDEMPOTENCY_CACHE retrived by the query idempotency_spov2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query idempotency_spov2 on db nodo_online under macro NewMod1
 
     # IDMP_SPO_12
 
@@ -450,39 +454,40 @@ Feature: idempotency checks for sendPaymentOutcomeV2
         And check faultCode is PPT_SINTASSI_EXTRAXSD of sendPaymentOutcomeV2 response
         And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query idempotency_spov2 on db nodo_online under macro NewMod1
 
-    # test al momento non eseguibile: manca il mock del psp in cloud
     # IDMP_SPO_12.1
 
-    # Scenario: IDMP_SPO_12.1 (part 1)
-    #     Given the activatePaymentNoticeV2 scenario executed successfully
-    #     When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-    #     Then check outcome is OK of activatePaymentNoticeV2 response
-    #     And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response
+    Scenario: IDMP_SPO_12.1 (part 1)
+        Given the activatePaymentNoticeV2 scenario executed successfully
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response
 
-    # Scenario: IDMP_SPO_12.1 (part 2)
-    #     Given the IDMP_SPO_12.1 (part 1) scenario executed successfully
-    #     And the activatePaymentNoticeV2 scenario executed successfully
-    #     And idempotencyKey with #idempotency_key1# in activatePaymentNoticeV2
-    #     When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-    #     Then check outcome is OK of activatePaymentNoticeV2 response
-    #     And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response1
+    Scenario: IDMP_SPO_12.1 (part 2)
+        Given the IDMP_SPO_12.1 (part 1) scenario executed successfully
+        And noticeNumber with 311$iuv1 in activatePaymentNoticeV2
+        And creditorReferenceId with 11$iuv1 in paGetPayment
+        And EC replies to nodo-dei-pagamenti with the paGetPayment
+        And random idempotencyKey having $activatePaymentNoticeV2.idPSP as idPSP in activatePaymentNoticeV2
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response1
 
-    # Scenario: IDMP_SPO_12.1 (part 3)
-    #     Given the IDMP_SPO_12.1 (part 2) scenario executed successfully
-    #     And the closePaymentV2 scenario executed successfully
-    #     When PM sends closePaymentV2 to nodo-dei-pagamenti
-    #     Then check outcome is OK of closePaymentV2 response
-    #     And check faultCode is 200 of closePaymentV2 response
-    #     And wait 5 seconds for expiration
-
-    # Scenario: IDMP_SPO_12.1 (part 4)
-    #     Given the IDMP_SPO_12.1 (part 3) scenario executed successfully
-    #     And the sendPaymentOutcomeV2 scenario executed successfully
-    #     And idPSP with Empty in sendPaymentOutcomeV2
-    #     When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
-    #     Then check outcome is KO of sendPaymentOutcomeV2 response
-    #     And check faultCode is PPT_SINTASSI_EXTRAXSD of sendPaymentOutcomeV2 response
-    #     And checks the value None of the record at column ID of the table IDEMPOTENCY_CACHE retrived by the query idempotency_spov2 on db nodo_online under macro NewMod1
+    Scenario: IDMP_SPO_12.1 (part 3)
+        Given the IDMP_SPO_12.1 (part 2) scenario executed successfully
+        And the closePaymentV2 with 2 paymentToken scenario executed successfully
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 200
+        And check outcome is OK of v2/closepayment response
+        And wait 5 seconds for expiration
+    @wip
+    Scenario: IDMP_SPO_12.1 (part 4)
+        Given the IDMP_SPO_12.1 (part 3) scenario executed successfully
+        And the sendPaymentOutcomeV2 with 2 paymentToken scenario executed successfully
+        And idPSP with Empty in sendPaymentOutcomeV2
+        When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
+        Then check outcome is KO of sendPaymentOutcomeV2 response
+        And check faultCode is PPT_SINTASSI_EXTRAXSD of sendPaymentOutcomeV2 response
+        And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query idempotency_spov2 on db nodo_online under macro NewMod1
 
     # IDMP_SPO_13
 
@@ -776,83 +781,83 @@ Feature: idempotency checks for sendPaymentOutcomeV2
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table IDEMPOTENCY_CACHE retrived by the query idempotency_spov2_timestamp_desc on db nodo_online under macro NewMod1
         And verify 2 record for the table IDEMPOTENCY_CACHE retrived by the query idempotency_spov2_timestamp_desc on db nodo_online under macro NewMod1
 
-    # test al momento non eseguibile: manca il mock del psp in cloud
     # IDMP_SPO_18
 
-    # Scenario: IDMP_SPO_18 (part 1)
-    #     Given the activatePaymentNoticeV2 scenario executed successfully
-    #     When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-    #     Then check outcome is OK of activatePaymentNoticeV2 response
-    #     And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2Request
-    #     And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response
+    Scenario: IDMP_SPO_18 (part 1)
+        Given the activatePaymentNoticeV2 scenario executed successfully
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2_1Request
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_1
 
-    # Scenario: IDMP_SPO_18 (part 2)
-    #     Given the IDMP_SPO_18 (part 1) scenario executed successfully
-    #     And the activatePaymentNoticeV2 scenario executed successfully
-    #     And idempotencyKey with #idempotency_key1# in activatePaymentNoticeV2
-    #     When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-    #     Then check outcome is OK of activatePaymentNoticeV2 response
-    #     And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2Request1
-    #     And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response1
+    Scenario: IDMP_SPO_18 (part 2)
+        Given the IDMP_SPO_18 (part 1) scenario executed successfully
+        And noticeNumber with 311$iuv1 in activatePaymentNoticeV2
+        And creditorReferenceId with 11$iuv1 in paGetPayment
+        And EC replies to nodo-dei-pagamenti with the paGetPayment
+        And random idempotencyKey having $activatePaymentNoticeV2.idPSP as idPSP in activatePaymentNoticeV2
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2_2Request
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_2
 
-    # Scenario: IDMP_SPO_18 (part 3)
-    #     Given the IDMP_SPO_18 (part 2) scenario executed successfully
-    #     And the closePaymentV2 scenario executed successfully
-    #     When PM sends closePaymentV2 to nodo-dei-pagamenti
-    #     Then check outcome is OK of closePaymentV2 response
-    #     And check faultCode is 200 of closePaymentV2 response
-    #     And wait 5 seconds for expiration
-    #     And checks the value NotNone of the record at column ID of the table IDEMPOTENCY_CACHE retrived by the query idempotency_apnv2 on db nodo_online under macro NewMod1
-    #     And checks the value NotNone of the record at column ID of the table IDEMPOTENCY_CACHE retrived by the query idempotency_apnv2_1 on db nodo_online under macro NewMod1
+    Scenario: IDMP_SPO_18 (part 3)
+        Given the IDMP_SPO_18 (part 2) scenario executed successfully
+        And the closePaymentV2 with 2 paymentToken scenario executed successfully
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 200
+        And check outcome is OK of v2/closepayment response
+        And wait 5 seconds for expiration
+        And verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache_1 on db nodo_online under macro NewMod1
+        And verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache_2 on db nodo_online under macro NewMod1
+    @wip
+    Scenario: IDMP_SPO_18 (part 4)
+        Given the IDMP_SPO_18 (part 3) scenario executed successfully
+        And the sendPaymentOutcomeV2 with 2 paymentToken scenario executed successfully
+        When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of sendPaymentOutcomeV2 response
+        And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache_1 on db nodo_online under macro NewMod1
+        And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache_2 on db nodo_online under macro NewMod1
 
-    # Scenario: IDMP_SPO_18 (part 4)
-    #     Given the IDMP_SPO_18 (part 3) scenario executed successfully
-    #     And the sendPaymentOutcomeV2 scenario executed successfully
-    #     When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
-    #     Then check outcome is OK of sendPaymentOutcomeV2 response
-    #     And checks the value None of the record at column ID of the table IDEMPOTENCY_CACHE retrived by the query idempotency_apnv2 on db nodo_online under macro NewMod1
-    #     And checks the value None of the record at column ID of the table IDEMPOTENCY_CACHE retrived by the query idempotency_apnv2_1 on db nodo_online under macro NewMod1
-
-    # test al momento non eseguibile: manca il mock del psp in cloud
     # IDMP_SPO_20
 
-    # Scenario: IDMP_SPO_20 (part 1)
-    #     Given the activatePaymentNoticeV2 scenario executed successfully
-    #     When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-    #     Then check outcome is OK of activatePaymentNoticeV2 response
-    #     And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2Request
-    #     And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response
+    Scenario: IDMP_SPO_20 (part 1)
+        Given the activatePaymentNoticeV2 scenario executed successfully
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2_1Request
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_1
 
-    # Scenario: IDMP_SPO_20 (part 2)
-    #     Given the IDMP_SPO_20 (part 1) scenario executed successfully
-    #     And the activatePaymentNoticeV2 scenario executed successfully
-    #     And idempotencyKey with #idempotency_key1# in activatePaymentNoticeV2
-    #     When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-    #     Then check outcome is OK of activatePaymentNoticeV2 response
-    #     And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2Request1
-    #     And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response1
+    Scenario: IDMP_SPO_20 (part 2)
+        Given the IDMP_SPO_20 (part 1) scenario executed successfully
+        And noticeNumber with 311$iuv1 in activatePaymentNoticeV2
+        And creditorReferenceId with 11$iuv1 in paGetPayment
+        And EC replies to nodo-dei-pagamenti with the paGetPayment
+        And random idempotencyKey having $activatePaymentNoticeV2.idPSP as idPSP in activatePaymentNoticeV2
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2_2Request
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_2
 
-    # Scenario: IDMP_SPO_20 (part 3)
-    #     Given the IDMP_SPO_20 (part 2) scenario executed successfully
-    #     And the closePaymentV2 scenario executed successfully
-    #     When PM sends closePaymentV2 to nodo-dei-pagamenti
-    #     Then check outcome is OK of closePaymentV2 response
-    #     And check faultCode is 200 of closePaymentV2 response
-    #     And wait 5 seconds for expiration
-    #     And checks the value NotNone of the record at column ID of the table IDEMPOTENCY_CACHE retrived by the query idempotency_apnv2 on db nodo_online under macro NewMod1
-    #     And checks the value NotNone of the record at column ID of the table IDEMPOTENCY_CACHE retrived by the query idempotency_apnv2_1 on db nodo_online under macro NewMod1
-    #     And nodo-dei-pagamenti DEV has config parameter useIdempotency set to false
-    #     And wait 10 seconds for expiration
-
-    # Scenario: IDMP_SPO_20 (part 4)
-    #     Given the IDMP_SPO_20 (part 3) scenario executed successfully
-    #     And the sendPaymentOutcomeV2 scenario executed successfully
-    #     When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
-    #     Then check outcome is OK of sendPaymentOutcomeV2 response
-    #     And nodo-dei-pagamenti DEV has config parameter useIdempotency set to true
-    #     And wait 10 seconds for expiration
-    #     And checks the value None of the record at column ID of the table IDEMPOTENCY_CACHE retrived by the query idempotency_apnv2 on db nodo_online under macro NewMod1
-    #     And checks the value None of the record at column ID of the table IDEMPOTENCY_CACHE retrived by the query idempotency_apnv2_1 on db nodo_online under macro NewMod1
+    Scenario: IDMP_SPO_20 (part 3)
+        Given the IDMP_SPO_20 (part 2) scenario executed successfully
+        And the closePaymentV2 with 2 paymentToken scenario executed successfully
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 200
+        And check outcome is OK of v2/closepayment response
+        And wait 5 seconds for expiration
+        And verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache_1 on db nodo_online under macro NewMod1
+        And verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache_2 on db nodo_online under macro NewMod1
+    @wip
+    Scenario: IDMP_SPO_20 (part 4)
+        Given the IDMP_SPO_20 (part 3) scenario executed successfully
+        And nodo-dei-pagamenti DEV has config parameter useIdempotency set to false
+        And the sendPaymentOutcomeV2 scenario executed successfully
+        When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of sendPaymentOutcomeV2 response
+        And nodo-dei-pagamenti DEV has config parameter useIdempotency set to true
+        And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache_1 on db nodo_online under macro NewMod1
+        And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache_2 on db nodo_online under macro NewMod1
 
     # IDMP_SPO_22
 
@@ -970,7 +975,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2
         And idempotencyKey with None in sendPaymentOutcomeV2
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-    
+
     Scenario: IDMP_SPO_31 (part 4)
         Given the IDMP_SPO_31 (part 3) scenario executed successfully
         And paymentToken with $activatePaymentNoticeV2_1Response.paymentToken in sendPaymentOutcomeV2
