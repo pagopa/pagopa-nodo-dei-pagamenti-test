@@ -31,42 +31,6 @@ Feature: process tests for REGR_retryTokenScaduto_OK
 
   Scenario: Execute activatePaymentNotice request
     Given the Execute verifyPaymentNotice request scenario executed successfully
-    And initial XML paaAttivaRPT
-    """
-    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">   
-        <soapenv:Header/>   
-        <soapenv:Body>       
-            <ws:paaAttivaRPTRisposta>           
-                <paaAttivaRPTRisposta>               
-                    <esito>OK</esito>               
-                    <datiPagamentoPA>                   
-                        <importoSingoloVersamento>12.34</importoSingoloVersamento>                   
-                        <ibanAccredito>IT45R0760103200000000001016</ibanAccredito>                   
-                        <bicAccredito>BSCTCH22</bicAccredito>                   
-                        <enteBeneficiario>                       
-                            <pag:identificativoUnivocoBeneficiario>                           
-                                <pag:tipoIdentificativoUnivoco>G</pag:tipoIdentificativoUnivoco>                           
-                                <pag:codiceIdentificativoUnivoco>#id_station_old#</pag:codiceIdentificativoUnivoco>                       
-                            </pag:identificativoUnivocoBeneficiario>                       
-                            <pag:denominazioneBeneficiario>15376371009</pag:denominazioneBeneficiario>                       
-                            <pag:codiceUnitOperBeneficiario>15376371009_01</pag:codiceUnitOperBeneficiario>                       
-                            <pag:denomUnitOperBeneficiario>uj</pag:denomUnitOperBeneficiario>                       
-                            <pag:indirizzoBeneficiario>\"paaAttivaRPT\"</pag:indirizzoBeneficiario>                       
-                            <pag:civicoBeneficiario>j</pag:civicoBeneficiario>                       
-                            <pag:capBeneficiario>gt</pag:capBeneficiario>                       
-                            <pag:localitaBeneficiario>gw</pag:localitaBeneficiario>                       
-                            <pag:provinciaBeneficiario>ds</pag:provinciaBeneficiario>                       
-                            <pag:nazioneBeneficiario>UK</pag:nazioneBeneficiario>                   
-                        </enteBeneficiario>                   
-                        <credenzialiPagatore>i</credenzialiPagatore>                   
-                        <causaleVersamento>prova/RFDB/$1iuv/TXT/</causaleVersamento>               
-                    </datiPagamentoPA>           
-                </paaAttivaRPTRisposta>       
-            </ws:paaAttivaRPTRisposta>   
-        </soapenv:Body>
-    </soapenv:Envelope>
-    """
-    And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
     And initial XML activatePaymentNotice
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -83,7 +47,7 @@ Feature: process tests for REGR_retryTokenScaduto_OK
         <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
         </qrCode>
         <expirationTime>1000</expirationTime>
-        <amount>12.34</amount>
+        <amount>10.00</amount>
         <dueDate>#date#</dueDate>
         <paymentNote>causale/$1noticeNumber/nuovoMod3</paymentNote>
         </nod:activatePaymentNoticeReq>
@@ -201,28 +165,17 @@ Feature: process tests for REGR_retryTokenScaduto_OK
           </soapenv:Body>
           </soapenv:Envelope>
         """
-    And initial XML pspInviaRPT
-        """
-        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-        <soapenv:Header/>
-        <soapenv:Body>
-        <ws:pspInviaRPTResponse>
-        <pspInviaRPTResponse>
-        <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-        <identificativoCarrello>$activatePaymentNoticeResponse.paymentToken</identificativoCarrello>
-        <parametriPagamentoImmediato>idBruciatura=$activatePaymentNoticeResponse.paymentToken</parametriPagamentoImmediato>
-        </pspInviaRPTResponse>
-        </ws:pspInviaRPTResponse>
-        </soapenv:Body>
-        </soapenv:Envelope>
-        """
-    And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
     When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
     Then check esito is OK of nodoInviaRPT response
 
+Scenario: trigger paInviaRT
+    Given the Execute nodoInviaRPT request scenario executed successfully
+    When job paInviaRt triggered after 3 seconds
+    Then verify the HTTP status code of paInviaRt response is 200
+    And wait 5 seconds for expiration
 
   Scenario: Execute sendPaymentOutcome request
-    Given the Execute nodoInviaRPT request scenario executed successfully
+    Given the trigger paInviaRT scenario executed successfully
     And initial XML sendPaymentOutcome
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -265,9 +218,9 @@ Feature: process tests for REGR_retryTokenScaduto_OK
     And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcome response
     And wait 5 seconds for expiration
 
-    # And replace token content with $activatePaymentNoticeResponse.paymentToken-v2 content
-    # And checks the value Y of the record at column PAAATTIVARPTRESP of the table RPT_ACTIVATIONS retrived by the query token on db nodo_online under macro NewMod3
-    # And checks the value N of the record at column NODOINVIARPTREQ of the table RPT_ACTIVATIONS retrived by the query token on db nodo_online under macro NewMod3
+    And replace token content with $activatePaymentNoticeResponse.paymentToken-v2 content
+    And checks the value Y of the record at column PAAATTIVARPTRESP of the table RPT_ACTIVATIONS retrived by the query token on db nodo_online under macro NewMod3
+    And checks the value N of the record at column NODOINVIARPTREQ of the table RPT_ACTIVATIONS retrived by the query token on db nodo_online under macro NewMod3
 
 
   Scenario: RPT2 generation
@@ -358,7 +311,7 @@ Feature: process tests for REGR_retryTokenScaduto_OK
                   <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
                   <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
                   <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
-                  <codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken</codiceContestoPagamento>
+                  <codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken-v2</codiceContestoPagamento>
               </ppt:intestazionePPT>
           </soapenv:Header>
           <soapenv:Body>
@@ -368,26 +321,10 @@ Feature: process tests for REGR_retryTokenScaduto_OK
                   <identificativoIntermediarioPSP>15376371009</identificativoIntermediarioPSP>
                   <identificativoCanale>15376371009_01</identificativoCanale>
                   <tipoFirma></tipoFirma>
-                  <rpt>$rpt1Attachment</rpt>
+                  <rpt>$rpt2Attachment</rpt>
               </ws:nodoInviaRPT>
           </soapenv:Body>
           </soapenv:Envelope>
         """
-    And initial XML pspInviaRPT
-        """
-        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-        <soapenv:Header/>
-        <soapenv:Body>
-        <ws:pspInviaRPTResponse>
-        <pspInviaRPTResponse>
-        <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-        <identificativoCarrello>$activatePaymentNoticeResponse.paymentToken</identificativoCarrello>
-        <parametriPagamentoImmediato>idBruciatura=$activatePaymentNoticeResponse.paymentToken</parametriPagamentoImmediato>
-        </pspInviaRPTResponse>
-        </ws:pspInviaRPTResponse>
-        </soapenv:Body>
-        </soapenv:Envelope>
-        """
-    And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
     When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
     Then check esito is OK of nodoInviaRPT response

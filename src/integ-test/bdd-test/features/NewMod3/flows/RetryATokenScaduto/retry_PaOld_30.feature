@@ -178,6 +178,7 @@ Feature: process tests for retry a token scaduto (retry_PaOld_30)
     Then check esito is OK of nodoInviaRPT response
     And check redirect is 0 of nodoInviaRPT response
 
+
  Scenario: Execute paInviaRT
     Given the Execute nodoInviaRPT request scenario executed successfully
     And PSP waits 5 seconds for expiration
@@ -187,9 +188,7 @@ Feature: process tests for retry a token scaduto (retry_PaOld_30)
 
 Scenario: Check DB1
     Given the Execute paInviaRT scenario executed successfully
-    Then execution query stati_rpt_snapshot to get value on the table STATI_RPT_SNAPSHOT, with the columns STATO under macro NewMod3 with db name nodo_online
-    And through the query stati_rpt_snapshot retrieve param STATO at position 0 and save it under the key STATO
-    And check value RT_ACCETTATA_PA is equal to value $STATO
+    And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query stati_rpt on db nodo_online under macro NewMod3
 
 
   # Payment Outcome Phase outcome KO
@@ -270,7 +269,7 @@ Scenario: Check DB1
     #And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
     And checks the value None of the record at column CARRELLO_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
     And checks the value None of the record at column ORIGINAL_PAYMENT_TOKEN of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
-    And with the query payment_status check assert beetwen elem FK_PAYMENT_PLAN in position 0 and elem ID with position 0 of the query position_receipt
+    #And with the query payment_status check assert beetwen elem FK_PAYMENT_PLAN in position 0 and elem ID with position 0 of the query position_receipt
     #And verify 0 record for the table RPT retrived by the query rpt_id on db nodo_online under macro NewMod3
     And checks the value PAYING,CANCELLED_NORPT,CANCELLED,PAID_NORPT of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
     #And verify 0 record for the table RPT_ACTIVATIONS retrived by the query payment_token_v2 on db nodo_online under macro NewMod3
@@ -293,28 +292,29 @@ Scenario: Check DB1
     #And checks the value N of the record at column NODOINVIARPTREQ of the table RPT_ACTIVATIONS retrived by the query rpt_activision on db nodo_online under macro NewMod3
     #And checks the value Y of the record at column PAAATTIVARPTRESP of the table RPT_ACTIVATIONS retrived by the query rpt_activision on db nodo_online under macro NewMod3
     #And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RPT_ACTIVATIONS retrived by the query rpt_activision on db nodo_online under macro NewMod3
-    And checks the value NotNone of the record at column ID of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
-    And checks the value $activatePaymentNoticeResponse.paymentToken of the record at column RECEIPT_ID of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
-    And checks the value $activatePaymentNotice.noticeNumber of the record at column NOTICE_ID of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
-    And checks the value $activatePaymentNotice.fiscalCode of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
-    And checks the value $iuv of the record at column CREDITOR_REFERENCE_ID of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
-    And checks the value $activatePaymentNoticeResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
-    And checks the value OK of the record at column OUTCOME of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
-    And checks the value NotNone of the record at column ID of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
-    And checks the value NotNone of the record at column ID of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
-    And checks the value NotNone of the record at column ID of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
-    And checks the value $activatePaymentNotice.idPSP of the record at column PSP_ID of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
-    And execution query position_service to get value on the table POSITION_SERVICE, with the columns DESCRIPTION,COMPANY_NAME,OFFICE_NAME,DEBTOR_ID under macro NewMod3 with db name nodo_online
+    And verify 0 record for the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
+    #And checks the value NotNone of the record at column ID of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
+    #And checks the value $activatePaymentNoticeResponse.paymentToken of the record at column RECEIPT_ID of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
+    #And checks the value $activatePaymentNotice.noticeNumber of the record at column NOTICE_ID of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
+    #And checks the value $activatePaymentNotice.fiscalCode of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
+    #And checks the value $iuv of the record at column CREDITOR_REFERENCE_ID of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
+    #And checks the value $activatePaymentNoticeResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
+    #And checks the value OK of the record at column OUTCOME of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
+    #And checks the value NotNone of the record at column ID of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
+    #And checks the value NotNone of the record at column ID of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
+    #And checks the value NotNone of the record at column ID of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
+    #And checks the value $activatePaymentNotice.idPSP of the record at column PSP_ID of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
+    #And execution query position_service to get value on the table POSITION_SERVICE, with the columns DESCRIPTION,COMPANY_NAME,OFFICE_NAME,DEBTOR_ID under macro NewMod3 with db name nodo_online
     And execution query psp to get value on the table PSP, with the columns CODICE_FISCALE,VAT_NUMBER,RAGIONE_SOCIALE under macro NewMod3 with db name nodo_cfg
-    And execution query position_receipt to get value on the table POSITION_RECEIPT, with the columns PSP_FISCAL_CODE,PSP_VAT_NUMBER,PSP_COMPANY_NAME under macro NewMod3 with db name nodo_online
-    And with the query position_receipt check assert beetwen elem PSP_FISCAL_CODE in position 0 and elem CODICE_FISCALE with position 0 of the query psp
-    And with the query position_receipt check assert beetwen elem PSP_VAT_NUMBER in position 1 and elem VAT_NUMBER with position 1 of the query psp
-    And with the query position_receipt check assert beetwen elem PSP_COMPANY_NAME in position 2 and elem RAGIONE_SOCIALE with position 2 of the query psp
-    And execution query position_receipt to get value on the table POSITION_RECEIPT, with the columns DESCRIPTION,COMPANY_NAME,OFFICE_NAME,DEBTOR_ID under macro NewMod3 with db name nodo_online
-    And with the query position_receipt check assert beetwen elem DESCRIPTION in position 0 and elem DESCRIPTION with position 0 of the query position_service
-    And with the query position_receipt check assert beetwen elem COMPANY_NAME in position 1 and elem COMPANY_NAME with position 1 of the query position_service
-    And with the query position_receipt check assert beetwen elem OFFICE_NAME in position 2 and elem OFFICE_NAME with position 2 of the query position_service
-    And with the query position_receipt check assert beetwen elem DEBTOR_ID in position 3 and elem DEBTOR_ID with position 3 of the query position_service
+    #And execution query position_receipt to get value on the table POSITION_RECEIPT, with the columns PSP_FISCAL_CODE,PSP_VAT_NUMBER,PSP_COMPANY_NAME under macro NewMod3 with db name nodo_online
+    #And with the query position_receipt check assert beetwen elem PSP_FISCAL_CODE in position 0 and elem CODICE_FISCALE with position 0 of the query psp
+    #And with the query position_receipt check assert beetwen elem PSP_VAT_NUMBER in position 1 and elem VAT_NUMBER with position 1 of the query psp
+    #And with the query position_receipt check assert beetwen elem PSP_COMPANY_NAME in position 2 and elem RAGIONE_SOCIALE with position 2 of the query psp
+    #And execution query position_receipt to get value on the table POSITION_RECEIPT, with the columns DESCRIPTION,COMPANY_NAME,OFFICE_NAME,DEBTOR_ID under macro NewMod3 with db name nodo_online
+    #And with the query position_receipt check assert beetwen elem DESCRIPTION in position 0 and elem DESCRIPTION with position 0 of the query position_service
+    #And with the query position_receipt check assert beetwen elem COMPANY_NAME in position 1 and elem COMPANY_NAME with position 1 of the query position_service
+    #And with the query position_receipt check assert beetwen elem OFFICE_NAME in position 2 and elem OFFICE_NAME with position 2 of the query position_service
+    #And with the query position_receipt check assert beetwen elem DEBTOR_ID in position 3 and elem DEBTOR_ID with position 3 of the query position_service
 
     And execution query psp to get value on the table PSP, with the columns RAGIONE_SOCIALE, ID_PSP under macro NewMod3 with db name nodo_cfg
     And through the query psp retrieve param RAGIONE_SOCIALE at position 0 and save it under the key RAGIONE_SOCIALE
@@ -327,22 +327,22 @@ Scenario: Check DB1
     And execution query rt_xml to get value on the table RPT_XML, with the columns XML_CONTENT under macro NewMod3 with db name nodo_online
     And through the query rt_xml retrieve xml_no_decode XML_CONTENT at position 0 and save it under the key xml_rpt
     # Assigning XML_CONTENT query result to receipt
-    And execution query receipt_xml to get value on the table POSITION_RECEIPT_XML, with the columns XML under macro NewMod3 with db name nodo_online
-    And through the query receipt_xml retrieve xml XML at position 0 and save it under the key xml_receipt
+    #And execution query receipt_xml to get value on the table POSITION_RECEIPT_XML, with the columns XML under macro NewMod3 with db name nodo_online
+    #And through the query receipt_xml retrieve xml XML at position 0 and save it under the key xml_receipt
     #checks on XML
     And check value $xml_rt.identificativoDominio is equal to value $xml_rpt.identificativoDominio
     And check value $xml_rt.riferimentoMessaggioRichiesta is equal to value $xml_rpt.identificativoMessaggioRichiesta
-    And check value $xml_rt.codiceIdentificativoUnivoco is equal to value $PSP_ID
+    #And check value $xml_rt.codiceIdentificativoUnivoco is equal to value $PSP_ID
     And check value $xml_rt.denominazioneBeneficiario is equal to value $xml_rpt.denominazioneBeneficiario
     And check value $xml_rt.anagraficaPagatore is equal to value $xml_rpt.anagraficaPagatore
     And check value $xml_rt.identificativoUnivocoVersamento is equal to value $xml_rpt.identificativoUnivocoVersamento
     And check value $xml_rt.CodiceContestoPagamento is equal to value $xml_rpt.codiceContestoPagamento
-    And check value $xml_rt.identificativoUnivocoRiscossione is equal to value $activatePaymentNoticeResponse.paymentToken
+    #And check value $xml_rt.identificativoUnivocoRiscossione is equal to value $activatePaymentNoticeResponse.paymentToken
     And check value $xml_rt.causaleVersamento is equal to value $xml_rpt.causaleVersamento
     And check value $xml_rt.datiSpecificiRiscossione is equal to value $xml_rpt.datiSpecificiRiscossione
     #Assigning XML_CONTENT query result to
-    And execution query receipt_xml to get value on the table POSITION_RECEIPT_XML, with the columns XML under macro NewMod3 with db name nodo_online
-    And through the query receipt_xml retrieve xml XML at position 0 and save it under the key xml_receipt
+    #And execution query receipt_xml to get value on the table POSITION_RECEIPT_XML, with the columns XML under macro NewMod3 with db name nodo_online
+    #And through the query receipt_xml retrieve xml XML at position 0 and save it under the key xml_receipt
     #POSITION_PAYMENT
     And execution query payment_status_pay to get value on the table POSITION_PAYMENT, with the columns * under macro NewMod3 with db name nodo_online
     And through the query payment_status_pay retrieve param BROKER_PA_ID at position 5 and save it under the key BROKER_PA_ID
@@ -376,22 +376,22 @@ Scenario: Check DB1
     And through the query psp retrieve param RAGIONE_SOCIALE at position 0 and save it under the key RAGIONE_SOCIALE
     And through the query psp retrieve param CODICE_FISCALE at position 1 and save it under the key CODICE_FISCALE
     #checks on XML
-    And check value $xml_receipt.idPA is equal to value $PA_FISCAL_CODE
-    And check value $xml_receipt.idBrokerPA is equal to value $BROKER_PA_ID
-    And check value $xml_receipt.noticeNumber is equal to value $NOTICE_ID
-    And check value $xml_receipt.fiscalCode is equal to value $PA_FISCAL_CODE
-    And check value $xml_receipt.creditorReferenceId is equal to value $CREDITOR_REFERENCE_ID
-    And check value $xml_receipt.description is equal to value $DESCRIPTION
-    And check value $xml_receipt.companyName is equal to value $COMPANY_NAME
-    And check value $xml_receipt.idTransfer is equal to value $TRANSFER_IDENTIFIER
-    And check value $xml_receipt.fiscalCodePA is equal to value $PA_FISCAL_CODE_SECONDARY
-    And check value $xml_receipt.IBAN is equal to value $IBAN
-    And check value $xml_receipt.remittanceInformation is equal to value $REMITTANCE_INFORMATION
-    And check value $xml_receipt.transferCategory is equal to value $TRANSFER_CATEGORY
-    And check value $xml_receipt.idPSP is equal to value $PSP_ID
-    And check value $xml_receipt.pspFiscalCode is equal to value $CODICE_FISCALE
-    And check value $xml_receipt.PSPCompanyName is equal to value $RAGIONE_SOCIALE
-    And check value $xml_receipt.idChannel is equal to value $CHANNEL_ID
+    #And check value $xml_receipt.idPA is equal to value $PA_FISCAL_CODE
+    #And check value $xml_receipt.idBrokerPA is equal to value $BROKER_PA_ID
+    #And check value $xml_receipt.noticeNumber is equal to value $NOTICE_ID
+    #And check value $xml_receipt.fiscalCode is equal to value $PA_FISCAL_CODE
+    #And check value $xml_receipt.creditorReferenceId is equal to value $CREDITOR_REFERENCE_ID
+    #And check value $xml_receipt.description is equal to value $DESCRIPTION
+    #And check value $xml_receipt.companyName is equal to value $COMPANY_NAME
+    #And check value $xml_receipt.idTransfer is equal to value $TRANSFER_IDENTIFIER
+    #And check value $xml_receipt.fiscalCodePA is equal to value $PA_FISCAL_CODE_SECONDARY
+    #And check value $xml_receipt.IBAN is equal to value $IBAN
+    #And check value $xml_receipt.remittanceInformation is equal to value $REMITTANCE_INFORMATION
+    #And check value $xml_receipt.transferCategory is equal to value $TRANSFER_CATEGORY
+    #And check value $xml_receipt.idPSP is equal to value $PSP_ID
+    #And check value $xml_receipt.pspFiscalCode is equal to value $CODICE_FISCALE
+    #And check value $xml_receipt.PSPCompanyName is equal to value $RAGIONE_SOCIALE
+    #And check value $xml_receipt.idChannel is equal to value $CHANNEL_ID
 # TOKEN_UTILITY
     And checks the value $activatePaymentNotice.fiscalCode of the record at column pa_fiscal_code of the table TOKEN_UTILITY retrived by the query payment_status on db nodo_online under macro NewMod3
     And checks the value $activatePaymentNotice.noticeNumber of the record at column notice_id of the table TOKEN_UTILITY retrived by the query payment_status on db nodo_online under macro NewMod3
