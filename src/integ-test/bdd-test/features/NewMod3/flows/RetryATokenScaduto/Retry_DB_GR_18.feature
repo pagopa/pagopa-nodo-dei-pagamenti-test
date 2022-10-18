@@ -108,7 +108,7 @@ Feature: process tests for Retry_DB_GR_18
       <!--1 to 5 repetitions:-->
       <transfer>
       <idTransfer>1</idTransfer>
-      <transferAmount>17.00</transferAmount>
+      <transferAmount>10.00</transferAmount>
       <fiscalCodePA>66666666666</fiscalCodePA>
       <IBAN>IT45R0760103200000000001016</IBAN>
       <remittanceInformation>testPaGetPayment</remittanceInformation>
