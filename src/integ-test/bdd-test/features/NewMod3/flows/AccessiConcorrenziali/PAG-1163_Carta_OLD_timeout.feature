@@ -383,4 +383,4 @@ Feature: Pag-1163_Carta_OLD_OK
         When calling primitive inoltroEsito/carta_inoltroEsito/carta POST and nodoInviaRT_nodoInviaRT POST with 4000 ms delay
         Then verify the HTTP status code of inoltroEsito/carta response is 408
         And check error is Operazione in timeout of inoltroEsito/carta response
-        And check esito is KO of nodoInviaRT response
+        And check esito is OK of nodoInviaRT response
