@@ -43,7 +43,7 @@ Feature: check syntax KO for paGetPaymentV2 with MBD and IBAN as double choice
             <retentionDate>2021-12-30T12:12:12</retentionDate>
             <!--Optional:-->
             <lastPayment>1</lastPayment>
-            <description>noei38932nfdioulpncdoaifer9eukvmpweuw9tunfgadkvaifuewtudnvahv23234fssdafqffdnoei38932nfdioulTncdoaifer9eukvmpweuw9tunfgadkvaifuewtudnvahvd452</description>
+            <description>description</description>
             <!--Optional:-->
             <companyName>company</companyName>
             <!--Optional:-->
