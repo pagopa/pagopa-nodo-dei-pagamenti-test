@@ -713,10 +713,10 @@ Feature: process tests for 5 RPT 5 Versamenti
             """
             {
             "idPagamento":"$sessionToken",
-            "identificativoPsp":"40000000001",
+            "identificativoPsp":"#psp#",
             "tipoVersamento":"BP",
-            "identificativoIntermediario":"40000000001",
-            "identificativoCanale":"40000000001_03",
+            "identificativoIntermediario":"#psp#",
+            "identificativoCanale":"#canale#",
             "tipoOperazione":"web"
             }
 
