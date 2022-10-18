@@ -553,5 +553,3 @@ Feature: syntax checks for sendPaymentOutcomeV2
       When psp sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
       Then check outcome is KO of sendPaymentOutcomeV2 response
       And check faultCode is PPT_SINTASSI_EXTRAXSD of sendPaymentOutcomeV2 response
-
-      
