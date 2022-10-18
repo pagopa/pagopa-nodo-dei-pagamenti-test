@@ -165,7 +165,6 @@ Feature: check syntax KO for paGetPaymentV2 with MBD
             | streetName                            | Empty
             | streetName                            | sanoei38932nfdiou%&ncdoaifer9eukvmpweuw9tunfgadkvaifuewtudnvahv89u3e375
             | civicNumber                           | Empty
-            | civicNumber                           | 12ftr4567dghfi89k
             | postalCode                            | Empty
             | postalCode                            | 12ftr4567dghfi89k
             | city                                  | Empty
@@ -178,11 +177,6 @@ Feature: check syntax KO for paGetPaymentV2 with MBD
             | e-mail                                | Empty
             | e-mail                                | @prova.it
             | e-mail                                | noei38932nfdiou%&ncdoaifer9eukvmpweuw9tunfgadkvaifuewtudnvahv89u3e375sanoei38932nfdiou%&ncdoaifer9eukvmpweuw9tunfgadkvaifuewtudnvahv89u3e375sanoei38932nfdiou%&ncdoaifer9eukvmpweuw9tunfgadkvaifuewtudnvahv89u3e375sanoei38932nfdiou%&ncdoaifer9eukvmptu@prova.it
-            | idTransfer                            | Empty
-            | idTransfer                            | None
-            | idTransfer                            | a
-            | idTransfer                            | 23
-            | idTransfer                            | 6
             | transferAmount                        | None
             | transferAmount                        | Empty
             | transferAmount                        | 0.00
@@ -210,16 +204,6 @@ Feature: check syntax KO for paGetPaymentV2 with MBD
             | provinciaResidenza                    | M
             | provinciaResidenza                    | 12
             | provinciaResidenza                    | rc
-            | remittanceInformation                 | None
-            | remittanceInformation                 | Empty
-            | remittanceInformation                 | noei38932nfdioulpncdoaifer9eukvmpweuw9tunfgadkvaifuewtudnvahv23234fssdafqffdnoei38932nfdioulTncdoaifer9eukvmpweuw9tunfgadkvaifuewtudnvahvd452
-            | transferCategory                      | None
-            | transferCategory                      | Empty
-            | transferCategory                      | noei38932nfdioulpncdoaifer9eukvmpweuw9tunfgadkvaifuewtudnvahv23234fssdafqffdnoei38932nfdioulTncdoaifer9eukvmpweuw9tunfgadkvaifuewtudnvahvd452
-            | key                                   | None
-            | key                                   | Empty
-            | value                                 | None
-            | value                                 | Empty
             | IBAN                                  | None
             | IBAN                                  | Empty
             | IBAN                                  | 123456789012345678901234567890123456
