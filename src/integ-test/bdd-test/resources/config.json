@@ -50,7 +50,10 @@
     "psp_AGID": "AGID_01",
     "broker_AGID": "97735020584",
     "canale_AGID": "97735020584_03",
-    "password": "pwdpwdpwd"
+    "password": "pwdpwdpwd",
+    "pspEcommerce": "36892710904",
+    "brokerEcommerce": "36892710904",
+    "canaleEcommerce": "36892710904_02"
   },
   "db_configuration": {
     "nodo_cfg": {

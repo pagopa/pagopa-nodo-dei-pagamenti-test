@@ -5,7 +5,9 @@ Feature: flow tests for sendPaymentOutcomeV2 - Marca da bollo
 
    Background:
       Given systems up
-      And initial XML activatePaymentNoticeV2
+
+   Scenario: activatePaymentNoticeV2
+      Given initial XML activatePaymentNoticeV2
          """
          <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
          xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -16,7 +18,6 @@ Feature: flow tests for sendPaymentOutcomeV2 - Marca da bollo
          <idBrokerPSP>#brokerEcommerce#</idBrokerPSP>
          <idChannel>#canaleEcommerce#</idChannel>
          <password>#password#</password>
-         <idempotencyKey>#idempotency_key#</idempotencyKey>
          <qrCode>
          <fiscalCode>#creditor_institution_code#</fiscalCode>
          <noticeNumber>310#iuv#</noticeNumber>
@@ -107,8 +108,6 @@ Feature: flow tests for sendPaymentOutcomeV2 - Marca da bollo
          </soapenv:Envelope>
          """
       And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
-      When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-      Then check outcome is OK of activatePaymentNoticeV2 response
 
    @skip
    Scenario: closePaymentV2
@@ -237,8 +236,14 @@ Feature: flow tests for sendPaymentOutcomeV2 - Marca da bollo
          """
 
    # sunny day
+   Scenario: execute activatePaymentNoticeV2 1
+      Given the activatePaymentNoticeV2 scenario executed successfully
+      When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+      Then check outcome is OK of activatePaymentNoticeV2 response
+
    Scenario: execute closePaymentV2 1
-      Given the closePaymentV2 scenario executed successfully
+      Given the execute activatePaymentNoticeV2 1 scenario executed successfully
+      And the closePaymentV2 scenario executed successfully
       When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
       Then verify the HTTP status code of v2/closepayment response is 200
       And check outcome is OK of v2/closepayment response
@@ -256,13 +261,13 @@ Feature: flow tests for sendPaymentOutcomeV2 - Marca da bollo
 
 
 #DA ELIMINARE
-   # Scenario: Psp with MARCA_BOLLO_DIGITALE != 1
-   #    Given updates through the query update_id_psp of the table PSP the parameter MARCA_BOLLO_DIGITALE with 0 under macro NewMod1 on db nodo_cfg
-   #    And refresh job PSP triggered after 10 seconds
-   #    And the closePaymentV2 scenario executed successfully
-   #    When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
-   #    Then verify the HTTP status code of v2/closepayment response is 400
-   #    And check outcome is KO of v2/closepayment response
-   #    And check description is Invalid PSP/Canale for MBD of v2/closepayment response
-   #    And updates through the query update_id_psp of the table PSP the parameter MARCA_BOLLO_DIGITALE with 1 under macro NewMod1 on db nodo_cfg
-   #    And refresh job PSP triggered after 10 seconds
+# Scenario: Psp with MARCA_BOLLO_DIGITALE != 1
+#    Given updates through the query update_id_psp of the table PSP the parameter MARCA_BOLLO_DIGITALE with 0 under macro NewMod1 on db nodo_cfg
+#    And refresh job PSP triggered after 10 seconds
+#    And the closePaymentV2 scenario executed successfully
+#    When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+#    Then verify the HTTP status code of v2/closepayment response is 400
+#    And check outcome is KO of v2/closepayment response
+#    And check description is Invalid PSP/Canale for MBD of v2/closepayment response
+#    And updates through the query update_id_psp of the table PSP the parameter MARCA_BOLLO_DIGITALE with 1 under macro NewMod1 on db nodo_cfg
+#    And refresh job PSP triggered after 10 seconds
