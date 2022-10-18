@@ -155,7 +155,7 @@ Feature: flow tests for sendPaymentOutcomeV2 - Marca da bollo
          </PSP>
          <IUBD>#iubd#</IUBD>
          <OraAcquisto>2022-02-06T15:00:44.659+01:00</OraAcquisto>
-         <Importo>10.00</Importo>
+         <Importo>5.00</Importo>
          <TipoBollo>01</TipoBollo>
          <ImprontaDocumento>
          <DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256" />
