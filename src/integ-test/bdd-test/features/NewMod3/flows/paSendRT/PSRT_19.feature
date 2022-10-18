@@ -230,7 +230,7 @@ Feature: process tests for paSendRT
       <fault>
       <faultCode>PAA_SEMANTICA</faultCode>
       <faultString>chiamata da rifiutare</faultString>
-      <id>$activatePaymentNotice.fiscalCode</id>
+      <id>$verifyPaymentNotice.fiscalCode</id>
       </fault>
       </paf:paSendRTRes>
       </soapenv:Body>
