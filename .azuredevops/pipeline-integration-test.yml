@@ -158,7 +158,7 @@ stages:
               whereis behave
               which behave
               export PATH=/usr/local/bin/behave:/usr/bin:/usr/local/bin:$PATH #Add environment variables
-              behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/Mod1/flows/ChiediStato/T101_G_chiediStato_RT_ACCETTATA_PA_Carrello_2PA_sbloccoParcheggio.feature      
+              behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/Mod1/flows/ChiediStato/T102_chiediStato_RT_RIFIUTATA_PA.feature      
             displayName: 'Run integration test'
         
           - task: PublishTestResults@2

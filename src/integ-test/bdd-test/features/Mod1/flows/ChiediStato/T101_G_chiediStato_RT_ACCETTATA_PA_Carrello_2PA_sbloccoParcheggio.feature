@@ -2,7 +2,7 @@ Feature: process tests for T101_G_chiediStato_RT_ACCETTATA_PA_Carrello_2PA_sbloc
 
     Background:
         Given systems up
-        
+@runnable        
     Scenario: RPT generation
         Given RPT generation
             """
@@ -333,7 +333,7 @@ Feature: process tests for T101_G_chiediStato_RT_ACCETTATA_PA_Carrello_2PA_sbloc
             </pay_i:datiPagamento>
             </pay_i:RT>
             """
-
+@runnable
     Scenario: Execute nodoInviaCarrelloRPT
 		Given the RPT generation scenario executed successfully
 		And initial XML nodoInviaCarrelloRPT
@@ -389,7 +389,7 @@ Feature: process tests for T101_G_chiediStato_RT_ACCETTATA_PA_Carrello_2PA_sbloc
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check url contains acardste of nodoInviaCarrelloRPT response
         And retrieve session token from $nodoInviaCarrelloRPTResponse.url
-
+@runnable
     Scenario: Execute nodoNotificaAnnullamento
         Given the Execute nodoInviaCarrelloRPT scenario executed successfully
         When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken to nodo-dei-pagamenti
@@ -397,13 +397,13 @@ Feature: process tests for T101_G_chiediStato_RT_ACCETTATA_PA_Carrello_2PA_sbloc
         And check esito is OK of notificaAnnullamento response
         And wait 7 seconds for expiration 
 
-    
+ @runnable   
     Scenario: Execute job paInviaRt
         Given the Execute nodoNotificaAnnullamento scenario executed successfully
         When job paInviaRt triggered after 5 seconds
         And wait 10 seconds for expiration
 
-
+@runnable
     Scenario: Execute nodoChiediStatoRPT request
         Given the Execute job paInviaRt scenario executed successfully
         And initial XML nodoChiediStatoRPT
@@ -431,7 +431,7 @@ Feature: process tests for T101_G_chiediStato_RT_ACCETTATA_PA_Carrello_2PA_sbloc
         And checks stato contains RPT_PARCHEGGIATA_NODO of nodoChiediStatoRPT response
         And check redirect is 0 of nodoChiediStatoRPT response
         And check url field not exists in nodoChiediStatoRPT response
-
+@runnable
     Scenario: Execute second nodoChiediStatoRPT request
         Given the Execute nodoChiediStatoRPT request scenario executed successfully
         And initial XML nodoChiediStatoRPT
@@ -459,7 +459,7 @@ Feature: process tests for T101_G_chiediStato_RT_ACCETTATA_PA_Carrello_2PA_sbloc
         And checks stato contains RPT_PARCHEGGIATA_NODO of nodoChiediStatoRPT response
         And check redirect is 0 of nodoChiediStatoRPT response
         And check url field not exists in nodoChiediStatoRPT response
-
+@runnable
     Scenario: Execute nodoInviaRT request
         Given the Execute second nodoChiediStatoRPT request scenario executed successfully
         And initial XML nodoInviaRT
