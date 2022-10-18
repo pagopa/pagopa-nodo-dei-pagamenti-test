@@ -225,9 +225,11 @@ Feature: flow tests for sendPaymentOutcomeV2 - Marca da bollo
          <applicationDate>2021-12-12</applicationDate>
          <transferDate>2021-12-11</transferDate>
          <marcheDaBollo>
+         <marcaDaBollo>
          <paymentToken>$activatePaymentNoticeV2Response.paymentToken</paymentToken>
          <idTransfer>1</idTransfer>
          <MBDAttachment>$mbdAttachment</MBDAttachment>
+         </marcaDaBollo>
          </marcheDaBollo>
          </details>
          </nod:sendPaymentOutcomeV2Request>
