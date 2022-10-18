@@ -240,9 +240,12 @@ Feature: Syntax checks for nodoInviaRT - OK
       When psp sends SOAP nodoInviaRPT to nodo-dei-pagamenti
       And EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
       Then check esito is OK of nodoInviaRT response
-      And check faultCode is PPT_SINTASSI_XSD of nodoInviaRT response
+      # And check faultCode is PPT_SINTASSI_XSD of nodoInviaRT response
           Examples:
-            | tag                                    | tag_value | SoapUI |
-            | pay_i:identificativoStazioneRichiedente                  | None      | RTSIN8.1 |
-            | pay_i:codiceUnitOperAttestante                  | None      | RTSIN38.1 |
-            | pay_i:riferimentoDataRichiesta               | 2001-12-31                           | RTSIN25 |
+          |SoapUI     | tag                                      | tag_value  |
+          | RTSIN8.1  | pay_i:identificativoStazioneRichiedente  | None       |   
+          | RTSIN25   | pay_i:riferimentoDataRichiesta           | 2001-12-31 |              
+          | RTSIN38.1 | pay_i:codiceUnitOperAttestante           | None       |          
+          | RTSIN63   | pay_i:tipoIdentificativoUnivoco          | A          |                                 
+          | RTSIN76   | pay_i:indirizzoBeneficiario              | None       |
+

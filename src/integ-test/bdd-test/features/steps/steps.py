@@ -605,6 +605,7 @@ def step_impl(context):
         setattr(context, "ccp", ccp)
     
     setattr(context, 'rt', payload)
+    print(payload)
     payload_b = bytes(payload, 'ascii')
     payload_uni = b64.b64encode(payload_b)
     payload = f"{payload_uni}".split("'")[1]
