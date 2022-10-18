@@ -102,7 +102,7 @@ Feature: process tests for T095_N_ChiediStato_RPT_ESITO_SCONOSCIUTO_PSP_RPT_time
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canaleRtPush#</identificativoCanale>
+            <identificativoCanale>60000000001_07</identificativoCanale>
             <tipoFirma></tipoFirma>
             <rpt>$rptAttachment</rpt>
             </ws:nodoInviaRPT>
@@ -157,7 +157,7 @@ Feature: process tests for T095_N_ChiediStato_RPT_ESITO_SCONOSCIUTO_PSP_RPT_time
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canaleRtPush#</identificativoCanale>
+            <identificativoCanale>60000000001_07</identificativoCanale>
             <tipoFirma></tipoFirma>
             <rpt>$rptAttachment</rpt>
             </ws:nodoInviaRPT>
