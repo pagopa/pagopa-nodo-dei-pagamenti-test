@@ -2,7 +2,7 @@ Feature: process tests for InoltroEsitoCartaCarrello_RPT_TIMEOUT-BUG_593
 
     Background:
         Given systems up
-
+@runnable
     Scenario: RPT generation
         Given RPT generation
             """
@@ -81,7 +81,7 @@ Feature: process tests for InoltroEsitoCartaCarrello_RPT_TIMEOUT-BUG_593
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-
+@runnable
     Scenario: Execute nodoInviaRPT request
         Given the RPT generation scenario executed successfully
         And initial XML nodoInviaRPT
@@ -112,7 +112,7 @@ Feature: process tests for InoltroEsitoCartaCarrello_RPT_TIMEOUT-BUG_593
         Then check esito is OK of nodoInviaRPT response
         And check url contains acards of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
-
+@runnable
     Scenario: Execution Esito Carta
         Given the Execute nodoInviaRPT request scenario executed successfully
         And initial XML pspInviaCarrelloRPTCarte 
@@ -150,13 +150,13 @@ Feature: process tests for InoltroEsitoCartaCarrello_RPT_TIMEOUT-BUG_593
         Then verify the HTTP status code of inoltroEsito/carta response is 408
         And check url field not exists in inoltroEsito/carta response
         And check error is Operazione in timeout of inoltroEsito/carta response
-
+@runnable
     Scenario: Execute nodoNotificaAnnullamento
         Given the Execution Esito Carta scenario executed successfully
         When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of notificaAnnullamento response is 404
         And check error is Il Pagamento indicato non esiste of notificaAnnullamento response
-
+@runnable
     Scenario: Execute nodoChiediStatoRPT request
         Given the Execute nodoNotificaAnnullamento scenario executed successfully
         And initial XML nodoChiediStatoRPT
@@ -181,14 +181,14 @@ Feature: process tests for InoltroEsitoCartaCarrello_RPT_TIMEOUT-BUG_593
         And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
         And check url field not exists in nodoChiediStatoRPT response
-
+@runnable
     Scenario: Execute nodoChiediAvanzamentoPagamento
         Given the Execute nodoChiediStatoRPT request scenario executed successfully
         When WISP sends REST GET avanzamentoPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of avanzamentoPagamento response is 200
         And checks esito contains ACK_UNKNOWN of avanzamentoPagamento response
 
-
+@runnable
     Scenario: Execution second rest Esito Carta
         Given the Execute nodoChiediAvanzamentoPagamento scenario executed successfully
         And initial XML pspInviaRPT 
