@@ -198,7 +198,7 @@ Feature: check syntax KO for paGetPaymentV2 with MBD
             | hashDocumento                         | None
             | hashDocumento                         | Empty
             | hashDocumento                         | 10hjkrt
-            | hashDocumento                         | noei38932nfdioul&ncdoaifer9eukvmpweuw9tunfgadkvaifuewtudnvahv23234fssdafqffd
+            | hashDocumento                         | noei38932nfdioulgncdoaifer9eukvmpweuw9tunfgadkvaifuewtudnvahv23234fssdafqffd
             | tipoBollo                             | 123
             | tipoBollo                             | None
             | tipoBollo                             | Empty
@@ -212,10 +212,10 @@ Feature: check syntax KO for paGetPaymentV2 with MBD
             | provinciaResidenza                    | rc
             | remittanceInformation                 | None
             | remittanceInformation                 | Empty
-            | remittanceInformation                 | noei38932nfdioul&ncdoaifer9eukvmpweuw9tunfgadkvaifuewtudnvahv23234fssdafqffdnoei38932nfdioul&ncdoaifer9eukvmpweuw9tunfgadkvaifuewtudnvahvd452
+            | remittanceInformation                 | noei38932nfdioulpncdoaifer9eukvmpweuw9tunfgadkvaifuewtudnvahv23234fssdafqffdnoei38932nfdioulTncdoaifer9eukvmpweuw9tunfgadkvaifuewtudnvahvd452
             | transferCategory                      | None
             | transferCategory                      | Empty
-            | transferCategory                      | noei38932nfdioul&ncdoaifer9eukvmpweuw9tunfgadkvaifuewtudnvahv23234fssdafqffdnoei38932nfdioul&ncdoaifer9eukvmpweuw9tunfgadkvaifuewtudnvahvd452
+            | transferCategory                      | noei38932nfdioulpncdoaifer9eukvmpweuw9tunfgadkvaifuewtudnvahv23234fssdafqffdnoei38932nfdioulTncdoaifer9eukvmpweuw9tunfgadkvaifuewtudnvahvd452
             | key                                   | None
             | key                                   | Empty
             | value                                 | None
