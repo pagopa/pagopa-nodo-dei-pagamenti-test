@@ -308,8 +308,8 @@ Feature: checks for pspNotifyPaymentV2
         Given the checkPosition scenario executed successfully
         And the activatePaymentNoticeV2 scenario executed successfully
         And the closePaymentV2 scenario executed successfully
-        And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED of the record at column status of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db db_online under macro NewMod1
-        And checks the value PAYMENT_ACCEPTED of the record at column status of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db db_online under macro NewMod1
+        And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED of the record at column status of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value PAYMENT_ACCEPTED of the record at column status of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 4 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
@@ -321,8 +321,8 @@ Feature: checks for pspNotifyPaymentV2
         And the pspNotifyPaymentV2 sleep OK scenario executed successfully
         And the closePaymentV2 scenario executed successfully
         And wait 10 seconds for expiration
-        And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED of the record at column status of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db db_online under macro NewMod1
-        And checks the value PAYMENT_ACCEPTED of the record at column status of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db db_online under macro NewMod1
+        And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED of the record at column status of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value PAYMENT_ACCEPTED of the record at column status of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 4 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
@@ -333,8 +333,8 @@ Feature: checks for pspNotifyPaymentV2
         And the activatePaymentNoticeV2 scenario executed successfully
         And the pspNotifyPaymentV2 KO scenario executed successfully
         And the closePaymentV2 scenario executed successfully
-        And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_REFUSED of the record at column status of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db db_online under macro NewMod1
-        And checks the value PAYMENT_REFUSED of the record at column status of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db db_online under macro NewMod1
+        And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_REFUSED of the record at column status of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value PAYMENT_REFUSED of the record at column status of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 4 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
@@ -346,8 +346,8 @@ Feature: checks for pspNotifyPaymentV2
         And the pspNotifyPaymentV2 sleep KO scenario executed successfully
         And the closePaymentV2 scenario executed successfully
         And wait 10 seconds for expiration
-        And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_REFUSED of the record at column status of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db db_online under macro NewMod1
-        And checks the value PAYMENT_REFUSED of the record at column status of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db db_online under macro NewMod1
+        And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_REFUSED of the record at column status of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value PAYMENT_REFUSED of the record at column status of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 4 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
@@ -358,8 +358,8 @@ Feature: checks for pspNotifyPaymentV2
         And the activatePaymentNoticeV2 scenario executed successfully
         And the pspNotifyPaymentV2 KO scenario executed successfully
         And the closePaymentV2 scenario executed successfully
-        And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_UNKNOWN of the record at column status of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db db_online under macro NewMod1
-        And checks the value PAYMENT_UNKNOWN of the record at column status of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db db_online under macro NewMod1
+        And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_UNKNOWN of the record at column status of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value PAYMENT_UNKNOWN of the record at column status of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 4 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
@@ -371,8 +371,8 @@ Feature: checks for pspNotifyPaymentV2
         And the pspNotifyPaymentV2 timeout scenario executed successfully
         And the closePaymentV2 scenario executed successfully
         And wait 12 seconds for expiration
-        And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_UNKNOWN of the record at column status of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db db_online under macro NewMod1
-        And checks the value PAYMENT_UNKNOWN of the record at column status of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db db_online under macro NewMod1
+        And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_UNKNOWN of the record at column status of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value PAYMENT_UNKNOWN of the record at column status of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 4 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
@@ -383,8 +383,8 @@ Feature: checks for pspNotifyPaymentV2
         And the activatePaymentNoticeV2 scenario executed successfully
         And the pspNotifyPaymentV2 malformata scenario executed successfully
         And the closePaymentV2 scenario executed successfully
-        And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_UNKNOWN of the record at column status of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db db_online under macro NewMod1
-        And checks the value PAYMENT_UNKNOWN of the record at column status of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db db_online under macro NewMod1
+        And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_UNKNOWN of the record at column status of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value PAYMENT_UNKNOWN of the record at column status of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 4 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
@@ -396,8 +396,8 @@ Feature: checks for pspNotifyPaymentV2
         And the pspNotifyPaymentV2 sleep malformata scenario executed successfully
         And the closePaymentV2 scenario executed successfully
         And wait 10 seconds for expiration
-        And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_UNKNOWN of the record at column status of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db db_online under macro NewMod1
-        And checks the value PAYMENT_UNKNOWN of the record at column status of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db db_online under macro NewMod1
+        And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_UNKNOWN of the record at column status of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value PAYMENT_UNKNOWN of the record at column status of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 4 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
@@ -408,7 +408,7 @@ Feature: checks for pspNotifyPaymentV2
         And the activatePaymentNoticeV2 scenario executed successfully
         And the pspNotifyPaymentV2 irraggiungibile scenario executed successfully
         And the closePaymentV2 scenario executed successfully
-        And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_SEND_ERROR of the record at column status of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db db_online under macro NewMod1
-        And checks the value PAYMENT_SEND_ERROR of the record at column status of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db db_online under macro NewMod1
+        And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_SEND_ERROR of the record at column status of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value PAYMENT_SEND_ERROR of the record at column status of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 4 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
