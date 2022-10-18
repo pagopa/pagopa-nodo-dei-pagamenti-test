@@ -2,7 +2,7 @@ Feature: process tests for chiediListaPSP
 
     Background:
         Given systems up
-
+@runnable
     Scenario: RPT generation
         Given RPT generation
             """
@@ -81,7 +81,7 @@ Feature: process tests for chiediListaPSP
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-
+@runnable
     Scenario: Execute nodoInviaRPT request
         Given the RPT generation scenario executed successfully
         And initial XML nodoInviaRPT
@@ -132,19 +132,19 @@ Feature: process tests for chiediListaPSP
         And execution query getPspAltro to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
         And through the query getPspAltro retrieve param listaAltro at position -1 and save it under the key listaAltro
 
-
+@runnable
     Scenario: execution nodoChiediListaPSP - altro
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest GET listaPSP?idPagamento=$sessionToken&percorsoPagamento=ALTRO&lingua=$lingua to nodo-dei-pagamenti
         Then verify the HTTP status code of listaPSP response is 200
-
+@runnable
     Scenario: execution nodoChiediListaPSP - carte
         Given the execution nodoChiediListaPSP - altro scenario executed successfully
         When WISP sends rest GET listaPSP?idPagamento=$sessionToken&percorsoPagamento=CARTE&lingua=$lingua to nodo-dei-pagamenti
         Then verify the HTTP status code of listaPSP response is 200
         And check totalRows is $sizeCarte of listaPSP response
         And check data is $listaCarte of listaPSP response
-
+@runnable
     Scenario: execution nodoChiediListaPSP - conto
         Given the execution nodoChiediListaPSP - carte scenario executed successfully
         When WISP sends rest GET listaPSP?idPagamento=$sessionToken&percorsoPagamento=CC&lingua=$lingua to nodo-dei-pagamenti
