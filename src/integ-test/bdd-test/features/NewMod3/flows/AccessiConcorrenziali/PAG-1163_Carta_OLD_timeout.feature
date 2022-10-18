@@ -1,4 +1,4 @@
-Feature: Pag-1163_Carta_OLD_err
+Feature: Pag-1163_Carta_OLD_OK
 
     Background:
         Given systems up
@@ -356,7 +356,7 @@ Feature: Pag-1163_Carta_OLD_err
                 "identificativoCanale": "#canale#",
                 "importoTotalePagato": 10.00,
                 "timestampOperazione": "2021-07-09T17:06:03.100+01:00",
-                "codiceAutorizzativo": "sleMal",
+                "codiceAutorizzativo": "resTim",
                 "esitoTransazioneCarta": "00"
             }
             """
@@ -369,8 +369,10 @@ Feature: Pag-1163_Carta_OLD_err
             <soapenv:Body>
             <ws:pspInviaCarrelloRPTCarteResponse>
             <pspInviaCarrelloRPTResponse>
-            <delay>7000</delay>
-            <esitoComplessivoOperazione>malformata</esitoComplessivoOperazione>
+            <delay>10000</delay>
+            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+            <identificativoCarrello>$ccp</identificativoCarrello>
+            <parametriPagamentoImmediato>idBruciatura=$ccp</parametriPagamentoImmediato>
             </pspInviaCarrelloRPTResponse>
             </ws:pspInviaCarrelloRPTCarteResponse>
             </soapenv:Body>
@@ -379,6 +381,6 @@ Feature: Pag-1163_Carta_OLD_err
         And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte
         And saving inoltroEsito/cartaJSON request in inoltroEsito/carta
         When calling primitive inoltroEsito/carta_inoltroEsito/carta POST and nodoInviaRT_nodoInviaRT POST with 4000 ms delay
-        Then verify the HTTP status code of inoltroEsito/carta response is 200
-        And check esito is KO of inoltroEsito/carta response
+        Then verify the HTTP status code of inoltroEsito/carta response is 408
+        And check error is Operazione in timeout of inoltroEsito/carta response
         And check esito is KO of nodoInviaRT response
