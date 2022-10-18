@@ -89,21 +89,21 @@ Feature: process tests for T097_ChiediStato_RPT_ACCETTATA_PSP - BUG_480
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
             <ppt:intestazionePPT>
-            <identificativoIntermediarioPA>66666666666</identificativoIntermediarioPA>
-            <identificativoStazioneIntermediarioPA>66666666666_01</identificativoStazioneIntermediarioPA>
-            <identificativoDominio>66666666666</identificativoDominio>
-            <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+                <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
+                <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
+                <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+                <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
+                <codiceContestoPagamento>CCD01</codiceContestoPagamento>
             </ppt:intestazionePPT>
             </soapenv:Header>
             <soapenv:Body>
             <ws:nodoInviaRPT>
-            <password>pwdpwdpwd</password>
-            <identificativoPSP>#psp#</identificativoPSP>
-            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canale#</identificativoCanale>
-            <tipoFirma></tipoFirma>
-            <rpt>$rptAttachment</rpt>
+                <password>pwdpwdpwd</password>
+                <identificativoPSP>#psp#</identificativoPSP>
+                <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+                <identificativoCanale>#canale#</identificativoCanale>
+                <tipoFirma></tipoFirma>
+                <rpt>$rptAttachment</rpt>
             </ws:nodoInviaRPT>
             </soapenv:Body>
             </soapenv:Envelope>
