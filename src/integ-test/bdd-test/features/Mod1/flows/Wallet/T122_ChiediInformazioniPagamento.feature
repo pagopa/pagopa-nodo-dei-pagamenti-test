@@ -2,7 +2,7 @@ Feature: process tests for chiediInformazioniPagamento
 
     Background:
         Given systems up
-
+@runnable
     Scenario: RPT generation
         Given RPT generation
             """
@@ -81,7 +81,7 @@ Feature: process tests for chiediInformazioniPagamento
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-
+@runnable
     Scenario: Execute nodoInviaRPT request
         Given the RPT generation scenario executed successfully
         And initial XML nodoInviaRPT
@@ -113,7 +113,7 @@ Feature: process tests for chiediInformazioniPagamento
         And check url field exists in nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
 
-
+@runnable
     Scenario: Execution idPagamento
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
