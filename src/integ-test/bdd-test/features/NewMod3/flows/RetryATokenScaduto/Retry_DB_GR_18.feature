@@ -123,7 +123,7 @@ Feature: process tests for Retry_DB_GR_18
       <transferCategory>paGetPaymentTest</transferCategory>
       </transfer>
       <transfer>
-      <idTransfer>23</idTransfer>
+      <idTransfer>3</idTransfer>
       <transferAmount>4.00</transferAmount>
       <fiscalCodePA>90000000002</fiscalCodePA>
       <IBAN>IT45R0760103200000000001016</IBAN>
