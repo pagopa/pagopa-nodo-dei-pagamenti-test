@@ -203,7 +203,7 @@ Feature: process tests for retry a token scaduto
       <idempotencyKey>#idempotency_key#</idempotencyKey>
       <qrCode>
       <fiscalCode>#creditor_institution_code_old#</fiscalCode>
-      <noticeNumber>#notice_number_old#</noticeNumber>
+      <noticeNumber>$activatePaymentNotice1.noticeNumber</noticeNumber>
       </qrCode>
       <expirationTime>6000</expirationTime>
       <amount>10.00</amount>
