@@ -220,7 +220,7 @@ Feature: process tests for retry a token scaduto
 
   # Payment Outcome Phase outcome KO
   Scenario: Execute sendPaymentOutcome request
-    Given the Execute nodoInviaRPT request scenario executed successfully
+    Given the Execute activatePaymentNotice1 request scenario executed successfully
     And PSP waits 5 seconds for expiration
     And initial XML sendPaymentOutcome
       """
@@ -268,7 +268,7 @@ Feature: process tests for retry a token scaduto
 
   # test execution
   Scenario: Execution test rety_PaOld_26
-    Given the Execute activatePaymentNotice1 request scenario executed successfully
+    Given the Execute sendPaymentOutcome request scenario executed successfully
     Then execution query payment_status to get value on the table POSITION_PAYMENT, with the columns FK_PAYMENT_PLAN,RPT_ID,AMOUNT,CHANNEL_ID,PAYMENT_CHANNEL,PAYER_ID,PAYMENT_METHOD,FEE,INSERTED_TIMESTAMP,APPLICATION_DATE,TRANSFER_DATE under macro NewMod3 with db name nodo_online
     And execution query rpt_id to get value on the table RPT, with the columns ID,ID_MSG_RICH under macro NewMod3 with db name nodo_online
     And execution query position_receipt to get value on the table POSITION_PAYMENT_PLAN, with the columns ID,METADATA under macro NewMod3 with db name nodo_online
