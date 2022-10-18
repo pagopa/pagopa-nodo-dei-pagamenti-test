@@ -131,9 +131,9 @@ Feature: process tests for paSendRT
       <soapenv:Header/>
       <soapenv:Body>
       <nod:sendPaymentOutcomeReq>
-      <idPSP>70000000001</idPSP>
-      <idBrokerPSP>70000000001</idBrokerPSP>
-      <idChannel>70000000001_01</idChannel>
+      <idPSP>#psp#</idPSP>
+      <idBrokerPSP>#psp#</idBrokerPSP>
+      <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
       <password>pwdpwdpwd</password>
       <paymentToken>token</paymentToken>
       <outcome>OK</outcome>
@@ -219,9 +219,6 @@ Feature: process tests for paSendRT
     Given the Execute verifyPaymentNotice request scenario executed successfully
     And the Define paGetPayment scenario executed successfully
     And EC replies to nodo-dei-pagamenti with the paGetPayment
-    And the Define activatePaymentNotice scenario executed successfully
-    When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
-    Then check outcome is OK of activatePaymentNotice response
     And initial XML paSendRT
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
@@ -233,13 +230,16 @@ Feature: process tests for paSendRT
       <fault>
       <faultCode>PAA_SEMANTICA</faultCode>
       <faultString>chiamata da rifiutare</faultString>
-      <id>$activatePaymentNotice.fiscalCode</id>
+      <id>$verifyPaymentNotice.fiscalCode</id>
       </fault>
       </paf:paSendRTRes>
       </soapenv:Body>
       </soapenv:Envelope>
       """
     And EC replies to nodo-dei-pagamenti with the paSendRT
+    And the Define activatePaymentNotice scenario executed successfully
+    When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+    Then check outcome is OK of activatePaymentNotice response
 
 
   # Activate phase - 3 transfers in paGetPayment transferList and broadcast false for all stations [PSRT_05]
@@ -281,38 +281,6 @@ Feature: process tests for paSendRT
     Then check outcome is OK of sendPaymentOutcome response
   #And check EC receives paSendRT properly with noticeNumber $activatePaymentNotice.noticeNumber
   #And check EC receives paSendRT properly having in the receipt $activatePaymentNotice.fiscalCode as fiscalcode
-
-
-
-  # Activate phase - 4 transfers in paGetPayment transferList and broadcast false for all stations [PSRT_05]
-  Scenario: Execute activatePaymentNotice request with 3 transfers with expiration time
-    Given the Execute verifyPaymentNotice request scenario executed successfully
-    And the Define activatePaymentNotice scenario executed successfully
-    And expirationTime with 2000 in activatePaymentNotice
-    And the Define paGetPayment scenario executed successfully
-    And transferList with <transferList><transfer><idTransfer>1</idTransfer><transferAmount>3.00</transferAmount><fiscalCodePA>77777777777</fiscalCodePA><IBAN>IT45R0760103200000000001016</IBAN><remittanceInformation>testPaGetPayment</remittanceInformation><transferCategory>paGetPaymentTest</transferCategory></transfer><transfer><idTransfer>2</idTransfer><transferAmount>3.00</transferAmount><fiscalCodePA>90000000001</fiscalCodePA><IBAN>IT45R0760103200000000001016</IBAN><remittanceInformation>test</remittanceInformation><transferCategory>test</transferCategory></transfer><transfer><idTransfer>3</idTransfer><transferAmount>4.00</transferAmount><fiscalCodePA>90000000002</fiscalCodePA><IBAN>IT45R0760103200000000001016</IBAN><remittanceInformation>test</remittanceInformation><transferCategory>test</transferCategory></transfer></transferList> in paGetPayment
-    And EC replies to nodo-dei-pagamenti with the paGetPayment
-    #   TODO with apiconfig: And broadcast with false in NODO4_CFG.PA_STAZIONE_PA for EC 77777777777, 90000000001 and 90000000002
-    When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
-    Then check outcome is OK of activatePaymentNotice response
-    And initial XML paSendRT
-      """
-      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
-      <soapenv:Header/>
-      <soapenv:Body>
-      <paf:paSendRTRes>
-      <outcome>KO</outcome>
-      <!--Optional:-->
-      <fault>
-      <faultCode>PAA_SEMANTICA</faultCode>
-      <faultString>chiamata da rifiutare</faultString>
-      <id>$activatePaymentNotice.fiscalCode</id>
-      </fault>
-      </paf:paSendRTRes>
-      </soapenv:Body>
-      </soapenv:Envelope>
-      """
-    And EC replies to nodo-dei-pagamenti with the paSendRT
 
 
 
@@ -746,6 +714,18 @@ Feature: process tests for paSendRT
     Then verify the HTTP status code of mod3CancelV2 response is 200
   #And check EC receives paSendRT not properly with noticeNumber $activatePaymentNotice.noticeNumber
 
+
+# Activate phase - 4 transfers in paGetPayment transferList and broadcast false for all stations [PSRT_05]
+  Scenario: Execute activatePaymentNotice request with 3 transfers with expiration time
+    Given the Execute verifyPaymentNotice request scenario executed successfully
+    And the Define activatePaymentNotice scenario executed successfully
+    And expirationTime with 2000 in activatePaymentNotice
+    And the Define paGetPayment scenario executed successfully
+    And transferList with <transferList><transfer><idTransfer>1</idTransfer><transferAmount>3.00</transferAmount><fiscalCodePA>77777777777</fiscalCodePA><IBAN>IT45R0760103200000000001016</IBAN><remittanceInformation>testPaGetPayment</remittanceInformation><transferCategory>paGetPaymentTest</transferCategory></transfer><transfer><idTransfer>2</idTransfer><transferAmount>3.00</transferAmount><fiscalCodePA>90000000001</fiscalCodePA><IBAN>IT45R0760103200000000001016</IBAN><remittanceInformation>test</remittanceInformation><transferCategory>test</transferCategory></transfer><transfer><idTransfer>3</idTransfer><transferAmount>4.00</transferAmount><fiscalCodePA>90000000002</fiscalCodePA><IBAN>IT45R0760103200000000001016</IBAN><remittanceInformation>test</remittanceInformation><transferCategory>test</transferCategory></transfer></transferList> in paGetPayment
+    And EC replies to nodo-dei-pagamenti with the paGetPayment
+    #   TODO with apiconfig: And broadcast with false in NODO4_CFG.PA_STAZIONE_PA for EC 77777777777, 90000000001 and 90000000002
+    When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+    Then check outcome is OK of activatePaymentNotice response
 
   # Mod3Cancel Phase - [PSRT_17]
   Scenario: Execute mod3Cancel poller with 3 transfers with expiration time
