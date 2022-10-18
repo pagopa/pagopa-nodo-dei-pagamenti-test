@@ -1111,4 +1111,4 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         Given the activatePaymentNoticeV2 + paGetPaymentV2 scenario executed successfully
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        And checks the value NotNone of the record at column RESPONSE of the table IDEMPOTENCY_CACHE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2Response of the record at column RESPONSE of the table IDEMPOTENCY_CACHE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
