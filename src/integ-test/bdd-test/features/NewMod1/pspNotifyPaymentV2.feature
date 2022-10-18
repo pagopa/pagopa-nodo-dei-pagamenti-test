@@ -257,7 +257,7 @@ Feature: checks for pspNotifyPaymentV2
         And PSP replies to nodo-dei-pagamenti with the pspNotifyPaymentV2
 
     @skip
-    Scenario: pspNotifyPaymentV2 malformata
+    Scenario: pspNotifyPaymentV2 malformata KO
         Given initial XML pspNotifyPaymentV2
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pfn="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
@@ -272,7 +272,7 @@ Feature: checks for pspNotifyPaymentV2
         And PSP replies to nodo-dei-pagamenti with the pspNotifyPaymentV2
 
     @skip
-    Scenario: pspNotifyPaymentV2 sleep malformata
+    Scenario: pspNotifyPaymentV2 sleep malformata OO
         Given initial XML pspNotifyPaymentV2
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pfn="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
@@ -296,6 +296,21 @@ Feature: checks for pspNotifyPaymentV2
             <soapenv:Body>
             <pfn:pspNotifyPaymentV2Res>
             <irraggiungibile/>
+            </pfn:pspNotifyPaymentV2Res>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And PSP replies to nodo-dei-pagamenti with the pspNotifyPaymentV2
+
+    @skip
+    Scenario: pspNotifyPaymentV2 malformata OO
+        Given initial XML pspNotifyPaymentV2
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pfn="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <pfn:pspNotifyPaymentV2Res>
+            <outcome>OO</outcome>
             </pfn:pspNotifyPaymentV2Res>
             </soapenv:Body>
             </soapenv:Envelope>
@@ -358,7 +373,7 @@ Feature: checks for pspNotifyPaymentV2
     Scenario: T_PNPV2_03
         Given the checkPosition scenario executed successfully
         And the activatePaymentNoticeV2 scenario executed successfully
-        And the pspNotifyPaymentV2 KO scenario executed successfully
+        And the pspNotifyPaymentV2 malformata OO scenario executed successfully
         And the closePaymentV2 scenario executed successfully
         And wait 5 seconds for expiration
         And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_UNKNOWN of the record at column status of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
@@ -384,7 +399,7 @@ Feature: checks for pspNotifyPaymentV2
     Scenario: T_PNPV2_03.2
         Given the checkPosition scenario executed successfully
         And the activatePaymentNoticeV2 scenario executed successfully
-        And the pspNotifyPaymentV2 malformata scenario executed successfully
+        And the pspNotifyPaymentV2 malformata KO scenario executed successfully
         And the closePaymentV2 scenario executed successfully
         And wait 5 seconds for expiration
         And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_UNKNOWN of the record at column status of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
@@ -397,7 +412,7 @@ Feature: checks for pspNotifyPaymentV2
     Scenario: T_PNPV2_03.3
         Given the checkPosition scenario executed successfully
         And the activatePaymentNoticeV2 scenario executed successfully
-        And the pspNotifyPaymentV2 sleep malformata scenario executed successfully
+        And the pspNotifyPaymentV2 sleep malformata OO scenario executed successfully
         And the closePaymentV2 scenario executed successfully
         And wait 10 seconds for expiration
         And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_UNKNOWN of the record at column status of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
