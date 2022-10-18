@@ -83,6 +83,13 @@ def get_soap_mock_ec(context):
     else:
         return ""
 
+def get_soap_mock_ec2(context):
+    if context.config.userdata.get('services').get('secondary-mock-ec').get('soap_service') is not None:
+        return context.config.userdata.get('services').get('secondary-mock-ec').get('url') \
+            + context.config.userdata.get('services').get('secondary-mock-ec').get('soap_service')
+    else:
+        return ""
+
 
 def get_soap_mock_psp(context):
     if context.config.userdata.get('services').get('mock-psp').get('soap_service') is not None:
