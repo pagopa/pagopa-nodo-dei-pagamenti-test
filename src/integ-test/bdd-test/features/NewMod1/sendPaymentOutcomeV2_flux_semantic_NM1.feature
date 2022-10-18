@@ -555,7 +555,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
         And the sendPaymentOutcomeV2 with 2 paymentToken scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-    @wip
+    
     Scenario: SEM_SPO_23.1 (part 5)
         Given the SEM_SPO_23.1 (part 4) scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -646,7 +646,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
         And the sendPaymentOutcomeV2 with 2 paymentToken scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-    @wip
+    
     Scenario: SEM_SPO_30 (part 5)
         Given the SEM_SPO_30 (part 4) scenario executed successfully
         And updates through the query update_PAYMENT_TOKEN_1 of the table POSITION_PAYMENT the parameter OUTCOME with OO under macro NewMod1 on db nodo_online
@@ -681,7 +681,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
         And wait 5 seconds for expiration
-    @wip
+    
     Scenario: SEM_SPO_31 (part 4)
         Given the SEM_SPO_31 (part 3) scenario executed successfully
         And updates through the query update_activatev2 of the table POSITION_STATUS_SNAPSHOT the parameter NOTICE_ID with 311011451292109621 under macro NewMod1 on db nodo_online
@@ -753,7 +753,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
         And wait 5 seconds for expiration
-    @wip
+    
     Scenario: SEM_SPO_33 (part 4)
         Given the SEM_SPO_33 (part 3) scenario executed successfully
         And updates through the query update_PAYMENT_TOKEN_1 of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_ACCEPTED under macro NewMod1 on db nodo_online
@@ -788,7 +788,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
         And wait 5 seconds for expiration
-    @wip
+    
     Scenario: SEM_SPO_33.1 (part 4)
         Given the SEM_SPO_33.1 (part 3) scenario executed successfully
         And updates through the query update_PAYMENT_TOKEN_1 of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_UNKNOWN under macro NewMod1 on db nodo_online
@@ -861,7 +861,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
         Then verify the HTTP status code of v2/closepayment response is 200
         And wait 5 seconds for expiration
         And check outcome is OK of v2/closepayment response
-    @wip
+    
     Scenario: SEM_SPO_35.1 (part 4)
         Given the SEM_SPO_35.1 (part 3) scenario executed successfully
         And updates through the query update_activatev2 of the table POSITION_STATUS_SNAPSHOT the parameter ACTIVATION_PENDING with Y under macro NewMod1 on db nodo_online
@@ -1082,7 +1082,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
         And wait 5 seconds for expiration
-    @wip
+    
     Scenario: SEM_SPO_36 (part 4)
         Given the SEM_SPO_36 (part 3) scenario executed successfully
         And updates through the query update_noticeid_pa of the table POSITION_STATUS_SNAPSHOT the parameter STATUS with PAID under macro NewMod1 on db nodo_online
@@ -1118,7 +1118,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
         And wait 5 seconds for expiration
-    @wip
+    
     Scenario: SEM_SPO_36.1 (part 4)
         Given the SEM_SPO_36.1 (part 3) scenario executed successfully
         And updates through the query update_noticeid_pa of the table POSITION_STATUS_SNAPSHOT the parameter STATUS with NOTIFIED under macro NewMod1 on db nodo_online
