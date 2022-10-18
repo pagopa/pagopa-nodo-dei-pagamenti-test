@@ -3,7 +3,7 @@ Feature: process tests for NotificaAnnullamento_RPT_CONPSP
     Background:
         Given systems up
 @runnable
-    Scenario: RPT1 generation
+    Scenario: RPT generation
         Given RPT generation
 
       """
