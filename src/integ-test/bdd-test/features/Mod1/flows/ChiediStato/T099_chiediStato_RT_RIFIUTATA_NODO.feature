@@ -249,16 +249,17 @@ Feature: process tests for T099_chiediStato_RT_RIFIUTATA_NODO
         <soapenv:Header/>
         <soapenv:Body>
             <ws:nodoChiediStatoRPT>
-                <identificativoIntermediarioPA>66666666666</identificativoIntermediarioPA>
-                <identificativoStazioneIntermediarioPA>66666666666_01</identificativoStazioneIntermediarioPA>
+                <identificativoIntermediarioPA>#creditor_institution_code_old#</identificativoIntermediarioPA>
+                <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
                 <password>pwdpwdpwd</password>
-                <identificativoDominio>66666666666</identificativoDominio>
+                <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
                 <identificativoUnivocoVersamento>$2iuv</identificativoUnivocoVersamento>
                 <codiceContestoPagamento>CCD01</codiceContestoPagamento>
             </ws:nodoChiediStatoRPT>
         </soapenv:Body>
         </soapenv:Envelope>
         """
+        When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
         When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
         Then checks stato contains RPT_ACCETTATA_PSP of nodoChiediStatoRPT response
         And checks stato contains RT_RIFIUTATA_NODO of nodoChiediStatoRPT response
