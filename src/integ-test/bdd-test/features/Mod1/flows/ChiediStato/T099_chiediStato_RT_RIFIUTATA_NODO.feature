@@ -249,10 +249,10 @@ Feature: process tests for T099_chiediStato_RT_RIFIUTATA_NODO
         <soapenv:Header/>
         <soapenv:Body>
             <ws:nodoChiediStatoRPT>
-                <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
-                <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
+                <identificativoIntermediarioPA>66666666666</identificativoIntermediarioPA>
+                <identificativoStazioneIntermediarioPA>66666666666_01</identificativoStazioneIntermediarioPA>
                 <password>pwdpwdpwd</password>
-                <identificativoDominio>44444444444</identificativoDominio>
+                <identificativoDominio>66666666666</identificativoDominio>
                 <identificativoUnivocoVersamento>$2iuv</identificativoUnivocoVersamento>
                 <codiceContestoPagamento>CCD01</codiceContestoPagamento>
             </ws:nodoChiediStatoRPT>
