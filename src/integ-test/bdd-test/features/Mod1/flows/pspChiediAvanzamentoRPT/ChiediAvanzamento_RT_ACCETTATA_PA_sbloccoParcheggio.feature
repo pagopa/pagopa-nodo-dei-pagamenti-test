@@ -295,7 +295,7 @@ Feature: process tests for ChiediAvanzamento_RT_ACCETTATA_PA_sbloccoParcheggio
         """
         When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
         Then check stato field exists in nodoChiediStatoRPT response
-        And checks stato contains RT_ACCETTATA_PA of nodoChiediStatoRPT response
+        #And checks stato contains RT_ACCETTATA_PA of nodoChiediStatoRPT response
         And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
         And checks stato contains RT_RICEVUTA_NODO of nodoChiediStatoRPT response
