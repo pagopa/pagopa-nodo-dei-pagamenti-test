@@ -97,7 +97,7 @@ stages:
              #behave --help #Run behave
              #behave --tags=wip --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/NewMod1/activatePaymentNoticeV2_semantic_new.feature
              #behave --tags=-skip --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/NewMod1/closePaymentV2_flux_NM1.feature
-             behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/NewMod1/closePayment-v2_syntax_outcomeOK_02.feature
+             behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/NewMod1/closePayment-v2_syntax_outcomeKO_02.feature
             displayName: 'Run Behave Test Suite'
           - task: PublishTestResults@2
             condition: succeededOrFailed()
