@@ -89,7 +89,7 @@ Feature: gestioneReceiptMb_01_PULL
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-            <pay_i:identificativoDominio>#creditor_institution_secondary#</pay_i:identificativoDominio>
+            <pay_i:identificativoDominio>#creditor_institution_code_secondary#</pay_i:identificativoDominio>
             <pay_i:identificativoStazioneRichiedente>#id_station_secondary#</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
@@ -272,7 +272,7 @@ Feature: gestioneReceiptMb_01_PULL
             <rpt>$rpt1Attachment</rpt>
             </elementoListaRPT>
             <elementoListaRPT>
-            <identificativoDominio>#creditor_institution_secondary#</identificativoDominio>
+            <identificativoDominio>#creditor_institution_code_secondary#</identificativoDominio>
             <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
             <rpt>$rpt2Attachment</rpt>
@@ -288,7 +288,7 @@ Feature: gestioneReceiptMb_01_PULL
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
 
         And replace pa content with #creditor_institution_code# content
-        And replace 1pa content with #creditor_institution_secondary# content
+        And replace 1pa content with #creditor_institution_code_secondary# content
         And execution query obj_id_dom to get value on the table PA, with the columns OBJ_ID under macro Mod1Mb with db name nodo_cfg
         And through the query obj_id_dom retrieve param objId at position 0 and save it under the key objId
 
@@ -329,7 +329,7 @@ Feature: gestioneReceiptMb_01_PULL
             "identificativoPsp":"#psp#",
             "tipoVersamento":"BBT",
             "identificativoIntermediario":"#psp#",
-            "identificativoCanale":"canaleRtPull",
+            "identificativoCanale":"#canaleRtPull#",
             "tipoOperazione":"mobile",
             "mobileToken":"123ABC456"
             }
