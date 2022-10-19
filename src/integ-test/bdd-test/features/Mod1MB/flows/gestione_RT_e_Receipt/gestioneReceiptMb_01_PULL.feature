@@ -376,3 +376,13 @@ Feature: gestioneReceiptMb_01_PULL
         And PSP replies to nodo-dei-pagamenti with the pspChiediRT
         When job pspChiediListaAndChiediRt triggered after 7 seconds
         Then wait 15 seconds for expiration
+
+        #checks
+        And replace noticeNumber content with $1noticeNumber content
+        And replace paymentToken content with $sessionToken content
+        And verify 0 record for the table POSITION_RECEIPT retrived by the query by_notice_number_and_payment_token on db nodo_online under macro Mod1Mb
+        And verify 0 record for the table POSITION_RECEIPT_TRANSFER retrived by the query position_receipt_transfer on db nodo_online under macro Mod1Mb
+        And verify 0 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query by_notice_number_and_payment_token on db nodo_online under macro Mod1Mb
+        And verify 0 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query by_notice_number_and_payment_token on db nodo_online under macro Mod1Mb
+        And verify 0 record for the table POSITION_RECEIPT_XML retrived by the query by_notice_number_and_payment_token on db nodo_online under macro Mod1Mb
+
