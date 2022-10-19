@@ -289,7 +289,7 @@ Feature: gestioneReceiptMb_01_PULL
 
         And replace pa content with #creditor_institution_code# content
         And replace 1pa content with #creditor_institution_secondary# content
-        And execution query obj_id_dom to get value on the table PA, with the columns OBJ_ID under macro costanti with db name nodo_cfg
+        And execution query obj_id_dom to get value on the table PA, with the columns OBJ_ID under macro Mod1Mb with db name nodo_cfg
         And through the query obj_id_dom retrieve param objId at position 0 and save it under the key objId
 
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'N', with where condition FK_PA = $objId under macro update_query on db nodo_cfg
