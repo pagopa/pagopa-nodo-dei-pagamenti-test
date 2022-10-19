@@ -3,8 +3,13 @@ Feature: gestioneReceiptMb_09
     Background:
         Given systems up
 
+    Scenario: clean paSendRt queue
+        When job paSendRt triggered after 1 seconds
+        And wait 15 seconds for expiration
+
     Scenario: Execute nodoInviaCarrelloRPT (Phase 1)
-        Given nodo-dei-pagamenti has config parameter scheduler.jobName_paSendRt.enabled set to false
+        Given the clean paSendRt queue scenario executed successfully
+        And nodo-dei-pagamenti has config parameter scheduler.jobName_paSendRt.enabled set to false
         And nodo-dei-pagamenti has config parameter scheduler.paSendRtMaxRetry set to 1
         And generate 1 notice number and iuv with aux digit 3, segregation code 02 and application code -
         And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
@@ -626,6 +631,7 @@ Feature: gestioneReceiptMb_09
     @test
     Scenario: Check POSITION_RETRY_PA_SEND_RT table
         Given the Execute nodoInviaRT (Phase 4) scenario executed successfully
+        And wait 60 seconds for expiration
         And nodo-dei-pagamenti has config parameter scheduler.jobName_paSendRt.enabled set to true
         And EC2 replies to nodo-dei-pagamenti with the paSendRT
             """
