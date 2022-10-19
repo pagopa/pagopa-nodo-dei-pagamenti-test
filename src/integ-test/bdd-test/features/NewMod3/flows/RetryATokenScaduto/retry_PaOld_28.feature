@@ -267,7 +267,7 @@ Feature: process tests for retry a token scaduto
   
 
   Scenario: DB check
-    Given the Execute sendPaymentOutcome2 request scenario executed successfully
+    Given the Execute sendPaymentOutcome1 request scenario executed successfully
     And wait 5 seconds for expiration
     #STATI
     Then checks the value PAYING,INSERTED,PAID of the record at column status of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
