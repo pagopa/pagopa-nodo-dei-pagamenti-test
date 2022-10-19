@@ -205,6 +205,7 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
         And replace iuv2 content with $2iuv content
         And replace 1ccp content with CCD01 content
         And replace 2CCP content with CCD01 content
+        And replace pa content with 44444444444 content
         And verify 3 record for the table STATI_RPT retrived by the query stati_RPT on db nodo_online under macro Mod1
         And verify 3 record for the table STATI_RPT retrived by the query stati_RPT2 on db nodo_online under macro Mod1
         And checks the value $sessionToken of the record at column ID_SESSIONE of the table STATI_RPT retrived by the query stati_RPT on db nodo_online under macro Mod1
