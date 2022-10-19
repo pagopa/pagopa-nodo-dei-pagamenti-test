@@ -175,7 +175,7 @@ Feature: process tests for retry a token scaduto
 
 
   Scenario: trigger paInviaRT + DB check
-    Given the Execute nodoInviaRPT request scenario executed successfully
+    Given the Execute poller Annulli scenario executed successfully
     When job paInviaRt triggered after 3 seconds
     Then verify the HTTP status code of paInviaRt response is 200
     And wait 5 seconds for expiration
