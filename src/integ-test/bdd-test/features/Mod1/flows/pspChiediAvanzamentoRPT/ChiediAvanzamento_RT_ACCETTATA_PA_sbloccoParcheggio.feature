@@ -225,10 +225,10 @@ Feature: process tests for ChiediAvanzamento_RT_ACCETTATA_PA_sbloccoParcheggio
             """
             {
             "idPagamento":"$sessionToken",
-            "identificativoPsp":"#psp#",
+            "identificativoPsp":"40000000001",
             "tipoVersamento":"BBT", 
-            "identificativoIntermediario":"#psp#",
-            "identificativoCanale":"#canale#",
+            "identificativoIntermediario":"40000000001",
+            "identificativoCanale":"40000000001_03",
             "tipoOperazione":"web"
             }
              """
@@ -248,10 +248,10 @@ Feature: process tests for ChiediAvanzamento_RT_ACCETTATA_PA_sbloccoParcheggio
             <soapenv:Header/>
             <soapenv:Body>
             <ws:nodoInviaRT>
-            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canale#</identificativoCanale>
+            <identificativoIntermediarioPSP>40000000001</identificativoIntermediarioPSP>
+            <identificativoCanale>40000000001_03</identificativoCanale>
             <password>pwdpwdpwd</password>
-            <identificativoPSP>#psp#</identificativoPSP>
+            <identificativoPSP>40000000001</identificativoPSP>
             <identificativoDominio>44444444444</identificativoDominio>
             <identificativoUnivocoVersamento>avanzaOK</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
@@ -295,7 +295,7 @@ Feature: process tests for ChiediAvanzamento_RT_ACCETTATA_PA_sbloccoParcheggio
         """
         When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
         Then check stato field exists in nodoChiediStatoRPT response
-        #And checks stato contains RT_ACCETTATA_PA of nodoChiediStatoRPT response
+        And checks stato contains RT_ACCETTATA_PA of nodoChiediStatoRPT response
         And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
         And checks stato contains RT_RICEVUTA_NODO of nodoChiediStatoRPT response
