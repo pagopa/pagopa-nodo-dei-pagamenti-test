@@ -199,11 +199,8 @@ Feature: flux tests for closePaymentV2
                 }
             }
             """
-        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
-        Then verify the HTTP status code of v2/closepayment response is 200
-        And check outcome is OK of v2/closepayment response
 
-@skip
+    @skip
     Scenario: closePaymentV2 KO with 2 paymentToken
         Given initial JSON v2/closepayment
             """
@@ -265,13 +262,10 @@ Feature: flux tests for closePaymentV2
                 }
             }
             """
-        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
-        Then verify the HTTP status code of v2/closepayment response is 200
-        And check outcome is OK of v2/closepayment response
 
     # FLUSSO_NM1_CP_01
 
-    Scenario: FLUSSO_NM1_CP_01
+    Scenario: FLUSSO_NM1_CP_01 (part 1)
         Given the checkPosition scenario executed successfully
         And the activatePaymentNoticeV2 with iuv scenario executed successfully
         And the activatePaymentNoticeV2 with iuv1 scenario executed successfully
@@ -281,6 +275,12 @@ Feature: flux tests for closePaymentV2
         And checks the value $activatePaymentNoticeV2.idPSP,$activatePaymentNoticeV2.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query notice_id_2_activatev2 on db nodo_online under macro NewMod1
 
         And the closePaymentV2 OK with 2 paymentToken scenario executed successfully
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 200
+        And check outcome is OK of v2/closepayment response
+
+    Scenario: FLUSSO_NM1_CP_01 (part 2)
+        Given the FLUSSO_NM1_CP_01 (part 1) scenario executed successfully
         And wait 5 seconds for expiration
 
         # POSITION_PAYMENT_STATUS
@@ -424,9 +424,9 @@ Feature: flux tests for closePaymentV2
         And checks the value closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2 of the record at column INSERTED_BY of the table PM_METADATA retrived by the query transactionid on db nodo_online under macro NewMod1
         And checks the value closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2 of the record at column UPDATED_BY of the table PM_METADATA retrived by the query transactionid on db nodo_online under macro NewMod1
 
-        # FLUSSO_NM1_CP_02
+    # FLUSSO_NM1_CP_02
 
-    Scenario: FLUSSO_NM1_CP_02
+    Scenario: FLUSSO_NM1_CP_02 (part 1)
         Given the checkPosition scenario executed successfully
         And the activatePaymentNoticeV2 with iuv scenario executed successfully
         And the activatePaymentNoticeV2 with iuv1 scenario executed successfully
@@ -436,6 +436,12 @@ Feature: flux tests for closePaymentV2
         And checks the value $activatePaymentNoticeV2.idPSP,$activatePaymentNoticeV2.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query notice_id_2_activatev2 on db nodo_online under macro NewMod1
 
         And the closePaymentV2 KO with 2 paymentToken scenario executed successfully
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 200
+        And check outcome is OK of v2/closepayment response
+
+    Scenario: FLUSSO_NM1_CP_02 (part 2)
+        Given the FLUSSO_NM1_CP_02 (part 1) scenario executed successfully
         And wait 5 seconds for expiration
 
         # POSITION_PAYMENT_STATUS
