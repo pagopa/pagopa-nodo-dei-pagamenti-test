@@ -135,7 +135,7 @@
         "select_activate": "SELECT columns FROM table_name WHERE NOTICE_ID = '$activatePaymentNotice.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode'",
         "update_activate": "UPDATE table_name SET param = 'value' WHERE NOTICE_ID = '$activatePaymentNotice.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode'",
         "iuv": "SELECT columns FROM table_name WHERE IUV = '$nodoInviaRPT.identificativoUnivocoVersamento'",
-        "notice_id_iuv_iuv1": "SELECT columns FROM table_name WHERE NOTICE_ID IN ('311$iuv', '311$iuv1')",
+        "notice_id_2_activatev2": "SELECT columns FROM table_name WHERE NOTICE_ID IN ('$activatePaymentNoticeV2_1Request.noticeNumber', 'activatePaymentNoticeV2_2Request.noticeNumber')",
         "select_activateio": "SELECT columns FROM table_name WHERE NOTICE_ID = '$activateIOPayment.noticeNumber' AND PA_FISCAL_CODE = '$activateIOPayment.fiscalCode'",
         "update_activateio": "UPDATE table_name SET param = 'value' WHERE NOTICE_ID = '$activateIOPayment.noticeNumber' AND PA_FISCAL_CODE = '$activateIOPayment.fiscalCode'",
         "notice_number_from_iuv": "SELECT columns FROM table_name WHERE NOTICE_ID = '002$iuv' AND PA_FISCAL_CODE = '$nodoInviaRPT.identificativoDominio'",

@@ -137,6 +137,7 @@ Feature: flux tests for closePaymentV2
         Given the Request activatePaymentNoticeV2 scenario executed successfully
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
+        And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2_1Request
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_1
 
     @skip
@@ -147,6 +148,7 @@ Feature: flux tests for closePaymentV2
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
+        And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2_2Request
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_2
 
     @skip
@@ -221,7 +223,7 @@ Feature: flux tests for closePaymentV2
         Given the checkPosition scenario executed successfully
         And the activatePaymentNoticeV2 with iuv scenario executed successfully
         And the activatePaymentNoticeV2 with iuv1 scenario executed successfully
-        And checks the value $activatePaymentNoticeV2_1Response.paymentToken,$activatePaymentNoticeV2_2Response.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query notice_id_iuv_iuv1 on db nodo_online under macro NewMod1
-        And checks the value $activatePaymentNoticeV2.idPSP,$activatePaymentNoticeV2.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query notice_id_iuv_iuv1 on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2_1Response.paymentToken,$activatePaymentNoticeV2_2Response.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query notice_id_2_activatev2 on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2.idPSP,$activatePaymentNoticeV2.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query notice_id_2_activatev2 on db nodo_online under macro NewMod1
         And the closePaymentV2 scenario executed successfully
         And wait 5 seconds for expiration
