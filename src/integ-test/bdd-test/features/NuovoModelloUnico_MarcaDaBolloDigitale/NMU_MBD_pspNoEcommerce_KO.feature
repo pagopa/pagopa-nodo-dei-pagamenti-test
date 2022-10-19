@@ -129,4 +129,5 @@ Feature: activatePaymentNoticeV2Request with psp no eCommerce
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check faultCode is PPT_SEMANTICA of activatePaymentNoticeV2 response
-        And check faultString is Pagamento non attivabile of activatePaymentNoticeV2 response
+        And check faultString is Errore semantico. of activatePaymentNoticeV2 response
+        And check description is Pagamento non attivabile of activatePaymentNoticeV2 response
