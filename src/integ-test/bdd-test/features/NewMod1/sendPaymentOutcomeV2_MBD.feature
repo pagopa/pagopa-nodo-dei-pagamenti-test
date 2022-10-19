@@ -261,4 +261,4 @@ Feature: flow tests for sendPaymentOutcomeV2 - Marca da bollo
       When psp sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
       Then check outcome is OK of sendPaymentOutcomeV2 response
       And verify 1 record for the table POSITION_TRANSFER_MBD retrived by the query select_position_transfer_mbd on db nodo_online under macro NewMod1
-      And checks the value PAYING of the record at column TIPO_BOLLO of the table POSITION_TRANSFER_MBD retrived by the query select_position_transfer_mbd on db nodo_online under macro NewMod1
+      And checks the value $MB.IUBD of the record at column TIPO_BOLLO of the table POSITION_TRANSFER_MBD retrived by the query select_position_transfer_mbd on db nodo_online under macro NewMod1
