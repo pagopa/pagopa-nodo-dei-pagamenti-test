@@ -124,8 +124,8 @@ Feature: activatePaymentNoticeV2Request with MBD flow OK
             <metadata>
             <!--1 to 10 repetitions:-->
             <mapEntry>
-            <key>1</key>
-            <value>22</value>
+            <key>CHIAVEOKFINNULL</key>
+            <value>CHIAVEOKFINNULL</value>
             </mapEntry>
             </metadata>
             </data>
