@@ -2,15 +2,15 @@ Feature: process tests for 5 RPT 5 Versamenti
 
     Background:
         Given systems up
-
+@runnable
     Scenario: RPT generation
         Given RPT generation
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.1</pay_i:versioneOggetto>
             <pay_i:dominio>
-            <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
-            <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
+            <pay_i:identificativoDominio>44444444444</pay_i:identificativoDominio>
+            <pay_i:identificativoStazioneRichiedente>44444444444_01</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
             <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
@@ -125,7 +125,7 @@ Feature: process tests for 5 RPT 5 Versamenti
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-
+@runnable
     Scenario: RPT2 generation
         Given the RPT generation scenario executed successfully
         And RPT2 generation
@@ -135,7 +135,7 @@ Feature: process tests for 5 RPT 5 Versamenti
             <pay_i:versioneOggetto>1.1</pay_i:versioneOggetto>
             <pay_i:dominio>
             <pay_i:identificativoDominio>44444444445</pay_i:identificativoDominio>
-            <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
+            <pay_i:identificativoStazioneRichiedente>44444444444_01</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
             <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
@@ -250,7 +250,7 @@ Feature: process tests for 5 RPT 5 Versamenti
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-
+@runnable
     Scenario: RPT3 generation
         Given the RPT2 generation scenario executed successfully
         And RPT3 generation
@@ -259,8 +259,8 @@ Feature: process tests for 5 RPT 5 Versamenti
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.1</pay_i:versioneOggetto>
             <pay_i:dominio>
-            <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
-            <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
+            <pay_i:identificativoDominio>44444444444</pay_i:identificativoDominio>
+            <pay_i:identificativoStazioneRichiedente>44444444444_01</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
             <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
@@ -375,7 +375,7 @@ Feature: process tests for 5 RPT 5 Versamenti
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-
+@runnable
     Scenario: RPT4 generation
         Given the RPT3 generation scenario executed successfully
         And RPT4 generation
@@ -384,7 +384,7 @@ Feature: process tests for 5 RPT 5 Versamenti
             <pay_i:versioneOggetto>1.1</pay_i:versioneOggetto>
             <pay_i:dominio>
             <pay_i:identificativoDominio>44444444445</pay_i:identificativoDominio>
-            <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
+            <pay_i:identificativoStazioneRichiedente>44444444444_01</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
             <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
@@ -499,7 +499,7 @@ Feature: process tests for 5 RPT 5 Versamenti
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-
+@runnable
     Scenario: RPT5 generation
         Given the RPT4 scenario executed successfully
         And RPT5 generation
@@ -507,8 +507,8 @@ Feature: process tests for 5 RPT 5 Versamenti
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.1</pay_i:versioneOggetto>
             <pay_i:dominio>
-            <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
-            <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
+            <pay_i:identificativoDominio>44444444444</pay_i:identificativoDominio>
+            <pay_i:identificativoStazioneRichiedente>44444444444_01</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
             <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
@@ -623,7 +623,7 @@ Feature: process tests for 5 RPT 5 Versamenti
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-
+@runnable
     Scenario: Execute nodoInviaCarrelloRPT request
         Given the RPT5 generation scenario executed successfully
         And initial XML nodoInviaCarrelloRPT
@@ -631,8 +631,8 @@ Feature: process tests for 5 RPT 5 Versamenti
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
         <soapenv:Header>
         <ppt:intestazioneCarrelloPPT>
-        <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
-        <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
+        <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
+        <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
         <identificativoCarrello>#CARRELLO#</identificativoCarrello>
         </ppt:intestazioneCarrelloPPT>
         </soapenv:Header>
@@ -644,7 +644,7 @@ Feature: process tests for 5 RPT 5 Versamenti
         <identificativoCanale>#canale_AGID#</identificativoCanale>
         <listaRPT>
             <elementoListaRPT>
-                <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+                <identificativoDominio>44444444444</identificativoDominio>
                 <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
                 <codiceContestoPagamento>CCD01</codiceContestoPagamento>
                 <rpt>$rptAttachment</rpt>
@@ -656,7 +656,7 @@ Feature: process tests for 5 RPT 5 Versamenti
                 <rpt>$rpt2Attachment</rpt>
             </elementoListaRPT>
             <elementoListaRPT>
-                <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+                <identificativoDominio>44444444444</identificativoDominio>
                 <identificativoUnivocoVersamento>$3IUV</identificativoUnivocoVersamento>
                 <codiceContestoPagamento>CCD03</codiceContestoPagamento>
                 <rpt>$rpt3Attachment</rpt>
@@ -668,7 +668,7 @@ Feature: process tests for 5 RPT 5 Versamenti
                 <rpt>$rpt4Attachment</rpt>
             </elementoListaRPT>
             <elementoListaRPT>
-                <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+                <identificativoDominio>44444444444</identificativoDominio>
                 <identificativoUnivocoVersamento>$5IUV</identificativoUnivocoVersamento>
                 <codiceContestoPagamento>CCD05</codiceContestoPagamento>
                 <rpt>$rpt5Attachment</rpt>
@@ -682,7 +682,7 @@ Feature: process tests for 5 RPT 5 Versamenti
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
         And check url contains acardste of nodoInviaCarrelloRPT response
         And retrieve session token from $nodoInviaCarrelloRPTResponse.url
-
+@runnable
     Scenario: Execution idPagamento
         Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
         When WISP sends rest GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
