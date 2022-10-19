@@ -120,73 +120,73 @@ Feature: MBD syntax checks in sendPaymentOutcomeV2
       And check faultCode is PPT_SINTASSI_XSD of sendPaymentOutcomeV2 response
       And check description is Errore validazione marca da bollo of sendPaymentOutcomeV2 response
       Examples:
-         | elem                                                                               | value                         | Test   |
-         | PSP                                                                                | None                          | Test 1 |
-         | PSP                                                                                | Empty                         | Test 2 |
-         | PSP                                                                                | RemoveParent                  | Test 3 |
-         | CodiceFiscale                                                                      | None                          | Test 3 |
-         | CodiceFiscale                                                                      | Empty                         | Test 3 |
-         | Denominazione                                                                      | None                          | Test 3 |
-         | Denominazione                                                                      | Empty                         | Test 3 |
-         | IUBD                                                                               | None                          | Test 3 |
-         | IUBD                                                                               | Empty                         | Test 3 |
-         | OraAcquisto                                                                        | None                          | Test 3 |
-         | OraAcquisto                                                                        | Empty                         | Test 3 |
-         | OraAcquisto                                                                        | 15:00:44.659                  | Test 3 |
-         | OraAcquisto                                                                        | 2022-02-06                    | Test 3 |
-         | OraAcquisto                                                                        | 02-06-2022T15:00:44.659+01:00 | Test 3 |
-         | Importo                                                                            | None                          | Test 3 |
-         | Importo                                                                            | Empty                         | Test 3 |
-         | Importo                                                                            | 5                             | Test 3 |
-         | Importo                                                                            | 5.8                           | Test 3 |
-         | Importo                                                                            | 5.845                         | Test 3 |
-         | Importo                                                                            | 5,84                          | Test 3 |
-         | TipoBollo                                                                          | None                          | Test 3 |
-         | TipoBollo                                                                          | Empty                         | Test 3 |
-         | TipoBollo                                                                          | 02                            | Test 3 |
-         | ImprontaDocumento                                                                  | None                          | Test 3 |
-         | ImprontaDocumento                                                                  | Empty                         | Test 3 |
-         | ImprontaDocumento                                                                  | RemoveParent                  | Test 3 |
-         | DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"                   | None                          | Test 3 |
-         | DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"                   | Empty                         | Test 3 |
-         | ns2:DigestValue                                                                    | None                          | Test 3 |
-         | ns2:DigestValue                                                                    | Empty                         | Test 3 |
-         | ns2:DigestValue                                                                    | nobase64                      | Test 3 |
-         | Signature xmlns="http://www.w3.org/2000/09/xmldsig#"                               | None                          | Test 3 |
-         | Signature xmlns="http://www.w3.org/2000/09/xmldsig#"                               | Empty                         | Test 3 |
-         | SignedInfo                                                                         | None                          | Test 3 |
-         | SignedInfo                                                                         | Empty                         | Test 3 |
-         | SignedInfo                                                                         | RemoveParent                  | Test 3 |
-         | CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" | None                          | Test 3 |
-         | CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" | Empty                         | Test 3 |
-         | SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"      | None                          | Test 3 |
-         | SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"      | Empty                         | Test 3 |
-         | Reference URI=""                                                                   | None                          | Test 3 |
-         | Reference URI=""                                                                   | Empty                         | Test 3 |
-         | Transforms                                                                         | Empty                         | Test 3 |
-         | Transforms                                                                         | RemoveParent                  | Test 3 |
-         | Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"        | None                          | Test 3 |
-         | Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"        | Empty                         | Test 3 |
-         | DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"                   | None                          | Test 3 |
-         | DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"                   | Empty                         | Test 3 |
-         | DigestValue                                                                        | None                          | Test 3 |
-         | DigestValue                                                                        | Empty                         | Test 3 |
-         | DigestValue                                                                        | nobase64                      | Test 3 |
-         | SignatureValue                                                                     | None                          | Test 3 |
-         | SignatureValue                                                                     | Empty                         | Test 3 |
-         | SignatureValue                                                                     | nobase64                      | Test 3 |
-         | KeyInfo                                                                            | None                          | Test 3 |
-         | KeyInfo                                                                            | Empty                         | Test 3 |
-         | KeyInfo                                                                            | RemoveParent                  | Test 3 |
-         | X509Data                                                                           | None                          | Test 3 |
-         | X509Data                                                                           | Empty                         | Test 3 |
-         | X509Data                                                                           | RemoveParent                  | Test 3 |
-         | X509Certificate                                                                    | None                          | Test 3 |
-         | X509Certificate                                                                    | Empty                         | Test 3 |
-         | X509Certificate                                                                    | nobase64                      | Test 3 |
-         | X509CRL                                                                            | None                          | Test 3 |
-         | X509CRL                                                                            | Empty                         | Test 3 |
-         | X509CRL                                                                            | nobase64                      | Test 3 |
+         | elem                   | value                         | Test   |
+         | PSP                    | None                          | Test 1 |
+         | PSP                    | Empty                         | Test 2 |
+         | PSP                    | RemoveParent                  | Test 3 |
+         | CodiceFiscale          | None                          | Test 3 |
+         | CodiceFiscale          | Empty                         | Test 3 |
+         | Denominazione          | None                          | Test 3 |
+         | Denominazione          | Empty                         | Test 3 |
+         | IUBD                   | None                          | Test 3 |
+         | IUBD                   | Empty                         | Test 3 |
+         | OraAcquisto            | None                          | Test 3 |
+         | OraAcquisto            | Empty                         | Test 3 |
+         | OraAcquisto            | 15:00:44.659                  | Test 3 |
+         | OraAcquisto            | 2022-02-06                    | Test 3 |
+         | OraAcquisto            | 02-06-2022T15:00:44.659+01:00 | Test 3 |
+         | Importo                | None                          | Test 3 |
+         | Importo                | Empty                         | Test 3 |
+         | Importo                | 5                             | Test 3 |
+         | Importo                | 5.8                           | Test 3 |
+         | Importo                | 5.845                         | Test 3 |
+         | Importo                | 5,84                          | Test 3 |
+         | TipoBollo              | None                          | Test 3 |
+         | TipoBollo              | Empty                         | Test 3 |
+         | TipoBollo              | 02                            | Test 3 |
+         | ImprontaDocumento      | None                          | Test 3 |
+         | ImprontaDocumento      | Empty                         | Test 3 |
+         | ImprontaDocumento      | RemoveParent                  | Test 3 |
+         | DigestMethod           | None                          | Test 3 |
+         | DigestMethod           | Empty                         | Test 3 |
+         | ns2:DigestValue        | None                          | Test 3 |
+         | ns2:DigestValue        | Empty                         | Test 3 |
+         | ns2:DigestValue        | nobase64                      | Test 3 |
+         | Signature              | None                          | Test 3 |
+         | Signature              | Empty                         | Test 3 |
+         | SignedInfo             | None                          | Test 3 |
+         | SignedInfo             | Empty                         | Test 3 |
+         | SignedInfo             | RemoveParent                  | Test 3 |
+         | CanonicalizationMethod | None                          | Test 3 |
+         | CanonicalizationMethod | Empty                         | Test 3 |
+         | SignatureMethod        | None                          | Test 3 |
+         | SignatureMethod        | Empty                         | Test 3 |
+         | Reference              | None                          | Test 3 |
+         | Reference              | Empty                         | Test 3 |
+         | Transforms             | Empty                         | Test 3 |
+         | Transforms             | RemoveParent                  | Test 3 |
+         | Transform              | None                          | Test 3 |
+         | Transform              | Empty                         | Test 3 |
+         | DigestMethod           | None                          | Test 3 |
+         | DigestMethod           | Empty                         | Test 3 |
+         | DigestValue            | None                          | Test 3 |
+         | DigestValue            | Empty                         | Test 3 |
+         | DigestValue            | nobase64                      | Test 3 |
+         | SignatureValue         | None                          | Test 3 |
+         | SignatureValue         | Empty                         | Test 3 |
+         | SignatureValue         | nobase64                      | Test 3 |
+         | KeyInfo                | None                          | Test 3 |
+         | KeyInfo                | Empty                         | Test 3 |
+         | KeyInfo                | RemoveParent                  | Test 3 |
+         | X509Data               | None                          | Test 3 |
+         | X509Data               | Empty                         | Test 3 |
+         | X509Data               | RemoveParent                  | Test 3 |
+         | X509Certificate        | None                          | Test 3 |
+         | X509Certificate        | Empty                         | Test 3 |
+         | X509Certificate        | nobase64                      | Test 3 |
+         | X509CRL                | None                          | Test 3 |
+         | X509CRL                | Empty                         | Test 3 |
+         | X509CRL                | nobase64                      | Test 3 |
 
 
    # sendPaymentOutcomeV2 OK
