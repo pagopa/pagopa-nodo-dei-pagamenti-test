@@ -10,8 +10,8 @@ Feature: process tests for ChiediAvanzamento_RT_ACCETTATA_PA_sbloccoParcheggio
         <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
         <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
         <pay_i:dominio>
-        <pay_i:identificativoDominio>44444444444</pay_i:identificativoDominio>
-        <pay_i:identificativoStazioneRichiedente>44444444444_01</pay_i:identificativoStazioneRichiedente>
+        <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
+        <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
         </pay_i:dominio>
         <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
         <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
@@ -90,8 +90,8 @@ Feature: process tests for ChiediAvanzamento_RT_ACCETTATA_PA_sbloccoParcheggio
         <pay_i:RT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
         <pay_i:versioneOggetto>6.0</pay_i:versioneOggetto>
         <pay_i:dominio>
-            <pay_i:identificativoDominio>44444444444</pay_i:identificativoDominio>
-            <pay_i:identificativoStazioneRichiedente>44444444444_01</pay_i:identificativoStazioneRichiedente>
+            <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
+            <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
         </pay_i:dominio>
         <pay_i:identificativoMessaggioRicevuta>IdentificativoMessaggioRicevuta</pay_i:identificativoMessaggioRicevuta>
         <pay_i:dataOraMessaggioRicevuta>#timedate#</pay_i:dataOraMessaggioRicevuta>
@@ -179,9 +179,9 @@ Feature: process tests for ChiediAvanzamento_RT_ACCETTATA_PA_sbloccoParcheggio
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
         <soapenv:Header>
             <ppt:intestazionePPT>
-                <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
-                <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
-                <identificativoDominio>44444444444</identificativoDominio>
+                <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
+                <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
+                <identificativoDominio>#creditor_institution_code#</identificativoDominio>
                 <identificativoUnivocoVersamento>avanzaOK</identificativoUnivocoVersamento>
                 <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
             </ppt:intestazionePPT>
@@ -225,9 +225,9 @@ Feature: process tests for ChiediAvanzamento_RT_ACCETTATA_PA_sbloccoParcheggio
             """
             {
             "idPagamento":"$sessionToken",
-            "identificativoPsp":"40000000001",
+            "identificativoPsp":"#psp#",
             "tipoVersamento":"BBT", 
-            "identificativoIntermediario":"40000000001",
+            "identificativoIntermediario":"#psp#",
             "identificativoCanale":"#canale#",
             "tipoOperazione":"web"
             }
@@ -248,11 +248,11 @@ Feature: process tests for ChiediAvanzamento_RT_ACCETTATA_PA_sbloccoParcheggio
             <soapenv:Header/>
             <soapenv:Body>
             <ws:nodoInviaRT>
-            <identificativoIntermediarioPSP>40000000001</identificativoIntermediarioPSP>
+            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
             <identificativoCanale>#canale#</identificativoCanale>
             <password>pwdpwdpwd</password>
-            <identificativoPSP>40000000001</identificativoPSP>
-            <identificativoDominio>44444444444</identificativoDominio>
+            <identificativoPSP>#psp#</identificativoPSP>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoUnivocoVersamento>avanzaOK</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
             <tipoFirma></tipoFirma>
@@ -283,10 +283,10 @@ Feature: process tests for ChiediAvanzamento_RT_ACCETTATA_PA_sbloccoParcheggio
         <soapenv:Header/>
         <soapenv:Body>
             <ws:nodoChiediStatoRPT>
-                <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
-                <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
+                <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
+                <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
                 <password>pwdpwdpwd</password>
-                <identificativoDominio>44444444444</identificativoDominio>
+                <identificativoDominio>#creditor_institution_code#</identificativoDominio>
                 <identificativoUnivocoVersamento>avanzaOK</identificativoUnivocoVersamento>
                 <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
             </ws:nodoChiediStatoRPT>
