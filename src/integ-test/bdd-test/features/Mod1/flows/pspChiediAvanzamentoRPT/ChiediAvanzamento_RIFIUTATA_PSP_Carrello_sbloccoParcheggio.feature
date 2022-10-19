@@ -330,7 +330,7 @@ Feature: process tests for ChiediAvanzamento_RIFIUTATA_PSP_Carrello_sbloccoParch
 
             """
         Then verify the HTTP status code of inoltroEsito/carta response is 200
-        And check error is KO of inoltroEsito/carta response
+        And check esito is KO of inoltroEsito/carta response
         And check url field not exists in inoltroEsito/carta response
 
 @runnable
