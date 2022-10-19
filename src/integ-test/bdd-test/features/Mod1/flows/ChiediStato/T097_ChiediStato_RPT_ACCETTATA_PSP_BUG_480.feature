@@ -2,7 +2,7 @@ Feature: process tests for T097_ChiediStato_RPT_ACCETTATA_PSP - BUG_480
 
     Background:
         Given systems up
-@runnable
+    @runnable
     Scenario: RPT generation
         Given RPT generation
             """
@@ -81,26 +81,26 @@ Feature: process tests for T097_ChiediStato_RPT_ACCETTATA_PSP - BUG_480
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-@runnable
+    @runnable
     Scenario: Execute nodoInviaRPT request
         Given the RPT generation scenario executed successfully
-                And initial XML pspInviaRPT
-        """
-        <soapenv:Envelope
+        And initial XML pspInviaRPT
+            """
+            <soapenv:Envelope
             xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
             xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header/>
             <soapenv:Body>
-                <ws:pspInviaRPTResponse>
-                    <pspInviaRPTResponse>
-                        <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-                        <identificativoCarrello>$IUV</identificativoCarrello>
-                        <parametriPagamentoImmediato>idBruciatura=$IUV</parametriPagamentoImmediato>
-                    </pspInviaRPTResponse>
-                </ws:pspInviaRPTResponse>
+            <ws:pspInviaRPTResponse>
+            <pspInviaRPTResponse>
+            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+            <identificativoCarrello>$IUV</identificativoCarrello>
+            <parametriPagamentoImmediato>idBruciatura=$IUV</parametriPagamentoImmediato>
+            </pspInviaRPTResponse>
+            </ws:pspInviaRPTResponse>
             </soapenv:Body>
-        </soapenv:Envelope>
-        """
+            </soapenv:Envelope>
+            """
         And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
 
         And initial XML nodoInviaRPT
@@ -132,13 +132,14 @@ Feature: process tests for T097_ChiediStato_RPT_ACCETTATA_PSP - BUG_480
         And replace iuv content with $IUV content
         And replace ccp content with CCD01 content
         And replace pa content with #creditor_institution_code# content
+        And retrieve session token from $nodoInviaCarrelloRPTResponse.url
         And verify 4 record for the table STATI_RPT retrived by the query stati_RPT on db nodo_online under macro Mod1
         And checks the value $sessionToken of the record at column ID_SESSIONE of the table STATI_RPT retrived by the query stati_RPT on db nodo_online under macro Mod1
         And checks the value nodoInviaRPT,nodoInviaRPT,pspInviaRPT,pspInviaRPT of the record at column INSERTED_BY of the table STATI_RPT retrived by the query stati_RPT on db nodo_online under macro Mod1
         And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_INVIATA_A_PSP,RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT retrived by the query stati_RPT on db nodo_online under macro Mod1
         And checks the value RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query motivo_annullamento on db nodo_online under macro Mod1
 
-@runnable
+    @runnable
     Scenario: Execute nodoChiediStatoRPT request
         Given the Execute nodoInviaRPT scenario executed successfully
         And initial XML nodoChiediStatoRPT
