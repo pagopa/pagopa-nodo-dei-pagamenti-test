@@ -2,7 +2,7 @@ Feature: process tests for nodoInviaRT_esito=1
 
     Background:
         Given systems up
-@runnable
+    @runnable
     Scenario: RPT generation
         Given RPT generation
             """
@@ -81,7 +81,7 @@ Feature: process tests for nodoInviaRT_esito=1
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-@runnable
+    @runnable
     Scenario: Execute nodoInviaRPT request
         Given the RPT generation scenario executed successfully
         And initial XML nodoInviaRPT
@@ -108,9 +108,26 @@ Feature: process tests for nodoInviaRT_esito=1
             </soapenv:Body>
             </soapenv:Envelope>
             """
+        And initial XML pspInviaRPT
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <ws:pspInviaRPTResponse>
+            <pspInviaRPTResponse>
+            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+            <identificativoCarrello>$nodoInviaRPT.identificativoUnivocoVersamento</identificativoCarrello>
+            <parametriPagamentoImmediato>idBruciatura=$nodoInviaRPT.identificativoUnivocoVersamento</parametriPagamentoImmediato>
+            </pspInviaRPTResponse>
+            </ws:pspInviaRPTResponse>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
+
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
-@runnable
+    @runnable
     Scenario: RT generation
         Given the Execute nodoInviaRPT request scenario executed successfully
         And RT generation
@@ -199,7 +216,7 @@ Feature: process tests for nodoInviaRT_esito=1
             </pay_i:datiPagamento>
             </pay_i:RT>
             """
-@runnable
+    @runnable
     Scenario: Execute nodoInviaRT request
         Given the RT generation scenario executed successfully
         And initial XML nodoInviaRT
@@ -224,7 +241,7 @@ Feature: process tests for nodoInviaRT_esito=1
             """
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
-@runnable
+    @runnable
     Scenario: Execute second nodoInviaRT request
         Given the Execute nodoInviaRT request scenario executed successfully
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
