@@ -15,7 +15,7 @@ Feature: Syntax checks ok for nodoAttivaRPT
                         <identificativoIntermediarioPSPPagamento>#psp#</identificativoIntermediarioPSPPagamento>
                         <identificativoCanalePagamento>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanalePagamento>
                         <codificaInfrastrutturaPSP>BARCODE-128-AIM</codificaInfrastrutturaPSP>
-                        <codiceIdRPT><aim:aim128> <aim:CCPost>444444444444</aim:CCPost> <aim:CodStazPA>02</aim:CodStazPA> <aim:AuxDigit>0</aim:AuxDigit>  <aim:CodIUV>010231780177500</aim:CodIUV></aim:aim128></codiceIdRPT>
+                        <codiceIdRPT><aim:aim128> <aim:CCPost>66666666666</aim:CCPost> <aim:CodStazPA>01</aim:CodStazPA> <aim:AuxDigit>0</aim:AuxDigit>  <aim:CodIUV>010231780177500</aim:CodIUV></aim:aim128></codiceIdRPT>
                         <datiPagamentoPSP>
                             <importoSingoloVersamento>10.00</importoSingoloVersamento>
                             <!--Optional:-->
