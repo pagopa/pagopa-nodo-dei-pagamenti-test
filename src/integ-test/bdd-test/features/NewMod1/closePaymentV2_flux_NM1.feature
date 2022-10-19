@@ -150,7 +150,7 @@ Feature: flux tests for closePaymentV2
                 "idChannel": "#canale_versione_primitive_2#",
                 "paymentMethod": "TPAY",
                 "transactionId": "#transaction_id#",
-                "totalAmount": 12,
+                "totalAmount": 22,
                 "fee": 2,
                 "timestampOperation": "2033-04-23T18:25:43Z",
                 "additionalPaymentInformations": {
