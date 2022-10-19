@@ -17,7 +17,7 @@ Feature: Syntax checks ok for nodoAttivaRPT
                         <codificaInfrastrutturaPSP>BARCODE-128-AIM</codificaInfrastrutturaPSP>
                         <codiceIdRPT><aim:aim128> <aim:CCPost>444444444444</aim:CCPost> <aim:CodStazPA>02</aim:CodStazPA> <aim:AuxDigit>0</aim:AuxDigit>  <aim:CodIUV>010231780177500</aim:CodIUV></aim:aim128></codiceIdRPT>
                         <datiPagamentoPSP>
-                            <importoSingoloVersamento>10</importoSingoloVersamento>
+                            <importoSingoloVersamento>10.00</importoSingoloVersamento>
                             <!--Optional:-->
                             <ibanAppoggio>IT96R0123454321000000012345</ibanAppoggio>
                             <!--Optional:-->
