@@ -1,7 +1,7 @@
 Feature: process tests for nodoChiediListaPendentiRPT
     Background:
         Given systems up
-  
+ @runnable 
     Scenario: Execute nodoChiediListaPendentiRPT request
         Given initial XML nodoChiediListaPendentiRPT
         """
