@@ -146,7 +146,7 @@ Feature: flow tests for sendPaymentOutcomeV2 - Marca da bollo
 
    @skip
    Scenario: Define MBD
-      Given MB generation
+      Given initial xml MB
          """
          <marcaDaBollo xmlns="http://www.agenziaentrate.gov.it/2014/MarcaDaBollo" xmlns:ns2="http://www.w3.org/2000/09/xmldsig#">
          <PSP>
@@ -253,24 +253,12 @@ Feature: flow tests for sendPaymentOutcomeV2 - Marca da bollo
    Scenario: execute sendPaymentOutcomeV2 1
       Given the execute closePaymentV2 1 scenario executed successfully
       And the Define MBD scenario executed successfully
+      And MB generation
+         """
+         $MB
+         """
       And the sendPaymentOutcomeV2 scenario executed successfully
       When psp sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
       Then check outcome is OK of sendPaymentOutcomeV2 response
-
-
-
-
-
-
-
-#DA ELIMINARE
-# Scenario: Psp with MARCA_BOLLO_DIGITALE != 1
-#    Given updates through the query update_id_psp of the table PSP the parameter MARCA_BOLLO_DIGITALE with 0 under macro NewMod1 on db nodo_cfg
-#    And refresh job PSP triggered after 10 seconds
-#    And the closePaymentV2 scenario executed successfully
-#    When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
-#    Then verify the HTTP status code of v2/closepayment response is 400
-#    And check outcome is KO of v2/closepayment response
-#    And check description is Invalid PSP/Canale for MBD of v2/closepayment response
-#    And updates through the query update_id_psp of the table PSP the parameter MARCA_BOLLO_DIGITALE with 1 under macro NewMod1 on db nodo_cfg
-#    And refresh job PSP triggered after 10 seconds
+      And verify 1 record for the table POSITION_TRANSFER_MBD retrived by the query select_position_transfer_mbd on db nodo_online under macro NewMod1
+      And checks the value PAYING of the record at column TIPO_BOLLO of the table POSITION_TRANSFER_MBD retrived by the query select_position_transfer_mbd on db nodo_online under macro NewMod1
