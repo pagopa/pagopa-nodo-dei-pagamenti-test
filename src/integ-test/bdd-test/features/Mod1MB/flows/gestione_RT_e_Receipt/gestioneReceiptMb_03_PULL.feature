@@ -466,6 +466,7 @@ Feature: gestioneReceiptMb_03_PULL
         #checks
         And replace noticeNumber content with $1noticeNumber content
         And replace paymentToken content with $sessionToken content
+        And replace psp content with #psp# content
 
         #extraction from POSITION_RECEIPT table
         And execution query by_notice_number_and_pa to get value on the table POSITION_RECEIPT, with the columns * under macro Mod1Mb with db name nodo_online
