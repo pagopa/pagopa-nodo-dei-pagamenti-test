@@ -2,7 +2,7 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
 
     Background:
         Given systems up
-        
+@runnable        
     Scenario: RPT generation
         Given RPT generation
             """
@@ -160,7 +160,7 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
                 </pay_i:RPT>
             """
         
-
+@runnable
     Scenario: Execute nodoInviaCarrelloRPT
 		Given the RPT generation scenario executed successfully
 		And initial XML nodoInviaCarrelloRPT
@@ -209,7 +209,7 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
         And checks the value nodoInviaCarrelloRPT of the record at column INSERTED_BY of the table STATI_RPT retrived by the query stati_RPT on db nodo_online under macro Mod1
         And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query stati_RPT on db nodo_online under macro Mod1
 
-
+@runnable
     Scenario: Execution Esito Carta
         Given the Execute nodoInviaCarrelloRPT scenario executed successfully
         And initial XML pspInviaCarrelloRPT 
@@ -237,17 +237,17 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
             """
             {
             "idPagamento": "$sessionToken",
-            "identificativoPsp": "40000000001",
+            "identificativoPsp": "#psp#",
             "tipoVersamento": "BBT",
-            "identificativoIntermediario": "40000000001",
-            "identificativoCanale": "40000000001_04"
+            "identificativoIntermediario": "#psp#",
+            "identificativoCanale": "#canale_BBT#"
             }
              """
         Then check esito is KO of inoltroEsito/mod2 response
         And check url field not exists in inoltroEsito/mod2 response
         And check errorCode is RIFPSP of inoltroEsito/mod2 response
 
-
+@runnable
     Scenario: Execute nodoChiediStatoRPT request
         Given the Execution Esito Carta scenario executed successfully
         And initial XML nodoChiediStatoRPT
@@ -272,7 +272,7 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
         And checks stato contains RPT_PARCHEGGIATA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_INVIATA_A_PSP of nodoChiediStatoRPT response
         And checks stato contains RPT_RIFIUTATA_PSP of nodoChiediStatoRPT response
-
+@runnable
     Scenario: Execute second nodoInviaCarrelloRPT
 		Given the Execute nodoChiediStatoRPT request scenario executed successfully
 		And initial XML nodoInviaCarrelloRPT
@@ -312,7 +312,7 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
 	    Then check faultCode is PPT_ID_CARRELLO_DUPLICATO of nodoInviaCarrelloRPT response
 
-
+@runnable
     Scenario: Execute second nodoChiediStatoRPT request
         Given the Execute second nodoInviaCarrelloRPT scenario executed successfully
         And initial XML nodoChiediStatoRPT
@@ -338,7 +338,7 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
         And checks stato contains RPT_INVIATA_A_PSP of nodoChiediStatoRPT response
         And checks stato contains RPT_RIFIUTATA_NODO of nodoChiediStatoRPT response
 
-
+@runnable
     Scenario: Execute nodoNotificaAnnullamento
         Given the Execute second nodoChiediStatoRPT request scenario executed successfully
         When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken to nodo-dei-pagamenti
