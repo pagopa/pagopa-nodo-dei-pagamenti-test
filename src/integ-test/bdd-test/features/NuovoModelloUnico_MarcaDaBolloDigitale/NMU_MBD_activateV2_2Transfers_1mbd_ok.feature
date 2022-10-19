@@ -137,6 +137,12 @@ Feature: activatePaymentNoticeV2Request with MBD flow OK
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         And save activatePaymentNoticeV2 response in activatePaymentResponse
+        And check hashDocumento is ciao of activatePaymentNoticeV2 response
+        And check tipoBollo is 01 of activatePaymentNoticeV2 response
+        And check provinciaResidenza is MI of activatePaymentNoticeV2 response
+        And check IBAN is IT45R0760103200000000001016 of activatePaymentNoticeV2 response
+        And check key is CHIAVEOKFINNULL of activatePaymentNoticeV2 response
+        And check value is CHIAVEOKFINNULL of activatePaymentNoticeV2 response
 
     #DB check
     Scenario: DB check
