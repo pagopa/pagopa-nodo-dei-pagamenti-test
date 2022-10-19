@@ -134,7 +134,7 @@ Feature: process tests for ChiediStato_RPT_RIFIUTATA_PSP
         Then check esito is KO of nodoInviaRPT response
         And check faultCode is PPT_CANALE_ERRORE of nodoInviaRPT response
         #And check description contains CANALE_RPT_DA_RIFIUTARE of nodoInviaRPT response
-        #And check identificativoPSP is #psp# of nodoInviaRPT response
+        And check nodoInviaRPT.identificativoPSP is #psp# of nodoInviaRPT response
     @runnable
     Scenario: Execute nodoChiediStatoRPT request
         Given the Execute nodoInviaRPT scenario executed successfully
