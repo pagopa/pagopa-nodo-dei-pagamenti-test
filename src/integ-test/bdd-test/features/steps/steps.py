@@ -80,7 +80,7 @@ def step_impl(context, primitive):
         setattr(context, 'date', date)
 
     if '#yesterday_date#' in payload:
-        yesterday_date = datetime.date.today() - datetime.timedelta(days=1)
+        yesterday_date = date.today() - timedelta(days=1)
         payload = payload.replace('#yesterday_date#', yesterday_date)
         setattr(context, 'yesterday_date', yesterday_date)
 
