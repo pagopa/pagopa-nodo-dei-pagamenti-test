@@ -331,7 +331,7 @@ Feature: process tests for nodoInviaRT
             <password>pwdpwdpwd</password>
             <identificativoPSP>60000000001</identificativoPSP>
             <identificativoIntermediarioPSP>60000000001</identificativoIntermediarioPSP>
-            <identificativoCanale>60000000001_03</identificativoCanale>
+            <identificativoCanale>60000000001_07</identificativoCanale>
             <tipoFirma></tipoFirma>
             <rpt>$rptAttachment</rpt>
             </ws:nodoInviaRPT>
@@ -367,7 +367,7 @@ Feature: process tests for nodoInviaRT
             <soapenv:Body>
                 <ws:nodoInviaRT>
                     <identificativoIntermediarioPSP>60000000001</identificativoIntermediarioPSP>
-                    <identificativoCanale>60000000001_03</identificativoCanale>
+                    <identificativoCanale>60000000001_07</identificativoCanale>
                     <password>pwdpwdpwd</password>
                     <identificativoPSP>60000000001</identificativoPSP>
                     <identificativoDominio>66666666666</identificativoDominio>
@@ -382,7 +382,7 @@ Feature: process tests for nodoInviaRT
             """
         When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
-
+@runnable  
     Scenario: Execute nodoInviaRR request
         Given the Execute nodoInviaRT request scenario executed successfully
         And initial XML nodoInviaRichiestaRevoca
@@ -393,7 +393,7 @@ Feature: process tests for nodoInviaRT
                 <ws:nodoInviaRichiestaRevoca>
                     <identificativoPSP>60000000001</identificativoPSP>
                     <identificativoIntermediarioPSP>60000000001</identificativoIntermediarioPSP>
-                    <identificativoCanale>60000000001_03</identificativoCanale>
+                    <identificativoCanale>60000000001_07</identificativoCanale>
                     <password>pwdpwdpwd</password>
                     <identificativoDominio>66666666666</identificativoDominio>
                     <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
@@ -405,7 +405,7 @@ Feature: process tests for nodoInviaRT
             """
         When EC sends SOAP nodoInviaRichiestaRevoca to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRichiestaRevoca response
-
+@runnable  
     Scenario: Execute nodoInviaER request
         Given the Execute nodoInviaRR request scenario executed successfully
         And initial XML nodoInviaRispostaRevoca
