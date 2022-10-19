@@ -408,7 +408,7 @@ Feature: process tests for InoltroEsitoCartaCarrello
         And check ragioneSociale field exists in informazioniPagamento response
         And check oggettoPagamento field exists in informazioniPagamento response
         And check urlRedirectEC field exists in informazioniPagamento response
-
+@runnable
     Scenario: Execution Esito Carta
         Given the Execution idPagamento scenario executed successfully
         And initial XML pspInviaCarrelloRPT 
