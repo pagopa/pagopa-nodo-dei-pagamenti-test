@@ -273,28 +273,28 @@ Feature: process tests for ChiediAvanzamento_RIFIUTATA_PSP_Carrello_sbloccoParch
 @runnable
     Scenario: Execute job pspChiediAvanzamentoRPT
         Given the Execute second check DB-RPT scenario executed successfully
-        And initial XML pspChiediAvanzamentoRPT
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <ws:pspChiediAvanzamentoRPTResponse>
-            <pspChiediAvanzamentoRPTResponse>
-            <fault>
-            <faultCode>CANALE_RPT_RIFIUTATA</faultCode>
-            <faultString>RPT arrivata al PSP e rifiutata</faultString>
-            <id>#psp#</id>
-            <description>RPT rifiutata dal PSP</description>
-            </fault>
-            </pspChiediAvanzamentoRPTResponse>
-            </ws:pspChiediAvanzamentoRPTResponse>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        And PSP replies to nodo-dei-pagamenti with the pspChiediAvanzamentoRPT
+        # And initial XML pspChiediAvanzamentoRPT
+        #     """
+        #     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+        #     <soapenv:Header/>
+        #     <soapenv:Body>
+        #     <ws:pspChiediAvanzamentoRPTResponse>
+        #     <pspChiediAvanzamentoRPTResponse>
+        #     <fault>
+        #     <faultCode>CANALE_RPT_RIFIUTATA</faultCode>
+        #     <faultString>RPT arrivata al PSP e rifiutata</faultString>
+        #     <id>#psp#</id>
+        #     <description>RPT rifiutata dal PSP</description>
+        #     </fault>
+        #     </pspChiediAvanzamentoRPTResponse>
+        #     </ws:pspChiediAvanzamentoRPTResponse>
+        #     </soapenv:Body>
+        #     </soapenv:Envelope>
+        #     """
+        # And PSP replies to nodo-dei-pagamenti with the pspChiediAvanzamentoRPT
         When job pspChiediAvanzamentoRpt triggered after 5 seconds
         And wait 20 seconds for expiration
-        #Then checks the value CART_RIFIUTATO_PSP of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query motivo_annullamento on db nodo_online under macro Mod1
+        Then checks the value CART_RIFIUTATO_PSP of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query motivo_annullamento on db nodo_online under macro Mod1
 @runnable
     Scenario: Execution retry Esito Carta
         Given the Execute job pspChiediAvanzamentoRPT scenario executed successfully
