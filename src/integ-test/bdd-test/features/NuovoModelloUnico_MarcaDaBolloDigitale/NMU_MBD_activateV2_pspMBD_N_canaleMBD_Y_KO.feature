@@ -35,7 +35,7 @@ Feature: activatePaymentNoticeV2Request with psp NO MBD and canale MBD
 
     # activateV2 phase
     Scenario: activatePaymentNoticeV2
-        Given the Execute checkPosition request scenario executed successfully
+        Given the Execute refresh psp e canali scenario executed successfully
         And initial XML activatePaymentNoticeV2
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -137,8 +137,8 @@ Feature: activatePaymentNoticeV2Request with psp NO MBD and canale MBD
             """
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-        Then check outcome is KO of activatePaymentNoticeV2 response
-        # And check idTransfer is 1 of activatePaymentNoticeV2 response
-        # And check hashDocumento is ciao of activatePaymentNoticeV2 response
-        # And check tipoBollo is 01 of activatePaymentNoticeV2 response
-        # And check provinciaResidenza is MI of activatePaymentNoticeV2 response
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And check idTransfer is 1 of activatePaymentNoticeV2 response
+        And check hashDocumento is ciao of activatePaymentNoticeV2 response
+        And check tipoBollo is 01 of activatePaymentNoticeV2 response
+        And check provinciaResidenza is MI of activatePaymentNoticeV2 response
