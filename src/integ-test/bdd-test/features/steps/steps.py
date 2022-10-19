@@ -80,10 +80,9 @@ def step_impl(context, primitive):
         setattr(context, 'date', date)
 
     if '#yesterday_date#' in payload:
-        yesterday_date = date.today() - timedelta(days=1)
+        yesterday_date = datetime.date.today() - datetime.timedelta(days=1)
         payload = payload.replace('#yesterday_date#', yesterday_date)
         setattr(context, 'yesterday_date', yesterday_date)
-        print('#########', '#yesterday_date#')
 
     if "#ccp#" in payload:
         ccp = str(random.randint(100000000000000, 999999999999999))
