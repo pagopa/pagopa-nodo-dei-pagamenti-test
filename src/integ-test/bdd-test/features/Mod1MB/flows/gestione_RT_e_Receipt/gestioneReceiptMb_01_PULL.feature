@@ -64,7 +64,7 @@ Feature: gestioneReceiptMb_01_PULL
             <pay_i:datiVersamento>
             <pay_i:dataEsecuzionePagamento>2016-09-16</pay_i:dataEsecuzionePagamento>
             <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
-            <pay_i:tipoVersamento>PO</pay_i:tipoVersamento>
+            <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
             <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
             <pay_i:codiceContestoPagamento>$1carrello</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
@@ -141,7 +141,7 @@ Feature: gestioneReceiptMb_01_PULL
             <pay_i:datiVersamento>
             <pay_i:dataEsecuzionePagamento>2016-09-16</pay_i:dataEsecuzionePagamento>
             <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
-            <pay_i:tipoVersamento>PO</pay_i:tipoVersamento>
+            <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
             <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
             <pay_i:codiceContestoPagamento>$1carrello</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
