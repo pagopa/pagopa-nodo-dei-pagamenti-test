@@ -118,7 +118,7 @@ Feature: MBD syntax checks in sendPaymentOutcomeV2
       When psp sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
       Then check outcome is KO of sendPaymentOutcomeV2 response
       And check faultCode is PPT_SINTASSI_XSD of sendPaymentOutcomeV2 response
-      And check faultString is Errore validazione marca da bollo of sendPaymentOutcomeV2 response
+      And check description is Errore validazione marca da bollo of sendPaymentOutcomeV2 response
       Examples:
          | elem                                                                               | value                         | Test   |
          | PSP                                                                                | None                          | Test 1 |
@@ -199,7 +199,10 @@ Feature: MBD syntax checks in sendPaymentOutcomeV2
          """
       And the sendPaymentOutcomeV2 scenario executed successfully
       When psp sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
-      Then check outcome is OK of sendPaymentOutcomeV2 response
+      Then check outcome is KO of sendPaymentOutcomeV2 response
+      And check faultCode is not PPT_SINTASSI_XSD of sendPaymentOutcomeV2 response
+      And check faultCode is not PPT_SINTASSI_EXTRAXSD of sendPaymentOutcomeV2 response
+      And check faultCode is not PPT_SEMANTICA of sendPaymentOutcomeV2 response
       Examples:
          | elem       | value | Test   |
          | Transforms | None  | Test 3 |
