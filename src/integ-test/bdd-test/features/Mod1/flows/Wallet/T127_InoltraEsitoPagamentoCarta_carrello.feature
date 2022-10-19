@@ -411,22 +411,22 @@ Feature: process tests for InoltroEsitoCartaCarrello
 @runnable
     Scenario: Execution Esito Carta
         Given the Execution idPagamento scenario executed successfully
-        And initial XML pspInviaCarrelloRPT 
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <ws:pspInviaCarrelloRPTResponse>
-            <pspInviaCarrelloRPTResponse>
-            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-            <identificativoCarrello>$nodoInviaCarrelloRPT.identificativoCarrello</identificativoCarrello>
-            <parametriPagamentoImmediato>idBruciatura=$nodoInviaCarrelloRPT.identificativoCarrello</parametriPagamentoImmediato>
-            </pspInviaCarrelloRPTResponse>
-            </ws:pspInviaCarrelloRPTResponse>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
+        # And initial XML pspInviaCarrelloRPT 
+        #     """
+        #     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+        #     <soapenv:Header/>
+        #     <soapenv:Body>
+        #     <ws:pspInviaCarrelloRPTResponse>
+        #     <pspInviaCarrelloRPTResponse>
+        #     <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+        #     <identificativoCarrello>$nodoInviaCarrelloRPT.identificativoCarrello</identificativoCarrello>
+        #     <parametriPagamentoImmediato>idBruciatura=$nodoInviaCarrelloRPT.identificativoCarrello</parametriPagamentoImmediato>
+        #     </pspInviaCarrelloRPTResponse>
+        #     </ws:pspInviaCarrelloRPTResponse>
+        #     </soapenv:Body>
+        #     </soapenv:Envelope>
+        #     """
+        # And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
         When WISP sends REST POST inoltroEsito/carta to nodo-dei-pagamenti
 
             """
@@ -443,6 +443,7 @@ Feature: process tests for InoltroEsitoCartaCarrello
             "codiceAutorizzativo": "123212"
             }
              """
+        And wait 10 seconds for expiration
         Then verify the HTTP status code of inoltroEsito/carta response is 200
         And check esito is OK of inoltroEsito/carta response
 @runnable
