@@ -17,7 +17,7 @@ Feature: Semantic checks KO for nodoVerificaRPT
             <codificaInfrastrutturaPSP>BARCODE-GS1-128</codificaInfrastrutturaPSP>
             <codiceIdRPT>
                 <bc:BarCode>
-                    <bc:Gln>1234567890122</bc:Gln>
+                    <bc:Gln>4444444444444</bc:Gln>
                     <bc:CodStazPA>01</bc:CodStazPA>
                     <bc:AuxDigit>2</bc:AuxDigit>
                     <bc:CodIUV>123456789012345</bc:CodIUV>
