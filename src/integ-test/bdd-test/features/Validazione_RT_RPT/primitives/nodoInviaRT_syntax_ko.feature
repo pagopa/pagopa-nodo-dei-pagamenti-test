@@ -322,7 +322,41 @@ Feature: Syntax checks for nodoInviaRT - KO
           | RTSIN83 |  pay_i:provinciaBeneficiario                  | QuestiSono36CaratteriAlfaNumericiTT1 |
           | RTSIN84 |  pay_i:nazioneBeneficiario                    | Empty                                |
           | RTSIN85 |  pay_i:nazioneBeneficiario                    | 1IT                                  |
-
+          | RTSIN90 |  pay_i:tipoIdentificativoUnivoco              | Empty                                |
+          | RTSIN91 |  pay_i:tipoIdentificativoUnivoco              | PP                                   |
+          | RTSIN93 |  pay_i:codiceIdentificativoUnivoco            | None                                 |
+          | RTSIN94 |  pay_i:codiceIdentificativoUnivoco            | Empty                                |
+          | RTSIN95 |  pay_i:codiceIdentificativoUnivoco            | QuestiSono36CaratteriAlfaNumericiTT1 |
+          | RTSIN96 |  pay_i:anagraficaVersante                     | None                                 |
+          | RTSIN97 |  pay_i:anagraficaVersante                     | Empty                                |
+          | RTSIN98 |  pay_i:anagraficaVersante                     | QuestiSono71CaratteriAlfaNumericiQuestiSono71CaratteriAlfaNumerici12345 |
+          | RTSIN99 |  pay_i:indirizzoVersante                      | Empty                                |
+          | RTSIN100|  pay_i:indirizzoVersante                      | QuestiSono71CaratteriAlfaNumericiQuestiSono71CaratteriAlfaNumerici12345 |
+          | RTSIN101|  pay_i:civicoVersante                         | Empty                                |
+          | RTSIN102|  pay_i:civicoVersante                         | Sono17CaratteAlfa                    |
+          | RTSIN103|  pay_i:capVersante                            | Empty                                |
+          | RTSIN104|  pay_i:capVersante                            | Sono17CaratteAlfa                    |
+          | RTSIN105|  pay_i:localitaVersante                       | Empty                                |
+          | RTSIN106|  pay_i:localitaVersante                       | QuestiSono36CaratteriAlfaNumericiTT1 |
+          | RTSIN107|  pay_i:provinciaVersante                      | Empty                                |
+          | RTSIN108|  pay_i:provinciaVersante                      | QuestiSono36CaratteriAlfaNumericiTT1 |
+          | RTSIN109|  pay_i:nazioneVersante                        | Empty                                |
+          | RTSIN110|  pay_i:nazioneVersante                        | IIT                                  |
+          | RTSIN111|  pay_i:e-mailVersante                         | Empty                                |
+          | RTSIN112|  pay_i:e-mailVersante                         | 257DDDDDDDDDDDDDDDDDDDDDDDDDFFFFFFFFFFFFFFDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDFDDDmail |
+          | RTSIN113|  pay_i:e-mailVersante                         | &                                    |
+          | RTSIN114|  pay_i:soggettoPagatore                       | None                                 |
+          | RTSIN116|  pay_i:identificativoUnivocoPagatore          | None                                 |
+          | RTSIN117|  pay_i:identificativoUnivocoPagatore          | RemoveParent                         |
+          | RTSIN118|  pay_i:tipoIdentificativoUnivoco              | None                                 |
+          | RTSIN119|  pay_i:tipoIdentificativoUnivoco              | Empty                                |
+          | RTSIN120|  pay_i:tipoIdentificativoUnivoco              | FF                                   |
+          | RTSIN121|  pay_i:tipoIdentificativoUnivoco              | H                                    |
+          | RTSIN122|  pay_i:codiceIdentificativoUnivoco            | None                                 |
+          | RTSIN123|  pay_i:codiceIdentificativoUnivoco            | Empty                                |
+          | RTSIN124|  pay_i:codiceIdentificativoUnivoco            | QuestiSono36CaratteriAlfaNumericiTT1 |
+          | RTSIN125|  pay_i:anagraficaPagatore                     | None                                 |
+          | RTSIN126|  pay_i:anagraficaPagatore                     | Empty                                |
 
             
 
