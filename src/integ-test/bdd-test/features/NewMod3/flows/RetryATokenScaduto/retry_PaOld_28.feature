@@ -328,6 +328,6 @@ Feature: process tests for retry a token scaduto
     And checks the value $activatePaymentNotice2Response.paymentToken of the record at column payment_token of the table POSITION_ACTIVATE retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
     And checks the value NotNone of the record at column token_valid_from of the table POSITION_ACTIVATE retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
     And checks the value NotNone of the record at column token_valid_to of the table POSITION_ACTIVATE retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
-    And checks the value 10 of the record at column amount of the table POSITION_ACTIVATE retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
+    And checks the value 8 of the record at column amount of the table POSITION_ACTIVATE retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
     #TOKEN_UTILITY
     And verify 0 record for the table TOKEN_UTILITY retrived by the query payment_status on db nodo_online under macro NewMod3
