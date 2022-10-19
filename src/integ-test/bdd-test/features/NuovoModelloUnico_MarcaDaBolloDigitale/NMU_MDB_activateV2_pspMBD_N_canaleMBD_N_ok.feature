@@ -36,7 +36,7 @@ Feature: activatePaymentNoticeV2Request with psp MBD and canale NO MBD
 
     # activateV2 phase
     Scenario: activatePaymentNoticeV2
-        Given the Execute refresh psp e canali scenario executed successfully
+        Given the Execute checkPosition request scenario executed successfully
         And initial XML activatePaymentNoticeV2
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
