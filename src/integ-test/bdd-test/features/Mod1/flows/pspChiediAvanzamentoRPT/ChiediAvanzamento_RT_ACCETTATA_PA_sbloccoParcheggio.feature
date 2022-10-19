@@ -228,7 +228,7 @@ Feature: process tests for ChiediAvanzamento_RT_ACCETTATA_PA_sbloccoParcheggio
             "identificativoPsp":"40000000001",
             "tipoVersamento":"BBT", 
             "identificativoIntermediario":"40000000001",
-            "identificativoCanale":"40000000001_03",
+            "identificativoCanale":"#canale#",
             "tipoOperazione":"web"
             }
              """
@@ -249,7 +249,7 @@ Feature: process tests for ChiediAvanzamento_RT_ACCETTATA_PA_sbloccoParcheggio
             <soapenv:Body>
             <ws:nodoInviaRT>
             <identificativoIntermediarioPSP>40000000001</identificativoIntermediarioPSP>
-            <identificativoCanale>40000000001_03</identificativoCanale>
+            <identificativoCanale>#canale#</identificativoCanale>
             <password>pwdpwdpwd</password>
             <identificativoPSP>40000000001</identificativoPSP>
             <identificativoDominio>44444444444</identificativoDominio>
