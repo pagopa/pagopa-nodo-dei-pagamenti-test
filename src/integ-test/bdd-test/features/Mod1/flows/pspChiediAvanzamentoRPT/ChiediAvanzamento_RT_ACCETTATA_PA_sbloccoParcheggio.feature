@@ -2,7 +2,7 @@ Feature: process tests for ChiediAvanzamento_RT_ACCETTATA_PA_sbloccoParcheggio
 
     Background:
         Given systems up
-
+@runnable
     Scenario: RPT generation
         Given RPT generation
 
@@ -82,7 +82,7 @@ Feature: process tests for ChiediAvanzamento_RT_ACCETTATA_PA_sbloccoParcheggio
         </pay_i:datiVersamento>
         </pay_i:RPT>
         """
-
+@runnable
     Scenario: RT generation
         Given the RPT generation scenario executed successfully
         And RT generation
@@ -171,6 +171,7 @@ Feature: process tests for ChiediAvanzamento_RT_ACCETTATA_PA_sbloccoParcheggio
         </pay_i:datiPagamento>
         </pay_i:RT>
         """
+@runnable
     Scenario: Execute nodoInviaRPT request
         Given the RT generation scenario executed successfully
         And initial XML nodoInviaRPT
@@ -217,17 +218,17 @@ Feature: process tests for ChiediAvanzamento_RT_ACCETTATA_PA_sbloccoParcheggio
         Then check esito is OK of nodoInviaRPT response
         And check url contains acards of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
-
+@runnable
     Scenario: Execution Esito Mod1
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends REST POST inoltroEsito/mod1 to nodo-dei-pagamenti
             """
             {
             "idPagamento":"$sessionToken",
-            "identificativoPsp":"40000000001",
+            "identificativoPsp":"#psp#",
             "tipoVersamento":"BBT", 
-            "identificativoIntermediario":"40000000001",
-            "identificativoCanale":"40000000001_03",
+            "identificativoIntermediario":"#psp#",
+            "identificativoCanale":"#canale#",
             "tipoOperazione":"web"
             }
              """
@@ -238,7 +239,7 @@ Feature: process tests for ChiediAvanzamento_RT_ACCETTATA_PA_sbloccoParcheggio
         And replace iuv content with avanzaOK content
         And checks the value RPT_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query stati_RPT_noOrder on db nodo_online under macro Mod1
         And verify 1 record for the table RETRY_RPT retrived by the query motivo_annullamento_originale on db nodo_online under macro Mod1
-
+@runnable
     Scenario: Execute nodoInviaRT request
         Given the Execution Esito Mod1 scenario executed successfully
         And initial XML nodoInviaRT
@@ -247,10 +248,10 @@ Feature: process tests for ChiediAvanzamento_RT_ACCETTATA_PA_sbloccoParcheggio
             <soapenv:Header/>
             <soapenv:Body>
             <ws:nodoInviaRT>
-            <identificativoIntermediarioPSP>40000000001</identificativoIntermediarioPSP>
-            <identificativoCanale>40000000001_03</identificativoCanale>
+            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canale#</identificativoCanale>
             <password>pwdpwdpwd</password>
-            <identificativoPSP>40000000001</identificativoPSP>
+            <identificativoPSP>#psp#</identificativoPSP>
             <identificativoDominio>44444444444</identificativoDominio>
             <identificativoUnivocoVersamento>avanzaOK</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
@@ -264,7 +265,7 @@ Feature: process tests for ChiediAvanzamento_RT_ACCETTATA_PA_sbloccoParcheggio
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
         And wait 5 seconds for expiration
-
+@runnable
     Scenario: Execute job pspChiediAvanzamentoRPT
         Given the Execute nodoInviaRT request scenario executed successfully
         When job pspChiediAvanzamentoRpt triggered after 5 seconds
@@ -273,7 +274,7 @@ Feature: process tests for ChiediAvanzamento_RT_ACCETTATA_PA_sbloccoParcheggio
         And wait 10 seconds for expiration
         And verify 0 record for the table RETRY_RPT retrived by the query motivo_annullamento_originale on db nodo_online under macro Mod1
         And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query stati_RPT_noOrder on db nodo_online under macro Mod1
-
+@runnable
     Scenario: Execute nodoChiediStatoRPT request
         Given the Execute job pspChiediAvanzamentoRPT scenario executed successfully
         And initial XML nodoChiediStatoRPT
