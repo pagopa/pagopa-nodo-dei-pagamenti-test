@@ -20,7 +20,8 @@ Feature: Semantic checks KO for nodoVerificaRPT
             <qrc:CodStazPA>#cod_segr#</qrc:CodStazPA>
             <qrc:AuxDigit>2</qrc:AuxDigit>
             <qrc:CodIUV>#iuv#</qrc:CodIUV>
-            </qrc:QrCode></codiceIdRPT>
+            </qrc:QrCode>
+            </codiceIdRPT>
             </ws:nodoVerificaRPT>
             </soapenv:Body>
             </soapenv:Envelope>
