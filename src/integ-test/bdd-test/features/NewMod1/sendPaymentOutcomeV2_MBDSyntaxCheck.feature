@@ -137,8 +137,6 @@ Feature: MBD syntax checks in sendPaymentOutcomeV2
          | OraAcquisto            | 02-06-2022T15:00:44.659+01:00 | Test 3 |
          | Importo                | None                          | Test 3 |
          | Importo                | Empty                         | Test 3 |
-         | Importo                | 5                             | Test 3 |
-         | Importo                | 5.8                           | Test 3 |
          | Importo                | 5.845                         | Test 3 |
          | Importo                | 5,84                          | Test 3 |
          | TipoBollo              | None                          | Test 3 |
@@ -149,7 +147,6 @@ Feature: MBD syntax checks in sendPaymentOutcomeV2
          | ImprontaDocumento      | RemoveParent                  | Test 3 |
          | DigestMethod           | None                          | Test 3 |
          | ns2:DigestValue        | None                          | Test 3 |
-         | ns2:DigestValue        | Empty                         | Test 3 |
          | ns2:DigestValue        | s                             | Test 3 |
          | Signature              | None                          | Test 3 |
          | Signature              | Empty                         | Test 3 |
@@ -164,20 +161,15 @@ Feature: MBD syntax checks in sendPaymentOutcomeV2
          | Transforms             | RemoveParent                  | Test 3 |
          | Transform              | None                          | Test 3 |
          | DigestValue            | None                          | Test 3 |
-         | DigestValue            | Empty                         | Test 3 |
          | DigestValue            | s                             | Test 3 |
          | SignatureValue         | None                          | Test 3 |
-         | SignatureValue         | Empty                         | Test 3 |
          | SignatureValue         | s                             | Test 3 |
-         | KeyInfo                | None                          | Test 3 |
          | KeyInfo                | Empty                         | Test 3 |
          | KeyInfo                | RemoveParent                  | Test 3 |
          | X509Data               | None                          | Test 3 |
          | X509Data               | Empty                         | Test 3 |
          | X509Data               | RemoveParent                  | Test 3 |
-         | X509Certificate        | Empty                         | Test 3 |
          | X509Certificate        | s                             | Test 3 |
-         | X509CRL                | Empty                         | Test 3 |
          | X509CRL                | s                             | Test 3 |
 
 
@@ -197,6 +189,14 @@ Feature: MBD syntax checks in sendPaymentOutcomeV2
       And checks faultCode is not PPT_SEMANTICA of sendPaymentOutcomeV2 response
       Examples:
          | elem            | value | Test   |
+         | Importo         | 5     | Test 3 |
+         | Importo         | 5.8   | Test 3 |
+         | ns2:DigestValue | Empty | Test 3 |
+         | DigestValue     | Empty | Test 3 |
+         | SignatureValue  | Empty | Test 3 |
          | Transforms      | None  | Test 3 |
+         | KeyInfo         | None  | Test 3 |
          | X509Certificate | None  | Test 3 |
+         | X509Certificate | Empty | Test 3 |
          | X509CRL         | None  | Test 3 |
+         | X509CRL         | Empty | Test 3 |
