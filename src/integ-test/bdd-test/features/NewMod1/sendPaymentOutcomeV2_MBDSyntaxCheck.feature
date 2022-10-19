@@ -124,10 +124,10 @@ Feature: MBD syntax checks in sendPaymentOutcomeV2
          | PSP                    | None                          | Test 1 |
          | PSP                    | Empty                         | Test 2 |
          | PSP                    | RemoveParent                  | Test 3 |
-         | CodiceFiscale          | None                          | Test 3 |
-         | CodiceFiscale          | Empty                         | Test 3 |
-         | Denominazione          | None                          | Test 3 |
-         | Denominazione          | Empty                         | Test 3 |
+         | CodiceFiscale          | None                          | Test 4 |
+         | CodiceFiscale          | Empty                         | Test 5 |
+         | Denominazione          | None                          | Test 6 |
+         | Denominazione          | Empty                         | Test 7 |
          | IUBD                   | None                          | Test 3 |
          | IUBD                   | Empty                         | Test 3 |
          | OraAcquisto            | None                          | Test 3 |
@@ -175,10 +175,8 @@ Feature: MBD syntax checks in sendPaymentOutcomeV2
          | X509Data               | None                          | Test 3 |
          | X509Data               | Empty                         | Test 3 |
          | X509Data               | RemoveParent                  | Test 3 |
-         | X509Certificate        | None                          | Test 3 |
          | X509Certificate        | Empty                         | Test 3 |
          | X509Certificate        | s                             | Test 3 |
-         | X509CRL                | None                          | Test 3 |
          | X509CRL                | Empty                         | Test 3 |
          | X509CRL                | s                             | Test 3 |
 
@@ -194,9 +192,11 @@ Feature: MBD syntax checks in sendPaymentOutcomeV2
       And the sendPaymentOutcomeV2 scenario executed successfully
       When psp sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
       Then check outcome is KO of sendPaymentOutcomeV2 response
-      And check faultCode is not PPT_SINTASSI_XSD of sendPaymentOutcomeV2 response
-      And check faultCode is not PPT_SINTASSI_EXTRAXSD of sendPaymentOutcomeV2 response
-      And check faultCode is not PPT_SEMANTICA of sendPaymentOutcomeV2 response
+      And checks faultCode is not PPT_SINTASSI_XSD of sendPaymentOutcomeV2 response
+      And checks faultCode is not PPT_SINTASSI_EXTRAXSD of sendPaymentOutcomeV2 response
+      And checks faultCode is not PPT_SEMANTICA of sendPaymentOutcomeV2 response
       Examples:
-         | elem       | value | Test   |
-         | Transforms | None  | Test 3 |
+         | elem            | value | Test   |
+         | Transforms      | None  | Test 3 |
+         | X509Certificate | None  | Test 3 |
+         | X509CRL         | None  | Test 3 |
