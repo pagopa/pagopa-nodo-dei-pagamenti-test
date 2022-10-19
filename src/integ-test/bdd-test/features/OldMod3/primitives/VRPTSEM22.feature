@@ -14,13 +14,14 @@ Feature: Semantic checks KO for nodoVerificaRPT
             <identificativoCanale>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanale>
             <password>pwdpwdpwd</password>
             <codiceContestoPagamento>CCD01</codiceContestoPagamento>
-            <codificaInfrastrutturaPSP>QR-CODE</codificaInfrastrutturaPSP>
-            <codiceIdRPT><qrc:QrCode>
-            <qrc:CF>32</qrc:CF>
-            <qrc:CodStazPA>#cod_segr#</qrc:CodStazPA>
-            <qrc:AuxDigit>2</qrc:AuxDigit>
-            <qrc:CodIUV>#iuv#</qrc:CodIUV>
-            </qrc:QrCode>
+            <codificaInfrastrutturaPSP>BARCODE-GS1-128</codificaInfrastrutturaPSP>
+            <codiceIdRPT>
+                <bc:BarCode>
+                    <bc:Gln>1234567890122</bc:Gln>
+                    <bc:CodStazPA>01</bc:CodStazPA>
+                    <bc:AuxDigit>2</bc:AuxDigit>
+                    <bc:CodIUV>123456789012345</bc:CodIUV>
+                </bc:BarCode>
             </codiceIdRPT>
             </ws:nodoVerificaRPT>
             </soapenv:Body>
