@@ -1074,9 +1074,14 @@ def step_impl(context, mock, destination, primitive):
         print(utils.get_soap_mock_ec2(context))
         response_status_code = utils.save_soap_action(utils.get_soap_mock_ec2(context), primitive,
                                                       pa_verify_payment_notice_res, override=True)
-    else:
+    elif mock == 'PSP': 
         print(utils.get_soap_mock_psp(context))
         response_status_code = utils.save_soap_action(utils.get_soap_mock_psp(context), primitive,
+                                                      pa_verify_payment_notice_res, override=True)
+
+    else:
+        print(utils.get_soap_mock_psp2(context))
+        response_status_code = utils.save_soap_action(utils.get_soap_mock_psp2(context), primitive,
                                                       pa_verify_payment_notice_res, override=True)
 
     assert response_status_code == 200

@@ -98,6 +98,13 @@ def get_soap_mock_psp(context):
     else:
         return ""
 
+def get_soap_mock_psp2(context):
+    if context.config.userdata.get('services').get('secondary-mock-psp').get('soap_service') is not None:
+        return context.config.userdata.get('services').get('secondary-mock-psp').get('url') \
+            + context.config.userdata.get('services').get('secondary-mock-psp').get('soap_service')
+    else:
+        return ""
+
 
 def get_refresh_config_url(context):
     if context.config.userdata.get('services').get('nodo-dei-pagamenti').get('refresh_config_service') is not None:
