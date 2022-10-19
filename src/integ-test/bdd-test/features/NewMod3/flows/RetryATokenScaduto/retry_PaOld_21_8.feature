@@ -283,7 +283,7 @@ Feature: process tests for retryAtokenScaduto
       <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
       <pay_i:tipoVersamento>PO</pay_i:tipoVersamento>
       <pay_i:identificativoUnivocoVersamento>$iuv</pay_i:identificativoUnivocoVersamento>
-      <pay_i:codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken-v2</pay_i:codiceContestoPagamento>
+      <pay_i:codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken</pay_i:codiceContestoPagamento>
       <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
       <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
       <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -313,7 +313,7 @@ Feature: process tests for retryAtokenScaduto
       <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
       <identificativoDominio>$activatePaymentNotice.fiscalCode</identificativoDominio>
       <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
-      <codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken-v2</codiceContestoPagamento>
+      <codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken</codiceContestoPagamento>
       </ppt:intestazionePPT>
       </soapenv:Header>
       <soapenv:Body>
@@ -330,7 +330,7 @@ Feature: process tests for retryAtokenScaduto
       """
     When psp sends SOAP nodoInviaRPT to nodo-dei-pagamenti
     Then check esito is KO of nodoInviaRPT response
-    Then check faultCode is PPT_SEMANTICA of nodoInviaRPT response
+    Then check faultCode is PPT_RPT_DUPLICATA of nodoInviaRPT response
 
   Scenario: DB check
     Given the Execute nodoInviaRPT2 request scenario executed successfully

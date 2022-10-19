@@ -5,12 +5,12 @@ Feature: process tests for retry a token scaduto
     And initial XML verifyPaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-      <soapenv:Header/>
+      <soapenv:Header />
       <soapenv:Body>
       <nod:verifyPaymentNoticeReq>
-      <idPSP>70000000001</idPSP>
-      <idBrokerPSP>70000000001</idBrokerPSP>
-      <idChannel>70000000001_01</idChannel>
+      <idPSP>#psp#</idPSP>
+      <idBrokerPSP>#psp#</idBrokerPSP>
+      <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
       <password>pwdpwdpwd</password>
       <qrCode>
       <fiscalCode>#creditor_institution_code_old#</fiscalCode>
@@ -55,13 +55,8 @@ Feature: process tests for retry a token scaduto
       """
     When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
-    #And checks the value $iuv of the record at column CREDITOR_REFERENCE_ID of the table RPT_ACTIVATIONS retrived by the query rpt_activision on db nodo_online under macro NewMod3
-    #And checks the value $activatePaymentNoticeResponse.paymentToken of the record at column PAYMENT_TOKEN of the table RPT_ACTIVATIONS retrived by the query rpt_activision on db nodo_online under macro NewMod3
-    #And checks the value N of the record at column NODOINVIARPTREQ of the table RPT_ACTIVATIONS retrived by the query rpt_activision on db nodo_online under macro NewMod3
-    #And checks the value Y of the record at column PAAATTIVARPTRESP of the table RPT_ACTIVATIONS retrived by the query rpt_activision on db nodo_online under macro NewMod3
-    #And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RPT_ACTIVATIONS retrived by the query rpt_activision on db nodo_online under macro NewMod3
-    And saving activatePaymentNotice request in activatePaymentNotice1
-    And save activatePaymentNotice response in activatePaymentNotice1
+    And saving activatePaymentNotice request in activatePaymentNotice2
+    And save activatePaymentNotice response in activatePaymentNotice2
 
   Scenario: Define RPT
     Given the Execute activatePaymentNotice request scenario executed successfully
@@ -71,7 +66,7 @@ Feature: process tests for retry a token scaduto
       <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
       <pay_i:dominio>
       <pay_i:identificativoDominio>$activatePaymentNotice.fiscalCode</pay_i:identificativoDominio>
-      <pay_i:identificativoStazioneRichiedente>#intermediarioPA#</pay_i:identificativoStazioneRichiedente>
+      <pay_i:identificativoStazioneRichiedente>#id_station_old#</pay_i:identificativoStazioneRichiedente>
       </pay_i:dominio>
       <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
       <pay_i:dataOraMessaggioRichiesta>2016-09-16T11:24:10</pay_i:dataOraMessaggioRichiesta>
@@ -136,13 +131,13 @@ Feature: process tests for retry a token scaduto
       <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio>
       <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
       <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
-      <pay_i:causaleVersamento>pagamento fotocopie pratica RPT</pay_i:causaleVersamento>
+      <pay_i:causaleVersamento>pagamento</pay_i:causaleVersamento>
       <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
       </pay_i:datiSingoloVersamento>
       </pay_i:datiVersamento>
       </pay_i:RPT>
       """
-  
+
   Scenario: Execute nodoInviaRPT request
     Given the Define RPT scenario executed successfully
     And initial XML nodoInviaRPT
@@ -169,31 +164,26 @@ Feature: process tests for retry a token scaduto
       </soapenv:Body>
       </soapenv:Envelope>
       """
-    #  When psp sends SOAP nodoInviaRPT to nodo-dei-pagamenti using the token of the activate phase
     When psp sends SOAP nodoInviaRPT to nodo-dei-pagamenti
     Then check esito is OK of nodoInviaRPT response
-    And check redirect is 0 of nodoInviaRPT response
 
-  Scenario: Execute Poller Annulli
+  Scenario: Execute poller Annulli
     Given the Execute nodoInviaRPT request scenario executed successfully
     When job mod3CancelV1 triggered after 5 seconds
     Then verify the HTTP status code of mod3CancelV1 response is 200
 
-  Scenario: Execute paaInviaRT
-    Given the Execute Poller Annulli scenario executed successfully
+  Scenario: trigger paInviaRT + DB check
+    Given the Execute poller Annulli scenario executed successfully
     When job paInviaRt triggered after 3 seconds
     Then verify the HTTP status code of paInviaRt response is 200
-
-  Scenario: DB check
-    Given the Execute paaInviaRT scenario executed successfully
     And wait 5 seconds for expiration
     And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query stati_rpt on db nodo_online under macro NewMod3
-  
+
   Scenario: Execute activatePaymentNotice1 request
-    Given the DB check scenario executed successfully
+    Given the trigger paInviaRT + DB check scenario executed successfully
     And initial XML activatePaymentNotice
       """
-       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
       <soapenv:Header/>
       <soapenv:Body>
       <nod:activatePaymentNoticeReq>
@@ -215,14 +205,54 @@ Feature: process tests for retry a token scaduto
       """
     When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
-    And save activatePaymentNotice response in activatePaymentNotice2
-    And saving activatePaymentNotice request in activatePaymentNotice2
+    And save activatePaymentNotice response in activatePaymentNotice1
+    And saving activatePaymentNotice request in activatePaymentNotice1
 
-
-
-  # Payment Outcome Phase outcome KO
-  Scenario: Execute sendPaymentOutcome request
+    Scenario: Execute sendPaymentOutcome2 request
     Given the Execute activatePaymentNotice1 request scenario executed successfully
+    And initial XML sendPaymentOutcome
+      """
+      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+      <soapenv:Header/>
+      <soapenv:Body>
+      <nod:sendPaymentOutcomeReq>
+      <idPSP>$activatePaymentNotice.idPSP</idPSP>
+      <idBrokerPSP>$activatePaymentNotice.idBrokerPSP</idBrokerPSP>
+      <idChannel>$activatePaymentNotice.idChannel</idChannel>
+      <password>pwdpwdpwd</password>
+      <paymentToken>$activatePaymentNotice2Response.paymentToken</paymentToken>
+      <outcome>OK</outcome>
+      <details>
+      <paymentMethod>creditCard</paymentMethod>
+      <paymentChannel>app</paymentChannel>
+      <fee>2.00</fee>
+      <payer>
+      <uniqueIdentifier>
+      <entityUniqueIdentifierType>F</entityUniqueIdentifierType>
+      <entityUniqueIdentifierValue>JHNDOE00A01F205N</entityUniqueIdentifierValue>
+      </uniqueIdentifier>
+      <fullName>John Doe</fullName>
+      <streetName>street</streetName>
+      <civicNumber>12</civicNumber>
+      <postalCode>89020</postalCode>
+      <city>city</city>
+      <stateProvinceRegion>MI</stateProvinceRegion>
+      <country>IT</country>
+      <e-mail>john.doe@test.it</e-mail>
+      </payer>
+      <applicationDate>2021-10-01</applicationDate>
+      <transferDate>2021-10-02</transferDate>
+      </details>
+      </nod:sendPaymentOutcomeReq>
+      </soapenv:Body>
+      </soapenv:Envelope>
+      """
+    When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+    Then check outcome is KO of sendPaymentOutcome response
+    And check faultCode is PPT_PAGAMENTO_DUPLICATO of sendPaymentOutcome response 
+
+  Scenario: Execute sendPaymentOutcome1 request
+    Given the Execute sendPaymentOutcome2 request scenario executed successfully
     And initial XML sendPaymentOutcome
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -259,17 +289,14 @@ Feature: process tests for retry a token scaduto
       </nod:sendPaymentOutcomeReq>
       </soapenv:Body>
       </soapenv:Envelope>
-      """   
+      """
     When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-    Then check outcome is KO of sendPaymentOutcome response
-    And check faultCode is PPT_PAGAMENTO_DUPLICATO of sendPaymentOutcome response
+    Then check outcome is OK of sendPaymentOutcome response
 
+ 
 
-  
-
-  # test execution
-  Scenario: Execution test rety_PaOld_26
-    Given the Execute sendPaymentOutcome request scenario executed successfully
+  Scenario: DB check
+    Given the Execute sendPaymentOutcome1 request scenario executed successfully
     And wait 5 seconds for expiration
     #STATI
     Then checks the value PAYING,INSERTED,PAYING of the record at column status of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
@@ -305,12 +332,12 @@ Feature: process tests for retry a token scaduto
     And checks the value $activatePaymentNotice1.idBrokerPSP of the record at column broker_psp_id of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
     And checks the value $activatePaymentNotice1.idempotencyKey of the record at column idempotency_key of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
     And checks the value 10 of the record at column amount of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
-    And checks the value None of the record at column fee of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
-    And checks the value None of the record at column payment_method of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
-    And checks the value NA of the record at column payment_channel of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
-    And checks the value None of the record at column transfer_date of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
-    And checks the value None of the record at column payer_id of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
-    And checks the value None of the record at column application_date of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
+    And checks the value 2 of the record at column fee of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
+    And checks the value creditCard of the record at column payment_method of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
+    And checks the value app of the record at column payment_channel of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
+    And checks the value NotNone of the record at column transfer_date of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
+    And checks the value NotNone of the record at column payer_id of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
+    And checks the value NotNone of the record at column application_date of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
     And checks the value NotNone of the record at column inserted_timestamp of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
     And checks the value NotNone of the record at column updated_timestamp of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
     And checks the value MOD3 of the record at column payment_type of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3

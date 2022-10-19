@@ -14,6 +14,12 @@
       "soap_service": "servizi/PagamentiTelematiciRPT",
       "rest_service": ""
     },
+    "secondary-mock-ec": {
+      "url": "http://localhost:8091/",
+      "healthcheck": "servizi/PagamentiTelematiciRPT/info",
+      "soap_service": "servizi/PagamentiTelematiciRPT",
+      "rest_service": ""
+    },
     "mock-psp": {
       "url": "http://localhost:8090/",
       "healthcheck": "servizi/MockPSP/info",
@@ -24,12 +30,13 @@
   "global_configuration": {
     "creditor_institution_code": "77777777777",
     "creditor_institution_code_old": "44444444444",
-    "creditor_institution_secondary": "88888888888",
+    "creditor_institution_code_secondary": "88888888888",
     "psp":"70000000001",
     "intermediarioPA":"77777777777",
     "intermediarioPAOld":"44444444444",
     "fiscalCodePA": "12345678901",
     "id_station": "77777777777_01",
+    "id_station_secondary": "88888888888_01",
     "id_station_disabled": "77777777777_06",
     "intermediario_stz_disabled": "77777777777",
     "canale":"70000000001_07",

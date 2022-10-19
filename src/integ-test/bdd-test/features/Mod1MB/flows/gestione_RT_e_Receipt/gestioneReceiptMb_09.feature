@@ -1,11 +1,19 @@
-Feature: gestioneReceiptMb_07
+Feature: gestioneReceiptMb_09
 
     Background:
         Given systems up
 
+    Scenario: clean paSendRt queue
+        When job paSendRt triggered after 1 seconds
+        And wait 15 seconds for expiration
+
     Scenario: Execute nodoInviaCarrelloRPT (Phase 1)
-        Given generate 1 notice number and iuv with aux digit 3, segregation code 02 and application code -
+        Given the clean paSendRt queue scenario executed successfully
+        And nodo-dei-pagamenti has config parameter scheduler.jobName_paSendRt.enabled set to false
+        And nodo-dei-pagamenti has config parameter scheduler.paSendRtMaxRetry set to 1
+        And generate 1 notice number and iuv with aux digit 3, segregation code 02 and application code -
         And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
+        And generate 2 cart with PA #creditor_institution_code_secondary# and notice number $1noticeNumber
         And replace pa1 content with #creditor_institution_code_secondary# content
         And RPT1 generation
             """
@@ -167,7 +175,7 @@ Feature: gestioneReceiptMb_07
             <pay_i:RT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0.xsd ">
             <pay_i:versioneOggetto>6.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-            <pay_i:identificativoDominio>#creditor_istitution_code#</pay_i:identificativoDominio>
+            <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
             <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRicevuta>TR0001_20120302-10:37:52.0264-F098</pay_i:identificativoMessaggioRicevuta>
@@ -369,6 +377,18 @@ Feature: gestioneReceiptMb_07
             </soapenv:Body>
             </soapenv:Envelope>
             """
+        And EC2 replies to nodo-dei-pagamenti with the paSendRT
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
+            <soapenv:Header />
+            <soapenv:Body>
+            <paf:paSendRTRes>
+            <outcome>OK</outcome>
+            <delay>10000</delay>
+            </paf:paSendRTRes>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
         And retrieve session token from $nodoInviaCarrelloRPTResponse.url
@@ -376,7 +396,11 @@ Feature: gestioneReceiptMb_07
         And replace pa content with #creditor_institution_code# content
         And execution query get_pa_id to get value on the table PA, with the columns OBJ_ID under macro costanti with db name nodo_cfg
         And through the query get_pa_id retrieve param objId at position 0 and save it under the key objId
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition FK_PA = $objId under macro update_query on db nodo_cfg
+        
+        And replace station_id content with #id_station# content
+        And execution query by_station_id to get value on the table STAZIONI, with the columns OBJ_ID under macro costanti with db name nodo_cfg
+        And through the query by_station_id retrieve param stationID at position 0 and save it under the key stationID
+        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition FK_PA = $objId AND FK_STAZIONE = $stationID under macro update_query on db nodo_cfg
 
         And replace pa content with $pa1 content
         And execution query get_pa_id to get value on the table PA, with the columns OBJ_ID under macro costanti with db name nodo_cfg
@@ -387,13 +411,6 @@ Feature: gestioneReceiptMb_07
         And through the query by_station_id retrieve param stationID at position 0 and save it under the key stationID
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition FK_PA = $objId AND FK_STAZIONE = $stationID under macro update_query on db nodo_cfg
 
-        And replace station_id content with irraggiungibile content
-        And replace pa content with $pa1 content
-        And execution query by_station_id to get value on the table STAZIONI, with the columns OBJ_ID under macro costanti with db name nodo_cfg
-        And through the query by_station_id retrieve param stationID at position 0 and save it under the key stationID
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition FK_PA = $objId AND FK_STAZIONE = $stationID under macro update_query on db nodo_cfg
-
-
         And refresh job PA triggered after 10 seconds
         And wait 5 seconds for expiration
 
@@ -401,11 +418,6 @@ Feature: gestioneReceiptMb_07
         Given the Execute nodoInviaCarrelloRPT (Phase 1) scenario executed successfully
         When WISP sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200
-        And check importo field exists in informazioniPagamento response
-        And check email field exists in informazioniPagamento response
-        And check ragioneSociale field exists in informazioniPagamento response
-        And check oggettoPagamento field exists in informazioniPagamento response
-        And check urlRedirectEC field exists in informazioniPagamento response
 
     Scenario: Execute nodoInoltroEsitoMod1 (Phase 3)
         Given the Execute nodoChiediInformazioniPagamento (Phase 2) scenario executed successfully
@@ -463,6 +475,27 @@ Feature: gestioneReceiptMb_07
             """
         When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
+
+        And replace pa content with #creditor_institution_code# content
+        And execution query get_pa_id to get value on the table PA, with the columns OBJ_ID under macro costanti with db name nodo_cfg
+        And through the query get_pa_id retrieve param objId at position 0 and save it under the key objId
+        
+        And replace station_id content with #id_station# content
+        And execution query by_station_id to get value on the table STAZIONI, with the columns OBJ_ID under macro costanti with db name nodo_cfg
+        And through the query by_station_id retrieve param stationID at position 0 and save it under the key stationID
+        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'N', with where condition FK_PA = $objId AND FK_STAZIONE = $stationID under macro update_query on db nodo_cfg
+
+        And replace pa content with $pa1 content
+        And execution query get_pa_id to get value on the table PA, with the columns OBJ_ID under macro costanti with db name nodo_cfg
+        And through the query get_pa_id retrieve param objId at position 0 and save it under the key objId
+
+        And replace station_id content with #id_station_secondary# content
+        And execution query by_station_id to get value on the table STAZIONI, with the columns OBJ_ID under macro costanti with db name nodo_cfg
+        And through the query by_station_id retrieve param stationID at position 0 and save it under the key stationID
+        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'N', with where condition FK_PA = $objId AND FK_STAZIONE = $stationID under macro update_query on db nodo_cfg
+
+        And refresh job PA triggered after 10 seconds
+        And wait 5 seconds for expiration
 
         And replace noticeNumber content with $1noticeNumber content
         And replace pa content with #creditor_institution_code# content
@@ -560,17 +593,7 @@ Feature: gestioneReceiptMb_07
         And through the query by_notice_number_and_payment_token retrieve param recipientBroker1 at position 6 and save it under the key recipientBroker1
         And through the query by_notice_number_and_payment_token retrieve param recipientStation1 at position 7 and save it under the key recipientStation1
         And through the query by_notice_number_and_payment_token retrieve param status1 at position 8 and save it under the key status1
-        #row2
-        And through the query by_notice_number_and_payment_token retrieve param paFiscalCode2 at position 1 in the row 1 and save it under the key paFiscalCode2
-        And through the query by_notice_number_and_payment_token retrieve param noticeID2 at position 2 in the row 1 and save it under the key noticeID2
-        And through the query by_notice_number_and_payment_token retrieve param creditorReferenceId2 at position 3 in the row 1 and save it under the key creditorReferenceId2
-        And through the query by_notice_number_and_payment_token retrieve param paymentToken2 at position 4 in the row 1 and save it under the key paymentToken2
-        And through the query by_notice_number_and_payment_token retrieve param recipientPA2 at position 5 in the row 1 and save it under the key recipientPA2
-        And through the query by_notice_number_and_payment_token retrieve param recipientBroker2 at position 6 in the row 1 and save it under the key recipientBroker2
-        And through the query by_notice_number_and_payment_token retrieve param recipientStation2 at position 7 in the row 1 and save it under the key recipientStation2
-        And through the query by_notice_number_and_payment_token retrieve param status2 at position 8 in the row 1 and save it under the key status2
-
-
+        
         #checks
         And check value $paFiscalCode1 is equal to value $expFiscalCode
         And check value $noticeID1 is equal to value $expNoticeID
@@ -580,14 +603,6 @@ Feature: gestioneReceiptMb_07
         And check value $recipientBroker1 is equal to value $pa1
         And check value $recipientStation1 is equal to value #id_station_secondary#
 
-        And check value $paFiscalCode2 is equal to value $expFiscalCode
-        And check value $noticeID2 is equal to value $expNoticeID
-        And check value $creditorReferenceId2 is equal to value $expCreditorReferenceID
-        And check value $paymentToken2 is equal to value $expPaymentToken
-        And check value $recipientPA2 is equal to value $pa1
-        And check value $recipientBroker2 is equal to value irraggiungibile
-        And check value $recipientStation2 is equal to value irraggiungibile
-        #And check value $status is equal to value NOTIFIED
 
         #extraction from POSITION_RECEIPT_XML
         And execution query by_notice_number_and_payment_token to get value on the table POSITION_RECEIPT_XML, with the columns * under macro Mod1Mb with db name nodo_online
@@ -599,14 +614,6 @@ Feature: gestioneReceiptMb_07
         And through the query by_notice_number_and_payment_token retrieve param recipientPA1 at position 8 and save it under the key recipientPA1
         And through the query by_notice_number_and_payment_token retrieve param recipientBroker1 at position 9 and save it under the key recipientBroker1
         And through the query by_notice_number_and_payment_token retrieve param recipientStation1 at position 10 and save it under the key recipientStation1
-        #row2
-        And through the query by_notice_number_and_payment_token retrieve param paFiscalCode2 at position 1 in the row 1 and save it under the key paFiscalCode2
-        And through the query by_notice_number_and_payment_token retrieve param noticeID2 at position 2 in the row 1 and save it under the key noticeID2
-        And through the query by_notice_number_and_payment_token retrieve param creditorReferenceId2 at position 3 in the row 1 and save it under the key creditorReferenceId2
-        And through the query by_notice_number_and_payment_token retrieve param paymentToken2 at position 4 in the row 1 and save it under the key paymentToken2
-        And through the query by_notice_number_and_payment_token retrieve param recipientPA2 at position 8 in the row 1 and save it under the key recipientPA2
-        And through the query by_notice_number_and_payment_token retrieve param recipientBroker2 at position 9 in the row 1 and save it under the key recipientBroker2
-        And through the query by_notice_number_and_payment_token retrieve param recipientStation2 at position 10 in the row 1 and save it under the key recipientStation2
         #checks
         And check value $paFiscalCode1 is equal to value $expFiscalCode
         And check value $noticeID1 is equal to value $expNoticeID
@@ -615,46 +622,36 @@ Feature: gestioneReceiptMb_07
         And check value $recipientPA1 is equal to value $pa1
         And check value $recipientBroker1 is equal to value $pa1
         And check value $recipientStation1 is equal to value #id_station_secondary#
+        
+        And checks the value PAYING, PAID, NOTICE_GENERATED, NOTICE_SENT of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+        And checks the value NOTICE_SENT of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+        And checks the value PAYING, PAID of the record at column STATUS of the table POSITION_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+        And checks the value PAID of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
 
-        And check value $paFiscalCode2 is equal to value $expFiscalCode
-        And check value $noticeID2 is equal to value $expNoticeID
-        And check value $creditorReferenceId2 is equal to value $expCreditorReferenceID
-        And check value $paymentToken2 is equal to value $expPaymentToken
-        And check value $recipientPA2 is equal to value $pa1
-        And check value $recipientBroker2 is equal to value irraggiungibile
-        And check value $recipientStation2 is equal to value irraggiungibile
-        # #And verify 0 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query by_notice_number_and_payment_token on db nodo_online under macro Mod1Mb
-        #And verify 0 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query by_notice_number_and_payment_token on db nodo_online under macro Mod1Mb
-        # And checks the value PAYING, PAID, NOTICE_GENERATED, NOTICE_SENT, NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        # And checks the value NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        # And checks the value PAYING, PAID, NOTIFIED of the record at column STATUS of the table POSITION_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        # And checks the value NOTIFIED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-
-        #And checks the value PAYING, PAID, NOTICE_GENERATED, NOTICE_SENT, NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        #And checks the value NOTICE_SENT of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        #And checks the value PAYING, PAID, NOTIFIED of the record at column STATUS of the table POSITION_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        #And checks the value NOTIFIED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-
-
-        And replace pa content with #creditor_institution_code# content
-        And execution query get_pa_id to get value on the table PA, with the columns OBJ_ID under macro costanti with db name nodo_cfg
-        And through the query get_pa_id retrieve param objId at position 0 and save it under the key objId
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'N', with where condition FK_PA = $objId under macro update_query on db nodo_cfg
-
-        And replace pa content with $pa1 content
-        And execution query get_pa_id to get value on the table PA, with the columns OBJ_ID under macro costanti with db name nodo_cfg
-        And through the query get_pa_id retrieve param objId at position 0 and save it under the key objId
-
-        And replace station_id content with #id_station_secondary# content
-        And execution query by_station_id to get value on the table STAZIONI, with the columns OBJ_ID under macro costanti with db name nodo_cfg
-        And through the query by_station_id retrieve param stationID at position 0 and save it under the key stationID
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'N', with where condition FK_PA = $objId AND FK_STAZIONE = $stationID under macro update_query on db nodo_cfg
-
-        And replace station_id content with irraggiungibile content
-        And replace pa content with $pa1 content
-        And execution query by_station_id to get value on the table STAZIONI, with the columns OBJ_ID under macro costanti with db name nodo_cfg
-        And through the query by_station_id retrieve param stationID at position 0 and save it under the key stationID
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'N', with where condition FK_PA = $objId AND FK_STAZIONE = $stationID under macro update_query on db nodo_cfg
-
-        And refresh job PA triggered after 10 seconds
-        And wait 5 seconds for expiration
+    @test
+    Scenario: Check POSITION_RETRY_PA_SEND_RT table
+        Given the Execute nodoInviaRT (Phase 4) scenario executed successfully
+        And wait 60 seconds for expiration
+        And nodo-dei-pagamenti has config parameter scheduler.jobName_paSendRt.enabled set to true
+        And EC2 replies to nodo-dei-pagamenti with the paSendRT
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
+            <soapenv:Header />
+            <soapenv:Body>
+            <paf:paSendRTRes>
+            <outcome>OK</outcome>
+            <delay>10000</delay>
+            </paf:paSendRTRes>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        When job paSendRt triggered after 5 seconds
+        And wait 15 seconds for expiration
+        #check POSITION_RETRY_PA_SEND_RT table
+        Then checks the value #creditor_institution_code# of the record at column PA_FISCAL_CODE of the table POSITION_RETRY_PA_SEND_RT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+        And checks the value $1noticeNumber of the record at column NOTICE_ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+        And checks the value $paymentToken of the record at column TOKEN of the table POSITION_RETRY_PA_SEND_RT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+        And checks the value 1 of the record at column RETRY of the table POSITION_RETRY_PA_SEND_RT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+        And restore initial configurations

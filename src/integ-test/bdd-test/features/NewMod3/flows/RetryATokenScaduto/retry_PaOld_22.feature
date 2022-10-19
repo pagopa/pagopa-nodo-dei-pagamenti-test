@@ -1,4 +1,4 @@
-Feature: process tests for retryAtokenScaduto
+Feature: process tests for retry a token scaduto
 
   Background:
     Given systems up
@@ -130,7 +130,7 @@ Feature: process tests for retryAtokenScaduto
       <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
       <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
       <pay_i:causaleVersamento>pagamento</pay_i:causaleVersamento>
-      <pay_i:datiSpecificiRiscossione>9/0101002TS/abc</pay_i:datiSpecificiRiscossione>
+      <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
       </pay_i:datiSingoloVersamento>
       </pay_i:datiVersamento>
       </pay_i:RPT>
@@ -165,6 +165,8 @@ Feature: process tests for retryAtokenScaduto
     When psp sends SOAP nodoInviaRPT to nodo-dei-pagamenti
     Then check esito is OK of nodoInviaRPT response
     And verify 0 record for the table RPT_ACTIVATIONS retrived by the query rpt_activision on db nodo_online under macro NewMod3
+    And generic update through the query param_update_generic_where_condition of the table POSITION_ACTIVATE the parameter AMOUNT = '2', with where condition NOTICE_ID = '$activatePaymentNotice.noticeNumber' AND PA_FISCAL_CODE= '$activatePaymentNotice.fiscalCode' under macro update_query on db nodo_online
+    And wait 5 seconds for expiration
 
   Scenario: Execute poller Annulli
     Given the Execute nodoInviaRPT request scenario executed successfully
@@ -178,7 +180,7 @@ Feature: process tests for retryAtokenScaduto
     And wait 5 seconds for expiration
     And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query stati_rpt on db nodo_online under macro NewMod3
 
-  # Payment Outcome Phase outcome OK
+  # Payment Outcome Phase outcome KO
   Scenario: Execute sendPaymentOutcome request
     Given the trigger paInviaRT + DB check scenario executed successfully
     And initial XML sendPaymentOutcome
@@ -252,7 +254,7 @@ Feature: process tests for retryAtokenScaduto
       <pay_i:soggettoPagatore>
       <pay_i:identificativoUnivocoPagatore>
       <pay_i:tipoIdentificativoUnivoco>F</pay_i:tipoIdentificativoUnivoco>
-      <pay_i:codiceIdentificativoUnivoco>RCCGLD09P09H501E</pay_i:codiceIdentificativoUnivoco>
+      <pay_i:codiceIdentificativoUnivoco>FDCRLD06P89H521E</pay_i:codiceIdentificativoUnivoco>
       </pay_i:identificativoUnivocoPagatore>
       <pay_i:anagraficaPagatore>Gesualdo;Riccitelli</pay_i:anagraficaPagatore>
       <pay_i:indirizzoPagatore>via del gesu</pay_i:indirizzoPagatore>
@@ -296,7 +298,7 @@ Feature: process tests for retryAtokenScaduto
       <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
       <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
       <pay_i:causaleVersamento>pagamento</pay_i:causaleVersamento>
-      <pay_i:datiSpecificiRiscossione>9/0101002IM/abc</pay_i:datiSpecificiRiscossione>
+      <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
       </pay_i:datiSingoloVersamento>
       </pay_i:datiVersamento>
       </pay_i:RPT>
@@ -330,8 +332,9 @@ Feature: process tests for retryAtokenScaduto
       """
     When psp sends SOAP nodoInviaRPT to nodo-dei-pagamenti
     Then check esito is KO of nodoInviaRPT response
-    Then check faultCode is PPT_SEMANTICA of nodoInviaRPT response
+    And check faultCode is PPT_SEMANTICA of nodoInviaRPT response
 
+  @prova
   Scenario: DB check
     Given the Execute nodoInviaRPT2 request scenario executed successfully
     And wait 5 seconds for expiration
@@ -391,7 +394,7 @@ Feature: process tests for retryAtokenScaduto
     And checks the value $activatePaymentNoticeResponse.paymentToken of the record at column payment_token of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro NewMod3
     And checks the value NotNone of the record at column token_valid_from of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro NewMod3
     And checks the value NotNone of the record at column token_valid_to of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro NewMod3
-    And checks the value 8 of the record at column amount of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro NewMod3
+    And checks the value 2 of the record at column amount of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro NewMod3
     ##
     And checks the value $activatePaymentNotice.fiscalCode of the record at column pa_fiscal_code of the table POSITION_ACTIVATE retrived by the query payment_status_v2 on db nodo_online under macro NewMod3
     And checks the value $activatePaymentNotice.noticeNumber of the record at column notice_id of the table POSITION_ACTIVATE retrived by the query payment_status_v2 on db nodo_online under macro NewMod3
@@ -400,7 +403,7 @@ Feature: process tests for retryAtokenScaduto
     And checks the value $activatePaymentNoticeResponse.paymentToken-v2 of the record at column payment_token of the table POSITION_ACTIVATE retrived by the query payment_status_v2 on db nodo_online under macro NewMod3
     And checks the value NotNone of the record at column token_valid_from of the table POSITION_ACTIVATE retrived by the query payment_status_v2 on db nodo_online under macro NewMod3
     And checks the value NotNone of the record at column token_valid_to of the table POSITION_ACTIVATE retrived by the query payment_status_v2 on db nodo_online under macro NewMod3
-    And checks the value 8 of the record at column amount of the table POSITION_ACTIVATE retrived by the query payment_status_v2 on db nodo_online under macro NewMod3
+    And checks the value 2 of the record at column amount of the table POSITION_ACTIVATE retrived by the query payment_status_v2 on db nodo_online under macro NewMod3
     #TOKEN_UTILITY
     And checks the value $activatePaymentNotice.fiscalCode of the record at column pa_fiscal_code of the table TOKEN_UTILITY retrived by the query payment_status on db nodo_online under macro NewMod3
     And checks the value $activatePaymentNotice.noticeNumber of the record at column notice_id of the table TOKEN_UTILITY retrived by the query payment_status on db nodo_online under macro NewMod3
@@ -415,8 +418,6 @@ Feature: process tests for retryAtokenScaduto
     And checks the value $id1 of the record at column fk_payment2 of the table TOKEN_UTILITY retrived by the query payment_status on db nodo_online under macro NewMod3
     And execution query rt_stati to get value on the table RPT, with the columns id under macro NewMod3 with db name nodo_online
     And through the query rt_stati retrieve param id at position 0 and save it under the key fk_rptid0
-    And execution query rt_stati_ordbyDesc to get value on the table RPT, with the columns id under macro NewMod3 with db name nodo_online
-    And through the query rt_stati_ordbyDesc retrieve param id at position 0 and save it under the key fk_rptid1
     And checks the value $fk_rptid0 of the record at column fk_rpt1 of the table TOKEN_UTILITY retrived by the query payment_status on db nodo_online under macro NewMod3
     And checks the value None of the record at column fk_rpt2 of the table TOKEN_UTILITY retrived by the query payment_status on db nodo_online under macro NewMod3
     #RPT_ACTIVATIONS
