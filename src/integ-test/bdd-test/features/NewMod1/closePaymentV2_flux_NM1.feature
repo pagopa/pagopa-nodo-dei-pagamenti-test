@@ -515,9 +515,9 @@ Feature: flux tests for closePaymentV2
         And checks the value $activatePaymentNoticeV2.idChannel of the record at column CHANNEL_ID of the table POSITION_PAYMENT retrived by the query notice_id_first_activatev2 on db nodo_online under macro NewMod1
         And checks the value None of the record at column IDEMPOTENCY_KEY of the table POSITION_PAYMENT retrived by the query notice_id_first_activatev2 on db nodo_online under macro NewMod1
         And checks the value $activatePaymentNoticeV2.amount of the record at column AMOUNT of the table POSITION_PAYMENT retrived by the query notice_id_first_activatev2 on db nodo_online under macro NewMod1
-        And checks the value 2 of the record at column FEE of the table POSITION_PAYMENT retrived by the query notice_id_first_activatev2 on db nodo_online under macro NewMod1
+        And checks the value None of the record at column FEE of the table POSITION_PAYMENT retrived by the query notice_id_first_activatev2 on db nodo_online under macro NewMod1
         And checks the value None of the record at column OUTCOME of the table POSITION_PAYMENT retrived by the query notice_id_first_activatev2 on db nodo_online under macro NewMod1
-        And checks the value TPAY of the record at column PAYMENT_METHOD of the table POSITION_PAYMENT retrived by the query notice_id_first_activatev2 on db nodo_online under macro NewMod1
+        And checks the value None of the record at column PAYMENT_METHOD of the table POSITION_PAYMENT retrived by the query notice_id_first_activatev2 on db nodo_online under macro NewMod1
         And checks the value NA of the record at column PAYMENT_CHANNEL of the table POSITION_PAYMENT retrived by the query notice_id_first_activatev2 on db nodo_online under macro NewMod1
         And checks the value None of the record at column TRANSFER_DATE of the table POSITION_PAYMENT retrived by the query notice_id_first_activatev2 on db nodo_online under macro NewMod1
         And checks the value None of the record at column PAYER_ID of the table POSITION_PAYMENT retrived by the query notice_id_first_activatev2 on db nodo_online under macro NewMod1
@@ -530,10 +530,10 @@ Feature: flux tests for closePaymentV2
         And checks the value None of the record at column CARRELLO_ID of the table POSITION_PAYMENT retrived by the query notice_id_first_activatev2 on db nodo_online under macro NewMod1
         And checks the value None of the record at column ORIGINAL_PAYMENT_TOKEN of the table POSITION_PAYMENT retrived by the query notice_id_first_activatev2 on db nodo_online under macro NewMod1
         And checks the value N of the record at column FLAG_IO of the table POSITION_PAYMENT retrived by the query notice_id_first_activatev2 on db nodo_online under macro NewMod1
-        And checks the value Y of the record at column RICEVUTA_PM of the table POSITION_PAYMENT retrived by the query notice_id_first_activatev2 on db nodo_online under macro NewMod1
-        And checks the value N of the record at column FLAG_PAYPAL of the table POSITION_PAYMENT retrived by the query notice_id_first_activatev2 on db nodo_online under macro NewMod1
-        And checks the value $transaction_id of the record at column TRANSACTION_ID of the table POSITION_PAYMENT retrived by the query notice_id_first_activatev2 on db nodo_online under macro NewMod1
-        And checks the value v2 of the record at column CLOSE_VERSION of the table POSITION_PAYMENT retrived by the query notice_id_first_activatev2 on db nodo_online under macro NewMod1
+        And checks the value None of the record at column RICEVUTA_PM of the table POSITION_PAYMENT retrived by the query notice_id_first_activatev2 on db nodo_online under macro NewMod1
+        And checks the value None of the record at column FLAG_PAYPAL of the table POSITION_PAYMENT retrived by the query notice_id_first_activatev2 on db nodo_online under macro NewMod1
+        And checks the value None of the record at column TRANSACTION_ID of the table POSITION_PAYMENT retrived by the query notice_id_first_activatev2 on db nodo_online under macro NewMod1
+        And checks the value None of the record at column CLOSE_VERSION of the table POSITION_PAYMENT retrived by the query notice_id_first_activatev2 on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column ID of the table POSITION_PAYMENT retrived by the query notice_id_second_activatev2 on db nodo_online under macro NewMod1
         And checks the value $activatePaymentNoticeV2.fiscalCode of the record at column PA_FISCAL_CODE of the table POSITION_PAYMENT retrived by the query notice_id_second_activatev2 on db nodo_online under macro NewMod1
         And checks the value $paGetPayment_2Request.creditorReferenceId of the record at column CREDITOR_REFERENCE_ID of the table POSITION_PAYMENT retrived by the query notice_id_second_activatev2 on db nodo_online under macro NewMod1
@@ -546,9 +546,9 @@ Feature: flux tests for closePaymentV2
         And checks the value $activatePaymentNoticeV2.idChannel of the record at column CHANNEL_ID of the table POSITION_PAYMENT retrived by the query notice_id_second_activatev2 on db nodo_online under macro NewMod1
         And checks the value None of the record at column IDEMPOTENCY_KEY of the table POSITION_PAYMENT retrived by the query notice_id_second_activatev2 on db nodo_online under macro NewMod1
         And checks the value $activatePaymentNoticeV2.amount of the record at column AMOUNT of the table POSITION_PAYMENT retrived by the query notice_id_second_activatev2 on db nodo_online under macro NewMod1
-        And checks the value 2 of the record at column FEE of the table POSITION_PAYMENT retrived by the query notice_id_second_activatev2 on db nodo_online under macro NewMod1
+        And checks the value None of the record at column FEE of the table POSITION_PAYMENT retrived by the query notice_id_second_activatev2 on db nodo_online under macro NewMod1
         And checks the value None of the record at column OUTCOME of the table POSITION_PAYMENT retrived by the query notice_id_second_activatev2 on db nodo_online under macro NewMod1
-        And checks the value TPAY of the record at column PAYMENT_METHOD of the table POSITION_PAYMENT retrived by the query notice_id_second_activatev2 on db nodo_online under macro NewMod1
+        And checks the value None of the record at column PAYMENT_METHOD of the table POSITION_PAYMENT retrived by the query notice_id_second_activatev2 on db nodo_online under macro NewMod1
         And checks the value NA of the record at column PAYMENT_CHANNEL of the table POSITION_PAYMENT retrived by the query notice_id_second_activatev2 on db nodo_online under macro NewMod1
         And checks the value None of the record at column TRANSFER_DATE of the table POSITION_PAYMENT retrived by the query notice_id_second_activatev2 on db nodo_online under macro NewMod1
         And checks the value None of the record at column PAYER_ID of the table POSITION_PAYMENT retrived by the query notice_id_second_activatev2 on db nodo_online under macro NewMod1
@@ -561,10 +561,10 @@ Feature: flux tests for closePaymentV2
         And checks the value None of the record at column CARRELLO_ID of the table POSITION_PAYMENT retrived by the query notice_id_second_activatev2 on db nodo_online under macro NewMod1
         And checks the value None of the record at column ORIGINAL_PAYMENT_TOKEN of the table POSITION_PAYMENT retrived by the query notice_id_second_activatev2 on db nodo_online under macro NewMod1
         And checks the value N of the record at column FLAG_IO of the table POSITION_PAYMENT retrived by the query notice_id_second_activatev2 on db nodo_online under macro NewMod1
-        And checks the value Y of the record at column RICEVUTA_PM of the table POSITION_PAYMENT retrived by the query notice_id_second_activatev2 on db nodo_online under macro NewMod1
-        And checks the value N of the record at column FLAG_PAYPAL of the table POSITION_PAYMENT retrived by the query notice_id_second_activatev2 on db nodo_online under macro NewMod1
-        And checks the value $transaction_id of the record at column TRANSACTION_ID of the table POSITION_PAYMENT retrived by the query notice_id_second_activatev2 on db nodo_online under macro NewMod1
-        And checks the value v2 of the record at column CLOSE_VERSION of the table POSITION_PAYMENT retrived by the query notice_id_second_activatev2 on db nodo_online under macro NewMod1
+        And checks the value None of the record at column RICEVUTA_PM of the table POSITION_PAYMENT retrived by the query notice_id_second_activatev2 on db nodo_online under macro NewMod1
+        And checks the value None of the record at column FLAG_PAYPAL of the table POSITION_PAYMENT retrived by the query notice_id_second_activatev2 on db nodo_online under macro NewMod1
+        And checks the value None of the record at column TRANSACTION_ID of the table POSITION_PAYMENT retrived by the query notice_id_second_activatev2 on db nodo_online under macro NewMod1
+        And checks the value None of the record at column CLOSE_VERSION of the table POSITION_PAYMENT retrived by the query notice_id_second_activatev2 on db nodo_online under macro NewMod1
 
         # PM_SESSION_DATA
         And verify 0 record for the table PM_SESSION_DATA retrived by the query id_sessione on db nodo_online under macro NewMod1
