@@ -346,7 +346,7 @@ Feature: flux tests for closePaymentV2
         And checks the value v2 of the record at column CLOSE_VERSION of the table POSITION_PAYMENT retrived by the query notice_id_second_activatev2 on db nodo_online under macro NewMod1
 
         # PM_SESSION_DATA
-        And verify 0 record for the table PM_SESSION_DATA retrived by the query notice_id_2_activatev2 on db nodo_online under macro NewMod1
+        And verify 0 record for the table PM_SESSION_DATA retrived by the query id_sessione on db nodo_online under macro NewMod1
 
         # POSITION_ACTIVATE
         And checks the value $activatePaymentNoticeV2_1Response.paymentToken,$activatePaymentNoticeV2_2Response.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query notice_id_2_activatev2 on db nodo_online under macro NewMod1
