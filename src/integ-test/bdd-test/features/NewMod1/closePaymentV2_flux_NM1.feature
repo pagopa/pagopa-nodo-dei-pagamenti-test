@@ -780,3 +780,28 @@ Feature: flux tests for closePaymentV2
         Then verify the HTTP status code of v2/closepayment response is 422
         And check outcome is KO of v2/closepayment response
         And check description is Outcome already acquired of v2/closepayment response
+
+    # FLUSSO_NM1_CP_03.3
+
+    Scenario: FLUSSO_NM1_CP_03.3 (part 1)
+        Given the checkPosition scenario executed successfully
+        And the activatePaymentNoticeV2 with iuv scenario executed successfully
+        And the activatePaymentNoticeV2 with iuv1 scenario executed successfully
+
+        # POSITION_ACTIVATE
+        And checks the value $activatePaymentNoticeV2_1Response.paymentToken,$activatePaymentNoticeV2_2Response.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query notice_id_2_activatev2 on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2.idPSP,$activatePaymentNoticeV2.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query notice_id_2_activatev2 on db nodo_online under macro NewMod1
+
+        And the closePaymentV2 KO request scenario executed successfully
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 200
+        And check outcome is OK of v2/closepayment response
+
+    Scenario: FLUSSO_NM1_CP_03.3 (part 2)
+        Given the FLUSSO_NM1_CP_03.3 (part 1) scenario executed successfully
+        And wait 2 seconds for expiration
+        And the closePaymentV2 OK with 2 paymentToken request scenario executed successfully
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 422
+        And check outcome is KO of v2/closepayment response
+        And check description is Outcome already acquired of v2/closepayment response
