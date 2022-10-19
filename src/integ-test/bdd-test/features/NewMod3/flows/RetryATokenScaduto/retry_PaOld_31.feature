@@ -64,7 +64,7 @@ Feature: process tests for retry a token scaduto
     Then verify the HTTP status code of mod3CancelV1 response is 200
 
   Scenario: Define RPT
-    Given the Execute activatePaymentNotice request scenario executed successfully
+    Given the Execute poller Annulli scenario executed successfully
     And RPT generation
       """
       <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
