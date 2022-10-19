@@ -104,7 +104,7 @@ Feature: process tests for nodoInviaRT_ibanAccr_ibanAdd
             <identificativoDominio>44444444444</identificativoDominio>
             <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
             <codiceContestoPagamento>CCD01</codiceContestoPagamento>
-            <rpt>$rpt1Attachment</rpt>
+            <rpt>$rptAttachment</rpt>
             </elementoListaRPT>
             </listaRPT>
             </ws:nodoInviaCarrelloRPT>
