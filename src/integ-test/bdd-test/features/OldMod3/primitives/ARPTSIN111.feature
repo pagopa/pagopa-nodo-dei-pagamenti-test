@@ -17,7 +17,7 @@ Feature: Syntax checks KO for nodoAttivaRPT
             <identificativoIntermediarioPSPPagamento>#psp#</identificativoIntermediarioPSPPagamento>
             <identificativoCanalePagamento>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanalePagamento>
             <codificaInfrastrutturaPSPBARCODE-GS1-128</codificaInfrastrutturaPSP>
-            <codiceIdRPT><bc:BarCode>   <!--bc:CodStazPA>01</bc:CodStazPA-->  <bc:AuxDigit>3</bc:AuxDigit>  <bc:CodIUV>11332222222222222</bc:CodIUV> </bc:BarCode></codiceIdRPT>
+            <codiceIdRPT><bc:BarCode><!--bc:CodStazPA>01</bc:CodStazPA--><bc:AuxDigit>3</bc:AuxDigit><bc:CodIUV>11332222222222222</bc:CodIUV></bc:BarCode></codiceIdRPT>
             <datiPagamentoPSP>
             <importoSingoloVersamento>10.00</importoSingoloVersamento>
             <!--Optional:-->
