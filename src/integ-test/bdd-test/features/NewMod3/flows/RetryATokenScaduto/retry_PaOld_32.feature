@@ -169,7 +169,7 @@ Feature: process tests for retry a token scaduto
     Then check esito is OK of nodoInviaRPT response
 
     Scenario: Execute poller Annulli
-    Given the Execute activatePaymentNotice request scenario executed successfully
+    Given the Execute nodoInviaRPT request scenario executed successfully
     When job mod3CancelV1 triggered after 5 seconds
     Then verify the HTTP status code of mod3CancelV1 response is 200
 
