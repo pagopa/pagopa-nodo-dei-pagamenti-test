@@ -140,7 +140,7 @@ Feature: Semantic checks KO for nodoAttivaRPT
     When psp sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
     Then check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of nodoAttivaRPT response    
 
-  # identificativoIntermediarioPA value check [ARPTSEM24]
+  # identificativoIntermediarioPA value check [ARPTSEM23]
   Scenario: Check PPT_STAZIONE_INT_PA_IRRAGGIUNGIBILE error on identificativoIntermediarioPA not in configuration
     Given initial XML nodoAttivaRPT
         """

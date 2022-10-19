@@ -201,7 +201,6 @@ Feature: Syntax checks KO for nodoAttivaRPT
         Examples:
         | tag                    | value                    | SoapUI Test |
         | bc:AuxDigit            | Empty                    | ARPTSIN110  |
-        | bc:AuxDigit            | 3                        | ARPTSIN111  |
         | bc:AuxDigit            | 8                        | ARPTSIN112  |
         | bc:CodIUV              | Empty                    | ARPTSIN113  |
         | bc:CodIUV              | Sono16CaratteAlf         | ARPTSIN114  |
