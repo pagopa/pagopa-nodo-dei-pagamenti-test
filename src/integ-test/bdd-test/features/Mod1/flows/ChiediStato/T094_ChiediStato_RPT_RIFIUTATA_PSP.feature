@@ -101,7 +101,7 @@ Feature: process tests for ChiediStato_RPT_RIFIUTATA_PSP
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>6000000000_03</identificativoCanale>
+            <identificativoCanale>6000000000_07</identificativoCanale>
             <tipoFirma></tipoFirma>
             <rpt>$rptAttachment</rpt>
             </ws:nodoInviaRPT>
@@ -157,7 +157,7 @@ Feature: process tests for ChiediStato_RPT_RIFIUTATA_PSP
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>6000000000_03</identificativoCanale>
+            <identificativoCanale>6000000000_07</identificativoCanale>
             <tipoFirma></tipoFirma>
             <rpt>$rptAttachment</rpt>
             </ws:nodoInviaRPT>
