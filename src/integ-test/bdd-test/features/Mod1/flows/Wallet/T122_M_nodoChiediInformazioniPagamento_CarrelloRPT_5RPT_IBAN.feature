@@ -2,7 +2,7 @@ Feature: process tests for 5 RPT 5 Versamenti
 
     Background:
         Given systems up
-@runnable
+    @runnable
     Scenario: RPT generation
         Given RPT generation
             """
@@ -125,7 +125,7 @@ Feature: process tests for 5 RPT 5 Versamenti
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-@runnable
+    @runnable
     Scenario: RPT2 generation
         Given the RPT generation scenario executed successfully
         And RPT2 generation
@@ -250,7 +250,7 @@ Feature: process tests for 5 RPT 5 Versamenti
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-@runnable
+    @runnable
     Scenario: RPT3 generation
         Given the RPT2 generation scenario executed successfully
         And RPT3 generation
@@ -375,7 +375,7 @@ Feature: process tests for 5 RPT 5 Versamenti
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-@runnable
+    @runnable
     Scenario: RPT4 generation
         Given the RPT3 generation scenario executed successfully
         And RPT4 generation
@@ -499,7 +499,7 @@ Feature: process tests for 5 RPT 5 Versamenti
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-@runnable
+    @runnable
     Scenario: RPT5 generation
         Given the RPT4 scenario executed successfully
         And RPT5 generation
@@ -623,66 +623,83 @@ Feature: process tests for 5 RPT 5 Versamenti
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-@runnable
+    @runnable
     Scenario: Execute nodoInviaCarrelloRPT request
         Given the RPT5 generation scenario executed successfully
         And initial XML nodoInviaCarrelloRPT
-        """
-        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-        <soapenv:Header>
-        <ppt:intestazioneCarrelloPPT>
-        <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
-        <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
-        <identificativoCarrello>#CARRELLO#</identificativoCarrello>
-        </ppt:intestazioneCarrelloPPT>
-        </soapenv:Header>
-        <soapenv:Body>
-        <ws:nodoInviaCarrelloRPT>
-        <password>pwdpwdpwd</password>
-        <identificativoPSP>#psp_AGID#</identificativoPSP>
-        <identificativoIntermediarioPSP>97735020584</identificativoIntermediarioPSP>
-        <identificativoCanale>#canale_AGID#</identificativoCanale>
-        <listaRPT>
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header>
+            <ppt:intestazioneCarrelloPPT>
+            <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
+            <identificativoCarrello>#CARRELLO#</identificativoCarrello>
+            </ppt:intestazioneCarrelloPPT>
+            </soapenv:Header>
+            <soapenv:Body>
+            <ws:nodoInviaCarrelloRPT>
+            <password>pwdpwdpwd</password>
+            <identificativoPSP>#psp_AGID#</identificativoPSP>
+            <identificativoIntermediarioPSP>97735020584</identificativoIntermediarioPSP>
+            <identificativoCanale>#canale_AGID#</identificativoCanale>
+            <listaRPT>
             <elementoListaRPT>
-                <identificativoDominio>44444444444</identificativoDominio>
-                <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
-                <codiceContestoPagamento>CCD01</codiceContestoPagamento>
-                <rpt>$rptAttachment</rpt>
+            <identificativoDominio>44444444444</identificativoDominio>
+            <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+            <rpt>$rptAttachment</rpt>
             </elementoListaRPT>
             <elementoListaRPT>
-                <identificativoDominio>44444444445</identificativoDominio>
-                <identificativoUnivocoVersamento>$2IUV</identificativoUnivocoVersamento>
-                <codiceContestoPagamento>CCD02</codiceContestoPagamento>
-                <rpt>$rpt2Attachment</rpt>
+            <identificativoDominio>44444444445</identificativoDominio>
+            <identificativoUnivocoVersamento>$2IUV</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>CCD02</codiceContestoPagamento>
+            <rpt>$rpt2Attachment</rpt>
             </elementoListaRPT>
             <elementoListaRPT>
-                <identificativoDominio>44444444444</identificativoDominio>
-                <identificativoUnivocoVersamento>$3IUV</identificativoUnivocoVersamento>
-                <codiceContestoPagamento>CCD03</codiceContestoPagamento>
-                <rpt>$rpt3Attachment</rpt>
+            <identificativoDominio>44444444444</identificativoDominio>
+            <identificativoUnivocoVersamento>$3IUV</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>CCD03</codiceContestoPagamento>
+            <rpt>$rpt3Attachment</rpt>
             </elementoListaRPT>
             <elementoListaRPT>
-                <identificativoDominio>44444444445</identificativoDominio>
-                <identificativoUnivocoVersamento>$4IUV</identificativoUnivocoVersamento>
-                <codiceContestoPagamento>CCD04</codiceContestoPagamento>
-                <rpt>$rpt4Attachment</rpt>
+            <identificativoDominio>44444444445</identificativoDominio>
+            <identificativoUnivocoVersamento>$4IUV</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>CCD04</codiceContestoPagamento>
+            <rpt>$rpt4Attachment</rpt>
             </elementoListaRPT>
             <elementoListaRPT>
-                <identificativoDominio>44444444444</identificativoDominio>
-                <identificativoUnivocoVersamento>$5IUV</identificativoUnivocoVersamento>
-                <codiceContestoPagamento>CCD05</codiceContestoPagamento>
-                <rpt>$rpt5Attachment</rpt>
+            <identificativoDominio>44444444444</identificativoDominio>
+            <identificativoUnivocoVersamento>$5IUV</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>CCD05</codiceContestoPagamento>
+            <rpt>$rpt5Attachment</rpt>
             </elementoListaRPT>
-        </listaRPT>
-        </ws:nodoInviaCarrelloRPT>
-        </soapenv:Body>
-        </soapenv:Envelope>
-        """
+            </listaRPT>
+            </ws:nodoInviaCarrelloRPT>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And initial XML pspInviaCarrelloRPT
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <ws:pspInviaCarrelloRPTResponse>
+            <pspInviaCarrelloRPTResponse>
+            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+            <identificativoCarrello>$nodoInviaCarrelloRPT.identificativoCarrello</identificativoCarrello>
+            <parametriPagamentoImmediato>idBruciatura=$nodoInviaCarrelloRPT.identificativoCarrello</parametriPagamentoImmediato>
+            </pspInviaCarrelloRPTResponse>
+            </ws:pspInviaCarrelloRPTResponse>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
+
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
         And check url contains acardste of nodoInviaCarrelloRPT response
         And retrieve session token from $nodoInviaCarrelloRPTResponse.url
-@runnable
+    @runnable
     Scenario: Execution idPagamento
         Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
         When WISP sends rest GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
