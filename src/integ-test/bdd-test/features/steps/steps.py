@@ -10,6 +10,7 @@ from xml.dom.minicompat import NodeList
 from xml.dom.minidom import parseString
 import base64 as b64
 import json_operations as jo
+import threading
 
 import requests
 from behave import *
@@ -2521,3 +2522,11 @@ def step_impl(context, causaleVers):
     db.executeQuery(conn, query_update)
 
     db.closeConnection(conn)
+
+@step(u'run in parallel "{feature}", "{scenario}"')
+def step_impl(context, feature, scenario):
+    t = threading.Thread(
+        name='run test parallel',
+        target=utils.parallel_executor,
+        args=[context, feature, scenario])
+    t.start()
