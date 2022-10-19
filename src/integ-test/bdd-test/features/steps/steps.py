@@ -817,9 +817,9 @@ def step_impl(context, sender, method, service, receiver):
                 l = list()
                 l.append(body["paymentTokens"])
                 body["paymentTokens"] = l
-        if 'totalAmount' in body.keys():
-             body["totalAmount"] = float(body["totalAmount"])
-        if 'fee' in body.keys():
+        if ('totalAmount' in body.keys()) and (body["totalAmount"] != None):
+            body["totalAmount"] = float(body["totalAmount"])
+        if ('fee' in body.keys()) and (body["fee"] != None):
             body["fee"] = float(body["fee"])
         if ('positionslist' in body.keys()) and (body["positionslist"] != None):
             body["positionslist"] = body["positionslist"]["position"]
