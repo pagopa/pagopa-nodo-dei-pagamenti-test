@@ -234,7 +234,7 @@ Feature: process tests for retry a token scaduto
       <idBrokerPSP>$activatePaymentNotice.idBrokerPSP</idBrokerPSP>
       <idChannel>$activatePaymentNotice.idChannel</idChannel>
       <password>pwdpwdpwd</password>
-      <paymentToken>$activatePaymentNotice1Response.paymentToken</paymentToken>
+      <paymentToken>$activatePaymentNotice2Response.paymentToken</paymentToken>
       <outcome>OK</outcome>
       <details>
       <paymentMethod>creditCard</paymentMethod>
