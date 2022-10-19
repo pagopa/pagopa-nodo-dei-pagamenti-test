@@ -177,6 +177,7 @@ Feature: flow tests for sendPaymentOutcomeV2 - Marca da bollo
          </Signature>
          </marcaDaBollo>
          """
+      And saving MB request in MBxsd
 
    @skip
    Scenario: sendPaymentOutcomeV2
@@ -253,14 +254,12 @@ Feature: flow tests for sendPaymentOutcomeV2 - Marca da bollo
    Scenario: execute sendPaymentOutcomeV2 1
       Given the execute closePaymentV2 1 scenario executed successfully
       And the Define MBD scenario executed successfully
-      And saving MB request in MBxsd
       And MB generation
          """
          $MB
          """
       And the sendPaymentOutcomeV2 scenario executed successfully
       When psp sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
-      And wait 10 seconds for expiration
       Then check outcome is OK of sendPaymentOutcomeV2 response
       And verify 1 record for the table POSITION_TRANSFER_MBD retrived by the query select_position_transfer_mbd on db nodo_online under macro NewMod1
       And checks the value $MBxsd.TipoBollo of the record at column TIPO_BOLLO of the table POSITION_TRANSFER_MBD retrived by the query select_position_transfer_mbd on db nodo_online under macro NewMod1
