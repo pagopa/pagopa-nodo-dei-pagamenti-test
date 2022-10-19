@@ -9,15 +9,14 @@ Feature: Semantic checks KO for nodoVerificaRPT
             <soapenv:Header/>
             <soapenv:Body>
             <ws:nodoVerificaRPT>
-            <identificativoPSP>#psp#</identificativoPSP>
-            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanale>
+            <identificativoPSP>40000000001</identificativoPSP>
+            <identificativoIntermediarioPSP>40000000001</identificativoIntermediarioPSP>
+            <identificativoCanale>40000000001_01</identificativoCanale>
             <password>pwdpwdpwd</password>
             <codiceContestoPagamento>CCD01</codiceContestoPagamento>
             <codificaInfrastrutturaPSP>BARCODE-GS1-128</codificaInfrastrutturaPSP>
-            <codiceIdRPT>
-                <bc:BarCode>
-                    <bc:Gln>4444444444444</bc:Gln>
+            <codiceIdRPT><bc:BarCode>
+                    <bc:Gln>444444444444</bc:Gln>
                     <bc:CodStazPA>01</bc:CodStazPA>
                     <bc:AuxDigit>2</bc:AuxDigit>
                     <bc:CodIUV>123456789012345</bc:CodIUV>
