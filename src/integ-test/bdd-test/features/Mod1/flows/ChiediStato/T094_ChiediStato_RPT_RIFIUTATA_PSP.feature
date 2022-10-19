@@ -2,7 +2,7 @@ Feature: process tests for ChiediStato_RPT_RIFIUTATA_PSP
 
     Background:
         Given systems up
-@runnable
+    @runnable
     Scenario: RPT generation
         Given RPT generation
             """
@@ -81,7 +81,7 @@ Feature: process tests for ChiediStato_RPT_RIFIUTATA_PSP
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-@runnable
+    @runnable
     Scenario: Execute nodoInviaRPT request
         Given the RPT generation scenario executed successfully
         And initial XML nodoInviaRPT
@@ -108,12 +108,34 @@ Feature: process tests for ChiediStato_RPT_RIFIUTATA_PSP
             </soapenv:Body>
             </soapenv:Envelope>
             """
+        And initial XML pspInviaRPT
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <ws:pspInviaRPTResponse>
+            <pspInviaRPTResponse>
+            <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
+            <listaErroriRPT>
+            <fault>
+            <faultCode>CANALE_SYSTEM_ERROR</faultCode>
+            <faultString>system error</faultString>
+            <id>wrapper</id>
+            </fault>
+            </listaErroriRPT>
+            </pspInviaRPTResponse>
+            </ws:pspInviaRPTResponse>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
+
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is KO of nodoInviaRPT response
         And check faultCode is PPT_CANALE_ERRORE of nodoInviaRPT response
         And check description contains CANALE_RPT_DA_RIFIUTARE of nodoInviaRPT response
         And check id is #psp# of nodoInviaRPT response
-@runnable
+    @runnable
     Scenario: Execute nodoChiediStatoRPT request
         Given the Execute nodoInviaRPT scenario executed successfully
         And initial XML nodoChiediStatoRPT
@@ -137,7 +159,7 @@ Feature: process tests for ChiediStato_RPT_RIFIUTATA_PSP
         And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
         And check url field not exists in nodoChiediStatoRPT response
-@runnable
+    @runnable
     Scenario: Execute second nodoInviaRPT request
         Given the Execute nodoChiediStatoRPT request scenario executed successfully
         And initial XML nodoInviaRPT
