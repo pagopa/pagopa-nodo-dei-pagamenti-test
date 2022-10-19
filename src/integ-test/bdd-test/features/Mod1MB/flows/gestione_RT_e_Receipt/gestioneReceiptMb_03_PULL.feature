@@ -370,6 +370,17 @@ Feature: gestioneReceiptMb_03_PULL
             </soapenv:Body>
             </soapenv:Envelope>
             """
+        And EC2 replies to nodo-dei-pagamenti with the paSendRT
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
+            <soapenv:Header />
+            <soapenv:Body>
+            <paf:paSendRTRes>
+            <outcome>OK</outcome>
+            </paf:paSendRTRes>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
 
