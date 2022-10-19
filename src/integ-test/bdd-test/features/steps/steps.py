@@ -464,6 +464,46 @@ def step_impl(context, number):
     setattr(context, f'rpt{number}Attachment', payload)
 
 
+@given ('MB generation')
+def step_impl(context):
+    payload = context.text or ""
+
+    payload = utils.replace_local_variables(payload, context)
+    payload = utils.replace_context_variables(payload, context)
+    payload = utils.replace_global_variables(payload, context)
+
+    if '#iubd#' in payload:
+        iubd = ''+ str(random.randint(10000000, 20000000)) + str(random.randint(10000000, 20000000))
+        payload = payload.replace('#iubd#', iubd)
+        setattr(context, 'iubd', iubd)
+
+    payload_b = bytes(payload, 'ascii')
+    payload_uni = b64.b64encode(payload_b)
+    payload = f"{payload_uni}".split("'")[1]
+
+    setattr(context, 'bollo', payload)
+
+
+@given ('MB{number:d} generation')
+def step_impl(context, number):
+    payload = context.text or ""
+
+    payload = utils.replace_local_variables(payload, context)
+    payload = utils.replace_context_variables(payload, context)
+    payload = utils.replace_global_variables(payload, context)
+
+    if f'#iubd{number}#' in payload:
+        iubd = ''+ str(random.randint(10000000, 20000000)) + str(random.randint(10000000, 20000000))
+        payload = payload.replace(f'#iubd{number}#', iubd)
+        setattr(context, f'{number}iubd', iubd)
+
+    payload_b = bytes(payload, 'ascii')
+    payload_uni = b64.b64encode(payload_b)
+    payload = f"{payload_uni}".split("'")[1]
+
+    setattr(context, f'{number}bollo', payload)
+
+
 @given('REND generation')
 def step_impl(context):
     payload = context.text or ""
@@ -2294,28 +2334,3 @@ def step_impl(context, primitive):
     payload = utils.replace_context_variables(payload, context)
     payload = utils.replace_global_variables(payload, context)
     setattr(context, primitive, payload)
-
-
-@given('MBD generation')
-def step_impl(context):
-    payload = context.text or ""
-    date = datetime.date.today().strftime("%Y-%m-%d")
-    timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
-    setattr(context, 'date', date)
-    setattr(context, 'timedate', timedate)
-    payload = utils.replace_local_variables(payload, context)
-    payload = utils.replace_context_variables(payload, context)
-
-    if "#iubd#" in payload:
-        iubd = f"10{str(random.randint(100000000000, 999999999999))}"
-        payload = payload.replace('#iubd#', iubd)
-        setattr(context, 'iubd', iubd)
-
-    payload = utils.replace_global_variables(payload, context)
-
-    print('payload MBD: ', payload)
-    payload_b = bytes(payload, 'ascii')
-    payload_uni = b64.b64encode(payload_b)
-    payload = f"{payload_uni}".split("'")[1]
-
-    setattr(context, 'mbdAttachment', payload)

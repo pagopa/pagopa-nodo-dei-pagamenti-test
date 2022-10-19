@@ -5,7 +5,7 @@ Feature: syntax checks for sendPaymentOutcomeV2
 
    @skip
    Scenario: Define MBD
-      Given MBD generation
+      Given MB generation
          """
          <marcaDaBollo xmlns="http://www.agenziaentrate.gov.it/2014/MarcaDaBollo" xmlns:ns2="http://www.w3.org/2000/09/xmldsig#">
          <PSP>
@@ -91,7 +91,7 @@ Feature: syntax checks for sendPaymentOutcomeV2
          <marcaDaBollo>
          <paymentToken>12345678901234567890123456789012</paymentToken>
          <idTransfer>1</idTransfer>
-         <MBDAttachment>$mbdAttachment</MBDAttachment>
+         <MBDAttachment>$bollo</MBDAttachment>
          </marcaDaBollo>
          </marcheDaBollo>
          </details>
@@ -394,7 +394,7 @@ Feature: syntax checks for sendPaymentOutcomeV2
          <marcheDaBollo>
          <marcaDaBollo>
          <idTransfer>1</idTransfer>
-         <MBDAttachment>$mbdAttachment</MBDAttachment>
+         <MBDAttachment>$bollo</MBDAttachment>
          </marcaDaBollo>
          </marcheDaBollo>
          </details>
@@ -466,7 +466,7 @@ Feature: syntax checks for sendPaymentOutcomeV2
          <marcaDaBollo>
          <paymentToken></paymentToken>
          <idTransfer>1</idTransfer>
-         <MBDAttachment>$mbdAttachment</MBDAttachment>
+         <MBDAttachment>$bollo</MBDAttachment>
          </marcaDaBollo>
          </marcheDaBollo>
          </details>
@@ -538,7 +538,7 @@ Feature: syntax checks for sendPaymentOutcomeV2
          <marcaDaBollo>
          <paymentToken>123456789012345678901234567890123456</paymentToken>
          <idTransfer>1</idTransfer>
-         <MBDAttachment>$mbdAttachment</MBDAttachment>
+         <MBDAttachment>$bollo</MBDAttachment>
          </marcaDaBollo>
          </marcheDaBollo>
          </details>

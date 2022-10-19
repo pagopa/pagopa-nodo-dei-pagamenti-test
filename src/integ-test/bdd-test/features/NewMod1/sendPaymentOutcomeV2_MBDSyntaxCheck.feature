@@ -57,7 +57,7 @@ Feature: MBD syntax checks in sendPaymentOutcomeV2
          <marcaDaBollo>
          <paymentToken>12345678901234567890123456789012</paymentToken>
          <idTransfer>1</idTransfer>
-         <MBDAttachment>$mbdAttachment</MBDAttachment>
+         <MBDAttachment>$bollo</MBDAttachment>
          </marcaDaBollo>
          </marcheDaBollo>
          </details>
@@ -68,7 +68,7 @@ Feature: MBD syntax checks in sendPaymentOutcomeV2
    @skip
    # test 1
    Scenario: Define MBD test 1
-      Given MBD generation
+      Given MB generation
          """
          <marcaDaBollo xmlns="http://www.agenziaentrate.gov.it/2014/MarcaDaBollo" xmlns:ns2="http://www.w3.org/2000/09/xmldsig#">
          <IUBD>#iubd#</IUBD>
@@ -107,7 +107,7 @@ Feature: MBD syntax checks in sendPaymentOutcomeV2
    @skip
    # test 2
    Scenario: Define MBD test 2
-      Given MBD generation
+      Given MB generation
          """
          <marcaDaBollo xmlns="http://www.agenziaentrate.gov.it/2014/MarcaDaBollo" xmlns:ns2="http://www.w3.org/2000/09/xmldsig#">
          <PSP>
@@ -149,7 +149,7 @@ Feature: MBD syntax checks in sendPaymentOutcomeV2
    @skip
    # test 3
    Scenario: Define MBD test 3
-      Given MBD generation
+      Given MB generation
          """
          <marcaDaBollo xmlns="http://www.agenziaentrate.gov.it/2014/MarcaDaBollo" xmlns:ns2="http://www.w3.org/2000/09/xmldsig#">
 
@@ -192,7 +192,7 @@ Feature: MBD syntax checks in sendPaymentOutcomeV2
 
    # test 3
    Scenario: Define MBD test 4
-      Given MarcaDaBollo
+      Given initial xml MB
          """
          <marcaDaBollo xmlns="http://www.agenziaentrate.gov.it/2014/MarcaDaBollo" xmlns:ns2="http://www.w3.org/2000/09/xmldsig#">
          <PSP>
@@ -226,7 +226,11 @@ Feature: MBD syntax checks in sendPaymentOutcomeV2
 
    Scenario Outline: Check PPT_SINTASSI error on MBD PSP no tag - Test 4
       Given the Define MBD test 4 scenario executed successfully
-      And <elem> with <value> in MarcaDaBollo
+      And <elem> with <value> in MB
+      And MB generation 
+      """
+      $MB
+      """
       And the sendPaymentOutcomeV2 scenario executed successfully
       When psp sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
       Then check outcome is KO of sendPaymentOutcomeV2 response

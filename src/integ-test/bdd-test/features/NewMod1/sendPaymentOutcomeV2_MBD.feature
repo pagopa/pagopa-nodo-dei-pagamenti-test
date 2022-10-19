@@ -146,7 +146,7 @@ Feature: flow tests for sendPaymentOutcomeV2 - Marca da bollo
 
    @skip
    Scenario: Define MBD
-      Given MBD generation
+      Given MB generation
          """
          <marcaDaBollo xmlns="http://www.agenziaentrate.gov.it/2014/MarcaDaBollo" xmlns:ns2="http://www.w3.org/2000/09/xmldsig#">
          <PSP>
@@ -228,7 +228,7 @@ Feature: flow tests for sendPaymentOutcomeV2 - Marca da bollo
          <marcaDaBollo>
          <paymentToken>$activatePaymentNoticeV2Response.paymentToken</paymentToken>
          <idTransfer>1</idTransfer>
-         <MBDAttachment>$mbdAttachment</MBDAttachment>
+         <MBDAttachment>$bollo</MBDAttachment>
          </marcaDaBollo>
          </marcheDaBollo>
          </details>
