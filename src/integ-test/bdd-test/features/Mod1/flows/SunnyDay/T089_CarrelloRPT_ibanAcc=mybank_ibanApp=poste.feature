@@ -1,15 +1,16 @@
 Feature: process tests for nodoInviaRT_ibanAccr_ibanAdd
     Background:
         Given systems up
-@runnable
+    @runnable
     Scenario: RPT generation
         Given RPT generation
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-            <pay_i:identificativoDominio>44444444444</pay_i:identificativoDominio>
-            <pay_i:identificativoStazioneRichiedente>44444444444_01</pay_i:identificativoStazioneRichiedente>
+            <pay_i:identificativoDominio>66666666666</pay_i:identificativoDominio>
+            <pay_i:identificativoStazioneRichiedente>66666666666_01</pay_i:identificativoStazioneRichiedente>
+            </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
             <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
             <pay_i:autenticazioneSoggetto>CNS</pay_i:autenticazioneSoggetto>
@@ -68,9 +69,9 @@ Feature: process tests for nodoInviaRT_ibanAccr_ibanAdd
             <pay_i:datiSingoloVersamento>
             <pay_i:importoSingoloVersamento>10.00</pay_i:importoSingoloVersamento>
             <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
-            <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
+            <pay_i:ibanAccredito>IT45R0760103200000000001016</pay_i:ibanAccredito>
             <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
-            <pay_i:ibanAppoggio>IT45R0760103200000000001016</pay_i:ibanAppoggio>
+            <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio>
             <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
             <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
             <pay_i:causaleVersamento>pagamento fotocopie pratica RPT</pay_i:causaleVersamento>
@@ -79,54 +80,49 @@ Feature: process tests for nodoInviaRT_ibanAccr_ibanAdd
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-@runnable
+    @runnable
     Scenario: Execute nodoInviaCarrelloRPT request
         Given the RPT generation scenario executed successfully
         And initial XML nodoInviaCarrelloRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
-            <ppt:intestazioneCarrelloPPT>
-            <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
-            <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
-            <identificativoCarrello>#carrelloMills#</identificativoCarrello>
-            </ppt:intestazioneCarrelloPPT>
+            <ppt:intestazionePPT>
+            <identificativoIntermediarioPA>66666666666</identificativoIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>66666666666_01</identificativoStazioneIntermediarioPA>
+            <identificativoDominio>66666666666</identificativoDominio>
+            <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>#carrelloMillis#</codiceContestoPagamento>
+            </ppt:intestazionePPT>
             </soapenv:Header>
             <soapenv:Body>
-            <ws:nodoInviaCarrelloRPT>
+            <ws:nodoInviaRPT>
             <password>pwdpwdpwd</password>
-            <identificativoPSP>#psp#</identificativoPSP>
-            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canale#</identificativoCanale>
-            <listaRPT>
-            <elementoListaRPT>
-            <identificativoDominio>44444444444</identificativoDominio>
-            <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>CCD01</codiceContestoPagamento>
-            <!--tipoFirma></tipoFirma-->
+            <identificativoPSP>60000000001</identificativoPSP>
+            <identificativoIntermediarioPSP>60000000001</identificativoIntermediarioPSP>
+            <identificativoCanale>60000000001_03</identificativoCanale>
+            <tipoFirma></tipoFirma>
             <rpt>$rptAttachment</rpt>
-            </elementoListaRPT>
-            </listaRPT>
-            </ws:nodoInviaCarrelloRPT>
+            </ws:nodoInviaRPT>
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        # And initial XML pspInviaCarrelloRPT
-        #     """
-        #     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-        #     <soapenv:Header/>
-        #     <soapenv:Body>
-        #     <ws:pspInviaCarrelloRPTResponse>
-        #     <pspInviaCarrelloRPTResponse>
-        #     <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-        #     <identificativoCarrello>$nodoInviaCarrelloRPT.identificativoCarrello</identificativoCarrello>
-        #     <parametriPagamentoImmediato>idBruciatura=$nodoInviaCarrelloRPT.identificativoCarrello</parametriPagamentoImmediato>
-        #     </pspInviaCarrelloRPTResponse>
-        #     </ws:pspInviaCarrelloRPTResponse>
-        #     </soapenv:Body>
-        #     </soapenv:Envelope>
-        #     """
-        # And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
+        And initial XML pspInviaCarrelloRPT
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <ws:pspInviaCarrelloRPTResponse>
+            <pspInviaCarrelloRPTResponse>
+            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+            <identificativoCarrello>$nodoInviaCarrelloRPT.identificativoCarrello</identificativoCarrello>
+            <parametriPagamentoImmediato>idBruciatura=$nodoInviaCarrelloRPT.identificativoCarrello</parametriPagamentoImmediato>
+            </pspInviaCarrelloRPTResponse>
+            </ws:pspInviaCarrelloRPTResponse>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
         And check url field exists in nodoInviaCarrelloRPT response
