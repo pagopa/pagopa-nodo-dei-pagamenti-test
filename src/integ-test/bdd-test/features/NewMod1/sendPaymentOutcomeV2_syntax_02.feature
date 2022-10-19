@@ -295,8 +295,7 @@ Feature: syntax checks for sendPaymentOutcomeV2
          | idTransfer                      | 6                                                                                                                                                                                                                                                                 | # marca da bollo 5     |
          | idTransfer                      | a                                                                                                                                                                                                                                                                 | # marca da bollo 6     |
          | MBDAttachment                   | None                                                                                                                                                                                                                                                              | # marca da bollo 7     |
-         | MBDAttachment                   | Empty                                                                                                                                                                                                                                                             | # marca da bollo 8     |
-         | MBDAttachment                   | s                                                                                                                                                                                                                                                          | # marca da bollo 9     |
+         | MBDAttachment                   | s                                                                                                                                                                                                                                                                 | # marca da bollo 9     |
 
    #  the syntax check is OK (check that the error is not PPT_SINTASSI_EXTRAXSD). The SPOV2 outcome is KO though because the payment has not been activated
    Scenario Outline: OK syntax checks
@@ -340,7 +339,8 @@ Feature: syntax checks for sendPaymentOutcomeV2
       Then check outcome is KO of sendPaymentOutcomeV2 response
       And check faultCode is PPT_SINTASSI_EXTRAXSD of sendPaymentOutcomeV2 response
 
-   # marca da bollo 11
+
+   # marca da bollo 11 - MBD token None  -->  PPT_SINTASSI_EXTRAXSD
    @skip
    Scenario: sendPaymentOutcomeV2 MBD token None
       Given initial XML sendPaymentOutcomeV2
@@ -411,7 +411,7 @@ Feature: syntax checks for sendPaymentOutcomeV2
       And check faultCode is PPT_SINTASSI_EXTRAXSD of sendPaymentOutcomeV2 response
 
 
-   # marca da bollo 12
+   # marca da bollo 12 - MBD token Empty  -->  PPT_SINTASSI_EXTRAXSD
    @skip
    Scenario: sendPaymentOutcomeV2 MBD token Empty
       Given initial XML sendPaymentOutcomeV2
@@ -483,7 +483,7 @@ Feature: syntax checks for sendPaymentOutcomeV2
       And check faultCode is PPT_SINTASSI_EXTRAXSD of sendPaymentOutcomeV2 response
 
 
-   # marca da bollo 13
+   # marca da bollo 13 - MBD token long  -->  PPT_SINTASSI_EXTRAXSD
    @skip
    Scenario: sendPaymentOutcomeV2 MBD token long
       Given initial XML sendPaymentOutcomeV2
@@ -553,3 +553,13 @@ Feature: syntax checks for sendPaymentOutcomeV2
       When psp sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
       Then check outcome is KO of sendPaymentOutcomeV2 response
       And check faultCode is PPT_SINTASSI_EXTRAXSD of sendPaymentOutcomeV2 response
+
+
+   # marca da bollo 8 - MBDAttachment Empty --> PPT_SINTASSI_XSD    
+   Scenario: execute sendPaymentOutcomeV2 MBDAttachment Empty
+      Given the Define MBD scenario executed successfully
+      And the sendPaymentOutcomeV2 scenario executed successfully
+      And MBDAttachment with Empty in sendPaymentOutcomeV2
+      When psp sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
+      Then check outcome is KO of sendPaymentOutcomeV2 response
+      And check faultCode is PPT_SINTASSI_XSD of sendPaymentOutcomeV2 response
