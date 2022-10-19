@@ -293,7 +293,7 @@ Feature: process tests for ChiediAvanzamento_RIFIUTATA_PSP_Carrello_sbloccoParch
         #     """
         # And PSP replies to nodo-dei-pagamenti with the pspChiediAvanzamentoRPT
         When job pspChiediAvanzamentoRpt triggered after 5 seconds
-        And wait 20 seconds for expiration
+        And wait 10 seconds for expiration
         Then checks the value CART_RIFIUTATO_PSP of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query motivo_annullamento on db nodo_online under macro Mod1
 @runnable
     Scenario: Execution retry Esito Carta
