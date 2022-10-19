@@ -232,7 +232,7 @@ Feature: process tests for retry a token scaduto
         <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
         <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
         <pay_i:dominio>
-        <pay_i:identificativoDominio>#creditor_institution_code_old#</pay_i:identificativoDominio>
+        <pay_i:identificativoDominio>$activatePaymentNotice.fiscalCode</pay_i:identificativoDominio>
         <pay_i:identificativoStazioneRichiedente>#id_station_old#</pay_i:identificativoStazioneRichiedente>
         </pay_i:dominio>
         <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
@@ -286,7 +286,7 @@ Feature: process tests for retry a token scaduto
         <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
         <pay_i:tipoVersamento>PO</pay_i:tipoVersamento>
         <pay_i:identificativoUnivocoVersamento>$iuv</pay_i:identificativoUnivocoVersamento>
-        <pay_i:codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken-v2</pay_i:codiceContestoPagamento>
+        <pay_i:codiceContestoPagamento>$activatePaymentNotice2Response.paymentToken-v2</pay_i:codiceContestoPagamento>
         <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
         <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
         <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -316,7 +316,7 @@ Feature: process tests for retry a token scaduto
       <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
       <identificativoDominio>$activatePaymentNotice.fiscalCode</identificativoDominio>
       <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
-      <codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken-v2</codiceContestoPagamento>
+      <codiceContestoPagamento>$activatePaymentNotice2Response.paymentToken-v2</codiceContestoPagamento>
       </ppt:intestazionePPT>
       </soapenv:Header>
       <soapenv:Body>
