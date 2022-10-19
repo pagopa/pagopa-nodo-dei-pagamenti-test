@@ -253,6 +253,7 @@ Feature: flow tests for sendPaymentOutcomeV2 - Marca da bollo
    Scenario: execute sendPaymentOutcomeV2 1
       Given the execute closePaymentV2 1 scenario executed successfully
       And the Define MBD scenario executed successfully
+      And saving MB request in MBxsd
       And MB generation
          """
          $MB
@@ -261,11 +262,11 @@ Feature: flow tests for sendPaymentOutcomeV2 - Marca da bollo
       When psp sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
       Then check outcome is OK of sendPaymentOutcomeV2 response
       And verify 1 record for the table POSITION_TRANSFER_MBD retrived by the query select_position_transfer_mbd on db nodo_online under macro NewMod1
-      And checks the value $MB.TipoBollo of the record at column TIPO_BOLLO of the table POSITION_TRANSFER_MBD retrived by the query select_position_transfer_mbd on db nodo_online under macro NewMod1
+      And checks the value $MBxsd.TipoBollo of the record at column TIPO_BOLLO of the table POSITION_TRANSFER_MBD retrived by the query select_position_transfer_mbd on db nodo_online under macro NewMod1
       And checks the value BD of the record at column TIPO_ALLEGATO_RICEVUTA of the table POSITION_TRANSFER_MBD retrived by the query select_position_transfer_mbd on db nodo_online under macro NewMod1
-      And checks the value $MB.IUBD of the record at column IUBD of the table POSITION_TRANSFER_MBD retrived by the query select_position_transfer_mbd on db nodo_online under macro NewMod1
-      And checks the value $MB.Importo of the record at column IMPORTO of the table POSITION_TRANSFER_MBD retrived by the query select_position_transfer_mbd on db nodo_online under macro NewMod1
-      And checks the value $MB.OraAcquisto of the record at column ORA_ACQUISTO of the table POSITION_TRANSFER_MBD retrived by the query select_position_transfer_mbd on db nodo_online under macro NewMod1
+      And checks the value $MBxsd.IUBD of the record at column IUBD of the table POSITION_TRANSFER_MBD retrived by the query select_position_transfer_mbd on db nodo_online under macro NewMod1
+      And checks the value $MBxsd.Importo of the record at column IMPORTO of the table POSITION_TRANSFER_MBD retrived by the query select_position_transfer_mbd on db nodo_online under macro NewMod1
+      And checks the value $MBxsd.OraAcquisto of the record at column ORA_ACQUISTO of the table POSITION_TRANSFER_MBD retrived by the query select_position_transfer_mbd on db nodo_online under macro NewMod1
       And checks the value NotNone of the record at column XML_CONTENT of the table POSITION_TRANSFER_MBD retrived by the query select_position_transfer_mbd on db nodo_online under macro NewMod1
       And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_TRANSFER_MBD retrived by the query select_position_transfer_mbd on db nodo_online under macro NewMod1
       And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_TRANSFER_MBD retrived by the query select_position_transfer_mbd on db nodo_online under macro NewMod1
