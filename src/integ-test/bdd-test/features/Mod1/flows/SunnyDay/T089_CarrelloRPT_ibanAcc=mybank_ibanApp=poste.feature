@@ -96,9 +96,9 @@ Feature: process tests for nodoInviaRT_ibanAccr_ibanAdd
             <soapenv:Body>
             <ws:nodoInviaCarrelloRPT>
             <password>pwdpwdpwd</password>
-            <identificativoPSP>#psp#</identificativoPSP>
-            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canale#</identificativoCanale>
+            <identificativoPSP>AGID_01</identificativoPSP>
+            <identificativoIntermediarioPSP>97735020584</identificativoIntermediarioPSP>
+            <identificativoCanale>97735020584_02</identificativoCanale>
             <listaRPT>
             <elementoListaRPT>
             <identificativoDominio>44444444444</identificativoDominio>
