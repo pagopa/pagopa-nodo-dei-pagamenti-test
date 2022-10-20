@@ -1,6 +1,6 @@
 Feature: Semantic checks KO for nodoAttivaRPT
-    #Background:
-        #Given systems up
+    Background:
+        Given systems up
     
     Scenario: Check PPT_INTERMEDIARIO_PA_DISABILITATO error 
     Given initial XML nodoAttivaRPT
