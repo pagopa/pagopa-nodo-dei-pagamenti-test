@@ -42,6 +42,7 @@ Feature: flux tests for closePaymentV2
             <fiscalCode>#creditor_institution_code#</fiscalCode>
             <noticeNumber>311$iuv</noticeNumber>
             </qrCode>
+            <expirationTime>2000</expirationTime>
             <amount>10.00</amount>
             <dueDate>2021-12-31</dueDate>
             <paymentNote>causale</paymentNote>
@@ -396,6 +397,7 @@ Feature: flux tests for closePaymentV2
     Scenario: activatePaymentNoticeV2 with iuv
         Given the activatePaymentNoticeV2 request scenario executed successfully
         And idempotencyKey with None in activatePaymentNoticeV2
+        And expirationTime with None in activatePaymentNoticeV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2_1Request
@@ -406,6 +408,7 @@ Feature: flux tests for closePaymentV2
     Scenario: activatePaymentNoticeV2 with iuv1
         Given the activatePaymentNoticeV2 request scenario executed successfully
         And idempotencyKey with None in activatePaymentNoticeV2
+        And expirationTime with None in activatePaymentNoticeV2
         And noticeNumber with 311$iuv1 in activatePaymentNoticeV2
         And creditorReferenceId with 11$iuv1 in paGetPayment
         And EC replies to nodo-dei-pagamenti with the paGetPayment
@@ -418,16 +421,33 @@ Feature: flux tests for closePaymentV2
     @skip
     Scenario: activatePaymentNoticeV2 with iuv and idempotencyKey
         Given the activatePaymentNoticeV2 request scenario executed successfully
+        And expirationTime with None in activatePaymentNoticeV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
 
     @skip
     Scenario: activatePaymentNoticeV2 with iuv and paGetPayment KO
         Given the activatePaymentNoticeV2 request scenario executed successfully
+        And idempotencyKey with None in activatePaymentNoticeV2
+        And expirationTime with None in activatePaymentNoticeV2
         And the paGetPayment KO scenario executed successfully
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check faultCode is PPT_ERRORE_EMESSO_DA_PAA of activatePaymentNoticeV2 response
+        And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2_1Request
+
+@skip
+    Scenario: activatePaymentNoticeV2 with iuv1 and expirationTime
+        Given the activatePaymentNoticeV2 request scenario executed successfully
+        And idempotencyKey with None in activatePaymentNoticeV2
+        And noticeNumber with 311$iuv1 in activatePaymentNoticeV2
+        And creditorReferenceId with 11$iuv1 in paGetPayment
+        And EC replies to nodo-dei-pagamenti with the paGetPayment
+        When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2_2Request
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_2
+        And saving paGetPayment request in paGetPayment_2Request
 
     # FLUSSO_NM1_CP_01
 
