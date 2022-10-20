@@ -2,7 +2,7 @@ Feature: pspInviaCarrelloRPT_timeout_chiediAvanzamento_sconosciuta
 
     Background:
         Given systems up
-
+@runnable
     Scenario: RPT1 generation
         Given nodo-dei-pagamenti has config parameter scheduler.pspChiediAvanzamentoRptPollerMaxRetry set to 1
         And generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr_old# and application code NA
@@ -84,51 +84,51 @@ Feature: pspInviaCarrelloRPT_timeout_chiediAvanzamento_sconosciuta
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-
+@runnable
     Scenario: Execute nodoInviaCarrelloRPT request
         Given the RPT1 generation scenario executed successfully
         And initial XML nodoInviaCarrelloRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
-                <ppt:intestazioneCarrelloPPT>
-                    <identificativoIntermediarioPA>#id_broker#</identificativoIntermediarioPA>
-                    <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
-                    <identificativoCarrello>$1carrello</identificativoCarrello>
-                </ppt:intestazioneCarrelloPPT>
+            <ppt:intestazioneCarrelloPPT>
+            <identificativoIntermediarioPA>#id_broker#</identificativoIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
+            <identificativoCarrello>$1carrello</identificativoCarrello>
+            </ppt:intestazioneCarrelloPPT>
             </soapenv:Header>
             <soapenv:Body>
-                <ws:nodoInviaCarrelloRPT>
-                    <password>pwdpwdpwd</password>
-                    <identificativoPSP>#psp#</identificativoPSP>
-                    <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-                    <identificativoCanale>#canale#</identificativoCanale>
-                    <listaRPT>
-                        <elementoListaRPT>
-                            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-                            <identificativoUnivocoVersamento>avanzaErrResponse</identificativoUnivocoVersamento>
-                            <codiceContestoPagamento>$1CCP</codiceContestoPagamento>
-                            <rpt>$rpt1Attachment</rpt>
-                        </elementoListaRPT>
-                    </listaRPT>
-                </ws:nodoInviaCarrelloRPT>
+            <ws:nodoInviaCarrelloRPT>
+            <password>pwdpwdpwd</password>
+            <identificativoPSP>#psp#</identificativoPSP>
+            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canale#</identificativoCanale>
+            <listaRPT>
+            <elementoListaRPT>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+            <identificativoUnivocoVersamento>avanzaErrResponse</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>$1CCP</codiceContestoPagamento>
+            <rpt>$rpt1Attachment</rpt>
+            </elementoListaRPT>
+            </listaRPT>
+            </ws:nodoInviaCarrelloRPT>
             </soapenv:Body>
             </soapenv:Envelope>
             """
         And initial XML pspInviaCarrelloRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-                <soapenv:Header/>
-                <soapenv:Body>
-                    <ws:pspInviaCarrelloRPTResponse>
-                        <pspInviaCarrelloRPTResponse>
-                            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-                            <delay>10000</delay>
-                            <identificativoCarrello>$nodoInviaCarrelloRPT.identificativoCarrello</identificativoCarrello>
-                            <parametriPagamentoImmediato>idBruciatura=$nodoInviaCarrelloRPT.identificativoCarrello</parametriPagamentoImmediato>
-                        </pspInviaCarrelloRPTResponse>
-                    </ws:pspInviaCarrelloRPTResponse>
-                </soapenv:Body>
+            <soapenv:Header/>
+            <soapenv:Body>
+            <ws:pspInviaCarrelloRPTResponse>
+            <pspInviaCarrelloRPTResponse>
+            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+            <delay>10000</delay>
+            <identificativoCarrello>$nodoInviaCarrelloRPT.identificativoCarrello</identificativoCarrello>
+            <parametriPagamentoImmediato>idBruciatura=$nodoInviaCarrelloRPT.identificativoCarrello</parametriPagamentoImmediato>
+            </pspInviaCarrelloRPTResponse>
+            </ws:pspInviaCarrelloRPTResponse>
+            </soapenv:Body>
             </soapenv:Envelope>
             """
         And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
@@ -143,7 +143,7 @@ Feature: pspInviaCarrelloRPT_timeout_chiediAvanzamento_sconosciuta
         And checks the value RPT_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_RPT retrived by the query rpt on db nodo_online under macro Primitive_accessorie
         And checks the value RPT_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt on db nodo_online under macro Primitive_accessorie
 
-
+@runnable
     # [pspChiediAvanzamentoRPT -> sconosciuta]
     Scenario: Execute job pspChiediAvanzamentoRPT
         Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
@@ -155,10 +155,10 @@ Feature: pspInviaCarrelloRPT_timeout_chiediAvanzamento_sconosciuta
             <ws:pspChiediAvanzamentoRPTResponse>
             <pspChiediAvanzamentoRPTResponse>
             <fault>
-               <faultCode>CANALE_RPT_SCONOSCIUTA</faultCode>
-               <faultString>RPT mai arrivata al PSP</faultString>
-               <id>#psp#</id>
-               <description>RPT sconosciuta per il PSP</description>
+            <faultCode>CANALE_RPT_SCONOSCIUTA</faultCode>
+            <faultString>RPT mai arrivata al PSP</faultString>
+            <id>#psp#</id>
+            <description>RPT sconosciuta per il PSP</description>
             </fault>
             </pspChiediAvanzamentoRPTResponse>
             </ws:pspChiediAvanzamentoRPTResponse>
