@@ -138,7 +138,7 @@ Feature: flux tests for closePaymentV2
         And saving paGetPayment request in paGetPayment_2Request
 
     @skip
-    Scenario: closePaymentV2 OK with 2 paymentToken request
+    Scenario: closePaymentV2 with 2 paymentToken request
         Given initial JSON v2/closepayment
             """
             {
@@ -201,132 +201,7 @@ Feature: flux tests for closePaymentV2
             """
 
     @skip
-    Scenario: closePaymentV2 KO with 2 paymentToken request
-        Given initial JSON v2/closepayment
-            """
-            {
-                "paymentTokens": [
-                    "$activatePaymentNoticeV2_1Response.paymentToken",
-                    "$activatePaymentNoticeV2_2Response.paymentToken"
-                ],
-                "outcome": "KO",
-                "idPSP": "#psp#",
-                "idBrokerPSP": "#id_broker_psp#",
-                "idChannel": "#canale_versione_primitive_2#",
-                "paymentMethod": "TPAY",
-                "transactionId": "#transaction_id#",
-                "totalAmount": 22,
-                "fee": 2,
-                "timestampOperation": "2033-04-23T18:25:43Z",
-                "additionalPaymentInformations": {
-                    "key": "#psp_transaction_id#"
-                },
-                "additionalPMInfo": {
-                    "origin": "",
-                    "user": {
-                        "fullName": "John Doe",
-                        "type": "F",
-                        "fiscalCode": "JHNDOE00A01F205N",
-                        "notificationEmail": "john.doe@mail.it",
-                        "userId": 1234,
-                        "userStatus": 11,
-                        "userStatusDescription": "REGISTERED_SPID"
-                    },
-                    "walletItem": {
-                        "idWallet": 1234,
-                        "walletType": "CARD",
-                        "enableableFunctions": [],
-                        "pagoPa": false,
-                        "onboardingChannel": "",
-                        "favourite": false,
-                        "createDate": "",
-                        "info": {
-                            "type": "",
-                            "blurredNumber": "",
-                            "holder": "Mario Rossi",
-                            "expireMonth": "",
-                            "expireYear": "",
-                            "brand": "",
-                            "issuerAbi": "",
-                            "issuerName": "Intesa",
-                            "label": "********234"
-                        },
-                        "authRequest": {
-                            "authOutcome": "KO",
-                            "guid": "77e1c83b-7bb0-437b-bc50-a7a58e5660ac",
-                            "correlationId": "f864d987-3ae2-44a3-bdcb-075554495841",
-                            "error": "Not Authorized",
-                            "auth_code": "99"
-                        }
-                    }
-                }
-            }
-            """
-
-    @skip
-    Scenario: closePaymentV2 OK request
-        Given initial JSON v2/closepayment
-            """
-            {
-                "paymentTokens": [
-                    "$activatePaymentNoticeV2_1Response.paymentToken"
-                ],
-                "outcome": "OK",
-                "idPSP": "#psp#",
-                "idBrokerPSP": "#id_broker_psp#",
-                "idChannel": "#canale_versione_primitive_2#",
-                "paymentMethod": "TPAY",
-                "transactionId": "#transaction_id#",
-                "totalAmount": 12,
-                "fee": 2,
-                "timestampOperation": "2033-04-23T18:25:43Z",
-                "additionalPaymentInformations": {
-                    "key": "#psp_transaction_id#"
-                },
-                "additionalPMInfo": {
-                    "origin": "",
-                    "user": {
-                        "fullName": "John Doe",
-                        "type": "F",
-                        "fiscalCode": "JHNDOE00A01F205N",
-                        "notificationEmail": "john.doe@mail.it",
-                        "userId": 1234,
-                        "userStatus": 11,
-                        "userStatusDescription": "REGISTERED_SPID"
-                    },
-                    "walletItem": {
-                        "idWallet": 1234,
-                        "walletType": "CARD",
-                        "enableableFunctions": [],
-                        "pagoPa": false,
-                        "onboardingChannel": "",
-                        "favourite": false,
-                        "createDate": "",
-                        "info": {
-                            "type": "",
-                            "blurredNumber": "",
-                            "holder": "Mario Rossi",
-                            "expireMonth": "",
-                            "expireYear": "",
-                            "brand": "",
-                            "issuerAbi": "",
-                            "issuerName": "Intesa",
-                            "label": "********234"
-                        },
-                        "authRequest": {
-                            "authOutcome": "KO",
-                            "guid": "77e1c83b-7bb0-437b-bc50-a7a58e5660ac",
-                            "correlationId": "f864d987-3ae2-44a3-bdcb-075554495841",
-                            "error": "Not Authorized",
-                            "auth_code": "99"
-                        }
-                    }
-                }
-            }
-            """
-
-    @skip
-    Scenario: closePaymentV2 KO request
+    Scenario: closePaymentV2 request
         Given initial JSON v2/closepayment
             """
             {
@@ -398,7 +273,7 @@ Feature: flux tests for closePaymentV2
         And checks the value $activatePaymentNoticeV2_1Response.paymentToken,$activatePaymentNoticeV2_2Response.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query notice_id_2_activatev2 on db nodo_online under macro NewMod1
         And checks the value $activatePaymentNoticeV2.idPSP,$activatePaymentNoticeV2.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query notice_id_2_activatev2 on db nodo_online under macro NewMod1
 
-        And the closePaymentV2 OK with 2 paymentToken request scenario executed successfully
+        And the closePaymentV2 with 2 paymentToken request scenario executed successfully
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
@@ -559,7 +434,8 @@ Feature: flux tests for closePaymentV2
         And checks the value $activatePaymentNoticeV2_1Response.paymentToken,$activatePaymentNoticeV2_2Response.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query notice_id_2_activatev2 on db nodo_online under macro NewMod1
         And checks the value $activatePaymentNoticeV2.idPSP,$activatePaymentNoticeV2.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query notice_id_2_activatev2 on db nodo_online under macro NewMod1
 
-        And the closePaymentV2 KO with 2 paymentToken request scenario executed successfully
+        And the closePaymentV2 with 2 paymentToken request scenario executed successfully
+        And outcome with KO in v2/closepayment
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
@@ -717,7 +593,7 @@ Feature: flux tests for closePaymentV2
         And checks the value $activatePaymentNoticeV2_1Response.paymentToken,$activatePaymentNoticeV2_2Response.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query notice_id_2_activatev2 on db nodo_online under macro NewMod1
         And checks the value $activatePaymentNoticeV2.idPSP,$activatePaymentNoticeV2.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query notice_id_2_activatev2 on db nodo_online under macro NewMod1
 
-        And the closePaymentV2 OK request scenario executed successfully
+        And the closePaymentV2 request scenario executed successfully
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
@@ -725,7 +601,8 @@ Feature: flux tests for closePaymentV2
     Scenario: FLUSSO_NM1_CP_03 (part 2)
         Given the FLUSSO_NM1_CP_03 (part 1) scenario executed successfully
         And wait 2 seconds for expiration
-        And the closePaymentV2 KO with 2 paymentToken request scenario executed successfully
+        And the closePaymentV2 with 2 paymentToken request scenario executed successfully
+        And outcome with KO in v2/closepayment
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 422
         And check outcome is KO of v2/closepayment response
@@ -742,7 +619,7 @@ Feature: flux tests for closePaymentV2
         And checks the value $activatePaymentNoticeV2_1Response.paymentToken,$activatePaymentNoticeV2_2Response.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query notice_id_2_activatev2 on db nodo_online under macro NewMod1
         And checks the value $activatePaymentNoticeV2.idPSP,$activatePaymentNoticeV2.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query notice_id_2_activatev2 on db nodo_online under macro NewMod1
 
-        And the closePaymentV2 OK request scenario executed successfully
+        And the closePaymentV2 request scenario executed successfully
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
@@ -750,7 +627,7 @@ Feature: flux tests for closePaymentV2
     Scenario: FLUSSO_NM1_CP_03.1 (part 2)
         Given the FLUSSO_NM1_CP_03.1 (part 1) scenario executed successfully
         And wait 2 seconds for expiration
-        And the closePaymentV2 OK with 2 paymentToken request scenario executed successfully
+        And the closePaymentV2 with 2 paymentToken request scenario executed successfully
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 422
         And check outcome is KO of v2/closepayment response
@@ -767,7 +644,8 @@ Feature: flux tests for closePaymentV2
         And checks the value $activatePaymentNoticeV2_1Response.paymentToken,$activatePaymentNoticeV2_2Response.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query notice_id_2_activatev2 on db nodo_online under macro NewMod1
         And checks the value $activatePaymentNoticeV2.idPSP,$activatePaymentNoticeV2.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query notice_id_2_activatev2 on db nodo_online under macro NewMod1
 
-        And the closePaymentV2 KO request scenario executed successfully
+        And the closePaymentV2 request scenario executed successfully
+        And outcome with KO in v2/closepayment
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
@@ -775,7 +653,8 @@ Feature: flux tests for closePaymentV2
     Scenario: FLUSSO_NM1_CP_03.2 (part 2)
         Given the FLUSSO_NM1_CP_03.2 (part 1) scenario executed successfully
         And wait 2 seconds for expiration
-        And the closePaymentV2 KO with 2 paymentToken request scenario executed successfully
+        And the closePaymentV2 with 2 paymentToken request scenario executed successfully
+        And outcome with KO in v2/closepayment
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 422
         And check outcome is KO of v2/closepayment response
@@ -792,7 +671,8 @@ Feature: flux tests for closePaymentV2
         And checks the value $activatePaymentNoticeV2_1Response.paymentToken,$activatePaymentNoticeV2_2Response.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query notice_id_2_activatev2 on db nodo_online under macro NewMod1
         And checks the value $activatePaymentNoticeV2.idPSP,$activatePaymentNoticeV2.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query notice_id_2_activatev2 on db nodo_online under macro NewMod1
 
-        And the closePaymentV2 KO request scenario executed successfully
+        And the closePaymentV2 request scenario executed successfully
+        And outcome with KO in v2/closepayment
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
@@ -800,7 +680,7 @@ Feature: flux tests for closePaymentV2
     Scenario: FLUSSO_NM1_CP_03.3 (part 2)
         Given the FLUSSO_NM1_CP_03.3 (part 1) scenario executed successfully
         And wait 2 seconds for expiration
-        And the closePaymentV2 OK with 2 paymentToken request scenario executed successfully
+        And the closePaymentV2 with 2 paymentToken request scenario executed successfully
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 422
         And check outcome is KO of v2/closepayment response
