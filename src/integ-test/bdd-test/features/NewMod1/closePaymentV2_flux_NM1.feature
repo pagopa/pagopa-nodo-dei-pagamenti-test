@@ -427,7 +427,7 @@ Feature: flux tests for closePaymentV2
         And the paGetPayment KO scenario executed successfully
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNoticeV2 response
-        And check faultCode is PPT_ERRORE_EMESSO_DALLA_PAA of activatePaymentNoticeV2 response
+        And check faultCode is PPT_ERRORE_EMESSO_DA_PAA of activatePaymentNoticeV2 response
 
     # FLUSSO_NM1_CP_01
 
@@ -823,9 +823,9 @@ Feature: flux tests for closePaymentV2
         And the closePaymentV2 with 2 paymentToken request scenario executed successfully
         And outcome with KO in v2/closepayment
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
-        Then verify the HTTP status code of v2/closepayment response is 422
+        Then verify the HTTP status code of v2/closepayment response is 400
         And check outcome is KO of v2/closepayment response
-        And check description is Outcome already acquired of v2/closepayment response
+        And check description is Unacceptable outcome when token has expired of v2/closepayment response
 
     # FLUSSO_NM1_CP_03.3
 
@@ -849,9 +849,9 @@ Feature: flux tests for closePaymentV2
         And wait 2 seconds for expiration
         And the closePaymentV2 with 2 paymentToken request scenario executed successfully
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
-        Then verify the HTTP status code of v2/closepayment response is 422
+        Then verify the HTTP status code of v2/closepayment response is 400
         And check outcome is KO of v2/closepayment response
-        And check description is Outcome already acquired of v2/closepayment response
+        And check description is Unacceptable outcome when token has expired of v2/closepayment response
 
     # FLUSSO_NM1_CP_04
 
@@ -1011,7 +1011,7 @@ Feature: flux tests for closePaymentV2
 
     # FLUSSO_NM1_CP_05
 
-    Scenario: FLUSSO_NM1_CP_05
+    Scenario: FLUSSO_NM1_CP_05 (part 1)
         Given the checkPosition scenario executed successfully
         And the activatePaymentNoticeV2 with iuv scenario executed successfully
         And the activatePaymentNoticeV2 with iuv1 scenario executed successfully
@@ -1021,9 +1021,13 @@ Feature: flux tests for closePaymentV2
         And checks the value $activatePaymentNoticeV2.idPSP,$activatePaymentNoticeV2.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query notice_id_2_activatev2 on db nodo_online under macro NewMod1
 
         When job mod3CancelV2 triggered after 4 seconds
+        Then verify the HTTP status code of mod3CancelV2 response is 200
+
+    Scenario: FLUSSO_NM1_CP_05 (part 2)
+        Given the FLUSSO_NM1_CP_05 (part 1) scenario executed successfully
         And wait 3 seconds for expiration
         And the closePaymentV2 with 2 paymentToken request scenario executed successfully
-        And WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 400
         And check outcome is KO of v2/closepayment response
         And check description is Unacceptable outcome when outcome has expired of v2/closepayment response
