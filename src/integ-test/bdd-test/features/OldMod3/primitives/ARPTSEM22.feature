@@ -11,7 +11,7 @@ Feature: Semantic checks KO for nodoAttivaRPT
               <ws:nodoAttivaRPT>
                 <identificativoPSP>#psp#</identificativoPSP>
                 <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-                <identificativoCanale>canale_ATTIVATO_PRESSO_PSP</identificativoCanale>
+                <identificativoCanale>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanale>
                 <password>pwdpwdpwd</password>
                 <codiceContestoPagamento>CCD01</codiceContestoPagamento>
                 <identificativoIntermediarioPSPPagamento>#psp#</identificativoIntermediarioPSPPagamento>
