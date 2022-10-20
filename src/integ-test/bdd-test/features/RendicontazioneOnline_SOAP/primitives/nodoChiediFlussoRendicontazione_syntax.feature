@@ -3,7 +3,7 @@ Feature: Syntax checks for nodoChiediFlussoRendicontazione
    Background:
       Given systems up
 
-
+@runnable
    # [CFRSIN0]
    Scenario: Check PPT_SINTASSI_EXTRAXSD error for nodoChiediFlussoRendicontazione primitive
       Given initial XML nodoChiediFlussoRendicontazione
@@ -17,7 +17,7 @@ Feature: Syntax checks for nodoChiediFlussoRendicontazione
          <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
          <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
          <password>pwdpwdpwd</password>
-         <identificativoDominio>#codicePA#</identificativoDominio>
+         <identificativoDominio>#creditor_institution_code#</identificativoDominio>
          <identificativoPSP>#psp#</identificativoPSP>
          <identificativoFlusso>#identificativoFlusso#</identificativoFlusso>
          </ws:nodoChiediFlussoRendicontazione>
@@ -27,7 +27,7 @@ Feature: Syntax checks for nodoChiediFlussoRendicontazione
       When  EC sends SOAP nodoChiediFlussoRendicontazione to nodo-dei-pagamenti
       Then  check faultCode is PPT_SINTASSI_EXTRAXSD of nodoChiediFlussoRendicontazione response
 
-
+@runnable
    #[CFRSIN1]
    Scenario: Check PPT_SINTASSI_EXTRAXSD error for nodoChiediFlussoRendicontazione primitive
       Given initial XML nodoChiediFlussoRendicontazione
@@ -41,7 +41,7 @@ Feature: Syntax checks for nodoChiediFlussoRendicontazione
          <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
          <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
          <password>pwdpwdpwd</password>
-         <identificativoDominio>#codicePA#</identificativoDominio>
+         <identificativoDominio>#creditor_institution_code#</identificativoDominio>
          <identificativoPSP>#psp#</identificativoPSP>
          <identificativoFlusso>#identificativoFlusso#</identificativoFlusso>
          </ws:nodoChiediFlussoRendicontazione>
@@ -51,7 +51,7 @@ Feature: Syntax checks for nodoChiediFlussoRendicontazione
       When  EC sends SOAP nodoChiediFlussoRendicontazione to nodo-dei-pagamenti
       Then  check faultCode is PPT_SINTASSI_EXTRAXSD of nodoChiediFlussoRendicontazione response
 
-
+@runnable
    Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error for nodoChiediFlussoRendicontazione primitive
       Given initial XML nodoChiediFlussoRendicontazione
          """
@@ -62,7 +62,7 @@ Feature: Syntax checks for nodoChiediFlussoRendicontazione
          <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
          <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
          <password>pwdpwdpwd</password>
-         <identificativoDominio>#codicePA#</identificativoDominio>
+         <identificativoDominio>#creditor_institution_code#</identificativoDominio>
          <identificativoPSP>#psp#</identificativoPSP>
          <identificativoFlusso>#identificativoFlusso#</identificativoFlusso>
          </ws:nodoChiediFlussoRendicontazione>
@@ -90,7 +90,7 @@ Feature: Syntax checks for nodoChiediFlussoRendicontazione
    #      <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
    #      <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
    #      <password>pwdpwdpwd</password>
-   #      <identificativoDominio>#codicePA#</identificativoDominio>
+   #      <identificativoDominio>#creditor_institution_code#</identificativoDominio>
    #      <identificativoPSP>#psp#</identificativoPSP>
    #      <identificativoFlusso>#identificativoFlusso#</identificativoFlusso>
    #      </ppt:nodoChiediFlussoRendicontazione>
@@ -101,7 +101,7 @@ Feature: Syntax checks for nodoChiediFlussoRendicontazione
    #   Then  check faultCode is PPT_SINTASSI_EXTRAXSD of nodoChiediFlussoRendicontazione response
    #   And   check faultstring is Errore di sintassi extra XSD. of nodoChiediFlussoRendicontazione response
 
-
+@runnable
    Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error for nodoChiediFlussoRendicontazione primitive
       Given initial XML nodoChiediFlussoRendicontazione
          """
@@ -112,7 +112,7 @@ Feature: Syntax checks for nodoChiediFlussoRendicontazione
          <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
          <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
          <password>pwdpwdpwd</password>
-         <identificativoDominio>#codicePA#</identificativoDominio>
+         <identificativoDominio>#creditor_institution_code#</identificativoDominio>
          <identificativoPSP>#psp#</identificativoPSP>
          <identificativoFlusso>#identificativoFlusso#</identificativoFlusso>
          </ws:nodoChiediFlussoRendicontazione>
@@ -139,7 +139,7 @@ Feature: Syntax checks for nodoChiediFlussoRendicontazione
          | identificativoDominio                 | k91JETYVnE7grIIKbzWE6Di7XKM3ymJeawhf | CFRSIN18    |
          | identificativoPSP                     | k91JETYVnE7grIIKbzWE6Di7XKM3ymJeawhf | CFRSIN21    |
          | identificativoFlusso                  | None                                 | CFRSIN22    |
-
+@runnable
    Scenario Outline: Check for nodoChiediFlussoRendicontazione response
       Given initial XML nodoChiediFlussoRendicontazione
          """
@@ -150,7 +150,7 @@ Feature: Syntax checks for nodoChiediFlussoRendicontazione
          <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
          <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
          <password>pwdpwdpwd</password>
-         <identificativoDominio>#codicePA#</identificativoDominio>
+         <identificativoDominio>#creditor_institution_code#</identificativoDominio>
          <identificativoPSP>#psp#</identificativoPSP>
          <identificativoFlusso>${#TestSuite#flussoPsp1}</identificativoFlusso>
          </ws:nodoChiediFlussoRendicontazione>
@@ -164,7 +164,7 @@ Feature: Syntax checks for nodoChiediFlussoRendicontazione
       | identificativoDominio | None  | CFRSIN16    |
       | identificativoPSP     | None  | CFRSIN19    |
 
-   
+ @runnable  
    # [CFRSIN17]
    Scenario: Check PPT_SINTASSI_EXTRAXSD error for nodoChiediFlussoRendicontazione primitive
       Given initial XML nodoChiediFlussoRendicontazione
@@ -186,7 +186,7 @@ Feature: Syntax checks for nodoChiediFlussoRendicontazione
       When  EC sends SOAP nodoChiediFlussoRendicontazione to nodo-dei-pagamenti
       Then  check faultCode is PPT_SINTASSI_EXTRAXSD of nodoChiediFlussoRendicontazione response
 
-   
+ @runnable  
    # [CFRSIN23]
    Scenario: Check PPT_ID_FLUSSO_SCONOSCIUTO error for nodoChiediFlussoRendicontazione primitive
       Given initial XML nodoChiediFlussoRendicontazione
@@ -198,7 +198,7 @@ Feature: Syntax checks for nodoChiediFlussoRendicontazione
          <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
          <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
          <password>pwdpwdpwd</password>
-         <identificativoDominio>#codicePA#</identificativoDominio>
+         <identificativoDominio>#creditor_institution_code#</identificativoDominio>
          <identificativoPSP>#psp#</identificativoPSP>
          <identificativoFlusso></identificativoFlusso>
          </ws:nodoChiediFlussoRendicontazione>
@@ -208,7 +208,7 @@ Feature: Syntax checks for nodoChiediFlussoRendicontazione
       When  EC sends SOAP nodoChiediFlussoRendicontazione to nodo-dei-pagamenti
       Then  check faultCode is PPT_ID_FLUSSO_SCONOSCIUTO of nodoChiediFlussoRendicontazione response
 
-  
+@runnable  
    # [CFRSIN24]
    Scenario: Check PPT_SINTASSI_EXTRAXSD error for nodoChiediFlussoRendicontazione primitive
       Given initial XML nodoChiediFlussoRendicontazione
@@ -220,7 +220,7 @@ Feature: Syntax checks for nodoChiediFlussoRendicontazione
          <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
          <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
          <password>pwdpwdpwd</password>
-         <identificativoDominio>#codicePA#</identificativoDominio>
+         <identificativoDominio>#creditor_institution_code#</identificativoDominio>
          <identificativoPSP>#psp#</identificativoPSP>
          <identificativoFlusso>#identificativoFlusso#</identificativoFlusso>
          <rpt>ciao</rpt>
@@ -244,7 +244,7 @@ Feature: Syntax checks for nodoChiediFlussoRendicontazione
    #      <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
    #      <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
    #      <password>pwdpwdpwd
-   #      <identificativoDominio>#codicePA#</identificativoDominio>
+   #      <identificativoDominio>#creditor_institution_code#</identificativoDominio>
    #      <identificativoPSP>#psp#</identificativoPSP>
    #      <identificativoFlusso>#identificativoFlusso#</identificativoFlusso>
    #      </ws:nodoChiediFlussoRendicontazione>
