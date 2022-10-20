@@ -248,4 +248,5 @@ Feature: Syntax checks for nodoInviaRT - OK
           | RTSIN38.1 | pay_i:codiceUnitOperAttestante           | None       |          
           | RTSIN63   | pay_i:tipoIdentificativoUnivoco          | A          |                                 
           | RTSIN76   | pay_i:indirizzoBeneficiario              | None       |
-
+          | RTSIN92   | pay_i:tipoIdentificativoUnivoco          | A          |
+          | RTSIN128.1| pay_i:indirizzoPagatore                  | None       |
