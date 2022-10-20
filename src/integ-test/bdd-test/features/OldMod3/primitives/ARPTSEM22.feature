@@ -14,10 +14,10 @@ Feature: Semantic checks KO for nodoAttivaRPT
                 <identificativoCanale>40000000001_01</identificativoCanale>
                 <password>pwdpwdpwd</password>
                 <codiceContestoPagamento>CCD01</codiceContestoPagamento>
-                <identificativoIntermediarioPSPPagamento>77777777777</identificativoIntermediarioPSPPagamento>
+                <identificativoIntermediarioPSPPagamento>40000000001</identificativoIntermediarioPSPPagamento>
                 <identificativoCanalePagamento>40000000001_01</identificativoCanalePagamento>
                 <codificaInfrastrutturaPSP>QR-CODE</codificaInfrastrutturaPSP>
-                <codiceIdRPT><qrc:QrCode>  <qrc:CF>77777777777</qrc:CF> <qrc:CodStazPA>02</qrc:CodStazPA> <qrc:AuxDigit>0</qrc:AuxDigit>  <qrc:CodIUV>015701081153300</qrc:CodIUV> </qrc:QrCode></codiceIdRPT>
+                <codiceIdRPT><qrc:QrCode>  <qrc:CF>11111122223</qrc:CF> <qrc:CodStazPA>02</qrc:CodStazPA> <qrc:AuxDigit>0</qrc:AuxDigit>  <qrc:CodIUV>015701081153300</qrc:CodIUV> </qrc:QrCode></codiceIdRPT>
                 <datiPagamentoPSP>
                     <importoSingoloVersamento>4.00</importoSingoloVersamento>
                     <!--Optional:-->
