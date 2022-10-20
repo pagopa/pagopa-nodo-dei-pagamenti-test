@@ -309,7 +309,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - OK
 
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaFlussoRendicontazione response
-    @runnable
+    
     # [SEM_NIFR_25]
     Scenario: Create REND6
         Given REND generation
@@ -347,7 +347,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - OK
             </pay_i:datiSingoliPagamenti>
             </pay_i:FlussoRiversamento>
             """
-    @runnable
+    
     Scenario: Send nodoInviaFlussoRendicontazione5 primitive
         Given the Create REND6 scenario executed successfully
         And initial XML nodoInviaFlussoRendicontazione
