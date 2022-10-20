@@ -82,7 +82,7 @@ def step_impl(context, primitive):
 
     if '#yesterday_date#' in payload:
         yesterday_date = datetime.date.today() - datetime.timedelta(days=1)
-        payload = payload.replace('#yesterday_date#', yesterday_date)
+        payload = payload.replace('#yesterday_date#', str(yesterday_date))
         setattr(context, 'yesterday_date', yesterday_date)
 
     if "#ccp#" in payload:
