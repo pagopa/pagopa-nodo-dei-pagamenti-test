@@ -9,13 +9,13 @@ Feature: Semantic checks KO for nodoAttivaRPT
           <soapenv:Header/>
           <soapenv:Body>
               <ws:nodoAttivaRPT>
-                <identificativoPSP>60000000001</identificativoPSP>
-                <identificativoIntermediarioPSP>60000000001</identificativoIntermediarioPSP>
-                <identificativoCanale>60000000001_07</identificativoCanale>
+                <identificativoPSP>#psp#</identificativoPSP>
+                <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+                <identificativoCanale>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanale>
                 <password>pwdpwdpwd</password>
                 <codiceContestoPagamento>CCD01</codiceContestoPagamento>
-                <identificativoIntermediarioPSPPagamento>60000000001</identificativoIntermediarioPSPPagamento>
-                <identificativoCanalePagamento>60000000001_07</identificativoCanalePagamento>
+                <identificativoIntermediarioPSPPagamento>#psp#</identificativoIntermediarioPSPPagamento>
+                <identificativoCanalePagamento>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanalePagamento>
                 <codificaInfrastrutturaPSP>QR-CODE</codificaInfrastrutturaPSP>
                 <codiceIdRPT><qrc:QrCode>  <qrc:CF>11223344551</qrc:CF> <qrc:CodStazPA>01</qrc:CodStazPA> <qrc:AuxDigit>0</qrc:AuxDigit>  <qrc:CodIUV>015701081153300</qrc:CodIUV> </qrc:QrCode></codiceIdRPT>
                 <datiPagamentoPSP>
