@@ -2,7 +2,7 @@ Feature: Semantic checks for nodoChiediElencoFlussiRendicontazione - KO
 
     Background:
         Given systems up
-
+@runnable
     Scenario Outline: Check semantic errors for nodoChiediElencoFlussiRendicontazione primitive
         Given initial XML nodoChiediElencoFlussiRendicontazione
             """
