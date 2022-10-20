@@ -84,7 +84,7 @@ Feature: pspInviaCarrelloRPT_timeout_chiediAvanzamento_sconosciuta
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-@runnable
+
     Scenario: Execute nodoInviaCarrelloRPT request
         Given the RPT1 generation scenario executed successfully
         And initial XML nodoInviaCarrelloRPT
@@ -143,7 +143,7 @@ Feature: pspInviaCarrelloRPT_timeout_chiediAvanzamento_sconosciuta
         And checks the value RPT_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_RPT retrived by the query rpt on db nodo_online under macro Primitive_accessorie
         And checks the value RPT_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt on db nodo_online under macro Primitive_accessorie
 
-@runnable
+
     # [pspChiediAvanzamentoRPT -> sconosciuta]
     Scenario: Execute job pspChiediAvanzamentoRPT
         Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
@@ -168,7 +168,7 @@ Feature: pspInviaCarrelloRPT_timeout_chiediAvanzamento_sconosciuta
         And PSP replies to nodo-dei-pagamenti with the pspChiediAvanzamentoRPT
         When job pspChiediAvanzamentoRpt triggered after 5 seconds
         And wait 10 seconds for expiration
-        Then checks the value RPT_ESITO_SCONOSCIUTO_PSP,RPT_ERRORE_INVIO_A_PSP of the record at column STATO of the table STATI_RPT retrived by the query rpt on db nodo_online under macro Primitive_accessorie
+        Then checks the value RPT_ESITO_SCONOSCIUTO_PSP, RPT_ERRORE_INVIO_A_PSP of the record at column STATO of the table STATI_RPT retrived by the query rpt on db nodo_online under macro Primitive_accessorie
         And checks the value RPT_ERRORE_INVIO_A_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt on db nodo_online under macro Primitive_accessorie
 
 
