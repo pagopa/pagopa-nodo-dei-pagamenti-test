@@ -2,7 +2,7 @@ Feature: pspInviaRPT_timeout_chiediAvanzamento
 
     Background:
         Given systems up
-@runnablee
+@runnable
     Scenario: RPT generation
         Given nodo-dei-pagamenti has config parameter scheduler.pspChiediAvanzamentoRptPollerMaxRetry set to 1
         And RPT generation
