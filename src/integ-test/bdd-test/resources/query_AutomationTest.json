@@ -123,6 +123,7 @@
         "position_transfer_nmu_desc": "SELECT columns FROM table_name WHERE NOTICE_ID ='$activatePaymentNoticeV2.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNoticeV2.fiscalCode' ORDER BY ID DESC",
         "position_transfer_mbd": "SELECT ptm.* FROM POSITION_TRANSFER_MBD ptm JOIN POSITION_TRANSFER pt ON ptm.FK_POSITION_TRANSFER = pt.ID WHERE pt.NOTICE_ID ='$activatePaymentNoticeV2.noticeNumber'",
         "pspEcommerce_update": "UPDATE table_name SET param = 'value' where ID_PSP = 'pspEcommerce'",
-        "canaleEcommerce_update": "UPDATE table_name SET param = 'value' where OBJ_ID = (SELECT FK_CANALI_NODO FROM CANALI WHERE ID_CANALE = 'canaleEcommerce')"
+        "canaleEcommerce_update": "UPDATE table_name SET param = 'value' where OBJ_ID = (SELECT FK_CANALI_NODO FROM CANALI WHERE ID_CANALE = 'canaleEcommerce')",
+        "select_paSendRTV2": "SELECT columns FROM table_name WHERE NOTICE_ID = '$activatePaymentNoticeV2.noticeNumber' AND TIPO_EVENTO = 'paSendRTV2' ORDER BY ID ASC"
     }
 }
