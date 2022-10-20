@@ -2,7 +2,7 @@ Feature: pspInviaCarrelloRPT_timeout_chiediAvanzamento_sconosciuta
 
     Background:
         Given systems up
-@runnable
+
     Scenario: RPT1 generation
         Given nodo-dei-pagamenti has config parameter scheduler.pspChiediAvanzamentoRptPollerMaxRetry set to 1
         And generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr_old# and application code NA
