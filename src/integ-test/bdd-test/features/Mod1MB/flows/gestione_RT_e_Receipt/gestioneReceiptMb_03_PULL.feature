@@ -88,7 +88,7 @@ Feature: gestioneReceiptMb_03_PULL
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-            <pay_i:identificativoDominio>#creditor_institution_secondary#</pay_i:identificativoDominio>
+            <pay_i:identificativoDominio>#creditor_institution_code_secondary#</pay_i:identificativoDominio>
             <pay_i:identificativoStazioneRichiedente>#id_station_secondary#</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
@@ -166,7 +166,7 @@ Feature: gestioneReceiptMb_03_PULL
             <pay_i:RT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0.xsd ">
             <pay_i:versioneOggetto>6.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-            <pay_i:identificativoDominio>#creditor_institution_secondary#</pay_i:identificativoDominio>
+            <pay_i:identificativoDominio>#creditor_institution_code_secondary#</pay_i:identificativoDominio>
             <pay_i:identificativoStazioneRichiedente>#id_station_secondary#</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRicevuta>TR0001_20120302-10:37:52.0264-F098</pay_i:identificativoMessaggioRicevuta>
@@ -270,7 +270,7 @@ Feature: gestioneReceiptMb_03_PULL
             <rpt>$rpt1Attachment</rpt>
             </elementoListaRPT>
             <elementoListaRPT>
-            <identificativoDominio>#creditor_institution_secondary#</identificativoDominio>
+            <identificativoDominio>#creditor_institution_code_secondary#</identificativoDominio>
             <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
             <rpt>$rpt2Attachment</rpt>
