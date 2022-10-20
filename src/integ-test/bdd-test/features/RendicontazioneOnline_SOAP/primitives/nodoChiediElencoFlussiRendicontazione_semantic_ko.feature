@@ -27,7 +27,7 @@ Feature: Semantic checks for nodoChiediElencoFlussiRendicontazione - KO
             | identificativoIntermediarioPA         | ciaoIntermediarioPA | PPT_INTERMEDIARIO_PA_SCONOSCIUTO  | CEFRSEM1    |
             | identificativoIntermediarioPA         | INT_NOT_ENABLED     | PPT_INTERMEDIARIO_PA_DISABILITATO | CEFRSEM2    |
             | identificativoStazioneIntermediarioPA | ciaoStazionePA      | PPT_STAZIONE_INT_PA_SCONOSCIUTA   | CEFRSEM3    |
-            | identificativoStazioneIntermediarioPA | 77777777777_05      | PPT_STAZIONE_INT_PA_DISABILITATA  | CEFRSEM4    |
+            | identificativoStazioneIntermediarioPA | 66666666666_05      | PPT_STAZIONE_INT_PA_DISABILITATA  | CEFRSEM4    |
             | password                              | password01          | PPT_AUTENTICAZIONE                | CEFRSEM5    |
             | identificativoDominio                 | ciaoDominio         | PPT_DOMINIO_SCONOSCIUTO           | CEFRSEM6    |
             | identificativoDominio                 | NOT_ENABLED         | PPT_DOMINIO_DISABILITATO          | CEFRSEM7    |
