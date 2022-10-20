@@ -47,4 +47,4 @@ Feature: Semantic checks for nodoChiediCopiaRT - KO
         Examples:
             | iuv_value                       | ccp_value         | error                 | soapUI test |
             | 11000679416493210               | 59050             | PPT_RT_SCONOSCIUTA    | CCRTSEM10   |
-            | 11000778432122951               | 94020             | PPT_RT_NONDISPONIBILE | CCRTSEM11   | 
+            #| 11000778432122951               | 94020             | PPT_RT_NONDISPONIBILE | CCRTSEM11   | 
