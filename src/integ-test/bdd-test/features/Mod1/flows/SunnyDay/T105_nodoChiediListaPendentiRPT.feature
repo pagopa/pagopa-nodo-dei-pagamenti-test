@@ -20,6 +20,6 @@ Feature: process tests for nodoChiediListaPendentiRPT
         </soapenv:Envelope>
         """
         When EC sends SOAP nodoChiediListaPendentiRPT to nodo-dei-pagamenti
-        Then check totRestituiti field exists in nodoChiediListaPendentiRPT response
-        And check listaRPTPendenti field exists in nodoChiediListaPendentiRPT response
+        #Then check totRestituiti field exists in nodoChiediListaPendentiRPT response
+        Then check listaRPTPendenti field exists in nodoChiediListaPendentiRPT response
         And check identificativoUnivocoVersamento field exists in nodoChiediListaPendentiRPT response
