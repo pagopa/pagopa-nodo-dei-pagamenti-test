@@ -239,7 +239,7 @@ Feature: gestioneReceiptMb_03_PULL
             <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
             <pay_i:esitoSingoloPagamento>ACCEPTED</pay_i:esitoSingoloPagamento>
             <pay_i:dataEsitoSingoloPagamento>2012-03-02</pay_i:dataEsitoSingoloPagamento>
-            <pay_i:identificativoUnivocoRiscossione>IUV_2021-11-15_13:55:13.038</pay_i:identificativoUnivocoRiscossione>
+            <pay_i:identificativoUnivocoRiscossione>$1iuv</pay_i:identificativoUnivocoRiscossione>
             <pay_i:causaleVersamento>causale RT pull</pay_i:causaleVersamento>
             <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
             </pay_i:datiSingoloPagamento>
@@ -346,7 +346,7 @@ Feature: gestioneReceiptMb_03_PULL
             <ws:pspChiediListaRTResponse>
             <pspChiediListaRTResponse>
             <elementoListaRTResponse>
-            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+            <identificativoDominio>#creditor_institution_code_secondary#</identificativoDominio>
             <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
             </elementoListaRTResponse>
@@ -407,6 +407,23 @@ Feature: gestioneReceiptMb_03_PULL
         And through the query by_notice_number_and_pa retrieve param metadata at position 24 and save it under the key metadata
         And through the query by_notice_number_and_pa retrieve param rtID at position 25 and save it under the key rtID
         And through the query by_notice_number_and_pa retrieve param fkPositionPayment at position 26 and save it under the key fkPositionPayment
+        #extraction from POSITION_PAYMENT table
+        And execution query by_notice_number_and_pa to get value on the table POSITION_PAYMENT, with the columns * under macro Mod1Mb with db name nodo_online
+        And through the query by_notice_number_and_pa retrieve param expFiscalCode at position 1 and save it under the key expFiscalCode
+        And through the query by_notice_number_and_pa retrieve param expNoticeID at position 2 and save it under the key expNoticeID
+        And through the query by_notice_number_and_pa retrieve param expCreditorReferenceID at position 3 and save it under the key expCreditorReferenceID
+        And through the query by_notice_number_and_pa retrieve param expPaymentToken at position 4 and save it under the key expPaymentToken
+        And through the query by_notice_number_and_pa retrieve param expBrokerPA at position 5 and save it under the key expBrokerPA
+        And through the query by_notice_number_and_pa retrieve param expStationID at position 6 and save it under the key expStationID
+        And through the query by_notice_number_and_pa retrieve param expChannelID at position 10 and save it under the key expChannelID
+        And through the query by_notice_number_and_pa retrieve param expAmount at position 12 and save it under the key expAmount
+        And through the query by_notice_number_and_pa retrieve param expFee at position 13 and save it under the key expFee
+        And through the query by_notice_number_and_pa retrieve param expOutcome at position 14 and save it under the key expOutcome
+        And through the query by_notice_number_and_pa retrieve param expPaymentMethod at position 15 and save it under the key expPaymentMethod
+        And through the query by_notice_number_and_pa retrieve param expPaymentChannel at position 16 and save it under the key expPaymentChannel
+        And through the query by_notice_number_and_pa retrieve param expTransferDate at position 17 and save it under the key expTransferDate
+        And through the query by_notice_number_and_pa retrieve param expPayerID at position 18 and save it under the key expPayerID
+        And through the query by_notice_number_and_pa retrieve param expApplicationDate at position 19 and save it under the key expApplicationDate
         #extraction from POSITION_SERVICE table
         And execution query by_notice_number_and_pa to get value on the table POSITION_SERVICE, with the columns * under macro Mod1Mb with db name nodo_online
         And through the query by_notice_number_and_pa retrieve param expDescription at position 3 and save it under the key expDescription
@@ -457,9 +474,9 @@ Feature: gestioneReceiptMb_03_PULL
         And check value $noticeID1 is equal to value $expNoticeID
         And check value $creditorReferenceId1 is equal to value $expCreditorReferenceID
         And check value $paymentToken1 is equal to value $expPaymentToken
-        And check value $recipientPA1 is equal to value $pa1
-        And check value $recipientBroker1 is equal to value $pa1
-        And check value $recipientStation1 is equal to value #id_station_secondary#
+        And check value $recipientPA1 is equal to value #creditor_institution_code#
+        And check value $recipientBroker1 is equal to value #creditor_institution_code#
+        And check value $recipientStation1 is equal to value #id_station#
 
         And checks the value PAYING, PAID, NOTICE_GENERATED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value NOTICE_GENERATED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
