@@ -70,6 +70,7 @@ def step_impl(context, primitive):
         payload = payload.replace('#idempotency_key_IOname#', "IOname" + "_" + str(random.randint(1000000000, 9999999999)))
 
     if "#timedate#" in payload:
+        date = datetime.date.today().strftime("%Y-%m-%d")
         timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
         payload = payload.replace('#timedate#', timedate)
         setattr(context, 'timedate', timedate)
