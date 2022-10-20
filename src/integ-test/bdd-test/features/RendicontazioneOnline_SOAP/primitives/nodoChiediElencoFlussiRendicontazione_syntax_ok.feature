@@ -6,15 +6,15 @@ Feature: Syntax checks OK for nodoChiediElencoFlussiRendicontazione
     Scenario Outline: Syntax checks OK for nodoChiediElencoFlussiRendicontazione
         Given initial XML nodoChiediElencoFlussiRendicontazione
             """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/ciao/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header>
-            <ws:nodoChiediElencoFlussiRendicontazione />
-            </soapenv:Header>
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
             <soapenv:Body>
             <ws:nodoChiediElencoFlussiRendicontazione>
             <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
             <password>pwdpwdpwd</password>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+            <!--<identificativoPSP>?</identificativoPSP>-->
             </ws:nodoChiediElencoFlussiRendicontazione>
             </soapenv:Body>
             </soapenv:Envelope>
