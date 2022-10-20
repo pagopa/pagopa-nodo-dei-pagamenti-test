@@ -506,6 +506,18 @@ Feature: gestioneReceiptMb_03_PULL
         And through the query by_notice_number_and_pa retrieve param metadata at position 24 and save it under the key metadata
         And through the query by_notice_number_and_pa retrieve param rtID at position 25 and save it under the key rtID
         And through the query by_notice_number_and_pa retrieve param fkPositionPayment at position 26 and save it under the key fkPositionPayment
+        #extraction from POSITION_SERVICE table
+        And execution query by_notice_number_and_pa to get value on the table POSITION_SERVICE, with the columns * under macro Mod1Mb with db name nodo_online
+        And through the query by_notice_number_and_pa retrieve param expDescription at position 3 and save it under the key expDescription
+        And through the query by_notice_number_and_pa retrieve param expCompanyName at position 4 and save it under the key expCompanyName
+        And through the query by_notice_number_and_pa retrieve param expOfficeName at position 5 and save it under the key expOfficeName
+        And through the query by_notice_number_and_pa retrieve param expDebtorID at position 6 and save it under the key expDebtorID
+        #extraction from PSP table
+        And execution query by_psp to get value on the table PSP, with the columns * under macro Mod1Mb with db name nodo_cfg
+        And through the query by_psp retrieve param ragioneSociale at position 6 and save it under the key ragioneSociale
+        And through the query by_psp retrieve param codiceFiscale at position 16 and save it under the key codiceFiscale
+        And through the query by_psp retrieve param vatNumber at position 17 and save it under the key vatNumber
+        
         #checks
         And check value $receptID is equal to value $1iuv
         And check value $noticeID is equal to value $expNoticeID
@@ -518,7 +530,7 @@ Feature: gestioneReceiptMb_03_PULL
         And check value $company is equal to value $expCompanyName
         And check value $officeName is equal to value $expOfficeName
         And check value $debtorID is equal to value $expDebtorID
-        And check value $pspID is equal to value 40000000001
+        And check value $pspID is equal to value $psp
         And check value $pspFiscalCode is equal to value $codiceFiscale
         And check value $pspVatNumber is equal to value $vatNumber
         And check value $channelID is equal to value $expChannelID

@@ -71,6 +71,7 @@ def step_impl(context, primitive):
         payload = payload.replace('#idempotency_key_IOname#', "IOname" + "_" + str(random.randint(1000000000, 9999999999)))
 
     if "#timedate#" in payload:
+        date = datetime.date.today().strftime("%Y-%m-%d")
         timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
         payload = payload.replace('#timedate#', timedate)
         setattr(context, 'timedate', timedate)
@@ -81,7 +82,7 @@ def step_impl(context, primitive):
         setattr(context, 'date', date)
 
     if '#yesterday_date#' in payload:
-        yesterday_date = datetime.date.today() - datetime.timedelta(days=1)
+        yesterday_date = str(datetime.date.today() - datetime.timedelta(days=1))
         payload = payload.replace('#yesterday_date#', yesterday_date)
         setattr(context, 'yesterday_date', yesterday_date)
 
