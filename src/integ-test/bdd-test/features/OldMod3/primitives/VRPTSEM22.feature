@@ -1,6 +1,6 @@
 Feature: Semantic checks KO for nodoVerificaRPT
-    #Background:
-        #Given systems up
+    Background:
+        Given systems up
 
      Scenario: Check faultCode error PPT_STAZIONE_INT_PA_SERVIZIO_NONATTIVO [VRPTSEM22 ]
         Given initial XML nodoVerificaRPT
