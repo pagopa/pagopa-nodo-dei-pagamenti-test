@@ -87,7 +87,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - OK
             """
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaFlussoRendicontazione response
-
+@runnable
     Scenario Outline: Check valid response for nodoInviaFlussoRendicontazione primitive
         Given the Generazione rendicontazione scenario executed successfully
         And <tag> with <tag_value> in rendAttachment
