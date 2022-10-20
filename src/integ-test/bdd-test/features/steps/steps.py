@@ -2156,9 +2156,9 @@ def step_impl(context, causaleVers):
         db_config = context.config.userdata.get("db_configuration")
         db_selected = db_config.get(db_name)
         conn = db.getConnection(db_selected.get('host'), db_selected.get(
-        'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+            'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
         selected_query = utils.query_json(context, query_name, name_macro).replace(
-        "columns", column).replace("table_name", table_name).replace('where_condition', where_condition)
+            "columns", column).replace("table_name", table_name).replace('where_condition', where_condition)
         print(selected_query)
         exec_query = db.executeQuery(conn, selected_query)
         query_result = [t[0] for t in exec_query]
@@ -2235,6 +2235,7 @@ def step_impl(context, param, value):
     time.sleep(5)
     assert refresh_response.status_code == 200
 
+
 @given('initial JSON {primitive}')
 def step_impl(context, primitive):
     payload = context.text or ""
@@ -2279,3 +2280,36 @@ def step_impl(context, primitive):
         exec_query = db.executeQuery(conn, selected_query)
         print("record query: ", exec_query)
         assert len(exec_query) > 0, f"{len(exec_query)}"
+
+    @given('MB generation')
+    def step_impl(context):
+        payload = context.text or ""
+        payload = utils.replace_local_variables(payload, context)
+        payload = utils.replace_context_variables(payload, context)
+        payload = utils.replace_global_variables(payload, context)
+        if '#iubd#' in payload:
+            iubd = '' + str(random.randint(10000000, 20000000)) + \
+                str(random.randint(10000000, 20000000))
+            payload = payload.replace('#iubd#', iubd)
+            setattr(context, 'iubd', iubd)
+        payload_b = bytes(payload, 'ascii')
+        payload_uni = b64.b64encode(payload_b)
+        payload = f"{payload_uni}".split("'")[1]
+        setattr(context, 'bollo', payload)
+
+
+    @given('MB{number:d} generation')
+    def step_impl(context, number):
+        payload = context.text or ""
+        payload = utils.replace_local_variables(payload, context)
+        payload = utils.replace_context_variables(payload, context)
+        payload = utils.replace_global_variables(payload, context)
+        if f'#iubd{number}#' in payload:
+            iubd = '' + str(random.randint(10000000, 20000000)) + \
+                str(random.randint(10000000, 20000000))
+            payload = payload.replace(f'#iubd{number}#', iubd)
+            setattr(context, f'{number}iubd', iubd)
+        payload_b = bytes(payload, 'ascii')
+        payload_uni = b64.b64encode(payload_b)
+        payload = f"{payload_uni}".split("'")[1]
+        setattr(context, f'{number}bollo', payload)
