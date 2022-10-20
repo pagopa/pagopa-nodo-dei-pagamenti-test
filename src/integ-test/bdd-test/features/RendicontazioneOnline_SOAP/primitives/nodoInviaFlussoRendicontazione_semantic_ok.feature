@@ -165,7 +165,8 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - OK
             """
 @runnable
     Scenario: Send nodoInviaFlussoRendicontazione3 primitive
-        Given initial XML nodoInviaFlussoRendicontazione
+        Given the Create REND3 scenario executed successfully
+        And initial XML nodoInviaFlussoRendicontazione
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header/>
