@@ -1034,7 +1034,7 @@ Feature: flux tests for closePaymentV2
     Scenario: FLUSSO_NM1_CP_05 (part 1)
         Given the checkPosition scenario executed successfully
         And the activatePaymentNoticeV2 with iuv scenario executed successfully
-        And the activatePaymentNoticeV2 with iuv1 scenario executed successfully
+        And the activatePaymentNoticeV2 with iuv1 and expirationTime scenario executed successfully
 
         # POSITION_ACTIVATE
         And checks the value $activatePaymentNoticeV2_1Response.paymentToken,$activatePaymentNoticeV2_2Response.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query notice_id_2_activatev2 on db nodo_online under macro NewMod1
