@@ -20,6 +20,12 @@
       "soap_service": "servizi/MockPSP",
       "rest_service": ""
     },
+    "secondary-mock-ec": {
+      "url": "http://localhost:8091/",
+      "healthcheck": "servizi/PagamentiTelematiciRPT/info",
+      "soap_service": "servizi/PagamentiTelematiciRPT",
+      "rest_service": ""
+    },
     "secondary-mock-psp": {
       "url": "http://localhost:8092/",
       "healthcheck": "servizi/MockPSP/info",
