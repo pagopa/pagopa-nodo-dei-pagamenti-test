@@ -19,7 +19,7 @@ Feature: Semantic checks for nodoChiediCopiaRT - KO
             </soapenv:Envelope>
             """
 
-
+@runnable
     Scenario Outline: Check semantic errors for nodoChiediCopiaRT primitive
         Given <tag> with <tag_value> in nodoChiediCopiaRT
         When EC sends SOAP nodoChiediCopiaRT to nodo-dei-pagamenti
