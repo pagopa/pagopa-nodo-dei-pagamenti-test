@@ -2,7 +2,7 @@ Feature: Syntax checks OK for nodoChiediElencoFlussiRendicontazione
 
     Background:
         Given systems up
-
+@runnable
     Scenario Outline: Syntax checks OK for nodoChiediElencoFlussiRendicontazione
             Given initial XML nodoChiediElencoFlussiRendicontazione
                 """
@@ -10,10 +10,10 @@ Feature: Syntax checks OK for nodoChiediElencoFlussiRendicontazione
                 <soapenv:Header/>
                 <soapenv:Body>
                     <ws:nodoChiediElencoFlussiRendicontazione>
-                        <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
-                        <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
+                        <identificativocreditor_institution_code>#creditor_institution_code#</identificativocreditor_institution_code>
+                        <identificativoStazionecreditor_institution_code>#id_station#</identificativoStazionecreditor_institution_code>
                         <password>pwdpwdpwd</password>
-                        <identificativoDominio>#codicePA#</identificativoDominio>
+                        <identificativoDominio>#creditor_institution_code#</identificativoDominio>
                         <identificativoPSP>#psp#</identificativoPSP>
                     </ws:nodoChiediElencoFlussiRendicontazione>
                 </soapenv:Body>
