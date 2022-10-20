@@ -2,7 +2,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
 
     Background:
         Given systems up
-
+@runnable
     Scenario: Create REND
         Given REND generation
             """
@@ -39,7 +39,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             </pay_i:datiSingoliPagamenti>
             </pay_i:FlussoRiversamento>
             """
-
+@runnable
     Scenario Outline: Check error for nodoInviaFlussoRendicontazione primitive
         Given the Create REND scenario executed successfully
         And initial XML nodoInviaFlussoRendicontazione
@@ -52,7 +52,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
             <identificativoCanale>#canale#</identificativoCanale>
             <password>pwdpwdpwd</password>
-            <identificativoDominio>#codicePA#</identificativoDominio>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoFlusso>$identificativoFlusso</identificativoFlusso>
             <dataOraFlusso>$timedate</dataOraFlusso>
             <xmlRendicontazione>$rendAttachment</xmlRendicontazione>
@@ -74,7 +74,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             | password                       | Password1          | PPT_AUTENTICAZIONE                 | SEM_NIFR_07 |
             | identificativoDominio          | sconosciuto        | PPT_DOMINIO_SCONOSCIUTO            | SEM_NIFR_08 |
             | identificativoDominio          | NOT_ENABLED        | PPT_DOMINIO_DISABILITATO           | SEM_NIFR_09 |
-
+@runnable
     # [SEM_NIFR_10]
     Scenario: Check PPT_SEMANTICA error for nodoInviaFlussoRendicontazione primitive
         Given the Create REND scenario executed successfully
@@ -88,7 +88,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
             <identificativoCanale>#canale#</identificativoCanale>
             <password>pwdpwdpwd</password>
-            <identificativoDominio>#codicePA#</identificativoDominio>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoFlusso>$identificativoFlusso$identificativoFlusso$identificativoFlusso$identificativoFlusso</identificativoFlusso>
             <dataOraFlusso>$timedate</dataOraFlusso>
             <xmlRendicontazione>$rendAttachment</xmlRendicontazione>
@@ -98,7 +98,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             """
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check faultCode is PPT_SEMANTICA of nodoInviaFlussoRendicontazione response
-
+@runnable
 
     # [SEM_NIFR_11]
     Scenario: Check PPT_SEMANTICA error for nodoInviaFlussoRendicontazione primitive
@@ -113,7 +113,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
             <identificativoCanale>#canale#</identificativoCanale>
             <password>pwdpwdpwd</password>
-            <identificativoDominio>#codicePA#</identificativoDominio>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoFlusso>70000000001-9999</identificativoFlusso>
             <dataOraFlusso>$timedate</dataOraFlusso>
             <xmlRendicontazione>$rendAttachment</xmlRendicontazione>
@@ -123,7 +123,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             """
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check faultCode is PPT_SEMANTICA of nodoInviaFlussoRendicontazione response
-
+@runnable
     # [SEM_NIFR_14]
     Scenario: Check PPT_AUTORIZZAZIONE error for nodoInviaFlussoRendicontazione primitive
         Given the Create REND scenario executed successfully
@@ -137,7 +137,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
             <identificativoCanale>80000000001_06</identificativoCanale>
             <password>pwdpwdpwd</password>
-            <identificativoDominio>#codicePA#</identificativoDominio>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoFlusso>$identificativoFlusso</identificativoFlusso>
             <dataOraFlusso>$timedate</dataOraFlusso>
             <xmlRendicontazione>$rendAttachment</xmlRendicontazione>
@@ -148,7 +148,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check faultCode is PPT_AUTORIZZAZIONE of nodoInviaFlussoRendicontazione response
 
-
+@runnable
     # [SEM_NIFR_15]
     Scenario: Send nodoInviaFlussoRendicontazione primitive
         Given the Create REND scenario executed successfully
@@ -162,7 +162,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
             <identificativoCanale>#canale#</identificativoCanale>
             <password>pwdpwdpwd</password>
-            <identificativoDominio>#codicePA#</identificativoDominio>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoFlusso>$identificativoFlusso</identificativoFlusso>
             <dataOraFlusso>$timedate</dataOraFlusso>
             <xmlRendicontazione>$rendAttachment</xmlRendicontazione>
@@ -172,7 +172,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             """
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaFlussoRendicontazione response
-
+@runnable
     Scenario: Check PPT_SEMANTICA error for nodoInviaFlussoRendicontazione_dataOraFlussoUguale primitive
         Given the Send nodoInviaFlussoRendicontazione primitive scenario executed successfully
         And initial XML nodoInviaFlussoRendicontazione
@@ -185,7 +185,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
             <identificativoCanale>#canale#</identificativoCanale>
             <password>pwdpwdpwd</password>
-            <identificativoDominio>#codicePA#</identificativoDominio>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoFlusso>$identificativoFlusso</identificativoFlusso>
             <dataOraFlusso>$timedate</dataOraFlusso>
             <xmlRendicontazione>$rendAttachment</xmlRendicontazione>
@@ -196,7 +196,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check esito is KO of nodoInviaFlussoRendicontazione response
         And check faultCode is PPT_SEMANTICA of nodoInviaFlussoRendicontazione response
-
+@runnable
     Scenario: Check PPT_SEMANTICA error for nodoInviaFlussoRendicontazione_dataOraFlussoMinore primitive
         Given the Check PPT_SEMANTICA error for nodoInviaFlussoRendicontazione_dataOraFlussoUguale primitive scenario executed successfully
         And initial XML nodoInviaFlussoRendicontazione
@@ -209,7 +209,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
             <identificativoCanale>#canale#</identificativoCanale>
             <password>pwdpwdpwd</password>
-            <identificativoDominio>#codicePA#</identificativoDominio>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoFlusso>$identificativoFlusso</identificativoFlusso>
             <dataOraFlusso>2022-01-24T12:07:34.606</dataOraFlusso>
             <xmlRendicontazione>$rendAttachment</xmlRendicontazione>
@@ -220,7 +220,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check esito is KO of nodoInviaFlussoRendicontazione response
         And check faultCode is PPT_SEMANTICA of nodoInviaFlussoRendicontazione response
-
+@runnable
     # [SEM_NIFR_17]
     Scenario: Send nodoInviaFlussoRendicontazione2 primitive
         Given the Create REND scenario executed successfully
@@ -234,7 +234,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
             <identificativoCanale>#canale#</identificativoCanale>
             <password>pwdpwdpwd</password>
-            <identificativoDominio>#codicePA#</identificativoDominio>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoFlusso>$identificativoFlusso</identificativoFlusso>
             <dataOraFlusso>$timedate</dataOraFlusso>
             <xmlRendicontazione>$rendAttachment</xmlRendicontazione>
@@ -245,7 +245,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaFlussoRendicontazione response
 
-
+@runnable
     Scenario: Create a new REND
         Given the Send nodoInviaFlussoRendicontazione2 primitive scenario executed successfully
         And REND generation
@@ -283,7 +283,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             </pay_i:datiSingoliPagamenti>
             </pay_i:FlussoRiversamento>
             """
-    
+ @runnable   
     Scenario: Send nodoInviaFlussoRendicontazione_dataOraMaggiore primitive
         Given the Create a new REND scenario executed successfully
         And initial XML nodoInviaFlussoRendicontazione
@@ -307,7 +307,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check esito is KO of nodoInviaFlussoRendicontazione response
         And check faultCode is PPT_SEMANTICA of nodoInviaFlussoRendicontazione response
-
+@runnable
     # [SEM_NIFR_19]
     Scenario: Create REND2
         Given REND generation
@@ -345,6 +345,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             </pay_i:datiSingoliPagamenti>
             </pay_i:FlussoRiversamento>
             """
+@runnable
     Scenario: Send nodoInviaFlussoRendicontazione3 primitive
         Given the Create REND2 scenario executed successfully
         And initial XML nodoInviaFlussoRendicontazione
@@ -357,7 +358,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
             <identificativoCanale>#canale#</identificativoCanale>
             <password>pwdpwdpwd</password>
-            <identificativoDominio>#codicePA#</identificativoDominio>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoFlusso>$identificativoFlusso</identificativoFlusso>
             <dataOraFlusso>2021-10-24T12:14:29.176</dataOraFlusso>
             <xmlRendicontazione>$rendAttachment</xmlRendicontazione>
@@ -368,7 +369,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaFlussoRendicontazione response
 
-
+@runnable
     Scenario: Check PPT_SEMANTICA error for nodoInviaFlussoRendicontazione_dataOraFlussoUguale primitive
         Given the Send nodoInviaFlussoRendicontazione3 primitive scenario executed successfully
         And initial XML nodoInviaFlussoRendicontazione
@@ -381,7 +382,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
             <identificativoCanale>#canale#</identificativoCanale>
             <password>pwdpwdpwd</password>
-            <identificativoDominio>#codicePA#</identificativoDominio>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoFlusso>$identificativoFlusso</identificativoFlusso>
             <dataOraFlusso>2021-10-24T12:14:29.176</dataOraFlusso>
             <xmlRendicontazione>$rendAttachment</xmlRendicontazione>
@@ -392,7 +393,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check esito is KO of nodoInviaFlussoRendicontazione response
         And check faultCode is PPT_SEMANTICA of nodoInviaFlussoRendicontazione response
-
+@runnable
     Scenario: Check PPT_SEMANTICA error for nodoInviaFlussoRendicontazione_dataOraFlussoMinore primitive
         Given the Check PPT_SEMANTICA error for nodoInviaFlussoRendicontazione_dataOraFlussoUguale primitive scenario executed successfully
         And initial XML nodoInviaFlussoRendicontazione
@@ -405,7 +406,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
             <identificativoCanale>#canale#</identificativoCanale>
             <password>pwdpwdpwd</password>
-            <identificativoDominio>#codicePA#</identificativoDominio>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoFlusso>$identificativoFlusso</identificativoFlusso>
             <dataOraFlusso>2021-01-24T12:07:34.606</dataOraFlusso>
             <xmlRendicontazione>$rendAttachment</xmlRendicontazione>
@@ -416,7 +417,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check esito is KO of nodoInviaFlussoRendicontazione response
         And check faultCode is PPT_SEMANTICA of nodoInviaFlussoRendicontazione response
-
+@runnable
     # [SEM_NIFR_20]
     Scenario: Check PPT_SEMANTICA error for nodoInviaFlussoRendicontazione primitive
         Given the Create REND scenario executed successfully
@@ -430,7 +431,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
             <identificativoCanale>#canale#</identificativoCanale>
             <password>pwdpwdpwd</password>
-            <identificativoDominio>#codicePA#</identificativoDominio>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoFlusso>#identificativoFlusso#</identificativoFlusso>
             <dataOraFlusso>$timedate</dataOraFlusso>
             <xmlRendicontazione>$rendAttachment</xmlRendicontazione>
@@ -441,7 +442,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check esito is KO of nodoInviaFlussoRendicontazione response
         And check faultCode is PPT_SEMANTICA of nodoInviaFlussoRendicontazione response
-
+@runnable
     # [SEM_NIFR_21]
     Scenario: Check PPT_SEMANTICA error for nodoInviaFlussoRendicontazione primitive
         Given the Create REND scenario executed successfully
@@ -455,7 +456,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
             <identificativoCanale>#canale#</identificativoCanale>
             <password>pwdpwdpwd</password>
-            <identificativoDominio>#codicePA#</identificativoDominio>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoFlusso>$identificativoFlusso</identificativoFlusso>
             <dataOraFlusso>2021-08-02T11:22:42.248</dataOraFlusso>
             <xmlRendicontazione>$rendAttachment</xmlRendicontazione>
