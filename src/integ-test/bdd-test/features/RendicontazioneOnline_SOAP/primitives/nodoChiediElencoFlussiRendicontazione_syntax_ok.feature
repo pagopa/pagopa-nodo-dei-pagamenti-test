@@ -21,7 +21,7 @@ Feature: Syntax checks OK for nodoChiediElencoFlussiRendicontazione
             """
         And  <elem> with <value> in nodoChiediElencoFlussiRendicontazione
         When EC sends SOAP nodoChiediElencoFlussiRendicontazione to nodo-dei-pagamenti
-        Then totRestituiti exists in nodoChiediElencoFlussiRendicontazione response
+        Then check totRestituiti field exists in nodoChiediElencoFlussiRendicontazione response
         Examples:
             | elem                  | value | soapUI test |
             | identificativoDominio | None  | CEFRSIN16.1 |
