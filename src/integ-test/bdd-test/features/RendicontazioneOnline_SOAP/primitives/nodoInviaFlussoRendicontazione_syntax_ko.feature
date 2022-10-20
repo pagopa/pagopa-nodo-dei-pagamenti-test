@@ -224,7 +224,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And <tag> with <tag_value> in $rendAttachment
+        And <tag> with <tag_value> in rendAttachment
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check faultCode is PPT_SINTASSI_XSD of nodoInviaFlussoRendicontazione response
         Examples:
