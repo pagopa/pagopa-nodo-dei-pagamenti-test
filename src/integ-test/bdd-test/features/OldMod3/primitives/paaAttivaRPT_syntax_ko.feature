@@ -151,7 +151,7 @@ Feature: Syntax checks KO for nodoAttivaRPT
     </soapenv:Body>
     </soapenv:Envelope>
     """
-    @prova
+ 
     Scenario: Execute nodoAttivaRPT [ARPTRES1]
         Given initial XML paaAttivaRPT
         """

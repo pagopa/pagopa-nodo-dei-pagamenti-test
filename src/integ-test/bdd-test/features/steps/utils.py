@@ -5,6 +5,7 @@ import datetime
 from webbrowser import get
 from xml.dom.minidom import parseString
 
+from behave.__main__ import main as behave_main
 import time
 from threading import Thread
 import requests
@@ -95,6 +96,13 @@ def get_soap_mock_psp(context):
     if context.config.userdata.get('services').get('mock-psp').get('soap_service') is not None:
         return context.config.userdata.get('services').get('mock-psp').get('url') \
             + context.config.userdata.get('services').get('mock-psp').get('soap_service')
+    else:
+        return ""
+
+def get_soap_mock_psp2(context):
+    if context.config.userdata.get('services').get('secondary-mock-psp').get('soap_service') is not None:
+        return context.config.userdata.get('services').get('secondary-mock-psp').get('url') \
+            + context.config.userdata.get('services').get('secondary-mock-psp').get('soap_service')
     else:
         return ""
 
@@ -344,3 +352,8 @@ def json2xml(json_obj, line_padding=""):
                 result_list.append("%s</%s>" % (line_padding, tag_name))
         return "\n".join(result_list)
     return "%s%s" % (line_padding, json_obj)
+
+
+def parallel_executor(context, feature_name, scenario):
+    #os.chdir(testenv.PARALLEACTIONS_PATH)
+    behave_main('-i "{}" -n "{}" --no-skip'.format(feature_name, scenario))

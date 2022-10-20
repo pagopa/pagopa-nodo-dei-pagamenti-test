@@ -10,6 +10,7 @@ from xml.dom.minicompat import NodeList
 from xml.dom.minidom import parseString
 import base64 as b64
 import json_operations as jo
+import threading
 
 import requests
 from behave import *
@@ -70,6 +71,7 @@ def step_impl(context, primitive):
         payload = payload.replace('#idempotency_key_IOname#', "IOname" + "_" + str(random.randint(1000000000, 9999999999)))
 
     if "#timedate#" in payload:
+        date = datetime.date.today().strftime("%Y-%m-%d")
         timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
         payload = payload.replace('#timedate#', timedate)
         setattr(context, 'timedate', timedate)
@@ -80,7 +82,7 @@ def step_impl(context, primitive):
         setattr(context, 'date', date)
 
     if '#yesterday_date#' in payload:
-        yesterday_date = datetime.date.today() - datetime.timedelta(days=1)
+        yesterday_date = str(datetime.date.today() - datetime.timedelta(days=1))
         payload = payload.replace('#yesterday_date#', yesterday_date)
         setattr(context, 'yesterday_date', yesterday_date)
 
@@ -1074,9 +1076,14 @@ def step_impl(context, mock, destination, primitive):
         print(utils.get_soap_mock_ec2(context))
         response_status_code = utils.save_soap_action(utils.get_soap_mock_ec2(context), primitive,
                                                       pa_verify_payment_notice_res, override=True)
-    else:
+    elif mock == 'PSP': 
         print(utils.get_soap_mock_psp(context))
         response_status_code = utils.save_soap_action(utils.get_soap_mock_psp(context), primitive,
+                                                      pa_verify_payment_notice_res, override=True)
+
+    else:
+        print(utils.get_soap_mock_psp2(context))
+        response_status_code = utils.save_soap_action(utils.get_soap_mock_psp2(context), primitive,
                                                       pa_verify_payment_notice_res, override=True)
 
     assert response_status_code == 200
@@ -2516,3 +2523,11 @@ def step_impl(context, causaleVers):
     db.executeQuery(conn, query_update)
 
     db.closeConnection(conn)
+
+@step(u'run in parallel "{feature}", "{scenario}"')
+def step_impl(context, feature, scenario):
+    t = threading.Thread(
+        name='run test parallel',
+        target=utils.parallel_executor,
+        args=[context, feature, scenario])
+    t.start()

@@ -14,17 +14,23 @@
       "soap_service": "servizi/PagamentiTelematiciRPT",
       "rest_service": ""
     },
+    "mock-psp": {
+      "url": "http://localhost:8090/",
+      "healthcheck": "servizi/MockPSP/info",
+      "soap_service": "servizi/MockPSP",
+      "rest_service": ""
+    },
     "secondary-mock-ec": {
       "url": "http://localhost:8091/",
       "healthcheck": "servizi/PagamentiTelematiciRPT/info",
       "soap_service": "servizi/PagamentiTelematiciRPT",
       "rest_service": ""
     },
-    "mock-psp": {
-      "url": "http://localhost:8090/",
+    "secondary-mock-psp": {
+      "url": "http://localhost:8092/",
       "healthcheck": "servizi/MockPSP/info",
       "soap_service": "servizi/MockPSP",
-      "rest_service": ""
+      "rest_service": ""  
     }
   },
   "global_configuration": {

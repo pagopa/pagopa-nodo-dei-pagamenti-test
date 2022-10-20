@@ -5,6 +5,7 @@
     },
     "NewMod3" : { 
         "payment_status":"SELECT columns FROM table_name WHERE NOTICE_ID ='$activatePaymentNotice.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode'",
+        "payment_status_only_act1":"SELECT columns FROM table_name WHERE NOTICE_ID ='$activatePaymentNotice1.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNotice1.fiscalCode'",
         "payment_status_v2":"SELECT columns FROM table_name WHERE NOTICE_ID ='$activatePaymentNotice.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode' AND PAYMENT_TOKEN = '$activatePaymentNoticeResponse.paymentToken-v2'",
         "payment_status_1":"SELECT columns FROM table_name WHERE NOTICE_ID ='$activatePaymentNotice1.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNotice1.fiscalCode'",
         "payment_status_pay":"SELECT columns FROM table_name WHERE NOTICE_ID ='$activatePaymentNotice.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode' AND PAYMENT_TOKEN ='$activatePaymentNoticeResponse.paymentToken'",
@@ -36,6 +37,7 @@
         "rpt_activision": "SELECT s.columns FROM table_name s where s.NOTICE_ID = '$activatePaymentNotice.noticeNumber' and s.PA_FISCAL_CODE= '$activatePaymentNotice.fiscalCode'",
         "rpt_activision-v2": "SELECT columns FROM table_name  where PAYMENT_TOKEN = '$activatePaymentNoticeResponse.paymentToken-v2'",
         "rt": "SELECT columns FROM table_name WHERE IUV = '$iuv' AND CCP= '$activatePaymentNoticeResponse.paymentToken' AND IDENT_DOMINIO= '$activatePaymentNotice.fiscalCode'",
+        "rt_v1": "SELECT columns FROM table_name WHERE CCP= '$activatePaymentNotice1Response.paymentToken' AND IDENT_DOMINIO= '$activatePaymentNotice1.fiscalCode'",
         "rt_vers_join":"SELECT s.columns FROM table_name s JOIN RT r on s.FK_RT=r.ID  WHERE r.IUV = '$iuv' AND r.CCP= '$activatePaymentNoticeResponse.paymentToken' AND r.IDENT_DOMINIO= '$activatePaymentNoticeResponse.fiscalCode'",
         "rpt": "SELECT columns FROM table_name WHERE IUV = '$iuv' AND CCP= '$activatePaymentNoticeResponse.paymentToken' AND IDENT_DOMINIO= '$activatePaymentNotice.fiscalCode'",
         "rt_versamenti": "SELECT s.columns FROM table_name s JOIN RT r on s.FK_RT=r.ID  WHERE r.IUV = '$iuv' AND r.CCP= '$activatePaymentNoticeResponse.paymentToken' AND r.IDENT_DOMINIO= '$activatePaymentNotice.fiscalCode'",
@@ -135,6 +137,7 @@
         "by_psp": "SELECT columns FROM table_name s WHERE s.ID_PSP = '$psp'",
         "by_ccp_and_ident_dominio":"SELECT columns FROM table_name WHERE CCP = '$idCarrello' and IDENT_DOMINIO = '$pa'",
         "obj_id_dom": "SELECT columns FROM table_name WHERE ID_DOMINIO = '$pa' OR ID_DOMINIO = '$1pa'",
+        "obj_id_dom1": "SELECT columns FROM table_name WHERE ID_DOMINIO = '$1pa'",
         "position_receipt_transfer" : "SELECT s.columns FROM table_name s JOIN POSITION_TRANSFER pt ON pt.ID = s.FK_POSITION_TRANSFER WHERE pt.NOTICE_ID = '$noticeNumber' AND pt.PA_FISCAL_CODE = '$pa'"
         
     },
