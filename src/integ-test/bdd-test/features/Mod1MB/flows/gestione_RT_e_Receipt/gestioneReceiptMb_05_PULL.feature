@@ -6,7 +6,7 @@ Feature: gestioneReceiptMb_05_PULL
     Scenario: Execute nodoInviaCarrelloRPT (Phase 1)
         Given generate 1 notice number and iuv with aux digit 3, segregation code 02 and application code -
         And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
-        And replace pa1 content with 90000000001 content
+        And replace pa1 content with #creditor_institution_code_secondary# content
         And RPT1 generation
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
@@ -290,18 +290,22 @@ Feature: gestioneReceiptMb_05_PULL
         And replace pa content with #creditor_institution_code# content
         And execution query get_pa_id to get value on the table PA, with the columns OBJ_ID under macro costanti with db name nodo_cfg
         And through the query get_pa_id retrieve param objId at position 0 and save it under the key objId
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition FK_PA = $objId under macro update_query on db nodo_cfg
+        
+        And replace station_id content with #id_station# content
+        And execution query by_station_id to get value on the table STAZIONI, with the columns OBJ_ID under macro costanti with db name nodo_cfg
+        And through the query by_station_id retrieve param stationID at position 0 and save it under the key stationID
+        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition FK_PA = $objId AND FK_STAZIONE = $stationID under macro update_query on db nodo_cfg
         
         And replace pa content with $pa1 content
         And execution query get_pa_id to get value on the table PA, with the columns OBJ_ID under macro costanti with db name nodo_cfg
         And through the query get_pa_id retrieve param objId at position 0 and save it under the key objId
 
-        And replace station_id content with 90000000001_06 content
+        And replace station_id content with #id_station_secondary# content
         And execution query by_station_id to get value on the table STAZIONI, with the columns OBJ_ID under macro costanti with db name nodo_cfg
         And through the query by_station_id retrieve param stationID at position 0 and save it under the key stationID
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition FK_PA = $objId AND FK_STAZIONE = $stationID under macro update_query on db nodo_cfg
         
-        And replace station_id content with 90000000001_09 content
+        And replace station_id content with 88888888888_02 content
         And execution query by_station_id to get value on the table STAZIONI, with the columns OBJ_ID under macro costanti with db name nodo_cfg
         And through the query by_station_id retrieve param stationID at position 0 and save it under the key stationID
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition FK_PA = $objId AND FK_STAZIONE = $stationID under macro update_query on db nodo_cfg
@@ -408,6 +412,7 @@ Feature: gestioneReceiptMb_05_PULL
         And replace psp content with #psp# content
 
         #extraction from POSITION_RECEIPT table
+        And replace pa content with #creditor_institution_code# content
         And execution query by_notice_number_and_pa to get value on the table POSITION_RECEIPT, with the columns * under macro Mod1Mb with db name nodo_online
         And through the query by_notice_number_and_pa retrieve param receptID at position 1 and save it under the key receptID
         And through the query by_notice_number_and_pa retrieve param noticeID at position 2 and save it under the key noticeID
@@ -501,9 +506,9 @@ Feature: gestioneReceiptMb_05_PULL
         And check value $noticeID1 is equal to value $expNoticeID
         And check value $creditorReferenceId1 is equal to value $expCreditorReferenceID
         And check value $paymentToken1 is equal to value $expPaymentToken
-        And check value $recipientPA1 is equal to value #creditor_institution_code#
-        And check value $recipientBroker1 is equal to value #creditor_institution_code#
-        And check value $recipientStation1 is equal to value #id_station#
+        And check value $recipientPA1 is equal to value #creditor_institution_code_secondary#
+        And check value $recipientBroker1 is equal to value #creditor_institution_code_secondary#
+        And check value $recipientStation1 is equal to value #id_station_secondary#
 
         And checks the value PAYING, PAID, NOTICE_GENERATED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value NOTICE_GENERATED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
