@@ -436,7 +436,7 @@ Feature: flux tests for closePaymentV2
         And check faultCode is PPT_ERRORE_EMESSO_DA_PAA of activatePaymentNoticeV2 response
         And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2_1Request
 
-@skip
+    @skip
     Scenario: activatePaymentNoticeV2 with iuv1 and expirationTime
         Given the activatePaymentNoticeV2 request scenario executed successfully
         And idempotencyKey with None in activatePaymentNoticeV2
@@ -1050,7 +1050,7 @@ Feature: flux tests for closePaymentV2
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 400
         And check outcome is KO of v2/closepayment response
-        And check description is Unacceptable outcome when outcome has expired of v2/closepayment response
+        And check description is Unacceptable outcome when token has expired of v2/closepayment response
         And wait 5 seconds for expiration
 
         # POSITION_PAYMENT_STATUS
