@@ -3,7 +3,7 @@ Feature: Syntax checks for nodoChiediElencoFlussiRendicontazione - KO
 
     Background:
         Given systems up
-
+@runnable
     #[CEFRSIN0]
     Scenario: Check PPT_SINTASSI_EXTRAXSD error on invalid wsdl namespace
         Given initial XML nodoChiediElencoFlussiRendicontazione
@@ -14,7 +14,7 @@ Feature: Syntax checks for nodoChiediElencoFlussiRendicontazione - KO
             </soapenv:Header>
             <soapenv:Body>
             <ws:nodoChiediElencoFlussiRendicontazione>
-            <identificativoIntermediarioPA>#codicePA#</identificativoIntermediarioPA>
+            <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
             <password>pwdpwdpwd</password>
             </ws:nodoChiediElencoFlussiRendicontazione>
@@ -25,7 +25,7 @@ Feature: Syntax checks for nodoChiediElencoFlussiRendicontazione - KO
         Then check faultString is Errore di sintassi extra XSD. of nodoChiediElencoFlussiRendicontazione response
         And check faultCode is PPT_SINTASSI_EXTRAXSD of nodoChiediElencoFlussiRendicontazione response
         And check description is Errore validazione XML [Envelope] - cvc-elt.1.a: impossibile trovare la dichiarazione dell'elemento "soapenv:Envelope". of nodoChiediElencoFlussiRendicontazione response
-
+@runnable
     #[CEFRSIN1]
     Scenario: Check PPT_SINTASSI_EXTRAXSD error for nodoChiediElencoFlussiRendicontazione primitive
         Given initial XML nodoChiediElencoFlussiRendicontazione
@@ -36,7 +36,7 @@ Feature: Syntax checks for nodoChiediElencoFlussiRendicontazione - KO
             </soapenv:Header>
             <soapenv:Body>
             <ws:nodoChiediElencoFlussiRendicontazione>
-            <identificativoIntermediarioPA>#codicePA#</identificativoIntermediarioPA>
+            <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
             <password>pwdpwdpwd</password>
             </ws:nodoChiediElencoFlussiRendicontazione>
@@ -47,7 +47,7 @@ Feature: Syntax checks for nodoChiediElencoFlussiRendicontazione - KO
         Then check faultString is Errore di sintassi extra XSD. of nodoChiediElencoFlussiRendicontazione response
         And check faultCode is PPT_SINTASSI_EXTRAXSD of nodoChiediElencoFlussiRendicontazione response
 
-
+@runnable
     #[CEFRSIN3]
     Scenario: Check PPT_SINTASSI_EXTRAXSD error for nodoChiediElencoFlussiRendicontazione primitive
         Given initial XML nodoChiediElencoFlussiRendicontazione
@@ -69,7 +69,7 @@ Feature: Syntax checks for nodoChiediElencoFlussiRendicontazione - KO
     #        <soapenv:Header/>
     #            <soapenv:Body>
     #                <ppt:nodoChiediElencoFlussiRendicontazione>
-    #                    <identificativoIntermediarioPA>#codicePA#</identificativoIntermediarioPA>
+    #                    <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
     #                    <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
     #                    <password>pwdpwdpwd</password>
     #                </ppt:nodoChiediElencoFlussiRendicontazione>
@@ -79,7 +79,7 @@ Feature: Syntax checks for nodoChiediElencoFlussiRendicontazione - KO
     #   When EC sends SOAP nodoChiediElencoFlussiRendicontazione to nodo-dei-pagamenti
     #   Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoChiediElencoFlussiRendicontazione response
 
-
+@runnable
     Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error for nodoChiediElencoFlussiRendicontazione primitive
         Given initial XML nodoChiediElencoFlussiRendicontazione
             """
@@ -87,7 +87,7 @@ Feature: Syntax checks for nodoChiediElencoFlussiRendicontazione - KO
             <soapenv:Header/>
             <soapenv:Body>
             <ws:nodoChiediElencoFlussiRendicontazione>
-            <identificativoIntermediarioPA>#codicePA#</identificativoIntermediarioPA>
+            <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
             <password>pwdpwdpwd</password>
             </ws:nodoChiediElencoFlussiRendicontazione>
@@ -112,7 +112,7 @@ Feature: Syntax checks for nodoChiediElencoFlussiRendicontazione - KO
             | password                                 | Empty                                | CEFRSIN13   |
             | password                                 | Xlve3Jc                              | CEFRSIN14   |
             | password                                 | xxkV8x4phzRKyiuE                     | CEFRSIN15   |
-
+@runnable
     Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error for nodoChiediElencoFlussiRendicontazione primitive
         Given initial XML nodoChiediElencoFlussiRendicontazione
             """
@@ -120,10 +120,10 @@ Feature: Syntax checks for nodoChiediElencoFlussiRendicontazione - KO
             <soapenv:Header/>
             <soapenv:Body>
             <ws:nodoChiediElencoFlussiRendicontazione>
-            <identificativoIntermediarioPA>#codicePA#</identificativoIntermediarioPA>
+            <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
             <password>pwdpwdpwd</password>
-            <identificativoDominio>#codicePA#</identificativoDominio>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoPSP>#psp#</identificativoPSP>
             </ws:nodoChiediElencoFlussiRendicontazione>
             </soapenv:Body>
@@ -149,10 +149,10 @@ Feature: Syntax checks for nodoChiediElencoFlussiRendicontazione - KO
     #        <soapenv:Header/>
     #        <soapenv:Body>
     #        <ws:nodoChiediElencoFlussiRendicontazione>
-    #        <identificativoIntermediarioPA>#codicePA#</identificativoIntermediarioPA>
+    #        <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
     #        <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
     #        <password>pwdpwdpwd<password>
-    #        <identificativoDominio>#codicePA#</identificativoDominio>
+    #        <identificativoDominio>#creditor_institution_code#</identificativoDominio>
     #        <identificativoPSP>#psp#</identificativoPSP>
     #        </ws:nodoChiediElencoFlussiRendicontazione>
     #        </soapenv:Body>
