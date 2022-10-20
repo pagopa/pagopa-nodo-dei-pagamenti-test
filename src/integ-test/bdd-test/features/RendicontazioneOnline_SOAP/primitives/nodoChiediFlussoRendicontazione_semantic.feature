@@ -37,7 +37,7 @@ Feature: Semantic checks for nodoChiediFlussoRendicontazione
             </pay_i:datiSingoliPagamenti>
             </pay_i:FlussoRiversamento>
             """
-
+@runnable
     Scenario: Executed nodoInviaFlussoRendicontazione
         Given initial XML nodoInviaFlussoRendicontazione
             """
@@ -49,7 +49,7 @@ Feature: Semantic checks for nodoChiediFlussoRendicontazione
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
             <identificativoCanale>#canale#</identificativoCanale>
             <password>pwdpwdpwd</password>
-            <identificativoDominio>#codicePA#</identificativoDominio>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoFlusso>$identificativoFlusso</identificativoFlusso>
             <dataOraFlusso>$timedate</dataOraFlusso>
             <xmlRendicontazione>$rendAttachment</xmlRendicontazione>
@@ -59,7 +59,7 @@ Feature: Semantic checks for nodoChiediFlussoRendicontazione
             """
         When PSP sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaFlussoRendicontazione response
-
+@runnable
     Scenario Outline: Check semantic errors for nodoChiediFlussoRendicontazione primitive
         Given the Executed nodoInviaFlussoRendicontazione scenario executed successfully
         And initial XML nodoChiediFlussoRendicontazione
@@ -71,7 +71,7 @@ Feature: Semantic checks for nodoChiediFlussoRendicontazione
             <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
             <password>pwdpwdpwd</password>
-            <identificativoDominio>#codicePA#</identificativoDominio>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoFlusso>$identificativoFlusso</identificativoFlusso>
             </ws:nodoChiediFlussoRendicontazione>
@@ -92,12 +92,12 @@ Feature: Semantic checks for nodoChiediFlussoRendicontazione
             | identificativoFlusso                  | 2017-09-11idPsp1-pluto123 | PPT_ID_FLUSSO_SCONOSCIUTO         | CFRSEM10    |
 
 
-
+@runnable
     # [CFRSEM6]
     Scenario: Aggiornamento DB_1
         Given the Executed nodoInviaFlussoRendicontazione scenario executed successfully
         And update through the query param_update of the table RENDICONTAZIONE the parameter DOMINIO with ciaoDominio, with where condition ID_FLUSSO and where value $identificativoFlusso under macro update_query on db nodo_offline
-
+@runnable
     Scenario: Check semantic errors for nodoChiediFlussoRendicontazione primitive
         Given the Aggiornamento DB_1 scenario executed successfully
         And initial XML nodoChiediFlussoRendicontazione
@@ -109,7 +109,7 @@ Feature: Semantic checks for nodoChiediFlussoRendicontazione
             <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
             <password>pwdpwdpwd</password>
-            <identificativoDominio>#codicePA#</identificativoDominio>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoFlusso>$identificativoFlusso</identificativoFlusso>
             </ws:nodoChiediFlussoRendicontazione>
@@ -121,12 +121,12 @@ Feature: Semantic checks for nodoChiediFlussoRendicontazione
         Then check faultCode is PPT_DOMINIO_SCONOSCIUTO of nodoChiediFlussoRendicontazione response
 
 
-
+@runnable
     # [CFRSEM7]
     Scenario: Aggiornamento DB_2
         Given the Executed nodoInviaFlussoRendicontazione scenario executed successfully
         And update through the query param_update of the table RENDICONTAZIONE the parameter DOMINIO with NOT_ENABLED, with where condition ID_FLUSSO and where value $identificativoFlusso under macro update_query on db nodo_offline
-
+@runnable
     Scenario: Check semantic errors for nodoChiediFlussoRendicontazione primitive
         Given the Aggiornamento DB_2 scenario executed successfully
         And initial XML nodoChiediFlussoRendicontazione
@@ -138,7 +138,7 @@ Feature: Semantic checks for nodoChiediFlussoRendicontazione
             <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
             <password>pwdpwdpwd</password>
-            <identificativoDominio>#codicePA#</identificativoDominio>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoFlusso>$identificativoFlusso</identificativoFlusso>
             </ws:nodoChiediFlussoRendicontazione>
@@ -150,11 +150,11 @@ Feature: Semantic checks for nodoChiediFlussoRendicontazione
         Then check faultCode is PPT_DOMINIO_DISABILITATO of nodoChiediFlussoRendicontazione response
 
     # [CFRSEM11] 
-    
+ @runnable   
     Scenario: Aggiornamento DB_3
         Given the Executed nodoInviaFlussoRendicontazione scenario executed successfully
         And update through the query param_update of the table RENDICONTAZIONE the parameter DOMINIO with 90000000001, with where condition ID_FLUSSO and where value $identificativoFlusso under macro update_query on db nodo_offline
-
+@runnable
     Scenario: Check semantic errors for nodoChiediFlussoRendicontazione primitive
         Given the Aggiornamento DB_3 scenario executed successfully
         And initial XML nodoChiediFlussoRendicontazione
@@ -176,7 +176,7 @@ Feature: Semantic checks for nodoChiediFlussoRendicontazione
         #And identificativoStazioneIntermediarioPA with  in nodoChiediFlussoRendicontazione
         When EC sends SOAP nodoChiediFlussoRendicontazione to nodo-dei-pagamenti
         Then check faultCode is PPT_AUTORIZZAZIONE of nodoChiediFlussoRendicontazione response
-
+@runnable
     # Send un nuovo flusso rendicontazione coretto
     Scenario: Executed nodoInviaFlussoRendicontazione_1
         Given initial XML nodoInviaFlussoRendicontazione
@@ -189,7 +189,7 @@ Feature: Semantic checks for nodoChiediFlussoRendicontazione
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
             <identificativoCanale>#canale#</identificativoCanale>
             <password>pwdpwdpwd</password>
-            <identificativoDominio>#codicePA#</identificativoDominio>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoFlusso>$identificativoFlusso</identificativoFlusso>
             <dataOraFlusso>$timedate</dataOraFlusso>
             <xmlRendicontazione>$rendAttachment</xmlRendicontazione>
@@ -199,12 +199,12 @@ Feature: Semantic checks for nodoChiediFlussoRendicontazione
             """
         When PSP sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaFlussoRendicontazione response
-
+@runnable
     # [CFRSEM8]
     Scenario: Aggiornamento DB_4
         Given the Executed nodoInviaFlussoRendicontazione_1 scenario executed successfully
         And update through the query param_update of the table RENDICONTAZIONE the parameter PSP with ciaoPSP, with where condition ID_FLUSSO and where value $identificativoFlusso under macro update_query on db nodo_offline
-
+@runnable
     Scenario: Check semantic errors for nodoChiediFlussoRendicontazione primitive
         Given the Aggiornamento DB_4 scenario executed successfully
         And initial XML nodoChiediFlussoRendicontazione
@@ -216,7 +216,7 @@ Feature: Semantic checks for nodoChiediFlussoRendicontazione
             <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
             <password>pwdpwdpwd</password>
-            <identificativoDominio>#codicePA#</identificativoDominio>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoFlusso>$identificativoFlusso</identificativoFlusso>
             </ws:nodoChiediFlussoRendicontazione>
@@ -226,12 +226,12 @@ Feature: Semantic checks for nodoChiediFlussoRendicontazione
         And identificativoPSP with ciaoPSP in nodoChiediFlussoRendicontazione
         When EC sends SOAP nodoChiediFlussoRendicontazione to nodo-dei-pagamenti
         Then check faultCode is PPT_PSP_SCONOSCIUTO of nodoChiediFlussoRendicontazione response
-
+@runnable
     # [CFRSEM9]
     Scenario: Aggiornamento DB_5
         Given the Executed nodoInviaFlussoRendicontazione_1 scenario executed successfully
         And update through the query param_update of the table RENDICONTAZIONE the parameter PSP with NOT_ENABLED, with where condition ID_FLUSSO and where value $identificativoFlusso under macro update_query on db nodo_offline
-
+@runnable
     Scenario: Check semantic errors for nodoChiediFlussoRendicontazione primitive
         Given the Aggiornamento DB_5 scenario executed successfully
         And initial XML nodoChiediFlussoRendicontazione
@@ -243,7 +243,7 @@ Feature: Semantic checks for nodoChiediFlussoRendicontazione
             <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
             <password>pwdpwdpwd</password>
-            <identificativoDominio>#codicePA#</identificativoDominio>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoFlusso>$identificativoFlusso</identificativoFlusso>
             </ws:nodoChiediFlussoRendicontazione>
