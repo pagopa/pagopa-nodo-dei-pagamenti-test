@@ -9,10 +9,10 @@ Feature: process tests for nodoChiediListaPendentiRPT
         <soapenv:Header/>
         <soapenv:Body>
             <ws:nodoChiediListaPendentiRPT>
-                <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
-                <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
+                <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
+                <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
                 <password>pwdpwdpwd</password>
-                <identificativoDominio>44444444444</identificativoDominio>
+                <identificativoDominio>#creditor_institution_code#</identificativoDominio>
                 <rangeDa>#yesterday_date#</rangeDa>
                 <dimensioneLista>5</dimensioneLista>
             </ws:nodoChiediListaPendentiRPT>
