@@ -37,7 +37,7 @@ Feature: Semantic checks for nodoChiediCopiaRT - KO
             | codiceContestoPagamento               | wrongPaymentContextCode | PPT_RT_SCONOSCIUTA                | CCRTSEM9    |
             | identificativoIntermediarioPA         | 77777777777             | PPT_AUTORIZZAZIONE                | CCRTSEM12   |
 
-
+@runnable
     Scenario Outline: Check semantic errors for nodoChiediCopiaRT primitive
         Given identificativoUnivocoVersamento with <iuv_value> in nodoChiediCopiaRT
         And codiceContestoPagamento with <ccp_value> in nodoChiediCopiaRT
