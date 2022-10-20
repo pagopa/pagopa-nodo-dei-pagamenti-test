@@ -265,7 +265,8 @@ Feature: flow tests for sendPaymentOutcomeV2 - Marca da bollo
       And checks the value BD of the record at column TIPO_ALLEGATO_RICEVUTA of the table POSITION_TRANSFER_MBD retrived by the query select_position_transfer_mbd on db nodo_online under macro NewMod1
       And checks the value $iubd of the record at column IUBD of the table POSITION_TRANSFER_MBD retrived by the query select_position_transfer_mbd on db nodo_online under macro NewMod1
       And checks the value $MB.Importo of the record at column IMPORTO of the table POSITION_TRANSFER_MBD retrived by the query select_position_transfer_mbd on db nodo_online under macro NewMod1
-      And checks the value $MB.OraAcquisto of the record at column ORA_ACQUISTO of the table POSITION_TRANSFER_MBD retrived by the query select_position_transfer_mbd on db nodo_online under macro NewMod1
+      # And checks the value $MB.OraAcquisto of the record at column ORA_ACQUISTO of the table POSITION_TRANSFER_MBD retrived by the query select_position_transfer_mbd on db nodo_online under macro NewMod1
+      And checks the value NotNone of the record at column ORA_ACQUISTO of the table POSITION_TRANSFER_MBD retrived by the query select_position_transfer_mbd on db nodo_online under macro NewMod1
       And checks the value NotNone of the record at column XML_CONTENT of the table POSITION_TRANSFER_MBD retrived by the query select_position_transfer_mbd on db nodo_online under macro NewMod1
       And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_TRANSFER_MBD retrived by the query select_position_transfer_mbd on db nodo_online under macro NewMod1
       And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_TRANSFER_MBD retrived by the query select_position_transfer_mbd on db nodo_online under macro NewMod1
