@@ -542,3 +542,108 @@ Feature: flow tests for sendPaymentOutcomeV2 - Marca da bollo
       Then check outcome is KO of sendPaymentOutcomeV2 response
       And check faultCode is PPT_SEMANTICA of sendPaymentOutcomeV2 response
       And check description is Check marca da bollo of sendPaymentOutcomeV2 response
+
+
+   # test 3 - IUBD non univoco  -->  SPOV2 OK
+   Scenario: execute activatePaymentNoticeV2 4
+      Given the activatePaymentNoticeV2 scenario executed successfully
+      When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+      Then check outcome is OK of activatePaymentNoticeV2 response
+
+   Scenario: execute closePaymentV2 4
+      Given the execute activatePaymentNoticeV2 4 scenario executed successfully
+      And the closePaymentV2 scenario executed successfully
+      When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+      Then verify the HTTP status code of v2/closepayment response is 200
+      And check outcome is OK of v2/closepayment response
+
+   Scenario: execute sendPaymentOutcomeV2 4
+      Given the execute closePaymentV2 4 scenario executed successfully
+      And the Define MBD scenario executed successfully
+      And IUBD with 1574213715129721 in MB 
+      And MB generation
+         """
+         $MB
+         """
+      And the sendPaymentOutcomeV2 scenario executed successfully
+      When psp sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
+      Then check outcome is OK of sendPaymentOutcomeV2 response
+
+
+   # test 4 - Hash diverso  -->  SPOV2 OK
+   Scenario: execute activatePaymentNoticeV2 5
+      Given the activatePaymentNoticeV2 scenario executed successfully
+      When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+      Then check outcome is OK of activatePaymentNoticeV2 response
+
+   Scenario: execute closePaymentV2 5
+      Given the execute activatePaymentNoticeV2 5 scenario executed successfully
+      And the closePaymentV2 scenario executed successfully
+      When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+      Then verify the HTTP status code of v2/closepayment response is 200
+      And check outcome is OK of v2/closepayment response
+
+   Scenario: execute sendPaymentOutcomeV2 5
+      Given the execute closePaymentV2 5 scenario executed successfully
+      And the Define MBD scenario executed successfully
+      And ns2:DigestValue with ciao in MB 
+      And MB generation
+         """
+         $MB
+         """
+      And the sendPaymentOutcomeV2 scenario executed successfully
+      When psp sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
+      Then check outcome is OK of sendPaymentOutcomeV2 response
+
+
+   # test 5 - CF PSP diverso  -->  SPOV2 OK
+   Scenario: execute activatePaymentNoticeV2 6
+      Given the activatePaymentNoticeV2 scenario executed successfully
+      When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+      Then check outcome is OK of activatePaymentNoticeV2 response
+
+   Scenario: execute closePaymentV2 6
+      Given the execute activatePaymentNoticeV2 6 scenario executed successfully
+      And the closePaymentV2 scenario executed successfully
+      When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+      Then verify the HTTP status code of v2/closepayment response is 200
+      And check outcome is OK of v2/closepayment response
+
+   Scenario: execute sendPaymentOutcomeV2 6
+      Given the execute closePaymentV2 6 scenario executed successfully
+      And the Define MBD scenario executed successfully
+      And CodiceFiscale with CF40000000001 in MB 
+      And MB generation
+         """
+         $MB
+         """
+      And the sendPaymentOutcomeV2 scenario executed successfully
+      When psp sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
+      Then check outcome is OK of sendPaymentOutcomeV2 response
+
+
+   # test 6 - TipoBollo diverso  -->  SPOV2 OK
+   Scenario: execute activatePaymentNoticeV2 7
+      Given the activatePaymentNoticeV2 scenario executed successfully
+      And tipoBollo with 02 in paGetPaymentV2
+      And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
+      When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+      Then check outcome is OK of activatePaymentNoticeV2 response
+
+   Scenario: execute closePaymentV2 7
+      Given the execute activatePaymentNoticeV2 7 scenario executed successfully
+      And the closePaymentV2 scenario executed successfully
+      When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+      Then verify the HTTP status code of v2/closepayment response is 200
+      And check outcome is OK of v2/closepayment response
+
+   Scenario: execute sendPaymentOutcomeV2 7
+      Given the execute closePaymentV2 7 scenario executed successfully
+      And the Define MBD scenario executed successfully
+      And MB generation
+         """
+         $MB
+         """
+      And the sendPaymentOutcomeV2 scenario executed successfully
+      When psp sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
+      Then check outcome is OK of sendPaymentOutcomeV2 response
