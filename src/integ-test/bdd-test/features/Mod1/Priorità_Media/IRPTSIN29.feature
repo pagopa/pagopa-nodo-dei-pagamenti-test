@@ -109,5 +109,5 @@ Feature: process tests for nodoInviaRT[IRPTSIN29]
             """
             When PSP sends SOAP nodoInviaRPT to nodo-dei-pagamenti
             Then check esito is KO of nodoInviaRPT response
-            And check faultCode is PPT_AUTENTICAZIONE of nodoInviaRPT response
+            And check faultCode is PPT_PSP_SCONOSCIUTO of nodoInviaRPT response
             
