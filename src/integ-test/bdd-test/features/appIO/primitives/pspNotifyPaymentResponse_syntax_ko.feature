@@ -148,8 +148,8 @@ Feature: Syntax checks for pspNotifyPaymentResponse - KO
       | soapenv:Body            | Empty        | T_05        |
       | soapenv:Body            | None         | T_06        |
       | soapenv:Body            | RemoveParent | T_07        |
-      | psp:pspNotifyPaymentRes | RemoveParent | T_08        |
-      | psp:pspNotifyPaymentRes | Empty        | T_09        |
+      | pfn:pspNotifyPaymentRes | RemoveParent | T_08        |
+      | pfn:pspNotifyPaymentRes | Empty        | T_09        |
       | outcome                 | None         | T_10        |
       | outcome                 | Empty        | T_11        |
       | outcome                 | PP           | T_12        |
