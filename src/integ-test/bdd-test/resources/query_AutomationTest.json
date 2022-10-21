@@ -177,6 +177,7 @@
         "binary_file": "SELECT s.columns FROM table_name s JOIN RENDICONTAZIONE r ON s.ID = r.FK_BINARY_FILE WHERE r.ID_FLUSSO = '$identificativoFlusso' AND r.DOMINIO = '$pa' "
     },
     "Primitive_accessorie": {
-        "rpt": "SELECT columns FROM table_name WHERE IUV = '$iuv' AND CCP= '$ccp'"
+        "rpt": "SELECT columns FROM table_name WHERE IUV = '$iuv' AND CCP= '$ccp'",
+        "stati_rpt_snapshot": "SELECT columns FROM table_name srs WHERE srs.STATO ='$status' AND srs.ID_DOMINIO ='$pa' ORDER BY srs.UPDATED_TIMESTAMP DESC"
     }
 }
