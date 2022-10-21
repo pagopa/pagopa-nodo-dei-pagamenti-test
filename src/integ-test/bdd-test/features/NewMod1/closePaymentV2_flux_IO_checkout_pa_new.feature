@@ -1721,7 +1721,7 @@ Feature: flux tests for closePaymentV2
         And checks the value $transaction_id of the record at column TRANSACTION_ID of the table POSITION_PAYMENT retrived by the query select_activateio on db nodo_online under macro NewMod1
 
         # POSITION_SUBJECT
-        And verify 0 record for the table POSITION_SUBJECT retrived by the query position_subject_spo on db nodo_online under macro NewMod1
+        And verify 0 record for the table POSITION_SUBJECT retrived by the query position_subject_pagetpayment on db nodo_online under macro NewMod1
 
         # POSITION_RECEIPT
         And verify 0 record for the table POSITION_RECEIPT retrived by the query select_activateio on db nodo_online under macro NewMod1
