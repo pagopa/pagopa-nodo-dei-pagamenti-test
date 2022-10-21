@@ -75,7 +75,7 @@ Feature: flow tests for sendPaymentOutcomeV2 - Marca da bollo
          <!--1 to 5 repetitions:-->
          <transfer>
          <idTransfer>1</idTransfer>
-         <transferAmount>6.00</transferAmount>
+         <transferAmount>10.00</transferAmount>
          <fiscalCodePA>$activatePaymentNoticeV2.fiscalCode</fiscalCodePA>
          <richiestaMarcaDaBollo>
          <hashDocumento>wHpFSLCGZjIvNSXxqtGbxg7275t446DRTk5ZrsdUQ6E=</hashDocumento>
@@ -537,7 +537,7 @@ Feature: flow tests for sendPaymentOutcomeV2 - Marca da bollo
          """
          $MB2
          """
-      And the sendPaymentOutcomeV2 3 MDB scenario executed successfully
+      And the sendPaymentOutcomeV2 3 MBD scenario executed successfully
       When psp sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
       Then check outcome is KO of sendPaymentOutcomeV2 response
       And check faultCode is PPT_SEMANTICA of sendPaymentOutcomeV2 response
