@@ -233,39 +233,19 @@ Feature: FLUSSO_APIO_20_PPALOLD
     @runnable
     Scenario: Execute nodoInoltroEsitoPayPal (Phase 5) - OK
         Given the Execute nodoChiediInformazioniPagamento (Phase 4) scenario executed successfully
-        And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:psp="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <psp:pspNotifyPaymentRes>
-            <outcome>KO</outcome>
-            <!--Optional:-->
-            <fault>
-            <faultCode>CANALE_SEMANTICA</faultCode>
-            <faultString>Errore semantico dal psp</faultString>
-            <id>1</id>
-            <!--Optional:-->
-            <description>Errore dal psp</description>
-            </fault>
-            </psp:pspNotifyPaymentRes>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-
         When WISP sends REST POST inoltroEsito/paypal to nodo-dei-pagamenti
-            """
-            {
-                "idTransazione": "responseKO",
-                "idTransazionePsp": "153016btAE",
-                "idPagamento": "$sessionToken",
-                "identificativoIntermediario": "#psp#",
-                "identificativoPsp": "#psp#",
-                "identificativoCanale": "#canale#",
-                "importoTotalePagato": 10,
-                "timestampOperazione": "2012-04-23T18:25:43Z"
-            }
-            """
+        """
+        {
+            "idTransazione": "responseKO",
+            "idTransazionePsp":"153016btAE",
+            "idPagamento": "$sessionToken",
+            "identificativoIntermediario": "#psp#",
+            "identificativoPsp": "#psp#",
+            "identificativoCanale": "#canale#",
+            "importoTotalePagato": 10.00,
+            "timestampOperazione": "2012-04-23T18:25:43Z"
+        }
+        """
         Then verify the HTTP status code of inoltroEsito/paypal response is 200
         And check esito is OK of inoltroEsito/paypal response
     @runnable
