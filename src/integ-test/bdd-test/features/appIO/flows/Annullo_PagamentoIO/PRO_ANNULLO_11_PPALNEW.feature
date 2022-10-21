@@ -2,7 +2,8 @@ Feature: PRO_ANNULLO_11_PPALNEW
 
     Background:
         Given systems up
-        @runnable
+    @runnable
+    Scenario: Execute verifyPaymentNotice (Phase 1)
         Given nodo-dei-pagamenti has config parameter scheduler.cancelIOPaymentActorMinutesToBack set to 1
         And generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
         And initial XML verifyPaymentNotice
