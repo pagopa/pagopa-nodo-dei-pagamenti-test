@@ -158,21 +158,6 @@ Feature: PRO_ANNULLO_04
 
     Scenario: initial primitive request
         Given the Execute nodoChiediInformazioniPagamento request scenario executed successfully
-        And initial JSON inoltroEsito/carta
-            """
-            {
-            "idPagamento":"$activateIOPaymentResponse.paymentToken",
-            "RRN":18199444,
-            "identificativoPsp":"#psp#",
-            "tipoVersamento":"CP",
-            "identificativoIntermediario":"#psp#",
-            "identificativoCanale":"#canale#",
-            "importoTotalePagato":10.00,
-            "timestampOperazione":"2021-07-09T17:06:03.100+01:00",
-            "codiceAutorizzativo":"resTim",
-            "esitoTransazioneCarta":"00"
-            }
-            """
         And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:psp="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
@@ -186,6 +171,21 @@ Feature: PRO_ANNULLO_04
             </soapenv:Envelope>
             """
         When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
+                    """
+            {
+            "idPagamento":"$activateIOPaymentResponse.paymentToken",
+            "RRN":18199444,
+            "identificativoPsp":"#psp#",
+            "tipoVersamento":"CP",
+            "identificativoIntermediario":"#psp#",
+            "identificativoCanale":"#canale#",
+            "importoTotalePagato":10.00,
+            "timestampOperazione":"2021-07-09T17:06:03.100+01:00",
+            "codiceAutorizzativo":"resTim",
+            "esitoTransazioneCarta":"00"
+            }
+            """
+
         And job mod3CancelV2 triggered after 10 seconds
         And wait 20 seconds for expiration
         Then verify the HTTP status code of inoltroEsito/carta response is 408
