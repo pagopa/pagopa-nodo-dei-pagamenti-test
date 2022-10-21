@@ -37,6 +37,7 @@
     "fiscalCodePA": "12345678901",
     "id_station": "66666666666_01",
     "id_station_old" : "66666666666_05",
+    "id_station_secondary": "88888888888_01",
     "id_station_disabled": "STAZIONE_NOT_ENABLED",
     "intermediario_stz_disabled": "INT_STZ_NOT_ENABLED",
     "canale":"60000000001_07",
