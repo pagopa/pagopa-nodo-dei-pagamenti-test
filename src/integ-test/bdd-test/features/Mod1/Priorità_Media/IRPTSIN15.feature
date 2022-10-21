@@ -91,7 +91,7 @@ Feature: process tests for nodoInviaRT[IRPTSIN15]
                     <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
                     <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
                     <identificativoDominio>44444444444</identificativoDominio>
-                    <identificativoUnivocoVersamento></identificativoUnivocoVersamento>
+                    <identificativoUnivocoVersamento> </identificativoUnivocoVersamento>
                     <codiceContestoPagamento>CCD01</codiceContestoPagamento>
                 </ppt:intestazionePPT>
             </soapenv:Header>
