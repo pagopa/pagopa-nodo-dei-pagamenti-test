@@ -93,34 +93,37 @@ Feature: PRO_ANNULLO_04
             <soapenv:Header/>
             <soapenv:Body>
             <psp:pspNotifyPaymentRes>
-            <outcome>OK</outcome>
             <delay>10000</delay>
+            <outcome>OK</outcome>
             </psp:pspNotifyPaymentRes>
             </soapenv:Body>
             </soapenv:Envelope>
             """
- When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
+        When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
 
-        """
-        {
+            """
 
-        "idPagamento":"$activateIOPaymentResponse.paymentToken",
-        "RRN":10026669,
-        "tipoVersamento":"CP",
-        "identificativoIntermediario":"#psp#",
-        "identificativoPsp":"#psp#",
-        "identificativoCanale":"#canale#",
-        "importoTotalePagato":10.00,
-        "timestampOperazione":"2021-07-09T17:06:03.100+01:00",
-        "codiceAutorizzativo":"resTim",
-        "esitoTransazioneCarta":"00"
-        }
-        """
+            {
+
+                "idPagamento": "$activateIOPaymentResponse.paymentToken",
+                "RRN": 10026669,
+                "tipoVersamento": "CP",
+                "identificativoIntermediario": "#psp#",
+                "identificativoPsp": "#psp#",
+                "identificativoCanale": "#canale#",
+                "importoTotalePagato": 10,
+                "timestampOperazione": "2021-07-09T17:06:03.100+01:00",
+                "codiceAutorizzativo": "resTim",
+                "esitoTransazioneCarta": "00"
+
+            }
+
+            """
         And wait 10 seconds for expiration
         And job mod3CancelV2 triggered after 10 seconds
         And wait 6 seconds for expiration
         Then verify the HTTP status code of inoltroEsito/carta response is 408
-        And check error is Operazione in timeout of inoltroEsito/carta response  
+        And check error is Operazione in timeout of inoltroEsito/carta response
         And checks the value PAYING, PAYMENT_SENT, PAYMENT_UNKNOWN of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value PAYMENT_UNKNOWN of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
