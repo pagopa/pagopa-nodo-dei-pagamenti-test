@@ -425,6 +425,19 @@ Feature: gestioneReceiptMb_08_PULL
         And refresh job PA triggered after 10 seconds
         And wait 10 seconds for expiration
 
+    Scenario: Execute paSendRT OK (Phase 5)
+        Given the job pspChiediRT (Phase 4) scenario executed successfully
+        And EC2 replies to nodo-dei-pagamenti with the paSendRT
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
+            <soapenv:Header />
+            <soapenv:Body>
+            <paf:paSendRTRes>
+            <outcome>OK</outcome>
+            </paf:paSendRTRes>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
         #checks
         And replace noticeNumber content with $1noticeNumber content
         And replace paymentToken content with $sessionToken content
