@@ -5,6 +5,7 @@ Feature: PRO_ANNULLO_04
     @runnable
     Scenario: Execute verifyPaymentNotice (Phase 1)
         Given nodo-dei-pagamenti has config parameter default_durata_token_IO set to 10000
+        And generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
         And initial XML verifyPaymentNotice
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -17,7 +18,7 @@ Feature: PRO_ANNULLO_04
             <password>pwdpwdpwd</password>
             <qrCode>
             <fiscalCode>#creditor_institution_code#</fiscalCode>
-            <noticeNumber>#notice_number#</noticeNumber>
+            <noticeNumber>$1noticeNumber</noticeNumber>
             </qrCode>
             </nod:verifyPaymentNoticeReq>
             </soapenv:Body>
@@ -28,6 +29,50 @@ Feature: PRO_ANNULLO_04
     @runnable
     Scenario: Execute activateIOPayment (Phase 2)
         Given the Execute verifyPaymentNotice (Phase 1) scenario executed successfully
+        And initial XML paGetPayment
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <paf:paGetPaymentRes>
+            <outcome>OK</outcome>
+            <data>
+            <creditorReferenceId>#cod_segr#$1iuv</creditorReferenceId>
+            <paymentAmount>10.00</paymentAmount>
+            <dueDate>2021-07-31</dueDate>
+            <description>TARI 2021</description>
+            <companyName>company PA</companyName>
+            <officeName>office PA</officeName>
+            <debtor>
+            <uniqueIdentifier>
+            <entityUniqueIdentifierType>F</entityUniqueIdentifierType>
+            <entityUniqueIdentifierValue>JHNDOE00A01F205N</entityUniqueIdentifierValue>
+            </uniqueIdentifier>
+            <fullName>John Doe</fullName>
+            <streetName>street</streetName>
+            <civicNumber>12</civicNumber>
+            <postalCode>89020</postalCode>
+            <city>city</city>
+            <stateProvinceRegion>MI</stateProvinceRegion>
+            <country>IT</country>
+            <e-mail>john.doe@test.it</e-mail>
+            </debtor>
+            <transferList>
+            <transfer>
+            <idTransfer>1</idTransfer>
+            <transferAmount>10.00</transferAmount>
+            <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
+            <IBAN>IT96R0123454321000000012345</IBAN>
+            <remittanceInformation>TARI Comune EC_TE</remittanceInformation>
+            <transferCategory>0101101IM</transferCategory>
+            </transfer>
+            </transferList>
+            </data>
+            </paf:paGetPaymentRes>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And EC replies to nodo-dei-pagamenti with the paGetPayment
         And initial XML activateIOPayment
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd">
@@ -55,7 +100,7 @@ Feature: PRO_ANNULLO_04
             <payer>
             <uniqueIdentifier>
             <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-            <entityUniqueIdentifierValue>77777777777</entityUniqueIdentifierValue>
+            <entityUniqueIdentifierValue>#creditor_institution_code#</entityUniqueIdentifierValue>
             </uniqueIdentifier>
             <fullName>name</fullName>
             <!--Optional:-->
@@ -100,11 +145,8 @@ Feature: PRO_ANNULLO_04
             </soapenv:Envelope>
             """
         When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
-
             """
-
             {
-
                 "idPagamento": "$activateIOPaymentResponse.paymentToken",
                 "RRN": 10026669,
                 "tipoVersamento": "CP",
@@ -115,9 +157,7 @@ Feature: PRO_ANNULLO_04
                 "timestampOperazione": "2021-07-09T17:06:03.100+01:00",
                 "codiceAutorizzativo": "resTim",
                 "esitoTransazioneCarta": "00"
-
             }
-
             """
         And wait 10 seconds for expiration
         And job mod3CancelV2 triggered after 10 seconds
