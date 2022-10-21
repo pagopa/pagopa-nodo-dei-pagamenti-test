@@ -84,15 +84,15 @@ Feature: process tests for nodoInviaRT[IRPTSIN2]
         Given the RPT generation scenario executed successfully
         And initial XML nodoInviaRPT
             """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
-                <ppt:intestazionePPT>
+                <pt:intestazionePPT>
                     <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
                     <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
                     <identificativoDominio>44444444444</identificativoDominio>
                     <identificativoUnivocoVersamento>IUV160</identificativoUnivocoVersamento>
                     <codiceContestoPagamento>CCD01</codiceContestoPagamento>
-                </ppt:intestazionePPT>
+                </pt:intestazionePPT>
             </soapenv:Header>
             <soapenv:Body>
                 <ws:nodoInviaRPT>
