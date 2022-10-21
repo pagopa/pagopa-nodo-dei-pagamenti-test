@@ -14,6 +14,12 @@
       "soap_service": "",
       "rest_service": ""
     },
+    "secondary-mock-ec": {
+      "url": "https://api.dev.platform.pagopa.it/secondary-mock-ec/api/v1",
+      "healthcheck": "/info",
+      "soap_service": "",
+      "rest_service": ""
+    },
     "mock-psp": {
       "url": "https://api.dev.platform.pagopa.it/mock-psp-service/api/v1",
       "healthcheck": "/info",
@@ -31,10 +37,11 @@
     "fiscalCodePA": "12345678901",
     "id_station": "66666666666_01",
     "id_station_old" : "66666666666_05",
+    "id_station_secondary": "88888888888_01",
     "id_station_disabled": "STAZIONE_NOT_ENABLED",
     "intermediario_stz_disabled": "INT_STZ_NOT_ENABLED",
     "canale":"60000000001_07",
-    "canaleRtPull":"60000000001_05",
+    "canaleRtPull":"60000000001_06",
     "canaleRtPush":"60000000001_03",
     "canale_BBT":"60000000001_04",
     "canale_ATTIVATO_PRESSO_PSP": "60000000001_01",

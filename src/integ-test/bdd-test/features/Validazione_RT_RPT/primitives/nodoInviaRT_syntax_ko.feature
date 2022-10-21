@@ -357,7 +357,39 @@ Feature: Syntax checks for nodoInviaRT - KO
           | RTSIN124|  pay_i:codiceIdentificativoUnivoco            | QuestiSono36CaratteriAlfaNumericiTT1 |
           | RTSIN125|  pay_i:anagraficaPagatore                     | None                                 |
           | RTSIN126|  pay_i:anagraficaPagatore                     | Empty                                |
-
+          | RTSIN127|  pay_i:anagraficaPagatore                     | QuestiSono71CaratteriAlfaNumericiQuestiSono71CaratteriAlfaNumerici12345 |
+          | RTSIN128|  pay_i:indirizzoPagatore                      | Empty                                |
+          | RTSIN129|  pay_i:indirizzoPagatore                      | QuestiSono71CaratteriAlfaNumericiQuestiSono71CaratteriAlfaNumerici12345 |
+          | RTSIN130|  pay_i:civicoPagatore                         | Empty                                |
+          | RTSIN131|  pay_i:civicoPagatore                         | Sono17CaratteAlfa                    |
+          | RTSIN132|  pay_i:capPagatore                            | Empty                                |
+          | RTSIN133|  pay_i:capPagatore                            | Sono17CaratteAlfa                    |
+          | RTSIN134|  pay_i:localitaPagatore                       | Empty                                |
+          | RTSIN135|  pay_i:localitaPagatore                       | QuestiSono36CaratteriAlfaNumericiTT1 |
+          | RTSIN136|  pay_i:provinciaPagatore                      | Empty                                |            
+          | RTSIN137|  pay_i:provinciaPagatore                      | QuestiSono36CaratteriAlfaNumericiTT1 |           
+          | RTSIN138|  pay_i:nazionePagatore                        | Empty                                |
+          | RTSIN139|  pay_i:nazionePagatore                        | IIT                                  |
+          | RTSIN140|  pay_i:e-mailPagatore                         | Empty                                |
+          | RTSIN141|  pay_i:e-mailPagatore                         | 257DDDDDDDDDDDDDDDDDDDDDDDDDFFFFFFFFFFFFFFDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDFDDDmail                                |
+          | RTSIN142|  pay_i:datiPagamento                          | None                                 |
+          | RTSIN143|  pay_i:datiPagamento                          | RemoveParent                         |
+          | RTSIN144|  pay_i:codiceEsitoPagamento                   | None                                 |
+          | RTSIN145|  pay_i:codiceEsitoPagamento                   | Empty                                |
+          | RTSIN146|  pay_i:codiceEsitoPagamento                   | 22                                   |
+          | RTSIN147|  pay_i:codiceEsitoPagamento                   | 9                                    |
+          | RTSIN148|  pay_i:importoTotalePagato                    | None                                 |
+          | RTSIN149|  pay_i:importoTotalePagato                    | Empty                                |
+          | RTSIN150|  pay_i:importoTotalePagato                    | Sono13Caratte                        |
+          | RTSIN153|  pay_i:importoTotalePagato                    | 235,12                               |
+          | RTSIN154|  pay_i:identificativoUnivocoVersamento        | None                                 |
+          | RTSIN155|  pay_i:identificativoUnivocoVersamento        | Empty                                |
+          | RTSIN156|  pay_i:identificativoUnivocoVersamento        | QuestiSono36CaratteriAlfaNumericiTT1 |
+          ## | RTSIN157|  pay_i:codiceContestoPagamento                | None                                 |
+          ## | RTSIN158|  pay_i:codiceContestoPagamento                | Empty                                |
+          ## | RTSIN159|  pay_i:codiceContestoPagamento                | QuestiSono36CaratteriAlfaNumericiTT1 |
+          | RTSIN160|  pay_i:datiSingoloPagamento                   | Empty                                |
+          | RTSIN162|  pay_i:singoloImportoPagato                   | None                                 |
             
 
             

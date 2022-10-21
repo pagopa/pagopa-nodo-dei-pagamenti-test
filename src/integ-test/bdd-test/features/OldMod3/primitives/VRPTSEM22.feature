@@ -2,16 +2,16 @@ Feature: Semantic checks KO for nodoVerificaRPT
     Background:
         Given systems up
 
-     Scenario: Check faultCode error PPT_STAZIONE_INT_PA_SERVIZIO_NONATTIVO [VRPTSEM22 ]
+     Scenario: Check faultCode error PPT_STAZIONE_INT_PA_SERVIZIO_NONATTIVO [VRPTSEM22]
         Given initial XML nodoVerificaRPT
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:bc="http://PuntoAccessoPSP.spcoop.gov.it/BarCode_GS1_128_Modified" xmlns:aim="http://PuntoAccessoPSP.spcoop.gov.it/Code_128_AIM_USS-128_tipo_C" xmlns:qrc="http://PuntoAccessoPSP.spcoop.gov.it/QrCode">
             <soapenv:Header/>
             <soapenv:Body>
                 <ws:nodoVerificaRPT>
-                <identificativoPSP>40000000001</identificativoPSP>
-                <identificativoIntermediarioPSP>40000000001</identificativoIntermediarioPSP>
-                <identificativoCanale>40000000001_01</identificativoCanale>
+                <identificativoPSP>#psp#</identificativoPSP>
+                <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+                <identificativoCanale>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanale>
                 <password>pwdpwdpwd</password>
                 <codiceContestoPagamento>CCD01</codiceContestoPagamento>
                 <codificaInfrastrutturaPSP>BARCODE-GS1-128</codificaInfrastrutturaPSP>
