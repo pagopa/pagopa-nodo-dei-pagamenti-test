@@ -309,7 +309,7 @@ Feature: flux tests for closePaymentV2
 
     Scenario: FLUSSO_CP_01 (part 2)
         Given the FLUSSO_CP_01 (part 1) scenario executed successfully
-        And the closePaymentV2 request executed successfully
+        And the closePaymentV2 request scenario executed successfully
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
@@ -395,7 +395,7 @@ Feature: flux tests for closePaymentV2
         And checks the value $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query select_activateio on db nodo_online under macro NewMod1
         And checks the value $activateIOPayment.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query select_activateio on db nodo_online under macro NewMod1
 
-        And the sendPaymentOutcome request executed successfully
+        And the sendPaymentOutcome request scenario executed successfully
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
 
@@ -545,7 +545,7 @@ Feature: flux tests for closePaymentV2
 
     Scenario: FLUSSO_CP_02 (part 2)
         Given the FLUSSO_CP_02 (part 1) scenario executed successfully
-        And the closePaymentV2 request executed successfully
+        And the closePaymentV2 request scenario executed successfully
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
@@ -631,7 +631,7 @@ Feature: flux tests for closePaymentV2
         And checks the value $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query select_activateio on db nodo_online under macro NewMod1
         And checks the value $activateIOPayment.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query select_activateio on db nodo_online under macro NewMod1
 
-        And the sendPaymentOutcome request executed successfully
+        And the sendPaymentOutcome request scenario executed successfully
         And outcome with KO in sendPaymentOutcome
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcome response
@@ -726,7 +726,7 @@ Feature: flux tests for closePaymentV2
 
     Scenario: FLUSSO_CP_03 (part 2)
         Given the FLUSSO_CP_03 (part 1) scenario executed successfully
-        And the closePaymentV2 request executed successfully
+        And the closePaymentV2 request scenario executed successfully
         And outcome with KO in v2/closepayment
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
@@ -809,7 +809,7 @@ Feature: flux tests for closePaymentV2
         And checks the value $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query select_activateio on db nodo_online under macro NewMod1
         And checks the value $activateIOPayment.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query select_activateio on db nodo_online under macro NewMod1
 
-        And the sendPaymentOutcome request executed successfully
+        And the sendPaymentOutcome request scenario executed successfully
         And outcome with KO in sendPaymentOutcome
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcome response
@@ -904,7 +904,7 @@ Feature: flux tests for closePaymentV2
 
     Scenario: FLUSSO_CP_04 (part 2)
         Given the FLUSSO_CP_04 (part 1) scenario executed successfully
-        And the closePaymentV2 request executed successfully
+        And the closePaymentV2 request scenario executed successfully
         And outcome with KO in v2/closepayment
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
@@ -987,7 +987,7 @@ Feature: flux tests for closePaymentV2
         And checks the value $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query select_activateio on db nodo_online under macro NewMod1
         And checks the value $activateIOPayment.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query select_activateio on db nodo_online under macro NewMod1
 
-        And the sendPaymentOutcome request executed successfully
+        And the sendPaymentOutcome request scenario executed successfully
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcome response
         And check faultCode is PPT_TOKEN_SCONOSCIUTO of sendPaymentOutcome response
@@ -1082,7 +1082,7 @@ Feature: flux tests for closePaymentV2
     Scenario: FLUSSO_CP_05 (part 2)
         Given the FLUSSO_CP_05 (part 1) scenario executed successfully
         And the pspNotifyPayment timeout scenario executed successfully
-        And the closePaymentV2 request executed successfully
+        And the closePaymentV2 request scenario executed successfully
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
@@ -1168,7 +1168,7 @@ Feature: flux tests for closePaymentV2
         And checks the value $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query select_activateio on db nodo_online under macro NewMod1
         And checks the value $activateIOPayment.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query select_activateio on db nodo_online under macro NewMod1
 
-        And the sendPaymentOutcome request executed successfully
+        And the sendPaymentOutcome request scenario executed successfully
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
 
@@ -1319,7 +1319,7 @@ Feature: flux tests for closePaymentV2
     Scenario: FLUSSO_CP_06 (part 2)
         Given the FLUSSO_CP_06 (part 1) scenario executed successfully
         And the pspNotifyPayment malformata scenario executed successfully
-        And the closePaymentV2 request executed successfully
+        And the closePaymentV2 request scenario executed successfully
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
@@ -1405,7 +1405,7 @@ Feature: flux tests for closePaymentV2
         And checks the value $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query select_activateio on db nodo_online under macro NewMod1
         And checks the value $activateIOPayment.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query select_activateio on db nodo_online under macro NewMod1
 
-        And the sendPaymentOutcome request executed successfully
+        And the sendPaymentOutcome request scenario executed successfully
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
 
