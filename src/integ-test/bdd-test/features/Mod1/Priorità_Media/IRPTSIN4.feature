@@ -90,15 +90,15 @@ Feature: process tests for nodoInviaRT[IRPTSIN4]
                     <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
                     <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
                     <identificativoDominio>44444444444</identificativoDominio>
-                    <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
-                    <codiceContestoPagamento>$ccp</codiceContestoPagamento>
+                    <identificativoUnivocoVersamento>#iuv2#</identificativoUnivocoVersamento>
+                    <codiceContestoPagamento>CCD01</codiceContestoPagamento>
                 </ppt:intestazionePPT>
                 <ppt:intestazionePPT>
                     <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
                     <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
                     <identificativoDominio>44444444444</identificativoDominio>
-                    <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
-                    <codiceContestoPagamento>$ccp</codiceContestoPagamento>
+                    <identificativoUnivocoVersamento>#iuv2#</identificativoUnivocoVersamento>
+                    <codiceContestoPagamento>CCD01</codiceContestoPagamento>
                 </ppt:intestazionePPT>
             </soapenv:Header>
             <soapenv:Body>
