@@ -170,7 +170,7 @@ Feature: flux tests for closePaymentV2
                 "fee": 2,
                 "timestampOperation": "2012-04-23T18:25:43Z",
                 "additionalPaymentInformations": {
-                    "key": "12345678"
+                    "key": "#psp_transaction_id#"
                 },
                 "additionalPMInfo": {
                     "origin": "",
@@ -803,7 +803,7 @@ Feature: flux tests for closePaymentV2
         And verify 0 record for the table PM_SESSION_DATA retrived by the query id_sessione_activateio on db nodo_online under macro NewMod1
 
         # PM_METADATA
-        And verify 0 record for the table PM_METADATA retrived by the query id_sessione_activateio on db nodo_online under macro NewMod1
+        And verify 0 record for the table PM_METADATA retrived by the query transactionid on db nodo_online under macro NewMod1
 
         # POSITION_ACTIVATE
         And checks the value $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query select_activateio on db nodo_online under macro NewMod1
@@ -981,7 +981,7 @@ Feature: flux tests for closePaymentV2
         And verify 0 record for the table PM_SESSION_DATA retrived by the query id_sessione_activateio on db nodo_online under macro NewMod1
 
         # PM_METADATA
-        And verify 0 record for the table PM_METADATA retrived by the query id_sessione_activateio on db nodo_online under macro NewMod1
+        And verify 0 record for the table PM_METADATA retrived by the query transactionid on db nodo_online under macro NewMod1
 
         # POSITION_ACTIVATE
         And checks the value $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query select_activateio on db nodo_online under macro NewMod1
