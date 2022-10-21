@@ -172,6 +172,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
 
     Scenario Outline: Check PPT_SINTASSI_XSD error for nodoInviaFlussoRendicontazione primitive
         Given the Generazione rendicontazione scenario executed successfully
+        And <tag> with <tag_value> in rendAttachment
         And  initial XML nodoInviaFlussoRendicontazione
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -190,7 +191,6 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And <tag> with <tag_value> in rendAttachment
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check faultCode is PPT_SINTASSI_XSD of nodoInviaFlussoRendicontazione response
         Examples:
