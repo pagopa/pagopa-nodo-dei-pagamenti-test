@@ -2,7 +2,7 @@ Feature: T218_RT_forzaControlloSegno_esito=1_carrello
 
     Background:
         Given systems up
-
+@runnable
     Scenario: Execute nodoInviaCarrelloRPT (Phase 1)
         Given RPT1 generation
             """
@@ -213,7 +213,7 @@ Feature: T218_RT_forzaControlloSegno_esito=1_carrello
         And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
-
+@runnable
     Scenario Outline: Execute nodoInviaRT (Phase 2)
         Given the Execute nodoInviaCarrelloRPT (Phase 1) scenario executed successfully
         And initial XML nodoInviaRT

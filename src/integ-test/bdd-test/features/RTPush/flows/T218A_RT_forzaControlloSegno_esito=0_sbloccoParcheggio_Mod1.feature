@@ -2,7 +2,7 @@ Feature: T218_RT_forzaControlloSegno_esito=0_sbloccoParcheggio_Mod1
 
     Background:
         Given systems up
-
+@runnable
     Scenario: Execute nodoInviaRPT (Phase 1)
         Given RPT1 generation
             """
@@ -210,7 +210,7 @@ Feature: T218_RT_forzaControlloSegno_esito=0_sbloccoParcheggio_Mod1
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
-
+@runnable
     Scenario: Execute nodoInoltroEsitoMod1 (Phase 2)
         Given the Execute nodoInviaRPT (Phase 1) scenario executed successfully
         When WISP sends REST POST inoltroEsito/mod1 to nodo-dei-pagamenti
@@ -226,7 +226,7 @@ Feature: T218_RT_forzaControlloSegno_esito=0_sbloccoParcheggio_Mod1
             """
         Then verify the HTTP status code of inoltroEsito/mod1 response is 200
         And check esito is OK of inoltroEsito/mod1 response
-
+@runnable
     Scenario Outline: Execute nodoInviaRT (Phase 3)
         Given the Execute nodoInoltroEsitoMod1 (Phase 2) scenario executed successfully
         And initial XML nodoInviaRT
