@@ -240,13 +240,26 @@ Feature: Syntax checks for nodoInviaRT - OK
       When psp sends SOAP nodoInviaRPT to nodo-dei-pagamenti
       And EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
       Then check esito is OK of nodoInviaRT response
-      # And check faultCode is PPT_SINTASSI_XSD of nodoInviaRT response
           Examples:
           |SoapUI     | tag                                      | tag_value  |
           | RTSIN8.1  | pay_i:identificativoStazioneRichiedente  | None       |   
           | RTSIN25   | pay_i:riferimentoDataRichiesta           | 2001-12-31 |              
-          | RTSIN38.1 | pay_i:codiceUnitOperAttestante           | None       |          
-          | RTSIN63   | pay_i:tipoIdentificativoUnivoco          | A          |                                 
+          | RTSIN38.1 | pay_i:codiceUnitOperAttestante           | None       |
+          | RTSIN40.1  | pay_i:denomUnitOperAttestante           | None       |
+          | RTSIN42.1  | pay_i:indirizzoAttestante               | None       |
+          | RTSIN44.1  | pay_i:civicoAttestante                  | None       |
+          | RTSIN46.1  | pay_i:capAttestante                     | None       |
+          | RTSIN48.1  | pay_i:localitaAttestante                | None       |
+          | RTSIN50.1  | pay_i:provinciaAttestante               | None       |
+          | RTSIN52.1  | pay_i:nazioneAttestante                 | None       |
+          | RTSIN63   | pay_i:tipoIdentificativoUnivoco          | A          |   
+          | RTSIN70.1  | pay_i:codiceUnitOperBeneficiario        | None       |
+          | RTSIN72.1  | pay_i:denomUnitOperBeneficiario         | None       |
+          | RTSIN74.1  | pay_i:indirizzoBeneficiario             | None       |
+          | RTSIN76.1  | pay_i:civicoBeneficiario                | None       |
+          | RTSIN78.1  | pay_i:capBeneficiario                   | None       |
+          | RTSIN80.1  | pay_i:localitaBeneficiario              | None       |
+          | RTSIN82.1  | pay_i:provinciaBeneficiario             | None       |
           | RTSIN76   | pay_i:indirizzoBeneficiario              | None       |
           | RTSIN92   | pay_i:tipoIdentificativoUnivoco          | A          |
           | RTSIN128.1| pay_i:indirizzoPagatore                  | None       |

@@ -390,7 +390,47 @@ Feature: Syntax checks for nodoInviaRT - KO
           ## | RTSIN159|  pay_i:codiceContestoPagamento                | QuestiSono36CaratteriAlfaNumericiTT1 |
           | RTSIN160|  pay_i:datiSingoloPagamento                   | Empty                                |
           | RTSIN162|  pay_i:singoloImportoPagato                   | None                                 |
-            
+          | RTSIN163|  pay_i:singoloImportoPagato                   | Empty                                |
+          | RTSIN164|  pay_i:singoloImportoPagato                   | 99                                   |
+          | RTSIN165|  pay_i:singoloImportoPagato                   | 1999999999.99                        |
+          ## | RTSIN166|  pay_i:singoloImportoPagato                   | 999999999.99                         |
+          | RTSIN167|  pay_i:singoloImportoPagato                   | 10.563                               |
+          | RTSIN168|  pay_i:singoloImportoPagato                   | 10,51                                |
+          | RTSIN169|  pay_i:esitoSingoloPagamento                  | Empty                                |
+          | RTSIN170|  pay_i:esitoSingoloPagamento                  | QuestiSono36CaratteriAlfaNumericiTT1 |
+          | RTSIN171|  pay_i:dataEsitoSingoloPagamento              | None                                 |
+          | RTSIN172|  pay_i:dataEsitoSingoloPagamento              | Empty                                |
+          | RTSIN173|  pay_i:dataEsitoSingoloPagamento              | 2001-12-31T12                        |
+          | RTSIN174|  pay_i:dataEsitoSingoloPagamento              | 2001-12-                             |
+          | RTSIN175|  pay_i:identificativoUnivocoRiscossione       | None                                 |
+          | RTSIN176|  pay_i:identificativoUnivocoRiscossione       | Empty                                |
+          | RTSIN177|  pay_i:identificativoUnivocoRiscossione       | QuestiSono36CaratteriAlfaNumericiTT1 |
+          | RTSIN178|  pay_i:causaleVersamento                      | None                                 |
+          | RTSIN179|  pay_i:causaleVersamento                      | Empty                                |
+          | RTSIN180|  pay_i:causaleVersamento                      | QuestiSono141CaratteriAlfaNumericiQuestiSono141CaratteriAlfaNumericiQuestiSono141CaratteriAlfaNumericiQuestiSono141CaratteriAlfaNumerici12345|
+          | RTSIN181|  pay_i:datiSpecificiRiscossione               | None                                 |
+          | RTSIN182|  pay_i:datiSpecificiRiscossione               | Empty                                |
+          | RTSIN183|  pay_i:datiSpecificiRiscossione               | QuestiSono141CaratteriAlfaNumericiQuestiSono141CaratteriAlfaNumericiQuestiSono141CaratteriAlfaNumericiQuestiSono141CaratteriAlfaNumerici12345|
+          | RTSIN184|  pay_i:commissioniApplicatePSP                | Empty                                |
+          | RTSIN185|  pay_i:commissioniApplicatePSP                | 22                                   |
+          ##| RTSIN186|  pay_i:commissioniApplicatePSP                | 0.00                                 |
+          ##| RTSIN187|  pay_i:commissioniApplicatePSP                | 199999999.99                         |
+          | RTSIN188|  pay_i:commissioniApplicatePSP                | 10.251                               |
+          | RTSIN189|  pay_i:commissioniApplicatePSP                | 10,25                                |
+          ##| RTSIN190|  pay_i:allegatoRicevuta                       | Empty                                |
+          ##| RTSIN192|  pay_i:tipoAllegatoRicevuta                   | None                                 |
+          ##| RTSIN193|  pay_i:tipoAllegatoRicevuta                   | Empty                                |
+          ##| RTSIN194|  pay_i:tipoAllegatoRicevuta                   | AB                                   |
+          ##| RTSIN195|  pay_i:tipoAllegatoRicevuta                   | ABD                                  |
+          ##| RTSIN196|  pay_i:tipoAllegatoRicevuta                   | A                                    |
+          ##| RTSIN197|  pay_i:testoAllegato                          | None                                 |
+          ##| RTSIN198|  pay_i:testoAllegato                          | Empty                                |
+         
+
+
+
+
+         
 
             
             
