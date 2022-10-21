@@ -651,6 +651,7 @@ def step_impl(context):
         date = date.strftime("%Y-%m-%d")
         timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
         payload = payload.replace('#timedate+1#', timedate)
+        setattr(context, 'timedate+1', timedate)
 
     if "#timedate#" in payload:
         date = datetime.date.today().strftime("%Y-%m-%d")
