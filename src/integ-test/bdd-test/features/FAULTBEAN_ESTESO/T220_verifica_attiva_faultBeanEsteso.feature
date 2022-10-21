@@ -2,7 +2,7 @@ Feature: T220_verifica_attiva_faultBeanEsteso
 
     Background:
         Given systems up
-
+@runnable
     Scenario: Execute nodoVerificaRPT (Phase 1)
         Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
         And initial XML nodoVerificaRPT
@@ -54,7 +54,7 @@ Feature: T220_verifica_attiva_faultBeanEsteso
         And replace wrongFaultCode content with PAA_SOAPACTION content
         And check value $nodoVerificaRPTResponse.originalFaultCode is not equal to value $wrongFaultCode
         
-
+@runnable
     Scenario: Execute nodoAttivaRPT (Phase 2)
         Given the Execute nodoVerificaRPT (Phase 1) scenario executed successfully
         And initial XML nodoAttivaRPT

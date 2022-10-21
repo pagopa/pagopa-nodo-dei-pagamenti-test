@@ -2,7 +2,7 @@ Feature: RPT-RT bollo
 
    Background:
       Given systems up
-
+@runnable
    Scenario: MB generation
       Given MB generation
          """
@@ -255,7 +255,7 @@ Feature: RPT-RT bollo
       When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
       Then check esito is OK of nodoInviaRPT response
       And check redirect is 1 of nodoInviaRPT response
-
+@runnable
    Scenario: Execute nodoInviaRT
       Given the MB generation scenario executed successfully
       And initial XML nodoInviaRT

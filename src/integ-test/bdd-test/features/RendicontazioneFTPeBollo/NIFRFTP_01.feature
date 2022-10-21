@@ -2,7 +2,7 @@ Feature: NIFRFTP
 
     Background:
         Given systems up
-
+@runnable
     Scenario: REND generation
         Given REND generation
             """
@@ -40,7 +40,7 @@ Feature: NIFRFTP
             </pay_i:FlussoRiversamento>
             """
 
-
+@runnable
     Scenario: Execute nodoInviaFlussoRendicontazione request
         Given the REND generation scenario executed successfully
         And initial XML nodoInviaFlussoRendicontazione
@@ -98,7 +98,7 @@ Feature: NIFRFTP
         And checks the value ftp-sender of the record at column UPDATED_BY of the table RENDICONTAZIONE_SFTP_SEND_QUEUE retrived by the query send_queue on db nodo_offline under macro RendicontazioneFTPeBollo
         And checks the value 0 of the record at column RETRY of the table RENDICONTAZIONE_SFTP_SEND_QUEUE retrived by the query send_queue on db nodo_offline under macro RendicontazioneFTPeBollo
 
-
+@runnable
     Scenario: Execute nodoChiediFlussoRendicontazione primitive
         Given the Execute nodoInviaFlussoRendicontazione request scenario executed successfully
         And initial XML nodoChiediFlussoRendicontazione

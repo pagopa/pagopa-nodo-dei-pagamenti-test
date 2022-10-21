@@ -2,7 +2,7 @@ Feature: T220_Carrello_faultBeanEsteso
 
     Background:
         Given systems up
-
+@runnable
     Scenario: Execute nodoInviaCarrelloRPT (Phase 1)
         Given generate 1 notice number and iuv with aux digit 3, segregation code 12 and application code -
         And generate 2 notice number and iuv with aux digit 3, segregation code 12 and application code -
@@ -219,7 +219,7 @@ Feature: T220_Carrello_faultBeanEsteso
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
         And check faultCode is PPT_CANALE_ERRORE of nodoInviaCarrelloRPT response
-
+@runnable
     Scenario: Execute nodoChiediStatoRPT (Phase 2)
         Given the Execute nodoInviaCarrelloRPT (Phase 1) scenario executed successfully
         And initial XML nodoChiediStatoRPT
@@ -243,7 +243,7 @@ Feature: T220_Carrello_faultBeanEsteso
         And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
         And check url field not exists in nodoChiediStatoRPT response
-
+@runnable
     Scenario: Execute nodoChiediStatoRPT2 (Phase 3)
         Given the Execute nodoChiediStatoRPT (Phase 2) scenario executed successfully
         And identificativoUnivocoVersamento with $2iuv in nodoChiediStatoRPT
@@ -253,13 +253,13 @@ Feature: T220_Carrello_faultBeanEsteso
         And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
         And check url field not exists in nodoChiediStatoRPT response
-
+@runnable
     Scenario: Execute nodoInviaCarrelloRPT2 (Phase 4)
         Given the Execute nodoChiediStatoRPT2 (Phase 3) scenario executed successfully
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
         And check faultCode is PPT_ID_CARRELLO_DUPLICATO of nodoInviaCarrelloRPT response
-
+@runnable
     Scenario: Execute nodoChiediStatoRPT2_2 (Phase 5)
         Given the Execute nodoInviaCarrelloRPT2 (Phase 4) scenario executed successfully
         When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
