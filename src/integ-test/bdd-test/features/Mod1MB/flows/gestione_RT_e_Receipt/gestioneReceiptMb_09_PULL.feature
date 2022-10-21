@@ -1,4 +1,4 @@
-Feature: gestioneReceiptMb_08_PULL
+Feature: gestioneReceiptMb_09_PULL
 
     Background:
         Given systems up
@@ -290,12 +290,8 @@ Feature: gestioneReceiptMb_08_PULL
             <soapenv:Header />
             <soapenv:Body>
             <paf:paSendRTRes>
-            <outcome>KO</outcome>
-            <fault>
-            <faultCode>PAA_ERRORE_MOCK</faultCode>
-            <faultString>Errore semantico</faultString>
-            <id>1</id>
-            </fault>
+            <outcome>OK</outcome>
+            <delay>10000</delay>
             </paf:paSendRTRes>
             </soapenv:Body>
             </soapenv:Envelope>
@@ -431,7 +427,6 @@ Feature: gestioneReceiptMb_08_PULL
         And replace psp content with #psp# content
 
         #extraction from POSITION_RECEIPT table
-        And replace pa content with #creditor_institution_code# content
         And execution query by_notice_number_and_pa to get value on the table POSITION_RECEIPT, with the columns * under macro Mod1Mb with db name nodo_online
         And through the query by_notice_number_and_pa retrieve param receptID at position 1 and save it under the key receptID
         And through the query by_notice_number_and_pa retrieve param noticeID at position 2 and save it under the key noticeID
@@ -447,6 +442,7 @@ Feature: gestioneReceiptMb_08_PULL
         And through the query by_notice_number_and_pa retrieve param pspID at position 12 and save it under the key pspID
         And through the query by_notice_number_and_pa retrieve param pspFiscalCode at position 13 and save it under the key pspFiscalCode
         And through the query by_notice_number_and_pa retrieve param pspVatNumber at position 14 and save it under the key pspVatNumber
+        And through the query by_notice_number_and_pa retrieve param pspCompany at position 15 and save it under the key pspCompany
         And through the query by_notice_number_and_pa retrieve param channelID at position 16 and save it under the key channelID
         And through the query by_notice_number_and_pa retrieve param channelDescription at position 17 and save it under the key channelDescription
         And through the query by_notice_number_and_pa retrieve param payerID at position 18 and save it under the key payerID
@@ -486,7 +482,6 @@ Feature: gestioneReceiptMb_08_PULL
         And through the query by_psp retrieve param ragioneSociale at position 6 and save it under the key ragioneSociale
         And through the query by_psp retrieve param codiceFiscale at position 16 and save it under the key codiceFiscale
         And through the query by_psp retrieve param vatNumber at position 17 and save it under the key vatNumber
-        
         #checks
         And check value $receptID is equal to value $1iuv
         And check value $noticeID is equal to value $expNoticeID
@@ -499,7 +494,8 @@ Feature: gestioneReceiptMb_08_PULL
         And check value $company is equal to value $expCompanyName
         And check value $officeName is equal to value $expOfficeName
         And check value $debtorID is equal to value $expDebtorID
-        And check value $pspID is equal to value $psp
+        And check value $pspID is equal to value 40000000001
+        #And check value $pspCompany is equal to value $ragioneSociale
         And check value $pspFiscalCode is equal to value $codiceFiscale
         And check value $pspVatNumber is equal to value $vatNumber
         And check value $channelID is equal to value $expChannelID
@@ -509,6 +505,30 @@ Feature: gestioneReceiptMb_08_PULL
         And check value $fee is equal to value $expFee
         And check value $applicationDate is equal to value $expApplicationDate
         And check value $transferDate is equal to value $expTransferDate
+
+
+        #extraction from POSITION_RECEIPT_RECIPIENT table
+        And replace $paymentToken content with $1carrello content
+        #row 1
+        And execution query by_notice_number_and_payment_token to get value on the table POSITION_RECEIPT_RECIPIENT, with the columns * under macro Mod1Mb with db name nodo_online
+        And through the query by_notice_number_and_payment_token retrieve param paFiscalCode1 at position 1 and save it under the key paFiscalCode1
+        And through the query by_notice_number_and_payment_token retrieve param noticeID1 at position 2 and save it under the key noticeID1
+        And through the query by_notice_number_and_payment_token retrieve param creditorReferenceId1 at position 3 and save it under the key creditorReferenceId1
+        And through the query by_notice_number_and_payment_token retrieve param paymentToken1 at position 4 and save it under the key paymentToken1
+        And through the query by_notice_number_and_payment_token retrieve param recipientPA1 at position 5 and save it under the key recipientPA1
+        And through the query by_notice_number_and_payment_token retrieve param recipientBroker1 at position 6 and save it under the key recipientBroker1
+        And through the query by_notice_number_and_payment_token retrieve param recipientStation1 at position 7 and save it under the key recipientStation1
+        And through the query by_notice_number_and_payment_token retrieve param status1 at position 8 and save it under the key status1
+        
+        #checks
+        And check value $paFiscalCode1 is equal to value $expFiscalCode
+        And check value $noticeID1 is equal to value $expNoticeID
+        And check value $creditorReferenceId1 is equal to value $expCreditorReferenceID
+        And check value $paymentToken1 is equal to value $expPaymentToken
+        And check value $recipientPA1 is equal to value $pa1
+        And check value $recipientBroker1 is equal to value $pa1
+        And check value $recipientStation1 is equal to value #id_station_secondary#
+
 
         #extraction from POSITION_RECEIPT_XML
         And execution query by_notice_number_and_payment_token to get value on the table POSITION_RECEIPT_XML, with the columns * under macro Mod1Mb with db name nodo_online
@@ -525,11 +545,39 @@ Feature: gestioneReceiptMb_08_PULL
         And check value $noticeID1 is equal to value $expNoticeID
         And check value $creditorReferenceId1 is equal to value $expCreditorReferenceID
         And check value $paymentToken1 is equal to value $expPaymentToken
-        And check value $recipientPA1 is equal to value #creditor_institution_code_secondary#
-        And check value $recipientBroker1 is equal to value #creditor_institution_code_secondary#
+        And check value $recipientPA1 is equal to value $pa1
+        And check value $recipientBroker1 is equal to value $pa1
         And check value $recipientStation1 is equal to value #id_station_secondary#
+        
+        And checks the value PAYING, PAID, NOTICE_GENERATED, NOTICE_SENT of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+        And checks the value NOTICE_SENT of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+        And checks the value PAYING, PAID of the record at column STATUS of the table POSITION_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+        And checks the value PAID of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
 
-        And checks the value PAYING, PAID, NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        And checks the value NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        And checks the value PAYING, PAID,NOTIFIED of the record at column STATUS of the table POSITION_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        And checks the value NOTIFIED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+    @test
+    Scenario: Check POSITION_RETRY_PA_SEND_RT table
+        Given the Execute nodoInviaRT (Phase 4) scenario executed successfully
+        And wait 60 seconds for expiration
+        And nodo-dei-pagamenti has config parameter scheduler.jobName_paSendRt.enabled set to true
+        And EC2 replies to nodo-dei-pagamenti with the paSendRT
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
+            <soapenv:Header />
+            <soapenv:Body>
+            <paf:paSendRTRes>
+            <outcome>OK</outcome>
+            <delay>10000</delay>
+            </paf:paSendRTRes>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        When job paSendRt triggered after 5 seconds
+        And wait 15 seconds for expiration
+        #check POSITION_RETRY_PA_SEND_RT table
+        Then checks the value #creditor_institution_code# of the record at column PA_FISCAL_CODE of the table POSITION_RETRY_PA_SEND_RT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+        And checks the value $1noticeNumber of the record at column NOTICE_ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+        And checks the value $paymentToken of the record at column TOKEN of the table POSITION_RETRY_PA_SEND_RT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+        And checks the value 1 of the record at column RETRY of the table POSITION_RETRY_PA_SEND_RT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+        And restore initial configurations
