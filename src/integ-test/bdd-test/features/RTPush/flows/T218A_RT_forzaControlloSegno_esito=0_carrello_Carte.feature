@@ -2,7 +2,7 @@ Feature: T218A_RT_forzaControlloSegno_esito=0_carrello_Carte
 
     Background:
         Given systems up
-
+@runnable
     Scenario: Execute nodoInviaCarrelloRPT (Phase 1)
         Given RPT1 generation
             """
@@ -382,7 +382,7 @@ Feature: T218A_RT_forzaControlloSegno_esito=0_carrello_Carte
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
         And retrieve session token from $nodoInviaCarrelloRPTResponse.url
-
+@runnable
     Scenario: Execute nodoInoltraEsitoCarta (Phase 2)
         Given the Execute nodoInviaCarrelloRPT (Phase 1) scenario executed successfully
         When WISP sends REST POST inoltroEsito/carta to nodo-dei-pagamenti
@@ -402,7 +402,7 @@ Feature: T218A_RT_forzaControlloSegno_esito=0_carrello_Carte
             """
         Then verify the HTTP status code of inoltroEsito/carta response is 200
         And check esito is OK of inoltroEsito/carta response
-
+@runnable
     Scenario: Execute nodoInviaRT (Phase 3) [forzaControlloSegnoPresente]
         Given the Execute nodoInoltraEsitoCarta (Phase 2) scenario executed successfully
         And initial XML nodoInviaRT
@@ -427,14 +427,14 @@ Feature: T218A_RT_forzaControlloSegno_esito=0_carrello_Carte
             """
         When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
-
+@runnable
     Scenario: Execute nodoInviaRT2 (Phase 4) [forzaControlloSegnoPresente]
         Given the Execute nodoInviaRT (Phase 3) [forzaControlloSegnoPresente] scenario executed successfully
         And identificativoUnivocoVersamento with $2IUV in nodoInviaRT
         And rt with $rt2Attachment in nodoInviaRT
         When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
-
+@runnable
     # forzaControlloSegnoAssente
     Scenario: Execute nodoInviaRT (Phase 3) [forzaControlloSegnoAssente]
         Given the Execute nodoInoltraEsitoCarta (Phase 2) scenario executed successfully
@@ -459,7 +459,7 @@ Feature: T218A_RT_forzaControlloSegno_esito=0_carrello_Carte
             """
         When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
-
+@runnable
     Scenario: Execute nodoInviaRT2 (Phase 4) [forzaControlloSegnoAssente]
         Given the Execute nodoInviaRT (Phase 3) [forzaControlloSegnoAssente] scenario executed successfully
         And identificativoUnivocoVersamento with $2IUV in nodoInviaRT

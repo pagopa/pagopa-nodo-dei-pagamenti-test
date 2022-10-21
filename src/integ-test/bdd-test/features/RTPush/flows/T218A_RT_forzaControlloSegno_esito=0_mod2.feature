@@ -2,7 +2,7 @@ Feature: T218A_RT_forzaControlloSegno_esito=0_mod2
 
     Background:
         Given systems up
-
+@runnable
     Scenario: Execute nodoInviaRPT (Phase 1)
         Given RPT1 generation
             """
@@ -209,7 +209,7 @@ Feature: T218A_RT_forzaControlloSegno_esito=0_mod2
         And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
-
+@runnable
     Scenario Outline: Execute nodoInviaRT (Phase 2)
         Given the Execute nodoInviaRPT (Phase 1) scenario executed successfully
         And initial XML nodoInviaRT
