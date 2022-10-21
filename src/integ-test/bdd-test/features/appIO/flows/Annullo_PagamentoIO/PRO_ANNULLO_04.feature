@@ -4,7 +4,7 @@ Feature: PRO_ANNULLO_04
         Given systems up
     @runnable
     Scenario: Execute verifyPaymentNotice (Phase 1)
-        Given nodo-dei-pagamenti has config parameter default_durata_token_IO set to 20000
+        Given nodo-dei-pagamenti has config parameter default_durata_token_IO set to 180000
         And generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
         And initial XML verifyPaymentNotice
             """
@@ -90,7 +90,7 @@ Feature: PRO_ANNULLO_04
             <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
             </qrCode>
             <!--Optional:-->
-            <expirationTime>6000</expirationTime>
+            <expirationTime>180000</expirationTime>
             <amount>10.00</amount>
             <!--Optional:-->
             <dueDate>2021-12-12</dueDate>
