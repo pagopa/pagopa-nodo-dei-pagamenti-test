@@ -447,7 +447,7 @@ Feature: flux tests for closePaymentV2
         And checks the value $sendPaymentOutcome.outcome of the record at column OUTCOME of the table POSITION_PAYMENT retrived by the query select_activateio on db nodo_online under macro NewMod1
         And checks the value TPAY of the record at column PAYMENT_METHOD of the table POSITION_PAYMENT retrived by the query select_activateio on db nodo_online under macro NewMod1
         And checks the value WISP of the record at column PAYMENT_CHANNEL of the table POSITION_PAYMENT retrived by the query select_activateio on db nodo_online under macro NewMod1
-        And checks the value None of the record at column TRANSFER_DATE of the table POSITION_PAYMENT retrived by the query select_activateio on db nodo_online under macro NewMod1
+        And checks the value $sendPaymentOutcomeV2.transferDate of the record at column TRANSFER_DATE of the table POSITION_PAYMENT retrived by the query select_activateio on db nodo_online under macro NewMod1
         And checks the value None of the record at column PAYER_ID of the table POSITION_PAYMENT retrived by the query select_activateio on db nodo_online under macro NewMod1
         And checks the value None of the record at column APPLICATION_DATE of the table POSITION_PAYMENT retrived by the query select_activateio on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_PAYMENT retrived by the query select_activateio on db nodo_online under macro NewMod1
@@ -463,7 +463,7 @@ Feature: flux tests for closePaymentV2
         And checks the value $transaction_id of the record at column TRANSACTION_ID of the table POSITION_PAYMENT retrived by the query select_activateio on db nodo_online under macro NewMod1
 
         # POSITION_SUBJECT
-        And verify 0 record for the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro NewMod1
+        And verify 0 record for the table POSITION_SUBJECT retrived by the query position_subject_spo on db nodo_online under macro NewMod1
 
         # POSITION_RECEIPT
         And checks the value $activateIOPaymentResponse.paymentToken of the record at column RECEIPT_ID of the table POSITION_RECEIPT retrived by the query select_activateio on db nodo_online under macro NewMod1
@@ -686,7 +686,7 @@ Feature: flux tests for closePaymentV2
         And checks the value None of the record at column OUTCOME of the table POSITION_PAYMENT retrived by the query select_activateio on db nodo_online under macro NewMod1
         And checks the value TPAY of the record at column PAYMENT_METHOD of the table POSITION_PAYMENT retrived by the query select_activateio on db nodo_online under macro NewMod1
         And checks the value WISP of the record at column PAYMENT_CHANNEL of the table POSITION_PAYMENT retrived by the query select_activateio on db nodo_online under macro NewMod1
-        And checks the value None of the record at column TRANSFER_DATE of the table POSITION_PAYMENT retrived by the query select_activateio on db nodo_online under macro NewMod1
+        And checks the value $sendPaymentOutcome.transferDate of the record at column TRANSFER_DATE of the table POSITION_PAYMENT retrived by the query select_activateio on db nodo_online under macro NewMod1
         And checks the value None of the record at column PAYER_ID of the table POSITION_PAYMENT retrived by the query select_activateio on db nodo_online under macro NewMod1
         And checks the value None of the record at column APPLICATION_DATE of the table POSITION_PAYMENT retrived by the query select_activateio on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_PAYMENT retrived by the query select_activateio on db nodo_online under macro NewMod1
@@ -702,7 +702,7 @@ Feature: flux tests for closePaymentV2
         And checks the value $transaction_id of the record at column TRANSACTION_ID of the table POSITION_PAYMENT retrived by the query select_activateio on db nodo_online under macro NewMod1
 
         # POSITION_SUBJECT
-        And verify 0 record for the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro NewMod1
+        And verify 0 record for the table POSITION_SUBJECT retrived by the query position_subject_spo on db nodo_online under macro NewMod1
 
         # POSITION_RECEIPT
         And verify 0 record for the table POSITION_RECEIPT retrived by the query select_activateio on db nodo_online under macro NewMod1
@@ -864,7 +864,7 @@ Feature: flux tests for closePaymentV2
         And checks the value None of the record at column OUTCOME of the table POSITION_PAYMENT retrived by the query select_activateio on db nodo_online under macro NewMod1
         And checks the value None of the record at column PAYMENT_METHOD of the table POSITION_PAYMENT retrived by the query select_activateio on db nodo_online under macro NewMod1
         And checks the value NA of the record at column PAYMENT_CHANNEL of the table POSITION_PAYMENT retrived by the query select_activateio on db nodo_online under macro NewMod1
-        And checks the value None of the record at column TRANSFER_DATE of the table POSITION_PAYMENT retrived by the query select_activateio on db nodo_online under macro NewMod1
+        And checks the value $sendPaymentOutcome.transferDate of the record at column TRANSFER_DATE of the table POSITION_PAYMENT retrived by the query select_activateio on db nodo_online under macro NewMod1
         And checks the value None of the record at column PAYER_ID of the table POSITION_PAYMENT retrived by the query select_activateio on db nodo_online under macro NewMod1
         And checks the value None of the record at column APPLICATION_DATE of the table POSITION_PAYMENT retrived by the query select_activateio on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_PAYMENT retrived by the query select_activateio on db nodo_online under macro NewMod1
@@ -880,7 +880,7 @@ Feature: flux tests for closePaymentV2
         And checks the value None of the record at column TRANSACTION_ID of the table POSITION_PAYMENT retrived by the query select_activateio on db nodo_online under macro NewMod1
 
         # POSITION_SUBJECT
-        And verify 0 record for the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro NewMod1
+        And verify 0 record for the table POSITION_SUBJECT retrived by the query position_subject_spo on db nodo_online under macro NewMod1
 
         # POSITION_RECEIPT
         And verify 0 record for the table POSITION_RECEIPT retrived by the query select_activateio on db nodo_online under macro NewMod1
@@ -1057,7 +1057,7 @@ Feature: flux tests for closePaymentV2
         And checks the value None of the record at column TRANSACTION_ID of the table POSITION_PAYMENT retrived by the query select_activateio on db nodo_online under macro NewMod1
 
         # POSITION_SUBJECT
-        And verify 0 record for the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro NewMod1
+        And verify 0 record for the table POSITION_SUBJECT retrived by the query position_subject_spo on db nodo_online under macro NewMod1
 
         # POSITION_RECEIPT
         And verify 0 record for the table POSITION_RECEIPT retrived by the query select_activateio on db nodo_online under macro NewMod1
@@ -1220,7 +1220,7 @@ Feature: flux tests for closePaymentV2
         And checks the value $sendPaymentOutcome.outcome of the record at column OUTCOME of the table POSITION_PAYMENT retrived by the query select_activateio on db nodo_online under macro NewMod1
         And checks the value TPAY of the record at column PAYMENT_METHOD of the table POSITION_PAYMENT retrived by the query select_activateio on db nodo_online under macro NewMod1
         And checks the value WISP of the record at column PAYMENT_CHANNEL of the table POSITION_PAYMENT retrived by the query select_activateio on db nodo_online under macro NewMod1
-        And checks the value None of the record at column TRANSFER_DATE of the table POSITION_PAYMENT retrived by the query select_activateio on db nodo_online under macro NewMod1
+        And checks the value $sendPaymentOutcome.transferDate of the record at column TRANSFER_DATE of the table POSITION_PAYMENT retrived by the query select_activateio on db nodo_online under macro NewMod1
         And checks the value None of the record at column PAYER_ID of the table POSITION_PAYMENT retrived by the query select_activateio on db nodo_online under macro NewMod1
         And checks the value None of the record at column APPLICATION_DATE of the table POSITION_PAYMENT retrived by the query select_activateio on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_PAYMENT retrived by the query select_activateio on db nodo_online under macro NewMod1
@@ -1236,7 +1236,7 @@ Feature: flux tests for closePaymentV2
         And checks the value $transaction_id of the record at column TRANSACTION_ID of the table POSITION_PAYMENT retrived by the query select_activateio on db nodo_online under macro NewMod1
 
         # POSITION_SUBJECT
-        And verify 0 record for the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro NewMod1
+        And verify 0 record for the table POSITION_SUBJECT retrived by the query position_subject_spo on db nodo_online under macro NewMod1
 
         # POSITION_RECEIPT
         And checks the value $activateIOPaymentResponse.paymentToken of the record at column RECEIPT_ID of the table POSITION_RECEIPT retrived by the query select_activateio on db nodo_online under macro NewMod1
@@ -1457,7 +1457,7 @@ Feature: flux tests for closePaymentV2
         And checks the value $sendPaymentOutcome.outcome of the record at column OUTCOME of the table POSITION_PAYMENT retrived by the query select_activateio on db nodo_online under macro NewMod1
         And checks the value TPAY of the record at column PAYMENT_METHOD of the table POSITION_PAYMENT retrived by the query select_activateio on db nodo_online under macro NewMod1
         And checks the value WISP of the record at column PAYMENT_CHANNEL of the table POSITION_PAYMENT retrived by the query select_activateio on db nodo_online under macro NewMod1
-        And checks the value None of the record at column TRANSFER_DATE of the table POSITION_PAYMENT retrived by the query select_activateio on db nodo_online under macro NewMod1
+        And checks the value $sendPaymentOutcome.transferDate of the record at column TRANSFER_DATE of the table POSITION_PAYMENT retrived by the query select_activateio on db nodo_online under macro NewMod1
         And checks the value None of the record at column PAYER_ID of the table POSITION_PAYMENT retrived by the query select_activateio on db nodo_online under macro NewMod1
         And checks the value None of the record at column APPLICATION_DATE of the table POSITION_PAYMENT retrived by the query select_activateio on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_PAYMENT retrived by the query select_activateio on db nodo_online under macro NewMod1
@@ -1473,7 +1473,7 @@ Feature: flux tests for closePaymentV2
         And checks the value $transaction_id of the record at column TRANSACTION_ID of the table POSITION_PAYMENT retrived by the query select_activateio on db nodo_online under macro NewMod1
 
         # POSITION_SUBJECT
-        And verify 0 record for the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro NewMod1
+        And verify 0 record for the table POSITION_SUBJECT retrived by the query position_subject_spo on db nodo_online under macro NewMod1
 
         # POSITION_RECEIPT
         And checks the value $activateIOPaymentResponse.paymentToken of the record at column RECEIPT_ID of the table POSITION_RECEIPT retrived by the query select_activateio on db nodo_online under macro NewMod1
