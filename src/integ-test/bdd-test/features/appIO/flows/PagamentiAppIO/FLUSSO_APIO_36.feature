@@ -4,7 +4,8 @@ Feature: FLUSSO_APIO_36
         Given systems up
     @runnable
     Scenario: Execute verifyPaymentNotice (Phase 1)
-        Given initial XML verifyPaymentNotice
+        Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
+        And initial XML verifyPaymentNotice
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
             <soapenv:Header/>
@@ -16,17 +17,62 @@ Feature: FLUSSO_APIO_36
             <password>pwdpwdpwd</password>
             <qrCode>
             <fiscalCode>#creditor_institution_code#</fiscalCode>
-            <noticeNumber>#notice_number#</noticeNumber>
+            <noticeNumber>$1noticeNumber</noticeNumber>
             </qrCode>
             </nod:verifyPaymentNoticeReq>
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        When AppIO sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
+        When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of verifyPaymentNotice response
     @runnable
     Scenario: Execute activateIOPayment (Phase 2)
         Given the Execute verifyPaymentNotice (Phase 1) scenario executed successfully
+        And initial XML paGetPayment
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <paf:paGetPaymentRes>
+            <outcome>OK</outcome>
+            <data>
+            <creditorReferenceId>#cod_segr#$1iuv</creditorReferenceId>
+            <paymentAmount>10.00</paymentAmount>
+            <dueDate>2021-07-31</dueDate>
+            <description>TARI 2021</description>
+            <companyName>company PA</companyName>
+            <officeName>office PA</officeName>
+            <debtor>
+            <uniqueIdentifier>
+            <entityUniqueIdentifierType>F</entityUniqueIdentifierType>
+            <entityUniqueIdentifierValue>JHNDOE00A01F205N</entityUniqueIdentifierValue>
+            </uniqueIdentifier>
+            <fullName>John Doe</fullName>
+            <streetName>street</streetName>
+            <civicNumber>12</civicNumber>
+            <postalCode>89020</postalCode>
+            <city>city</city>
+            <stateProvinceRegion>MI</stateProvinceRegion>
+            <country>IT</country>
+            <e-mail>john.doe@test.it</e-mail>
+            </debtor>
+            <transferList>
+            <transfer>
+            <idTransfer>1</idTransfer>
+            <transferAmount>10.00</transferAmount>
+            <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
+            <IBAN>IT96R0123454321000000012345</IBAN>
+            <remittanceInformation>TARI Comune EC_TE</remittanceInformation>
+            <transferCategory>0101101IM</transferCategory>
+            </transfer>
+            </transferList>
+            </data>
+            </paf:paGetPaymentRes>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And EC replies to nodo-dei-pagamenti with the paGetPayment
+
         And initial XML activateIOPayment
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd">
@@ -44,17 +90,17 @@ Feature: FLUSSO_APIO_36
             <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
             </qrCode>
             <!--Optional:-->
-            <expirationTime>12345</expirationTime>
+            <expirationTime>6000</expirationTime>
             <amount>10.00</amount>
             <!--Optional:-->
             <dueDate>2021-12-12</dueDate>
             <!--Optional:-->
-            <paymentNote>test</paymentNote>
+            <paymentNote>responseFull</paymentNote>
             <!--Optional:-->
             <payer>
             <uniqueIdentifier>
             <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-            <entityUniqueIdentifierValue>44444444444</entityUniqueIdentifierValue>
+            <entityUniqueIdentifierValue>77777777777</entityUniqueIdentifierValue>
             </uniqueIdentifier>
             <fullName>name</fullName>
             <!--Optional:-->
@@ -76,37 +122,19 @@ Feature: FLUSSO_APIO_36
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        When AppIO sends SOAP activateIOPayment to nodo-dei-pagamenti
+        When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
     @runnable
     Scenario: Execute nodoChiediInformazioniPagamento (Phase 3)
         Given the Execute activateIOPayment (Phase 2) scenario executed successfully
         When WISP sends rest GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200
-    
+    @runnable
     Scenario: Execute activateIOPayment1 (Phase 4)
         Given nodo-dei-pagamenti has config parameter scheduler.cancelIOPaymentActorMinutesToBack set to 1
         And nodo-dei-pagamenti has config parameter default_durata_token_IO set to 50000
         And the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
-        #And save activateIOPayment response in activateIOPayment1
-        And initial XML paGetPayment
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <paf:paGetPaymentRes>
-            <outcome>KO</outcome>
-            <fault>
-            <faultCode>PAA_SEMANTICA</faultCode>
-            <faultString>errore semantico PA</faultString>
-            <id>$activateIOPayment.fiscalCode</id>
-            <description>Errore semantico emesso dalla PA</description>
-            </fault>
-            </paf:paGetPaymentRes>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-
+        And save activateIOPayment response in activateIOPayment1
         When job annullamentoRptMaiRichiesteDaPm triggered after 70 seconds
         And wait 15 seconds for expiration
         And PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
