@@ -102,7 +102,7 @@ Feature: process tests for nodoInviaRT[IRPTSIN38]
                     <identificativoIntermediarioPSP>40000000001</identificativoIntermediarioPSP>
                     <identificativoCanale>40000000001_03</identificativoCanale>
                     <tipoFirma></tipoFirma>
-                    <rpt>$</rpt>
+                    <rpt></rpt>
                 </ws:nodoInviaRPT>
             </soapenv:Body>
             </soapenv:Envelope>
