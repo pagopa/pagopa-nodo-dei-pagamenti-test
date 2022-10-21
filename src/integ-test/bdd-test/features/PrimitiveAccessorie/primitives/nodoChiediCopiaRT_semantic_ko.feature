@@ -38,7 +38,12 @@ Feature: Semantic checks for nodoChiediCopiaRT - KO
             | identificativoIntermediarioPA         | 77777777777             | PPT_AUTORIZZAZIONE                | CCRTSEM12   |
 
     Scenario Outline: Check semantic errors for nodoChiediCopiaRT primitive
-        Given identificativoUnivocoVersamento with <iuv_value> in nodoChiediCopiaRT
+        Given replace status content with RPT_ACCETTATA_PSP content
+        And replace pa content with #creditor_institution_code_old# content
+        And execution query stati_rpt_snapshot to get value on the table STATI_RPT_SNAPSHOT, with the columns IUV, CCP under macro Primitive_accessorie with db name nodo_online
+        And through the query stati_rpt_snapshot retrieve param iuv at position 0 in the row 0 and save it under the key iuv
+        And through the query stati_rpt_snapshot retrieve param ccp at position 1 in the row 0 and save it under the key ccp
+        And identificativoUnivocoVersamento with <iuv_value> in nodoChiediCopiaRT
         And codiceContestoPagamento with <ccp_value> in nodoChiediCopiaRT
         When EC sends SOAP nodoChiediCopiaRT to nodo-dei-pagamenti
         Then check faultCode is <error> of nodoChiediCopiaRT response
@@ -46,4 +51,4 @@ Feature: Semantic checks for nodoChiediCopiaRT - KO
         Examples:
             | iuv_value                       | ccp_value         | error                 | soapUI test |
             | 11000679416493210               | 59050             | PPT_RT_SCONOSCIUTA    | CCRTSEM10   |
-            | 11000778432122951               | 94020             | PPT_RT_NONDISPONIBILE | CCRTSEM11   | 
+            | $iuv                            | $ccp              | PPT_RT_NONDISPONIBILE | CCRTSEM11   | 
