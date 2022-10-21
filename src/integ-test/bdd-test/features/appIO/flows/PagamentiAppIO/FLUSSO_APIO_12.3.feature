@@ -130,7 +130,7 @@ Feature: FLUSSO_APIO_12.3
         Given the Execute activateIOPayment (Phase 2) scenario executed successfully
         When WISP sends rest GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200
-
+    @runnable
     Scenario: Execute nodoInoltroEsitoCarta (Phase 4)
         Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
         And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
@@ -214,7 +214,7 @@ Feature: FLUSSO_APIO_12.3
         And checks the value None of the record at column MOTIVO_ANNULLAMENTO of the table PM_SESSION_DATA retrived by the query pm_session on db nodo_online under macro AppIO
         And checks the value None of the record at column CODICE_CONVENZIONE of the table PM_SESSION_DATA retrived by the query pm_session on db nodo_online under macro AppIO
 
-
+    @runnable
     Scenario: Check nodoInoltraEsitoCarte1 response after nodoInoltroEsitoCarta
         Given the Execute nodoInoltroEsitoCarta (Phase 4) scenario executed successfully
         And EC replies to nodo-dei-pagamenti with the pspNotifyPayment
