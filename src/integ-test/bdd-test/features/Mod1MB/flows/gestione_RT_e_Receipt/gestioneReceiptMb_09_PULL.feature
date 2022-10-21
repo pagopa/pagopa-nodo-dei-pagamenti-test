@@ -1,4 +1,4 @@
-Feature: gestioneReceiptMb_12
+Feature: gestioneReceiptMb_09_PULL
 
     Background:
         Given systems up
@@ -64,7 +64,7 @@ Feature: gestioneReceiptMb_12
             <pay_i:datiVersamento>
             <pay_i:dataEsecuzionePagamento>2016-09-16</pay_i:dataEsecuzionePagamento>
             <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
-            <pay_i:tipoVersamento>PO</pay_i:tipoVersamento>
+            <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
             <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
             <pay_i:codiceContestoPagamento>$1carrello</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
@@ -141,7 +141,7 @@ Feature: gestioneReceiptMb_12
             <pay_i:datiVersamento>
             <pay_i:dataEsecuzionePagamento>2016-09-16</pay_i:dataEsecuzionePagamento>
             <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
-            <pay_i:tipoVersamento>PO</pay_i:tipoVersamento>
+            <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
             <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
             <pay_i:codiceContestoPagamento>$1carrello</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
@@ -158,127 +158,8 @@ Feature: gestioneReceiptMb_12
             <pay_i:causaleVersamento>pagamento fotocopie pratica RPT</pay_i:causaleVersamento>
             <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
             </pay_i:datiSingoloVersamento>
-            <pay_i:datiSingoloVersamento>
-            <pay_i:importoSingoloVersamento>10.00</pay_i:importoSingoloVersamento>
-            <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
-            <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
-            <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
-            <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio>
-            <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
-            <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
-            <pay_i:causaleVersamento>pagamento fotocopie pratica RPT</pay_i:causaleVersamento>
-            <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
-            </pay_i:datiSingoloVersamento>
-            <pay_i:datiSingoloVersamento>
-            <pay_i:importoSingoloVersamento>10.00</pay_i:importoSingoloVersamento>
-            <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
-            <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
-            <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
-            <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio>
-            <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
-            <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
-            <pay_i:causaleVersamento>pagamento fotocopie pratica RPT</pay_i:causaleVersamento>
-            <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
-            </pay_i:datiSingoloVersamento>
-            <pay_i:datiSingoloVersamento>
-            <pay_i:importoSingoloVersamento>10.00</pay_i:importoSingoloVersamento>
-            <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
-            <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
-            <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
-            <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio>
-            <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
-            <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
-            <pay_i:causaleVersamento>pagamento fotocopie pratica RPT</pay_i:causaleVersamento>
-            <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
-            </pay_i:datiSingoloVersamento>
             </pay_i:datiVersamento>
             </pay_i:RPT>
-            """
-        And RT1 generation
-            """
-            <?xml version="1.0" encoding="UTF-8"?>
-            <pay_i:RT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0.xsd ">
-            <pay_i:versioneOggetto>6.0</pay_i:versioneOggetto>
-            <pay_i:dominio>
-            <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
-            <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
-            </pay_i:dominio>
-            <pay_i:identificativoMessaggioRicevuta>TR0001_20120302-10:37:52.0264-F098</pay_i:identificativoMessaggioRicevuta>
-            <pay_i:dataOraMessaggioRicevuta>2012-03-02T10:37:52</pay_i:dataOraMessaggioRicevuta>
-            <pay_i:riferimentoMessaggioRichiesta>TR0001_20120302-10:37:52.0264-F098</pay_i:riferimentoMessaggioRichiesta>
-            <pay_i:riferimentoDataRichiesta>2012-01-26</pay_i:riferimentoDataRichiesta>
-            <pay_i:istitutoAttestante>
-            <pay_i:identificativoUnivocoAttestante>
-            <pay_i:tipoIdentificativoUnivoco>G</pay_i:tipoIdentificativoUnivoco>
-            <pay_i:codiceIdentificativoUnivoco>CodiceIdentific</pay_i:codiceIdentificativoUnivoco>
-            </pay_i:identificativoUnivocoAttestante>
-            <pay_i:denominazioneAttestante>DenominazioneAttestante</pay_i:denominazioneAttestante>
-            <pay_i:codiceUnitOperAttestante>CodiceUOA</pay_i:codiceUnitOperAttestante>
-            <pay_i:denomUnitOperAttestante>DenomUnitOperAttestante</pay_i:denomUnitOperAttestante>
-            <pay_i:indirizzoAttestante>IndirizzoAttestante</pay_i:indirizzoAttestante>
-            <pay_i:civicoAttestante>11</pay_i:civicoAttestante>
-            <pay_i:capAttestante>11111</pay_i:capAttestante>
-            <pay_i:localitaAttestante>LocalitaAttestante</pay_i:localitaAttestante>
-            <pay_i:provinciaAttestante>ProvinciaAttestante</pay_i:provinciaAttestante>
-            <pay_i:nazioneAttestante>IT</pay_i:nazioneAttestante>
-            </pay_i:istitutoAttestante>
-            <pay_i:enteBeneficiario>
-            <pay_i:identificativoUnivocoBeneficiario>
-            <pay_i:tipoIdentificativoUnivoco>G</pay_i:tipoIdentificativoUnivoco>
-            <pay_i:codiceIdentificativoUnivoco>11111111117</pay_i:codiceIdentificativoUnivoco>
-            </pay_i:identificativoUnivocoBeneficiario>
-            <pay_i:denominazioneBeneficiario>AZIENDA XXX</pay_i:denominazioneBeneficiario>
-            <pay_i:codiceUnitOperBeneficiario>123</pay_i:codiceUnitOperBeneficiario>
-            <pay_i:denomUnitOperBeneficiario>XXX</pay_i:denomUnitOperBeneficiario>
-            <pay_i:indirizzoBeneficiario>IndirizzoBeneficiario</pay_i:indirizzoBeneficiario>
-            <pay_i:civicoBeneficiario>123</pay_i:civicoBeneficiario>
-            <pay_i:capBeneficiario>00123</pay_i:capBeneficiario>
-            <pay_i:localitaBeneficiario>Roma</pay_i:localitaBeneficiario>
-            <pay_i:provinciaBeneficiario>RM</pay_i:provinciaBeneficiario>
-            <pay_i:nazioneBeneficiario>IT</pay_i:nazioneBeneficiario>
-            </pay_i:enteBeneficiario>
-            <pay_i:soggettoVersante>
-            <pay_i:identificativoUnivocoVersante>
-            <pay_i:tipoIdentificativoUnivoco>F</pay_i:tipoIdentificativoUnivoco>
-            <pay_i:codiceIdentificativoUnivoco>RCCGLD09P09H501F</pay_i:codiceIdentificativoUnivoco>
-            </pay_i:identificativoUnivocoVersante>
-            <pay_i:anagraficaVersante>Gesualdo;Riccitelli</pay_i:anagraficaVersante>
-            <pay_i:indirizzoVersante>via del gesu</pay_i:indirizzoVersante>
-            <pay_i:civicoVersante>11</pay_i:civicoVersante>
-            <pay_i:capVersante>00186</pay_i:capVersante>
-            <pay_i:localitaVersante>Roma</pay_i:localitaVersante>
-            <pay_i:provinciaVersante>RM</pay_i:provinciaVersante>
-            <pay_i:nazioneVersante>IT</pay_i:nazioneVersante>
-            </pay_i:soggettoVersante>
-            <pay_i:soggettoPagatore>
-            <pay_i:identificativoUnivocoPagatore>
-            <pay_i:tipoIdentificativoUnivoco>F</pay_i:tipoIdentificativoUnivoco>
-            <pay_i:codiceIdentificativoUnivoco>RCCGLD09P09H501E</pay_i:codiceIdentificativoUnivoco>
-            </pay_i:identificativoUnivocoPagatore>
-            <pay_i:anagraficaPagatore>Gesualdo;Riccitelli</pay_i:anagraficaPagatore>
-            <pay_i:indirizzoPagatore>via del gesu</pay_i:indirizzoPagatore>
-            <pay_i:civicoPagatore>11</pay_i:civicoPagatore>
-            <pay_i:capPagatore>00186</pay_i:capPagatore>
-            <pay_i:localitaPagatore>Roma</pay_i:localitaPagatore>
-            <pay_i:provinciaPagatore>RM</pay_i:provinciaPagatore>
-            <pay_i:nazionePagatore>IT</pay_i:nazionePagatore>
-            <pay_i:e-mailPagatore>gesualdo.riccitelli@poste.it</pay_i:e-mailPagatore>
-            </pay_i:soggettoPagatore>
-            <pay_i:datiPagamento>
-            <pay_i:codiceEsitoPagamento>0</pay_i:codiceEsitoPagamento>
-            <pay_i:importoTotalePagato>10.00</pay_i:importoTotalePagato>
-            <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
-            <pay_i:CodiceContestoPagamento>$1carrello</pay_i:CodiceContestoPagamento>
-            <pay_i:datiSingoloPagamento>
-            <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
-            <pay_i:esitoSingoloPagamento>ACCEPTED</pay_i:esitoSingoloPagamento>
-            <pay_i:dataEsitoSingoloPagamento>2012-03-02</pay_i:dataEsitoSingoloPagamento>
-            <pay_i:identificativoUnivocoRiscossione>IUV_2021-11-15_13:55:13.038</pay_i:identificativoUnivocoRiscossione>
-            <pay_i:causaleVersamento>causale RT pull</pay_i:causaleVersamento>
-            <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
-            </pay_i:datiSingoloPagamento>
-            </pay_i:datiPagamento>
-            </pay_i:RT>
             """
         And RT2 generation
             """
@@ -366,6 +247,7 @@ Feature: gestioneReceiptMb_12
             </pay_i:datiPagamento>
             </pay_i:RT>
             """
+
         And initial XML nodoInviaCarrelloRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -408,19 +290,14 @@ Feature: gestioneReceiptMb_12
             <soapenv:Header />
             <soapenv:Body>
             <paf:paSendRTRes>
-            <outcome>KO</outcome>
-            <fault>
-            <faultCode>PAA_ERRORE_MOCK</faultCode>
-            <faultString>Errore semantico</faultString>
-            <id>1</id>
-            </fault>
+            <outcome>OK</outcome>
+            <delay>10000</delay>
             </paf:paSendRTRes>
             </soapenv:Body>
             </soapenv:Envelope>
             """
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
-        And retrieve session token from $nodoInviaCarrelloRPTResponse.url
 
         And replace pa content with #creditor_institution_code# content
         And execution query get_pa_id to get value on the table PA, with the columns OBJ_ID under macro costanti with db name nodo_cfg
@@ -430,7 +307,7 @@ Feature: gestioneReceiptMb_12
         And execution query by_station_id to get value on the table STAZIONI, with the columns OBJ_ID under macro costanti with db name nodo_cfg
         And through the query by_station_id retrieve param stationID at position 0 and save it under the key stationID
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition FK_PA = $objId AND FK_STAZIONE = $stationID under macro update_query on db nodo_cfg
-
+        
         And replace pa content with $pa1 content
         And execution query get_pa_id to get value on the table PA, with the columns OBJ_ID under macro costanti with db name nodo_cfg
         And through the query get_pa_id retrieve param objId at position 0 and save it under the key objId
@@ -441,7 +318,9 @@ Feature: gestioneReceiptMb_12
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition FK_PA = $objId AND FK_STAZIONE = $stationID under macro update_query on db nodo_cfg
 
         And refresh job PA triggered after 10 seconds
-        And wait 5 seconds for expiration
+        And wait 10 seconds for expiration
+        And retrieve session token from $nodoInviaCarrelloRPTResponse.url
+
 
     Scenario: Execute nodoChiediInformazioniPagamento (Phase 2)
         Given the Execute nodoInviaCarrelloRPT (Phase 1) scenario executed successfully
@@ -469,41 +348,57 @@ Feature: gestioneReceiptMb_12
         When WISP sends REST POST inoltroEsito/mod1 to nodo-dei-pagamenti
             """
             {
-                "idPagamento": "$sessionToken",
-                "identificativoPsp": "40000000001",
-                "tipoVersamento": "BP",
-                "identificativoIntermediario": "40000000001",
-                "identificativoCanale": "40000000001_03",
-                "tipoOperazione": "web"
+            "idPagamento":"$sessionToken",
+            "identificativoPsp":"#psp#",
+            "tipoVersamento":"BBT",
+            "identificativoIntermediario":"#psp#",
+            "identificativoCanale":"#canaleRtPull#",
+            "tipoOperazione":"mobile",
+            "mobileToken":"123ABC456"
             }
             """
         Then verify the HTTP status code of inoltroEsito/mod1 response is 200
         And check esito is OK of inoltroEsito/mod1 response
 
-    Scenario: Execute nodoInviaRT (Phase 4)
+
+    Scenario: job pspChiediRT (Phase 4)
         Given the Execute nodoInoltroEsitoMod1 (Phase 3) scenario executed successfully
-        And initial XML nodoInviaRT
+        And initial XML pspChiediListaRT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header/>
             <soapenv:Body>
-            <ws:nodoInviaRT>
-            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canale#</identificativoCanale>
-            <password>pwdpwdpwd</password>
-            <identificativoPSP>#psp#</identificativoPSP>
+            <ws:pspChiediListaRTResponse>
+            <pspChiediListaRTResponse>
+            <elementoListaRTResponse>
             <identificativoDominio>$pa1</identificativoDominio>
             <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
-            <tipoFirma></tipoFirma>
-            <forzaControlloSegno>1</forzaControlloSegno>
-            <rt>$rt2Attachment</rt>
-            </ws:nodoInviaRT>
+            </elementoListaRTResponse>
+            </pspChiediListaRTResponse>
+            </ws:pspChiediListaRTResponse>
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
-        Then check esito is OK of nodoInviaRT response
+        And initial XML pspChiediRT
+            """
+            <soapenv:Envelope
+            xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+            xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <ws:pspChiediRTResponse>
+            <pspChiediRTResponse>
+            <rt>$rt2Attachment</rt>
+            </pspChiediRTResponse>
+            </ws:pspChiediRTResponse>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And PSP replies to nodo-dei-pagamenti with the pspChiediListaRT
+        And PSP replies to nodo-dei-pagamenti with the pspChiediRT
+        When job pspChiediListaAndChiediRt triggered after 7 seconds
+        Then wait 15 seconds for expiration
 
         And replace pa content with #creditor_institution_code# content
         And execution query get_pa_id to get value on the table PA, with the columns OBJ_ID under macro costanti with db name nodo_cfg
@@ -524,11 +419,14 @@ Feature: gestioneReceiptMb_12
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'N', with where condition FK_PA = $objId AND FK_STAZIONE = $stationID under macro update_query on db nodo_cfg
 
         And refresh job PA triggered after 10 seconds
-        And wait 5 seconds for expiration
+        And wait 10 seconds for expiration
 
+        #checks
         And replace noticeNumber content with $1noticeNumber content
+        And replace paymentToken content with $sessionToken content
+        And replace psp content with #psp# content
         And replace pa content with #creditor_institution_code# content
-        And replace psp content with 40000000001 content
+
         #extraction from POSITION_RECEIPT table
         And execution query by_notice_number_and_pa to get value on the table POSITION_RECEIPT, with the columns * under macro Mod1Mb with db name nodo_online
         And through the query by_notice_number_and_pa retrieve param receptID at position 1 and save it under the key receptID
@@ -652,7 +550,35 @@ Feature: gestioneReceiptMb_12
         And check value $recipientBroker1 is equal to value $pa1
         And check value $recipientStation1 is equal to value #id_station_secondary#
         
-        And checks the value PAYING, PAID, NOTICE_GENERATED, NOTICE_SENT, NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        And checks the value NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        And checks the value PAYING, PAID, NOTIFIED of the record at column STATUS of the table POSITION_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        And checks the value NOTIFIED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+        And checks the value PAYING, PAID, NOTICE_GENERATED, NOTICE_SENT of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+        And checks the value NOTICE_SENT of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+        And checks the value PAYING, PAID of the record at column STATUS of the table POSITION_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+        And checks the value PAID of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+
+    @test
+    Scenario: Check POSITION_RETRY_PA_SEND_RT table
+        Given the Execute nodoInviaRT (Phase 4) scenario executed successfully
+        And wait 60 seconds for expiration
+        And nodo-dei-pagamenti has config parameter scheduler.jobName_paSendRt.enabled set to true
+        And EC2 replies to nodo-dei-pagamenti with the paSendRT
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
+            <soapenv:Header />
+            <soapenv:Body>
+            <paf:paSendRTRes>
+            <outcome>OK</outcome>
+            <delay>10000</delay>
+            </paf:paSendRTRes>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        When job paSendRt triggered after 5 seconds
+        And wait 15 seconds for expiration
+        #check POSITION_RETRY_PA_SEND_RT table
+        Then checks the value #creditor_institution_code# of the record at column PA_FISCAL_CODE of the table POSITION_RETRY_PA_SEND_RT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+        And checks the value $1noticeNumber of the record at column NOTICE_ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+        And checks the value $paymentToken of the record at column TOKEN of the table POSITION_RETRY_PA_SEND_RT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+        And checks the value 1 of the record at column RETRY of the table POSITION_RETRY_PA_SEND_RT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+        And restore initial configurations

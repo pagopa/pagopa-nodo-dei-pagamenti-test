@@ -630,7 +630,7 @@ Feature: gestioneReceiptMb_10
 
     Scenario: Check POSITION_RETRY_PA_SEND_RT table
         Given the Execute nodoInviaRT (Phase 4) scenario executed successfully
-        And wait 90 seconds for expiration
+        And wait 120 seconds for expiration
         And nodo-dei-pagamenti has config parameter scheduler.jobName_paSendRt.enabled set to true
         And EC2 replies to nodo-dei-pagamenti with the paSendRT
             """
