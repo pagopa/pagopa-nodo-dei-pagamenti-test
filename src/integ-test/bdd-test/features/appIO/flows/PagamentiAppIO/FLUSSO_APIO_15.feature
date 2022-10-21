@@ -255,7 +255,7 @@ Feature: FLUSSO_APIO_15
         </soapenv:Body>
         </soapenv:Envelope>
         """
-        When job mod3CancelV2 triggered after 3 seconds
+        When job mod3CancelV2 triggered after 10 seconds
         When wait 6 seconds for expiration
         And PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcome response
