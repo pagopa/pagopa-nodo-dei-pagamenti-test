@@ -109,5 +109,5 @@ Feature: process tests for nodoInviaRT[IRPTSIN31]
             """
             When PSP sends SOAP nodoInviaRPT to nodo-dei-pagamenti
             Then check esito is KO of nodoInviaRPT response
-            And check faultCode is PPT_SINTASSI_EXTRAXSD of nodoInviaRPT response
+            And check faultCode is PPT_INTERMEDIARIO_PSP_SCONOSCIUTO of nodoInviaRPT response
             
