@@ -14,6 +14,12 @@
       "soap_service": "",
       "rest_service": ""
     },
+    "secondary-mock-ec": {
+      "url": "https://api.dev.platform.pagopa.it/secondary-mock-ec/api/v1",
+      "healthcheck": "/info",
+      "soap_service": "",
+      "rest_service": ""
+    },
     "mock-psp": {
       "url": "https://api.dev.platform.pagopa.it/mock-psp-service/api/v1",
       "healthcheck": "/info",
