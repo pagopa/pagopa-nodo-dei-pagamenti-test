@@ -3,9 +3,10 @@ Feature: FLUSSO_APIO_12.3
     Background:
         Given systems up
         And EC new version
-@runnable
+    @runnable
     Scenario: Execute verifyPaymentNotice (Phase 1)
-        Given initial XML verifyPaymentNotice
+        Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
+        And initial XML verifyPaymentNotice
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
             <soapenv:Header/>
@@ -17,17 +18,62 @@ Feature: FLUSSO_APIO_12.3
             <password>pwdpwdpwd</password>
             <qrCode>
             <fiscalCode>#creditor_institution_code#</fiscalCode>
-            <noticeNumber>#notice_number#</noticeNumber>
+            <noticeNumber>$1noticeNumber</noticeNumber>
             </qrCode>
             </nod:verifyPaymentNoticeReq>
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        When AppIO sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
+        When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of verifyPaymentNotice response
-@runnable
+    @runnable
     Scenario: Execute activateIOPayment (Phase 2)
         Given the Execute verifyPaymentNotice (Phase 1) scenario executed successfully
+        And initial XML paGetPayment
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <paf:paGetPaymentRes>
+            <outcome>OK</outcome>
+            <data>
+            <creditorReferenceId>#cod_segr#$1iuv</creditorReferenceId>
+            <paymentAmount>10.00</paymentAmount>
+            <dueDate>2021-07-31</dueDate>
+            <description>TARI 2021</description>
+            <companyName>company PA</companyName>
+            <officeName>office PA</officeName>
+            <debtor>
+            <uniqueIdentifier>
+            <entityUniqueIdentifierType>F</entityUniqueIdentifierType>
+            <entityUniqueIdentifierValue>JHNDOE00A01F205N</entityUniqueIdentifierValue>
+            </uniqueIdentifier>
+            <fullName>John Doe</fullName>
+            <streetName>street</streetName>
+            <civicNumber>12</civicNumber>
+            <postalCode>89020</postalCode>
+            <city>city</city>
+            <stateProvinceRegion>MI</stateProvinceRegion>
+            <country>IT</country>
+            <e-mail>john.doe@test.it</e-mail>
+            </debtor>
+            <transferList>
+            <transfer>
+            <idTransfer>1</idTransfer>
+            <transferAmount>10.00</transferAmount>
+            <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
+            <IBAN>IT96R0123454321000000012345</IBAN>
+            <remittanceInformation>TARI Comune EC_TE</remittanceInformation>
+            <transferCategory>0101101IM</transferCategory>
+            </transfer>
+            </transferList>
+            </data>
+            </paf:paGetPaymentRes>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And EC replies to nodo-dei-pagamenti with the paGetPayment
+
         And initial XML activateIOPayment
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd">
@@ -45,17 +91,17 @@ Feature: FLUSSO_APIO_12.3
             <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
             </qrCode>
             <!--Optional:-->
-            <expirationTime>12345</expirationTime>
+            <expirationTime>6000</expirationTime>
             <amount>10.00</amount>
             <!--Optional:-->
             <dueDate>2021-12-12</dueDate>
             <!--Optional:-->
-            <paymentNote>test</paymentNote>
+            <paymentNote>responseFull</paymentNote>
             <!--Optional:-->
             <payer>
             <uniqueIdentifier>
             <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-            <entityUniqueIdentifierValue>44444444444</entityUniqueIdentifierValue>
+            <entityUniqueIdentifierValue>77777777777</entityUniqueIdentifierValue>
             </uniqueIdentifier>
             <fullName>name</fullName>
             <!--Optional:-->
@@ -77,10 +123,9 @@ Feature: FLUSSO_APIO_12.3
             </soapenv:Body>
             </soapenv:Envelope>
             """
-
-        When AppIO sends SOAP activateIOPayment to nodo-dei-pagamenti
+        When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
-@runnable
+    @runnable
     Scenario: Execute nodoChiediInformazioniPagamento (Phase 3)
         Given the Execute activateIOPayment (Phase 2) scenario executed successfully
         When WISP sends rest GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
@@ -88,12 +133,12 @@ Feature: FLUSSO_APIO_12.3
 
     Scenario: Execute nodoInoltroEsitoCarta (Phase 4)
         Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
-        And EC replies to nodo-dei-pagamenti with the pspNotifyPayment
+        And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
             """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:psp="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pfn="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
             <soapenv:Header/>
             <soapenv:Body>
-            <psp:pspNotifyPaymentRes>
+            <pfn:pspNotifyPaymentRes>
             <outcome>KO</outcome>
             <!--Optional:-->
             <fault>
@@ -103,7 +148,7 @@ Feature: FLUSSO_APIO_12.3
             <!--Optional:-->
             <description>Errore dal psp</description>
             </fault>
-            </psp:pspNotifyPaymentRes>
+            </pfn:pspNotifyPaymentRes>
             </soapenv:Body>
             </soapenv:Envelope>
             """
