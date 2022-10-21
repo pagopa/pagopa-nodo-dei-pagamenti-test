@@ -189,7 +189,7 @@ Background:
                         <password>pwdpwdpwd</password>
                         <identificativoPSP>#psp_AGID#</identificativoPSP>
                         <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
-                        <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
+                        <identificativoCanale>#canale_AGID#</identificativoCanale>
                         <tipoFirma></tipoFirma>
                         <rpt>$rpt1Attachment</rpt>
                     </ws:nodoInviaRPT>
