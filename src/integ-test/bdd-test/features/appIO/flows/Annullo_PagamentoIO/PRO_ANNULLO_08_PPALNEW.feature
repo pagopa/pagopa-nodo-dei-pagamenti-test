@@ -155,7 +155,7 @@ Feature: PRO_ANNULLO_08_PPALNEW
                 "identificativoIntermediario": "#psp#",
                 "identificativoPsp": "#psp#",
                 "identificativoCanale": "#canale#",
-                "importoTotalePagato": 10,
+                "importoTotalePagato": 10.00,
                 "timestampOperazione": "2012-04-23T18:25:43Z"
             }
             """
