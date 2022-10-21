@@ -495,7 +495,7 @@ Feature: gestioneReceiptMb_09_PULL
         And check value $company is equal to value $expCompanyName
         And check value $officeName is equal to value $expOfficeName
         And check value $debtorID is equal to value $expDebtorID
-        And check value $pspID is equal to value 40000000001
+        And check value $pspID is equal to value #psp#
         #And check value $pspCompany is equal to value $ragioneSociale
         And check value $pspFiscalCode is equal to value $codiceFiscale
         And check value $pspVatNumber is equal to value $vatNumber
@@ -550,17 +550,17 @@ Feature: gestioneReceiptMb_09_PULL
         And check value $recipientBroker1 is equal to value $pa1
         And check value $recipientStation1 is equal to value #id_station_secondary#
         
-        And checks the value PAYING, PAID, NOTICE_GENERATED, NOTICE_SENT of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        And checks the value NOTICE_SENT of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        And checks the value PAYING, PAID of the record at column STATUS of the table POSITION_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        And checks the value PAID of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+        #And checks the value PAYING, PAID, NOTICE_GENERATED, NOTICE_SENT of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+        #And checks the value NOTICE_SENT of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+        #And checks the value PAYING, PAID of the record at column STATUS of the table POSITION_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+        #And checks the value PAID of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
 
     @test
     Scenario: Check POSITION_RETRY_PA_SEND_RT table
-        Given the Execute nodoInviaRT (Phase 4) scenario executed successfully
+        Given the job pspChiediRT (Phase 4) scenario executed successfully
         And wait 60 seconds for expiration
         And nodo-dei-pagamenti has config parameter scheduler.jobName_paSendRt.enabled set to true
-        And EC2 replies to nodo-dei-pagamenti with the paSendRT
+        And EC replies to nodo-dei-pagamenti with the paSendRT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
             <soapenv:Header />
