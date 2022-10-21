@@ -89,7 +89,7 @@ Feature: process tests for nodoInviaRT[IRPTSIN9]
             <soapenv:Header>
                 <ppt:intestazionePPT>
                     <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
-                    <identificativoStazioneIntermediarioPA>00000000000_01</identificativoStazioneIntermediarioPA>
+                    <identificativoStazioneIntermediarioPA> </identificativoStazioneIntermediarioPA>
                     <identificativoDominio>44444444444</identificativoDominio>
                     <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
                     <codiceContestoPagamento>CCD01</codiceContestoPagamento>
