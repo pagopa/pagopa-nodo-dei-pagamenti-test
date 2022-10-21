@@ -163,7 +163,7 @@ Feature: FLUSSO_APIO_12.3
                 "identificativoCanale": "#canale#",
                 "importoTotalePagato": 10,
                 "timestampOperazione": "2021-07-09T17:06:03.100+01:00",
-                "codiceAutorizzativo": "resMal",
+                "codiceAutorizzativo": "resOK",
                 "esitoTransazioneCarta": "00"
             }
             """
@@ -247,7 +247,7 @@ Feature: FLUSSO_APIO_12.3
                 "identificativoCanale": "#canale#",
                 "importoTotalePagato": 10,
                 "timestampOperazione": "2021-07-09T17:06:03.100+01:00",
-                "codiceAutorizzativo": "resOK",
+                "codiceAutorizzativo": "resMal",
                 "esitoTransazioneCarta": "00"
             }
             """
