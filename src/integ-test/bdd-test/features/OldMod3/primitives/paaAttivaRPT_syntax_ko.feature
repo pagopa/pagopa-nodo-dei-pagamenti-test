@@ -121,7 +121,7 @@ Feature: Syntax checks KO for nodoAttivaRPT
         """
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
         When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-        Then check faultCode is PPT_SINTASSI_XSD of nodoAttivaRPT response
+        Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoAttivaRPT response
 
 
     Scenario: Execute nodoAttivaRPT [ARPTRES3]
@@ -143,7 +143,7 @@ Feature: Syntax checks KO for nodoAttivaRPT
         """
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
         When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-        Then check faultCode is PPT_SINTASSI_XSD of nodoAttivaRPT response
+        Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoAttivaRPT response
 
     Scenario: Execute nodoAttivaRPT [ARPTRES4]
         Given initial XML paaAttivaRPT
@@ -164,7 +164,7 @@ Feature: Syntax checks KO for nodoAttivaRPT
         """
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
         When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-        Then check faultCode is PPT_SINTASSI_XSD of nodoAttivaRPT response
+        Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoAttivaRPT response
 
     Scenario: Execute nodoAttivaRPT [ARPTRES5]
         Given initial XML paaAttivaRPT
@@ -190,7 +190,7 @@ Feature: Syntax checks KO for nodoAttivaRPT
         """
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
         When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-        Then check faultCode is PPT_SINTASSI_XSD of nodoAttivaRPT response
+        Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoAttivaRPT response
 
     Scenario: Execute nodoAttivaRPT [ARPTRES6]
         Given initial XML paaAttivaRPT
@@ -219,7 +219,7 @@ Feature: Syntax checks KO for nodoAttivaRPT
         """
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
         When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-        Then check faultCode is PPT_SINTASSI_XSD of nodoAttivaRPT response
+        Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoAttivaRPT response
     
     Scenario: Execute nodoAttivaRPT [ARPTRES7]
         Given initial XML paaAttivaRPT
@@ -241,7 +241,7 @@ Feature: Syntax checks KO for nodoAttivaRPT
         """
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
         When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-        Then check faultCode is PPT_SINTASSI_XSD of nodoAttivaRPT response
+        Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoAttivaRPT response
     
     Scenario: Execute nodoAttivaRPT [ARPTRES8]
         Given initial XML paaAttivaRPT
@@ -263,4 +263,4 @@ Feature: Syntax checks KO for nodoAttivaRPT
         """
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
         When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-        Then check faultCode is PPT_SINTASSI_XSD of nodoAttivaRPT response
+        Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoAttivaRPT response
