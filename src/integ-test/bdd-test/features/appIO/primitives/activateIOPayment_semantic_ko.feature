@@ -384,7 +384,7 @@ Feature: Semantic checks for activateIOPayment - KO
     And wait 10 seconds for expiration
     And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro AppIO
     And restore initial configurations
-
+@runnable
   # [SEM_AIPR_21]
   Scenario Outline: Check PPT_ERRORE_IDEMPOTENZA error on idempotencyKey validity (Phase 2)
     Given the Execute activateIOPayment (Phase 1) scenario executed successfully
@@ -549,7 +549,7 @@ Feature: Semantic checks for activateIOPayment - KO
     And check faultCode is PPT_PAGAMENTO_IN_CORSO of activateIOPayment response
     And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro AppIO
     And restore initial configurations
-
+@runnable
   # [SEM_AIPR_29]
   Scenario: Check PPT_PAGAMENTO_IN_CORSO error with PAYING debtor position
     Given the Execute activateIOPayment (Phase 1) scenario executed successfully
