@@ -2250,11 +2250,11 @@ Feature: flux tests for closePaymentV2
     Scenario: FLUSSO_CP_11 (part 3)
         Given the FLUSSO_CP_11 (part 2) scenario executed successfully
         And execution query transactionid to get value on the table PM_METADATA, with the columns * under macro NewMod1 with db name nodo_online
-        And through the query transactionid retrieve param TRANSACTION_ID at position 1 in the row 0 and save it under the key transaction_id
-        And through the query transactionid retrieve param VALUE at position 3 in the row 2 and save it under the key psp_transaction_id
+        And through the query transactionid retrieve param TRANSACTION_ID at position 1 in the row 0 and save it under the key temp_transaction_id
+        And through the query transactionid retrieve param VALUE at position 3 in the row 2 and save it under the key temp_psp_transaction_id
         And the closePaymentV2 request scenario executed successfully
-        And transactionId with $transaction_id in v2/closepayment
-        And key with $psp_transaction_id in v2/closepayment
+        And transactionId with $temp_transaction_id in v2/closepayment
+        And key with $temp_psp_transaction_id in v2/closepayment
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 422
         And check outcome is KO of v2/closepayment response
@@ -2325,15 +2325,15 @@ Feature: flux tests for closePaymentV2
         And checks the value Y of the record at column FLAG_IO of the table POSITION_PAYMENT retrived by the query select_activateio on db nodo_online under macro NewMod1
         And checks the value Y of the record at column RICEVUTA_PM of the table POSITION_PAYMENT retrived by the query select_activateio on db nodo_online under macro NewMod1
         And checks the value N of the record at column FLAG_PAYPAL of the table POSITION_PAYMENT retrived by the query select_activateio on db nodo_online under macro NewMod1
-        And checks the value $transaction_id of the record at column TRANSACTION_ID of the table POSITION_PAYMENT retrived by the query select_activateio on db nodo_online under macro NewMod1
+        And checks the value $temp_transaction_id of the record at column TRANSACTION_ID of the table POSITION_PAYMENT retrived by the query select_activateio on db nodo_online under macro NewMod1
 
         # PM_SESSION_DATA
         And verify 0 record for the table PM_SESSION_DATA retrived by the query id_sessione_activateio on db nodo_online under macro NewMod1
 
         # PM_METADATA
-        And checks the value $transaction_id,$transaction_id,$transaction_id of the record at column TRANSACTION_ID of the table PM_METADATA retrived by the query transactionid on db nodo_online under macro NewMod1
+        And checks the value $temp_transaction_id,$temp_transaction_id,$temp_transaction_id of the record at column TRANSACTION_ID of the table PM_METADATA retrived by the query transactionid on db nodo_online under macro NewMod1
         And checks the value Token,Tipo versamento,key of the record at column KEY of the table PM_METADATA retrived by the query transactionid on db nodo_online under macro NewMod1
-        And checks the value $activateIOPaymentResponse.paymentToken,TPAY,$psp_transaction_id of the record at column VALUE of the table PM_METADATA retrived by the query transactionid on db nodo_online under macro NewMod1
+        And checks the value $activateIOPaymentResponse.paymentToken,TPAY,$temp_psp_transaction_id of the record at column VALUE of the table PM_METADATA retrived by the query transactionid on db nodo_online under macro NewMod1
         And checks the value closePayment-v2,closePayment-v2,closePayment-v2 of the record at column INSERTED_BY of the table PM_METADATA retrived by the query transactionid on db nodo_online under macro NewMod1
         And checks the value closePayment-v2,closePayment-v2,closePayment-v2 of the record at column UPDATED_BY of the table PM_METADATA retrived by the query transactionid on db nodo_online under macro NewMod1
 
@@ -2407,7 +2407,7 @@ Feature: flux tests for closePaymentV2
         And checks the value Y of the record at column FLAG_IO of the table POSITION_PAYMENT retrived by the query select_activateio on db nodo_online under macro NewMod1
         And checks the value Y of the record at column RICEVUTA_PM of the table POSITION_PAYMENT retrived by the query select_activateio on db nodo_online under macro NewMod1
         And checks the value N of the record at column FLAG_PAYPAL of the table POSITION_PAYMENT retrived by the query select_activateio on db nodo_online under macro NewMod1
-        And checks the value $transaction_id of the record at column TRANSACTION_ID of the table POSITION_PAYMENT retrived by the query select_activateio on db nodo_online under macro NewMod1
+        And checks the value $temp_transaction_id of the record at column TRANSACTION_ID of the table POSITION_PAYMENT retrived by the query select_activateio on db nodo_online under macro NewMod1
 
         # POSITION_SUBJECT
         And verify 0 record for the table POSITION_SUBJECT retrived by the query position_subject_spo on db nodo_online under macro NewMod1
