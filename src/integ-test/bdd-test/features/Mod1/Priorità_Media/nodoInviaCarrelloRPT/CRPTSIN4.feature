@@ -118,6 +118,6 @@ Feature: process tests for nodoInviaCarrelloRPT[CRPTSIN4]
             </soapenv:Envelope>
             """
             When PSP sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
-            Then check esito is OK of nodoInviaCarrelloRPT response
+            Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
             
             
