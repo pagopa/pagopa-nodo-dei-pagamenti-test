@@ -1,4 +1,4 @@
-Feature: process tests for nodoInviaCarrelloRPT[CRPTSIN31]
+Feature: process tests for nodoInviaCarrelloRPT[CRPTSIN34]
     Background:
         Given systems up
         And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
@@ -102,8 +102,8 @@ Feature: process tests for nodoInviaCarrelloRPT[CRPTSIN31]
                     <listaRPT>
                         <!--1 or more repetitions:-->
                         <elementoListaRPT>
-                        <identificativoDominio> </identificativoDominio>
-                        <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
+                        <identificativoDominio>44444444444</identificativoDominio>
+                        <identificativoUnivocoVersamento></identificativoUnivocoVersamento>
                         <codiceContestoPagamento>CCD01</codiceContestoPagamento>
                         <rpt>$rptAttachment</rpt>
                         </elementoListaRPT>
@@ -114,5 +114,5 @@ Feature: process tests for nodoInviaCarrelloRPT[CRPTSIN31]
             """
             When PSP sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
             Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
-            And check faultCode is PPT_DOMINIO_SCONOSCIUTO of nodoInviaCarrelloRPT response
+            And check faultCode is PPT_SINTASSI_EXTRAXSD of nodoInviaCarrelloRPT response
             
