@@ -507,7 +507,10 @@ Feature: gestioneReceiptMb_11_PULL
         And checks the value PAID of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And wait 15 seconds for expiration
 
-        # Broadcast N
+    @tag
+    Scenario: Check POSITION_RETRY_PA_SEND_RT table
+        Given the job pspChiediRT (Phase 4) scenario executed successfully
+
         And execution query get_pa_id to get value on the table PA, with the columns OBJ_ID under macro costanti with db name nodo_cfg
         And through the query get_pa_id retrieve param objId at position 0 and save it under the key objId
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'N', with where condition FK_PA = $objId under macro update_query on db nodo_cfg
@@ -529,9 +532,6 @@ Feature: gestioneReceiptMb_11_PULL
         And refresh job PA triggered after 10 seconds
         And wait 10 seconds for expiration
 
-    @tag
-    Scenario: Check POSITION_RETRY_PA_SEND_RT table
-        Given the job pspChiediRT (Phase 4) scenario executed successfully
         And wait 120 seconds for expiration
         And nodo-dei-pagamenti has config parameter scheduler.jobName_paSendRt.enabled set to true
         And EC2 replies to nodo-dei-pagamenti with the paSendRT
@@ -549,6 +549,7 @@ Feature: gestioneReceiptMb_11_PULL
         When job paSendRt triggered after 10 seconds
         And job paSendRt triggered after 20 seconds
         And wait 15 seconds for expiration
+        
         #check POSITION_RETRY_PA_SEND_RT table
         Then checks the value #creditor_institution_code# of the record at column PA_FISCAL_CODE of the table POSITION_RETRY_PA_SEND_RT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value $1noticeNumber of the record at column NOTICE_ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
