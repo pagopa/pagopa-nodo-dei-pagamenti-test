@@ -1756,7 +1756,7 @@ Feature: flux tests for closePaymentV2
         Then verify the HTTP status code of v2/closepayment response is 400
         And check outcome is KO of v2/closepayment response
         And check description is Unacceptable outcome when token has expired of v2/closepayment response
-        And wait 5 seconds for expiration
+        And wait 12 seconds for expiration
         And nodo-dei-pagamenti DEV has config parameter default_durata_token_IO set to 3600000
 
         # POSITION_PAYMENT_STATUS
