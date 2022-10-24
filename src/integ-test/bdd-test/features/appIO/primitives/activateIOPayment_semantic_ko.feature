@@ -602,7 +602,7 @@ Feature: Semantic checks for activateIOPayment - KO
     Given the Execute activateIOPayment (Phase 1) scenario executed successfully
     And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
     And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
-    And random idempotencyKey having $activateIOPayment.idPSP as idPSP in activateIOPayment
+    And random idempotencyKey having #psp# as idPSP in activateIOPayment
     When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is KO of activateIOPayment response
     And check faultCode is PPT_PAGAMENTO_IN_CORSO of activateIOPayment response
