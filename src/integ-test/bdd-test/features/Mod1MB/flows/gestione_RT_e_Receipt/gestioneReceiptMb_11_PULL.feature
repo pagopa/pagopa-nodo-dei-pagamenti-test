@@ -547,9 +547,8 @@ Feature: gestioneReceiptMb_11_PULL
             </soapenv:Envelope>
             """
         When job paSendRt triggered after 10 seconds
-        And job paSendRt triggered after 20 seconds
         And wait 15 seconds for expiration
-        
+
         #check POSITION_RETRY_PA_SEND_RT table
         Then checks the value #creditor_institution_code# of the record at column PA_FISCAL_CODE of the table POSITION_RETRY_PA_SEND_RT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value $1noticeNumber of the record at column NOTICE_ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
@@ -564,8 +563,8 @@ Feature: gestioneReceiptMb_11_PULL
         Given the Check POSITION_RETRY_PA_SEND_RT table scenario executed successfully
         And wait 60 seconds for expiration
         When job paSendRt triggered after 5 seconds
-        And job paSendRt triggered after 20 seconds
         And wait 15 seconds for expiration
+        
         And execution query by_notice_number_and_payment_token to get value on the table POSITION_RECEIPT_RECIPIENT, with the columns * under macro Mod1Mb with db name nodo_online
         And through the query by_notice_number_and_payment_token retrieve param paFiscalCode1 at position 1 and save it under the key paFiscalCode1
         And through the query by_notice_number_and_payment_token retrieve param noticeID1 at position 2 and save it under the key noticeID1
