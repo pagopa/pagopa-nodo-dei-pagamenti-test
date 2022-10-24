@@ -4,7 +4,7 @@ Feature: process tests for paSendRT [PSRT_30]
         Given systems up
 
     # PSRT_21
-
+@wip
     Scenario: 21 Execute verifyPaymentNotice request
         Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
         And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
@@ -29,7 +29,7 @@ Feature: process tests for paSendRT [PSRT_30]
         And EC new version
         When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of verifyPaymentNotice response
-
+@wip
     Scenario: 21 Execute activatePaymentNotice request
         Given the 21 Execute verifyPaymentNotice request scenario executed successfully
         And initial XML paGetPayment
@@ -123,7 +123,7 @@ Feature: process tests for paSendRT [PSRT_30]
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
 
-
+@wip
     Scenario: 21 Define sendPaymentOutcome
         Given the 21 Execute activatePaymentNotice request scenario executed successfully
         And initial XML paSendRT
@@ -212,13 +212,13 @@ Feature: process tests for paSendRT [PSRT_30]
         And checks the value $activatePaymentNotice.fiscalCode of the record at column PA_FISCAL_CODE of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
         And checks the value $activatePaymentNotice.noticeNumber of the record at column NOTICE_ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
 
-
+@wip
     Scenario: 21 clean paSendRt queue
         Given the 21 Define sendPaymentOutcome scenario executed successfully
         When job paSendRt triggered after 5 seconds
         And wait 10 seconds for expiration
 
-
+@wip
     Scenario: 21 job paSendRt
         Given the 21 Define sendPaymentOutcome scenario executed successfully
         And initial XML paSendRT
