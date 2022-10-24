@@ -1,4 +1,4 @@
-Feature: process tests for nodoInviaCarrelloRPT[CRPTSIN18]
+Feature: process tests for nodoInviaCarrelloRPT[CRPTSIN19]
     Background:
         Given systems up
         And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
@@ -95,7 +95,7 @@ Feature: process tests for nodoInviaCarrelloRPT[CRPTSIN18]
             </soapenv:Header>
             <soapenv:Body>
                 <ws:nodoInviaCarrelloRPT>
-                    <password> </password>
+                    <password>passwor</password>
                     <identificativoPSP>40000000001</identificativoPSP>
                     <identificativoIntermediarioPSP>40000000001</identificativoIntermediarioPSP>
                     <identificativoCanale>40000000001_03</identificativoCanale>
