@@ -122,13 +122,13 @@ stages:
              #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/NewMod3/flows/AccessiConcorrenzialiPaypal
              
              # Lorenzo  
-             #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/Mod1MB/flows/gestione_RT_e_Receipt/gestioneReceiptMb_10_PULL.feature
+             behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/Mod1MB/flows/gestione_RT_e_Receipt/gestioneReceiptMb_10_PULL.feature
             
              # Alessandro
              #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/appIO/flows/PagamentiAppIO/FLUSSO_APIO_08.feature
              
              # Marisa
-             behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/Mod1/Priorità_Media/nodoInviaCarrelloRPT/CRPTSIN7.feature
+             #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/Mod1/Priorità_Media/nodoInviaCarrelloRPT/CRPTSIN7.feature
 
              # Redis
              #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/Mod1/flows/pspChiediAvanzamentoRPT/ChiediAvanzamento_ACCETTATA_PSP_Carrello_sbloccoParcheggio.feature
