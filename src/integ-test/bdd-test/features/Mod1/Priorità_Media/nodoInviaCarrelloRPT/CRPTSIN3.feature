@@ -111,6 +111,6 @@ Feature: process tests for nodoInviaCarrelloRPT[CRPTSIN3]
             </soapenv:Envelope>
             """
             When PSP sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
-            Then check esito is KO of nodoInviaCarrelloRPT response
+            Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
             And check faultCode is PPT_SINTASSI_EXTRAXSD of nodoInviaCarrelloRPT response
             
