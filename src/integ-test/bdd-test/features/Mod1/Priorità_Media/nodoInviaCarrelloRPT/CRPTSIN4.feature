@@ -102,6 +102,8 @@ Feature: process tests for nodoInviaCarrelloRPT[CRPTSIN4]
                 <ws:nodoInviaCarrelloRPT>
                     <password>pwdpwdpwd</password>
                     <identificativoPSP>40000000001</identificativoPSP>
+                    <identificativoIntermediarioPSP>40000000001</identificativoIntermediarioPSP>
+                    <identificativoCanale>40000000001_03</identificativoCanale>
                     <listaRPT>
                         <!--1 or more repetitions:-->
                         <elementoListaRPT>
