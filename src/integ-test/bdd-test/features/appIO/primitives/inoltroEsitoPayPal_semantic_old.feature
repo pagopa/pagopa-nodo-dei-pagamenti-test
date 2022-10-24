@@ -864,14 +864,14 @@ Feature: Semantic checks on inoltroEsitoPayPal primitive for old EC
                 "identificativoIntermediario": "#psp#",
                 "identificativoPsp": "#psp#",
                 "identificativoCanale": "#canale#",
-                "importoTotalePagato": 10,
+                "importoTotalePagato": 10.00,
                 "timestampOperazione": "2012-04-23T18:25:43Z"
             }
             """
         Then verify the HTTP status code of inoltroEsito/paypal response is 200
         And check esito is KO of inoltroEsito/paypal response
         And check errorCode is CONPSP of inoltroEsito/paypal response
-        And wait 10 seconds for expiration
+        And wait 6 seconds for expiration
         And checks the value PAYING, PAYMENT_SENT, PAYMENT_REFUSED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
         And checks the value PAYMENT_REFUSED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
         # check correctness POSITION_PAYMENT table
