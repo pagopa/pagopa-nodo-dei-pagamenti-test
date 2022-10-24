@@ -653,7 +653,7 @@ Feature: Semantic checks on inoltroEsitoPayPal primitive for old EC
         And checks the value None of the record at column CODICE_AUTORIZZATIVO_PAYPAL of the table PM_SESSION_DATA retrived by the query pm_session_old on db nodo_online under macro AppIO
         #And checks the value $activateIOPayment.idempotencyKey of the record at column ID_TRANSAZIONE_PSP_PAYPAL of the table PM_SESSION_DATA retrived by the query pm_session on db nodo_online under macro AppIO
         And checks the value responseOK of the record at column ID_TRANSAZIONE_PM_PAYPAL of the table PM_SESSION_DATA retrived by the query pm_session_old on db nodo_online under macro AppIO
-
+    @runnable
     #[SEM_NIEPP_08]
     Scenario: Execute nodoNotificaAnnullamento (Phase 6) [SEM_NIEPP_08]
         Given the Execute nodoInoltroEsitoPaypal (Phase 5) - Timeout scenario executed successfully
@@ -661,7 +661,7 @@ Feature: Semantic checks on inoltroEsitoPayPal primitive for old EC
         And wait 6 seconds for expiration
         And WISP sends REST GET notificaAnnullamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of notificaAnnullamento response is 200
-
+    @runnable
     Scenario: Execute nodoInoltroEsitoPaypal1 (Phase 7) [SEM_NIEPP_08]
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
         And the Execute nodoNotificaAnnullamento (Phase 6) scenario executed successfully
@@ -1020,7 +1020,7 @@ Feature: Semantic checks on inoltroEsitoPayPal primitive for old EC
         And checks the value Y of the record at column FLAG_PAYPAL of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
         # check correctness STATI_RPT_SNAPSHOT
         And checks the value RPT_ERRORE_INVIO_A_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro AppIO
-
+    @runnable
     Scenario: Execute nodoInoltroEsitoPaypal (Phase 7) [SEM_NIEPP_13]
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
         And the Execute trigger PollerAnnulli (Phase 6) scenario executed successfully
