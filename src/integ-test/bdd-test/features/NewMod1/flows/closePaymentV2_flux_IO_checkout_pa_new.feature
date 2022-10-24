@@ -262,7 +262,7 @@ Feature: flux tests for closePaymentV2
             }
             """
 
-@skip
+    @skip
     Scenario: closePaymentV2 with arbitrary paymentToken request
         Given initial json v2/closepayment
             """
@@ -337,6 +337,56 @@ Feature: flux tests for closePaymentV2
             <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
             <password>#password#</password>
             <paymentToken>$activateIOPaymentResponse.paymentToken</paymentToken>
+            <outcome>OK</outcome>
+            <!--Optional:-->
+            <details>
+            <paymentMethod>creditCard</paymentMethod>
+            <!--Optional:-->
+            <paymentChannel>app</paymentChannel>
+            <fee>2.00</fee>
+            <!--Optional:-->
+            <payer>
+            <uniqueIdentifier>
+            <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
+            <entityUniqueIdentifierValue>77777777777_01</entityUniqueIdentifierValue>
+            </uniqueIdentifier>
+            <fullName>name</fullName>
+            <!--Optional:-->
+            <streetName>street</streetName>
+            <!--Optional:-->
+            <civicNumber>civic</civicNumber>
+            <!--Optional:-->
+            <postalCode>postal</postalCode>
+            <!--Optional:-->
+            <city>city</city>
+            <!--Optional:-->
+            <stateProvinceRegion>state</stateProvinceRegion>
+            <!--Optional:-->
+            <country>IT</country>
+            <!--Optional:-->
+            <e-mail>prova@test.it</e-mail>
+            </payer>
+            <applicationDate>2021-12-12</applicationDate>
+            <transferDate>2021-12-11</transferDate>
+            </details>
+            </nod:sendPaymentOutcomeReq>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+
+    @skip
+    Scenario: sendPaymentOutcome with arbitrary paymentToken request
+        Given initial XML sendPaymentOutcome
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <nod:sendPaymentOutcomeReq>
+            <idPSP>#psp#</idPSP>
+            <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
+            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
+            <password>#password#</password>
+            <paymentToken>token</paymentToken>
             <outcome>OK</outcome>
             <!--Optional:-->
             <details>
@@ -4336,7 +4386,8 @@ Feature: flux tests for closePaymentV2
     @wip
     Scenario: FLUSSO_CP_22 (part 3)
         Given the FLUSSO_CP_22 (part 2) scenario executed successfully
-        And the sendPaymentOutcome request scenario executed successfully
+        And the sendPaymentOutcome with arbitrary paymentToken request scenario executed successfully
+        And paymentToken with $temp_payment_token in sendPaymentOutcome
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcome response
         And check faultCode is PPT_TOKEN_SCONOSCIUTO of sendPaymentOutcome response
