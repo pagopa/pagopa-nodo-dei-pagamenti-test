@@ -83,7 +83,7 @@ Feature: process tests for nodoInviaCarrelloRPT[CRPTSIN4]
             """
     Scenario: Execute nodoInviaRPT request
         Given the RPT generation scenario executed successfully
-        And initial XML nodoInviaRPT
+        And initial XML nodoInviaCarrelloRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
@@ -117,7 +117,7 @@ Feature: process tests for nodoInviaCarrelloRPT[CRPTSIN4]
             </soapenv:Body>
             </soapenv:Envelope>
             """
-            When PSP sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-            Then check esito is OK of nodoInviaRPT response
+            When PSP sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
+            Then check esito is OK of nodoInviaCarrelloRPT response
             
             
