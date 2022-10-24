@@ -2,6 +2,7 @@ import datetime
 
 from datetime import timedelta
 import json
+from multiprocessing.sharedctypes import Value
 import os
 import random
 from sre_constants import ASSERT
@@ -2526,8 +2527,41 @@ def step_impl(context, causaleVers):
 
 @step(u'run in parallel "{feature}", "{scenario}"')
 def step_impl(context, feature, scenario):
-    t = threading.Thread(
+    scenari = list(scenario)
+    i = 0
+    threads = list()
+    while i < len(scenari):
+        t = threading.Thread(
         name='run test parallel',
         target=utils.parallel_executor,
         args=[context, feature, scenario])
-    t.start()
+        threads.append(t)
+        t.start()
+        i += 1
+
+    for thread in threads:
+        thread.join()
+    
+    
+@step('export elem {elem} with value {value} in cache')
+def step_impl(context, elem, value):
+    print('saving in cache')
+    value = utils.replace_local_variables(value, context)
+    value = utils.replace_context_variables(value, context)
+    cache = json.load(open(os.path.join(context.config.base_dir + "/../resources/cache.json"),'r'))
+    with open(os.path.join(context.config.base_dir + '/../resources/cache.json'), 'w') as f:
+        cache[elem] = value
+        cache = json.dump(cache, f, indent=4)
+
+@step('delete cache')
+def step_impl(context):
+    print('delete info in cache')
+    #delete cache
+    os.remove(os.path.join(context.config.base_dir + '/../resources/cache.json'))
+
+@step('retrive elements from cache and save it in context')
+def step_impl(context):
+    print('retrive info from cache')
+    cache = json.load(open(os.path.join(context.config.base_dir + "/../resources/cache.json"),'r'))
+    for key, value in cache.items():
+        setattr(context, key, value)

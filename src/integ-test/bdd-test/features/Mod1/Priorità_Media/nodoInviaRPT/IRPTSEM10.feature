@@ -1,6 +1,7 @@
-Feature: process tests for nodoInviaRT[IRPTSIN1]
+Feature: process tests for nodoInviaRT[IRPTSEM10]
     Background:
         Given systems up
+        And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
 
     Scenario: RPT generation
         Given RPT generation
@@ -61,7 +62,7 @@ Feature: process tests for nodoInviaRT[IRPTSIN1]
             <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
             <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
-            <pay_i:identificativoUnivocoVersamento>#iuv2#</pay_i:identificativoUnivocoVersamento>
+            <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
             <pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
@@ -84,19 +85,19 @@ Feature: process tests for nodoInviaRT[IRPTSIN1]
         Given the RPT generation scenario executed successfully
         And initial XML nodoInviaRPT
             """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/ciao/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
                 <ppt:intestazionePPT>
                     <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
                     <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
                     <identificativoDominio>44444444444</identificativoDominio>
-                    <identificativoUnivocoVersamento>#iuv2#</identificativoUnivocoVersamento>
+                    <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
                     <codiceContestoPagamento>CCD01</codiceContestoPagamento>
                 </ppt:intestazionePPT>
             </soapenv:Header>
             <soapenv:Body>
                 <ws:nodoInviaRPT>
-                    <password>pwd</password>
+                    <password>pwdpwdpwd</password>
                     <identificativoPSP>40000000001</identificativoPSP>
                     <identificativoIntermediarioPSP>40000000001</identificativoIntermediarioPSP>
                     <identificativoCanale>40000000001_03</identificativoCanale>
@@ -108,4 +109,4 @@ Feature: process tests for nodoInviaRT[IRPTSIN1]
             """
             When PSP sends SOAP nodoInviaRPT to nodo-dei-pagamenti
             Then check esito is KO of nodoInviaRPT response
-            And check faultCode is Soap:Version Mismatch of nodoInviaRPT response
+            And check faultCode is PPT_AUTENTICAZIONE of nodoInviaRPT response

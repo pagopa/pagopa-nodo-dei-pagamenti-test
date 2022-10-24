@@ -198,7 +198,13 @@
         "binary_file": "SELECT s.columns FROM table_name s JOIN RENDICONTAZIONE r ON s.ID = r.FK_BINARY_FILE WHERE r.ID_FLUSSO = '$identificativoFlusso' AND r.DOMINIO = '$pa' "
     },
     "Primitive_accessorie":{
-        "rpt": "SELECT columns FROM table_name WHERE IUV = '$iuv' AND CCP= '$ccp'",
-        "stati_rpt_snapshot": "SELECT columns FROM table_name srs WHERE srs.STATO ='$status' AND srs.ID_DOMINIO ='$pa' ORDER BY srs.UPDATED_TIMESTAMP DESC"
+        "rpt": "SELECT columns FROM table_name WHERE IUV = '$iuv' AND CCP= '$ccp'"
+    },
+    "flussi_paralleli":{
+        "idempotency_paymentToken" : "SELECT columns FROM table_name WHERE NOTICE_ID = '$noticeNumber' AND PA_FISCAL_CODE = '$fiscalCode'",
+        "payment_status":"SELECT columns FROM table_name WHERE NOTICE_ID ='$noticeNumber' AND PA_FISCAL_CODE = '$fiscalCode'",
+        "payment_status_orderbydesc":"SELECT columns FROM table_name WHERE NOTICE_ID ='$noticeNumber' AND PA_FISCAL_CODE = '$fiscalCode' ORDER BY ID DESC",
+        "payment_status_pay_act1":"SELECT columns FROM table_name WHERE NOTICE_ID ='$noticeNumber' AND PA_FISCAL_CODE = '$fiscalCode' AND PAYMENT_TOKEN ='$paymentToken'",
+        "rt_v1": "SELECT columns FROM table_name WHERE CCP= '$paymentToken' AND IDENT_DOMINIO= '$fiscalCode'"
     }
 }

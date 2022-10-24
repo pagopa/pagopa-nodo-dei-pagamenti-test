@@ -402,6 +402,7 @@ Feature: gestioneReceiptMb_08_PULL
         And PSP replies to nodo-dei-pagamenti with the pspChiediListaRT
         And PSP replies to nodo-dei-pagamenti with the pspChiediRT
         When job pspChiediListaAndChiediRt triggered after 7 seconds
+        And job paInviaRt triggered after 10 seconds
         Then wait 15 seconds for expiration
 
         And replace pa content with #creditor_institution_code# content
@@ -550,8 +551,3 @@ Feature: gestioneReceiptMb_08_PULL
         And check value $recipientPA1 is equal to value #creditor_institution_code_secondary#
         And check value $recipientBroker1 is equal to value #creditor_institution_code_secondary#
         And check value $recipientStation1 is equal to value #id_station_secondary#
-
-        And checks the value PAYING, PAID, NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        And checks the value NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        And checks the value PAYING, PAID,NOTIFIED of the record at column STATUS of the table POSITION_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        And checks the value NOTIFIED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb

@@ -356,4 +356,4 @@ def json2xml(json_obj, line_padding=""):
 
 def parallel_executor(context, feature_name, scenario):
     #os.chdir(testenv.PARALLEACTIONS_PATH)
-    behave_main('-i "{}" -n "{}" --no-skip'.format(feature_name, scenario))
+    behave_main('-i "{}" -n "{}"'.format(feature_name, scenario))
