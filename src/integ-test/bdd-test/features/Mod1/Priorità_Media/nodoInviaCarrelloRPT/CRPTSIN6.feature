@@ -88,7 +88,7 @@ Feature: process tests for nodoInviaCarrelloRPT[CRPTSIN6]
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
                 <ppt:intestazioneCarrelloPPT>
-                    <identificativoIntermediarioPA></identificativoIntermediarioPA>
+                    <identificativoIntermediarioPA> </identificativoIntermediarioPA>
                     <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
                     <identificativoCarrello>$1iuv</identificativoCarrello>
                 </ppt:intestazioneCarrelloPPT>
