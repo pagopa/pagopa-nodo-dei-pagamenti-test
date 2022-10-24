@@ -128,7 +128,7 @@
         "notice_number": "SELECT columns FROM table_name WHERE NOTICE_ID = '$activatePaymentNoticeV2.noticeNumber'",
         "update_noticeidrandom": "UPDATE table_name SET param = 'value' WHERE NOTICE_ID ='311011451292109621'",
         "transactionid": "SELECT columns FROM table_name WHERE TRANSACTION_ID = '$transaction_id'",
-        "temp_transactionid": "SELECT columns FROM table_name WHERE TRANSACTION_ID = '$temp_transaction_id'",
+        "temptransactionid": "SELECT columns FROM table_name WHERE TRANSACTION_ID = '$temp_transaction_id'",
         "update_noticeid_pa": "UPDATE table_name SET param = 'value' WHERE NOTICE_ID ='311$iuv' and PA_FISCAL_CODE='#creditor_institution_code#'",
         "update_noticeid1_pa": "UPDATE table_name SET param = 'value' WHERE NOTICE_ID ='311$iuv1' and PA_FISCAL_CODE='#creditor_institution_code#'",
         "position_subject": "SELECT columns FROM table_name WHERE ENTITY_UNIQUE_IDENTIFIER_VALUE = '$sendPaymentOutcomeV2.entityUniqueIdentifierValue' and INSERTED_TIMESTAMP > TO_DATE ('$date','YYYY-MM-DD HH24:MI:SS')",

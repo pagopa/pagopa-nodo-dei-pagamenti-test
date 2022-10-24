@@ -2331,11 +2331,11 @@ Feature: flux tests for closePaymentV2
         And verify 0 record for the table PM_SESSION_DATA retrived by the query id_sessione_activateio on db nodo_online under macro NewMod1
 
         # PM_METADATA
-        And checks the value $temp_transaction_id,$temp_transaction_id,$temp_transaction_id of the record at column TRANSACTION_ID of the table PM_METADATA retrived by the query temp_transaction_id on db nodo_online under macro NewMod1
-        And checks the value Token,Tipo versamento,key of the record at column KEY of the table PM_METADATA retrived by the query temp_transaction_id on db nodo_online under macro NewMod1
-        And checks the value $activateIOPaymentResponse.paymentToken,TPAY,$temp_psp_transaction_id of the record at column VALUE of the table PM_METADATA retrived by the query temp_transaction_id on db nodo_online under macro NewMod1
-        And checks the value closePayment-v2,closePayment-v2,closePayment-v2 of the record at column INSERTED_BY of the table PM_METADATA retrived by the query temp_transaction_id on db nodo_online under macro NewMod1
-        And checks the value closePayment-v2,closePayment-v2,closePayment-v2 of the record at column UPDATED_BY of the table PM_METADATA retrived by the query temp_transaction_id on db nodo_online under macro NewMod1
+        And checks the value $temp_transaction_id,$temp_transaction_id,$temp_transaction_id of the record at column TRANSACTION_ID of the table PM_METADATA retrived by the query temptransactionid on db nodo_online under macro NewMod1
+        And checks the value Token,Tipo versamento,key of the record at column KEY of the table PM_METADATA retrived by the query temptransactionid on db nodo_online under macro NewMod1
+        And checks the value $activateIOPaymentResponse.paymentToken,TPAY,$temp_psp_transaction_id of the record at column VALUE of the table PM_METADATA retrived by the query temptransactionid on db nodo_online under macro NewMod1
+        And checks the value closePayment-v2,closePayment-v2,closePayment-v2 of the record at column INSERTED_BY of the table PM_METADATA retrived by the query temptransactionid on db nodo_online under macro NewMod1
+        And checks the value closePayment-v2,closePayment-v2,closePayment-v2 of the record at column UPDATED_BY of the table PM_METADATA retrived by the query temptransactionid on db nodo_online under macro NewMod1
 
         # POSITION_ACTIVATE
         And checks the value $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query select_activateio on db nodo_online under macro NewMod1
