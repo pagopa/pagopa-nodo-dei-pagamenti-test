@@ -104,7 +104,7 @@ Feature: process tests for nodoInviaCarrelloRPT[CRPTSIN43]
                         <elementoListaRPT>
                         <identificativoDominio>44444444444</identificativoDominio>
                         <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
-                        <codiceContestoPagamento>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</codiceContestoPagamento>
+                        <codiceContestoPagamento>CCD01</codiceContestoPagamento>
                         <tipoFirma></tipoFirma>
                         <rpt>Y2lhbyBjaWFv</rpt>
                         </elementoListaRPT>
