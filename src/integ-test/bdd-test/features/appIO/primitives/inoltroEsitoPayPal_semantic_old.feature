@@ -448,7 +448,7 @@ Feature: Semantic checks on inoltroEsitoPayPal primitive for old EC
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
+        When WISP sends rest POST inoltroEsito/paypal to nodo-dei-pagamenti
             """
             {
                 "idTransazione": "responseMalformata",
