@@ -3424,4 +3424,4 @@ Feature: flux tests for closePaymentV2
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcome response
         And check faultCode is PPT_ESITO_GIA_ACQUISITO of sendPaymentOutcome response
-        And check description is L'esito del pagamento risulta già acquisito dal sistema pagoPA. of sendPaymentOutcome response
+        And check faultString is L'esito del pagamento risulta già acquisito dal sistema pagoPA. of sendPaymentOutcome response
