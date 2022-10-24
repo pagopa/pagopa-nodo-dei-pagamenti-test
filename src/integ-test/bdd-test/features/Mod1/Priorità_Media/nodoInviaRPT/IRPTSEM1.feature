@@ -3,7 +3,7 @@ Feature: process tests for nodoInviaRT[IRPTSEM1]
         Given systems up
         And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
 
-    Scenario: RPT generation
+   Scenario: RPT generation
         Given RPT generation
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
@@ -88,7 +88,7 @@ Feature: process tests for nodoInviaRT[IRPTSEM1]
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
                 <ppt:intestazionePPT>
-                    <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
+                    <identificativoIntermediarioPA>00000000000</identificativoIntermediarioPA>
                     <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
                     <identificativoDominio>44444444444</identificativoDominio>
                     <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
