@@ -395,7 +395,7 @@ Feature: gestioneReceiptMb_11_PULL
         And PSP replies to nodo-dei-pagamenti with the pspChiediRT
         When job pspChiediListaAndChiediRt triggered after 7 seconds
         And job paInviaRt triggered after 10 seconds
-        Then wait 15 seconds for expiration
+        Then wait 30 seconds for expiration
 
         #checks
         And replace pa content with #creditor_institution_code# content
@@ -529,6 +529,7 @@ Feature: gestioneReceiptMb_11_PULL
         And refresh job PA triggered after 10 seconds
         And wait 10 seconds for expiration
 
+    @tag
     Scenario: Check POSITION_RETRY_PA_SEND_RT table
         Given the job pspChiediRT (Phase 4) scenario executed successfully
         And wait 120 seconds for expiration
