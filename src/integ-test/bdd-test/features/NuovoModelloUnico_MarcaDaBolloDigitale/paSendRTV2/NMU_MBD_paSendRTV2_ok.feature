@@ -282,3 +282,15 @@ Feature: flow tests for paSendRTV2 - Marca da bollo
         # RE
         And verify 2 record for the table RE retrived by the query select_paSendRTV2 on db re under macro sendPaymentResultV2
         And checks the value REQ,RESP of the record at column TIPO_EVENTO of the table RE retrived by the query select_paSendRTV2 on db re under macro sendPaymentResultV2
+        # POSITION_RECEIPT_RECIPIENT_STATUS
+        And checks the value NOTICE_GENERATED,NOTICE_SENT,NOTIFIED for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_receipt_recipient_v2 on db nodo_online under macro sendPaymentResultV2
+        # POSITION_PAYMENT_STATUS
+        And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED,PAID,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED for the table POSITION_PAYMENT_STATUS retrived by the query position_receipt_recipient_v2 on db nodo_online under macro sendPaymentResultV2
+        # POSITION_PAYMENT_STATUS_SNAPSHOT
+        And checks the value NOTIFIED for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query position_receipt_recipient_v2 on db nodo_online under macro sendPaymentResultV2
+        # POSITION_STATUS
+        And checks the value PAYING,PAID,NOTIFIED for the table POSITION_STATUS retrived by the query position_receipt_recipient_v2 on db nodo_online under macro sendPaymentResultV2
+        # POSITION_STATUS_SNAPSHOT
+        And checks the value NOTIFIED for the table POSITION_STATUS_SNAPSHOT retrived by the query position_receipt_recipient_v2 on db nodo_online under macro sendPaymentResultV2
+        # POSITION_RETRY_PA_SEND_RT
+        And verify 0 record for the table POSITION_RETRY_PA_SEND_RT retrived by the query position_receipt_recipient_v2 on db nodo_online under macro sendPaymentResultV2
