@@ -1023,26 +1023,6 @@ Feature: Semantic checks on inoltroEsitoPayPal primitive for old EC
     Scenario: Execute nodoInoltroEsitoPaypal (Phase 7) [SEM_NIEPP_13]
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
         And the Execute trigger PollerAnnulli (Phase 6) scenario executed successfully
-        And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:psp="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <psp:pspNotifyPaymentRes>
-            <outcome>KO</outcome>
-            <!--Optional:-->
-            <fault>
-            <faultCode>CANALE_SEMANTICA</faultCode>
-            <faultString>Errore semantico dal psp</faultString>
-            <id>1</id>
-            <!--Optional:-->
-            <description>Errore dal psp</description>
-            </fault>
-            </psp:pspNotifyPaymentRes>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-
         When WISP sends REST POST inoltroEsito/paypal to nodo-dei-pagamenti
             """
             {
@@ -1058,7 +1038,7 @@ Feature: Semantic checks on inoltroEsitoPayPal primitive for old EC
             """
         Then verify the HTTP status code of inoltroEsito/paypal response is 200
         And check esito is KO of inoltroEsito/paypal response
-        And check errorCode is RIFPSP of inoltroEsito/paypal response
+        And check errorCode is CONPSP of inoltroEsito/paypal response
         And checks the value PAYING, PAYMENT_SENT, PAYMENT_UNKNOWN, PAYMENT_SEND_ERROR of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
         And checks the value PAYMENT_SEND_ERROR of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
         # check correctness POSITION_PAYMENT table
