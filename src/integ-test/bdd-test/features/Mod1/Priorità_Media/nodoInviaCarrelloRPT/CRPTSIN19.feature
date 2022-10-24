@@ -95,7 +95,7 @@ Feature: process tests for nodoInviaCarrelloRPT[CRPTSIN19]
             </soapenv:Header>
             <soapenv:Body>
                 <ws:nodoInviaCarrelloRPT>
-                    <password>passwor</password>
+                    <password>password</password>
                     <identificativoPSP>40000000001</identificativoPSP>
                     <identificativoIntermediarioPSP>40000000001</identificativoIntermediarioPSP>
                     <identificativoCanale>40000000001_03</identificativoCanale>
