@@ -126,6 +126,7 @@
         "pspEcommerce_update": "UPDATE table_name SET param = 'value' where ID_PSP = 'pspEcommerce'",
         "canaleEcommerce_update": "UPDATE table_name SET param = 'value' where OBJ_ID = (SELECT FK_CANALI_NODO FROM CANALI WHERE ID_CANALE = 'canaleEcommerce')",
         "select_paSendRTV2": "SELECT columns FROM table_name WHERE NOTICE_ID = '$activatePaymentNoticeV2.noticeNumber' AND TIPO_EVENTO = 'paSendRTV2' ORDER BY ID ASC",
-        "position_receipt_recipient_v2": "SELECT columns FROM table_name WHERE NOTICE_ID = '$activatePaymentNoticeV2.noticeNumber' ORDER BY ID ASC"
+        "position_receipt_recipient_v2": "SELECT columns FROM table_name WHERE NOTICE_ID = '$activatePaymentNoticeV2.noticeNumber' ORDER BY ID ASC",
+        "position_receipt_recipient_v2_desc": "SELECT columns FROM table_name WHERE NOTICE_ID = '$activatePaymentNoticeV2.noticeNumber' ORDER BY ID DESC"
     }
 }
