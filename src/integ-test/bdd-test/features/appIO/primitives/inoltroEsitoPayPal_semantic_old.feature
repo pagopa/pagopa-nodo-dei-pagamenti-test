@@ -851,7 +851,7 @@ Feature: Semantic checks on inoltroEsitoPayPal primitive for old EC
         And checks the value responseMalformata of the record at column ID_TRANSAZIONE_PM_PAYPAL of the table PM_SESSION_DATA retrived by the query pm_session_old on db nodo_online under macro AppIO
         # check correctness STATI_RPT_SNAPSHOT
         And checks the value RPT_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro AppIO
-    
+    @runnable
     # [SEM_NIEPP_11]
     Scenario: Execute nodoInoltroEsitoPayPal1 (Phase 6) [SEM_NIEPP_11]
         Given the Execute nodoInoltroEsitoPaypal (Phase 5) - KO (RIFPSP) scenario executed successfully
@@ -864,7 +864,7 @@ Feature: Semantic checks on inoltroEsitoPayPal primitive for old EC
                 "identificativoIntermediario": "#psp#",
                 "identificativoPsp": "#psp#",
                 "identificativoCanale": "#canale#",
-                "importoTotalePagato": 10.00,
+                "importoTotalePagato": 10,
                 "timestampOperazione": "2012-04-23T18:25:43Z"
             }
             """
