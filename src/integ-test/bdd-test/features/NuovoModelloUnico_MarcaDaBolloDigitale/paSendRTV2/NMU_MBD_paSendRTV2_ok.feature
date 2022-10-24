@@ -196,6 +196,10 @@ Feature: flow tests for paSendRTV2 - Marca da bollo
     # sendPaymentOutcome phase
     Scenario: Execute sendPaymentOutcomeV2
         Given the Define MBD scenario executed successfully
+        And MB generation
+         """
+         $MB
+         """
         And the Execute a closePayment-v2 request scenario executed successfully
         And initial XML sendPaymentOutcomeV2
             """
