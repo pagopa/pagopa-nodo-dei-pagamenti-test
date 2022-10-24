@@ -9,7 +9,7 @@ Feature: flow tests for paSendRTV2 - Marca da bollo
     Background:
         Given systems up
 
-    Scenario: activatePaymentNoticeV2
+    Scenario: Execute activatePaymentNoticeV2
         Given initial XML activatePaymentNoticeV2
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
@@ -111,15 +111,17 @@ Feature: flow tests for paSendRTV2 - Marca da bollo
             </soapenv:Envelope>
             """
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
+        When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response
 
-    @skip
+    # define closePaymentV2
     Scenario: closePaymentV2
         Given initial json v2/closepayment
             """
             {
                 "paymentTokens": [
-                    "$activatePaymentNoticeV2Response.paymentToken"
+                    "token"
                 ],
                 "outcome": "OK",
                 "idPSP": "#psp#",
@@ -148,7 +150,7 @@ Feature: flow tests for paSendRTV2 - Marca da bollo
             }
             """
 
-    @skip
+    # define MBD
     Scenario: Define MBD
         Given initial xml MB
             """
@@ -182,9 +184,20 @@ Feature: flow tests for paSendRTV2 - Marca da bollo
             </marcaDaBollo>
             """
 
-    @skip
-    Scenario: sendPaymentOutcomeV2
-        Given initial XML sendPaymentOutcomeV2
+    # closePayment-v2 phase
+    Scenario: Execute a closePayment-v2 request
+        Given the Execute activatePaymentNoticeV2 scenario executed successfully
+        And the closePaymentV2 scenario executed successfully
+        And paymentToken with $activatePaymentNoticeV2Response.paymentToken in v2/closepayment
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then check outcome is OK of v2/closepayment response
+        And verify the HTTP status code of v2/closepayment response is 200
+
+    # sendPaymentOutcome phase
+    Scenario: Execute sendPaymentOutcomeV2
+        Given the Define MBD scenario executed successfully
+        And the Execute a closePayment-v2 request scenario executed successfully
+        And initial XML sendPaymentOutcomeV2
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
             <soapenv:Header/>
@@ -240,31 +253,11 @@ Feature: flow tests for paSendRTV2 - Marca da bollo
             </soapenv:Body>
             </soapenv:Envelope>
             """
-
-    # sunny day
-    Scenario: execute activatePaymentNoticeV2 1
-        Given the activatePaymentNoticeV2 scenario executed successfully
-        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-        Then check outcome is OK of activatePaymentNoticeV2 response
-
-    Scenario: execute closePaymentV2 1
-        Given the execute activatePaymentNoticeV2 1 scenario executed successfully
-        And the closePaymentV2 scenario executed successfully
-        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
-        Then verify the HTTP status code of v2/closepayment response is 200
-        And check outcome is OK of v2/closepayment response
-
-    Scenario: execute sendPaymentOutcomeV2 1
-        Given the execute closePaymentV2 1 scenario executed successfully
         And wait 10 seconds for expiration
-        And the Define MBD scenario executed successfully
-        And MB generation
-            """
-            $MB
-            """
-        And the sendPaymentOutcomeV2 scenario executed successfully
-        When psp sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
+        When psp sends sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
+
+
 
     # DB check
     Scenario: execute DB check
