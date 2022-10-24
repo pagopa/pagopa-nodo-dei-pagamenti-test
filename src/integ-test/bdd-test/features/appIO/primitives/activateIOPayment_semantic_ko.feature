@@ -119,7 +119,7 @@ Feature: Semantic checks for activateIOPayment - KO
       | noticeNumber | 011456789012345678 | PPT_STAZIONE_INT_PA_SCONOSCIUTA     | SEM_AIPR_12 - auxDigit 0 - progressivo inesistente     |
       | noticeNumber | 323134567890787583 | PPT_STAZIONE_INT_PA_SCONOSCIUTA     | SEM_AIPR_12 - auxDigit 3 - segregationCode inesistente |
       | noticeNumber | 316456789012345678 | PPT_STAZIONE_INT_PA_DISABILITATA    | SEM_AIPR_13                                            |
-      | noticeNumber | 314134567890787583 | PPT_STAZIONE_INT_PA_DISABILITATA    | SEM_AIPR_13                                            |
+      | noticeNumber | 314456789012345478 | PPT_STAZIONE_INT_PA_DISABILITATA    | SEM_AIPR_13                                            |
       | noticeNumber | 099456789012345678 | PPT_STAZIONE_INT_PA_IRRAGGIUNGIBILE | SEM_AIRP_14                                            |
       | noticeNumber | 312456789012345678 | PPT_MULTI_BENEFICIARIO              | SEM_AIPR_15                                            |
       | noticeNumber | 088456789012345678 | PPT_INTERMEDIARIO_PA_DISABILITATO   | SEM_AIPR_16                                            |
