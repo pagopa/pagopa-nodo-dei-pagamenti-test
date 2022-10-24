@@ -212,6 +212,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
 
     # [SEM_nodoInviaCarrelloMb_03]
    Scenario: Define RPT3
+   Given generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
       Given RPT3 generation
          """
          <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
@@ -271,7 +272,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          <pay_i:importoTotaleDaVersare>1.50</pay_i:importoTotaleDaVersare>
          <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
          <pay_i:identificativoUnivocoVersamento>#iuv3#</pay_i:identificativoUnivocoVersamento>
-         <pay_i:codiceContestoPagamento>#idCarrello#</pay_i:codiceContestoPagamento>
+         <pay_i:codiceContestoPagamento>$1carrello</pay_i:codiceContestoPagamento>
          <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
          <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
          <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -350,7 +351,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          <pay_i:importoTotaleDaVersare>1.50</pay_i:importoTotaleDaVersare>
          <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
          <pay_i:identificativoUnivocoVersamento>$3iuv</pay_i:identificativoUnivocoVersamento>
-         <pay_i:codiceContestoPagamento>$idCarrello</pay_i:codiceContestoPagamento>
+         <pay_i:codiceContestoPagamento>$1carrello</pay_i:codiceContestoPagamento>
          <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
          <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
          <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -379,7 +380,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
             <ppt:intestazioneCarrelloPPT>
             <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
-            <identificativoCarrello>$idCarrello</identificativoCarrello>
+            <identificativoCarrello>$1carrello</identificativoCarrello>
             </ppt:intestazioneCarrelloPPT>
             </soapenv:Header>
             <soapenv:Body>
@@ -392,13 +393,13 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
             <elementoListaRPT>
             <identificativoDominio>#codicePA#</identificativoDominio>
             <identificativoUnivocoVersamento>$3iuv</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>$idCarrello</codiceContestoPagamento>
+            <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
             <rpt>$rptAttachment</rpt>
             </elementoListaRPT>
             <elementoListaRPT>
             <identificativoDominio>90000000001</identificativoDominio>
             <identificativoUnivocoVersamento>$3iuv</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>$idCarrello</codiceContestoPagamento>
+            <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
             <rpt>$rpt2Attachment</rpt>
             </elementoListaRPT>
             </listaRPT>

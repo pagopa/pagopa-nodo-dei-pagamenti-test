@@ -429,10 +429,11 @@ Feature: Semantic checks for activateIOPayment - KO
     And wait 10 seconds for expiration
     And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro AppIO
     And restore initial configurations
- 
+@runnable 
    # [SEM_AIPR_21]
   Scenario Outline: Check PPT_ERRORE_IDEMPOTENZA error on idempotencyKey validity (Phase 2)
-    Given the Execute activateIOPayment (Phase 1) scenario executed successfully
+    Given nodo-dei-pagamenti has config parameter useIdempotency set to true
+    And the Execute activateIOPayment (Phase 1) scenario executed successfully
     And <tag> with <tag_value> in activateIOPayment
     When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is KO of activateIOPayment response
