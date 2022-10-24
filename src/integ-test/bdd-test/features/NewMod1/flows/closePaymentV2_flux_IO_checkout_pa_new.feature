@@ -4093,7 +4093,7 @@ Feature: flux tests for closePaymentV2
         And checks the value $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query select_activateio on db nodo_online under macro NewMod1
         And checks the value $activateIOPayment.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query select_activateio on db nodo_online under macro NewMod1
 
-        And random idempotencyKey having $activateIOPayment.idPSP as idPSP in activateIOPayment
+        And random idempotencyKey having #psp# as idPSP in activateIOPayment
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
