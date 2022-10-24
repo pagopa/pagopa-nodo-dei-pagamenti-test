@@ -394,6 +394,7 @@ Feature: gestioneReceiptMb_11_PULL
         And PSP replies to nodo-dei-pagamenti with the pspChiediListaRT
         And PSP replies to nodo-dei-pagamenti with the pspChiediRT
         When job pspChiediListaAndChiediRt triggered after 7 seconds
+        And job paInviaRt triggered after 10 seconds
         Then wait 15 seconds for expiration
 
         #checks
@@ -403,7 +404,6 @@ Feature: gestioneReceiptMb_11_PULL
         And replace psp content with #psp# content
 
         #extraction from POSITION_RECEIPT table
-        And replace pa content with #creditor_institution_code# content
         And execution query by_notice_number_and_pa to get value on the table POSITION_RECEIPT, with the columns * under macro Mod1Mb with db name nodo_online
         And through the query by_notice_number_and_pa retrieve param receptID at position 1 and save it under the key receptID
         And through the query by_notice_number_and_pa retrieve param noticeID at position 2 and save it under the key noticeID
