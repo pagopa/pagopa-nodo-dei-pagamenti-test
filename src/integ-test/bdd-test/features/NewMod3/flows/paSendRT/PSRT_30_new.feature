@@ -2,8 +2,10 @@ Feature: process tests for paSendRT [PSRT_30]
 
     Background:
         Given systems up
-    
-    Scenario: Execute verifyPaymentNotice request 21
+
+    # PSRT_21
+
+    Scenario: 21 Execute verifyPaymentNotice request
         Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
         And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
         And initial XML verifyPaymentNotice
@@ -27,9 +29,9 @@ Feature: process tests for paSendRT [PSRT_30]
         And EC new version
         When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of verifyPaymentNotice response
-    
-    Scenario: Execute activatePaymentNotice request 21
-        Given the Execute verifyPaymentNotice request 21 scenario executed successfully
+
+    Scenario: 21 Execute activatePaymentNotice request
+        Given the 21 Execute verifyPaymentNotice request scenario executed successfully
         And initial XML paGetPayment
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
@@ -121,9 +123,9 @@ Feature: process tests for paSendRT [PSRT_30]
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
 
-    
-    Scenario: Define sendPaymentOutcome 21
-        Given the Execute activatePaymentNotice request 21 scenario executed successfully
+
+    Scenario: 21 Define sendPaymentOutcome
+        Given the 21 Execute activatePaymentNotice request scenario executed successfully
         And initial XML paSendRT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
@@ -210,15 +212,15 @@ Feature: process tests for paSendRT [PSRT_30]
         And checks the value $activatePaymentNotice.fiscalCode of the record at column PA_FISCAL_CODE of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
         And checks the value $activatePaymentNotice.noticeNumber of the record at column NOTICE_ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
 
-    
-    Scenario: clean paSendRt queue 21
-        Given the Define sendPaymentOutcome 21 scenario executed successfully
+
+    Scenario: 21 clean paSendRt queue
+        Given the 21 Define sendPaymentOutcome scenario executed successfully
         When job paSendRt triggered after 5 seconds
         And wait 10 seconds for expiration
 
-    
-    Scenario: job paSendRt 21
-        Given the Define sendPaymentOutcome 21 scenario executed successfully
+
+    Scenario: 21 job paSendRt
+        Given the 21 Define sendPaymentOutcome scenario executed successfully
         And initial XML paSendRT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
@@ -237,15 +239,9 @@ Feature: process tests for paSendRT [PSRT_30]
         And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
 
 
+    # PSRT_22
 
-
-
-
-
-
-
-
-    Scenario: Execute verifyPaymentNotice request 22
+    Scenario: 22 Execute verifyPaymentNotice request
         Given update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with N, with where condition FK_PA and where value ('6','8') under macro update_query on db nodo_cfg
         And generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
         And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
@@ -271,8 +267,8 @@ Feature: process tests for paSendRT [PSRT_30]
         When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of verifyPaymentNotice response
 
-    Scenario: Execute activatePaymentNotice request 22
-        Given the Execute verifyPaymentNotice request 22 scenario executed successfully
+    Scenario: 22 Execute activatePaymentNotice request
+        Given the 22 Execute verifyPaymentNotice request scenario executed successfully
         And initial XML paGetPayment
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
@@ -366,8 +362,8 @@ Feature: process tests for paSendRT [PSRT_30]
         Then check outcome is OK of activatePaymentNotice response
 
 
-    Scenario: Define sendPaymentOutcome 22
-        Given the Execute activatePaymentNotice request 22 scenario executed successfully
+    Scenario: 22 Define sendPaymentOutcome
+        Given the 22 Execute activatePaymentNotice request scenario executed successfully
         And initial XML paSendRT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
@@ -448,14 +444,14 @@ Feature: process tests for paSendRT [PSRT_30]
         And checks the value $activatePaymentNotice.fiscalCode of the record at column PA_FISCAL_CODE of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
         And checks the value $activatePaymentNotice.noticeNumber of the record at column NOTICE_ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
 
-    Scenario: clean paSendRt queue 22
-        Given the Define sendPaymentOutcome 22 scenario executed successfully
+    Scenario: 22 clean paSendRt queue
+        Given the 22 Define sendPaymentOutcome scenario executed successfully
         When job paSendRt triggered after 5 seconds
         And wait 10 seconds for expiration
 
 
-    Scenario: job paSendRt 22
-        Given the Define sendPaymentOutcome 22 scenario executed successfully
+    Scenario: 22 job paSendRt
+        Given the 22 Define sendPaymentOutcome scenario executed successfully
         And initial XML paSendRT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
@@ -474,21 +470,14 @@ Feature: process tests for paSendRT [PSRT_30]
         And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
 
 
+    # PSRT_23
 
-
-
-
-
-
-
-
-
-    Scenario: job refresh pa (1) 23
+    Scenario: 23 job refresh pa (1)
         Given update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with Y, with where condition OBJ_ID and where value ('13','1201') under macro update_query on db nodo_cfg
         And refresh job PA triggered after 10 seconds
 
-    Scenario: Execute verifyPaymentNotice request 23
-        Given the job refresh pa (1) 23 scenario executed successfully
+    Scenario: 23 Execute verifyPaymentNotice request
+        Given the 23 job refresh pa (1) scenario executed successfully
         And wait 5 seconds for expiration
         And generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
         And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
@@ -514,8 +503,8 @@ Feature: process tests for paSendRT [PSRT_30]
         When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of verifyPaymentNotice response
 
-    Scenario: Execute activatePaymentNotice request 23
-        Given the Execute verifyPaymentNotice request 23 scenario executed successfully
+    Scenario: 23 Execute activatePaymentNotice request
+        Given the 23 Execute verifyPaymentNotice request scenario executed successfully
         And initial XML paGetPayment
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
@@ -625,8 +614,8 @@ Feature: process tests for paSendRT [PSRT_30]
         Then check outcome is OK of activatePaymentNotice response
 
 
-    Scenario: Define sendPaymentOutcome 23
-        Given the Execute activatePaymentNotice request 23 scenario executed successfully
+    Scenario: 23 Define sendPaymentOutcome
+        Given the 23 Execute activatePaymentNotice request scenario executed successfully
         And initial XML paSendRT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
@@ -689,14 +678,14 @@ Feature: process tests for paSendRT [PSRT_30]
         #And job paSendRt triggered after 6 seconds
         Then check outcome is OK of sendPaymentOutcome response
 
-    #Scenario: trigger jobs paSendRt
+    #Scenario: 23 trigger jobs paSendRt
     #Given the Execute sendPaymentOutcome request scenario executed successfully
     #When job paSendRt triggered after 5 seconds
     #Then verify the HTTP status code of paSendRt response is 200
 
 
-    Scenario: DB check + db update 23
-        Given the Define sendPaymentOutcome 23 scenario executed successfully
+    Scenario: 23 DB check + db update
+        Given the 23 Define sendPaymentOutcome scenario executed successfully
         And wait 10 seconds for expiration
         And update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with N, with where condition OBJ_ID and where value ('13','1201') under macro update_query on db nodo_cfg
         And execution query position_transfer to get value on the table POSITION_RECEIPT_RECIPIENT_STATUS, with the columns STATUS under macro NewMod3 with db name nodo_online
@@ -722,22 +711,21 @@ Feature: process tests for paSendRT [PSRT_30]
         And checks the value $activatePaymentNotice.fiscalCode of the record at column PA_FISCAL_CODE of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
         And checks the value $activatePaymentNotice.noticeNumber of the record at column NOTICE_ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
 
-    Scenario: job refresh pa (2) 23
-        Given the DB check + db update 23 scenario executed successfully
+    Scenario: 23 job refresh pa (2)
+        Given the 23 DB check + db update scenario executed successfully
         Then refresh job PA triggered after 10 seconds
 
 
 
 
+    # PSRT_24
 
-
-
-    Scenario: job refresh pa (1) 24
+    Scenario: 24 job refresh pa (1)
         Given update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with Y, with where condition OBJ_ID and where value ('13','1201') under macro update_query on db nodo_cfg
         And refresh job PA triggered after 10 seconds
 
-    Scenario: Execute verifyPaymentNotice request 24
-        Given the job refresh pa (1) 24 scenario executed successfully
+    Scenario: 24 Execute verifyPaymentNotice request
+        Given the 24 job refresh pa (1) scenario executed successfully
         And wait 5 seconds for expiration
         And generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
         And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
@@ -763,8 +751,8 @@ Feature: process tests for paSendRT [PSRT_30]
         When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of verifyPaymentNotice response
 
-    Scenario: Execute activatePaymentNotice request 24
-        Given the Execute verifyPaymentNotice request 24 scenario executed successfully
+    Scenario: 24 Execute activatePaymentNotice request
+        Given the 24 Execute verifyPaymentNotice request scenario executed successfully
         And initial XML paGetPayment
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
@@ -866,8 +854,8 @@ Feature: process tests for paSendRT [PSRT_30]
         Then check outcome is OK of activatePaymentNotice response
 
 
-    Scenario: Define sendPaymentOutcome 24
-        Given the Execute activatePaymentNotice request 24 scenario executed successfully
+    Scenario: 24 Define sendPaymentOutcome
+        Given the 24 Execute activatePaymentNotice request scenario executed successfully
         And initial XML paSendRT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
@@ -930,14 +918,14 @@ Feature: process tests for paSendRT [PSRT_30]
         #And job paSendRt triggered after 6 seconds
         Then check outcome is OK of sendPaymentOutcome response
 
-    #Scenario: trigger jobs paSendRt
+    #Scenario: 24 trigger jobs paSendRt
     #Given the Execute sendPaymentOutcome request scenario executed successfully
     #When job paSendRt triggered after 5 seconds
     #Then verify the HTTP status code of paSendRt response is 200
 
 
-    Scenario: DB check + db update 24
-        Given the Define sendPaymentOutcome 24 scenario executed successfully
+    Scenario: 24 DB check + db update
+        Given the 24 Define sendPaymentOutcome scenario executed successfully
         And wait 10 seconds for expiration
         And update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with N, with where condition OBJ_ID and where value ('13','1201') under macro update_query on db nodo_cfg
         And execution query position_transfer to get value on the table POSITION_RECEIPT_RECIPIENT_STATUS, with the columns STATUS under macro NewMod3 with db name nodo_online
@@ -963,25 +951,16 @@ Feature: process tests for paSendRT [PSRT_30]
         And checks the value $activatePaymentNotice.fiscalCode of the record at column PA_FISCAL_CODE of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
         And checks the value $activatePaymentNotice.noticeNumber of the record at column NOTICE_ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
 
-    Scenario: job refresh pa (2) 24
-        Given the DB check + db update 24 scenario executed successfully
+    Scenario: 24 job refresh pa (2)
+        Given the 24 DB check + db update scenario executed successfully
         Then refresh job PA triggered after 10 seconds
 
 
 
 
+    # PSRT_26
 
-
-
-
-
-
-
-
-
-
-    
-    Scenario: Execute verifyPaymentNotice request 26
+    Scenario: 26 Execute verifyPaymentNotice request
         Given update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with Y, with where condition OBJ_ID and where value ('1201') under macro update_query on db nodo_cfg
         And refresh job PA triggered after 10 seconds
         And wait 5 seconds for expiration
@@ -1008,9 +987,9 @@ Feature: process tests for paSendRT [PSRT_30]
         And EC new version
         When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of verifyPaymentNotice response
-    
-    Scenario: Execute activatePaymentNotice request 26
-        Given the Execute verifyPaymentNotice request 26 scenario executed successfully
+
+    Scenario: 26 Execute activatePaymentNotice request
+        Given the 26 Execute verifyPaymentNotice request scenario executed successfully
         And initial XML paGetPayment
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
@@ -1119,9 +1098,9 @@ Feature: process tests for paSendRT [PSRT_30]
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
 
-    
-    Scenario: Define sendPaymentOutcome 26
-        Given the Execute activatePaymentNotice request 26 scenario executed successfully
+
+    Scenario: 26 Define sendPaymentOutcome
+        Given the 26 Execute activatePaymentNotice request scenario executed successfully
         And initial XML paSendRT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
@@ -1211,15 +1190,15 @@ Feature: process tests for paSendRT [PSRT_30]
         And checks the value NotNone of the record at column ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
         And checks the value $activatePaymentNotice.fiscalCode of the record at column PA_FISCAL_CODE of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
         And checks the value $activatePaymentNotice.noticeNumber of the record at column NOTICE_ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
-    
-    Scenario: clean paSendRt queue 26
-        Given the Define sendPaymentOutcome 26 scenario executed successfully
+
+    Scenario: 26 clean paSendRt queue
+        Given the 26 Define sendPaymentOutcome scenario executed successfully
         When job paSendRt triggered after 5 seconds
         And wait 10 seconds for expiration
 
-    
-    Scenario: job paSendRt 26
-        Given the Define sendPaymentOutcome 26 scenario executed successfully
+
+    Scenario: 26 job paSendRt
+        Given the 26 Define sendPaymentOutcome scenario executed successfully
         And initial XML paSendRT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
@@ -1238,18 +1217,9 @@ Feature: process tests for paSendRT [PSRT_30]
         And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
 
 
+    # PSRT_27
 
-
-
-
-
-
-
-
-
-
-    
-    Scenario: Execute verifyPaymentNotice request 27
+    Scenario: 27 Execute verifyPaymentNotice request
         Given update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with N, with where condition FK_PA and where value ('6') under macro update_query on db nodo_cfg
         And refresh job PA triggered after 10 seconds
         And wait 5 seconds for expiration
@@ -1276,9 +1246,9 @@ Feature: process tests for paSendRT [PSRT_30]
         And EC new version
         When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of verifyPaymentNotice response
-    
-    Scenario: Execute activatePaymentNotice request 27
-        Given the Execute verifyPaymentNotice request 27 scenario executed successfully
+
+    Scenario: 27 Execute activatePaymentNotice request
+        Given the 27 Execute verifyPaymentNotice request scenario executed successfully
         And initial XML paGetPayment
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
@@ -1371,9 +1341,9 @@ Feature: process tests for paSendRT [PSRT_30]
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
 
-    
-    Scenario: Define sendPaymentOutcome 27
-        Given the Execute activatePaymentNotice request 27 scenario executed successfully
+
+    Scenario: 27 Define sendPaymentOutcome
+        Given the 27 Execute activatePaymentNotice request scenario executed successfully
         And initial XML paSendRT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
@@ -1445,15 +1415,15 @@ Feature: process tests for paSendRT [PSRT_30]
         And checks the value NotNone of the record at column ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
         And checks the value $activatePaymentNotice.fiscalCode of the record at column PA_FISCAL_CODE of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
         And checks the value $activatePaymentNotice.noticeNumber of the record at column NOTICE_ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
-    
-    Scenario: clean paSendRt queue 27
-        Given the Define sendPaymentOutcome 27 scenario executed successfully
+
+    Scenario: 27 clean paSendRt queue
+        Given the 27 Define sendPaymentOutcome scenario executed successfully
         When job paSendRt triggered after 5 seconds
         And wait 10 seconds for expiration
 
-    
-    Scenario: job paSendRt 27
-        Given the Define sendPaymentOutcome 27 scenario executed successfully
+
+    Scenario: 27 job paSendRt
+        Given the 27 Define sendPaymentOutcome scenario executed successfully
         And initial XML paSendRT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
@@ -1472,14 +1442,9 @@ Feature: process tests for paSendRT [PSRT_30]
         And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
 
 
+    # PSRT_29
 
-
-
-
-
-
-
-    Scenario: Execute verifyPaymentNotice request 29
+    Scenario: 29 Execute verifyPaymentNotice request
         Given update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with N, with where condition FK_PA and where value ('6','8') under macro update_query on db nodo_cfg
         And refresh job PA triggered after 10 seconds
         And wait 5 seconds for expiration
@@ -1507,8 +1472,8 @@ Feature: process tests for paSendRT [PSRT_30]
         When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of verifyPaymentNotice response
 
-    Scenario: Execute activatePaymentNotice request 29
-        Given the Execute verifyPaymentNotice request 29 scenario executed successfully
+    Scenario: 29 Execute activatePaymentNotice request
+        Given the 29 Execute verifyPaymentNotice request scenario executed successfully
         And initial XML paGetPayment
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
@@ -1562,7 +1527,7 @@ Feature: process tests for paSendRT [PSRT_30]
             <transferCategory>paGetPaymentTest</transferCategory>
             </transfer>
             <transfer>
-            <idTransfer>2</idTransfer>
+            <idTransfer>1</idTransfer>
             <transferAmount>3.00</transferAmount>
             <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
             <IBAN>IT45R0760103200000000001016</IBAN>
@@ -1570,7 +1535,7 @@ Feature: process tests for paSendRT [PSRT_30]
             <transferCategory>paGetPaymentTest</transferCategory>
             </transfer>
             <transfer>
-            <idTransfer>3</idTransfer>
+            <idTransfer>1</idTransfer>
             <transferAmount>2.00</transferAmount>
             <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
             <IBAN>IT45R0760103200000000001016</IBAN>
@@ -1617,13 +1582,13 @@ Feature: process tests for paSendRT [PSRT_30]
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
 
-    Scenario: trigger PollerAnnulli 29
-        Given the Execute activatePaymentNotice request 29 scenario executed successfully
+    Scenario: 29 trigger PollerAnnulli
+        Given the 29 Execute activatePaymentNotice request scenario executed successfully
         When job mod3CancelV2 triggered after 6 seconds
         Then wait 5 seconds for expiration
 
-    Scenario: Define sendPaymentOutcome 29
-        Given the trigger PollerAnnulli 29 scenario executed successfully
+    Scenario: 29 Define sendPaymentOutcome
+        Given the 29 trigger PollerAnnulli scenario executed successfully
         And initial XML paSendRT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
@@ -1699,14 +1664,14 @@ Feature: process tests for paSendRT [PSRT_30]
         And checks the value $activatePaymentNotice.fiscalCode of the record at column PA_FISCAL_CODE of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
         And checks the value $activatePaymentNotice.noticeNumber of the record at column NOTICE_ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
 
-    Scenario: clean paSendRt queue 29
-        Given the Define sendPaymentOutcome 29 scenario executed successfully
+    Scenario: 29 clean paSendRt queue
+        Given the 29 Define sendPaymentOutcome scenario executed successfully
         When job paSendRt triggered after 5 seconds
         And wait 10 seconds for expiration
 
 
-    Scenario: job paSendRt 29
-        Given the Define sendPaymentOutcome 29 scenario executed successfully
+    Scenario: 29 job paSendRt
+        Given the 29 Define sendPaymentOutcome scenario executed successfully
         And initial XML paSendRT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
