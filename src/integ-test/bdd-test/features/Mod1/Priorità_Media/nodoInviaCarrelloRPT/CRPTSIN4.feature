@@ -96,7 +96,7 @@ Feature: process tests for nodoInviaCarrelloRPT[CRPTSIN4]
                     <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
                     <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
                     <identificativoCarrello>$1iuv</identificativoCarrello>
-                </ppt:/intestazioneCarrelloPPT>
+                </ppt:intestazioneCarrelloPPT>
             </soapenv:Header>
             <soapenv:Body>
                 <ws:nodoInviaCarrelloRPT>
