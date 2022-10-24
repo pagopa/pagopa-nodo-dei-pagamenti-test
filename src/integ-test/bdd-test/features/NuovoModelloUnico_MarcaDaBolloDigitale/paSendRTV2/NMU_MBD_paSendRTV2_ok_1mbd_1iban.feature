@@ -283,6 +283,7 @@ Feature: flow tests for paSendRTV2 - Marca da bollo e IBAN
     Scenario: execute DB check
         Given the Execute sendPaymentOutcomeV2 scenario executed successfully
         And wait 30 seconds for expiration
+        # POSITION_TRANSFER_MBD
         Then verify 1 record for the table POSITION_TRANSFER_MBD retrived by the query select_position_transfer_mbd on db nodo_online under macro NewMod1
         And checks the value $MB.TipoBollo of the record at column TIPO_BOLLO of the table POSITION_TRANSFER_MBD retrived by the query select_position_transfer_mbd on db nodo_online under macro NewMod1
         And checks the value BD of the record at column TIPO_ALLEGATO_RICEVUTA of the table POSITION_TRANSFER_MBD retrived by the query select_position_transfer_mbd on db nodo_online under macro NewMod1
@@ -294,6 +295,12 @@ Feature: flow tests for paSendRTV2 - Marca da bollo e IBAN
         And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_TRANSFER_MBD retrived by the query select_position_transfer_mbd on db nodo_online under macro NewMod1
         And checks the value sendPaymentOutcomeV2 of the record at column INSERTED_BY of the table POSITION_TRANSFER_MBD retrived by the query select_position_transfer_mbd on db nodo_online under macro NewMod1
         And checks the value sendPaymentOutcomeV2 of the record at column UPDATED_BY of the table POSITION_TRANSFER_MBD retrived by the query select_position_transfer_mbd on db nodo_online under macro NewMod1
+        # POSITION_TRANSFER
+        And verify 2 record for the table POSITION_TRANSFER retrived by the query position_receipt_recipient_v2 on db nodo_online under macro sendPaymentResultV2
+        And checks the value None, NotNone of the record at column IBAN of the table POSITION_TRANSFER retrived by the query position_receipt_recipient_v2 on db nodo_online under macro sendPaymentResultV2
+        And checks the value 01,None of the record at column REQ_TIPO_BOLLO of the table POSITION_TRANSFER retrived by the query position_receipt_recipient_v2 on db nodo_online under macro sendPaymentResultV2
+        And checks the value ciao, None of the record at column REQ_HASH_DOCUMENTO of the table POSITION_TRANSFER retrived by the query position_receipt_recipient_v2 on db nodo_online under macro sendPaymentResultV2
+        And checks the value MI, None of the record at column REQ_PROVINCIA_RESIDENZA of the table POSITION_TRANSFER retrived by the query position_receipt_recipient_v2 on db nodo_online under macro sendPaymentResultV2
         # RE
         And verify 2 record for the table RE retrived by the query select_paSendRTV2 on db re under macro sendPaymentResultV2
         And checks the value REQ,RESP of the record at column SOTTO_TIPO_EVENTO of the table RE retrived by the query select_paSendRTV2 on db re under macro sendPaymentResultV2
