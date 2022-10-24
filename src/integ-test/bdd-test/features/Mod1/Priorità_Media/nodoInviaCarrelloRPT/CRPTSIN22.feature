@@ -1,4 +1,4 @@
-Feature: process tests for nodoInviaCarrelloRPT[CRPTSIN20]
+Feature: process tests for nodoInviaCarrelloRPT[CRPTSIN22]
     Background:
         Given systems up
         And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
@@ -95,8 +95,8 @@ Feature: process tests for nodoInviaCarrelloRPT[CRPTSIN20]
             </soapenv:Header>
             <soapenv:Body>
                 <ws:nodoInviaCarrelloRPT>
-                    <password>passwor</password>
-                    <identificativoPSP>40000000001</identificativoPSP>
+                    <password>pwdpwdpwd</password>
+                    <identificativoPSP> </identificativoPSP>
                     <identificativoIntermediarioPSP>40000000001</identificativoIntermediarioPSP>
                     <identificativoCanale>40000000001_03</identificativoCanale>
                     <listaRPT>
@@ -114,5 +114,5 @@ Feature: process tests for nodoInviaCarrelloRPT[CRPTSIN20]
             """
             When PSP sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
             Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
-            And check faultCode is PPT_AUTENTICAZIONE of nodoInviaCarrelloRPT response
+            And check faultCode is PPT_PSP_SCONOSCIUTO of nodoInviaCarrelloRPT response
             
