@@ -255,6 +255,7 @@ Feature: flow tests for paSendRTV2 - Marca da bollo
 
     Scenario: execute sendPaymentOutcomeV2 1
         Given the execute closePaymentV2 1 scenario executed successfully
+        And wait 10 seconds for expiration
         And the Define MBD scenario executed successfully
         And MB generation
             """
