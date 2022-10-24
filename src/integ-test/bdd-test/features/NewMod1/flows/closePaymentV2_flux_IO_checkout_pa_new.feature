@@ -4269,7 +4269,7 @@ Feature: flux tests for closePaymentV2
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 404
         And check outcome is KO of v2/closepayment response
-        And check description is Unknown token
+        And check description is Unknown token of v2/closepayment response
     @wip
     Scenario: FLUSSO_CP_22 (part 3)
         Given the FLUSSO_CP_22 (part 2) scenario executed successfully
