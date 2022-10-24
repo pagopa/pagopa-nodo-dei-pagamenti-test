@@ -198,7 +198,7 @@ Feature: flux tests for closePaymentV2
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is KO of activateIOPayment response
-        And check faultCode is PPT_ERRORE_EMESSO_DA_PAA
+        And check faultCode is PPT_ERRORE_EMESSO_DA_PAA of activateIOPayment response
 
     @skip
     Scenario: closePaymentV2 request
