@@ -265,7 +265,7 @@ Feature: flow tests for paSendRTV2 - Marca da bollo
 
     # DB check
     Scenario: execute DB check
-        Given the execute sendPaymentOutcomeV2 1 scenario executed successfully
+        Given the Execute sendPaymentOutcomeV2 scenario executed successfully
         And wait 30 seconds for expiration
         Then verify 1 record for the table POSITION_TRANSFER_MBD retrived by the query select_position_transfer_mbd on db nodo_online under macro NewMod1
         And checks the value $MB.TipoBollo of the record at column TIPO_BOLLO of the table POSITION_TRANSFER_MBD retrived by the query select_position_transfer_mbd on db nodo_online under macro NewMod1
