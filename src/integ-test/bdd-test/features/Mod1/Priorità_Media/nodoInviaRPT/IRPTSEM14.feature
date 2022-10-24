@@ -99,7 +99,7 @@ Feature: process tests for nodoInviaRT[IRPTSEM14]
                 <ws:nodoInviaRPT>
                     <password>pwdpwdpwd</password>
                     <identificativoPSP>40000000001</identificativoPSP>
-                    <identificativoIntermediarioPSP>NOT_ENABLED</identificativoIntermediarioPSP>
+                    <identificativoIntermediarioPSP>INT_NOT_ENABLED</identificativoIntermediarioPSP>
                     <identificativoCanale>40000000001_03</identificativoCanale>
                     <tipoFirma></tipoFirma>
                     <rpt>$rptAttachment</rpt>
