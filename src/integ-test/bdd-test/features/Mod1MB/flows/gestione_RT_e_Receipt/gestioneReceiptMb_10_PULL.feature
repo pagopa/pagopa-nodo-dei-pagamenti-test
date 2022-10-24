@@ -583,7 +583,7 @@ Feature: gestioneReceiptMb_10_PULL
 
 
         #extraction from POSITION_RECEIPT_RECIPIENT table
-        And replace $paymentToken content with $1carrello content
+        And replace paymentToken content with $1carrello content
         #row 1
         And execution query by_notice_number_and_payment_token to get value on the table POSITION_RECEIPT_RECIPIENT, with the columns * under macro Mod1Mb with db name nodo_online
         And through the query by_notice_number_and_payment_token retrieve param paFiscalCode1 at position 1 and save it under the key paFiscalCode1
