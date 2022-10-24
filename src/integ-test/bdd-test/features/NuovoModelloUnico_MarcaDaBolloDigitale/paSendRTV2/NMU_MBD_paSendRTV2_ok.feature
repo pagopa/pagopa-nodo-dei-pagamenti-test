@@ -258,7 +258,7 @@ Feature: flow tests for paSendRTV2 - Marca da bollo
             </soapenv:Envelope>
             """
         And wait 10 seconds for expiration
-        When psp sends sendPaymentOutcomeV2 to nodo-dei-pagamenti
+        When psp sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
 
 
