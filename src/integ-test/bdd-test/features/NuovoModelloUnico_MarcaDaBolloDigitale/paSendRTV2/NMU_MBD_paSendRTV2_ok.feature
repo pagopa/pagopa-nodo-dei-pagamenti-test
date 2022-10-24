@@ -111,6 +111,7 @@ Feature: flow tests for paSendRTV2 - Marca da bollo
             </soapenv:Envelope>
             """
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response
 
     @skip
     Scenario: closePaymentV2
