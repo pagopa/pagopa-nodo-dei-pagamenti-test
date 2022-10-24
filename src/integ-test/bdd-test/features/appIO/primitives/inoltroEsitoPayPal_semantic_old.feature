@@ -870,7 +870,7 @@ Feature: Semantic checks on inoltroEsitoPayPal primitive for old EC
             """
         Then verify the HTTP status code of inoltroEsito/paypal response is 200
         And check esito is KO of inoltroEsito/paypal response
-        And check errorCode is CONPSP of inoltroEsito/paypal response
+        And check errorCode is RIFPSP of inoltroEsito/paypal response
         And wait 6 seconds for expiration
         And checks the value PAYING, PAYMENT_SENT, PAYMENT_REFUSED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
         And checks the value PAYMENT_REFUSED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
