@@ -438,16 +438,17 @@ Feature: Semantic checks on inoltroEsitoPayPal primitive for old EC
         Given the Execute nodoChiediInformazioniPagamento (Phase 4) scenario executed successfully
         And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
             """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:psp="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pfn="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
             <soapenv:Header/>
             <soapenv:Body>
-            <psp:pspNotifyPaymentRes>
-            <outcome>Response malformata</outcome>
-            </psp:pspNotifyPaymentRes>
+            <pfn:pspNotifyPaymentRes>
+            <delay>10000</delay>
+            <outcome>OK</outcome>
+            </pfn:pspNotifyPaymentRes>
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        When WISP sends REST POST inoltroEsito/paypal to nodo-dei-pagamenti
+        When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
             """
             {
                 "idTransazione": "responseMalformata",
