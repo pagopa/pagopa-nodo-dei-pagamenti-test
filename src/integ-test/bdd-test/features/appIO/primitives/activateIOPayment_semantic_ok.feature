@@ -51,8 +51,8 @@ Feature: Semantic checks for activateIOPaymentReq - OK
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        
-    
+
+    @runnable
     Scenario Outline: Check Unknown/Disabled PSP in idempotencyKey
         Given <tag> with <tag_value> in activateIOPayment
         When psp sends SOAP activateIOPayment to nodo-dei-pagamenti
@@ -61,26 +61,26 @@ Feature: Semantic checks for activateIOPaymentReq - OK
             | tag            | tag_value              | soapUI test |
             | idempotencyKey | 12345678901_1244gtg684 | SEM_AIPR_17 |
             | idempotencyKey | 80000000001_1244gtg684 | SEM_AIPR_18 |
-    
+    @runnable
     # [SEM_AIPR_19]
     Scenario: Execute activateIOPayment (Phase 1)
         Given nodo-dei-pagamenti has config parameter useIdempotency set to true
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
         And save activateIOPayment response in activateIOPayment_first
         Then check outcome is OK of activateIOPayment_first response
-    
+    @runnable
     Scenario: Check second activateIOPayment is equal to the first
         Given the Execute activateIOPayment (Phase 1) scenario executed successfully
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then activateIOPayment_first response is equal to activateIOPayment response
         And verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro AppIO
         And restore initial configurations
-    @runnable
+
     # [SEM_AIPR_31]
     Scenario: Check activateIOPayment response with parameters in deny list
-        Given idPSP with #psp# in activateIOPayment
-        And idBrokerPSP with #psp# in activateIOPayment
-        And idChannel with #canale# in activateIOPayment
+        Given idPSP with 70000000001 in activateIOPayment
+        And idBrokerPSP with 70000000002 in activateIOPayment
+        And idChannel with 70000000002_01 in activateIOPayment
         And verify 1 record for the table DENYLIST retrived by the query deny_list on db nodo_cfg under macro AppIO
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
