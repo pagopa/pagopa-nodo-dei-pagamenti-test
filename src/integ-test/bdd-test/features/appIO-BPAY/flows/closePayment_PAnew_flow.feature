@@ -232,7 +232,7 @@ Feature: flow checks for closePayment - PA new
          <soapenv:Header/>
          <soapenv:Body>
          <pfn:pspNotifyPaymentRes>
-         <delay>10000</delay>
+         <delay>15000</delay>
          </pfn:pspNotifyPaymentRes>
          </soapenv:Body>
          </soapenv:Envelope>
@@ -474,7 +474,7 @@ Feature: flow checks for closePayment - PA new
       And checks the value #id_station# of the record at column STATION_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
       And checks the value 2 of the record at column STATION_VERSION of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
       And checks the value #psp_AGID# of the record at column PSP_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
-      And checks the value #broker_AGID# the record at column BROKER_PSP_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
+      And checks the value #broker_AGID# of the record at column BROKER_PSP_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
       And checks the value #canale_AGID# of the record at column CHANNEL_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
       And checks the value None of the record at column IDEMPOTENCY_KEY of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
       And checks the value 10 of the record at column AMOUNT of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
@@ -508,7 +508,7 @@ Feature: flow checks for closePayment - PA new
       And outcome with KO in sendPaymentOutcome
       When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
       Then check outcome is KO of sendPaymentOutcome response
-      And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcome response
+      And check faultCode is PPT_TOKEN_SCONOSCIUTO of sendPaymentOutcome response
       And check description is token unknown of sendPaymentOutcome response
       And wait 5 seconds for expiration
       # POSITION & PAYMENT STATUS
@@ -562,7 +562,7 @@ Feature: flow checks for closePayment - PA new
       And the sendPaymentOutcome scenario executed successfully
       When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
       Then check outcome is KO of sendPaymentOutcome response
-      And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcome response
+      And check faultCode is PPT_TOKEN_SCONOSCIUTO of sendPaymentOutcome response
       And check description is token unknown of sendPaymentOutcome response
       And wait 5 seconds for expiration
       # POSITION & PAYMENT STATUS
@@ -609,7 +609,7 @@ Feature: flow checks for closePayment - PA new
       When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
       Then verify the HTTP status code of v1/closepayment response is 200
       And check esito is OK of v1/closepayment response
-      And wait 5 seconds for expiration
+      And wait 17 seconds for expiration
       # POSITION & PAYMENT STATUS
       And verify 1 record for the table POSITION_STATUS retrived by the query select_activateio on db nodo_online under macro NewMod1
       And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query select_activateio on db nodo_online under macro NewMod1
@@ -675,7 +675,7 @@ Feature: flow checks for closePayment - PA new
       When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
       Then verify the HTTP status code of v1/closepayment response is 200
       And check esito is OK of v1/closepayment response
-      And wait 5 seconds for expiration
+      And wait 17 seconds for expiration
       # POSITION & PAYMENT STATUS
       And verify 1 record for the table POSITION_STATUS retrived by the query select_activateio on db nodo_online under macro NewMod1
       And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query select_activateio on db nodo_online under macro NewMod1
