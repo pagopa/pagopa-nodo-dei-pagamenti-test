@@ -125,7 +125,8 @@ Feature: Semantic checks for activateIOPayment - KO
 @runnable
   # idChannel value check: idChannel with value in NODO4_CFG.CANALI whose field MODELLO_PAGAMENTO in NODO4_CFG.CANALI_NODO table of nodo-dei-pagamenti database does not contain value 'ATTIVATO_PRESSO_PSP' (e.g. contains 'IMMEDIATO_MULTIBENEFICIARIO') [SEM_AIPR_07]
   Scenario: Check PPT_AUTORIZZAZIONE error on psp channel not enabled for payment model 3
-    Given initial XML paGetPayment
+      Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
+      And initial XML paGetPayment
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
       <soapenv:Header/>
@@ -170,7 +171,7 @@ Feature: Semantic checks for activateIOPayment - KO
       """
     And EC replies to nodo-dei-pagamenti with the paGetPayment
 
-    Given initial XML activateIOPayment
+    And initial XML activateIOPayment
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd">
       <soapenv:Header/>
@@ -219,7 +220,7 @@ Feature: Semantic checks for activateIOPayment - KO
       </soapenv:Body>
       </soapenv:Envelope>
       """
-    Given idChannel with 70000000001_03_ONUS in activateIOPayment
+    And idChannel with 70000000001_03_ONUS in activateIOPayment
     When psp sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is KO of activateIOPayment response
     And check faultCode is PPT_AUTORIZZAZIONE of activateIOPayment response
