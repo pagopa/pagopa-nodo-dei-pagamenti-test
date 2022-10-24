@@ -2092,7 +2092,7 @@ Feature: flux tests for closePaymentV2
         Given the FLUSSO_CP_10 (part 1) scenario executed successfully
         When job mod3CancelV2 triggered after 3 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
-    @wip
+    
     Scenario: FLUSSO_CP_10 (part 3)
         Given the FLUSSO_CP_10 (part 2) scenario executed successfully
         And wait 3 seconds for expiration
@@ -2249,6 +2249,7 @@ Feature: flux tests for closePaymentV2
 
     Scenario: FLUSSO_CP_11 (part 3)
         Given the FLUSSO_CP_11 (part 2) scenario executed successfully
+        And the closePaymentV2 request scenario executed successfully
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 422
         And check outcome is KO of v2/closepayment response
