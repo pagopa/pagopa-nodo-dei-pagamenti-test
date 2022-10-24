@@ -4330,39 +4330,6 @@ Feature: flux tests for closePaymentV2
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     # FLUSSO_CP_22
 
     Scenario: FLUSSO_CP_22 (part 1)
@@ -4383,10 +4350,58 @@ Feature: flux tests for closePaymentV2
         Then verify the HTTP status code of v2/closepayment response is 404
         And check outcome is KO of v2/closepayment response
         And check description is Unknown token of v2/closepayment response
-    @wip
+
     Scenario: FLUSSO_CP_22 (part 3)
         Given the FLUSSO_CP_22 (part 2) scenario executed successfully
         And the sendPaymentOutcome with arbitrary paymentToken request scenario executed successfully
+        And paymentToken with $temp_payment_token in sendPaymentOutcome
+        When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+        Then check outcome is KO of sendPaymentOutcome response
+        And check faultCode is PPT_TOKEN_SCONOSCIUTO of sendPaymentOutcome response
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    # FLUSSO_CP_23
+
+    Scenario: FLUSSO_CP_23 (part 1)
+        Given current date generation
+        And the verifyPaymentNotice scenario executed successfully
+        And the activateIOPayment with paGetPayment KO scenario executed successfully
+        And execution query select_activateio to get value on the table POSITION_ACTIVATE, with the columns PAYMENT_TOKEN under macro NewMod1 with db name nodo_online
+        And through the query select_activateio retrieve param PAYMENT_TOKEN at position 0 and save it under the key temp_payment_token
+        When PM sends REST GET informazioniPagamento?idPagamento=$temp_payment_token to nodo-dei-pagamenti
+        Then verify the HTTP status code of informazioniPagamento response is 404
+        And check error is Il pagamento non esiste of informazioniPagamento response
+
+    Scenario: FLUSSO_CP_23 (part 2)
+        Given the FLUSSO_CP_23 (part 1) scenario executed successfully
+        And the closePaymentV2 with arbitrary paymentToken request scenario executed successfully
+        And paymentToken with $temp_payment_token in v2/closepayment
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 404
+        And check outcome is KO of v2/closepayment response
+        And check description is Unknown token of v2/closepayment response
+    @wip
+    Scenario: FLUSSO_CP_23 (part 3)
+        Given the FLUSSO_CP_23 (part 2) scenario executed successfully
+        And the sendPaymentOutcome with arbitrary paymentToken request scenario executed successfully
+        And outcome with KO in sendPaymentOutcome
         And paymentToken with $temp_payment_token in sendPaymentOutcome
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcome response
