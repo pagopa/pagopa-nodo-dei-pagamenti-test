@@ -67,14 +67,14 @@ Feature: Semantic checks for activateIOPaymentReq - OK
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
         And save activateIOPayment response in activateIOPayment_first
         Then check outcome is OK of activateIOPayment_first response
-
+    @runnable
     Scenario: Check second activateIOPayment is equal to the first
         Given the Execute activateIOPayment (Phase 1) scenario executed successfully
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then activateIOPayment_first response is equal to activateIOPayment response
         And verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro AppIO
         And restore initial configurations
-
+    @runnable
     # [SEM_AIPR_31]
     Scenario: Check activateIOPayment response with parameters in deny list
         Given idPSP with 70000000001 in activateIOPayment
