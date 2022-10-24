@@ -452,30 +452,45 @@ Feature: gestioneReceiptMb_10_PULL
         Then verify the HTTP status code of inoltroEsito/mod1 response is 200
         And check esito is OK of inoltroEsito/mod1 response
 
-    Scenario: Execute nodoInviaRT (Phase 4)
+    Scenario: job pspChiediRT (Phase 4)
         Given the Execute nodoInoltroEsitoMod1 (Phase 3) scenario executed successfully
-        And initial XML nodoInviaRT
+        And initial XML pspChiediListaRT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header/>
             <soapenv:Body>
-            <ws:nodoInviaRT>
-            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canale#</identificativoCanale>
-            <password>pwdpwdpwd</password>
-            <identificativoPSP>#psp#</identificativoPSP>
+            <ws:pspChiediListaRTResponse>
+            <pspChiediListaRTResponse>
+            <elementoListaRTResponse>
             <identificativoDominio>$pa1</identificativoDominio>
             <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
-            <tipoFirma></tipoFirma>
-            <forzaControlloSegno>1</forzaControlloSegno>
-            <rt>$rt2Attachment</rt>
-            </ws:nodoInviaRT>
+            </elementoListaRTResponse>
+            </pspChiediListaRTResponse>
+            </ws:pspChiediListaRTResponse>
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
-        Then check esito is OK of nodoInviaRT response
+        And initial XML pspChiediRT
+            """
+            <soapenv:Envelope
+            xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+            xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <ws:pspChiediRTResponse>
+            <pspChiediRTResponse>
+            <rt>$rt2Attachment</rt>
+            </pspChiediRTResponse>
+            </ws:pspChiediRTResponse>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And PSP replies to nodo-dei-pagamenti with the pspChiediListaRT
+        And PSP replies to nodo-dei-pagamenti with the pspChiediRT
+        When job pspChiediListaAndChiediRt triggered after 7 seconds
+        And job paInviaRt triggered after 10 seconds
+        Then wait 15 seconds for expiration
 
         And replace pa content with #creditor_institution_code# content
         And execution query get_pa_id to get value on the table PA, with the columns OBJ_ID under macro costanti with db name nodo_cfg
@@ -630,7 +645,7 @@ Feature: gestioneReceiptMb_10_PULL
         And checks the value PAID of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
 
     Scenario: Check POSITION_RETRY_PA_SEND_RT table
-        Given the Execute nodoInviaRT (Phase 4) scenario executed successfully
+        Given the job pspChiediRT (Phase 4) scenario executed successfully
         And wait 120 seconds for expiration
         And nodo-dei-pagamenti has config parameter scheduler.jobName_paSendRt.enabled set to true
         And EC2 replies to nodo-dei-pagamenti with the paSendRT
@@ -680,4 +695,10 @@ Feature: gestioneReceiptMb_10_PULL
         And check value $recipientPA1 is equal to value $pa1
         And check value $recipientBroker1 is equal to value $pa1
         And check value $recipientStation1 is equal to value #id_station_secondary#
+    
+        And checks the value PAYING, PAID, NOTICE_GENERATED, NOTICE_SENT, NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+        And checks the value NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+        And checks the value PAYING, PAID, NOTIFIED of the record at column STATUS of the table POSITION_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+        And checks the value NOTIFIED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+        And verify 0 record for the table POSITION_RETRY_PA_SEND_RT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
     
