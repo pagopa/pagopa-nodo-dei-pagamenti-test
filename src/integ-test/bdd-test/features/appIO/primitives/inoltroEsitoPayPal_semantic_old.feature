@@ -245,7 +245,7 @@ Feature: Semantic checks on inoltroEsitoPayPal primitive for old EC
                 "identificativoIntermediario": "#psp#",
                 "identificativoPsp": "#psp#",
                 "identificativoCanale": "#canale#",
-                "importoTotalePagato": 10,
+                "importoTotalePagato": 10.00,
                 "timestampOperazione": "2012-04-23T18:25:43Z"
             }
             """
