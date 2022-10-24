@@ -185,7 +185,7 @@ Feature: process tests for paSendRT [PSRT_30]
             </soapenv:Envelope>
             """
         When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-        And wait 5 seconds for expiration
+        And wait 10 seconds for expiration
         Then check outcome is OK of sendPaymentOutcome response
 
     @wip
