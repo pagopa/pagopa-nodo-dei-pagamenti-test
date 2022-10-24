@@ -1,5 +1,5 @@
 import http from 'k6/http';
-import { check } from 'k6';
+import { check, fail } from 'k6';
 import { parseHTML } from "k6/html";
 import { Trend } from 'k6/metrics';
 
@@ -52,12 +52,15 @@ export function sendPaymentOutput_NN(baseUrl,rndAnagPsp,paymentToken) {
  //console.log("VERIFY="+noticeNmbr);
  
  const res = http.post(
-    baseUrl+'?soapAction=sendPaymentOutcome',
+    baseUrl,
     sendPaymentOutputReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, paymentToken),
-    { headers: { 'Content-Type': 'text/xml' } ,
+    { headers: { 'Content-Type': 'text/xml', 'SOAPAction': 'sendPaymentOutcome' } ,
 	tags: { sendPaymentOutcome_NN: 'http_req_duration', ALL: 'http_req_duration'}
 	}
   );
+  
+  console.debug("sendPaymentOutput_NN RES");
+  console.debug(res);
   
    sendPaymentOutput_NN_Trend.add(res.timings.duration);
    All_Trend.add(res.timings.duration);
@@ -120,14 +123,16 @@ export function sendPaymentOutput_NN(baseUrl,rndAnagPsp,paymentToken) {
     { sendPaymentOutcome_NN: 'ok_rate' , ALL:'ok_rate'}
 	);
  
-  check(
+  if(check(
     res,
     {
       
 	  'sendPaymentOutcome_NN:ko_rate': (r) => outcome !== 'OK',
     },
     { sendPaymentOutcome_NN: 'ko_rate', ALL:'ko_rate' }
-  );
+  )){
+	fail("outcome != ok: "+outcome);
+	}
   
   return res;
    

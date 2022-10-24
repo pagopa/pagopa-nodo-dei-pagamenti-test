@@ -1,5 +1,5 @@
 import http from 'k6/http';
-import { check } from 'k6';
+import { check, fail } from 'k6';
 import { parseHTML } from "k6/html";
 import { Trend } from 'k6/metrics';
 
@@ -35,12 +35,15 @@ export function activateReqBody (psp, pspint, chpsp, cfpa, noticeNmbr, idempoten
 export function activatePaymentNotice(baseUrl,rndAnagPsp,rndAnagPa,noticeNmbr,idempotencyKey) {
  
  //console.log( activateReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , noticeNmbr, idempotencyKey));
- let res=http.post(baseUrl+'?soapAction=activatePaymentNotice',
+ let res=http.post(baseUrl,
     activateReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , noticeNmbr, idempotencyKey),
-    { headers: { 'Content-Type': 'text/xml' } ,
+    { headers: { 'Content-Type': 'text/xml', 'SOAPAction':'activatePaymentNotice' } ,
 	tags: { activatePaymentNotice: 'http_req_duration' , ALL: 'http_req_duration'}
 	}
   );
+  
+  console.debug("activatePaymentNotice RES");
+  console.debug(res);
 
    activatePaymentNotice_Trend.add(res.timings.duration);
    All_Trend.add(res.timings.duration);
@@ -100,30 +103,32 @@ export function activatePaymentNotice(baseUrl,rndAnagPsp,rndAnagPa,noticeNmbr,id
   result.creditorReferenceId=creditorReferenceId;
   }catch(error){}
 
-
+/*
   if(outcome=='KO'){
   console.log("activate REQuest----------------"+activateReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , noticeNmbr, idempotencyKey)); 
   console.log("activate RESPONSE----------------"+res.body);
-  }  
+  } */ 
 
 
    check(
     res,
     {
       //'activatePaymentNotice:ok_rate': (r) => r.status == 200,
-	  'activatePaymentNotice:ok_rate': (r) => outcome == 'OK',
+	  'activatePaymentNotice:ok_rate': (r) => outcome == 'OK' && result.creditorReferenceId != undefined && result.creditorReferenceId !== '',
     },
     { activatePaymentNotice: 'ok_rate', ALL: 'ok_rate' }
 	);
 	
-	 check(
+	if(check(
     res,
     {
       //'activatePaymentNotice:ko_rate': (r) => r.status !== 200,
-	  'activatePaymentNotice:ko_rate': (r) => outcome !== 'OK',
+	  'activatePaymentNotice:ko_rate': (r) => result.creditorReferenceId == undefined || result.creditorReferenceId === '' || outcome !== 'OK',
     },
     { activatePaymentNotice: 'ko_rate', ALL: 'ko_rate' }
-  );
+  )){
+	fail('result.creditorReferenceId undefined or empty: '+ result.creditorReferenceId + "or outcome != OK: "+ outcome);
+	}
    
      return result;
 }

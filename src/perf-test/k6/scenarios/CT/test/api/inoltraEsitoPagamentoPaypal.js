@@ -1,5 +1,5 @@
 import http from 'k6/http';
-import { check } from 'k6';
+import { check, fail } from 'k6';
 import { Trend } from 'k6/metrics';
 
 
@@ -101,6 +101,9 @@ export function inoltraEsitoPagamentoPaypal(baseUrl,rndAnagPsp,paymentToken,valu
 	tags: { inoltraEsitoPagamentoPaypal: 'http_req_duration', ALL: 'http_req_duration'}
 	}
   );
+  
+  console.debug("inoltraEsitoPagamentoPaypal RES");
+  console.debug(res);
 
 
   inoltraEsitoPagamentoPaypal_Trend.add(res.timings.duration);
@@ -163,14 +166,16 @@ export function inoltraEsitoPagamentoPaypal(baseUrl,rndAnagPsp,paymentToken,valu
     { inoltraEsitoPagamentoPaypal: 'ok_rate', ALL:'ok_rate' }
 	);
  
-  check(
+  if(check(
     res,
     {
      
 	  'inoltraEsitoPagamentoPaypal:ko_rate': (r) => outcome !== valueToAssert,
     },
     { inoltraEsitoPagamentoPaypal: 'ko_rate', ALL:'ko_rate'}
-  );
+  )){
+	fail("outcome != ok: "+outcome);
+	}
   
   return res;
    

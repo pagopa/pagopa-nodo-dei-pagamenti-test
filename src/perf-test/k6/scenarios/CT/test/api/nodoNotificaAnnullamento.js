@@ -1,6 +1,5 @@
 import http from 'k6/http';
-import { check } from 'k6';
-import { parseHTML } from "k6/html";
+import { check, fail } from 'k6';
 import { Trend } from 'k6/metrics';
 
 
@@ -15,7 +14,8 @@ export function nodoNotificaAnnullamento(baseUrl,paymentToken) {
 	tags: { nodoNotificaAnnullamento: 'http_req_duration' , ALL: 'http_req_duration'}
 	}
   );
-  //console.log(res);
+  console.debug("nodoNotificaAnnullamento RES");
+  console.debug(res);
     nodoNotificaAnnullamento_Trend.add(res.timings.duration);
     All_Trend.add(res.timings.duration);
 
@@ -75,14 +75,16 @@ export function nodoNotificaAnnullamento(baseUrl,paymentToken) {
     { nodoNotificaAnnullamento: 'ok_rate', ALL:'ok_rate' }
 	);
 	
-	 check(
+	if(check(
     res,
     {
       //'nodoNotificaAnnullamento:ko_rate': (r) => r.status !== 200,
 	  'nodoNotificaAnnullamento:ko_rate': (r) => outcome !== 'OK',
     },
     { nodoNotificaAnnullamento: 'ko_rate', ALL:'ko_rate' }
-  );
+  )){
+	fail("outcome != ok: "+outcome);
+	}
    
      return res;
 }

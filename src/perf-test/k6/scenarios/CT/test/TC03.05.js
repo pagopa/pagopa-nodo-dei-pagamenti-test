@@ -1,7 +1,6 @@
 //import { htmlReport } from "https://raw.githubusercontent.com/benc-uk/k6-reporter/main/dist/bundle.js";
 import { SharedArray } from 'k6/data';
 import papaparse from 'https://jslib.k6.io/papaparse/5.1.1/index.js';
-import { jUnit, textSummary } from 'https://jslib.k6.io/k6-summary/0.0.1/index.js';
 import { sendPaymentOutput_NN } from './api/sendPaymentOutput_NN.js';
 import { activatePaymentNotice_NN } from './api/activatePaymentNotice_NN.js';
 import { verifyPaymentNotice_NN } from './api/verifyPaymentNotice_NN.js';

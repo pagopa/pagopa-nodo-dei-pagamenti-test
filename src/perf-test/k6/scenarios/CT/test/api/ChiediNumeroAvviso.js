@@ -1,5 +1,5 @@
 import http from 'k6/http';
-import { check } from 'k6';
+import { check, fail } from 'k6';
 import { parseHTML } from "k6/html";
 import { Trend } from 'k6/metrics';
 
@@ -30,12 +30,15 @@ return `
 export function ChiediNumeroAvviso(baseUrl,rndAnagPsp,rndAnagPa) {
  
  const res = http.post(
-    baseUrl+'?soapAction=nodoChiediNumeroAvviso',
+    baseUrl,
     numAvvisoReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.PA),
-    { headers: { 'Content-Type': 'text/xml' } ,
+    { headers: { 'Content-Type': 'text/xml', 'SOAPAction': 'nodoChiediNumeroAvviso' } ,
 	tags: { ChiediNumeroAvviso: 'http_req_duration', ALL: 'http_req_duration'}
 	}
   );
+  
+  console.debug("ChiediNumeroAvviso RES");
+  console.debug(res);
 
   ChiediNumeroAvviso_Trend.add(res.timings.duration);
   All_Trend.add(res.timings.duration);
@@ -96,14 +99,16 @@ export function ChiediNumeroAvviso(baseUrl,rndAnagPsp,rndAnagPa) {
     { ChiediNumeroAvviso: 'ok_rate', ALL:'ok_rate' }
 	);
  
-  check(
+  if(check(
     res,
     {
       //'ChiediNumeroAvviso:ko_rate': (r) => r.status !== 200,
 	  'ChiediNumeroAvviso:ko_rate': (r) => outcome !== 'OK',
     },
     { ChiediNumeroAvviso: 'ko_rate', ALL:'ko_rate' }
-  );
+  )){
+	fail("outcome != ok: "+outcome);
+	}
   
   return res;
    

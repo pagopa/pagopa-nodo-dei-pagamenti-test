@@ -1,5 +1,5 @@
 import http from 'k6/http';
-import { check } from 'k6';
+import { check, fail } from 'k6';
 import { Trend } from 'k6/metrics';
 
 
@@ -119,6 +119,9 @@ export function closePayment(baseUrl,rndAnagPsp,paymentToken, outcome, transacti
 	tags: { closePayment: 'http_req_duration', ALL: 'http_req_duration'}
 	}
   );
+  
+  console.debug("closePayment RES");
+  console.debug(res);
 
 
   closePayment_Trend.add(res.timings.duration);
@@ -175,14 +178,16 @@ export function closePayment(baseUrl,rndAnagPsp,paymentToken, outcome, transacti
     { closePayment: 'ok_rate', ALL: 'ok_rate' }
 	);
  
-  check(
+  if(check(
     res,
     {
      
 	  'closePayment:ko_rate': (r) => esito !== 'OK',
     },
     { closePayment: 'ko_rate', ALL: 'ko_rate'}
-  );
+  )){
+	fail("esito != ok: "+esito);
+	}
   
   return res;
    

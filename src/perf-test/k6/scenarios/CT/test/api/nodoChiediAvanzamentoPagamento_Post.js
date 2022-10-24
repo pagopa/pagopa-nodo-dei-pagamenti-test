@@ -1,5 +1,5 @@
 import http from 'k6/http';
-import { check } from 'k6';
+import { check, fail } from 'k6';
 import { parseHTML } from "k6/html";
 import { Trend } from 'k6/metrics';
 
@@ -15,7 +15,8 @@ export function nodoChiediAvanzamentoPagamento_Post(baseUrl,paymentToken) {
 	tags: { nodoChiediAvanzamentoPagamento_Post: 'http_req_duration' , ALL: 'http_req_duration'}
 	}
   );
-  //console.log(res);
+  console.debug("nodoChiediAvanzamentoPagamento_Post RES");
+  console.debug(res);
   nodoChiediAvanzamentoPagamento_Post_Trend.add(res.timings.duration);
   All_Trend.add(res.timings.duration);
 
@@ -72,13 +73,15 @@ export function nodoChiediAvanzamentoPagamento_Post(baseUrl,paymentToken) {
     { nodoChiediAvanzamentoPagamento_Post: 'ok_rate', ALL: 'ok_rate' }
 	);
 	
-	 check(
+	if(check(
     res,
     {
      'nodoChiediAvanzamentoPagamento_Post:ko_rate': (r) => outcome !== 'OK',
     },
     { nodoChiediAvanzamentoPagamento_Post: 'ko_rate', ALL: 'ko_rate' }
-  );
+  )){
+	fail("outcome != ok: "+outcome);
+	}
    
      return res;
 }

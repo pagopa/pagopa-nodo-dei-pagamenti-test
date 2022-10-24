@@ -1,5 +1,5 @@
 import http from 'k6/http';
-import { check } from 'k6';
+import { check, fail } from 'k6';
 import { parseHTML } from "k6/html";
 import { Trend } from 'k6/metrics';
 
@@ -42,13 +42,16 @@ today = yyyy + '-' + mm + '-' + dd;
 
 export function activatePaymentNotice_NN(baseUrl,rndAnagPsp,rndAnagPa,noticeNmbr,idempotencyKey, paymentNote) {
  
- let res=http.post(baseUrl+'?soapAction=activatePaymentNotice',
+ let res=http.post(baseUrl,
     activateReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , noticeNmbr, idempotencyKey, paymentNote),
-    { headers: { 'Content-Type': 'text/xml' } ,
+    { headers: { 'Content-Type': 'text/xml', 'SOAPAction':'activatePaymentNotice' } ,
 	tags: { activatePaymentNotice_NN: 'http_req_duration' , ALL: 'http_req_duration'}
 	}
   );
-  //console.log(res);
+  
+  console.debug("activatePaymentNotice_NN RES");
+  console.debug(res);
+  
   activatePaymentNotice_NN_Trend.add(res.timings.duration);
   All_Trend.add(res.timings.duration);
 
@@ -101,33 +104,35 @@ export function activatePaymentNotice_NN(baseUrl,rndAnagPsp,rndAnagPa,noticeNmbr
   paymentToken = script.text();
   result.paymentToken=paymentToken;
   }catch(error){}
-  console.log("activatepaymentNotice="+outcome);
+  //console.log("activatepaymentNotice="+outcome);
 
 
 
-
+/*
   if(outcome=='KO'){
   //console.log("activateNN REQuest----------------"+ activateReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , noticeNmbr, idempotencyKey, paymentNote));
   //console.log("activateNN RESPONSE----------------"+res.body);
-  }
+  }*/
   
    check(
     res,
     {
      
-	  'activatePaymentNotice_NN:ok_rate': (r) => outcome == 'OK',
+	  'activatePaymentNotice_NN:ok_rate': (r) => outcome == 'OK' && paymentToken != undefined || paymentToken !== '',
     },
     { activatePaymentNotice_NN: 'ok_rate', ALL: 'ok_rate'  }
 	);
-	
-	 check(
+
+	if(check(
     res,
     {
     
-	  'activatePaymentNotice_NN:ko_rate': (r) => outcome !== 'OK',
+	  'activatePaymentNotice_NN:ko_rate': (r) => paymentToken == undefined || paymentToken === '' || outcome !== 'OK',
     },
     { activatePaymentNotice_NN: 'ko_rate', ALL: 'ko_rate' }
-  );
+  )){
+	fail("unexpected value for paymentToken/outcome. paymentToken  "+ paymentToken+" outcome "+ outcome);
+}
    
      return result;
 }

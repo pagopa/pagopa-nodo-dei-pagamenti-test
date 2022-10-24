@@ -1,5 +1,5 @@
 import http from 'k6/http';
-import { check } from 'k6';
+import { check, fail } from 'k6';
 import { parseHTML } from "k6/html";
 import { Trend } from 'k6/metrics';
 
@@ -74,12 +74,15 @@ export function Attiva(baseUrl,rndAnagPsp,rndAnagPa,iuv, ccp) {
  
   
  const res = http.post(
-    baseUrl+'?soapAction=Attiva',
+    baseUrl,
     AttivaReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , iuv, ccp),
-    { headers: { 'Content-Type': 'text/xml' } ,
+    { headers: { 'Content-Type': 'text/xml', 'SOAPAction': 'Attiva' } ,
 	tags: { Attiva: 'http_req_duration', ALL: 'http_req_duration'}
 	}
   );
+  
+  console.debug("Attiva RES");
+  console.debug(res);
 
   Attiva_Trend.add(res.timings.duration);
   All_Trend.add(res.timings.duration);
@@ -143,14 +146,16 @@ export function Attiva(baseUrl,rndAnagPsp,rndAnagPa,iuv, ccp) {
     { Attiva: 'ok_rate', ALL:'ok_rate' }
 	);
  
-  check(
+  if(check(
     res,
     {
       //'Attiva:ko_rate': (r) => r.status !== 200,
 	  'Attiva:ko_rate': (r) => outcome !== 'OK',
     },
     { Attiva: 'ko_rate', ALL:'ko_rate' }
-  );
+  )){
+	fail("outcome != ok: "+outcome);
+	}
   
   return res;
    

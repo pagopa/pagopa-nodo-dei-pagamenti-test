@@ -1,5 +1,5 @@
 import http from 'k6/http';
-import { check } from 'k6';
+import { check, fail } from 'k6';
 import { parseHTML } from "k6/html";
 import * as rptUtil from '../util/rpt.js';
 import { Trend } from 'k6/metrics';
@@ -62,12 +62,15 @@ export function RPT_Carrello_2(baseUrl,rndAnagPa,iuvs) {
  }
   
  const res = http.post(
-    baseUrl+'?soapAction=nodoInviaCarrelloRPT',
+    baseUrl,
     rptReqBody(rndAnagPa.PA, rndAnagPa.INTPA, rndAnagPa.STAZPA, iuvs, rptEncodeds),
-    { headers: { 'Content-Type': 'text/xml' } ,
+    { headers: { 'Content-Type': 'text/xml', 'SOAPAction': 'nodoInviaCarrelloRPT' } ,
 	tags: { RPT_Carrello_2: 'http_req_duration', ALL: 'http_req_duration'}
 	}
   );
+  
+  console.debug("RPT_Carrello_2 RES");
+  console.debug(res);
 
 
    RPT_Carrello_2_Trend.add(res.timings.duration);
@@ -134,19 +137,21 @@ export function RPT_Carrello_2(baseUrl,rndAnagPa,iuvs) {
     res,
     {
     
-	  'RPT_Carrello_2:ok_rate': (r) => outcome == 'OK',
+	  'RPT_Carrello_2:ok_rate': (r) => outcome == 'OK' && result.paymentToken != undefined && result.paymentToken !== '',
     },
     { RPT_Carrello_2: 'ok_rate' , ALL:'ok_rate' }
 	);
- 
-  check(
+  
+  if(check(
     res,
     {
      
-	  'RPT_Carrello_2:ko_rate': (r) => outcome !== 'OK',
+	  'RPT_Carrello_2:ko_rate': (r) => outcome !== 'OK' || result.paymentToken == undefined || result.paymentToken === '',
     },
     { RPT_Carrello_2: 'ko_rate', ALL:'ko_rate' }
-  );
+  )){
+	fail("result.paymentToken undefined or empty: "+result.paymentToken + " or outcome != ok "+ outcome);
+	}
   
   return result;
    

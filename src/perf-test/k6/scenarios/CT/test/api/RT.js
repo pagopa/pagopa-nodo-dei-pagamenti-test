@@ -1,5 +1,5 @@
 import http from 'k6/http';
-import { check } from 'k6';
+import { check, fail } from 'k6';
 import { parseHTML } from "k6/html";
 import * as rptUtil from '../util/rpt.js';
 import { Trend } from 'k6/metrics';
@@ -40,12 +40,15 @@ export function RT(baseUrl,rndAnagPsp,rndAnagPa,iuv) {
  let rtEncoded = rptUtil.getRtEncoded(rndAnagPa.PA, iuv);
   
  const res = http.post(
-    baseUrl+'?soapAction=nodoInviaRT',
+    baseUrl,
     rtReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP_C, rndAnagPa.PA, iuv, rtEncoded),
-    { headers: { 'Content-Type': 'text/xml' } ,
+    { headers: { 'Content-Type': 'text/xml', 'SOAPAction': 'nodoInviaRT' } ,
 	tags: { RT: 'http_req_duration', ALL: 'http_req_duration'}
 	}
   );
+  
+  console.debug("RT RES");
+  console.debug(res);
 
 
    RT_Trend.add(res.timings.duration);
@@ -106,14 +109,16 @@ export function RT(baseUrl,rndAnagPsp,rndAnagPa,iuv) {
     { RT: 'ok_rate', ALL:'ok_rate' }
 	);
  
-  check(
+  if(check(
     res,
     {
      
 	 'RT:ko_rate': (r) => outcome !== 'OK',
     },
     { RT: 'ko_rate', ALL:'ko_rate' }
-  );
+  )){
+	fail("outcome != ok: "+outcome);
+	}
   
   return res;
    

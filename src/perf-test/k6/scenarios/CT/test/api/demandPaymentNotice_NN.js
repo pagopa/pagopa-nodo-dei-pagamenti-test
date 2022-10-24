@@ -1,5 +1,5 @@
 import http from 'k6/http';
-import { check } from 'k6';
+import { check, fail } from 'k6';
 import { parseHTML } from "k6/html";
 import { Trend } from 'k6/metrics';
 
@@ -36,12 +36,15 @@ export function demandPaymentNotice_NN(baseUrl,rndAnagPsp,rndAnagPa,noticeNmbr,i
  }catch(error){}
  
  const res = http.post(
-    baseUrl+'?soapAction=demandPaymentNotice',
+    baseUrl,
     demandReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, idServizio),
-    { headers: { 'Content-Type': 'text/xml' } ,
+    { headers: { 'Content-Type': 'text/xml', 'SOAPAction': 'demandPaymentNotice' } ,
 	tags: { demandPaymentNotice_NN: 'http_req_duration', ALL: 'http_req_duration'}
 	}
   );
+  
+  console.debug("demandPaymentNotice_NN RES");
+  console.debug(res);
   
    demandPaymentNotice_NN_Trend.add(res.timings.duration);
    All_Trend.add(res.timings.duration);
@@ -100,18 +103,20 @@ export function demandPaymentNotice_NN(baseUrl,rndAnagPsp,rndAnagPa,noticeNmbr,i
     res,
     {
      
-	 'demandPaymentNotice_NN:ok_rate': (r) => outcome == 'OK',
+	 'demandPaymentNotice_NN:ok_rate': (r) => outcome == 'OK' && result.noticeNmbr != undefined && result.noticeNmbr !== '',
     },
     { demandPaymentNotice_NN: 'ok_rate', ALL: 'ok_rate' }
 	);
- 
-  check(
+  
+  if(check(
     res,
     {
-     'demandPaymentNotice_NN:ko_rate': (r) => outcome !== 'OK',
+     'demandPaymentNotice_NN:ko_rate': (r) => result.noticeNmbr == undefined || result.noticeNmbr === '' || outcome !== 'OK',
     },
     { demandPaymentNotice_NN: 'ko_rate', ALL: 'ko_rate' }
-  );
+  )){
+	fail("result.noticeNmbr undefined or empty: "+result.noticeNmbr + " or outcome  != ok "+  outcome);
+	}
   
   return result;
    

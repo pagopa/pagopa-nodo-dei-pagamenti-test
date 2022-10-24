@@ -1,5 +1,5 @@
 import http from 'k6/http';
-import { check } from 'k6';
+import { check, fail } from 'k6';
 import { parseHTML } from "k6/html";
 import { Trend } from 'k6/metrics';
 
@@ -33,12 +33,15 @@ export function verifyPaymentNotice_NN(baseUrl,rndAnagPsp,rndAnagPa,noticeNmbr,i
  //console.log("VERIFY="+noticeNmbr);
  
  const res = http.post(
-    baseUrl+'?soapAction=verifyPaymentNotice',
+    baseUrl,
     verifyReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , noticeNmbr),
-    { headers: { 'Content-Type': 'text/xml' } ,
+    { headers: { 'Content-Type': 'text/xml', 'SOAPAction':'verifyPaymentNotice' } ,
 	tags: { verifyPaymentNotice_NN: 'http_req_duration', ALL: 'http_req_duration'}
 	}
   );
+  
+  console.debug("verifyPaymentNotice_NN RES");
+  console.debug(res);
 
 
   verifyPaymentNotice_NN_Trend.add(res.timings.duration);
@@ -104,13 +107,15 @@ export function verifyPaymentNotice_NN(baseUrl,rndAnagPsp,rndAnagPa,noticeNmbr,i
     { verifyPaymentNotice_NN: 'ok_rate' , ALL:'ok_rate'}
 	);
  
-  check(
+  if(check(
     res,
     {
       'verifyPaymentNotice_NN:ko_rate': (r) => outcome !== 'OK',
     },
     { verifyPaymentNotice_NN: 'ko_rate' , ALL:'ko_rate'}
-  );
+  )){
+	fail("outcome != ok: "+outcome);
+	}
   
   return res;
    

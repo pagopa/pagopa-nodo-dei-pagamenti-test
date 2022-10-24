@@ -1,5 +1,5 @@
 import http from 'k6/http';
-import { check } from 'k6';
+import { check, fail } from 'k6';
 import { parseHTML } from "k6/html";
 import { Trend } from 'k6/metrics';
 
@@ -53,12 +53,15 @@ export function sendPaymentOutput(baseUrl,rndAnagPsp,paymentToken) {
  //console.log("VERIFY="+noticeNmbr);
  
  const res = http.post(
-    baseUrl+'?soapAction=sendPaymentOutcome',
+    baseUrl,
     sendPaymentOutputReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, paymentToken),
-    { headers: { 'Content-Type': 'text/xml' } ,
+    { headers: { 'Content-Type': 'text/xml', 'SOAPAction': 'sendPaymentOutcome' } ,
 	tags: { sendPaymentOutcome: 'http_req_duration', ALL: 'http_req_duration'}
 	}
   );
+  
+  console.debug("sendPaymentOutput RES");
+  console.debug(res);
 
   sendPaymentOutput_Trend.add(res.timings.duration);
   All_Trend.add(res.timings.duration);
@@ -106,10 +109,10 @@ export function sendPaymentOutput(baseUrl,rndAnagPsp,paymentToken) {
   let script = doc.find('outcome');
   outcome = script.text();
   }catch(error){}
-  if(outcome=='KO'){
+  /*if(outcome=='KO'){
   console.log("SendPaymentOutput REq----------------"+sendPaymentOutputReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, paymentToken));
   console.log("SendPaymentOutput RESPONSE----------------"+res.body);
-  }
+  }*/
 
 
 
@@ -122,14 +125,16 @@ export function sendPaymentOutput(baseUrl,rndAnagPsp,paymentToken) {
     { sendPaymentOutcome: 'ok_rate', ALL:'ok_rate' }
 	);
  
-  check(
+  if(check(
     res,
     {
       //'sendPaymentOutput:ko_rate': (r) => r.status !== 200,
 	  'sendPaymentOutcome:ko_rate': (r) => outcome !== 'OK',
     },
     { sendPaymentOutcome: 'ko_rate' , ALL:'ko_rate'}
-  );
+  )){
+	fail("outcome != ok: "+outcome);
+	}
   
   return res;
    

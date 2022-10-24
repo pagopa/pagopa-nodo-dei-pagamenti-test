@@ -1,5 +1,5 @@
 import http from 'k6/http';
-import { check } from 'k6';
+import { check, fail } from 'k6';
 import { parseHTML } from "k6/html";
 import { Trend } from 'k6/metrics';
 
@@ -34,14 +34,17 @@ return `
 };
 
 export function Verifica(baseUrl,rndAnagPsp,rndAnagPa,iuv, auxDigit, valueToAssert) {
- 
+
  const res = http.post(
-    baseUrl+'?soapAction=nodoVerificaRPT',
+    baseUrl,
     verificaReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , iuv, auxDigit),
-    { headers: { 'Content-Type': 'text/xml' } ,
+    { headers: { 'Content-Type': 'text/xml', 'SOAPAction':'nodoVerificaRPT'} ,
 	tags: { Verifica: 'http_req_duration', ALL: 'http_req_duration'}
 	}
   );
+  
+  console.debug("Verifica RES");
+  console.debug(res);
   
 
    Verifica_Trend.add(res.timings.duration);
@@ -104,14 +107,16 @@ export function Verifica(baseUrl,rndAnagPsp,rndAnagPa,iuv, auxDigit, valueToAsse
     { Verifica: 'ok_rate', ALL:'ok_rate' }
 	);
  
-  check(
+  if(check(
     res,
     {
       //'Verifica:ko_rate': (r) => r.status !== 200,
 	  'Verifica:ko_rate': (r) => outcome !== valueToAssert,
     },
     { Verifica: 'ko_rate', ALL:'ko_rate' }
-  );
+  )){
+	fail("outcome != "+valueToAssert + " : "+outcome);
+}
   
   return res;
    

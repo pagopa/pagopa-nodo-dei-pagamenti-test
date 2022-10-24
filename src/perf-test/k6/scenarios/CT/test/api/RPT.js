@@ -1,5 +1,5 @@
 import http from 'k6/http';
-import { check } from 'k6';
+import { check, fail } from 'k6';
 import { parseHTML } from "k6/html";
 import * as rptUtil from '../util/rpt.js';
 import { Trend } from 'k6/metrics';
@@ -42,12 +42,15 @@ export function RPT(baseUrl,rndAnagPa,iuv,ccp) {
  let rptEncoded = rptUtil.getRptEncoded(rndAnagPa.PA, rndAnagPa.STAZPA, iuv, ccp);
  
  const res = http.post(
-    baseUrl+'?soapAction=nodoInviaRPT',
+    baseUrl,
     rptReqBody(rndAnagPa.PA, rndAnagPa.INTPA, rndAnagPa.STAZPA, iuv, rptEncoded, ccp),
-    { headers: { 'Content-Type': 'text/xml' } ,
+    { headers: { 'Content-Type': 'text/xml', 'SOAPAction': 'nodoInviaRPT' } ,
 	tags: { RPT: 'http_req_duration', ALL: 'http_req_duration'}
 	}
   );
+  
+  console.debug("RPT RES");
+  console.debug(res);
 
    RPT_Trend.add(res.timings.duration);
    All_Trend.add(res.timings.duration);
@@ -111,19 +114,21 @@ export function RPT(baseUrl,rndAnagPa,iuv,ccp) {
     res,
     {
      
-	 'RPT:ok_rate': (r) => outcome == 'OK',
+	 'RPT:ok_rate': (r) => outcome == 'OK' && result.paymentToken != undefined && result.paymentToken !== '',
     },
     { RPT: 'ok_rate' , ALL:'ok_rate'}
 	);
- 
-  check(
+  
+  if(check(
     res,
     {
       
-	 'RPT:ko_rate': (r) => outcome !== 'OK',
+	 'RPT:ko_rate': (r) => outcome != 'OK' || result.paymentToken == undefined || result.paymentToken === '',
     },
     { RPT: 'ko_rate', ALL:'ko_rate' }
-  );
+  )){
+	fail("result.paymentToken undefined or empty: "+result.paymentToken + " or outcome != ok");
+	}
   
   return result;
    

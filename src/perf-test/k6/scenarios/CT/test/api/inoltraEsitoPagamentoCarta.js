@@ -1,5 +1,5 @@
 import http from 'k6/http';
-import { check } from 'k6';
+import { check, fail } from 'k6';
 import { Trend } from 'k6/metrics';
 
 
@@ -45,6 +45,9 @@ export function inoltraEsitoPagamentoCarta(baseUrl,rndAnagPsp,paymentToken, fiel
 	tags: { inoltraEsitoPagamentoCarta: 'http_req_duration', ALL: 'http_req_duration'}
 	}
   );
+  
+  console.debug("inoltraEsitoPagamentoCarta RES");
+  console.debug(res);
 
   inoltraEsitoPagamentoCarta_Trend.add(res.timings.duration);
   All_Trend.add(res.timings.duration);
@@ -86,7 +89,6 @@ export function inoltraEsitoPagamentoCarta(baseUrl,rndAnagPsp,paymentToken, fiel
    );
 
 
-   console.log(res);
    let outcome='';
    try{
    outcome= res[fieldToAssert];
@@ -107,14 +109,16 @@ export function inoltraEsitoPagamentoCarta(baseUrl,rndAnagPsp,paymentToken, fiel
     { inoltraEsitoPagamentoCarta: 'ok_rate' , ALL: 'ok_rate'}
 	);
  
-  check(
+  if(check(
     res,
     {
      
 	  'inoltraEsitoPagamentoCarta:ko_rate': (r) => outcome !== valueToAssert,
     },
     { inoltraEsitoPagamentoCarta: 'ko_rate', ALL: 'ko_rate' }
-  );
+  )){
+	fail("outcome != ok: "+outcome);
+	}
   
   return res;
    

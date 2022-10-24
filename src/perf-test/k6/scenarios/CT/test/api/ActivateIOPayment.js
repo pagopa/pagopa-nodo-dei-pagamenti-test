@@ -1,5 +1,5 @@
 import http from 'k6/http';
-import { check } from 'k6';
+import { check, fail } from 'k6';
 import { parseHTML } from "k6/html";
 import { Trend } from 'k6/metrics';
 
@@ -43,13 +43,15 @@ export function activateIOPaymentReqBody (psp, pspint, chpsp, cf, noticeNumber, 
 
 export function ActivateIOPayment(baseUrl,rndAnagPsp,rndAnagPaNew,noticeNmbr,idempotencyKey) {
  
- let res=http.post(baseUrl+'?soapAction=ActivateIOPayment',
+ let res=http.post(baseUrl,
     activateIOPaymentReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPaNew.CF , noticeNmbr, idempotencyKey),
-    { headers: { 'Content-Type': 'text/xml' } ,
+    { headers: { 'Content-Type': 'text/xml', 'SOAPAction': 'ActivateIOPayment'} ,
 	tags: { ActivateIOPayment: 'http_req_duration' , ALL: 'http_req_duration'}
 	}
   );
-  //console.log(res);
+  
+  console.debug("ActivateIOPayment RES");
+  console.debug(res);
 
   ActivateIOPayment_Trend.add(res.timings.duration);
   All_Trend.add(res.timings.duration);
@@ -106,29 +108,32 @@ export function ActivateIOPayment(baseUrl,rndAnagPsp,rndAnagPaNew,noticeNmbr,ide
     result.paymentToken=paymentToken;
     }catch(error){}
 
-  
+  /*
   if(outcome=='KO'){
   console.log("ActivateIOPayment REQuest----------------"+activateIOPaymentReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPaNew.CF , noticeNmbr, idempotencyKey)); 
   console.log("ActivateIOPayment RESPONSE----------------"+res.body);
-  }
+  }*/
   
    check(
     res,
     {
       //'ActivateIOPayment:ok_rate': (r) => r.status == 200,
-	  'ActivateIOPayment:ok_rate': (r) => outcome == 'OK',
+	  'ActivateIOPayment:ok_rate': (r) => outcome == 'OK' && paymentToken != undefined && paymentToken != '',
     },
     { ActivateIOPayment: 'ok_rate', ALL: 'ok_rate' }
 	);
 	
-	 check(
+	if(check(
     res,
     {
       //'ActivateIOPayment:ko_rate': (r) => r.status !== 200,
-	  'ActivateIOPayment:ko_rate': (r) => outcome !== 'OK',
+	  'ActivateIOPayment:ko_rate': (r) => paymentToken == undefined || paymentToken === '' || outcome != 'OK',
+	  
     },
     { ActivateIOPayment: 'ko_rate', ALL: 'ko_rate' }
-  );
+  )){
+	fail("unexpected value for paymentToken/outcome. paymentToken  "+ paymentToken+" outcome "+ outcome);
+	}
    
      return result;
 }

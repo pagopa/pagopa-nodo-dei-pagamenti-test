@@ -1,5 +1,5 @@
 import http from 'k6/http';
-import { check } from 'k6';
+import { check, fail } from 'k6';
 import { parseHTML } from "k6/html";
 import { Trend } from 'k6/metrics';
 
@@ -33,13 +33,14 @@ export function activateReqBody (psp, pspint, chpsp, cfpa, noticeNmbr, idempoten
 
 export function activatePaymentNotice_IDMP(baseUrl,rndAnagPsp,rndAnagPa,noticeNmbr,idempotencyKey) {
  
- let res=http.post(baseUrl+'?soapAction=activatePaymentNotice',
+ let res=http.post(baseUrl,
     activateReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , noticeNmbr, idempotencyKey),
-    { headers: { 'Content-Type': 'text/xml' } ,
+    { headers: { 'Content-Type': 'text/xml', 'SOAPAction':'activatePaymentNotice' } ,
 	tags: { activatePaymentNotice_IDMP: 'http_req_duration' , ALL: 'http_req_duration'}
 	}
   );
-  //console.log(res);
+  console.debug("activatePaymentNotice_IDMP RES");
+  console.debug(res);
 
   activatePaymentNotice_IDMP_Trend.add(res.timings.duration);
   All_Trend.add(res.timings.duration);
@@ -86,11 +87,11 @@ export function activatePaymentNotice_IDMP(baseUrl,rndAnagPsp,rndAnagPa,noticeNm
   let script = doc.find('outcome');
   outcome = script.text();
   }catch(error){}
-  
+  /*
   if(outcome=='KO'){
   console.log("activateIDP REQuest----------------"+ activateReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , noticeNmbr, idempotencyKey)); 
   console.log("activateIDP RESPONSE----------------"+res.body);
-  } 
+  }*/ 
   
    check(
     res,
@@ -100,13 +101,15 @@ export function activatePaymentNotice_IDMP(baseUrl,rndAnagPsp,rndAnagPa,noticeNm
     { activatePaymentNotice_IDMP: 'ok_rate', ALL:'ok_rate' }
 	);
 	
-	 check(
+	if(check(
     res,
     {
       'activatePaymentNotice_IDMP:ko_rate': (r) => outcome !== 'OK',
     },
     { activatePaymentNotice_IDMP: 'ko_rate', ALL:'ko_rate' }
-  );
+  )){
+	fail('outcome != ok '+ outcome);
+	}
    
      return res;
 }

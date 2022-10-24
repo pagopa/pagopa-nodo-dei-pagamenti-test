@@ -3,50 +3,35 @@ import { SharedArray } from 'k6/data';
 
 const csvAnagPsp = new SharedArray('PSP_data', function () {
     
-  return papaparse.parse(open('../../../../data/anagraficaPSP_ALL_SIT.csv'), { header: true }).data;
+  return papaparse.parse(open('../../../../data/anagraficaPSP_ALL.csv'), { header: true }).data;
 });
 
 const csvAnagPa = new SharedArray('PA_data', function () {
 	  
-  return papaparse.parse(open('../../../../data/anagraficaPA_SIT.csv'), { header: true }).data;
+  return papaparse.parse(open('../../../../data/anagraficaPA.csv'), { header: true }).data;
 });
 
 const csvAnagPaNew = new SharedArray('PA_data_new', function () {
 	  
-  return papaparse.parse(open('../../../../data/anagraficaPA_NEW_SIT.csv'), { header: true }).data;
+  return papaparse.parse(open('../../../../data/anagraficaPANew.csv'), { header: true }).data;
 });
-
-const csvAnagPaSit = new SharedArray('PA_data_sit', function () {
-	  
-  return papaparse.parse(open('../../../../data/anagraficaPA_SIT.csv'), { header: true }).data;
-});
-
-const csvAnagPaPerf = new SharedArray('PA_data_perf', function () {
-	  
-  return papaparse.parse(open('../../../../data/anagraficaPA_PERF.csv'), { header: true }).data;
-});
-
-
 
 export function getAnagPsp(){
-	return csvAnagPsp[Math.floor(Math.random() * csvAnagPsp.length)];
+	let psp = csvAnagPsp[Math.floor(Math.random() * csvAnagPsp.length)];
+	console.debug("PSP "+ JSON.stringify(psp));
+	return psp;
 }
 
 export function getAnagPa(){
-	return csvAnagPa[Math.floor(Math.random() * csvAnagPa.length)];
+	let pa = csvAnagPa[Math.floor(Math.random() * csvAnagPa.length)];
+	console.debug("PA "+ JSON.stringify(pa));
+	return pa;
 }
-
-/*export function getAnagPaNew(){
-	return csvAnagPaNew[Math.floor(Math.random() * csvAnagPaNew.length)];
-*/	
-
-/*export function getAnagPaNew(){
-	return csvAnagPaSit[Math.floor(Math.random() * csvAnagPaPerf.length)];
-}
-} */
 
 export function getAnagPaNew(){
-	return csvAnagPaNew[Math.floor(Math.random() * csvAnagPaNew.length)];
+	let paNew = csvAnagPaNew[Math.floor(Math.random() * csvAnagPaNew.length)];
+	console.debug("PA NEW "+ JSON.stringify(paNew));
+	return paNew;
 }
 
 

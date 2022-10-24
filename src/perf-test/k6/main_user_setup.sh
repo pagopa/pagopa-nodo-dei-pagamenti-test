@@ -3,7 +3,7 @@ active_scenario=PMCS_CT
 active_test=user_setup
 #active_test=TC01.01
 test_step=rampa_1_1_10
-env="pagoPA_DEV_apim"
+env="pagoPA_PERF_apim"
 echo -----------------------------------------
 echo *** Main K6 Perf Test Script ***
 echo -----------------------------------------

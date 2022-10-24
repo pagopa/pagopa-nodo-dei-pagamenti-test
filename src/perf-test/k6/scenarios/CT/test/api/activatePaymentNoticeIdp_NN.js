@@ -1,5 +1,5 @@
 import http from 'k6/http';
-import { check } from 'k6';
+import { check, fail } from 'k6';
 import { parseHTML } from "k6/html";
 import { Trend } from 'k6/metrics';
 
@@ -41,13 +41,16 @@ today = yyyy + '-' + mm + '-' + dd;
 
 export function activatePaymentNoticeIdp_NN(baseUrl,rndAnagPsp,rndAnagPa,noticeNmbr,idempotencyKey, paymentNote) {
  
- let res=http.post(baseUrl+'?soapAction=activatePaymentNotice',
+ let res=http.post(baseUrl,
     activateReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , noticeNmbr, idempotencyKey, paymentNote),
-    { headers: { 'Content-Type': 'text/xml' } ,
+    { headers: { 'Content-Type': 'text/xml', 'SOAPAction':'activatePaymentNotice' } ,
 	tags: { activatePaymentNoticeIdp_NN: 'http_req_duration' , ALL: 'http_req_duration'}
 	}
   );
-  //console.log(res);
+  
+  console.debug("activatePaymentNoticeIdp_NN RES");
+  console.debug(res);
+
   activatePaymentNoticeIdp_NN_Trend.add(res.timings.duration);
   All_Trend.add(res.timings.duration);
 
@@ -108,19 +111,21 @@ export function activatePaymentNoticeIdp_NN(baseUrl,rndAnagPsp,rndAnagPa,noticeN
     res,
     {
      
-	  'activatePaymentNoticeIdp_NN:ok_rate': (r) => outcome == 'OK',
+	  'activatePaymentNoticeIdp_NN:ok_rate': (r) => outcome == 'OK' && result.paymentToken != undefined && result.paymentToken !=='',
     },
     { activatePaymentNoticeIdp_NN: 'ok_rate', ALL:'ok_rate' }
 	);
-	
-	 check(
+		
+	if(check(
     res,
     {
     
-	  'activatePaymentNoticeIdp_NN:ko_rate': (r) => outcome !== 'OK',
+	  'activatePaymentNoticeIdp_NN:ko_rate': (r) => outcome != 'OK' || result.paymentToken == undefined || result.paymentToken ==='',
     },
     { activatePaymentNoticeIdp_NN: 'ko_rate', ALL:'ko_rate'}
-  );
+  )){
+	fail('result.paymentToken undefined or empty: '+ result.paymentToken + "or outcome != ok "+ outcome);
+	}
    
      return result;
 }

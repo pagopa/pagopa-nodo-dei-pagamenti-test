@@ -1,8 +1,7 @@
-import { check } from 'k6';
+import { check, fail } from 'k6';
 //import { htmlReport } from "https://raw.githubusercontent.com/benc-uk/k6-reporter/main/dist/bundle.js";
 import { SharedArray } from 'k6/data';
 import papaparse from 'https://jslib.k6.io/papaparse/5.1.1/index.js';
-import { jUnit, textSummary } from 'https://jslib.k6.io/k6-summary/0.0.1/index.js';
 import { Verifica } from './api/Verifica.js';
 import { Attiva } from './api/Attiva.js';
 import { ChiediNumeroAvviso } from './api/ChiediNumeroAvviso.js';
@@ -171,7 +170,7 @@ export const options = {
 	'checks{ChiediNumeroAvviso:over_sla800}': [],
 	'checks{ChiediNumeroAvviso:over_sla1000}': [],
 	'checks{ChiediNumeroAvviso:ok_rate}': [],
-	'checks{ChiediNumeroAvviso:ko_rate}': [],
+	'checks{ChiediNumeroAvviso:ko_rate}': ['rate<0.01'],
 	'checks{Attiva:over_sla300}': [],
 	'checks{Attiva:over_sla400}': [],
 	'checks{Attiva:over_sla500}': [],
@@ -179,7 +178,7 @@ export const options = {
 	'checks{Attiva:over_sla800}': [],
 	'checks{Attiva:over_sla1000}': [],
 	'checks{Attiva:ok_rate}': [],
-	'checks{Attiva:ko_rate}': [],
+	'checks{Attiva:ko_rate}': ['rate<0.01'],
 	'checks{Verifica:over_sla300}': [],
 	'checks{Verifica:over_sla400}': [],
 	'checks{Verifica:over_sla500}': [],
@@ -187,7 +186,7 @@ export const options = {
 	'checks{Verifica:over_sla800}': [],
 	'checks{Verifica:over_sla1000}': [],
 	'checks{Verifica:ok_rate}': [],
-	'checks{Verifica:ko_rate}': [],
+	'checks{Verifica:ko_rate}': ['rate<0.01'],
 	'checks{RPT_Semplice:over_sla300}': [],
 	'checks{RPT_Semplice:over_sla400}': [],
 	'checks{RPT_Semplice:over_sla500}': [],
@@ -195,7 +194,7 @@ export const options = {
 	'checks{RPT_Semplice:over_sla800}': [],
 	'checks{RPT_Semplice:over_sla1000}': [],
 	'checks{RPT_Semplice:ok_rate}': [],
-	'checks{RPT_Semplice:ko_rate}': [],
+	'checks{RPT_Semplice:ko_rate}': ['rate<0.01'],
 	'checks{RT:over_sla300}': [],
     'checks{RT:over_sla400}': [],
     'checks{RT:over_sla500}': [],
@@ -203,7 +202,7 @@ export const options = {
     'checks{RT:over_sla800}': [],
     'checks{RT:over_sla1000}': [],
     'checks{RT:ok_rate}': [],
-    'checks{RT:ko_rate}': [],
+    'checks{RT:ko_rate}': ['rate<0.01'],
 	'checks{RPT_Carrello_5:over_sla300}': [],
 	'checks{RPT_Carrello_5:over_sla400}': [],
 	'checks{RPT_Carrello_5:over_sla500}': [],
@@ -211,7 +210,7 @@ export const options = {
 	'checks{RPT_Carrello_5:over_sla800}': [],
 	'checks{RPT_Carrello_5:over_sla1000}': [],
 	'checks{RPT_Carrello_5:ok_rate}': [],
-	'checks{RPT_Carrello_5:ko_rate}': [],
+	'checks{RPT_Carrello_5:ko_rate}': ['rate<0.01'],
 	'checks{RPT_Carrello_1:over_sla300}': [],
 	'checks{RPT_Carrello_1:over_sla400}': [],
 	'checks{RPT_Carrello_1:over_sla500}': [],
@@ -219,7 +218,7 @@ export const options = {
 	'checks{RPT_Carrello_1:over_sla800}': [],
 	'checks{RPT_Carrello_1:over_sla1000}': [],
 	'checks{RPT_Carrello_1:ok_rate}': [],
-	'checks{RPT_Carrello_1:ko_rate}': [],
+	'checks{RPT_Carrello_1:ko_rate}': ['rate<0.01'],
 	'checks{ALL:over_sla300}': [],
 	'checks{ALL:over_sla400}': [],
 	'checks{ALL:over_sla500}': [],
@@ -264,15 +263,19 @@ function executeRpts(){
 var baseUrl = "";
 
 export function total() {
-
   let urls = csvBaseUrl;
+
   for (var key in urls){
+	
 	   if (urls[key].ENV == `${__ENV.env}`){
-     
+     	
 		baseUrl = urls[key].SOAP_BASEURL;
+		break;
       }
   }
-
+  console.debug('BASE URL: ');
+  console.debug(baseUrl);
+	
     execute();
 	
 	executeRpts();

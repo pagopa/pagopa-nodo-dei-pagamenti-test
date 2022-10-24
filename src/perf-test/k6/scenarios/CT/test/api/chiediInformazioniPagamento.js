@@ -1,5 +1,5 @@
 import http from 'k6/http';
-import { check } from 'k6';
+import { check, fail } from 'k6';
 import { parseHTML } from "k6/html";
 import { Trend } from 'k6/metrics';
 
@@ -15,6 +15,10 @@ export function chiediInformazioniPagamento(baseUrl,paymentToken, rndAnagPa) {
 	tags: { chiediInformazioniPagamento: 'http_req_duration' , ALL: 'http_req_duration'}
 	}
   );
+  
+  console.debug("chiediInformazioniPagamento RES");
+  console.debug(res);
+  
   //console.log(res);
     chiediInformazioniPagamento_Trend.add(res.timings.duration);
     All_Trend.add(res.timings.duration);
@@ -83,11 +87,11 @@ export function chiediInformazioniPagamento(baseUrl,paymentToken, rndAnagPa) {
    result.ragioneSocialeExtr=ragioneSocialeExtr;
    }catch(error){}
 
-     console.log(ragioneSocialeExtr+"---"+ rndAnagPa.PA);
+     console.debug(ragioneSocialeExtr+"---"+ rndAnagPa.PA);
    // console.log("ragioneSocialeExtr="+ragioneSocialeExtr);
   // console.log(res.body);
   if(ragioneSocialeExtr!==pa){
-   console.log("chiediInfoPagamento RESPONSE----------------"+res.body+"---"+rndAnagPa.PA);
+   console.debug("chiediInfoPagamento RESPONSE----------------"+res.body+"---"+rndAnagPa.PA);
   }
 
    
@@ -100,14 +104,16 @@ export function chiediInformazioniPagamento(baseUrl,paymentToken, rndAnagPa) {
     { chiediInformazioniPagamento: 'ok_rate', ALL:'ok_rate' }
 	);
 	
-	 check(
+	if(check(
     res,
     {
        //'chiediInformazioniPagamento:ko_rate': (r) => outcome !== 'OK',
 	   'chiediInformazioniPagamento:ko_rate': (r) => ragioneSocialeExtr !== pa,
     },
     { chiediInformazioniPagamento: 'ko_rate', ALL:'ko_rate' }
-  );
+  )){
+	fail("ragioneSocialeExtr != pa: "+ragioneSocialeExtr);
+}
    
      return result;
 }

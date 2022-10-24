@@ -1,5 +1,5 @@
 import http from 'k6/http';
-import { check } from 'k6';
+import { check, fail } from 'k6';
 import { parseHTML } from "k6/html";
 import * as rptUtil from '../util/rpt.js';
 import { Trend } from 'k6/metrics';
@@ -48,12 +48,15 @@ export function RPT_Semplice_N3(baseUrl,rndAnagPaNew,paymentToken, creditorRefer
   let rptEncoded = rptUtil.getRptEncoded(rndAnagPaNew.PA, rndAnagPaNew.STAZPA, creditorReferenceId, paymentToken);
   
  const res = http.post(
-    baseUrl+'?soapAction=nodoInviaRPT',
+    baseUrl,
     rptSempliceN3ReqBody(rndAnagPaNew.PA, rndAnagPaNew.INTPA, rndAnagPaNew.STAZPA,paymentToken, creditorReferenceId, rptEncoded),
-    { headers: { 'Content-Type': 'text/xml' } ,
+    { headers: { 'Content-Type': 'text/xml', 'SOAPAction': 'nodoInviaRPT' } ,
 	tags: { RPT_Semplice_N3: 'http_req_duration', ALL: 'http_req_duration'}
 	}
   );
+  
+  console.debug("RPT_Semplice_N3 RES");
+  console.debug(res);
   
    RPT_Semplice_N3_Trend.add(res.timings.duration);
    All_Trend.add(res.timings.duration);
@@ -103,11 +106,11 @@ export function RPT_Semplice_N3(baseUrl,rndAnagPaNew,paymentToken, creditorRefer
   outcome = script.text();
   }catch(error){}
 
-
+/*
   if(outcome=='KO'){
  // console.log("RPTSempliceN3 REQuest----------------"+ rptSempliceN3ReqBody(rndAnagPaNew.PA, rndAnagPaNew.INTPA, rndAnagPaNew.STAZPA,paymentToken, creditorReferenceId, rptEncoded));
  // console.log("RPTSempliceN3 RESPONSE----------------"+res.body);
-  }
+  }*/
    
    check(
     res,
@@ -118,14 +121,16 @@ export function RPT_Semplice_N3(baseUrl,rndAnagPaNew,paymentToken, creditorRefer
     { RPT_Semplice_N3: 'ok_rate', ALL:'ok_rate' }
 	);
  
-  check(
+  if(check(
     res,
     {
      
 	  'RPT_Semplice_N3:ko_rate': (r) => outcome !== 'OK',
     },
     { RPT_Semplice_N3: 'ko_rate', ALL:'ko_rate' }
-  );
+  )){
+	fail("outcome != ok: "+outcome);
+	}
   
   return res;
    

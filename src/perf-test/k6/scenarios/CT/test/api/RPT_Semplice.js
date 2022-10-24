@@ -1,5 +1,5 @@
 import http from 'k6/http';
-import { check } from 'k6';
+import { check, fail } from 'k6';
 import { parseHTML } from "k6/html";
 import * as rptUtil from '../util/rpt.js';
 import { Trend } from 'k6/metrics';
@@ -42,12 +42,15 @@ export function RPT(baseUrl,rndAnagPsp,rndAnagPa,iuv) {
  let rptEncoded = rptUtil.getRptEncoded(rndAnagPa.PA, rndAnagPa.STAZPA, iuv, "PERFORMANCE");
  
  const res = http.post(
-    baseUrl+'?soapAction=nodoInviaRPT',
+    baseUrl,
     rptReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.PA, rndAnagPa.INTPA, rndAnagPa.STAZPA, iuv, rptEncoded),
-    { headers: { 'Content-Type': 'text/xml' } ,
+    { headers: { 'Content-Type': 'text/xml', 'SOAPAction': 'nodoInviaRPT' } ,
 	tags: { RPT_Semplice: 'http_req_duration', ALL: 'http_req_duration'}
 	}
   );
+  
+  console.debug("RPT (semplice) RES");
+  console.debug(res);
 
    RPT_Semplice_Trend.add(res.timings.duration);
    All_Trend.add(res.timings.duration);
@@ -109,14 +112,16 @@ export function RPT(baseUrl,rndAnagPsp,rndAnagPa,iuv) {
     { RPT_Semplice: 'ok_rate' , ALL:'ok_rate'}
 	);
  
-  check(
+  if(check(
     res,
     {
       
 	  'RPT_Semplice:ko_rate': (r) => outcome !== 'OK',
     },
     { RPT_Semplice: 'ko_rate', ALL:'ko_rate' }
-  );
+  )){
+	fail("outcome != ok: "+outcome);
+	}
   
   return res;
    
