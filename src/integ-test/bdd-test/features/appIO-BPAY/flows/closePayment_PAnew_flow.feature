@@ -325,12 +325,12 @@ Feature: flow checks for closePayment - PA new
       And checks the value $activateIOPayment.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
 
    Scenario: FLUSSO_CP_02 (part 2)
-      Given the FLUSSO_CP_01 (part 1) scenario executed successfully
+      Given the FLUSSO_CP_02 (part 1) scenario executed successfully
       When PM sends REST GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
       Then verify the HTTP status code of informazioniPagamento response is 200
 
    Scenario: FLUSSO_CP_02 (part 3)
-      Given the FLUSSO_CP_01 (part 2) scenario executed successfully
+      Given the FLUSSO_CP_02 (part 2) scenario executed successfully
       And the closePayment scenario executed successfully
       When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
       Then verify the HTTP status code of v1/closepayment response is 200
@@ -338,7 +338,7 @@ Feature: flow checks for closePayment - PA new
       And wait 5 seconds for expiration
 
    Scenario: FLUSSO_CP_02 (part 4)
-      Given the FLUSSO_CP_01 (part 3) scenario executed successfully
+      Given the FLUSSO_CP_02 (part 3) scenario executed successfully
       And the sendPaymentOutcome scenario executed successfully
       And outcome with KO in sendPaymentOutcome
       When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
