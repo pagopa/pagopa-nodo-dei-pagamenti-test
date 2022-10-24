@@ -96,7 +96,7 @@ Feature: process tests for nodoInviaRT[IRPTSEM2]
             </soapenv:Header>
             <soapenv:Body>
                 <ws:nodoInviaRPT>
-                    <password>pwd</password>
+                    <password>pwdpwdpwd</password>
                     <identificativoPSP>40000000001</identificativoPSP>
                     <identificativoIntermediarioPSP>40000000001</identificativoIntermediarioPSP>
                     <identificativoCanale>40000000001_03</identificativoCanale>
