@@ -114,7 +114,7 @@ Feature: process tests for nodoInviaRT[IRPTSEM17]
             <soapenv:Body>
             <ws:pspInviaRPTResponse>
             <pspInviaRPTResponse>
-            <delay>10000</delay>
+            <delay>30000</delay>
             </pspInviaRPTResponse>
             </ws:pspInviaRPTResponse>
             </soapenv:Body>
