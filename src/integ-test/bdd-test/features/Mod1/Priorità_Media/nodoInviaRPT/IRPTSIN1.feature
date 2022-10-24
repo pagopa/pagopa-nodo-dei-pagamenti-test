@@ -108,4 +108,4 @@ Feature: process tests for nodoInviaRT[IRPTSIN1]
             """
             When PSP sends SOAP nodoInviaRPT to nodo-dei-pagamenti
             Then check esito is KO of nodoInviaRPT response
-            And check faultCode is Soap:Version Mismatch of nodoInviaRPT response
+            And check faultCode is soap:Version Mismatch of nodoInviaRPT response
