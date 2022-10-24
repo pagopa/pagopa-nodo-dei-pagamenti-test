@@ -4260,7 +4260,8 @@ Feature: flux tests for closePaymentV2
         And execution query select_activateio to get value on the table POSITION_ACTIVATE, with the columns PAYMENT_TOKEN under macro NewMod1 with db name nodo_online
         And through the query select_activateio retrieve param PAYMENT_TOKEN at position 0 and save it under the key temp_payment_token
         When PM sends REST GET informazioniPagamento?idPagamento=$temp_payment_token to nodo-dei-pagamenti
-        Then verify the HTTP status code of informazioniPagamento response is 200
+        Then verify the HTTP status code of informazioniPagamento response is 404
+        And check error is Il pagamento non esiste of informazioniPagamento response
 
     Scenario: FLUSSO_CP_22 (part 2)
         Given the FLUSSO_CP_22 (part 1) scenario executed successfully
