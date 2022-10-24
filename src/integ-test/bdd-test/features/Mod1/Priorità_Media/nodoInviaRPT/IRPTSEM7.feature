@@ -90,7 +90,7 @@ Feature: process tests for nodoInviaRT[IRPTSEM7]
                 <ppt:intestazionePPT>
                     <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
                     <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
-                    <identificativoDominio>66666666666</identificativoDominio>
+                    <identificativoDominio>44444444445</identificativoDominio>
                     <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
                     <codiceContestoPagamento>CCD01</codiceContestoPagamento>
                 </ppt:intestazionePPT>
