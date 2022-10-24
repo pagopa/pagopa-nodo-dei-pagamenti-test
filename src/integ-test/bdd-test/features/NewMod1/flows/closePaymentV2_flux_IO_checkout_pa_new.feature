@@ -153,6 +153,54 @@ Feature: flux tests for closePaymentV2
         Then check outcome is OK of activateIOPayment response
 
     @skip
+    Scenario: activateIOPayment with paGetPayment KO
+        Given initial XML activateIOPayment
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <nod:activateIOPaymentReq>
+            <idPSP>#psp_AGID#</idPSP>
+            <idBrokerPSP>#broker_AGID#</idBrokerPSP>
+            <idChannel>#canale_AGID#</idChannel>
+            <password>#password#</password>
+            <idempotencyKey>#idempotency_key#</idempotencyKey>
+            <qrCode>
+            <fiscalCode>#creditor_institution_code#</fiscalCode>
+            <noticeNumber>311$iuv</noticeNumber>
+            </qrCode>
+            <expirationTime>60000</expirationTime>
+            <amount>10.00</amount>
+            <paymentNote>responseKO</paymentNote>
+            </nod:activateIOPaymentReq>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And initial XML paGetPayment
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <paf:paGetPaymentRes>
+            <outcome>KO</outcome>
+            <!--Optional:-->
+            <fault>
+            <faultCode>PAA_SEMANTICA</faultCode>
+            <faultString>chiamata rifiutata</faultString>
+            <id>1</id>
+            <!--Optional:-->
+            <description>chiamata rifiutata</description>
+            </fault>
+            </paf:paGetPaymentRes>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And EC replies to nodo-dei-pagamenti with the paGetPayment
+        When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
+        Then check outcome is KO of activateIOPayment response
+        And check faultCode is PPT_ERRORE_EMESSO_DA_PAA
+
+    @skip
     Scenario: closePaymentV2 request
         Given initial json v2/closepayment
             """
@@ -4070,43 +4118,6 @@ Feature: flux tests for closePaymentV2
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     # FLUSSO_CP_21
 
     Scenario: FLUSSO_CP_21 (part 1)
@@ -4128,7 +4139,7 @@ Feature: flux tests for closePaymentV2
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-    @wip
+
     Scenario: FLUSSO_CP_21 (part 3)
         Given the FLUSSO_CP_21 (part 2) scenario executed successfully
         And wait 5 seconds for expiration
@@ -4206,3 +4217,63 @@ Feature: flux tests for closePaymentV2
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    # FLUSSO_CP_22
+
+    Scenario: FLUSSO_CP_22 (part 1)
+        Given current date generation
+        And the verifyPaymentNotice scenario executed successfully
+        And the activateIOPayment with paGetPayment KO scenario executed successfully
+        And execution query select_activateio to get value on the table POSITION_ACTIVATE, with the columns PAYMENT_TOKEN under macro NewMod1 with db name nodo_online
+        And through the query select_activateio retrieve param PAYMENT_TOKEN at position 0 and save it under the key temp_payment_token
+        When PM sends REST GET informazioniPagamento?idPagamento=$temp_payment_token to nodo-dei-pagamenti
+        Then verify the HTTP status code of informazioniPagamento response is 200
+
+    Scenario: FLUSSO_CP_22 (part 2)
+        Given the FLUSSO_CP_22 (part 1) scenario executed successfully
+        And the closePaymentV2 request scenario executed successfully
+        And paymentToken with $temp_payment_token in v2/closepayment
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 404
+        And check outcome is KO of v2/closepayment response
+        And check description is Unknown token
+    @wip
+    Scenario: FLUSSO_CP_22 (part 3)
+        Given the FLUSSO_CP_22 (part 2) scenario executed successfully
+        And the sendPaymentOutcome request scenario executed successfully
+        When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+        Then check outcome is KO of sendPaymentOutcome response
+        And check faultCode is PPT_TOKEN_SCONOSCIUTO of sendPaymentOutcome response
