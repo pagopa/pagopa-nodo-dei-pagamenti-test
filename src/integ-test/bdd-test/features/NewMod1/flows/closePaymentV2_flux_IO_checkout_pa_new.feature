@@ -1746,7 +1746,7 @@ Feature: flux tests for closePaymentV2
         Given the FLUSSO_CP_08 (part 1) scenario executed successfully
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
-    @wip
+    
     Scenario: FLUSSO_CP_08 (part 3)
         Given the FLUSSO_CP_08 (part 2) scenario executed successfully
         And wait 3 seconds for expiration
