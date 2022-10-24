@@ -2092,7 +2092,7 @@ Feature: flux tests for closePaymentV2
         Given the FLUSSO_CP_10 (part 1) scenario executed successfully
         When job mod3CancelV2 triggered after 3 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
-    
+
     Scenario: FLUSSO_CP_10 (part 3)
         Given the FLUSSO_CP_10 (part 2) scenario executed successfully
         And wait 3 seconds for expiration
@@ -2177,55 +2177,6 @@ Feature: flux tests for closePaymentV2
         And checks the value $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query select_activateio on db nodo_online under macro NewMod1
         And checks the value $activateIOPayment.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query select_activateio on db nodo_online under macro NewMod1
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     # FLUSSO_CP_11
 
     Scenario: FLUSSO_CP_11 (part 1)
@@ -2259,7 +2210,7 @@ Feature: flux tests for closePaymentV2
         Then verify the HTTP status code of v2/closepayment response is 422
         And check outcome is KO of v2/closepayment response
         And check description is Outcome already acquired of v2/closepayment response
-    @wip
+
     Scenario: FLUSSO_CP_11 (part 4)
         Given the FLUSSO_CP_11 (part 3) scenario executed successfully
         And wait 5 seconds for expiration
