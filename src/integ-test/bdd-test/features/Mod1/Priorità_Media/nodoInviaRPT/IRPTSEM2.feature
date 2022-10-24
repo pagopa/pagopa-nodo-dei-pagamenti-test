@@ -109,4 +109,4 @@ Feature: process tests for nodoInviaRT[IRPTSEM2]
             """
             When PSP sends SOAP nodoInviaRPT to nodo-dei-pagamenti
             Then check esito is KO of nodoInviaRPT response
-            And check faultCode is PPT_INTERMEDIARIO_PA_SCONOSCIUTO of nodoInviaRPT response
+            And check faultCode is PPT_INTERMEDIARIO_PA_DISABILITATO of nodoInviaRPT response
