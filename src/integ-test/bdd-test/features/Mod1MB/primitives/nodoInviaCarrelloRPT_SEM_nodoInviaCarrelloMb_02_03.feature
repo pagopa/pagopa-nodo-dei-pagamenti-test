@@ -4,7 +4,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
       Given systems up
 
 
-    #[SEM_nodoInviaCarrelloMb_02]
+   #[SEM_nodoInviaCarrelloMb_02]
    Scenario: Define RPT
       Given RPT generation
          """
@@ -83,8 +83,8 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          </pay_i:datiVersamento>
          </pay_i:RPT>
          """
-  
-     Scenario: Define RPT2
+
+   Scenario: Define RPT2
       Given the Define RPT scenario executed successfully
       And RPT2 generation
          """
@@ -164,55 +164,56 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          </pay_i:RPT>
          """
 
-    Scenario: Check PPT_DOMINIO_SCONOSCIUTO error for nodoInviaCarrelloRPT primitive
-        Given the Define RPT2 scenario executed successfully
-        And initial XML nodoInviaCarrelloRPT
+   Scenario: Check PPT_DOMINIO_SCONOSCIUTO error for nodoInviaCarrelloRPT primitive
+      Given the Define RPT2 scenario executed successfully
+      And initial XML nodoInviaCarrelloRPT
 
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header>
-            <ppt:intestazioneCarrelloPPT>
-            <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
-            <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
-            <identificativoCarrello>$idCarrello</identificativoCarrello>
-            </ppt:intestazioneCarrelloPPT>
-            </soapenv:Header>
-            <soapenv:Body>
-            <ws:nodoInviaCarrelloRPT>
-            <password>pwdpwdpwd</password>
-            <identificativoPSP>AGID_01</identificativoPSP>
-            <identificativoIntermediarioPSP>97735020584</identificativoIntermediarioPSP>
-            <identificativoCanale>97735020584_02</identificativoCanale>
-            <listaRPT>
-            <elementoListaRPT>
-            <identificativoDominio>#codicePA#</identificativoDominio>
-            <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>$idCarrello</codiceContestoPagamento>
-            <rpt>$rptAttachment</rpt>
-            </elementoListaRPT>
-            <elementoListaRPT>
-            <identificativoDominio>90000000001</identificativoDominio>
-            <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>$idCarrello</codiceContestoPagamento>
-            <rpt>$rpt2Attachment</rpt>
-            </elementoListaRPT>
-            </listaRPT>
-            <requireLightPayment>01</requireLightPayment>
-            <multiBeneficiario>1</multiBeneficiario>
-            </ws:nodoInviaCarrelloRPT>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
+         """
+         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+         <soapenv:Header>
+         <ppt:intestazioneCarrelloPPT>
+         <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
+         <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
+         <identificativoCarrello>$idCarrello</identificativoCarrello>
+         </ppt:intestazioneCarrelloPPT>
+         </soapenv:Header>
+         <soapenv:Body>
+         <ws:nodoInviaCarrelloRPT>
+         <password>pwdpwdpwd</password>
+         <identificativoPSP>AGID_01</identificativoPSP>
+         <identificativoIntermediarioPSP>97735020584</identificativoIntermediarioPSP>
+         <identificativoCanale>97735020584_02</identificativoCanale>
+         <listaRPT>
+         <elementoListaRPT>
+         <identificativoDominio>#codicePA#</identificativoDominio>
+         <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
+         <codiceContestoPagamento>$idCarrello</codiceContestoPagamento>
+         <rpt>$rptAttachment</rpt>
+         </elementoListaRPT>
+         <elementoListaRPT>
+         <identificativoDominio>90000000001</identificativoDominio>
+         <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
+         <codiceContestoPagamento>$idCarrello</codiceContestoPagamento>
+         <rpt>$rpt2Attachment</rpt>
+         </elementoListaRPT>
+         </listaRPT>
+         <requireLightPayment>01</requireLightPayment>
+         <multiBeneficiario>1</multiBeneficiario>
+         </ws:nodoInviaCarrelloRPT>
+         </soapenv:Body>
+         </soapenv:Envelope>
+         """
 
-        And multiBeneficiario with true in nodoInviaCarrelloRPT
-        When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
-        Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
-        And check faultCode is PPT_DOMINIO_SCONOSCIUTO of nodoInviaCarrelloRPT response
+      And multiBeneficiario with true in nodoInviaCarrelloRPT
+      When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
+      Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
+      And check faultCode is PPT_DOMINIO_SCONOSCIUTO of nodoInviaCarrelloRPT response
 
 
-    # [SEM_nodoInviaCarrelloMb_03]
+   # [SEM_nodoInviaCarrelloMb_03]
    Scenario: Define RPT3
-   Given generate 1 cart with PA #codicePA# and notice number $1noticeNumber
+      Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
+      And generate 1 cart with PA #codicePA# and notice number $1noticeNumber
       Given RPT3 generation
          """
          <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
@@ -370,47 +371,47 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          </pay_i:RPT>
          """
 
-    Scenario: Check PPT_DOMINIO_SCONOSCIUTO error
-        Given the Define RPT4 scenario executed successfully
-        And initial XML nodoInviaCarrelloRPT
+   Scenario: Check PPT_DOMINIO_SCONOSCIUTO error
+      Given the Define RPT4 scenario executed successfully
+      And initial XML nodoInviaCarrelloRPT
 
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header>
-            <ppt:intestazioneCarrelloPPT>
-            <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
-            <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
-            <identificativoCarrello>$1carrello</identificativoCarrello>
-            </ppt:intestazioneCarrelloPPT>
-            </soapenv:Header>
-            <soapenv:Body>
-            <ws:nodoInviaCarrelloRPT>
-            <password>pwdpwdpwd</password>
-            <identificativoPSP>AGID_01</identificativoPSP>
-            <identificativoIntermediarioPSP>97735020584</identificativoIntermediarioPSP>
-            <identificativoCanale>97735020584_02</identificativoCanale>
-            <listaRPT>
-            <elementoListaRPT>
-            <identificativoDominio>#codicePA#</identificativoDominio>
-            <identificativoUnivocoVersamento>$3iuv</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
-            <rpt>$rptAttachment</rpt>
-            </elementoListaRPT>
-            <elementoListaRPT>
-            <identificativoDominio>90000000001</identificativoDominio>
-            <identificativoUnivocoVersamento>$3iuv</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
-            <rpt>$rpt2Attachment</rpt>
-            </elementoListaRPT>
-            </listaRPT>
-            <requireLightPayment>01</requireLightPayment>
-            <multiBeneficiario>1</multiBeneficiario>
-            </ws:nodoInviaCarrelloRPT>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
+         """
+         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+         <soapenv:Header>
+         <ppt:intestazioneCarrelloPPT>
+         <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
+         <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
+         <identificativoCarrello>$1carrello</identificativoCarrello>
+         </ppt:intestazioneCarrelloPPT>
+         </soapenv:Header>
+         <soapenv:Body>
+         <ws:nodoInviaCarrelloRPT>
+         <password>pwdpwdpwd</password>
+         <identificativoPSP>AGID_01</identificativoPSP>
+         <identificativoIntermediarioPSP>97735020584</identificativoIntermediarioPSP>
+         <identificativoCanale>97735020584_02</identificativoCanale>
+         <listaRPT>
+         <elementoListaRPT>
+         <identificativoDominio>#codicePA#</identificativoDominio>
+         <identificativoUnivocoVersamento>$3iuv</identificativoUnivocoVersamento>
+         <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
+         <rpt>$rptAttachment</rpt>
+         </elementoListaRPT>
+         <elementoListaRPT>
+         <identificativoDominio>90000000001</identificativoDominio>
+         <identificativoUnivocoVersamento>$3iuv</identificativoUnivocoVersamento>
+         <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
+         <rpt>$rpt2Attachment</rpt>
+         </elementoListaRPT>
+         </listaRPT>
+         <requireLightPayment>01</requireLightPayment>
+         <multiBeneficiario>1</multiBeneficiario>
+         </ws:nodoInviaCarrelloRPT>
+         </soapenv:Body>
+         </soapenv:Envelope>
+         """
 
-        And multiBeneficiario with true in nodoInviaCarrelloRPT
-        When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
-        Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
-        And check faultCode is PPT_DOMINIO_SCONOSCIUTO of nodoInviaCarrelloRPT response
+      And multiBeneficiario with true in nodoInviaCarrelloRPT
+      When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
+      Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
+      And check faultCode is PPT_DOMINIO_SCONOSCIUTO of nodoInviaCarrelloRPT response
