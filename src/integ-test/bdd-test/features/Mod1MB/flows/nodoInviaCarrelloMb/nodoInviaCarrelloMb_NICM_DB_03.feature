@@ -1,9 +1,9 @@
-Feature: process tests for nodoInviaCarrelloMb
+Feature: NICM_DB_03
 
-    #[NICM_DB_03]
     Background:
         Given systems up
-    Scenario: RPT generation
+
+    Scenario: Execute nodoInviaCarrelloRPT (Phase 1)
         Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
         And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
         And RPT1 generation
@@ -161,22 +161,6 @@ Feature: process tests for nodoInviaCarrelloMb
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-
-    Scenario: Execute nodoInviaCarrelloRPT request
-        Given the RPT generation scenario executed successfully
-        And EC replies to nodo-dei-pagamenti with the paaInviaRT
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <ws:paaInviaRTRisposta>
-            <paaInviaRTRisposta>
-            <esito>OK</esito>
-            </paaInviaRTRisposta>
-            </ws:paaInviaRTRisposta>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
         And initial XML nodoInviaCarrelloRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -190,7 +174,7 @@ Feature: process tests for nodoInviaCarrelloMb
             <soapenv:Body>
             <ws:nodoInviaCarrelloRPT>
             <password>pwdpwdpwd</password>
-            <identificativoPSP>#canale_AGID#</identificativoPSP>
+            <identificativoPSP>#psp_AGID#</identificativoPSP>
             <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
             <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
             <listaRPT>
@@ -215,19 +199,19 @@ Feature: process tests for nodoInviaCarrelloMb
             """
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
-        Then retrieve session token from $nodoInviaCarrelloRPTResponse.url
-
-    Scenario: Generation of two more RPT
-        Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
+        #Then retrieve session token from $nodoInviaCarrelloRPTResponse.url
         And replace pa content with #creditor_institution_code# content
-        And replace iuv content with $1iuv content
         And replace noticeNumber content with $1noticeNumber content
-
         And generic update through the query param_update_generic_where_condition of the table POSITION_STATUS_SNAPSHOT the parameter STATUS = 'INSERTED', with where condition NOTICE_ID = '$noticeNumber' and PA_FISCAL_CODE='$pa' under macro update_query on db nodo_online
         And generic update through the query param_update_generic_where_condition of the table POSITION_PAYMENT_STATUS the parameter STATUS = 'FAILED', with where condition NOTICE_ID = '$noticeNumber' and PA_FISCAL_CODE='$pa' under macro update_query on db nodo_online
         And generic update through the query param_update_generic_where_condition of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS = 'FAILED', with where condition NOTICE_ID = '$noticeNumber' and PA_FISCAL_CODE='$pa' under macro update_query on db nodo_online
         And generic update through the query param_update_generic_where_condition of the table POSITION_STATUS the parameter STATUS = 'INSERTED', with where condition NOTICE_ID = '$noticeNumber' and PA_FISCAL_CODE='$pa' under macro update_query on db nodo_online
-        And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
+        And verify 1 record for the table POSITION_SERVICE retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+
+    Scenario: Execute nodoInviaCarrelloRPT (Phase 2)
+        Given the Execute nodoInviaCarrelloRPT (Phase 1) scenario executed successfully
+        # And generate 2 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
+        And generate 2 cart with PA #creditor_institution_code# and notice number $1noticeNumber
         And RPT3 generation
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
@@ -284,15 +268,15 @@ Feature: process tests for nodoInviaCarrelloMb
             </pay_i:enteBeneficiario>
             <pay_i:datiVersamento>
             <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
-            <pay_i:importoTotaleDaVersare>2.50</pay_i:importoTotaleDaVersare>
+            <pay_i:importoTotaleDaVersare>1.50</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
             <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
-            <pay_i:codiceContestoPagamento>$1carrello</pay_i:codiceContestoPagamento>
+            <pay_i:codiceContestoPagamento>$2carrello</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
             <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
             <pay_i:datiSingoloVersamento>
-            <pay_i:importoSingoloVersamento>2.50</pay_i:importoSingoloVersamento>
+            <pay_i:importoSingoloVersamento>1.50</pay_i:importoSingoloVersamento>
             <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
             <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
             <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
@@ -305,14 +289,13 @@ Feature: process tests for nodoInviaCarrelloMb
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-
         And RPT4 generation
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.1</pay_i:versioneOggetto>
             <pay_i:dominio>
-            <pay_i:identificativoDominio>90000000001</pay_i:identificativoDominio>
-            <pay_i:identificativoStazioneRichiedente>90000000001_01</pay_i:identificativoStazioneRichiedente>
+            <pay_i:identificativoDominio>#creditor_institution_code_secondary#</pay_i:identificativoDominio>
+            <pay_i:identificativoStazioneRichiedente>#id_station_secondary#</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
             <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
@@ -362,15 +345,15 @@ Feature: process tests for nodoInviaCarrelloMb
             </pay_i:enteBeneficiario>
             <pay_i:datiVersamento>
             <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
-            <pay_i:importoTotaleDaVersare>2.50</pay_i:importoTotaleDaVersare>
+            <pay_i:importoTotaleDaVersare>1.50</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
             <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
-            <pay_i:codiceContestoPagamento>$1carrello</pay_i:codiceContestoPagamento>
+            <pay_i:codiceContestoPagamento>$2carrello</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
             <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
             <pay_i:datiSingoloVersamento>
-            <pay_i:importoSingoloVersamento>2.50</pay_i:importoSingoloVersamento>
+            <pay_i:importoSingoloVersamento>1.50</pay_i:importoSingoloVersamento>
             <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
             <pay_i:ibanAccredito>IT45R0760103200000000001016</pay_i:ibanAccredito>
             <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
@@ -383,19 +366,6 @@ Feature: process tests for nodoInviaCarrelloMb
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-        And EC replies to nodo-dei-pagamenti with the paaInviaRT
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <ws:paaInviaRTRisposta>
-            <paaInviaRTRisposta>
-            <esito>OK</esito>
-            </paaInviaRTRisposta>
-            </ws:paaInviaRTRisposta>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
         And initial XML nodoInviaCarrelloRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -403,7 +373,7 @@ Feature: process tests for nodoInviaCarrelloMb
             <ppt:intestazioneCarrelloPPT>
             <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
-            <identificativoCarrello>$1carrello</identificativoCarrello>
+            <identificativoCarrello>$2carrello</identificativoCarrello>
             </ppt:intestazioneCarrelloPPT>
             </soapenv:Header>
             <soapenv:Body>
@@ -411,18 +381,18 @@ Feature: process tests for nodoInviaCarrelloMb
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp_AGID#</identificativoPSP>
             <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canale_AGID#</identificativoCanale>
+            <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
             <listaRPT>
             <elementoListaRPT>
             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
+            <codiceContestoPagamento>$2carrello</codiceContestoPagamento>
             <rpt>$rpt3Attachment</rpt>
             </elementoListaRPT>
             <elementoListaRPT>
             <identificativoDominio>#creditor_institution_code_secondary#</identificativoDominio>
             <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
+            <codiceContestoPagamento>$2carrello</codiceContestoPagamento>
             <rpt>$rpt4Attachment</rpt>
             </elementoListaRPT>
             </listaRPT>
@@ -432,9 +402,10 @@ Feature: process tests for nodoInviaCarrelloMb
             </soapenv:Body>
             </soapenv:Envelope>
             """
+        # And identificativoUnivocoVersamento with $2iuv in nodoInviaCarrelloRPT
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
-        Then retrieve session token from $nodoInviaCarrelloRPTResponse.url
+        And verify 1 record for the table POSITION_SERVICE retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
 
         #DB_CHECKS
         #POSITION_SUBJECT

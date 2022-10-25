@@ -1639,8 +1639,6 @@ def step_impl(context, value, column, query_name, table_name, db_name, name_macr
         print('NotNone')
         assert query_result[0] != None
     else:
-        if 'iuv' in value:
-            value = getattr(context, 'iuv')
         value = utils.replace_global_variables(value, context)
         value = utils.replace_local_variables(value, context)
         value = utils.replace_context_variables(value, context)
