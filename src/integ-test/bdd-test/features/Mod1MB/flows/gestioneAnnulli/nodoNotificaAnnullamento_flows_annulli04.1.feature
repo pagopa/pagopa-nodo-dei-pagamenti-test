@@ -231,7 +231,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_04.1]
       When job annullamentoRptMaiRichiesteDaPm triggered after 10 seconds
       Then verify the HTTP status code of annullamentoRptMaiRichiesteDaPm response is 200
 
-
+      And wait 10 seconds for expiration
       #DB-CHECK-STATI_RPT
       And replace iuv content with $1iuv content
       And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query DB_GEST_ANN_stati_rpt on db nodo_online under macro Mod1Mb
