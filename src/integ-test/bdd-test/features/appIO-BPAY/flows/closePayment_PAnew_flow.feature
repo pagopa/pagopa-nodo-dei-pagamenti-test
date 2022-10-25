@@ -254,6 +254,7 @@ Feature: flow checks for closePayment - PA new
          """
       And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
 
+
    # FLUSSO_CP_01
    Scenario: FLUSSO_CP_01 (part 1)
       Given the verifyPaymentNotice scenario executed successfully
@@ -1561,8 +1562,9 @@ Feature: flow checks for closePayment - PA new
       And check esito is OK of v1/closepayment response
       And wait 5 seconds for expiration
 
-   Scenario: FLUSSO_CP_23 (part 1)
-      Given the activateIOPayment scenario executed successfully
+   Scenario: FLUSSO_CP_23 (part 4)
+      Given the FLUSSO_CP_23 (part 3) scenario executed successfully
+      And the activateIOPayment scenario executed successfully
       And noticeNumber with 311$iuv in activateIOPayment
       And creditorReferenceId with 11$iuv in paGetPayment
       And EC replies to nodo-dei-pagamenti with the paGetPayment
@@ -1574,27 +1576,100 @@ Feature: flow checks for closePayment - PA new
    Scenario: FLUSSO_CP_25 (part 1)
       Given the verifyPaymentNotice scenario executed successfully
       And the activateIOPayment scenario executed successfully
+      And EC replies to nodo-dei-pagamenti with the paGetPayment
+         """
+         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
+         <soapenv:Header/>
+         <soapenv:Body>
+         <paf:paGetPaymentRes>
+         <outcome>KO</outcome>
+         <fault>
+         <faultCode>PAA_SINTASSI_EXTRAXSD</faultCode>
+         <faultString>errore sintattico PA</faultString>
+         <id>1</id>
+         <description>Errore sintattico emesso dalla PA</description>
+         </fault>
+         </paf:paGetPaymentRes>
+         </soapenv:Body>
+         </soapenv:Envelope>
+         """
       When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
-      Then check outcome is OK of activateIOPayment response
-      And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
-      And checks the value $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
-      And checks the value $activateIOPayment.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
+      Then check outcome is KO of activateIOPayment response
+      And check faultCode is PPT_ERRORE_EMESSO_DA_PAA of activateIOPayment response
+      And execution query payment_status to get value on the table POSITION_ACTIVATE, with the columns * under macro AppIO with db name nodo_online
+      And through the query payment_status retrieve param paymentToken at position 6 and save it under the key payToken
 
    Scenario: FLUSSO_CP_25 (part 2)
       Given the FLUSSO_CP_25 (part 1) scenario executed successfully
-      When PM sends REST GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
-      Then verify the HTTP status code of informazioniPagamento response is 200
+      When PM sends REST GET informazioniPagamento?idPagamento=$payToken to nodo-dei-pagamenti
+      Then verify the HTTP status code of informazioniPagamento response is 404
+      And check error is Il pagamento non esiste of informazioniPagamento response
 
    Scenario: FLUSSO_CP_25 (part 3)
       Given the FLUSSO_CP_25 (part 2) scenario executed successfully
       And the closePayment scenario executed successfully
+      And paymentToken with payToken in v1/closepayment
       When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
-      Then verify the HTTP status code of v1/closepayment response is 200
-      And check esito is OK of v1/closepayment response
+      Then verify the HTTP status code of v1/closepayment response is 404
+      And check esito is KO of v1/closepayment response
+      And check descrizione is Il Pagamento indicato non esiste of v1/closepayment response
       And wait 5 seconds for expiration
 
    Scenario: FLUSSO_CP_25 (part 4)
       Given the FLUSSO_CP_25 (part 3) scenario executed successfully
       And the sendPaymentOutcome scenario executed successfully
       When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-      Then check outcome is OK of sendPaymentOutcome response
+      Then check outcome is KO of sendPaymentOutcome response
+      And check faultCode is PPT_TOKEN_SCONOSCIUTO of sendPaymentOutcome response
+
+
+   # FLUSSO_CP_26
+   Scenario: FLUSSO_CP_26 (part 1)
+      Given the verifyPaymentNotice scenario executed successfully
+      And the activateIOPayment scenario executed successfully
+      And EC replies to nodo-dei-pagamenti with the paGetPayment
+         """
+         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
+         <soapenv:Header/>
+         <soapenv:Body>
+         <paf:paGetPaymentRes>
+         <outcome>KO</outcome>
+         <fault>
+         <faultCode>PAA_SINTASSI_EXTRAXSD</faultCode>
+         <faultString>errore sintattico PA</faultString>
+         <id>1</id>
+         <description>Errore sintattico emesso dalla PA</description>
+         </fault>
+         </paf:paGetPaymentRes>
+         </soapenv:Body>
+         </soapenv:Envelope>
+         """
+      When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
+      Then check outcome is KO of activateIOPayment response
+      And check faultCode is PPT_ERRORE_EMESSO_DA_PAA of activateIOPayment response
+      And execution query payment_status to get value on the table POSITION_ACTIVATE, with the columns * under macro AppIO with db name nodo_online
+      And through the query payment_status retrieve param paymentToken at position 6 and save it under the key payToken
+
+   Scenario: FLUSSO_CP_26 (part 2)
+      Given the FLUSSO_CP_26 (part 1) scenario executed successfully
+      When PM sends REST GET informazioniPagamento?idPagamento=$payToken to nodo-dei-pagamenti
+      Then verify the HTTP status code of informazioniPagamento response is 404
+      And check error is Il pagamento non esiste of informazioniPagamento response
+
+   Scenario: FLUSSO_CP_26 (part 3)
+      Given the FLUSSO_CP_26 (part 2) scenario executed successfully
+      And the closePayment scenario executed successfully
+      And paymentToken with payToken in v1/closepayment
+      When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
+      Then verify the HTTP status code of v1/closepayment response is 404
+      And check esito is KO of v1/closepayment response
+      And check descrizione is Il Pagamento indicato non esiste of v1/closepayment response
+      And wait 5 seconds for expiration
+
+   Scenario: FLUSSO_CP_26 (part 4)
+      Given the FLUSSO_CP_26 (part 3) scenario executed successfully
+      And the sendPaymentOutcome scenario executed successfully
+      And outcome with KO in sendPaymentOutcome
+      When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+      Then check outcome is KO of sendPaymentOutcome response
+      And check faultCode is PPT_TOKEN_SCONOSCIUTO of sendPaymentOutcome response
