@@ -8,6 +8,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_04]
    Scenario: RPT generation
       Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
       And generate 1 cart with PA #codicePA# and notice number $1noticeNumber
+
       And RPT generation
          """
          <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
@@ -66,7 +67,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_04]
          <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
          <pay_i:importoTotaleDaVersare>1.50</pay_i:importoTotaleDaVersare>
          <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
-         <pay_i:identificativoUnivocoVersamento>#1iuv</pay_i:identificativoUnivocoVersamento>
+         <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
          <pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
          <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
          <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
@@ -221,26 +222,34 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_04]
       When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
       Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
       Then retrieve session token from $nodoInviaCarrelloRPTResponse.url
-      And update through the query DB_GEST_ANN_update1 with date Today under macro Mod1Mb on db nodo_online
-      And update through the query DB_GEST_ANN_update2 with date Today under macro Mod1Mb on db nodo_online
 
-
+   Scenario: update column valid_to UPDATED_TIMESTAMP
+      Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
+      And replace iuv content with $1iuv content
+      And change date Today to remove minutes 15
+      Then update through the query DB_GEST_ANN_update1 with date $date under macro Mod1Mb on db nodo_online
+      And replace iuv content with $2iuv content
+      And update through the query DB_GEST_ANN_update2 with date $date under macro Mod1Mb on db nodo_online
       And wait 10 seconds for expiration
+
+
    # Activate phase
    Scenario: Trigger annullamentoRptMaiRichiesteDaPm
-      Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
+      Given the update column valid_to UPDATED_TIMESTAMP scenario executed successfully
       When job annullamentoRptMaiRichiesteDaPm triggered after 10 seconds
       Then verify the HTTP status code of annullamentoRptMaiRichiesteDaPm response is 200
 
 
       #DB-CHECK-STATI_RPT
       And replace iuv content with $1iuv content
+
       And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query DB_GEST_ANN_stati_rpt on db nodo_online under macro Mod1Mb
       And replace iuv content with $2iuv content
       And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query DB_GEST_ANN_iuv2 on db nodo_online under macro Mod1Mb
 
       #DB-CHECK-STATI_RPT_SNAPSHOT
       And replace iuv content with $1iuv content
+
       And checks the value RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query DB_GEST_ANN_stati_rpt on db nodo_online under macro Mod1Mb
       And replace iuv content with $2iuv content
       And checks the value RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query DB_GEST_ANN_iuv2 on db nodo_online under macro Mod1Mb
