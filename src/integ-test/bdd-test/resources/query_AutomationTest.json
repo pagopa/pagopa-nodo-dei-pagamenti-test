@@ -147,7 +147,9 @@
         "notice_number_from_iuv": "SELECT columns FROM table_name WHERE NOTICE_ID = '002$iuv' AND PA_FISCAL_CODE = '$nodoInviaRPT.identificativoDominio'",
         "update_notice_number_from_iuv": "UPDATE table_name SET param = 'value' WHERE NOTICE_ID = '002$iuv' AND PA_FISCAL_CODE = '$nodoInviaRPT.identificativoDominio'",
         "update_id_psp": "UPDATE table_name SET param = 'value' WHERE ID_PSP = '#psp#'",
-        "update_obj_id": "UPDATE table_name SET param = 'value' WHERE OBJ_ID = '2685736'"
+        "update_obj_id": "UPDATE table_name SET param = 'value' WHERE OBJ_ID = '2685736'",
+        "sessiontoken": "SELECT columns FROM table_name WHERE ID_SESSIONE = '$sessionToken'",
+        "ccp": "SELECT columns FROM table_name WHERE ID_SESSIONE = '$ccp'"
     },
     "Mod4": {
         "update_id_intermediario_pa": "UPDATE table_name SET param = 'value' WHERE ID_INTERMEDIARIO_PA = '77777777777'",
