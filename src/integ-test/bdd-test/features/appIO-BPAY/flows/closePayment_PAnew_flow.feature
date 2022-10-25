@@ -795,7 +795,7 @@ Feature: flow checks for closePayment - PA new
    Scenario: FLUSSO_CP_08 (part 4)
       Given the FLUSSO_CP_08 (part 3) scenario executed successfully
       And the closePayment scenario executed successfully
-      When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
+      When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti 
       Then verify the HTTP status code of v1/closepayment response is 400
       And check esito is KO of v1/closepayment response
       And check descrizione is Esito non accettabile a token scaduto of v1/closepayment response
