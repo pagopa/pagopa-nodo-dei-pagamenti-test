@@ -317,7 +317,8 @@ Feature: flow tests for paSendRTV2 - Marca da bollo
     # trigger pa send RT retry
     Scenario: Execute paSendRT
         Given the execute DB check scenario executed successfully
-        When job paSendRT triggered after 10 seconds
+        And EC replies to nodo-dei-pagamenti with the paSendRTV2
+        When job paSendRt triggered after 10 seconds        
         Then verify the HTTP status code of paSendRT response is 200
 
         # DB check 1
