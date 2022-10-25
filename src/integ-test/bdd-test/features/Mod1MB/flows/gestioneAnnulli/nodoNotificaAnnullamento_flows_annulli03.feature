@@ -3,7 +3,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_03]
    Background:
       Given systems up
 
-
+@runnable
    # [annulli_03]
    Scenario: RPT generation
       Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
@@ -164,7 +164,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_03]
          </pay_i:RPT>
          """
 
-
+@runnable
    Scenario: Execute nodoInviaCarrelloRPT request
       Given the RPT generation scenario executed successfully
       And initial XML paaInviaRT
@@ -222,7 +222,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_03]
       Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
       Then retrieve session token from $nodoInviaCarrelloRPTResponse.url
 
-
+@runnable
    Scenario: update column valid_to UPDATED_TIMESTAMP
       Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
       And replace iuv content with $1iuv content
@@ -231,12 +231,12 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_03]
       And update through the query DB_GEST_ANN_update2 with date $date under macro Mod1Mb on db nodo_online
       And wait 10 seconds for expiration
 
-
+@runnable
    Scenario: Trigger annullamentoRptMaiRichiesteDaPm
       Given the update column valid_to UPDATED_TIMESTAMP scenario executed successfully
       When job annullamentoRptMaiRichiesteDaPm triggered after 10 seconds
       Then verify the HTTP status code of annullamentoRptMaiRichiesteDaPm response is 200
-
+@runnable
    Scenario: Trigger paInviaRT
       Given the Trigger annullamentoRptMaiRichiesteDaPm scenario executed successfully
       When job paInviaRt triggered after 5 seconds
