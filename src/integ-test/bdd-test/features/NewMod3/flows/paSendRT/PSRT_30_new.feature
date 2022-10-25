@@ -1177,7 +1177,7 @@ Feature: process tests for paSendRT [PSRT_30]
 
         And update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with N, with where condition OBJ_ID and where value ('1201') under macro update_query on db nodo_cfg
         And refresh job PA triggered after 10 seconds
-        And wait 5 seconds for expiration
+        And wait 10 seconds for expiration
 
         # DB Check
         #And execution query position_transfer to get value on the table POSITION_RECEIPT_RECIPIENT_STATUS, with the columns STATUS under macro NewMod3 with db name nodo_online
@@ -1204,7 +1204,7 @@ Feature: process tests for paSendRT [PSRT_30]
 
         # db update config
         And nodo-dei-pagamenti has config parameter scheduler.paSendRtMaxRetry set to 1
-        
+
     @wip
     Scenario: 26 clean paSendRt queue
         Given the 26 Define sendPaymentOutcome scenario executed successfully
