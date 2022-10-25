@@ -221,17 +221,22 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_04.1]
       When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
       Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
       Then retrieve session token from $nodoInviaCarrelloRPTResponse.url
-      And update through the query DB_GEST_ANN_update1 with date Today under macro Mod1Mb on db nodo_online
-      And update through the query DB_GEST_ANN_update2 with date Today under macro Mod1Mb on db nodo_online
+   Scenario: update column valid_to UPDATED_TIMESTAMP
+      Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
+      And replace iuv content with $1iuv content
+      And change date Today to remove minutes 15
+      Then update through the query DB_GEST_ANN_update1 with date $date under macro Mod1Mb on db nodo_online
+      And replace iuv content with $2iuv content
+      And update through the query DB_GEST_ANN_update2 with date $date under macro Mod1Mb on db nodo_online
+      And wait 10 seconds for expiration
 
 
    # Activate phase
    Scenario: Trigger annullamentoRptMaiRichiesteDaPm
-      Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
+      Given the update column valid_to UPDATED_TIMESTAMP scenario executed successfully
       When job annullamentoRptMaiRichiesteDaPm triggered after 10 seconds
       Then verify the HTTP status code of annullamentoRptMaiRichiesteDaPm response is 200
 
-      And wait 10 seconds for expiration
       #DB-CHECK-STATI_RPT
       And replace iuv content with $1iuv content
       And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query DB_GEST_ANN_stati_rpt on db nodo_online under macro Mod1Mb
