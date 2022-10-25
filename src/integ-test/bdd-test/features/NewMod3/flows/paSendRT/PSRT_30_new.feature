@@ -209,9 +209,11 @@ Feature: process tests for paSendRT [PSRT_30]
         And checks the value $activatePaymentNotice.fiscalCode of the record at column PA_FISCAL_CODE of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_transfer on db nodo_online under macro NewMod3
         And checks the value $activatePaymentNotice.noticeNumber of the record at column NOTICE_ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_transfer on db nodo_online under macro NewMod3
 
+        And nodo-dei-pagamenti has config parameter scheduler.paSendRtMaxRetry set to 1
+        And nodo-dei-pagamenti has config parameter scheduler.jobName_paSendRt.enabled set to 1
 
         When job paSendRt triggered after 0 seconds
-        And wait 70 seconds for expiration
+        And wait 15 seconds for expiration
         Then checks the value 1 of the record at column RETRY of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_transfer on db nodo_online under macro NewMod3
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_transfer on db nodo_online under macro NewMod3
         And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_transfer on db nodo_online under macro NewMod3
