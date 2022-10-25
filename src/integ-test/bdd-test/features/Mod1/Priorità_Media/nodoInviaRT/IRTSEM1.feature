@@ -98,7 +98,7 @@ Feature: process tests for nodoInviaRT[IRTSEM1]
             <codiceContestoPagamento>CCD01</codiceContestoPagamento>
             <tipoFirma></tipoFirma>
             <forzaControlloSegno>1</forzaControlloSegno>
-            <rt>$rtAttachment</rt>
+            <rt>$rptAttachment</rt>
             </ws:nodoInviaRT>
             </soapenv:Body>
             </soapenv:Envelope>
