@@ -1,4 +1,4 @@
-Feature: process tests for nodoInviaCarrelloRPT[CRPTSEM13]
+Feature: process tests for nodoInviaCarrelloRPT[CRPTSEM14]
     Background:
         Given systems up
         And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
@@ -122,8 +122,7 @@ Feature: process tests for nodoInviaCarrelloRPT[CRPTSEM13]
                 <soapenv:Body>
                     <ws:pspInviaCarrelloRPTResponse>
                         <pspInviaCarrelloRPTResponse>
-                            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-                            <delay>10000</delay>
+                            <esitoComplessivoOperazione>malformata</esitoComplessivoOperazione>
                             <identificativoCarrello>$nodoInviaCarrelloRPT.identificativoCarrello</identificativoCarrello>
                             <parametriPagamentoImmediato>idBruciatura=$nodoInviaCarrelloRPT.identificativoCarrello</parametriPagamentoImmediato>
                         </pspInviaCarrelloRPTResponse>
@@ -134,5 +133,5 @@ Feature: process tests for nodoInviaCarrelloRPT[CRPTSEM13]
             And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
             When PSP sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
             Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
-            And check faultCode is PPT_CANALE_TIMEOUT of nodoInviaCarrelloRPT response
+            And check faultCode is PPT_CANALE_ERRORE_RESPONSE of nodoInviaCarrelloRPT response
                     
