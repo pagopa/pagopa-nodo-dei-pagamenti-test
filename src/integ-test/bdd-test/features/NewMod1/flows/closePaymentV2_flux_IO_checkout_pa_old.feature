@@ -580,8 +580,7 @@ Feature: flux tests for closePaymentV2
         # STATI_RPT_SNAPSHOT
         And checks the value RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
-
-    @wip
+    
     Scenario: FLUSSO_OLD_CP_01 (part 2)
         Given the FLUSSO_OLD_CP_01 (part 1) scenario executed successfully
         And the sendPaymentOutcome request scenario executed successfully
@@ -729,7 +728,7 @@ Feature: flux tests for closePaymentV2
         And the nodoAttivaRPT scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
 
-# CD_INFO_PAGAMENTO
+        # CD_INFO_PAGAMENTO
         And checks the value NotNone of the record at column OBJ_ID of the table CD_INFO_PAGAMENTO retrived by the query sessiontoken on db nodo_online under macro NewMod1
         And checks the value $nodoInviaRPT.identificativoDominio of the record at column IDENT_DOMINIO of the table CD_INFO_PAGAMENTO retrived by the query sessiontoken on db nodo_online under macro NewMod1
         And checks the value $iuv of the record at column IUV of the table CD_INFO_PAGAMENTO retrived by the query sessiontoken on db nodo_online under macro NewMod1
@@ -742,18 +741,153 @@ Feature: flux tests for closePaymentV2
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        And wait 10 seconds for expiration
+        And wait 5 seconds for expiration
 
+        # RPT
+        And checks the value #canale_IMMEDIATO_MULTIBENEFICIARIO# of the record at column CANALE of the table RPT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value #psp# of the record at column PSP of the table RPT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value #id_broker_psp# of the record at column INTERMEDIARIOPSP of the table RPT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value TPAY of the record at column TIPO_VERSAMENTO of the table RPT retrived by the query iuv on db nodo_online under macro NewMod1
 
+        # POSITION_ACTIVATE
+        And checks the value NotNone of the record at column ID of the table POSITION_ACTIVATE retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value $iuv of the record at column CREDITOR_REFERENCE_ID of the table POSITION_ACTIVATE retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value #psp# of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value None of the record at column IDEMPOTENCY_KEY of the table POSITION_ACTIVATE retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value None of the record at column TOKEN_VALID_FROM of the table POSITION_ACTIVATE retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column TOKEN_VALID_TO of the table POSITION_ACTIVATE retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value None of the record at column DUE_DATE of the table POSITION_ACTIVATE retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value $nodoAttivaRPT.importoSingoloVersamento of the record at column AMOUNT of the table POSITION_ACTIVATE retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_ACTIVATE retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_ACTIVATE retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value closePayment-v2 of the record at column INSERTED_BY of the table POSITION_ACTIVATE retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value closePayment-v2 of the record at column UPDATED_BY of the table POSITION_ACTIVATE retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
 
+        # POSITION_SERVICE
+        And checks the value NotNone of the record at column ID of the table POSITION_SERVICE retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value TPAY of the record at column DESCRIPTION of the table POSITION_SERVICE retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column COMPANY_NAME of the table POSITION_SERVICE retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value None of the record at column OFFICE_NAME of the table POSITION_SERVICE retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column DEBTOR_ID of the table POSITION_SERVICE retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_SERVICE retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_SERVICE retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value closePayment-v2 of the record at column INSERTED_BY of the table POSITION_SERVICE retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value closePayment-v2 of the record at column UPDATED_BY of the table POSITION_SERVICE retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
 
+        # POSITION_PAYMENT_PLAN
+        And checks the value NotNone of the record at column ID of the table POSITION_PAYMENT_PLAN retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value $iuv of the record at column CREDITOR_REFERENCE_ID of the table POSITION_PAYMENT_PLAN retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column DUE_DATE of the table POSITION_PAYMENT_PLAN retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value None of the record at column RETENTION_DATE of the table POSITION_PAYMENT_PLAN retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value $nodoAttivaRPT.importoSingoloVersamento of the record at column AMOUNT of the table POSITION_PAYMENT_PLAN retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value Y of the record at column FLAG_FINAL_PAYMENT of the table POSITION_PAYMENT_PLAN retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_PAYMENT_PLAN retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_PAYMENT_PLAN retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value None of the record at column METADATA of the table POSITION_PAYMENT_PLAN retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column FK_POSITION_SERVICE of the table POSITION_PAYMENT_PLAN retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value closePayment-v2 of the record at column INSERTED_BY of the table POSITION_PAYMENT_PLAN retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value closePayment-v2 of the record at column UPDATED_BY of the table POSITION_PAYMENT_PLAN retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
 
+        # POSITION_PAYMENT
+        And checks the value NotNone of the record at column ID of the table POSITION_PAYMENT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value $iuv of the record at column CREDITOR_REFERENCE_ID of the table POSITION_PAYMENT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_PAYMENT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value $nodoInviaRPT.identificativoDominio of the record at column BROKER_PA_ID of the table POSITION_PAYMENT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value #id_station_old# of the record at column STATION_ID of the table POSITION_PAYMENT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value 1 of the record at column STATION_VERSION of the table POSITION_PAYMENT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value #psp# of the record at column PSP_ID of the table POSITION_PAYMENT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value #id_broker_psp# of the record at column BROKER_PSP_ID of the table POSITION_PAYMENT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value #canale_IMMEDIATO_MULTIBENEFICIARIO# of the record at column CHANNEL_ID of the table POSITION_PAYMENT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value None of the record at column IDEMPOTENCY_KEY of the table POSITION_PAYMENT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value $nodoAttivaRPT.importoSingoloVersamento of the record at column AMOUNT of the table POSITION_PAYMENT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value 2 of the record at column FEE of the table POSITION_PAYMENT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value None of the record at column OUTCOME of the table POSITION_PAYMENT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value TPAY of the record at column PAYMENT_METHOD of the table POSITION_PAYMENT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value WISP of the record at column PAYMENT_CHANNEL of the table POSITION_PAYMENT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value None of the record at column TRANSFER_DATE of the table POSITION_PAYMENT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value None of the record at column PAYER_ID of the table POSITION_PAYMENT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value None of the record at column APPLICATION_DATE of the table POSITION_PAYMENT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_PAYMENT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_PAYMENT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column FK_PAYMENT_PLAN of the table POSITION_PAYMENT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column RPT_ID of the table POSITION_PAYMENT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value MOD3 of the record at column PAYMENT_TYPE of the table POSITION_PAYMENT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value None of the record at column CARRELLO_ID of the table POSITION_PAYMENT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value None of the record at column ORIGINAL_PAYMENT_TOKEN of the table POSITION_PAYMENT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value Y of the record at column FLAG_IO of the table POSITION_PAYMENT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value Y of the record at column RICEVUTA_PM of the table POSITION_PAYMENT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value N of the record at column FLAG_PAYPAL of the table POSITION_PAYMENT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value Y of the record at column FLAG_ACTIVATE_RESP_MISSING of the table POSITION_PAYMENT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value $transaction_id of the record at column TRANSACTION_ID of the table POSITION_PAYMENT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
 
+        # POSITION_TRANSFER
+        And checks the value NotNone of the record at column ID of the table POSITION_TRANSFER retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value $iuv of the record at column CREDITOR_REFERENCE_ID of the table POSITION_TRANSFER retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value $nodoInviaRPT.identificativoDominio of the record at column PA_FISCAL_CODE_SECONDARY of the table POSITION_TRANSFER retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value $nodoAttivaRPT.ibanAppoggio of the record at column IBAN of the table POSITION_TRANSFER retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value $nodoAttivaRPT.importoSingoloVersamento of the record at column AMOUNT of the table POSITION_TRANSFER retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column REMITTANCE_INFORMATION of the table POSITION_TRANSFER retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column TRANSFER_CATEGORY of the table POSITION_TRANSFER retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value 1 of the record at column TRANSFER_IDENTIFIER of the table POSITION_TRANSFER retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value Y of the record at column VALID of the table POSITION_TRANSFER retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_TRANSFER retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_TRANSFER retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column FK_PAYMENT_PLAN of the table POSITION_TRANSFER retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column FK_POSITION_PAYMENT of the table POSITION_TRANSFER retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value closePayment-v2 of the record at column INSERTED_BY of the table POSITION_TRANSFER retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value closePayment-v2 of the record at column UPDATED_BY of the table POSITION_TRANSFER retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
 
+        # POSITION_PAYMENT_STATUS
+        And checks the value NotNone of the record at column ID of the table POSITION_PAYMENT_STATUS retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_PAYMENT_STATUS retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value $iuv of the record at column CREDITOR_REFERENCE_ID of the table POSITION_PAYMENT_STATUS retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_PAYMENT_STATUS retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And verify 3 record for the table POSITION_PAYMENT_STATUS retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
 
+        # POSITION_PAYMENT_STATUS_SNAPSHOT
+        And checks the value NotNone of the record at column ID of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column FK_POSITION_PAYMENT of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value $iuv of the record at column CREDITOR_REFERENCE_ID of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value PAYMENT_ACCEPTED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
 
+        # POSITION_STATUS
+        And checks the value NotNone of the record at column ID of the table POSITION_STATUS retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_STATUS retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_STATUS retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
 
+        # POSITION_STATUS_SNAPSHOT
+        And checks the value NotNone of the record at column ID of the table POSITION_STATUS_SNAPSHOT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_STATUS_SNAPSHOT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_STATUS_SNAPSHOT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column FK_POSITION_SERVICE of the table POSITION_STATUS_SNAPSHOT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
 
+        # PM_SESSION_DATA
+        And verify 0 record for the table PM_SESSION_DATA retrived by the query ccp on db nodo_online under macro NewMod1
+
+        # PM_METADATA
+        And checks the value $transaction_id,$transaction_id,$transaction_id of the record at column TRANSACTION_ID of the table PM_METADATA retrived by the query transactionid on db nodo_online under macro NewMod1
+        And checks the value Token,Tipo versamento,key of the record at column KEY of the table PM_METADATA retrived by the query transactionid on db nodo_online under macro NewMod1
+        And checks the value $ccp,TPAY,$psp_transaction_id of the record at column VALUE of the table PM_METADATA retrived by the query transactionid on db nodo_online under macro NewMod1
+        And checks the value closePayment-v2,closePayment-v2,closePayment-v2 of the record at column INSERTED_BY of the table PM_METADATA retrived by the query transactionid on db nodo_online under macro NewMod1
+        And checks the value closePayment-v2,closePayment-v2,closePayment-v2 of the record at column UPDATED_BY of the table PM_METADATA retrived by the query transactionid on db nodo_online under macro NewMod1
+
+        # STATI_RPT
+        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 4 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+
+        # STATI_RPT_SNAPSHOT
+        And checks the value RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
+    
     Scenario: FLUSSO_OLD_CP_02 (part 2)
         Given the FLUSSO_OLD_CP_02 (part 1) scenario executed successfully
         And the sendPaymentOutcome request scenario executed successfully
@@ -764,24 +898,77 @@ Feature: flux tests for closePaymentV2
         And check description is Esito discorde of sendPaymentOutcome response
         And wait 5 seconds for expiration
 
+        # POSITION_PAYMENT_STATUS
+        And checks the value NotNone of the record at column ID of the table POSITION_PAYMENT_STATUS retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_PAYMENT_STATUS retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value $iuv of the record at column CREDITOR_REFERENCE_ID of the table POSITION_PAYMENT_STATUS retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_PAYMENT_STATUS retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And verify 3 record for the table POSITION_PAYMENT_STATUS retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
 
+        # POSITION_PAYMENT_STATUS_SNAPSHOT
+        And checks the value NotNone of the record at column ID of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column FK_POSITION_PAYMENT of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value $iuv of the record at column CREDITOR_REFERENCE_ID of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value PAYMENT_ACCEPTED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
 
+        # POSITION_STATUS
+        And checks the value NotNone of the record at column ID of the table POSITION_STATUS retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_STATUS retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_STATUS retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
 
+        # POSITION_STATUS_SNAPSHOT
+        And checks the value NotNone of the record at column ID of the table POSITION_STATUS_SNAPSHOT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_STATUS_SNAPSHOT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_STATUS_SNAPSHOT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column FK_POSITION_SERVICE of the table POSITION_STATUS_SNAPSHOT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
 
+        # POSITION_PAYMENT
+        And checks the value NotNone of the record at column ID of the table POSITION_PAYMENT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value $iuv of the record at column CREDITOR_REFERENCE_ID of the table POSITION_PAYMENT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_PAYMENT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value $nodoInviaRPT.identificativoDominio of the record at column BROKER_PA_ID of the table POSITION_PAYMENT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value #id_station_old# of the record at column STATION_ID of the table POSITION_PAYMENT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value 1 of the record at column STATION_VERSION of the table POSITION_PAYMENT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value $sendPaymentOutcome.idPSP of the record at column PSP_ID of the table POSITION_PAYMENT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value $sendPaymentOutcome.idBrokerPSP of the record at column BROKER_PSP_ID of the table POSITION_PAYMENT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value #canale_IMMEDIATO_MULTIBENEFICIARIO# of the record at column CHANNEL_ID of the table POSITION_PAYMENT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value None of the record at column IDEMPOTENCY_KEY of the table POSITION_PAYMENT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value $nodoAttivaRPT.importoSingoloVersamento of the record at column AMOUNT of the table POSITION_PAYMENT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value None of the record at column FEE of the table POSITION_PAYMENT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value None of the record at column OUTCOME of the table POSITION_PAYMENT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value TPAY of the record at column PAYMENT_METHOD of the table POSITION_PAYMENT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value WISP of the record at column PAYMENT_CHANNEL of the table POSITION_PAYMENT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value None of the record at column TRANSFER_DATE of the table POSITION_PAYMENT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value None of the record at column PAYER_ID of the table POSITION_PAYMENT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value None of the record at column APPLICATION_DATE of the table POSITION_PAYMENT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_PAYMENT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_PAYMENT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column FK_PAYMENT_PLAN of the table POSITION_PAYMENT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column RPT_ID of the table POSITION_PAYMENT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value MOD3 of the record at column PAYMENT_TYPE of the table POSITION_PAYMENT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value None of the record at column CARRELLO_ID of the table POSITION_PAYMENT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value None of the record at column ORIGINAL_PAYMENT_TOKEN of the table POSITION_PAYMENT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value Y of the record at column FLAG_IO of the table POSITION_PAYMENT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value Y of the record at column RICEVUTA_PM of the table POSITION_PAYMENT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
 
-
-
-
-
-
-
+        # STATI_RPT
+        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 4 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
 
     # FLUSSO_OLD_CP_03
 
-    Scenario: FLUSSO_OLD_CP_03 (part 1)
-        Given the nodoVerificaRPT scenario executed successfully
-        And the nodoAttivaRPT scenario executed successfully
-        And the nodoInviaRPT scenario executed successfully
+    # Scenario: FLUSSO_OLD_CP_03 (part 1)
+    #     Given the nodoVerificaRPT scenario executed successfully
+    #     And the nodoAttivaRPT scenario executed successfully
+    #     And the nodoInviaRPT scenario executed successfully
 
 
 
@@ -795,13 +982,13 @@ Feature: flux tests for closePaymentV2
 
 
 
-        And the informazioniPagamento scenario executed successfully
-        And the closePaymentV2 request scenario executed successfully
-        And outcome with KO in v2/closepayment
-        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
-        Then verify the HTTP status code of v2/closepayment response is 200
-        And check outcome is OK of v2/closepayment response
-        And wait 10 seconds for expiration
+    #     And the informazioniPagamento scenario executed successfully
+    #     And the closePaymentV2 request scenario executed successfully
+    #     And outcome with KO in v2/closepayment
+    #     When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+    #     Then verify the HTTP status code of v2/closepayment response is 200
+    #     And check outcome is OK of v2/closepayment response
+    #     And wait 10 seconds for expiration
 
 
 
@@ -813,11 +1000,11 @@ Feature: flux tests for closePaymentV2
 
 
 
-    Scenario: FLUSSO_OLD_CP_03 (part 2)
-        Given the FLUSSO_OLD_CP_03 (part 1) scenario executed successfully
-        And the sendPaymentOutcome request scenario executed successfully
-        When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-        Then check outcome is KO of sendPaymentOutcome response
-        And check faultCode is PPT_TOKEN_SCONOSCIUTO of sendPaymentOutcome response
-        And check description is token unknown of sendPaymentOutcome response
-        And wait 5 seconds for expiration
+    # Scenario: FLUSSO_OLD_CP_03 (part 2)
+    #     Given the FLUSSO_OLD_CP_03 (part 1) scenario executed successfully
+    #     And the sendPaymentOutcome request scenario executed successfully
+    #     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+    #     Then check outcome is KO of sendPaymentOutcome response
+    #     And check faultCode is PPT_TOKEN_SCONOSCIUTO of sendPaymentOutcome response
+    #     And check description is token unknown of sendPaymentOutcome response
+    #     And wait 5 seconds for expiration
