@@ -6,10 +6,13 @@ Feature: process tests for generazioneRicevute
   # Verify phase
   Scenario: Execute verifyPaymentNotice (Phase 1)
     Given update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with N, with where condition FK_PA and where value ('6','8') under macro update_query on db nodo_cfg
+<<<<<<< HEAD
     And refresh job PA triggered after 10 seconds
     And wait 5 seconds for expiration 
     And generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
     And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber  
+=======
+>>>>>>> origin/feature/gherkin-with-behavetag
     And initial XML verifyPaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -21,8 +24,13 @@ Feature: process tests for generazioneRicevute
       <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
       <password>pwdpwdpwd</password>
       <qrCode>
+<<<<<<< HEAD
       <fiscalCode>#creditor_institution_code#</fiscalCode>
       <noticeNumber>$1noticeNumber</noticeNumber>
+=======
+      <fiscalCode>#creditor_institution_code_old#</fiscalCode>
+      <noticeNumber>#notice_number_old#</noticeNumber>
+>>>>>>> origin/feature/gherkin-with-behavetag
       </qrCode>
       </nod:verifyPaymentNoticeReq>
       </soapenv:Body>
@@ -45,12 +53,22 @@ Feature: process tests for generazioneRicevute
       <password>pwdpwdpwd</password>
       <idempotencyKey>#idempotency_key#</idempotencyKey>
       <qrCode>
+<<<<<<< HEAD
       <fiscalCode>#creditor_institution_code#</fiscalCode>
       <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
       </qrCode>
       <expirationTime>60000</expirationTime>
       <amount>10.00</amount>
       <paymentNote>responseFull3Transfers</paymentNote>
+=======
+      <fiscalCode>#creditor_institution_code_old#</fiscalCode>
+      <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
+      </qrCode>
+      <expirationTime>6000</expirationTime>
+      <amount>70.00</amount>
+      <dueDate>2021-12-31</dueDate>
+      <paymentNote>causale</paymentNote>
+>>>>>>> origin/feature/gherkin-with-behavetag
       </nod:activatePaymentNoticeReq>
       </soapenv:Body>
       </soapenv:Envelope>
@@ -153,7 +171,11 @@ Feature: process tests for generazioneRicevute
       <nod:sendPaymentOutcomeReq>
       <idPSP>#psp#</idPSP>
       <idBrokerPSP>#psp#</idBrokerPSP>
+<<<<<<< HEAD
       <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
+=======
+      <idChannel>#canale#</idChannel>
+>>>>>>> origin/feature/gherkin-with-behavetag
       <password>pwdpwdpwd</password>
       <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
       <outcome>OK</outcome>
@@ -185,6 +207,7 @@ Feature: process tests for generazioneRicevute
     When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
     And wait 5 seconds for expiration
+<<<<<<< HEAD
 
     # DB Check POSITION_RECEIPT_RECIPIENT
     And execution query position_receipt_recipient_status to get value on the table POSITION_RECEIPT_RECIPIENT, with the columns * under macro NewMod3 with db name nodo_online
@@ -246,3 +269,51 @@ Feature: process tests for generazioneRicevute
      And through the query position_recipient_transfer retrieve param fk_position_transfer at position 1 and save it under the key fk_position_transfer
      And checks the value $fk_position_receipt of the record at column ID of the table POSITION_RECEIPT retrived by the query position_receipt1 on db nodo_online under macro NewMod3
      And checks the value $fk_position_transfer of the record at column ID of the table POSITION_TRANSFER retrived by the query position_transfer1 on db nodo_online under macro NewMod3
+=======
+
+    # DB Check POSITION_RECEIPT_RECIPIENT_PA
+    And execution query position_receipt_recipient_status to get value on the table POSITION_RECEIPT_RECIPIENT, with the columns * under macro NewMod3 with db name nodo_online
+    And through the query position_receipt_recipient_status retrieve param pa_fiscal_code at position 1 and save it under the key pa_fiscal_code
+    And through the query position_receipt_recipient_status retrieve param notice_id at position 2 and save it under the key notice_id
+    And through the query position_receipt_recipient_status retrieve param creditor_reference_id at position 3 and save it under the key creditor_reference_id
+    And through the query position_receipt_recipient_status retrieve param payment_token at position 4 and save it under the key payment_token
+    And through the query position_receipt_recipient_status retrieve param recipient_pa_fiscal_code at position 5 and save it under the key recipient_pa_fiscal_code
+    And through the query position_receipt_recipient_status retrieve param recipient_broker_pa_id at position 6 and save it under the key recipient_broker_pa_id
+    And through the query position_receipt_recipient_status retrieve param recipient_station_id at position 7 and save it under the key recipient_station_id
+    And through the query position_receipt_recipient_status retrieve param status at position 8 and save it under the key status
+    And through the query position_receipt_recipient_status retrieve param fk_position_receip at position 10 and save it under the key fk_position_receip
+
+    And checks the value $pa_fiscal_code of the record at column PA_FISCAL_CODE of the table POSITION_PAYMENT retrived by the query position_status_n on db nodo_online under macro NewMod3
+    And checks the value $notice_id of the record at column NOTICE_ID of the table POSITION_PAYMENT retrived by the query position_status_n on db nodo_online under macro NewMod3
+    And checks the value $creditor_reference_id of the record at column CREDITOR_REFERENCE_ID of the table POSITION_PAYMENT retrived by the query position_status_n on db nodo_online under macro NewMod3
+    And checks the value $payment_token of the record at column PAYMENT_TOKEN of the table POSITION_PAYMENT retrived by the query position_status_n on db nodo_online under macro NewMod3
+    And checks the value $recipient_pa_fiscal_code of the record at column PA_FISCAL_CODE of the table POSITION_PAYMENT retrived by the query position_status_n on db nodo_online under macro NewMod3
+    And checks the value $recipient_broker_pa_id of the record at column BROKER_PA_ID of the table POSITION_PAYMENT retrived by the query position_status_n on db nodo_online under macro NewMod3
+    And checks the value $recipient_station_id of the record at column STATION_ID of the table POSITION_PAYMENT retrived by the query position_status_n on db nodo_online under macro NewMod3
+    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIEN retrived by the query position_status_n on db nodo_online under macro NewMod3
+    And checks the value $fk_position_receip of the record at column ID of the table POSITION_RECEIPT retrived by the query position_status_n on db nodo_online under macro NewMod3
+
+    And checks the value None of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
+    And checks the value None of the record at column NOTICE_ID of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
+    And checks the value None of the record at column CREDITOR_REFERENCE_ID of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
+    And checks the value None of the record at column PAYMENT_TOKEN of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
+    And checks the value None of the record at column RECIPIENT_PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
+    And checks the value None of the record at column RECIPIENT_BROKER_PA_ID of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
+    And checks the value None of the record at column RECIPIENT_STATION_ID of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
+    And checks the value None of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
+    And checks the value None of the record at column INSERTED_TIMESTAMP of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
+    And checks the value None of the record at column UPDATED_TIMESTAMP of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
+    And checks the value None of the record at column FK_POSITION_RECEIPT of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
+
+    # DB Check POSITION_RECEIPT_RECIPIENT_PA
+    And execution query position_receipt_recipient_status to get value on the table POSITION_RECEIPT_RECIPIENT_STATUS, with the columns * under macro NewMod3 with db name nodo_online
+    And through the query position_receipt_recipient_status retrieve param pa_fiscal_code at position 1 and save it under the key pa_fiscal_code
+    And through the query position_receipt_recipient_status retrieve param notice_id at position 2 and save it under the key notice_id
+    And through the query position_receipt_recipient_status retrieve param creditor_reference_id at position 3 and save it under the key creditor_reference_id
+    And through the query position_receipt_recipient_status retrieve param payment_token at position 4 and save it under the key payment_token
+    And through the query position_receipt_recipient_status retrieve param recipient_pa_fiscal_code at position 5 and save it under the key recipient_pa_fiscal_code
+    And through the query position_receipt_recipient_status retrieve param recipient_broker_pa_id at position 6 and save it under the key recipient_broker_pa_id
+    And through the query position_receipt_recipient_status retrieve param recipient_station_id at position 7 and save it under the key recipient_station_id
+    And through the query position_receipt_recipient_status retrieve param status at position 8 and save it under the key status
+    And through the query position_receipt_recipient_status retrieve param fk_position_receip at position 10 and save it under the key fk_position_receip
+>>>>>>> origin/feature/gherkin-with-behavetag

@@ -2,15 +2,24 @@ Feature: process tests for InoltroEsitoCartaCarrello_KO
 
     Background:
         Given systems up
+<<<<<<< HEAD
 
+=======
+@runnable
+>>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: RPT generation
         Given RPT generation
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
             <pay_i:dominio>
+<<<<<<< HEAD
                 <pay_i:identificativoDominio>44444444444</pay_i:identificativoDominio>
                 <pay_i:identificativoStazioneRichiedente>44444444444_01</pay_i:identificativoStazioneRichiedente>
+=======
+                <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
+                <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
+>>>>>>> origin/feature/gherkin-with-behavetag
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
             <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
@@ -81,6 +90,10 @@ Feature: process tests for InoltroEsitoCartaCarrello_KO
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
+<<<<<<< HEAD
+=======
+@runnable
+>>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: RPT2 generation
         Given the RPT generation scenario executed successfully
         And  RPT2 generation
@@ -88,7 +101,11 @@ Feature: process tests for InoltroEsitoCartaCarrello_KO
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
             <pay_i:dominio>
+<<<<<<< HEAD
                 <pay_i:identificativoDominio>44444444444</pay_i:identificativoDominio>
+=======
+                <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
+>>>>>>> origin/feature/gherkin-with-behavetag
                 <pay_i:identificativoStazioneRichiedente>'+context.expand('${stazione}')+'</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
@@ -160,7 +177,11 @@ Feature: process tests for InoltroEsitoCartaCarrello_KO
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
+<<<<<<< HEAD
     
+=======
+@runnable    
+>>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: RT generation
         Given the RPT2 generation scenario executed successfully
         And RT generation
@@ -168,8 +189,13 @@ Feature: process tests for InoltroEsitoCartaCarrello_KO
             <pay_i:RT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>6.0</pay_i:versioneOggetto>
             <pay_i:dominio>
+<<<<<<< HEAD
                 <pay_i:identificativoDominio>44444444444</pay_i:identificativoDominio>
                 <pay_i:identificativoStazioneRichiedente>44444444444_01</pay_i:identificativoStazioneRichiedente>
+=======
+                <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
+                <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
+>>>>>>> origin/feature/gherkin-with-behavetag
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRicevuta>IdentificativoMessaggioRicevuta</pay_i:identificativoMessaggioRicevuta>
             <pay_i:dataOraMessaggioRicevuta>#timedate#</pay_i:dataOraMessaggioRicevuta>
@@ -249,7 +275,11 @@ Feature: process tests for InoltroEsitoCartaCarrello_KO
             </pay_i:datiPagamento>
             </pay_i:RT>
             """
+<<<<<<< HEAD
 
+=======
+@runnable
+>>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: RT2 generation
         Given the RT generation scenario executed successfully
         And RT2 generation
@@ -257,8 +287,13 @@ Feature: process tests for InoltroEsitoCartaCarrello_KO
             <pay_i:RT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>6.0</pay_i:versioneOggetto>
             <pay_i:dominio>
+<<<<<<< HEAD
                 <pay_i:identificativoDominio>44444444444</pay_i:identificativoDominio>
                 <pay_i:identificativoStazioneRichiedente>44444444444_01</pay_i:identificativoStazioneRichiedente>
+=======
+                <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
+                <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
+>>>>>>> origin/feature/gherkin-with-behavetag
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRicevuta>IdentificativoMessaggioRicevuta</pay_i:identificativoMessaggioRicevuta>
             <pay_i:dataOraMessaggioRicevuta>#timedate#</pay_i:dataOraMessaggioRicevuta>
@@ -338,7 +373,11 @@ Feature: process tests for InoltroEsitoCartaCarrello_KO
             </pay_i:datiPagamento>
             </pay_i:RT>
             """
+<<<<<<< HEAD
 
+=======
+@runnable
+>>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execute nodoInviaCarrelloRPT request
         Given the RT2 generation scenario executed successfully
         And initial XML nodoInviaCarrelloRPT
@@ -346,8 +385,13 @@ Feature: process tests for InoltroEsitoCartaCarrello_KO
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
                 <ppt:intestazioneCarrelloPPT>
+<<<<<<< HEAD
                     <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
                     <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
+=======
+                    <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
+                    <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
+>>>>>>> origin/feature/gherkin-with-behavetag
                     <identificativoCarrello>#carrelloMills#</identificativoCarrello>
                 </ppt:intestazioneCarrelloPPT>
             </soapenv:Header>
@@ -359,14 +403,22 @@ Feature: process tests for InoltroEsitoCartaCarrello_KO
                     <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
                     <listaRPT>
                         <elementoListaRPT>
+<<<<<<< HEAD
                         <identificativoDominio>44444444444</identificativoDominio>
+=======
+                        <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+>>>>>>> origin/feature/gherkin-with-behavetag
                         <identificativoUnivocoVersamento>RPTdaRifSintassiPsp</identificativoUnivocoVersamento>
                         <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
                         <!--tipoFirma></tipoFirma-->
                         <rpt>$rptAttachment</rpt>
                         </elementoListaRPT>
                         <elementoListaRPT>
+<<<<<<< HEAD
                         <identificativoDominio>44444444444</identificativoDominio>
+=======
+                        <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+>>>>>>> origin/feature/gherkin-with-behavetag
                         <identificativoUnivocoVersamento>RPTdaRifPsp</identificativoUnivocoVersamento>
                         <codiceContestoPagamento>$2CCP</codiceContestoPagamento>
                         <!--tipoFirma></tipoFirma-->
@@ -398,7 +450,11 @@ Feature: process tests for InoltroEsitoCartaCarrello_KO
         And check url contains acardste of nodoInviaCarrelloRPT response
         And retrieve session token from $nodoInviaCarrelloRPTResponse.url
 
+<<<<<<< HEAD
 
+=======
+@runnable
+>>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execution Esito Carta
         Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
         And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte 
@@ -439,7 +495,11 @@ Feature: process tests for InoltroEsitoCartaCarrello_KO
         And check url field not exists in inoltroEsito/carta response
         And check descrizione is Risposta negativa del Canale of inoltroEsito/carta response 
         And check errorCode is RIFPSP of inoltroEsito/carta response
+<<<<<<< HEAD
 
+=======
+@runnable
+>>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execute nodoChiediStatoRPT request
         Given the Execution Esito Carta scenario executed successfully
         And initial XML nodoChiediStatoRPT
@@ -449,10 +509,17 @@ Feature: process tests for InoltroEsitoCartaCarrello_KO
         <soapenv:Header/>
         <soapenv:Body>
             <ws:nodoChiediStatoRPT>
+<<<<<<< HEAD
                 <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
                 <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
                 <password>pwdpwdpwd</password>
                 <identificativoDominio>44444444444</identificativoDominio>
+=======
+                <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
+                <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
+                <password>pwdpwdpwd</password>
+                <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+>>>>>>> origin/feature/gherkin-with-behavetag
                 <identificativoUnivocoVersamento>RPTdaRifSintassiPsp</identificativoUnivocoVersamento>
                 <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
             </ws:nodoChiediStatoRPT>
@@ -466,14 +533,22 @@ Feature: process tests for InoltroEsitoCartaCarrello_KO
         And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
         And check url field not exists in nodoChiediStatoRPT response
+<<<<<<< HEAD
 
+=======
+@runnable
+>>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execute nodoChiediAvanzamentoPagamento
         Given the Execute nodoChiediStatoRPT request scenario executed successfully
         When WISP sends REST GET avanzamentoPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of avanzamentoPagamento response is 200
         And check esito is KO of avanzamentoPagamento response
 
+<<<<<<< HEAD
 
+=======
+@runnable
+>>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execute nodoInviaRT request
         Given the Execute nodoChiediAvanzamentoPagamento scenario executed successfully
         And initial XML nodoInviaRT
@@ -486,7 +561,11 @@ Feature: process tests for InoltroEsitoCartaCarrello_KO
             <identificativoCanale>#canale#</identificativoCanale>
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp#</identificativoPSP>
+<<<<<<< HEAD
             <identificativoDominio>44444444444</identificativoDominio>
+=======
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+>>>>>>> origin/feature/gherkin-with-behavetag
             <identificativoUnivocoVersamento>RPTdaRifSintassiPsp</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
             <tipoFirma></tipoFirma>
@@ -498,7 +577,11 @@ Feature: process tests for InoltroEsitoCartaCarrello_KO
             """
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is KO of nodoInviaRT response
+<<<<<<< HEAD
 
+=======
+@runnable
+>>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execute nodoInviaRT2 request
         Given the Execute nodoInviaRT request scenario executed successfully
         And initial XML nodoInviaRT
@@ -511,7 +594,11 @@ Feature: process tests for InoltroEsitoCartaCarrello_KO
                     <identificativoCanale>#canale#</identificativoCanale>
                     <password>pwdpwdpwd</password>
                     <identificativoPSP>#psp#</identificativoPSP>
+<<<<<<< HEAD
                     <identificativoDominio>44444444444</identificativoDominio>
+=======
+                    <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+>>>>>>> origin/feature/gherkin-with-behavetag
                     <identificativoUnivocoVersamento>RPTdaRifPsp</identificativoUnivocoVersamento>
                     <codiceContestoPagamento>$2CCP</codiceContestoPagamento>
                     <tipoFirma></tipoFirma>
@@ -523,7 +610,11 @@ Feature: process tests for InoltroEsitoCartaCarrello_KO
             """
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is KO of nodoInviaRT response
+<<<<<<< HEAD
 
+=======
+@runnable
+>>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execution second rest Esito Carta
         Given the Execute nodoInviaRT2 request scenario executed successfully
         And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte 

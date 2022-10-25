@@ -2,7 +2,11 @@ Feature: T220_RPT_faultBeanEsteso
 
     Background:
         Given systems up
+<<<<<<< HEAD
 
+=======
+@runnable
+>>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execute nodoInviaRPT (Phase 1)
         Given generate 1 notice number and iuv with aux digit 3, segregation code 12 and application code -
         And replace $1iuv content with RPTdaRifPsp content
@@ -132,7 +136,11 @@ Feature: T220_RPT_faultBeanEsteso
         Then check esito is KO of nodoInviaRPT response
         And check faultCode is PPT_CANALE_ERRORE of nodoInviaRPT response
         #And check originalFaultCode is CANALE_RPT_DA_RIFIUTARE of nodoInviaRPT response
+<<<<<<< HEAD
 
+=======
+@runnable
+>>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execute nodoChiediStatoRPT (Phase 2)
         Given the Execute nodoInviaRPT (Phase 1) scenario executed successfully
         And initial XML nodoChiediStatoRPT
@@ -155,7 +163,11 @@ Feature: T220_RPT_faultBeanEsteso
         Then checks stato contains RPT_RIFIUTATA_PSP of nodoChiediStatoRPT response
         And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
+<<<<<<< HEAD
         
+=======
+ @runnable       
+>>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execute nodoInviaRPT1 (Phase 3)
         Given the Execute nodoChiediStatoRPT (Phase 2) scenario executed successfully
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti

@@ -2,7 +2,11 @@ Feature: process test for nodoInviaFlussoRendicontazione
 
     Background:
         Given systems up
+<<<<<<< HEAD
 
+=======
+@runnable
+>>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Create REND
         Given REND generation
             """
@@ -39,7 +43,11 @@ Feature: process test for nodoInviaFlussoRendicontazione
             </pay_i:datiSingoliPagamenti>
             </pay_i:FlussoRiversamento>
             """
+<<<<<<< HEAD
 
+=======
+@runnable
+>>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Send nodoInviaFlussoRendicontazione primitive
         Given the Create REND scenario executed successfully
         And initial XML nodoInviaFlussoRendicontazione

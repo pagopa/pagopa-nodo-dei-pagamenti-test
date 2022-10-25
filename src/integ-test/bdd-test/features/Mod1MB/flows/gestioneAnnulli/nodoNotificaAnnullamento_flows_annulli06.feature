@@ -3,17 +3,29 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_06]
    Background:
       Given systems up
 
+<<<<<<< HEAD
 
    # [annulli_06]
    Scenario: RPT generation
       Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
       And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
+=======
+@runnable
+   # [annulli_06]
+   Scenario: RPT generation
+      Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
+      And generate 1 cart with PA #codicePA# and notice number $1noticeNumber
+>>>>>>> origin/feature/gherkin-with-behavetag
       And RPT1 generation
          """
          <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
          <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
          <pay_i:dominio>
+<<<<<<< HEAD
          <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
+=======
+         <pay_i:identificativoDominio>#codicePA#</pay_i:identificativoDominio>
+>>>>>>> origin/feature/gherkin-with-behavetag
          <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
          </pay_i:dominio>
          <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
@@ -164,7 +176,11 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_06]
          </pay_i:RPT>
          """
 
+<<<<<<< HEAD
 
+=======
+@runnable
+>>>>>>> origin/feature/gherkin-with-behavetag
    Scenario: Execute nodoInviaCarrelloRPT request
       Given the RPT generation scenario executed successfully
       And initial XML paaInviaRT
@@ -187,7 +203,11 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_06]
          <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
          <soapenv:Header>
          <ppt:intestazioneCarrelloPPT>
+<<<<<<< HEAD
          <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
+=======
+         <identificativoIntermediarioPA>#codicePA#</identificativoIntermediarioPA>
+>>>>>>> origin/feature/gherkin-with-behavetag
          <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
          <identificativoCarrello>$1carrello</identificativoCarrello>
          </ppt:intestazioneCarrelloPPT>
@@ -200,7 +220,11 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_06]
          <identificativoCanale>97735020584_02</identificativoCanale>
          <listaRPT>
          <elementoListaRPT>
+<<<<<<< HEAD
          <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+=======
+         <identificativoDominio>#codicePA#</identificativoDominio>
+>>>>>>> origin/feature/gherkin-with-behavetag
          <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
          <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
          <rpt>$rpt1Attachment</rpt>
@@ -221,7 +245,11 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_06]
       When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
       Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
       Then retrieve session token from $nodoInviaCarrelloRPTResponse.url
+<<<<<<< HEAD
 
+=======
+@runnable
+>>>>>>> origin/feature/gherkin-with-behavetag
    Scenario: update column valid_to UPDATED_TIMESTAMP
       Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
       And replace iuv content with $1iuv content
@@ -230,12 +258,20 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_06]
       And update through the query DB_GEST_ANN_update2 with date $date under macro Mod1Mb on db nodo_online
       And wait 10 seconds for expiration
 
+<<<<<<< HEAD
 
+=======
+@runnable
+>>>>>>> origin/feature/gherkin-with-behavetag
    Scenario: Trigger annullamentoRptMaiRichiesteDaPm
       Given the update column valid_to UPDATED_TIMESTAMP scenario executed successfully
       When job annullamentoRptMaiRichiesteDaPm triggered after 10 seconds
       Then verify the HTTP status code of annullamentoRptMaiRichiesteDaPm response is 200
+<<<<<<< HEAD
 
+=======
+@runnable
+>>>>>>> origin/feature/gherkin-with-behavetag
    Scenario: Trigger paInviaRT
       Given the Trigger annullamentoRptMaiRichiesteDaPm scenario executed successfully
       When job paInviaRt triggered after 5 seconds
@@ -276,16 +312,27 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_06]
       #DB-CHECK-POSITION_STATUS_SNAPSHOT
       And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query DB_GEST_ANN_notice_number on db nodo_online under macro Mod1Mb
 
+<<<<<<< HEAD
 
    Scenario: Generation of two more RPT
       Given the Trigger paInviaRT scenario executed successfully
       And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
+=======
+@runnable
+   Scenario: Generation of two more RPT
+      Given the Trigger paInviaRT scenario executed successfully
+      And generate 1 cart with PA #codicePA# and notice number $1noticeNumber
+>>>>>>> origin/feature/gherkin-with-behavetag
       And RPT3 generation
          """
          <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
          <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
          <pay_i:dominio>
+<<<<<<< HEAD
          <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
+=======
+         <pay_i:identificativoDominio>#codicePA#</pay_i:identificativoDominio>
+>>>>>>> origin/feature/gherkin-with-behavetag
          <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
          </pay_i:dominio>
          <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
@@ -436,7 +483,11 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_06]
          </pay_i:RPT>
          """
 
+<<<<<<< HEAD
 
+=======
+@runnable
+>>>>>>> origin/feature/gherkin-with-behavetag
    Scenario: Execute nodoInviaCarrelloRPT request
       Given the Generation of two more RPT scenario executed successfully
       And initial XML paaInviaRT
@@ -459,7 +510,11 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_06]
          <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
          <soapenv:Header>
          <ppt:intestazioneCarrelloPPT>
+<<<<<<< HEAD
          <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
+=======
+         <identificativoIntermediarioPA>#codicePA#</identificativoIntermediarioPA>
+>>>>>>> origin/feature/gherkin-with-behavetag
          <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
          <identificativoCarrello>$1carrello</identificativoCarrello>
          </ppt:intestazioneCarrelloPPT>
@@ -472,7 +527,11 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_06]
          <identificativoCanale>97735020584_02</identificativoCanale>
          <listaRPT>
          <elementoListaRPT>
+<<<<<<< HEAD
          <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+=======
+         <identificativoDominio>#codicePA#</identificativoDominio>
+>>>>>>> origin/feature/gherkin-with-behavetag
          <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
          <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
          <rpt>$rpt3Attachment</rpt>
@@ -514,7 +573,11 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_06]
       And checks the value CART_PARCHEGGIATO_NODO of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query DB_GEST_ANN_stati_payment_token on db nodo_online under macro Mod1Mb
 
       #DB-CHECK-POSITION_PAYMENT_STATUS
+<<<<<<< HEAD
       And replace pa content with #creditor_institution_code# content
+=======
+      And replace pa content with #codicePA# content
+>>>>>>> origin/feature/gherkin-with-behavetag
       And replace noticeNumber content with $1noticeNumber content
 
       And checks the value PAYING, CANCELLED, PAYING of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb

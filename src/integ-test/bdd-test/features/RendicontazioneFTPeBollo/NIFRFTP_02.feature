@@ -2,7 +2,11 @@ Feature: NIFRFTP
 
     Background:
         Given systems up
+<<<<<<< HEAD
 
+=======
+@runnable
+>>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: REND generation
         Given REND generation
             """
@@ -39,7 +43,11 @@ Feature: NIFRFTP
             </pay_i:datiSingoliPagamenti>
             </pay_i:FlussoRiversamento>
             """
+<<<<<<< HEAD
 
+=======
+@runnable
+>>>>>>> origin/feature/gherkin-with-behavetag
 
     Scenario: Execute nodoInviaFlussoRendicontazione request
         Given the REND generation scenario executed successfully
@@ -98,7 +106,11 @@ Feature: NIFRFTP
         And checks the value ftp-sender of the record at column UPDATED_BY of the table RENDICONTAZIONE_SFTP_SEND_QUEUE retrived by the query send_queue on db nodo_offline under macro RendicontazioneFTPeBollo
         And checks the value 0 of the record at column RETRY of the table RENDICONTAZIONE_SFTP_SEND_QUEUE retrived by the query send_queue on db nodo_offline under macro RendicontazioneFTPeBollo
 
+<<<<<<< HEAD
 
+=======
+@runnable
+>>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execute nodoChiediFlussoRendicontazione primitive
         Given the Execute nodoInviaFlussoRendicontazione request scenario executed successfully
         And initial XML nodoChiediFlussoRendicontazione

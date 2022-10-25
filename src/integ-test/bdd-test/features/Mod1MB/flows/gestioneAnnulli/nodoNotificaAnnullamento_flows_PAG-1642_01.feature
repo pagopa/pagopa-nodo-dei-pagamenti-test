@@ -8,13 +8,21 @@ Feature: Flows checks for nodoInviaCarrelloRPT [PAG-1642_01]
     Scenario: RPT generation
         Given nodo-dei-pagamenti has config parameter CONFIG_VALUE set to false
         And generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
+<<<<<<< HEAD
         And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
+=======
+        And generate 1 cart with PA #codicePA# and notice number $1noticeNumber
+>>>>>>> origin/feature/gherkin-with-behavetag
         And RPT1 generation
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
             <pay_i:dominio>
+<<<<<<< HEAD
             <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
+=======
+            <pay_i:identificativoDominio>#codicePA#</pay_i:identificativoDominio>
+>>>>>>> origin/feature/gherkin-with-behavetag
             <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
@@ -188,7 +196,11 @@ Feature: Flows checks for nodoInviaCarrelloRPT [PAG-1642_01]
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
             <ppt:intestazioneCarrelloPPT>
+<<<<<<< HEAD
             <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
+=======
+            <identificativoIntermediarioPA>#codicePA#</identificativoIntermediarioPA>
+>>>>>>> origin/feature/gherkin-with-behavetag
             <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
             <identificativoCarrello>$1carrello</identificativoCarrello>
             </ppt:intestazioneCarrelloPPT>
@@ -201,7 +213,11 @@ Feature: Flows checks for nodoInviaCarrelloRPT [PAG-1642_01]
             <identificativoCanale>97735020584_02</identificativoCanale>
             <listaRPT>
             <elementoListaRPT>
+<<<<<<< HEAD
             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+=======
+            <identificativoDominio>#codicePA#</identificativoDominio>
+>>>>>>> origin/feature/gherkin-with-behavetag
             <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
             <rpt>$rpt1Attachment</rpt>
@@ -237,7 +253,11 @@ Feature: Flows checks for nodoInviaCarrelloRPT [PAG-1642_01]
         Given the Execute nodoChiediInformazioniPagamento scenario executed successfully
         When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of notificaAnnullamento response is 200
+<<<<<<< HEAD
         And wait 5 seconds for expiration
+=======
+        And wait 10 seconds for expiration
+>>>>>>> origin/feature/gherkin-with-behavetag
 
         #DB-CHECK-STATI_RPT
         And replace iuv content with $1iuv content
@@ -297,7 +317,11 @@ Feature: Flows checks for nodoInviaCarrelloRPT [PAG-1642_01]
             <payer>
             <uniqueIdentifier>
             <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
+<<<<<<< HEAD
             <entityUniqueIdentifierValue>#creditor_institution_code#</entityUniqueIdentifierValue>
+=======
+            <entityUniqueIdentifierValue>#codicePA#</entityUniqueIdentifierValue>
+>>>>>>> origin/feature/gherkin-with-behavetag
             </uniqueIdentifier>
             <fullName>IOname_</fullName>
             <!--Optional:-->
@@ -346,7 +370,11 @@ Feature: Flows checks for nodoInviaCarrelloRPT [PAG-1642_01]
         And check urlRedirectEC field exists in informazioniPagamento response
         And check enteBeneficiario field exists in informazioniPagamento response
     #And check $1iuv field exists in informazioniPagamento response
+<<<<<<< HEAD
     #And check #creditor_institution_code# field exists in informazioniPagamento response
+=======
+    #And check #codicePA# field exists in informazioniPagamento response
+>>>>>>> origin/feature/gherkin-with-behavetag
 
     Scenario: Execute nodoInoltroEsitoCarta
         Given the Execute nodoChiediInformazioniPagamento1 scenario executed successfully
@@ -437,7 +465,11 @@ Feature: Flows checks for nodoInviaCarrelloRPT [PAG-1642_01]
         And checks the value CART_ANNULLATO_WISP of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query DB_GEST_ANN_stati_payment_token on db nodo_online under macro Mod1Mb
 
         #DB-CHECK-POSITION_PAYMENT_STATUS
+<<<<<<< HEAD
         And replace pa content with #creditor_institution_code# content
+=======
+        And replace pa content with #codicePA# content
+>>>>>>> origin/feature/gherkin-with-behavetag
         And replace noticeNumber content with $1noticeNumber content
         And checks the value PAYING, CANCELLED, PAYMENT_SENT, PAYMENT_ACCEPTED, PAID, NOTICE_GENERATED, NOTICE_SENT, NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value $nodoInviaCarrelloRPT.identificativoCarrello, $activateIOPaymentResponse.paymentToken, $activateIOPaymentResponse.paymentToken, $activateIOPaymentResponse.paymentToken, $activateIOPaymentResponse.paymentToken, $activateIOPaymentResponse.paymentToken, $activateIOPaymentResponse.paymentToken, $activateIOPaymentResponse.paymentToken, $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_PAYMENT_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb

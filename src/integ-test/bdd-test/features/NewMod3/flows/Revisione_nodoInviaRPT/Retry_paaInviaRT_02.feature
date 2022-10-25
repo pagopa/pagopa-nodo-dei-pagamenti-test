@@ -60,7 +60,11 @@ Feature: process tests for nodoInviaRPT [Retry_paaInviaRT_02]
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
             <pay_i:dominio>
+<<<<<<< HEAD
             <pay_i:identificativoDominio>#creditor_institution_code_old#</pay_i:identificativoDominio>
+=======
+            <pay_i:identificativoDominio>#codicePA_old#</pay_i:identificativoDominio>
+>>>>>>> origin/feature/gherkin-with-behavetag
             <pay_i:identificativoStazioneRichiedente>#id_station_old#</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
@@ -140,9 +144,15 @@ Feature: process tests for nodoInviaRPT [Retry_paaInviaRT_02]
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
             <ppt:intestazionePPT>
+<<<<<<< HEAD
             <identificativoIntermediarioPA>#creditor_institution_code_old#</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
             <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
+=======
+            <identificativoIntermediarioPA>#codicePA_old#</identificativoIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
+            <identificativoDominio>#codicePA_old#</identificativoDominio>
+>>>>>>> origin/feature/gherkin-with-behavetag
             <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken</codiceContestoPagamento>
             </ppt:intestazionePPT>
@@ -237,7 +247,11 @@ Feature: process tests for nodoInviaRPT [Retry_paaInviaRT_02]
     Scenario: DB check
         Given the Execute sendPaymentOutcome request Scenario executed successfully
         Then checks the value NotNone of the record at column id of the table RETRY_PA_INVIA_RT retrived by the query retry_pa_invia_rt_only_ccp on db nodo_online under macro NewMod3
+<<<<<<< HEAD
         And checks the value #creditor_institution_code_old# of the record at column id_dominio of the table RETRY_PA_INVIA_RT retrived by the query retry_pa_invia_rt_only_ccp on db nodo_online under macro NewMod3
+=======
+        And checks the value #codicePA_old# of the record at column id_dominio of the table RETRY_PA_INVIA_RT retrived by the query retry_pa_invia_rt_only_ccp on db nodo_online under macro NewMod3
+>>>>>>> origin/feature/gherkin-with-behavetag
         #DB CHECK-POSITION_PAYMENT_STATUS
         And checks the value PAYING, PAYING_RPT, PAID, NOTICE_GENERATED, NOTICE_STORED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
         #DB CHECK-POSITION_PAYMENT_STATUS_SNAPSHOT
@@ -413,6 +427,10 @@ Feature: process tests for nodoInviaRPT [Retry_paaInviaRT_02]
         And check value $prx_xml.fiscalCode is equal to value $pp1_pa_fiscal_code
         And check value $prx_xml.outcome is equal to value $pp1_outcome
         And check value $prx_xml.creditorReferenceId is equal to value $pp1_creditor_reference_id
+<<<<<<< HEAD
+=======
+        #And check value $prx_xml.paymentAmount is equal to value $pp1_amount
+>>>>>>> origin/feature/gherkin-with-behavetag
         And check value $prx_xml.description is equal to value $ps_description
         And check value $prx_xml.companyName is equal to value $ps_company_name
         And check value $prx_xml.entityUniqueIdentifierType is equal to value $pss_entity_unique_identifier_type
@@ -424,7 +442,13 @@ Feature: process tests for nodoInviaRPT [Retry_paaInviaRT_02]
         And check value $prx_xml.city is equal to value $pss_city
         And check value $prx_xml.stateProvinceRegion is equal to value $pss_state_province_region
         And check value $prx_xml.country is equal to value $pss_country
+<<<<<<< HEAD
         And check value $prx_xml.idTransfer is equal to value $pt_transfer_identifier
+=======
+        #And check value $prx_xml.e-mail is equal to value $pss_email
+        And check value $prx_xml.idTransfer is equal to value $pt_transfer_identifier
+        #And check value $prx_xml.transferAmount is equal to value $pt_amount
+>>>>>>> origin/feature/gherkin-with-behavetag
         And check value $prx_xml.fiscalCodePA is equal to value $pt_pa_fiscal_code_secondary
         And check value $prx_xml.IBAN is equal to value $pt_iban
         And check value $prx_xml.remittanceInformation is equal to value $pt_remittance_information

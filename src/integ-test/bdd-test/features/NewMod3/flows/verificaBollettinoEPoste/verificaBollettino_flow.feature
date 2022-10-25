@@ -16,7 +16,11 @@ Feature: flow checks for verificaBollettino - EC new
       <codificaInfrastrutturaPSP>BARCODE-128-AIM</codificaInfrastrutturaPSP>
       <codiceIdRPT>
       <aim:aim128>
+<<<<<<< HEAD
       <aim:CCPost>#creditor_institution_code#</aim:CCPost>
+=======
+      <aim:CCPost>#codicePA#</aim:CCPost>
+>>>>>>> origin/feature/gherkin-with-behavetag
       <aim:AuxDigit>3</aim:AuxDigit>
       <aim:CodIUV>11192051789512983</aim:CodIUV>
       </aim:aim128>
@@ -47,7 +51,11 @@ Feature: flow checks for verificaBollettino - EC new
       <idBrokerPSP>BANCOPOSTA</idBrokerPSP>
       <idChannel>POSTE3</idChannel>
       <password>pwdpwdpwd</password>
+<<<<<<< HEAD
       <ccPost>#creditor_institution_code#</ccPost>
+=======
+      <ccPost>#codicePA#</ccPost>
+>>>>>>> origin/feature/gherkin-with-behavetag
       <noticeNumber>#notice_number#</noticeNumber>
       </nod:verificaBollettinoReq>
       </soapenv:Body>

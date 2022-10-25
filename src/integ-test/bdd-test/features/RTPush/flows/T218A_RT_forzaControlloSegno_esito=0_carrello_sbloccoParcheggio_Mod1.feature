@@ -2,7 +2,11 @@ Feature: T218A_RT_forzaControlloSegno_esito=0_carrello_sbloccoParcheggio_Mod1
 
     Background:
         Given systems up
+<<<<<<< HEAD
 
+=======
+@runnable
+>>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execute nodoInviaCarrelloRPT (Phase 1)
         Given RPT1 generation
             """
@@ -383,7 +387,11 @@ Feature: T218A_RT_forzaControlloSegno_esito=0_carrello_sbloccoParcheggio_Mod1
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
         And retrieve session token from $nodoInviaCarrelloRPTResponse.url
+<<<<<<< HEAD
 
+=======
+@runnable
+>>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execute nodoInoltroEsitoMod1 (Phase 2)
         Given the Execute nodoInviaCarrelloRPT (Phase 1) scenario executed successfully
         When WISP sends REST POST inoltroEsito/mod1 to nodo-dei-pagamenti
@@ -399,7 +407,11 @@ Feature: T218A_RT_forzaControlloSegno_esito=0_carrello_sbloccoParcheggio_Mod1
             """
         Then verify the HTTP status code of inoltroEsito/mod1 response is 200
         And check esito is OK of inoltroEsito/mod1 response
+<<<<<<< HEAD
 
+=======
+@runnable
+>>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execute nodoInviaRT (Phase 3) [forzaControlloSegnoPresente]
         Given the Execute nodoInoltroEsitoMod1 (Phase 2) scenario executed successfully
         And initial XML nodoInviaRT
@@ -424,14 +436,22 @@ Feature: T218A_RT_forzaControlloSegno_esito=0_carrello_sbloccoParcheggio_Mod1
             """
         When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
+<<<<<<< HEAD
 
+=======
+@runnable
+>>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execute nodoInviaRT2 (Phase 4) [forzaControlloSegnoPresente]
         Given the Execute nodoInviaRT (Phase 3) [forzaControlloSegnoPresente] scenario executed successfully
         And identificativoUnivocoVersamento with $2IUV in nodoInviaRT
         And rt with $rt2Attachment in nodoInviaRT
         When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
+<<<<<<< HEAD
 
+=======
+@runnable
+>>>>>>> origin/feature/gherkin-with-behavetag
     # forzaConrolloSegnoAssente
     Scenario: Execute nodoInviaRT (Phase 3) [forzaControlloSegnoAssente]
         Given the Execute nodoInoltroEsitoMod1 (Phase 2) scenario executed successfully
@@ -456,7 +476,11 @@ Feature: T218A_RT_forzaControlloSegno_esito=0_carrello_sbloccoParcheggio_Mod1
             """
         When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
+<<<<<<< HEAD
 
+=======
+@runnable
+>>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execute nodoInviaRT2 (Phase 4) [forzaControlloSegnoAssente]
         Given the Execute nodoInviaRT (Phase 3) [forzaControlloSegnoAssente] scenario executed successfully
         And identificativoUnivocoVersamento with $2IUV in nodoInviaRT

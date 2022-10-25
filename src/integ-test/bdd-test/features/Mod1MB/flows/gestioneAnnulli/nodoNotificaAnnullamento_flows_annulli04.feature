@@ -3,15 +3,29 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_04]
    Background:
       Given systems up
 
+<<<<<<< HEAD
 
    # [annulli_04]
    Scenario: RPT generation
       Given RPT generation
+=======
+@runnable
+   # [annulli_04]
+   Scenario: RPT generation
+      Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
+      And generate 1 cart with PA #codicePA# and notice number $1noticeNumber
+
+      And RPT generation
+>>>>>>> origin/feature/gherkin-with-behavetag
          """
          <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
          <pay_i:versioneOggetto>1.1</pay_i:versioneOggetto>
          <pay_i:dominio>
+<<<<<<< HEAD
          <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
+=======
+         <pay_i:identificativoDominio>#codicePA#</pay_i:identificativoDominio>
+>>>>>>> origin/feature/gherkin-with-behavetag
          <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
          </pay_i:dominio>
          <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
@@ -64,7 +78,11 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_04]
          <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
          <pay_i:importoTotaleDaVersare>1.50</pay_i:importoTotaleDaVersare>
          <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
+<<<<<<< HEAD
          <pay_i:identificativoUnivocoVersamento>#IuV#</pay_i:identificativoUnivocoVersamento>
+=======
+         <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
+>>>>>>> origin/feature/gherkin-with-behavetag
          <pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
          <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
          <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
@@ -83,13 +101,21 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_04]
          </pay_i:datiVersamento>
          </pay_i:RPT>
          """
+<<<<<<< HEAD
 
+=======
+      And generate 2 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
+>>>>>>> origin/feature/gherkin-with-behavetag
       And RPT2 generation
          """
          <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
          <pay_i:versioneOggetto>1.1</pay_i:versioneOggetto>
          <pay_i:dominio>
+<<<<<<< HEAD
          <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
+=======
+         <pay_i:identificativoDominio>#codicePA#</pay_i:identificativoDominio>
+>>>>>>> origin/feature/gherkin-with-behavetag
          <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
          </pay_i:dominio>
          <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
@@ -142,7 +168,11 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_04]
          <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
          <pay_i:importoTotaleDaVersare>1.50</pay_i:importoTotaleDaVersare>
          <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
+<<<<<<< HEAD
          <pay_i:identificativoUnivocoVersamento>#IuV2#</pay_i:identificativoUnivocoVersamento>
+=======
+         <pay_i:identificativoUnivocoVersamento>$2iuv</pay_i:identificativoUnivocoVersamento>
+>>>>>>> origin/feature/gherkin-with-behavetag
          <pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
          <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
          <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
@@ -162,7 +192,11 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_04]
          </pay_i:RPT>
          """
 
+<<<<<<< HEAD
 
+=======
+@runnable
+>>>>>>> origin/feature/gherkin-with-behavetag
    Scenario: Execute nodoInviaCarrelloRPT request
       Given the RPT generation scenario executed successfully
       And initial XML paaInviaRT
@@ -185,9 +219,15 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_04]
          <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
          <soapenv:Header>
          <ppt:intestazioneCarrelloPPT>
+<<<<<<< HEAD
          <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
          <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
          <identificativoCarrello>#carrello#</identificativoCarrello>
+=======
+         <identificativoIntermediarioPA>#codicePA#</identificativoIntermediarioPA>
+         <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
+         <identificativoCarrello>$1carrello</identificativoCarrello>
+>>>>>>> origin/feature/gherkin-with-behavetag
          </ppt:intestazioneCarrelloPPT>
          </soapenv:Header>
          <soapenv:Body>
@@ -198,14 +238,24 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_04]
          <identificativoCanale>97735020584_02</identificativoCanale>
          <listaRPT>
          <elementoListaRPT>
+<<<<<<< HEAD
          <identificativoDominio>#creditor_institution_code#</identificativoDominio>
          <identificativoUnivocoVersamento>$IuV</identificativoUnivocoVersamento>
+=======
+         <identificativoDominio>#codicePA#</identificativoDominio>
+         <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
+>>>>>>> origin/feature/gherkin-with-behavetag
          <codiceContestoPagamento>CCD01</codiceContestoPagamento>
          <rpt>$rptAttachment</rpt>
          </elementoListaRPT>
          <elementoListaRPT>
+<<<<<<< HEAD
          <identificativoDominio>#creditor_institution_code#</identificativoDominio>
          <identificativoUnivocoVersamento>$2IuV</identificativoUnivocoVersamento>
+=======
+         <identificativoDominio>#codicePA#</identificativoDominio>
+         <identificativoUnivocoVersamento>$2iuv</identificativoUnivocoVersamento>
+>>>>>>> origin/feature/gherkin-with-behavetag
          <codiceContestoPagamento>CCD01</codiceContestoPagamento>
          <rpt>$rpt2Attachment</rpt>
          </elementoListaRPT>
@@ -219,6 +269,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_04]
       When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
       Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
       Then retrieve session token from $nodoInviaCarrelloRPTResponse.url
+<<<<<<< HEAD
       And update through the query DB_GEST_ANN_update1 with date Today under macro Mod1Mb on db nodo_online
       And update through the query DB_GEST_ANN_update2 with date Today under macro Mod1Mb on db nodo_online
 
@@ -226,10 +277,27 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_04]
    # Activate phase
    Scenario: Trigger annullamentoRptMaiRichiesteDaPm
       Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
+=======
+@runnable
+   Scenario: update column valid_to UPDATED_TIMESTAMP
+      Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
+      And replace iuv content with $1iuv content
+      And change date Today to remove minutes 15
+      Then update through the query DB_GEST_ANN_update1 with date $date under macro Mod1Mb on db nodo_online
+      And replace iuv content with $2iuv content
+      And update through the query DB_GEST_ANN_update2 with date $date under macro Mod1Mb on db nodo_online
+      And wait 10 seconds for expiration
+
+@runnable
+   # Activate phase
+   Scenario: Trigger annullamentoRptMaiRichiesteDaPm
+      Given the update column valid_to UPDATED_TIMESTAMP scenario executed successfully
+>>>>>>> origin/feature/gherkin-with-behavetag
       When job annullamentoRptMaiRichiesteDaPm triggered after 10 seconds
       Then verify the HTTP status code of annullamentoRptMaiRichiesteDaPm response is 200
 
 
+<<<<<<< HEAD
     #DB-CHECK-STATI_RPT
     And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query DB_GEST_ANN_stati_rpt on db nodo_online under macro Mod1Mb
 
@@ -257,3 +325,38 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_04]
 
     #DB-CHECK-POSITION_STATUS_SNAPSHOT
     And verify 0 record for the table POSITION_STATUS_SNAPSHOT retrived by the query DB_GEST_ANN_stati_position_status on db nodo_online under macro Mod1Mb
+=======
+      #DB-CHECK-STATI_RPT
+      And replace iuv content with $1iuv content
+
+      And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query DB_GEST_ANN_stati_rpt on db nodo_online under macro Mod1Mb
+      And replace iuv content with $2iuv content
+      And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query DB_GEST_ANN_iuv2 on db nodo_online under macro Mod1Mb
+
+      #DB-CHECK-STATI_RPT_SNAPSHOT
+      And replace iuv content with $1iuv content
+
+      And checks the value RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query DB_GEST_ANN_stati_rpt on db nodo_online under macro Mod1Mb
+      And replace iuv content with $2iuv content
+      And checks the value RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query DB_GEST_ANN_iuv2 on db nodo_online under macro Mod1Mb
+
+      #DB-CHECK-STATI_CARRELLO
+      And replace iuv content with $1iuv content
+
+      And checks the value CART_RICEVUTO_NODO, CART_ACCETTATO_NODO, CART_PARCHEGGIATO_NODO of the record at column STATO of the table STATI_CARRELLO retrived by the query DB_GEST_ANN_stati_payment_token on db nodo_online under macro Mod1Mb
+
+      #DB-CHECK-STATI_CARRELLO_SNAPSHOT
+      And checks the value CART_PARCHEGGIATO_NODO of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query DB_GEST_ANN_stati_payment_token on db nodo_online under macro Mod1Mb
+
+      #DB-CHECK-POSITION_PAYMENT_STATUS
+      And verify 0 record for the table POSITION_PAYMENT_STATUS retrived by the query DB_GEST_ANN_stati_position_payment_status on db nodo_online under macro Mod1Mb
+
+      #DB-CHECK-POSITION_PAYMENT_STATUS_SNAPSHOT
+      And verify 0 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query DB_GEST_ANN_stati_position_payment_status on db nodo_online under macro Mod1Mb
+
+      #DB-CHECK-POSITION_STATUS
+      And verify 0 record for the table POSITION_STATUS retrived by the query DB_GEST_ANN_stati_position_status on db nodo_online under macro Mod1Mb
+
+      #DB-CHECK-POSITION_STATUS_SNAPSHOT
+      And verify 0 record for the table POSITION_STATUS_SNAPSHOT retrived by the query DB_GEST_ANN_stati_position_status on db nodo_online under macro Mod1Mb
+>>>>>>> origin/feature/gherkin-with-behavetag

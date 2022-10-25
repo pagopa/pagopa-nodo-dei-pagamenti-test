@@ -198,16 +198,28 @@ Background:
         </soapenv:Body>
         </soapenv:Envelope>
         """
+<<<<<<< HEAD
 
 Scenario: verifyRPT phase
     When PSP sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
     Then check esito is OK of nodoVerificaRPT response
 
+=======
+@runnable
+Scenario: verifyRPT phase
+    When PSP sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
+    Then check esito is OK of nodoVerificaRPT response
+@runnable
+>>>>>>> origin/feature/gherkin-with-behavetag
 Scenario: attivaRPT phase
     Given the verifyRPT phase scenario executed successfully
     When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
     Then check esito is OK of nodoAttivaRPT response
+<<<<<<< HEAD
 
+=======
+@runnable
+>>>>>>> origin/feature/gherkin-with-behavetag
 Scenario: check nodoInviaRPT response
     Given the attivaRPT phase scenario executed successfully
     When PSP sends SOAP nodoInviaRPT to nodo-dei-pagamenti

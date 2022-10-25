@@ -2,7 +2,11 @@ Feature: pspInviaCarrelloRPT_timeout_chiediAvanzamento
 
     Background:
         Given systems up
+<<<<<<< HEAD
 
+=======
+@runnable
+>>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: RPT1 generation
         Given nodo-dei-pagamenti has config parameter scheduler.pspChiediAvanzamentoRptPollerMaxRetry set to 1
         And generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr_old# and application code NA
@@ -84,7 +88,11 @@ Feature: pspInviaCarrelloRPT_timeout_chiediAvanzamento
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
+<<<<<<< HEAD
 
+=======
+@runnable
+>>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execute nodoInviaCarrelloRPT request
         Given the RPT1 generation scenario executed successfully
         And initial XML nodoInviaCarrelloRPT
@@ -143,7 +151,11 @@ Feature: pspInviaCarrelloRPT_timeout_chiediAvanzamento
         And checks the value RPT_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_RPT retrived by the query rpt on db nodo_online under macro Primitive_accessorie
         And checks the value RPT_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt on db nodo_online under macro Primitive_accessorie
 
+<<<<<<< HEAD
 
+=======
+@runnable
+>>>>>>> origin/feature/gherkin-with-behavetag
     # [pspChiediAvanzamentoRPT -> OK]
     Scenario: Execute job pspChiediAvanzamentoRPT
         Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
@@ -166,7 +178,11 @@ Feature: pspInviaCarrelloRPT_timeout_chiediAvanzamento
         Then checks the value RPT_ESITO_SCONOSCIUTO_PSP,RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT retrived by the query rpt on db nodo_online under macro Primitive_accessorie
         And checks the value RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt on db nodo_online under macro Primitive_accessorie
 
+<<<<<<< HEAD
 
+=======
+@runnable
+>>>>>>> origin/feature/gherkin-with-behavetag
     # [pspChiediAvanzamentoRPT -> timeout]
     Scenario: Execute job pspChiediAvanzamentoRPT
         Given the Execute nodoInviaCarrelloRPT request scenario executed successfully

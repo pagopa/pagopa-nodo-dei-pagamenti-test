@@ -52,18 +52,18 @@ Feature: syntax checks for pspNotifyPaymentReq - CreditCard [T_01]
         </soapenv:Envelope>
       """
     And EC new version
-
+  @runnable
   Scenario: Execute activateIOPaymentReq request
     When IO sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is OK of activateIOPayment response
-
+  @runnable
   # nodoChiediInformazioniPagamento phase
   Scenario: Execute nodoChiediInformazioniPagamento request
     Given the Execute activateIOPaymentReq request scenario executed successfully
     When WISP sends rest GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
     Then verify the HTTP status code of informazioniPagamento response is 200
         
-        
+   @runnable     
   # nodoInoltraEsitoPagamentoCarte phase
   Scenario: Execute nodoInoltraEsitoPagamentoCarte request
     Given the Execute nodoChiediInformazioniPagamento request scenario executed successfully

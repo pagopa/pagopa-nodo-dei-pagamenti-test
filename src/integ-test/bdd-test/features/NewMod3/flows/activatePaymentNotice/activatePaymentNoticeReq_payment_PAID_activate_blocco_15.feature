@@ -124,7 +124,11 @@ Feature: process tests for retry on a NOTICE_STORED transaction with different t
          <ppt:intestazionePPT>
          <identificativoIntermediarioPA>#id_broker_old#</identificativoIntermediarioPA>
          <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
+<<<<<<< HEAD
          <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
+=======
+         <identificativoDominio>#codicePA_old#</identificativoDominio>
+>>>>>>> origin/feature/gherkin-with-behavetag
          <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
          <codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken</codiceContestoPagamento>
          </ppt:intestazionePPT>

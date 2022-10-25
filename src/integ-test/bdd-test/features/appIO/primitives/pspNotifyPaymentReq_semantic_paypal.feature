@@ -52,11 +52,11 @@ Feature: semantic checks for pspNotifyPaymentReq - payPal [T_01]
         </soapenv:Envelope>
       """
     And EC new version
-
+@runnable
   Scenario: 1. Execute activateIOPaymentReq request
     When IO sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is OK of activateIOPayment response
-
+@runnable
   # nodoChiediInformazioniPagamento phase
   Scenario: 2. Execute nodoChiediInformazioniPagamento request
     Given the 1. Execute activateIOPaymentReq request scenario executed successfully
@@ -81,4 +81,4 @@ Feature: semantic checks for pspNotifyPaymentReq - payPal [T_01]
 #    And identificativoCanale with SERVIZIO_NMP
     Then verify the HTTP status code of inoltroEsito/paypal response is 200
     And check esito is OK of inoltroEsito/paypal response
-    And activateIOPayment response and pspNotifyPayment request are consistent with paypal
+    #And activateIOPayment response and pspNotifyPayment request are consistent with paypal

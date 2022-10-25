@@ -2,15 +2,24 @@ Feature: process tests for chiediListaPSP
 
     Background:
         Given systems up
+<<<<<<< HEAD
 
+=======
+@runnable
+>>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: RPT generation
         Given RPT generation
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
             <pay_i:dominio>
+<<<<<<< HEAD
                 <pay_i:identificativoDominio>44444444444</pay_i:identificativoDominio>
                 <pay_i:identificativoStazioneRichiedente>44444444444_01</pay_i:identificativoStazioneRichiedente>
+=======
+                <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
+                <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
+>>>>>>> origin/feature/gherkin-with-behavetag
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
             <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
@@ -81,6 +90,10 @@ Feature: process tests for chiediListaPSP
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
+<<<<<<< HEAD
+=======
+@runnable
+>>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execute nodoInviaCarrelloRPT request
         Given the RPT generation scenario executed successfully
         And initial XML nodoInviaCarrelloRPT
@@ -88,8 +101,13 @@ Feature: process tests for chiediListaPSP
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
                 <ppt:intestazioneCarrelloPPT>
+<<<<<<< HEAD
                     <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
                     <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
+=======
+                    <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
+                    <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
+>>>>>>> origin/feature/gherkin-with-behavetag
                     <identificativoCarrello>$IUV</identificativoCarrello>
                 </ppt:intestazioneCarrelloPPT>
             </soapenv:Header>
@@ -101,7 +119,11 @@ Feature: process tests for chiediListaPSP
                     <identificativoCanale>97735020584_02</identificativoCanale>
                     <listaRPT>
                         <elementoListaRPT>
+<<<<<<< HEAD
                         <identificativoDominio>44444444444</identificativoDominio>
+=======
+                        <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+>>>>>>> origin/feature/gherkin-with-behavetag
                         <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
                         <codiceContestoPagamento>CCD01</codiceContestoPagamento>
                         <rpt>$rptAttachment</rpt>
@@ -136,19 +158,31 @@ Feature: process tests for chiediListaPSP
         And execution query getPspAltro to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
         And through the query getPspAltro retrieve param listaAltro at position -1 and save it under the key listaAltro
 
+<<<<<<< HEAD
 
+=======
+@runnable
+>>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: execution nodoChiediListaPSP - altro
         Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
         When WISP sends rest GET listaPSP?idPagamento=$sessionToken&percorsoPagamento=ALTRO&lingua=$lingua to nodo-dei-pagamenti
         Then verify the HTTP status code of listaPSP response is 200
+<<<<<<< HEAD
 
+=======
+@runnable
+>>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: execution nodoChiediListaPSP - carte
         Given the execution nodoChiediListaPSP - altro scenario executed successfully
         When WISP sends rest GET listaPSP?idPagamento=$sessionToken&percorsoPagamento=CARTE&lingua=$lingua to nodo-dei-pagamenti
         Then verify the HTTP status code of listaPSP response is 200
         And check totalRows is $sizeCarte of listaPSP response
         And check data is $listaCarte of listaPSP response
+<<<<<<< HEAD
 
+=======
+@runnable
+>>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: execution nodoChiediListaPSP - conto
         Given the execution nodoChiediListaPSP - carte scenario executed successfully
         When WISP sends rest GET listaPSP?idPagamento=$sessionToken&percorsoPagamento=CC&lingua=$lingua to nodo-dei-pagamenti

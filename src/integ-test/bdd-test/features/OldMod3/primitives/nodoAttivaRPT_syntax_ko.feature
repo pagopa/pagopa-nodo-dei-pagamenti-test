@@ -9,11 +9,19 @@ Feature: Syntax checks KO for nodoAttivaRPT
             <ws:nodoAttivaRPT>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoIntermediarioPSP>#id_broker#</identificativoIntermediarioPSP>
+<<<<<<< HEAD
             <identificativoCanale>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanale>
             <password>pwdpwdpwd</password>
             <codiceContestoPagamento>#ccp#</codiceContestoPagamento>
             <identificativoIntermediarioPSPPagamento>#psp#</identificativoIntermediarioPSPPagamento>
             <identificativoCanalePagamento>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanalePagamento>
+=======
+            <identificativoCanale>#canale#</identificativoCanale>
+            <password>pwdpwdpwd</password>
+            <codiceContestoPagamento>#ccp#</codiceContestoPagamento>
+            <identificativoIntermediarioPSPPagamento>97735020584</identificativoIntermediarioPSPPagamento>
+            <identificativoCanalePagamento>#canale#</identificativoCanalePagamento>
+>>>>>>> origin/feature/gherkin-with-behavetag
             <codificaInfrastrutturaPSP>QR-CODE</codificaInfrastrutturaPSP>
             <codiceIdRPT><bc:BarCode><bc:Gln>1234567890122</bc:Gln><bc:CodStazPA>01</bc:CodStazPA><bc:AuxDigit>0</bc:AuxDigit><bc:CodIUV>112222222222222</bc:CodIUV></bc:BarCode></codiceIdRPT>
             <datiPagamentoPSP>
@@ -103,6 +111,7 @@ Feature: Syntax checks KO for nodoAttivaRPT
             | identificativoPSP                       | None                                                                    | ARPTSIN6    |
             | identificativoIntermediarioPSP          | None                                                                    | ARPTSIN9    |
             | identificativoCanale                    | None                                                                    | ARPTSIN12   |
+<<<<<<< HEAD
             | identificativoCanale                    | QuestiSono36CaratteriAlfaNumericiTT1                                    | ARPTSIN14   |
             | password                                | None                                                                    | ARPTSIN15   |
             | codiceContestoPagamento                 | None                                                                    | ARPTSIN19   |
@@ -115,6 +124,14 @@ Feature: Syntax checks KO for nodoAttivaRPT
             | codificaInfrastrutturaPSP               | None                                                                    | ARPTSIN28   |
             | codiceIdRPT                             | None                                                                    | ARPTSIN30   |
             | codiceIdRPT                             | Empty                                                                   | ARPTSIN31   |
+=======
+            | password                                | None                                                                    | ARPTSIN15   |
+            | codiceContestoPagamento                 | None                                                                    | ARPTSIN19   |
+            | identificativoIntermediarioPSPPagamento | None                                                                    | ARPTSIN22   |
+            | identificativoCanalePagamento           | None                                                                    | ARPTSIN25   |
+            | codificaInfrastrutturaPSP               | None                                                                    | ARPTSIN28   |
+            | codiceIdRPT                             | None                                                                    | ARPTSIN30   |
+>>>>>>> origin/feature/gherkin-with-behavetag
             | datiPagamentoPSP                        | None                                                                    | ARPTSIN32   |
             | datiPagamentoPSP                        | RemoveParent                                                            | ARPTSIN33   |
             | importoSingoloVersamento                | None                                                                    | ARPTSIN34   |
@@ -140,7 +157,11 @@ Feature: Syntax checks KO for nodoAttivaRPT
             | pag:codiceIdentificativoUnivoco         | None                                                                    | ARPTSIN90   |
             | pag:anagraficaPagatore                  | None                                                                    | ARPTSIN93   |
             | codiceContestoPagamento                 | Empty                                                                   | ARPTSIN20   |
+<<<<<<< HEAD
             | codiceContestoPagamento                 | QuestiSono36CaratteriAlfaNumericiTT1                                    | ARPTSIN21   |
+=======
+            | codiceContestoPagamento                 | QuestiSono35CaratteriAlfaNumericiTT1                                    | ARPTSIN21   |
+>>>>>>> origin/feature/gherkin-with-behavetag
             | importoSingoloVersamento                | 22                                                                      | ARPTSIN36   |
             | importoSingoloVersamento                | 1999999999.99                                                           | ARPTSIN38   |
             | importoSingoloVersamento                | 10.251                                                                  | ARPTSIN39   |
@@ -156,6 +177,7 @@ Feature: Syntax checks KO for nodoAttivaRPT
             | pag:anagraficaVersante                  | RSSFNC50S01L781HARSSFNC50S01L781HARSSFNC50S01L781HARSSFNC50S01L781HAasd | ARPTSIN61   |
             | pag:indirizzoVersante                   | Empty                                                                   | ARPTSIN62   |
             | pag:indirizzoVersante                   | RSSFNC50S01L781HARSSFNC50S01L781HARSSFNC50S01L781HARSSFNC50S01L781HAasd | ARPTSIN63   |
+<<<<<<< HEAD
             | pag:civicoVersante                      | Empty                                                                   | ARPTSIN64   |
             | pag:civicoVersante                      | Sono17CaratteAlfa                                                       | ARPTSIN65   |
             | pag:capVersante                         | Empty                                                                   | ARPTSIN66   |
@@ -206,6 +228,14 @@ Feature: Syntax checks KO for nodoAttivaRPT
         | bc:CodIUV              | Sono16CaratteAlf         | ARPTSIN114  |
         | bc:CodStazPA           | Empty                    | ARPTSIN115  |
 
+=======
+
+
+    Scenario: Check faultCode PPT_SINTASSI_EXTRAXSD on invalid body element value [ARPTSIN115]
+        Given bc:CodStazPA with Empty in nodoAttivaRPT
+        When psp sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
+        Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoAttivaRPT response
+>>>>>>> origin/feature/gherkin-with-behavetag
 
     Scenario Outline: Check faultCode PPT_SINTASSI_EXTRAXSD on invalid body element value
         Given <tag> with <value> in nodoAttivaRPT
@@ -234,13 +264,21 @@ Feature: Syntax checks KO for nodoAttivaRPT
                 | password | Empty            | ARPTSIN16   |
                 | password | Alpha_7          | ARPTSIN17   |
                 | password | Alpha_16_Num_123 | ARPTSIN18   |
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Check faultCode PPT_SINTASSI_EXTRAXSD on invalid body element value [ARPTSIN13]
         Given identificativoCanale with Empty in nodoAttivaRPT
         When psp sends soap nodoAttivaRPT to nodo-dei-pagamenti
         Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoAttivaRPT response
+<<<<<<< HEAD
  
     # Scenario: Check faultCode PPT_AUTORIZZAZIONE error on invalid body element value [ARPTSIN29]
     #     Given codificaInfrastrutturaPSP with empty in nodoAttivaRPT
     #     When psp sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
     #     Then check faultCode is PPT_AUTORIZZAZIONE of nodoAttivaRPT response
+=======
+
+>>>>>>> origin/feature/gherkin-with-behavetag

@@ -29,6 +29,78 @@ Feature: process tests for accessiConCorrenziali [1a - RPT+SPO]
         </soapenv:Body>
         </soapenv:Envelope>
         """
+<<<<<<< HEAD
+=======
+        And initial XML paGetPayment
+
+        """
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+        xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
+        <soapenv:Header/>
+        <soapenv:Body>
+        <paf:paGetPaymentRes>
+        <outcome>OK</outcome>
+        <data>
+        <creditorReferenceId>$1iuv</creditorReferenceId>
+        <paymentAmount>10.00</paymentAmount>
+        <dueDate>2021-12-31</dueDate>
+        <!--Optional:-->
+        <retentionDate>2021-12-31T12:12:12</retentionDate>
+        <!--Optional:-->
+        <lastPayment>1</lastPayment>
+        <description>description</description>
+        <!--Optional:-->
+        <companyName>company</companyName>
+        <!--Optional:-->
+        <officeName>office</officeName>
+        <debtor>
+        <uniqueIdentifier>
+        <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
+        <entityUniqueIdentifierValue>#creditor_institution_code_old#</entityUniqueIdentifierValue>
+        </uniqueIdentifier>
+        <fullName>paGetPaymentName</fullName>
+        <!--Optional:-->
+        <streetName>paGetPaymentStreet</streetName>
+        <!--Optional:-->
+        <civicNumber>paGetPayment99</civicNumber>
+        <!--Optional:-->
+        <postalCode>20155</postalCode>
+        <!--Optional:-->
+        <city>paGetPaymentCity</city>
+        <!--Optional:-->
+        <stateProvinceRegion>paGetPaymentState</stateProvinceRegion>
+        <!--Optional:-->
+        <country>IT</country>
+        <!--Optional:-->
+        <e-mail>paGetPayment@test.it</e-mail>
+        </debtor>
+        <!--Optional:-->
+        <transferList>
+        <!--1 to 5 repetitions:-->
+        <transfer>
+        <idTransfer>1</idTransfer>
+        <transferAmount>70.00</transferAmount>
+        <fiscalCodePA>#creditor_institution_code_old#</fiscalCodePA>
+        <IBAN>IT45R0760103200000000001016</IBAN>
+        <remittanceInformation>testPaGetPayment</remittanceInformation>
+        <transferCategory>paGetPaymentTest</transferCategory>
+        </transfer>
+        </transferList>
+        <!--Optional:-->
+        <metadata>
+        <!--1 to 10 repetitions:-->
+        <mapEntry>
+        <key>1</key>
+        <value>22</value>
+        </mapEntry>
+        </metadata>
+        </data>
+        </paf:paGetPaymentRes>
+        </soapenv:Body>
+        </soapenv:Envelope>
+        """
+        And EC replies to nodo-dei-pagamenti with the paGetPayment
+>>>>>>> origin/feature/gherkin-with-behavetag
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
 
@@ -140,11 +212,15 @@ Feature: process tests for accessiConCorrenziali [1a - RPT+SPO]
             </soapenv:Body>
             </soapenv:Envelope>
             """
+<<<<<<< HEAD
         Then saving nodoInviaRPT request in nodoInviaRPT
 
 
     Scenario: Excecute second primitives request
         Given the Excecute primitives request scenario executed successfully
+=======
+
+>>>>>>> origin/feature/gherkin-with-behavetag
         And initial XML sendPaymentOutcome
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -192,6 +268,7 @@ Feature: process tests for accessiConCorrenziali [1a - RPT+SPO]
             </soapenv:Body>
             </soapenv:Envelope>
             """
+<<<<<<< HEAD
         Then saving sendPaymentOutcome request in sendPaymentOutcome
 
     Scenario: parallel calls and test scenario
@@ -200,6 +277,17 @@ Feature: process tests for accessiConCorrenziali [1a - RPT+SPO]
         Then check esito is OK of nodoInviaRPT response
         And check outcome is OK of sendPaymentOutcome response
 
+=======
+
+
+    Scenario: parallel calls and test scenario
+        Given the Excecute primitives request scenario executed successfully
+        And calling primitive nodoInviaRPT and sendPaymentOutcome in parallel
+        Then check esito is OK of nodoInviaRPT response
+        And check outcome is OK of sendPaymentOutcome response
+
+
+>>>>>>> origin/feature/gherkin-with-behavetag
         # #DB CHECK-POSITION_PAYMENT_STATUS
         # And checks the value PAYING, PAYING_RPT, PAID, NOTICE_GENERATED, NOTICE_STORED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
 

@@ -2,15 +2,24 @@ Feature: process tests for notificaAnnullamento_Carrello_2RPT-T139B
 
     Background:
         Given systems up
+<<<<<<< HEAD
 
+=======
+@runnable
+>>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: RPT generation
         Given RPT generation
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
             <pay_i:dominio>
+<<<<<<< HEAD
                 <pay_i:identificativoDominio>44444444444</pay_i:identificativoDominio>
                 <pay_i:identificativoStazioneRichiedente>44444444444_01</pay_i:identificativoStazioneRichiedente>
+=======
+                <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
+                <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
+>>>>>>> origin/feature/gherkin-with-behavetag
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
             <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
@@ -81,7 +90,11 @@ Feature: process tests for notificaAnnullamento_Carrello_2RPT-T139B
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
+<<<<<<< HEAD
 
+=======
+@runnable
+>>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: RPT2 generation
         Given the RPT generation scenario executed successfully
         And RPT2 generation
@@ -89,8 +102,13 @@ Feature: process tests for notificaAnnullamento_Carrello_2RPT-T139B
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
             <pay_i:dominio>
+<<<<<<< HEAD
                 <pay_i:identificativoDominio>44444444444</pay_i:identificativoDominio>
                 <pay_i:identificativoStazioneRichiedente>44444444444_01</pay_i:identificativoStazioneRichiedente>
+=======
+                <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
+                <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
+>>>>>>> origin/feature/gherkin-with-behavetag
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
             <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
@@ -161,7 +179,11 @@ Feature: process tests for notificaAnnullamento_Carrello_2RPT-T139B
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
+<<<<<<< HEAD
 
+=======
+@runnable
+>>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execute nodoInviaCarrelloRPT request
         Given the RPT2 generation scenario executed successfully
         And initial XML nodoInviaCarrelloRPT
@@ -169,8 +191,13 @@ Feature: process tests for notificaAnnullamento_Carrello_2RPT-T139B
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
                 <ppt:intestazioneCarrelloPPT>
+<<<<<<< HEAD
                     <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
                     <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
+=======
+                    <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
+                    <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
+>>>>>>> origin/feature/gherkin-with-behavetag
                     <identificativoCarrello>#CARRELLO1#</identificativoCarrello>
                 </ppt:intestazioneCarrelloPPT>
             </soapenv:Header>
@@ -183,13 +210,21 @@ Feature: process tests for notificaAnnullamento_Carrello_2RPT-T139B
                     <listaRPT>
                         <!--1 or more repetitions:-->
                         <elementoListaRPT>
+<<<<<<< HEAD
                         <identificativoDominio>44444444444</identificativoDominio>
+=======
+                        <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+>>>>>>> origin/feature/gherkin-with-behavetag
                         <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
                         <codiceContestoPagamento>CCD01</codiceContestoPagamento>
                         <rpt>$rptAttachment</rpt>
                         </elementoListaRPT>
                         <elementoListaRPT>
+<<<<<<< HEAD
                         <identificativoDominio>44444444444</identificativoDominio>
+=======
+                        <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+>>>>>>> origin/feature/gherkin-with-behavetag
                         <identificativoUnivocoVersamento>$2IUV</identificativoUnivocoVersamento>
                         <codiceContestoPagamento>CCD01</codiceContestoPagamento>
                         <rpt>$rpt2Attachment</rpt>
@@ -204,7 +239,11 @@ Feature: process tests for notificaAnnullamento_Carrello_2RPT-T139B
         And check url contains acardste of nodoInviaCarrelloRPT response
         And retrieve session token from $nodoInviaCarrelloRPTResponse.url
 
+<<<<<<< HEAD
 
+=======
+@runnable
+>>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execute nodoNotificaAnnullamento
         Given the Execute nodoInviaCarrelloRPT scenario executed successfully
         When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken to nodo-dei-pagamenti

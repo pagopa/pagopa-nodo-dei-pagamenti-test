@@ -3,7 +3,11 @@ Feature: task_509
     Background:
         Given systems up
         And EC new version
+<<<<<<< HEAD
 
+=======
+@runnable
+>>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execute verifyPaymentNotice (Phase 1)
         Given initial XML verifyPaymentNotice
         """
@@ -25,7 +29,11 @@ Feature: task_509
         """
         When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of verifyPaymentNotice response
+<<<<<<< HEAD
 
+=======
+@runnable
+>>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execute activateIOPayment (Phase 2)
         Given the Execute verifyPaymentNotice (Phase 1) scenario executed successfully
         And initial XML activateIOPayment
@@ -81,13 +89,21 @@ Feature: task_509
         Then check outcome is OK of activateIOPayment response
         And execution query token_validity to get value on the table POSITION_ACTIVATE, with the columns TOKEN_VALID_FROM under macro AppIO with db name nodo_online
         And through the query token_validity retrieve param token_valid_from_activate at position 0 and save it under the key token_valid_from_activate
+<<<<<<< HEAD
     
+=======
+@runnable  
+>>>>>>> origin/feature/gherkin-with-behavetag
     # [TASK_509_01]
     Scenario: Execute nodoChiediInformazioniPagamento (Phase 3)
         Given the Execute activateIOPayment (Phase 2) scenario executed successfully
         When WISP sends rest GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200
+<<<<<<< HEAD
 
+=======
+@runnable
+>>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execute nodoInoltroEsitoCarta (Phase 3)
         Given the Execute activateIOPayment (Phase 2) scenario executed successfully
         When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
@@ -107,7 +123,11 @@ Feature: task_509
         """
         Then verify the HTTP status code of inoltroEsito/carta response is 200
         And check esito is OK of inoltroEsito/carta response
+<<<<<<< HEAD
 
+=======
+@runnable
+>>>>>>> origin/feature/gherkin-with-behavetag
     # [TASK_509_02]
     Scenario: Execute nodoInoltroEsitoCarta (Phase 4)
         Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
@@ -128,27 +148,43 @@ Feature: task_509
         """
         Then verify the HTTP status code of inoltroEsito/carta response is 200
         And check esito is OK of inoltroEsito/carta response
+<<<<<<< HEAD
 
+=======
+@runnable
+>>>>>>> origin/feature/gherkin-with-behavetag
     # [TASK_509_03]
     Scenario: Execute nodoChiediListaPSP (Phase 4)
         Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
         When WISP sends rest GET listaPSP?idPagamento=$activateIOPaymentResponse.paymentToken&percorsoPagamento=CARTE to nodo-dei-pagamenti
         Then verify the HTTP status code of listaPSP response is 200
+<<<<<<< HEAD
 
+=======
+@runnable
+>>>>>>> origin/feature/gherkin-with-behavetag
     # [TASK_509_04]
     Scenario: Execute nodoNotificaAnnullamento (Phase 4)
         Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
         When WISP sends REST GET notificaAnnullamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
         Then verify the HTTP status code of notificaAnnullamento response is 200
         And check esito is OK of notificaAnnullamento response
+<<<<<<< HEAD
     
+=======
+ @runnable   
+>>>>>>> origin/feature/gherkin-with-behavetag
     # [TASK_509_05]
     Scenario: Execute nodoChiediAvanzamentoPagamento (Phase 4)
         Given the Execute nodoInoltroEsitoCarta (Phase 3) scenario executed successfully
         When WISP sends REST GET avanzamentoPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
         Then verify the HTTP status code of avanzamentoPagamento response is 200
         And check esito is OK of avanzamentoPagamento response
+<<<<<<< HEAD
 
+=======
+@runnable
+>>>>>>> origin/feature/gherkin-with-behavetag
     # [TASK_509_06]
     Scenario: Check TOKEN_VALID_FROM (Phase 5)
         Given the Execute nodoInoltroEsitoCarta (Phase 4) scenario executed successfully
@@ -156,7 +192,11 @@ Feature: task_509
         And execution query token_validity to get value on the table POSITION_ACTIVATE, with the columns TOKEN_VALID_FROM under macro AppIO with db name nodo_online
         And through the query token_validity retrieve param token_valid_from_inoltro at position 0 and save it under the key token_valid_from_inoltro
         And check value $token_valid_from_activate is equal to value $token_valid_from_inoltro
+<<<<<<< HEAD
         
+=======
+@runnable        
+>>>>>>> origin/feature/gherkin-with-behavetag
     # [TASK_509_07]
     Scenario: Check TOKEN_VALID_TO + 1h (Phase 5)
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 3600000
@@ -164,7 +204,11 @@ Feature: task_509
         And the Execute nodoInoltroEsitoCarta (Phase 4) scenario executed successfully
         Then check token_valid_to is greater than token_valid_from plus default_durata_estensione_token_IO
         And restore initial configurations
+<<<<<<< HEAD
 
+=======
+@runnable
+>>>>>>> origin/feature/gherkin-with-behavetag
     # [TASK_509_08]
     Scenario: Check debtor position (Phase 3)
         Given nodo-dei-pagamenti has config parameter scheduler.annullamentoRptMaiRichiesteDaPmPollerMinutesToBack set to 1

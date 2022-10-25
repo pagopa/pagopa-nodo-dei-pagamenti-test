@@ -6,8 +6,59 @@ Feature: TXX
     Scenario: Initialize all mock responses
         Given generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTPS', with where condition ID_CANALE like '7000%' AND ID_CANALE <> '#canaleRtPull#' under macro update_query on db nodo_cfg
         And refresh job PSP triggered after 10 seconds
+<<<<<<< HEAD
         And refresh job PSP triggered after 10 seconds
         And wait 10 seconds for expiration
+=======
+        And wait 10 seconds for expiration
+        And initial XML pspInviaRPT
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <ws:pspInviaRPTResponse>
+            <pspInviaRPTResponse>
+            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+            <identificativoCarrello>$nodoInviaCarrelloRPT.identificativoCarrello</identificativoCarrello>
+            <parametriPagamentoImmediato>idBruciatura=$nodoInviaCarrelloRPT.identificativoCarrello</parametriPagamentoImmediato>
+            </pspInviaRPTResponse>
+            </ws:pspInviaRPTResponse>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And initial XML pspChiediListaRT
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <ws:pspChiediListaRTResponse>
+            <pspChiediListaRTResponse>
+            <elementoListaRTResponse>
+            <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
+            <identificativoUnivocoVersamento>iuv</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+            </elementoListaRTResponse>
+            </pspChiediListaRTResponse>
+            </ws:pspChiediListaRTResponse>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And initial XML pspChiediRT
+            """
+            <soapenv:Envelope
+            xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+            xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <ws:pspChiediRTResponse>
+            <pspChiediRTResponse>
+            <rt>$rtAttachment</rt>
+            </pspChiediRTResponse>
+            </ws:pspChiediRTResponse>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+>>>>>>> origin/feature/gherkin-with-behavetag
         And initial XML pspInviaAckRT
             """
             <soapenv:Envelope
@@ -39,7 +90,11 @@ Feature: TXX
 
     Scenario: Execute nodoInviaRPT1 (Phase 1)
         Given the Initialize all mock responses scenario executed successfully
+<<<<<<< HEAD
         And RPT1 generation
+=======
+        And RPT generation
+>>>>>>> origin/feature/gherkin-with-behavetag
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_2_0.xsd ">
             <pay_i:versioneOggetto>6.0</pay_i:versioneOggetto>
@@ -95,7 +150,11 @@ Feature: TXX
             <pay_i:dataEsecuzionePagamento>2016-09-16</pay_i:dataEsecuzionePagamento>
             <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
+<<<<<<< HEAD
             <pay_i:identificativoUnivocoVersamento>#iuv1#</pay_i:identificativoUnivocoVersamento>
+=======
+            <pay_i:identificativoUnivocoVersamento>#iuv#</pay_i:identificativoUnivocoVersamento>
+>>>>>>> origin/feature/gherkin-with-behavetag
             <pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT45R0760103200000000001016</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
@@ -114,7 +173,11 @@ Feature: TXX
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
+<<<<<<< HEAD
         And RT1 generation
+=======
+        And RT generation
+>>>>>>> origin/feature/gherkin-with-behavetag
             """
             <pay_i:RT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0.xsd ">
             <pay_i:versioneOggetto>6.0</pay_i:versioneOggetto>
@@ -186,15 +249,29 @@ Feature: TXX
             <pay_i:datiPagamento>
             <pay_i:codiceEsitoPagamento>0</pay_i:codiceEsitoPagamento>
             <pay_i:importoTotalePagato>10.00</pay_i:importoTotalePagato>
+<<<<<<< HEAD
             <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
+=======
+            <pay_i:identificativoUnivocoVersamento>$iuv</pay_i:identificativoUnivocoVersamento>
+>>>>>>> origin/feature/gherkin-with-behavetag
             <pay_i:CodiceContestoPagamento>CCD01</pay_i:CodiceContestoPagamento>
             <pay_i:datiSingoloPagamento>
             <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
             <pay_i:esitoSingoloPagamento>Pagamento effettuato</pay_i:esitoSingoloPagamento>
             <pay_i:dataEsitoSingoloPagamento>2012-03-02</pay_i:dataEsitoSingoloPagamento>
+<<<<<<< HEAD
             <pay_i:identificativoUnivocoRiscossione>$1iuv</pay_i:identificativoUnivocoRiscossione>
             <pay_i:causaleVersamento>pagamento fotocopie pratica RT</pay_i:causaleVersamento>
             <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
+=======
+            <pay_i:identificativoUnivocoRiscossione>$iuv</pay_i:identificativoUnivocoRiscossione>
+            <pay_i:causaleVersamento>pagamento fotocopie pratica RT</pay_i:causaleVersamento>
+            <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
+            <pay_i:allegatoRicevuta>
+            <pay_i:tipoAllegatoRicevuta>BD</pay_i:tipoAllegatoRicevuta>
+            <pay_i:testoAllegato>$bollo</pay_i:testoAllegato>
+            </pay_i:allegatoRicevuta>
+>>>>>>> origin/feature/gherkin-with-behavetag
             </pay_i:datiSingoloPagamento>
             </pay_i:datiPagamento>
             </pay_i:RT>
@@ -207,7 +284,11 @@ Feature: TXX
             <identificativoIntermediarioPA>#id_broker_old#</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
             <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
+<<<<<<< HEAD
             <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
+=======
+            <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
+>>>>>>> origin/feature/gherkin-with-behavetag
             <codiceContestoPagamento>CCD01</codiceContestoPagamento>
             </ppt:intestazionePPT>
             </soapenv:Header>
@@ -218,11 +299,16 @@ Feature: TXX
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
             <identificativoCanale>#canaleRtPull#</identificativoCanale>
             <tipoFirma></tipoFirma>
+<<<<<<< HEAD
             <rpt>$rpt1Attachment</rpt>
+=======
+            <rpt>$rptAttachment</rpt>
+>>>>>>> origin/feature/gherkin-with-behavetag
             </ws:nodoInviaRPT>
             </soapenv:Body>
             </soapenv:Envelope>
             """
+<<<<<<< HEAD
             And initial XML pspInviaRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -270,6 +356,8 @@ Feature: TXX
             </soapenv:Body>
             </soapenv:Envelope>
             """
+=======
+>>>>>>> origin/feature/gherkin-with-behavetag
         And initial XML nodoChiediStatoRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -280,12 +368,20 @@ Feature: TXX
             <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
             <password>pwdpwdpwd</password>
             <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
+<<<<<<< HEAD
             <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
+=======
+            <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
+>>>>>>> origin/feature/gherkin-with-behavetag
             <codiceContestoPagamento>CCD01</codiceContestoPagamento>
             </ws:nodoChiediStatoRPT>
             </soapenv:Body>
             </soapenv:Envelope>
             """
+<<<<<<< HEAD
+=======
+        And identificativoUnivocoVersamento with $iuv in pspChiediRT
+>>>>>>> origin/feature/gherkin-with-behavetag
         And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
         And PSP replies to nodo-dei-pagamenti with the pspChiediListaRT
         And PSP replies to nodo-dei-pagamenti with the pspChiediRT
@@ -293,8 +389,13 @@ Feature: TXX
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         And EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
         And job pspChiediListaAndChiediRt triggered after 5 seconds
+<<<<<<< HEAD
         And job paInviaRt triggered after 10 seconds
         And wait 10 seconds for expiration
+=======
+        And job paInviaRt triggered after 50 seconds
+        And wait 50 seconds for expiration
+>>>>>>> origin/feature/gherkin-with-behavetag
         Then check esito is OK of nodoInviaRPT response
         And check stato is RPT_ACCETTATA_PSP of nodoChiediStatoRPT response
         
@@ -364,7 +465,10 @@ Feature: TXX
             <pay_i:datiSingoloVersamento>
             <pay_i:importoSingoloVersamento>10.00</pay_i:importoSingoloVersamento>
             <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
+<<<<<<< HEAD
             <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
+=======
+>>>>>>> origin/feature/gherkin-with-behavetag
             <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
             <pay_i:ibanAppoggio>IT45R0760103200000000001016</pay_i:ibanAppoggio>
             <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
@@ -456,17 +560,30 @@ Feature: TXX
             <pay_i:identificativoUnivocoRiscossione>$2iuv</pay_i:identificativoUnivocoRiscossione>
             <pay_i:causaleVersamento>pagamento fotocopie pratica RT</pay_i:causaleVersamento>
             <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
+<<<<<<< HEAD
+=======
+            <pay_i:allegatoRicevuta>
+            <pay_i:tipoAllegatoRicevuta>BD</pay_i:tipoAllegatoRicevuta>
+            <pay_i:testoAllegato>$bollo</pay_i:testoAllegato>
+            </pay_i:allegatoRicevuta>
+>>>>>>> origin/feature/gherkin-with-behavetag
             </pay_i:datiSingoloPagamento>
             </pay_i:datiPagamento>
             </pay_i:RT>
             """
         And identificativoUnivocoVersamento with $2iuv in nodoInviaRPT
+<<<<<<< HEAD
         And rpt with $rpt2Attachment in nodoInviaRPT
         And rt with $rt2Attachment in pspChiediRT
         And identificativoUnivocoVersamento with $2iuv in nodoChiediStatoRPT
         And identificativoCarrello with $2iuv in pspInviaRPT
         And parametriPagamentoImmediato with idBruciatura=$2iuv in pspInviaRPT
         And identificativoUnivocoVersamento with $2iuv in pspChiediListaRT
+=======
+        And identificativoUnivocoVersamento with $2iuv in pspChiediRT
+        And rpt with $rpt2Attachment in nodoInviaRPT
+        And identificativoUnivocoVersamento with $2iuv in nodoChiediStatoRPT
+>>>>>>> origin/feature/gherkin-with-behavetag
         And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
         And PSP replies to nodo-dei-pagamenti with the pspChiediListaRT
         And PSP replies to nodo-dei-pagamenti with the pspChiediRT
@@ -478,11 +595,14 @@ Feature: TXX
         And wait 10 seconds for expiration
         Then check esito is OK of nodoInviaRPT response
         And check stato is RPT_ACCETTATA_PSP of nodoChiediStatoRPT response
+<<<<<<< HEAD
         And generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTP', with where condition ID_CANALE like '7000%' under macro update_query on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTPS', with where condition ID_CANALE like '7000%' AND ID_CANALE <> '#canaleRtPush#' under macro update_query on db nodo_cfg
         And refresh job PSP triggered after 10 seconds
         And refresh job PSP triggered after 10 seconds
         And wait 10 seconds for expiration
+=======
+>>>>>>> origin/feature/gherkin-with-behavetag
         
     Scenario: Execute nodoInviaRPT3 (Phase 3)
         Given the Execute nodoInviaRPT2 (Phase 2) scenario executed successfully
@@ -550,7 +670,10 @@ Feature: TXX
             <pay_i:datiSingoloVersamento>
             <pay_i:importoSingoloVersamento>10.00</pay_i:importoSingoloVersamento>
             <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
+<<<<<<< HEAD
             <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
+=======
+>>>>>>> origin/feature/gherkin-with-behavetag
             <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
             <pay_i:ibanAppoggio>IT45R0760103200000000001016</pay_i:ibanAppoggio>
             <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
@@ -642,10 +765,18 @@ Feature: TXX
             <pay_i:identificativoUnivocoRiscossione>$3iuv</pay_i:identificativoUnivocoRiscossione>
             <pay_i:causaleVersamento>pagamento fotocopie pratica RT</pay_i:causaleVersamento>
             <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
+<<<<<<< HEAD
+=======
+            <pay_i:allegatoRicevuta>
+            <pay_i:tipoAllegatoRicevuta>BD</pay_i:tipoAllegatoRicevuta>
+            <pay_i:testoAllegato>$bollo</pay_i:testoAllegato>
+            </pay_i:allegatoRicevuta>
+>>>>>>> origin/feature/gherkin-with-behavetag
             </pay_i:datiSingoloPagamento>
             </pay_i:datiPagamento>
             </pay_i:RT>
             """
+<<<<<<< HEAD
 
         And identificativoUnivocoVersamento with $3iuv in nodoInviaRPT
         And identificativoCanale with #canaleRtPush# in nodoInviaRPT
@@ -659,6 +790,12 @@ Feature: TXX
         And PSP replies to nodo-dei-pagamenti with the pspChiediListaRT
         And PSP replies to nodo-dei-pagamenti with the pspChiediRT
         And wait 10 seconds for expiration
+=======
+        And identificativoUnivocoVersamento with $3iuv in nodoInviaRPT
+        And rpt with $rpt3Attachment in nodoInviaRPT
+        And identificativoUnivocoVersamento with $3iuv in nodoChiediStatoRPT
+        And identificativoUnivocoVersamento with $3iuv in pspChiediRT
+>>>>>>> origin/feature/gherkin-with-behavetag
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         And EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
         And job pspChiediListaAndChiediRt triggered after 5 seconds
@@ -666,8 +803,12 @@ Feature: TXX
         And wait 10 seconds for expiration
         Then check esito is OK of nodoInviaRPT response
         And check stato is RPT_ACCETTATA_PSP of nodoChiediStatoRPT response
+<<<<<<< HEAD
     
     @final
+=======
+
+>>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execute nodoInviaRPT4 (Phase 4)
         Given the Execute nodoInviaRPT3 (Phase 3) scenario executed successfully
         And RPT4 generation
@@ -726,7 +867,11 @@ Feature: TXX
             <pay_i:dataEsecuzionePagamento>2016-09-16</pay_i:dataEsecuzionePagamento>
             <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
+<<<<<<< HEAD
             <pay_i:identificativoUnivocoVersamento>#iuv4#</pay_i:identificativoUnivocoVersamento>
+=======
+            <pay_i:identificativoUnivocoVersamento>#iuv3#</pay_i:identificativoUnivocoVersamento>
+>>>>>>> origin/feature/gherkin-with-behavetag
             <pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT45R0760103200000000001016</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
@@ -734,7 +879,10 @@ Feature: TXX
             <pay_i:datiSingoloVersamento>
             <pay_i:importoSingoloVersamento>10.00</pay_i:importoSingoloVersamento>
             <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
+<<<<<<< HEAD
             <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
+=======
+>>>>>>> origin/feature/gherkin-with-behavetag
             <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
             <pay_i:ibanAppoggio>IT45R0760103200000000001016</pay_i:ibanAppoggio>
             <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
@@ -817,19 +965,34 @@ Feature: TXX
             <pay_i:datiPagamento>
             <pay_i:codiceEsitoPagamento>0</pay_i:codiceEsitoPagamento>
             <pay_i:importoTotalePagato>10.00</pay_i:importoTotalePagato>
+<<<<<<< HEAD
             <pay_i:identificativoUnivocoVersamento>$4iuv</pay_i:identificativoUnivocoVersamento>
+=======
+            <pay_i:identificativoUnivocoVersamento>$3iuv</pay_i:identificativoUnivocoVersamento>
+>>>>>>> origin/feature/gherkin-with-behavetag
             <pay_i:CodiceContestoPagamento>CCD01</pay_i:CodiceContestoPagamento>
             <pay_i:datiSingoloPagamento>
             <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
             <pay_i:esitoSingoloPagamento>Pagamento effettuato</pay_i:esitoSingoloPagamento>
             <pay_i:dataEsitoSingoloPagamento>2012-03-02</pay_i:dataEsitoSingoloPagamento>
+<<<<<<< HEAD
             <pay_i:identificativoUnivocoRiscossione>$4iuv</pay_i:identificativoUnivocoRiscossione>
             <pay_i:causaleVersamento>pagamento fotocopie pratica RT</pay_i:causaleVersamento>
             <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
+=======
+            <pay_i:identificativoUnivocoRiscossione>$3iuv</pay_i:identificativoUnivocoRiscossione>
+            <pay_i:causaleVersamento>pagamento fotocopie pratica RT</pay_i:causaleVersamento>
+            <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
+            <pay_i:allegatoRicevuta>
+            <pay_i:tipoAllegatoRicevuta>BD</pay_i:tipoAllegatoRicevuta>
+            <pay_i:testoAllegato>$bollo</pay_i:testoAllegato>
+            </pay_i:allegatoRicevuta>
+>>>>>>> origin/feature/gherkin-with-behavetag
             </pay_i:datiSingoloPagamento>
             </pay_i:datiPagamento>
             </pay_i:RT>
             """
+<<<<<<< HEAD
         
         And identificativoUnivocoVersamento with $4iuv in nodoInviaRPT
         And identificativoCanale with #canaleRtPush# in nodoInviaRPT
@@ -843,6 +1006,12 @@ Feature: TXX
         And PSP replies to nodo-dei-pagamenti with the pspChiediListaRT
         And PSP replies to nodo-dei-pagamenti with the pspChiediRT
         And wait 10 seconds for expiration
+=======
+        And identificativoUnivocoVersamento with $4iuv in nodoInviaRPT
+        And rpt with $rpt4Attachment in nodoInviaRPT
+        And identificativoUnivocoVersamento with $4iuv in nodoChiediStatoRPT
+        And identificativoUnivocoVersamento with $4iuv in pspChiediRT
+>>>>>>> origin/feature/gherkin-with-behavetag
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         And EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
         And job pspChiediListaAndChiediRt triggered after 5 seconds
@@ -852,10 +1021,15 @@ Feature: TXX
         And check stato is RPT_ACCETTATA_PSP of nodoChiediStatoRPT response
         And generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTP', with where condition ID_CANALE like '7000%' under macro update_query on db nodo_cfg
         And refresh job PSP triggered after 10 seconds
+<<<<<<< HEAD
         And refresh job PSP triggered after 10 seconds
         And wait 10 seconds for expiration
         # check correctness STATI_RPT 1
         And replace iuv content with $1iuv content
+=======
+        And wait 10 seconds for expiration
+        # check correctness STATI_RPT 1
+>>>>>>> origin/feature/gherkin-with-behavetag
         And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_INVIATA_A_PSP, RPT_ACCETTATA_PSP, RT_RICEVUTA_NODO, RT_ACCETTATA_NODO, RT_INVIATA_PA, RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro RTPull
         And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro RTPull
         And verify 0 record for the table RETRY_PA_INVIA_RT retrived by the query rpt_stati on db nodo_online under macro RTPull
@@ -866,6 +1040,7 @@ Feature: TXX
         And verify 0 record for the table RETRY_PA_INVIA_RT retrived by the query rpt_stati on db nodo_online under macro RTPull
         # check correctness STATI_RPT 3
         And replace iuv content with $3iuv content
+<<<<<<< HEAD
         And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_INVIATA_A_PSP, RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro RTPull
         And checks the value RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro RTPull
         And verify 0 record for the table RETRY_PA_INVIA_RT retrived by the query rpt_stati on db nodo_online under macro RTPull
@@ -873,4 +1048,14 @@ Feature: TXX
         And replace iuv content with $4iuv content
         And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_INVIATA_A_PSP, RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro RTPull
         And checks the value RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro RTPull
+=======
+        And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_INVIATA_A_PSP, RPT_ACCETTATA_PSP, RT_RICEVUTA_NODO, RT_ACCETTATA_NODO, RT_INVIATA_PA, RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro RTPull
+        And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro RTPull
+        And verify 0 record for the table RETRY_PA_INVIA_RT retrived by the query rpt_stati on db nodo_online under macro RTPull
+        # check correctness STATI_RPT 4
+        And replace iuv content with $4iuv content
+        And verify 0 record for the table RPT_STATI retrived by the query rpt_stati on db nodo_online under macro RTPull
+        And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_INVIATA_A_PSP, RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro RTPull
+        And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro RTPull
+>>>>>>> origin/feature/gherkin-with-behavetag
         And verify 0 record for the table RETRY_PA_INVIA_RT retrived by the query rpt_stati on db nodo_online under macro RTPull

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Feature: Pag-1163_Paypal_NM3_KO
 
     Background:
@@ -28,12 +29,37 @@ Feature: Pag-1163_Paypal_NM3_KO
 
     Scenario: Execute activateIOPayment (Phase 2)
         Given the Execute verifyPaymentNotice (Phase 1) scenario executed successfully
+=======
+Feature: Checks for concorrential access of Paypal payments KO
+
+    Background:
+        Given systems up
+        And initial XML verifyPaymentNotice
+        """
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+           <soapenv:Header/>
+           <soapenv:Body>
+              <nod:verifyPaymentNoticeReq>
+                 <idPSP>AGID_01</idPSP>
+                 <idBrokerPSP>97735020584</idBrokerPSP>
+                 <idChannel>97735020584_03</idChannel>
+                 <password>pwdpwdpwd</password>
+                 <qrCode>
+                    <fiscalCode>77777777777</fiscalCode>
+                    <noticeNumber>311$iuv</noticeNumber>
+                 </qrCode>
+              </nod:verifyPaymentNoticeReq>
+           </soapenv:Body>
+        </soapenv:Envelope>
+        """
+>>>>>>> origin/feature/gherkin-with-behavetag
         And initial XML activateIOPayment
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd">
                 <soapenv:Header/>
                 <soapenv:Body>
                     <nod:activateIOPaymentReq>
+<<<<<<< HEAD
                         <idPSP>$verifyPaymentNotice.idPSP</idPSP>
                         <idBrokerPSP>$verifyPaymentNotice.idBrokerPSP</idBrokerPSP>
                         <idChannel>$verifyPaymentNotice.idChannel</idChannel>
@@ -47,6 +73,21 @@ Feature: Pag-1163_Paypal_NM3_KO
                         <!--Optional:-->
                         <expirationTime>6000</expirationTime>
                         <amount>10.00</amount>
+=======
+                        <idPSP>70000000001</idPSP>
+                        <idBrokerPSP>70000000001</idBrokerPSP>
+                        <idChannel>70000000001_01</idChannel>
+                        <password>pwdpwdpwd</password>
+                        <!--Optional:-->
+                        <idempotencyKey>$idempotenza</idempotencyKey>
+                        <qrCode>
+                            <fiscalCode>#fiscalCodePA#</fiscalCode>
+                            <noticeNumber>#notice_number#</noticeNumber>
+                        </qrCode>
+                        <!--Optional:-->
+                        <expirationTime>12345</expirationTime>
+                        <amount>70.00</amount>
+>>>>>>> origin/feature/gherkin-with-behavetag
                         <!--Optional:-->
                         <dueDate>2021-12-12</dueDate>
                         <!--Optional:-->
@@ -57,6 +98,7 @@ Feature: Pag-1163_Paypal_NM3_KO
                                 <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
                                 <entityUniqueIdentifierValue>44444444444</entityUniqueIdentifierValue>
                             </uniqueIdentifier>
+<<<<<<< HEAD
                             <fullName>Full name</fullName>
                             <!--Optional:-->
                             <streetName>Street name</streetName>
@@ -68,6 +110,19 @@ Feature: Pag-1163_Paypal_NM3_KO
                             <city>City</city>
                             <!--Optional:-->
                             <stateProvinceRegion>State province region</stateProvinceRegion>
+=======
+                            <fullName>name</fullName>
+                            <!--Optional:-->
+                            <streetName>street</streetName>
+                            <!--Optional:-->
+                            <civicNumber>civic</civicNumber>
+                            <!--Optional:-->
+                            <postalCode>code</postalCode>
+                            <!--Optional:-->
+                            <city>city</city>
+                            <!--Optional:-->
+                            <stateProvinceRegion>state</stateProvinceRegion>
+>>>>>>> origin/feature/gherkin-with-behavetag
                             <!--Optional:-->
                             <country>IT</country>
                             <!--Optional:-->
@@ -77,6 +132,7 @@ Feature: Pag-1163_Paypal_NM3_KO
                 </soapenv:Body>
             </soapenv:Envelope>
             """
+<<<<<<< HEAD
         When psp sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
 
@@ -93,6 +149,37 @@ Feature: Pag-1163_Paypal_NM3_KO
         And check enteBeneficiario field exists in informazioniPagamento response
 
     Scenario: Node handling of nodoInoltraEsitoPagamentoPaypal and sendPaymentOutcome OK
+=======
+        When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
+        Then check outcome is OK of verifyPaymentNotice response
+
+
+    Scenario: Execute activateIOPaymentReq request
+        When psp sends SOAP activateIOPayment to nodo-dei-pagamenti
+        Then check outcome is OK of activateIOPayment response
+
+
+    Scenario: Execute nodoChiediInformazioniPagamento request
+        Given the Execute activateIOPaymentReq request scenario executed successfully
+        When EC sends rest GET /informazioniPagamento?idPagamento=$idPagamento to nodo-dei-pagamenti
+        Then check importo field exists in /informazioniPagamento response
+        And check ragioneSociale field exists in /informazioniPagamento response
+        And check oggettoPagamento field exists in /informazioniPagamento response
+        And check redirect is redirectEC of /informazioniPagamento response
+        And check false field exists in /informazioniPagamento response
+        And check dettagli field exists in /informazioniPagamento response
+        And check iuv is &iuv of /informazioniPagamento response
+        And check ccp is $ccp of /informazioniPagamento response
+        And check pa field exists in /informazioniPagamento response
+        And check enteBeneficiario field exists in /informazioniPagamento response
+        And execution query pa_dbcheck_json to get value on the table PA, with the columns ragione_sociale under macro NewMod3 with db name nodo_cfg
+        And through the query pa_dbcheck_json retrieve param ragione_sociale at position 0 and save it under the key ragione_sociale
+        And check $ragione_sociale is enteBeneficiario in /informazioniPagamento response
+        And check $ragione_sociale is ragioneSociale in /informazioniPagamento response
+
+
+    Scenario: Node handling of nodoInoltraEsitoPagamentoPaypal and sendPaymentOutcome KO
+>>>>>>> origin/feature/gherkin-with-behavetag
         Given the Execute nodoChiediInformazioniPagamento request scenario executed successfully
         And initial XML sendPaymentOutcome
         """
@@ -101,8 +188,13 @@ Feature: Pag-1163_Paypal_NM3_KO
            <soapenv:Body>
               <nod:sendPaymentOutcomeReq>
                  <idPSP>#psp#</idPSP>
+<<<<<<< HEAD
                  <idBrokerPSP>#psp#</idBrokerPSP>
                  <idChannel>#canale#</idChannel>
+=======
+                 <idBrokerPSP>70000000001</idBrokerPSP>
+                 <idChannel>70000000001_07</idChannel>
+>>>>>>> origin/feature/gherkin-with-behavetag
                  <password>pwdpwdpwd</password>
                  <paymentToken>$activateIOPaymentResponse.paymentToken</paymentToken>
                  <outcome>OK</outcome>
@@ -141,6 +233,7 @@ Feature: Pag-1163_Paypal_NM3_KO
            </soapenv:Body>
         </soapenv:Envelope>
         """
+<<<<<<< HEAD
         And initial JSON inoltroEsito/paypal
             """
             {
@@ -179,4 +272,22 @@ Feature: Pag-1163_Paypal_NM3_KO
         And check errorCode is RIFPSP of inoltroEsito/paypal response
         And check descrizione is Risposta negativa del Canale of inoltroEsito/paypal response
         And check outcome is KO of sendPaymentOutcome response
+=======
+
+        When PSP sends rest POST /inoltroEsito/paypal to nodo-dei-pagamenti
+        """
+        {"idTransazione": "responseKOSleep",
+        "idTransazionePsp":"$activateIOPayment.idempotencyKey",
+        "idPagamento": "$idPagamento_1a",
+        "identificativoIntermediario": "70000000001",
+        "identificativoPsp": "#psp#",
+        "identificativoCanale": "70000000001_07",
+        "importoTotalePagato": 10.00,
+        "timestampOperazione": "2012-04-23T18:25:43Z"}
+        """
+        And wait 5 seconds for expiration
+        And psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+        Then check esito is KO in /inoltroEsito/paypal response
+        And check RIFPSP is Risposta negativa del Canale in /inoltroEsito/paypal response
+>>>>>>> origin/feature/gherkin-with-behavetag
         And check faultCode is PPT_SEMANTICA of sendPaymentOutcome response

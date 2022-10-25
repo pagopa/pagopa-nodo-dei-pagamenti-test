@@ -5,6 +5,7 @@ Feature: Semantic checks for nodoChiediCopiaRT - KO
         And initial XML nodoChiediCopiaRT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+<<<<<<< HEAD
             <soapenv:Header/>
             <soapenv:Body>
             <ws:nodoChiediCopiaRT>
@@ -20,6 +21,23 @@ Feature: Semantic checks for nodoChiediCopiaRT - KO
             """
 
 
+=======
+                <soapenv:Header/>
+                <soapenv:Body>
+                    <ws:nodoChiediCopiaRT>
+                        <identificativoIntermediarioPA>#id_broker_old#</identificativoIntermediarioPA>
+                        <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
+                        <password>pwdpwdpwd</password>
+                        <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
+                        <identificativoUnivocoVersamento>IUV846</identificativoUnivocoVersamento>
+                        <codiceContestoPagamento>codiceContestoPagamento</codiceContestoPagamento>
+                    </ws:nodoChiediCopiaRT>
+                </soapenv:Body>
+            </soapenv:Envelope>
+            """
+
+@runnable
+>>>>>>> origin/feature/gherkin-with-behavetag
     Scenario Outline: Check semantic errors for nodoChiediCopiaRT primitive
         Given <tag> with <tag_value> in nodoChiediCopiaRT
         When EC sends SOAP nodoChiediCopiaRT to nodo-dei-pagamenti
@@ -37,7 +55,12 @@ Feature: Semantic checks for nodoChiediCopiaRT - KO
             | codiceContestoPagamento               | wrongPaymentContextCode | PPT_RT_SCONOSCIUTA                | CCRTSEM9    |
             | identificativoIntermediarioPA         | 77777777777             | PPT_AUTORIZZAZIONE                | CCRTSEM12   |
 
+<<<<<<< HEAD
     Scenario Outline: Check semantic errors for nodoChiediCopiaRT primitive
+=======
+@runnable
+Scenario Outline: Check semantic errors for nodoChiediCopiaRT primitive
+>>>>>>> origin/feature/gherkin-with-behavetag
         Given replace status content with RPT_ACCETTATA_PSP content
         And replace pa content with #creditor_institution_code_old# content
         And execution query stati_rpt_snapshot to get value on the table STATI_RPT_SNAPSHOT, with the columns IUV, CCP under macro Primitive_accessorie with db name nodo_online
@@ -51,4 +74,8 @@ Feature: Semantic checks for nodoChiediCopiaRT - KO
         Examples:
             | iuv_value                       | ccp_value         | error                 | soapUI test |
             | 11000679416493210               | 59050             | PPT_RT_SCONOSCIUTA    | CCRTSEM10   |
+<<<<<<< HEAD
             | $iuv                            | $ccp              | PPT_RT_NONDISPONIBILE | CCRTSEM11   | 
+=======
+            | $iuv                            | $ccp              | PPT_RT_NONDISPONIBILE | CCRTSEM11   |
+>>>>>>> origin/feature/gherkin-with-behavetag

@@ -52,18 +52,22 @@ Feature: semantic checks for pspNotifyPaymentReq - CreditCard [T_02]
       </soapenv:Envelope>
       """
     And EC new version
-
+@runnable
   Scenario: Execute activateIOPaymentReq request
     When IO sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is OK of activateIOPayment response
-
+@runnable
   # nodoChiediInformazioniPagamento phase
   Scenario: Execute nodoChiediInformazioniPagamento request
     Given the Execute activateIOPaymentReq request scenario executed successfully
     When WISP sends rest GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
     Then verify the HTTP status code of informazioniPagamento response is 200
 
+<<<<<<< HEAD
 
+=======
+@runnable
+>>>>>>> origin/feature/gherkin-with-behavetag
   # nodoInoltraEsitoPagamentoCarte phase
   Scenario: Execute nodoInoltraEsitoPagamentoCarte request
     Given the Execute nodoChiediInformazioniPagamento request scenario executed successfully
@@ -97,4 +101,4 @@ Feature: semantic checks for pspNotifyPaymentReq - CreditCard [T_02]
     #       And identificativoCanale with SERVIZIO_NMP
     Then verify the HTTP status code of inoltroEsito/carta response is 200
     And check esito is OK of inoltroEsito/carta response
-    Then activateIOPayment response and pspNotifyPayment request are consistent
+    #Then activateIOPayment response and pspNotifyPayment request are consistent

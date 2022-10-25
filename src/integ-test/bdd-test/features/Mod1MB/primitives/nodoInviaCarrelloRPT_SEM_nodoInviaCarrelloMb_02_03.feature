@@ -4,7 +4,11 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
       Given systems up
 
 
+<<<<<<< HEAD
     #[SEM_nodoInviaCarrelloMb_02]
+=======
+   #[SEM_nodoInviaCarrelloMb_02]
+>>>>>>> origin/feature/gherkin-with-behavetag
    Scenario: Define RPT
       Given RPT generation
          """
@@ -83,8 +87,13 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          </pay_i:datiVersamento>
          </pay_i:RPT>
          """
+<<<<<<< HEAD
   
      Scenario: Define RPT2
+=======
+
+   Scenario: Define RPT2
+>>>>>>> origin/feature/gherkin-with-behavetag
       Given the Define RPT scenario executed successfully
       And RPT2 generation
          """
@@ -164,6 +173,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          </pay_i:RPT>
          """
 
+<<<<<<< HEAD
     Scenario: Check PPT_DOMINIO_SCONOSCIUTO error for nodoInviaCarrelloRPT primitive
         Given the Define RPT2 scenario executed successfully
         And initial XML nodoInviaCarrelloRPT
@@ -212,12 +222,68 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
 
     # [SEM_nodoInviaCarrelloMb_03]
    Scenario: Define RPT3
+=======
+   Scenario: Check PPT_DOMINIO_SCONOSCIUTO error for nodoInviaCarrelloRPT primitive
+      Given the Define RPT2 scenario executed successfully
+      And initial XML nodoInviaCarrelloRPT
+
+         """
+         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+         <soapenv:Header>
+         <ppt:intestazioneCarrelloPPT>
+         <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
+         <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
+         <identificativoCarrello>$idCarrello</identificativoCarrello>
+         </ppt:intestazioneCarrelloPPT>
+         </soapenv:Header>
+         <soapenv:Body>
+         <ws:nodoInviaCarrelloRPT>
+         <password>pwdpwdpwd</password>
+         <identificativoPSP>AGID_01</identificativoPSP>
+         <identificativoIntermediarioPSP>97735020584</identificativoIntermediarioPSP>
+         <identificativoCanale>97735020584_02</identificativoCanale>
+         <listaRPT>
+         <elementoListaRPT>
+         <identificativoDominio>#codicePA#</identificativoDominio>
+         <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
+         <codiceContestoPagamento>$idCarrello</codiceContestoPagamento>
+         <rpt>$rptAttachment</rpt>
+         </elementoListaRPT>
+         <elementoListaRPT>
+         <identificativoDominio>90000000001</identificativoDominio>
+         <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
+         <codiceContestoPagamento>$idCarrello</codiceContestoPagamento>
+         <rpt>$rpt2Attachment</rpt>
+         </elementoListaRPT>
+         </listaRPT>
+         <requireLightPayment>01</requireLightPayment>
+         <multiBeneficiario>1</multiBeneficiario>
+         </ws:nodoInviaCarrelloRPT>
+         </soapenv:Body>
+         </soapenv:Envelope>
+         """
+
+      And multiBeneficiario with true in nodoInviaCarrelloRPT
+      When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
+      Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
+      And check faultCode is PPT_DOMINIO_SCONOSCIUTO of nodoInviaCarrelloRPT response
+
+
+   # [SEM_nodoInviaCarrelloMb_03]
+   Scenario: Define RPT3
+      Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
+      And generate 1 cart with PA #codicePA# and notice number $1noticeNumber
+>>>>>>> origin/feature/gherkin-with-behavetag
       Given RPT3 generation
          """
          <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
          <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
          <pay_i:dominio>
+<<<<<<< HEAD
          <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
+=======
+         <pay_i:identificativoDominio>#codicePA#</pay_i:identificativoDominio>
+>>>>>>> origin/feature/gherkin-with-behavetag
          <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
          </pay_i:dominio>
          <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
@@ -270,8 +336,13 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
          <pay_i:importoTotaleDaVersare>1.50</pay_i:importoTotaleDaVersare>
          <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
+<<<<<<< HEAD
          <pay_i:identificativoUnivocoVersamento>#iuv#</pay_i:identificativoUnivocoVersamento>
          <pay_i:codiceContestoPagamento>#idCarrello#</pay_i:codiceContestoPagamento>
+=======
+         <pay_i:identificativoUnivocoVersamento>#iuv3#</pay_i:identificativoUnivocoVersamento>
+         <pay_i:codiceContestoPagamento>$1carrello</pay_i:codiceContestoPagamento>
+>>>>>>> origin/feature/gherkin-with-behavetag
          <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
          <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
          <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -349,8 +420,13 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
          <pay_i:importoTotaleDaVersare>1.50</pay_i:importoTotaleDaVersare>
          <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
+<<<<<<< HEAD
          <pay_i:identificativoUnivocoVersamento>$iuv</pay_i:identificativoUnivocoVersamento>
          <pay_i:codiceContestoPagamento>$idCarrello</pay_i:codiceContestoPagamento>
+=======
+         <pay_i:identificativoUnivocoVersamento>$3iuv</pay_i:identificativoUnivocoVersamento>
+         <pay_i:codiceContestoPagamento>$1carrello</pay_i:codiceContestoPagamento>
+>>>>>>> origin/feature/gherkin-with-behavetag
          <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
          <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
          <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -369,6 +445,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          </pay_i:RPT>
          """
 
+<<<<<<< HEAD
     Scenario: Check PPT_DOMINIO_SCONOSCIUTO error
         Given the Define RPT4 scenario executed successfully
         And initial XML nodoInviaCarrelloRPT
@@ -413,3 +490,49 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
         And check faultCode is PPT_DOMINIO_SCONOSCIUTO of nodoInviaCarrelloRPT response
+=======
+   Scenario: Check PPT_DOMINIO_SCONOSCIUTO error
+      Given the Define RPT4 scenario executed successfully
+      And initial XML nodoInviaCarrelloRPT
+
+         """
+         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+         <soapenv:Header>
+         <ppt:intestazioneCarrelloPPT>
+         <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
+         <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
+         <identificativoCarrello>$1carrello</identificativoCarrello>
+         </ppt:intestazioneCarrelloPPT>
+         </soapenv:Header>
+         <soapenv:Body>
+         <ws:nodoInviaCarrelloRPT>
+         <password>pwdpwdpwd</password>
+         <identificativoPSP>AGID_01</identificativoPSP>
+         <identificativoIntermediarioPSP>97735020584</identificativoIntermediarioPSP>
+         <identificativoCanale>97735020584_02</identificativoCanale>
+         <listaRPT>
+         <elementoListaRPT>
+         <identificativoDominio>#codicePA#</identificativoDominio>
+         <identificativoUnivocoVersamento>$3iuv</identificativoUnivocoVersamento>
+         <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
+         <rpt>$rpt3Attachment</rpt>
+         </elementoListaRPT>
+         <elementoListaRPT>
+         <identificativoDominio>90000000001</identificativoDominio>
+         <identificativoUnivocoVersamento>$3iuv</identificativoUnivocoVersamento>
+         <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
+         <rpt>$rpt4Attachment</rpt>
+         </elementoListaRPT>
+         </listaRPT>
+         <requireLightPayment>01</requireLightPayment>
+         <multiBeneficiario>1</multiBeneficiario>
+         </ws:nodoInviaCarrelloRPT>
+         </soapenv:Body>
+         </soapenv:Envelope>
+         """
+
+      And multiBeneficiario with true in nodoInviaCarrelloRPT
+      When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
+      Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
+      And check faultCode is PPT_DOMINIO_SCONOSCIUTO of nodoInviaCarrelloRPT response
+>>>>>>> origin/feature/gherkin-with-behavetag

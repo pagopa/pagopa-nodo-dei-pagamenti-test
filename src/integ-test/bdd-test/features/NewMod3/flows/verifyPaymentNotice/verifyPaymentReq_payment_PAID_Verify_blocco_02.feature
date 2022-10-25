@@ -17,7 +17,11 @@ Feature:  block checks for verifyPaymentReq - position status in PAID [Verify_bl
          <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
          <password>pwdpwdpwd</password>
          <qrCode>
+<<<<<<< HEAD
          <fiscalCode>#creditor_institution_code_old#</fiscalCode>
+=======
+         <fiscalCode>#codicePA_old#</fiscalCode>
+>>>>>>> origin/feature/gherkin-with-behavetag
          <noticeNumber>#notice_number_old#</noticeNumber>
          </qrCode>
          </nod:verifyPaymentNoticeReq>
@@ -148,7 +152,11 @@ Feature:  block checks for verifyPaymentReq - position status in PAID [Verify_bl
          <ppt:intestazionePPT>
          <identificativoIntermediarioPA>#id_broker_old#</identificativoIntermediarioPA>
          <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
+<<<<<<< HEAD
          <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
+=======
+         <identificativoDominio>#codicePA_old#</identificativoDominio>
+>>>>>>> origin/feature/gherkin-with-behavetag
          <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
          <codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken</codiceContestoPagamento>
          </ppt:intestazionePPT>

@@ -2,7 +2,11 @@ Feature: process tests for ChiediAvanzamento_RT_ACCETTATA_PA_sbloccoParcheggio
 
     Background:
         Given systems up
+<<<<<<< HEAD
 
+=======
+@runnable
+>>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: RPT generation
         Given RPT generation
 
@@ -10,8 +14,13 @@ Feature: process tests for ChiediAvanzamento_RT_ACCETTATA_PA_sbloccoParcheggio
         <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
         <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
         <pay_i:dominio>
+<<<<<<< HEAD
         <pay_i:identificativoDominio>44444444444</pay_i:identificativoDominio>
         <pay_i:identificativoStazioneRichiedente>44444444444_01</pay_i:identificativoStazioneRichiedente>
+=======
+        <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
+        <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
+>>>>>>> origin/feature/gherkin-with-behavetag
         </pay_i:dominio>
         <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
         <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
@@ -82,7 +91,11 @@ Feature: process tests for ChiediAvanzamento_RT_ACCETTATA_PA_sbloccoParcheggio
         </pay_i:datiVersamento>
         </pay_i:RPT>
         """
+<<<<<<< HEAD
 
+=======
+@runnable
+>>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: RT generation
         Given the RPT generation scenario executed successfully
         And RT generation
@@ -90,8 +103,13 @@ Feature: process tests for ChiediAvanzamento_RT_ACCETTATA_PA_sbloccoParcheggio
         <pay_i:RT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
         <pay_i:versioneOggetto>6.0</pay_i:versioneOggetto>
         <pay_i:dominio>
+<<<<<<< HEAD
             <pay_i:identificativoDominio>44444444444</pay_i:identificativoDominio>
             <pay_i:identificativoStazioneRichiedente>44444444444_01</pay_i:identificativoStazioneRichiedente>
+=======
+            <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
+            <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
+>>>>>>> origin/feature/gherkin-with-behavetag
         </pay_i:dominio>
         <pay_i:identificativoMessaggioRicevuta>IdentificativoMessaggioRicevuta</pay_i:identificativoMessaggioRicevuta>
         <pay_i:dataOraMessaggioRicevuta>#timedate#</pay_i:dataOraMessaggioRicevuta>
@@ -171,6 +189,10 @@ Feature: process tests for ChiediAvanzamento_RT_ACCETTATA_PA_sbloccoParcheggio
         </pay_i:datiPagamento>
         </pay_i:RT>
         """
+<<<<<<< HEAD
+=======
+@runnable
+>>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execute nodoInviaRPT request
         Given the RT generation scenario executed successfully
         And initial XML nodoInviaRPT
@@ -178,9 +200,15 @@ Feature: process tests for ChiediAvanzamento_RT_ACCETTATA_PA_sbloccoParcheggio
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
         <soapenv:Header>
             <ppt:intestazionePPT>
+<<<<<<< HEAD
                 <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
                 <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
                 <identificativoDominio>44444444444</identificativoDominio>
+=======
+                <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
+                <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
+                <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+>>>>>>> origin/feature/gherkin-with-behavetag
                 <identificativoUnivocoVersamento>avanzaOK</identificativoUnivocoVersamento>
                 <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
             </ppt:intestazionePPT>
@@ -217,17 +245,28 @@ Feature: process tests for ChiediAvanzamento_RT_ACCETTATA_PA_sbloccoParcheggio
         Then check esito is OK of nodoInviaRPT response
         And check url contains acards of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
+<<<<<<< HEAD
 
+=======
+@runnable
+>>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execution Esito Mod1
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends REST POST inoltroEsito/mod1 to nodo-dei-pagamenti
             """
             {
             "idPagamento":"$sessionToken",
+<<<<<<< HEAD
             "identificativoPsp":"40000000001",
             "tipoVersamento":"BBT", 
             "identificativoIntermediario":"40000000001",
             "identificativoCanale":"40000000001_03",
+=======
+            "identificativoPsp":"#psp#",
+            "tipoVersamento":"BBT", 
+            "identificativoIntermediario":"#psp#",
+            "identificativoCanale":"#canale#",
+>>>>>>> origin/feature/gherkin-with-behavetag
             "tipoOperazione":"web"
             }
              """
@@ -238,7 +277,11 @@ Feature: process tests for ChiediAvanzamento_RT_ACCETTATA_PA_sbloccoParcheggio
         And replace iuv content with avanzaOK content
         And checks the value RPT_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query stati_RPT_noOrder on db nodo_online under macro Mod1
         And verify 1 record for the table RETRY_RPT retrived by the query motivo_annullamento_originale on db nodo_online under macro Mod1
+<<<<<<< HEAD
 
+=======
+@runnable
+>>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execute nodoInviaRT request
         Given the Execution Esito Mod1 scenario executed successfully
         And initial XML nodoInviaRT
@@ -247,11 +290,19 @@ Feature: process tests for ChiediAvanzamento_RT_ACCETTATA_PA_sbloccoParcheggio
             <soapenv:Header/>
             <soapenv:Body>
             <ws:nodoInviaRT>
+<<<<<<< HEAD
             <identificativoIntermediarioPSP>40000000001</identificativoIntermediarioPSP>
             <identificativoCanale>40000000001_03</identificativoCanale>
             <password>pwdpwdpwd</password>
             <identificativoPSP>40000000001</identificativoPSP>
             <identificativoDominio>44444444444</identificativoDominio>
+=======
+            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canale#</identificativoCanale>
+            <password>pwdpwdpwd</password>
+            <identificativoPSP>#psp#</identificativoPSP>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+>>>>>>> origin/feature/gherkin-with-behavetag
             <identificativoUnivocoVersamento>avanzaOK</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
             <tipoFirma></tipoFirma>
@@ -264,7 +315,11 @@ Feature: process tests for ChiediAvanzamento_RT_ACCETTATA_PA_sbloccoParcheggio
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
         And wait 5 seconds for expiration
+<<<<<<< HEAD
 
+=======
+@runnable
+>>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execute job pspChiediAvanzamentoRPT
         Given the Execute nodoInviaRT request scenario executed successfully
         When job pspChiediAvanzamentoRpt triggered after 5 seconds
@@ -273,7 +328,11 @@ Feature: process tests for ChiediAvanzamento_RT_ACCETTATA_PA_sbloccoParcheggio
         And wait 10 seconds for expiration
         And verify 0 record for the table RETRY_RPT retrived by the query motivo_annullamento_originale on db nodo_online under macro Mod1
         And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query stati_RPT_noOrder on db nodo_online under macro Mod1
+<<<<<<< HEAD
 
+=======
+@runnable
+>>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execute nodoChiediStatoRPT request
         Given the Execute job pspChiediAvanzamentoRPT scenario executed successfully
         And initial XML nodoChiediStatoRPT
@@ -282,10 +341,17 @@ Feature: process tests for ChiediAvanzamento_RT_ACCETTATA_PA_sbloccoParcheggio
         <soapenv:Header/>
         <soapenv:Body>
             <ws:nodoChiediStatoRPT>
+<<<<<<< HEAD
                 <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
                 <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
                 <password>pwdpwdpwd</password>
                 <identificativoDominio>44444444444</identificativoDominio>
+=======
+                <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
+                <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
+                <password>pwdpwdpwd</password>
+                <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+>>>>>>> origin/feature/gherkin-with-behavetag
                 <identificativoUnivocoVersamento>avanzaOK</identificativoUnivocoVersamento>
                 <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
             </ws:nodoChiediStatoRPT>

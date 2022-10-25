@@ -2,7 +2,10 @@ import re
 import json
 import os
 import datetime
+<<<<<<< HEAD
 from webbrowser import get
+=======
+>>>>>>> origin/feature/gherkin-with-behavetag
 from xml.dom.minidom import parseString
 
 from behave.__main__ import main as behave_main
@@ -84,6 +87,7 @@ def get_soap_mock_ec(context):
     else:
         return ""
 
+<<<<<<< HEAD
 def get_soap_mock_ec2(context):
     if context.config.userdata.get('services').get('secondary-mock-ec').get('soap_service') is not None:
         return context.config.userdata.get('services').get('secondary-mock-ec').get('url') \
@@ -91,6 +95,8 @@ def get_soap_mock_ec2(context):
     else:
         return ""
 
+=======
+>>>>>>> origin/feature/gherkin-with-behavetag
 
 def get_soap_mock_psp(context):
     if context.config.userdata.get('services').get('mock-psp').get('soap_service') is not None:
@@ -99,6 +105,7 @@ def get_soap_mock_psp(context):
     else:
         return ""
 
+<<<<<<< HEAD
 def get_soap_mock_psp2(context):
     if context.config.userdata.get('services').get('secondary-mock-psp').get('soap_service') is not None:
         return context.config.userdata.get('services').get('secondary-mock-psp').get('url') \
@@ -106,6 +113,8 @@ def get_soap_mock_psp2(context):
     else:
         return ""
 
+=======
+>>>>>>> origin/feature/gherkin-with-behavetag
 
 def get_refresh_config_url(context):
     if context.config.userdata.get('services').get('nodo-dei-pagamenti').get('refresh_config_service') is not None:
@@ -263,13 +272,18 @@ def isDate(string: str):
         return False
 
 
+<<<<<<< HEAD
 def single_thread(context, soap_primitive, type):
+=======
+def single_thread(context, soap_primitive):
+>>>>>>> origin/feature/gherkin-with-behavetag
     print("single_thread")
     primitive = soap_primitive.split("_")[0]
     primitive = replace_local_variables(primitive, context)
     primitive = replace_context_variables(primitive, context)
     primitive = replace_global_variables(primitive, context)
     print(soap_primitive.split("_")[1])
+<<<<<<< HEAD
     if type == 'GET':
         headers = {'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}
         url_nodo = f"{get_rest_url_nodo(context)}/{primitive}"
@@ -295,6 +309,25 @@ def threading(context, primitive_list, list_of_type):
     threads = list()
     while i < len(primitive_list):
         t = Thread(target=single_thread, args=(context, primitive_list[i], list_of_type[i]))
+=======
+    headers = {'Content-Type': 'application/xml', "SOAPAction": primitive, 'Host': 'api.dev.platform.pagopa.it:443'}
+    url_nodo = get_soap_url_nodo(context, primitive)
+    print("nodo soap_request sent >>>", getattr(
+        context, soap_primitive.split("_")[1]))
+    soap_response = requests.post(url_nodo, getattr(
+        context, soap_primitive.split("_")[1]), headers=headers, verify=False)
+    print("nodo soap_response: ", soap_response.content)
+    print(soap_primitive.split("_")[1] + "Response")
+    setattr(context, soap_primitive.split("_")[
+            1] + "Response", soap_response.content)
+
+
+def threading(context, primitive_list):
+    i = 0
+    threads = list()
+    while i < len(primitive_list):
+        t = Thread(target=single_thread, args=(context, primitive_list[i]))
+>>>>>>> origin/feature/gherkin-with-behavetag
         threads.append(t)
         t.start()
         i += 1
@@ -302,11 +335,19 @@ def threading(context, primitive_list, list_of_type):
     for thread in threads:
         thread.join()
 
+<<<<<<< HEAD
 def threading_delayed(context, primitive_list, list_of_delays, list_of_type):
     i = 0
     threads = list()
     while i < len(primitive_list):
         t = Thread(target=single_thread, args=(context, primitive_list[i], list_of_type[i]))
+=======
+def threading_delayed(context, primitive_list, list_of_delays):
+    i = 0
+    threads = list()
+    while i < len(primitive_list):
+        t = Thread(target=single_thread, args=(context, primitive_list[i]))
+>>>>>>> origin/feature/gherkin-with-behavetag
         threads.append(t)
         time.sleep(list_of_delays[i]/1000)
         t.start()
@@ -315,6 +356,7 @@ def threading_delayed(context, primitive_list, list_of_delays, list_of_type):
     for thread in threads:
         thread.join()
 
+<<<<<<< HEAD
 def json2xml(json_obj, line_padding=""):
     result_list = list()
     json_obj_type = type(json_obj)
@@ -357,3 +399,5 @@ def json2xml(json_obj, line_padding=""):
 def parallel_executor(context, feature_name, scenario):
     #os.chdir(testenv.PARALLEACTIONS_PATH)
     behave_main('-i {} -n {} --tags=@test --no-skipped --no-capture'.format(feature_name, scenario))
+=======
+>>>>>>> origin/feature/gherkin-with-behavetag

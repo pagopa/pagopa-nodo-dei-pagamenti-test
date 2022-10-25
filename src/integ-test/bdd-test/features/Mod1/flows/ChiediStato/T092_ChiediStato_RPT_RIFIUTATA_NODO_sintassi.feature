@@ -3,7 +3,11 @@ Feature: process tests for ChiediStato_RPT_RIFIUTATA_NODO_sintassi
     Background:
         Given systems up
 
+<<<<<<< HEAD
     
+=======
+@runnable   
+>>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: RPT generation
         Given RPT generation
             """
@@ -83,7 +87,11 @@ Feature: process tests for ChiediStato_RPT_RIFIUTATA_NODO_sintassi
                 </pay_i:RPT>
             """
         
+<<<<<<< HEAD
 
+=======
+@runnable 
+>>>>>>> origin/feature/gherkin-with-behavetag
 	Scenario: Execute nodoInviaRPT
 		Given the RPT generation scenario executed successfully
 		And initial XML nodoInviaRPT
@@ -117,7 +125,11 @@ Feature: process tests for ChiediStato_RPT_RIFIUTATA_NODO_sintassi
         And replace pa content with #creditor_institution_code# content
         And verify 0 record for the table STATI_RPT retrived by the query stati_RPT_new on db nodo_online under macro Mod1
         
+<<<<<<< HEAD
 
+=======
+@runnable 
+>>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execute nodoChiediStatoRPT
         Given the Execute nodoInviaRPT scenario executed successfully
         And initial XML nodoChiediStatoRPT
@@ -139,7 +151,11 @@ Feature: process tests for ChiediStato_RPT_RIFIUTATA_NODO_sintassi
         When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
         Then check faultCode is PPT_RPT_SCONOSCIUTA of nodoChiediStatoRPT response
        
+<<<<<<< HEAD
 
+=======
+@runnable 
+>>>>>>> origin/feature/gherkin-with-behavetag
 	Scenario: Execute nodoInviaRPT Duplicato
 		Given the Execute nodoChiediStatoRPT scenario executed successfully
 		And initial XML nodoInviaRPT

@@ -14,16 +14,27 @@ Feature: Semantic checks KO for nodoVerificaRPT
             <codiceContestoPagamento>CCD01</codiceContestoPagamento>
             <codificaInfrastrutturaPSP>QR-CODE</codificaInfrastrutturaPSP>
             <codiceIdRPT><qrc:QrCode>
+<<<<<<< HEAD
             <qrc:CF>#id_broker#</qrc:CF>
             <qrc:CodStazPA>#cod_segr#</qrc:CodStazPA>
             <qrc:AuxDigit>0</qrc:AuxDigit>
             <qrc:CodIUV>#iuv#</qrc:CodIUV>
+=======
+            <qrc:CF>11111122223</qrc:CF>
+            <qrc:CodStazPA>02</qrc:CodStazPA>
+            <qrc:AuxDigit>0</qrc:AuxDigit>
+            <qrc:CodIUV>010481670134400</qrc:CodIUV>
+>>>>>>> origin/feature/gherkin-with-behavetag
             </qrc:QrCode></codiceIdRPT>
             </ws:nodoVerificaRPT>
             </soapenv:Body>
             </soapenv:Envelope>
             """
+<<<<<<< HEAD
      
+=======
+
+>>>>>>> origin/feature/gherkin-with-behavetag
     Scenario Outline: Check faultCode error on non-existent or invalid field
         Given <field> with <value> in nodoVerificaRPT
         When psp sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
@@ -38,6 +49,7 @@ Feature: Semantic checks KO for nodoVerificaRPT
             | identificativoCanale           | CANALE_NOT_ENABLED | PPT_CANALE_DISABILITATO            | VRPTSEM6    |
             | password                       | test_wrong_pwd     | PPT_AUTENTICAZIONE                 | VRPTSEM7    |
             | codificaInfrastrutturaPSP      | codificaErrata     | PPT_CODIFICA_PSP_SCONOSCIUTA       | VRPTSEM8    |
+<<<<<<< HEAD
     
     Scenario Outline: Check faultCode on invalid body element
         Given <field_1> with <value_1> in nodoVerificaRPT
@@ -105,12 +117,26 @@ Feature: Semantic checks KO for nodoVerificaRPT
         When psp sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
         Then check faultCode is PPT_STAZIONE_INT_PA_SCONOSCIUTA of nodoVerificaRPT response
     
+=======
+
+    Scenario Outline: Check faultCode PPT_SEMANTICA on invalid body element
+        Given <field_1> with <value_1> in nodoVerificaRPT
+        And <field_2> with <value_2> in nodoVerificaRPT
+        When psp sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
+        Then check faultCode is PPT_SEMANTICA of nodoVerificaRPT response
+        Examples:
+            | field_1      | value_1 | field_2    | value_2           | soapUI test |
+            | qrc:AuxDigit | 0       | qrc:CodIUV | 12345678901234567 | VRPTSEM9    |
+            | qrc:AuxDigit | 1       | qrc:CodIUV | 123456789012345   | VRPTSEM10   |
+
+>>>>>>> origin/feature/gherkin-with-behavetag
     Scenario Outline: Check faultCode error on unknown or invalid CodStazPA
         Given <field> with <value> in nodoVerificaRPT
         When psp sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
         Then check faultCode is <resp_error> of nodoVerificaRPT response
         Examples:
             | field         | value       | resp_error              | soapUI test |
+<<<<<<< HEAD
             | qrc:CF        | 11111122222 | PPT_DOMINIO_SCONOSCIUTO | VRPTSEM16   |
             | qrc:CF        | 77777777778 | PPT_DOMINIO_SCONOSCIUTO | VRPTSEM17   |
             | qrc:CF        | 11111122222 | PPT_DOMINIO_SCONOSCIUTO | VRPTSEM18   |
@@ -159,3 +185,7 @@ Feature: Semantic checks KO for nodoVerificaRPT
         """
         When psp sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
         Then check faultCode is PPT_STAZIONE_INT_PA_IRRAGGIUNGIBILE of nodoVerificaRPT response
+=======
+            | qrc:CF        | 11111122222 | PPT_DOMINIO_SCONOSCIUTO | VRPTSEM18   |
+            | qrc:CodStazPA | None        | PPT_SEMANTICA           | VRPTSEM19   |
+>>>>>>> origin/feature/gherkin-with-behavetag
