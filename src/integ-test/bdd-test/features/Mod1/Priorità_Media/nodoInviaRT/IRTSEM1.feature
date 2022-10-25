@@ -1,4 +1,4 @@
-Feature: process tests for nodoInviaCarrelloRPT[IRTSEM1]
+Feature: process tests for nodoInviaRT[IRTSEM1]
     Background:
         Given systems up
         And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
@@ -88,23 +88,23 @@ Feature: process tests for nodoInviaCarrelloRPT[IRTSEM1]
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header/>
             <soapenv:Body>
-                <ws:nodoInviaRT>
-                    <identificativoIntermediarioPSP>sconosciuto</identificativoIntermediarioPSP>
-                    <identificativoCanale>40000000001_03</identificativoCanale>
-                    <password>pwdpwdpwd</password>
-                    <identificativoPSP>40000000001</identificativoPSP>
-                    <identificativoDominio>44444444444</identificativoDominio>
-                    <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
-                    <codiceContestoPagamento>CCD01</codiceContestoPagamento>
-                    <tipoFirma></tipoFirma>
-                    <forzaControlloSegno>1</forzaControlloSegno>
-                    <rt>$rptAttachment</rt>
-                </ws:nodoInviaRT>
+            <ws:nodoInviaRT>
+            <identificativoIntermediarioPSP>sconosciuto</identificativoIntermediarioPSP>
+            <identificativoCanale>40000000001_03</identificativoCanale>
+            <password>pwdpwdpwd</password>
+            <identificativoPSP>40000000001</identificativoPSP>
+            <identificativoDominio>44444444444</identificativoDominio>
+            <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+            <tipoFirma></tipoFirma>
+            <forzaControlloSegno>1</forzaControlloSegno>
+            <rt>$rtAttachment</rt>
+            </ws:nodoInviaRT>
             </soapenv:Body>
             </soapenv:Envelope>
             """
             When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
-            Then check esitoComplessivoOperazione is KO of nodoInviaRT response
+            Then check esito is KO of nodoInviaRT response
             And check faultCode is PPT_INTERMEDIARIO_PSP_SCONOSCIUTO of nodoInviaRT response
 
 
