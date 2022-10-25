@@ -1023,7 +1023,7 @@ Feature: flux tests for closePaymentV2
         And verify 0 record for the table PM_SESSION_DATA retrived by the query ccp on db nodo_online under macro NewMod1
 
         # PM_METADATA
-        And verify 0 record for the table PM_SESSION_DATA retrived by the query PM_METADATA on db nodo_online under macro NewMod1
+        And verify 0 record for the table PM_SESSION_DATA retrived by the query transactionid on db nodo_online under macro NewMod1
 
         # STATI_RPT
         And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_ANNULLATA_WISP,RT_GENERATA_NODO,RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
