@@ -144,28 +144,12 @@ Feature: process tests for nodoInviaRPT [PAG-1192_RPT_timeout_b]
     Scenario: Trigger mod3Cancel
         Given the Excecute nodoInviaRPT scenario executed successfully
         When job mod3CancelV1 triggered after 5 seconds
-        Then verify the HTTP status code of mod3CancelV1 response is 200
-        And export elem noticeNumber with value $activatePaymentNotice1.noticeNumber in cache
-        And export elem fiscalCode with value $activatePaymentNotice1.fiscalCode in cache
-        And export elem idPSP with value $activatePaymentNotice1.idPSP in cache
-        And export elem idBrokerPSP with value $activatePaymentNotice1.idBrokerPSP in cache
-        And export elem idChannel with value $activatePaymentNotice1.idChannel in cache
-        And export elem paymentToken with value $activatePaymentNotice1Response.paymentToken in cache
-        And export elem iuv with value $iuv in cache
-
-    @prova
-    Scenario: parallel run
-        Given the Trigger mod3Cancel scenario executed successfully
-        When run in parallel "C:/Users/damiano.dorelli/'OneDrive - Accenture'/Desktop/NEXI/nodo-dei-pagamenti/pagopa-nodo-dei-pagamenti-test/src/integ-test/bdd-test/features/NewMod3/flows/Revisione_nodoInviaRPT/nodoInviaRPT_flows_PAG-1192_RPT_timeout_b.feature", "Excecute_nodoChiediCopiaRT2, get_token, Excecute_nodoInviaRPT3"
-        # And run in parallel "C:/Users/damiano.dorelli/'OneDrive - Accenture'/Desktop/NEXI/nodo-dei-pagamenti/pagopa-nodo-dei-pagamenti-test/src/integ-test/bdd-test/features/NewMod3/flows/Revisione_nodoInviaRPT/nodoInviaRPT_flows_PAG-1192_RPT_timeout_b.feature", "get Token"
-        # And run in parallel "C:/Users/damiano.dorelli/'OneDrive - Accenture'/Desktop/NEXI/nodo-dei-pagamenti/pagopa-nodo-dei-pagamenti-test/src/integ-test/bdd-test/features/NewMod3/flows/Revisione_nodoInviaRPT/nodoInviaRPT_flows_PAG-1192_RPT_timeout_b.feature", "Excecute nodoInviaRPT3"
+        Then wait 5 seconds for expiration
+        And verify the HTTP status code of mod3CancelV1 response is 200
     #END SETUP
 
-
-    #START ACTIVATE PHASE
-    @skip
     Scenario: Execute activatePaymentNotice3 request
-        Given retrive elements from cache and save it in context
+        Given the Trigger mod3Cancel scenario executed successfully
         And  initial XML activatePaymentNotice
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -178,7 +162,7 @@ Feature: process tests for nodoInviaRPT [PAG-1192_RPT_timeout_b]
             <password>pwdpwdpwd</password>
             <qrCode>
             <fiscalCode>#creditor_institution_code_old#</fiscalCode>
-            <noticeNumber>$noticeNumber</noticeNumber>
+            <noticeNumber>$activatePaymentNotice.noticeNumber</noticeNumber>
             </qrCode>
             <expirationTime>2000</expirationTime>
             <amount>10.00</amount>
@@ -194,7 +178,7 @@ Feature: process tests for nodoInviaRPT [PAG-1192_RPT_timeout_b]
             <ws:paaAttivaRPTRisposta>
             <paaAttivaRPTRisposta>
             <esito>KO</esito>
-            <delay>60000</delay>
+            <delay>10000</delay>
             <datiPagamentoPA>
             <importoSingoloVersamento>2.00</importoSingoloVersamento>
             <ibanAccredito>IT96R0123454321000000012345</ibanAccredito>
@@ -223,169 +207,10 @@ Feature: process tests for nodoInviaRPT [PAG-1192_RPT_timeout_b]
             </soapenv:Envelope>
             """
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
-        When psp sends soap activatePaymentNotice to nodo-dei-pagamenti
-        Then check outcome is KO of activatePaymentNotice response
-        And check faultCode is PPT_STAZIONE_INT_PA_TIMEOUT of activatePaymentNotice response
-        And save activatePaymentNotice response in activatePaymentNotice2
-        And saving activatePaymentNotice request in activatePaymentNotice2
-
-    @skip
-    Scenario: DB check
-        Given the Execute activatePaymentNotice3 request scenario executed successfully
-        And wait 5 seconds for expiration
-        #RPT_ACTIVATIONS
-        Then checks the value None of the record at column PAAATTIVARPTRESP of the table RPT_ACTIVATIONS retrived by the query idempotency_paymentToken on db nodo_online under macro flussi_paralleli
-        And checks the value None of the record at column NODOINVIARPTREQ of the table RPT_ACTIVATIONS retrived by the query idempotency_paymentToken on db nodo_online under macro flussi_paralleli
-        And checks the value None of the record at column PAAATTIVARPTERROR of the table RPT_ACTIVATIONS retrived by the query idempotency_paymentToken on db nodo_online under macro flussi_paralleli
-        And checks the value None of the record at column PAYMENT_TOKEN of the table RPT_ACTIVATIONS retrived by the query idempotency_paymentToken on db nodo_online under macro flussi_paralleli
-        #POSITION_PAYMENT
-        And checks the value $fiscalCode of the record at column pa_fiscal_code of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro flussi_paralleli
-        And checks the value $noticeNumber of the record at column notice_id of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro flussi_paralleli
-        And checks the value $paymentToken of the record at column payment_token of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro flussi_paralleli
-        And checks the value $fiscalCode of the record at column broker_pa_id of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro flussi_paralleli
-        And checks the value 1 of the record at column station_version of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro flussi_paralleli
-        And checks the value $idPSP of the record at column psp_id of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro flussi_paralleli
-        And checks the value $idBrokerPSP of the record at column broker_psp_id of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro flussi_paralleli
-        And checks the value None of the record at column idempotency_key of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro flussi_paralleli
-        And checks the value 10 of the record at column amount of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro flussi_paralleli
-        And checks the value None of the record at column fee of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro flussi_paralleli
-        And checks the value None of the record at column payment_method of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro flussi_paralleli
-        And checks the value NA of the record at column payment_channel of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro flussi_paralleli
-        And checks the value None of the record at column transfer_date of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro flussi_paralleli
-        And checks the value None of the record at column payer_id of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro flussi_paralleli
-        And checks the value None of the record at column application_date of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro flussi_paralleli
-        And checks the value NotNone of the record at column inserted_timestamp of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro flussi_paralleli
-        And checks the value NotNone of the record at column updated_timestamp of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro flussi_paralleli
-        And checks the value MOD3 of the record at column payment_type of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro flussi_paralleli
-        And checks the value None of the record at column carrello_id of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro flussi_paralleli
-        ##
-        And checks the value $activatePaymentNotice2.fiscalCode of the record at column pa_fiscal_code of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro flussi_paralleli
-        And checks the value $activatePaymentNotice2.noticeNumber of the record at column notice_id of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro flussi_paralleli
-        And checks the value $activatePaymentNotice2Response.paymentToken of the record at column payment_token of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro flussi_paralleli
-        And checks the value $activatePaymentNotice2.fiscalCode of the record at column broker_pa_id of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro flussi_paralleli
-        And checks the value 1 of the record at column station_version of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro flussi_paralleli
-        And checks the value $activatePaymentNotice2.idPSP of the record at column psp_id of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro flussi_paralleli
-        And checks the value $activatePaymentNotice2.idBrokerPSP of the record at column broker_psp_id of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro flussi_paralleli
-        And checks the value None of the record at column idempotency_key of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro flussi_paralleli
-        And checks the value 10 of the record at column amount of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro flussi_paralleli
-        And checks the value None of the record at column fee of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro flussi_paralleli
-        And checks the value None of the record at column payment_method of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro flussi_paralleli
-        And checks the value NA of the record at column payment_channel of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro flussi_paralleli
-        And checks the value NotNone of the record at column transfer_date of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro flussi_paralleli
-        And checks the value NotNone of the record at column payer_id of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro flussi_paralleli
-        And checks the value NotNone of the record at column application_date of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro flussi_paralleli
-        And checks the value NotNone of the record at column inserted_timestamp of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro flussi_paralleli
-        And checks the value NotNone of the record at column updated_timestamp of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro flussi_paralleli
-        And checks the value MOD3 of the record at column payment_type of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro flussi_paralleli
-        And checks the value None of the record at column carrello_id of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro flussi_paralleli
-        And checks the value Y of the record at column FLAG_ACTIVATE_RESP_MISSING of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro flussi_paralleli
-        #POSITION_ACTIVATE
-        And checks the value $fiscalCode of the record at column pa_fiscal_code of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro flussi_paralleli
-        And checks the value $noticeNumber of the record at column notice_id of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro flussi_paralleli
-        And checks the value None of the record at column idempotency_key of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro flussi_paralleli
-        And checks the value $paymentToken of the record at column payment_token of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro flussi_paralleli
-        And checks the value NotNone of the record at column token_valid_from of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro flussi_paralleli
-        And checks the value NotNone of the record at column token_valid_to of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro flussi_paralleli
-        And checks the value 10 of the record at column amount of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro flussi_paralleli
-        ##
-        And checks the value $activatePaymentNotice2.fiscalCode of the record at column pa_fiscal_code of the table POSITION_ACTIVATE retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMflussi_paralleliod3
-        And checks the value $activatePaymentNotice2.noticeNumber of the record at column notice_id of the table POSITION_ACTIVATE retrived by the query payment_status_orderbydesc on db nodo_online under macro flussi_paralleli
-        And checks the value None of the record at column idempotency_key of the table POSITION_ACTIVATE retrived by the query payment_status_orderbydesc on db nodo_online under macro flussi_paralleli
-        And checks the value $activatePaymentNotice2Response.paymentToken of the record at column payment_token of the table POSITION_ACTIVATE retrived by the query payment_status_orderbydesc on db nodo_online under macro flussi_paralleli
-        And checks the value NotNone of the record at column token_valid_from of the table POSITION_ACTIVATE retrived by the query payment_status_orderbydesc on db nodo_online under macro flussi_paralleli
-        And checks the value NotNone of the record at column token_valid_to of the table POSITION_ACTIVATE retrived by the query payment_status_orderbydesc on db nodo_online under macro flussi_paralleli
-        And checks the value 10 of the record at column amount of the table POSITION_ACTIVATE retrived by the query payment_status_orderbydesc on db nodo_online under macro flussi_paralleli
-        #POSITION_PAYMENT_PLAN
-        And checks the value $fiscalCode of the record at column pa_fiscal_code of the table POSITION_PAYMENT_PLAN retrived by the query payment_status_orderbydesc on db nodo_online under macro flussi_paralleli
-        And checks the value $noticeNumber of the record at column notice_id of the table POSITION_PAYMENT_PLAN retrived by the query payment_status_orderbydesc on db nodo_online under macro flussi_paralleli
-        And checks the value NotNone of the record at column due_date of the table POSITION_PAYMENT_PLAN retrived by the query payment_status_orderbydesc on db nodo_online under macro flussi_paralleli
-        And checks the value None of the record at column RETENTION_DATE of the table POSITION_PAYMENT_PLAN retrived by the query payment_status_orderbydesc on db nodo_online under macro flussi_paralleli
-        And checks the value Y of the record at column FLAG_FINAL_PAYMENT of the table POSITION_PAYMENT_PLAN retrived by the query payment_status_orderbydesc on db nodo_online under macro flussi_paralleli
-        And checks the value 10 of the record at column amount of the table POSITION_PAYMENT_PLAN retrived by the query payment_status_orderbydesc on db nodo_online under macro flussi_paralleli
-        And checks the value NotNone of the record at column inserted_timestamp of the table POSITION_PAYMENT_PLAN retrived by the query payment_status_orderbydesc on db nodo_online under macro flussi_paralleli
-        And checks the value NotNone of the record at column updated_timestamp of the table POSITION_PAYMENT_PLAN retrived by the query payment_status_orderbydesc on db nodo_online under macro flussi_paralleli
-        And checks the value None of the record at column METADATA of the table POSITION_PAYMENT_PLAN retrived by the query payment_status_orderbydesc on db nodo_online under macro flussi_paralleli
-        #POSITION_SERVICE
-        And checks the value $fiscalCode of the record at column pa_fiscal_code of the table POSITION_SERVICE retrived by the query payment_status_orderbydesc on db nodo_online under macro flussi_paralleli
-        And checks the value $noticeNumber of the record at column notice_id of the table POSITION_SERVICE retrived by the query payment_status_orderbydesc on db nodo_online under macro flussi_paralleli
-        And checks the value pagamento multibeneficiario of the record at column DESCRIPTION of the table POSITION_SERVICE retrived by the query payment_status_orderbydesc on db nodo_online under macro flussi_paralleli
-        And checks the value NotNone of the record at column COMPANY_NAME of the table POSITION_SERVICE retrived by the query payment_status_orderbydesc on db nodo_online under macro flussi_paralleli
-        And checks the value None of the record at column OFFICE_NAME of the table POSITION_SERVICE retrived by the query payment_status_orderbydesc on db nodo_online under macro flussi_paralleli
-        And checks the value NotNone of the record at column DEBTOR_ID of the table POSITION_SERVICE retrived by the query payment_status_orderbydesc on db nodo_online under macro flussi_paralleli
-        And checks the value NotNone of the record at column inserted_timestamp of the table POSITION_SERVICE retrived by the query payment_status_orderbydesc on db nodo_online under macro flussi_paralleli
-        And checks the value NotNone of the record at column updated_timestamp of the table POSITION_SERVICE retrived by the query payment_status_orderbydesc on db nodo_online under macro flussi_paralleli
-        #STATI
-        #POSITION_PAYMENT_STATUS
-        And checks the value PAYING,PAYING_RPT,CANCELLED of the record at column status of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_pay_only_act1 on db nodo_online under macro flussi_paralleli
-        And checks the value CANCELLED of the record at column status of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_pay_only_act1 on db nodo_online under macro flussi_paralleli
-        #POSITION_PAYMENT_STATUS_SNAPSHOT
-        And checks the value CANCELLED,CANCELLED of the record at column status of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_only_act1 on db nodo_online under macro flussi_paralleli
-        #POSITION_STATUS
-        And checks the value PAYING,INSERTED,INSERTED of the record at column status of the table POSITION_STATUS retrived by the query payment_status_only_act1 on db nodo_online under macro flussi_paralleli
-        #POSITION_STATUS
-        And checks the value PAYING,INSERTED,INSERTED of the record at column status of the table POSITION_STATUS retrived by the query payment_status_only_act1 on db nodo_online under macro flussi_paralleli
-        #STATI_RPT
-        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO_MOD3,RPT_ANNULLATA_NODO,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA of the record at column stato of the table STATI_RPT retrived by the query rt_v1 on db nodo_online under macro flussi_paralleli
-
-    @skip
-    Scenario: Excecute nodoChiediCopiaRT
-        Given the DB check scenario executed successfully
-        And initial XML nodoChiediCopiaRT
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <ws:nodoChiediCopiaRT>
-            <identificativoIntermediarioPA>#creditor_institution_code_old#</identificativoIntermediarioPA>
-            <identificativoStazioneIntermediarioPA>#canale#</identificativoStazioneIntermediarioPA>
-            <password>pwdpwdpwd</password>
-            <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
-            <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>$paymentToken</codiceContestoPagamento>
-            </ws:nodoChiediCopiaRT>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        When psp sends soap nodoChiediCopiaRT to nodo-dei-pagamenti
-        Then check rt field exists in nodoChiediCopiaRT response
-        And check ppt:nodoChiediCopiaRTRisposta field exists in nodoChiediCopiaRT response
-
-    @skip
-    Scenario: Excecute_nodoChiediCopiaRT2
-        Given the Excecute nodoChiediCopiaRT scenario executed successfully
-        And initial XML nodoChiediCopiaRT
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <ws:nodoChiediCopiaRT>
-            <identificativoIntermediarioPA>#creditor_institution_code_old#</identificativoIntermediarioPA>
-            <identificativoStazioneIntermediarioPA>#canale#</identificativoStazioneIntermediarioPA>
-            <password>pwdpwdpwd</password>
-            <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
-            <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>$paymentToken</codiceContestoPagamento>
-            </ws:nodoChiediCopiaRT>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        When psp sends soap nodoChiediCopiaRT to nodo-dei-pagamenti
-        Then check rt field exists in nodoChiediCopiaRT response
-        And check ppt:nodoChiediCopiaRTRisposta field exists in nodoChiediCopiaRT response
-    #END ACTIVATE PHASE
-
-    #START GETTOKEN PHASE
-    @skip
-    Scenario: get_Token
-        Given wait 2 seconds for expiration
-        Then execution query payment_status_only_act1 to get value on the table POSITION_ACTIVATE, with the columns PAYMENT_TOKEN under macro NewMod3 with db name nodo_online
-        And through the query payment_status_only_act1 retrieve param paymentToken at position 0 and save it under the key paymentToken
-    #END GETTOKEN PHASE
-
-    #START NODOINVIARPT PHASE
-    @skip
-    Scenario: Define RPT3
-        Given RPT generation
+        When send, by sender psp, soap action activatePaymentNotice to nodo-dei-pagamenti
+        Then execution query payment_status_pay_act1 to get value on the table POSITION_ACTIVATE, with the columns PAYMENT_TOKEN under macro NewMod3 with db name nodo_online
+        And through the query payment_status_pay_act1 retrieve param paymentToken at position 0 and save it under the key paymentToken
+        And RPT generation
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
@@ -462,17 +287,13 @@ Feature: process tests for nodoInviaRPT [PAG-1192_RPT_timeout_b]
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-
-    @skip
-    Scenario: Excecute_nodoInviaRPT3
-        Given the Define RPT3 scenario executed successfully
         And initial XML nodoInviaRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
             <ppt:intestazionePPT>
             <identificativoIntermediarioPA>#creditor_institution_code_old#</identificativoIntermediarioPA>
-            <identificativoStazioneIntermediarioPA>#canale#</identificativoStazioneIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
             <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
             <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$paymentToken</codiceContestoPagamento>
@@ -490,6 +311,150 @@ Feature: process tests for nodoInviaRPT [PAG-1192_RPT_timeout_b]
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-        Then check esito is OK of nodoInviaRPT response
-#END NODOINVIARPT PHASE
+        And send, by sender EC, soap action nodoInviaRPT to nodo-dei-pagamenti
+        And check outcome is KO of activatePaymentNotice response
+        And check faultCode is PPT_STAZIONE_INT_PA_TIMEOUT of activatePaymentNotice response
+        And check esito is OK of nodoInviaRPT response
+        And save activatePaymentNotice response in activatePaymentNotice2
+        And saving activatePaymentNotice request in activatePaymentNotice2
+
+    Scenario: DB check
+        Given the Execute activatePaymentNotice3 request scenario executed successfully
+        And waiting 40 seconds for thread
+        #RPT_ACTIVATIONS
+        Then checks the value None of the record at column PAAATTIVARPTRESP of the table RPT_ACTIVATIONS retrived by the query idempotency_paymentToken on db nodo_online under macro NewMod3
+        And checks the value None of the record at column NODOINVIARPTREQ of the table RPT_ACTIVATIONS retrived by the query idempotency_paymentToken on db nodo_online under macro NewMod3
+        And checks the value None of the record at column PAAATTIVARPTERROR of the table RPT_ACTIVATIONS retrived by the query idempotency_paymentToken on db nodo_online under macro NewMod3
+        And checks the value None of the record at column PAYMENT_TOKEN of the table RPT_ACTIVATIONS retrived by the query idempotency_paymentToken on db nodo_online under macro NewMod3
+        #POSITION_PAYMENT
+        And checks the value $activatePaymentNotice1.fiscalCode of the record at column pa_fiscal_code of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
+        And checks the value $activatePaymentNotice1.noticeNumber of the record at column notice_id of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
+        And checks the value $paymentToken of the record at column payment_token of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
+        And checks the value $activatePaymentNotice1.fiscalCode of the record at column broker_pa_id of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
+        And checks the value 1 of the record at column station_version of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
+        And checks the value $activatePaymentNotice1.idPSP of the record at column psp_id of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
+        And checks the value $activatePaymentNotice1.idBrokerPSP of the record at column broker_psp_id of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
+        And checks the value None of the record at column idempotency_key of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
+        And checks the value 10 of the record at column amount of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
+        And checks the value None of the record at column fee of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
+        And checks the value None of the record at column payment_method of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
+        And checks the value NA of the record at column payment_channel of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
+        And checks the value None of the record at column transfer_date of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
+        And checks the value None of the record at column payer_id of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
+        And checks the value None of the record at column application_date of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
+        And checks the value NotNone of the record at column inserted_timestamp of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
+        And checks the value NotNone of the record at column updated_timestamp of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
+        And checks the value MOD3 of the record at column payment_type of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
+        And checks the value None of the record at column carrello_id of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
+        ##
+        And checks the value $activatePaymentNotice2.fiscalCode of the record at column pa_fiscal_code of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
+        And checks the value $activatePaymentNotice2.noticeNumber of the record at column notice_id of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
+        And checks the value $activatePaymentNotice2Response.paymentToken of the record at column payment_token of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
+        And checks the value $activatePaymentNotice2.fiscalCode of the record at column broker_pa_id of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
+        And checks the value 1 of the record at column station_version of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
+        And checks the value $activatePaymentNotice2.idPSP of the record at column psp_id of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
+        And checks the value $activatePaymentNotice2.idBrokerPSP of the record at column broker_psp_id of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
+        And checks the value None of the record at column idempotency_key of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
+        And checks the value 10 of the record at column amount of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
+        And checks the value None of the record at column fee of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
+        And checks the value None of the record at column payment_method of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
+        And checks the value NA of the record at column payment_channel of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
+        And checks the value NotNone of the record at column transfer_date of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
+        And checks the value NotNone of the record at column payer_id of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
+        And checks the value NotNone of the record at column application_date of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
+        And checks the value NotNone of the record at column inserted_timestamp of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
+        And checks the value NotNone of the record at column updated_timestamp of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
+        And checks the value MOD3 of the record at column payment_type of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
+        And checks the value None of the record at column carrello_id of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
+        And checks the value Y of the record at column FLAG_ACTIVATE_RESP_MISSING of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
+        #POSITION_ACTIVATE
+        And checks the value $activatePaymentNotice1.fiscalCode of the record at column pa_fiscal_code of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro NewMod3
+        And checks the value $activatePaymentNotice1.noticeNumber of the record at column notice_id of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro NewMod3
+        And checks the value None of the record at column idempotency_key of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro NewMod3
+        And checks the value $paymentToken of the record at column payment_token of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro NewMod3
+        And checks the value NotNone of the record at column token_valid_from of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro NewMod3
+        And checks the value NotNone of the record at column token_valid_to of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro NewMod3
+        And checks the value 10 of the record at column amount of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro NewMod3
+        ##
+        And checks the value $activatePaymentNotice2.fiscalCode of the record at column pa_fiscal_code of the table POSITION_ACTIVATE retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMNewMod3od3
+        And checks the value $activatePaymentNotice2.noticeNumber of the record at column notice_id of the table POSITION_ACTIVATE retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
+        And checks the value None of the record at column idempotency_key of the table POSITION_ACTIVATE retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
+        And checks the value $activatePaymentNotice2Response.paymentToken of the record at column payment_token of the table POSITION_ACTIVATE retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
+        And checks the value NotNone of the record at column token_valid_from of the table POSITION_ACTIVATE retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
+        And checks the value NotNone of the record at column token_valid_to of the table POSITION_ACTIVATE retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
+        And checks the value 10 of the record at column amount of the table POSITION_ACTIVATE retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
+        #POSITION_PAYMENT_PLAN
+        And checks the value $activatePaymentNotice1.fiscalCode of the record at column pa_fiscal_code of the table POSITION_PAYMENT_PLAN retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
+        And checks the value $activatePaymentNotice1.noticeNumber of the record at column notice_id of the table POSITION_PAYMENT_PLAN retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
+        And checks the value NotNone of the record at column due_date of the table POSITION_PAYMENT_PLAN retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
+        And checks the value None of the record at column RETENTION_DATE of the table POSITION_PAYMENT_PLAN retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
+        And checks the value Y of the record at column FLAG_FINAL_PAYMENT of the table POSITION_PAYMENT_PLAN retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
+        And checks the value 10 of the record at column amount of the table POSITION_PAYMENT_PLAN retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
+        And checks the value NotNone of the record at column inserted_timestamp of the table POSITION_PAYMENT_PLAN retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
+        And checks the value NotNone of the record at column updated_timestamp of the table POSITION_PAYMENT_PLAN retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
+        And checks the value None of the record at column METADATA of the table POSITION_PAYMENT_PLAN retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
+        #POSITION_SERVICE
+        And checks the value $activatePaymentNotice1.fiscalCode of the record at column pa_fiscal_code of the table POSITION_SERVICE retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
+        And checks the value $activatePaymentNotice1.noticeNumber of the record at column notice_id of the table POSITION_SERVICE retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
+        And checks the value pagamento multibeneficiario of the record at column DESCRIPTION of the table POSITION_SERVICE retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
+        And checks the value NotNone of the record at column COMPANY_NAME of the table POSITION_SERVICE retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
+        And checks the value None of the record at column OFFICE_NAME of the table POSITION_SERVICE retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
+        And checks the value NotNone of the record at column DEBTOR_ID of the table POSITION_SERVICE retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
+        And checks the value NotNone of the record at column inserted_timestamp of the table POSITION_SERVICE retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
+        And checks the value NotNone of the record at column updated_timestamp of the table POSITION_SERVICE retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
+        #STATI
+        #POSITION_PAYMENT_STATUS
+        And checks the value PAYING,PAYING_RPT,CANCELLED of the record at column status of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_pay_only_act1 on db nodo_online under macro NewMod3
+        And checks the value CANCELLED of the record at column status of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_pay_only_act1 on db nodo_online under macro NewMod3
+        #POSITION_PAYMENT_STATUS_SNAPSHOT
+        And checks the value CANCELLED,CANCELLED of the record at column status of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_only_act1 on db nodo_online under macro NewMod3
+        #POSITION_STATUS
+        And checks the value PAYING,INSERTED,INSERTED of the record at column status of the table POSITION_STATUS retrived by the query payment_status_only_act1 on db nodo_online under macro NewMod3
+        #POSITION_STATUS
+        And checks the value PAYING,INSERTED,INSERTED of the record at column status of the table POSITION_STATUS retrived by the query payment_status_only_act1 on db nodo_online under macro NewMod3
+        #STATI_RPT
+        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO_MOD3,RPT_ANNULLATA_NODO,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA of the record at column stato of the table STATI_RPT retrived by the query rt_v1 on db nodo_online under macro NewMod3
+
+    Scenario: Excecute nodoChiediCopiaRT
+        Given the DB check scenario executed successfully
+        And initial XML nodoChiediCopiaRT
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <ws:nodoChiediCopiaRT>
+            <identificativoIntermediarioPA>#creditor_institution_code_old#</identificativoIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
+            <password>pwdpwdpwd</password>
+            <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
+            <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>$paymentToken</codiceContestoPagamento>
+            </ws:nodoChiediCopiaRT>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        When psp sends soap nodoChiediCopiaRT to nodo-dei-pagamenti
+        Then check rt field exists in nodoChiediCopiaRT response
+        And check ppt:nodoChiediCopiaRTRisposta field exists in nodoChiediCopiaRT response
+    @prova
+    Scenario: Excecute_nodoChiediCopiaRT2
+        Given the Excecute nodoChiediCopiaRT scenario executed successfully
+        And initial XML nodoChiediCopiaRT
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <ws:nodoChiediCopiaRT>
+            <identificativoIntermediarioPA>#creditor_institution_code_old#</identificativoIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
+            <password>pwdpwdpwd</password>
+            <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
+            <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>$paymentToken</codiceContestoPagamento>
+            </ws:nodoChiediCopiaRT>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        When psp sends soap nodoChiediCopiaRT to nodo-dei-pagamenti
+        Then check rt field exists in nodoChiediCopiaRT response
+        And check ppt:nodoChiediCopiaRTRisposta field exists in nodoChiediCopiaRT response
