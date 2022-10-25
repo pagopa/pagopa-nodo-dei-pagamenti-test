@@ -217,7 +217,6 @@ Feature: process tests for paSendRT [PSRT_30]
         # db update config
 
         And nodo-dei-pagamenti has config parameter scheduler.paSendRtMaxRetry set to 1
-        And nodo-dei-pagamenti has config parameter scheduler.jobName_paSendRt.enabled set to true
 
     @wip
     Scenario: 21 clean paSendRt queue
