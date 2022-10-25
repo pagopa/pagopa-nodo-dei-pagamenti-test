@@ -445,7 +445,7 @@ Feature: flux tests for closePaymentV2
         # POSITION_ACTIVATE
         And checks the value NotNone of the record at column ID of the table POSITION_ACTIVATE retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
         And checks the value $iuv of the record at column CREDITOR_REFERENCE_ID of the table POSITION_ACTIVATE retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
-        And checks the value #psp# of the record at column PSP of the table POSITION_ACTIVATE retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value #psp# of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
         And checks the value None of the record at column IDEMPOTENCY_KEY of the table POSITION_ACTIVATE retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
         And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
         And checks the value None of the record at column TOKEN_VALID_FROM of the table POSITION_ACTIVATE retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
@@ -469,7 +469,6 @@ Feature: flux tests for closePaymentV2
         And checks the value closePayment-v2 of the record at column UPDATED_BY of the table POSITION_SERVICE retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
 
         # POSITION_PAYMENT_PLAN
-
         And checks the value NotNone of the record at column ID of the table POSITION_PAYMENT_PLAN retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
         And checks the value $iuv of the record at column CREDITOR_REFERENCE_ID of the table POSITION_PAYMENT_PLAN retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column DUE_DATE of the table POSITION_PAYMENT_PLAN retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
