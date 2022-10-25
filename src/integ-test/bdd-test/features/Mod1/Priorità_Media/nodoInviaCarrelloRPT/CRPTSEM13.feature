@@ -101,7 +101,7 @@ Feature: process tests for nodoInviaCarrelloRPT[CRPTSEM11]
                     <password>pwdpwdpwd</password>
                     <identificativoPSP>40000000001</identificativoPSP>
                     <identificativoIntermediarioPSP>40000000001</identificativoIntermediarioPSP>
-                    <identificativoCanale>sconosciuto</identificativoCanale>
+                    <identificativoCanale>40000000001_03</identificativoCanale>
                     <listaRPT>
                         <!--1 or more repetitions:-->
                         <elementoListaRPT>
