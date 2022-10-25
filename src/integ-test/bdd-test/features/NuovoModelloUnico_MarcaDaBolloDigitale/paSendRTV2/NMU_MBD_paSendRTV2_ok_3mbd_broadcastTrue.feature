@@ -357,4 +357,14 @@ Feature: flow tests for paSendRTV2 - Marca da bollo
         And checks the value 66666666666_08,90000000001_06,90000000001_01 of the record at column RECIPIENT_STATION_ID of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_v2 on db nodo_online under macro sendPaymentResultV2
         And checks the value NOTIFIED,NOTIFIED,NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_v2 on db nodo_online under macro sendPaymentResultV2
 
-# inserire i check sul blob in RE per l'xml paSendRTV2
+    # inserire i check sul blob in RE per l'xml paSendRTV2
+
+    #DB update 1
+    Scenario: Execute station update 1
+        Given the execute DB check scenario executed successfully
+        And updates through the query stationUpdateBroadcast of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro sendPaymentResultV2 on db nodo_cfg
+
+    #refresh pa e stazioni 1
+    Scenario: Execute refresh pa e stazioni
+        Given the Execute station update 1 scenario executed successfully
+        Then refresh job PA triggered after 10 seconds
