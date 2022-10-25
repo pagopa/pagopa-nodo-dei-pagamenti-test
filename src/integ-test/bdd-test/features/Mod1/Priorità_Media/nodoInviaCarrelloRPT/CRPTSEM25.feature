@@ -172,7 +172,7 @@ Feature: process tests for nodoInviaCarrelloRPT[CRPTSEM25]
                 <ppt:intestazioneCarrelloPPT>
                     <identificativoIntermediarioPA>#id_broker_old#</identificativoIntermediarioPA>
                     <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
-                    <identificativoCarrello>$1carrello</identificativoCarrello>
+                    <identificativoCarrello>$1uv</identificativoCarrello>
                 </ppt:intestazioneCarrelloPPT>
             </soapenv:Header>
             <soapenv:Body>
