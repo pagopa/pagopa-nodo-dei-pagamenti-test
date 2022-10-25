@@ -712,15 +712,15 @@ Feature: flux tests for closePaymentV2
         And verify 1 record for the table POSITION_RECEIPT_TRANSFER JOIN POSITION_TRANSFER ON POSITION_TRANSFER.ID=POSITION_RECEIPT_TRANSFER.FK_POSITION_TRANSFER retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
 
         # POSITION_RECEIPT_XML
-        And checks the value $iuv of the record at column CREDITOR_REFERENCE_ID of the table POSITION_RECEIPT_XML retrived by the query select_activateio on db nodo_online under macro NewMod1
-        And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_RECEIPT_XML retrived by the query select_activateio on db nodo_online under macro NewMod1
-        And checks the value NotNone of the record at column XML of the table POSITION_RECEIPT_XML retrived by the query select_activateio on db nodo_online under macro NewMod1
-        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RECEIPT_XML retrived by the query select_activateio on db nodo_online under macro NewMod1
-        And checks the value NotNone of the record at column FK_POSITION_RECEIPT of the table POSITION_RECEIPT_XML retrived by the query select_activateio on db nodo_online under macro NewMod1
-        And checks the value $nodoInviaRPT.identificativoDominio of the record at column RECIPIENT_PA_FISCAL_CODE of the table POSITION_RECEIPT_XML retrived by the query select_activateio on db nodo_online under macro NewMod1
-        And checks the value $nodoInviaRPT.identificativoDominio of the record at column RECIPIENT_BROKER_PA_ID of the table POSITION_RECEIPT_XML retrived by the query select_activateio on db nodo_online under macro NewMod1
-        And checks the value #id_station_old# of the record at column RECIPIENT_STATION_ID of the table POSITION_RECEIPT_XML retrived by the query select_activateio on db nodo_online under macro NewMod1
-        And verify 1 record for the table POSITION_RECEIPT_XML retrived by the query select_activateio on db nodo_online under macro NewMod1
+        And checks the value $iuv of the record at column CREDITOR_REFERENCE_ID of the table POSITION_RECEIPT_XML retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_RECEIPT_XML retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column XML of the table POSITION_RECEIPT_XML retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RECEIPT_XML retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column FK_POSITION_RECEIPT of the table POSITION_RECEIPT_XML retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value $nodoInviaRPT.identificativoDominio of the record at column RECIPIENT_PA_FISCAL_CODE of the table POSITION_RECEIPT_XML retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value $nodoInviaRPT.identificativoDominio of the record at column RECIPIENT_BROKER_PA_ID of the table POSITION_RECEIPT_XML retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And checks the value #id_station_old# of the record at column RECIPIENT_STATION_ID of the table POSITION_RECEIPT_XML retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_RECEIPT_XML retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
 
     # FLUSSO_OLD_CP_02
 
@@ -729,12 +729,13 @@ Feature: flux tests for closePaymentV2
         And the nodoAttivaRPT scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
 
-
-
-
-
-
-
+# CD_INFO_PAGAMENTO
+        And checks the value NotNone of the record at column OBJ_ID of the table CD_INFO_PAGAMENTO retrived by the query sessiontoken on db nodo_online under macro NewMod1
+        And checks the value $nodoInviaRPT.identificativoDominio of the record at column IDENT_DOMINIO of the table CD_INFO_PAGAMENTO retrived by the query sessiontoken on db nodo_online under macro NewMod1
+        And checks the value $iuv of the record at column IUV of the table CD_INFO_PAGAMENTO retrived by the query sessiontoken on db nodo_online under macro NewMod1
+        And checks the value $ccp of the record at column CCP of the table CD_INFO_PAGAMENTO retrived by the query sessiontoken on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table CD_INFO_PAGAMENTO retrived by the query sessiontoken on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table CD_INFO_PAGAMENTO retrived by the query sessiontoken on db nodo_online under macro NewMod1
 
         And the informazioniPagamento scenario executed successfully
         And the closePaymentV2 request scenario executed successfully
