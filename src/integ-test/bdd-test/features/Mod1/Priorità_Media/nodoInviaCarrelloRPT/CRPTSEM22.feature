@@ -208,7 +208,7 @@ Feature: process tests for nodoInviaCarrelloRPT[CRPTSEM22]
                 <ppt:intestazioneCarrelloPPT>
                     <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
                     <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
-                    <identificativoCarrello>$1iuv</identificativoCarrello>
+                    <identificativoCarrello>$1iuv-v2</identificativoCarrello>
                 </ppt:intestazioneCarrelloPPT>
             </soapenv:Header>
             <soapenv:Body>
