@@ -109,7 +109,7 @@ Feature: flow tests for paSendRTV2 - Marca da bollo
             <transfer>
             <idTransfer>2</idTransfer>
             <transferAmount>4.00</transferAmount>
-            <fiscalCodePA>$activatePaymentNoticeV2.fiscalCode</fiscalCodePA>
+            <fiscalCodePA>90000000001</fiscalCodePA>
             <richiestaMarcaDaBollo>
             <hashDocumento>ciao</hashDocumento>
             <tipoBollo>01</tipoBollo>
@@ -121,7 +121,7 @@ Feature: flow tests for paSendRTV2 - Marca da bollo
             <transfer>
             <idTransfer>3</idTransfer>
             <transferAmount>4.00</transferAmount>
-            <fiscalCodePA>$activatePaymentNoticeV2.fiscalCode</fiscalCodePA>
+            <fiscalCodePA>90000000002</fiscalCodePA>
             <richiestaMarcaDaBollo>
             <hashDocumento>ciao</hashDocumento>
             <tipoBollo>01</tipoBollo>
