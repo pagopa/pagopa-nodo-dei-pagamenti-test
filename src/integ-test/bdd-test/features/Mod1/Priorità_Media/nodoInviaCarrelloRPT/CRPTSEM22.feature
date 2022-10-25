@@ -179,7 +179,7 @@ Feature: process tests for nodoInviaCarrelloRPT[CRPTSEM22]
             <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
             <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
-            <pay_i:identificativoUnivocoVersamento>$2iuv</pay_i:identificativoUnivocoVersamento>
+            <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
             <pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
@@ -208,7 +208,7 @@ Feature: process tests for nodoInviaCarrelloRPT[CRPTSEM22]
                 <ppt:intestazioneCarrelloPPT>
                     <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
                     <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
-                    <identificativoCarrello>$2iuv</identificativoCarrello>
+                    <identificativoCarrello>$1iuv</identificativoCarrello>
                 </ppt:intestazioneCarrelloPPT>
             </soapenv:Header>
             <soapenv:Body>
@@ -221,7 +221,7 @@ Feature: process tests for nodoInviaCarrelloRPT[CRPTSEM22]
                         <!--1 or more repetitions:-->
                         <elementoListaRPT>
                         <identificativoDominio>44444444444</identificativoDominio>
-                        <identificativoUnivocoVersamento>$2iuv</identificativoUnivocoVersamento>
+                        <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
                         <codiceContestoPagamento>CCD01</codiceContestoPagamento>
                         <rpt>$nodoInviaCarrelloRPT.rpt</rpt>
                         </elementoListaRPT>
