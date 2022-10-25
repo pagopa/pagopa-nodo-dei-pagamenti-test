@@ -291,6 +291,56 @@ Feature: flow checks for closePayment - PA new
          }
          """
 
+   @skip
+   Scenario: sendPaymentOutcome payToken
+      Given initial XML sendPaymentOutcome
+         """
+         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+         <soapenv:Header/>
+         <soapenv:Body>
+         <nod:sendPaymentOutcomeReq>
+         <idPSP>#psp#</idPSP>
+         <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
+         <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
+         <password>#password#</password>
+         <paymentToken>$payToken</paymentToken>
+         <outcome>OK</outcome>
+         <!--Optional:-->
+         <details>
+         <paymentMethod>creditCard</paymentMethod>
+         <!--Optional:-->
+         <paymentChannel>app</paymentChannel>
+         <fee>2.00</fee>
+         <!--Optional:-->
+         <payer>
+         <uniqueIdentifier>
+         <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
+         <entityUniqueIdentifierValue>77777777777_01</entityUniqueIdentifierValue>
+         </uniqueIdentifier>
+         <fullName>name</fullName>
+         <!--Optional:-->
+         <streetName>street</streetName>
+         <!--Optional:-->
+         <civicNumber>civic</civicNumber>
+         <!--Optional:-->
+         <postalCode>postal</postalCode>
+         <!--Optional:-->
+         <city>city</city>
+         <!--Optional:-->
+         <stateProvinceRegion>state</stateProvinceRegion>
+         <!--Optional:-->
+         <country>IT</country>
+         <!--Optional:-->
+         <e-mail>prova@test.it</e-mail>
+         </payer>
+         <applicationDate>2021-12-12</applicationDate>
+         <transferDate>2021-12-11</transferDate>
+         </details>
+         </nod:sendPaymentOutcomeReq>
+         </soapenv:Body>
+         </soapenv:Envelope>
+         """
+
 
    # FLUSSO_CP_01
    Scenario: FLUSSO_CP_01 (part 1)
@@ -1471,6 +1521,7 @@ Feature: flow checks for closePayment - PA new
 
    Scenario: FLUSSO_CP_19 (part 4)
       Given the FLUSSO_CP_19 (part 3) scenario executed successfully
+      Given the FLUSSO_CP_19 (part 1) scenario executed successfully
       When PM sends REST GET avanzamentoPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
       Then verify the HTTP status code of avanzamentoPagamento is 200
       And check esito is OK of avanzamentoPagamento response
@@ -1653,7 +1704,7 @@ Feature: flow checks for closePayment - PA new
 
    Scenario: FLUSSO_CP_25 (part 4)
       Given the FLUSSO_CP_25 (part 3) scenario executed successfully
-      And the sendPaymentOutcome scenario executed successfully
+      And the sendPaymentOutcome payToken scenario executed successfully
       When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
       Then check outcome is KO of sendPaymentOutcome response
       And check faultCode is PPT_TOKEN_SCONOSCIUTO of sendPaymentOutcome response
@@ -1703,7 +1754,7 @@ Feature: flow checks for closePayment - PA new
 
    Scenario: FLUSSO_CP_26 (part 4)
       Given the FLUSSO_CP_26 (part 3) scenario executed successfully
-      And the sendPaymentOutcome scenario executed successfully
+      And the sendPaymentOutcome payToken scenario executed successfully
       And outcome with KO in sendPaymentOutcome
       When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
       Then check outcome is KO of sendPaymentOutcome response
@@ -1816,4 +1867,4 @@ Feature: flow checks for closePayment - PA new
       And outcome with KO in sendPaymentOutcome
       When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
       Then check outcome is KO of sendPaymentOutcome response
-      And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcome response
+      And check faultCode is PPT_TOKEN_SCONOSCIUTO of sendPaymentOutcome response
