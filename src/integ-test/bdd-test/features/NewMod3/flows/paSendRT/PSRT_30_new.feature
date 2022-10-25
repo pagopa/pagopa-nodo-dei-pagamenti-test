@@ -211,7 +211,7 @@ Feature: process tests for paSendRT [PSRT_30]
 
 
         When job paSendRt triggered after 0 seconds
-        And wait 15 seconds for expiration
+        And wait 70 seconds for expiration
         Then checks the value 1 of the record at column RETRY of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_transfer on db nodo_online under macro NewMod3
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_transfer on db nodo_online under macro NewMod3
         And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_transfer on db nodo_online under macro NewMod3
