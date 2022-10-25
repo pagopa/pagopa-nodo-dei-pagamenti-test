@@ -197,7 +197,7 @@ Feature: process tests for nodoInviaCarrelloRPT[CRPTSEM24]
                     </listaRPT>
                 </ws:nodoInviaCarrelloRPT>
             </soapenv:Body>
-        </soapenv:Envelope>
+            </soapenv:Envelope>
             """
             When PSP sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
             Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
