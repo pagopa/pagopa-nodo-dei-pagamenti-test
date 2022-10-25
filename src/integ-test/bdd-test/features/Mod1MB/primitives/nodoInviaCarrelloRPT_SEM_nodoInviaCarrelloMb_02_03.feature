@@ -212,7 +212,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
 
     # [SEM_nodoInviaCarrelloMb_03]
    Scenario: Define RPT3
-   Given generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
+   Given generate 1 cart with PA #codicePA# and notice number $1noticeNumber
       Given RPT3 generation
          """
          <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
