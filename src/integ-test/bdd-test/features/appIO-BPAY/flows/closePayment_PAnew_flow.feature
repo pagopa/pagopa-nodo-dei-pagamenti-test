@@ -795,7 +795,7 @@ Feature: flow checks for closePayment - PA new
    Scenario: FLUSSO_CP_08 (part 4)
       Given the FLUSSO_CP_08 (part 3) scenario executed successfully
       And the closePayment scenario executed successfully
-      When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti 
+      When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
       Then verify the HTTP status code of v1/closepayment response is 400
       And check esito is KO of v1/closepayment response
       And check descrizione is Esito non accettabile a token scaduto of v1/closepayment response
@@ -920,7 +920,7 @@ Feature: flow checks for closePayment - PA new
       Given the FLUSSO_CP_10 (part 3) scenario executed successfully
       And the closePayment scenario executed successfully
       And outcome with KO in v1/closepayment
-      When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti 
+      When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
       Then verify the HTTP status code of v1/closepayment response is 400
       And check esito is KO of v1/closepayment response
       And check descrizione is Esito non accettabile a token scaduto of v1/closepayment response
@@ -976,8 +976,8 @@ Feature: flow checks for closePayment - PA new
    Scenario: FLUSSO_CP_11 (part 4)
       Given the FLUSSO_CP_11 (part 3) scenario executed successfully
       And the closePayment scenario executed successfully
-      And pspTransactionId with $psp_transaction_id in v1/closepayment 
-      And transactionId with $transaction_id in v1/closepayment    
+      And pspTransactionId with $psp_transaction_id in v1/closepayment
+      And transactionId with $transaction_id in v1/closepayment
       When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
       Then verify the HTTP status code of v1/closepayment response is 422
       And check esito is KO of v1/closepayment response
@@ -1044,8 +1044,8 @@ Feature: flow checks for closePayment - PA new
       Given the FLUSSO_CP_12 (part 3) scenario executed successfully
       And the closePayment scenario executed successfully
       And outcome with KO in v1/closepayment
-      And pspTransactionId with $psp_transaction_id in v1/closepayment 
-      And transactionId with $transaction_id in v1/closepayment    
+      And pspTransactionId with $psp_transaction_id in v1/closepayment
+      And transactionId with $transaction_id in v1/closepayment
       When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
       Then verify the HTTP status code of v1/closepayment response is 400
       And check esito is KO of v1/closepayment response
@@ -1088,8 +1088,8 @@ Feature: flow checks for closePayment - PA new
       Given the FLUSSO_CP_13 (part 3) scenario executed successfully
       And the closePayment scenario executed successfully
       And outcome with KO in v1/closepayment
-      And pspTransactionId with $psp_transaction_id in v1/closepayment 
-      And transactionId with $transaction_id in v1/closepayment    
+      And pspTransactionId with $psp_transaction_id in v1/closepayment
+      And transactionId with $transaction_id in v1/closepayment
       When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
       Then verify the HTTP status code of v1/closepayment response is 422
       And check esito is KO of v1/closepayment response
@@ -1155,8 +1155,8 @@ Feature: flow checks for closePayment - PA new
    Scenario: FLUSSO_CP_14 (part 4)
       Given the FLUSSO_CP_14 (part 3) scenario executed successfully
       And the closePayment scenario executed successfully
-      And pspTransactionId with $psp_transaction_id in v1/closepayment 
-      And transactionId with $transaction_id in v1/closepayment    
+      And pspTransactionId with $psp_transaction_id in v1/closepayment
+      And transactionId with $transaction_id in v1/closepayment
       When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
       Then verify the HTTP status code of v1/closepayment response is 400
       And check esito is KO of v1/closepayment response
@@ -1289,7 +1289,7 @@ Feature: flow checks for closePayment - PA new
       When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
       Then check outcome is KO of sendPaymentOutcome response
       And check faultCode is PPT_ESITO_GIA_ACQUISITO of sendPaymentOutcome response
-      And check description is L'esito del pagamento risulta già acquisito dal sistema pagoPA. of sendPaymentOutcome response
+      And check faultString is L'esito del pagamento risulta già acquisito dal sistema pagoPA. of sendPaymentOutcome response
 
 
    # FLUSSO_CP_17
@@ -1406,3 +1406,196 @@ Feature: flow checks for closePayment - PA new
       Then verify the HTTP status code of v1/closepayment response is 422
       And check esito is KO of v1/closepayment response
       And check descrizione is Esito già acquisito of v1/closepayment response
+
+
+   # FLUSSO_CP_19
+   Scenario: FLUSSO_CP_19 (part 1)
+      Given the verifyPaymentNotice scenario executed successfully
+      And the activateIOPayment scenario executed successfully
+      When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
+      Then check outcome is OK of activateIOPayment response
+      And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
+      And checks the value $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
+      And checks the value $activateIOPayment.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
+
+   Scenario: FLUSSO_CP_19 (part 2)
+      Given the FLUSSO_CP_19 (part 1) scenario executed successfully
+      When PM sends REST GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
+      Then verify the HTTP status code of informazioniPagamento response is 200
+
+   Scenario: FLUSSO_CP_19 (part 3)
+      Given the FLUSSO_CP_19 (part 2) scenario executed successfully
+      And the closePayment scenario executed successfully
+      When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
+      Then verify the HTTP status code of v1/closepayment response is 200
+      And check esito is OK of v1/closepayment response
+      And wait 5 seconds for expiration
+
+   Scenario: FLUSSO_CP_19 (part 4)
+      Given the FLUSSO_CP_19 (part 3) scenario executed successfully
+      When WISP sends REST GET avanzamentoPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
+      Then verify the HTTP status code of avanzamentoPagamento is 200
+      And check esito is OK of avanzamentoPagamento response
+
+
+   # FLUSSO_CP_20
+   Scenario: FLUSSO_CP_20 (part 1)
+      Given the verifyPaymentNotice scenario executed successfully
+      And the activateIOPayment scenario executed successfully
+      When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
+      Then check outcome is OK of activateIOPayment response
+      And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
+      And checks the value $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
+      And checks the value $activateIOPayment.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
+
+   Scenario: FLUSSO_CP_20 (part 2)
+      Given the FLUSSO_CP_20 (part 1) scenario executed successfully
+      When PM sends REST GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
+      Then verify the HTTP status code of informazioniPagamento response is 200
+
+   Scenario: FLUSSO_CP_20 (part 3)
+      Given the FLUSSO_CP_20 (part 2) scenario executed successfully
+      And the pspNotifyPayment timeout scenario executed successfully
+      And the closePayment scenario executed successfully
+      When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
+      Then verify the HTTP status code of v1/closepayment response is 200
+      And check esito is OK of v1/closepayment response
+      And wait 12 seconds for expiration
+
+   Scenario: FLUSSO_CP_20 (part 4)
+      Given the FLUSSO_CP_20 (part 3) scenario executed successfully
+      When WISP sends REST GET avanzamentoPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
+      Then verify the HTTP status code of avanzamentoPagamento is 200
+      And check esito is ACK_UNKNOWN of avanzamentoPagamento response
+
+
+   # FLUSSO_CP_21
+   Scenario: FLUSSO_CP_21 (part 1)
+      Given the verifyPaymentNotice scenario executed successfully
+      And the activateIOPayment scenario executed successfully
+      When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
+      Then check outcome is OK of activateIOPayment response
+      And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
+      And checks the value $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
+      And checks the value $activateIOPayment.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
+
+   Scenario: FLUSSO_CP_21 (part 2)
+      Given the FLUSSO_CP_21 (part 1) scenario executed successfully
+      When PM sends REST GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
+      Then verify the HTTP status code of informazioniPagamento response is 200
+
+   Scenario: FLUSSO_CP_21 (part 3)
+      Given the FLUSSO_CP_21 (part 2) scenario executed successfully
+      And the closePayment scenario executed successfully
+      When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
+      Then verify the HTTP status code of v1/closepayment response is 200
+      And check esito is OK of v1/closepayment response
+      And wait 5 seconds for expiration
+
+   Scenario: FLUSSO_CP_21 (part 4)
+      Given the FLUSSO_CP_21 (part 3) scenario executed successfully
+      And the sendPaymentOutcome scenario executed successfully
+      When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+      Then check outcome is OK of sendPaymentOutcome response
+      And wait 5 seconds for expiration
+
+   Scenario: FLUSSO_CP_21 (part 5)
+      Given the FLUSSO_CP_21 (part 4) scenario executed successfully
+      When WISP sends REST GET avanzamentoPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
+      Then verify the HTTP status code of avanzamentoPagamento is 200
+      And check esito is OK of avanzamentoPagamento response
+
+
+   # FLUSSO_CP_22
+   Scenario: FLUSSO_CP_22 (part 1)
+      Given the verifyPaymentNotice scenario executed successfully
+      And the activateIOPayment scenario executed successfully
+      When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
+      Then check outcome is OK of activateIOPayment response
+      And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
+      And checks the value $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
+      And checks the value $activateIOPayment.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
+
+   Scenario: FLUSSO_CP_22 (part 2)
+      Given the FLUSSO_CP_22 (part 1) scenario executed successfully
+      When PM sends REST GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
+      Then verify the HTTP status code of informazioniPagamento response is 200
+
+   Scenario: FLUSSO_CP_22 (part 3)
+      Given the FLUSSO_CP_22 (part 2) scenario executed successfully
+      And the closePayment scenario executed successfully
+      And outcome with KO in v1/closepayment
+      When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
+      Then verify the HTTP status code of v1/closepayment response is 200
+      And check esito is OK of v1/closepayment response
+      And wait 5 seconds for expiration
+
+   Scenario: FLUSSO_CP_22 (part 4)
+      Given the FLUSSO_CP_22 (part 3) scenario executed successfully
+      When WISP sends REST GET avanzamentoPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
+      Then verify the HTTP status code of avanzamentoPagamento is 200
+      And check esito is KO of avanzamentoPagamento response
+
+
+   # FLUSSO_CP_23/24
+   Scenario: FLUSSO_CP_23 (part 1)
+      Given the verifyPaymentNotice scenario executed successfully
+      And the activateIOPayment scenario executed successfully
+      When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
+      Then check outcome is OK of activateIOPayment response
+      And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
+      And checks the value $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
+      And checks the value $activateIOPayment.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
+
+   Scenario: FLUSSO_CP_23 (part 2)
+      Given the FLUSSO_CP_23 (part 1) scenario executed successfully
+      When PM sends REST GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
+      Then verify the HTTP status code of informazioniPagamento response is 200
+
+   Scenario: FLUSSO_CP_23 (part 3)
+      Given the FLUSSO_CP_23 (part 2) scenario executed successfully
+      And the closePayment scenario executed successfully
+      And outcome with KO in v1/closepayment
+      When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
+      Then verify the HTTP status code of v1/closepayment response is 200
+      And check esito is OK of v1/closepayment response
+      And wait 5 seconds for expiration
+
+   Scenario: FLUSSO_CP_23 (part 1)
+      Given the activateIOPayment scenario executed successfully
+      And noticeNumber with 311$iuv in activateIOPayment
+      And creditorReferenceId with 11$iuv in paGetPayment
+      And EC replies to nodo-dei-pagamenti with the paGetPayment
+      When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
+      Then check outcome is OK of activateIOPayment response
+
+
+   # FLUSSO_CP_25
+   Scenario: FLUSSO_CP_25 (part 1)
+      Given the verifyPaymentNotice scenario executed successfully
+      And the activateIOPayment scenario executed successfully
+      When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
+      Then check outcome is OK of activateIOPayment response
+      And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
+      And checks the value $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
+      And checks the value $activateIOPayment.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
+
+   Scenario: FLUSSO_CP_25 (part 2)
+      Given the FLUSSO_CP_25 (part 1) scenario executed successfully
+      When PM sends REST GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
+      Then verify the HTTP status code of informazioniPagamento response is 200
+
+   Scenario: FLUSSO_CP_25 (part 3)
+      Given the FLUSSO_CP_25 (part 2) scenario executed successfully
+      And the closePayment scenario executed successfully
+      And outcome with KO in v1/closepayment
+      When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
+      Then verify the HTTP status code of v1/closepayment response is 200
+      And check esito is OK of v1/closepayment response
+      And wait 5 seconds for expiration
+
+   Scenario: FLUSSO_CP_25 (part 4)
+      Given the FLUSSO_CP_25 (part 3) scenario executed successfully
+      And the sendPaymentOutcome scenario executed successfully
+      When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+      Then check outcome is OK of sendPaymentOutcome response
