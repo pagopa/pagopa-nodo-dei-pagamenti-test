@@ -198,7 +198,7 @@ Feature: checks semantic OK for nodoInviaCarrelloRPT
          <password>pwdpwdpwd</password>
          <identificativoPSP>#psp#</identificativoPSP>
          <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-         <identificativoCanale>#canale#</identificativoCanale>
+         <identificativoCanale>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanale>
          <listaRPT>
          <elementoListaRPT>
          <identificativoDominio>#codicePA#</identificativoDominio>
