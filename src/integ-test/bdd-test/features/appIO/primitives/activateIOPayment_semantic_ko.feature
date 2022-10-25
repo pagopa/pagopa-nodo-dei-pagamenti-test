@@ -3,7 +3,7 @@ Feature: Semantic checks for activateIOPayment - KO
   Background:
     Given systems up
 
-  @runnble
+  @runnable
   Scenario Outline: Check errors on activateIOPayment
     Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
     And initial XML paGetPayment
