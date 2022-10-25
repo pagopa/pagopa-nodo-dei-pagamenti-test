@@ -1,4 +1,4 @@
-# Il test verifica che la paSendRTV2 sia inviata correttamente in caso di 3 transfers con 3 marche da bollo a tutti i recipient in caso di broadcast = true
+# Il test verifica che la in caso di timeout per la paSendRTV2 sia inserito un record nella tabella POSITION_RETRY_PA_SEND_RT
 
 Feature: flow tests for paSendRTV2 - Marca da bollo
     # Reference document:
@@ -8,16 +8,6 @@ Feature: flow tests for paSendRTV2 - Marca da bollo
 
     Background:
         Given systems up
-
-    #DB update
-    Scenario: Execute station update
-        Then updates through the query stationUpdateVersione of the table STAZIONI the parameter VERSIONE_PRIMITIVE with 2 under macro sendPaymentResultV2 on db nodo_cfg
-        And updates through the query stationUpdateBroadcast of the table PA_STAZIONE_PA the parameter BROADCAST with Y under macro sendPaymentResultV2 on db nodo_cfg
-
-    #refresh pa e stazioni
-    Scenario: Execute refresh pa e stazioni
-        Given the Execute station update scenario executed successfully
-        Then refresh job PA triggered after 10 seconds
 
     Scenario: Execute activatePaymentNoticeV2
         Given initial XML activatePaymentNoticeV2
@@ -88,7 +78,7 @@ Feature: flow tests for paSendRTV2 - Marca da bollo
             <!--1 to 5 repetitions:-->
             <transfer>
             <idTransfer>1</idTransfer>
-            <transferAmount>2.00</transferAmount>
+            <transferAmount>10.00</transferAmount>
             <fiscalCodePA>$activatePaymentNoticeV2.fiscalCode</fiscalCodePA>
             <richiestaMarcaDaBollo>
             <hashDocumento>wHpFSLCGZjIvNSXxqtGbxg7275t446DRTk5ZrsdUQ6E=</hashDocumento>
@@ -105,30 +95,6 @@ Feature: flow tests for paSendRTV2 - Marca da bollo
             <value>22</value>
             </mapEntry>
             </metadata>
-            </transfer>
-            <transfer>
-            <idTransfer>2</idTransfer>
-            <transferAmount>4.00</transferAmount>
-            <fiscalCodePA>90000000001</fiscalCodePA>
-            <richiestaMarcaDaBollo>
-            <hashDocumento>ciao</hashDocumento>
-            <tipoBollo>01</tipoBollo>
-            <provinciaResidenza>MI</provinciaResidenza>
-            </richiestaMarcaDaBollo>
-            <remittanceInformation>information2</remittanceInformation>
-            <transferCategory>category2</transferCategory>
-            </transfer>
-            <transfer>
-            <idTransfer>3</idTransfer>
-            <transferAmount>4.00</transferAmount>
-            <fiscalCodePA>90000000002</fiscalCodePA>
-            <richiestaMarcaDaBollo>
-            <hashDocumento>ciao</hashDocumento>
-            <tipoBollo>01</tipoBollo>
-            <provinciaResidenza>MI</provinciaResidenza>
-            </richiestaMarcaDaBollo>
-            <remittanceInformation>information3</remittanceInformation>
-            <transferCategory>category3</transferCategory>
             </transfer>
             </transferList>
             <!--Optional:-->
@@ -184,6 +150,21 @@ Feature: flow tests for paSendRTV2 - Marca da bollo
             }
             """
 
+    # define paSendRTV2
+    Scenario: paSendRTV2
+        Given initial xml paSendRTV2
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <paf:paSendRTV2Response>
+            <delay>25000</delay>
+            <outcome>OK</outcome>
+            </paf:paSendRTV2Response>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+
     # define MBD
     Scenario: Define MBD
         Given initial xml MB
@@ -230,11 +211,13 @@ Feature: flow tests for paSendRTV2 - Marca da bollo
     # sendPaymentOutcome phase
     Scenario: Execute sendPaymentOutcomeV2
         Given the Define MBD scenario executed successfully
+        And the paSendRTV2 scenario executed successfully
         And MB generation
             """
             $MB
             """
         And the Execute a closePayment-v2 request scenario executed successfully
+        And EC replies to nodo-dei-pagamenti with the paSendRTV2
         And initial XML sendPaymentOutcomeV2
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -285,16 +268,6 @@ Feature: flow tests for paSendRTV2 - Marca da bollo
             <idTransfer>1</idTransfer>
             <MBDAttachment>$bollo</MBDAttachment>
             </marcaDaBollo>
-            <marcaDaBollo>
-            <paymentToken>$activatePaymentNoticeV2Response.paymentToken</paymentToken>
-            <idTransfer>2</idTransfer>
-            <MBDAttachment>PG1hcmNhRGFCb2xsbwogICAgeG1sbnM9Imh0dHA6Ly93d3cuYWdlbnppYWVudHJhdGUuZ292Lml0LzIwMTQvTWFyY2FEYUJvbGxvIgogICAgeG1sbnM6bnMyPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwLzA5L3htbGRzaWcjIj4KICAgIDxQU1A+CiAgICAgICAgPENvZGljZUZpc2NhbGU+Q0Y3MDAwMDAwMDAwMTwvQ29kaWNlRmlzY2FsZT4KICAgICAgICA8RGVub21pbmF6aW9uZT43MDAwMDAwMDAwMTwvRGVub21pbmF6aW9uZT4KICAgIDwvUFNQPgogICAgPElVQkQ+MTIzNDU2Nzg5MDEyMzQ1PC9JVUJEPgogICAgPE9yYUFjcXVpc3RvPjIwMjItMDItMDZUMTU6MDA6NDQuNjU5KzAxOjAwPC9PcmFBY3F1aXN0bz4KICAgIDxJbXBvcnRvPjUuMDA8L0ltcG9ydG8+CiAgICA8VGlwb0JvbGxvPjAxPC9UaXBvQm9sbG8+CiAgICA8SW1wcm9udGFEb2N1bWVudG8+CiAgICAgICAgPERpZ2VzdE1ldGhvZCBBbGdvcml0aG09Imh0dHA6Ly93d3cudzMub3JnLzIwMDEvMDQveG1sZW5jI3NoYTI1NiIgLz4KICAgICAgICA8bnMyOkRpZ2VzdFZhbHVlPmNpYW88L25zMjpEaWdlc3RWYWx1ZT4KICAgIDwvSW1wcm9udGFEb2N1bWVudG8+CiAgICA8U2lnbmF0dXJlCiAgICAgICAgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvMDkveG1sZHNpZyMiPgogICAgICAgIDxTaWduZWRJbmZvPgogICAgICAgICAgICA8Q2Fub25pY2FsaXphdGlvbk1ldGhvZCBBbGdvcml0aG09Imh0dHA6Ly93d3cudzMub3JnL1RSLzIwMDEvUkVDLXhtbC1jMTRuLTIwMDEwMzE1IiAvPgogICAgICAgICAgICA8U2lnbmF0dXJlTWV0aG9kIEFsZ29yaXRobT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS8wNC94bWxkc2lnLW1vcmUjcnNhLXNoYTI1NiIgLz4KICAgICAgICAgICAgPFJlZmVyZW5jZSBVUkk9IiI+CiAgICAgICAgICAgICAgICA8VHJhbnNmb3Jtcz4KICAgICAgICAgICAgICAgICAgICA8VHJhbnNmb3JtIEFsZ29yaXRobT0iaHR0cDovL3d3dy53My5vcmcvMjAwMC8wOS94bWxkc2lnI2VudmVsb3BlZC1zaWduYXR1cmUiIC8+CiAgICAgICAgICAgICAgICA8L1RyYW5zZm9ybXM+CiAgICAgICAgICAgICAgICA8RGlnZXN0TWV0aG9kIEFsZ29yaXRobT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS8wNC94bWxlbmMjc2hhMjU2IiAvPgogICAgICAgICAgICAgICAgPERpZ2VzdFZhbHVlPndIcEZTTENHWmpJdk5TWHhxdEdieGc3Mjc1dDQ0NkRSVGs1WnJzZFVRNkU9PC9EaWdlc3RWYWx1ZT4KICAgICAgICAgICAgPC9SZWZlcmVuY2U+CiAgICAgICAgPC9TaWduZWRJbmZvPgogICAgICAgIDxTaWduYXR1cmVWYWx1ZT50U081U0J5TnBhZGJ6YlB2VW41VDk5YWpVNGhIZHFKTFZ5cjR1OFA4V1NCNXhjOUs3U3ptdy9mbzVTWVhZYVBTNkEvRHpQbGNoTTk1IGZnRk1aM1ZZQnlxdEErVmM3V2dYOGFJT0VWT3JNNmVYcXg4K2tjNGcvamdtLzlFUXlVbVhHUCtSQnZ4MlNnMHVpbTA0YURkQjdGZmQgVUlpNlE1dmpqbmExcmhOdlpJa0JFakNWKytmK3diTDlxcEZMdDhFMk4rYk9xOVkwd2NUVUJIaUlDcnhYdkRCRFVqMVg3Q2tidTAvWSBLVlJKY2s2Y0U1cnBvUUI2RGp4ZEVuNURFVWdtelIvVVpFd3RBMUJLM2NWUmlPc2Fzeng4YlhFSXdHSGU0ZnZ2enhKT0hJcWdMNGN0IGpqMURvSTVtMnhHb29iUTNyRzZQZjNIRXdGWEx3OXg4M095a0RBPT08L1NpZ25hdHVyZVZhbHVlPgogICAgPC9TaWduYXR1cmU+CjwvbWFyY2FEYUJvbGxvPg==</MBDAttachment>
-            </marcaDaBollo>
-            <marcaDaBollo>
-            <paymentToken>$activatePaymentNoticeV2Response.paymentToken</paymentToken>
-            <idTransfer>3</idTransfer>
-            <MBDAttachment>PG1hcmNhRGFCb2xsbwogICAgeG1sbnM9Imh0dHA6Ly93d3cuYWdlbnppYWVudHJhdGUuZ292Lml0LzIwMTQvTWFyY2FEYUJvbGxvIgogICAgeG1sbnM6bnMyPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwLzA5L3htbGRzaWcjIj4KICAgIDxQU1A+CiAgICAgICAgPENvZGljZUZpc2NhbGU+Q0Y3MDAwMDAwMDAwMTwvQ29kaWNlRmlzY2FsZT4KICAgICAgICA8RGVub21pbmF6aW9uZT43MDAwMDAwMDAwMTwvRGVub21pbmF6aW9uZT4KICAgIDwvUFNQPgogICAgPElVQkQ+MTIzNDU2Nzg5MDEyMzQ1PC9JVUJEPgogICAgPE9yYUFjcXVpc3RvPjIwMjItMDItMDZUMTU6MDA6NDQuNjU5KzAxOjAwPC9PcmFBY3F1aXN0bz4KICAgIDxJbXBvcnRvPjUuMDA8L0ltcG9ydG8+CiAgICA8VGlwb0JvbGxvPjAxPC9UaXBvQm9sbG8+CiAgICA8SW1wcm9udGFEb2N1bWVudG8+CiAgICAgICAgPERpZ2VzdE1ldGhvZCBBbGdvcml0aG09Imh0dHA6Ly93d3cudzMub3JnLzIwMDEvMDQveG1sZW5jI3NoYTI1NiIgLz4KICAgICAgICA8bnMyOkRpZ2VzdFZhbHVlPmNpYW88L25zMjpEaWdlc3RWYWx1ZT4KICAgIDwvSW1wcm9udGFEb2N1bWVudG8+CiAgICA8U2lnbmF0dXJlCiAgICAgICAgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvMDkveG1sZHNpZyMiPgogICAgICAgIDxTaWduZWRJbmZvPgogICAgICAgICAgICA8Q2Fub25pY2FsaXphdGlvbk1ldGhvZCBBbGdvcml0aG09Imh0dHA6Ly93d3cudzMub3JnL1RSLzIwMDEvUkVDLXhtbC1jMTRuLTIwMDEwMzE1IiAvPgogICAgICAgICAgICA8U2lnbmF0dXJlTWV0aG9kIEFsZ29yaXRobT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS8wNC94bWxkc2lnLW1vcmUjcnNhLXNoYTI1NiIgLz4KICAgICAgICAgICAgPFJlZmVyZW5jZSBVUkk9IiI+CiAgICAgICAgICAgICAgICA8VHJhbnNmb3Jtcz4KICAgICAgICAgICAgICAgICAgICA8VHJhbnNmb3JtIEFsZ29yaXRobT0iaHR0cDovL3d3dy53My5vcmcvMjAwMC8wOS94bWxkc2lnI2VudmVsb3BlZC1zaWduYXR1cmUiIC8+CiAgICAgICAgICAgICAgICA8L1RyYW5zZm9ybXM+CiAgICAgICAgICAgICAgICA8RGlnZXN0TWV0aG9kIEFsZ29yaXRobT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS8wNC94bWxlbmMjc2hhMjU2IiAvPgogICAgICAgICAgICAgICAgPERpZ2VzdFZhbHVlPndIcEZTTENHWmpJdk5TWHhxdEdieGc3Mjc1dDQ0NkRSVGs1WnJzZFVRNkU9PC9EaWdlc3RWYWx1ZT4KICAgICAgICAgICAgPC9SZWZlcmVuY2U+CiAgICAgICAgPC9TaWduZWRJbmZvPgogICAgICAgIDxTaWduYXR1cmVWYWx1ZT50U081U0J5TnBhZGJ6YlB2VW41VDk5YWpVNGhIZHFKTFZ5cjR1OFA4V1NCNXhjOUs3U3ptdy9mbzVTWVhZYVBTNkEvRHpQbGNoTTk1IGZnRk1aM1ZZQnlxdEErVmM3V2dYOGFJT0VWT3JNNmVYcXg4K2tjNGcvamdtLzlFUXlVbVhHUCtSQnZ4MlNnMHVpbTA0YURkQjdGZmQgVUlpNlE1dmpqbmExcmhOdlpJa0JFakNWKytmK3diTDlxcEZMdDhFMk4rYk9xOVkwd2NUVUJIaUlDcnhYdkRCRFVqMVg3Q2tidTAvWSBLVlJKY2s2Y0U1cnBvUUI2RGp4ZEVuNURFVWdtelIvVVpFd3RBMUJLM2NWUmlPc2Fzeng4YlhFSXdHSGU0ZnZ2enhKT0hJcWdMNGN0IGpqMURvSTVtMnhHb29iUTNyRzZQZjNIRXdGWEx3OXg4M095a0RBPT08L1NpZ25hdHVyZVZhbHVlPgogICAgPC9TaWduYXR1cmU+CjwvbWFyY2FEYUJvbGxvPg==</MBDAttachment>
-            </marcaDaBollo>
             </marcheDaBollo>
             </details>
             </nod:sendPaymentOutcomeV2Request>
@@ -311,8 +284,7 @@ Feature: flow tests for paSendRTV2 - Marca da bollo
     Scenario: execute DB check
         Given the Execute sendPaymentOutcomeV2 scenario executed successfully
         And wait 30 seconds for expiration
-        # POSITION_TRANSFER_MBD
-        Then verify 3 record for the table POSITION_TRANSFER_MBD retrived by the query select_position_transfer_mbd on db nodo_online under macro NewMod1
+        Then verify 1 record for the table POSITION_TRANSFER_MBD retrived by the query select_position_transfer_mbd on db nodo_online under macro NewMod1
         And checks the value $MB.TipoBollo of the record at column TIPO_BOLLO of the table POSITION_TRANSFER_MBD retrived by the query select_position_transfer_mbd on db nodo_online under macro NewMod1
         And checks the value BD of the record at column TIPO_ALLEGATO_RICEVUTA of the table POSITION_TRANSFER_MBD retrived by the query select_position_transfer_mbd on db nodo_online under macro NewMod1
         And checks the value $iubd of the record at column IUBD of the table POSITION_TRANSFER_MBD retrived by the query select_position_transfer_mbd on db nodo_online under macro NewMod1
@@ -323,23 +295,11 @@ Feature: flow tests for paSendRTV2 - Marca da bollo
         And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_TRANSFER_MBD retrived by the query select_position_transfer_mbd on db nodo_online under macro NewMod1
         And checks the value sendPaymentOutcomeV2 of the record at column INSERTED_BY of the table POSITION_TRANSFER_MBD retrived by the query select_position_transfer_mbd on db nodo_online under macro NewMod1
         And checks the value sendPaymentOutcomeV2 of the record at column UPDATED_BY of the table POSITION_TRANSFER_MBD retrived by the query select_position_transfer_mbd on db nodo_online under macro NewMod1
-        # POSITION_TRANSFER
-        And verify 3 record for the table POSITION_TRANSFER retrived by the query position_receipt_recipient_v2 on db nodo_online under macro sendPaymentResultV2
-        And checks the value None of the record at column IBAN of the table POSITION_TRANSFER retrived by the query position_receipt_recipient_v2 on db nodo_online under macro sendPaymentResultV2
-        And checks the value 01 of the record at column REQ_TIPO_BOLLO of the table POSITION_TRANSFER retrived by the query position_receipt_recipient_v2 on db nodo_online under macro sendPaymentResultV2
-        And checks the value wHpFSLCGZjIvNSXxqtGbxg7275t446DRTk5ZrsdUQ6E= of the record at column REQ_HASH_DOCUMENTO of the table POSITION_TRANSFER retrived by the query position_receipt_recipient_v2 on db nodo_online under macro sendPaymentResultV2
-        And checks the value MI of the record at column REQ_PROVINCIA_RESIDENZA of the table POSITION_TRANSFER retrived by the query position_receipt_recipient_v2 on db nodo_online under macro sendPaymentResultV2
-        And checks the value None of the record at column IBAN of the table POSITION_TRANSFER retrived by the query position_receipt_recipient_v2_desc on db nodo_online under macro sendPaymentResultV2
-        And checks the value 01 of the record at column REQ_TIPO_BOLLO of the table POSITION_TRANSFER retrived by the query position_receipt_recipient_v2_desc on db nodo_online under macro sendPaymentResultV2
-        And checks the value ciao of the record at column REQ_HASH_DOCUMENTO of the table POSITION_TRANSFER retrived by the query position_receipt_recipient_v2_desc on db nodo_online under macro sendPaymentResultV2
-        And checks the value MI of the record at column REQ_PROVINCIA_RESIDENZA of the table POSITION_TRANSFER retrived by the query position_receipt_recipient_v2_desc on db nodo_online under macro sendPaymentResultV2
         # RE
-        And verify 6 record for the table RE retrived by the query select_paSendRTV2 on db re under macro sendPaymentResultV2
-        And checks the value REQ,RESP,REQ,RESP,REQ,RESP of the record at column SOTTO_TIPO_EVENTO of the table RE retrived by the query select_paSendRTV2 on db re under macro sendPaymentResultV2
-        And checks the value 66666666666_08,66666666666_08,90000000001_06,90000000001_06,90000000001_01,90000000001_01 of the record at column EROGATORE_DESCR of the table RE retrived by the query select_paSendRTV2 on db re under macro sendPaymentResultV2
+        And verify 2 record for the table RE retrived by the query select_paSendRTV2 on db re under macro sendPaymentResultV2
+        And checks the value REQ,RESP of the record at column SOTTO_TIPO_EVENTO of the table RE retrived by the query select_paSendRTV2 on db re under macro sendPaymentResultV2
         # POSITION_RECEIPT_RECIPIENT_STATUS
-        And verify 9 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_receipt_recipient_v2 on db nodo_online under macro sendPaymentResultV2
-        And checks the value NOTICE_GENERATED,NOTICE_GENERATED,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED,NOTICE_SENT,NOTIFIED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_receipt_recipient_v2 on db nodo_online under macro sendPaymentResultV2
+        And checks the value NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_receipt_recipient_v2 on db nodo_online under macro sendPaymentResultV2
         # POSITION_PAYMENT_STATUS
         And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED,PAID,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query position_receipt_recipient_v2 on db nodo_online under macro sendPaymentResultV2
         # POSITION_PAYMENT_STATUS_SNAPSHOT
@@ -349,22 +309,17 @@ Feature: flow tests for paSendRTV2 - Marca da bollo
         # POSITION_STATUS_SNAPSHOT
         And checks the value NOTIFIED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query position_receipt_recipient_v2 on db nodo_online under macro sendPaymentResultV2
         # POSITION_RETRY_PA_SEND_RT
-        And verify 0 record for the table POSITION_RETRY_PA_SEND_RT retrived by the query position_receipt_recipient_v2 on db nodo_online under macro sendPaymentResultV2
-        # POSITION_RECEIPT_RECIPIENT
-        And verify 3 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_v2 on db nodo_online under macro sendPaymentResultV2
-        And checks the value 66666666666,90000000001,90000000002 of the record at column RECIPIENT_PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_v2 on db nodo_online under macro sendPaymentResultV2
-        And checks the value 66666666666,90000000001,90000000001 of the record at column RECIPIENT_BROKER_PA_ID of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_v2 on db nodo_online under macro sendPaymentResultV2
-        And checks the value 66666666666_08,90000000001_06,90000000001_01 of the record at column RECIPIENT_STATION_ID of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_v2 on db nodo_online under macro sendPaymentResultV2
-        And checks the value NOTIFIED,NOTIFIED,NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_v2 on db nodo_online under macro sendPaymentResultV2
+        And verify 1 record for the table POSITION_RETRY_PA_SEND_RT retrived by the query position_receipt_recipient_v2 on db nodo_online under macro sendPaymentResultV2
 
     # inserire i check sul blob in RE per l'xml paSendRTV2
 
-    #DB update 1
-    Scenario: Execute station update 1
-        Given the execute DB check scenario executed successfully
-        And updates through the query stationUpdateBroadcast of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro sendPaymentResultV2 on db nodo_cfg
 
-    #refresh pa e stazioni 1
-    Scenario: Execute refresh pa e stazioni
-        Given the Execute station update 1 scenario executed successfully
-        Then refresh job PA triggered after 10 seconds
+    # trigger pa send RT retry
+    Scenario: Execute paSendRT
+        Given the execute DB check scenario executed successfully
+        When job paSendRT triggered after 10 seconds
+        Then verify the HTTP status code of paSendRT response is 200
+
+        # DB check 1
+        # POSITION_RETRY_PA_SEND_RT
+        And checks the value 1 of the record at column RETRY of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_receipt_recipient_v2 on db nodo_online under macro sendPaymentResultV2
