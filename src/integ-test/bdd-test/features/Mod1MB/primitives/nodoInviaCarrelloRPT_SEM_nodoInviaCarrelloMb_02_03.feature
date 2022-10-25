@@ -395,13 +395,13 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          <identificativoDominio>#codicePA#</identificativoDominio>
          <identificativoUnivocoVersamento>$3iuv</identificativoUnivocoVersamento>
          <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
-         <rpt>$rptAttachment</rpt>
+         <rpt>$rpt3Attachment</rpt>
          </elementoListaRPT>
          <elementoListaRPT>
          <identificativoDominio>90000000001</identificativoDominio>
          <identificativoUnivocoVersamento>$3iuv</identificativoUnivocoVersamento>
          <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
-         <rpt>$rpt2Attachment</rpt>
+         <rpt>$rpt4Attachment</rpt>
          </elementoListaRPT>
          </listaRPT>
          <requireLightPayment>01</requireLightPayment>
