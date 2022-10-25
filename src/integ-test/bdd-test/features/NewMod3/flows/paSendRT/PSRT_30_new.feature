@@ -4,7 +4,7 @@ Feature: process tests for paSendRT [PSRT_30]
         Given systems up
 
     # PSRT_21
-    @wip
+
     Scenario: 21 Execute verifyPaymentNotice request
         Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
         And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
@@ -29,7 +29,7 @@ Feature: process tests for paSendRT [PSRT_30]
         And EC new version
         When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of verifyPaymentNotice response
-    @wip
+
     Scenario: 21 Execute activatePaymentNotice request
         Given the 21 Execute verifyPaymentNotice request scenario executed successfully
         And initial XML paGetPayment
@@ -123,7 +123,7 @@ Feature: process tests for paSendRT [PSRT_30]
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
 
-    @wip
+
     Scenario: 21 Define sendPaymentOutcome
         Given the 21 Execute activatePaymentNotice request scenario executed successfully
         And initial XML paSendRT
@@ -217,13 +217,13 @@ Feature: process tests for paSendRT [PSRT_30]
         # db update config
         And nodo-dei-pagamenti has config parameter scheduler.paSendRtMaxRetry set to 1
 
-    @wip
+
     Scenario: 21 clean paSendRt queue
         Given the 21 Define sendPaymentOutcome scenario executed successfully
         When job paSendRt triggered after 5 seconds
         And wait 10 seconds for expiration
 
-    @wip
+
     Scenario: 21 job paSendRt
         Given the 21 Define sendPaymentOutcome scenario executed successfully
         And initial XML paSendRT
@@ -247,7 +247,7 @@ Feature: process tests for paSendRT [PSRT_30]
 
 
     # PSRT_22
-
+    @wip
     Scenario: 22 Execute verifyPaymentNotice request
         Given update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with N, with where condition FK_PA and where value ('6','8') under macro update_query on db nodo_cfg
         And generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
@@ -273,7 +273,7 @@ Feature: process tests for paSendRT [PSRT_30]
         And EC new version
         When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of verifyPaymentNotice response
-
+    @wip
     Scenario: 22 Execute activatePaymentNotice request
         Given the 22 Execute verifyPaymentNotice request scenario executed successfully
         And initial XML paGetPayment
@@ -368,7 +368,7 @@ Feature: process tests for paSendRT [PSRT_30]
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
 
-
+    @wip
     Scenario: 22 Define sendPaymentOutcome
         Given the 22 Execute activatePaymentNotice request scenario executed successfully
         And initial XML paSendRT
@@ -451,12 +451,16 @@ Feature: process tests for paSendRT [PSRT_30]
         And checks the value $activatePaymentNotice.fiscalCode of the record at column PA_FISCAL_CODE of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
         And checks the value $activatePaymentNotice.noticeNumber of the record at column NOTICE_ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
 
+        # db update config
+        And nodo-dei-pagamenti has config parameter scheduler.paSendRtMaxRetry set to 1
+
+    @wip
     Scenario: 22 clean paSendRt queue
         Given the 22 Define sendPaymentOutcome scenario executed successfully
         When job paSendRt triggered after 5 seconds
         And wait 10 seconds for expiration
 
-
+    @wip
     Scenario: 22 job paSendRt
         Given the 22 Define sendPaymentOutcome scenario executed successfully
         And initial XML paSendRT
