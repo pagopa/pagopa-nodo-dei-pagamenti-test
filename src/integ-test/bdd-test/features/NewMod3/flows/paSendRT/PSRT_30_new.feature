@@ -215,7 +215,6 @@ Feature: process tests for paSendRT [PSRT_30]
         And checks the value $activatePaymentNotice.noticeNumber of the record at column NOTICE_ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
 
         # db update config
-
         And nodo-dei-pagamenti has config parameter scheduler.paSendRtMaxRetry set to 1
 
     @wip
