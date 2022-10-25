@@ -193,7 +193,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_02]
       </elementoListaRPT>
       <elementoListaRPT>
       <identificativoDominio>#codicePA#</identificativoDominio>
-      <identificativoUnivocoVersamento>2iuv</identificativoUnivocoVersamento>
+      <identificativoUnivocoVersamento>$2iuv</identificativoUnivocoVersamento>
       <codiceContestoPagamento>CCD01</codiceContestoPagamento>
       <rpt>$rpt2Attachment</rpt>
       </elementoListaRPT>
