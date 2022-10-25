@@ -1036,6 +1036,7 @@ Feature: flux tests for closePaymentV2
     Scenario: FLUSSO_OLD_CP_03 (part 2)
         Given the FLUSSO_OLD_CP_03 (part 1) scenario executed successfully
         And the sendPaymentOutcome request scenario executed successfully
+        And outcome with KO in sendPaymentOutcome
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcome response
         And check faultCode is PPT_TOKEN_SCONOSCIUTO of sendPaymentOutcome response
@@ -1157,11 +1158,12 @@ Feature: flux tests for closePaymentV2
         # STATI_RPT_SNAPSHOT
         And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
-    @wip
+    
     Scenario: FLUSSO_OLD_CP_04 (part 2)
         Given the FLUSSO_OLD_CP_04 (part 1) scenario executed successfully
         And the sendPaymentOutcome request scenario executed successfully
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+        Then check outcome is KO of sendPaymentOutcome response
         And check faultCode is PPT_TOKEN_SCONOSCIUTO of sendPaymentOutcome response
         And check description is token unknown of sendPaymentOutcome response
         And wait 5 seconds for expiration
