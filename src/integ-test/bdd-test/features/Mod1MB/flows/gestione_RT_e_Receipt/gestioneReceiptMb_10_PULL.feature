@@ -171,24 +171,25 @@ Feature: gestioneReceiptMb_10_PULL
             """
         And RT1 generation
             """
-            <?xml version="1.0" encoding="UTF-8"?>
-            <pay_i:RT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0.xsd ">
+            <pay_i:RT xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd "
+            xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
             <pay_i:versioneOggetto>6.0</pay_i:versioneOggetto>
             <pay_i:dominio>
             <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
             <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
-            <pay_i:identificativoMessaggioRicevuta>TR0001_20120302-10:37:52.0264-F098</pay_i:identificativoMessaggioRicevuta>
-            <pay_i:dataOraMessaggioRicevuta>2012-03-02T10:37:52</pay_i:dataOraMessaggioRicevuta>
-            <pay_i:riferimentoMessaggioRichiesta>TR0001_20120302-10:37:52.0264-F098</pay_i:riferimentoMessaggioRichiesta>
-            <pay_i:riferimentoDataRichiesta>2012-01-26</pay_i:riferimentoDataRichiesta>
+            <pay_i:identificativoMessaggioRicevuta>IdentificativoMessaggioRicevuta</pay_i:identificativoMessaggioRicevuta>
+            <pay_i:dataOraMessaggioRicevuta>2001-12-31T12:00:00</pay_i:dataOraMessaggioRicevuta>
+            <pay_i:riferimentoMessaggioRichiesta>RiferimentoMessaggioRichiesta</pay_i:riferimentoMessaggioRichiesta>
+            <pay_i:riferimentoDataRichiesta>2001-01-01</pay_i:riferimentoDataRichiesta>
             <pay_i:istitutoAttestante>
             <pay_i:identificativoUnivocoAttestante>
             <pay_i:tipoIdentificativoUnivoco>G</pay_i:tipoIdentificativoUnivoco>
-            <pay_i:codiceIdentificativoUnivoco>CodiceIdentific</pay_i:codiceIdentificativoUnivoco>
+            <pay_i:codiceIdentificativoUnivoco>IDPSPFNZ</pay_i:codiceIdentificativoUnivoco>
             </pay_i:identificativoUnivocoAttestante>
             <pay_i:denominazioneAttestante>DenominazioneAttestante</pay_i:denominazioneAttestante>
-            <pay_i:codiceUnitOperAttestante>CodiceUOA</pay_i:codiceUnitOperAttestante>
+            <pay_i:codiceUnitOperAttestante>CodiceUnitOperAttestante</pay_i:codiceUnitOperAttestante>
             <pay_i:denomUnitOperAttestante>DenomUnitOperAttestante</pay_i:denomUnitOperAttestante>
             <pay_i:indirizzoAttestante>IndirizzoAttestante</pay_i:indirizzoAttestante>
             <pay_i:civicoAttestante>11</pay_i:civicoAttestante>
@@ -207,7 +208,7 @@ Feature: gestioneReceiptMb_10_PULL
             <pay_i:denomUnitOperBeneficiario>XXX</pay_i:denomUnitOperBeneficiario>
             <pay_i:indirizzoBeneficiario>IndirizzoBeneficiario</pay_i:indirizzoBeneficiario>
             <pay_i:civicoBeneficiario>123</pay_i:civicoBeneficiario>
-            <pay_i:capBeneficiario>00123</pay_i:capBeneficiario>
+            <pay_i:capBeneficiario>22222</pay_i:capBeneficiario>
             <pay_i:localitaBeneficiario>Roma</pay_i:localitaBeneficiario>
             <pay_i:provinciaBeneficiario>RM</pay_i:provinciaBeneficiario>
             <pay_i:nazioneBeneficiario>IT</pay_i:nazioneBeneficiario>
@@ -215,7 +216,7 @@ Feature: gestioneReceiptMb_10_PULL
             <pay_i:soggettoVersante>
             <pay_i:identificativoUnivocoVersante>
             <pay_i:tipoIdentificativoUnivoco>F</pay_i:tipoIdentificativoUnivoco>
-            <pay_i:codiceIdentificativoUnivoco>RCCGLD09P09H501F</pay_i:codiceIdentificativoUnivoco>
+            <pay_i:codiceIdentificativoUnivoco>RCCGLD09P09H502E</pay_i:codiceIdentificativoUnivoco>
             </pay_i:identificativoUnivocoVersante>
             <pay_i:anagraficaVersante>Gesualdo;Riccitelli</pay_i:anagraficaVersante>
             <pay_i:indirizzoVersante>via del gesu</pay_i:indirizzoVersante>
@@ -224,6 +225,7 @@ Feature: gestioneReceiptMb_10_PULL
             <pay_i:localitaVersante>Roma</pay_i:localitaVersante>
             <pay_i:provinciaVersante>RM</pay_i:provinciaVersante>
             <pay_i:nazioneVersante>IT</pay_i:nazioneVersante>
+            <pay_i:e-mailVersante>gesualdo.riccitelli@poste.it</pay_i:e-mailVersante>
             </pay_i:soggettoVersante>
             <pay_i:soggettoPagatore>
             <pay_i:identificativoUnivocoPagatore>
@@ -246,10 +248,10 @@ Feature: gestioneReceiptMb_10_PULL
             <pay_i:CodiceContestoPagamento>$1carrello</pay_i:CodiceContestoPagamento>
             <pay_i:datiSingoloPagamento>
             <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
-            <pay_i:esitoSingoloPagamento>ACCEPTED</pay_i:esitoSingoloPagamento>
-            <pay_i:dataEsitoSingoloPagamento>2012-03-02</pay_i:dataEsitoSingoloPagamento>
-            <pay_i:identificativoUnivocoRiscossione>IUV_2021-11-15_13:55:13.038</pay_i:identificativoUnivocoRiscossione>
-            <pay_i:causaleVersamento>causale RT pull</pay_i:causaleVersamento>
+            <pay_i:esitoSingoloPagamento>REJECT</pay_i:esitoSingoloPagamento>
+            <pay_i:dataEsitoSingoloPagamento>2001-01-01</pay_i:dataEsitoSingoloPagamento>
+            <pay_i:identificativoUnivocoRiscossione>$1iuv</pay_i:identificativoUnivocoRiscossione>
+            <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
             <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
             </pay_i:datiSingoloPagamento>
             </pay_i:datiPagamento>
@@ -257,24 +259,25 @@ Feature: gestioneReceiptMb_10_PULL
             """
         And RT2 generation
             """
-            <?xml version="1.0" encoding="UTF-8"?>
-            <pay_i:RT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0.xsd ">
+            <pay_i:RT xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd "
+            xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
             <pay_i:versioneOggetto>6.0</pay_i:versioneOggetto>
             <pay_i:dominio>
             <pay_i:identificativoDominio>$pa1</pay_i:identificativoDominio>
             <pay_i:identificativoStazioneRichiedente>#id_station_secondary#</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
-            <pay_i:identificativoMessaggioRicevuta>TR0001_20120302-10:37:52.0264-F098</pay_i:identificativoMessaggioRicevuta>
-            <pay_i:dataOraMessaggioRicevuta>2012-03-02T10:37:52</pay_i:dataOraMessaggioRicevuta>
-            <pay_i:riferimentoMessaggioRichiesta>TR0001_20120302-10:37:52.0264-F098</pay_i:riferimentoMessaggioRichiesta>
-            <pay_i:riferimentoDataRichiesta>2012-01-26</pay_i:riferimentoDataRichiesta>
+            <pay_i:identificativoMessaggioRicevuta>IdentificativoMessaggioRicevuta</pay_i:identificativoMessaggioRicevuta>
+            <pay_i:dataOraMessaggioRicevuta>2001-12-31T12:00:00</pay_i:dataOraMessaggioRicevuta>
+            <pay_i:riferimentoMessaggioRichiesta>RiferimentoMessaggioRichiesta</pay_i:riferimentoMessaggioRichiesta>
+            <pay_i:riferimentoDataRichiesta>2001-01-01</pay_i:riferimentoDataRichiesta>
             <pay_i:istitutoAttestante>
             <pay_i:identificativoUnivocoAttestante>
             <pay_i:tipoIdentificativoUnivoco>G</pay_i:tipoIdentificativoUnivoco>
-            <pay_i:codiceIdentificativoUnivoco>CodiceIdentific</pay_i:codiceIdentificativoUnivoco>
+            <pay_i:codiceIdentificativoUnivoco>IDPSPFNZ</pay_i:codiceIdentificativoUnivoco>
             </pay_i:identificativoUnivocoAttestante>
             <pay_i:denominazioneAttestante>DenominazioneAttestante</pay_i:denominazioneAttestante>
-            <pay_i:codiceUnitOperAttestante>CodiceUOA</pay_i:codiceUnitOperAttestante>
+            <pay_i:codiceUnitOperAttestante>CodiceUnitOperAttestante</pay_i:codiceUnitOperAttestante>
             <pay_i:denomUnitOperAttestante>DenomUnitOperAttestante</pay_i:denomUnitOperAttestante>
             <pay_i:indirizzoAttestante>IndirizzoAttestante</pay_i:indirizzoAttestante>
             <pay_i:civicoAttestante>11</pay_i:civicoAttestante>
@@ -293,7 +296,7 @@ Feature: gestioneReceiptMb_10_PULL
             <pay_i:denomUnitOperBeneficiario>XXX</pay_i:denomUnitOperBeneficiario>
             <pay_i:indirizzoBeneficiario>IndirizzoBeneficiario</pay_i:indirizzoBeneficiario>
             <pay_i:civicoBeneficiario>123</pay_i:civicoBeneficiario>
-            <pay_i:capBeneficiario>00123</pay_i:capBeneficiario>
+            <pay_i:capBeneficiario>22222</pay_i:capBeneficiario>
             <pay_i:localitaBeneficiario>Roma</pay_i:localitaBeneficiario>
             <pay_i:provinciaBeneficiario>RM</pay_i:provinciaBeneficiario>
             <pay_i:nazioneBeneficiario>IT</pay_i:nazioneBeneficiario>
@@ -301,7 +304,7 @@ Feature: gestioneReceiptMb_10_PULL
             <pay_i:soggettoVersante>
             <pay_i:identificativoUnivocoVersante>
             <pay_i:tipoIdentificativoUnivoco>F</pay_i:tipoIdentificativoUnivoco>
-            <pay_i:codiceIdentificativoUnivoco>RCCGLD09P09H501F</pay_i:codiceIdentificativoUnivoco>
+            <pay_i:codiceIdentificativoUnivoco>RCCGLD09P09H502E</pay_i:codiceIdentificativoUnivoco>
             </pay_i:identificativoUnivocoVersante>
             <pay_i:anagraficaVersante>Gesualdo;Riccitelli</pay_i:anagraficaVersante>
             <pay_i:indirizzoVersante>via del gesu</pay_i:indirizzoVersante>
@@ -310,6 +313,7 @@ Feature: gestioneReceiptMb_10_PULL
             <pay_i:localitaVersante>Roma</pay_i:localitaVersante>
             <pay_i:provinciaVersante>RM</pay_i:provinciaVersante>
             <pay_i:nazioneVersante>IT</pay_i:nazioneVersante>
+            <pay_i:e-mailVersante>gesualdo.riccitelli@poste.it</pay_i:e-mailVersante>
             </pay_i:soggettoVersante>
             <pay_i:soggettoPagatore>
             <pay_i:identificativoUnivocoPagatore>
@@ -332,10 +336,10 @@ Feature: gestioneReceiptMb_10_PULL
             <pay_i:CodiceContestoPagamento>$1carrello</pay_i:CodiceContestoPagamento>
             <pay_i:datiSingoloPagamento>
             <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
-            <pay_i:esitoSingoloPagamento>ACCEPTED</pay_i:esitoSingoloPagamento>
-            <pay_i:dataEsitoSingoloPagamento>2012-03-02</pay_i:dataEsitoSingoloPagamento>
+            <pay_i:esitoSingoloPagamento>REJECT</pay_i:esitoSingoloPagamento>
+            <pay_i:dataEsitoSingoloPagamento>2001-01-01</pay_i:dataEsitoSingoloPagamento>
             <pay_i:identificativoUnivocoRiscossione>$1iuv</pay_i:identificativoUnivocoRiscossione>
-            <pay_i:causaleVersamento>causale RT pull</pay_i:causaleVersamento>
+            <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
             <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
             </pay_i:datiSingoloPagamento>
             </pay_i:datiPagamento>
@@ -396,7 +400,7 @@ Feature: gestioneReceiptMb_10_PULL
         And replace pa content with #creditor_institution_code# content
         And execution query get_pa_id to get value on the table PA, with the columns OBJ_ID under macro costanti with db name nodo_cfg
         And through the query get_pa_id retrieve param objId at position 0 and save it under the key objId
-        
+
         And replace station_id content with #id_station# content
         And execution query by_station_id to get value on the table STAZIONI, with the columns OBJ_ID under macro costanti with db name nodo_cfg
         And through the query by_station_id retrieve param stationID at position 0 and save it under the key stationID
@@ -441,13 +445,13 @@ Feature: gestioneReceiptMb_10_PULL
         When WISP sends REST POST inoltroEsito/mod1 to nodo-dei-pagamenti
             """
             {
-            "idPagamento":"$sessionToken",
-            "identificativoPsp":"#psp#",
-            "tipoVersamento":"BBT",
-            "identificativoIntermediario":"#psp#",
-            "identificativoCanale":"#canaleRtPull#",
-            "tipoOperazione":"mobile",
-            "mobileToken":"123ABC456"
+                "idPagamento": "$sessionToken",
+                "identificativoPsp": "#psp#",
+                "tipoVersamento": "BBT",
+                "identificativoIntermediario": "#psp#",
+                "identificativoCanale": "#canaleRtPull#",
+                "tipoOperazione": "mobile",
+                "mobileToken": "123ABC456"
             }
             """
         Then verify the HTTP status code of inoltroEsito/mod1 response is 200
@@ -455,47 +459,6 @@ Feature: gestioneReceiptMb_10_PULL
 
     Scenario: job pspChiediRT (Phase 4)
         Given the Execute nodoInoltroEsitoMod1 (Phase 3) scenario executed successfully
-        And initial XML pspChiediListaRT
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <ws:pspChiediListaRTResponse>
-            <pspChiediListaRTResponse>
-            <elementoListaRTResponse>
-            <identificativoDominio>$pa1</identificativoDominio>
-            <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
-            </elementoListaRTResponse>
-            </pspChiediListaRTResponse>
-            </ws:pspChiediListaRTResponse>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        And initial XML pspChiediRT
-            """
-            <soapenv:Envelope
-            xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-            xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <ws:pspChiediRTResponse>
-            <pspChiediRTResponse>
-            <rt>$rt2Attachment</rt>
-            </pspChiediRTResponse>
-            </ws:pspChiediRTResponse>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        And PSP replies to nodo-dei-pagamenti with the pspChiediListaRT
-        And PSP replies to nodo-dei-pagamenti with the pspChiediRT
-        When job pspChiediListaAndChiediRt triggered after 7 seconds
-        #And job paInviaRt triggered after 10 seconds
-        #And job paSendRt triggered after 10 seconds
-        Then wait 15 seconds for expiration
-
-    Scenario: job pspChiediRT (Phase 4.1)
-        Given the job pspChiediRT (Phase 4) scenario executed successfully
         And initial XML pspChiediListaRT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -530,6 +493,47 @@ Feature: gestioneReceiptMb_10_PULL
             """
         And PSP replies to nodo-dei-pagamenti with the pspChiediListaRT
         And PSP replies to nodo-dei-pagamenti with the pspChiediRT
+        When job pspChiediListaAndChiediRt triggered after 7 seconds
+        #And job paInviaRt triggered after 10 seconds
+        #And job paSendRt triggered after 10 seconds
+        Then wait 15 seconds for expiration
+
+    Scenario: job pspChiediRT (Phase 4.1)
+        Given the job pspChiediRT (Phase 4) scenario executed successfully
+        And initial XML pspChiediListaRT
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <ws:pspChiediListaRTResponse>
+            <pspChiediListaRTResponse>
+            <elementoListaRTResponse>
+            <identificativoDominio>$pa1</identificativoDominio>
+            <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
+            </elementoListaRTResponse>
+            </pspChiediListaRTResponse>
+            </ws:pspChiediListaRTResponse>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And initial XML pspChiediRT
+            """
+            <soapenv:Envelope
+            xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+            xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <ws:pspChiediRTResponse>
+            <pspChiediRTResponse>
+            <rt>$rt2Attachment</rt>
+            </pspChiediRTResponse>
+            </ws:pspChiediRTResponse>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And PSP replies to nodo-dei-pagamenti with the pspChiediListaRT
+        And PSP replies to nodo-dei-pagamenti with the pspChiediRT
         And nodo-dei-pagamenti has config parameter scheduler.jobName_paSendRt.enabled set to true
         When job pspChiediListaAndChiediRt triggered after 7 seconds
         And job paInviaRt triggered after 10 seconds
@@ -539,7 +543,7 @@ Feature: gestioneReceiptMb_10_PULL
         And replace pa content with #creditor_institution_code# content
         And execution query get_pa_id to get value on the table PA, with the columns OBJ_ID under macro costanti with db name nodo_cfg
         And through the query get_pa_id retrieve param objId at position 0 and save it under the key objId
-        
+
         And replace station_id content with #id_station# content
         And execution query by_station_id to get value on the table STAZIONI, with the columns OBJ_ID under macro costanti with db name nodo_cfg
         And through the query by_station_id retrieve param stationID at position 0 and save it under the key stationID
@@ -653,40 +657,40 @@ Feature: gestioneReceiptMb_10_PULL
         And through the query by_notice_number_and_payment_token retrieve param recipientBroker1 at position 6 and save it under the key recipientBroker1
         And through the query by_notice_number_and_payment_token retrieve param recipientStation1 at position 7 and save it under the key recipientStation1
         And through the query by_notice_number_and_payment_token retrieve param status1 at position 8 and save it under the key status1
-        
+
         #checks
         And check value $paFiscalCode1 is equal to value $expFiscalCode
         And check value $noticeID1 is equal to value $expNoticeID
         And check value $creditorReferenceId1 is equal to value $expCreditorReferenceID
         And check value $paymentToken1 is equal to value $expPaymentToken
         And check value $recipientPA1 is equal to value $pa1
-        And check value $recipientBroker1 is equal to value $pa1
-        And check value $recipientStation1 is equal to value #id_station_secondary#
+        #And check value $recipientBroker1 is equal to value $pa1
+        #And check value $recipientStation1 is equal to value #id_station_secondary#
 
 
         #extraction from POSITION_RECEIPT_XML
         And execution query by_notice_number_and_payment_token to get value on the table POSITION_RECEIPT_XML, with the columns * under macro Mod1Mb with db name nodo_online
-        #row 1
-        #And through the query by_notice_number_and_payment_token retrieve param paFiscalCode1 at position 1 and save it under the key paFiscalCode1
-        #And through the query by_notice_number_and_payment_token retrieve param noticeID1 at position 2 and save it under the key noticeID1
-        #And through the query by_notice_number_and_payment_token retrieve param creditorReferenceId1 at position 3 and save it under the key creditorReferenceId1
-        #And through the query by_notice_number_and_payment_token retrieve param paymentToken1 at position 4 and save it under the key paymentToken1
-        #And through the query by_notice_number_and_payment_token retrieve param recipientPA1 at position 8 and save it under the key recipientPA1
-        #And through the query by_notice_number_and_payment_token retrieve param recipientBroker1 at position 9 and save it under the key recipientBroker1
-        #And through the query by_notice_number_and_payment_token retrieve param recipientStation1 at position 10 and save it under the key recipientStation1
-        #checks
-        #And check value $paFiscalCode1 is equal to value $expFiscalCode
-        #And check value $noticeID1 is equal to value $expNoticeID
-        #And check value $creditorReferenceId1 is equal to value $expCreditorReferenceID
-        #And check value $paymentToken1 is equal to value $expPaymentToken
-        #And check value $recipientPA1 is equal to value $pa1
-        #And check value $recipientBroker1 is equal to value $pa1
-        #And check value $recipientStation1 is equal to value #id_station_secondary#
-        
-        #And checks the value PAYING, PAID, NOTICE_GENERATED, NOTICE_SENT of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        #And checks the value NOTICE_SENT of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        #And checks the value PAYING, PAID of the record at column STATUS of the table POSITION_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        #And checks the value PAID of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+    #row 1
+    #And through the query by_notice_number_and_payment_token retrieve param paFiscalCode1 at position 1 and save it under the key paFiscalCode1
+    #And through the query by_notice_number_and_payment_token retrieve param noticeID1 at position 2 and save it under the key noticeID1
+    #And through the query by_notice_number_and_payment_token retrieve param creditorReferenceId1 at position 3 and save it under the key creditorReferenceId1
+    #And through the query by_notice_number_and_payment_token retrieve param paymentToken1 at position 4 and save it under the key paymentToken1
+    #And through the query by_notice_number_and_payment_token retrieve param recipientPA1 at position 8 and save it under the key recipientPA1
+    #And through the query by_notice_number_and_payment_token retrieve param recipientBroker1 at position 9 and save it under the key recipientBroker1
+    #And through the query by_notice_number_and_payment_token retrieve param recipientStation1 at position 10 and save it under the key recipientStation1
+    #checks
+    #And check value $paFiscalCode1 is equal to value $expFiscalCode
+    #And check value $noticeID1 is equal to value $expNoticeID
+    #And check value $creditorReferenceId1 is equal to value $expCreditorReferenceID
+    #And check value $paymentToken1 is equal to value $expPaymentToken
+    #And check value $recipientPA1 is equal to value $pa1
+    #And check value $recipientBroker1 is equal to value $pa1
+    #And check value $recipientStation1 is equal to value #id_station_secondary#
+
+    #And checks the value PAYING, PAID, NOTICE_GENERATED, NOTICE_SENT of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+    #And checks the value NOTICE_SENT of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+    #And checks the value PAYING, PAID of the record at column STATUS of the table POSITION_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+    #And checks the value PAID of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
 
     Scenario: Check POSITION_RETRY_PA_SEND_RT table
         Given the job pspChiediRT (Phase 4.1) scenario executed successfully
@@ -730,7 +734,7 @@ Feature: gestioneReceiptMb_10_PULL
         And through the query by_notice_number_and_payment_token retrieve param recipientBroker1 at position 6 and save it under the key recipientBroker1
         And through the query by_notice_number_and_payment_token retrieve param recipientStation1 at position 7 and save it under the key recipientStation1
         And through the query by_notice_number_and_payment_token retrieve param status1 at position 8 and save it under the key status1
-        
+
         #checks
         And check value $paFiscalCode1 is equal to value $expFiscalCode
         And check value $noticeID1 is equal to value $expNoticeID
@@ -739,10 +743,9 @@ Feature: gestioneReceiptMb_10_PULL
         And check value $recipientPA1 is equal to value $pa1
         And check value $recipientBroker1 is equal to value $pa1
         And check value $recipientStation1 is equal to value #id_station_secondary#
-    
+
         And checks the value PAYING, PAID, NOTICE_GENERATED, NOTICE_SENT, NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value PAYING, PAID, NOTIFIED of the record at column STATUS of the table POSITION_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value NOTIFIED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And verify 0 record for the table POSITION_RETRY_PA_SEND_RT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-    
