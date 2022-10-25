@@ -237,7 +237,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [PAG-1642_01]
         Given the Execute nodoChiediInformazioniPagamento scenario executed successfully
         When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of notificaAnnullamento response is 200
-        And wait 5 seconds for expiration
+        And wait 10 seconds for expiration
 
         #DB-CHECK-STATI_RPT
         And replace iuv content with $1iuv content
