@@ -191,7 +191,7 @@ Feature: checks semantic OK for nodoInviaCarrelloRPT
          <elementoListaRPT>
          <identificativoDominio>#codicePA#</identificativoDominio>
          <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
-         <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+         <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
          <rpt>$rptAttachment</rpt>
          </elementoListaRPT>
          <elementoListaRPT>
