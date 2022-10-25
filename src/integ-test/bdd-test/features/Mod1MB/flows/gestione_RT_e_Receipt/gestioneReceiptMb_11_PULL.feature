@@ -348,10 +348,10 @@ Feature: gestioneReceiptMb_11_PULL
             """
             {
             "idPagamento":"$sessionToken",
-            "identificativoPsp":"#psp#",
+            "identificativoPsp":"40000000001",
             "tipoVersamento":"BBT",
-            "identificativoIntermediario":"#psp#",
-            "identificativoCanale":"#canaleRtPull#",
+            "identificativoIntermediario":"40000000001",
+            "identificativoCanale":"40000000001_06",
             "tipoOperazione":"mobile",
             "mobileToken":"123ABC456"
             }
