@@ -11,7 +11,7 @@ Feature: flow tests for paSendRTV2 - Marca da bollo
 
     #DB update
     Scenario: Execute station update
-        Then updates through the query stationUpdateVersione of the table STAZIONI the parameter VERSIONE with 2 under macro sendPaymentResultV2 on db nodo_cfg
+        Then updates through the query stationUpdateVersione of the table STAZIONI the parameter VERSIONE_PRIMITIVE with 2 under macro sendPaymentResultV2 on db nodo_cfg
         And updates through the query stationUpdateBroadcast of the table PA_STAZIONE_PA the parameter BROADCAST with Y under macro sendPaymentResultV2 on db nodo_cfg
 
     #refresh pa e stazioni
@@ -335,9 +335,11 @@ Feature: flow tests for paSendRTV2 - Marca da bollo
         And checks the value MI of the record at column REQ_PROVINCIA_RESIDENZA of the table POSITION_TRANSFER retrived by the query position_receipt_recipient_v2_desc on db nodo_online under macro sendPaymentResultV2
         # RE
         And verify 6 record for the table RE retrived by the query select_paSendRTV2 on db re under macro sendPaymentResultV2
-        And checks the value REQ,RESP of the record at column SOTTO_TIPO_EVENTO of the table RE retrived by the query select_paSendRTV2 on db re under macro sendPaymentResultV2
+        And checks the value REQ,RESP,REQ,RESP,REQ,RESP of the record at column SOTTO_TIPO_EVENTO of the table RE retrived by the query select_paSendRTV2 on db re under macro sendPaymentResultV2
+        And checks the value 77777777777_08,77777777777_08,90000000001_06,90000000001_06,90000000001_01,90000000001_01 of the record at column EROGATORE_DESCR of the table RE retrived by the query select_paSendRTV2 on db re under macro sendPaymentResultV2
         # POSITION_RECEIPT_RECIPIENT_STATUS
-        And checks the value NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_receipt_recipient_v2 on db nodo_online under macro sendPaymentResultV2
+        And verify 9 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_receipt_recipient_v2 on db nodo_online under macro sendPaymentResultV2
+        And checks the value NOTICE_GENERATED,NOTICE_GENERATED,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED,NOTICE_SENT,NOTIFIED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_receipt_recipient_v2 on db nodo_online under macro sendPaymentResultV2
         # POSITION_PAYMENT_STATUS
         And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED,PAID,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query position_receipt_recipient_v2 on db nodo_online under macro sendPaymentResultV2
         # POSITION_PAYMENT_STATUS_SNAPSHOT
@@ -348,5 +350,11 @@ Feature: flow tests for paSendRTV2 - Marca da bollo
         And checks the value NOTIFIED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query position_receipt_recipient_v2 on db nodo_online under macro sendPaymentResultV2
         # POSITION_RETRY_PA_SEND_RT
         And verify 0 record for the table POSITION_RETRY_PA_SEND_RT retrived by the query position_receipt_recipient_v2 on db nodo_online under macro sendPaymentResultV2
+        # POSITION_RECEIPT_RECIPIENT
+        And verify 3 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_v2 on db nodo_online under macro sendPaymentResultV2
+        And checks the value 77777777777,90000000001,90000000002 of the record at column RECIPIENT_PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_v2 on db nodo_online under macro sendPaymentResultV2
+        And checks the value 77777777777,90000000001,90000000001 of the record at column RECIPIENT_BROKER_PA_ID of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_v2 on db nodo_online under macro sendPaymentResultV2
+        And checks the value 77777777777_08,90000000001_06,90000000001_01 of the record at column RECIPIENT_STATION_ID of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_v2 on db nodo_online under macro sendPaymentResultV2
+        And checks the value NOTIFIED,NOTIFIED,NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_v2 on db nodo_online under macro sendPaymentResultV2
 
 # inserire i check sul blob in RE per l'xml paSendRTV2
