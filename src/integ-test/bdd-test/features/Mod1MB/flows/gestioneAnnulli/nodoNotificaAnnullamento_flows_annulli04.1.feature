@@ -6,7 +6,10 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_04.1]
 
    # [annulli_04.1]
    Scenario: RPT generation
-      Given RPT generation
+      Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
+      And generate 1 cart with PA #codicePA# and notice number $1noticeNumber
+
+      And RPT generation
          """
          <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
          <pay_i:versioneOggetto>1.1</pay_i:versioneOggetto>
@@ -64,7 +67,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_04.1]
          <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
          <pay_i:importoTotaleDaVersare>1.50</pay_i:importoTotaleDaVersare>
          <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
-         <pay_i:identificativoUnivocoVersamento>#IuV#</pay_i:identificativoUnivocoVersamento>
+         <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
          <pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
          <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
          <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
@@ -83,7 +86,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_04.1]
          </pay_i:datiVersamento>
          </pay_i:RPT>
          """
-
+      And generate 2 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
       And RPT2 generation
          """
          <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
@@ -142,7 +145,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_04.1]
          <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
          <pay_i:importoTotaleDaVersare>1.50</pay_i:importoTotaleDaVersare>
          <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
-         <pay_i:identificativoUnivocoVersamento>#IuV2#</pay_i:identificativoUnivocoVersamento>
+         <pay_i:identificativoUnivocoVersamento>$2iuv</pay_i:identificativoUnivocoVersamento>
          <pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
          <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
          <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
@@ -199,13 +202,13 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_04.1]
          <listaRPT>
          <elementoListaRPT>
          <identificativoDominio>#codicePA#</identificativoDominio>
-         <identificativoUnivocoVersamento>$IuV</identificativoUnivocoVersamento>
+         <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
          <codiceContestoPagamento>CCD01</codiceContestoPagamento>
          <rpt>$rptAttachment</rpt>
          </elementoListaRPT>
          <elementoListaRPT>
          <identificativoDominio>#codicePA#</identificativoDominio>
-         <identificativoUnivocoVersamento>$2IuV</identificativoUnivocoVersamento>
+         <identificativoUnivocoVersamento>$2iuv</identificativoUnivocoVersamento>
          <codiceContestoPagamento>CCD01</codiceContestoPagamento>
          <rpt>$rpt2Attachment</rpt>
          </elementoListaRPT>
@@ -229,30 +232,36 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_04.1]
       Then verify the HTTP status code of annullamentoRptMaiRichiesteDaPm response is 200
 
 
-    #DB-CHECK-STATI_RPT
-    And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query DB_GEST_ANN_stati_rpt on db nodo_online under macro Mod1Mb
+      #DB-CHECK-STATI_RPT
+      And replace iuv content with $1iuv content
 
-    And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query DB_GEST_ANN_iuv2 on db nodo_online under macro Mod1Mb
+      And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query DB_GEST_ANN_stati_rpt on db nodo_online under macro Mod1Mb
 
-    #DB-CHECK-STATI_RPT_SNAPSHOT
-    And checks the value RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query DB_GEST_ANN_stati_rpt on db nodo_online under macro Mod1Mb
+      And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query DB_GEST_ANN_iuv2 on db nodo_online under macro Mod1Mb
 
-    And checks the value RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query DB_GEST_ANN_iuv2 on db nodo_online under macro Mod1Mb
+      #DB-CHECK-STATI_RPT_SNAPSHOT
+      And replace iuv content with $1iuv content
 
-    #DB-CHECK-STATI_CARRELLO
-    And checks the value CART_RICEVUTO_NODO, CART_ACCETTATO_NODO, CART_PARCHEGGIATO_NODO of the record at column STATO of the table STATI_CARRELLO retrived by the query DB_GEST_ANN_stati_payment_token on db nodo_online under macro Mod1Mb
+      And checks the value RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query DB_GEST_ANN_stati_rpt on db nodo_online under macro Mod1Mb
+      And replace iuv content with $2iuv content
+      And checks the value RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query DB_GEST_ANN_iuv2 on db nodo_online under macro Mod1Mb
 
-    #DB-CHECK-STATI_CARRELLO_SNAPSHOT
-    And checks the value CART_PARCHEGGIATO_NODO of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query DB_GEST_ANN_stati_payment_token on db nodo_online under macro Mod1Mb
+      #DB-CHECK-STATI_CARRELLO
+      And replace iuv content with $1iuv content
+      And replace iuv content with $2iuv content
+      And checks the value CART_RICEVUTO_NODO, CART_ACCETTATO_NODO, CART_PARCHEGGIATO_NODO of the record at column STATO of the table STATI_CARRELLO retrived by the query DB_GEST_ANN_stati_payment_token on db nodo_online under macro Mod1Mb
 
-    #DB-CHECK-POSITION_PAYMENT_STATUS
-    And verify 0 record for the table POSITION_PAYMENT_STATUS retrived by the query DB_GEST_ANN_stati_position_payment_status on db nodo_online under macro Mod1Mb
+      #DB-CHECK-STATI_CARRELLO_SNAPSHOT
+      And checks the value CART_PARCHEGGIATO_NODO of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query DB_GEST_ANN_stati_payment_token on db nodo_online under macro Mod1Mb
 
-    #DB-CHECK-POSITION_PAYMENT_STATUS_SNAPSHOT
-    And verify 0 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query DB_GEST_ANN_stati_position_payment_status on db nodo_online under macro Mod1Mb
+      #DB-CHECK-POSITION_PAYMENT_STATUS
+      And verify 0 record for the table POSITION_PAYMENT_STATUS retrived by the query DB_GEST_ANN_stati_position_payment_status on db nodo_online under macro Mod1Mb
 
-    #DB-CHECK-POSITION_STATUS
-    And verify 0 record for the table POSITION_STATUS retrived by the query DB_GEST_ANN_stati_position_status on db nodo_online under macro Mod1Mb
+      #DB-CHECK-POSITION_PAYMENT_STATUS_SNAPSHOT
+      And verify 0 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query DB_GEST_ANN_stati_position_payment_status on db nodo_online under macro Mod1Mb
 
-    #DB-CHECK-POSITION_STATUS_SNAPSHOT
-    And verify 0 record for the table POSITION_STATUS_SNAPSHOT retrived by the query DB_GEST_ANN_stati_position_status on db nodo_online under macro Mod1Mb
+      #DB-CHECK-POSITION_STATUS
+      And verify 0 record for the table POSITION_STATUS retrived by the query DB_GEST_ANN_stati_position_status on db nodo_online under macro Mod1Mb
+
+      #DB-CHECK-POSITION_STATUS_SNAPSHOT
+      And verify 0 record for the table POSITION_STATUS_SNAPSHOT retrived by the query DB_GEST_ANN_stati_position_status on db nodo_online under macro Mod1Mb
