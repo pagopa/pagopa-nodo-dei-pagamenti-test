@@ -105,7 +105,7 @@ Feature: process tests for nodoInviaCarrelloRPT[CRPTSEM11]
                     <listaRPT>
                         <!--1 or more repetitions:-->
                         <elementoListaRPT>
-                        <identificativoDominio>44444444444</identificativoDominio>
+                        <identificativoDominio>#creditor_institution_code#</identificativoDominio>
                         <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
                         <codiceContestoPagamento>CCD01</codiceContestoPagamento>
                         <rpt>$rptAttachment</rpt>
