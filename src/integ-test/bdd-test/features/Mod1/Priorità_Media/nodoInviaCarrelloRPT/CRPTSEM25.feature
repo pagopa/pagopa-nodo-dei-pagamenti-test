@@ -1,4 +1,4 @@
-Feature: process tests for nodoInviaCarrelloRPT[CRPTSEM24]
+Feature: process tests for nodoInviaCarrelloRPT[CRPTSEM25]
     Background:
         Given systems up
         
@@ -97,16 +97,16 @@ Feature: process tests for nodoInviaCarrelloRPT[CRPTSEM24]
         <pay_i:soggettoVersante>
         <pay_i:identificativoUnivocoVersante>
         <pay_i:tipoIdentificativoUnivoco>F</pay_i:tipoIdentificativoUnivoco>
-        <pay_i:codiceIdentificativoUnivoco>RCCGLD09P09H502E</pay_i:codiceIdentificativoUnivoco>
+        <pay_i:codiceIdentificativoUnivoco>RCCGLD09P09H512E</pay_i:codiceIdentificativoUnivoco>
         </pay_i:identificativoUnivocoVersante>
-        <pay_i:anagraficaVersante>Gesualdo;Riccitelli</pay_i:anagraficaVersante>
+        <pay_i:anagraficaVersante>Gesualdo;Riccitelli1</pay_i:anagraficaVersante>
         <pay_i:indirizzoVersante>via del gesu</pay_i:indirizzoVersante>
-        <pay_i:civicoVersante>11</pay_i:civicoVersante>
-        <pay_i:capVersante>00186</pay_i:capVersante>
+        <pay_i:civicoVersante>113</pay_i:civicoVersante>
+        <pay_i:capVersante>00185</pay_i:capVersante>
         <pay_i:localitaVersante>Roma</pay_i:localitaVersante>
         <pay_i:provinciaVersante>RM</pay_i:provinciaVersante>
         <pay_i:nazioneVersante>IT</pay_i:nazioneVersante>
-        <pay_i:e-mailVersante>gesualdo.riccitelli@poste.it</pay_i:e-mailVersante>
+        <pay_i:e-mailVersante>gesualdo.riccitelli1@poste.it</pay_i:e-mailVersante>
         </pay_i:soggettoVersante>
         <pay_i:soggettoPagatore>
         <pay_i:identificativoUnivocoPagatore>
@@ -172,7 +172,7 @@ Feature: process tests for nodoInviaCarrelloRPT[CRPTSEM24]
                 <ppt:intestazioneCarrelloPPT>
                     <identificativoIntermediarioPA>#id_broker_old#</identificativoIntermediarioPA>
                     <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
-                    <identificativoCarrello>$1iuv</identificativoCarrello>
+                    <identificativoCarrello>$1carrello</identificativoCarrello>
                 </ppt:intestazioneCarrelloPPT>
             </soapenv:Header>
             <soapenv:Body>
@@ -200,5 +200,5 @@ Feature: process tests for nodoInviaCarrelloRPT[CRPTSEM24]
             </soapenv:Envelope>
             """
             When PSP sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
-            Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
-           
+            Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
+            And check faultCode is PPT_SEMANTICA of nodoInviaCarrelloRPT response
