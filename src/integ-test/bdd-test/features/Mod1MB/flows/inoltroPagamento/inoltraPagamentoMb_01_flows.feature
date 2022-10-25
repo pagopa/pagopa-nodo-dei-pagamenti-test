@@ -3,7 +3,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [inoltropagamentoMb_01]
    Background:
       Given systems up
 
-
+@runnable
    # [inoltropagamentoMb_01]
    Scenario: RPT generation
       Given nodo-dei-pagamenti has config parameter CONFIG_VALUE set to false
@@ -165,7 +165,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [inoltropagamentoMb_01]
          </pay_i:RPT>
          """
 
-
+@runnable
    Scenario: Execute nodoInviaCarrelloRPT request
       Given the RPT generation scenario executed successfully
       And initial XML paaInviaRT
@@ -223,7 +223,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [inoltropagamentoMb_01]
       Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
       Then retrieve session token from $nodoInviaCarrelloRPTResponse.url
 
-
+@runnable
    Scenario: Execute nodoChiediInformazioniPagamento
       Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
       When WISP sends rest GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
@@ -234,7 +234,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [inoltropagamentoMb_01]
       And check oggettoPagamento field exists in informazioniPagamento response
       And check urlRedirectEC field exists in informazioniPagamento response
       And check enteBeneficiario field exists in informazioniPagamento response
-
+@runnable
    Scenario: Execute nodoInoltraEsitoCarta
       Given the Execute nodoChiediInformazioniPagamento scenario executed successfully
       When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
@@ -254,7 +254,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [inoltropagamentoMb_01]
          """
       Then verify the HTTP status code of inoltroEsito/carta response is 200
       And check esito is OK of inoltroEsito/carta response
-
+@runnable
    Scenario: Trigger paInviaRT
       Given the Execute nodoInoltraEsitoCarta scenario executed successfully
       When job paInviaRt triggered after 5 seconds

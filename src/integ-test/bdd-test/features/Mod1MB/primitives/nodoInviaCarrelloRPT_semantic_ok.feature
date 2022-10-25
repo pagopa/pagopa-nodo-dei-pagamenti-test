@@ -89,10 +89,9 @@ Feature: checks semantic OK for nodoInviaCarrelloRPT
    Scenario: Define RPT2
       Given the Define RPT scenario executed successfully
       And RPT2 generation
-
          """
          <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
-         <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
+         <pay_i:versioneOggetto>1.1</pay_i:versioneOggetto>
          <pay_i:dominio>
          <pay_i:identificativoDominio>#codicePA#</pay_i:identificativoDominio>
          <pay_i:identificativoStazioneRichiedente>90000000001_01</pay_i:identificativoStazioneRichiedente>
@@ -149,27 +148,40 @@ Feature: checks semantic OK for nodoInviaCarrelloRPT
          <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
          <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
          <pay_i:codiceContestoPagamento>$1carrello</pay_i:codiceContestoPagamento>
-         <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
+         <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
          <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
          <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
          <pay_i:datiSingoloVersamento>
          <pay_i:importoSingoloVersamento>1.50</pay_i:importoSingoloVersamento>
          <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
-         <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
+         <pay_i:ibanAccredito>IT45R0760103200000000001016</pay_i:ibanAccredito>
          <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
-         <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio>
+         <pay_i:ibanAppoggio>IT45R0760103200000000001016</pay_i:ibanAppoggio>
          <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
          <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
-         <pay_i:causaleVersamento>pagamento fotocopie pratica RPT</pay_i:causaleVersamento>
+         <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
          <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
          </pay_i:datiSingoloVersamento>
          </pay_i:datiVersamento>
          </pay_i:RPT>
          """
-
-
    Scenario: Check no error for nodoInviaCarrelloRPT
       Given the Define RPT2 scenario executed successfully
+      And initial XML paaInviaRT
+         """
+         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+         <soapenv:Header/>
+         <soapenv:Body>
+         <ws:paaInviaRTRisposta>
+         <paaInviaRTRisposta>
+         <esito>OK</esito>
+         </paaInviaRTRisposta>
+         </ws:paaInviaRTRisposta>
+         </soapenv:Body>
+         </soapenv:Envelope>
+         """
+      And EC replies to nodo-dei-pagamenti with the paaInviaRT
+
       And initial XML nodoInviaCarrelloRPT
 
          """
