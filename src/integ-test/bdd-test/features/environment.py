@@ -1,9 +1,4 @@
-from email import header
 import json
-import random
-import time
-from wsgiref import headers
-
 import steps.db_operation as db
 from behave.model import Table
 import os, cx_Oracle, requests
@@ -32,8 +27,6 @@ def before_all(context):
         config_dict[config_key] = config_value
     
     setattr(context, 'configurations', config_dict)
-    
-
 
 def before_feature(context, feature):
     services = context.config.userdata.get("services")

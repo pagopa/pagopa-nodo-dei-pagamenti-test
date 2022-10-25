@@ -56,7 +56,7 @@ def step_impl(context, version):
     pass
 
 
-@given('initial XML {primitive}')
+@step('initial XML {primitive}')
 def step_impl(context, primitive):
     payload = context.text or ""
     payload = utils.replace_local_variables(payload, context)
@@ -227,7 +227,7 @@ def step_impl(context, primitive):
         payload = payload.replace('$psp_transaction_id', getattr(context, 'psp_transaction_id'))
     setattr(context, primitive, payload)
 
-@given('RPT generation')
+@step('RPT generation')
 def step_impl(context):
     payload = context.text or ""
     date = datetime.date.today().strftime("%Y-%m-%d")
@@ -758,6 +758,22 @@ def step_impl(context, sender, soap_primitive, receiver):
 
     assert (soap_response.status_code ==
             200), f"status_code {soap_response.status_code}"
+
+@step('send, by sender {sender}, soap action {soap_primitive} to {receiver}')
+def step_impl(context, sender, soap_primitive, receiver):
+    primitive = soap_primitive.split("_")[0]
+    headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive,
+               'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}  # set what your server accepts
+    url_nodo = utils.get_soap_url_nodo(context, primitive)
+    print("url_nodo: ", url_nodo)
+    print("nodo soap_request sent >>>", getattr(context, soap_primitive))
+    print("headers: ", headers)
+    soap_response = requests.post(url_nodo, getattr(
+        context, soap_primitive), headers=headers, verify=False)
+    print(soap_response.content)
+    print(soap_response.status_code)
+    setattr(context, soap_primitive + RESPONSE, soap_response)
+
 
 
 @when('job {job_name} triggered after {seconds} seconds')
@@ -2525,17 +2541,42 @@ def step_impl(context, causaleVers):
 
 @step(u'run in parallel "{feature}", "{scenario}"')
 def step_impl(context, feature, scenario):
-    scenari = list(scenario)
+    scenari = scenario.split(',')
     i = 0
     threads = list()
-    while i < len(scenari):
-        t = threading.Thread(
-        name='run test parallel',
-        target=utils.parallel_executor,
-        args=[context, feature, scenario])
-        threads.append(t)
-        t.start()
-        i += 1
+    
+    t1 = threading.Thread(
+    name='run test parallel',
+    target=utils.parallel_executor,
+    args=[context, feature, scenario[0]])
+    threads.append(t1)
+    t1.start()
+
+    t2 = threading.Thread(
+    name='run test parallel',
+    target=utils.parallel_executor,
+    args=[context, feature, scenario[1]])
+    threads.append(t2)
+    t2.start()
+  
+    t3 = threading.Thread(
+    name='run test parallel',
+    target=utils.parallel_executor,
+    args=[context, feature, scenario[2]])
+    threads.append(t3)
+    t3.start()
+    
+    
+    
+    
+    # while i < len(scenari):
+    #     t = threading.Thread(
+    #     name='run test parallel',
+    #     target=utils.parallel_executor,
+    #     args=[context, feature, scenario[i]])
+    #     threads.append(t)
+    #     t.start()
+    #     i += 1
 
     for thread in threads:
         thread.join()
@@ -2563,3 +2604,10 @@ def step_impl(context):
     cache = json.load(open(os.path.join(context.config.base_dir + "/../resources/cache.json"),'r'))
     for key, value in cache.items():
         setattr(context, key, value)
+
+@step('waiting {seconds} seconds for thread')
+def step_impl(contex, seconds):
+    endT = datetime.datetime.now() + datetime.timedelta(seconds=int(seconds))
+    while True:
+        if datetime.datetime.now() >= endT:
+            break
