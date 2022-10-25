@@ -239,7 +239,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [PAG-1642_02]
         Given the update column valid_to UPDATED_TIMESTAMP scenario executed successfully
         When job annullamentoRptMaiRichiesteDaPm triggered after 10 seconds
         Then verify the HTTP status code of annullamentoRptMaiRichiesteDaPm response is 200
-
+        And wait 15 seconds for expiration
 
 
         #DB-CHECK-STATI_RPT
