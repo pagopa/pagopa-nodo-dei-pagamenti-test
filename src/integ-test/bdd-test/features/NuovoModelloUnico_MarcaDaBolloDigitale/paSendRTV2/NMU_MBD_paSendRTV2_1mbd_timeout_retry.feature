@@ -313,13 +313,28 @@ Feature: flow tests for paSendRTV2 - Marca da bollo
 
     # inserire i check sul blob in RE per l'xml paSendRTV2
 
+    # define paSendRTV2 retry
+    Scenario: paSendRTV2 1
+        Given initial xml paSendRTV2 req
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <paf:paSendRTV2Response>
+            <delay>25000</delay>
+            <outcome>OK</outcome>
+            </paf:paSendRTV2Response>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+
 
     # trigger pa send RT retry
     Scenario: Execute paSendRT
-        Given the execute DB check scenario executed successfully  
-        And the paSendRTV2 scenario executed successfully  
-        And EC replies to nodo-dei-pagamenti with the paSendRTV2    
-        When job paSendRt triggered after 10 seconds                
+        Given the execute DB check scenario executed successfully
+        And the paSendRTV2 1 scenario executed successfully
+        And EC replies to nodo-dei-pagamenti with the paSendRTV2 req
+        When job paSendRt triggered after 10 seconds
         Then verify the HTTP status code of paSendRt response is 200
 
         # DB check 1
