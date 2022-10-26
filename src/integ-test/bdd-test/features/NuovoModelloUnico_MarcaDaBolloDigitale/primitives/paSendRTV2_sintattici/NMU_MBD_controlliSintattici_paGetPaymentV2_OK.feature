@@ -1,6 +1,6 @@
-# Il test verifica che il nodo restituisca un KO se la paGetPaymentV2 contiene una description lunga 141
+# Il test verifica che il nodo restituisca un OK
 
-Feature: check syntax KO for paGetPaymentV2 with MBD
+Feature: check syntax OK for paGetPaymentV2 with MBD
 
     Background:
         Given systems up
@@ -28,7 +28,7 @@ Feature: check syntax KO for paGetPaymentV2 with MBD
             </soapenv:Envelope>
             """
 
-    Scenario: description lunghezza 141
+    Scenario Outline:
         Given initial XML paGetPaymentV2
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
@@ -43,7 +43,7 @@ Feature: check syntax KO for paGetPaymentV2 with MBD
             <retentionDate>2021-12-30T12:12:12</retentionDate>
             <!--Optional:-->
             <lastPayment>1</lastPayment>
-            <description>noei38932nfdioulpncdoaifer9eukvmpweuw9tunfgadkvaifuewtudnvahv23234fssdafqffdnoei38932nfdioulTncdoaifer9eukvmpweuw9tunfgadkvaifuewtudnvahvd452</description>
+            <description>test</description>
             <!--Optional:-->
             <companyName>company</companyName>
             <!--Optional:-->
@@ -92,14 +92,6 @@ Feature: check syntax KO for paGetPaymentV2 with MBD
             </mapEntry>
             </metadata>
             </transfer>
-            <transfer>
-            <idTransfer>2</idTransfer>
-            <transferAmount>1.00</transferAmount>
-            <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
-            <IBAN>IT45R0760103200000000001016</IBAN>
-            <remittanceInformation>remittanceInfo</remittanceInformation>
-            <transferCategory>category</transferCategory>
-            </transfer>
             </transferList>
             <!--Optional:-->
             <metadata>
@@ -114,7 +106,21 @@ Feature: check syntax KO for paGetPaymentV2 with MBD
             </soapenv:Body>
             </soapenv:Envelope>
             """
+        And <tag> with <value> in paGetPaymentV2
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends soap activatePaymentNoticeV2 to nodo-dei-pagamenti
-        Then check outcome is KO of activatePaymentNoticeV2 response
-        And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of activatePaymentNoticeV2 response
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        
+        Examples:
+            | tag                                   | value  
+            | retentionDate                         | None
+            | lastPayment                           | None            
+            | companyName                           | None
+            | officeName                            | None
+            | streetName                            | None
+            | civicNumber                           | None
+            | postalCode                            | None
+            | city                                  | None            
+            | stateProvinceRegion                   | None            
+            | country                               | None
+            | e-mail                                | None
