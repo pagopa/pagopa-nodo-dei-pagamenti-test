@@ -365,6 +365,68 @@ Feature: flux tests for closePaymentV2
             """
 
     @skip
+    Scenario: closePaymentV2 with arbitrary paymentToken request
+        Given initial json v2/closepayment
+            """
+            {
+                "paymentTokens": [
+                    "token"
+                ],
+                "outcome": "OK",
+                "idPSP": "#psp#",
+                "paymentMethod": "TPAY",
+                "idBrokerPSP": "#id_broker_psp#",
+                "idChannel": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
+                "transactionId": "#transaction_id#",
+                "totalAmount": 12,
+                "fee": 2,
+                "timestampOperation": "2012-04-23T18:25:43Z",
+                "additionalPaymentInformations": {
+                    "key": "#psp_transaction_id#"
+                },
+                "additionalPMInfo": {
+                    "origin": "",
+                    "user": {
+                        "fullName": "John Doe",
+                        "type": "F",
+                        "fiscalCode": "JHNDOE00A01F205N",
+                        "notificationEmail": "john.doe@mail.it",
+                        "userId": 1234,
+                        "userStatus": 11,
+                        "userStatusDescription": "REGISTERED_SPID"
+                    },
+                    "walletItem": {
+                        "idWallet": 1234,
+                        "walletType": "CARD",
+                        "enableableFunctions": [],
+                        "pagoPa": false,
+                        "onboardingChannel": "",
+                        "favourite": false,
+                        "createDate": "",
+                        "info": {
+                            "type": "",
+                            "blurredNumber": "",
+                            "holder": "Mario Rossi",
+                            "expireMonth": "",
+                            "expireYear": "",
+                            "brand": "",
+                            "issuerAbi": "",
+                            "issuerName": "Intesa",
+                            "label": "********234"
+                        },
+                        "authRequest": {
+                            "authOutcome": "KO",
+                            "guid": "77e1c83b-7bb0-437b-bc50-a7a58e5660ac",
+                            "correlationId": "f864d987-3ae2-44a3-bdcb-075554495841",
+                            "error": "Not Authorized",
+                            "auth_code": "99"
+                        }
+                    }
+                }
+            }
+            """
+
+    @skip
     Scenario: sendPaymentOutcome request
         Given initial XML sendPaymentOutcome
             """
@@ -2157,7 +2219,7 @@ Feature: flux tests for closePaymentV2
     Scenario: FLUSSO_OLD_CP_08 (part 2)
         Given the FLUSSO_OLD_CP_08 (part 1) scenario executed successfully
         And wait 5 seconds for expiration
-        And the closePaymentV2 request scenario executed successfully
+        And the closePaymentV2 with arbitrary paymentToken request scenario executed successfully
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 404
         And check outcome is KO of v2/closepayment response
