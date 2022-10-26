@@ -8,7 +8,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
       Given generate 1 notice number and iuv with aux digit 0, segregation code 88 and application code NA
       And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
 
-      Given RPT generation
+      And RPT generation
          """
          <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
          <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
@@ -108,7 +108,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          <elementoListaRPT>
          <identificativoDominio>#creditor_institution_code#</identificativoDominio>
          <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
-         <codiceContestoPagamento>$thrCarrello</codiceContestoPagamento>
+         <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
          <rpt>$rptAttachment</rpt>
          </elementoListaRPT>
          </listaRPT>
