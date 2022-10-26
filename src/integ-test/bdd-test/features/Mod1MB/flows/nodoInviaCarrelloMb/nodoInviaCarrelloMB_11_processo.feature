@@ -3,6 +3,7 @@ Feature: process tests for nodoInviaCarrelloMB
     #[nodoInviaCarrelloMB_11]
     Background:
         Given systems up
+    @runnable
     Scenario: RPT generation
         Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
         And generate 1 cart with PA 77777777778 and notice number $1noticeNumber
@@ -160,7 +161,7 @@ Feature: process tests for nodoInviaCarrelloMB
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-
+    @runnable
     Scenario: Execute nodoInviaCarrelloRPT request
         Given the RPT generation scenario executed successfully
         And initial XML paaInviaRT

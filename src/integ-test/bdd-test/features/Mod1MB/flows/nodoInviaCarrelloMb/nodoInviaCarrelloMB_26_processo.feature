@@ -3,6 +3,7 @@ Feature: process tests for nodoInviaCarrelloMB[nodoInviaCarrelloMB_26]
 
     Background:
         Given systems up
+    @runnable
     Scenario: RPT generation
         Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
         And generate 1 cart with PA #codicePA# and notice number $1noticeNumber
@@ -161,7 +162,7 @@ Feature: process tests for nodoInviaCarrelloMB[nodoInviaCarrelloMB_26]
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-
+    @runnable
     Scenario: Execute nodoInviaCarrelloRPT request
         Given the RPT generation scenario executed successfully
         And initial XML paaInviaRT
@@ -217,7 +218,7 @@ Feature: process tests for nodoInviaCarrelloMB[nodoInviaCarrelloMB_26]
             """
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
-
+    @runnable
     Scenario: Generation of two more RPT
         Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
         And replace pa content with #codicePA# content
@@ -385,7 +386,7 @@ Feature: process tests for nodoInviaCarrelloMB[nodoInviaCarrelloMB_26]
             </pay_i:RPT>
             """
 
-
+    @runnable
     Scenario: Execute nodoInviaCarrelloRPT request
         Given the Generation of two more RPT scenario executed successfully
         And initial XML paaInviaRT

@@ -3,7 +3,7 @@
     
     Background:
         Given systems up
-
+    @runnable
    Scenario: MB generation
         Given generate 1 notice number and iuv with aux digit 3, segregation code 02 and application code NA
         And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
@@ -215,7 +215,7 @@
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-
+    @runnable
     Scenario: Execute nodoInviaCarrelloRPT request
         Given the MB generation scenario executed successfully
         And initial XML paaInviaRT
