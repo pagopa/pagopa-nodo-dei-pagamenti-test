@@ -295,10 +295,10 @@ Feature: flow tests for paSendRTV2 - Marca da bollo
         And checks the value sendPaymentOutcomeV2 of the record at column INSERTED_BY of the table POSITION_TRANSFER_MBD retrived by the query select_position_transfer_mbd on db nodo_online under macro NewMod1
         And checks the value sendPaymentOutcomeV2 of the record at column UPDATED_BY of the table POSITION_TRANSFER_MBD retrived by the query select_position_transfer_mbd on db nodo_online under macro NewMod1
         # RE
-        And verify 1 record for the table RE retrived by the query select_paSendRTV2 on db re under macro sendPaymentResultV2
-        And checks the value REQ of the record at column SOTTO_TIPO_EVENTO of the table RE retrived by the query select_paSendRTV2 on db re under macro sendPaymentResultV2
+        And verify 2 record for the table RE retrived by the query select_paSendRTV2 on db re under macro sendPaymentResultV2
+        And checks the value REQ,RESP of the record at column SOTTO_TIPO_EVENTO of the table RE retrived by the query select_paSendRTV2 on db re under macro sendPaymentResultV2
         # POSITION_RECEIPT_RECIPIENT_STATUS
-        And checks the value NOTICE_GENERATED,NOTICE_SENT of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_receipt_recipient_v2 on db nodo_online under macro sendPaymentResultV2
+        And checks the value NOTICE_GENERATED,NOTICE_SENT,NOTICE_PENDING of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_receipt_recipient_v2 on db nodo_online under macro sendPaymentResultV2
         # POSITION_PAYMENT_STATUS
         And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED,PAID,NOTICE_GENERATED,NOTICE_SENT of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query position_receipt_recipient_v2 on db nodo_online under macro sendPaymentResultV2
         # POSITION_PAYMENT_STATUS_SNAPSHOT
