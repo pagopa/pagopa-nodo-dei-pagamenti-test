@@ -315,7 +315,7 @@ Feature: flow tests for paSendRTV2 - Marca da bollo
 
     # define paSendRTV2 retry
     Scenario: paSendRTV2 1
-        Given initial xml paSendRTV2 req
+        Given initial xml paSendRTV2 1
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
             <soapenv:Header/>
@@ -333,7 +333,7 @@ Feature: flow tests for paSendRTV2 - Marca da bollo
     Scenario: Execute paSendRT
         Given the execute DB check scenario executed successfully
         And the paSendRTV2 1 scenario executed successfully
-        And EC replies to nodo-dei-pagamenti with the paSendRTV2 req
+        And EC replies to nodo-dei-pagamenti with the paSendRTV2 1
         When job paSendRt triggered after 10 seconds
         Then verify the HTTP status code of paSendRt response is 200
 
