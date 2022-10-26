@@ -75,37 +75,7 @@ Feature: Semantic checks KO for nodoAttivaRPT
             </soapenv:Body>
             </soapenv:Envelope>
             """
-<<<<<<< HEAD
 
-  Scenario Outline: Check faultcode error on wrong values
-    Given <elem> with <value> in nodoAttivaRPT
-    When psp sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-    Then check faultCode is <faultCode> of nodoAttivaRPT response
-    Examples:
-    | elem                                      |  value                 | faultCode                          | SoapUI   |
-    | identificativoPSP                         | pspUnknown             |PPT_PSP_SCONOSCIUTO                 | ARPTSEM1 |
-    | identificativoPSP                         | NOT_ENABLED            |PPT_PSP_DISABILITATO                | ARPTSEM2 |
-    | identificativoIntermediarioPSP            | brokerPspUnknown       |PPT_INTERMEDIARIO_PSP_SCONOSCIUTO   | ARPTSEM3 |
-    | identificativoIntermediarioPSP            | INT_NOT_ENABLED        |PPT_INTERMEDIARIO_PSP_DISABILITATO  | ARPTSEM4 |
-    | identificativoCanale                      | channelUnknown         |PPT_CANALE_SCONOSCIUTO              | ARPTSEM5 |
-    | identificativoCanale                      | CANALE_NOT_ENABLED     |PPT_CANALE_DISABILITATO             | ARPTSEM6 |
-    | password                                  | wrongPassword          |PPT_AUTENTICAZIONE                  | ARPTSEM7 |
-    | identificativoIntermediarioPSPPagamento   | brokerPspUnknown       |PPT_INTERMEDIARIO_PSP_SCONOSCIUTO   | ARPTSEM8 |
-    | identificativoIntermediarioPSPPagamento   | INT_NOT_ENABLED        |PPT_INTERMEDIARIO_PSP_DISABILITATO  | ARPTSEM9 |
-    | identificativoCanalePagamento             | channelUnknown         |PPT_CANALE_SCONOSCIUTO              | ARPTSEM10|
-    | identificativoCanalePagamento             | CANALE_NOT_ENABLED     |PPT_CANALE_DISABILITATO             | ARPTSEM11|
-    | codificaInfrastrutturaPSP                 | infrastrutturaPSP      |PPT_CODIFICA_PSP_SCONOSCIUTA        | ARPTSEM12|
-
-  Scenario Outline: Check faultcode error on wrong values
-    Given <elem> with <value> in nodoAttivaRPT
-    And <tag> with <tag_value> in nodoAttivaRPT
-    When psp sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-    Then check faultCode is <faultCode> of nodoAttivaRPT response
-    Examples:
-      | elem         | value | tag        | tag_value           | faultCode     | SoapUI     |
-      | aim:AuxDigit | 0     | aim:CodIUV | 12312541281233210   |PPT_SEMANTICA  | ARPTSEM13  |
-      | aim:AuxDigit | 2     | aim:CodIUV | 123455412812332     |PPT_SEMANTICA  | ARPTSEM14  |
-=======
   # identificativoPSP value check: identificativoPSP not in configuration [ARPTSEM1]
   Scenario: Check PPT_PSP_SCONOSCIUTO error on non-existent psp
     Given identificativoPSP with pspUnknown in nodoAttivaRPT
@@ -206,7 +176,7 @@ Feature: Semantic checks KO for nodoAttivaRPT
       | elem         | value | tag        | tag_value           | SoapUI     |
       | aim:AuxDigit | 0     | aim:CodIUV | 12312541281233210   | ARPTSEM13  |
       | aim:AuxDigit | 2     | aim:CodIUV | 123455412812332     | ARPTSEM14  |
->>>>>>> origin/feature/gherkin-with-behavetag
+
   
   # codiceIdRPT value check: segregation code check  [ARPTSEM15]
   Scenario: Check PPT_STAZIONE_INT_PA_SCONOSCIUTA error on segregation code not in configuration
@@ -243,12 +213,8 @@ Feature: Semantic checks KO for nodoAttivaRPT
     When psp sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
     Then check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of nodoAttivaRPT response    
 
-<<<<<<< HEAD
 
-  
 
-=======
->>>>>>> origin/feature/gherkin-with-behavetag
   # identificativoStazioneIntermediarioPA value check [ARPTSEM24]
   Scenario: Check PPT_STAZIONE_INT_PA_SCONOSCIUTA error on identificativoStazioneIntermediarioPA not in configuration
     Given initial XML nodoAttivaRPT
@@ -426,8 +392,7 @@ Feature: Semantic checks KO for nodoAttivaRPT
     Given identificativoCanale with #canale# in nodoAttivaRPT
     When psp sends SOAP nodoAttivaRPT to nodo-dei-pagamenti 
     Then check faultCode is PPT_AUTORIZZAZIONE of nodoAttivaRPT response
-<<<<<<< HEAD
-=======
+
   
   #Scenario Outline: Check PPT_SEMANTICA error 
   #  Given <elem> with <value> in nodoAttivaRPT
@@ -439,7 +404,7 @@ Feature: Semantic checks KO for nodoAttivaRPT
   #    | elem        | value             | tag         | tag_value   | tag1           | tag_value1             | SoapUI    |
   #    | bc:Gln      | 9000000000111     | bc:AuxDigit | 2           | bc:CodIUV      | 123456789012345        | ARPTSEM29 |
   #    | bc:Gln      | 9000000000111     | bc:AuxDigit | 0           | bc:CodStazPA   | None                   | ARPTSEM30 |
->>>>>>> origin/feature/gherkin-with-behavetag
+
 
 
   # Check PPT_SEMANTICA error [ARPTSEM29]

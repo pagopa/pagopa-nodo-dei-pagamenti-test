@@ -163,29 +163,17 @@ Scenario: Execute activateIOPayment (Phase 2)
     And EC replies to nodo-dei-pagamenti with the paGetPayment
     When AppIO sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is OK of activateIOPayment response
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
 Scenario: Execute nodoChiediInformazioniPagamento (Phase 3)
     Given the Execute activateIOPayment (Phase 2) scenario executed successfully
     When WISP sends rest GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
     Then verify the HTTP status code of informazioniPagamento response is 200
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
 Scenario: trigger PollerAnnulli
    Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
    When job mod3CancelV2 triggered after 10 seconds
    Then wait 10 seconds for expiration
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
 Scenario: Execute activateIOPayment1 (Phase 4)
     Given the trigger PollerAnnulli scenario executed successfully
     And initial XML activateIOPayment

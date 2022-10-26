@@ -2,14 +2,10 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
 
     Background:
         Given systems up
-<<<<<<< HEAD
 
-    # [SEM_NIFR_30]
-
-=======
 @runnable
     # [SEM_NIFR_30]
->>>>>>> origin/feature/gherkin-with-behavetag
+
     Scenario: Create REND
         Given REND generation
             """
@@ -47,11 +43,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             </pay_i:FlussoRiversamento>
             """
 
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Check error for nodoInviaFlussoRendicontazione primitive
         Given the Create REND scenario executed successfully
         And initial XML nodoInviaFlussoRendicontazione
@@ -75,13 +67,10 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaFlussoRendicontazione response
 
-<<<<<<< HEAD
-    # [SEM_NIFR_31]
 
-=======
 @runnable
     # [SEM_NIFR_31]
->>>>>>> origin/feature/gherkin-with-behavetag
+
     Scenario: Create REND2
         Given REND generation
             """
@@ -119,11 +108,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             </pay_i:FlussoRiversamento>
             """
 
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Check error for nodoInviaFlussoRendicontazione primitive
         Given the Create REND2 scenario executed successfully
         And initial XML nodoInviaFlussoRendicontazione
@@ -148,14 +133,10 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
         Then check esito is OK of nodoInviaFlussoRendicontazione response
 
 
-<<<<<<< HEAD
 
-    # [SEM_NIFR_32]
-
-=======
 @runnable
     # [SEM_NIFR_32]
->>>>>>> origin/feature/gherkin-with-behavetag
+
     Scenario: Create REND3
         Given REND generation
             """
@@ -193,11 +174,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             </pay_i:FlussoRiversamento>
             """
 
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Check error for nodoInviaFlussoRendicontazione primitive
         Given the Create REND3 scenario executed successfully
         And initial XML nodoInviaFlussoRendicontazione
@@ -221,14 +198,10 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaFlussoRendicontazione response
 
-<<<<<<< HEAD
 
-    # [SEM_NIFR_39]
-
-=======
 @runnable
     # [SEM_NIFR_39]
->>>>>>> origin/feature/gherkin-with-behavetag
+
     Scenario: Create REND4
         Given REND generation
             """
@@ -266,11 +239,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             </pay_i:FlussoRiversamento>
             """
 
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Check error for nodoInviaFlussoRendicontazione primitive
         Given the Create REND4 scenario executed successfully
         And initial XML nodoInviaFlussoRendicontazione
@@ -294,14 +263,10 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaFlussoRendicontazione response
 
-<<<<<<< HEAD
 
-    # [SEM_NIFR_41]
-
-=======
 @runnable
     # [SEM_NIFR_41]
->>>>>>> origin/feature/gherkin-with-behavetag
+
     Scenario: Create REND5
         Given REND generation
             """
@@ -339,11 +304,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             </pay_i:FlussoRiversamento>
             """
 
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Check error for nodoInviaFlussoRendicontazione primitive
         Given the Create REND5 scenario executed successfully
         And initial XML nodoInviaFlussoRendicontazione
@@ -366,14 +327,10 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             """
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaFlussoRendicontazione response
-<<<<<<< HEAD
 
-    # [SEM_NIFR_33]
-
-=======
 @runnable
     # [SEM_NIFR_33]
->>>>>>> origin/feature/gherkin-with-behavetag
+
     Scenario: Create REND6
         Given REND generation
             """
@@ -411,11 +368,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             </pay_i:FlussoRiversamento>
             """
 
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Check error for nodoInviaFlussoRendicontazione primitive
         Given the Create REND6 scenario executed successfully
         And initial XML nodoInviaFlussoRendicontazione
@@ -439,11 +392,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaFlussoRendicontazione response
 
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     # [SEM_NIFR_35]
 
     Scenario: Create REND6
@@ -483,11 +432,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             </pay_i:FlussoRiversamento>
             """
 
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Check error for nodoInviaFlussoRendicontazione primitive
         Given the Create REND6 scenario executed successfully
         And initial XML nodoInviaFlussoRendicontazione
@@ -511,11 +456,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaFlussoRendicontazione response
 
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     # [SEM_NIFR_34]
 
     Scenario: Create REND7
@@ -555,11 +496,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             </pay_i:FlussoRiversamento>
             """
 
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Check error for nodoInviaFlussoRendicontazione primitive
         Given the Create REND7 scenario executed successfully
         And initial XML nodoInviaFlussoRendicontazione
@@ -583,11 +520,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaFlussoRendicontazione response
 
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     # [SEM_NIFR_36]
 
     Scenario: Create REND8
@@ -635,11 +568,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             </pay_i:FlussoRiversamento>
             """
 
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Check error for nodoInviaFlussoRendicontazione primitive
         Given the Create REND8 scenario executed successfully
         And initial XML nodoInviaFlussoRendicontazione
@@ -663,11 +592,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaFlussoRendicontazione response
 
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     # [SEM_NIFR_37]
 
     Scenario: Create REND9
@@ -715,11 +640,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             </pay_i:FlussoRiversamento>
             """
 
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Check error for nodoInviaFlussoRendicontazione primitive
         Given the Create REND9 scenario executed successfully
         And initial XML nodoInviaFlussoRendicontazione
@@ -743,11 +664,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaFlussoRendicontazione response
 
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     # [SEM_NIFR_28]
 
     Scenario: Create REND10
@@ -787,11 +704,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             </pay_i:FlussoRiversamento>
             """
 
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Check error for nodoInviaFlussoRendicontazione primitive
         Given the Create REND10 scenario executed successfully
         And initial XML nodoInviaFlussoRendicontazione
@@ -816,10 +729,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
         Then check esito is OK of nodoInviaFlussoRendicontazione response
 
 
-<<<<<<< HEAD
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     # [SEM_NIFR_38]
 
     Scenario: Create REND11
@@ -867,11 +777,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             </pay_i:FlussoRiversamento>
             """
 
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Check error for nodoInviaFlussoRendicontazione primitive
         Given the Create REND11 scenario executed successfully
         And initial XML nodoInviaFlussoRendicontazione
@@ -895,11 +801,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaFlussoRendicontazione response
 
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     # [SEM_NIFR_39]
 
     Scenario: Create REND12
@@ -939,11 +841,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             </pay_i:FlussoRiversamento>
             """
 
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Check error for nodoInviaFlussoRendicontazione primitive
         Given the Create REND12 scenario executed successfully
         And initial XML nodoInviaFlussoRendicontazione
@@ -967,11 +865,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaFlussoRendicontazione response
 
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     # [SEM_NIFR_42]
 
     Scenario: Create RT
@@ -1035,11 +929,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             </pay_i:datiPagamento>
             </pay_i:RT>
             """
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Create REND12
         Given REND generation
             """
@@ -1077,11 +967,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             </pay_i:FlussoRiversamento>
             """
 
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Check error for nodoInviaFlussoRendicontazione primitive
         Given the Create REND12 scenario executed successfully
         And initial XML nodoInviaFlussoRendicontazione

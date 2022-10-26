@@ -11,16 +11,7 @@ Feature: FLUSSO_APIO_04_PPALNEW
             <soapenv:Header/>
             <soapenv:Body>
             <nod:verifyPaymentNoticeReq>
-<<<<<<< HEAD
-            <idPSP>#psp_AGID#</idPSP>
-            <idBrokerPSP>#broker_AGID#</idBrokerPSP>
-            <idChannel>#canale_AGID#</idChannel>
-            <password>pwdpwdpwd</password>
-            <qrCode>
-            <fiscalCode>#creditor_institution_code#</fiscalCode>
-            <noticeNumber>#notice_number#</noticeNumber>
-            </qrCode>
-=======
+
                 <idPSP>#psp_AGID#</idPSP>
                 <idBrokerPSP>#broker_AGID#</idBrokerPSP>
                 <idChannel>#canale_AGID#</idChannel>
@@ -29,7 +20,7 @@ Feature: FLUSSO_APIO_04_PPALNEW
                     <fiscalCode>#creditor_institution_code#</fiscalCode>
                     <noticeNumber>#notice_number#</noticeNumber>
                 </qrCode>
->>>>>>> origin/feature/gherkin-with-behavetag
+
             </nod:verifyPaymentNoticeReq>
             </soapenv:Body>
             </soapenv:Envelope>
@@ -44,49 +35,7 @@ Feature: FLUSSO_APIO_04_PPALNEW
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd">
             <soapenv:Header/>
             <soapenv:Body>
-<<<<<<< HEAD
-            <nod:activateIOPaymentReq>
-            <idPSP>$verifyPaymentNotice.idPSP</idPSP>
-            <idBrokerPSP>$verifyPaymentNotice.idBrokerPSP</idBrokerPSP>
-            <idChannel>$verifyPaymentNotice.idChannel</idChannel>
-            <password>$verifyPaymentNotice.password</password>
-            <!--Optional:-->
-            <idempotencyKey>#idempotency_key#</idempotencyKey>
-            <qrCode>
-            <fiscalCode>#creditor_institution_code#</fiscalCode>
-            <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
-            </qrCode>
-            <!--Optional:-->
-            <expirationTime>6000</expirationTime>
-            <amount>10.00</amount>
-            <!--Optional:-->
-            <dueDate>2021-12-12</dueDate>
-            <!--Optional:-->
-            <paymentNote>responseFull</paymentNote>
-            <!--Optional:-->
-            <payer>
-            <uniqueIdentifier>
-            <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-            <entityUniqueIdentifierValue>77777777777</entityUniqueIdentifierValue>
-            </uniqueIdentifier>
-            <fullName>name</fullName>
-            <!--Optional:-->
-            <streetName>street</streetName>
-            <!--Optional:-->
-            <civicNumber>civic</civicNumber>
-            <!--Optional:-->
-            <postalCode>code</postalCode>
-            <!--Optional:-->
-            <city>city</city>
-            <!--Optional:-->
-            <stateProvinceRegion>state</stateProvinceRegion>
-            <!--Optional:-->
-            <country>IT</country>
-            <!--Optional:-->
-            <e-mail>test.prova@gmail.com</e-mail>
-            </payer>
-            </nod:activateIOPaymentReq>
-=======
+
                 <nod:activateIOPaymentReq>
                 <idPSP>$verifyPaymentNotice.idPSP</idPSP>
                 <idBrokerPSP>$verifyPaymentNotice.idBrokerPSP</idBrokerPSP>
@@ -128,7 +77,7 @@ Feature: FLUSSO_APIO_04_PPALNEW
                     <e-mail>test.prova@gmail.com</e-mail>
                 </payer>
                 </nod:activateIOPaymentReq>
->>>>>>> origin/feature/gherkin-with-behavetag
+
             </soapenv:Body>
             </soapenv:Envelope>
             """
@@ -144,20 +93,7 @@ Feature: FLUSSO_APIO_04_PPALNEW
         Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
         And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
             """
-<<<<<<< HEAD
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:psp="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <psp:pspNotifyPaymentRes>
-            <outcome>OK</outcome>
-            <!--Optional:-->
-            <wait>20</wait>
-            </psp:pspNotifyPaymentRes>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        When WISP sends REST POST inoltroEsito/paypal to nodo-dei-pagamenti
-=======
+
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pfn="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
             <soapenv:Header/>
             <soapenv:Body>
@@ -169,7 +105,7 @@ Feature: FLUSSO_APIO_04_PPALNEW
             </soapenv:Envelope>
             """
         When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
->>>>>>> origin/feature/gherkin-with-behavetag
+
             """
             {
                 "idTransazione": "responseKO",

@@ -237,10 +237,9 @@ Feature: process tests for retryAtokenScaduto
     Then check outcome is KO of sendPaymentOutcome response
     And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcome response
 
-<<<<<<< HEAD
-=======
+
   @prova
->>>>>>> origin/feature/gherkin-with-behavetag
+
   Scenario: check position_payment
     Given the Execute sendPaymentOutcome request scenario executed successfully
     And wait 5 seconds for expiration
@@ -353,11 +352,9 @@ Feature: process tests for retryAtokenScaduto
     And checks the value N of the record at column PAAATTIVARPTRESP of the table RPT_ACTIVATIONS retrived by the query payment_token_v2 on db nodo_online under macro NewMod3
     And checks the value N of the record at column NODOINVIARPTREQ of the table RPT_ACTIVATIONS retrived by the query payment_token_v2 on db nodo_online under macro NewMod3
     And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RPT_ACTIVATIONS retrived by the query payment_token_v2 on db nodo_online under macro NewMod3
-<<<<<<< HEAD
-    #RETRY_PA_ATTIVA_RPT
-=======
+
     #RETRY_PA_ATTIVA_RPT & RETRY_PA_INVIA_RT
->>>>>>> origin/feature/gherkin-with-behavetag
+
     And checks the value $activatePaymentNotice.fiscalCode of the record at column pa_fiscal_code of the table RETRY_PA_ATTIVA_RPT retrived by the query retry_pa_invia_rpt on db nodo_online under macro NewMod3
     And checks the value $activatePaymentNoticeResponse.paymentToken-v2 of the record at column token of the table RETRY_PA_ATTIVA_RPT retrived by the query retry_pa_invia_rpt on db nodo_online under macro NewMod3
     And checks the value NotNone of the record at column inserted_timestamp of the table RETRY_PA_ATTIVA_RPT retrived by the query retry_pa_invia_rpt on db nodo_online under macro NewMod3

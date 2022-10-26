@@ -2,24 +2,17 @@ Feature: process tests for notificaAnnullamento_RPT-T139
 
     Background:
         Given systems up
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: RPT generation
         Given RPT generation
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-<<<<<<< HEAD
-                <pay_i:identificativoDominio>44444444444</pay_i:identificativoDominio>
-                <pay_i:identificativoStazioneRichiedente>44444444444_01</pay_i:identificativoStazioneRichiedente>
-=======
+
                 <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
                 <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
->>>>>>> origin/feature/gherkin-with-behavetag
+
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
             <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
@@ -90,11 +83,7 @@ Feature: process tests for notificaAnnullamento_RPT-T139
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execute nodoInviaRPT request
         Given the RPT generation scenario executed successfully
         And initial XML nodoInviaRPT
@@ -102,15 +91,11 @@ Feature: process tests for notificaAnnullamento_RPT-T139
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
             <ppt:intestazionePPT>
-<<<<<<< HEAD
-            <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
-            <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
-            <identificativoDominio>44444444444</identificativoDominio>
-=======
+
             <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
->>>>>>> origin/feature/gherkin-with-behavetag
+
             <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
             <codiceContestoPagamento>CCD01</codiceContestoPagamento>
             </ppt:intestazionePPT>
@@ -130,11 +115,7 @@ Feature: process tests for notificaAnnullamento_RPT-T139
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then retrieve session token from $nodoInviaRPTResponse.url
 
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execute nodoNotificaAnnullamento
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken to nodo-dei-pagamenti

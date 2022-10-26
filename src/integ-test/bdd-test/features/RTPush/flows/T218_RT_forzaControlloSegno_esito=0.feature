@@ -2,11 +2,7 @@ Feature: T218_RT_forzaControlloSegno_esito=0
 
     Background:
         Given systems up
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execute nodoInviaRPT (Phase 1)
         Given RPT1 generation
             """
@@ -213,11 +209,7 @@ Feature: T218_RT_forzaControlloSegno_esito=0
         And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario Outline: Execute nodoInviaRT (Phase 2)
         Given the Execute nodoInviaRPT (Phase 1) scenario executed successfully
         And initial XML nodoInviaRT

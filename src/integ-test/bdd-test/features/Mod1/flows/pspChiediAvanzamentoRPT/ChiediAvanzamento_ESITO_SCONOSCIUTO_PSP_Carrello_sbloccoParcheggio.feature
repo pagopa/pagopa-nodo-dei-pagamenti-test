@@ -2,11 +2,7 @@ Feature: process tests for ChiediAvanzamento_ESITO_SCONOSCIUTO_PSP_Carrello_sblo
 
     Background:
         Given systems up
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: RPT generation
         Given RPT generation
 
@@ -86,11 +82,7 @@ Feature: process tests for ChiediAvanzamento_ESITO_SCONOSCIUTO_PSP_Carrello_sblo
         </pay_i:datiVersamento>
         </pay_i:RPT>
         """
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: RPT2 generation
         Given the RPT generation scenario executed successfully
         And RPT2 generation
@@ -171,11 +163,7 @@ Feature: process tests for ChiediAvanzamento_ESITO_SCONOSCIUTO_PSP_Carrello_sblo
         </pay_i:datiVersamento>
         </pay_i:RPT>
         """
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execute nodoInviaCarrelloRPT request
         Given the RPT2 generation scenario executed successfully
         And initial XML nodoInviaCarrelloRPT
@@ -217,11 +205,7 @@ Feature: process tests for ChiediAvanzamento_ESITO_SCONOSCIUTO_PSP_Carrello_sblo
         And check url contains acardste of nodoInviaCarrelloRPT response
         And retrieve session token from $nodoInviaCarrelloRPTResponse.url
 
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execute check DB-RPT
         Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
         And replace iuv content with avanzaErrResponse content
@@ -234,11 +218,7 @@ Feature: process tests for ChiediAvanzamento_ESITO_SCONOSCIUTO_PSP_Carrello_sblo
         And checks the value nodoInviaCarrelloRPT of the record at column INSERTED_BY of the table STATI_RPT retrived by the query stati_RPT2 on db nodo_online under macro Mod1
         And verify 3 record for the table STATI_RPT retrived by the query stati_RPT2 on db nodo_online under macro Mod1
 
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execution Esito Carta
         Given the Execute check DB-RPT scenario executed successfully
         And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte 
@@ -260,17 +240,12 @@ Feature: process tests for ChiediAvanzamento_ESITO_SCONOSCIUTO_PSP_Carrello_sblo
         {
             "idPagamento": "$sessionToken",
             "RRN":123456789,
-<<<<<<< HEAD
-            "identificativoPsp": "40000000001",
-            "tipoVersamento": "CP",
-            "identificativoIntermediario": "40000000001",
-            "identificativoCanale": "40000000001_03",
-=======
+
             "identificativoPsp": "#psp#",
             "tipoVersamento": "CP",
             "identificativoIntermediario": "#psp#",
             "identificativoCanale": "#canale#",
->>>>>>> origin/feature/gherkin-with-behavetag
+
             "esitoTransazioneCarta": "123456", 
             "importoTotalePagato": 11.11,
             "timestampOperazione": "2012-04-23T18:25:43.001Z",
@@ -280,11 +255,7 @@ Feature: process tests for ChiediAvanzamento_ESITO_SCONOSCIUTO_PSP_Carrello_sblo
         Then verify the HTTP status code of inoltroEsito/carta response is 408
         And check error is Operazione in timeout of inoltroEsito/carta response
         And check url field not exists in inoltroEsito/carta response
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execute second check DB-RPT 
         Given the Execution Esito Carta scenario executed successfully
         Then checks the value CART_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query retry_rpt on db nodo_online under macro Mod1
@@ -294,21 +265,15 @@ Feature: process tests for ChiediAvanzamento_ESITO_SCONOSCIUTO_PSP_Carrello_sblo
         And checks the value 0 of the record at column RETRY of the table RETRY_RPT retrived by the query retry_rpt_original on db nodo_online under macro Mod1
         And verify 1 record for the table RETRY_RPT retrived by the query retry_rpt_original on db nodo_online under macro Mod1
         And wait 5 seconds for expiration
-<<<<<<< HEAD
-    
-=======
+
 @runnable    
->>>>>>> origin/feature/gherkin-with-behavetag
+
     Scenario: Execute job pspChiediAvanzamentoRPT
         Given the Execute second check DB-RPT scenario executed successfully
         When job pspChiediAvanzamentoRPT triggered after 5 seconds
         And wait 10 seconds for expiration
         Then checks the value CART_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query motivo_annullamento on db nodo_online under macro Mod1
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execution retry Esito Carta
         Given the Execute job pspChiediAvanzamentoRPT scenario executed successfully
         And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte 
@@ -330,17 +295,12 @@ Feature: process tests for ChiediAvanzamento_ESITO_SCONOSCIUTO_PSP_Carrello_sblo
         {
             "idPagamento": "$sessionToken",
             "RRN":123456789,
-<<<<<<< HEAD
-            "identificativoPsp": "40000000001",
-            "tipoVersamento": "CP",
-            "identificativoIntermediario": "40000000001",
-            "identificativoCanale": "40000000001_03",
-=======
+
             "identificativoPsp": "#psp#",
             "tipoVersamento": "CP",
             "identificativoIntermediario": "#psp#",
             "identificativoCanale": "#canale#",
->>>>>>> origin/feature/gherkin-with-behavetag
+
             "esitoTransazioneCarta": "123456", 
             "importoTotalePagato": 11.11,
             "timestampOperazione": "2012-04-23T18:25:43.001Z",
@@ -351,11 +311,7 @@ Feature: process tests for ChiediAvanzamento_ESITO_SCONOSCIUTO_PSP_Carrello_sblo
         And check error is Operazione in timeout of inoltroEsito/carta response
         And check url field not exists in inoltroEsito/carta response
 
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execute third check DB-RPT 
         Given the Execution retry Esito Carta scenario executed successfully
         Then checks the value RPT_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query stati_RPT_noOrder on db nodo_online under macro Mod1

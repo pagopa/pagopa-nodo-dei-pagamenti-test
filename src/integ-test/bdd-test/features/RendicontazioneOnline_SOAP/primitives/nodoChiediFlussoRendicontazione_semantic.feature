@@ -37,11 +37,7 @@ Feature: Semantic checks for nodoChiediFlussoRendicontazione
             </pay_i:datiSingoliPagamenti>
             </pay_i:FlussoRiversamento>
             """
-<<<<<<< HEAD
-
-=======
     @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Executed nodoInviaFlussoRendicontazione
         Given initial XML nodoInviaFlussoRendicontazione
             """
@@ -63,11 +59,7 @@ Feature: Semantic checks for nodoChiediFlussoRendicontazione
             """
         When PSP sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaFlussoRendicontazione response
-<<<<<<< HEAD
-
-=======
     @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario Outline: Check semantic errors for nodoChiediFlussoRendicontazione primitive
         Given the Executed nodoInviaFlussoRendicontazione scenario executed successfully
         And initial XML nodoChiediFlussoRendicontazione
@@ -95,29 +87,19 @@ Feature: Semantic checks for nodoChiediFlussoRendicontazione
             | identificativoIntermediarioPA         | ciaoIntermediarioPA       | PPT_INTERMEDIARIO_PA_SCONOSCIUTO  | CFRSEM1     |
             | identificativoIntermediarioPA         | INT_NOT_ENABLED           | PPT_INTERMEDIARIO_PA_DISABILITATO | CFRSEM2     |
             | identificativoStazioneIntermediarioPA | ciaoStazionePA            | PPT_STAZIONE_INT_PA_SCONOSCIUTA   | CFRSEM3     |
-<<<<<<< HEAD
-            | identificativoStazioneIntermediarioPA | 77777777777_05            | PPT_STAZIONE_INT_PA_DISABILITATA  | CFRSEM4     |
-=======
+
             | identificativoStazioneIntermediarioPA | STAZIONE_NOT_ENABLED      | PPT_STAZIONE_INT_PA_DISABILITATA  | CFRSEM4     |
->>>>>>> origin/feature/gherkin-with-behavetag
+
             | password                              | Password01                | PPT_AUTENTICAZIONE                | CFRSEM5     |
             | identificativoFlusso                  | 2017-09-11idPsp1-pluto123 | PPT_ID_FLUSSO_SCONOSCIUTO         | CFRSEM10    |
 
 
-<<<<<<< HEAD
-
-=======
     @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     # [CFRSEM6]
     Scenario: Aggiornamento DB_1
         Given the Executed nodoInviaFlussoRendicontazione scenario executed successfully
         And update through the query param_update of the table RENDICONTAZIONE the parameter DOMINIO with ciaoDominio, with where condition ID_FLUSSO and where value $identificativoFlusso under macro update_query on db nodo_offline
-<<<<<<< HEAD
-
-=======
     @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Check semantic errors for nodoChiediFlussoRendicontazione primitive
         Given the Aggiornamento DB_1 scenario executed successfully
         And initial XML nodoChiediFlussoRendicontazione
@@ -141,20 +123,12 @@ Feature: Semantic checks for nodoChiediFlussoRendicontazione
         Then check faultCode is PPT_DOMINIO_SCONOSCIUTO of nodoChiediFlussoRendicontazione response
 
 
-<<<<<<< HEAD
-
-=======
     @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     # [CFRSEM7]
     Scenario: Aggiornamento DB_2
         Given the Executed nodoInviaFlussoRendicontazione scenario executed successfully
         And update through the query param_update of the table RENDICONTAZIONE the parameter DOMINIO with NOT_ENABLED, with where condition ID_FLUSSO and where value $identificativoFlusso under macro update_query on db nodo_offline
-<<<<<<< HEAD
-
-=======
     @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Check semantic errors for nodoChiediFlussoRendicontazione primitive
         Given the Aggiornamento DB_2 scenario executed successfully
         And initial XML nodoChiediFlussoRendicontazione
@@ -177,21 +151,14 @@ Feature: Semantic checks for nodoChiediFlussoRendicontazione
         When EC sends SOAP nodoChiediFlussoRendicontazione to nodo-dei-pagamenti
         Then check faultCode is PPT_DOMINIO_DISABILITATO of nodoChiediFlussoRendicontazione response
 
-<<<<<<< HEAD
-    # [CFRSEM11] 
-    
-    Scenario: Aggiornamento DB_3
-        Given the Executed nodoInviaFlussoRendicontazione scenario executed successfully
-        And update through the query param_update of the table RENDICONTAZIONE the parameter DOMINIO with 90000000001, with where condition ID_FLUSSO and where value $identificativoFlusso under macro update_query on db nodo_offline
 
-=======
     # [CFRSEM11]
     @runnable
     Scenario: Aggiornamento DB_3
         Given the Executed nodoInviaFlussoRendicontazione scenario executed successfully
         And update through the query param_update of the table RENDICONTAZIONE the parameter DOMINIO with 90000000001, with where condition ID_FLUSSO and where value $identificativoFlusso under macro update_query on db nodo_offline
     @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
+
     Scenario: Check semantic errors for nodoChiediFlussoRendicontazione primitive
         Given the Aggiornamento DB_3 scenario executed successfully
         And initial XML nodoChiediFlussoRendicontazione
@@ -213,11 +180,7 @@ Feature: Semantic checks for nodoChiediFlussoRendicontazione
         #And identificativoStazioneIntermediarioPA with  in nodoChiediFlussoRendicontazione
         When EC sends SOAP nodoChiediFlussoRendicontazione to nodo-dei-pagamenti
         Then check faultCode is PPT_AUTORIZZAZIONE of nodoChiediFlussoRendicontazione response
-<<<<<<< HEAD
-
-=======
     @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     # Send un nuovo flusso rendicontazione coretto
     Scenario: Executed nodoInviaFlussoRendicontazione_1
         Given initial XML nodoInviaFlussoRendicontazione
@@ -240,20 +203,12 @@ Feature: Semantic checks for nodoChiediFlussoRendicontazione
             """
         When PSP sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaFlussoRendicontazione response
-<<<<<<< HEAD
-
-=======
     @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     # [CFRSEM8]
     Scenario: Aggiornamento DB_4
         Given the Executed nodoInviaFlussoRendicontazione_1 scenario executed successfully
         And update through the query param_update of the table RENDICONTAZIONE the parameter PSP with ciaoPSP, with where condition ID_FLUSSO and where value $identificativoFlusso under macro update_query on db nodo_offline
-<<<<<<< HEAD
-
-=======
     @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Check semantic errors for nodoChiediFlussoRendicontazione primitive
         Given the Aggiornamento DB_4 scenario executed successfully
         And initial XML nodoChiediFlussoRendicontazione
@@ -275,20 +230,12 @@ Feature: Semantic checks for nodoChiediFlussoRendicontazione
         And identificativoPSP with ciaoPSP in nodoChiediFlussoRendicontazione
         When EC sends SOAP nodoChiediFlussoRendicontazione to nodo-dei-pagamenti
         Then check faultCode is PPT_PSP_SCONOSCIUTO of nodoChiediFlussoRendicontazione response
-<<<<<<< HEAD
-
-=======
     @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     # [CFRSEM9]
     Scenario: Aggiornamento DB_5
         Given the Executed nodoInviaFlussoRendicontazione_1 scenario executed successfully
         And update through the query param_update of the table RENDICONTAZIONE the parameter PSP with NOT_ENABLED, with where condition ID_FLUSSO and where value $identificativoFlusso under macro update_query on db nodo_offline
-<<<<<<< HEAD
-
-=======
     @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Check semantic errors for nodoChiediFlussoRendicontazione primitive
         Given the Aggiornamento DB_5 scenario executed successfully
         And initial XML nodoChiediFlussoRendicontazione

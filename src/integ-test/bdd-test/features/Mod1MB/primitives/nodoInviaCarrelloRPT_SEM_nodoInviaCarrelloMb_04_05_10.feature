@@ -143,11 +143,9 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
          <pay_i:importoTotaleDaVersare>1.50</pay_i:importoTotaleDaVersare>
          <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
-<<<<<<< HEAD
-         <pay_i:identificativoUnivocoVersamento>#IuV#</pay_i:identificativoUnivocoVersamento>
-=======
+
          <pay_i:identificativoUnivocoVersamento>#IuV2#</pay_i:identificativoUnivocoVersamento>
->>>>>>> origin/feature/gherkin-with-behavetag
+
          <pay_i:codiceContestoPagamento>$carrello</pay_i:codiceContestoPagamento>
          <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
          <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
@@ -194,11 +192,9 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          </elementoListaRPT>
          <elementoListaRPT>
          <identificativoDominio>90000000001</identificativoDominio>
-<<<<<<< HEAD
-         <identificativoUnivocoVersamento>$IuV</identificativoUnivocoVersamento>
-=======
+
          <identificativoUnivocoVersamento>$2IuV</identificativoUnivocoVersamento>
->>>>>>> origin/feature/gherkin-with-behavetag
+
          <codiceContestoPagamento>$carrello</codiceContestoPagamento>
          <rpt>$rpt2Attachment</rpt>
          </elementoListaRPT>
@@ -358,11 +354,9 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
          <pay_i:importoTotaleDaVersare>1.50</pay_i:importoTotaleDaVersare>
          <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
-<<<<<<< HEAD
-         <pay_i:identificativoUnivocoVersamento>#IuV#</pay_i:identificativoUnivocoVersamento>
-=======
+
          <pay_i:identificativoUnivocoVersamento>#IuV2#</pay_i:identificativoUnivocoVersamento>
->>>>>>> origin/feature/gherkin-with-behavetag
+
          <pay_i:codiceContestoPagamento>$carrello</pay_i:codiceContestoPagamento>
          <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
          <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
@@ -410,11 +404,9 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          </elementoListaRPT>
          <elementoListaRPT>
          <identificativoDominio>90000000001</identificativoDominio>
-<<<<<<< HEAD
-         <identificativoUnivocoVersamento>$IuV</identificativoUnivocoVersamento>
-=======
+
          <identificativoUnivocoVersamento>$2IuV</identificativoUnivocoVersamento>
->>>>>>> origin/feature/gherkin-with-behavetag
+
          <codiceContestoPagamento>$carrello</codiceContestoPagamento>
          <rpt>$rpt2Attachment</rpt>
          </elementoListaRPT>
@@ -574,11 +566,9 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
          <pay_i:importoTotaleDaVersare>1.50</pay_i:importoTotaleDaVersare>
          <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
-<<<<<<< HEAD
-         <pay_i:identificativoUnivocoVersamento>#IuV#</pay_i:identificativoUnivocoVersamento>
-=======
+
          <pay_i:identificativoUnivocoVersamento>#IuV2#</pay_i:identificativoUnivocoVersamento>
->>>>>>> origin/feature/gherkin-with-behavetag
+
          <pay_i:codiceContestoPagamento>$carrello</pay_i:codiceContestoPagamento>
          <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
          <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
@@ -605,11 +595,9 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
          <soapenv:Header>
          <ppt:intestazioneCarrelloPPT>
-<<<<<<< HEAD
-         <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
-=======
+
          <identificativoIntermediarioPA>#codicePA#</identificativoIntermediarioPA>
->>>>>>> origin/feature/gherkin-with-behavetag
+
          <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
          <identificativoCarrello>$carrello</identificativoCarrello>
          </ppt:intestazioneCarrelloPPT>
@@ -629,11 +617,9 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          </elementoListaRPT>
          <elementoListaRPT>
          <identificativoDominio>90000000001</identificativoDominio>
-<<<<<<< HEAD
-         <identificativoUnivocoVersamento>$IuV</identificativoUnivocoVersamento>
-=======
+
          <identificativoUnivocoVersamento>$2IuV</identificativoUnivocoVersamento>
->>>>>>> origin/feature/gherkin-with-behavetag
+
          <codiceContestoPagamento>$carrello</codiceContestoPagamento>
          <rpt>$rpt2Attachment</rpt>
          </elementoListaRPT>

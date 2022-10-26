@@ -81,11 +81,7 @@ Feature: process tests for NotificaAnnullamento_RPT_CONPSP
       </pay_i:RPT>
       """
 
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execute nodoInviaRPT request
         Given initial XML nodoInviaRPT
 
@@ -93,11 +89,9 @@ Feature: process tests for NotificaAnnullamento_RPT_CONPSP
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
         <soapenv:Header>
             <ppt:intestazionePPT>
-<<<<<<< HEAD
-                <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
-=======
+
                 <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
->>>>>>> origin/feature/gherkin-with-behavetag
+
                 <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
                 <identificativoDominio>#creditor_institution_code#</identificativoDominio>
                 <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
@@ -121,21 +115,15 @@ Feature: process tests for NotificaAnnullamento_RPT_CONPSP
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
 
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execution idPagamento
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200
 
-<<<<<<< HEAD
-    
-=======
+
 @runnable   
->>>>>>> origin/feature/gherkin-with-behavetag
+
     Scenario: Execute nodoNotificaAnnullamento
         Given the Execution idPagamento scenario executed successfully
         When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken&motivoAnnullamento=CONPSP to nodo-dei-pagamenti
@@ -146,10 +134,7 @@ Feature: process tests for NotificaAnnullamento_RPT_CONPSP
     # refresh DB
     # riga 799 del file steps per il delay
     # CONPSP in ultimo check, è corretto? Guardare SoapUI ---> checkDB ---> riga 7
-<<<<<<< HEAD
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execution test T221_NotificaAnnullamento_RPT_CONPSP
         Given the Execute nodoNotificaAnnullamento scenario executed successfully
         When job paInviaRt triggered after 5 seconds

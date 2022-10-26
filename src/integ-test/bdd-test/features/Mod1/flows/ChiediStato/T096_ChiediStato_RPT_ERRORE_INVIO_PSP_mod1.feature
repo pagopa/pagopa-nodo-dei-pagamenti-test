@@ -2,11 +2,7 @@ Feature: process tests for T096_ChiediStato_RPT_ERRORE_INVIO_PSP_mod1
 
     Background:
         Given systems up
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: RPT generation
         Given RPT generation
 
@@ -86,11 +82,7 @@ Feature: process tests for T096_ChiediStato_RPT_ERRORE_INVIO_PSP_mod1
         </pay_i:datiVersamento>
         </pay_i:RPT>
         """
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execute nodoInviaRPT request
         Given the RPT generation scenario executed successfully
         And initial XML nodoInviaRPT
@@ -120,11 +112,7 @@ Feature: process tests for T096_ChiediStato_RPT_ERRORE_INVIO_PSP_mod1
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is KO of nodoInviaRPT response
         And check faultCode is PPT_CANALE_IRRAGGIUNGIBILE of nodoInviaRPT response
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execute nodoChiediStatoRPT request
         Given the Execute nodoInviaRPT scenario executed successfully
         And initial XML nodoChiediStatoRPT
@@ -149,11 +137,7 @@ Feature: process tests for T096_ChiediStato_RPT_ERRORE_INVIO_PSP_mod1
         And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
         And check url field not exists in nodoChiediStatoRPT response
 
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execute second nodoInviaRPT request
         Given the Execute nodoChiediStatoRPT request scenario executed successfully
         And initial XML nodoInviaRPT

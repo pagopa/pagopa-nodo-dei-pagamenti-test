@@ -238,11 +238,9 @@
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
             <ppt:intestazioneCarrelloPPT>
-<<<<<<< HEAD
-            <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
-=======
+
             <identificativoIntermediarioPA>#codicePA#</identificativoIntermediarioPA>
->>>>>>> origin/feature/gherkin-with-behavetag
+
             <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
             <identificativoCarrello>$1carrello</identificativoCarrello>
             </ppt:intestazioneCarrelloPPT>
@@ -255,11 +253,9 @@
             <identificativoCanale>97735020584_02</identificativoCanale>
             <listaRPT>
             <elementoListaRPT>
-<<<<<<< HEAD
-            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-=======
+
             <identificativoDominio>#codicePA#</identificativoDominio>
->>>>>>> origin/feature/gherkin-with-behavetag
+
             <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
             <rpt>$rpt1Attachment</rpt>

@@ -7,11 +7,9 @@ Feature: process tests for generazioneRicevute [DB_GR_24]
 
   # Verify phase
   Scenario: Execute verifyPaymentNotice request
-<<<<<<< HEAD
-      Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
-=======
+
       Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr_old# and application code NA
->>>>>>> origin/feature/gherkin-with-behavetag
+
       And generate 1 cart with PA #creditor_institution_code_old# and notice number $1noticeNumber
       And initial XML verifyPaymentNotice
       """
@@ -31,10 +29,9 @@ Feature: process tests for generazioneRicevute [DB_GR_24]
       </soapenv:Body>
       </soapenv:Envelope>
       """
-<<<<<<< HEAD
-=======
+
     And EC old version
->>>>>>> origin/feature/gherkin-with-behavetag
+
     When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of verifyPaymentNotice response
 
@@ -159,15 +156,11 @@ Feature: process tests for generazioneRicevute [DB_GR_24]
         <soapenv:Body>
             <ws:nodoInviaRPT>
                 <password>pwdpwdpwd</password>
-<<<<<<< HEAD
-                <identificativoPSP>15376371009</identificativoPSP>
-                <identificativoIntermediarioPSP>15376371009</identificativoIntermediarioPSP>
-                <identificativoCanale>15376371009_01</identificativoCanale>
-=======
+
                 <identificativoPSP>#psp#</identificativoPSP>
                 <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
                 <identificativoCanale>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanale>
->>>>>>> origin/feature/gherkin-with-behavetag
+
                 <tipoFirma></tipoFirma>
                 <rpt>$rpt1Attachment</rpt>
             </ws:nodoInviaRPT>
@@ -189,18 +182,12 @@ Feature: process tests for generazioneRicevute [DB_GR_24]
       </soapenv:Body>
       </soapenv:Envelope>
       """
-<<<<<<< HEAD
-    And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
-    When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-    Then check esito is OK of nodoInviaRPT response
-    And check redirect is 0 of nodoInviaRPT response
-    And wait 7 seconds for expiration
-=======
+
     #And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
     When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
     Then check esito is OK of nodoInviaRPT response
     And check redirect is 0 of nodoInviaRPT response
->>>>>>> origin/feature/gherkin-with-behavetag
+
 
 
   # Payment Outcome Phase outcome OK
@@ -244,11 +231,9 @@ Feature: process tests for generazioneRicevute [DB_GR_24]
       """
     When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
-<<<<<<< HEAD
-    And wait 10 seconds for expiration
-=======
+
     #And wait 10 seconds for expiration
->>>>>>> origin/feature/gherkin-with-behavetag
+
     And execution query position_payment to get value on the table POSITION_RECEIPT, with the columns * under macro NewMod3 with db name nodo_online
     And through the query position_payment retrieve param receipt_id at position 1 and save it under the key receipt_id
     And through the query position_payment retrieve param notice_id at position 2 and save it under the key notice_id
@@ -261,10 +246,9 @@ Feature: process tests for generazioneRicevute [DB_GR_24]
     And through the query position_payment retrieve param company_name at position 9 and save it under the key company_name
     And through the query position_payment retrieve param office_name at position 10 and save it under the key office_name
     And through the query position_payment retrieve param debtor_id at position 11 and save it under the key debtor_id
-<<<<<<< HEAD
-=======
+
    # And through the query position_status_n retrieve param psp_id at position 0 and save it under the key psp_id
->>>>>>> origin/feature/gherkin-with-behavetag
+
     And through the query position_payment retrieve param psp_company_name at position 15 and save it under the key psp_company_name
     And through the query position_payment retrieve param psp_fiscal_code at position 13 and save it under the key psp_fiscal_code
     And through the query position_payment retrieve param psp_vat_number at position 14 and save it under the key psp_vat_number
@@ -273,12 +257,7 @@ Feature: process tests for generazioneRicevute [DB_GR_24]
     And through the query position_payment retrieve param payer_id at position 18 and save it under the key payer_id
     And through the query position_payment retrieve param payment_method at position 19 and save it under the key payment_method
     And through the query position_payment retrieve param fee at position 20 and save it under the key fee
-<<<<<<< HEAD
-    And through the query position_payment retrieve param application_date at position 22 and save it under the key application_date
-    And through the query position_payment retrieve param metadata at position 24 and save it under the key metadata
-    And through the query position_payment retrieve param rt_id at position 25 and save it under the key rt_id
-    And through the query position_payment retrieve param fk_position_payment at position 26 and save it under the key fk_position_payment
-=======
+
     #And through the query position_status_n retrieve param payment_date_time at position 0 and save it under the key payment_date_time
     And through the query position_payment retrieve param application_date at position 22 and save it under the key application_date
     #And through the query position_status_n retrieve param transfer_date at position 0 and save it under the key transfer_date
@@ -286,7 +265,7 @@ Feature: process tests for generazioneRicevute [DB_GR_24]
     And through the query position_payment retrieve param rt_id at position 25 and save it under the key rt_id
     And through the query position_payment retrieve param fk_position_payment at position 26 and save it under the key fk_position_payment
 
->>>>>>> origin/feature/gherkin-with-behavetag
+
     And checks the value $receipt_id of the record at column PAYMENT_TOKEN of the table POSITION_PAYMENT retrived by the query position_status_n on db nodo_online under macro NewMod3
     And checks the value $notice_id of the record at column NOTICE_ID of the table POSITION_PAYMENT retrived by the query position_status_n on db nodo_online under macro NewMod3
     And checks the value $pa_fiscal_code of the record at column PA_FISCAL_CODE of the table POSITION_PAYMENT retrived by the query position_status_n on db nodo_online under macro NewMod3
@@ -296,31 +275,20 @@ Feature: process tests for generazioneRicevute [DB_GR_24]
     And checks the value $payment_amount of the record at column AMOUNT of the table POSITION_PAYMENT retrived by the query position_status_n on db nodo_online under macro NewMod3
     And checks the value $description of the record at column DESCRIPTION of the table POSITION_SERVICE retrived by the query position_status_n on db nodo_online under macro NewMod3
     And checks the value $company_name of the record at column COMPANY_NAME of the table POSITION_SERVICE retrived by the query position_status_n on db nodo_online under macro NewMod3
-<<<<<<< HEAD
-    And checks the value $debtor_id of the record at column DEBTOR_ID of the table POSITION_SERVICE retrived by the query position_status_n on db nodo_online under macro NewMod3
-    And checks the value $sendPaymentOutcome.idPSP of the record at column PSP_ID of the table POSITION_RECEIPT retrived by the query position_status_n on db nodo_online under macro NewMod3
-    And checks the value $psp_company_name of the record at column RAGIONE_SOCIALE of the table PSP retrived by the query psp on db nodo_cfg under macro NewMod3
-    And checks the value $psp_fiscal_code of the record at column CODICE_FISCALE of the table PSP retrived by the query psp on db nodo_cfg under macro NewMod3
-    And checks the value $psp_vat_number of the record at column VAT_NUMBER of the table PSP retrived by the query psp on db nodo_cfg under macro NewMod3
-=======
+
     And checks the value $office_name of the record at column OFFICE_NAME of the table POSITION_SERVICE retrived by the query position_status_n on db nodo_online under macro NewMod3
     And checks the value $debtor_id of the record at column DEBTOR_ID of the table POSITION_SERVICE retrived by the query position_status_n on db nodo_online under macro NewMod3
     And checks the value $sendPaymentOutcome.idPSP of the record at column PSP_ID of the table POSITION_RECEIPT retrived by the query position_status_n on db nodo_online under macro NewMod3
     And checks the value $psp_company_name of the record at column RAGIONE_SOCIALE of the table PSP retrived by the query psp on db nodo_online under macro NewMod3
     And checks the value $psp_fiscal_code of the record at column CODICE_FISCALE of the table PSP retrived by the query psp on db nodo_online under macro NewMod3
     And checks the value $psp_vat_number of the record at column VAT_NUMBER of the table PSP retrived by the query psp on db nodo_online under macro NewMod3
->>>>>>> origin/feature/gherkin-with-behavetag
+
     And checks the value $channel_id of the record at column CHANNEL_ID of the table POSITION_PAYMENT retrived by the query position_status_n on db nodo_online under macro NewMod3
     And checks the value NA of the record at column PAYMENT_CHANNEL of the table POSITION_PAYMENT retrived by the query position_status_n on db nodo_online under macro NewMod3
     And checks the value $payer_id of the record at column PAYER_ID of the table POSITION_PAYMENT retrived by the query position_status_n on db nodo_online under macro NewMod3
     And checks the value $payment_method of the record at column PAYMENT_METHOD of the table POSITION_PAYMENT retrived by the query position_status_n on db nodo_online under macro NewMod3
     And checks the value $fee of the record at column FEE of the table POSITION_PAYMENT retrived by the query position_status_n on db nodo_online under macro NewMod3
-<<<<<<< HEAD
-    And checks the value NotNone of the record at column PAYMENT_DATE_TIME of the table POSITION_RECEIPT retrived by the query position_status_n on db nodo_online under macro NewMod3
-    And checks the value NotNone of the record at column TRANSFER_DATE of the table POSITION_RECEIPT retrived by the query position_status_n on db nodo_online under macro NewMod3
-    
-    
-=======
+
     And checks the value $metadata of the record at column METADATA of the table POSITION_PAYMENT_PLAN retrived by the query position_status_n on db nodo_online under macro NewMod3
     
     And checks the value NotNone of the record at column PAYMENT_DATE_TIME of the table POSITION_RECEIPT retrived by the query position_status_n on db nodo_online under macro NewMod3
@@ -347,4 +315,4 @@ Feature: process tests for generazioneRicevute [DB_GR_24]
 
 
     
->>>>>>> origin/feature/gherkin-with-behavetag
+

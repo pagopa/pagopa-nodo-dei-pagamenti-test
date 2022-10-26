@@ -2,11 +2,7 @@ Feature: process tests for T099_C_chiediStato_RT_RIFIUTATA_NODO_Carrello_sblocco
 
     Background:
         Given systems up
-<<<<<<< HEAD
-        
-=======
-@runnable        
->>>>>>> origin/feature/gherkin-with-behavetag
+@runnable 
     Scenario: RPT generation
         Given RPT generation
             """
@@ -337,11 +333,7 @@ Feature: process tests for T099_C_chiediStato_RT_RIFIUTATA_NODO_Carrello_sblocco
             </pay_i:datiPagamento>
             </pay_i:RT>
             """
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execute nodoInviaCarrelloRPT
 		Given the RPT generation scenario executed successfully
 		And initial XML nodoInviaCarrelloRPT
@@ -381,11 +373,7 @@ Feature: process tests for T099_C_chiediStato_RT_RIFIUTATA_NODO_Carrello_sblocco
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check url contains acardste of nodoInviaCarrelloRPT response
         And retrieve session token from $nodoInviaCarrelloRPTResponse.url
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execution Esito Mod1
         Given the Execute nodoInviaCarrelloRPT scenario executed successfully
         And initial XML pspInviaCarrelloRPT 
@@ -409,28 +397,19 @@ Feature: process tests for T099_C_chiediStato_RT_RIFIUTATA_NODO_Carrello_sblocco
             """
             {
             "idPagamento":"$sessionToken",
-<<<<<<< HEAD
-            "identificativoPsp":"40000000001",
-            "tipoVersamento":"BBT",
-            "identificativoIntermediario":"40000000001",
-            "identificativoCanale":"40000000001_03",
-=======
+
             "identificativoPsp":"#psp#",
             "tipoVersamento":"BBT",
             "identificativoIntermediario":"#psp#",
             "identificativoCanale":"#canale#",
->>>>>>> origin/feature/gherkin-with-behavetag
+
             "tipoOperazione":"web"
             }
             """
         Then check esito is OK of inoltroEsito/mod1 response
         And check urlRedirectPSP field exists in inoltroEsito/mod1 response
 
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execute nodoInviaRT request
         Given the Execution Esito Mod1 scenario executed successfully
         And initial XML nodoInviaRT
@@ -456,11 +435,7 @@ Feature: process tests for T099_C_chiediStato_RT_RIFIUTATA_NODO_Carrello_sblocco
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is KO of nodoInviaRT response
 
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
    Scenario: Execute second nodoInviaRT request
         Given the Execute nodoInviaRT request scenario executed successfully
         And initial XML nodoInviaRT
@@ -486,11 +461,7 @@ Feature: process tests for T099_C_chiediStato_RT_RIFIUTATA_NODO_Carrello_sblocco
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is KO of nodoInviaRT response
 
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execute nodoChiediStatoRPT request
         Given the Execute second nodoInviaRT request scenario executed successfully
         And initial XML nodoChiediStatoRPT
@@ -515,11 +486,7 @@ Feature: process tests for T099_C_chiediStato_RT_RIFIUTATA_NODO_Carrello_sblocco
         And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ACCETTATA_PSP of nodoChiediStatoRPT response
         And check url field not exists in nodoChiediStatoRPT response
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execute second nodoChiediStatoRPT request
         Given the Execute nodoChiediStatoRPT request scenario executed successfully
         And initial XML nodoChiediStatoRPT
@@ -546,22 +513,14 @@ Feature: process tests for T099_C_chiediStato_RT_RIFIUTATA_NODO_Carrello_sblocco
         And checks stato contains RT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And check url field not exists in nodoChiediStatoRPT response
 
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execute nodoNotificaAnnullamento
         Given the Execute nodoChiediStatoRPT request scenario executed successfully
         When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of notificaAnnullamento response is 404
         And check error is Il Pagamento indicato non esiste of notificaAnnullamento response
 
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execute second nodoInviaCarrelloRPT
 		Given the Execute nodoNotificaAnnullamento scenario executed successfully
 		And initial XML nodoInviaCarrelloRPT
@@ -601,11 +560,7 @@ Feature: process tests for T099_C_chiediStato_RT_RIFIUTATA_NODO_Carrello_sblocco
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check faultCode contains PPT_ID_CARRELLO_DUPLICATO of nodoInviaCarrelloRPT response
 
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execute third nodoInviaRT request
         Given the Execute second nodoInviaCarrelloRPT scenario executed successfully
         And initial XML nodoInviaRT

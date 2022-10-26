@@ -2,10 +2,8 @@ import re
 import json
 import os
 import datetime
-<<<<<<< HEAD
-from webbrowser import get
-=======
->>>>>>> origin/feature/gherkin-with-behavetag
+
+
 from xml.dom.minidom import parseString
 
 from behave.__main__ import main as behave_main
@@ -87,16 +85,8 @@ def get_soap_mock_ec(context):
     else:
         return ""
 
-<<<<<<< HEAD
-def get_soap_mock_ec2(context):
-    if context.config.userdata.get('services').get('secondary-mock-ec').get('soap_service') is not None:
-        return context.config.userdata.get('services').get('secondary-mock-ec').get('url') \
-            + context.config.userdata.get('services').get('secondary-mock-ec').get('soap_service')
-    else:
-        return ""
 
-=======
->>>>>>> origin/feature/gherkin-with-behavetag
+
 
 def get_soap_mock_psp(context):
     if context.config.userdata.get('services').get('mock-psp').get('soap_service') is not None:
@@ -105,16 +95,8 @@ def get_soap_mock_psp(context):
     else:
         return ""
 
-<<<<<<< HEAD
-def get_soap_mock_psp2(context):
-    if context.config.userdata.get('services').get('secondary-mock-psp').get('soap_service') is not None:
-        return context.config.userdata.get('services').get('secondary-mock-psp').get('url') \
-            + context.config.userdata.get('services').get('secondary-mock-psp').get('soap_service')
-    else:
-        return ""
 
-=======
->>>>>>> origin/feature/gherkin-with-behavetag
+
 
 def get_refresh_config_url(context):
     if context.config.userdata.get('services').get('nodo-dei-pagamenti').get('refresh_config_service') is not None:
@@ -272,44 +254,16 @@ def isDate(string: str):
         return False
 
 
-<<<<<<< HEAD
-def single_thread(context, soap_primitive, type):
-=======
+
 def single_thread(context, soap_primitive):
->>>>>>> origin/feature/gherkin-with-behavetag
+
     print("single_thread")
     primitive = soap_primitive.split("_")[0]
     primitive = replace_local_variables(primitive, context)
     primitive = replace_context_variables(primitive, context)
     primitive = replace_global_variables(primitive, context)
     print(soap_primitive.split("_")[1])
-<<<<<<< HEAD
-    if type == 'GET':
-        headers = {'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}
-        url_nodo = f"{get_rest_url_nodo(context)}/{primitive}"
-        print(url_nodo)
-        soap_response = requests.get(url_nodo, headers=headers, verify=False)
-    elif type == 'POST':
-        body = getattr(context,primitive)
-        if 'xml' in getattr(context,primitive):
-            headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}
-            url_nodo = get_soap_url_nodo(context, primitive)
-        else:
-            headers = {'Content-Type': 'application/json', 'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}
-            url_nodo = f"{get_rest_url_nodo(context)}/{primitive}"
-        soap_response = requests.post(url_nodo, body, headers=headers, verify=False)
-    
-    print("nodo soap_response: ", soap_response.content)
-    print(soap_primitive.split("_")[1] + "Response")
-    setattr(context, soap_primitive.split("_")[1] + "Response", soap_response)
 
-
-def threading(context, primitive_list, list_of_type):
-    i = 0
-    threads = list()
-    while i < len(primitive_list):
-        t = Thread(target=single_thread, args=(context, primitive_list[i], list_of_type[i]))
-=======
     headers = {'Content-Type': 'application/xml', "SOAPAction": primitive, 'Host': 'api.dev.platform.pagopa.it:443'}
     url_nodo = get_soap_url_nodo(context, primitive)
     print("nodo soap_request sent >>>", getattr(
@@ -327,7 +281,7 @@ def threading(context, primitive_list):
     threads = list()
     while i < len(primitive_list):
         t = Thread(target=single_thread, args=(context, primitive_list[i]))
->>>>>>> origin/feature/gherkin-with-behavetag
+
         threads.append(t)
         t.start()
         i += 1
@@ -335,19 +289,13 @@ def threading(context, primitive_list):
     for thread in threads:
         thread.join()
 
-<<<<<<< HEAD
-def threading_delayed(context, primitive_list, list_of_delays, list_of_type):
-    i = 0
-    threads = list()
-    while i < len(primitive_list):
-        t = Thread(target=single_thread, args=(context, primitive_list[i], list_of_type[i]))
-=======
+
 def threading_delayed(context, primitive_list, list_of_delays):
     i = 0
     threads = list()
     while i < len(primitive_list):
         t = Thread(target=single_thread, args=(context, primitive_list[i]))
->>>>>>> origin/feature/gherkin-with-behavetag
+
         threads.append(t)
         time.sleep(list_of_delays[i]/1000)
         t.start()
@@ -356,48 +304,5 @@ def threading_delayed(context, primitive_list, list_of_delays):
     for thread in threads:
         thread.join()
 
-<<<<<<< HEAD
-def json2xml(json_obj, line_padding=""):
-    result_list = list()
-    json_obj_type = type(json_obj)
-    if json_obj_type is list:
-        for sub_elem in json_obj:
-            result_list.append(json2xml(sub_elem, line_padding))
-        return "\n".join(result_list)
-    if json_obj_type is dict:
-        for tag_name in json_obj:
-            sub_obj = json_obj[tag_name]
-            if type(sub_obj) is dict:
-                result_list.append("%s<%s>" % (line_padding, tag_name))
-                for key in sub_obj:
-                    sub_sub_obj = sub_obj[key]
-                    result_list.append("%s<%s>" % (line_padding, key))
-                    result_list.append(json2xml(sub_sub_obj, "\t" + line_padding))
-                    result_list.append("%s</%s>" % (line_padding, key))
-                result_list.append("%s</%s>" % (line_padding, tag_name))
-            elif type(sub_obj) is list:
-                result_list.append("%s<%s>" % (line_padding, tag_name))
-                if tag_name == 'paymentTokens':
-                    for sub_elem in sub_obj:
-                        result_list.append("%s<%s>" % (line_padding, "paymentToken"))
-                        result_list.append(json2xml(sub_elem, line_padding))
-                        result_list.append("%s</%s>" % (line_padding, "paymentToken"))
-                if tag_name == 'positionslist':
-                    for sub_elem in sub_obj:
-                        result_list.append("%s<%s>" % (line_padding, "position"))
-                        result_list.append(json2xml(sub_elem, line_padding))
-                        result_list.append("%s</%s>" % (line_padding, "position"))
-                result_list.append("%s</%s>" % (line_padding, tag_name))
-            else:
-                result_list.append("%s<%s>" % (line_padding, tag_name))
-                result_list.append(json2xml(sub_obj, "\t" + line_padding))
-                result_list.append("%s</%s>" % (line_padding, tag_name))
-        return "\n".join(result_list)
-    return "%s%s" % (line_padding, json_obj)
 
 
-def parallel_executor(context, feature_name, scenario):
-    #os.chdir(testenv.PARALLEACTIONS_PATH)
-    behave_main('-i {} -n {} --tags=@test --no-skipped --no-capture'.format(feature_name, scenario))
-=======
->>>>>>> origin/feature/gherkin-with-behavetag

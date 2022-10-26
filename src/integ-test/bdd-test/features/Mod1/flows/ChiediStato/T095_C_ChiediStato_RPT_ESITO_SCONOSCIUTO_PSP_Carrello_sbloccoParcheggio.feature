@@ -2,11 +2,7 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
 
     Background:
         Given systems up
-<<<<<<< HEAD
-        
-=======
-@runnable       
->>>>>>> origin/feature/gherkin-with-behavetag
+@runnable
     Scenario: RPT generation
         Given RPT generation
             """
@@ -242,11 +238,9 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
                 </pay_i:RPT>
             """
         
-<<<<<<< HEAD
 
-=======
 @runnable 
->>>>>>> origin/feature/gherkin-with-behavetag
+
     Scenario: Execute nodoInviaCarrelloRPT
 		Given the RPT generation scenario executed successfully
 		And initial XML nodoInviaCarrelloRPT
@@ -295,11 +289,9 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
         And checks the value nodoInviaCarrelloRPT of the record at column INSERTED_BY of the table STATI_RPT retrived by the query stati_RPT on db nodo_online under macro Mod1
         And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query stati_RPT on db nodo_online under macro Mod1
 
-<<<<<<< HEAD
 
-=======
 @runnable 
->>>>>>> origin/feature/gherkin-with-behavetag
+
     Scenario: Execution Esito Mod1
         Given the Execute nodoInviaCarrelloRPT scenario executed successfully
         And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT 
@@ -320,28 +312,21 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
             """
             {
             "idPagamento":"$sessionToken",
-<<<<<<< HEAD
-            "identificativoPsp":"40000000001",
-            "tipoVersamento":"BBT", 
-            "identificativoIntermediario":"40000000001",
-            "identificativoCanale":"40000000001_03",
-=======
+
             "identificativoPsp":"#psp#",
             "tipoVersamento":"BBT", 
             "identificativoIntermediario":"#psp#",
             "identificativoCanale":"#canale#",
->>>>>>> origin/feature/gherkin-with-behavetag
+
             "tipoOperazione":"web"
             }
 
              """
         Then verify the HTTP status code of inoltroEsito/mod1 response is 408
         And check error is timeout of inoltroEsito/mod1 response
-<<<<<<< HEAD
 
-=======
 @runnable 
->>>>>>> origin/feature/gherkin-with-behavetag
+
     Scenario: Execute nodoChiediStatoRPT request
         Given the Execution Esito Mod1 scenario executed successfully
         And initial XML nodoChiediStatoRPT
@@ -367,11 +352,9 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
         And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ESITO_SCONOSCIUTO_PSP of nodoChiediStatoRPT response
 
-<<<<<<< HEAD
 
-=======
 @runnable 
->>>>>>> origin/feature/gherkin-with-behavetag
+
     Scenario: Execute second nodoInviaCarrelloRPT
 		Given the Execute nodoChiediStatoRPT request scenario executed successfully
 		And initial XML nodoInviaCarrelloRPT
@@ -411,11 +394,9 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
 	    Then check faultCode is PPT_RPT_DUPLICATA of nodoInviaCarrelloRPT response
 
-<<<<<<< HEAD
 
-=======
 @runnable 
->>>>>>> origin/feature/gherkin-with-behavetag
+
     Scenario: Execute second nodoChiediStatoRPT request
         Given the Execute second nodoInviaCarrelloRPT scenario executed successfully
         And initial XML nodoChiediStatoRPT
@@ -441,11 +422,9 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
         And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ESITO_SCONOSCIUTO_PSP of nodoChiediStatoRPT response
 
-<<<<<<< HEAD
 
-=======
 @runnable 
->>>>>>> origin/feature/gherkin-with-behavetag
+
     Scenario: Execute 21nodoInviaCarrelloRPT
 		Given the Execute second nodoChiediStatoRPT request scenario executed successfully
 		And initial XML nodoInviaCarrelloRPT
@@ -485,11 +464,9 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
 	    Then check faultCode is PPT_RPT_DUPLICATA of nodoInviaCarrelloRPT response
 
-<<<<<<< HEAD
 
-=======
 @runnable 
->>>>>>> origin/feature/gherkin-with-behavetag
+
     Scenario: Execute 21nodoChiediStatoRPT request
         Given the Execute 21nodoInviaCarrelloRPT scenario executed successfully
         And initial XML nodoChiediStatoRPT
@@ -512,11 +489,7 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
         Then checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_RIFIUTATA_NODO of nodoChiediStatoRPT response
 
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execute nodoNotificaAnnullamento
         Given the Execute 21nodoChiediStatoRPT request scenario executed successfully
         When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken to nodo-dei-pagamenti

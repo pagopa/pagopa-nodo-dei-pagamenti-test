@@ -96,20 +96,14 @@ Feature: Syntax checks for activateIOPaymentReq - OK
                 </soapenv:Body>
             </soapenv:Envelope>
             """
-<<<<<<< HEAD
 
-    Scenario: Check OK of activateIOPayment response
-        When psp sends SOAP activateIOPayment to nodo-dei-pagamenti
-        Then check outcome is OK of activateIOPayment response
-
-=======
     @runnable
     Scenario: Check OK of activateIOPayment response
         When psp sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
         
     @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
+
     Scenario Outline: Check OK of activateIOPayment response (phase 2)
         Given <elem> with <value> in activateIOPayment
         When psp sends SOAP activateIOPayment to nodo-dei-pagamenti

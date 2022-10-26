@@ -2,24 +2,17 @@ Feature: process tests for T103_A_chiediStato_RT_ESITO_SCONOSCIUTO_PA_Carrello
 
     Background:
         Given systems up
-<<<<<<< HEAD
-        
-=======
-@runnable       
->>>>>>> origin/feature/gherkin-with-behavetag
+@runnable
     Scenario: RPT generation
         Given RPT generation
             """
                 <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
                 <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
                 <pay_i:dominio>
-<<<<<<< HEAD
-                <pay_i:identificativoDominio>44444444444</pay_i:identificativoDominio>
-                <pay_i:identificativoStazioneRichiedente>44444444444_01</pay_i:identificativoStazioneRichiedente>
-=======
+
                 <pay_i:identificativoDominio>66666666666</pay_i:identificativoDominio>
                 <pay_i:identificativoStazioneRichiedente>66666666666_01</pay_i:identificativoStazioneRichiedente>
->>>>>>> origin/feature/gherkin-with-behavetag
+
                 </pay_i:dominio>
                 <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
                 <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
@@ -96,13 +89,10 @@ Feature: process tests for T103_A_chiediStato_RT_ESITO_SCONOSCIUTO_PA_Carrello
                 <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd "> 
                 <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
                 <pay_i:dominio>
-<<<<<<< HEAD
-                <pay_i:identificativoDominio>44444444444</pay_i:identificativoDominio>
-                <pay_i:identificativoStazioneRichiedente>44444444444_01</pay_i:identificativoStazioneRichiedente>
-=======
+
                 <pay_i:identificativoDominio>66666666666</pay_i:identificativoDominio>
                 <pay_i:identificativoStazioneRichiedente>66666666666_01</pay_i:identificativoStazioneRichiedente>
->>>>>>> origin/feature/gherkin-with-behavetag
+
                 </pay_i:dominio>
                 <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
                 <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
@@ -179,13 +169,10 @@ Feature: process tests for T103_A_chiediStato_RT_ESITO_SCONOSCIUTO_PA_Carrello
             <pay_i:RT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>6.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-<<<<<<< HEAD
-                <pay_i:identificativoDominio>44444444444</pay_i:identificativoDominio>
-                <pay_i:identificativoStazioneRichiedente>44444444444_01</pay_i:identificativoStazioneRichiedente>
-=======
+
                 <pay_i:identificativoDominio>66666666666</pay_i:identificativoDominio>
                 <pay_i:identificativoStazioneRichiedente>66666666666_01</pay_i:identificativoStazioneRichiedente>
->>>>>>> origin/feature/gherkin-with-behavetag
+
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRicevuta>IdentificativoMessaggioRicevuta</pay_i:identificativoMessaggioRicevuta>
             <pay_i:dataOraMessaggioRicevuta>#timedate#</pay_i:dataOraMessaggioRicevuta>
@@ -271,13 +258,10 @@ Feature: process tests for T103_A_chiediStato_RT_ESITO_SCONOSCIUTO_PA_Carrello
             <pay_i:RT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>6.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-<<<<<<< HEAD
-                <pay_i:identificativoDominio>44444444444</pay_i:identificativoDominio>
-                <pay_i:identificativoStazioneRichiedente>44444444444_01</pay_i:identificativoStazioneRichiedente>
-=======
+
                 <pay_i:identificativoDominio>66666666666</pay_i:identificativoDominio>
                 <pay_i:identificativoStazioneRichiedente>66666666666_01</pay_i:identificativoStazioneRichiedente>
->>>>>>> origin/feature/gherkin-with-behavetag
+
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRicevuta>IdentificativoMessaggioRicevuta</pay_i:identificativoMessaggioRicevuta>
             <pay_i:dataOraMessaggioRicevuta>#timedate#</pay_i:dataOraMessaggioRicevuta>
@@ -357,11 +341,7 @@ Feature: process tests for T103_A_chiediStato_RT_ESITO_SCONOSCIUTO_PA_Carrello
             </pay_i:datiPagamento>
             </pay_i:RT>
             """
-<<<<<<< HEAD
 
-=======
-@runnable  
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execute nodoInviaCarrelloRPT
 		Given the RPT generation scenario executed successfully
 		And initial XML nodoInviaCarrelloRPT
@@ -369,44 +349,30 @@ Feature: process tests for T103_A_chiediStato_RT_ESITO_SCONOSCIUTO_PA_Carrello
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
             <ppt:intestazioneCarrelloPPT>
-<<<<<<< HEAD
-            <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
-            <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
-=======
             <identificativoIntermediarioPA>66666666666</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>66666666666_01</identificativoStazioneIntermediarioPA>
->>>>>>> origin/feature/gherkin-with-behavetag
             <identificativoCarrello>$IUV</identificativoCarrello>
             </ppt:intestazioneCarrelloPPT>
             </soapenv:Header>
             <soapenv:Body>
             <ws:nodoInviaCarrelloRPT>
             <password>pwdpwdpwd</password>
-<<<<<<< HEAD
-            <identificativoPSP>40000000001</identificativoPSP>
-            <identificativoIntermediarioPSP>40000000001</identificativoIntermediarioPSP>
-            <identificativoCanale>40000000001_03</identificativoCanale>
-            <listaRPT>
-            <elementoListaRPT>
-            <identificativoDominio>44444444444</identificativoDominio>
-=======
+
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
             <identificativoCanale>#canale#</identificativoCanale>
             <listaRPT>
             <elementoListaRPT>
             <identificativoDominio>66666666666</identificativoDominio>
->>>>>>> origin/feature/gherkin-with-behavetag
+
             <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
             <rpt>$rptAttachment</rpt>
             </elementoListaRPT>
             <elementoListaRPT>
-<<<<<<< HEAD
-            <identificativoDominio>44444444444</identificativoDominio>
-=======
+
             <identificativoDominio>66666666666</identificativoDominio>
->>>>>>> origin/feature/gherkin-with-behavetag
+
             <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$2CCP</codiceContestoPagamento>
             <rpt>$rpt2Attachment</rpt>
@@ -434,11 +400,7 @@ Feature: process tests for T103_A_chiediStato_RT_ESITO_SCONOSCIUTO_PA_Carrello
         And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check url field exists in nodoInviaCarrelloRPT response
-<<<<<<< HEAD
 
-=======
-@runnable  
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execute nodoInviaRT request
         Given the Execute nodoInviaCarrelloRPT scenario executed successfully
         And initial XML paaInviaRT
@@ -461,19 +423,13 @@ Feature: process tests for T103_A_chiediStato_RT_ESITO_SCONOSCIUTO_PA_Carrello
             <soapenv:Header/>
             <soapenv:Body>
             <ws:nodoInviaRT>
-<<<<<<< HEAD
-            <identificativoIntermediarioPSP>40000000001</identificativoIntermediarioPSP>
-            <identificativoCanale>40000000001_03</identificativoCanale>
-            <password>pwdpwdpwd</password>
-            <identificativoPSP>40000000001</identificativoPSP>
-            <identificativoDominio>44444444444</identificativoDominio>
-=======
+
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
             <identificativoCanale>#canale#</identificativoCanale>
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoDominio>66666666666</identificativoDominio>
->>>>>>> origin/feature/gherkin-with-behavetag
+
             <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
             <tipoFirma></tipoFirma>
@@ -487,11 +443,7 @@ Feature: process tests for T103_A_chiediStato_RT_ESITO_SCONOSCIUTO_PA_Carrello
         Then check esito is OK of nodoInviaRT response
         And wait 5 seconds for expiration
 
-<<<<<<< HEAD
 
-=======
-@runnable  
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execute second nodoInviaRT request
         Given the Execute nodoInviaRT request scenario executed successfully
         And initial XML paaInviaRT
@@ -514,19 +466,13 @@ Feature: process tests for T103_A_chiediStato_RT_ESITO_SCONOSCIUTO_PA_Carrello
             <soapenv:Header/>
             <soapenv:Body>
             <ws:nodoInviaRT>
-<<<<<<< HEAD
-            <identificativoIntermediarioPSP>40000000001</identificativoIntermediarioPSP>
-            <identificativoCanale>40000000001_03</identificativoCanale>
-            <password>pwdpwdpwd</password>
-            <identificativoPSP>40000000001</identificativoPSP>
-            <identificativoDominio>44444444444</identificativoDominio>
-=======
+
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
             <identificativoCanale>#canale#</identificativoCanale>
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoDominio>66666666666</identificativoDominio>
->>>>>>> origin/feature/gherkin-with-behavetag
+
             <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$2CCP</codiceContestoPagamento>
             <tipoFirma></tipoFirma>
@@ -539,12 +485,9 @@ Feature: process tests for T103_A_chiediStato_RT_ESITO_SCONOSCIUTO_PA_Carrello
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
         And wait 5 seconds for expiration
-<<<<<<< HEAD
 
-
-=======
 @runnable  
->>>>>>> origin/feature/gherkin-with-behavetag
+
     Scenario: Execute nodoChiediStatoRPT request
         Given the Execute second nodoInviaRT request scenario executed successfully
         And initial XML nodoChiediStatoRPT
@@ -553,17 +496,12 @@ Feature: process tests for T103_A_chiediStato_RT_ESITO_SCONOSCIUTO_PA_Carrello
         <soapenv:Header/>
         <soapenv:Body>
             <ws:nodoChiediStatoRPT>
-<<<<<<< HEAD
-                <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
-                <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
-                <password>pwdpwdpwd</password>
-                <identificativoDominio>44444444444</identificativoDominio>
-=======
+
                 <identificativoIntermediarioPA>66666666666</identificativoIntermediarioPA>
                 <identificativoStazioneIntermediarioPA>66666666666_01</identificativoStazioneIntermediarioPA>
                 <password>pwdpwdpwd</password>
                 <identificativoDominio>66666666666</identificativoDominio>
->>>>>>> origin/feature/gherkin-with-behavetag
+
                 <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
                 <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
             </ws:nodoChiediStatoRPT>
@@ -580,11 +518,7 @@ Feature: process tests for T103_A_chiediStato_RT_ESITO_SCONOSCIUTO_PA_Carrello
         And check redirect is 0 of nodoChiediStatoRPT response
         And check url field not exists in nodoChiediStatoRPT response
 
-<<<<<<< HEAD
 
-=======
-@runnable  
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execute second nodoChiediStatoRPT request
         Given the Execute nodoChiediStatoRPT request scenario executed successfully
         And initial XML nodoChiediStatoRPT
@@ -593,17 +527,12 @@ Feature: process tests for T103_A_chiediStato_RT_ESITO_SCONOSCIUTO_PA_Carrello
             <soapenv:Header/>
             <soapenv:Body>
                 <ws:nodoChiediStatoRPT>
-<<<<<<< HEAD
-                    <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
-                    <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
-                    <password>pwdpwdpwd</password>
-                    <identificativoDominio>44444444444</identificativoDominio>
-=======
+
                     <identificativoIntermediarioPA>66666666666</identificativoIntermediarioPA>
                     <identificativoStazioneIntermediarioPA>66666666666_01</identificativoStazioneIntermediarioPA>
                     <password>pwdpwdpwd</password>
                     <identificativoDominio>66666666666</identificativoDominio>
->>>>>>> origin/feature/gherkin-with-behavetag
+
                     <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
                     <codiceContestoPagamento>$2CCP</codiceContestoPagamento>
                 </ws:nodoChiediStatoRPT>
@@ -619,11 +548,7 @@ Feature: process tests for T103_A_chiediStato_RT_ESITO_SCONOSCIUTO_PA_Carrello
         And checks stato contains RT_ACCETTATA_NODO of nodoChiediStatoRPT response
         And check redirect is 0 of nodoChiediStatoRPT response
         And check url field not exists in nodoChiediStatoRPT response
-<<<<<<< HEAD
 
-=======
-@runnable  
->>>>>>> origin/feature/gherkin-with-behavetag
    Scenario: Execute third nodoInviaRT request
         Given the Execute second nodoChiediStatoRPT request scenario executed successfully
         And initial XML nodoInviaRT
@@ -632,19 +557,13 @@ Feature: process tests for T103_A_chiediStato_RT_ESITO_SCONOSCIUTO_PA_Carrello
             <soapenv:Header/>
             <soapenv:Body>
             <ws:nodoInviaRT>
-<<<<<<< HEAD
-            <identificativoIntermediarioPSP>40000000001</identificativoIntermediarioPSP>
-            <identificativoCanale>40000000001_03</identificativoCanale>
-            <password>pwdpwdpwd</password>
-            <identificativoPSP>40000000001</identificativoPSP>
-            <identificativoDominio>44444444444</identificativoDominio>
-=======
+
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
             <identificativoCanale>#canale#</identificativoCanale>
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoDominio>66666666666</identificativoDominio>
->>>>>>> origin/feature/gherkin-with-behavetag
+
             <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$2CCP</codiceContestoPagamento>
             <tipoFirma></tipoFirma>
@@ -673,11 +592,7 @@ Feature: process tests for T103_A_chiediStato_RT_ESITO_SCONOSCIUTO_PA_Carrello
         And checks the value RICEVUTA,CAMBIO_STATO,CAMBIO_STATO,INVIATA,CAMBIO_STATO,INVIATA,RICEVUTA,CAMBIO_STATO of the record at column ESITO of the table RE retrived by the query Re_2 on db re under macro Mod1
         And checks the value RT_RICEVUTA_NODO,RT_ACCETTATA_NODO,RT_INVIATA_PA,RT_ESITO_SCONOSCIUTO_PA of the record at column STATUS of the table RE retrived by the query Re on db re under macro Mod1
         And checks the value RT_RICEVUTA_NODO,RT_ACCETTATA_NODO,RT_INVIATA_PA,RT_ESITO_SCONOSCIUTO_PA of the record at column STATUS of the table RE retrived by the query Re_2 on db re under macro Mod1
-<<<<<<< HEAD
 
-=======
-@runnable  
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execute third nodoChiediStatoRPT request
         Given the Execute third nodoInviaRT request scenario executed successfully
         And initial XML nodoChiediStatoRPT
@@ -686,17 +601,12 @@ Feature: process tests for T103_A_chiediStato_RT_ESITO_SCONOSCIUTO_PA_Carrello
             <soapenv:Header/>
             <soapenv:Body>
                 <ws:nodoChiediStatoRPT>
-<<<<<<< HEAD
-                    <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
-                    <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
-                    <password>pwdpwdpwd</password>
-                    <identificativoDominio>44444444444</identificativoDominio>
-=======
+
                     <identificativoIntermediarioPA>66666666666</identificativoIntermediarioPA>
                     <identificativoStazioneIntermediarioPA>66666666666_01</identificativoStazioneIntermediarioPA>
                     <password>pwdpwdpwd</password>
                     <identificativoDominio>66666666666</identificativoDominio>
->>>>>>> origin/feature/gherkin-with-behavetag
+
                     <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
                     <codiceContestoPagamento>$2CCP</codiceContestoPagamento>
                 </ws:nodoChiediStatoRPT>
@@ -711,11 +621,7 @@ Feature: process tests for T103_A_chiediStato_RT_ESITO_SCONOSCIUTO_PA_Carrello
         And check redirect is 0 of nodoChiediStatoRPT response
         And check url field not exists in nodoChiediStatoRPT response
 
-<<<<<<< HEAD
 
-=======
-@runnable  
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execute fourth nodoChiediStatoRPT request
         Given the Execute third nodoChiediStatoRPT request scenario executed successfully
         And initial XML nodoChiediStatoRPT
@@ -724,17 +630,12 @@ Feature: process tests for T103_A_chiediStato_RT_ESITO_SCONOSCIUTO_PA_Carrello
             <soapenv:Header/>
             <soapenv:Body>
                 <ws:nodoChiediStatoRPT>
-<<<<<<< HEAD
-                    <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
-                    <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
-                    <password>pwdpwdpwd</password>
-                    <identificativoDominio>44444444444</identificativoDominio>
-=======
+
                     <identificativoIntermediarioPA>66666666666</identificativoIntermediarioPA>
                     <identificativoStazioneIntermediarioPA>66666666666_01</identificativoStazioneIntermediarioPA>
                     <password>pwdpwdpwd</password>
                     <identificativoDominio>66666666666</identificativoDominio>
->>>>>>> origin/feature/gherkin-with-behavetag
+
                     <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
                     <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
                 </ws:nodoChiediStatoRPT>
@@ -748,11 +649,7 @@ Feature: process tests for T103_A_chiediStato_RT_ESITO_SCONOSCIUTO_PA_Carrello
         And checks stato contains RT_INVIATA_PA of nodoChiediStatoRPT response
         And check redirect is 0 of nodoChiediStatoRPT response
         And check url field not exists in nodoChiediStatoRPT response
-<<<<<<< HEAD
 
-=======
-@runnable  
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execute fifth nodoChiediStatoRPT request
         Given the Execute fourth nodoChiediStatoRPT request scenario executed successfully
         And initial XML nodoChiediStatoRPT
@@ -761,17 +658,12 @@ Feature: process tests for T103_A_chiediStato_RT_ESITO_SCONOSCIUTO_PA_Carrello
             <soapenv:Header/>
             <soapenv:Body>
                 <ws:nodoChiediStatoRPT>
-<<<<<<< HEAD
-                    <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
-                    <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
-                    <password>pwdpwdpwd</password>
-                    <identificativoDominio>44444444444</identificativoDominio>
-=======
+
                     <identificativoIntermediarioPA>66666666666</identificativoIntermediarioPA>
                     <identificativoStazioneIntermediarioPA>66666666666_01</identificativoStazioneIntermediarioPA>
                     <password>pwdpwdpwd</password>
                     <identificativoDominio>66666666666</identificativoDominio>
->>>>>>> origin/feature/gherkin-with-behavetag
+
                     <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
                     <codiceContestoPagamento>$2CCP</codiceContestoPagamento>
                 </ws:nodoChiediStatoRPT>

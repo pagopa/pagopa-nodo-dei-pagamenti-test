@@ -1,10 +1,9 @@
 Feature: process tests for nodoChiediListaPendentiRPT
     Background:
         Given systems up
-<<<<<<< HEAD
-=======
+
  @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
+
     Scenario: Execute nodoChiediListaPendentiRPT request
         Given initial XML nodoChiediListaPendentiRPT
         """
@@ -12,31 +11,21 @@ Feature: process tests for nodoChiediListaPendentiRPT
         <soapenv:Header/>
         <soapenv:Body>
             <ws:nodoChiediListaPendentiRPT>
-<<<<<<< HEAD
-                <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
-                <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
-                <password>pwdpwdpwd</password>
-                <identificativoDominio>44444444444</identificativoDominio>
-                <rangeDa>#yesterday_date#</rangeDa>
-                <rangeA>#timedate#</rangeA>
-=======
+
                 <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
                 <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
                 <password>pwdpwdpwd</password>
                 <identificativoDominio>#creditor_institution_code#</identificativoDominio>
                 <rangeDa>#yesterday_date#</rangeDa>
->>>>>>> origin/feature/gherkin-with-behavetag
+
                 <dimensioneLista>5</dimensioneLista>
             </ws:nodoChiediListaPendentiRPT>
         </soapenv:Body>
         </soapenv:Envelope>
         """
         When EC sends SOAP nodoChiediListaPendentiRPT to nodo-dei-pagamenti
-<<<<<<< HEAD
-        Then check totRestituiti field exists in nodoChiediListaPendentiRPT response
-        And check listaRPTPendenti field exists in nodoChiediListaPendentiRPT response
-=======
+
         #Then check totRestituiti field exists in nodoChiediListaPendentiRPT response
         Then check listaRPTPendenti field exists in nodoChiediListaPendentiRPT response
->>>>>>> origin/feature/gherkin-with-behavetag
+
         And check identificativoUnivocoVersamento field exists in nodoChiediListaPendentiRPT response

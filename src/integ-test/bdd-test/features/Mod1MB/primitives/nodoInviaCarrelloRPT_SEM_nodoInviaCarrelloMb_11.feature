@@ -90,11 +90,9 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
          <soapenv:Header>
          <ppt:intestazioneCarrelloPPT>
-<<<<<<< HEAD
-         <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
-=======
+
          <identificativoIntermediarioPA>#codicePA#</identificativoIntermediarioPA>
->>>>>>> origin/feature/gherkin-with-behavetag
+
          <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
          <identificativoCarrello>$secCarrello</identificativoCarrello>
          </ppt:intestazioneCarrelloPPT>
@@ -107,11 +105,9 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          <identificativoCanale>97735020584_02</identificativoCanale>
          <listaRPT>
          <elementoListaRPT>
-<<<<<<< HEAD
-         <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-=======
+
          <identificativoDominio>#codicePA#</identificativoDominio>
->>>>>>> origin/feature/gherkin-with-behavetag
+
          <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
          <codiceContestoPagamento>$secCarrello</codiceContestoPagamento>
          <rpt>$rptAttachment</rpt>

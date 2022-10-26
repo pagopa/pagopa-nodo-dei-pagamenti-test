@@ -2,11 +2,7 @@ Feature: T220_RPT_Mod1_faultBeanEsteso
 
     Background:
         Given systems up
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execute nodoInviaRPT (Phase 1)
         Given generate 1 notice number and iuv with aux digit 3, segregation code 12 and application code -
         And replace $1iuv content with RPTdaRifPsp content
@@ -119,11 +115,7 @@ Feature: T220_RPT_Mod1_faultBeanEsteso
         And verify 3 record for the table STATI_RPT retrived by the query by_iuv_ccp_pa on db nodo_online under macro faultBeanEsteso
         And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query by_iuv_ccp_pa on db nodo_online under macro faultBeanEsteso
         And retrieve session token from $nodoInviaRPTResponse.url
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execute inoltroEsito/mod1 (Phase 2)
         Given the Execute nodoInviaRPT (Phase 1) scenario executed successfully
         And initial XML pspInviaRPT
@@ -162,11 +154,7 @@ Feature: T220_RPT_Mod1_faultBeanEsteso
         And check esito is KO of inoltroEsito/mod1 response
         And check errorCode is RIFPSP of inoltroEsito/mod1 response
         And check descrizione is Risposta negativa del Canale of inoltroEsito/mod1 response
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execute nodoChiediStatoRPT (Phase 3)
         Given the Execute inoltroEsito/mod1 (Phase 2) scenario executed successfully
         And initial XML nodoChiediStatoRPT
@@ -191,21 +179,13 @@ Feature: T220_RPT_Mod1_faultBeanEsteso
         And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_RIFIUTATA_PSP of nodoChiediStatoRPT response
         And checks stato contains RPT_INVIATA_A_PSP of nodoChiediStatoRPT response
-<<<<<<< HEAD
-        
-=======
- @runnable       
->>>>>>> origin/feature/gherkin-with-behavetag
+ @runnable
     Scenario: Execute nodoInviaRPT1 (Phase 4)
         Given the Execute nodoChiediStatoRPT (Phase 3) scenario executed successfully
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is KO of nodoInviaRPT response
         And check faultCode is PPT_RPT_DUPLICATA of nodoInviaRPT response
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execute nodoChiediStatoRPT2 (Phase 5)
         Given the Execute nodoInviaRPT1 (Phase 4) scenario executed successfully
         When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti

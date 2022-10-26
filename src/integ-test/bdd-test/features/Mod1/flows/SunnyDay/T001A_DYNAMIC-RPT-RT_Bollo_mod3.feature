@@ -2,22 +2,16 @@ Feature: process tests for RPT-RT bollo
 
    Background:
       Given systems up
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
    Scenario: MB generation
       Given MB generation
          """
          <marcaDaBollo xmlns="http://www.agenziaentrate.gov.it/2014/MarcaDaBollo" xmlns:ns2="http://www.w3.org/2000/09/xmldsig#">
             <PSP>
                <CodiceFiscale>12345678901</CodiceFiscale>
-<<<<<<< HEAD
-               <Denominazione>40000000001</Denominazione>
-=======
+
                <Denominazione>60000000001</Denominazione>
->>>>>>> origin/feature/gherkin-with-behavetag
+
             </PSP>
             <IUBD>#iubd#</IUBD>
             <OraAcquisto>2015-02-06T15:00:44.659+01:00</OraAcquisto>
@@ -227,11 +221,9 @@ Feature: process tests for RPT-RT bollo
             <ppt:intestazionePPT>
             <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
-<<<<<<< HEAD
-            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-=======
+
             <identificativoDominio>#intermediarioPA#</identificativoDominio>
->>>>>>> origin/feature/gherkin-with-behavetag
+
             <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
             <codiceContestoPagamento>CCD01</codiceContestoPagamento>
             </ppt:intestazionePPT>
@@ -250,11 +242,7 @@ Feature: process tests for RPT-RT bollo
             """
       When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
       Then check faultCode is PPT_CANALE_SERVIZIO_NONATTIVO of nodoInviaRPT response
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
    Scenario: Execute nodoInviaRT
       Given the MB generation scenario executed successfully
       And initial XML nodoInviaRT
@@ -267,11 +255,9 @@ Feature: process tests for RPT-RT bollo
                   <identificativoCanale>#canale#</identificativoCanale>
                   <password>pwdpwdpwd</password>
                   <identificativoPSP>#psp#</identificativoPSP>
-<<<<<<< HEAD
-                  <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-=======
+
                   <identificativoDominio>#intermediarioPA#</identificativoDominio>
->>>>>>> origin/feature/gherkin-with-behavetag
+
                   <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
                   <codiceContestoPagamento>CCD01</codiceContestoPagamento>
                   <tipoFirma></tipoFirma>

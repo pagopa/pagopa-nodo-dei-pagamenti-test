@@ -12,11 +12,9 @@ Feature: check syntax OK for nodoCarrelloMultibeneficiarioRPT
          <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
          <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
          <pay_i:dominio>
-<<<<<<< HEAD
-         <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
-=======
+
          <pay_i:identificativoDominio>#codicePA#</pay_i:identificativoDominio>
->>>>>>> origin/feature/gherkin-with-behavetag
+
          <pay_i:identificativoStazioneRichiedente>#intermediarioPA#</pay_i:identificativoStazioneRichiedente>
          </pay_i:dominio>
          <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
@@ -97,11 +95,9 @@ Feature: check syntax OK for nodoCarrelloMultibeneficiarioRPT
          <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
                <ppt:intestazioneCarrelloPPT>
-<<<<<<< HEAD
-                  <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
-=======
+
                   <identificativoIntermediarioPA>#codicePA#</identificativoIntermediarioPA>
->>>>>>> origin/feature/gherkin-with-behavetag
+
                   <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
                   <identificativoCarrello>#CARRELLO#</identificativoCarrello>
                </ppt:intestazioneCarrelloPPT>
@@ -114,11 +110,9 @@ Feature: check syntax OK for nodoCarrelloMultibeneficiarioRPT
                   <identificativoCanale>97735020584_02</identificativoCanale>
                   <listaRPT>
                      <elementoListaRPT>
-<<<<<<< HEAD
-                        <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-=======
+
                         <identificativoDominio>#codicePA#</identificativoDominio>
->>>>>>> origin/feature/gherkin-with-behavetag
+
                         <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
                         <codiceContestoPagamento>CCD01</codiceContestoPagamento>
                         <rpt>$rptAttachment</rpt>

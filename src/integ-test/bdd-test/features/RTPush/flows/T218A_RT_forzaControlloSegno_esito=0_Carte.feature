@@ -222,11 +222,9 @@ Feature: T218A_RT_forzaControlloSegno_esito=0_Carte
                 "identificativoIntermediario": "#psp#",
                 "identificativoPsp": "#psp#",
                 "identificativoCanale": "#canaleRtPush#",
-<<<<<<< HEAD
-                "importoTotalePagato": 10,
-=======
+
                 "importoTotalePagato": 10.00,
->>>>>>> origin/feature/gherkin-with-behavetag
+
                 "timestampOperazione": "2021-07-09T17:06:03.100+01:00",
                 "codiceAutorizzativo": "resOK",
                 "esitoTransazioneCarta": "00"

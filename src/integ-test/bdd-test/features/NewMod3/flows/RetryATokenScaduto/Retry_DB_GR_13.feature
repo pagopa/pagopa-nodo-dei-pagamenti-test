@@ -2,11 +2,9 @@ Feature: process tests for Retry_DB_GR_13
 
   Background:
     Given systems up
-<<<<<<< HEAD
-    And update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with Y, with where condition OBJ_ID and where value ('13','1201') under macro update_query on db nodo_cfg
-=======
+
     And update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with Y, with where condition FK_PA and where value ('13','1201') under macro update_query on db nodo_cfg
->>>>>>> origin/feature/gherkin-with-behavetag
+
 
   Scenario: job refresh pa (1)
     Given refresh job PA triggered after 10 seconds
@@ -19,15 +17,11 @@ Feature: process tests for Retry_DB_GR_13
       <soapenv:Header/>
       <soapenv:Body>
       <nod:verifyPaymentNoticeReq>
-<<<<<<< HEAD
-      <idPSP>#psp#</idPSP>
-      <idBrokerPSP>60000000001</idBrokerPSP>
-      <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
-=======
+
       <idPSP>70000000001</idPSP>
       <idBrokerPSP>70000000001</idBrokerPSP>
       <idChannel>70000000001_01</idChannel>
->>>>>>> origin/feature/gherkin-with-behavetag
+
       <password>pwdpwdpwd</password>
       <qrCode>
       <fiscalCode>#creditor_institution_code#</fiscalCode>
@@ -53,24 +47,18 @@ Feature: process tests for Retry_DB_GR_13
       <soapenv:Header/>
       <soapenv:Body>
       <nod:activatePaymentNoticeReq>
-<<<<<<< HEAD
-      <idPSP>#psp#</idPSP>
-      <idBrokerPSP>60000000001</idBrokerPSP>
-      <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
-=======
+
       <idPSP>70000000001</idPSP>
       <idBrokerPSP>70000000001</idBrokerPSP>
       <idChannel>70000000001_01</idChannel>
->>>>>>> origin/feature/gherkin-with-behavetag
+
       <password>pwdpwdpwd</password>
       <idempotencyKey>#idempotency_key#</idempotencyKey>
       <qrCode>
       <fiscalCode>#creditor_institution_code#</fiscalCode>
-<<<<<<< HEAD
-      <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
-=======
+
       <noticeNumber>#notice_number#</noticeNumber>
->>>>>>> origin/feature/gherkin-with-behavetag
+
       </qrCode>
       <expirationTime>2000</expirationTime>
       <amount>17.00</amount>
@@ -128,11 +116,9 @@ Feature: process tests for Retry_DB_GR_13
       <transfer>
       <idTransfer>1</idTransfer>
       <transferAmount>10.00</transferAmount>
-<<<<<<< HEAD
-      <fiscalCodePA>66666666666</fiscalCodePA>
-=======
+
       <fiscalCodePA>77777777777</fiscalCodePA>
->>>>>>> origin/feature/gherkin-with-behavetag
+
       <IBAN>IT45R0760103200000000001016</IBAN>
       <remittanceInformation>testPaGetPayment</remittanceInformation>
       <transferCategory>paGetPaymentTest</transferCategory>
@@ -185,15 +171,11 @@ Feature: process tests for Retry_DB_GR_13
       <soapenv:Header/>
       <soapenv:Body>
       <nod:sendPaymentOutcomeReq>
-<<<<<<< HEAD
-      <idPSP>#psp#</idPSP>
-      <idBrokerPSP>60000000001</idBrokerPSP>
-      <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
-=======
+
       <idPSP>70000000001</idPSP>
       <idBrokerPSP>70000000001</idBrokerPSP>
       <idChannel>70000000001_01</idChannel>
->>>>>>> origin/feature/gherkin-with-behavetag
+
       <password>pwdpwdpwd</password>
       <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
       <outcome>OK</outcome>

@@ -2,11 +2,7 @@ Feature: RPT-RT bollo
 
    Background:
       Given systems up
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
    Scenario: MB generation
       Given MB generation
          """
@@ -259,11 +255,7 @@ Feature: RPT-RT bollo
       When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
       Then check esito is OK of nodoInviaRPT response
       And check redirect is 1 of nodoInviaRPT response
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
    Scenario: Execute nodoInviaRT
       Given the MB generation scenario executed successfully
       And initial XML nodoInviaRT

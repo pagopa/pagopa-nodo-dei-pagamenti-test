@@ -2,11 +2,7 @@ Feature: process tests for RPT-RT bollo
 
    Background:
       Given systems up
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
    Scenario: MB generation
         Given generate 1 notice number and iuv with aux digit 3, segregation code 02 and application code NA
         And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
@@ -15,11 +11,9 @@ Feature: process tests for RPT-RT bollo
             <marcaDaBollo xmlns="http://www.agenziaentrate.gov.it/2014/MarcaDaBollo" xmlns:ns2="http://www.w3.org/2000/09/xmldsig#">
             <PSP>
                 <CodiceFiscale>12345678901</CodiceFiscale>
-<<<<<<< HEAD
-                <Denominazione>40000000001</Denominazione>
-=======
+
                 <Denominazione>60000000001</Denominazione>
->>>>>>> origin/feature/gherkin-with-behavetag
+
             </PSP>
             <IUBD>#iubd#</IUBD>
             <OraAcquisto>2015-02-06T15:00:44.659+01:00</OraAcquisto>
@@ -57,11 +51,9 @@ Feature: process tests for RPT-RT bollo
             <marcaDaBollo xmlns="http://www.agenziaentrate.gov.it/2014/MarcaDaBollo" xmlns:ns2="http://www.w3.org/2000/09/xmldsig#">
             <PSP>
                 <CodiceFiscale>12345678901</CodiceFiscale>
-<<<<<<< HEAD
-                <Denominazione>40000000001</Denominazione>
-=======
+
                 <Denominazione>60000000001</Denominazione>
->>>>>>> origin/feature/gherkin-with-behavetag
+
             </PSP>
             <IUBD>#iubd4#</IUBD>
             <OraAcquisto>2015-02-06T15:00:44.659+01:00</OraAcquisto>
@@ -531,29 +523,19 @@ Feature: process tests for RPT-RT bollo
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
         And check url contains acardste of nodoInviaCarrelloRPT response
         And retrieve session token from $nodoInviaCarrelloRPTResponse.url
-<<<<<<< HEAD
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
 
     Scenario: Execution idPagamento
         Given the MB generation scenario executed successfully
         When WISP sends rest GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200
-<<<<<<< HEAD
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
 
     Scenario: Check correct PSP list
         Given the Execution idPagamento scenario executed successfully
         When WISP sends rest GET listaPSP?idPagamento=$sessionToken&importoTotale=2000&percorsoPagamento=CARTE to nodo-dei-pagamenti
         Then verify the HTTP status code of listaPSP response is 200
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execution Esito Mod1
         Given the Check correct PSP list scenario executed successfully
         And initial XML pspInviaRPT 
@@ -588,11 +570,7 @@ Feature: process tests for RPT-RT bollo
              """
         Then verify the HTTP status code of inoltroEsito/mod1 response is 200
         And check esito is OK of inoltroEsito/mod1 response
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execute nodoInviaRT
         Given the Execution Esito Mod1 scenario executed successfully
         And initial XML nodoInviaRT
@@ -617,11 +595,7 @@ Feature: process tests for RPT-RT bollo
             """
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execute second nodoInviaRT
         Given the Execute nodoInviaRT scenario executed successfully
         And initial XML nodoInviaRT

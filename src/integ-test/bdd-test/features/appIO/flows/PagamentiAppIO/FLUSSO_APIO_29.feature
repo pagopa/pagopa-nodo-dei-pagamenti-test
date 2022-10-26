@@ -2,11 +2,7 @@ Feature: FLUSSO_APIO_29
 
     Background:
         Given systems up
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execute verifyPaymentNotice (Phase 1)
         Given initial XML verifyPaymentNotice
         """
@@ -28,19 +24,13 @@ Feature: FLUSSO_APIO_29
         """
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '13' under macro update_query on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1201' under macro update_query on db nodo_cfg
-<<<<<<< HEAD
-        When refresh job PA triggered after 10 seconds
-        And wait 15 seconds for expiration
-        And AppIO sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
-        Then check outcome is OK of verifyPaymentNotice response
 
-=======
         #When refresh job CONFIG triggered after 10 seconds
         #And wait 15 seconds for expiration
         And AppIO sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of verifyPaymentNotice response
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
+
     Scenario: Execute activateIOPayment (Phase 2)
         Given the Execute verifyPaymentNotice (Phase 1) scenario executed successfully
         And initial XML paGetPayment
@@ -181,20 +171,12 @@ Feature: FLUSSO_APIO_29
         And payer with None in activateIOPayment
         When AppIO sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execute nodoChiediInformazioniPagamento (Phase 3)
         Given the Execute activateIOPayment (Phase 2) scenario executed successfully
         When WISP sends rest GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200
-<<<<<<< HEAD
-    
-=======
- @runnable   
->>>>>>> origin/feature/gherkin-with-behavetag
+ @runnable 
     Scenario: Execute nodoInoltroEsitoCarta (Phase 4) 
         Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
         When WISP sends REST POST inoltroEsito/carta to nodo-dei-pagamenti
@@ -257,11 +239,7 @@ Feature: FLUSSO_APIO_29
         And checks the value None of the record at column MOTIVO_ANNULLAMENTO of the table PM_SESSION_DATA retrived by the query pm_session on db nodo_online under macro AppIO
         And checks the value None of the record at column CODICE_CONVENZIONE of the table PM_SESSION_DATA retrived by the query pm_session on db nodo_online under macro AppIO
 
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execute sendPaymentOutcome (Phase 5)
         Given the Execute nodoInoltroEsitoCarta (Phase 4) scenario executed successfully
         And initial XMl sendPaymentOutcome

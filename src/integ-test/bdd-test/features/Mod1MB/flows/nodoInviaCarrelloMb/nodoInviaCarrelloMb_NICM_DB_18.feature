@@ -4,21 +4,17 @@ Feature: process tests for nodoInviaCarrelloMb[NICM_DB_18_multibeneficiario=fals
         Given systems up
     Scenario: RPT generation
         Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
-<<<<<<< HEAD
-        And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
-=======
+
         And generate 1 cart with PA #codicePA# and notice number $1noticeNumber
->>>>>>> origin/feature/gherkin-with-behavetag
+
         And RPT1 generation
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-<<<<<<< HEAD
-            <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
-=======
+
             <pay_i:identificativoDominio>#codicePA#</pay_i:identificativoDominio>
->>>>>>> origin/feature/gherkin-with-behavetag
+
             <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
@@ -118,11 +114,9 @@ Feature: process tests for nodoInviaCarrelloMb[NICM_DB_18_multibeneficiario=fals
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.1</pay_i:versioneOggetto>
             <pay_i:dominio>
-<<<<<<< HEAD
-            <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
-=======
+
             <pay_i:identificativoDominio>#codicePA#</pay_i:identificativoDominio>
->>>>>>> origin/feature/gherkin-with-behavetag
+
             <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
@@ -239,11 +233,9 @@ Feature: process tests for nodoInviaCarrelloMb[NICM_DB_18_multibeneficiario=fals
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
             <ppt:intestazioneCarrelloPPT>
-<<<<<<< HEAD
-            <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
-=======
+
             <identificativoIntermediarioPA>#codicePA#</identificativoIntermediarioPA>
->>>>>>> origin/feature/gherkin-with-behavetag
+
             <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
             <identificativoCarrello>$1carrello</identificativoCarrello>
             </ppt:intestazioneCarrelloPPT>
@@ -256,21 +248,17 @@ Feature: process tests for nodoInviaCarrelloMb[NICM_DB_18_multibeneficiario=fals
             <identificativoCanale>97735020584_02</identificativoCanale>
             <listaRPT>
             <elementoListaRPT>
-<<<<<<< HEAD
-            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-=======
+
             <identificativoDominio>#codicePA#</identificativoDominio>
->>>>>>> origin/feature/gherkin-with-behavetag
+
             <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
             <codiceContestoPagamento>CCD01</codiceContestoPagamento>
             <rpt>$rpt1Attachment</rpt>
             </elementoListaRPT>
             <elementoListaRPT>
-<<<<<<< HEAD
-            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-=======
+
             <identificativoDominio>#codicePA#</identificativoDominio>
->>>>>>> origin/feature/gherkin-with-behavetag
+
             <identificativoUnivocoVersamento>$2iuv</identificativoUnivocoVersamento>
             <codiceContestoPagamento>CCD01</codiceContestoPagamento>
             <rpt>$rpt2Attachment</rpt>
@@ -285,11 +273,9 @@ Feature: process tests for nodoInviaCarrelloMb[NICM_DB_18_multibeneficiario=fals
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
         Then retrieve session token from $nodoInviaCarrelloRPTResponse.url
 
-<<<<<<< HEAD
-        And replace pa content with #creditor_institution_code# content
-=======
+
         And replace pa content with #codicePA# content
->>>>>>> origin/feature/gherkin-with-behavetag
+
         And replace iuv content with $1iuv content
         And replace noticeNumber content with $1noticeNumber content
 

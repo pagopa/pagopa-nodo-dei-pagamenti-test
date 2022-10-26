@@ -1,105 +1,6 @@
 Feature: Syntax checks for pspNotifyPaymentResponse - KO
-<<<<<<< HEAD
 
-  Background:
-    Given systems up
-    And generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
-    And initial XML paGetPayment
-    """
-    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
-        <soapenv:Header/>
-        <soapenv:Body>
-            <paf:paGetPaymentRes>
-                <outcome>OK</outcome>
-                <data>
-                    <creditorReferenceId>#cod_segr#$1iuv</creditorReferenceId>
-                    <paymentAmount>10.00</paymentAmount>
-                    <dueDate>2021-07-31</dueDate>
-                    <description>TARI 2021</description>
-                    <companyName>company PA</companyName>
-                    <officeName>office PA</officeName>
-                    <debtor>
-                        <uniqueIdentifier>
-                            <entityUniqueIdentifierType>F</entityUniqueIdentifierType>
-                            <entityUniqueIdentifierValue>JHNDOE00A01F205N</entityUniqueIdentifierValue>
-                        </uniqueIdentifier>
-                        <fullName>John Doe</fullName>
-                        <streetName>street</streetName>
-                        <civicNumber>12</civicNumber>
-                        <postalCode>89020</postalCode>
-                        <city>city</city>
-                        <stateProvinceRegion>MI</stateProvinceRegion>
-                        <country>IT</country>
-                        <e-mail>john.doe@test.it</e-mail>
-                    </debtor>
-                    <transferList>
-                        <transfer>
-                            <idTransfer>1</idTransfer>
-                            <transferAmount>10.00</transferAmount>
-                            <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
-                            <IBAN>IT96R0123454321000000012345</IBAN>
-                            <remittanceInformation>TARI Comune EC_TE</remittanceInformation>
-                            <transferCategory>0101101IM</transferCategory>
-                        </transfer>
-                    </transferList>
-                </data>
-            </paf:paGetPaymentRes>
-        </soapenv:Body>
-    </soapenv:Envelope>
-    """
-    And EC replies to nodo-dei-pagamenti with the paGetPayment
-    And initial XML activateIOPayment
-      """
-      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd">
-      <soapenv:Header/>
-      <soapenv:Body>
-      <nod:activateIOPaymentReq>
-      <idPSP>#psp_AGID#</idPSP>
-      <idBrokerPSP>#broker_AGID#</idBrokerPSP>
-      <idChannel>#canale_AGID#</idChannel>
-      <password>pwdpwdpwd</password>
-      <!--Optional:-->
-      <idempotencyKey>#idempotency_key#</idempotencyKey>
-      <qrCode>
-      <fiscalCode>#creditor_institution_code#</fiscalCode>
-      <noticeNumber>$1noticeNumber</noticeNumber>
-      </qrCode>
-      <!--Optional:-->
-      <expirationTime>6000</expirationTime>
-      <amount>10.00</amount>
-      <!--Optional:-->
-      <dueDate>2021-12-12</dueDate>
-      <!--Optional:-->
-      <paymentNote>responseFull</paymentNote>
-      <!--Optional:-->
-      <payer>
-      <uniqueIdentifier>
-      <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-      <entityUniqueIdentifierValue>#creditor_institution_code#</entityUniqueIdentifierValue>
-      </uniqueIdentifier>
-      <fullName>name</fullName>
-      <!--Optional:-->
-      <streetName>street</streetName>
-      <!--Optional:-->
-      <civicNumber>civic</civicNumber>
-      <!--Optional:-->
-      <postalCode>code</postalCode>
-      <!--Optional:-->
-      <city>city</city>
-      <!--Optional:-->
-      <stateProvinceRegion>state</stateProvinceRegion>
-      <!--Optional:-->
-      <country>IT</country>
-      <!--Optional:-->
-      <e-mail>test.prova@gmail.com</e-mail>
-      </payer>
-      </nod:activateIOPaymentReq>
-      </soapenv:Body>
-      </soapenv:Envelope>
-      """
-    And EC new version
-=======
->>>>>>> origin/feature/gherkin-with-behavetag
+
 
     Background:
         Given systems up
@@ -202,11 +103,7 @@ Feature: Syntax checks for pspNotifyPaymentResponse - KO
     When IO sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is OK of activateIOPayment response
 
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
   # nodoChiediInformazioniPagamento phase
   Scenario: Execute nodoChiediInformazioniPagamento request
     Given the Execute activateIOPaymentReq request scenario executed successfully
@@ -222,17 +119,12 @@ Feature: Syntax checks for pspNotifyPaymentResponse - KO
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pfn="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
       <soapenv:Header/>
       <soapenv:Body>
-<<<<<<< HEAD
-      <psp:pspNotifyPaymentRes>
-      <delay>10000</delay>
-      <outcome>KO</outcome>
-      </psp:pspNotifyPaymentRes>
-=======
+
       <pfn:pspNotifyPaymentRes>
       <delay>10000</delay>
       <outcome>KO</outcome>
       </pfn:pspNotifyPaymentRes>
->>>>>>> origin/feature/gherkin-with-behavetag
+
       </soapenv:Body>
       </soapenv:Envelope>
       """

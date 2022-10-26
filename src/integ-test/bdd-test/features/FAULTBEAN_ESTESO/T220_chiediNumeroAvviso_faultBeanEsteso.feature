@@ -2,11 +2,7 @@ Feature: T220_chiediNumeroAvviso_faultBeanEsteso
 
     Background:
         Given systems up
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execute nodoChiediNumeroAvviso (Phase 1)
         Given initial XML nodoChiediNumeroAvviso
         """

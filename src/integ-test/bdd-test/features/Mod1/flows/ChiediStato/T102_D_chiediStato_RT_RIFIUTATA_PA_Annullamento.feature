@@ -2,24 +2,17 @@ Feature: process tests for T102_D_chiediStato_RT_RIFIUTATA_PA_Annullamento
 
     Background:
         Given systems up
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: RPT generation
         Given RPT generation
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-<<<<<<< HEAD
-                <pay_i:identificativoDominio>44444444444</pay_i:identificativoDominio>
-                <pay_i:identificativoStazioneRichiedente>44444444444_01</pay_i:identificativoStazioneRichiedente>
-=======
+
                 <pay_i:identificativoDominio>66666666666</pay_i:identificativoDominio>
                 <pay_i:identificativoStazioneRichiedente>66666666666_01</pay_i:identificativoStazioneRichiedente>
->>>>>>> origin/feature/gherkin-with-behavetag
+
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
             <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
@@ -96,13 +89,10 @@ Feature: process tests for T102_D_chiediStato_RT_RIFIUTATA_PA_Annullamento
             <pay_i:RT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>6.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-<<<<<<< HEAD
-                <pay_i:identificativoDominio>44444444444</pay_i:identificativoDominio>
-                <pay_i:identificativoStazioneRichiedente>44444444444_01</pay_i:identificativoStazioneRichiedente>
-=======
+
                 <pay_i:identificativoDominio>66666666666</pay_i:identificativoDominio>
                 <pay_i:identificativoStazioneRichiedente>66666666666_01</pay_i:identificativoStazioneRichiedente>
->>>>>>> origin/feature/gherkin-with-behavetag
+
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRicevuta>IdentificativoMessaggioRicevuta</pay_i:identificativoMessaggioRicevuta>
             <pay_i:dataOraMessaggioRicevuta>$timedate</pay_i:dataOraMessaggioRicevuta>
@@ -182,11 +172,7 @@ Feature: process tests for T102_D_chiediStato_RT_RIFIUTATA_PA_Annullamento
             </pay_i:datiPagamento>
             </pay_i:RT>
             """
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execute nodoInviaRPT request
         Given the RPT generation scenario executed successfully
         And initial XML nodoInviaRPT
@@ -194,15 +180,11 @@ Feature: process tests for T102_D_chiediStato_RT_RIFIUTATA_PA_Annullamento
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
             <ppt:intestazionePPT>
-<<<<<<< HEAD
-            <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
-            <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
-            <identificativoDominio>44444444444</identificativoDominio>
-=======
+
             <identificativoIntermediarioPA>66666666666</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>66666666666_01</identificativoStazioneIntermediarioPA>
             <identificativoDominio>66666666666</identificativoDominio>
->>>>>>> origin/feature/gherkin-with-behavetag
+
             <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$timedate</codiceContestoPagamento>
             </ppt:intestazionePPT>
@@ -224,11 +206,7 @@ Feature: process tests for T102_D_chiediStato_RT_RIFIUTATA_PA_Annullamento
         And check url contains acards of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
 
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execute nodoNotificaAnnullamento
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken to nodo-dei-pagamenti
@@ -236,11 +214,7 @@ Feature: process tests for T102_D_chiediStato_RT_RIFIUTATA_PA_Annullamento
         And check esito is OK of notificaAnnullamento response
         And wait 10 seconds for expiration
 
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execute paInviaRT job
         Given the Execute nodoNotificaAnnullamento scenario executed successfully
         And initial XML paaInviaRT
@@ -253,11 +227,9 @@ Feature: process tests for T102_D_chiediStato_RT_RIFIUTATA_PA_Annullamento
                     <fault>
                     <faultCode>PAA_RT_DUPLICATA</faultCode>
                     <faultString>tegba</faultString>
-<<<<<<< HEAD
-                    <id>44444444444</id>
-=======
+
                     <id>66666666666</id>
->>>>>>> origin/feature/gherkin-with-behavetag
+
                     </fault>
                     <esito>KO</esito>
                 </paaInviaRTRisposta>
@@ -269,11 +241,7 @@ Feature: process tests for T102_D_chiediStato_RT_RIFIUTATA_PA_Annullamento
         When job paInviaRt triggered after 20 seconds
         Then wait 20 seconds for expiration
 
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execute nodoChiediStatoRPT request
         Given the Execute paInviaRT job scenario executed successfully
         And initial XML nodoChiediStatoRPT
@@ -282,17 +250,12 @@ Feature: process tests for T102_D_chiediStato_RT_RIFIUTATA_PA_Annullamento
             <soapenv:Header/>
             <soapenv:Body>
                 <ws:nodoChiediStatoRPT>
-<<<<<<< HEAD
-                    <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
-                    <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
-                    <password>pwdpwdpwd</password>
-                    <identificativoDominio>44444444444</identificativoDominio>
-=======
+
                     <identificativoIntermediarioPA>66666666666</identificativoIntermediarioPA>
                     <identificativoStazioneIntermediarioPA>66666666666_01</identificativoStazioneIntermediarioPA>
                     <password>pwdpwdpwd</password>
                     <identificativoDominio>66666666666</identificativoDominio>
->>>>>>> origin/feature/gherkin-with-behavetag
+
                     <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
                     <codiceContestoPagamento>$timedate</codiceContestoPagamento>
                 </ws:nodoChiediStatoRPT>

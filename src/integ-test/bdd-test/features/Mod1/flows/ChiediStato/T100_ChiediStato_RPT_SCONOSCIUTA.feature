@@ -2,11 +2,7 @@ Feature: process tests for T100_ChiediStato_RPT_SCONOSCIUTA
 
     Background:
         Given systems up
-<<<<<<< HEAD
-        
-=======
-@runnable        
->>>>>>> origin/feature/gherkin-with-behavetag
+@runnable 
     Scenario: RPT generation
         Given RPT generation
             """
@@ -85,11 +81,7 @@ Feature: process tests for T100_ChiediStato_RPT_SCONOSCIUTA
                 </pay_i:datiVersamento>
                 </pay_i:RPT>
             """
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execute nodoChiediStatoRPT request
         Given the RPT generation scenario executed successfully
         And initial XML nodoChiediStatoRPT

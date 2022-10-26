@@ -83,11 +83,7 @@ Feature: FLUSSO_APIO_20_PPALNEW
         Given the Execute activateIOPayment (Phase 2) scenario executed successfully
         When WISP sends rest GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200
-<<<<<<< HEAD
-
-=======
     @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execute nodoInoltroEsitoPayPal (Phase 3.1)
         Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
         #Given the Execute activateIOPayment (Phase 2) scenario executed successfully

@@ -117,11 +117,9 @@ Feature: process tests for nodoInviaRPT [REV_NIRPT_01]
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-<<<<<<< HEAD
-            <pay_i:identificativoDominio>#creditor_institution_code_old#</pay_i:identificativoDominio>
-=======
+
             <pay_i:identificativoDominio>#codicePA_old#</pay_i:identificativoDominio>
->>>>>>> origin/feature/gherkin-with-behavetag
+
             <pay_i:identificativoStazioneRichiedente>#id_station_old#</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
@@ -471,11 +469,9 @@ Feature: process tests for nodoInviaRPT [REV_NIRPT_01]
         And checks the value NotNone of the record at column inserted_timestamp of the table POSITION_RECEIPT_XML retrived by the query position_status_n on db nodo_online under macro NewMod3											
 
         #check xml rt 
-<<<<<<< HEAD
-        # Assigning XML_CONTENT query result to xml_rt 
-=======
+
         # Assigning XML_CONTENT query result to xml_rt
->>>>>>> origin/feature/gherkin-with-behavetag
+
         And execution query rt_xml to get value on the table RT_XML, with the columns XML_CONTENT under macro NewMod3 with db name nodo_online
         And through the query rt_xml retrieve xml_no_decode XML_CONTENT at position 0 and save it under the key xml_rt
         

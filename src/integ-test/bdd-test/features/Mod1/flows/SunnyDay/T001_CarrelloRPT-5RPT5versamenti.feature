@@ -2,24 +2,17 @@ Feature: process tests for 5 RPT 5 Versamenti
 
     Background:
         Given systems up
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: RPT generation
         Given RPT generation
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.1</pay_i:versioneOggetto>
             <pay_i:dominio>
-<<<<<<< HEAD
-            <pay_i:identificativoDominio>44444444444</pay_i:identificativoDominio>
-            <pay_i:identificativoStazioneRichiedente>44444444444_01</pay_i:identificativoStazioneRichiedente>
-=======
+
             <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
             <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
->>>>>>> origin/feature/gherkin-with-behavetag
+
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
             <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
@@ -134,11 +127,7 @@ Feature: process tests for 5 RPT 5 Versamenti
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: RPT2 generation
         Given the RPT generation scenario executed successfully
         And RPT2 generation
@@ -147,13 +136,10 @@ Feature: process tests for 5 RPT 5 Versamenti
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.1</pay_i:versioneOggetto>
             <pay_i:dominio>
-<<<<<<< HEAD
-            <pay_i:identificativoDominio>44444444444</pay_i:identificativoDominio>
-            <pay_i:identificativoStazioneRichiedente>44444444444_01</pay_i:identificativoStazioneRichiedente>
-=======
+
             <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
             <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
->>>>>>> origin/feature/gherkin-with-behavetag
+
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
             <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
@@ -268,11 +254,7 @@ Feature: process tests for 5 RPT 5 Versamenti
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: RPT3 generation
         Given the RPT2 generation scenario executed successfully
         And RPT3 generation
@@ -281,13 +263,10 @@ Feature: process tests for 5 RPT 5 Versamenti
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.1</pay_i:versioneOggetto>
             <pay_i:dominio>
-<<<<<<< HEAD
-            <pay_i:identificativoDominio>44444444444</pay_i:identificativoDominio>
-            <pay_i:identificativoStazioneRichiedente>44444444444_01</pay_i:identificativoStazioneRichiedente>
-=======
+
             <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
             <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
->>>>>>> origin/feature/gherkin-with-behavetag
+
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
             <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
@@ -402,11 +381,7 @@ Feature: process tests for 5 RPT 5 Versamenti
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: RPT4 generation
         Given the RPT3 generation scenario executed successfully
         And RPT4 generation
@@ -414,13 +389,10 @@ Feature: process tests for 5 RPT 5 Versamenti
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.1</pay_i:versioneOggetto>
             <pay_i:dominio>
-<<<<<<< HEAD
-            <pay_i:identificativoDominio>44444444444</pay_i:identificativoDominio>
-            <pay_i:identificativoStazioneRichiedente>44444444444_01</pay_i:identificativoStazioneRichiedente>
-=======
+
             <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
             <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
->>>>>>> origin/feature/gherkin-with-behavetag
+
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
             <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
@@ -535,11 +507,7 @@ Feature: process tests for 5 RPT 5 Versamenti
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: RPT5 generation
         Given the RPT4 scenario executed successfully
         And RPT5 generation
@@ -547,13 +515,10 @@ Feature: process tests for 5 RPT 5 Versamenti
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.1</pay_i:versioneOggetto>
             <pay_i:dominio>
-<<<<<<< HEAD
-            <pay_i:identificativoDominio>44444444444</pay_i:identificativoDominio>
-            <pay_i:identificativoStazioneRichiedente>44444444444_01</pay_i:identificativoStazioneRichiedente>
-=======
+
             <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
             <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
->>>>>>> origin/feature/gherkin-with-behavetag
+
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
             <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
@@ -668,11 +633,7 @@ Feature: process tests for 5 RPT 5 Versamenti
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execute nodoInviaCarrelloRPT request
         Given the RPT5 generation scenario executed successfully
         And initial XML nodoInviaCarrelloRPT
@@ -680,74 +641,56 @@ Feature: process tests for 5 RPT 5 Versamenti
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
         <soapenv:Header>
         <ppt:intestazioneCarrelloPPT>
-<<<<<<< HEAD
-        <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
-        <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
-=======
+
             <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
->>>>>>> origin/feature/gherkin-with-behavetag
+
         <identificativoCarrello>#CARRELLO#</identificativoCarrello>
         </ppt:intestazioneCarrelloPPT>
         </soapenv:Header>
         <soapenv:Body>
         <ws:nodoInviaCarrelloRPT>
         <password>pwdpwdpwd</password>
-<<<<<<< HEAD
-        <identificativoPSP>40000000001</identificativoPSP>
-        <identificativoIntermediarioPSP>40000000001</identificativoIntermediarioPSP>
-        <identificativoCanale>40000000001_03</identificativoCanale>
-        <listaRPT>
-            <elementoListaRPT>
-                <identificativoDominio>44444444444</identificativoDominio>
-=======
+
         <identificativoPSP>#psp#</identificativoPSP>
         <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
         <identificativoCanale>#canale#</identificativoCanale>
         <listaRPT>
             <elementoListaRPT>
                 <identificativoDominio>#creditor_institution_code#</identificativoDominio>
->>>>>>> origin/feature/gherkin-with-behavetag
+
                 <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
                 <codiceContestoPagamento>CCD01</codiceContestoPagamento>
                 <rpt>$rptAttachment</rpt>
             </elementoListaRPT>
             <elementoListaRPT>
-<<<<<<< HEAD
-                <identificativoDominio>44444444444</identificativoDominio>
-=======
+
                 <identificativoDominio>#creditor_institution_code#</identificativoDominio>
->>>>>>> origin/feature/gherkin-with-behavetag
+
                 <identificativoUnivocoVersamento>$2IUV</identificativoUnivocoVersamento>
                 <codiceContestoPagamento>CCD01</codiceContestoPagamento>
                 <rpt>$rpt2Attachment</rpt>
             </elementoListaRPT>
             <elementoListaRPT>
-<<<<<<< HEAD
-                <identificativoDominio>44444444444</identificativoDominio>
-=======
+
                 <identificativoDominio>#creditor_institution_code#</identificativoDominio>
->>>>>>> origin/feature/gherkin-with-behavetag
+
                 <identificativoUnivocoVersamento>$3IUV</identificativoUnivocoVersamento>
                 <codiceContestoPagamento>CCD01</codiceContestoPagamento>
                 <rpt>$rpt3Attachment</rpt>
             </elementoListaRPT>
             <elementoListaRPT>
-<<<<<<< HEAD
-                <identificativoDominio>44444444444</identificativoDominio>
-=======
+
                 <identificativoDominio>#creditor_institution_code#</identificativoDominio>
->>>>>>> origin/feature/gherkin-with-behavetag
+
                 <identificativoUnivocoVersamento>$4IUV</identificativoUnivocoVersamento>
                 <codiceContestoPagamento>CCD01</codiceContestoPagamento>
                 <rpt>$rpt4Attachment</rpt>
             </elementoListaRPT>
             <elementoListaRPT>
-<<<<<<< HEAD
-                <identificativoDominio>44444444444</identificativoDominio>
-=======
+
                 <identificativoDominio>#creditor_institution_code#</identificativoDominio>
->>>>>>> origin/feature/gherkin-with-behavetag
+
                 <identificativoUnivocoVersamento>$5IUV</identificativoUnivocoVersamento>
                 <codiceContestoPagamento>CCD01</codiceContestoPagamento>
                 <rpt>$rpt5Attachment</rpt>

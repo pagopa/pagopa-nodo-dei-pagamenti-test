@@ -97,10 +97,7 @@ Feature: Process checks for activateIOPayment request
             </soapenv:Envelope>
             """
         And EC new version
-<<<<<<< HEAD
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Check PPT_ERRORE_EMESSO_DA_PAA error [PRO_AIPR_01]
         Given initial XML paGetPayment
             """
@@ -196,11 +193,7 @@ Feature: Process checks for activateIOPayment request
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is KO of activateIOPayment response
         And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of activateIOPayment response
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execute syntax activateIOPayment1 (Phase 1) [PRO_AIPR_04]
         Given saving activateIOPayment request in activateIOPayment1
         And idempotencyKey with Empty in activateIOPayment

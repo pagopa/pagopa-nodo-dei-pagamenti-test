@@ -2,11 +2,7 @@ Feature: T220_RT_faultBeanEsteso
 
     Background:
         Given systems up
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execute nodoInviaRPT (Phase 1)
         Given generate 1 notice number and iuv with aux digit 3, segregation code 12 and application code -
         And replace $1iuv content with RPTdaRifPa content
@@ -215,11 +211,7 @@ Feature: T220_RT_faultBeanEsteso
         And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execute nodoInviaRT (Phase 2)
         Given the Execute nodoInviaRPT (Phase 1) scenario executed successfully
         And initial XMl nodoInviaRT
@@ -268,11 +260,7 @@ Feature: T220_RT_faultBeanEsteso
         When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
         And wait 10 seconds for expiration
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execute nodoChiediStatoRPT (Phase 3)
         Given the Execute nodoInviaRT (Phase 2) scenario executed successfully
         And initial XML nodoChiediStatoRPT

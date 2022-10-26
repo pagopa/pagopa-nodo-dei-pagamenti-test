@@ -78,11 +78,7 @@ Feature: GT_02
             """
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
         And check token_valid_to is equal to token_valid_from plus default_durata_token_IO
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execute nodoChiediInformazioniPagamento (Phase 3)
         Given the Execute activateIOPayment (Phase 2) scenario executed successfully
         When WISP sends rest GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti

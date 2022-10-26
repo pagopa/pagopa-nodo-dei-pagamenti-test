@@ -3,53 +3,7 @@ Feature: Semantic checks for activateIOPayment - KO
   Background:
     Given systems up
 
-<<<<<<< HEAD
-  Scenario Outline: Check errors on activateIOPayment
-    And generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
-    And initial XML paGetPayment
-    """
-    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
-        <soapenv:Header/>
-        <soapenv:Body>
-            <paf:paGetPaymentRes>
-                <outcome>OK</outcome>
-                <data>
-                    <creditorReferenceId>#cod_segr#$1iuv</creditorReferenceId>
-                    <paymentAmount>10.00</paymentAmount>
-                    <dueDate>2021-07-31</dueDate>
-                    <description>TARI 2021</description>
-                    <companyName>company PA</companyName>
-                    <officeName>office PA</officeName>
-                    <debtor>
-                        <uniqueIdentifier>
-                            <entityUniqueIdentifierType>F</entityUniqueIdentifierType>
-                            <entityUniqueIdentifierValue>JHNDOE00A01F205N</entityUniqueIdentifierValue>
-                        </uniqueIdentifier>
-                        <fullName>John Doe</fullName>
-                        <streetName>street</streetName>
-                        <civicNumber>12</civicNumber>
-                        <postalCode>89020</postalCode>
-                        <city>city</city>
-                        <stateProvinceRegion>MI</stateProvinceRegion>
-                        <country>IT</country>
-                        <e-mail>john.doe@test.it</e-mail>
-                    </debtor>
-                    <transferList>
-                        <transfer>
-                            <idTransfer>1</idTransfer>
-                            <transferAmount>10.00</transferAmount>
-                            <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
-                            <IBAN>IT96R0123454321000000012345</IBAN>
-                            <remittanceInformation>TARI Comune EC_TE</remittanceInformation>
-                            <transferCategory>0101101IM</transferCategory>
-                        </transfer>
-                    </transferList>
-                </data>
-            </paf:paGetPaymentRes>
-        </soapenv:Body>
-    </soapenv:Envelope>
-    """
-=======
+
   @runnable
   Scenario Outline: Check errors on activateIOPayment
     Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
@@ -96,7 +50,7 @@ Feature: Semantic checks for activateIOPayment - KO
       </soapenv:Body>
       </soapenv:Envelope>
       """
->>>>>>> origin/feature/gherkin-with-behavetag
+
     And EC replies to nodo-dei-pagamenti with the paGetPayment
     And initial XML activateIOPayment
       """
@@ -162,17 +116,7 @@ Feature: Semantic checks for activateIOPayment - KO
       | idChannel    | CANALE_NOT_ENABLED | PPT_CANALE_DISABILITATO             | SEM_AIPR_06                                            |
       | password     | wrongPassword      | PPT_AUTENTICAZIONE                  | SEM_AIPR_08                                            |
       | fiscalCode   | 10000000000        | PPT_DOMINIO_SCONOSCIUTO             | SEM_AIPR_09                                            |
-<<<<<<< HEAD
-      | fiscalCode   | 11111122222        | PPT_DOMINIO_DISABILITATO            | SEM_AIPR_10                                            |
-      | noticeNumber | 511456789012345678 | PPT_STAZIONE_INT_PA_SCONOSCIUTA     | SEM_AIPR_12 - auxDigit inesistente                     |
-      | noticeNumber | 011456789012345678 | PPT_STAZIONE_INT_PA_SCONOSCIUTA     | SEM_AIPR_12 - auxDigit 0 - progressivo inesistente     |
-      | noticeNumber | 316456789012345678 | PPT_STAZIONE_INT_PA_SCONOSCIUTA     | SEM_AIPR_12 - auxDigit 3 - segregationCode inesistente |
-      | noticeNumber | 323134567890787583 | PPT_STAZIONE_INT_PA_DISABILITATA    | SEM_AIPR_13                                            |
-      | noticeNumber | 314134567890787583 | PPT_STAZIONE_INT_PA_DISABILITATA    | SEM_AIPR_13                                            |
-      | noticeNumber | 099456789012345678 | PPT_STAZIONE_INT_PA_IRRAGGIUNGIBILE | SEM_AIRP_14                                            |
-      | noticeNumber | 312456789012345678 | PPT_MULTI_BENEFICIARIO              | SEM_AIPR_15                                            |
-      | noticeNumber | 088456789012345678 | PPT_INTERMEDIARIO_PA_DISABILITATO   | SEM_AIPR_16                                            |
-=======
+
       | fiscalCode   | 11111122223        | PPT_DOMINIO_DISABILITATO            | SEM_AIPR_10                                            |
       | noticeNumber | 511456789012345678 | PPT_STAZIONE_INT_PA_SCONOSCIUTA     | SEM_AIPR_12 - auxDigit inesistente                     |
       | noticeNumber | 011456789012345678 | PPT_STAZIONE_INT_PA_SCONOSCIUTA     | SEM_AIPR_12 - auxDigit 0 - progressivo inesistente     |
@@ -181,14 +125,12 @@ Feature: Semantic checks for activateIOPayment - KO
       | noticeNumber | 099456789012345678 | PPT_STAZIONE_INT_PA_IRRAGGIUNGIBILE | SEM_AIRP_14                                            |
       | noticeNumber | 312456789012345678 | PPT_MULTI_BENEFICIARIO              | SEM_AIPR_15                                            |
       | noticeNumber | 010456789012345678 | PPT_INTERMEDIARIO_PA_DISABILITATO   | SEM_AIPR_16                                            |
->>>>>>> origin/feature/gherkin-with-behavetag
+
 
   @runnable 
   # idChannel value check: idChannel with value in NODO4_CFG.CANALI whose field MODELLO_PAGAMENTO in NODO4_CFG.CANALI_NODO table of nodo-dei-pagamenti database does not contain value 'ATTIVATO_PRESSO_PSP' (e.g. contains 'IMMEDIATO_MULTIBENEFICIARIO') [SEM_AIPR_07]
   Scenario: Check PPT_AUTORIZZAZIONE error on psp channel not enabled for payment model 3
-<<<<<<< HEAD
-    Given initial XML activateIOPayment
-=======
+
     Given generate 2 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
     And initial XML paGetPayment
       """
@@ -235,7 +177,7 @@ Feature: Semantic checks for activateIOPayment - KO
       """
     And EC replies to nodo-dei-pagamenti with the paGetPayment
     And initial XML activateIOPayment
->>>>>>> origin/feature/gherkin-with-behavetag
+
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd">
       <soapenv:Header/>
@@ -249,11 +191,9 @@ Feature: Semantic checks for activateIOPayment - KO
       <idempotencyKey>#idempotency_key#</idempotencyKey>
       <qrCode>
       <fiscalCode>#creditor_institution_code#</fiscalCode>
-<<<<<<< HEAD
-      <noticeNumber>#notice_number#</noticeNumber>
-=======
+
       <noticeNumber>$2noticeNumber</noticeNumber>
->>>>>>> origin/feature/gherkin-with-behavetag
+
       </qrCode>
       <!--Optional:-->
       <expirationTime>20000</expirationTime>
@@ -288,17 +228,7 @@ Feature: Semantic checks for activateIOPayment - KO
       </soapenv:Body>
       </soapenv:Envelope>
       """
-<<<<<<< HEAD
-    Given idChannel with 70000000001_03_ONUS in activateIOPayment
-    When psp sends SOAP activateIOPayment to nodo-dei-pagamenti
-    Then check outcome is KO of activateIOPayment response
-    And check faultCode is PPT_AUTORIZZAZIONE of activateIOPayment response
-    And check description is Il canale non è di tipo 'ATTIVATO_PRESSO_PSP' of activateIOPayment response
 
-  # idBrokerPSP-idPSP value check: idBrokerPSP not associated to idPSP [SEM_AIPR_11]
-  Scenario: Check PPT_AUTORIZZAZIONE error on psp broker not associated to psp
-    Given initial XML activateIOPayment
-=======
     And idChannel with 70000000001_03_ONUS in activateIOPayment
     When psp sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is KO of activateIOPayment response
@@ -310,7 +240,7 @@ Feature: Semantic checks for activateIOPayment - KO
   Scenario: Check PPT_AUTORIZZAZIONE error on psp broker not associated to psp
     Given generate 3 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
     And initial XML activateIOPayment
->>>>>>> origin/feature/gherkin-with-behavetag
+
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd">
       <soapenv:Header/>
@@ -324,11 +254,9 @@ Feature: Semantic checks for activateIOPayment - KO
       <idempotencyKey>#idempotency_key#</idempotencyKey>
       <qrCode>
       <fiscalCode>#creditor_institution_code#</fiscalCode>
-<<<<<<< HEAD
-      <noticeNumber>#notice_number#</noticeNumber>
-=======
+
       <noticeNumber>$3noticeNumber</noticeNumber>
->>>>>>> origin/feature/gherkin-with-behavetag
+
       </qrCode>
       <!--Optional:-->
       <expirationTime>20000</expirationTime>
@@ -363,8 +291,7 @@ Feature: Semantic checks for activateIOPayment - KO
       </soapenv:Body>
       </soapenv:Envelope>
       """
-<<<<<<< HEAD
-=======
+
     And initial XML paGetPayment
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
@@ -409,22 +336,19 @@ Feature: Semantic checks for activateIOPayment - KO
       </soapenv:Envelope>
       """
     And EC replies to nodo-dei-pagamenti with the paGetPayment
->>>>>>> origin/feature/gherkin-with-behavetag
+
     And idBrokerPSP with 97735020584 in activateIOPayment
     When psp sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is KO of activateIOPayment response
     And check faultCode is PPT_AUTORIZZAZIONE of activateIOPayment response
     And check description is Configurazione intermediario-canale non corretta of activateIOPayment response
 
-<<<<<<< HEAD
-  Scenario: Execute activateIOPayment (Phase 1)
-    Given initial XML activateIOPayment
-=======
+
    @runnable
   Scenario: Execute activateIOPayment (Phase 1)
     Given generate 4 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
     And initial XML activateIOPayment
->>>>>>> origin/feature/gherkin-with-behavetag
+
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd">
       <soapenv:Header/>
@@ -438,11 +362,9 @@ Feature: Semantic checks for activateIOPayment - KO
       <idempotencyKey>#idempotency_key#</idempotencyKey>
       <qrCode>
       <fiscalCode>#creditor_institution_code#</fiscalCode>
-<<<<<<< HEAD
-      <noticeNumber>#notice_number#</noticeNumber>
-=======
+
       <noticeNumber>$4noticeNumber</noticeNumber>
->>>>>>> origin/feature/gherkin-with-behavetag
+
       </qrCode>
       <!--Optional:-->
       <expirationTime>20000</expirationTime>
@@ -477,11 +399,7 @@ Feature: Semantic checks for activateIOPayment - KO
       </soapenv:Body>
       </soapenv:Envelope>
       """
-<<<<<<< HEAD
-    When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
-    Then check outcome is OK of activateIOPayment response
-  
-=======
+
     And initial XML paGetPayment
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
@@ -569,7 +487,7 @@ Feature: Semantic checks for activateIOPayment - KO
     Then check outcome is OK of activateIOPayment response
 
    @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
+
   # [SEM_AIPR_20]
   Scenario: Check second activateIOPayment is equal to the first
     Given nodo-dei-pagamenti has config parameter useIdempotency set to false
@@ -581,18 +499,13 @@ Feature: Semantic checks for activateIOPayment - KO
     And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro AppIO
     And restore initial configurations
 
-<<<<<<< HEAD
-  # [SEM_AIPR_21]
-  Scenario Outline: Check PPT_ERRORE_IDEMPOTENZA error on idempotencyKey validity (Phase 2)
-    Given nodo-dei-pagamenti has config parameter useIdempotency set to true
-    Given the Execute activateIOPayment (Phase 1) scenario executed successfully
-=======
+
    @runnable
   # [SEM_AIPR_21]
   Scenario Outline: Check PPT_ERRORE_IDEMPOTENZA error on idempotencyKey validity (Phase 2)
     Given nodo-dei-pagamenti has config parameter useIdempotency set to true
     And the Execute activateIOPayment (Phase 1) scenario executed successfully
->>>>>>> origin/feature/gherkin-with-behavetag
+
     And <tag> with <tag_value> in activateIOPayment
     And wait 3 seconds for expiration
     When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
@@ -637,10 +550,9 @@ Feature: Semantic checks for activateIOPayment - KO
       | e-mail                      | Empty                 | SEM_AIPR_21 |
       | e-mail                      | None                  | SEM_AIPR_21 |
 
-<<<<<<< HEAD
-=======
+
    @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
+
   # [SEM_AIPR_22]
   Scenario Outline: Check OK on idempotencyKey validity
     Given nodo-dei-pagamenti has config parameter useIdempotency set to false
@@ -652,15 +564,11 @@ Feature: Semantic checks for activateIOPayment - KO
     Examples:
       | tag          | value              | soapUI test |
       | noticeNumber | 302119138889055636 | SEM_AIPR_22 |
-<<<<<<< HEAD
-      | fiscalCode   | 90000000001        | SEM_AIPR_22 |
 
-  
-=======
   #| fiscalCode   | 90000000001        | SEM_AIPR_22 |
 
    @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
+
   Scenario Outline: Check PPT_PAGAMENTO_IN_CORSO error on idempotencyKey validity
     Given nodo-dei-pagamenti has config parameter useIdempotency set to false
     And the Execute activateIOPayment (Phase 1) scenario executed successfully
@@ -697,10 +605,9 @@ Feature: Semantic checks for activateIOPayment - KO
       | e-mail                      | test1@prova.gmail.com | SEM_AIPR_22 |
       | e-mail                      | None                  | SEM_AIPR_22 |
 
-<<<<<<< HEAD
-=======
+
    @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
+
   # [SEM_AIPR_23]
   Scenario: Check reuse of idempotencyKey with expired paymentToken
     Given the Execute activateIOPayment (Phase 1) scenario executed successfully
@@ -722,10 +629,9 @@ Feature: Semantic checks for activateIOPayment - KO
     Then check outcome is KO of activateIOPayment response
     And check faultCode is PPT_PAGAMENTO_IN_CORSO of activateIOPayment response
 
-<<<<<<< HEAD
-=======
+
    @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
+
   # [SEM_AIPR_25]
   Scenario: [SEM_AIPR_25]
     Given nodo-dei-pagamenti has config parameter useIdempotency set to false
@@ -738,10 +644,9 @@ Feature: Semantic checks for activateIOPayment - KO
     And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro AppIO
     And restore initial configurations
 
-<<<<<<< HEAD
-=======
+
    @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
+
   # [SEM_AIPR_26]
   Scenario: [SEM_AIPR_26]
     Given nodo-dei-pagamenti has config parameter useIdempotency set to false
@@ -755,10 +660,9 @@ Feature: Semantic checks for activateIOPayment - KO
     And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro AppIO
     And restore initial configurations
 
-<<<<<<< HEAD
-=======
+
    @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
+
   # [SEM_AIPR_27]
   Scenario: Check reuse of idempotencyKey with expired idempotencyKey validity
     Given nodo-dei-pagamenti has config parameter default_idempotency_key_validity_minutes set to 1
@@ -770,10 +674,9 @@ Feature: Semantic checks for activateIOPayment - KO
     And check faultCode is PPT_PAGAMENTO_IN_CORSO of activateIOPayment response
     And restore initial configurations
 
-<<<<<<< HEAD
-=======
+
    @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
+
   # [SEM_AIPR_28]
   Scenario: [SEM_AIPR_28]
     Given nodo-dei-pagamenti has config parameter useIdempotency set to false
@@ -787,10 +690,9 @@ Feature: Semantic checks for activateIOPayment - KO
     And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro AppIO
     And restore initial configurations
 
-<<<<<<< HEAD
-=======
+
    @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
+
   # [SEM_AIPR_29]
   Scenario: Check PPT_PAGAMENTO_IN_CORSO error with PAYING debtor position
     Given the Execute activateIOPayment (Phase 1) scenario executed successfully
@@ -801,10 +703,9 @@ Feature: Semantic checks for activateIOPayment - KO
     Then check outcome is KO of activateIOPayment response
     And check faultCode is PPT_PAGAMENTO_IN_CORSO of activateIOPayment response
 
-<<<<<<< HEAD
-=======
+
    @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
+
   # [SEM_AIPR_30]
   Scenario: Check PPT_PAGAMENTO_IN_CORSO error with PAYING debtor position and without idempotencyKey
     Given the Execute activateIOPayment (Phase 1) scenario executed successfully

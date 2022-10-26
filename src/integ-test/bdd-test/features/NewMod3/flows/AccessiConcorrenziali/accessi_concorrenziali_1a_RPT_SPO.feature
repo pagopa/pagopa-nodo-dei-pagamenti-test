@@ -29,8 +29,7 @@ Feature: process tests for accessiConCorrenziali [1a - RPT+SPO]
         </soapenv:Body>
         </soapenv:Envelope>
         """
-<<<<<<< HEAD
-=======
+
         And initial XML paGetPayment
 
         """
@@ -100,7 +99,7 @@ Feature: process tests for accessiConCorrenziali [1a - RPT+SPO]
         </soapenv:Envelope>
         """
         And EC replies to nodo-dei-pagamenti with the paGetPayment
->>>>>>> origin/feature/gherkin-with-behavetag
+
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
 
@@ -212,15 +211,9 @@ Feature: process tests for accessiConCorrenziali [1a - RPT+SPO]
             </soapenv:Body>
             </soapenv:Envelope>
             """
-<<<<<<< HEAD
-        Then saving nodoInviaRPT request in nodoInviaRPT
 
 
-    Scenario: Excecute second primitives request
-        Given the Excecute primitives request scenario executed successfully
-=======
 
->>>>>>> origin/feature/gherkin-with-behavetag
         And initial XML sendPaymentOutcome
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -268,16 +261,7 @@ Feature: process tests for accessiConCorrenziali [1a - RPT+SPO]
             </soapenv:Body>
             </soapenv:Envelope>
             """
-<<<<<<< HEAD
-        Then saving sendPaymentOutcome request in sendPaymentOutcome
 
-    Scenario: parallel calls and test scenario
-        Given the Excecute second primitives request scenario executed successfully
-        And calling primitive sendPaymentOutcome_sendPaymentOutcome POST and nodoInviaRPT_nodoInviaRPT POST in parallel
-        Then check esito is OK of nodoInviaRPT response
-        And check outcome is OK of sendPaymentOutcome response
-
-=======
 
 
     Scenario: parallel calls and test scenario
@@ -287,7 +271,7 @@ Feature: process tests for accessiConCorrenziali [1a - RPT+SPO]
         And check outcome is OK of sendPaymentOutcome response
 
 
->>>>>>> origin/feature/gherkin-with-behavetag
+
         # #DB CHECK-POSITION_PAYMENT_STATUS
         # And checks the value PAYING, PAYING_RPT, PAID, NOTICE_GENERATED, NOTICE_STORED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
 

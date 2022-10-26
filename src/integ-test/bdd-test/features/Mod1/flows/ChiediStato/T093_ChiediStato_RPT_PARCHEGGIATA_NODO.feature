@@ -3,11 +3,7 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO
     Background:
         Given systems up
 
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: RPT generation
         Given RPT generation
             """
@@ -87,11 +83,7 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO
             </pay_i:RPT>
             """
         
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
 	Scenario: Execute nodoInviaRPT
 		Given the RPT generation scenario executed successfully
 		And initial XML nodoInviaRPT
@@ -130,11 +122,9 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO
         And checks the value nodoInviaRPT of the record at column INSERTED_BY of the table STATI_RPT retrived by the query stati_RPT_new on db nodo_online under macro Mod1 
         And checks the value RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query stati_RPT_new on db nodo_online under macro Mod1
 	    
-<<<<<<< HEAD
-       
-=======
+
  @runnable      
->>>>>>> origin/feature/gherkin-with-behavetag
+
     Scenario: Execute nodoChiediStatoRPT
         Given the Execute nodoInviaRPT scenario executed successfully
         And initial XML nodoChiediStatoRPT
@@ -157,11 +147,7 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO
 	    Then check stato is RPT_PARCHEGGIATA_NODO of nodoChiediStatoRPT response
         Then check redirect is 1 of nodoChiediStatoRPT response
 
-<<<<<<< HEAD
-        
-=======
- @runnable       
->>>>>>> origin/feature/gherkin-with-behavetag
+ @runnable
 	Scenario: Execute nodoInviaRPT Duplicato
 		Given the Execute nodoChiediStatoRPT scenario executed successfully
 		And initial XML nodoInviaRPT
@@ -192,11 +178,9 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO
         Then check esito is KO of nodoInviaRPT response
 	    Then check faultCode is PPT_RPT_DUPLICATA of nodoInviaRPT response
 
-<<<<<<< HEAD
-       
-=======
+
  @runnable      
->>>>>>> origin/feature/gherkin-with-behavetag
+
     Scenario: Execute nodoChiediStatoRPT Duplicato
         Given the Execute nodoInviaRPT Duplicato scenario executed successfully
         And initial XML nodoChiediStatoRPT

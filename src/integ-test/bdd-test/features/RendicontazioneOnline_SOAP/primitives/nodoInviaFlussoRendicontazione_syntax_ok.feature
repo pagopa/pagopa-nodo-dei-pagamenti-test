@@ -2,11 +2,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - OK
 
     Background:
         Given systems up
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Generazione rendicontazione
         Given REND generation
             """

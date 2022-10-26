@@ -2,11 +2,7 @@ Feature: process tests for chiediInformazioniPagamento_Bollo
 
    Background:
       Given systems up
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
    Scenario: MB generation
         Given MB generation
             """
@@ -242,11 +238,7 @@ Feature: process tests for chiediInformazioniPagamento_Bollo
         Then check esito is OK of nodoInviaRPT response
         And check url contains acards of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
-<<<<<<< HEAD
-
-=======
 @runnable
->>>>>>> origin/feature/gherkin-with-behavetag
     Scenario: Execution idPagamento
         Given the MB generation scenario executed successfully
         When WISP sends rest GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
