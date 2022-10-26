@@ -322,7 +322,7 @@ Feature: flow tests for paSendRTV2 - Marca da bollo
             <soapenv:Header/>
             <soapenv:Body>
             <paf:paSendRTV2Response>
-            <delay>10000</delay>
+            <delay>60000</delay>
             <outcome>OK</outcome>
             </paf:paSendRTV2Response>
             </soapenv:Body>
