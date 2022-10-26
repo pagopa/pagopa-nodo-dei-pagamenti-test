@@ -2057,7 +2057,7 @@ Feature: flux tests for closePaymentV2
     Scenario: FLUSSO_OLD_CP_07 (part 2)
         Given the FLUSSO_OLD_CP_07 (part 1) scenario executed successfully
         When job mod3CancelV1 triggered after 0 seconds
-        Then verify the HTTP status code of mod3CancelV2 response is 200
+        Then verify the HTTP status code of mod3CancelV1 response is 200
         And wait 3 seconds for expiration
         And nodo-dei-pagamenti DEV has config parameter default_durata_estensione_token_IO set to 3600000
 
