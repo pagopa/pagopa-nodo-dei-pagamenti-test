@@ -553,28 +553,28 @@ Feature: flow checks for closePayment - PA old
       And checks the value Y of the record at column RICEVUTA_PM of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
       And checks the value N of the record at column FLAG_PAYPAL of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
       # PM_SESSION_DATA
-      And verify 1 record for the table PM_SESSION_DATA retrived by the query pm_session_old on db nodo_online under macro AppIO
-      And checks the value $ccp of the record at column ID_SESSIONE of the table PM_SESSION_DATA retrived by the query pm_session_old on db nodo_online under macro AppIO
-      And checks the value RPT of the record at column TIPO of the table PM_SESSION_DATA retrived by the query pm_session_old on db nodo_online under macro AppIO
-      And checks the value None of the record at column MOBILE_TOKEN of the table PM_SESSION_DATA retrived by the query pm_session_old on db nodo_online under macro AppIO
-      And checks the value None of the record at column RRN of the table PM_SESSION_DATA retrived by the query pm_session_old on db nodo_online under macro AppIO
-      And checks the value None of the record at column TIPO_INTERAZIONE of the table PM_SESSION_DATA retrived by the query pm_session_old on db nodo_online under macro AppIO
-      And checks the value 12 of the record at column IMPORTO_TOTALE_PAGATO of the table PM_SESSION_DATA retrived by the query pm_session_old on db nodo_online under macro AppIO
-      And checks the value None of the record at column ESITO_TRANSAZIONE_CARTA of the table PM_SESSION_DATA retrived by the query pm_session_old on db nodo_online under macro AppIO
-      And checks the value None of the record at column CODICE_AUTORIZZATIVO of the table PM_SESSION_DATA retrived by the query pm_session_old on db nodo_online under macro AppIO
-      And checks the value NotNone of the record at column TIMESTAMP_OPERAZIONE of the table PM_SESSION_DATA retrived by the query pm_session_old on db nodo_online under macro AppIO
-      And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table PM_SESSION_DATA retrived by the query pm_session_old on db nodo_online under macro AppIO
-      And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table PM_SESSION_DATA retrived by the query pm_session_old on db nodo_online under macro AppIO
-      And checks the value None of the record at column MOTIVO_ANNULLAMENTO of the table PM_SESSION_DATA retrived by the query pm_session_old on db nodo_online under macro AppIO
-      And checks the value None of the record at column CODICE_CONVENZIONE of the table PM_SESSION_DATA retrived by the query pm_session_old on db nodo_online under macro AppIO
-      And checks the value None of the record at column CODICE_AUTORIZZATIVO_PAYPAL of the table PM_SESSION_DATA retrived by the query pm_session_old on db nodo_online under macro AppIO
-      And checks the value None of the record at column ID_TRANSAZIONE_PSP_PAYPAL of the table PM_SESSION_DATA retrived by the query pm_session_old on db nodo_online under macro AppIO
-      And checks the value None of the record at column ID_TRANSAZIONE_PM_PAYPAL of the table PM_SESSION_DATA retrived by the query pm_session_old on db nodo_online under macro AppIO
-      And checks the value $transaction_id of the record at column ID_TRANSAZIONE_PM_BPAY of the table PM_SESSION_DATA retrived by the query pm_session_old on db nodo_online under macro AppIO
-      And checks the value $psp_transaction_id of the record at column ID_TRANSAZIONE_PSP_BPAY of the table PM_SESSION_DATA retrived by the query pm_session_old on db nodo_online under macro AppIO
-      And checks the value EFF of the record at column OUTCOME_PAYMENT_GATEWAY of the table PM_SESSION_DATA retrived by the query pm_session_old on db nodo_online under macro AppIO
-      And checks the value 2 of the record at column COMMISSIONE of the table PM_SESSION_DATA retrived by the query pm_session_old on db nodo_online under macro AppIO
-      And checks the value resOK of the record at column CODICE_AUTORIZZATIVO_BPAY of the table PM_SESSION_DATA retrived by the query pm_session_old on db nodo_online under macro AppIO
+      And verify 1 record for the table PM_SESSION_DATA retrived by the query pm_session_old_ccp on db nodo_online under macro AppIO
+      And checks the value $ccp of the record at column ID_SESSIONE of the table PM_SESSION_DATA retrived by the query pm_session_old_ccp on db nodo_online under macro AppIO
+      And checks the value RPT of the record at column TIPO of the table PM_SESSION_DATA retrived by the query pm_session_old_ccp on db nodo_online under macro AppIO
+      And checks the value None of the record at column MOBILE_TOKEN of the table PM_SESSION_DATA retrived by the query pm_session_old_ccp on db nodo_online under macro AppIO
+      And checks the value None of the record at column RRN of the table PM_SESSION_DATA retrived by the query pm_session_old_ccp on db nodo_online under macro AppIO
+      And checks the value None of the record at column TIPO_INTERAZIONE of the table PM_SESSION_DATA retrived by the query pm_session_old_ccp on db nodo_online under macro AppIO
+      And checks the value 12 of the record at column IMPORTO_TOTALE_PAGATO of the table PM_SESSION_DATA retrived by the query pm_session_old_ccp on db nodo_online under macro AppIO
+      And checks the value None of the record at column ESITO_TRANSAZIONE_CARTA of the table PM_SESSION_DATA retrived by the query pm_session_old_ccp on db nodo_online under macro AppIO
+      And checks the value None of the record at column CODICE_AUTORIZZATIVO of the table PM_SESSION_DATA retrived by the query pm_session_old_ccp on db nodo_online under macro AppIO
+      And checks the value NotNone of the record at column TIMESTAMP_OPERAZIONE of the table PM_SESSION_DATA retrived by the query pm_session_old_ccp on db nodo_online under macro AppIO
+      And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table PM_SESSION_DATA retrived by the query pm_session_old_ccp on db nodo_online under macro AppIO
+      And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table PM_SESSION_DATA retrived by the query pm_session_old_ccp on db nodo_online under macro AppIO
+      And checks the value None of the record at column MOTIVO_ANNULLAMENTO of the table PM_SESSION_DATA retrived by the query pm_session_old_ccp on db nodo_online under macro AppIO
+      And checks the value None of the record at column CODICE_CONVENZIONE of the table PM_SESSION_DATA retrived by the query pm_session_old_ccp on db nodo_online under macro AppIO
+      And checks the value None of the record at column CODICE_AUTORIZZATIVO_PAYPAL of the table PM_SESSION_DATA retrived by the query pm_session_old_ccp on db nodo_online under macro AppIO
+      And checks the value None of the record at column ID_TRANSAZIONE_PSP_PAYPAL of the table PM_SESSION_DATA retrived by the query pm_session_old_ccp on db nodo_online under macro AppIO
+      And checks the value None of the record at column ID_TRANSAZIONE_PM_PAYPAL of the table PM_SESSION_DATA retrived by the query pm_session_old_ccp on db nodo_online under macro AppIO
+      And checks the value $transaction_id of the record at column ID_TRANSAZIONE_PM_BPAY of the table PM_SESSION_DATA retrived by the query pm_session_old_ccp on db nodo_online under macro AppIO
+      And checks the value $psp_transaction_id of the record at column ID_TRANSAZIONE_PSP_BPAY of the table PM_SESSION_DATA retrived by the query pm_session_old_ccp on db nodo_online under macro AppIO
+      And checks the value EFF of the record at column OUTCOME_PAYMENT_GATEWAY of the table PM_SESSION_DATA retrived by the query pm_session_old_ccp on db nodo_online under macro AppIO
+      And checks the value 2 of the record at column COMMISSIONE of the table PM_SESSION_DATA retrived by the query pm_session_old_ccp on db nodo_online under macro AppIO
+      And checks the value resOK of the record at column CODICE_AUTORIZZATIVO_BPAY of the table PM_SESSION_DATA retrived by the query pm_session_old_ccp on db nodo_online under macro AppIO
       # POSITION_ACTIVATE
       And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
       And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
@@ -802,7 +802,7 @@ Feature: flow checks for closePayment - PA old
 #    And checks the value Y of the record at column RICEVUTA_PM of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
 #    And checks the value N of the record at column FLAG_PAYPAL of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
 #    # PM_SESSION_DATA
-#    And verify 0 record for the table PM_SESSION_DATA retrived by the query pm_session_old on db nodo_online under macro AppIO
+#    And verify 0 record for the table PM_SESSION_DATA retrived by the query pm_session_old_ccp on db nodo_online under macro AppIO
 #    # POSITION_ACTIVATE
 #    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
 #    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
@@ -1126,7 +1126,7 @@ Feature: flow checks for closePayment - PA old
 #    And checks the value None of the record at column APPLICATION_DATE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
 #    And checks the value None of the record at column FLAG_PAYPAL of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
 #    # PM_SESSION_DATA
-#    And verify 0 record for the table PM_SESSION_DATA retrived by the query pm_session_old on db nodo_online under macro AppIO
+#    And verify 0 record for the table PM_SESSION_DATA retrived by the query pm_session_old_ccp on db nodo_online under macro AppIO
 #    # POSITION_ACTIVATE
 #    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
 #    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
@@ -1251,7 +1251,7 @@ Feature: flow checks for closePayment - PA old
 #    And checks the value None of the record at column APPLICATION_DATE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
 #    And checks the value None of the record at column FLAG_PAYPAL of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
 #    # PM_SESSION_DATA
-#    And verify 0 record for the table PM_SESSION_DATA retrived by the query pm_session_old on db nodo_online under macro AppIO
+#    And verify 0 record for the table PM_SESSION_DATA retrived by the query pm_session_old_ccp on db nodo_online under macro AppIO
 #    # POSITION_ACTIVATE
 #    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
 #    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
@@ -2073,7 +2073,7 @@ Feature: flow checks for closePayment - PA old
 #    And checks the value Y of the record at column RICEVUTA_PM of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
 #    And checks the value N of the record at column FLAG_PAYPAL of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
 #    # PM_SESSION_DATA
-#    And verify 0 record for the table PM_SESSION_DATA retrived by the query pm_session_old on db nodo_online under macro AppIO
+#    And verify 0 record for the table PM_SESSION_DATA retrived by the query pm_session_old_ccp on db nodo_online under macro AppIO
 #    # POSITION_ACTIVATE
 #    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
 #    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
