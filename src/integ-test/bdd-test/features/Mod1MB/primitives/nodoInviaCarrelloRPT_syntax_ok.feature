@@ -4,7 +4,7 @@ Feature: check syntax OK for nodoCarrelloMultibeneficiarioRPT
     Background:
         Given systems up
 
-
+@runnable
     # [SIN_nodoInviaCarrelloMb_01]
    Scenario: Define RPT
          Given RPT generation
@@ -84,7 +84,7 @@ Feature: check syntax OK for nodoCarrelloMultibeneficiarioRPT
          </pay_i:datiVersamento>
          </pay_i:RPT>
          """
-
+@runnable
     Scenario: Check OK response on missing optional fields multiBeneficiario
         Given the Define RPT scenario executed successfully
         And initial XML nodoInviaCarrelloRPT

@@ -4,7 +4,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
       Given systems up
 
    # [SEM_MB_14]
-
+@runnable
    Scenario: Define RPT
       Given RPT generation
          """
@@ -83,7 +83,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          </pay_i:datiVersamento>
          </pay_i:RPT>
          """
-
+@runnable
    Scenario: Define RPT2
       Given the Define RPT scenario executed successfully
       And RPT2 generation
@@ -164,7 +164,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          </pay_i:RPT>
          """
 
-
+@runnable
    Scenario: No error for nodoInviaCarrelloRPT primitive
       Given the Define RPT2 scenario executed successfully
       And initial XML nodoInviaCarrelloRPT
@@ -208,7 +208,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
       And multiBeneficiario with true in nodoInviaCarrelloRPT
       When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
       Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
-
+@runnable
 
    Scenario: Check PPT_ID_CARRELLO_DUPLICATO error for nodoInviaCarrelloRPT primitive
       Given the No error for nodoInviaCarrelloRPT primitive scenario executed successfully

@@ -2,8 +2,8 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
 
    Background:
       Given systems up
-
-    # [SEM_nodoInviaCarrelloMb_04]
+   @runnable
+   # [SEM_nodoInviaCarrelloMb_04]
    Scenario: Define RPT
       Given RPT generation
          """
@@ -82,8 +82,8 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          </pay_i:datiVersamento>
          </pay_i:RPT>
          """
-
-      Scenario: Define RPT2
+   @runnable
+   Scenario: Define RPT2
       Given the Define RPT scenario executed successfully
       And RPT2 generation
          """
@@ -162,7 +162,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          </pay_i:datiVersamento>
          </pay_i:RPT>
          """
-
+   @runnable
    Scenario: Check error for nodoInviaCarrelloRPT primitive
       Given the Define RPT2 scenario executed successfully
       And initial XML nodoInviaCarrelloRPT
@@ -208,8 +208,8 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
       And check faultCode is PPT_DOMINIO_SCONOSCIUTO of nodoInviaCarrelloRPT response
 
 
-
-    # [SEM_nodoInviaCarrelloMb_05]
+   @runnable
+   # [SEM_nodoInviaCarrelloMb_05]
    Scenario: Define RPT3
       Given RPT generation
          """
@@ -288,7 +288,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          </pay_i:datiVersamento>
          </pay_i:RPT>
          """
-
+   @runnable
    Scenario: Define RPT4
       Given the Define RPT3 scenario executed successfully
       And RPT2 generation
@@ -370,7 +370,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          </pay_i:RPT>
          """
 
-
+   @runnable
    Scenario: Check second error for nodoInviaCarrelloRPT primitive
       Given the Define RPT4 scenario executed successfully
       And initial XML nodoInviaCarrelloRPT
@@ -416,8 +416,8 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
       And check faultCode is PPT_MULTI_BENEFICIARIO of nodoInviaCarrelloRPT response
 
 
-
-    # [SEM_nodoInviaCarrelloMb_10]
+   @runnable
+   # [SEM_nodoInviaCarrelloMb_10]
    Scenario: Define RPT5
       Given RPT generation
 
@@ -497,10 +497,11 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          </pay_i:datiVersamento>
          </pay_i:RPT>
          """
-  Scenario: Define RPT6
+   @runnable
+   Scenario: Define RPT6
       Given the Define RPT5 scenario executed successfully
       And RPT2 generation
-      
+
          """
          <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
          <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
@@ -577,7 +578,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          </pay_i:datiVersamento>
          </pay_i:RPT>
          """
-
+   @runnable
    Scenario: Check third error for nodoInviaCarrelloRPT primitive
       Given the Define RPT6 scenario executed successfully
       And initial XML nodoInviaCarrelloRPT
