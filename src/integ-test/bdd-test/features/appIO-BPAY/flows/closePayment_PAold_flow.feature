@@ -524,7 +524,7 @@ Feature: flow checks for closePayment - PA old
       # POSITION_PAYMENT
       And verify 1 record for the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
       And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-      And checks the value 002$iuv of the record at column NOTICE_ID of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+      And checks the value 002$nodoInviaRPT.identificativoUnivocoVersamento of the record at column NOTICE_ID of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
       And checks the value $iuv of the record at column CREDITOR_REFERENCE_ID of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
       And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
       And checks the value #creditor_institution_code_old# of the record at column BROKER_PA_ID of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
@@ -578,7 +578,7 @@ Feature: flow checks for closePayment - PA old
       # POSITION_ACTIVATE
       And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
       And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-      And checks the value 002$iuv of the record at column NOTICE_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+      And checks the value 002$nodoInviaRPT.identificativoUnivocoVersamento of the record at column NOTICE_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
       And checks the value $iuv of the record at column CREDITOR_REFERENCE_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
       And checks the value #psp# of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
       And checks the value None of the record at column IDEMPOTENCY_KEY of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
@@ -595,7 +595,7 @@ Feature: flow checks for closePayment - PA old
       # POSITION_SERVICE
       And verify 1 record for the table POSITION_SERVICE retrived by the query payment_status_old on db nodo_online under macro AppIO
       And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table POSITION_SERVICE retrived by the query payment_status_old on db nodo_online under macro AppIO
-      And checks the value 002$iuv of the record at column NOTICE_ID of the table POSITION_SERVICE retrived by the query payment_status_old on db nodo_online under macro AppIO
+      And checks the value 002$nodoInviaRPT.identificativoUnivocoVersamento of the record at column NOTICE_ID of the table POSITION_SERVICE retrived by the query payment_status_old on db nodo_online under macro AppIO
       And checks the value Pagamento BPAY of the record at column DESCRIPTION of the table POSITION_SERVICE retrived by the query payment_status_old on db nodo_online under macro AppIO
       And checks the value #ragione_sociale# of the record at column COMPANY_NAME of the table POSITION_SERVICE retrived by the query payment_status_old on db nodo_online under macro AppIO
       And checks the value None of the record at column OFFICE_NAME of the table POSITION_SERVICE retrived by the query payment_status_old on db nodo_online under macro AppIO
@@ -607,7 +607,7 @@ Feature: flow checks for closePayment - PA old
       # POSITION_PAYMENT_PLAN
       And verify 1 record for the table POSITION_PAYMENT_PLAN retrived by the query payment_status_old on db nodo_online under macro AppIO
       And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table POSITION_PAYMENT_PLAN retrived by the query payment_status_old on db nodo_online under macro AppIO
-      And checks the value 002$iuv of the record at column NOTICE_ID of the table POSITION_PAYMENT_PLAN retrived by the query payment_status_old on db nodo_online under macro AppIO
+      And checks the value 002$nodoInviaRPT.identificativoUnivocoVersamento of the record at column NOTICE_ID of the table POSITION_PAYMENT_PLAN retrived by the query payment_status_old on db nodo_online under macro AppIO
       And checks the value $iuv of the record at column CREDITOR_REFERENCE_ID of the table POSITION_PAYMENT_PLAN retrived by the query payment_status_old on db nodo_online under macro AppIO
       And checks the value NotNone of the record at column DUE_DATE of the table POSITION_PAYMENT_PLAN retrived by the query payment_status_old on db nodo_online under macro AppIO
       And checks the value None of the record at column RETENTION_DATE of the table POSITION_PAYMENT_PLAN retrived by the query payment_status_old on db nodo_online under macro AppIO
@@ -623,7 +623,7 @@ Feature: flow checks for closePayment - PA old
       And verify 1 record for the table POSITION_TRANSFER retrived by the query payment_status_old on db nodo_online under macro AppIO
       And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table POSITION_TRANSFER retrived by the query payment_status_old on db nodo_online under macro AppIO
       And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE_SECONDARY of the table POSITION_TRANSFER retrived by the query payment_status_old on db nodo_online under macro AppIO
-      And checks the value 002$iuv of the record at column NOTICE_ID of the table POSITION_TRANSFER retrived by the query payment_status_old on db nodo_online under macro AppIO
+      And checks the value 002$nodoInviaRPT.identificativoUnivocoVersamento of the record at column NOTICE_ID of the table POSITION_TRANSFER retrived by the query payment_status_old on db nodo_online under macro AppIO
       And checks the value $iuv of the record at column CREDITOR_REFERENCE_ID of the table POSITION_TRANSFER retrived by the query payment_status_old on db nodo_online under macro AppIO
       And checks the value IT96R0123454321000000012345 of the record at column IBAN of the table POSITION_TRANSFER retrived by the query payment_status_old on db nodo_online under macro AppIO
       And checks the value pagamento fotocopie pratica RPT of the record at column REMITTANCE_INFORMATION of the table POSITION_TRANSFER retrived by the query payment_status_old on db nodo_online under macro AppIO
@@ -773,7 +773,7 @@ Feature: flow checks for closePayment - PA old
 #    # POSITION_PAYMENT
 #    And verify 1 record for the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
 #    And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-#    And checks the value 002$iuv of the record at column NOTICE_ID of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value 002$nodoInviaRPT.identificativoUnivocoVersamento of the record at column NOTICE_ID of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
 #    And checks the value $iuv of the record at column CREDITOR_REFERENCE_ID of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
 #    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
 #    And checks the value #creditor_institution_code_old# of the record at column BROKER_PA_ID of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
@@ -2044,7 +2044,7 @@ Feature: flow checks for closePayment - PA old
 #    # POSITION_PAYMENT
 #    And verify 1 record for the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
 #    And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-#    And checks the value 002$iuv of the record at column NOTICE_ID of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value 002$nodoInviaRPT.identificativoUnivocoVersamento of the record at column NOTICE_ID of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
 #    And checks the value $iuv of the record at column CREDITOR_REFERENCE_ID of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
 #    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
 #    And checks the value #creditor_institution_code_old# of the record at column BROKER_PA_ID of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
