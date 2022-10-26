@@ -2523,39 +2523,6 @@ Feature: flux tests for closePaymentV2
         And checks the value #id_station_old# of the record at column RECIPIENT_STATION_ID of the table POSITION_RECEIPT_XML retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_RECEIPT_XML retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     # FLUSSO_OLD_CP_9.1
 
     Scenario: FLUSSO_OLD_CP_9.1 (part 1)
@@ -2728,7 +2695,7 @@ Feature: flux tests for closePaymentV2
         # STATI_RPT_SNAPSHOT
         And checks the value RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
-    @wip
+
     Scenario: FLUSSO_OLD_CP_9.1 (part 3)
         Given the FLUSSO_OLD_CP_9.1 (part 2) scenario executed successfully
         And the sendPaymentOutcome request scenario executed successfully
@@ -2869,3 +2836,106 @@ Feature: flux tests for closePaymentV2
         And checks the value $nodoInviaRPT.identificativoDominio of the record at column RECIPIENT_BROKER_PA_ID of the table POSITION_RECEIPT_XML retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
         And checks the value #id_station_old# of the record at column RECIPIENT_STATION_ID of the table POSITION_RECEIPT_XML retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_RECEIPT_XML retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    # FLUSSO_OLD_CP_10
+
+    Scenario: FLUSSO_OLD_CP_10 (part 1)
+        Given nodo-dei-pagamenti DEV has config parameter scheduler.annullamentoRptMaiRichiesteDaPmPollerMinutesToBack set to 1
+        And the nodoVerificaRPT scenario executed successfully
+        And the nodoAttivaRPT scenario executed successfully
+        And the nodoInviaRPT scenario executed successfully
+        When job annullamentoRptMaiRichiesteDaPm triggered after 65 seconds
+        Then verify the HTTP status code of annullamentoRptMaiRichiesteDaPm response is 200
+
+    Scenario: FLUSSO_OLD_CP_10 (part 2)
+        Given the FLUSSO_OLD_CP_10 (part 1) scenario executed successfully
+        And wait 5 seconds for expiration
+        And the closePaymentV2 request scenario executed successfully
+        And outcome with KO in v2/closepayment
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 404
+        And check outcome is KO of v2/closepayment response
+        And check description is The indicated payment does not exist of v2/closepayment response
+    @wip
+    Scenario: FLUSSO_OLD_CP_10 (part 3)
+        Given the FLUSSO_OLD_CP_10 (part 2) scenario executed successfully
+        And nodo-dei-pagamenti DEV has config parameter scheduler.annullamentoRptMaiRichiesteDaPmPollerMinutesToBack set to 10
+        And wait 60 seconds for expiration
+
+        # RPT
+        And checks the value $nodoInviaRPT.identificativoCanale of the record at column CANALE of the table RPT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value $nodoInviaRPT.identificativoPSP of the record at column PSP of the table RPT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value $nodoInviaRPT.identificativoIntermediarioPSP of the record at column INTERMEDIARIOPSP of the table RPT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value PO of the record at column TIPO_VERSAMENTO of the table RPT retrived by the query iuv on db nodo_online under macro NewMod1
+
+        # POSITION_ACTIVATE
+        And verify 0 record for the table POSITION_ACTIVATE retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+
+        # POSITION_SERVICE
+        And verify 0 record for the table POSITION_SERVICE retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+
+        # POSITION_PAYMENT_PLAN
+        And verify 0 record for the table POSITION_PAYMENT_PLAN retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+
+        # POSITION_PAYMENT
+        And verify 0 record for the table POSITION_PAYMENT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+
+        # POSITION_TRANSFER
+        And verify 0 record for the table POSITION_TRANSFER retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+
+        # POSITION_PAYMENT_STATUS
+        And verify 0 record for the table POSITION_PAYMENT_STATUS retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+
+        # POSITION_PAYMENT_STATUS_SNAPSHOT
+        And verify 0 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+
+        # POSITION_STATUS
+        And verify 0 record for the table POSITION_STATUS retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+
+        # POSITION_STATUS_SNAPSHOT
+        And verify 0 record for the table POSITION_STATUS_SNAPSHOT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+
+        # PM_SESSION_DATA
+        And verify 0 record for the table PM_SESSION_DATA retrived by the query ccp on db nodo_online under macro NewMod1
+
+        # PM_METADATA
+        And verify 0 record for the table PM_METADATA retrived by the query transactionid on db nodo_online under macro NewMod1
+
+        # STATI_RPT
+        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_ANNULLATA_WISP,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 7 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+
+        # STATI_RPT_SNAPSHOT
+        And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
