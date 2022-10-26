@@ -2147,7 +2147,7 @@ Feature: flux tests for closePaymentV2
     # FLUSSO_OLD_CP_08
 
     Scenario: FLUSSO_OLD_CP_08 (part 1)
-        Given nodo-dei-pagamenti DEV has config parameter scheduler.AnnullamentoRptMaiRichiesteDaPmPollerMinutesToBack set to 1
+        Given nodo-dei-pagamenti DEV has config parameter scheduler.annullamentoRptMaiRichiesteDaPmPollerMinutesToBack set to 1
         And the nodoVerificaRPT scenario executed successfully
         And the nodoAttivaRPT scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
@@ -2211,7 +2211,7 @@ Feature: flux tests for closePaymentV2
         And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
 
-        And nodo-dei-pagamenti DEV has config parameter scheduler.AnnullamentoRptMaiRichiesteDaPmPollerMinutesToBack set to 10
+        And nodo-dei-pagamenti DEV has config parameter scheduler.annullamentoRptMaiRichiesteDaPmPollerMinutesToBack set to 10
 
         # RT_VERSAMENTI
         And checks the value NotNone of the record at column RT_VERSAMENTI.ID of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
