@@ -75,7 +75,7 @@ Feature: Semantic checks for activateIOPaymentReq - OK
         Then activateIOPayment_first response is equal to activateIOPayment response
         And verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro AppIO
         And restore initial configurations
-
+    @runnable
     # [SEM_AIPR_31]
     Scenario: Check activateIOPayment response with parameters in deny list
         Given idPSP with 70000000001 in activateIOPayment
