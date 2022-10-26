@@ -2909,37 +2909,6 @@ Feature: flux tests for closePaymentV2
         And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     # FLUSSO_OLD_CP_11
 
     Scenario: FLUSSO_OLD_CP_11 (part 1)
@@ -3119,7 +3088,7 @@ Feature: flux tests for closePaymentV2
         # STATI_RPT_SNAPSHOT
         And checks the value RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
-    
+
     Scenario: FLUSSO_OLD_CP_11 (part 3)
         Given the FLUSSO_OLD_CP_11 (part 2) scenario executed successfully
         And the sendPaymentOutcome request scenario executed successfully
@@ -3319,6 +3288,9 @@ Feature: flux tests for closePaymentV2
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
 
+        # PM_METADATA
+        And verify 0 record for the table PM_METADATA retrived by the query transactionid on db nodo_online under macro NewMod1
+
     Scenario: FLUSSO_OLD_CP_12 (part 2)
         Given the FLUSSO_OLD_CP_12 (part 1) scenario executed successfully
         And the closePaymentV2 request scenario executed successfully
@@ -3364,9 +3336,6 @@ Feature: flux tests for closePaymentV2
 
         # PM_SESSION_DATA
         And verify 0 record for the table PM_SESSION_DATA retrived by the query ccp on db nodo_online under macro NewMod1
-
-        # PM_METADATA
-        And verify 0 record for the table PM_METADATA retrived by the query temptransactionid on db nodo_online under macro NewMod1
 
         # STATI_RPT
         And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_ANNULLATA_WISP,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
