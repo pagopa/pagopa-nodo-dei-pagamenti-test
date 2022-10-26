@@ -3108,7 +3108,7 @@ Feature: flux tests for closePaymentV2
         # PM_METADATA
         And checks the value $temp_transaction_id,$temp_transaction_id,$temp_transaction_id of the record at column TRANSACTION_ID of the table PM_METADATA retrived by the query temptransactionid on db nodo_online under macro NewMod1
         And checks the value Token,Tipo versamento,key of the record at column KEY of the table PM_METADATA retrived by the query temptransactionid on db nodo_online under macro NewMod1
-        And checks the value $ccp,TPAY,$psp_temp_transaction_id of the record at column VALUE of the table PM_METADATA retrived by the query temptransactionid on db nodo_online under macro NewMod1
+        And checks the value $ccp,TPAY,$temp_psp_transaction_id of the record at column VALUE of the table PM_METADATA retrived by the query temptransactionid on db nodo_online under macro NewMod1
         And checks the value closePayment-v2,closePayment-v2,closePayment-v2 of the record at column INSERTED_BY of the table PM_METADATA retrived by the query temptransactionid on db nodo_online under macro NewMod1
         And checks the value closePayment-v2,closePayment-v2,closePayment-v2 of the record at column UPDATED_BY of the table PM_METADATA retrived by the query temptransactionid on db nodo_online under macro NewMod1
 
@@ -3371,7 +3371,7 @@ Feature: flux tests for closePaymentV2
         And verify 0 record for the table PM_SESSION_DATA retrived by the query ccp on db nodo_online under macro NewMod1
 
         # PM_METADATA
-        And verify 0 record for the table PM_METADATA retrived by the query transactionid on db nodo_online under macro NewMod1
+        And verify 0 record for the table PM_METADATA retrived by the query temptransactionid on db nodo_online under macro NewMod1
 
         # STATI_RPT
         And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_ANNULLATA_WISP,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
