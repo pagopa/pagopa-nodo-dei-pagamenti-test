@@ -2151,7 +2151,7 @@ Feature: flux tests for closePaymentV2
         And the nodoVerificaRPT scenario executed successfully
         And the nodoAttivaRPT scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
-        When job annullamentoRptMaiRichiesteDaPm triggered after 65 seconds
+        When job annullamentoRptMaiRichiesteDaPm triggered after 5 seconds
         Then verify the HTTP status code of annullamentoRptMaiRichiesteDaPm response is 200
     @wip
     Scenario: FLUSSO_OLD_CP_08 (part 2)
@@ -2162,7 +2162,7 @@ Feature: flux tests for closePaymentV2
         Then verify the HTTP status code of v2/closepayment response is 404
         And check outcome is KO of v2/closepayment response
         And check description is The indicated payment does not exist of v2/closepayment response
-        And wait 60 seconds for expiration
+        And wait 5 seconds for expiration
 
         # RPT
         And checks the value $nodoInviaRPT.identificativoCanale of the record at column CANALE of the table RPT retrived by the query iuv on db nodo_online under macro NewMod1
