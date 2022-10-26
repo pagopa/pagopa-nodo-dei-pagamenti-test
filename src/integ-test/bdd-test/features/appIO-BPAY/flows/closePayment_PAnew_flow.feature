@@ -1521,9 +1521,8 @@ Feature: flow checks for closePayment - PA new
 
    Scenario: FLUSSO_CP_19 (part 4)
       Given the FLUSSO_CP_19 (part 3) scenario executed successfully
-      Given the FLUSSO_CP_19 (part 1) scenario executed successfully
       When PM sends REST GET avanzamentoPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
-      Then verify the HTTP status code of avanzamentoPagamento is 200
+      Then verify the HTTP status code of avanzamentoPagamento response is 200
       And check esito is OK of avanzamentoPagamento response
 
 
@@ -1554,7 +1553,7 @@ Feature: flow checks for closePayment - PA new
    Scenario: FLUSSO_CP_20 (part 4)
       Given the FLUSSO_CP_20 (part 3) scenario executed successfully
       When PM sends REST GET avanzamentoPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
-      Then verify the HTTP status code of avanzamentoPagamento is 200
+      Then verify the HTTP status code of avanzamentoPagamento response is 200
       And check esito is ACK_UNKNOWN of avanzamentoPagamento response
 
 
@@ -1591,7 +1590,7 @@ Feature: flow checks for closePayment - PA new
    Scenario: FLUSSO_CP_21 (part 5)
       Given the FLUSSO_CP_21 (part 4) scenario executed successfully
       When PM sends REST GET avanzamentoPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
-      Then verify the HTTP status code of avanzamentoPagamento is 200
+      Then verify the HTTP status code of avanzamentoPagamento response is 200
       And check esito is OK of avanzamentoPagamento response
 
 
@@ -1622,7 +1621,7 @@ Feature: flow checks for closePayment - PA new
    Scenario: FLUSSO_CP_22 (part 4)
       Given the FLUSSO_CP_22 (part 3) scenario executed successfully
       When PM sends REST GET avanzamentoPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
-      Then verify the HTTP status code of avanzamentoPagamento is 200
+      Then verify the HTTP status code of avanzamentoPagamento response is 200
       And check esito is KO of avanzamentoPagamento response
 
 
@@ -1789,7 +1788,7 @@ Feature: flow checks for closePayment - PA new
    Scenario: FLUSSO_CP_27 (part 4)
       Given the FLUSSO_CP_27 (part 3) scenario executed successfully
       When PM sends REST GET avanzamentoPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
-      Then verify the HTTP status code of avanzamentoPagamento is 200
+      Then verify the HTTP status code of avanzamentoPagamento response is 200
       And check esito is ACK_UNKNOWN of avanzamentoPagamento response
 
 
