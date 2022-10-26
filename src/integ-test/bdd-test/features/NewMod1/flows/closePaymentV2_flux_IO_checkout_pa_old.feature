@@ -2121,29 +2121,6 @@ Feature: flux tests for closePaymentV2
         And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column ID_SESSIONE of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     # FLUSSO_OLD_CP_08
 
     Scenario: FLUSSO_OLD_CP_08 (part 1)
@@ -2153,7 +2130,7 @@ Feature: flux tests for closePaymentV2
         And the nodoInviaRPT scenario executed successfully
         When job annullamentoRptMaiRichiesteDaPm triggered after 65 seconds
         Then verify the HTTP status code of annullamentoRptMaiRichiesteDaPm response is 200
-    @wip
+    
     Scenario: FLUSSO_OLD_CP_08 (part 2)
         Given the FLUSSO_OLD_CP_08 (part 1) scenario executed successfully
         And wait 5 seconds for expiration
