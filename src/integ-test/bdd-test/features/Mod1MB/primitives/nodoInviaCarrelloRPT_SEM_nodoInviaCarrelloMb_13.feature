@@ -194,7 +194,6 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          <codiceContestoPagamento>CCD01</codiceContestoPagamento>
          <rpt>$rpt2Attachment</rpt>
          </elementoListaRPT>
-
          </listaRPT>
          <requireLightPayment>01</requireLightPayment>
          <multiBeneficiario>1</multiBeneficiario>
