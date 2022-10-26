@@ -41,6 +41,8 @@ Feature: check syntax OK for paGetPaymentV2 with MBD
             <dueDate>2021-12-30</dueDate>
             <!--Optional:-->
             <retentionDate>2021-12-30T12:12:12</retentionDate>
+            <!--Optional:-->
+            <lastPayment>1</lastPayment>
             <description>test</description>
             <!--Optional:-->
             <companyName>company</companyName>
@@ -108,3 +110,13 @@ Feature: check syntax OK for paGetPaymentV2 with MBD
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends soap activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
+                   
+            | companyName                           | None
+            | officeName                            | None
+            | streetName                            | None
+            | civicNumber                           | None
+            | postalCode                            | None
+            | city                                  | None            
+            | stateProvinceRegion                   | None            
+            | country                               | None
+            | e-mail                                | None
