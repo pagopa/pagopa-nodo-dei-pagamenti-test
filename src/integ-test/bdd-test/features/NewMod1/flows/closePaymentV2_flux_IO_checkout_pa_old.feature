@@ -3229,43 +3229,6 @@ Feature: flux tests for closePaymentV2
         And checks the value #id_station_old# of the record at column RECIPIENT_STATION_ID of the table POSITION_RECEIPT_XML retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_RECEIPT_XML retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     # FLUSSO_OLD_CP_12
 
     Scenario: FLUSSO_OLD_CP_12 (part 1)
@@ -3344,7 +3307,7 @@ Feature: flux tests for closePaymentV2
         # STATI_RPT_SNAPSHOT
         And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
-    @wip
+    
     Scenario: FLUSSO_OLD_CP_12 (part 3)
         Given the FLUSSO_OLD_CP_12 (part 2) scenario executed successfully
         And the sendPaymentOutcome request scenario executed successfully
