@@ -157,6 +157,7 @@ Feature: check syntax KO for paGetPaymentV2 with MBD
             | streetName                            | Empty
             | streetName                            | sanoei38932nfdiou%&ncdoaifer9eukvmpweuw9tunfgadkvaifuewtudnvahv89u3e375
             | civicNumber                           | Empty
+            | civicNumber                           | 1we345ty67ghjkl78
             | postalCode                            | Empty
             | postalCode                            | 12ftr4567dghfi89k
             | city                                  | Empty
@@ -176,6 +177,7 @@ Feature: check syntax KO for paGetPaymentV2 with MBD
             | transferAmount                        | 12.456
             | transferAmount                        | 1.1
             | transferAmount                        | 1000000000.00
+            | transferAmount                        | 60.98
             | fiscalCodePA                          | None
             | fiscalCodePA                          | Empty
             | fiscalCodePA                          | 123409857635
@@ -196,7 +198,12 @@ Feature: check syntax KO for paGetPaymentV2 with MBD
             | provinciaResidenza                    | M
             | provinciaResidenza                    | 12
             | provinciaResidenza                    | rc
-            | IBAN                                  | None
-            | IBAN                                  | Empty
-            | IBAN                                  | 123456789012345678901234567890123456
-            | IBAN                                  | IT45R07601032000000000018888
+            | remittanceInformation                 | None
+            | remittanceInformation                 | Empty
+            | remittanceInformation                 | sanoei38932nfdiou0pncdoaifer9eukvmpweuw9tunfgadkvaifuewtudnvahv89u3e37572efnsfigt609w3ut0592uhngpisdugw09tutwjeodngvgeriyrw8t29762f9qef0qfurf
+            | transferCategory                      | None
+            | transferCategory                      | Empty
+            | transferCategory                      | sanoei38932nfdiou0pncdoaifer9eukvmpweuw9tunfgadkvaifuewtudnvahv89u3e37572efnsfigt609w3ut0592uhngpisdugw09tutwjeodngvgeriyrw8t29762f9qef0qfurf
+            | fiscalCodePA                          | 17777777477
+            | fiscalCodePA                          | 11111122222
+            
