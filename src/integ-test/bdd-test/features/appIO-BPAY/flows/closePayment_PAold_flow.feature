@@ -194,8 +194,8 @@ Feature: flow checks for closePayment - PA old
          <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
          <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
          <pay_i:dominio>
-         <pay_i:identificativoDominio>#creditor_institution_code_old_old#</pay_i:identificativoDominio>
-         <pay_i:identificativoStazioneRichiedente>#id_station_old_old#</pay_i:identificativoStazioneRichiedente>
+         <pay_i:identificativoDominio>#creditor_institution_code_old#</pay_i:identificativoDominio>
+         <pay_i:identificativoStazioneRichiedente>#id_station_old#</pay_i:identificativoStazioneRichiedente>
          </pay_i:dominio>
          <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
          <pay_i:dataOraMessaggioRichiesta>2016-09-16T11:24:10</pay_i:dataOraMessaggioRichiesta>
@@ -272,8 +272,8 @@ Feature: flow checks for closePayment - PA old
          <soapenv:Header>
          <ppt:intestazionePPT>
          <identificativoIntermediarioPA>#id_broker_old#</identificativoIntermediarioPA>
-         <identificativoStazioneIntermediarioPA>#id_station_old_old#</identificativoStazioneIntermediarioPA>
-         <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
+         <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
+         <identificativoDominio>#creditor_institution_code#</identificativoDominio>
          <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
          <codiceContestoPagamento>$ccp</codiceContestoPagamento>
          </ppt:intestazionePPT>
@@ -681,1407 +681,1407 @@ Feature: flow checks for closePayment - PA old
       And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
       And checks the value NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
       And verify 1 record for the table POSITION_RECEIPT_XML retrived by the query payment_status_old on db nodo_online under macro AppIO
-   # [TBD] check RECEIPT_XML content nella POSITION_RECEIPT_XML (vedi PR Flow_closePaymentV1_ok_spo_ok)
-
-
-   # # FLUSSO_CP_02
-   # Scenario: FLUSSO_CP_02 (part 1)
-   #    Given the nodoVerificaRPT scenario executed successfully
-   #    And the nodoAttivaRPT scenario executed successfully
-   #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-   #    Then check esito is OK of nodoAttivaRPT response
-   #    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-
-   # Scenario: FLUSSO_CP_02 (part 2)
-   #    Given the FLUSSO_CP_02 (part 1) scenario executed successfully
-   #    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-   #    Then verify the HTTP status code of informazioniPagamento response is 200
-
-   # Scenario: FLUSSO_CP_02 (part 3)
-   #    Given the FLUSSO_CP_02 (part 2) scenario executed successfully
-   #    And the closePayment scenario executed successfully
-   #    When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
-   #    Then verify the HTTP status code of v1/closepayment response is 200
-   #    And check esito is OK of v1/closepayment response
-   #    And wait 5 seconds for expiration
-
-   # Scenario: FLUSSO_CP_02 (part 4)
-   #    Given the FLUSSO_CP_02 (part 3) scenario executed successfully
-   #    And the sendPaymentOutcome scenario executed successfully
-   #    And outcome with KO in sendPaymentOutcome
-   #    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-   #    Then check outcome is KO of sendPaymentOutcome response
-   #    And check faultCode is PPT_SEMANTICA of sendPaymentOutcome response
-   #    And check description is Esito discorde of sendPaymentOutcome response
-   #    And wait 5 seconds for expiration
-   #    # POSITION & PAYMENT STATUS
-   #    And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value PAYMENT_ACCEPTED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 1 record for the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 4 record for the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    # POSITION_PAYMENT
-   #    And verify 1 record for the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value None of the record at column OUTCOME of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value None of the record at column FEE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value None of the record at column TRANSFER_DATE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value None of the record at column APPLICATION_DATE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    # RECEIPT
-   #    And verify 0 record for the table POSITION_RECEIPT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 0 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 0 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 0 record for the table POSITION_RECEIPT_XML retrived by the query payment_status_old on db nodo_online under macro AppIO
-
-
-   # # FLUSSO_CP_03
-   # Scenario: FLUSSO_CP_03 (part 1)
-   #    Given the nodoVerificaRPT scenario executed successfully
-   #    And the nodoAttivaRPT scenario executed successfully
-   #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-   #    Then check esito is OK of nodoAttivaRPT response
-   #    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-
-   # Scenario: FLUSSO_CP_03 (part 2)
-   #    Given the FLUSSO_CP_03 (part 1) scenario executed successfully
-   #    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-   #    Then verify the HTTP status code of informazioniPagamento response is 200
-
-   # Scenario: FLUSSO_CP_03 (part 3)
-   #    Given the FLUSSO_CP_03 (part 2) scenario executed successfully
-   #    And the closePayment scenario executed successfully
-   #    And outcome with KO in v1/closepayment
-   #    When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
-   #    Then verify the HTTP status code of v1/closepayment response is 200
-   #    And check esito is OK of v1/closepayment response
-   #    And wait 5 seconds for expiration
-   #    # POSITION & PAYMENT STATUS
-   #    And verify 2 record for the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value PAYING,INSERTED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 2 record for the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value PAYING,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    # POSITION_PAYMENT
-   #    And verify 1 record for the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value 002$iuv of the record at column NOTICE_ID of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value $iuv of the record at column CREDITOR_REFERENCE_ID of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value #creditor_institution_code_old# of the record at column BROKER_PA_ID of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value #id_station_old# of the record at column STATION_ID of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value 2 of the record at column STATION_VERSION of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value #psp_AGID# of the record at column PSP_ID of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value #broker_AGID# of the record at column BROKER_PSP_ID of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value #canale_AGID# of the record at column CHANNEL_ID of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value None of the record at column IDEMPOTENCY_KEY of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value 10 of the record at column AMOUNT of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value None of the record at column FEE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value None of the record at column OUTCOME of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value BPAY of the record at column PAYMENT_METHOD of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value WISP of the record at column PAYMENT_CHANNEL of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value None of the record at column TRANSFER_DATE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value None of the record at column APPLICATION_DATE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    #And checks the value NotNone of the record at column PAYER_ID of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value NotNone of the record at column FK_PAYMENT_PLAN of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value None of the record at column RPT_ID of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value MOD3 of the record at column PAYMENT_TYPE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value None of the record at column CARRELLO_ID of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value None of the record at column ORIGINAL_PAYMENT_TOKEN of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value Y of the record at column FLAG_IO of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value Y of the record at column RICEVUTA_PM of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value N of the record at column FLAG_PAYPAL of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    # PM_SESSION_DATA
-   #    And verify 0 record for the table PM_SESSION_DATA retrived by the query pm_session_old on db nodo_online under macro AppIO
-   #    # POSITION_ACTIVATE
-   #    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-   # # [TBD] nella POSITION_ACTIVATE la colonna TOKEN_VALID_TO = current_timestamp di esecuzione della closePayment
-
-   # Scenario: FLUSSO_CP_03 (part 4)
-   #    Given the FLUSSO_CP_03 (part 3) scenario executed successfully
-   #    And the sendPaymentOutcome scenario executed successfully
-   #    And outcome with KO in sendPaymentOutcome
-   #    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-   #    Then check outcome is KO of sendPaymentOutcome response
-   #    And check faultCode is PPT_TOKEN_SCONOSCIUTO of sendPaymentOutcome response
-   #    And check description is token unknown of sendPaymentOutcome response
-   #    And wait 5 seconds for expiration
-   #    # POSITION & PAYMENT STATUS
-   #    And verify 2 record for the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value PAYING,INSERTED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 2 record for the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value PAYING,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    # POSITION_PAYMENT
-   #    And verify 1 record for the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value None of the record at column OUTCOME of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value None of the record at column FEE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value None of the record at column TRANSFER_DATE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value None of the record at column APPLICATION_DATE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    # RECEIPT
-   #    And verify 0 record for the table POSITION_RECEIPT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 0 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 0 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 0 record for the table POSITION_RECEIPT_XML retrived by the query payment_status_old on db nodo_online under macro AppIO
-
-
-   # # FLUSSO_CP_04
-   # Scenario: FLUSSO_CP_04 (part 1)
-   #    Given the nodoVerificaRPT scenario executed successfully
-   #    And the nodoAttivaRPT scenario executed successfully
-   #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-   #    Then check esito is OK of nodoAttivaRPT response
-   #    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-
-   # Scenario: FLUSSO_CP_04 (part 2)
-   #    Given the FLUSSO_CP_04 (part 1) scenario executed successfully
-   #    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-   #    Then verify the HTTP status code of informazioniPagamento response is 200
-
-   # Scenario: FLUSSO_CP_04 (part 3)
-   #    Given the FLUSSO_CP_04 (part 2) scenario executed successfully
-   #    And the closePayment scenario executed successfully
-   #    And outcome with KO in v1/closepayment
-   #    When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
-   #    Then verify the HTTP status code of v1/closepayment response is 200
-   #    And check esito is OK of v1/closepayment response
-   #    And wait 5 seconds for expiration
-
-   # Scenario: FLUSSO_CP_04 (part 4)
-   #    Given the FLUSSO_CP_04 (part 3) scenario executed successfully
-   #    And the sendPaymentOutcome scenario executed successfully
-   #    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-   #    Then check outcome is KO of sendPaymentOutcome response
-   #    And check faultCode is PPT_TOKEN_SCONOSCIUTO of sendPaymentOutcome response
-   #    And check description is token unknown of sendPaymentOutcome response
-   #    And wait 5 seconds for expiration
-   #    # POSITION & PAYMENT STATUS
-   #    And verify 2 record for the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value PAYING,INSERTED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 2 record for the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value PAYING,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    # POSITION_PAYMENT
-   #    And verify 1 record for the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value None of the record at column OUTCOME of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value None of the record at column FEE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value None of the record at column TRANSFER_DATE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value None of the record at column APPLICATION_DATE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    # RECEIPT
-   #    And verify 0 record for the table POSITION_RECEIPT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 0 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 0 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 0 record for the table POSITION_RECEIPT_XML retrived by the query payment_status_old on db nodo_online under macro AppIO
-
-
-   # # FLUSSO_CP_05
-   # Scenario: FLUSSO_CP_05 (part 1)
-   #    Given the nodoVerificaRPT scenario executed successfully
-   #    And the nodoAttivaRPT scenario executed successfully
-   #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-   #    Then check esito is OK of nodoAttivaRPT response
-   #    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-
-   # Scenario: FLUSSO_CP_05 (part 2)
-   #    Given the FLUSSO_CP_05 (part 1) scenario executed successfully
-   #    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-   #    Then verify the HTTP status code of informazioniPagamento response is 200
-
-   # Scenario: FLUSSO_CP_05 (part 3)
-   #    Given the FLUSSO_CP_05 (part 2) scenario executed successfully
-   #    And the pspNotifyPayment timeout scenario executed successfully
-   #    And the closePayment scenario executed successfully
-   #    When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
-   #    Then verify the HTTP status code of v1/closepayment response is 200
-   #    And check esito is OK of v1/closepayment response
-   #    And wait 12 seconds for expiration
-   #    # POSITION & PAYMENT STATUS
-   #    And verify 1 record for the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 4 record for the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_UNKNOWN of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value PAYMENT_UNKNOWN of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-
-   # Scenario: FLUSSO_CP_05 (part 4)
-   #    Given the FLUSSO_CP_05 (part 3) scenario executed successfully
-   #    And the sendPaymentOutcome scenario executed successfully
-   #    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-   #    Then check outcome is OK of sendPaymentOutcome response
-   #    And wait 5 seconds for expiration
-   #    # POSITION & PAYMENT STATUS
-   #    And verify 3 record for the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value PAYING,PAID,NOTIFIED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 8 record for the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_UNKNOWN,PAID,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    # POSITION_PAYMENT
-   #    And verify 1 record for the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value OK of the record at column OUTCOME of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value 2 of the record at column FEE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value NotNone of the record at column TRANSFER_DATE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value NotNone of the record at column APPLICATION_DATE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    # RECEIPT
-   #    And verify 1 record for the table POSITION_RECEIPT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 1 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 3 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 1 record for the table POSITION_RECEIPT_XML retrived by the query payment_status_old on db nodo_online under macro AppIO
-
-
-   # # FLUSSO_CP_06
-   # Scenario: FLUSSO_CP_06 (part 1)
-   #    Given the nodoVerificaRPT scenario executed successfully
-   #    And the nodoAttivaRPT scenario executed successfully
-   #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-   #    Then check esito is OK of nodoAttivaRPT response
-   #    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-
-   # Scenario: FLUSSO_CP_06 (part 2)
-   #    Given the FLUSSO_CP_06 (part 1) scenario executed successfully
-   #    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-   #    Then verify the HTTP status code of informazioniPagamento response is 200
-
-   # Scenario: FLUSSO_CP_06 (part 3)
-   #    Given the FLUSSO_CP_06 (part 2) scenario executed successfully
-   #    And the pspNotifyPayment malformata scenario executed successfully
-   #    And the closePayment scenario executed successfully
-   #    When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
-   #    Then verify the HTTP status code of v1/closepayment response is 200
-   #    And check esito is OK of v1/closepayment response
-   #    And wait 12 seconds for expiration
-   #    # POSITION & PAYMENT STATUS
-   #    And verify 1 record for the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 4 record for the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_UNKNOWN of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value PAYMENT_UNKNOWN of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-
-   # Scenario: FLUSSO_CP_06 (part 4)
-   #    Given the FLUSSO_CP_06 (part 3) scenario executed successfully
-   #    And the sendPaymentOutcome scenario executed successfully
-   #    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-   #    Then check outcome is OK of sendPaymentOutcome response
-   #    And wait 5 seconds for expiration
-   #    # POSITION & PAYMENT STATUS
-   #    And verify 3 record for the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value PAYING,PAID,NOTIFIED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 8 record for the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_UNKNOWN,PAID,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    # POSITION_PAYMENT
-   #    And verify 1 record for the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value OK of the record at column OUTCOME of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value 2 of the record at column FEE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value NotNone of the record at column TRANSFER_DATE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value NotNone of the record at column APPLICATION_DATE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    # RECEIPT
-   #    And verify 1 record for the table POSITION_RECEIPT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 1 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 3 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 1 record for the table POSITION_RECEIPT_XML retrived by the query payment_status_old on db nodo_online under macro AppIO
-
-
-   # # FLUSSO_CP_07
-   # Scenario: FLUSSO_CP_07 (part 1)
-   #    Given nodo-dei-pagamenti DEV has config parameter default_durata_estensione_token_IO set to 1000
-   #    And the nodoVerificaRPT scenario executed successfully
-   #    And the nodoAttivaRPT scenario executed successfully
-   #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-   #    Then check esito is OK of nodoAttivaRPT response
-   #    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-
-   # Scenario: FLUSSO_CP_07 (part 2)
-   #    Given the FLUSSO_CP_07 (part 1) scenario executed successfully
-   #    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-   #    Then verify the HTTP status code of informazioniPagamento response is 200
-
-   # Scenario: FLUSSO_CP_07 (part 3)
-   #    Given the FLUSSO_CP_07 (part 2) scenario executed successfully
-   #    And the pspNotifyPayment timeout scenario executed successfully
-   #    And the closePayment scenario executed successfully
-   #    When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
-   #    Then verify the HTTP status code of v1/closepayment response is 200
-   #    And check esito is OK of v1/closepayment response
-   #    And wait 12 seconds for expiration
-   #    # POSITION & PAYMENT STATUS
-   #    And verify 1 record for the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 4 record for the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_UNKNOWN of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value PAYMENT_UNKNOWN of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-
-   # Scenario: FLUSSO_CP_07 (part 4)
-   #    Given the FLUSSO_CP_07 (part 3) scenario executed successfully
-   #    When job mod3CancelV2 triggered after 0 seconds
-   #    Then verify the HTTP status code of mod3CancelV2 response is 200
-   #    And wait 5 seconds for expiration
-   #    And nodo-dei-pagamenti DEV has config parameter default_durata_estensione_token_IO set to 3600000
-   #    # POSITION & PAYMENT STATUS
-   #    And verify 2 record for the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value PAYING,INSERTED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 5 record for the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_UNKNOWN,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-
-
-   # # FLUSSO_CP_08
-   # Scenario: FLUSSO_CP_08 (part 1)
-   #    Given nodo-dei-pagamenti DEV has config parameter default_durata_token_IO set to 2000
-   #    And the nodoVerificaRPT scenario executed successfully
-   #    And the nodoAttivaRPT scenario executed successfully
-   #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-   #    Then check esito is OK of nodoAttivaRPT response
-   #    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-
-   # Scenario: FLUSSO_CP_08 (part 2)
-   #    Given the FLUSSO_CP_08 (part 1) scenario executed successfully
-   #    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-   #    Then verify the HTTP status code of informazioniPagamento response is 200
-
-   # Scenario: FLUSSO_CP_08 (part 3)
-   #    Given the FLUSSO_CP_08 (part 2) scenario executed successfully
-   #    When job mod3CancelV2 triggered after 3 seconds
-   #    Then verify the HTTP status code of mod3CancelV2 response is 200
-   #    And wait 5 seconds for expiration
-
-   # Scenario: FLUSSO_CP_08 (part 4)
-   #    Given the FLUSSO_CP_08 (part 3) scenario executed successfully
-   #    And the closePayment scenario executed successfully
-   #    When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
-   #    Then verify the HTTP status code of v1/closepayment response is 400
-   #    And check esito is KO of v1/closepayment response
-   #    And check descrizione is Esito non accettabile a token scaduto of v1/closepayment response
-   #    And wait 5 seconds for expiration
-   #    And nodo-dei-pagamenti DEV has config parameter default_durata_token_IO set to 3600000
-   #    # POSITION & PAYMENT STATUS
-   #    And verify 2 record for the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value PAYING,INSERTED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 2 record for the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value PAYING,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    # POSITION_PAYMENT
-   #    And verify 1 record for the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value None of the record at column OUTCOME of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value None of the record at column FEE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value NA of the record at column PAYMENT_CHANNEL of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value None of the record at column PAYMENT_METHOD of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value None of the record at column TRANSFER_DATE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value None of the record at column APPLICATION_DATE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value None of the record at column FLAG_PAYPAL of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    # PM_SESSION_DATA
-   #    And verify 0 record for the table PM_SESSION_DATA retrived by the query pm_session_old on db nodo_online under macro AppIO
-   #    # POSITION_ACTIVATE
-   #    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-
-
-   # # FLUSSO_CP_09
-   # Scenario: FLUSSO_CP_09 (part 1)
-   #    Given nodo-dei-pagamenti DEV has config parameter default_durata_token_IO set to 2000
-   #    And the nodoVerificaRPT scenario executed successfully
-   #    And the nodoAttivaRPT scenario executed successfully
-   #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-   #    Then check esito is OK of nodoAttivaRPT response
-   #    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-
-   # Scenario: FLUSSO_CP_09 (part 2)
-   #    Given the FLUSSO_CP_09 (part 1) scenario executed successfully
-   #    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-   #    Then verify the HTTP status code of informazioniPagamento response is 200
-   #    And wait 3 seconds for expiration
-
-   # Scenario: FLUSSO_CP_09 (part 3)
-   #    Given the FLUSSO_CP_09 (part 2) scenario executed successfully
-   #    And the closePayment scenario executed successfully
-   #    When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
-   #    Then verify the HTTP status code of v1/closepayment response is 200
-   #    And check esito is OK of v1/closepayment response
-   #    And wait 5 seconds for expiration
-   #    # POSITION & PAYMENT STATUS
-   #    And verify 1 record for the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 4 record for the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value PAYMENT_ACCEPTED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-
-   # Scenario: FLUSSO_CP_09 (part 4)
-   #    Given the FLUSSO_CP_09 (part 3) scenario executed successfully
-   #    And the sendPaymentOutcome scenario executed successfully
-   #    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-   #    Then check outcome is OK of sendPaymentOutcome response
-   #    And wait 5 seconds for expiration
-   #    And nodo-dei-pagamenti DEV has config parameter default_durata_token_IO set to 3600000
-   #    # POSITION & PAYMENT STATUS
-   #    And verify 3 record for the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value PAYING,PAID,NOTIFIED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 8 record for the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED,PAID,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    # POSITION_PAYMENT
-   #    And verify 1 record for the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value OK of the record at column OUTCOME of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value 2 of the record at column FEE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value NotNone of the record at column TRANSFER_DATE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value NotNone of the record at column APPLICATION_DATE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    # RECEIPT
-   #    And verify 1 record for the table POSITION_RECEIPT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 1 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 3 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 1 record for the table POSITION_RECEIPT_XML retrived by the query payment_status_old on db nodo_online under macro AppIO
-
-
-   # # FLUSSO_CP_10
-   # Scenario: FLUSSO_CP_10 (part 1)
-   #    Given nodo-dei-pagamenti DEV has config parameter default_durata_token_IO set to 2000
-   #    And the nodoVerificaRPT scenario executed successfully
-   #    And the nodoAttivaRPT scenario executed successfully
-   #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-   #    Then check esito is OK of nodoAttivaRPT response
-   #    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-
-   # Scenario: FLUSSO_CP_10 (part 2)
-   #    Given the FLUSSO_CP_10 (part 1) scenario executed successfully
-   #    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-   #    Then verify the HTTP status code of informazioniPagamento response is 200
-
-   # Scenario: FLUSSO_CP_10 (part 3)
-   #    Given the FLUSSO_CP_10 (part 2) scenario executed successfully
-   #    When job mod3CancelV2 triggered after 3 seconds
-   #    Then verify the HTTP status code of mod3CancelV2 response is 200
-   #    And wait 5 seconds for expiration
-
-   # Scenario: FLUSSO_CP_10 (part 4)
-   #    Given the FLUSSO_CP_10 (part 3) scenario executed successfully
-   #    And the closePayment scenario executed successfully
-   #    And outcome with KO in v1/closepayment
-   #    When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
-   #    Then verify the HTTP status code of v1/closepayment response is 400
-   #    And check esito is KO of v1/closepayment response
-   #    And check descrizione is Esito non accettabile a token scaduto of v1/closepayment response
-   #    And wait 5 seconds for expiration
-   #    And nodo-dei-pagamenti DEV has config parameter default_durata_token_IO set to 3600000
-   #    # POSITION & PAYMENT STATUS
-   #    And verify 2 record for the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value PAYING,INSERTED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 2 record for the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value PAYING,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    # POSITION_PAYMENT
-   #    And verify 1 record for the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value None of the record at column OUTCOME of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value None of the record at column FEE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value NA of the record at column PAYMENT_CHANNEL of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value None of the record at column PAYMENT_METHOD of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value None of the record at column TRANSFER_DATE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value None of the record at column APPLICATION_DATE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value None of the record at column FLAG_PAYPAL of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    # PM_SESSION_DATA
-   #    And verify 0 record for the table PM_SESSION_DATA retrived by the query pm_session_old on db nodo_online under macro AppIO
-   #    # POSITION_ACTIVATE
-   #    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-
-
-   # # FLUSSO_CP_11
-   # Scenario: FLUSSO_CP_11 (part 1)
-   #    Given the nodoVerificaRPT scenario executed successfully
-   #    And the nodoAttivaRPT scenario executed successfully
-   #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-   #    Then check esito is OK of nodoAttivaRPT response
-   #    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-
-   # Scenario: FLUSSO_CP_11 (part 2)
-   #    Given the FLUSSO_CP_11 (part 1) scenario executed successfully
-   #    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-   #    Then verify the HTTP status code of informazioniPagamento response is 200
-
-   # Scenario: FLUSSO_CP_11 (part 3)
-   #    Given the FLUSSO_CP_11 (part 2) scenario executed successfully
-   #    And the closePayment scenario executed successfully
-   #    When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
-   #    Then verify the HTTP status code of v1/closepayment response is 200
-   #    And check esito is OK of v1/closepayment response
-
-   # Scenario: FLUSSO_CP_11 (part 4)
-   #    Given the FLUSSO_CP_11 (part 3) scenario executed successfully
-   #    And the closePayment scenario executed successfully
-   #    And pspTransactionId with $psp_transaction_id in v1/closepayment
-   #    And transactionId with $transaction_id in v1/closepayment
-   #    When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
-   #    Then verify the HTTP status code of v1/closepayment response is 422
-   #    And check esito is KO of v1/closepayment response
-   #    And check descrizione is Esito già acquisito of v1/closepayment response
-   #    And wait 5 seconds for expiration
-
-   # Scenario: FLUSSO_CP_11 (part 5)
-   #    Given the FLUSSO_CP_11 (part 4) scenario executed successfully
-   #    And the sendPaymentOutcome scenario executed successfully
-   #    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-   #    Then check outcome is OK of sendPaymentOutcome response
-   #    And wait 5 seconds for expiration
-   #    # POSITION & PAYMENT STATUS
-   #    And verify 3 record for the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value PAYING,PAID,NOTIFIED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 8 record for the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED,PAID,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    # POSITION_PAYMENT
-   #    And verify 1 record for the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value OK of the record at column OUTCOME of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value 2 of the record at column FEE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value NotNone of the record at column TRANSFER_DATE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value NotNone of the record at column APPLICATION_DATE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    # RECEIPT
-   #    And verify 1 record for the table POSITION_RECEIPT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 1 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 3 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 1 record for the table POSITION_RECEIPT_XML retrived by the query payment_status_old on db nodo_online under macro AppIO
-
-
-   # # FLUSSO_CP_12
-   # Scenario: FLUSSO_CP_12 (part 1)
-   #    Given the nodoVerificaRPT scenario executed successfully
-   #    And the nodoAttivaRPT scenario executed successfully
-   #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-   #    Then check esito is OK of nodoAttivaRPT response
-   #    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-
-   # Scenario: FLUSSO_CP_12 (part 2)
-   #    Given the FLUSSO_CP_12 (part 1) scenario executed successfully
-   #    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-   #    Then verify the HTTP status code of informazioniPagamento response is 200
-
-   # Scenario: FLUSSO_CP_12 (part 3)
-   #    Given the FLUSSO_CP_12 (part 2) scenario executed successfully
-   #    And the closePayment scenario executed successfully
-   #    And outcome with KO in v1/closepayment
-   #    When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
-   #    Then verify the HTTP status code of v1/closepayment response is 200
-   #    And check esito is OK of v1/closepayment response
-
-   # Scenario: FLUSSO_CP_12 (part 4)
-   #    Given the FLUSSO_CP_12 (part 3) scenario executed successfully
-   #    And the closePayment scenario executed successfully
-   #    And outcome with KO in v1/closepayment
-   #    And pspTransactionId with $psp_transaction_id in v1/closepayment
-   #    And transactionId with $transaction_id in v1/closepayment
-   #    When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
-   #    Then verify the HTTP status code of v1/closepayment response is 400
-   #    And check esito is KO of v1/closepayment response
-   #    And check descrizione is Esito non accettabile a token scaduto of v1/closepayment response
-   #    And wait 5 seconds for expiration
-   #    # POSITION & PAYMENT STATUS
-   #    And verify 2 record for the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value PAYING,INSERTED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 2 record for the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value PAYING,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-
-
-   # # FLUSSO_CP_13
-   # Scenario: FLUSSO_CP_13 (part 1)
-   #    Given the nodoVerificaRPT scenario executed successfully
-   #    And the nodoAttivaRPT scenario executed successfully
-   #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-   #    Then check esito is OK of nodoAttivaRPT response
-   #    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-
-   # Scenario: FLUSSO_CP_13 (part 2)
-   #    Given the FLUSSO_CP_13 (part 1) scenario executed successfully
-   #    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-   #    Then verify the HTTP status code of informazioniPagamento response is 200
-
-   # Scenario: FLUSSO_CP_13 (part 3)
-   #    Given the FLUSSO_CP_13 (part 2) scenario executed successfully
-   #    And the closePayment scenario executed successfully
-   #    When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
-   #    Then verify the HTTP status code of v1/closepayment response is 200
-   #    And check esito is OK of v1/closepayment response
-
-   # Scenario: FLUSSO_CP_13 (part 4)
-   #    Given the FLUSSO_CP_13 (part 3) scenario executed successfully
-   #    And the closePayment scenario executed successfully
-   #    And outcome with KO in v1/closepayment
-   #    And pspTransactionId with $psp_transaction_id in v1/closepayment
-   #    And transactionId with $transaction_id in v1/closepayment
-   #    When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
-   #    Then verify the HTTP status code of v1/closepayment response is 422
-   #    And check esito is KO of v1/closepayment response
-   #    And check descrizione is Esito già acquisito of v1/closepayment response
-   #    And wait 5 seconds for expiration
-
-   # Scenario: FLUSSO_CP_13 (part 5)
-   #    Given the FLUSSO_CP_13 (part 4) scenario executed successfully
-   #    And the sendPaymentOutcome scenario executed successfully
-   #    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-   #    Then check outcome is OK of sendPaymentOutcome response
-   #    And wait 5 seconds for expiration
-   #    # POSITION & PAYMENT STATUS
-   #    And verify 3 record for the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value PAYING,PAID,NOTIFIED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 8 record for the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED,PAID,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    # POSITION_PAYMENT
-   #    And verify 1 record for the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value OK of the record at column OUTCOME of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value 2 of the record at column FEE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value NotNone of the record at column TRANSFER_DATE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value NotNone of the record at column APPLICATION_DATE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    # RECEIPT
-   #    And verify 1 record for the table POSITION_RECEIPT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 1 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 3 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 1 record for the table POSITION_RECEIPT_XML retrived by the query payment_status_old on db nodo_online under macro AppIO
-
-
-   # # FLUSSO_CP_14
-   # Scenario: FLUSSO_CP_14 (part 1)
-   #    Given the nodoVerificaRPT scenario executed successfully
-   #    And the nodoAttivaRPT scenario executed successfully
-   #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-   #    Then check esito is OK of nodoAttivaRPT response
-   #    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-
-   # Scenario: FLUSSO_CP_14 (part 2)
-   #    Given the FLUSSO_CP_14 (part 1) scenario executed successfully
-   #    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-   #    Then verify the HTTP status code of informazioniPagamento response is 200
-
-   # Scenario: FLUSSO_CP_14 (part 3)
-   #    Given the FLUSSO_CP_14 (part 2) scenario executed successfully
-   #    And the closePayment scenario executed successfully
-   #    And outcome with KO in v1/closepayment
-   #    When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
-   #    Then verify the HTTP status code of v1/closepayment response is 200
-   #    And check esito is OK of v1/closepayment response
-
-   # Scenario: FLUSSO_CP_14 (part 4)
-   #    Given the FLUSSO_CP_14 (part 3) scenario executed successfully
-   #    And the closePayment scenario executed successfully
-   #    And pspTransactionId with $psp_transaction_id in v1/closepayment
-   #    And transactionId with $transaction_id in v1/closepayment
-   #    When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
-   #    Then verify the HTTP status code of v1/closepayment response is 400
-   #    And check esito is KO of v1/closepayment response
-   #    And check descrizione is Esito non accettabile a token scaduto of v1/closepayment response
-
-
-   # # FLUSSO_CP_15
-   # Scenario: FLUSSO_CP_15 (part 1)
-   #    Given the nodoVerificaRPT scenario executed successfully
-   #    And the nodoAttivaRPT scenario executed successfully
-   #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-   #    Then check esito is OK of nodoAttivaRPT response
-   #    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-
-   # Scenario: FLUSSO_CP_15 (part 2)
-   #    Given the FLUSSO_CP_15 (part 1) scenario executed successfully
-   #    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-   #    Then verify the HTTP status code of informazioniPagamento response is 200
-
-   # Scenario: FLUSSO_CP_15 (part 3)
-   #    Given the FLUSSO_CP_15 (part 2) scenario executed successfully
-   #    And the closePayment scenario executed successfully
-   #    When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
-   #    Then verify the HTTP status code of v1/closepayment response is 200
-   #    And check esito is OK of v1/closepayment response
-   #    And wait 5 seconds for expiration
-
-   # Scenario: FLUSSO_CP_15 (part 4)
-   #    Given the FLUSSO_CP_15 (part 3) scenario executed successfully
-   #    And the sendPaymentOutcome scenario executed successfully
-   #    And outcome with KO in sendPaymentOutcome
-   #    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-   #    Then check outcome is KO of sendPaymentOutcome response
-   #    And check faultCode is PPT_SEMANTICA of sendPaymentOutcome response
-   #    And check description is Esito discorde of sendPaymentOutcome response
-
-   # Scenario: FLUSSO_CP_15 (part 5)
-   #    Given the FLUSSO_CP_15 (part 4) scenario executed successfully
-   #    And the sendPaymentOutcome scenario executed successfully
-   #    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-   #    Then check outcome is OK of sendPaymentOutcome response
-   #    And wait 5 seconds for expiration
-   #    # POSITION & PAYMENT STATUS
-   #    And verify 3 record for the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value PAYING,PAID,NOTIFIED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 8 record for the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED,PAID,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    # POSITION_PAYMENT
-   #    And verify 1 record for the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value OK of the record at column OUTCOME of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value 2 of the record at column FEE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value NotNone of the record at column TRANSFER_DATE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value NotNone of the record at column APPLICATION_DATE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    # RECEIPT
-   #    And verify 1 record for the table POSITION_RECEIPT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 1 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 3 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 1 record for the table POSITION_RECEIPT_XML retrived by the query payment_status_old on db nodo_online under macro AppIO
-
-
-   # # FLUSSO_CP_16
-   # Scenario: FLUSSO_CP_16 (part 1)
-   #    Given the nodoVerificaRPT scenario executed successfully
-   #    And the nodoAttivaRPT scenario executed successfully
-   #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-   #    Then check esito is OK of nodoAttivaRPT response
-   #    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-
-   # Scenario: FLUSSO_CP_16 (part 2)
-   #    Given the FLUSSO_CP_16 (part 1) scenario executed successfully
-   #    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-   #    Then verify the HTTP status code of informazioniPagamento response is 200
-
-   # Scenario: FLUSSO_CP_16 (part 3)
-   #    Given the FLUSSO_CP_16 (part 2) scenario executed successfully
-   #    And the closePayment scenario executed successfully
-   #    When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
-   #    Then verify the HTTP status code of v1/closepayment response is 200
-   #    And check esito is OK of v1/closepayment response
-   #    And wait 5 seconds for expiration
-
-   # Scenario: FLUSSO_CP_16 (part 4)
-   #    Given the FLUSSO_CP_16 (part 3) scenario executed successfully
-   #    And the sendPaymentOutcome scenario executed successfully
-   #    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-   #    Then check outcome is OK of sendPaymentOutcome response
-   #    And wait 5 seconds for expiration
-   #    # POSITION & PAYMENT STATUS
-   #    And verify 3 record for the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value PAYING,PAID,NOTIFIED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 8 record for the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED,PAID,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    # POSITION_PAYMENT
-   #    And verify 1 record for the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value OK of the record at column OUTCOME of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value 2 of the record at column FEE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value NotNone of the record at column TRANSFER_DATE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value NotNone of the record at column APPLICATION_DATE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    # RECEIPT
-   #    And verify 1 record for the table POSITION_RECEIPT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 1 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 3 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 1 record for the table POSITION_RECEIPT_XML retrived by the query payment_status_old on db nodo_online under macro AppIO
-
-   # Scenario: FLUSSO_CP_16 (part 5)
-   #    Given the FLUSSO_CP_16 (part 4) scenario executed successfully
-   #    And the sendPaymentOutcome scenario executed successfully
-   #    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-   #    Then check outcome is KO of sendPaymentOutcome response
-   #    And check faultCode is PPT_ESITO_GIA_ACQUISITO of sendPaymentOutcome response
-   #    And check faultString is L'esito del pagamento risulta già acquisito dal sistema pagoPA. of sendPaymentOutcome response
-
-
-   # # FLUSSO_CP_17
-   # Scenario: FLUSSO_CP_17 (part 1)
-   #    Given the nodoVerificaRPT scenario executed successfully
-   #    And the nodoAttivaRPT scenario executed successfully
-   #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-   #    Then check esito is OK of nodoAttivaRPT response
-   #    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-
-   # Scenario: FLUSSO_CP_17 (part 2)
-   #    Given the FLUSSO_CP_17 (part 1) scenario executed successfully
-   #    And the closePayment scenario executed successfully
-   #    When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
-   #    Then verify the HTTP status code of v1/closepayment response is 200
-   #    And check esito is OK of v1/closepayment response
-   #    And wait 5 seconds for expiration
-
-   # Scenario: FLUSSO_CP_17 (part 3)
-   #    Given the FLUSSO_CP_17 (part 2) scenario executed successfully
-   #    And the sendPaymentOutcome scenario executed successfully
-   #    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-   #    Then check outcome is OK of sendPaymentOutcome response
-   #    And wait 5 seconds for expiration
-   #    # POSITION & PAYMENT STATUS
-   #    And verify 3 record for the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value PAYING,PAID,NOTIFIED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 8 record for the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED,PAID,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    # POSITION_PAYMENT
-   #    And verify 1 record for the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value OK of the record at column OUTCOME of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value 2 of the record at column FEE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value NotNone of the record at column TRANSFER_DATE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value NotNone of the record at column APPLICATION_DATE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    # RECEIPT
-   #    And verify 1 record for the table POSITION_RECEIPT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 1 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 3 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 1 record for the table POSITION_RECEIPT_XML retrived by the query payment_status_old on db nodo_online under macro AppIO
-
-
-   # # FLUSSO_CP_18
-   # Scenario: FLUSSO_CP_18 (part 1)
-   #    Given the nodoVerificaRPT scenario executed successfully
-   #    And the nodoAttivaRPT scenario executed successfully
-   #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-   #    Then check esito is OK of nodoAttivaRPT response
-   #    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-
-   # Scenario: FLUSSO_CP_18 (part 2)
-   #    Given the FLUSSO_CP_18 (part 1) scenario executed successfully
-   #    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-   #    Then verify the HTTP status code of informazioniPagamento response is 200
-
-   # Scenario: FLUSSO_CP_18 (part 3)
-   #    Given the FLUSSO_CP_18 (part 2) scenario executed successfully
-   #    And the closePayment scenario executed successfully
-   #    When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
-   #    Then verify the HTTP status code of v1/closepayment response is 200
-   #    And check esito is OK of v1/closepayment response
-   #    And wait 5 seconds for expiration
-
-   # Scenario: FLUSSO_CP_18 (part 4)
-   #    Given the FLUSSO_CP_18 (part 3) scenario executed successfully
-   #    And the sendPaymentOutcome scenario executed successfully
-   #    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-   #    Then check outcome is OK of sendPaymentOutcome response
-   #    And wait 5 seconds for expiration
-   #    # POSITION & PAYMENT STATUS
-   #    And verify 3 record for the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value PAYING,PAID,NOTIFIED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 8 record for the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED,PAID,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    # POSITION_PAYMENT
-   #    And verify 1 record for the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value OK of the record at column OUTCOME of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value 2 of the record at column FEE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value NotNone of the record at column TRANSFER_DATE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value NotNone of the record at column APPLICATION_DATE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    # RECEIPT
-   #    And verify 1 record for the table POSITION_RECEIPT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 1 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 3 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 1 record for the table POSITION_RECEIPT_XML retrived by the query payment_status_old on db nodo_online under macro AppIO
-
-   # Scenario: FLUSSO_CP_18 (part 5)
-   #    Given the FLUSSO_CP_18 (part 4) scenario executed successfully
-   #    And the closePayment scenario executed successfully
-   #    And outcome with KO in v1/closepayment
-   #    When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
-   #    Then verify the HTTP status code of v1/closepayment response is 422
-   #    And check esito is KO of v1/closepayment response
-   #    And check descrizione is Esito già acquisito of v1/closepayment response
-
-
-   # # FLUSSO_CP_19
-   # Scenario: FLUSSO_CP_19 (part 1)
-   #    Given the nodoVerificaRPT scenario executed successfully
-   #    And the nodoAttivaRPT scenario executed successfully
-   #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-   #    Then check esito is OK of nodoAttivaRPT response
-   #    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-
-   # Scenario: FLUSSO_CP_19 (part 2)
-   #    Given the FLUSSO_CP_19 (part 1) scenario executed successfully
-   #    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-   #    Then verify the HTTP status code of informazioniPagamento response is 200
-
-   # Scenario: FLUSSO_CP_19 (part 3)
-   #    Given the FLUSSO_CP_19 (part 2) scenario executed successfully
-   #    And the closePayment scenario executed successfully
-   #    When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
-   #    Then verify the HTTP status code of v1/closepayment response is 200
-   #    And check esito is OK of v1/closepayment response
-   #    And wait 5 seconds for expiration
-
-   # Scenario: FLUSSO_CP_19 (part 4)
-   #    Given the FLUSSO_CP_19 (part 3) scenario executed successfully
-   #    When PM sends REST GET avanzamentoPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-   #    Then verify the HTTP status code of avanzamentoPagamento response is 200
-   #    And check esito is OK of avanzamentoPagamento response
-
-
-   # # FLUSSO_CP_20
-   # Scenario: FLUSSO_CP_20 (part 1)
-   #    Given the nodoVerificaRPT scenario executed successfully
-   #    And the nodoAttivaRPT scenario executed successfully
-   #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-   #    Then check esito is OK of nodoAttivaRPT response
-   #    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-
-   # Scenario: FLUSSO_CP_20 (part 2)
-   #    Given the FLUSSO_CP_20 (part 1) scenario executed successfully
-   #    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-   #    Then verify the HTTP status code of informazioniPagamento response is 200
-
-   # Scenario: FLUSSO_CP_20 (part 3)
-   #    Given the FLUSSO_CP_20 (part 2) scenario executed successfully
-   #    And the pspNotifyPayment timeout scenario executed successfully
-   #    And the closePayment scenario executed successfully
-   #    When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
-   #    Then verify the HTTP status code of v1/closepayment response is 200
-   #    And check esito is OK of v1/closepayment response
-   #    And wait 12 seconds for expiration
-
-   # Scenario: FLUSSO_CP_20 (part 4)
-   #    Given the FLUSSO_CP_20 (part 3) scenario executed successfully
-   #    When PM sends REST GET avanzamentoPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-   #    Then verify the HTTP status code of avanzamentoPagamento response is 200
-   #    And check esito is ACK_UNKNOWN of avanzamentoPagamento response
-
-
-   # # FLUSSO_CP_21
-   # Scenario: FLUSSO_CP_21 (part 1)
-   #    Given the nodoVerificaRPT scenario executed successfully
-   #    And the nodoAttivaRPT scenario executed successfully
-   #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-   #    Then check esito is OK of nodoAttivaRPT response
-   #    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-
-   # Scenario: FLUSSO_CP_21 (part 2)
-   #    Given the FLUSSO_CP_21 (part 1) scenario executed successfully
-   #    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-   #    Then verify the HTTP status code of informazioniPagamento response is 200
-
-   # Scenario: FLUSSO_CP_21 (part 3)
-   #    Given the FLUSSO_CP_21 (part 2) scenario executed successfully
-   #    And the closePayment scenario executed successfully
-   #    When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
-   #    Then verify the HTTP status code of v1/closepayment response is 200
-   #    And check esito is OK of v1/closepayment response
-   #    And wait 5 seconds for expiration
-
-   # Scenario: FLUSSO_CP_21 (part 4)
-   #    Given the FLUSSO_CP_21 (part 3) scenario executed successfully
-   #    And the sendPaymentOutcome scenario executed successfully
-   #    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-   #    Then check outcome is OK of sendPaymentOutcome response
-   #    And wait 5 seconds for expiration
-
-   # Scenario: FLUSSO_CP_21 (part 5)
-   #    Given the FLUSSO_CP_21 (part 4) scenario executed successfully
-   #    When PM sends REST GET avanzamentoPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-   #    Then verify the HTTP status code of avanzamentoPagamento response is 200
-   #    And check esito is OK of avanzamentoPagamento response
-
-
-   # # FLUSSO_CP_22
-   # Scenario: FLUSSO_CP_22 (part 1)
-   #    Given the nodoVerificaRPT scenario executed successfully
-   #    And the nodoAttivaRPT scenario executed successfully
-   #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-   #    Then check esito is OK of nodoAttivaRPT response
-   #    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-
-   # Scenario: FLUSSO_CP_22 (part 2)
-   #    Given the FLUSSO_CP_22 (part 1) scenario executed successfully
-   #    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-   #    Then verify the HTTP status code of informazioniPagamento response is 200
-
-   # Scenario: FLUSSO_CP_22 (part 3)
-   #    Given the FLUSSO_CP_22 (part 2) scenario executed successfully
-   #    And the closePayment scenario executed successfully
-   #    And outcome with KO in v1/closepayment
-   #    When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
-   #    Then verify the HTTP status code of v1/closepayment response is 200
-   #    And check esito is OK of v1/closepayment response
-   #    And wait 5 seconds for expiration
-
-   # Scenario: FLUSSO_CP_22 (part 4)
-   #    Given the FLUSSO_CP_22 (part 3) scenario executed successfully
-   #    When PM sends REST GET avanzamentoPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-   #    Then verify the HTTP status code of avanzamentoPagamento response is 200
-   #    And check esito is KO of avanzamentoPagamento response
-
-
-   # # FLUSSO_CP_23/24
-   # Scenario: FLUSSO_CP_23 (part 1)
-   #    Given the nodoVerificaRPT scenario executed successfully
-   #    And the nodoAttivaRPT scenario executed successfully
-   #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-   #    Then check esito is OK of nodoAttivaRPT response
-   #    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-
-   # Scenario: FLUSSO_CP_23 (part 2)
-   #    Given the FLUSSO_CP_23 (part 1) scenario executed successfully
-   #    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-   #    Then verify the HTTP status code of informazioniPagamento response is 200
-
-   # Scenario: FLUSSO_CP_23 (part 3)
-   #    Given the FLUSSO_CP_23 (part 2) scenario executed successfully
-   #    And the closePayment scenario executed successfully
-   #    And outcome with KO in v1/closepayment
-   #    When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
-   #    Then verify the HTTP status code of v1/closepayment response is 200
-   #    And check esito is OK of v1/closepayment response
-   #    And wait 5 seconds for expiration
-
-   # Scenario: FLUSSO_CP_23 (part 4)
-   #    Given the FLUSSO_CP_23 (part 3) scenario executed successfully
-   #    And the nodoAttivaRPT scenario executed successfully
-   #    And noticeNumber with 311$iuv in nodoAttivaRPT
-   #    And creditorReferenceId with 11$iuv in paaAttivaRPT
-   #    And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
-   #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-   #    Then check esito is OK of nodoAttivaRPT response
-
-
-   # # FLUSSO_CP_25
-   # Scenario: FLUSSO_CP_25 (part 1)
-   #    Given the nodoVerificaRPT scenario executed successfully
-   #    And the nodoAttivaRPT scenario executed successfully
-   #    And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
-   #       """
-   #       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
-   #       <soapenv:Header/>
-   #       <soapenv:Body>
-   #       <paf:paaAttivaRPTRes>
-   #       <outcome>KO</outcome>
-   #       <fault>
-   #       <faultCode>PAA_SINTASSI_EXTRAXSD</faultCode>
-   #       <faultString>errore sintattico PA</faultString>
-   #       <id>1</id>
-   #       <description>Errore sintattico emesso dalla PA</description>
-   #       </fault>
-   #       </paf:paaAttivaRPTRes>
-   #       </soapenv:Body>
-   #       </soapenv:Envelope>
-   #       """
-   #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-   #    Then check outcome is KO of nodoAttivaRPT response
-   #    And check faultCode is PPT_ERRORE_EMESSO_DA_PAA of nodoAttivaRPT response
-   #    And execution query payment_status_old to get value on the table POSITION_ACTIVATE, with the columns * under macro AppIO with db name nodo_online
-   #    And through the query payment_status_old retrieve param paymentToken at position 6 and save it under the key payToken
-
-   # Scenario: FLUSSO_CP_25 (part 2)
-   #    Given the FLUSSO_CP_25 (part 1) scenario executed successfully
-   #    When PM sends REST GET informazioniPagamento?idPagamento=$payToken to nodo-dei-pagamenti
-   #    Then verify the HTTP status code of informazioniPagamento response is 404
-   #    And check error is Il pagamento non esiste of informazioniPagamento response
-
-   # Scenario: FLUSSO_CP_25 (part 3)
-   #    Given the FLUSSO_CP_25 (part 2) scenario executed successfully
-   #    And the closePayment payToken scenario executed successfully
-   #    When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
-   #    Then verify the HTTP status code of v1/closepayment response is 404
-   #    And check esito is KO of v1/closepayment response
-   #    And check descrizione is Il Pagamento indicato non esiste of v1/closepayment response
-   #    And wait 5 seconds for expiration
-
-   # Scenario: FLUSSO_CP_25 (part 4)
-   #    Given the FLUSSO_CP_25 (part 3) scenario executed successfully
-   #    And the sendPaymentOutcome payToken scenario executed successfully
-   #    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-   #    Then check outcome is KO of sendPaymentOutcome response
-   #    And check faultCode is PPT_TOKEN_SCONOSCIUTO of sendPaymentOutcome response
-
-
-   # # FLUSSO_CP_26
-   # Scenario: FLUSSO_CP_26 (part 1)
-   #    Given the nodoVerificaRPT scenario executed successfully
-   #    And the nodoAttivaRPT scenario executed successfully
-   #    And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
-   #       """
-   #       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
-   #       <soapenv:Header/>
-   #       <soapenv:Body>
-   #       <paf:paaAttivaRPTRes>
-   #       <outcome>KO</outcome>
-   #       <fault>
-   #       <faultCode>PAA_SINTASSI_EXTRAXSD</faultCode>
-   #       <faultString>errore sintattico PA</faultString>
-   #       <id>1</id>
-   #       <description>Errore sintattico emesso dalla PA</description>
-   #       </fault>
-   #       </paf:paaAttivaRPTRes>
-   #       </soapenv:Body>
-   #       </soapenv:Envelope>
-   #       """
-   #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-   #    Then check outcome is KO of nodoAttivaRPT response
-   #    And check faultCode is PPT_ERRORE_EMESSO_DA_PAA of nodoAttivaRPT response
-   #    And execution query payment_status_old to get value on the table POSITION_ACTIVATE, with the columns * under macro AppIO with db name nodo_online
-   #    And through the query payment_status_old retrieve param paymentToken at position 6 and save it under the key payToken
-
-   # Scenario: FLUSSO_CP_26 (part 2)
-   #    Given the FLUSSO_CP_26 (part 1) scenario executed successfully
-   #    When PM sends REST GET informazioniPagamento?idPagamento=$payToken to nodo-dei-pagamenti
-   #    Then verify the HTTP status code of informazioniPagamento response is 404
-   #    And check error is Il pagamento non esiste of informazioniPagamento response
-
-   # Scenario: FLUSSO_CP_26 (part 3)
-   #    Given the FLUSSO_CP_26 (part 2) scenario executed successfully
-   #    And the closePayment payToken scenario executed successfully
-   #    When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
-   #    Then verify the HTTP status code of v1/closepayment response is 404
-   #    And check esito is KO of v1/closepayment response
-   #    And check descrizione is Il Pagamento indicato non esiste of v1/closepayment response
-   #    And wait 5 seconds for expiration
-
-   # Scenario: FLUSSO_CP_26 (part 4)
-   #    Given the FLUSSO_CP_26 (part 3) scenario executed successfully
-   #    And the sendPaymentOutcome payToken scenario executed successfully
-   #    And outcome with KO in sendPaymentOutcome
-   #    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-   #    Then check outcome is KO of sendPaymentOutcome response
-   #    And check faultCode is PPT_TOKEN_SCONOSCIUTO of sendPaymentOutcome response
-
-
-   # # FLUSSO_CP_27
-   # Scenario: FLUSSO_CP_27 (part 1)
-   #    Given the nodoVerificaRPT scenario executed successfully
-   #    And the nodoAttivaRPT scenario executed successfully
-   #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-   #    Then check esito is OK of nodoAttivaRPT response
-   #    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-
-   # Scenario: FLUSSO_CP_27 (part 2)
-   #    Given the FLUSSO_CP_27 (part 1) scenario executed successfully
-   #    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-   #    Then verify the HTTP status code of informazioniPagamento response is 200
-
-   # Scenario: FLUSSO_CP_27 (part 3)
-   #    Given the FLUSSO_CP_27 (part 2) scenario executed successfully
-   #    And the pspNotifyPayment timeout scenario executed successfully
-   #    And delay with 8000 in pspNotifyPayment
-   #    And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
-   #    And the closePayment scenario executed successfully
-   #    When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
-   #    Then verify the HTTP status code of v1/closepayment response is 200
-   #    And check esito is OK of v1/closepayment response
-
-   # Scenario: FLUSSO_CP_27 (part 4)
-   #    Given the FLUSSO_CP_27 (part 3) scenario executed successfully
-   #    When PM sends REST GET avanzamentoPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-   #    Then verify the HTTP status code of avanzamentoPagamento response is 200
-   #    And check esito is ACK_UNKNOWN of avanzamentoPagamento response
-
-
-   # # FLUSSO_CP_28
-   # Scenario: FLUSSO_CP_28 (part 1)
-   #    Given the nodoVerificaRPT scenario executed successfully
-   #    And the nodoAttivaRPT scenario executed successfully
-   #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-   #    Then check esito is OK of nodoAttivaRPT response
-   #    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-
-   # Scenario: FLUSSO_CP_28 (part 2)
-   #    Given the FLUSSO_CP_28 (part 1) scenario executed successfully
-   #    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-   #    Then verify the HTTP status code of informazioniPagamento response is 200
-
-   # Scenario: FLUSSO_CP_28 (part 3)
-   #    Given the FLUSSO_CP_28 (part 2) scenario executed successfully
-   #    And the closePayment KO scenario executed successfully
-   #    When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
-   #    Then verify the HTTP status code of v1/closepayment response is 200
-   #    And check esito is OK of v1/closepayment response
-   #    And wait 5 seconds for expiration
-   #    # POSITION & PAYMENT STATUS
-   #    And verify 2 record for the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value PAYING,INSERTED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 2 record for the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value PAYING,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    # POSITION_PAYMENT
-   #    And verify 1 record for the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value 002$iuv of the record at column NOTICE_ID of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value $iuv of the record at column CREDITOR_REFERENCE_ID of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value #creditor_institution_code_old# of the record at column BROKER_PA_ID of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value #id_station_old# of the record at column STATION_ID of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value 2 of the record at column STATION_VERSION of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value #psp_AGID# of the record at column PSP_ID of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value #broker_AGID# of the record at column BROKER_PSP_ID of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value #canale_AGID# of the record at column CHANNEL_ID of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value None of the record at column IDEMPOTENCY_KEY of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value 10 of the record at column AMOUNT of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value None of the record at column FEE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value None of the record at column OUTCOME of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value BPAY of the record at column PAYMENT_METHOD of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value WISP of the record at column PAYMENT_CHANNEL of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value None of the record at column TRANSFER_DATE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value None of the record at column APPLICATION_DATE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    #And checks the value NotNone of the record at column PAYER_ID of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value NotNone of the record at column FK_PAYMENT_PLAN of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value None of the record at column RPT_ID of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value MOD3 of the record at column PAYMENT_TYPE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value None of the record at column CARRELLO_ID of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value None of the record at column ORIGINAL_PAYMENT_TOKEN of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value Y of the record at column FLAG_IO of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value Y of the record at column RICEVUTA_PM of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value N of the record at column FLAG_PAYPAL of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    # PM_SESSION_DATA
-   #    And verify 0 record for the table PM_SESSION_DATA retrived by the query pm_session_old on db nodo_online under macro AppIO
-   #    # POSITION_ACTIVATE
-   #    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-   #    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-
-   # Scenario: FLUSSO_CP_28 (part 4)
-   #    Given the FLUSSO_CP_28 (part 3) scenario executed successfully
-   #    And the sendPaymentOutcome scenario executed successfully
-   #    And outcome with KO in sendPaymentOutcome
-   #    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-   #    Then check outcome is KO of sendPaymentOutcome response
-   #    And check faultCode is PPT_TOKEN_SCONOSCIUTO of sendPaymentOutcome response
+# [TBD] check RECEIPT_XML content nella POSITION_RECEIPT_XML (vedi PR Flow_closePaymentV1_ok_spo_ok)
+
+
+# # FLUSSO_CP_02
+# Scenario: FLUSSO_CP_02 (part 1)
+#    Given the nodoVerificaRPT scenario executed successfully
+#    And the nodoAttivaRPT scenario executed successfully
+#    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
+#    Then check esito is OK of nodoAttivaRPT response
+#    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+
+# Scenario: FLUSSO_CP_02 (part 2)
+#    Given the FLUSSO_CP_02 (part 1) scenario executed successfully
+#    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
+#    Then verify the HTTP status code of informazioniPagamento response is 200
+
+# Scenario: FLUSSO_CP_02 (part 3)
+#    Given the FLUSSO_CP_02 (part 2) scenario executed successfully
+#    And the closePayment scenario executed successfully
+#    When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
+#    Then verify the HTTP status code of v1/closepayment response is 200
+#    And check esito is OK of v1/closepayment response
+#    And wait 5 seconds for expiration
+
+# Scenario: FLUSSO_CP_02 (part 4)
+#    Given the FLUSSO_CP_02 (part 3) scenario executed successfully
+#    And the sendPaymentOutcome scenario executed successfully
+#    And outcome with KO in sendPaymentOutcome
+#    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+#    Then check outcome is KO of sendPaymentOutcome response
+#    And check faultCode is PPT_SEMANTICA of sendPaymentOutcome response
+#    And check description is Esito discorde of sendPaymentOutcome response
+#    And wait 5 seconds for expiration
+#    # POSITION & PAYMENT STATUS
+#    And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value PAYMENT_ACCEPTED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 1 record for the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 4 record for the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    # POSITION_PAYMENT
+#    And verify 1 record for the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value None of the record at column OUTCOME of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value None of the record at column FEE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value None of the record at column TRANSFER_DATE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value None of the record at column APPLICATION_DATE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    # RECEIPT
+#    And verify 0 record for the table POSITION_RECEIPT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 0 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 0 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 0 record for the table POSITION_RECEIPT_XML retrived by the query payment_status_old on db nodo_online under macro AppIO
+
+
+# # FLUSSO_CP_03
+# Scenario: FLUSSO_CP_03 (part 1)
+#    Given the nodoVerificaRPT scenario executed successfully
+#    And the nodoAttivaRPT scenario executed successfully
+#    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
+#    Then check esito is OK of nodoAttivaRPT response
+#    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+
+# Scenario: FLUSSO_CP_03 (part 2)
+#    Given the FLUSSO_CP_03 (part 1) scenario executed successfully
+#    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
+#    Then verify the HTTP status code of informazioniPagamento response is 200
+
+# Scenario: FLUSSO_CP_03 (part 3)
+#    Given the FLUSSO_CP_03 (part 2) scenario executed successfully
+#    And the closePayment scenario executed successfully
+#    And outcome with KO in v1/closepayment
+#    When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
+#    Then verify the HTTP status code of v1/closepayment response is 200
+#    And check esito is OK of v1/closepayment response
+#    And wait 5 seconds for expiration
+#    # POSITION & PAYMENT STATUS
+#    And verify 2 record for the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value PAYING,INSERTED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 2 record for the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value PAYING,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    # POSITION_PAYMENT
+#    And verify 1 record for the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value 002$iuv of the record at column NOTICE_ID of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value $iuv of the record at column CREDITOR_REFERENCE_ID of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value #creditor_institution_code_old# of the record at column BROKER_PA_ID of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value #id_station_old# of the record at column STATION_ID of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value 2 of the record at column STATION_VERSION of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value #psp_AGID# of the record at column PSP_ID of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value #broker_AGID# of the record at column BROKER_PSP_ID of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value #canale_AGID# of the record at column CHANNEL_ID of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value None of the record at column IDEMPOTENCY_KEY of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value 10 of the record at column AMOUNT of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value None of the record at column FEE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value None of the record at column OUTCOME of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value BPAY of the record at column PAYMENT_METHOD of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value WISP of the record at column PAYMENT_CHANNEL of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value None of the record at column TRANSFER_DATE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value None of the record at column APPLICATION_DATE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    #And checks the value NotNone of the record at column PAYER_ID of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value NotNone of the record at column FK_PAYMENT_PLAN of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value None of the record at column RPT_ID of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value MOD3 of the record at column PAYMENT_TYPE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value None of the record at column CARRELLO_ID of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value None of the record at column ORIGINAL_PAYMENT_TOKEN of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value Y of the record at column FLAG_IO of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value Y of the record at column RICEVUTA_PM of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value N of the record at column FLAG_PAYPAL of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    # PM_SESSION_DATA
+#    And verify 0 record for the table PM_SESSION_DATA retrived by the query pm_session_old on db nodo_online under macro AppIO
+#    # POSITION_ACTIVATE
+#    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+# # [TBD] nella POSITION_ACTIVATE la colonna TOKEN_VALID_TO = current_timestamp di esecuzione della closePayment
+
+# Scenario: FLUSSO_CP_03 (part 4)
+#    Given the FLUSSO_CP_03 (part 3) scenario executed successfully
+#    And the sendPaymentOutcome scenario executed successfully
+#    And outcome with KO in sendPaymentOutcome
+#    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+#    Then check outcome is KO of sendPaymentOutcome response
+#    And check faultCode is PPT_TOKEN_SCONOSCIUTO of sendPaymentOutcome response
+#    And check description is token unknown of sendPaymentOutcome response
+#    And wait 5 seconds for expiration
+#    # POSITION & PAYMENT STATUS
+#    And verify 2 record for the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value PAYING,INSERTED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 2 record for the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value PAYING,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    # POSITION_PAYMENT
+#    And verify 1 record for the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value None of the record at column OUTCOME of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value None of the record at column FEE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value None of the record at column TRANSFER_DATE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value None of the record at column APPLICATION_DATE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    # RECEIPT
+#    And verify 0 record for the table POSITION_RECEIPT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 0 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 0 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 0 record for the table POSITION_RECEIPT_XML retrived by the query payment_status_old on db nodo_online under macro AppIO
+
+
+# # FLUSSO_CP_04
+# Scenario: FLUSSO_CP_04 (part 1)
+#    Given the nodoVerificaRPT scenario executed successfully
+#    And the nodoAttivaRPT scenario executed successfully
+#    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
+#    Then check esito is OK of nodoAttivaRPT response
+#    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+
+# Scenario: FLUSSO_CP_04 (part 2)
+#    Given the FLUSSO_CP_04 (part 1) scenario executed successfully
+#    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
+#    Then verify the HTTP status code of informazioniPagamento response is 200
+
+# Scenario: FLUSSO_CP_04 (part 3)
+#    Given the FLUSSO_CP_04 (part 2) scenario executed successfully
+#    And the closePayment scenario executed successfully
+#    And outcome with KO in v1/closepayment
+#    When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
+#    Then verify the HTTP status code of v1/closepayment response is 200
+#    And check esito is OK of v1/closepayment response
+#    And wait 5 seconds for expiration
+
+# Scenario: FLUSSO_CP_04 (part 4)
+#    Given the FLUSSO_CP_04 (part 3) scenario executed successfully
+#    And the sendPaymentOutcome scenario executed successfully
+#    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+#    Then check outcome is KO of sendPaymentOutcome response
+#    And check faultCode is PPT_TOKEN_SCONOSCIUTO of sendPaymentOutcome response
+#    And check description is token unknown of sendPaymentOutcome response
+#    And wait 5 seconds for expiration
+#    # POSITION & PAYMENT STATUS
+#    And verify 2 record for the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value PAYING,INSERTED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 2 record for the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value PAYING,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    # POSITION_PAYMENT
+#    And verify 1 record for the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value None of the record at column OUTCOME of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value None of the record at column FEE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value None of the record at column TRANSFER_DATE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value None of the record at column APPLICATION_DATE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    # RECEIPT
+#    And verify 0 record for the table POSITION_RECEIPT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 0 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 0 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 0 record for the table POSITION_RECEIPT_XML retrived by the query payment_status_old on db nodo_online under macro AppIO
+
+
+# # FLUSSO_CP_05
+# Scenario: FLUSSO_CP_05 (part 1)
+#    Given the nodoVerificaRPT scenario executed successfully
+#    And the nodoAttivaRPT scenario executed successfully
+#    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
+#    Then check esito is OK of nodoAttivaRPT response
+#    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+
+# Scenario: FLUSSO_CP_05 (part 2)
+#    Given the FLUSSO_CP_05 (part 1) scenario executed successfully
+#    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
+#    Then verify the HTTP status code of informazioniPagamento response is 200
+
+# Scenario: FLUSSO_CP_05 (part 3)
+#    Given the FLUSSO_CP_05 (part 2) scenario executed successfully
+#    And the pspNotifyPayment timeout scenario executed successfully
+#    And the closePayment scenario executed successfully
+#    When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
+#    Then verify the HTTP status code of v1/closepayment response is 200
+#    And check esito is OK of v1/closepayment response
+#    And wait 12 seconds for expiration
+#    # POSITION & PAYMENT STATUS
+#    And verify 1 record for the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 4 record for the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_UNKNOWN of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value PAYMENT_UNKNOWN of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+
+# Scenario: FLUSSO_CP_05 (part 4)
+#    Given the FLUSSO_CP_05 (part 3) scenario executed successfully
+#    And the sendPaymentOutcome scenario executed successfully
+#    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+#    Then check outcome is OK of sendPaymentOutcome response
+#    And wait 5 seconds for expiration
+#    # POSITION & PAYMENT STATUS
+#    And verify 3 record for the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value PAYING,PAID,NOTIFIED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 8 record for the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_UNKNOWN,PAID,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    # POSITION_PAYMENT
+#    And verify 1 record for the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value OK of the record at column OUTCOME of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value 2 of the record at column FEE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value NotNone of the record at column TRANSFER_DATE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value NotNone of the record at column APPLICATION_DATE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    # RECEIPT
+#    And verify 1 record for the table POSITION_RECEIPT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 1 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 3 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 1 record for the table POSITION_RECEIPT_XML retrived by the query payment_status_old on db nodo_online under macro AppIO
+
+
+# # FLUSSO_CP_06
+# Scenario: FLUSSO_CP_06 (part 1)
+#    Given the nodoVerificaRPT scenario executed successfully
+#    And the nodoAttivaRPT scenario executed successfully
+#    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
+#    Then check esito is OK of nodoAttivaRPT response
+#    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+
+# Scenario: FLUSSO_CP_06 (part 2)
+#    Given the FLUSSO_CP_06 (part 1) scenario executed successfully
+#    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
+#    Then verify the HTTP status code of informazioniPagamento response is 200
+
+# Scenario: FLUSSO_CP_06 (part 3)
+#    Given the FLUSSO_CP_06 (part 2) scenario executed successfully
+#    And the pspNotifyPayment malformata scenario executed successfully
+#    And the closePayment scenario executed successfully
+#    When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
+#    Then verify the HTTP status code of v1/closepayment response is 200
+#    And check esito is OK of v1/closepayment response
+#    And wait 12 seconds for expiration
+#    # POSITION & PAYMENT STATUS
+#    And verify 1 record for the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 4 record for the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_UNKNOWN of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value PAYMENT_UNKNOWN of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+
+# Scenario: FLUSSO_CP_06 (part 4)
+#    Given the FLUSSO_CP_06 (part 3) scenario executed successfully
+#    And the sendPaymentOutcome scenario executed successfully
+#    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+#    Then check outcome is OK of sendPaymentOutcome response
+#    And wait 5 seconds for expiration
+#    # POSITION & PAYMENT STATUS
+#    And verify 3 record for the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value PAYING,PAID,NOTIFIED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 8 record for the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_UNKNOWN,PAID,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    # POSITION_PAYMENT
+#    And verify 1 record for the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value OK of the record at column OUTCOME of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value 2 of the record at column FEE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value NotNone of the record at column TRANSFER_DATE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value NotNone of the record at column APPLICATION_DATE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    # RECEIPT
+#    And verify 1 record for the table POSITION_RECEIPT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 1 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 3 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 1 record for the table POSITION_RECEIPT_XML retrived by the query payment_status_old on db nodo_online under macro AppIO
+
+
+# # FLUSSO_CP_07
+# Scenario: FLUSSO_CP_07 (part 1)
+#    Given nodo-dei-pagamenti DEV has config parameter default_durata_estensione_token_IO set to 1000
+#    And the nodoVerificaRPT scenario executed successfully
+#    And the nodoAttivaRPT scenario executed successfully
+#    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
+#    Then check esito is OK of nodoAttivaRPT response
+#    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+
+# Scenario: FLUSSO_CP_07 (part 2)
+#    Given the FLUSSO_CP_07 (part 1) scenario executed successfully
+#    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
+#    Then verify the HTTP status code of informazioniPagamento response is 200
+
+# Scenario: FLUSSO_CP_07 (part 3)
+#    Given the FLUSSO_CP_07 (part 2) scenario executed successfully
+#    And the pspNotifyPayment timeout scenario executed successfully
+#    And the closePayment scenario executed successfully
+#    When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
+#    Then verify the HTTP status code of v1/closepayment response is 200
+#    And check esito is OK of v1/closepayment response
+#    And wait 12 seconds for expiration
+#    # POSITION & PAYMENT STATUS
+#    And verify 1 record for the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 4 record for the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_UNKNOWN of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value PAYMENT_UNKNOWN of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+
+# Scenario: FLUSSO_CP_07 (part 4)
+#    Given the FLUSSO_CP_07 (part 3) scenario executed successfully
+#    When job mod3CancelV2 triggered after 0 seconds
+#    Then verify the HTTP status code of mod3CancelV2 response is 200
+#    And wait 5 seconds for expiration
+#    And nodo-dei-pagamenti DEV has config parameter default_durata_estensione_token_IO set to 3600000
+#    # POSITION & PAYMENT STATUS
+#    And verify 2 record for the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value PAYING,INSERTED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 5 record for the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_UNKNOWN,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+
+
+# # FLUSSO_CP_08
+# Scenario: FLUSSO_CP_08 (part 1)
+#    Given nodo-dei-pagamenti DEV has config parameter default_durata_token_IO set to 2000
+#    And the nodoVerificaRPT scenario executed successfully
+#    And the nodoAttivaRPT scenario executed successfully
+#    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
+#    Then check esito is OK of nodoAttivaRPT response
+#    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+
+# Scenario: FLUSSO_CP_08 (part 2)
+#    Given the FLUSSO_CP_08 (part 1) scenario executed successfully
+#    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
+#    Then verify the HTTP status code of informazioniPagamento response is 200
+
+# Scenario: FLUSSO_CP_08 (part 3)
+#    Given the FLUSSO_CP_08 (part 2) scenario executed successfully
+#    When job mod3CancelV2 triggered after 3 seconds
+#    Then verify the HTTP status code of mod3CancelV2 response is 200
+#    And wait 5 seconds for expiration
+
+# Scenario: FLUSSO_CP_08 (part 4)
+#    Given the FLUSSO_CP_08 (part 3) scenario executed successfully
+#    And the closePayment scenario executed successfully
+#    When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
+#    Then verify the HTTP status code of v1/closepayment response is 400
+#    And check esito is KO of v1/closepayment response
+#    And check descrizione is Esito non accettabile a token scaduto of v1/closepayment response
+#    And wait 5 seconds for expiration
+#    And nodo-dei-pagamenti DEV has config parameter default_durata_token_IO set to 3600000
+#    # POSITION & PAYMENT STATUS
+#    And verify 2 record for the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value PAYING,INSERTED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 2 record for the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value PAYING,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    # POSITION_PAYMENT
+#    And verify 1 record for the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value None of the record at column OUTCOME of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value None of the record at column FEE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value NA of the record at column PAYMENT_CHANNEL of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value None of the record at column PAYMENT_METHOD of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value None of the record at column TRANSFER_DATE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value None of the record at column APPLICATION_DATE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value None of the record at column FLAG_PAYPAL of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    # PM_SESSION_DATA
+#    And verify 0 record for the table PM_SESSION_DATA retrived by the query pm_session_old on db nodo_online under macro AppIO
+#    # POSITION_ACTIVATE
+#    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+
+
+# # FLUSSO_CP_09
+# Scenario: FLUSSO_CP_09 (part 1)
+#    Given nodo-dei-pagamenti DEV has config parameter default_durata_token_IO set to 2000
+#    And the nodoVerificaRPT scenario executed successfully
+#    And the nodoAttivaRPT scenario executed successfully
+#    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
+#    Then check esito is OK of nodoAttivaRPT response
+#    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+
+# Scenario: FLUSSO_CP_09 (part 2)
+#    Given the FLUSSO_CP_09 (part 1) scenario executed successfully
+#    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
+#    Then verify the HTTP status code of informazioniPagamento response is 200
+#    And wait 3 seconds for expiration
+
+# Scenario: FLUSSO_CP_09 (part 3)
+#    Given the FLUSSO_CP_09 (part 2) scenario executed successfully
+#    And the closePayment scenario executed successfully
+#    When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
+#    Then verify the HTTP status code of v1/closepayment response is 200
+#    And check esito is OK of v1/closepayment response
+#    And wait 5 seconds for expiration
+#    # POSITION & PAYMENT STATUS
+#    And verify 1 record for the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 4 record for the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value PAYMENT_ACCEPTED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+
+# Scenario: FLUSSO_CP_09 (part 4)
+#    Given the FLUSSO_CP_09 (part 3) scenario executed successfully
+#    And the sendPaymentOutcome scenario executed successfully
+#    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+#    Then check outcome is OK of sendPaymentOutcome response
+#    And wait 5 seconds for expiration
+#    And nodo-dei-pagamenti DEV has config parameter default_durata_token_IO set to 3600000
+#    # POSITION & PAYMENT STATUS
+#    And verify 3 record for the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value PAYING,PAID,NOTIFIED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 8 record for the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED,PAID,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    # POSITION_PAYMENT
+#    And verify 1 record for the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value OK of the record at column OUTCOME of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value 2 of the record at column FEE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value NotNone of the record at column TRANSFER_DATE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value NotNone of the record at column APPLICATION_DATE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    # RECEIPT
+#    And verify 1 record for the table POSITION_RECEIPT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 1 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 3 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 1 record for the table POSITION_RECEIPT_XML retrived by the query payment_status_old on db nodo_online under macro AppIO
+
+
+# # FLUSSO_CP_10
+# Scenario: FLUSSO_CP_10 (part 1)
+#    Given nodo-dei-pagamenti DEV has config parameter default_durata_token_IO set to 2000
+#    And the nodoVerificaRPT scenario executed successfully
+#    And the nodoAttivaRPT scenario executed successfully
+#    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
+#    Then check esito is OK of nodoAttivaRPT response
+#    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+
+# Scenario: FLUSSO_CP_10 (part 2)
+#    Given the FLUSSO_CP_10 (part 1) scenario executed successfully
+#    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
+#    Then verify the HTTP status code of informazioniPagamento response is 200
+
+# Scenario: FLUSSO_CP_10 (part 3)
+#    Given the FLUSSO_CP_10 (part 2) scenario executed successfully
+#    When job mod3CancelV2 triggered after 3 seconds
+#    Then verify the HTTP status code of mod3CancelV2 response is 200
+#    And wait 5 seconds for expiration
+
+# Scenario: FLUSSO_CP_10 (part 4)
+#    Given the FLUSSO_CP_10 (part 3) scenario executed successfully
+#    And the closePayment scenario executed successfully
+#    And outcome with KO in v1/closepayment
+#    When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
+#    Then verify the HTTP status code of v1/closepayment response is 400
+#    And check esito is KO of v1/closepayment response
+#    And check descrizione is Esito non accettabile a token scaduto of v1/closepayment response
+#    And wait 5 seconds for expiration
+#    And nodo-dei-pagamenti DEV has config parameter default_durata_token_IO set to 3600000
+#    # POSITION & PAYMENT STATUS
+#    And verify 2 record for the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value PAYING,INSERTED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 2 record for the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value PAYING,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    # POSITION_PAYMENT
+#    And verify 1 record for the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value None of the record at column OUTCOME of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value None of the record at column FEE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value NA of the record at column PAYMENT_CHANNEL of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value None of the record at column PAYMENT_METHOD of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value None of the record at column TRANSFER_DATE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value None of the record at column APPLICATION_DATE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value None of the record at column FLAG_PAYPAL of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    # PM_SESSION_DATA
+#    And verify 0 record for the table PM_SESSION_DATA retrived by the query pm_session_old on db nodo_online under macro AppIO
+#    # POSITION_ACTIVATE
+#    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+
+
+# # FLUSSO_CP_11
+# Scenario: FLUSSO_CP_11 (part 1)
+#    Given the nodoVerificaRPT scenario executed successfully
+#    And the nodoAttivaRPT scenario executed successfully
+#    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
+#    Then check esito is OK of nodoAttivaRPT response
+#    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+
+# Scenario: FLUSSO_CP_11 (part 2)
+#    Given the FLUSSO_CP_11 (part 1) scenario executed successfully
+#    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
+#    Then verify the HTTP status code of informazioniPagamento response is 200
+
+# Scenario: FLUSSO_CP_11 (part 3)
+#    Given the FLUSSO_CP_11 (part 2) scenario executed successfully
+#    And the closePayment scenario executed successfully
+#    When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
+#    Then verify the HTTP status code of v1/closepayment response is 200
+#    And check esito is OK of v1/closepayment response
+
+# Scenario: FLUSSO_CP_11 (part 4)
+#    Given the FLUSSO_CP_11 (part 3) scenario executed successfully
+#    And the closePayment scenario executed successfully
+#    And pspTransactionId with $psp_transaction_id in v1/closepayment
+#    And transactionId with $transaction_id in v1/closepayment
+#    When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
+#    Then verify the HTTP status code of v1/closepayment response is 422
+#    And check esito is KO of v1/closepayment response
+#    And check descrizione is Esito già acquisito of v1/closepayment response
+#    And wait 5 seconds for expiration
+
+# Scenario: FLUSSO_CP_11 (part 5)
+#    Given the FLUSSO_CP_11 (part 4) scenario executed successfully
+#    And the sendPaymentOutcome scenario executed successfully
+#    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+#    Then check outcome is OK of sendPaymentOutcome response
+#    And wait 5 seconds for expiration
+#    # POSITION & PAYMENT STATUS
+#    And verify 3 record for the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value PAYING,PAID,NOTIFIED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 8 record for the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED,PAID,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    # POSITION_PAYMENT
+#    And verify 1 record for the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value OK of the record at column OUTCOME of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value 2 of the record at column FEE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value NotNone of the record at column TRANSFER_DATE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value NotNone of the record at column APPLICATION_DATE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    # RECEIPT
+#    And verify 1 record for the table POSITION_RECEIPT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 1 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 3 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 1 record for the table POSITION_RECEIPT_XML retrived by the query payment_status_old on db nodo_online under macro AppIO
+
+
+# # FLUSSO_CP_12
+# Scenario: FLUSSO_CP_12 (part 1)
+#    Given the nodoVerificaRPT scenario executed successfully
+#    And the nodoAttivaRPT scenario executed successfully
+#    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
+#    Then check esito is OK of nodoAttivaRPT response
+#    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+
+# Scenario: FLUSSO_CP_12 (part 2)
+#    Given the FLUSSO_CP_12 (part 1) scenario executed successfully
+#    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
+#    Then verify the HTTP status code of informazioniPagamento response is 200
+
+# Scenario: FLUSSO_CP_12 (part 3)
+#    Given the FLUSSO_CP_12 (part 2) scenario executed successfully
+#    And the closePayment scenario executed successfully
+#    And outcome with KO in v1/closepayment
+#    When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
+#    Then verify the HTTP status code of v1/closepayment response is 200
+#    And check esito is OK of v1/closepayment response
+
+# Scenario: FLUSSO_CP_12 (part 4)
+#    Given the FLUSSO_CP_12 (part 3) scenario executed successfully
+#    And the closePayment scenario executed successfully
+#    And outcome with KO in v1/closepayment
+#    And pspTransactionId with $psp_transaction_id in v1/closepayment
+#    And transactionId with $transaction_id in v1/closepayment
+#    When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
+#    Then verify the HTTP status code of v1/closepayment response is 400
+#    And check esito is KO of v1/closepayment response
+#    And check descrizione is Esito non accettabile a token scaduto of v1/closepayment response
+#    And wait 5 seconds for expiration
+#    # POSITION & PAYMENT STATUS
+#    And verify 2 record for the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value PAYING,INSERTED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 2 record for the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value PAYING,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+
+
+# # FLUSSO_CP_13
+# Scenario: FLUSSO_CP_13 (part 1)
+#    Given the nodoVerificaRPT scenario executed successfully
+#    And the nodoAttivaRPT scenario executed successfully
+#    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
+#    Then check esito is OK of nodoAttivaRPT response
+#    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+
+# Scenario: FLUSSO_CP_13 (part 2)
+#    Given the FLUSSO_CP_13 (part 1) scenario executed successfully
+#    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
+#    Then verify the HTTP status code of informazioniPagamento response is 200
+
+# Scenario: FLUSSO_CP_13 (part 3)
+#    Given the FLUSSO_CP_13 (part 2) scenario executed successfully
+#    And the closePayment scenario executed successfully
+#    When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
+#    Then verify the HTTP status code of v1/closepayment response is 200
+#    And check esito is OK of v1/closepayment response
+
+# Scenario: FLUSSO_CP_13 (part 4)
+#    Given the FLUSSO_CP_13 (part 3) scenario executed successfully
+#    And the closePayment scenario executed successfully
+#    And outcome with KO in v1/closepayment
+#    And pspTransactionId with $psp_transaction_id in v1/closepayment
+#    And transactionId with $transaction_id in v1/closepayment
+#    When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
+#    Then verify the HTTP status code of v1/closepayment response is 422
+#    And check esito is KO of v1/closepayment response
+#    And check descrizione is Esito già acquisito of v1/closepayment response
+#    And wait 5 seconds for expiration
+
+# Scenario: FLUSSO_CP_13 (part 5)
+#    Given the FLUSSO_CP_13 (part 4) scenario executed successfully
+#    And the sendPaymentOutcome scenario executed successfully
+#    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+#    Then check outcome is OK of sendPaymentOutcome response
+#    And wait 5 seconds for expiration
+#    # POSITION & PAYMENT STATUS
+#    And verify 3 record for the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value PAYING,PAID,NOTIFIED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 8 record for the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED,PAID,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    # POSITION_PAYMENT
+#    And verify 1 record for the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value OK of the record at column OUTCOME of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value 2 of the record at column FEE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value NotNone of the record at column TRANSFER_DATE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value NotNone of the record at column APPLICATION_DATE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    # RECEIPT
+#    And verify 1 record for the table POSITION_RECEIPT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 1 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 3 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 1 record for the table POSITION_RECEIPT_XML retrived by the query payment_status_old on db nodo_online under macro AppIO
+
+
+# # FLUSSO_CP_14
+# Scenario: FLUSSO_CP_14 (part 1)
+#    Given the nodoVerificaRPT scenario executed successfully
+#    And the nodoAttivaRPT scenario executed successfully
+#    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
+#    Then check esito is OK of nodoAttivaRPT response
+#    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+
+# Scenario: FLUSSO_CP_14 (part 2)
+#    Given the FLUSSO_CP_14 (part 1) scenario executed successfully
+#    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
+#    Then verify the HTTP status code of informazioniPagamento response is 200
+
+# Scenario: FLUSSO_CP_14 (part 3)
+#    Given the FLUSSO_CP_14 (part 2) scenario executed successfully
+#    And the closePayment scenario executed successfully
+#    And outcome with KO in v1/closepayment
+#    When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
+#    Then verify the HTTP status code of v1/closepayment response is 200
+#    And check esito is OK of v1/closepayment response
+
+# Scenario: FLUSSO_CP_14 (part 4)
+#    Given the FLUSSO_CP_14 (part 3) scenario executed successfully
+#    And the closePayment scenario executed successfully
+#    And pspTransactionId with $psp_transaction_id in v1/closepayment
+#    And transactionId with $transaction_id in v1/closepayment
+#    When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
+#    Then verify the HTTP status code of v1/closepayment response is 400
+#    And check esito is KO of v1/closepayment response
+#    And check descrizione is Esito non accettabile a token scaduto of v1/closepayment response
+
+
+# # FLUSSO_CP_15
+# Scenario: FLUSSO_CP_15 (part 1)
+#    Given the nodoVerificaRPT scenario executed successfully
+#    And the nodoAttivaRPT scenario executed successfully
+#    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
+#    Then check esito is OK of nodoAttivaRPT response
+#    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+
+# Scenario: FLUSSO_CP_15 (part 2)
+#    Given the FLUSSO_CP_15 (part 1) scenario executed successfully
+#    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
+#    Then verify the HTTP status code of informazioniPagamento response is 200
+
+# Scenario: FLUSSO_CP_15 (part 3)
+#    Given the FLUSSO_CP_15 (part 2) scenario executed successfully
+#    And the closePayment scenario executed successfully
+#    When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
+#    Then verify the HTTP status code of v1/closepayment response is 200
+#    And check esito is OK of v1/closepayment response
+#    And wait 5 seconds for expiration
+
+# Scenario: FLUSSO_CP_15 (part 4)
+#    Given the FLUSSO_CP_15 (part 3) scenario executed successfully
+#    And the sendPaymentOutcome scenario executed successfully
+#    And outcome with KO in sendPaymentOutcome
+#    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+#    Then check outcome is KO of sendPaymentOutcome response
+#    And check faultCode is PPT_SEMANTICA of sendPaymentOutcome response
+#    And check description is Esito discorde of sendPaymentOutcome response
+
+# Scenario: FLUSSO_CP_15 (part 5)
+#    Given the FLUSSO_CP_15 (part 4) scenario executed successfully
+#    And the sendPaymentOutcome scenario executed successfully
+#    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+#    Then check outcome is OK of sendPaymentOutcome response
+#    And wait 5 seconds for expiration
+#    # POSITION & PAYMENT STATUS
+#    And verify 3 record for the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value PAYING,PAID,NOTIFIED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 8 record for the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED,PAID,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    # POSITION_PAYMENT
+#    And verify 1 record for the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value OK of the record at column OUTCOME of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value 2 of the record at column FEE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value NotNone of the record at column TRANSFER_DATE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value NotNone of the record at column APPLICATION_DATE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    # RECEIPT
+#    And verify 1 record for the table POSITION_RECEIPT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 1 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 3 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 1 record for the table POSITION_RECEIPT_XML retrived by the query payment_status_old on db nodo_online under macro AppIO
+
+
+# # FLUSSO_CP_16
+# Scenario: FLUSSO_CP_16 (part 1)
+#    Given the nodoVerificaRPT scenario executed successfully
+#    And the nodoAttivaRPT scenario executed successfully
+#    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
+#    Then check esito is OK of nodoAttivaRPT response
+#    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+
+# Scenario: FLUSSO_CP_16 (part 2)
+#    Given the FLUSSO_CP_16 (part 1) scenario executed successfully
+#    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
+#    Then verify the HTTP status code of informazioniPagamento response is 200
+
+# Scenario: FLUSSO_CP_16 (part 3)
+#    Given the FLUSSO_CP_16 (part 2) scenario executed successfully
+#    And the closePayment scenario executed successfully
+#    When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
+#    Then verify the HTTP status code of v1/closepayment response is 200
+#    And check esito is OK of v1/closepayment response
+#    And wait 5 seconds for expiration
+
+# Scenario: FLUSSO_CP_16 (part 4)
+#    Given the FLUSSO_CP_16 (part 3) scenario executed successfully
+#    And the sendPaymentOutcome scenario executed successfully
+#    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+#    Then check outcome is OK of sendPaymentOutcome response
+#    And wait 5 seconds for expiration
+#    # POSITION & PAYMENT STATUS
+#    And verify 3 record for the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value PAYING,PAID,NOTIFIED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 8 record for the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED,PAID,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    # POSITION_PAYMENT
+#    And verify 1 record for the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value OK of the record at column OUTCOME of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value 2 of the record at column FEE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value NotNone of the record at column TRANSFER_DATE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value NotNone of the record at column APPLICATION_DATE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    # RECEIPT
+#    And verify 1 record for the table POSITION_RECEIPT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 1 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 3 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 1 record for the table POSITION_RECEIPT_XML retrived by the query payment_status_old on db nodo_online under macro AppIO
+
+# Scenario: FLUSSO_CP_16 (part 5)
+#    Given the FLUSSO_CP_16 (part 4) scenario executed successfully
+#    And the sendPaymentOutcome scenario executed successfully
+#    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+#    Then check outcome is KO of sendPaymentOutcome response
+#    And check faultCode is PPT_ESITO_GIA_ACQUISITO of sendPaymentOutcome response
+#    And check faultString is L'esito del pagamento risulta già acquisito dal sistema pagoPA. of sendPaymentOutcome response
+
+
+# # FLUSSO_CP_17
+# Scenario: FLUSSO_CP_17 (part 1)
+#    Given the nodoVerificaRPT scenario executed successfully
+#    And the nodoAttivaRPT scenario executed successfully
+#    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
+#    Then check esito is OK of nodoAttivaRPT response
+#    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+
+# Scenario: FLUSSO_CP_17 (part 2)
+#    Given the FLUSSO_CP_17 (part 1) scenario executed successfully
+#    And the closePayment scenario executed successfully
+#    When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
+#    Then verify the HTTP status code of v1/closepayment response is 200
+#    And check esito is OK of v1/closepayment response
+#    And wait 5 seconds for expiration
+
+# Scenario: FLUSSO_CP_17 (part 3)
+#    Given the FLUSSO_CP_17 (part 2) scenario executed successfully
+#    And the sendPaymentOutcome scenario executed successfully
+#    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+#    Then check outcome is OK of sendPaymentOutcome response
+#    And wait 5 seconds for expiration
+#    # POSITION & PAYMENT STATUS
+#    And verify 3 record for the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value PAYING,PAID,NOTIFIED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 8 record for the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED,PAID,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    # POSITION_PAYMENT
+#    And verify 1 record for the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value OK of the record at column OUTCOME of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value 2 of the record at column FEE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value NotNone of the record at column TRANSFER_DATE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value NotNone of the record at column APPLICATION_DATE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    # RECEIPT
+#    And verify 1 record for the table POSITION_RECEIPT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 1 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 3 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 1 record for the table POSITION_RECEIPT_XML retrived by the query payment_status_old on db nodo_online under macro AppIO
+
+
+# # FLUSSO_CP_18
+# Scenario: FLUSSO_CP_18 (part 1)
+#    Given the nodoVerificaRPT scenario executed successfully
+#    And the nodoAttivaRPT scenario executed successfully
+#    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
+#    Then check esito is OK of nodoAttivaRPT response
+#    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+
+# Scenario: FLUSSO_CP_18 (part 2)
+#    Given the FLUSSO_CP_18 (part 1) scenario executed successfully
+#    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
+#    Then verify the HTTP status code of informazioniPagamento response is 200
+
+# Scenario: FLUSSO_CP_18 (part 3)
+#    Given the FLUSSO_CP_18 (part 2) scenario executed successfully
+#    And the closePayment scenario executed successfully
+#    When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
+#    Then verify the HTTP status code of v1/closepayment response is 200
+#    And check esito is OK of v1/closepayment response
+#    And wait 5 seconds for expiration
+
+# Scenario: FLUSSO_CP_18 (part 4)
+#    Given the FLUSSO_CP_18 (part 3) scenario executed successfully
+#    And the sendPaymentOutcome scenario executed successfully
+#    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+#    Then check outcome is OK of sendPaymentOutcome response
+#    And wait 5 seconds for expiration
+#    # POSITION & PAYMENT STATUS
+#    And verify 3 record for the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value PAYING,PAID,NOTIFIED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 8 record for the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED,PAID,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    # POSITION_PAYMENT
+#    And verify 1 record for the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value OK of the record at column OUTCOME of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value 2 of the record at column FEE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value NotNone of the record at column TRANSFER_DATE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value NotNone of the record at column APPLICATION_DATE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    # RECEIPT
+#    And verify 1 record for the table POSITION_RECEIPT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 1 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 3 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 1 record for the table POSITION_RECEIPT_XML retrived by the query payment_status_old on db nodo_online under macro AppIO
+
+# Scenario: FLUSSO_CP_18 (part 5)
+#    Given the FLUSSO_CP_18 (part 4) scenario executed successfully
+#    And the closePayment scenario executed successfully
+#    And outcome with KO in v1/closepayment
+#    When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
+#    Then verify the HTTP status code of v1/closepayment response is 422
+#    And check esito is KO of v1/closepayment response
+#    And check descrizione is Esito già acquisito of v1/closepayment response
+
+
+# # FLUSSO_CP_19
+# Scenario: FLUSSO_CP_19 (part 1)
+#    Given the nodoVerificaRPT scenario executed successfully
+#    And the nodoAttivaRPT scenario executed successfully
+#    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
+#    Then check esito is OK of nodoAttivaRPT response
+#    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+
+# Scenario: FLUSSO_CP_19 (part 2)
+#    Given the FLUSSO_CP_19 (part 1) scenario executed successfully
+#    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
+#    Then verify the HTTP status code of informazioniPagamento response is 200
+
+# Scenario: FLUSSO_CP_19 (part 3)
+#    Given the FLUSSO_CP_19 (part 2) scenario executed successfully
+#    And the closePayment scenario executed successfully
+#    When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
+#    Then verify the HTTP status code of v1/closepayment response is 200
+#    And check esito is OK of v1/closepayment response
+#    And wait 5 seconds for expiration
+
+# Scenario: FLUSSO_CP_19 (part 4)
+#    Given the FLUSSO_CP_19 (part 3) scenario executed successfully
+#    When PM sends REST GET avanzamentoPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
+#    Then verify the HTTP status code of avanzamentoPagamento response is 200
+#    And check esito is OK of avanzamentoPagamento response
+
+
+# # FLUSSO_CP_20
+# Scenario: FLUSSO_CP_20 (part 1)
+#    Given the nodoVerificaRPT scenario executed successfully
+#    And the nodoAttivaRPT scenario executed successfully
+#    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
+#    Then check esito is OK of nodoAttivaRPT response
+#    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+
+# Scenario: FLUSSO_CP_20 (part 2)
+#    Given the FLUSSO_CP_20 (part 1) scenario executed successfully
+#    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
+#    Then verify the HTTP status code of informazioniPagamento response is 200
+
+# Scenario: FLUSSO_CP_20 (part 3)
+#    Given the FLUSSO_CP_20 (part 2) scenario executed successfully
+#    And the pspNotifyPayment timeout scenario executed successfully
+#    And the closePayment scenario executed successfully
+#    When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
+#    Then verify the HTTP status code of v1/closepayment response is 200
+#    And check esito is OK of v1/closepayment response
+#    And wait 12 seconds for expiration
+
+# Scenario: FLUSSO_CP_20 (part 4)
+#    Given the FLUSSO_CP_20 (part 3) scenario executed successfully
+#    When PM sends REST GET avanzamentoPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
+#    Then verify the HTTP status code of avanzamentoPagamento response is 200
+#    And check esito is ACK_UNKNOWN of avanzamentoPagamento response
+
+
+# # FLUSSO_CP_21
+# Scenario: FLUSSO_CP_21 (part 1)
+#    Given the nodoVerificaRPT scenario executed successfully
+#    And the nodoAttivaRPT scenario executed successfully
+#    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
+#    Then check esito is OK of nodoAttivaRPT response
+#    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+
+# Scenario: FLUSSO_CP_21 (part 2)
+#    Given the FLUSSO_CP_21 (part 1) scenario executed successfully
+#    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
+#    Then verify the HTTP status code of informazioniPagamento response is 200
+
+# Scenario: FLUSSO_CP_21 (part 3)
+#    Given the FLUSSO_CP_21 (part 2) scenario executed successfully
+#    And the closePayment scenario executed successfully
+#    When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
+#    Then verify the HTTP status code of v1/closepayment response is 200
+#    And check esito is OK of v1/closepayment response
+#    And wait 5 seconds for expiration
+
+# Scenario: FLUSSO_CP_21 (part 4)
+#    Given the FLUSSO_CP_21 (part 3) scenario executed successfully
+#    And the sendPaymentOutcome scenario executed successfully
+#    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+#    Then check outcome is OK of sendPaymentOutcome response
+#    And wait 5 seconds for expiration
+
+# Scenario: FLUSSO_CP_21 (part 5)
+#    Given the FLUSSO_CP_21 (part 4) scenario executed successfully
+#    When PM sends REST GET avanzamentoPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
+#    Then verify the HTTP status code of avanzamentoPagamento response is 200
+#    And check esito is OK of avanzamentoPagamento response
+
+
+# # FLUSSO_CP_22
+# Scenario: FLUSSO_CP_22 (part 1)
+#    Given the nodoVerificaRPT scenario executed successfully
+#    And the nodoAttivaRPT scenario executed successfully
+#    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
+#    Then check esito is OK of nodoAttivaRPT response
+#    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+
+# Scenario: FLUSSO_CP_22 (part 2)
+#    Given the FLUSSO_CP_22 (part 1) scenario executed successfully
+#    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
+#    Then verify the HTTP status code of informazioniPagamento response is 200
+
+# Scenario: FLUSSO_CP_22 (part 3)
+#    Given the FLUSSO_CP_22 (part 2) scenario executed successfully
+#    And the closePayment scenario executed successfully
+#    And outcome with KO in v1/closepayment
+#    When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
+#    Then verify the HTTP status code of v1/closepayment response is 200
+#    And check esito is OK of v1/closepayment response
+#    And wait 5 seconds for expiration
+
+# Scenario: FLUSSO_CP_22 (part 4)
+#    Given the FLUSSO_CP_22 (part 3) scenario executed successfully
+#    When PM sends REST GET avanzamentoPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
+#    Then verify the HTTP status code of avanzamentoPagamento response is 200
+#    And check esito is KO of avanzamentoPagamento response
+
+
+# # FLUSSO_CP_23/24
+# Scenario: FLUSSO_CP_23 (part 1)
+#    Given the nodoVerificaRPT scenario executed successfully
+#    And the nodoAttivaRPT scenario executed successfully
+#    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
+#    Then check esito is OK of nodoAttivaRPT response
+#    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+
+# Scenario: FLUSSO_CP_23 (part 2)
+#    Given the FLUSSO_CP_23 (part 1) scenario executed successfully
+#    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
+#    Then verify the HTTP status code of informazioniPagamento response is 200
+
+# Scenario: FLUSSO_CP_23 (part 3)
+#    Given the FLUSSO_CP_23 (part 2) scenario executed successfully
+#    And the closePayment scenario executed successfully
+#    And outcome with KO in v1/closepayment
+#    When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
+#    Then verify the HTTP status code of v1/closepayment response is 200
+#    And check esito is OK of v1/closepayment response
+#    And wait 5 seconds for expiration
+
+# Scenario: FLUSSO_CP_23 (part 4)
+#    Given the FLUSSO_CP_23 (part 3) scenario executed successfully
+#    And the nodoAttivaRPT scenario executed successfully
+#    And noticeNumber with 311$iuv in nodoAttivaRPT
+#    And creditorReferenceId with 11$iuv in paaAttivaRPT
+#    And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
+#    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
+#    Then check esito is OK of nodoAttivaRPT response
+
+
+# # FLUSSO_CP_25
+# Scenario: FLUSSO_CP_25 (part 1)
+#    Given the nodoVerificaRPT scenario executed successfully
+#    And the nodoAttivaRPT scenario executed successfully
+#    And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
+#       """
+#       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
+#       <soapenv:Header/>
+#       <soapenv:Body>
+#       <paf:paaAttivaRPTRes>
+#       <outcome>KO</outcome>
+#       <fault>
+#       <faultCode>PAA_SINTASSI_EXTRAXSD</faultCode>
+#       <faultString>errore sintattico PA</faultString>
+#       <id>1</id>
+#       <description>Errore sintattico emesso dalla PA</description>
+#       </fault>
+#       </paf:paaAttivaRPTRes>
+#       </soapenv:Body>
+#       </soapenv:Envelope>
+#       """
+#    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
+#    Then check outcome is KO of nodoAttivaRPT response
+#    And check faultCode is PPT_ERRORE_EMESSO_DA_PAA of nodoAttivaRPT response
+#    And execution query payment_status_old to get value on the table POSITION_ACTIVATE, with the columns * under macro AppIO with db name nodo_online
+#    And through the query payment_status_old retrieve param paymentToken at position 6 and save it under the key payToken
+
+# Scenario: FLUSSO_CP_25 (part 2)
+#    Given the FLUSSO_CP_25 (part 1) scenario executed successfully
+#    When PM sends REST GET informazioniPagamento?idPagamento=$payToken to nodo-dei-pagamenti
+#    Then verify the HTTP status code of informazioniPagamento response is 404
+#    And check error is Il pagamento non esiste of informazioniPagamento response
+
+# Scenario: FLUSSO_CP_25 (part 3)
+#    Given the FLUSSO_CP_25 (part 2) scenario executed successfully
+#    And the closePayment payToken scenario executed successfully
+#    When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
+#    Then verify the HTTP status code of v1/closepayment response is 404
+#    And check esito is KO of v1/closepayment response
+#    And check descrizione is Il Pagamento indicato non esiste of v1/closepayment response
+#    And wait 5 seconds for expiration
+
+# Scenario: FLUSSO_CP_25 (part 4)
+#    Given the FLUSSO_CP_25 (part 3) scenario executed successfully
+#    And the sendPaymentOutcome payToken scenario executed successfully
+#    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+#    Then check outcome is KO of sendPaymentOutcome response
+#    And check faultCode is PPT_TOKEN_SCONOSCIUTO of sendPaymentOutcome response
+
+
+# # FLUSSO_CP_26
+# Scenario: FLUSSO_CP_26 (part 1)
+#    Given the nodoVerificaRPT scenario executed successfully
+#    And the nodoAttivaRPT scenario executed successfully
+#    And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
+#       """
+#       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
+#       <soapenv:Header/>
+#       <soapenv:Body>
+#       <paf:paaAttivaRPTRes>
+#       <outcome>KO</outcome>
+#       <fault>
+#       <faultCode>PAA_SINTASSI_EXTRAXSD</faultCode>
+#       <faultString>errore sintattico PA</faultString>
+#       <id>1</id>
+#       <description>Errore sintattico emesso dalla PA</description>
+#       </fault>
+#       </paf:paaAttivaRPTRes>
+#       </soapenv:Body>
+#       </soapenv:Envelope>
+#       """
+#    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
+#    Then check outcome is KO of nodoAttivaRPT response
+#    And check faultCode is PPT_ERRORE_EMESSO_DA_PAA of nodoAttivaRPT response
+#    And execution query payment_status_old to get value on the table POSITION_ACTIVATE, with the columns * under macro AppIO with db name nodo_online
+#    And through the query payment_status_old retrieve param paymentToken at position 6 and save it under the key payToken
+
+# Scenario: FLUSSO_CP_26 (part 2)
+#    Given the FLUSSO_CP_26 (part 1) scenario executed successfully
+#    When PM sends REST GET informazioniPagamento?idPagamento=$payToken to nodo-dei-pagamenti
+#    Then verify the HTTP status code of informazioniPagamento response is 404
+#    And check error is Il pagamento non esiste of informazioniPagamento response
+
+# Scenario: FLUSSO_CP_26 (part 3)
+#    Given the FLUSSO_CP_26 (part 2) scenario executed successfully
+#    And the closePayment payToken scenario executed successfully
+#    When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
+#    Then verify the HTTP status code of v1/closepayment response is 404
+#    And check esito is KO of v1/closepayment response
+#    And check descrizione is Il Pagamento indicato non esiste of v1/closepayment response
+#    And wait 5 seconds for expiration
+
+# Scenario: FLUSSO_CP_26 (part 4)
+#    Given the FLUSSO_CP_26 (part 3) scenario executed successfully
+#    And the sendPaymentOutcome payToken scenario executed successfully
+#    And outcome with KO in sendPaymentOutcome
+#    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+#    Then check outcome is KO of sendPaymentOutcome response
+#    And check faultCode is PPT_TOKEN_SCONOSCIUTO of sendPaymentOutcome response
+
+
+# # FLUSSO_CP_27
+# Scenario: FLUSSO_CP_27 (part 1)
+#    Given the nodoVerificaRPT scenario executed successfully
+#    And the nodoAttivaRPT scenario executed successfully
+#    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
+#    Then check esito is OK of nodoAttivaRPT response
+#    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+
+# Scenario: FLUSSO_CP_27 (part 2)
+#    Given the FLUSSO_CP_27 (part 1) scenario executed successfully
+#    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
+#    Then verify the HTTP status code of informazioniPagamento response is 200
+
+# Scenario: FLUSSO_CP_27 (part 3)
+#    Given the FLUSSO_CP_27 (part 2) scenario executed successfully
+#    And the pspNotifyPayment timeout scenario executed successfully
+#    And delay with 8000 in pspNotifyPayment
+#    And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
+#    And the closePayment scenario executed successfully
+#    When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
+#    Then verify the HTTP status code of v1/closepayment response is 200
+#    And check esito is OK of v1/closepayment response
+
+# Scenario: FLUSSO_CP_27 (part 4)
+#    Given the FLUSSO_CP_27 (part 3) scenario executed successfully
+#    When PM sends REST GET avanzamentoPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
+#    Then verify the HTTP status code of avanzamentoPagamento response is 200
+#    And check esito is ACK_UNKNOWN of avanzamentoPagamento response
+
+
+# # FLUSSO_CP_28
+# Scenario: FLUSSO_CP_28 (part 1)
+#    Given the nodoVerificaRPT scenario executed successfully
+#    And the nodoAttivaRPT scenario executed successfully
+#    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
+#    Then check esito is OK of nodoAttivaRPT response
+#    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+
+# Scenario: FLUSSO_CP_28 (part 2)
+#    Given the FLUSSO_CP_28 (part 1) scenario executed successfully
+#    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
+#    Then verify the HTTP status code of informazioniPagamento response is 200
+
+# Scenario: FLUSSO_CP_28 (part 3)
+#    Given the FLUSSO_CP_28 (part 2) scenario executed successfully
+#    And the closePayment KO scenario executed successfully
+#    When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
+#    Then verify the HTTP status code of v1/closepayment response is 200
+#    And check esito is OK of v1/closepayment response
+#    And wait 5 seconds for expiration
+#    # POSITION & PAYMENT STATUS
+#    And verify 2 record for the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value PAYING,INSERTED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 2 record for the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value PAYING,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    # POSITION_PAYMENT
+#    And verify 1 record for the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value 002$iuv of the record at column NOTICE_ID of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value $iuv of the record at column CREDITOR_REFERENCE_ID of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value #creditor_institution_code_old# of the record at column BROKER_PA_ID of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value #id_station_old# of the record at column STATION_ID of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value 2 of the record at column STATION_VERSION of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value #psp_AGID# of the record at column PSP_ID of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value #broker_AGID# of the record at column BROKER_PSP_ID of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value #canale_AGID# of the record at column CHANNEL_ID of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value None of the record at column IDEMPOTENCY_KEY of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value 10 of the record at column AMOUNT of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value None of the record at column FEE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value None of the record at column OUTCOME of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value BPAY of the record at column PAYMENT_METHOD of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value WISP of the record at column PAYMENT_CHANNEL of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value None of the record at column TRANSFER_DATE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value None of the record at column APPLICATION_DATE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    #And checks the value NotNone of the record at column PAYER_ID of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value NotNone of the record at column FK_PAYMENT_PLAN of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value None of the record at column RPT_ID of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value MOD3 of the record at column PAYMENT_TYPE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value None of the record at column CARRELLO_ID of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value None of the record at column ORIGINAL_PAYMENT_TOKEN of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value Y of the record at column FLAG_IO of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value Y of the record at column RICEVUTA_PM of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value N of the record at column FLAG_PAYPAL of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    # PM_SESSION_DATA
+#    And verify 0 record for the table PM_SESSION_DATA retrived by the query pm_session_old on db nodo_online under macro AppIO
+#    # POSITION_ACTIVATE
+#    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+#    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+
+# Scenario: FLUSSO_CP_28 (part 4)
+#    Given the FLUSSO_CP_28 (part 3) scenario executed successfully
+#    And the sendPaymentOutcome scenario executed successfully
+#    And outcome with KO in sendPaymentOutcome
+#    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+#    Then check outcome is KO of sendPaymentOutcome response
+#    And check faultCode is PPT_TOKEN_SCONOSCIUTO of sendPaymentOutcome response
