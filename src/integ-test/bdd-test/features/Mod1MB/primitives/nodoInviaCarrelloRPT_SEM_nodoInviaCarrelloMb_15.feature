@@ -2,7 +2,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
 
    Background:
       Given systems up
-@runnable
+
    # [SEM_MB_15]
    Scenario: Define RPT
       Given RPT generation
@@ -82,7 +82,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          </pay_i:datiVersamento>
          </pay_i:RPT>
          """
-@runnable
+
 
    Scenario: Define RPT2
       Given the Define RPT scenario executed successfully
@@ -164,7 +164,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          </pay_i:RPT>
          """
 
-@runnable
+
    Scenario: Check error for nodoInviaCarrelloRPT primitive
       Given the Define RPT2 scenario executed successfully
       And initial XML nodoInviaCarrelloRPT

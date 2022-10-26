@@ -1,7 +1,7 @@
 Feature: process tests for inoltropagamentoMb_09
     Background:
         Given systems up
-@runnable
+
     Scenario: RPT generation
         Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
         And generate 1 cart with PA #codicePA# and notice number $1noticeNumber
@@ -161,7 +161,7 @@ Feature: process tests for inoltropagamentoMb_09
             </pay_i:RPT>
             """
 
-@runnable
+
     Scenario: Execute nodoInviaCarrelloRPT request
         Given the RPT generation scenario executed successfully
         And initial XML paaInviaRT
@@ -217,7 +217,7 @@ Feature: process tests for inoltropagamentoMb_09
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
         Then retrieve session token from $nodoInviaCarrelloRPTResponse.url
-@runnable
+
     Scenario: Execute nodoChiediInformazioniPagamento
         Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
         When WISP sends rest GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
@@ -227,7 +227,7 @@ Feature: process tests for inoltropagamentoMb_09
         And check ragioneSociale field exists in informazioniPagamento response
         And check oggettoPagamento field exists in informazioniPagamento response
         And check urlRedirectEC field exists in informazioniPagamento response
-@runnable
+
     Scenario: Execute nodoInoltraPagamentoMod2
         Given the Execute nodoInviaCarrelloRPT scenario executed successfully
         And initial XML pspInviaCarrelloRPT

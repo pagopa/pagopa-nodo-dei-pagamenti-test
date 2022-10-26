@@ -3,7 +3,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_05]
    Background:
       Given systems up
 
-@runnable
+
    # [annulli_05]
    Scenario: RPT generation
       Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
@@ -164,7 +164,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_05]
          </pay_i:RPT>
          """
 
-@runnable
+
    Scenario: Execute nodoInviaCarrelloRPT request
       Given the RPT generation scenario executed successfully
       And initial XML paaInviaRT
@@ -221,7 +221,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_05]
       When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
       Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
       Then retrieve session token from $nodoInviaCarrelloRPTResponse.url
-@runnable
+
    Scenario: Execute nodoChiediInformazioniPagamento
       Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
       When WISP sends rest GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
@@ -231,7 +231,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_05]
       And check ragioneSociale field exists in informazioniPagamento response
       And check oggettoPagamento field exists in informazioniPagamento response
       And check urlRedirectEC field exists in informazioniPagamento response
-@runnable
+
    Scenario: Execute nodoNotificaAnnullamento
       Given the Execute nodoChiediInformazioniPagamento scenario executed successfully
       When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken to nodo-dei-pagamenti
@@ -271,7 +271,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_05]
 
       #DB-CHECK-POSITION_STATUS_SNAPSHOT
       And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query DB_GEST_ANN_notice_number on db nodo_online under macro Mod1Mb
-@runnable
+
 
    Scenario: Generation of two more RPT
       Given the Execute nodoNotificaAnnullamento scenario executed successfully
@@ -432,7 +432,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_05]
          </pay_i:RPT>
          """
 
-@runnable
+
    Scenario: Execute nodoInviaCarrelloRPT request
       Given the Generation of two more RPT scenario executed successfully
       And initial XML paaInviaRT

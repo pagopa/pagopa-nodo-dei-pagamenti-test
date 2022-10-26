@@ -3,7 +3,7 @@ Feature: process tests for nodoInviaCarrelloMB
     #[nodoInviaCarrelloMB_01]
     Background:
         Given systems up
-    @runnable
+    
     Scenario: RPT generation
         Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
         And generate 1 cart with PA #codicePA# and notice number $1noticeNumber
@@ -241,7 +241,7 @@ Feature: process tests for nodoInviaCarrelloMB
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-    @runnable
+    
     Scenario: RPT generation
         Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
         And generate 1 cart with PA #codicePA# and notice number $1noticeNumber
@@ -479,7 +479,7 @@ Feature: process tests for nodoInviaCarrelloMB
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-    @runnable
+    
     Scenario: Execute nodoInviaCarrelloRPT request
         Given the RPT generation scenario executed successfully
         And initial XML paaInviaRT
@@ -543,7 +543,7 @@ Feature: process tests for nodoInviaCarrelloMB
         Then check faultCode is PPT_MULTI_BENEFICIARIO of nodoInviaCarrelloRPT response
         Then check description is Il carrello non contiene solo 2 RPT of nodoInviaCarrelloRPT response
 
-    @runnable
+    
     Scenario: RPT generation SECOND PART
         Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
         And generate 1 cart with PA #codicePA# and notice number $1noticeNumber
@@ -624,7 +624,7 @@ Feature: process tests for nodoInviaCarrelloMB
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-    @runnable
+    
     Scenario: Execute nodoInviaCarrelloRPT request
         Given the RPT generation SECOND PART scenario executed successfully
         And initial XML paaInviaRT
