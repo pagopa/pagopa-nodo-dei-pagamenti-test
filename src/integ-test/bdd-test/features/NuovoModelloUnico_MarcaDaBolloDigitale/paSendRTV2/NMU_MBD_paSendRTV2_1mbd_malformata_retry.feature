@@ -312,9 +312,15 @@ Feature: flow tests for paSendRTV2 - Marca da bollo
 
     # inserire i check sul blob in RE per l'xml paSendRTV2
 
+    # clean paSendRT queue
+    Scenario: clean paSendRt queue
+        Given the execute DB check scenario executed successfully
+        When job paSendRt triggered after 10 seconds
+        And wait 15 seconds for expiration
+
     # trigger pa send RT retry
     Scenario: Execute paSendRT
-        Given the execute DB check scenario executed successfully
+        Given the clean paSendRt queue scenario executed successfully
         And initial xml paSendRTV2
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
@@ -327,7 +333,8 @@ Feature: flow tests for paSendRTV2 - Marca da bollo
             </soapenv:Envelope>
             """
         And EC replies to nodo-dei-pagamenti with the paSendRTV2
-        When job paSendRt triggered after 12 seconds
+        When job paSendRt triggered after 10 seconds
+        And wait 15 seconds for expiration
         Then verify the HTTP status code of paSendRt response is 200
 
         # DB check 1
