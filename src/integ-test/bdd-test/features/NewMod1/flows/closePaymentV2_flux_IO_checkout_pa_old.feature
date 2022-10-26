@@ -2124,7 +2124,6 @@ Feature: flux tests for closePaymentV2
 
         # STATI_RPT
         And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_ANNULLATA_WISP of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
-        And verify 4 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
 
         # RT_VERSAMENTI
         And checks the value NotNone of the record at column RT_VERSAMENTI.ID of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
