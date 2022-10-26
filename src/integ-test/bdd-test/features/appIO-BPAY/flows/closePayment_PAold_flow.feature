@@ -497,7 +497,7 @@ Feature: flow checks for closePayment - PA old
       Given the nodoVerificaRPT scenario executed successfully
       And the nodoAttivaRPT scenario executed successfully
       When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-      Then check outcome is OK of nodoAttivaRPT response
+      Then check esito is OK of nodoAttivaRPT response
 
    Scenario: FLUSSO_CP_01 (part 2)
       Given the FLUSSO_CP_01 (part 1) scenario executed successfully
@@ -689,7 +689,7 @@ Feature: flow checks for closePayment - PA old
    #    Given the nodoVerificaRPT scenario executed successfully
    #    And the nodoAttivaRPT scenario executed successfully
    #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-   #    Then check outcome is OK of nodoAttivaRPT response
+   #    Then check esito is OK of nodoAttivaRPT response
    #    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
    #    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
    #    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
@@ -743,7 +743,7 @@ Feature: flow checks for closePayment - PA old
    #    Given the nodoVerificaRPT scenario executed successfully
    #    And the nodoAttivaRPT scenario executed successfully
    #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-   #    Then check outcome is OK of nodoAttivaRPT response
+   #    Then check esito is OK of nodoAttivaRPT response
    #    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
    #    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
    #    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
@@ -844,7 +844,7 @@ Feature: flow checks for closePayment - PA old
    #    Given the nodoVerificaRPT scenario executed successfully
    #    And the nodoAttivaRPT scenario executed successfully
    #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-   #    Then check outcome is OK of nodoAttivaRPT response
+   #    Then check esito is OK of nodoAttivaRPT response
    #    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
    #    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
    #    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
@@ -898,7 +898,7 @@ Feature: flow checks for closePayment - PA old
    #    Given the nodoVerificaRPT scenario executed successfully
    #    And the nodoAttivaRPT scenario executed successfully
    #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-   #    Then check outcome is OK of nodoAttivaRPT response
+   #    Then check esito is OK of nodoAttivaRPT response
    #    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
    #    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
    #    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
@@ -964,7 +964,7 @@ Feature: flow checks for closePayment - PA old
    #    Given the nodoVerificaRPT scenario executed successfully
    #    And the nodoAttivaRPT scenario executed successfully
    #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-   #    Then check outcome is OK of nodoAttivaRPT response
+   #    Then check esito is OK of nodoAttivaRPT response
    #    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
    #    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
    #    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
@@ -1031,7 +1031,7 @@ Feature: flow checks for closePayment - PA old
    #    And the nodoVerificaRPT scenario executed successfully
    #    And the nodoAttivaRPT scenario executed successfully
    #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-   #    Then check outcome is OK of nodoAttivaRPT response
+   #    Then check esito is OK of nodoAttivaRPT response
    #    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
    #    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
    #    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
@@ -1082,7 +1082,7 @@ Feature: flow checks for closePayment - PA old
    #    And the nodoVerificaRPT scenario executed successfully
    #    And the nodoAttivaRPT scenario executed successfully
    #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-   #    Then check outcome is OK of nodoAttivaRPT response
+   #    Then check esito is OK of nodoAttivaRPT response
    #    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
    #    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
    #    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
@@ -1138,7 +1138,7 @@ Feature: flow checks for closePayment - PA old
    #    And the nodoVerificaRPT scenario executed successfully
    #    And the nodoAttivaRPT scenario executed successfully
    #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-   #    Then check outcome is OK of nodoAttivaRPT response
+   #    Then check esito is OK of nodoAttivaRPT response
    #    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
    #    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
    #    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
@@ -1206,7 +1206,7 @@ Feature: flow checks for closePayment - PA old
    #    And the nodoVerificaRPT scenario executed successfully
    #    And the nodoAttivaRPT scenario executed successfully
    #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-   #    Then check outcome is OK of nodoAttivaRPT response
+   #    Then check esito is OK of nodoAttivaRPT response
    #    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
    #    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
    #    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
@@ -1262,7 +1262,7 @@ Feature: flow checks for closePayment - PA old
    #    Given the nodoVerificaRPT scenario executed successfully
    #    And the nodoAttivaRPT scenario executed successfully
    #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-   #    Then check outcome is OK of nodoAttivaRPT response
+   #    Then check esito is OK of nodoAttivaRPT response
    #    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
    #    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
    #    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
@@ -1328,7 +1328,7 @@ Feature: flow checks for closePayment - PA old
    #    Given the nodoVerificaRPT scenario executed successfully
    #    And the nodoAttivaRPT scenario executed successfully
    #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-   #    Then check outcome is OK of nodoAttivaRPT response
+   #    Then check esito is OK of nodoAttivaRPT response
    #    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
    #    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
    #    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
@@ -1373,7 +1373,7 @@ Feature: flow checks for closePayment - PA old
    #    Given the nodoVerificaRPT scenario executed successfully
    #    And the nodoAttivaRPT scenario executed successfully
    #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-   #    Then check outcome is OK of nodoAttivaRPT response
+   #    Then check esito is OK of nodoAttivaRPT response
    #    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
    #    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
    #    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
@@ -1440,7 +1440,7 @@ Feature: flow checks for closePayment - PA old
    #    Given the nodoVerificaRPT scenario executed successfully
    #    And the nodoAttivaRPT scenario executed successfully
    #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-   #    Then check outcome is OK of nodoAttivaRPT response
+   #    Then check esito is OK of nodoAttivaRPT response
    #    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
    #    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
    #    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
@@ -1474,7 +1474,7 @@ Feature: flow checks for closePayment - PA old
    #    Given the nodoVerificaRPT scenario executed successfully
    #    And the nodoAttivaRPT scenario executed successfully
    #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-   #    Then check outcome is OK of nodoAttivaRPT response
+   #    Then check esito is OK of nodoAttivaRPT response
    #    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
    #    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
    #    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
@@ -1539,7 +1539,7 @@ Feature: flow checks for closePayment - PA old
    #    Given the nodoVerificaRPT scenario executed successfully
    #    And the nodoAttivaRPT scenario executed successfully
    #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-   #    Then check outcome is OK of nodoAttivaRPT response
+   #    Then check esito is OK of nodoAttivaRPT response
    #    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
    #    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
    #    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
@@ -1603,7 +1603,7 @@ Feature: flow checks for closePayment - PA old
    #    Given the nodoVerificaRPT scenario executed successfully
    #    And the nodoAttivaRPT scenario executed successfully
    #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-   #    Then check outcome is OK of nodoAttivaRPT response
+   #    Then check esito is OK of nodoAttivaRPT response
    #    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
    #    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
    #    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
@@ -1654,7 +1654,7 @@ Feature: flow checks for closePayment - PA old
    #    Given the nodoVerificaRPT scenario executed successfully
    #    And the nodoAttivaRPT scenario executed successfully
    #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-   #    Then check outcome is OK of nodoAttivaRPT response
+   #    Then check esito is OK of nodoAttivaRPT response
    #    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
    #    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
    #    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
@@ -1719,7 +1719,7 @@ Feature: flow checks for closePayment - PA old
    #    Given the nodoVerificaRPT scenario executed successfully
    #    And the nodoAttivaRPT scenario executed successfully
    #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-   #    Then check outcome is OK of nodoAttivaRPT response
+   #    Then check esito is OK of nodoAttivaRPT response
    #    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
    #    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
    #    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
@@ -1749,7 +1749,7 @@ Feature: flow checks for closePayment - PA old
    #    Given the nodoVerificaRPT scenario executed successfully
    #    And the nodoAttivaRPT scenario executed successfully
    #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-   #    Then check outcome is OK of nodoAttivaRPT response
+   #    Then check esito is OK of nodoAttivaRPT response
    #    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
    #    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
    #    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
@@ -1780,7 +1780,7 @@ Feature: flow checks for closePayment - PA old
    #    Given the nodoVerificaRPT scenario executed successfully
    #    And the nodoAttivaRPT scenario executed successfully
    #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-   #    Then check outcome is OK of nodoAttivaRPT response
+   #    Then check esito is OK of nodoAttivaRPT response
    #    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
    #    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
    #    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
@@ -1817,7 +1817,7 @@ Feature: flow checks for closePayment - PA old
    #    Given the nodoVerificaRPT scenario executed successfully
    #    And the nodoAttivaRPT scenario executed successfully
    #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-   #    Then check outcome is OK of nodoAttivaRPT response
+   #    Then check esito is OK of nodoAttivaRPT response
    #    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
    #    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
    #    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
@@ -1848,7 +1848,7 @@ Feature: flow checks for closePayment - PA old
    #    Given the nodoVerificaRPT scenario executed successfully
    #    And the nodoAttivaRPT scenario executed successfully
    #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-   #    Then check outcome is OK of nodoAttivaRPT response
+   #    Then check esito is OK of nodoAttivaRPT response
    #    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
    #    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
    #    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
@@ -1874,7 +1874,7 @@ Feature: flow checks for closePayment - PA old
    #    And creditorReferenceId with 11$iuv in paaAttivaRPT
    #    And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
    #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-   #    Then check outcome is OK of nodoAttivaRPT response
+   #    Then check esito is OK of nodoAttivaRPT response
 
 
    # # FLUSSO_CP_25
@@ -1983,7 +1983,7 @@ Feature: flow checks for closePayment - PA old
    #    Given the nodoVerificaRPT scenario executed successfully
    #    And the nodoAttivaRPT scenario executed successfully
    #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-   #    Then check outcome is OK of nodoAttivaRPT response
+   #    Then check esito is OK of nodoAttivaRPT response
    #    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
    #    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
    #    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
@@ -2015,7 +2015,7 @@ Feature: flow checks for closePayment - PA old
    #    Given the nodoVerificaRPT scenario executed successfully
    #    And the nodoAttivaRPT scenario executed successfully
    #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-   #    Then check outcome is OK of nodoAttivaRPT response
+   #    Then check esito is OK of nodoAttivaRPT response
    #    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
    #    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
    #    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
