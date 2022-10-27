@@ -3,9 +3,7 @@ Feature: process tests for nodoInviaCarrelloMB[nodoInviaCarrelloMB_22]
         Given systems up
     Scenario: RPT generation
         Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
-
-        And generate 1 cart with PA #codicePA# and notice number $1noticeNumber
-
+        And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
         #And replace 1ccp content with $1carrello content
         #And replace 2ccp content with $1carrello content
         And RPT1 generation
@@ -13,9 +11,7 @@ Feature: process tests for nodoInviaCarrelloMB[nodoInviaCarrelloMB_22]
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-
-            <pay_i:identificativoDominio>#codicePA#</pay_i:identificativoDominio>
-
+            <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
             <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
@@ -74,18 +70,7 @@ Feature: process tests for nodoInviaCarrelloMB[nodoInviaCarrelloMB_22]
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
             <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
             <pay_i:datiSingoloVersamento>
-            <pay_i:importoSingoloVersamento>1.00</pay_i:importoSingoloVersamento>
-            <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
-            <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
-            <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
-            <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio>
-            <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
-            <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
-            <pay_i:causaleVersamento>pagamento fotocopie pratica RPT</pay_i:causaleVersamento>
-            <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
-            </pay_i:datiSingoloVersamento>
-            <pay_i:datiSingoloVersamento>
-            <pay_i:importoSingoloVersamento>0.50</pay_i:importoSingoloVersamento>
+            <pay_i:importoSingoloVersamento>1.50</pay_i:importoSingoloVersamento>
             <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
             <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
             <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
@@ -103,8 +88,8 @@ Feature: process tests for nodoInviaCarrelloMB[nodoInviaCarrelloMB_22]
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.1</pay_i:versioneOggetto>
             <pay_i:dominio>
-            <pay_i:identificativoDominio>90000000001</pay_i:identificativoDominio>
-            <pay_i:identificativoStazioneRichiedente>90000000001_01</pay_i:identificativoStazioneRichiedente>
+            <pay_i:identificativoDominio>#creditor_institution_code_secondary#</pay_i:identificativoDominio>
+            <pay_i:identificativoStazioneRichiedente>id_station_secondary#</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
             <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
@@ -178,28 +163,12 @@ Feature: process tests for nodoInviaCarrelloMB[nodoInviaCarrelloMB_22]
 
     Scenario: Execute nodoInviaCarrelloRPT request
         Given the RPT generation scenario executed successfully
-        # And initial XML paaInviaRT
-        #     """
-        #     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-        #     <soapenv:Header/>
-        #     <soapenv:Body>
-        #     <ws:paaInviaRTRisposta>
-        #     <paaInviaRTRisposta>
-        #     <esito>OK</esito>
-        #     </paaInviaRTRisposta>
-        #     </ws:paaInviaRTRisposta>
-        #     </soapenv:Body>
-        #     </soapenv:Envelope>
-        #     """
-        # And EC replies to nodo-dei-pagamenti with the paaInviaRT
         And initial XML nodoInviaCarrelloRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
             <ppt:intestazioneCarrelloPPT>
-
-            <identificativoIntermediarioPA>#codicePA#</identificativoIntermediarioPA>
-
+            <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
             <identificativoCarrello>$1carrello</identificativoCarrello>
             </ppt:intestazioneCarrelloPPT>
@@ -207,20 +176,18 @@ Feature: process tests for nodoInviaCarrelloMB[nodoInviaCarrelloMB_22]
             <soapenv:Body>
             <ws:nodoInviaCarrelloRPT>
             <password>pwdpwdpwd</password>
-            <identificativoPSP>AGID_01</identificativoPSP>
-            <identificativoIntermediarioPSP>97735020584</identificativoIntermediarioPSP>
-            <identificativoCanale>97735020584_02</identificativoCanale>
+            <identificativoPSP>#psp_AGID#</identificativoPSP>
+            <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
             <listaRPT>
             <elementoListaRPT>
-
-            <identificativoDominio>#codicePA#</identificativoDominio>
-
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
             <rpt>$rpt1Attachment</rpt>
             </elementoListaRPT>
             <elementoListaRPT>
-            <identificativoDominio>90000000001</identificativoDominio>
+            <identificativoDominio>#creditor_institution_code_secondary#</identificativoDominio>
             <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
             <rpt>$rpt2Attachment</rpt>
@@ -234,32 +201,21 @@ Feature: process tests for nodoInviaCarrelloMB[nodoInviaCarrelloMB_22]
             """
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
+        And replace pa content with #creditor_institution_code# content
+        And replace noticeNumber content with $1noticeNumber content
+        And generic update through the query param_update_generic_where_condition of the table POSITION_STATUS_SNAPSHOT the parameter STATUS = 'INSERTED', with where condition NOTICE_ID = '$noticeNumber' and PA_FISCAL_CODE='$pa' under macro update_query on db nodo_online
+        And generic update through the query param_update_generic_where_condition of the table POSITION_PAYMENT_STATUS the parameter STATUS = 'PAID', with where condition NOTICE_ID = '$noticeNumber' and PA_FISCAL_CODE='$pa' under macro update_query on db nodo_online
+        And generic update through the query param_update_generic_where_condition of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS = 'PAID', with where condition NOTICE_ID = '$noticeNumber' and PA_FISCAL_CODE='$pa' under macro update_query on db nodo_online
 
-    Scenario: Generation of two more RPT
+    Scenario: Execute nodoInviaCarrello (Phase 2)
         Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
-
-        And replace pa content with #codicePA# content
-
-        #And replace iuv content with $1iuv content
-        #And replace noticeNumber content with $1noticeNumber content
-
-        And generic update through the query param_update_generic_where_condition of the table POSITION_STATUS_SNAPSHOT the parameter STATUS = 'INSERTED', with where condition NOTICE_ID = '$1noticeNumber' and PA_FISCAL_CODE='$pa' under macro update_query on db nodo_online
-        And generic update through the query param_update_generic_where_condition of the table POSITION_PAYMENT_STATUS the parameter STATUS = 'PAID', with where condition NOTICE_ID = '$1noticeNumber' and PA_FISCAL_CODE='$pa' under macro update_query on db nodo_online
-        And generic update through the query param_update_generic_where_condition of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS = 'PAID', with where condition NOTICE_ID = '$1noticeNumber' and PA_FISCAL_CODE='$pa' under macro update_query on db nodo_online
-
-        And generate 2 cart with PA #codicePA# and notice number $1noticeNumber
-
-
-    Scenario: Execute nodoInviaCarrelloRPT request
-        Given the Generation of two more RPT scenario executed successfully
-        And RPT1 generation
+        And generate 2 cart with PA #creditor_institution_code# and notice number $1noticeNumber
+        And RPT3 generation
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-
-            <pay_i:identificativoDominio>#codicePA#</pay_i:identificativoDominio>
-
+            <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
             <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
@@ -318,18 +274,7 @@ Feature: process tests for nodoInviaCarrelloMB[nodoInviaCarrelloMB_22]
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
             <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
             <pay_i:datiSingoloVersamento>
-            <pay_i:importoSingoloVersamento>1.00</pay_i:importoSingoloVersamento>
-            <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
-            <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
-            <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
-            <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio>
-            <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
-            <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
-            <pay_i:causaleVersamento>pagamento fotocopie pratica RPT</pay_i:causaleVersamento>
-            <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
-            </pay_i:datiSingoloVersamento>
-            <pay_i:datiSingoloVersamento>
-            <pay_i:importoSingoloVersamento>0.50</pay_i:importoSingoloVersamento>
+            <pay_i:importoSingoloVersamento>1.50</pay_i:importoSingoloVersamento>
             <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
             <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
             <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
@@ -342,13 +287,13 @@ Feature: process tests for nodoInviaCarrelloMB[nodoInviaCarrelloMB_22]
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-        And RPT2 generation
+        And RPT4 generation
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.1</pay_i:versioneOggetto>
             <pay_i:dominio>
-            <pay_i:identificativoDominio>90000000001</pay_i:identificativoDominio>
-            <pay_i:identificativoStazioneRichiedente>90000000001_01</pay_i:identificativoStazioneRichiedente>
+            <pay_i:identificativoDominio>#creditor_institution_code_secondary#</pay_i:identificativoDominio>
+            <pay_i:identificativoStazioneRichiedente>#id_station_secondary#</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
             <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
@@ -419,28 +364,12 @@ Feature: process tests for nodoInviaCarrelloMB[nodoInviaCarrelloMB_22]
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-        # And initial XML paaInviaRT
-        #     """
-        #     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-        #     <soapenv:Header/>
-        #     <soapenv:Body>
-        #     <ws:paaInviaRTRisposta>
-        #     <paaInviaRTRisposta>
-        #     <esito>OK</esito>
-        #     </paaInviaRTRisposta>
-        #     </ws:paaInviaRTRisposta>
-        #     </soapenv:Body>
-        #     </soapenv:Envelope>
-        #     """
-        # And EC replies to nodo-dei-pagamenti with the paaInviaRT
         And initial XML nodoInviaCarrelloRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
             <ppt:intestazioneCarrelloPPT>
-
-            <identificativoIntermediarioPA>#codicePA#</identificativoIntermediarioPA>
-
+            <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
             <identificativoCarrello>$2carrello</identificativoCarrello>
             </ppt:intestazioneCarrelloPPT>
@@ -448,23 +377,21 @@ Feature: process tests for nodoInviaCarrelloMB[nodoInviaCarrelloMB_22]
             <soapenv:Body>
             <ws:nodoInviaCarrelloRPT>
             <password>pwdpwdpwd</password>
-            <identificativoPSP>AGID_01</identificativoPSP>
-            <identificativoIntermediarioPSP>97735020584</identificativoIntermediarioPSP>
-            <identificativoCanale>97735020584_02</identificativoCanale>
+            <identificativoPSP>#psp_AGID#</identificativoPSP>
+            <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
             <listaRPT>
             <elementoListaRPT>
-
-            <identificativoDominio>#codicePA#</identificativoDominio>
-
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$2carrello</codiceContestoPagamento>
-            <rpt>$rpt1Attachment</rpt>
+            <rpt>$rpt3Attachment</rpt>
             </elementoListaRPT>
             <elementoListaRPT>
-            <identificativoDominio>90000000001</identificativoDominio>
+            <identificativoDominio>#creditor_institution_code_secondary#</identificativoDominio>
             <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$2carrello</codiceContestoPagamento>
-            <rpt>$rpt2Attachment</rpt>
+            <rpt>$rpt4Attachment</rpt>
             </elementoListaRPT>
             </listaRPT>
             <requireLightPayment>01</requireLightPayment>
@@ -474,6 +401,5 @@ Feature: process tests for nodoInviaCarrelloMB[nodoInviaCarrelloMB_22]
             </soapenv:Envelope>
             """
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
-        Then check faultCode is PPT_PAGAMENTO_DUPLICATO of nodoInviaCarrelloRPT response
-
-
+        Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
+        And check faultCode is PPT_PAGAMENTO_DUPLICATO of nodoInviaCarrelloRPT response
