@@ -42,7 +42,7 @@ Feature: check syntax KO for paGetPaymentV2 without body and with tags
             <retentionDate>2021-12-30T12:12:12</retentionDate>
             <!--Optional:-->
             <lastPayment>1</lastPayment>
-            <description>description</description>
+            <description>test</description>
             <!--Optional:-->
             <companyName>company</companyName>
             <!--Optional:-->
@@ -54,8 +54,6 @@ Feature: check syntax KO for paGetPaymentV2 without body and with tags
             </uniqueIdentifier>
             <fullName>paGetPaymentName</fullName>
             <!--Optional:-->
-            <streetName>paGetPaymentStreet</streetName>
-            <!--Optional:-->
             <civicNumber>paGetPayment99</civicNumber>
             <!--Optional:-->
             <postalCode>20155</postalCode>
@@ -65,8 +63,6 @@ Feature: check syntax KO for paGetPaymentV2 without body and with tags
             <stateProvinceRegion>paGetPaymentState</stateProvinceRegion>
             <!--Optional:-->
             <country>DE</country>
-            <!--Optional:-->
-            <e-mail>paGetPaymentV2@test.it</e-mail>
             </debtor>
             <!--Optional:-->
             <transferList>
@@ -79,7 +75,8 @@ Feature: check syntax KO for paGetPaymentV2 without body and with tags
             <hashDocumento>ciao</hashDocumento>
             <tipoBollo>01</tipoBollo>
             <provinciaResidenza>MI</provinciaResidenza>
-            </richiestaMarcaDaBollo><remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
+            </richiestaMarcaDaBollo>
+            <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
             <transferCategory>paGetPaymentTest</transferCategory>
             <!--Optional:-->
             <metadata>
