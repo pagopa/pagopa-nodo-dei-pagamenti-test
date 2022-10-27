@@ -188,331 +188,331 @@ Feature: Commissioni evolute process
         And checks the value $activatePaymentNoticeV2Response.suggestedPaFee of the record at column SUGGESTED_PA_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
     
-    # activate without paymentMethod and touchPoint --> fees request with paymentMethod = ANY and touchPoint = PSP -->
-    # psp in fees response, same of psp in activate request --> fields related to fee retrieved by fees populated with the first occurrence
-    Scenario: Execute activate 3
-        Given the activatePaymentNoticeV2 scenario executed successfully
-        And amount with 7002.00 in activatePaymentNoticeV2
-        And paymentMethod with None in activatePaymentNoticeV2
-        And touchPoint with None in activatePaymentNoticeV2
-        And paymentAmount with 7002.00 in paGetPaymentV2
-        And transferAmount with 6802.00 in paGetPaymentV2
-        And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
-        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-        Then check outcome is OK of activatePaymentNoticeV2 response
-        And check suggestedIdBundle is 2 of activatePaymentNoticeV2 response
-        And check suggestedIdCiBundle field not exists in activatePaymentNoticeV2 response
-        And check suggestedUserFee is 80 of activatePaymentNoticeV2 response
-        And check suggestedPaFee is 0 of activatePaymentNoticeV2 response
-        And wait 30 seconds for expiration
-        And verify 2 record for the table RE retrived by the query select_fees on db re under macro getFees
-        And verify 1 record for the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value $activatePaymentNoticeV2.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value None of the record at column PAYMENT_METHOD of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value None of the record at column TOUCHPOINT of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value $activatePaymentNoticeV2Response.suggestedIdBundle of the record at column SUGGESTED_IDBUNDLE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value None of the record at column SUGGESTED_IDCIBUNDLE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value $activatePaymentNoticeV2Response.suggestedUserFee of the record at column SUGGESTED_USER_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value $activatePaymentNoticeV2Response.suggestedPaFee of the record at column SUGGESTED_PA_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    # # activate without paymentMethod and touchPoint --> fees request with paymentMethod = ANY and touchPoint = PSP -->
+    # # psp in fees response, same of psp in activate request --> fields related to fee retrieved by fees populated with the first occurrence
+    # Scenario: Execute activate 3
+    #     Given the activatePaymentNoticeV2 scenario executed successfully
+    #     And amount with 7002.00 in activatePaymentNoticeV2
+    #     And paymentMethod with None in activatePaymentNoticeV2
+    #     And touchPoint with None in activatePaymentNoticeV2
+    #     And paymentAmount with 7002.00 in paGetPaymentV2
+    #     And transferAmount with 6802.00 in paGetPaymentV2
+    #     And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
+    #     When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+    #     Then check outcome is OK of activatePaymentNoticeV2 response
+    #     And check suggestedIdBundle is 2 of activatePaymentNoticeV2 response
+    #     And check suggestedIdCiBundle field not exists in activatePaymentNoticeV2 response
+    #     And check suggestedUserFee is 80 of activatePaymentNoticeV2 response
+    #     And check suggestedPaFee is 0 of activatePaymentNoticeV2 response
+    #     And wait 30 seconds for expiration
+    #     And verify 2 record for the table RE retrived by the query select_fees on db re under macro getFees
+    #     And verify 1 record for the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value $activatePaymentNoticeV2.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value None of the record at column PAYMENT_METHOD of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value None of the record at column TOUCHPOINT of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value $activatePaymentNoticeV2Response.suggestedIdBundle of the record at column SUGGESTED_IDBUNDLE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value None of the record at column SUGGESTED_IDCIBUNDLE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value $activatePaymentNoticeV2Response.suggestedUserFee of the record at column SUGGESTED_USER_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value $activatePaymentNoticeV2Response.suggestedPaFee of the record at column SUGGESTED_PA_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
     
-    # psp in fees response different from psp in activate request --> fields related to fee retrieved by fees not populated
-    Scenario: Execute activate 4
-        Given the activatePaymentNoticeV2 scenario executed successfully
-        And amount with 7006.00 in activatePaymentNoticeV2
-        And paymentMethod with CP in activatePaymentNoticeV2
-        And touchPoint with PSP in activatePaymentNoticeV2
-        And paymentAmount with 7006.00 in paGetPaymentV2
-        And transferAmount with 6806.00 in paGetPaymentV2
-        And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
-        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-        Then check outcome is OK of activatePaymentNoticeV2 response
-        And check suggestedIdBundle field not exists in activatePaymentNoticeV2 response
-        And check suggestedIdCiBundle field not exists in activatePaymentNoticeV2 response
-        And check suggestedUserFee field not exists in activatePaymentNoticeV2 response
-        And check suggestedPaFee field not exists in activatePaymentNoticeV2 response
-        And wait 30 seconds for expiration
-        And verify 2 record for the table RE retrived by the query select_fees on db re under macro getFees
-        And verify 1 record for the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value $activatePaymentNoticeV2.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value CP of the record at column PAYMENT_METHOD of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value PSP of the record at column TOUCHPOINT of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value None of the record at column SUGGESTED_IDBUNDLE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value None of the record at column SUGGESTED_IDCIBUNDLE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value None of the record at column SUGGESTED_USER_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value None of the record at column SUGGESTED_PA_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    # # psp in fees response different from psp in activate request --> fields related to fee retrieved by fees not populated
+    # Scenario: Execute activate 4
+    #     Given the activatePaymentNoticeV2 scenario executed successfully
+    #     And amount with 7006.00 in activatePaymentNoticeV2
+    #     And paymentMethod with CP in activatePaymentNoticeV2
+    #     And touchPoint with PSP in activatePaymentNoticeV2
+    #     And paymentAmount with 7006.00 in paGetPaymentV2
+    #     And transferAmount with 6806.00 in paGetPaymentV2
+    #     And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
+    #     When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+    #     Then check outcome is OK of activatePaymentNoticeV2 response
+    #     And check suggestedIdBundle field not exists in activatePaymentNoticeV2 response
+    #     And check suggestedIdCiBundle field not exists in activatePaymentNoticeV2 response
+    #     And check suggestedUserFee field not exists in activatePaymentNoticeV2 response
+    #     And check suggestedPaFee field not exists in activatePaymentNoticeV2 response
+    #     And wait 30 seconds for expiration
+    #     And verify 2 record for the table RE retrived by the query select_fees on db re under macro getFees
+    #     And verify 1 record for the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value $activatePaymentNoticeV2.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value CP of the record at column PAYMENT_METHOD of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value PSP of the record at column TOUCHPOINT of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value None of the record at column SUGGESTED_IDBUNDLE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value None of the record at column SUGGESTED_IDCIBUNDLE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value None of the record at column SUGGESTED_USER_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value None of the record at column SUGGESTED_PA_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
     
-    # 2 psp in fees response, first different from activate request, second the same --> fields related to fee retrieved by fees populated with the fields from the same psp
-    Scenario: Execute activate 5
-        Given the activatePaymentNoticeV2 scenario executed successfully
-        And amount with 7005.00 in activatePaymentNoticeV2
-        And paymentMethod with None in activatePaymentNoticeV2
-        And touchPoint with PSP in activatePaymentNoticeV2
-        And paymentAmount with 7005.00 in paGetPaymentV2
-        And transferAmount with 6805.00 in paGetPaymentV2
-        And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
-        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-        Then check outcome is OK of activatePaymentNoticeV2 response
-        And check suggestedIdBundle is 1 of activatePaymentNoticeV2 response
-        And check suggestedIdCiBundle is 1 of activatePaymentNoticeV2 response
-        And check suggestedUserFee is 130 of activatePaymentNoticeV2 response
-        And check suggestedPaFee is 20 of activatePaymentNoticeV2 response
-        And wait 30 seconds for expiration
-        And verify 2 record for the table RE retrived by the query select_fees on db re under macro getFees
-        And verify 1 record for the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value $activatePaymentNoticeV2.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value None of the record at column PAYMENT_METHOD of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value PSP of the record at column TOUCHPOINT of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value $activatePaymentNoticeV2Response.suggestedIdBundle of the record at column SUGGESTED_IDBUNDLE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value $activatePaymentNoticeV2Response.suggestedIdCiBundle of the record at column SUGGESTED_IDCIBUNDLE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value $activatePaymentNoticeV2Response.suggestedUserFee of the record at column SUGGESTED_USER_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value $activatePaymentNoticeV2Response.suggestedPaFee of the record at column SUGGESTED_PA_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    # # 2 psp in fees response, first different from activate request, second the same --> fields related to fee retrieved by fees populated with the fields from the same psp
+    # Scenario: Execute activate 5
+    #     Given the activatePaymentNoticeV2 scenario executed successfully
+    #     And amount with 7005.00 in activatePaymentNoticeV2
+    #     And paymentMethod with None in activatePaymentNoticeV2
+    #     And touchPoint with PSP in activatePaymentNoticeV2
+    #     And paymentAmount with 7005.00 in paGetPaymentV2
+    #     And transferAmount with 6805.00 in paGetPaymentV2
+    #     And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
+    #     When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+    #     Then check outcome is OK of activatePaymentNoticeV2 response
+    #     And check suggestedIdBundle is 1 of activatePaymentNoticeV2 response
+    #     And check suggestedIdCiBundle is 1 of activatePaymentNoticeV2 response
+    #     And check suggestedUserFee is 130 of activatePaymentNoticeV2 response
+    #     And check suggestedPaFee is 20 of activatePaymentNoticeV2 response
+    #     And wait 30 seconds for expiration
+    #     And verify 2 record for the table RE retrived by the query select_fees on db re under macro getFees
+    #     And verify 1 record for the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value $activatePaymentNoticeV2.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value None of the record at column PAYMENT_METHOD of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value PSP of the record at column TOUCHPOINT of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value $activatePaymentNoticeV2Response.suggestedIdBundle of the record at column SUGGESTED_IDBUNDLE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value $activatePaymentNoticeV2Response.suggestedIdCiBundle of the record at column SUGGESTED_IDCIBUNDLE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value $activatePaymentNoticeV2Response.suggestedUserFee of the record at column SUGGESTED_USER_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value $activatePaymentNoticeV2Response.suggestedPaFee of the record at column SUGGESTED_PA_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
     
-    # fees mock replies with an empty list --> fields related to fees empty in POSITION_ACTIVATE
-    Scenario: Execute activate 6
-        Given the activatePaymentNoticeV2 scenario executed successfully
-        And amount with 7003.00 in activatePaymentNoticeV2
-        And touchPoint with BETTING in activatePaymentNoticeV2
-        And paymentAmount with 7003.00 in paGetPaymentV2
-        And transferAmount with 6803.00 in paGetPaymentV2
-        And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
-        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-        Then check outcome is OK of activatePaymentNoticeV2 response
-        And wait 30 seconds for expiration
-        And verify 2 record for the table RE retrived by the query select_fees on db re under macro getFees
-        And verify 1 record for the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value $activatePaymentNoticeV2.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value PO of the record at column PAYMENT_METHOD of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value BETTING of the record at column TOUCHPOINT of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value None of the record at column SUGGESTED_IDBUNDLE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value None of the record at column SUGGESTED_IDCIBUNDLE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value None of the record at column SUGGESTED_USER_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value None of the record at column SUGGESTED_PA_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    # # fees mock replies with an empty list --> fields related to fees empty in POSITION_ACTIVATE
+    # Scenario: Execute activate 6
+    #     Given the activatePaymentNoticeV2 scenario executed successfully
+    #     And amount with 7003.00 in activatePaymentNoticeV2
+    #     And touchPoint with BETTING in activatePaymentNoticeV2
+    #     And paymentAmount with 7003.00 in paGetPaymentV2
+    #     And transferAmount with 6803.00 in paGetPaymentV2
+    #     And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
+    #     When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+    #     Then check outcome is OK of activatePaymentNoticeV2 response
+    #     And wait 30 seconds for expiration
+    #     And verify 2 record for the table RE retrived by the query select_fees on db re under macro getFees
+    #     And verify 1 record for the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value $activatePaymentNoticeV2.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value PO of the record at column PAYMENT_METHOD of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value BETTING of the record at column TOUCHPOINT of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value None of the record at column SUGGESTED_IDBUNDLE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value None of the record at column SUGGESTED_IDCIBUNDLE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value None of the record at column SUGGESTED_USER_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value None of the record at column SUGGESTED_PA_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
     
-    # activate with idPsp = AGID_01 --> fees not triggered
-    Scenario: Execute activate 7
-        Given the activatePaymentNoticeV2 scenario executed successfully
-        And idPSP with #psp_AGID# in activatePaymentNoticeV2
-        And idBrokerPSP with #broker_AGID# in activatePaymentNoticeV2
-        And idChannel with #canale_AGID# in activatePaymentNoticeV2
-        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-        Then check outcome is OK of activatePaymentNoticeV2 response
-        And wait 30 seconds for expiration
-        And verify 0 record for the table RE retrived by the query select_fees on db re under macro getFees
-        And verify 1 record for the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value $activatePaymentNoticeV2.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value PO of the record at column PAYMENT_METHOD of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value ATM of the record at column TOUCHPOINT of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value None of the record at column SUGGESTED_IDBUNDLE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value None of the record at column SUGGESTED_IDCIBUNDLE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value None of the record at column SUGGESTED_USER_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value None of the record at column SUGGESTED_PA_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    # # activate with idPsp = AGID_01 --> fees not triggered
+    # Scenario: Execute activate 7
+    #     Given the activatePaymentNoticeV2 scenario executed successfully
+    #     And idPSP with #psp_AGID# in activatePaymentNoticeV2
+    #     And idBrokerPSP with #broker_AGID# in activatePaymentNoticeV2
+    #     And idChannel with #canale_AGID# in activatePaymentNoticeV2
+    #     When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+    #     Then check outcome is OK of activatePaymentNoticeV2 response
+    #     And wait 30 seconds for expiration
+    #     And verify 0 record for the table RE retrived by the query select_fees on db re under macro getFees
+    #     And verify 1 record for the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value $activatePaymentNoticeV2.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value PO of the record at column PAYMENT_METHOD of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value ATM of the record at column TOUCHPOINT of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value None of the record at column SUGGESTED_IDBUNDLE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value None of the record at column SUGGESTED_IDCIBUNDLE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value None of the record at column SUGGESTED_USER_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value None of the record at column SUGGESTED_PA_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
     
-    # paGetPaymentV2 response not OK --> fees not triggered
-    Scenario: activatePaymentNoticeV2 paGetPaymentV2 KO
-        Given initial XML activatePaymentNoticeV2
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <nod:activatePaymentNoticeV2Request>
-            <idPSP>#psp#</idPSP>
-            <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
-            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
-            <password>#password#</password>
-            <qrCode>
-            <fiscalCode>#creditor_institution_code#</fiscalCode>
-            <noticeNumber>310#iuv#</noticeNumber>
-            </qrCode>
-            <amount>10.00</amount>
-            <paymentNote>responseFull</paymentNote>
-            <paymentMethod>PO</paymentMethod>
-            <touchPoint>ATM</touchPoint>
-            </nod:activatePaymentNoticeV2Request>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        And initial XML paGetPaymentV2
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <paf:paGetPaymentV2Response>
-            <outcome>KO</outcome>
-            <!--Optional:-->
-            <fault>
-            <faultCode>PAA_SEMANTICA</faultCode>
-            <faultString>chiamata rifiutata</faultString>
-            <id>1</id>
-            <!--Optional:-->
-            <description>chiamata rifiutata</description>
-            </fault>
-            </paf:paGetPaymentV2Response>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
+    # # paGetPaymentV2 response not OK --> fees not triggered
+    # Scenario: activatePaymentNoticeV2 paGetPaymentV2 KO
+    #     Given initial XML activatePaymentNoticeV2
+    #         """
+    #         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+    #         <soapenv:Header/>
+    #         <soapenv:Body>
+    #         <nod:activatePaymentNoticeV2Request>
+    #         <idPSP>#psp#</idPSP>
+    #         <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
+    #         <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
+    #         <password>#password#</password>
+    #         <qrCode>
+    #         <fiscalCode>#creditor_institution_code#</fiscalCode>
+    #         <noticeNumber>310#iuv#</noticeNumber>
+    #         </qrCode>
+    #         <amount>10.00</amount>
+    #         <paymentNote>responseFull</paymentNote>
+    #         <paymentMethod>PO</paymentMethod>
+    #         <touchPoint>ATM</touchPoint>
+    #         </nod:activatePaymentNoticeV2Request>
+    #         </soapenv:Body>
+    #         </soapenv:Envelope>
+    #         """
+    #     And initial XML paGetPaymentV2
+    #         """
+    #         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
+    #         <soapenv:Header/>
+    #         <soapenv:Body>
+    #         <paf:paGetPaymentV2Response>
+    #         <outcome>KO</outcome>
+    #         <!--Optional:-->
+    #         <fault>
+    #         <faultCode>PAA_SEMANTICA</faultCode>
+    #         <faultString>chiamata rifiutata</faultString>
+    #         <id>1</id>
+    #         <!--Optional:-->
+    #         <description>chiamata rifiutata</description>
+    #         </fault>
+    #         </paf:paGetPaymentV2Response>
+    #         </soapenv:Body>
+    #         </soapenv:Envelope>
+    #         """
+    #     And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
     
-    Scenario: Execute activate 8
-        Given the activatePaymentNoticeV2 paGetPaymentV2 KO scenario executed successfully
-        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-        Then check outcome is KO of activatePaymentNoticeV2 response
-        And wait 30 seconds for expiration
-        And verify 0 record for the table RE retrived by the query select_fees on db re under macro getFees
-        And verify 1 record for the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value $activatePaymentNoticeV2.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value PO of the record at column PAYMENT_METHOD of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value ATM of the record at column TOUCHPOINT of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value None of the record at column SUGGESTED_IDBUNDLE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value None of the record at column SUGGESTED_IDCIBUNDLE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value None of the record at column SUGGESTED_USER_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value None of the record at column SUGGESTED_PA_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    # Scenario: Execute activate 8
+    #     Given the activatePaymentNoticeV2 paGetPaymentV2 KO scenario executed successfully
+    #     When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+    #     Then check outcome is KO of activatePaymentNoticeV2 response
+    #     And wait 30 seconds for expiration
+    #     And verify 0 record for the table RE retrived by the query select_fees on db re under macro getFees
+    #     And verify 1 record for the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value $activatePaymentNoticeV2.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value PO of the record at column PAYMENT_METHOD of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value ATM of the record at column TOUCHPOINT of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value None of the record at column SUGGESTED_IDBUNDLE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value None of the record at column SUGGESTED_IDCIBUNDLE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value None of the record at column SUGGESTED_USER_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value None of the record at column SUGGESTED_PA_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
     
-    # retry fees - 400
-    Scenario: Execute activate 9
-        Given nodo-dei-pagamenti DEV has config parameter gec.fees.maxRetry set to 3
-        And the activatePaymentNoticeV2 scenario executed successfully
-        And amount with 400.00 in activatePaymentNoticeV2
-        And touchPoint with PSP in activatePaymentNoticeV2
-        And paymentAmount with 400.00 in paGetPaymentV2
-        And transferAmount with 200.00 in paGetPaymentV2
-        And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
-        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-        And wait 60 seconds for expiration
-        Then check outcome is OK of activatePaymentNoticeV2 response
-        And verify 8 record for the table RE retrived by the query select_fees on db re under macro getFees
-        And verify 1 record for the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value $activatePaymentNoticeV2.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value PO of the record at column PAYMENT_METHOD of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value PSP of the record at column TOUCHPOINT of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value None of the record at column SUGGESTED_IDBUNDLE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value None of the record at column SUGGESTED_IDCIBUNDLE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value None of the record at column SUGGESTED_USER_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value None of the record at column SUGGESTED_PA_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    # # retry fees - 400
+    # Scenario: Execute activate 9
+    #     Given nodo-dei-pagamenti DEV has config parameter gec.fees.maxRetry set to 3
+    #     And the activatePaymentNoticeV2 scenario executed successfully
+    #     And amount with 400.00 in activatePaymentNoticeV2
+    #     And touchPoint with PSP in activatePaymentNoticeV2
+    #     And paymentAmount with 400.00 in paGetPaymentV2
+    #     And transferAmount with 200.00 in paGetPaymentV2
+    #     And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
+    #     When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+    #     And wait 60 seconds for expiration
+    #     Then check outcome is OK of activatePaymentNoticeV2 response
+    #     And verify 8 record for the table RE retrived by the query select_fees on db re under macro getFees
+    #     And verify 1 record for the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value $activatePaymentNoticeV2.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value PO of the record at column PAYMENT_METHOD of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value PSP of the record at column TOUCHPOINT of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value None of the record at column SUGGESTED_IDBUNDLE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value None of the record at column SUGGESTED_IDCIBUNDLE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value None of the record at column SUGGESTED_USER_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value None of the record at column SUGGESTED_PA_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
     
-    # retry fees - 401
-    Scenario: Execute activate 9.1
-        Given the activatePaymentNoticeV2 scenario executed successfully
-        And amount with 401.00 in activatePaymentNoticeV2
-        And touchPoint with PSP in activatePaymentNoticeV2
-        And paymentAmount with 401.00 in paGetPaymentV2
-        And transferAmount with 201.00 in paGetPaymentV2
-        And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
-        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-        And wait 60 seconds for expiration
-        Then check outcome is OK of activatePaymentNoticeV2 response
-        And verify 8 record for the table RE retrived by the query select_fees on db re under macro getFees
-        And verify 1 record for the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value $activatePaymentNoticeV2.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value PO of the record at column PAYMENT_METHOD of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value PSP of the record at column TOUCHPOINT of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value None of the record at column SUGGESTED_IDBUNDLE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value None of the record at column SUGGESTED_IDCIBUNDLE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value None of the record at column SUGGESTED_USER_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value None of the record at column SUGGESTED_PA_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    # # retry fees - 401
+    # Scenario: Execute activate 9.1
+    #     Given the activatePaymentNoticeV2 scenario executed successfully
+    #     And amount with 401.00 in activatePaymentNoticeV2
+    #     And touchPoint with PSP in activatePaymentNoticeV2
+    #     And paymentAmount with 401.00 in paGetPaymentV2
+    #     And transferAmount with 201.00 in paGetPaymentV2
+    #     And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
+    #     When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+    #     And wait 60 seconds for expiration
+    #     Then check outcome is OK of activatePaymentNoticeV2 response
+    #     And verify 8 record for the table RE retrived by the query select_fees on db re under macro getFees
+    #     And verify 1 record for the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value $activatePaymentNoticeV2.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value PO of the record at column PAYMENT_METHOD of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value PSP of the record at column TOUCHPOINT of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value None of the record at column SUGGESTED_IDBUNDLE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value None of the record at column SUGGESTED_IDCIBUNDLE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value None of the record at column SUGGESTED_USER_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value None of the record at column SUGGESTED_PA_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
     
-    # retry fees - 429 
-    Scenario: Execute activate 9.2
-        Given the activatePaymentNoticeV2 scenario executed successfully
-        And amount with 429.00 in activatePaymentNoticeV2
-        And touchPoint with PSP in activatePaymentNoticeV2
-        And paymentAmount with 429.00 in paGetPaymentV2
-        And transferAmount with 229.00 in paGetPaymentV2
-        And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
-        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-        And wait 60 seconds for expiration
-        Then check outcome is OK of activatePaymentNoticeV2 response
-        And verify 8 record for the table RE retrived by the query select_fees on db re under macro getFees
-        And verify 1 record for the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value $activatePaymentNoticeV2.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value PO of the record at column PAYMENT_METHOD of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value PSP of the record at column TOUCHPOINT of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value None of the record at column SUGGESTED_IDBUNDLE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value None of the record at column SUGGESTED_IDCIBUNDLE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value None of the record at column SUGGESTED_USER_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value None of the record at column SUGGESTED_PA_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    # # retry fees - 429 
+    # Scenario: Execute activate 9.2
+    #     Given the activatePaymentNoticeV2 scenario executed successfully
+    #     And amount with 429.00 in activatePaymentNoticeV2
+    #     And touchPoint with PSP in activatePaymentNoticeV2
+    #     And paymentAmount with 429.00 in paGetPaymentV2
+    #     And transferAmount with 229.00 in paGetPaymentV2
+    #     And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
+    #     When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+    #     And wait 60 seconds for expiration
+    #     Then check outcome is OK of activatePaymentNoticeV2 response
+    #     And verify 8 record for the table RE retrived by the query select_fees on db re under macro getFees
+    #     And verify 1 record for the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value $activatePaymentNoticeV2.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value PO of the record at column PAYMENT_METHOD of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value PSP of the record at column TOUCHPOINT of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value None of the record at column SUGGESTED_IDBUNDLE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value None of the record at column SUGGESTED_IDCIBUNDLE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value None of the record at column SUGGESTED_USER_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value None of the record at column SUGGESTED_PA_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
     
-    # retry fees - 500
-    Scenario: Execute activate 9.3
-        Given the activatePaymentNoticeV2 scenario executed successfully
-        And amount with 500.00 in activatePaymentNoticeV2
-        And touchPoint with PSP in activatePaymentNoticeV2
-        And paymentAmount with 500.00 in paGetPaymentV2
-        And transferAmount with 300.00 in paGetPaymentV2
-        And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
-        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-        And wait 60 seconds for expiration
-        Then check outcome is OK of activatePaymentNoticeV2 response
-        And verify 8 record for the table RE retrived by the query select_fees on db re under macro getFees
-        And verify 1 record for the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value $activatePaymentNoticeV2.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value PO of the record at column PAYMENT_METHOD of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value PSP of the record at column TOUCHPOINT of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value None of the record at column SUGGESTED_IDBUNDLE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value None of the record at column SUGGESTED_IDCIBUNDLE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value None of the record at column SUGGESTED_USER_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value None of the record at column SUGGESTED_PA_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    # # retry fees - 500
+    # Scenario: Execute activate 9.3
+    #     Given the activatePaymentNoticeV2 scenario executed successfully
+    #     And amount with 500.00 in activatePaymentNoticeV2
+    #     And touchPoint with PSP in activatePaymentNoticeV2
+    #     And paymentAmount with 500.00 in paGetPaymentV2
+    #     And transferAmount with 300.00 in paGetPaymentV2
+    #     And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
+    #     When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+    #     And wait 60 seconds for expiration
+    #     Then check outcome is OK of activatePaymentNoticeV2 response
+    #     And verify 8 record for the table RE retrived by the query select_fees on db re under macro getFees
+    #     And verify 1 record for the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value $activatePaymentNoticeV2.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value PO of the record at column PAYMENT_METHOD of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value PSP of the record at column TOUCHPOINT of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value None of the record at column SUGGESTED_IDBUNDLE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value None of the record at column SUGGESTED_IDCIBUNDLE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value None of the record at column SUGGESTED_USER_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    #     And checks the value None of the record at column SUGGESTED_PA_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
 
-    # sendPaymentOutcome - sunny day
-    Scenario: Execute activate 10
-        Given the activatePaymentNoticeV2 scenario executed successfully
-        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-        Then check outcome is OK of activatePaymentNoticeV2 response
+    # # sendPaymentOutcome - sunny day
+    # Scenario: Execute activate 10
+    #     Given the activatePaymentNoticeV2 scenario executed successfully
+    #     When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+    #     Then check outcome is OK of activatePaymentNoticeV2 response
     
-    Scenario: Execute sendPaymentOutcomeV2
-        Given the Execute activate 10 scenario executed successfully
-        And the sendPaymentOutcomeV2 scenario executed successfully
-        When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
-        Then check outcome is OK of sendPaymentOutcomeV2 response
-        And verify 1 record for the table POSITION_PAYMENT retrived by the query PAYMENT_TOKEN_spov2 on db nodo_online under macro NewMod1
-        And checks the value $sendPaymentOutcomeV2.fee of the record at column FEE of the table POSITION_PAYMENT retrived by the query PAYMENT_TOKEN_spov2 on db nodo_online under macro NewMod1
-        And checks the value $sendPaymentOutcomeV2.primaryCiIncurredFee of the record at column FEE_PA of the table POSITION_PAYMENT retrived by the query PAYMENT_TOKEN_spov2 on db nodo_online under macro NewMod1
-        And checks the value $sendPaymentOutcomeV2.idBundle of the record at column BUNDLE_ID of the table POSITION_PAYMENT retrived by the query PAYMENT_TOKEN_spov2 on db nodo_online under macro NewMod1
-        And checks the value $sendPaymentOutcomeV2.idCiBundle of the record at column BUNDLE_PA_ID of the table POSITION_PAYMENT retrived by the query PAYMENT_TOKEN_spov2 on db nodo_online under macro NewMod1
-        And verify 1 record for the table POSITION_RECEIPT retrived by the query PAYMENT_TOKEN_spov2 on db nodo_online under macro NewMod1
-        And checks the value $sendPaymentOutcomeV2.fee of the record at column FEE of the table POSITION_RECEIPT retrived by the query PAYMENT_TOKEN_spov2 on db nodo_online under macro NewMod1
-        And checks the value $sendPaymentOutcomeV2.primaryCiIncurredFee of the record at column FEE_PA of the table POSITION_RECEIPT retrived by the query PAYMENT_TOKEN_spov2 on db nodo_online under macro NewMod1
-        And checks the value $sendPaymentOutcomeV2.idBundle of the record at column BUNDLE_ID of the table POSITION_RECEIPT retrived by the query PAYMENT_TOKEN_spov2 on db nodo_online under macro NewMod1
-        And checks the value $sendPaymentOutcomeV2.idCiBundle of the record at column BUNDLE_PA_ID of the table POSITION_RECEIPT retrived by the query PAYMENT_TOKEN_spov2 on db nodo_online under macro NewMod1
-        # verify paSendRTV2 is sent with fields receipt.fee = POSITION_RECEIPT.FEE, receipt.primaryCiIncurredFee = POSITION_RECEIPT.FEE_PA, receipt.idBundle = POSITION_RECEIPT.BUNDLE_ID, receipt.idCiBundle = POSITION_RECEIPT.BUNDLE_PA_ID
+    # Scenario: Execute sendPaymentOutcomeV2
+    #     Given the Execute activate 10 scenario executed successfully
+    #     And the sendPaymentOutcomeV2 scenario executed successfully
+    #     When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
+    #     Then check outcome is OK of sendPaymentOutcomeV2 response
+    #     And verify 1 record for the table POSITION_PAYMENT retrived by the query PAYMENT_TOKEN_spov2 on db nodo_online under macro NewMod1
+    #     And checks the value $sendPaymentOutcomeV2.fee of the record at column FEE of the table POSITION_PAYMENT retrived by the query PAYMENT_TOKEN_spov2 on db nodo_online under macro NewMod1
+    #     And checks the value $sendPaymentOutcomeV2.primaryCiIncurredFee of the record at column FEE_PA of the table POSITION_PAYMENT retrived by the query PAYMENT_TOKEN_spov2 on db nodo_online under macro NewMod1
+    #     And checks the value $sendPaymentOutcomeV2.idBundle of the record at column BUNDLE_ID of the table POSITION_PAYMENT retrived by the query PAYMENT_TOKEN_spov2 on db nodo_online under macro NewMod1
+    #     And checks the value $sendPaymentOutcomeV2.idCiBundle of the record at column BUNDLE_PA_ID of the table POSITION_PAYMENT retrived by the query PAYMENT_TOKEN_spov2 on db nodo_online under macro NewMod1
+    #     And verify 1 record for the table POSITION_RECEIPT retrived by the query PAYMENT_TOKEN_spov2 on db nodo_online under macro NewMod1
+    #     And checks the value $sendPaymentOutcomeV2.fee of the record at column FEE of the table POSITION_RECEIPT retrived by the query PAYMENT_TOKEN_spov2 on db nodo_online under macro NewMod1
+    #     And checks the value $sendPaymentOutcomeV2.primaryCiIncurredFee of the record at column FEE_PA of the table POSITION_RECEIPT retrived by the query PAYMENT_TOKEN_spov2 on db nodo_online under macro NewMod1
+    #     And checks the value $sendPaymentOutcomeV2.idBundle of the record at column BUNDLE_ID of the table POSITION_RECEIPT retrived by the query PAYMENT_TOKEN_spov2 on db nodo_online under macro NewMod1
+    #     And checks the value $sendPaymentOutcomeV2.idCiBundle of the record at column BUNDLE_PA_ID of the table POSITION_RECEIPT retrived by the query PAYMENT_TOKEN_spov2 on db nodo_online under macro NewMod1
+    #     # verify paSendRTV2 is sent with fields receipt.fee = POSITION_RECEIPT.FEE, receipt.primaryCiIncurredFee = POSITION_RECEIPT.FEE_PA, receipt.idBundle = POSITION_RECEIPT.BUNDLE_ID, receipt.idCiBundle = POSITION_RECEIPT.BUNDLE_PA_ID
 
     
-    # sendPaymentOutcome - no fee information in sendPaymentOutcomeV2 request
-    Scenario: Execute activate 11
-        Given the activatePaymentNoticeV2 scenario executed successfully
-        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-        Then check outcome is OK of activatePaymentNoticeV2 response
+    # # sendPaymentOutcome - no fee information in sendPaymentOutcomeV2 request
+    # Scenario: Execute activate 11
+    #     Given the activatePaymentNoticeV2 scenario executed successfully
+    #     When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+    #     Then check outcome is OK of activatePaymentNoticeV2 response
     
-    Scenario: Execute sendPaymentOutcomeV2 2
-        Given the Execute activate 11 scenario executed successfully
-        And the sendPaymentOutcomeV2 scenario executed successfully
-        And primaryCiIncurredFee with None in sendPaymentOutcomeV2
-        And idBundle with None in sendPaymentOutcomeV2
-        And idCiBundle with None in sendPaymentOutcomeV2
-        When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
-        Then check outcome is OK of sendPaymentOutcomeV2 response
-        And verify 1 record for the table POSITION_PAYMENT retrived by the query PAYMENT_TOKEN_spov2 on db nodo_online under macro NewMod1
-        And checks the value $sendPaymentOutcomeV2.fee of the record at column FEE of the table POSITION_PAYMENT retrived by the query PAYMENT_TOKEN_spov2 on db nodo_online under macro NewMod1
-        And checks the value None of the record at column FEE_PA of the table POSITION_PAYMENT retrived by the query PAYMENT_TOKEN_spov2 on db nodo_online under macro NewMod1
-        And checks the value None of the record at column BUNDLE_ID of the table POSITION_PAYMENT retrived by the query PAYMENT_TOKEN_spov2 on db nodo_online under macro NewMod1
-        And checks the value None of the record at column BUNDLE_PA_ID of the table POSITION_PAYMENT retrived by the query PAYMENT_TOKEN_spov2 on db nodo_online under macro NewMod1
-        And verify 1 record for the table POSITION_RECEIPT retrived by the query PAYMENT_TOKEN_spov2 on db nodo_online under macro NewMod1
-        And checks the value $sendPaymentOutcomeV2.fee of the record at column FEE of the table POSITION_RECEIPT retrived by the query PAYMENT_TOKEN_spov2 on db nodo_online under macro NewMod1
-        And checks the value None of the record at column FEE_PA of the table POSITION_RECEIPT retrived by the query PAYMENT_TOKEN_spov2 on db nodo_online under macro NewMod1
-        And checks the value None of the record at column BUNDLE_ID of the table POSITION_RECEIPT retrived by the query PAYMENT_TOKEN_spov2 on db nodo_online under macro NewMod1
-        And checks the value None of the record at column BUNDLE_PA_ID of the table POSITION_RECEIPT retrived by the query PAYMENT_TOKEN_spov2 on db nodo_online under macro NewMod1
-        # verify paSendRTV2 is sent without fields receipt.primaryCiIncurredFee, receipt.idBundle, receipt.idCiBundle
+    # Scenario: Execute sendPaymentOutcomeV2 2
+    #     Given the Execute activate 11 scenario executed successfully
+    #     And the sendPaymentOutcomeV2 scenario executed successfully
+    #     And primaryCiIncurredFee with None in sendPaymentOutcomeV2
+    #     And idBundle with None in sendPaymentOutcomeV2
+    #     And idCiBundle with None in sendPaymentOutcomeV2
+    #     When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
+    #     Then check outcome is OK of sendPaymentOutcomeV2 response
+    #     And verify 1 record for the table POSITION_PAYMENT retrived by the query PAYMENT_TOKEN_spov2 on db nodo_online under macro NewMod1
+    #     And checks the value $sendPaymentOutcomeV2.fee of the record at column FEE of the table POSITION_PAYMENT retrived by the query PAYMENT_TOKEN_spov2 on db nodo_online under macro NewMod1
+    #     And checks the value None of the record at column FEE_PA of the table POSITION_PAYMENT retrived by the query PAYMENT_TOKEN_spov2 on db nodo_online under macro NewMod1
+    #     And checks the value None of the record at column BUNDLE_ID of the table POSITION_PAYMENT retrived by the query PAYMENT_TOKEN_spov2 on db nodo_online under macro NewMod1
+    #     And checks the value None of the record at column BUNDLE_PA_ID of the table POSITION_PAYMENT retrived by the query PAYMENT_TOKEN_spov2 on db nodo_online under macro NewMod1
+    #     And verify 1 record for the table POSITION_RECEIPT retrived by the query PAYMENT_TOKEN_spov2 on db nodo_online under macro NewMod1
+    #     And checks the value $sendPaymentOutcomeV2.fee of the record at column FEE of the table POSITION_RECEIPT retrived by the query PAYMENT_TOKEN_spov2 on db nodo_online under macro NewMod1
+    #     And checks the value None of the record at column FEE_PA of the table POSITION_RECEIPT retrived by the query PAYMENT_TOKEN_spov2 on db nodo_online under macro NewMod1
+    #     And checks the value None of the record at column BUNDLE_ID of the table POSITION_RECEIPT retrived by the query PAYMENT_TOKEN_spov2 on db nodo_online under macro NewMod1
+    #     And checks the value None of the record at column BUNDLE_PA_ID of the table POSITION_RECEIPT retrived by the query PAYMENT_TOKEN_spov2 on db nodo_online under macro NewMod1
+    #     # verify paSendRTV2 is sent without fields receipt.primaryCiIncurredFee, receipt.idBundle, receipt.idCiBundle

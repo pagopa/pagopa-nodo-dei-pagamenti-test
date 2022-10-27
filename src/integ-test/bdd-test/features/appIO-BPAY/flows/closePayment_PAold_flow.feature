@@ -681,7 +681,7 @@ Feature: flow checks for closePayment - PA old
       And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
       And checks the value NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
       And verify 1 record for the table POSITION_RECEIPT_XML retrived by the query payment_status_old on db nodo_online under macro AppIO
-# [TBD] check RECEIPT_XML content nella POSITION_RECEIPT_XML (vedi PR Flow_closePaymentV1_ok_spo_ok)
+      # [TBD] check RECEIPT_XML content nella POSITION_RECEIPT_XML (vedi PR Flow_closePaymentV1_ok_spo_ok)
 
 
 # # FLUSSO_CP_02
