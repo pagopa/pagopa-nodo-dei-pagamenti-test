@@ -77,6 +77,7 @@ Feature: Semantic checks for activateIOPaymentReq - OK
         And restore initial configurations
 
     # [SEM_AIPR_31]
+    @runnable
     Scenario: Check activateIOPayment response with parameters in deny list
         Given idPSP with 70000000001 in activateIOPayment
         And idBrokerPSP with 70000000002 in activateIOPayment
