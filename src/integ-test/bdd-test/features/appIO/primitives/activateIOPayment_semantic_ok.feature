@@ -82,6 +82,7 @@ Feature: Semantic checks for activateIOPaymentReq - OK
         Given idPSP with 40000000001 in activateIOPayment
         And idBrokerPSP with 40000000001 in activateIOPayment
         And idChannel with 40000000002_01 in activateIOPayment
+        And fiscalCode with 44444444444 in activateIOPayment
         And verify 1 record for the table DENYLIST retrived by the query deny_list on db nodo_cfg under macro AppIO
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
