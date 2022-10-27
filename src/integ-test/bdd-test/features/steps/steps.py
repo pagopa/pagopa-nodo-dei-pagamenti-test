@@ -718,7 +718,6 @@ def step_impl(context, old_tag, new_tag, action):
         my_document = parseString(getattr(context, action))
         tag = my_document.getElementsByTagName(old_tag)[0]
         tag.tagName = new_tag
-        #print("provaprovaprova", my_document.toxml('UTF-8'), type(my_document))
         setattr(context, action, my_document.toxml())
 
 
