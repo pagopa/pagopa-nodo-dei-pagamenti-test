@@ -654,8 +654,8 @@ Feature: flow checks for closePayment - PA old
       Given the FLUSSO_CP_01 (part 3) scenario executed successfully
       And the sendPaymentOutcome scenario executed successfully
       When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-      Then check outcome is OK of sendPaymentOutcome response
       And job paInviaRt triggered after 5 seconds
+      Then check outcome is OK of sendPaymentOutcome response
       And wait 5 seconds for expiration
       # POSITION & PAYMENT STATUS
       And verify 3 record for the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
