@@ -67,7 +67,6 @@ Feature: paGetPaymentV2Response without debtor but with tags
             <companyName>company</companyName>
             <!--Optional:-->
             <officeName>office</officeName>
-            <debtor>
             <uniqueIdentifier>
             <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
             <entityUniqueIdentifierValue>#creditor_institution_code#</entityUniqueIdentifierValue>
@@ -87,7 +86,6 @@ Feature: paGetPaymentV2Response without debtor but with tags
             <country>DE</country>
             <!--Optional:-->
             <e-mail>paGetPaymentV2@test.it</e-mail>
-            </debtor>
             <!--Optional:-->
             <transferList>
             <!--1 to 5 repetitions:-->
