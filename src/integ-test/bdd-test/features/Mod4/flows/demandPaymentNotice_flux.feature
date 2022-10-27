@@ -377,7 +377,7 @@ Feature: flux tests for demandPaymentNotice
             <!--1 to 5 repetitions:-->
             <transfer>
             <idTransfer>1</idTransfer>
-            <transferAmount>3.00</transferAmount>
+            <transferAmount>5.00</transferAmount>
             <fiscalCodePA>$activatePaymentNotice.fiscalCode</fiscalCodePA>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>testPaGetPayment</remittanceInformation>
@@ -385,7 +385,7 @@ Feature: flux tests for demandPaymentNotice
             </transfer>
             <transfer>
             <idTransfer>2</idTransfer>
-            <transferAmount>3.00</transferAmount>
+            <transferAmount>5.00</transferAmount>
             <fiscalCodePA>90000000001</fiscalCodePA>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>testPaGetPayment</remittanceInformation>
