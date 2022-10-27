@@ -5286,38 +5286,6 @@ Feature: flux tests for closePaymentV2
         And check outcome is OK of v2/closepayment response
         And the nodoAttivaRPT scenario executed successfully
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     # FLUSSO_OLD_CP_21
 
     Scenario: FLUSSO_OLD_CP_21 (part 1)
@@ -5397,7 +5365,7 @@ Feature: flux tests for closePaymentV2
         # STATI_RPT_SNAPSHOT
         And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
-    @wip
+    
     Scenario: FLUSSO_OLD_CP_21 (part 2)
         Given the FLUSSO_OLD_CP_21 (part 1) scenario executed successfully
         And the sendPaymentOutcome request scenario executed successfully
