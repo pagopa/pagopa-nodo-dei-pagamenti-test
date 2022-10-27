@@ -2,7 +2,7 @@ Feature: process tests for chiediInformazioniPagamento_Bollo
 
    Background:
       Given systems up
-@runnable
+
    Scenario: MB generation
         Given MB generation
             """
@@ -209,7 +209,6 @@ Feature: process tests for chiediInformazioniPagamento_Bollo
             </pay_i:datiPagamento>
             </pay_i:RT>
             """
-        
         And initial XML nodoInviaRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -238,6 +237,7 @@ Feature: process tests for chiediInformazioniPagamento_Bollo
         Then check esito is OK of nodoInviaRPT response
         And check url contains acards of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
+
 @runnable
     Scenario: Execution idPagamento
         Given the MB generation scenario executed successfully

@@ -2,17 +2,15 @@ Feature: process tests for chiediInformazioniPagamento CANALE ERRORE RESPONSE
 
     Background:
         Given systems up
-@runnable
+
     Scenario: RPT generation
         Given RPT generation
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-
                 <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
                 <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
-
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
             <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
@@ -83,7 +81,7 @@ Feature: process tests for chiediInformazioniPagamento CANALE ERRORE RESPONSE
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-@runnable
+
     Scenario: RT generation
         Given the RPT generation scenario executed successfully
         And RT generation
@@ -91,10 +89,8 @@ Feature: process tests for chiediInformazioniPagamento CANALE ERRORE RESPONSE
             <pay_i:RT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>6.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-
                 <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
                 <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
-
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRicevuta>IdentificativoMessaggioRicevuta</pay_i:identificativoMessaggioRicevuta>
             <pay_i:dataOraMessaggioRicevuta>#timedate#</pay_i:dataOraMessaggioRicevuta>
@@ -174,7 +170,7 @@ Feature: process tests for chiediInformazioniPagamento CANALE ERRORE RESPONSE
             </pay_i:datiPagamento>
             </pay_i:RT>
             """
-@runnable
+
     Scenario: Execute nodoInviaRPT request
         Given the RT generation scenario executed successfully
         And initial XML nodoInviaRPT
@@ -182,11 +178,9 @@ Feature: process tests for chiediInformazioniPagamento CANALE ERRORE RESPONSE
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
             <ppt:intestazionePPT>
-
             <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-
             <identificativoUnivocoVersamento>avanzaErrResponse</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
             </ppt:intestazionePPT>
@@ -205,7 +199,7 @@ Feature: process tests for chiediInformazioniPagamento CANALE ERRORE RESPONSE
             """
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then retrieve session token from $nodoInviaRPTResponse.url
-@runnable
+
     Scenario: Execution Esito mod2
         Given the Execute nodoInviaRPT request scenario executed successfully
         And initial XML pspInviaRPT 
@@ -226,23 +220,19 @@ Feature: process tests for chiediInformazioniPagamento CANALE ERRORE RESPONSE
             """
         And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
         When WISP sends REST POST inoltroEsito/mod2 to nodo-dei-pagamenti
-
             """
             {
             "idPagamento": "$sessionToken",
-
             "identificativoPsp": "#psp#",
             "tipoVersamento": "BP",
             "identificativoIntermediario": "#psp#",
             "identificativoCanale": "#canale_BBT#"
-
             }
-
-             """
+            """
         Then verify the HTTP status code of inoltroEsito/mod2 response is 408
         And check url field not exists in inoltroEsito/mod2 response
         And check error is timeout of inoltroEsito/mod2 response
-@runnable
+
     Scenario: Execute nodoChiediStatoRPT request
         Given the Execution Esito mod2 scenario executed successfully
         And initial XML nodoChiediStatoRPT
@@ -252,19 +242,16 @@ Feature: process tests for chiediInformazioniPagamento CANALE ERRORE RESPONSE
         <soapenv:Header/>
         <soapenv:Body>
             <ws:nodoChiediStatoRPT>
-
                 <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
                 <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
                 <password>pwdpwdpwd</password>
                 <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-
                 <identificativoUnivocoVersamento>avanzaErrResponse</identificativoUnivocoVersamento>
                 <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
             </ws:nodoChiediStatoRPT>
         </soapenv:Body>
         </soapenv:Envelope>
         """
-
         When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
         Then check stato field exists in nodoChiediStatoRPT response
         And checks stato contains RPT_ESITO_SCONOSCIUTO_PSP of nodoChiediStatoRPT response
@@ -272,7 +259,6 @@ Feature: process tests for chiediInformazioniPagamento CANALE ERRORE RESPONSE
         And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
         And check url field not exists in nodoChiediStatoRPT response
 
-@runnable
     Scenario: Execute nodoChiediAvanzamentoPagamento
         Given the Execute nodoChiediStatoRPT request scenario executed successfully
         When WISP sends REST GET avanzamentoPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
@@ -288,13 +274,11 @@ Feature: process tests for chiediInformazioniPagamento CANALE ERRORE RESPONSE
             <soapenv:Header/>
             <soapenv:Body>
             <ws:nodoInviaRT>
-
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
             <identificativoCanale>#psp#_03</identificativoCanale>
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-
             <identificativoUnivocoVersamento>avanzaErrResponse</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
             <tipoFirma></tipoFirma>

@@ -2,7 +2,7 @@ Feature: process tests for nodoInviaRT[IRPTSIN2]
     Background:
         Given systems up
 
-
+    @runnable
     Scenario: Execute nodoInviaRPT request
         Given initial XML nodoInviaRPT
             """

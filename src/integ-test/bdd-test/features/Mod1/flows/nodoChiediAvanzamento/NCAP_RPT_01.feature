@@ -4,7 +4,7 @@ Feature: NCAP
 
     Background:
         Given systems up
-@runnable
+
     Scenario: RPT generation
         Given nodo-dei-pagamenti has config parameter useCountChiediAvanzamento set to true
         And nodo-dei-pagamenti has config parameter maxChiediAvanzamento set to 3
@@ -86,7 +86,7 @@ Feature: NCAP
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-@runnable
+
     Scenario: Execute nodoInviaRPT request
         Given the RPT generation scenario executed successfully
         And initial XML pspInviaRPT

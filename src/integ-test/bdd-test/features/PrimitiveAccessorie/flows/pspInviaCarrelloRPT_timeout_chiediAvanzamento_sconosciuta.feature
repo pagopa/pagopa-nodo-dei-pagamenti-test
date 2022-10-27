@@ -2,7 +2,7 @@ Feature: pspInviaCarrelloRPT_timeout_chiediAvanzamento_sconosciuta
 
     Background:
         Given systems up
-@runnable
+
     Scenario: RPT1 generation
         Given nodo-dei-pagamenti has config parameter scheduler.pspChiediAvanzamentoRptPollerMaxRetry set to 1
         And generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr_old# and application code NA
@@ -84,14 +84,13 @@ Feature: pspInviaCarrelloRPT_timeout_chiediAvanzamento_sconosciuta
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-@runnable
+
     Scenario: Execute nodoInviaCarrelloRPT request
         Given the RPT1 generation scenario executed successfully
         And initial XML nodoInviaCarrelloRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
-
             <ppt:intestazioneCarrelloPPT>
             <identificativoIntermediarioPA>#id_broker#</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
@@ -113,14 +112,12 @@ Feature: pspInviaCarrelloRPT_timeout_chiediAvanzamento_sconosciuta
             </elementoListaRPT>
             </listaRPT>
             </ws:nodoInviaCarrelloRPT>
-
             </soapenv:Body>
             </soapenv:Envelope>
             """
         And initial XML pspInviaCarrelloRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-
             <soapenv:Header/>
             <soapenv:Body>
             <ws:pspInviaCarrelloRPTResponse>
@@ -132,18 +129,15 @@ Feature: pspInviaCarrelloRPT_timeout_chiediAvanzamento_sconosciuta
             </pspInviaCarrelloRPTResponse>
             </ws:pspInviaCarrelloRPTResponse>
             </soapenv:Body>
-
             </soapenv:Envelope>
             """
         And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
         And check faultCode is PPT_CANALE_TIMEOUT of nodoInviaCarrelloRPT response
-
         # DB Check
         And replace iuv content with avanzaErrResponse content
         And replace ccp content with $1CCP content
-
         And checks the value RPT_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_RPT retrived by the query rpt on db nodo_online under macro Primitive_accessorie
         And checks the value RPT_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt on db nodo_online under macro Primitive_accessorie
 
@@ -159,12 +153,10 @@ Feature: pspInviaCarrelloRPT_timeout_chiediAvanzamento_sconosciuta
             <ws:pspChiediAvanzamentoRPTResponse>
             <pspChiediAvanzamentoRPTResponse>
             <fault>
-
             <faultCode>CANALE_RPT_SCONOSCIUTA</faultCode>
             <faultString>RPT mai arrivata al PSP</faultString>
             <id>#psp#</id>
             <description>RPT sconosciuta per il PSP</description>
-
             </fault>
             </pspChiediAvanzamentoRPTResponse>
             </ws:pspChiediAvanzamentoRPTResponse>
@@ -174,9 +166,7 @@ Feature: pspInviaCarrelloRPT_timeout_chiediAvanzamento_sconosciuta
         And PSP replies to nodo-dei-pagamenti with the pspChiediAvanzamentoRPT
         When job pspChiediAvanzamentoRpt triggered after 5 seconds
         And wait 10 seconds for expiration
-
         Then checks the value RPT_ESITO_SCONOSCIUTO_PSP, RPT_ERRORE_INVIO_A_PSP of the record at column STATO of the table STATI_RPT retrived by the query rpt on db nodo_online under macro Primitive_accessorie
-
         And checks the value RPT_ERRORE_INVIO_A_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt on db nodo_online under macro Primitive_accessorie
 
 

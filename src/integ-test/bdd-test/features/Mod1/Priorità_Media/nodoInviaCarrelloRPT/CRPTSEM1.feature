@@ -115,7 +115,7 @@ Feature: process tests for nodoInviaCarrelloRPT[CRPTSEM1]
             When PSP sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
             Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
 
-
+    @runnable
     Scenario: Execute nodoInviaCarrelloRPT2 request
         Given the Execute nodoInviaCarrelloRPT1 request scenario executed successfully
         And initial XML nodoInviaCarrelloRPT

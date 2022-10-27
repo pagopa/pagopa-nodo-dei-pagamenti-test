@@ -81,6 +81,8 @@ Feature: process tests for nodoInviaRT[IRPTSEM1]
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
+    
+    @runnable
     Scenario: Execute nodoInviaRPT request
         Given the RPT generation scenario executed successfully
         And initial XML nodoInviaRPT

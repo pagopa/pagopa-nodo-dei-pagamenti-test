@@ -252,6 +252,8 @@ Feature: process tests for nodoInviaRT[IRTSEM11]
             When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
             Then check esito is OK of nodoInviaRT response
             
+
+    @runnable
     Scenario: Execute nodoInviaRT1 (Phase 4)
         Given the Execute nodoInviaRT (Phase 3) scenario executed successfully
         And initial XML nodoInviaRT

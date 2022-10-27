@@ -81,6 +81,7 @@ Feature: process tests for nodoInviaCarrelloRPT[CRPTSIN3]
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
+    @runnable
     Scenario: Execute nodoInviaRPT request
         Given the RPT generation scenario executed successfully
         And initial XML nodoInviaCarrelloRPT

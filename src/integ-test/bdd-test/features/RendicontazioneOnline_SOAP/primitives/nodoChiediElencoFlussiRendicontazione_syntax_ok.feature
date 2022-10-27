@@ -4,7 +4,6 @@ Feature: Syntax checks OK for nodoChiediElencoFlussiRendicontazione
         Given systems up
  @runnable   
     Scenario Outline: Syntax checks OK for nodoChiediElencoFlussiRendicontazione
-
         Given initial XML nodoChiediElencoFlussiRendicontazione
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -27,4 +26,3 @@ Feature: Syntax checks OK for nodoChiediElencoFlussiRendicontazione
             | elem                  | value | soapUI test |
             | identificativoDominio | None  | CEFRSIN16.1 |
             | identificativoPSP     | None  | CEFRSIN18   |
-

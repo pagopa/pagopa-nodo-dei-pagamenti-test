@@ -2,17 +2,15 @@ Feature: process tests for InoltroEsitoCartaCarrello_CANALE_IRRAGGIUNGIBILE Mod2
 
     Background:
         Given systems up
-@runnable
+
     Scenario: RPT generation
         Given RPT generation
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-
                 <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
                 <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
-
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
             <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
@@ -83,7 +81,7 @@ Feature: process tests for InoltroEsitoCartaCarrello_CANALE_IRRAGGIUNGIBILE Mod2
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-@runnable
+
     Scenario: RPT2 generation
         Given the RPT generation scenario executed successfully
         And  RPT2 generation
@@ -91,10 +89,8 @@ Feature: process tests for InoltroEsitoCartaCarrello_CANALE_IRRAGGIUNGIBILE Mod2
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-
                 <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
                 <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
-
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
             <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
@@ -164,9 +160,7 @@ Feature: process tests for InoltroEsitoCartaCarrello_CANALE_IRRAGGIUNGIBILE Mod2
                 </pay_i:datiSingoloVersamento>
             </pay_i:datiVersamento>
             </pay_i:RPT>
-            """
-
-@runnable   
+            """ 
 
     Scenario: RT generation
         Given the RPT2 generation scenario executed successfully
@@ -175,10 +169,8 @@ Feature: process tests for InoltroEsitoCartaCarrello_CANALE_IRRAGGIUNGIBILE Mod2
             <pay_i:RT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>6.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-
                 <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
                 <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
-
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRicevuta>IdentificativoMessaggioRicevuta</pay_i:identificativoMessaggioRicevuta>
             <pay_i:dataOraMessaggioRicevuta>#timedate#</pay_i:dataOraMessaggioRicevuta>
@@ -258,7 +250,7 @@ Feature: process tests for InoltroEsitoCartaCarrello_CANALE_IRRAGGIUNGIBILE Mod2
             </pay_i:datiPagamento>
             </pay_i:RT>
             """
-@runnable
+
     Scenario: RT2 generation
         Given the RT generation scenario executed successfully
         And RT2 generation
@@ -266,10 +258,8 @@ Feature: process tests for InoltroEsitoCartaCarrello_CANALE_IRRAGGIUNGIBILE Mod2
             <pay_i:RT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>6.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-
                 <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
                 <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
-
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRicevuta>IdentificativoMessaggioRicevuta</pay_i:identificativoMessaggioRicevuta>
             <pay_i:dataOraMessaggioRicevuta>#timedate#</pay_i:dataOraMessaggioRicevuta>
@@ -349,7 +339,7 @@ Feature: process tests for InoltroEsitoCartaCarrello_CANALE_IRRAGGIUNGIBILE Mod2
             </pay_i:datiPagamento>
             </pay_i:RT>
             """
-@runnable
+
     Scenario: Execute nodoInviaCarrelloRPT request
         Given the RT2 generation scenario executed successfully
         And initial XML nodoInviaCarrelloRPT
@@ -357,10 +347,8 @@ Feature: process tests for InoltroEsitoCartaCarrello_CANALE_IRRAGGIUNGIBILE Mod2
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
                 <ppt:intestazioneCarrelloPPT>
-
                     <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
                     <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
-
                     <identificativoCarrello>#carrelloMills#</identificativoCarrello>
                 </ppt:intestazioneCarrelloPPT>
             </soapenv:Header>
@@ -372,18 +360,14 @@ Feature: process tests for InoltroEsitoCartaCarrello_CANALE_IRRAGGIUNGIBILE Mod2
                     <identificativoCanale>97735020584_02</identificativoCanale>
                     <listaRPT>
                         <elementoListaRPT>
-
                         <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-
                         <identificativoUnivocoVersamento>esitoSconosciutoPsp</identificativoUnivocoVersamento>
                         <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
                         <!--tipoFirma></tipoFirma-->
                         <rpt>$rptAttachment</rpt>
                         </elementoListaRPT>
                         <elementoListaRPT>
-
                         <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-
                         <identificativoUnivocoVersamento>esitoSconosciutoPsp</identificativoUnivocoVersamento>
                         <codiceContestoPagamento>$2CCP</codiceContestoPagamento>
                         <!--tipoFirma></tipoFirma-->
@@ -399,7 +383,6 @@ Feature: process tests for InoltroEsitoCartaCarrello_CANALE_IRRAGGIUNGIBILE Mod2
         And check url contains acardste of nodoInviaCarrelloRPT response
         And retrieve session token from $nodoInviaCarrelloRPTResponse.url
 
-@runnable
     Scenario: Execution Esito Carta
         Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
         When WISP sends REST POST inoltroEsito/mod2 to nodo-dei-pagamenti
@@ -417,11 +400,10 @@ Feature: process tests for InoltroEsitoCartaCarrello_CANALE_IRRAGGIUNGIBILE Mod2
         And check descrizione is Canale non raggiungibile of inoltroEsito/mod2 response 
         And check errorCode is CONPSP of inoltroEsito/mod2 response
         And check url field not exists in inoltroEsito/mod2 response
-@runnable
+
     Scenario: Execute nodoChiediStatoRPT request
         Given the Execution Esito Carta scenario executed successfully
         And initial XML nodoChiediStatoRPT
-
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
         <soapenv:Header/>
@@ -439,20 +421,18 @@ Feature: process tests for InoltroEsitoCartaCarrello_CANALE_IRRAGGIUNGIBILE Mod2
         </soapenv:Body>
         </soapenv:Envelope>
         """
-
         When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
         Then checks stato contains RPT_ERRORE_INVIO_A_PSP of nodoChiediStatoRPT response
         And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
         And check url field not exists in nodoChiediStatoRPT response
-@runnable
+
     Scenario: Execute nodoChiediAvanzamentoPagamento
         Given the Execute nodoChiediStatoRPT request scenario executed successfully
         When WISP sends REST GET avanzamentoPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of avanzamentoPagamento response is 200
         And check esito is KO of avanzamentoPagamento response
 
-@runnable
     Scenario: Execute nodoInviaRT request
         Given the Execute nodoChiediAvanzamentoPagamento scenario executed successfully
         And initial XML nodoInviaRT
@@ -461,13 +441,11 @@ Feature: process tests for InoltroEsitoCartaCarrello_CANALE_IRRAGGIUNGIBILE Mod2
             <soapenv:Header/>
             <soapenv:Body>
             <ws:nodoInviaRT>
-
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
             <identificativoCanale>#canale#</identificativoCanale>
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-
             <identificativoUnivocoVersamento>esitoSconosciutoPsp</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
             <tipoFirma></tipoFirma>
@@ -488,13 +466,11 @@ Feature: process tests for InoltroEsitoCartaCarrello_CANALE_IRRAGGIUNGIBILE Mod2
             <soapenv:Header/>
             <soapenv:Body>
                 <ws:nodoInviaRT>
-
                     <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
                     <identificativoCanale>#canale#</identificativoCanale>
                     <password>pwdpwdpwd</password>
                     <identificativoPSP>#psp#</identificativoPSP>
                     <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-
                     <identificativoUnivocoVersamento>esitoSconosciutoPsp</identificativoUnivocoVersamento>
                     <codiceContestoPagamento>$2CCP</codiceContestoPagamento>
                     <tipoFirma></tipoFirma>
