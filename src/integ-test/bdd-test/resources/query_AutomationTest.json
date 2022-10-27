@@ -153,6 +153,7 @@
     },
     "Mod4": {
         "update_id_intermediario_pa": "UPDATE table_name SET param = 'value' WHERE ID_INTERMEDIARIO_PA = '77777777777'",
-        "update_id_stazione": "UPDATE table_name SET param = 'value' WHERE ID_STAZIONE = '77777777777_01'"
+        "update_id_stazione": "UPDATE table_name SET param = 'value' WHERE ID_STAZIONE = '77777777777_01'",
+        "update_fk_pa": "UPDATE table_name SET param = 'value' WHERE FK_PA IN ('6', '8')"
     }
 }
