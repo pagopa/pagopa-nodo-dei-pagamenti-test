@@ -931,31 +931,6 @@ Feature: flux tests for demandPaymentNotice
         # POSITION_RECEIPT_XML
         And verify 0 record for the table POSITION_RECEIPT_XML retrived by the query select_activate on db nodo_online under macro NewMod1
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     # F_DPNR_16
 
     Scenario: F_DPNR_16 (part 1)
@@ -965,7 +940,7 @@ Feature: flux tests for demandPaymentNotice
         And the activatePaymentNotice request with 2 transfers scenario executed successfully
         When PSP sends soap activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-    @wip
+    
     Scenario: F_DPNR_16 (part 2)
         Given the F_DPNR_16 (part 1) scenario executed successfully
         And the sendPaymentOutcome request scenario executed successfully
