@@ -3,7 +3,7 @@ Feature: Semantic checks for chiediListaPSP primitive
     Background:
         Given systems up
         And EC new version
-    @runnable
+    #@runnable
     Scenario: Execute verifyPaymentNotice (Phase 1)
         Given initial XML verifyPaymentNotice
             """
@@ -25,7 +25,7 @@ Feature: Semantic checks for chiediListaPSP primitive
             """
         When AppIO sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of verifyPaymentNotice response
-    @runnable
+    #@runnable
     Scenario: Execute activateIOPayment (Phase 2)
         Given the Execute verifyPaymentNotice (Phase 1) scenario executed successfully
         And initial XML activateIOPayment
@@ -80,20 +80,20 @@ Feature: Semantic checks for chiediListaPSP primitive
         When AppIO sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
         
-    @runnable
+    #@runnable
     Scenario: Execute nodoChiediInformazioniPagamento (Phase 3)
         Given the Execute activateIOPayment (Phase 2) scenario executed successfully
         When WISP sends rest GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200
 
-    @runnable
+    #@runnable
      # [PRO_CLPSP_14]
     Scenario: Check semantic correctness - OK
         Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
         When WISP sends rest GET listaPSP?percorsoPagamento=CARTE&idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
         Then verify the HTTP status code of listaPSP response is 200
 
-    @runnable
+    #@runnable
     Scenario Outline: Check semantic correctness - KO
         Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
         When WISP sends rest GET <service> to nodo-dei-pagamenti

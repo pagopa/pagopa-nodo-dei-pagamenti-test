@@ -52,11 +52,11 @@ Feature: semantic checks for pspNotifyPaymentReq - payPal [T_01]
         </soapenv:Envelope>
       """
     And EC new version
-@runnable
+#@runnable
   Scenario: 1. Execute activateIOPaymentReq request
     When IO sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is OK of activateIOPayment response
-@runnable
+#@runnable
   # nodoChiediInformazioniPagamento phase
   Scenario: 2. Execute nodoChiediInformazioniPagamento request
     Given the 1. Execute activateIOPaymentReq request scenario executed successfully
