@@ -79,9 +79,9 @@ Feature: Semantic checks for activateIOPaymentReq - OK
     # [SEM_AIPR_31]
     @runnable
     Scenario: Check activateIOPayment response with parameters in deny list
-        Given idPSP with 70000000001 in activateIOPayment
-        And idBrokerPSP with 70000000002 in activateIOPayment
-        And idChannel with 70000000002_01 in activateIOPayment
+        Given idPSP with 40000000001 in activateIOPayment
+        And idBrokerPSP with 40000000001 in activateIOPayment
+        And idChannel with 40000000002_01 in activateIOPayment
         And verify 1 record for the table DENYLIST retrived by the query deny_list on db nodo_cfg under macro AppIO
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response

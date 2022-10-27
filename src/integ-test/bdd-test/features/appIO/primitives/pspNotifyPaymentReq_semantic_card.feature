@@ -70,11 +70,11 @@ Feature: semantic checks for pspNotifyPaymentReq - CreditCard [T_02]
 
     And initial XML pspNotifyPayment
       """
-      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:psp="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
+      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pfn="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
       <soapenv:Body>
-      <psp:pspNotifyPaymentRes>
+      <pfn:pspNotifyPaymentRes>
       <outcome>OK</outcome>
-      </psp:pspNotifyPaymentRes>
+      </pfn:pspNotifyPaymentRes>
       </soapenv:Body>
       </soapenv:Envelope>
       """
