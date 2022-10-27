@@ -95,9 +95,9 @@ stages:
              whereis behave
              which behave
              #behave --help #Run behave
-             behave --tags=wip --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/Mod4/flows/demandPaymentNotice_flux.feature
+             #behave --tags=wip --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/Mod4/flows/demandPaymentNotice_flux.feature
              #behave --tags=-skip --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/NewMod1/flows/closePaymentV2_flux_IO_checkout_pa_old.feature
-             #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/Mod4/flows/demandPaymentNotice_flux.feature
+             behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/Mod4/flows/demandPaymentNotice_flux.feature
             displayName: 'Run Behave Test Suite'
           - task: PublishTestResults@2
             condition: succeededOrFailed()
