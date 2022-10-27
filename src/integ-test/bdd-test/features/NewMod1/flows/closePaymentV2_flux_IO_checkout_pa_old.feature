@@ -364,6 +364,31 @@ Feature: flux tests for closePaymentV2
             }
             """
 
+@skip
+    Scenario: closePayment request
+        Given initial json v1/closepayment
+            """
+            {
+                "paymentTokens": [
+                    "$sessionToken"
+                ],
+                "outcome": "OK",
+                "identificativoPsp": "#psp#",
+                "tipoVersamento": "BPAY",
+                "identificativoIntermediario": "#id_broker_psp#",
+                "identificativoCanale": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
+                "pspTransactionId": "#psp_transaction_id#",
+                "totalAmount": 12,
+                "fee": 2,
+                "timestampOperation": "2012-04-23T18:25:43Z",
+                "additionalPaymentInformations": {
+                    "transactionId": "#transaction_id#",
+                    "outcomePaymentGateway": "EFF",
+                    "authorizationCode": "resOK"
+                }
+            }
+            """
+
     @skip
     Scenario: sendPaymentOutcome request
         Given initial XML sendPaymentOutcome
@@ -5100,11 +5125,11 @@ Feature: flux tests for closePaymentV2
         And execution query transactionid to get value on the table PM_METADATA, with the columns * under macro NewMod1 with db name nodo_online
         And through the query transactionid retrieve param TRANSACTION_ID at position 1 in the row 0 and save it under the key temp_transaction_id
         And through the query transactionid retrieve param VALUE at position 3 in the row 2 and save it under the key temp_psp_transaction_id
-        And the closePaymentV2 request scenario executed successfully
-        And outcome with KO in v2/closepayment
-        And transactionId with $temp_transaction_id in v2/closepayment
-        And key with $temp_psp_transaction_id in v2/closepayment
-        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
-        Then verify the HTTP status code of v2/closepayment response is 422
-        And check outcome is KO of v2/closepayment response
-        And check description is Esito già acquisito of v2/closepayment response
+        And the closePayment request scenario executed successfully
+        And outcome with KO in v1/closepayment
+        And transactionId with $temp_transaction_id in v1/closepayment
+        And key with $temp_psp_transaction_id in v1/closepayment
+        When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v1/closepayment response is 422
+        And check outcome is KO of v1/closepayment response
+        And check description is Esito già acquisito of v1/closepayment response
