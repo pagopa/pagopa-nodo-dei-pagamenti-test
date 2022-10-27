@@ -53,6 +53,61 @@ Feature: flux tests for demandPaymentNotice
         Then check outcome is OK of demandPaymentNotice response
 
     @skip
+    Scenario: verifyPaymentNotice
+        Given initial XML verifyPaymentNotice
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <nod:verifyPaymentNoticeReq>
+            <idPSP>#psp#</idPSP>
+            <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
+            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
+            <password>#password#</password>
+            <qrCode>
+            <fiscalCode>#creditor_institution_code#</fiscalCode>
+            <noticeNumber>311$iuv</noticeNumber>
+            </qrCode>
+            </nod:verifyPaymentNoticeReq>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And initial XML paVerifyPaymentNotice
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <paf:paVerifyPaymentNoticeRes>
+            <outcome>OK</outcome>
+            <paymentList>
+            <paymentOptionDescription>
+            <amount>1.00</amount>
+            <options>EQ</options>
+            <!--Optional:-->
+            <dueDate>2021-12-31</dueDate>
+            <!--Optional:-->
+            <detailDescription>descrizione dettagliata lato PA</detailDescription>
+            <!--Optional:-->
+            <allCCP>false</allCCP>
+            </paymentOptionDescription>
+            </paymentList>
+            <!--Optional:-->
+            <paymentDescription>/RFB/00202200000217527/5.00/TXT/</paymentDescription>
+            <!--Optional:-->
+            <fiscalCodePA>$verifyPaymentNotice.fiscalCode</fiscalCodePA>
+            <!--Optional:-->
+            <companyName>company PA</companyName>
+            <!--Optional:-->
+            <officeName>office PA</officeName>
+            </paf:paVerifyPaymentNoticeRes>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And EC replies to nodo-dei-pagamenti with the paVerifyPaymentNotice
+        When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
+        Then check outcome is OK of verifyPaymentNotice response
+
+    @skip
     Scenario: activatePaymentNotice request
         Given initial XML activatePaymentNotice
             """
@@ -422,18 +477,6 @@ Feature: flux tests for demandPaymentNotice
         # POSITION_RECEIPT
         And verify 0 record for the table POSITION_RECEIPT retrived by the query select_activate on db nodo_online under macro NewMod1
 
-
-
-
-
-
-
-
-
-
-
-
-
     # F_DPNR_04
 
     Scenario: F_DPNR_04 (part 1)
@@ -441,7 +484,7 @@ Feature: flux tests for demandPaymentNotice
         And the activatePaymentNotice request with 3 transfers scenario executed successfully
         When PSP sends soap activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-    @wip
+
     Scenario: F_DPNR_04 (part 2)
         Given the F_DPNR_04 (part 1) scenario executed successfully
         And the sendPaymentOutcome request scenario executed successfully
@@ -451,42 +494,67 @@ Feature: flux tests for demandPaymentNotice
         # POSITION_RECEIPT_TRANSFER
         And verify 3 record for the table POSITION_RECEIPT_TRANSFER JOIN POSITION_TRANSFER ON POSITION_TRANSFER.ID=POSITION_RECEIPT_TRANSFER.FK_POSITION_TRANSFER retrived by the query select_activate on db nodo_online under macro NewMod1
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        # F_DPNR_05
+    # F_DPNR_05
 
     Scenario: F_DPNR_05 (part 1)
         Given the demandPaymentNotice scenario executed successfully
         And the activatePaymentNotice request with 3 transfers scenario executed successfully
         When PSP sends soap activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-    @wip
+
     Scenario: F_DPNR_05 (part 2)
         Given the F_DPNR_05 (part 1) scenario executed successfully
         And the sendPaymentOutcome request scenario executed successfully
         And outcome with KO in sendPaymentOutcome
         When PSP sends soap sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
+
+        # POSITION_RECEIPT_TRANSFER
+        And verify 0 record for the table POSITION_RECEIPT_TRANSFER JOIN POSITION_TRANSFER ON POSITION_TRANSFER.ID=POSITION_RECEIPT_TRANSFER.FK_POSITION_TRANSFER retrived by the query select_activate on db nodo_online under macro NewMod1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    # F_DPNR_06
+
+    Scenario: F_DPNR_06 (part 1)
+        Given the demandPaymentNotice scenario executed successfully
+        And the verifyPaymentNotice scenario executed successfully
+        And the activatePaymentNotice request scenario executed successfully
+        And expirationTime with 2000 in activatePaymentNotice
+        When PSP sends soap activatePaymentNotice to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNotice response
+    @wip
+    Scenario: F_DPNR_06 (part 2)
+        Given the F_DPNR_06 (part 1) scenario executed successfully
+        When job mod3CancelV2 triggered after 4 seconds
+        Then verify the HTTP status code of mod3CancelV2 response is 200
 
         # POSITION_RECEIPT_TRANSFER
         And verify 0 record for the table POSITION_RECEIPT_TRANSFER JOIN POSITION_TRANSFER ON POSITION_TRANSFER.ID=POSITION_RECEIPT_TRANSFER.FK_POSITION_TRANSFER retrived by the query select_activate on db nodo_online under macro NewMod1
