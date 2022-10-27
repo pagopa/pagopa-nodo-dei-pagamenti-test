@@ -28,7 +28,7 @@ Feature: check syntax KO for paGetPaymentV2 without body and with tags
             </soapenv:Envelope>
             """
 
-    Scenario: description lunghezza 141
+    Scenario: lack of body
         Given initial XML paGetPaymentV2
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
