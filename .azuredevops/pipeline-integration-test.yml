@@ -1,194 +1,195 @@
-pr: none
-trigger: none
-
-pool:
-  vmImage: 'ubuntu-latest'
-
-parameters:
-  - name: env
-    displayName: Environment to Run Test
+parameters: 
+  - 
+    displayName: "Environment to Run Test"
+    name: env
     type: string
-    values:
+    values: 
       - dev
       - sit
-
-variables:
-  archiveName: nodo-dei-pagamenti-NRT.zip
-  destinationFolderExtractArtifact: nodo/extracted
-  deploy-pool: nodopagamenti-agent-pool-sit
-
-stages:
-  - stage: prepare_env
+pool: 
+  vmImage: ubuntu-latest
+pr: none
+stages: 
+  - 
     displayName: "Prepare env (${{ parameters.env }} )"
-    variables:
-      - group: nodo-integration-test-${{ parameters.env }}
-    jobs:
-      - job: 
+    jobs: 
+      - 
         displayName: "Prepare env (${{ parameters.env }})"
-        steps:
-          - checkout: self
+        job: ~
+        steps: 
+          - 
+            checkout: self
             clean: true
             persistCredentials: true
-          
-          - task: AzureKeyVault@2
-            inputs:
-              connectedServiceName: $(kv-service-connection-${{ parameters.env }})
-              keyVaultName: $(az-kv-name-${{ parameters.env }})
-              secretsFilter: '*'
+          - 
+            inputs: 
+              connectedServiceName: "$(kv-service-connection-${{ parameters.env }})"
+              keyVaultName: "$(az-kv-name-${{ parameters.env }})"
               runAsPreJob: true
-          
-          - script: |
-              function replace {
-                  file=$1
-                  key=$2
-                  value=$3
-                  
-                  contents=$(jq "$key = \"$value\"" $file) && echo "${contents}" > $file
-              }
-
-              file=$(Build.SourcesDirectory)/src/integ-test/bdd-test/resources/config.json
-
-              
-              replace $file ".services.\"nodo-dei-pagamenti\".url"           "https://10.230.8.5:443/nodo-pagamenti/api/v1"
-              replace $file ".services.\"nodo-dei-pagamenti\".healthcheck"   "/monitor/health"
-              replace $file ".services.\"nodo-dei-pagamenti\".soap_service"  "/webservices/input"
-              replace $file ".services.\"nodo-dei-pagamenti\".rest_service"  ""
-              replace $file ".services.\"nodo-dei-pagamenti\".refresh_config_service"  "/config/refresh/CONFIG"
-
-              replace $file ".services.\"mock-ec\".url"           "https://api.dev.platform.pagopa.it/mock-ec/api/v1"
-              replace $file ".services.\"mock-ec\".healthcheck"   "/info"
-              replace $file ".services.\"mock-ec\".soap_service"  ""
-              replace $file ".services.\"mock-ec\".rest_service"  ""
-
-
-              replace $file ".db_configuration.nodo_cfg.host"     $(db-cfg-host-${{ parameters.env }})
-              replace $file ".db_configuration.nodo_cfg.database" $(db-cfg-service-name-${{ parameters.env }})
-              replace $file ".db_configuration.nodo_cfg.user"     $(db-cfg-username-${{ parameters.env }})
-              replace $file ".db_configuration.nodo_cfg.password" $(db-cfg-password-${{ parameters.env }})
-              replace $file ".db_configuration.nodo_cfg.port"     $(db-cfg-port-${{ parameters.env }})
-
-              replace $file ".db_configuration.nodo_online.host"      $(db-online-host-${{ parameters.env }})
-              replace $file ".db_configuration.nodo_online.database"  $(db-online-service-name-${{ parameters.env }})
-              replace $file ".db_configuration.nodo_online.user"      $(db-online-username-${{ parameters.env }})
-              replace $file ".db_configuration.nodo_online.password"  $(db-online-password-${{ parameters.env }})
-              replace $file ".db_configuration.nodo_online.port"      $(db-online-port-${{ parameters.env }})
-
-              replace $file ".db_configuration.nodo_offline.host"       $(db-offline-host-${{ parameters.env }})
-              replace $file ".db_configuration.nodo_offline.database"   $(db-offline-service-name-${{ parameters.env }})
-              replace $file ".db_configuration.nodo_offline.user"       $(db-offline-username-${{ parameters.env }})
-              replace $file ".db_configuration.nodo_offline.password"   $(db-offline-password-${{ parameters.env }})  
-              replace $file ".db_configuration.nodo_offline.port"       $(db-offline-port-${{ parameters.env }})
-
-              replace $file ".db_configuration.re.host"       $(db-re-host-${{ parameters.env }})
-              replace $file ".db_configuration.re.database"   $(db-re-service-name-${{ parameters.env }})
-              replace $file ".db_configuration.re.user"       $(db-re-username-${{ parameters.env }})
-              replace $file ".db_configuration.re.password"   $(db-re-password-${{ parameters.env }})  
-              replace $file ".db_configuration.re.port"       $(db-re-port-${{ parameters.env }})
-
-              replace $file ".db_configuration.wfesp.host"      $(db-wfesp-host-${{ parameters.env }}) 
-              replace $file ".db_configuration.wfesp.database"  $(db-wfesp-service-name-${{ parameters.env }}) 
-              replace $file ".db_configuration.wfesp.user"      $(db-wfesp-username-${{ parameters.env }}) 
-              replace $file ".db_configuration.wfesp.password"  $(db-wfesp-password-${{ parameters.env }})     
-              replace $file ".db_configuration.wfesp.port"      $(db-wfesp-port-${{ parameters.env }})
-
-              jq . $file
-            displayName: 'Configure Global Properties'
-            
-          - script: |
-              sudo apt-get install build-essential unzip
-              mkdir $(Build.SourcesDirectory)/oracle
-              cd $(Build.SourcesDirectory)/oracle
-              sudo wget https://download.oracle.com/otn_software/linux/instantclient/216000/instantclient-basic-linux.x64-21.6.0.0.0dbru.zip
-              sudo unzip instantclient-basic-linux.x64-21.6.0.0.0dbru.zip
-              sudo apt update
-              sudo apt install libaio1
-
-            displayName: 'Install Oracle Instant Client'
-          
-          - task: ArchiveFiles@2
-            displayName: 'Zip $(archiveName)'
-            inputs:
-              rootFolderOrFile: $(Build.SourcesDirectory)
-              includeRootFolder: false
-              archiveType: zip
+              secretsFilter: "*"
+            task: AzureKeyVault@2
+          - 
+            displayName: "Configure Global Properties"
+            script: |
+                function replace {
+                    file=$1
+                    key=$2
+                    value=$3
+                    
+                    contents=$(jq "$key = \"$value\"" $file) && echo "${contents}" > $file
+                }
+                
+                file=$(Build.SourcesDirectory)/src/integ-test/bdd-test/resources/config.json
+                
+                
+                replace $file ".services.\"nodo-dei-pagamenti\".url"           "https://10.230.8.5:443/nodo-pagamenti/api/v1"
+                replace $file ".services.\"nodo-dei-pagamenti\".healthcheck"   "/monitor/health"
+                replace $file ".services.\"nodo-dei-pagamenti\".soap_service"  "/webservices/input"
+                replace $file ".services.\"nodo-dei-pagamenti\".rest_service"  ""
+                replace $file ".services.\"nodo-dei-pagamenti\".refresh_config_service"  "/config/refresh/CONFIG"
+                
+                replace $file ".services.\"mock-ec\".url"           "https://api.dev.platform.pagopa.it/mock-ec/api/v1"
+                replace $file ".services.\"mock-ec\".healthcheck"   "/info"
+                replace $file ".services.\"mock-ec\".soap_service"  ""
+                replace $file ".services.\"mock-ec\".rest_service"  ""
+                
+                
+                replace $file ".db_configuration.nodo_cfg.host"     $(db-cfg-host-${{ parameters.env }})
+                replace $file ".db_configuration.nodo_cfg.database" $(db-cfg-service-name-${{ parameters.env }})
+                replace $file ".db_configuration.nodo_cfg.user"     $(db-cfg-username-${{ parameters.env }})
+                replace $file ".db_configuration.nodo_cfg.password" $(db-cfg-password-${{ parameters.env }})
+                replace $file ".db_configuration.nodo_cfg.port"     $(db-cfg-port-${{ parameters.env }})
+                
+                replace $file ".db_configuration.nodo_online.host"      $(db-online-host-${{ parameters.env }})
+                replace $file ".db_configuration.nodo_online.database"  $(db-online-service-name-${{ parameters.env }})
+                replace $file ".db_configuration.nodo_online.user"      $(db-online-username-${{ parameters.env }})
+                replace $file ".db_configuration.nodo_online.password"  $(db-online-password-${{ parameters.env }})
+                replace $file ".db_configuration.nodo_online.port"      $(db-online-port-${{ parameters.env }})
+                
+                replace $file ".db_configuration.nodo_offline.host"       $(db-offline-host-${{ parameters.env }})
+                replace $file ".db_configuration.nodo_offline.database"   $(db-offline-service-name-${{ parameters.env }})
+                replace $file ".db_configuration.nodo_offline.user"       $(db-offline-username-${{ parameters.env }})
+                replace $file ".db_configuration.nodo_offline.password"   $(db-offline-password-${{ parameters.env }})  
+                replace $file ".db_configuration.nodo_offline.port"       $(db-offline-port-${{ parameters.env }})
+                
+                replace $file ".db_configuration.re.host"       $(db-re-host-${{ parameters.env }})
+                replace $file ".db_configuration.re.database"   $(db-re-service-name-${{ parameters.env }})
+                replace $file ".db_configuration.re.user"       $(db-re-username-${{ parameters.env }})
+                replace $file ".db_configuration.re.password"   $(db-re-password-${{ parameters.env }})  
+                replace $file ".db_configuration.re.port"       $(db-re-port-${{ parameters.env }})
+                
+                replace $file ".db_configuration.wfesp.host"      $(db-wfesp-host-${{ parameters.env }}) 
+                replace $file ".db_configuration.wfesp.database"  $(db-wfesp-service-name-${{ parameters.env }}) 
+                replace $file ".db_configuration.wfesp.user"      $(db-wfesp-username-${{ parameters.env }}) 
+                replace $file ".db_configuration.wfesp.password"  $(db-wfesp-password-${{ parameters.env }})     
+                replace $file ".db_configuration.wfesp.port"      $(db-wfesp-port-${{ parameters.env }})
+                
+                jq . $file
+          - 
+            displayName: "Install Oracle Instant Client"
+            script: |
+                sudo apt-get install build-essential unzip
+                mkdir $(Build.SourcesDirectory)/oracle
+                cd $(Build.SourcesDirectory)/oracle
+                sudo wget https://download.oracle.com/otn_software/linux/instantclient/216000/instantclient-basic-linux.x64-21.6.0.0.0dbru.zip
+                sudo unzip instantclient-basic-linux.x64-21.6.0.0.0dbru.zip
+                sudo apt update
+                sudo apt install libaio1
+          - 
+            displayName: "Zip $(archiveName)"
+            inputs: 
               archiveFile: $(Build.ArtifactStagingDirectory)/$(archiveName)
+              archiveType: zip
+              includeRootFolder: false
               replaceExistingArchive: true
-
-          - publish: $(Build.ArtifactStagingDirectory)/$(archiveName)
-            displayName: "Publish Artifact $(archiveName)"
+              rootFolderOrFile: $(Build.SourcesDirectory)
+            task: ArchiveFiles@2
+          - 
             artifact: $(archiveName)
-
-  - stage: run_test
-    displayName: "Run integration test (${{ parameters.env }})"
-    dependsOn:
+            displayName: "Publish Artifact $(archiveName)"
+            publish: $(Build.ArtifactStagingDirectory)/$(archiveName)
+    stage: prepare_env
+    variables: 
+      - 
+        group: "nodo-integration-test-${{ parameters.env }}"
+  - 
+    dependsOn: 
       - prepare_env
-    pool: $(deploy-pool)
-    jobs:
-      - job: 
+    displayName: "Run integration test (${{ parameters.env }})"
+    jobs: 
+      - 
         displayName: "Run integration test (${{ parameters.env }})"
-        timeoutInMinutes: 0 # how long to run the job before automatically cancelling. When 0 is specified, the maximum limit is used
-        steps:
-          - checkout: none 
-
-          - task: DownloadPipelineArtifact@2
+        job: ~
+        steps: 
+          - 
+            checkout: none
+          - 
             displayName: "Download Artifact $(archiveName)"
-            inputs:
+            inputs: 
               artifact: $(archiveName)
               source: current
-          
-          - task: ExtractFiles@1
-            displayName: 'Unzip $(archiveName)'
-            inputs:
+            task: DownloadPipelineArtifact@2
+          - 
+            displayName: "Unzip $(archiveName)"
+            inputs: 
               archiveFilePatterns: $(Pipeline.Workspace)/$(archiveName)
-              destinationFolder: $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)
               cleanDestinationFolder: true
+              destinationFolder: $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)
               overwriteExistingFiles: false
-
-          - script: |
-              sudo sh -c "echo $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/oracle/instantclient_21_6 > /etc/ld.so.conf.d/oracle-instantclient.conf"
-              sudo ldconfig
-
-            displayName: 'Linux ldconfig Command for Oracle Instant Client'
-            
-          - script: |
-              export PATH=/usr/bin:/usr/local/bin:$PATH #Add environment variables
-              echo 'Install Behave'
-              sudo pip3 install behave 
-              sudo pip3 install -U -r $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/requirements.txt #Install Requirements
-              whereis behave
-              which behave
-              export PATH=/usr/local/bin/behave:/usr/bin:/usr/local/bin:$PATH #Add environment variables
-             
-
-             # Damiano
-             #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/RTPull/RTPull_flows.feature --tags=ok
-             
-             # Nicolò
-             #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/NewMod3/flows/AccessiConcorrenzialiPaypal
-             
-             # Lorenzo  
-             #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/Mod1MB/primitives/activateIOPayment_semantic_ko.feature
-            
-             # Alessandro
-             #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/appIO/flows/PagamentiAppIO/FLUSSO_APIO_08.feature
-             
-             # Marisa
-             behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/Informative/nodoChiediCatalogoServizi/SIN_NCCS_07.feature
-
-             # Redis
-             #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/Mod1/flows/pspChiediAvanzamentoRPT/ChiediAvanzamento_ACCETTATA_PSP_Carrello_sbloccoParcheggio.feature
-             
-             # Gabriel
-             #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/NewMod3/flows/AccessiConcorrenzialiPaypal/Pag-1163_Paypal_NM3_Setup_DB.feature
-
-             # Davide
-             #behave --tags=wip --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/NewMod3/flows/paSendRT/PSRT_30_new.feature
-            displayName: 'Run integration test'
-        
-          - task: PublishTestResults@2
+            task: ExtractFiles@1
+          - 
+            displayName: "Linux ldconfig Command for Oracle Instant Client"
+            script: |
+                sudo sh -c "echo $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/oracle/instantclient_21_6 > /etc/ld.so.conf.d/oracle-instantclient.conf"
+                sudo ldconfig
+          - 
+            displayName: "Run integration test"
+            script: |
+                export PATH=/usr/bin:/usr/local/bin:$PATH #Add environment variables
+                echo 'Install Behave'
+                sudo pip3 install behave 
+                sudo pip3 install -U -r $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/requirements.txt #Install Requirements
+                whereis behave
+                which behave
+                export PATH=/usr/local/bin/behave:/usr/bin:/usr/local/bin:$PATH #Add environment variables
+                
+                
+                # Damiano
+                #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/RTPull/RTPull_flows.feature --tags=ok
+                
+                # Nicolò
+                #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/NewMod3/flows/AccessiConcorrenzialiPaypal
+                
+                # Lorenzo  
+                #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/Mod1MB/primitives/activateIOPayment_semantic_ko.feature
+                
+                # Alessandro
+                #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/appIO/flows/PagamentiAppIO/FLUSSO_APIO_08.feature
+                
+                # Marisa
+                behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/Informative/nodoChiediCatalogoServizi/SIN_NCCS_07.feature
+                
+                # Redis
+                #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/Mod1/flows/pspChiediAvanzamentoRPT/ChiediAvanzamento_ACCETTATA_PSP_Carrello_sbloccoParcheggio.feature
+                
+                # Gabriel
+                #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/NewMod3/flows/AccessiConcorrenzialiPaypal/Pag-1163_Paypal_NM3_Setup_DB.feature
+                
+                # Davide
+                #behave --tags=wip --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/NewMod3/flows/paSendRT/PSRT_30_new.feature
+          - 
             condition: succeededOrFailed()
-            inputs:
-              testResultsFiles: '$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report/*.xml'
-              mergeTestResults: true
-              testRunTitle: Integration test Nodo $(Build.BuildNumber)
+            inputs: 
               failTaskOnFailedTests: true
+              mergeTestResults: true
+              testResultsFiles: $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report/*.xml
+              testRunTitle: "Integration test Nodo $(Build.BuildNumber)"
+            task: PublishTestResults@2
+        timeoutInMinutes: 0
+    pool: $(deploy-pool)
+    stage: run_test
+trigger: none
+variables: 
+  archiveName: nodo-dei-pagamenti-NRT.zip
+  deploy-pool: nodopagamenti-agent-pool-sit
+  destinationFolderExtractArtifact: nodo/extracted
