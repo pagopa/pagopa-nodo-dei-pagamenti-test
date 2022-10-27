@@ -2,7 +2,7 @@ Feature: Semantic checks KO for nodoChiediCatalogoServizi
     Background:
         Given systems up
     
-    Scenario: Check SIN_NCCS_07
+    Scenario: Check SIN_NCCS_08
     Given initial XML nodoChiediCatalogoServizi
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -10,7 +10,7 @@ Feature: Semantic checks KO for nodoChiediCatalogoServizi
         <soapenv:Body>
             <ws:nodoChiediCatalogoServizi>
                 <identificativoPSP>#psp#</identificativoPSP>
-                
+                <identificativoIntermediarioPSP></identificativoIntermediarioPSP>
                 <identificativoCanale>#canale#</identificativoCanale>
                 <password>pwdpwdpwd</password>
                 <!--Optional:-->
