@@ -87,9 +87,7 @@ Feature: Semantic checks for nodoChiediFlussoRendicontazione
             | identificativoIntermediarioPA         | ciaoIntermediarioPA       | PPT_INTERMEDIARIO_PA_SCONOSCIUTO  | CFRSEM1     |
             | identificativoIntermediarioPA         | INT_NOT_ENABLED           | PPT_INTERMEDIARIO_PA_DISABILITATO | CFRSEM2     |
             | identificativoStazioneIntermediarioPA | ciaoStazionePA            | PPT_STAZIONE_INT_PA_SCONOSCIUTA   | CFRSEM3     |
-
             | identificativoStazioneIntermediarioPA | STAZIONE_NOT_ENABLED      | PPT_STAZIONE_INT_PA_DISABILITATA  | CFRSEM4     |
-
             | password                              | Password01                | PPT_AUTENTICAZIONE                | CFRSEM5     |
             | identificativoFlusso                  | 2017-09-11idPsp1-pluto123 | PPT_ID_FLUSSO_SCONOSCIUTO         | CFRSEM10    |
 
@@ -151,14 +149,12 @@ Feature: Semantic checks for nodoChiediFlussoRendicontazione
         When EC sends SOAP nodoChiediFlussoRendicontazione to nodo-dei-pagamenti
         Then check faultCode is PPT_DOMINIO_DISABILITATO of nodoChiediFlussoRendicontazione response
 
-
     # [CFRSEM11]
     @runnable
     Scenario: Aggiornamento DB_3
         Given the Executed nodoInviaFlussoRendicontazione scenario executed successfully
         And update through the query param_update of the table RENDICONTAZIONE the parameter DOMINIO with 90000000001, with where condition ID_FLUSSO and where value $identificativoFlusso under macro update_query on db nodo_offline
     @runnable
-
     Scenario: Check semantic errors for nodoChiediFlussoRendicontazione primitive
         Given the Aggiornamento DB_3 scenario executed successfully
         And initial XML nodoChiediFlussoRendicontazione

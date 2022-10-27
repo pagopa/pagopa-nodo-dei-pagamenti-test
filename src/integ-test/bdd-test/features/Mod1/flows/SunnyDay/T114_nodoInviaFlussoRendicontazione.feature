@@ -2,7 +2,7 @@ Feature: process test for nodoInviaFlussoRendicontazione
 
     Background:
         Given systems up
-@runnable
+
     Scenario: Create REND
         Given REND generation
             """

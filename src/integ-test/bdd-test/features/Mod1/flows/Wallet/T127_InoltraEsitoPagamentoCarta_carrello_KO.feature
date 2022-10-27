@@ -9,10 +9,8 @@ Feature: process tests for InoltroEsitoCartaCarrello_KO
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-
                 <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
                 <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
-
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
             <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
@@ -83,7 +81,7 @@ Feature: process tests for InoltroEsitoCartaCarrello_KO
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-@runnable
+
     Scenario: RPT2 generation
         Given the RPT generation scenario executed successfully
         And  RPT2 generation
@@ -91,9 +89,7 @@ Feature: process tests for InoltroEsitoCartaCarrello_KO
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-
                 <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
-
                 <pay_i:identificativoStazioneRichiedente>'+context.expand('${stazione}')+'</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
@@ -165,8 +161,6 @@ Feature: process tests for InoltroEsitoCartaCarrello_KO
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-
-@runnable    
 
     Scenario: RT generation
         Given the RPT2 generation scenario executed successfully
@@ -258,7 +252,7 @@ Feature: process tests for InoltroEsitoCartaCarrello_KO
             </pay_i:datiPagamento>
             </pay_i:RT>
             """
-@runnable
+
     Scenario: RT2 generation
         Given the RT generation scenario executed successfully
         And RT2 generation
@@ -349,7 +343,7 @@ Feature: process tests for InoltroEsitoCartaCarrello_KO
             </pay_i:datiPagamento>
             </pay_i:RT>
             """
-@runnable
+
     Scenario: Execute nodoInviaCarrelloRPT request
         Given the RT2 generation scenario executed successfully
         And initial XML nodoInviaCarrelloRPT
@@ -415,7 +409,7 @@ Feature: process tests for InoltroEsitoCartaCarrello_KO
         And check url contains acardste of nodoInviaCarrelloRPT response
         And retrieve session token from $nodoInviaCarrelloRPTResponse.url
 
-@runnable
+
     Scenario: Execution Esito Carta
         Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
         And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte 
@@ -456,7 +450,7 @@ Feature: process tests for InoltroEsitoCartaCarrello_KO
         And check url field not exists in inoltroEsito/carta response
         And check descrizione is Risposta negativa del Canale of inoltroEsito/carta response 
         And check errorCode is RIFPSP of inoltroEsito/carta response
-@runnable
+
     Scenario: Execute nodoChiediStatoRPT request
         Given the Execution Esito Carta scenario executed successfully
         And initial XML nodoChiediStatoRPT
@@ -485,14 +479,14 @@ Feature: process tests for InoltroEsitoCartaCarrello_KO
         And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
         And check url field not exists in nodoChiediStatoRPT response
-@runnable
+
     Scenario: Execute nodoChiediAvanzamentoPagamento
         Given the Execute nodoChiediStatoRPT request scenario executed successfully
         When WISP sends REST GET avanzamentoPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of avanzamentoPagamento response is 200
         And check esito is KO of avanzamentoPagamento response
 
-@runnable
+
     Scenario: Execute nodoInviaRT request
         Given the Execute nodoChiediAvanzamentoPagamento scenario executed successfully
         And initial XML nodoInviaRT
@@ -519,7 +513,7 @@ Feature: process tests for InoltroEsitoCartaCarrello_KO
             """
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is KO of nodoInviaRT response
-@runnable
+
     Scenario: Execute nodoInviaRT2 request
         Given the Execute nodoInviaRT request scenario executed successfully
         And initial XML nodoInviaRT
@@ -532,9 +526,7 @@ Feature: process tests for InoltroEsitoCartaCarrello_KO
                     <identificativoCanale>#canale#</identificativoCanale>
                     <password>pwdpwdpwd</password>
                     <identificativoPSP>#psp#</identificativoPSP>
-
                     <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-
                     <identificativoUnivocoVersamento>RPTdaRifPsp</identificativoUnivocoVersamento>
                     <codiceContestoPagamento>$2CCP</codiceContestoPagamento>
                     <tipoFirma></tipoFirma>

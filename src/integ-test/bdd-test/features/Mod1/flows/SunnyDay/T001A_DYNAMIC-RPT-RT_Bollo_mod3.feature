@@ -9,9 +9,7 @@ Feature: process tests for RPT-RT bollo
          <marcaDaBollo xmlns="http://www.agenziaentrate.gov.it/2014/MarcaDaBollo" xmlns:ns2="http://www.w3.org/2000/09/xmldsig#">
             <PSP>
                <CodiceFiscale>12345678901</CodiceFiscale>
-
                <Denominazione>60000000001</Denominazione>
-
             </PSP>
             <IUBD>#iubd#</IUBD>
             <OraAcquisto>2015-02-06T15:00:44.659+01:00</OraAcquisto>
@@ -43,7 +41,6 @@ Feature: process tests for RPT-RT bollo
             </Signature>
          </marcaDaBollo>
          """
-
       And RPT generation
          """
          <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_2_0.xsd ">
@@ -123,7 +120,6 @@ Feature: process tests for RPT-RT bollo
          </pay_i:datiVersamento>
          </pay_i:RPT>
          """
-
       And RT generation
             """
             <pay_i:RT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0.xsd ">
@@ -213,7 +209,6 @@ Feature: process tests for RPT-RT bollo
             </pay_i:datiPagamento>
             </pay_i:RT>
             """
-
       And initial XML nodoInviaRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -221,9 +216,7 @@ Feature: process tests for RPT-RT bollo
             <ppt:intestazionePPT>
             <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
-
             <identificativoDominio>#intermediarioPA#</identificativoDominio>
-
             <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
             <codiceContestoPagamento>CCD01</codiceContestoPagamento>
             </ppt:intestazionePPT>
@@ -255,9 +248,7 @@ Feature: process tests for RPT-RT bollo
                   <identificativoCanale>#canale#</identificativoCanale>
                   <password>pwdpwdpwd</password>
                   <identificativoPSP>#psp#</identificativoPSP>
-
                   <identificativoDominio>#intermediarioPA#</identificativoDominio>
-
                   <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
                   <codiceContestoPagamento>CCD01</codiceContestoPagamento>
                   <tipoFirma></tipoFirma>

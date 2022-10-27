@@ -14,19 +14,15 @@ Feature: Semantic checks KO for nodoVerificaRPT
             <codiceContestoPagamento>CCD01</codiceContestoPagamento>
             <codificaInfrastrutturaPSP>QR-CODE</codificaInfrastrutturaPSP>
             <codiceIdRPT><qrc:QrCode>
-
             <qrc:CF>11111122223</qrc:CF>
             <qrc:CodStazPA>02</qrc:CodStazPA>
             <qrc:AuxDigit>0</qrc:AuxDigit>
             <qrc:CodIUV>010481670134400</qrc:CodIUV>
-
             </qrc:QrCode></codiceIdRPT>
             </ws:nodoVerificaRPT>
             </soapenv:Body>
             </soapenv:Envelope>
             """
-
-
 
     Scenario Outline: Check faultCode error on non-existent or invalid field
         Given <field> with <value> in nodoVerificaRPT
@@ -43,7 +39,6 @@ Feature: Semantic checks KO for nodoVerificaRPT
             | password                       | test_wrong_pwd     | PPT_AUTENTICAZIONE                 | VRPTSEM7    |
             | codificaInfrastrutturaPSP      | codificaErrata     | PPT_CODIFICA_PSP_SCONOSCIUTA       | VRPTSEM8    |
 
-
     Scenario Outline: Check faultCode PPT_SEMANTICA on invalid body element
         Given <field_1> with <value_1> in nodoVerificaRPT
         And <field_2> with <value_2> in nodoVerificaRPT
@@ -54,14 +49,11 @@ Feature: Semantic checks KO for nodoVerificaRPT
             | qrc:AuxDigit | 0       | qrc:CodIUV | 12345678901234567 | VRPTSEM9    |
             | qrc:AuxDigit | 1       | qrc:CodIUV | 123456789012345   | VRPTSEM10   |
 
-
     Scenario Outline: Check faultCode error on unknown or invalid CodStazPA
         Given <field> with <value> in nodoVerificaRPT
         When psp sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
         Then check faultCode is <resp_error> of nodoVerificaRPT response
         Examples:
             | field         | value       | resp_error              | soapUI test |
-
             | qrc:CF        | 11111122222 | PPT_DOMINIO_SCONOSCIUTO | VRPTSEM18   |
             | qrc:CodStazPA | None        | PPT_SEMANTICA           | VRPTSEM19   |
-

@@ -20,7 +20,6 @@ Feature: process tests for ChiediAvanzamento_RIFIUTATA_PSP_Carrello_sbloccoParch
             <pay_i:identificativoUnivocoVersante>
             <pay_i:tipoIdentificativoUnivoco>F</pay_i:tipoIdentificativoUnivoco>
             <pay_i:codiceIdentificativoUnivoco>RCCGLD09P09H502E</pay_i:codiceIdentificativoUnivoco>
-
             </pay_i:identificativoUnivocoVersante>
             <pay_i:anagraficaVersante>Gesualdo;Riccitelli</pay_i:anagraficaVersante>
             <pay_i:indirizzoVersante>via del gesu</pay_i:indirizzoVersante>
@@ -30,13 +29,11 @@ Feature: process tests for ChiediAvanzamento_RIFIUTATA_PSP_Carrello_sbloccoParch
             <pay_i:provinciaVersante>RM</pay_i:provinciaVersante>
             <pay_i:nazioneVersante>IT</pay_i:nazioneVersante>
             <pay_i:e-mailVersante>gesualdo.riccitelli@poste.it</pay_i:e-mailVersante>
-
             </pay_i:soggettoVersante>
             <pay_i:soggettoPagatore>
             <pay_i:identificativoUnivocoPagatore>
             <pay_i:tipoIdentificativoUnivoco>F</pay_i:tipoIdentificativoUnivoco>
             <pay_i:codiceIdentificativoUnivoco>RCCGLD09P09H501E</pay_i:codiceIdentificativoUnivoco>
-
             </pay_i:identificativoUnivocoPagatore>
             <pay_i:anagraficaPagatore>Gesualdo;Riccitelli</pay_i:anagraficaPagatore>
             <pay_i:indirizzoPagatore>via del gesu</pay_i:indirizzoPagatore>
@@ -46,13 +43,11 @@ Feature: process tests for ChiediAvanzamento_RIFIUTATA_PSP_Carrello_sbloccoParch
             <pay_i:provinciaPagatore>RM</pay_i:provinciaPagatore>
             <pay_i:nazionePagatore>IT</pay_i:nazionePagatore>
             <pay_i:e-mailPagatore>gesualdo.riccitelli@poste.it</pay_i:e-mailPagatore>
-
             </pay_i:soggettoPagatore>
             <pay_i:enteBeneficiario>
             <pay_i:identificativoUnivocoBeneficiario>
             <pay_i:tipoIdentificativoUnivoco>G</pay_i:tipoIdentificativoUnivoco>
             <pay_i:codiceIdentificativoUnivoco>11111111117</pay_i:codiceIdentificativoUnivoco>
-
             </pay_i:identificativoUnivocoBeneficiario>
             <pay_i:denominazioneBeneficiario>AZIENDA XXX</pay_i:denominazioneBeneficiario>
             <pay_i:codiceUnitOperBeneficiario>123</pay_i:codiceUnitOperBeneficiario>
@@ -63,7 +58,6 @@ Feature: process tests for ChiediAvanzamento_RIFIUTATA_PSP_Carrello_sbloccoParch
             <pay_i:localitaBeneficiario>Roma</pay_i:localitaBeneficiario>
             <pay_i:provinciaBeneficiario>RM</pay_i:provinciaBeneficiario>
             <pay_i:nazioneBeneficiario>IT</pay_i:nazioneBeneficiario>
-
             </pay_i:enteBeneficiario>
             <pay_i:datiVersamento>
             <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
@@ -88,7 +82,7 @@ Feature: process tests for ChiediAvanzamento_RIFIUTATA_PSP_Carrello_sbloccoParch
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-@runnable
+
     Scenario: RPT2 generation
         Given the RPT generation scenario executed successfully
         And RPT2 generation
@@ -147,7 +141,6 @@ Feature: process tests for ChiediAvanzamento_RIFIUTATA_PSP_Carrello_sbloccoParch
             <pay_i:nazioneBeneficiario>IT</pay_i:nazioneBeneficiario>
             </pay_i:enteBeneficiario>
             <pay_i:datiVersamento>
-
             <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
             <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
@@ -157,7 +150,6 @@ Feature: process tests for ChiediAvanzamento_RIFIUTATA_PSP_Carrello_sbloccoParch
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
             <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
             <pay_i:datiSingoloVersamento>
-
             <pay_i:importoSingoloVersamento>10.00</pay_i:importoSingoloVersamento>
             <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
             <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
@@ -171,7 +163,7 @@ Feature: process tests for ChiediAvanzamento_RIFIUTATA_PSP_Carrello_sbloccoParch
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-@runnable
+
     Scenario: Execute nodoInviaCarrelloRPT request
         Given the RPT2 generation scenario executed successfully
         And initial XML nodoInviaCarrelloRPT
@@ -208,13 +200,11 @@ Feature: process tests for ChiediAvanzamento_RIFIUTATA_PSP_Carrello_sbloccoParch
             </soapenv:Body>
             </soapenv:Envelope>
             """
-
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
         And check url contains acardste of nodoInviaCarrelloRPT response
         And retrieve session token from $nodoInviaCarrelloRPTResponse.url
 
-@runnable
     Scenario: Execute check DB-RPT
         Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
         And replace iuv content with avanzaKO content
@@ -232,8 +222,6 @@ Feature: process tests for ChiediAvanzamento_RIFIUTATA_PSP_Carrello_sbloccoParch
         And checks the value nodoInviaCarrelloRPT of the record at column INSERTED_BY of the table STATI_RPT retrived by the query stati_RPT_new on db nodo_online under macro Mod1
         And verify 3 record for the table STATI_RPT retrived by the query stati_RPT_new on db nodo_online under macro Mod1
 
-
-@runnable
     Scenario: Execution Esito Carta
         Given the Execute check DB-RPT scenario executed successfully
         And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte
@@ -250,9 +238,7 @@ Feature: process tests for ChiediAvanzamento_RIFIUTATA_PSP_Carrello_sbloccoParch
             </soapenv:Envelope>
             """
         When WISP sends REST POST inoltroEsito/carta to nodo-dei-pagamenti
-
             """
-
             {
             "idPagamento": "$sessionToken",
             "RRN":123456789,
@@ -260,21 +246,17 @@ Feature: process tests for ChiediAvanzamento_RIFIUTATA_PSP_Carrello_sbloccoParch
             "tipoVersamento": "CP",
             "identificativoIntermediario": "#psp#",
             "identificativoCanale": "#canale#",
-
             "esitoTransazioneCarta": "123456", 
             "importoTotalePagato": 11.11,
             "timestampOperazione": "2012-04-23T18:25:43.001Z",
             "codiceAutorizzativo": "123212"
-
             }
-
             """
         Then verify the HTTP status code of inoltroEsito/carta response is 408
         And check error is Operazione in timeout of inoltroEsito/carta response
         And check url field not exists in inoltroEsito/carta response
-@runnable
-    Scenario: Execute second check DB-RPT
 
+    Scenario: Execute second check DB-RPT
         Given the Execution Esito Carta scenario executed successfully
         And replace iuv content with avanzaKO content
         Then checks the value CART_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query motivo_annullamento on db nodo_online under macro Mod1
@@ -285,7 +267,6 @@ Feature: process tests for ChiediAvanzamento_RIFIUTATA_PSP_Carrello_sbloccoParch
         And verify 1 record for the table RETRY_RPT retrived by the query motivo_annullamento_originale on db nodo_online under macro Mod1
         And wait 5 seconds for expiration
 
-@runnable
     Scenario: Execute job pspChiediAvanzamentoRPT
         Given the Execute second check DB-RPT scenario executed successfully
         # And initial XML pspChiediAvanzamentoRPT
@@ -310,7 +291,7 @@ Feature: process tests for ChiediAvanzamento_RIFIUTATA_PSP_Carrello_sbloccoParch
         When job pspChiediAvanzamentoRpt triggered after 5 seconds
         And wait 10 seconds for expiration
         Then checks the value CART_RIFIUTATO_PSP of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query motivo_annullamento on db nodo_online under macro Mod1
-@runnable
+
     Scenario: Execution retry Esito Carta
         Given the Execute job pspChiediAvanzamentoRPT scenario executed successfully
         And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte
@@ -324,12 +305,9 @@ Feature: process tests for ChiediAvanzamento_RIFIUTATA_PSP_Carrello_sbloccoParch
             </pspInviaCarrelloRPTResponse>
             </ws:pspInviaCarrelloRPTCarteResponse>
             </soapenv:Body>
-
             </soapenv:Envelope>
             """
         When WISP sends REST POST inoltroEsito/carta to nodo-dei-pagamenti
-
-
             """
 
             {
@@ -339,14 +317,11 @@ Feature: process tests for ChiediAvanzamento_RIFIUTATA_PSP_Carrello_sbloccoParch
             "tipoVersamento": "CP",
             "identificativoIntermediario": "#psp#",
             "identificativoCanale": "#canale#",
-
             "esitoTransazioneCarta": "123456", 
             "importoTotalePagato": 11.11,
             "timestampOperazione": "2012-04-23T18:25:43.001Z",
             "codiceAutorizzativo": "123212"
-
             }
-
             """
         Then verify the HTTP status code of inoltroEsito/carta response is 200
         And check esito is KO of inoltroEsito/carta response

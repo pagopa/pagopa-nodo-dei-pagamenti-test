@@ -163,12 +163,10 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - OK
             </pay_i:datiSingoliPagamenti>
             </pay_i:FlussoRiversamento>
             """
-
     @runnable
     Scenario: Send nodoInviaFlussoRendicontazione3 primitive
         Given the Create REND3 scenario executed successfully
         And initial XML nodoInviaFlussoRendicontazione
-
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header/>
@@ -309,11 +307,9 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - OK
             </soapenv:Envelope>
             """
 
-
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaFlussoRendicontazione response
 @runnable    
-
     # [SEM_NIFR_25]
     Scenario: Create REND6
         Given REND generation
@@ -351,9 +347,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - OK
             </pay_i:datiSingoliPagamenti>
             </pay_i:FlussoRiversamento>
             """
-
     
-
     Scenario: Send nodoInviaFlussoRendicontazione5 primitive
         Given the Create REND6 scenario executed successfully
         And initial XML nodoInviaFlussoRendicontazione
@@ -368,9 +362,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - OK
             <password>pwdpwdpwd</password>
             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoFlusso>$identificativoFlusso</identificativoFlusso>
-
             <dataOraFlusso>$timedate+1</dataOraFlusso>
-
             <xmlRendicontazione>$rendAttachment</xmlRendicontazione>
             </ws:nodoInviaFlussoRendicontazione>
             </soapenv:Body>

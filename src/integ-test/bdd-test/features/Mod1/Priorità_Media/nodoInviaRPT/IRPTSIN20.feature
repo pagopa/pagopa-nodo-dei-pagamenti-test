@@ -81,6 +81,8 @@ Feature: process tests for nodoInviaRT[IRPTSIN20]
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
+
+    @runnable
     Scenario: Execute nodoInviaRPT request
         Given the RPT generation scenario executed successfully
         And initial XML nodoInviaRPT
@@ -95,7 +97,6 @@ Feature: process tests for nodoInviaRT[IRPTSIN20]
                     <codiceContestoPagamento>CCD01</codiceContestoPagamento>
                 </ppt:intestazionePPT>
             </soapenv:Header>
-            
             </soapenv:Envelope>
             """
             When PSP sends SOAP nodoInviaRPT to nodo-dei-pagamenti

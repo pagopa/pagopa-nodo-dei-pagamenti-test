@@ -2,17 +2,15 @@ Feature: process tests for chiediInformazioniPagamento
 
     Background:
         Given systems up
-@runnable
+
     Scenario: RPT generation
         Given RPT generation
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-
             <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
             <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
-
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
             <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
@@ -83,7 +81,7 @@ Feature: process tests for chiediInformazioniPagamento
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-@runnable
+
     Scenario: Execute nodoInviaRPT request
         Given the RPT generation scenario executed successfully
         And initial XML nodoInviaRPT
@@ -91,11 +89,9 @@ Feature: process tests for chiediInformazioniPagamento
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
             <ppt:intestazionePPT>
-
             <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-
             <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
             <codiceContestoPagamento>CCD01</codiceContestoPagamento>
             </ppt:intestazionePPT>
@@ -117,7 +113,6 @@ Feature: process tests for chiediInformazioniPagamento
         And check url field exists in nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
 
-@runnable
     Scenario: Execution idPagamento
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
@@ -134,6 +129,7 @@ Feature: process tests for chiediInformazioniPagamento
         And check idDominio is #creditor_institution_code_old# of informazioniPagamento response
         And check enteBeneficiario is AZIENDA XXX of informazioniPagamento response
 
+@runnable
     Scenario: Execute nodoChiediAvanzamentoPagamento
         Given the Execution idPagamento scenario executed successfully
         When WISP sends rest GET avanzamentoPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti

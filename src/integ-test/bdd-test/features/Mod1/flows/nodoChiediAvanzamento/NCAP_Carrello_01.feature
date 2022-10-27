@@ -4,14 +4,12 @@ Feature: NCAP
 
     Background:
         Given systems up
-@runnable
+
     Scenario: RPT generation
         Given nodo-dei-pagamenti has config parameter useCountChiediAvanzamento set to true
         And nodo-dei-pagamenti has config parameter maxChiediAvanzamento set to 3
         And generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
-
         And generate 1 cart with PA #codicePA# and notice number $1noticeNumber
-
         And RPT generation
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
@@ -89,7 +87,6 @@ Feature: NCAP
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-
 		And initial XML nodoInviaCarrelloRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
