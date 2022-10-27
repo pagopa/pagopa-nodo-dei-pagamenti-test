@@ -194,12 +194,14 @@ Feature: flux tests for demandPaymentNotice
             </soapenv:Envelope>
             """
 
+    # F_DPNR_01
+
     Scenario: F_DPNR_01 (part 1)
         Given the demandPaymentNotice scenario executed successfully
         And the activatePaymentNotice request scenario executed successfully
         When PSP sends soap activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-    @wip
+
     Scenario: F_DPNR_01 (part 2)
         Given the F_DPNR_01 (part 1) scenario executed successfully
         And the sendPaymentOutcome request scenario executed successfully
@@ -234,12 +236,14 @@ Feature: flux tests for demandPaymentNotice
         And checks the value NotNone of the record at column FK_POSITION_PAYMENT of the table POSITION_RECEIPT retrived by the query select_activate on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_RECEIPT retrived by the query select_activate on db nodo_online under macro NewMod1
 
+    # F_DPNR_01.1
+
     Scenario: F_DPNR_01.1 (part 1)
         Given the demandPaymentNotice scenario executed successfully
         And the activatePaymentNotice request scenario executed successfully
         When PSP sends soap activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-    @wip
+
     Scenario: F_DPNR_01.1 (part 2)
         Given the F_DPNR_01.1 (part 1) scenario executed successfully
         And the sendPaymentOutcome request scenario executed successfully
@@ -274,3 +278,35 @@ Feature: flux tests for demandPaymentNotice
         And checks the value None of the record at column RT_ID of the table POSITION_RECEIPT retrived by the query select_activate on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column FK_POSITION_PAYMENT of the table POSITION_RECEIPT retrived by the query select_activate on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_RECEIPT retrived by the query select_activate on db nodo_online under macro NewMod1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    # F_DPNR_02
+
+    Scenario: F_DPNR_02 (part 1)
+        Given the demandPaymentNotice scenario executed successfully
+        And the activatePaymentNotice request scenario executed successfully
+        When PSP sends soap activatePaymentNotice to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNotice response
+    @wip
+    Scenario: F_DPNR_02 (part 2)
+        Given the F_DPNR_02 (part 1) scenario executed successfully
+        And the sendPaymentOutcome request scenario executed successfully
+        And outcome with KO in sendPaymentOutcome
+        When PSP sends soap sendPaymentOutcome to nodo-dei-pagamenti
+        Then check outcome is OK of sendPaymentOutcome response
+
+        # POSITION_RECEIPT
+        And verify 0 record for the table POSITION_RECEIPT retrived by the query select_activate on db nodo_online under macro NewMod1
