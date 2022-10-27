@@ -672,17 +672,17 @@ Feature: flow checks for closePayment - PA old
       And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT retrived by the query payment_status_old on db nodo_online under macro AppIO
       And verify 0 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_old on db nodo_online under macro AppIO
       And verify 1 record for the table POSITION_RECEIPT_XML retrived by the query payment_status_old on db nodo_online under macro AppIO
-      # RT
-      And verify 1 record for the table RT_VERSAMENTI retrived by the query esito on db nodo_online under macro AppIO
-      And checks the value of the record at column PROGRESSIVO of the table RT_VERSAMENTI retrived by the query esito on db nodo_online under macro AppIO
-      And checks the value of the record at column IMPORTO_RT of the table RT_VERSAMENTI retrived by the query esito on db nodo_online under macro AppIO
-      And checks the value of the record at column ESITO of the table RT_VERSAMENTI retrived by the query esito on db nodo_online under macro AppIO
-      And checks the value of the record at column CAUSALE_VERSAMENTO of the table RT_VERSAMENTI retrived by the query esito on db nodo_online under macro AppIO
-      And checks the value of the record at column DATI_SPECIFICI_RISCOSSIONE of the table RT_VERSAMENTI retrived by the query esito on db nodo_online under macro AppIO
-      And checks the value of the record at column COMMISSIONE_APPLICATE_PSP of the table RT_VERSAMENTI retrived by the query esito on db nodo_online under macro AppIO
-      And checks the value of the record at column FK_RT of the table RT_VERSAMENTI retrived by the query esito on db nodo_online under macro AppIO
-      And checks the value of the record at column INSERTED_TIMESTAMP of the table RT_VERSAMENTI retrived by the query esito on db nodo_online under macro AppIO
-      And checks the value of the record at column UPDATED_TIMESTAMP of the table RT_VERSAMENTI retrived by the query esito on db nodo_online under macro AppIO
+      # RT_VERSAMENTI
+      And verify 1 record for the table RT retrived by the query esito on db nodo_online under macro AppIO
+      And checks the value of the record at column PROGRESSIVO of the table RT retrived by the query esito on db nodo_online under macro AppIO
+      And checks the value of the record at column IMPORTO_RT of the table RT retrived by the query esito on db nodo_online under macro AppIO
+      And checks the value of the record at column ESITO of the table RT retrived by the query esito on db nodo_online under macro AppIO
+      And checks the value of the record at column CAUSALE_VERSAMENTO of the table RT retrived by the query esito on db nodo_online under macro AppIO
+      And checks the value of the record at column DATI_SPECIFICI_RISCOSSIONE of the table RT retrived by the query esito on db nodo_online under macro AppIO
+      And checks the value of the record at column COMMISSIONE_APPLICATE_PSP of the table RT retrived by the query esito on db nodo_online under macro AppIO
+      And checks the value of the record at column FK_RT of the table RT retrived by the query esito on db nodo_online under macro AppIO
+      And checks the value of the record at column INSERTED_TIMESTAMP of the table RT retrived by the query esito on db nodo_online under macro AppIO
+      And checks the value of the record at column UPDATED_TIMESTAMP of the table RT retrived by the query esito on db nodo_online under macro AppIO
       And verify 1 record for the table RT_XML retrived by the query rpt_stati on db nodo_online under macro AppIO
       # RPT STATUS
       And verify 8 record for the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro AppIO
@@ -822,6 +822,7 @@ Feature: flow checks for closePayment - PA old
 #    And the sendPaymentOutcome scenario executed successfully
 #    And outcome with KO in sendPaymentOutcome
 #    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+#    And job paInviaRt triggered after 5 seconds
 #    Then check outcome is KO of sendPaymentOutcome response
 #    And check faultCode is PPT_TOKEN_SCONOSCIUTO of sendPaymentOutcome response
 #    And check description is token unknown of sendPaymentOutcome response
@@ -875,6 +876,7 @@ Feature: flow checks for closePayment - PA old
 #    Given the FLUSSO_CP_04 (part 3) scenario executed successfully
 #    And the sendPaymentOutcome scenario executed successfully
 #    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+#    And job paInviaRt triggered after 5 seconds
 #    Then check outcome is KO of sendPaymentOutcome response
 #    And check faultCode is PPT_TOKEN_SCONOSCIUTO of sendPaymentOutcome response
 #    And check description is token unknown of sendPaymentOutcome response
@@ -937,6 +939,7 @@ Feature: flow checks for closePayment - PA old
 #    Given the FLUSSO_CP_05 (part 3) scenario executed successfully
 #    And the sendPaymentOutcome scenario executed successfully
 #    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+#    And job paInviaRt triggered after 5 seconds
 #    Then check outcome is OK of sendPaymentOutcome response
 #    And wait 5 seconds for expiration
 #    # POSITION & PAYMENT STATUS
@@ -1002,6 +1005,7 @@ Feature: flow checks for closePayment - PA old
 #    Given the FLUSSO_CP_06 (part 3) scenario executed successfully
 #    And the sendPaymentOutcome scenario executed successfully
 #    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+#    And job paInviaRt triggered after 5 seconds
 #    Then check outcome is OK of sendPaymentOutcome response
 #    And wait 5 seconds for expiration
 #    # POSITION & PAYMENT STATUS
@@ -1173,6 +1177,7 @@ Feature: flow checks for closePayment - PA old
 #    Given the FLUSSO_CP_09 (part 3) scenario executed successfully
 #    And the sendPaymentOutcome scenario executed successfully
 #    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+#    And job paInviaRt triggered after 5 seconds
 #    Then check outcome is OK of sendPaymentOutcome response
 #    And wait 5 seconds for expiration
 #    And nodo-dei-pagamenti DEV has config parameter default_durata_token_IO set to 3600000
@@ -1295,6 +1300,7 @@ Feature: flow checks for closePayment - PA old
 #    Given the FLUSSO_CP_11 (part 4) scenario executed successfully
 #    And the sendPaymentOutcome scenario executed successfully
 #    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+#    And job paInviaRt triggered after 5 seconds
 #    Then check outcome is OK of sendPaymentOutcome response
 #    And wait 5 seconds for expiration
 #    # POSITION & PAYMENT STATUS
@@ -1405,6 +1411,7 @@ Feature: flow checks for closePayment - PA old
 #    Given the FLUSSO_CP_13 (part 4) scenario executed successfully
 #    And the sendPaymentOutcome scenario executed successfully
 #    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+#    And job paInviaRt triggered after 5 seconds
 #    Then check outcome is OK of sendPaymentOutcome response
 #    And wait 5 seconds for expiration
 #    # POSITION & PAYMENT STATUS
@@ -1502,6 +1509,7 @@ Feature: flow checks for closePayment - PA old
 #    Given the FLUSSO_CP_15 (part 4) scenario executed successfully
 #    And the sendPaymentOutcome scenario executed successfully
 #    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+#    And job paInviaRt triggered after 5 seconds
 #    Then check outcome is OK of sendPaymentOutcome response
 #    And wait 5 seconds for expiration
 #    # POSITION & PAYMENT STATUS
@@ -1557,6 +1565,7 @@ Feature: flow checks for closePayment - PA old
 #    Given the FLUSSO_CP_16 (part 3) scenario executed successfully
 #    And the sendPaymentOutcome scenario executed successfully
 #    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+#    And job paInviaRt triggered after 5 seconds
 #    Then check outcome is OK of sendPaymentOutcome response
 #    And wait 5 seconds for expiration
 #    # POSITION & PAYMENT STATUS
@@ -1614,6 +1623,7 @@ Feature: flow checks for closePayment - PA old
 #    Given the FLUSSO_CP_17 (part 2) scenario executed successfully
 #    And the sendPaymentOutcome scenario executed successfully
 #    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+#    And job paInviaRt triggered after 5 seconds
 #    Then check outcome is OK of sendPaymentOutcome response
 #    And wait 5 seconds for expiration
 #    # POSITION & PAYMENT STATUS
@@ -1669,6 +1679,7 @@ Feature: flow checks for closePayment - PA old
 #    Given the FLUSSO_CP_18 (part 3) scenario executed successfully
 #    And the sendPaymentOutcome scenario executed successfully
 #    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+#    And job paInviaRt triggered after 5 seconds
 #    Then check outcome is OK of sendPaymentOutcome response
 #    And wait 5 seconds for expiration
 #    # POSITION & PAYMENT STATUS
