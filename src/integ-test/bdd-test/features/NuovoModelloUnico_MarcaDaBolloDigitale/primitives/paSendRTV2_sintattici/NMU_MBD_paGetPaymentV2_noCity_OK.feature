@@ -1,6 +1,6 @@
-# Il test verifica che il nodo restituisca un OK se il campo optional companyName non è presente
+# Il test verifica che il nodo restituisca un OK se il campo optional city non è presente
 
-Feature: check syntax OK for paGetPaymentV2 without companyName
+Feature: check syntax OK for paGetPaymentV2 without city
 
     Background:
         Given systems up
@@ -45,6 +45,8 @@ Feature: check syntax OK for paGetPaymentV2 without companyName
             <lastPayment>1</lastPayment>
             <description>test</description>
             <!--Optional:-->
+            <companyName>company</companyName>
+            <!--Optional:-->
             <officeName>office</officeName>
             <debtor>
             <uniqueIdentifier>
@@ -53,13 +55,9 @@ Feature: check syntax OK for paGetPaymentV2 without companyName
             </uniqueIdentifier>
             <fullName>paGetPaymentName</fullName>
             <!--Optional:-->
-            <streetName>paGetPaymentStreet</streetName>
-            <!--Optional:-->
             <civicNumber>paGetPayment99</civicNumber>
             <!--Optional:-->
             <postalCode>20155</postalCode>
-            <!--Optional:-->
-            <city>paGetPaymentCity</city>
             <!--Optional:-->
             <stateProvinceRegion>paGetPaymentState</stateProvinceRegion>
             <!--Optional:-->
