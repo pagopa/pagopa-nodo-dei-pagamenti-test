@@ -4,7 +4,6 @@ Feature: Semantic checks for activateIOPayment - KO
     Given systems up
 
 
-  @runnable
   Scenario Outline: Check errors on activateIOPayment
     Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
     And initial XML paGetPayment
@@ -50,7 +49,6 @@ Feature: Semantic checks for activateIOPayment - KO
       </soapenv:Body>
       </soapenv:Envelope>
       """
-
     And EC replies to nodo-dei-pagamenti with the paGetPayment
     And initial XML activateIOPayment
       """
@@ -116,7 +114,6 @@ Feature: Semantic checks for activateIOPayment - KO
       | idChannel    | CANALE_NOT_ENABLED | PPT_CANALE_DISABILITATO             | SEM_AIPR_06                                            |
       | password     | wrongPassword      | PPT_AUTENTICAZIONE                  | SEM_AIPR_08                                            |
       | fiscalCode   | 10000000000        | PPT_DOMINIO_SCONOSCIUTO             | SEM_AIPR_09                                            |
-
       | fiscalCode   | 11111122223        | PPT_DOMINIO_DISABILITATO            | SEM_AIPR_10                                            |
       | noticeNumber | 511456789012345678 | PPT_STAZIONE_INT_PA_SCONOSCIUTA     | SEM_AIPR_12 - auxDigit inesistente                     |
       | noticeNumber | 011456789012345678 | PPT_STAZIONE_INT_PA_SCONOSCIUTA     | SEM_AIPR_12 - auxDigit 0 - progressivo inesistente     |
@@ -127,10 +124,9 @@ Feature: Semantic checks for activateIOPayment - KO
       | noticeNumber | 010456789012345678 | PPT_INTERMEDIARIO_PA_DISABILITATO   | SEM_AIPR_16                                            |
 
 
-  @runnable 
+
   # idChannel value check: idChannel with value in NODO4_CFG.CANALI whose field MODELLO_PAGAMENTO in NODO4_CFG.CANALI_NODO table of nodo-dei-pagamenti database does not contain value 'ATTIVATO_PRESSO_PSP' (e.g. contains 'IMMEDIATO_MULTIBENEFICIARIO') [SEM_AIPR_07]
   Scenario: Check PPT_AUTORIZZAZIONE error on psp channel not enabled for payment model 3
-
     Given generate 2 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
     And initial XML paGetPayment
       """
@@ -177,7 +173,6 @@ Feature: Semantic checks for activateIOPayment - KO
       """
     And EC replies to nodo-dei-pagamenti with the paGetPayment
     And initial XML activateIOPayment
-
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd">
       <soapenv:Header/>
@@ -191,9 +186,7 @@ Feature: Semantic checks for activateIOPayment - KO
       <idempotencyKey>#idempotency_key#</idempotencyKey>
       <qrCode>
       <fiscalCode>#creditor_institution_code#</fiscalCode>
-
       <noticeNumber>$2noticeNumber</noticeNumber>
-
       </qrCode>
       <!--Optional:-->
       <expirationTime>20000</expirationTime>
@@ -254,9 +247,7 @@ Feature: Semantic checks for activateIOPayment - KO
       <idempotencyKey>#idempotency_key#</idempotencyKey>
       <qrCode>
       <fiscalCode>#creditor_institution_code#</fiscalCode>
-
       <noticeNumber>$3noticeNumber</noticeNumber>
-
       </qrCode>
       <!--Optional:-->
       <expirationTime>20000</expirationTime>
@@ -291,7 +282,6 @@ Feature: Semantic checks for activateIOPayment - KO
       </soapenv:Body>
       </soapenv:Envelope>
       """
-
     And initial XML paGetPayment
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
@@ -348,7 +338,6 @@ Feature: Semantic checks for activateIOPayment - KO
   Scenario: Execute activateIOPayment (Phase 1)
     Given generate 4 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
     And initial XML activateIOPayment
-
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd">
       <soapenv:Header/>
@@ -362,9 +351,7 @@ Feature: Semantic checks for activateIOPayment - KO
       <idempotencyKey>#idempotency_key#</idempotencyKey>
       <qrCode>
       <fiscalCode>#creditor_institution_code#</fiscalCode>
-
       <noticeNumber>$4noticeNumber</noticeNumber>
-
       </qrCode>
       <!--Optional:-->
       <expirationTime>20000</expirationTime>
@@ -399,7 +386,6 @@ Feature: Semantic checks for activateIOPayment - KO
       </soapenv:Body>
       </soapenv:Envelope>
       """
-
     And initial XML paGetPayment
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
@@ -447,7 +433,7 @@ Feature: Semantic checks for activateIOPayment - KO
       <transfer>
       <idTransfer>1</idTransfer>
       <transferAmount>3.00</transferAmount>
-      <fiscalCodePA>77777777777</fiscalCodePA>
+      <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
       <IBAN>IT45R0760103200000000001016</IBAN>
       <remittanceInformation>testPaGetPayment</remittanceInformation>
       <transferCategory>paGetPaymentTest</transferCategory>
@@ -455,7 +441,7 @@ Feature: Semantic checks for activateIOPayment - KO
       <transfer>
       <idTransfer>2</idTransfer>
       <transferAmount>3.00</transferAmount>
-      <fiscalCodePA>77777777777</fiscalCodePA>
+      <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
       <IBAN>IT45R0760103200000000001016</IBAN>
       <remittanceInformation>testPaGetPayment</remittanceInformation>
       <transferCategory>paGetPaymentTest</transferCategory>
@@ -463,7 +449,7 @@ Feature: Semantic checks for activateIOPayment - KO
       <transfer>
       <idTransfer>3</idTransfer>
       <transferAmount>4.00</transferAmount>
-      <fiscalCodePA>77777777777</fiscalCodePA>
+      <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
       <IBAN>IT45R0760103200000000001016</IBAN>
       <remittanceInformation>testPaGetPayment</remittanceInformation>
       <transferCategory>paGetPaymentTest</transferCategory>
@@ -487,7 +473,6 @@ Feature: Semantic checks for activateIOPayment - KO
     Then check outcome is OK of activateIOPayment response
 
    @runnable
-
   # [SEM_AIPR_20]
   Scenario: Check second activateIOPayment is equal to the first
     Given nodo-dei-pagamenti has config parameter useIdempotency set to false
@@ -552,7 +537,6 @@ Feature: Semantic checks for activateIOPayment - KO
 
 
    @runnable
-
   # [SEM_AIPR_22]
   Scenario Outline: Check OK on idempotencyKey validity
     Given nodo-dei-pagamenti has config parameter useIdempotency set to false
@@ -567,8 +551,8 @@ Feature: Semantic checks for activateIOPayment - KO
 
   #| fiscalCode   | 90000000001        | SEM_AIPR_22 |
 
-   @runnable
 
+   @runnable
   Scenario Outline: Check PPT_PAGAMENTO_IN_CORSO error on idempotencyKey validity
     Given nodo-dei-pagamenti has config parameter useIdempotency set to false
     And the Execute activateIOPayment (Phase 1) scenario executed successfully
@@ -607,7 +591,6 @@ Feature: Semantic checks for activateIOPayment - KO
 
 
    @runnable
-
   # [SEM_AIPR_23]
   Scenario: Check reuse of idempotencyKey with expired paymentToken
     Given the Execute activateIOPayment (Phase 1) scenario executed successfully
@@ -616,6 +599,7 @@ Feature: Semantic checks for activateIOPayment - KO
     When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is KO of activateIOPayment response
     And check faultCode is PPT_PAGAMENTO_IN_CORSO of activateIOPayment response
+
 
    @runnable
   # [SEM_AIPR_24]
@@ -631,7 +615,6 @@ Feature: Semantic checks for activateIOPayment - KO
 
 
    @runnable
-
   # [SEM_AIPR_25]
   Scenario: [SEM_AIPR_25]
     Given nodo-dei-pagamenti has config parameter useIdempotency set to false
