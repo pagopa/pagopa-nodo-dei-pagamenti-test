@@ -97,12 +97,12 @@ Feature: Syntax checks for pspNotifyPaymentResponse - OK
       </soapenv:Envelope>
       """
     And EC new version
-  @runnable
+  #@runnable
   Scenario: Execute activateIOPaymentReq request
     When IO sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is OK of activateIOPayment response
 
-  @runnable
+  #@runnable
   # nodoChiediInformazioniPagamento phase
   Scenario: Execute nodoChiediInformazioniPagamento request
     Given the Execute activateIOPaymentReq request scenario executed successfully

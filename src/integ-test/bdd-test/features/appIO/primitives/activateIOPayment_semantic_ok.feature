@@ -52,7 +52,7 @@ Feature: Semantic checks for activateIOPaymentReq - OK
             </soapenv:Envelope>
             """
 
-    @runnable
+    #@runnable
     Scenario Outline: Check Unknown/Disabled PSP in idempotencyKey
         Given <tag> with <tag_value> in activateIOPayment
         When psp sends SOAP activateIOPayment to nodo-dei-pagamenti
@@ -61,14 +61,14 @@ Feature: Semantic checks for activateIOPaymentReq - OK
             | tag            | tag_value              | soapUI test |
             | idempotencyKey | 12345678901_1244gtg684 | SEM_AIPR_17 |
             | idempotencyKey | 80000000001_1244gtg684 | SEM_AIPR_18 |
-    @runnable
+    #@runnable
     # [SEM_AIPR_19]
     Scenario: Execute activateIOPayment (Phase 1)
         Given nodo-dei-pagamenti has config parameter useIdempotency set to true
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
         And save activateIOPayment response in activateIOPayment_first
         Then check outcome is OK of activateIOPayment_first response
-    @runnable
+    #@runnable
     Scenario: Check second activateIOPayment is equal to the first
         Given the Execute activateIOPayment (Phase 1) scenario executed successfully
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
