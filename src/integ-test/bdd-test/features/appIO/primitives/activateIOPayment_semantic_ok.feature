@@ -79,7 +79,9 @@ Feature: Semantic checks for activateIOPaymentReq - OK
     # [SEM_AIPR_31]
     @runnable
     Scenario: Check activateIOPayment response with parameters in deny list
-        Given idPSP with 40000000001 in activateIOPayment
+        Given generate 1 notice number and iuv with aux digit 3, segregation code 11 and application code NA
+        And noticeNumber with $1noticeNumber in activateIOPayment
+        And idPSP with 40000000001 in activateIOPayment
         And idBrokerPSP with 40000000002 in activateIOPayment
         And idChannel with 40000000002_01 in activateIOPayment
         And fiscalCode with 44444444444 in activateIOPayment
