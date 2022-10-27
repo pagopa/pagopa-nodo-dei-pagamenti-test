@@ -1,4 +1,4 @@
-Feature: process tests for nodoInviaRT[IRTSEM1]
+Feature: process tests for nodoInviaRT[IRTSEM16]
     Background:
         Given systems up
         And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
@@ -88,7 +88,7 @@ Feature: process tests for nodoInviaRT[IRTSEM1]
             <pay_i:versioneOggetto>6.0</pay_i:versioneOggetto>
             <pay_i:dominio>
             <pay_i:identificativoDominio>#creditor_institution_code_old#</pay_i:identificativoDominio>
-            <pay_i:identificativoStazioneRichiedente>#id_station_old#</pay_i:identificativoStazioneRichiedente>
+            <pay_i:identificativoStazioneRichiedente>44444444444_01</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRicevuta>TR0001_20120302-10:37:52.0264-F098</pay_i:identificativoMessaggioRicevuta>
             <pay_i:dataOraMessaggioRicevuta>2012-03-02T10:37:52</pay_i:dataOraMessaggioRicevuta>
@@ -235,7 +235,7 @@ Feature: process tests for nodoInviaRT[IRTSEM1]
             <soapenv:Header/>
             <soapenv:Body>
             <ws:nodoInviaRT>
-            <identificativoIntermediarioPSP>sconosciuto</identificativoIntermediarioPSP>
+            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
             <identificativoCanale>#canaleRtPush#</identificativoCanale>
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp#</identificativoPSP>
@@ -250,8 +250,8 @@ Feature: process tests for nodoInviaRT[IRTSEM1]
             </soapenv:Envelope>
             """
             When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
-            Then check esito is KO of nodoInviaRT response
-            And check faultCode is PPT_INTERMEDIARIO_PSP_SCONOSCIUTO of nodoInviaRT response
+            Then check esito is OK of nodoInviaRT response
+          
 
 
     

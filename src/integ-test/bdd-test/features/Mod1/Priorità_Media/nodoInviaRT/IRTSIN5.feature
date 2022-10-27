@@ -1,4 +1,4 @@
-Feature: process tests for nodoInviaRT[IRTSEM1]
+Feature: process tests for nodoInviaRT[IRTSIN5]
     Background:
         Given systems up
         And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
@@ -235,7 +235,7 @@ Feature: process tests for nodoInviaRT[IRTSEM1]
             <soapenv:Header/>
             <soapenv:Body>
             <ws:nodoInviaRT>
-            <identificativoIntermediarioPSP>sconosciuto</identificativoIntermediarioPSP>
+            <identificativoIntermediarioPSP> </identificativoIntermediarioPSP>
             <identificativoCanale>#canaleRtPush#</identificativoCanale>
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp#</identificativoPSP>

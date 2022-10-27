@@ -1,4 +1,4 @@
-Feature: process tests for nodoInviaRT[IRTSEM1]
+Feature: process tests for nodoInviaRT[IRTSEM13]
     Background:
         Given systems up
         And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
@@ -235,12 +235,12 @@ Feature: process tests for nodoInviaRT[IRTSEM1]
             <soapenv:Header/>
             <soapenv:Body>
             <ws:nodoInviaRT>
-            <identificativoIntermediarioPSP>sconosciuto</identificativoIntermediarioPSP>
-            <identificativoCanale>#canaleRtPush#</identificativoCanale>
+            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canale#</identificativoCanale>
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
-            <identificativoUnivocoVersamento>$1IUV</identificativoUnivocoVersamento>
+            <identificativoUnivocoVersamento>011941794120700</identificativoUnivocoVersamento>
             <codiceContestoPagamento>CCD01</codiceContestoPagamento>
             <tipoFirma></tipoFirma>
             <forzaControlloSegno>1</forzaControlloSegno>
@@ -251,7 +251,7 @@ Feature: process tests for nodoInviaRT[IRTSEM1]
             """
             When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
             Then check esito is KO of nodoInviaRT response
-            And check faultCode is PPT_INTERMEDIARIO_PSP_SCONOSCIUTO of nodoInviaRT response
+            And check faultCode is PPT_RPT_SCONOSCIUTA of nodoInviaRT response
 
 
     
