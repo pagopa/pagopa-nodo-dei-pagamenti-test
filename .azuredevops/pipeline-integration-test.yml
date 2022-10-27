@@ -60,21 +60,6 @@ stages:
               replace $file ".services.\"mock-ec\".soap_service"  ""
               replace $file ".services.\"mock-ec\".rest_service"  ""
 
-              replace $file ".services.\"secondary-mock-ec\".url"           "https://api.dev.platform.pagopa.it/secondary-mock-ec/api/v1"
-              replace $file ".services.\"secondary-mock-ec\".healthcheck"   "/info"
-              replace $file ".services.\"secondary-mock-ec\".soap_service"  ""
-              replace $file ".services.\"secondary-mock-ec\".rest_service"  ""
-
-              replace $file ".services.\"mock-psp\".url"           "https://api.dev.platform.pagopa.it/mock-psp-service/api/v1"
-              replace $file ".services.\"mock-psp\".healthcheck"   "/info"
-              replace $file ".services.\"mock-psp\".soap_service"  ""
-              replace $file ".services.\"mock-psp\".rest_service"  ""
-
-              replace $file ".services.\"secondary-mock-psp\".url"           "https://api.dev.platform.pagopa.it/secondary-mock-psp-service/api/v1"
-              replace $file ".services.\"secondary-mock-psp\".healthcheck"   "/info"
-              replace $file ".services.\"secondary-mock-psp\".soap_service"  ""
-              replace $file ".services.\"secondary-mock-psp\".rest_service"  ""
-
 
               replace $file ".db_configuration.nodo_cfg.host"     $(db-cfg-host-${{ parameters.env }})
               replace $file ".db_configuration.nodo_cfg.database" $(db-cfg-service-name-${{ parameters.env }})
@@ -173,11 +158,31 @@ stages:
               whereis behave
               which behave
               export PATH=/usr/local/bin/behave:/usr/bin:/usr/local/bin:$PATH #Add environment variables
-              #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/Mod1 $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/RTPush --tags=runnable
+             
 
-              # Marisa
-              behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/Informative/nodoChiediCatalogoServizi/SIN_NCCS_01.feature
+             # Damiano
+             #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/RTPull/RTPull_flows.feature --tags=ok
+             
+             # Nicolò
+             #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/NewMod3/flows/AccessiConcorrenzialiPaypal
+             
+             # Lorenzo  
+             #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/Mod1MB/primitives/activateIOPayment_semantic_ko.feature
+            
+             # Alessandro
+             #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/appIO/flows/PagamentiAppIO/FLUSSO_APIO_08.feature
+             
+             # Marisa
+             behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/Informative/nodoChiediCatalogoServizi/SIN_NCCS_07.feature
 
+             # Redis
+             #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/Mod1/flows/pspChiediAvanzamentoRPT/ChiediAvanzamento_ACCETTATA_PSP_Carrello_sbloccoParcheggio.feature
+             
+             # Gabriel
+             #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/NewMod3/flows/AccessiConcorrenzialiPaypal/Pag-1163_Paypal_NM3_Setup_DB.feature
+
+             # Davide
+             #behave --tags=wip --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/NewMod3/flows/paSendRT/PSRT_30_new.feature
             displayName: 'Run integration test'
         
           - task: PublishTestResults@2
