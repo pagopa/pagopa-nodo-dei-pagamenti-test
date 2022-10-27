@@ -512,35 +512,6 @@ Feature: flux tests for demandPaymentNotice
         # POSITION_RECEIPT_TRANSFER
         And verify 0 record for the table POSITION_RECEIPT_TRANSFER JOIN POSITION_TRANSFER ON POSITION_TRANSFER.ID=POSITION_RECEIPT_TRANSFER.FK_POSITION_TRANSFER retrived by the query select_activate on db nodo_online under macro NewMod1
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     # F_DPNR_06
 
     Scenario: F_DPNR_06 (part 1)
@@ -550,7 +521,7 @@ Feature: flux tests for demandPaymentNotice
         And expirationTime with 2000 in activatePaymentNotice
         When PSP sends soap activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-    @wip
+    
     Scenario: F_DPNR_06 (part 2)
         Given the F_DPNR_06 (part 1) scenario executed successfully
         When job mod3CancelV2 triggered after 4 seconds
