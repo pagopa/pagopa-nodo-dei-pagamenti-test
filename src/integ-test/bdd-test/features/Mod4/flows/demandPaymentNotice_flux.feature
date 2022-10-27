@@ -53,7 +53,7 @@ Feature: flux tests for demandPaymentNotice
         Then check outcome is OK of demandPaymentNotice response
 
     @skip
-    Scenario: activatePaymentNotice
+    Scenario: activatePaymentNotice request
         Given initial XML activatePaymentNotice
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -143,9 +143,10 @@ Feature: flux tests for demandPaymentNotice
             </soapenv:Envelope>
             """
         And EC replies to nodo-dei-pagamenti with the paGetPayment
-        When PSP sends soap activatePaymentNotice to nodo-dei-pagamenti
-        Then check outcome is OK of activatePaymentNotice response
+
     @wip
     Scenario: F_DPNR_01
         Given the demandPaymentNotice scenario executed successfully
-        And the activatePaymentNotice scenario executed successfully
+        And the activatePaymentNotice request scenario executed successfully
+        When PSP sends soap activatePaymentNotice to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNotice response
