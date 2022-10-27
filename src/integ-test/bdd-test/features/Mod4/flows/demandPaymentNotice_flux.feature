@@ -765,7 +765,6 @@ Feature: flux tests for demandPaymentNotice
         And checks the value $activatePaymentNotice.fiscalCode,$activatePaymentNotice.fiscalCode,$activatePaymentNotice.fiscalCode of the record at column RECIPIENT_BROKER_PA_ID of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query select_activate on db nodo_online under macro NewMod1
         And checks the value #id_station#,#id_station#,#id_station# of the record at column RECIPIENT_STATION_ID of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query select_activate on db nodo_online under macro NewMod1
         And checks the value NOTICE_GENERATED,NOTICE_GENERATED,NOTICE_GENERATED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query select_activate on db nodo_online under macro NewMod1
-        And verify 3 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query select_activate on db nodo_online under macro NewMod1
 
         # POSITION_RECEIPT_XML
         And checks the value $paGetPayment.creditorReferenceId,$paGetPayment.creditorReferenceId,$paGetPayment.creditorReferenceId of the record at column CREDITOR_REFERENCE_ID of the table POSITION_RECEIPT_XML retrived by the query select_activate on db nodo_online under macro NewMod1
@@ -773,6 +772,5 @@ Feature: flux tests for demandPaymentNotice
         And checks the value $activatePaymentNotice.fiscalCode,90000000001,90000000002 of the record at column RECIPIENT_PA_FISCAL_CODE of the table POSITION_RECEIPT_XML retrived by the query select_activate on db nodo_online under macro NewMod1
         And checks the value $activatePaymentNotice.fiscalCode,90000000001,90000000001 of the record at column RECIPIENT_BROKER_PA_ID of the table POSITION_RECEIPT_XML retrived by the query select_activate on db nodo_online under macro NewMod1
         And checks the value #id_station#,90000000001_06,90000000001_01 of the record at column RECIPIENT_STATION_ID of the table POSITION_RECEIPT_XML retrived by the query select_activate on db nodo_online under macro NewMod1
-        And verify 3 record for the table POSITION_RECEIPT_XML retrived by the query select_activate on db nodo_online under macro NewMod1
 
 # check XML receipt: da implementare
