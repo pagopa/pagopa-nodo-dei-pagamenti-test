@@ -468,7 +468,7 @@ Feature: flux tests for demandPaymentNotice
         And expirationTime with 2000 in activatePaymentNotice
         When PSP sends soap activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-
+    @wip
     Scenario: F_DPNR_03 (part 2)
         Given the F_DPNR_03 (part 1) scenario executed successfully
         When job mod3CancelV2 triggered after 4 seconds
@@ -521,7 +521,7 @@ Feature: flux tests for demandPaymentNotice
         And expirationTime with 2000 in activatePaymentNotice
         When PSP sends soap activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-
+    @wip
     Scenario: F_DPNR_06 (part 2)
         Given the F_DPNR_06 (part 1) scenario executed successfully
         When job mod3CancelV2 triggered after 4 seconds
@@ -609,9 +609,10 @@ Feature: flux tests for demandPaymentNotice
     Scenario: F_DPNR_09 (part 1)
         Given the demandPaymentNotice scenario executed successfully
         And the activatePaymentNotice request scenario executed successfully
+        And expirationTime with 2000 in activatePaymentNotice
         When PSP sends soap activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-
+    @wip
     Scenario: F_DPNR_09 (part 2)
         Given the F_DPNR_09 (part 1) scenario executed successfully
         When job mod3CancelV2 triggered after 4 seconds
@@ -678,31 +679,6 @@ Feature: flux tests for demandPaymentNotice
 
     # check XML receipt: da implementare
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     # F_DPNR_11
 
     Scenario: F_DPNR_11 (part 1)
@@ -712,13 +688,38 @@ Feature: flux tests for demandPaymentNotice
         And the activatePaymentNotice request scenario executed successfully
         When PSP sends soap activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-    @wip
+
     Scenario: F_DPNR_11 (part 2)
         Given the F_DPNR_11 (part 1) scenario executed successfully
         And the sendPaymentOutcome request scenario executed successfully
         And outcome with KO in sendPaymentOutcome
         When PSP sends soap sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
+
+        # POSITION_RECEIPT_RECIPIENT
+        And verify 0 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query select_activate on db nodo_online under macro NewMod1
+
+        # POSITION_RECEIPT_RECIPIENT_STATUS
+        And verify 0 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query select_activate on db nodo_online under macro NewMod1
+
+        # POSITION_RECEIPT_XML
+        And verify 0 record for the table POSITION_RECEIPT_XML retrived by the query select_activate on db nodo_online under macro NewMod1
+
+    # F_DPNR_12
+
+    Scenario: F_DPNR_12 (part 1)
+        Given updates through the query update_fk_pa of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro Mod4 on db nodo_cfg
+        And refresh job PA triggered after 10 seconds
+        And the demandPaymentNotice scenario executed successfully
+        And the activatePaymentNotice request with 3 transfers scenario executed successfully
+        And expirationTime with 2000 in activatePaymentNotice
+        When PSP sends soap activatePaymentNotice to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNotice response
+    @wip
+    Scenario: F_DPNR_12 (part 2)
+        Given the F_DPNR_12 (part 1) scenario executed successfully
+        When job mod3CancelV2 triggered after 4 seconds
+        Then verify the HTTP status code of mod3CancelV2 response is 200
 
         # POSITION_RECEIPT_RECIPIENT
         And verify 0 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query select_activate on db nodo_online under macro NewMod1
