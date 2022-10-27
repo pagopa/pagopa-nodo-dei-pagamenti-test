@@ -2,7 +2,7 @@ Feature: Semantic checks for activateIOPayment - KO
 
   Background:
     Given systems up
-
+    And nodo-dei-pagamenti has config parameter scheduler.jobName_annullamentoRptMaiRichiesteDaPm.enabled set to false 
 
   Scenario Outline: Check errors on activateIOPayment
     Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
@@ -104,6 +104,7 @@ Feature: Semantic checks for activateIOPayment - KO
     When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is KO of activateIOPayment response
     And check faultCode is <error> of activateIOPayment response
+    And restore initial configurations
     Examples:
       | tag          | tag_value          | error                               | soapUI test                                            |
       | idPSP        | pspUnknown         | PPT_PSP_SCONOSCIUTO                 | SEM_AIPR_01                                            |
@@ -226,6 +227,7 @@ Feature: Semantic checks for activateIOPayment - KO
     When psp sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is KO of activateIOPayment response
     And check faultCode is PPT_AUTORIZZAZIONE of activateIOPayment response
+    And restore initial configurations
   #And check description is Il canale non è di tipo 'ATTIVATO_PRESSO_PSP' of activateIOPayment response
 
 
@@ -332,6 +334,7 @@ Feature: Semantic checks for activateIOPayment - KO
     Then check outcome is KO of activateIOPayment response
     And check faultCode is PPT_AUTORIZZAZIONE of activateIOPayment response
     And check description is Configurazione intermediario-canale non corretta of activateIOPayment response
+    And restore initial configurations
 
 
    @runnable
@@ -471,8 +474,9 @@ Feature: Semantic checks for activateIOPayment - KO
     And EC replies to nodo-dei-pagamenti with the paGetPayment
     When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is OK of activateIOPayment response
+    And restore initial configurations
 
-   @runnable
+  
   # [SEM_AIPR_20]
   Scenario: Check second activateIOPayment is equal to the first
     Given nodo-dei-pagamenti has config parameter useIdempotency set to false
@@ -485,17 +489,17 @@ Feature: Semantic checks for activateIOPayment - KO
     And restore initial configurations
 
 
-   @runnable
+
   # [SEM_AIPR_21]
   Scenario Outline: Check PPT_ERRORE_IDEMPOTENZA error on idempotencyKey validity (Phase 2)
     Given nodo-dei-pagamenti has config parameter useIdempotency set to true
     And the Execute activateIOPayment (Phase 1) scenario executed successfully
-
     And <tag> with <tag_value> in activateIOPayment
     And wait 3 seconds for expiration
     When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is KO of activateIOPayment response
     And check faultCode is PPT_ERRORE_IDEMPOTENZA of activateIOPayment response
+    And restore initial configurations
     Examples:
       | tag                         | tag_value             | soapUI test |
       | noticeNumber                | 302119138889055636    | SEM_AIPR_21 |
@@ -536,7 +540,7 @@ Feature: Semantic checks for activateIOPayment - KO
       | e-mail                      | None                  | SEM_AIPR_21 |
 
 
-   @runnable
+
   # [SEM_AIPR_22]
   Scenario Outline: Check OK on idempotencyKey validity
     Given nodo-dei-pagamenti has config parameter useIdempotency set to false
@@ -552,7 +556,7 @@ Feature: Semantic checks for activateIOPayment - KO
   #| fiscalCode   | 90000000001        | SEM_AIPR_22 |
 
 
-   @runnable
+
   Scenario Outline: Check PPT_PAGAMENTO_IN_CORSO error on idempotencyKey validity
     Given nodo-dei-pagamenti has config parameter useIdempotency set to false
     And the Execute activateIOPayment (Phase 1) scenario executed successfully
@@ -599,6 +603,7 @@ Feature: Semantic checks for activateIOPayment - KO
     When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is KO of activateIOPayment response
     And check faultCode is PPT_PAGAMENTO_IN_CORSO of activateIOPayment response
+    And restore initial configurations
 
 
    @runnable
@@ -612,6 +617,7 @@ Feature: Semantic checks for activateIOPayment - KO
     When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is KO of activateIOPayment response
     And check faultCode is PPT_PAGAMENTO_IN_CORSO of activateIOPayment response
+    And restore initial configurations
 
 
    @runnable
@@ -675,7 +681,6 @@ Feature: Semantic checks for activateIOPayment - KO
 
 
    @runnable
-
   # [SEM_AIPR_29]
   Scenario: Check PPT_PAGAMENTO_IN_CORSO error with PAYING debtor position
     Given the Execute activateIOPayment (Phase 1) scenario executed successfully
@@ -685,10 +690,10 @@ Feature: Semantic checks for activateIOPayment - KO
     When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is KO of activateIOPayment response
     And check faultCode is PPT_PAGAMENTO_IN_CORSO of activateIOPayment response
+    And restore initial configurations
 
 
    @runnable
-
   # [SEM_AIPR_30]
   Scenario: Check PPT_PAGAMENTO_IN_CORSO error with PAYING debtor position and without idempotencyKey
     Given the Execute activateIOPayment (Phase 1) scenario executed successfully
@@ -698,3 +703,4 @@ Feature: Semantic checks for activateIOPayment - KO
     When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is KO of activateIOPayment response
     And check faultCode is PPT_PAGAMENTO_IN_CORSO of activateIOPayment response
+    And restore initial configurations
