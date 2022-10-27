@@ -2,7 +2,7 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
 
     Background:
         Given systems up
-@runnable
+
     Scenario: RPT generation
         Given RPT generation
             """
@@ -238,9 +238,6 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
                 </pay_i:RPT>
             """
         
-
-@runnable 
-
     Scenario: Execute nodoInviaCarrelloRPT
 		Given the RPT generation scenario executed successfully
 		And initial XML nodoInviaCarrelloRPT
@@ -289,9 +286,6 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
         And checks the value nodoInviaCarrelloRPT of the record at column INSERTED_BY of the table STATI_RPT retrived by the query stati_RPT on db nodo_online under macro Mod1
         And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query stati_RPT on db nodo_online under macro Mod1
 
-
-@runnable 
-
     Scenario: Execution Esito Mod1
         Given the Execute nodoInviaCarrelloRPT scenario executed successfully
         And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT 
@@ -325,8 +319,6 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
         Then verify the HTTP status code of inoltroEsito/mod1 response is 408
         And check error is timeout of inoltroEsito/mod1 response
 
-@runnable 
-
     Scenario: Execute nodoChiediStatoRPT request
         Given the Execution Esito Mod1 scenario executed successfully
         And initial XML nodoChiediStatoRPT
@@ -351,9 +343,6 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
         And checks stato contains RPT_INVIATA_A_PSP of nodoChiediStatoRPT response
         And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ESITO_SCONOSCIUTO_PSP of nodoChiediStatoRPT response
-
-
-@runnable 
 
     Scenario: Execute second nodoInviaCarrelloRPT
 		Given the Execute nodoChiediStatoRPT request scenario executed successfully
@@ -394,9 +383,6 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
 	    Then check faultCode is PPT_RPT_DUPLICATA of nodoInviaCarrelloRPT response
 
-
-@runnable 
-
     Scenario: Execute second nodoChiediStatoRPT request
         Given the Execute second nodoInviaCarrelloRPT scenario executed successfully
         And initial XML nodoChiediStatoRPT
@@ -421,9 +407,6 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
         And checks stato contains RPT_INVIATA_A_PSP of nodoChiediStatoRPT response
         And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ESITO_SCONOSCIUTO_PSP of nodoChiediStatoRPT response
-
-
-@runnable 
 
     Scenario: Execute 21nodoInviaCarrelloRPT
 		Given the Execute second nodoChiediStatoRPT request scenario executed successfully
@@ -463,9 +446,6 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
             """
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
 	    Then check faultCode is PPT_RPT_DUPLICATA of nodoInviaCarrelloRPT response
-
-
-@runnable 
 
     Scenario: Execute 21nodoChiediStatoRPT request
         Given the Execute 21nodoInviaCarrelloRPT scenario executed successfully

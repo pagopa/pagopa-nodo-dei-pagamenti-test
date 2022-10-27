@@ -12,7 +12,6 @@ Feature: PRO_ANNULLO_08_PPALNEW
             <soapenv:Header/>
             <soapenv:Body>
             <nod:verifyPaymentNoticeReq>
-
             <idPSP>#psp_AGID#</idPSP>
             <idBrokerPSP>#broker_AGID#</idBrokerPSP>
             <idChannel>#canale_AGID#</idChannel>
@@ -21,7 +20,6 @@ Feature: PRO_ANNULLO_08_PPALNEW
             <fiscalCode>#creditor_institution_code#</fiscalCode>
             <noticeNumber>$1noticeNumber</noticeNumber>
             </qrCode>
-
             </nod:verifyPaymentNoticeReq>
             </soapenv:Body>
             </soapenv:Envelope>
@@ -36,7 +34,6 @@ Feature: PRO_ANNULLO_08_PPALNEW
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
             <soapenv:Header/>
             <soapenv:Body>
-
             <paf:paGetPaymentRes>
             <outcome>OK</outcome>
             <data>
@@ -72,7 +69,6 @@ Feature: PRO_ANNULLO_08_PPALNEW
             </transferList>
             </data>
             </paf:paGetPaymentRes>
-
             </soapenv:Body>
             </soapenv:Envelope>
             """
@@ -150,7 +146,6 @@ Feature: PRO_ANNULLO_08_PPALNEW
             </soapenv:Envelope>
             """
         When WISP sends rest POST inoltroEsito/paypal to nodo-dei-pagamenti
-
             """
             {
                 "idTransazione": "responseKO",
@@ -163,7 +158,6 @@ Feature: PRO_ANNULLO_08_PPALNEW
                 "timestampOperazione": "2012-04-23T18:25:43Z"
             }
             """
-
         And job annullamentoRptMaiRichiesteDaPm triggered after 65 seconds
         And wait 15 seconds for expiration
         Then verify the HTTP status code of inoltroEsito/paypal response is 408

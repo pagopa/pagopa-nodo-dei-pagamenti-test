@@ -14,7 +14,7 @@ Feature: Semantic checks KO for nodoChiediCatalogoServizi
                 <identificativoCanale>#canale#</identificativoCanale>
                 <password>pwdpwdpwd</password>
                 <!--Optional:-->
-                <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+                <identificativoDominio>NOT_ENABLED</identificativoDominio>
             </ws:nodoChiediCatalogoServizi>
         </soapenv:Body>
         </soapenv:Envelope>

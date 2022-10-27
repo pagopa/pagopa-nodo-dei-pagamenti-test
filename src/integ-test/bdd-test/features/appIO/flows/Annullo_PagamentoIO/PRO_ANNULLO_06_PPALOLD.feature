@@ -197,7 +197,7 @@ Feature: PRO_ANNULLO_06_PPALOLD
         """
         When IO sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoAttivaRPT response
- @runnable
+ @runnable       
         Scenario: Execute nodoInviaRPT (Phase 3)
         Given the Execute nodoAttivaRPT (Phase 2) scenario executed successfully
         And initial XML nodoInviaRPT
@@ -226,7 +226,7 @@ Feature: PRO_ANNULLO_06_PPALOLD
         """
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
- @runnable 
+ @runnable   
      Scenario: update column valid_to UPDATED_TIMESTAMP
         Given the Execute nodoInviaRPT (Phase 3) scenario executed successfully
         And wait 80 seconds for expiration

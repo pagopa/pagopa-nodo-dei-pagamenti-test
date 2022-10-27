@@ -228,9 +228,7 @@ Scenario: Execute nodoInoltroEsitoPayPal (Phase 4) - KO (RIFPSP)
     And checks the value None of the record at column CODICE_AUTORIZZATIVO_PAYPAL of the table PM_SESSION_DATA retrived by the query pm_session on db nodo_online under macro AppIO
     And checks the value $activateIOPayment.idempotencyKey of the record at column ID_TRANSAZIONE_PSP_PAYPAL of the table PM_SESSION_DATA retrived by the query pm_session on db nodo_online under macro AppIO
     And checks the value responseKO of the record at column ID_TRANSAZIONE_PM_PAYPAL of the table PM_SESSION_DATA retrived by the query pm_session on db nodo_online under macro AppIO
-
 @runnable   
-
 Scenario: Execute nodoInoltroEsitoPayPal (Phase 4) - KO (CONPSP)
     Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
     When WISP sends REST POST inoltroEsito/paypal to nodo-dei-pagamenti

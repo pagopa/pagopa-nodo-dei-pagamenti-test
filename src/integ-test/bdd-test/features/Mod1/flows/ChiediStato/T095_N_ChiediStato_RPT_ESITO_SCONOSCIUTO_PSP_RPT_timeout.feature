@@ -3,10 +3,8 @@ Feature: process tests for T095_N_ChiediStato_RPT_ESITO_SCONOSCIUTO_PSP_RPT_time
     Background:
         Given systems up
 
-    @runnable
     Scenario: RPT generation
         Given RPT generation
-
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
@@ -83,7 +81,6 @@ Feature: process tests for T095_N_ChiediStato_RPT_ESITO_SCONOSCIUTO_PSP_RPT_time
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-    @runnable
 
     Scenario: Execute nodoInviaRPT request
         Given the RPT generation scenario executed successfully
@@ -103,8 +100,6 @@ Feature: process tests for T095_N_ChiediStato_RPT_ESITO_SCONOSCIUTO_PSP_RPT_time
             </soapenv:Body>
             </soapenv:Envelope>
             """
-
-
         And initial XML pspInviaRPT
 
             """
@@ -122,12 +117,10 @@ Feature: process tests for T095_N_ChiediStato_RPT_ESITO_SCONOSCIUTO_PSP_RPT_time
             </soapenv:Body>
             </soapenv:Envelope>
             """
-
         And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is KO of nodoInviaRPT response
         And check faultCode is PPT_CANALE_TIMEOUT of nodoInviaRPT response
-    @runnable
 
     Scenario: Execute nodoChiediStatoRPT request
         Given the Execute nodoInviaRPT scenario executed successfully

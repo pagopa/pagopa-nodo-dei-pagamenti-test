@@ -2,7 +2,7 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
 
     Background:
         Given systems up
-@runnable 
+
     Scenario: RPT generation
         Given RPT generation
             """
@@ -81,7 +81,6 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
                 </pay_i:datiVersamento>
                 </pay_i:RPT>
             """
-
         And RPT2 generation            
             """
                 <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd "> 
@@ -160,7 +159,7 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
                 </pay_i:RPT>
             """
         
-@runnable
+
     Scenario: Execute nodoInviaCarrelloRPT
 		Given the RPT generation scenario executed successfully
 		And initial XML nodoInviaCarrelloRPT
@@ -203,16 +202,13 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
         And retrieve session token from $nodoInviaCarrelloRPTResponse.url
         And replace iuv content with RPTdaRifPsp_faultEsterno content
         And replace iuv2 content with RPTdaRifPsp_faultEsterno content
-
-        And replace pa content with 44444444444 content
-
         And verify 3 record for the table STATI_RPT retrived by the query stati_RPT on db nodo_online under macro Mod1
         And verify 3 record for the table STATI_RPT retrived by the query stati_RPT2 on db nodo_online under macro Mod1
         And checks the value $sessionToken of the record at column ID_SESSIONE of the table STATI_RPT retrived by the query stati_RPT on db nodo_online under macro Mod1
         And checks the value nodoInviaCarrelloRPT of the record at column INSERTED_BY of the table STATI_RPT retrived by the query stati_RPT on db nodo_online under macro Mod1
         And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query stati_RPT on db nodo_online under macro Mod1
 
-@runnable
+
     Scenario: Execution Esito Carta
         Given the Execute nodoInviaCarrelloRPT scenario executed successfully
         And initial XML pspInviaCarrelloRPT 
@@ -236,15 +232,13 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
             """
         And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT 
         When WISP sends REST POST inoltroEsito/mod2 to nodo-dei-pagamenti
-
             """
             {
             "idPagamento": "$sessionToken",
-
             "identificativoPsp": "#psp#",
             "tipoVersamento": "BBT",
             "identificativoIntermediario": "#psp#",
-            "identificativoCanale": "#canale_BBT#"
+            "identificativoCanale": "#canale_DIFFERITO_MOD2#"
 
             }
              """
@@ -252,7 +246,6 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
         And check url field not exists in inoltroEsito/mod2 response
         And check errorCode is RIFPSP of inoltroEsito/mod2 response
 
-@runnable
     Scenario: Execute nodoChiediStatoRPT request
         Given the Execution Esito Carta scenario executed successfully
         And initial XML nodoChiediStatoRPT
@@ -277,7 +270,7 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
         And checks stato contains RPT_PARCHEGGIATA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_INVIATA_A_PSP of nodoChiediStatoRPT response
         And checks stato contains RPT_RIFIUTATA_PSP of nodoChiediStatoRPT response
-@runnable
+
     Scenario: Execute second nodoInviaCarrelloRPT
 		Given the Execute nodoChiediStatoRPT request scenario executed successfully
 		And initial XML nodoInviaCarrelloRPT
@@ -317,7 +310,7 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
 	    Then check faultCode is PPT_ID_CARRELLO_DUPLICATO of nodoInviaCarrelloRPT response
 
-@runnable
+
     Scenario: Execute second nodoChiediStatoRPT request
         Given the Execute second nodoInviaCarrelloRPT scenario executed successfully
         And initial XML nodoChiediStatoRPT

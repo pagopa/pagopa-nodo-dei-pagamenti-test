@@ -1,7 +1,5 @@
 Feature: Syntax checks for pspNotifyPaymentResponse - KO
 
-
-
     Background:
         Given systems up
         And generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
@@ -119,12 +117,10 @@ Feature: Syntax checks for pspNotifyPaymentResponse - KO
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pfn="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
       <soapenv:Header/>
       <soapenv:Body>
-
       <pfn:pspNotifyPaymentRes>
       <delay>10000</delay>
       <outcome>KO</outcome>
       </pfn:pspNotifyPaymentRes>
-
       </soapenv:Body>
       </soapenv:Envelope>
       """

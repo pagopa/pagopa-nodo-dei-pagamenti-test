@@ -3,6 +3,7 @@ Feature: PRO_ANNULLO_01_PPALOLD
     Background:
         Given systems up
         And EC old version
+
 @runnable
     Scenario: Execute nodoVerificaRPT (Phase 1)
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 10000
@@ -109,6 +110,7 @@ Feature: PRO_ANNULLO_01_PPALOLD
         """
         When IO sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoVerificaRPT response
+
 @runnable
     Scenario: Execute nodoAttivaRPT (Phase 2)
         Given the Execute nodoVerificaRPT (Phase 1) scenario executed successfully
@@ -195,7 +197,8 @@ Feature: PRO_ANNULLO_01_PPALOLD
         """
         When IO sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoAttivaRPT response
- @runnable
+ 
+ @runnable       
     Scenario: Execute nodoInviaRPT (Phase 3)
         Given the Execute nodoAttivaRPT (Phase 2) scenario executed successfully
         And initial XML nodoInviaRPT
@@ -314,6 +317,7 @@ Feature: PRO_ANNULLO_01_PPALOLD
         And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO, RPT_INVIATA_A_PSP, RPT_ESITO_SCONOSCIUTO_PSP, RPT_ERRORE_INVIO_A_PSP of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro AppIO
         #check correctness STATI_RPT_SNAPSHOT table
         And checks the value RPT_ERRORE_INVIO_A_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro AppIO
+
 @runnable
     Scenario: Execute nodoNotificaAnnullamento (Phase 6)
         Given the Execute nodoInoltroEsitoPayPal (Phase 5) - Response malformata scenario executed successfully

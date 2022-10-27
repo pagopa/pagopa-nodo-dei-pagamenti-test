@@ -2,7 +2,7 @@ Feature: process tests for 5 RPT 5 Versamenti
 
     Background:
         Given systems up
-@runnable
+
     Scenario: RPT generation
         Given RPT generation
             """
@@ -125,9 +125,7 @@ Feature: process tests for 5 RPT 5 Versamenti
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-
         And RPT2 generation
-
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.1</pay_i:versioneOggetto>
@@ -248,7 +246,6 @@ Feature: process tests for 5 RPT 5 Versamenti
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-
         And RPT3 generation
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
@@ -370,7 +367,6 @@ Feature: process tests for 5 RPT 5 Versamenti
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-
         And RPT4 generation
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
@@ -492,7 +488,6 @@ Feature: process tests for 5 RPT 5 Versamenti
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-
         And RPT5 generation
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
@@ -614,7 +609,7 @@ Feature: process tests for 5 RPT 5 Versamenti
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-@runnable
+
     Scenario: Execute nodoInviaCarrelloRPT request
         Given the RPT generation scenario executed successfully
         And initial XML nodoInviaCarrelloRPT
@@ -673,7 +668,7 @@ Feature: process tests for 5 RPT 5 Versamenti
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
         And check url contains acardste of nodoInviaCarrelloRPT response
         And retrieve session token from $nodoInviaCarrelloRPTResponse.url
-@runnable
+
     Scenario: Execution idPagamento
         Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
         When WISP sends rest GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
@@ -683,13 +678,13 @@ Feature: process tests for 5 RPT 5 Versamenti
         And check ragioneSociale field exists in informazioniPagamento response
         And check oggettoPagamento field exists in informazioniPagamento response
         And check urlRedirectEC field exists in informazioniPagamento response
-@runnable
+
     Scenario: Execution chiediLista
         Given the Execution idPagamento scenario executed successfully
         When WISP sends rest GET listaPSP?idPagamento=$sessionToken&importoTotale=1000&percorsoPagamento=CARTE to nodo-dei-pagamenti
         Then check totalRows field exists in listaPSP response
         And check data field exists in listaPSP response
-@runnable
+
     Scenario: Execution Esito Mod1
         Given the Execution chiediLista scenario executed successfully
         And initial XML pspInviaCarrelloRPT 
@@ -709,23 +704,20 @@ Feature: process tests for 5 RPT 5 Versamenti
             """
         And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT 
         When WISP sends REST POST inoltroEsito/mod1 to nodo-dei-pagamenti
-
             """
             {
             "idPagamento":"$sessionToken",
-
             "identificativoPsp":"#psp#",
             "tipoVersamento":"BP",
             "identificativoIntermediario":"#psp#",
             "identificativoCanale":"#canale#",
-
             "tipoOperazione":"web"
             }
 
              """
         Then check esito is OK of inoltroEsito/mod1 response
         And check urlRedirectPSP field exists in inoltroEsito/mod1 response
-@runnable
+
     Scenario: Execute nodoChiediStatoRPT request
         Given the Execution Esito Mod1 scenario executed successfully
         And initial XML nodoChiediStatoRPT
@@ -749,7 +741,6 @@ Feature: process tests for 5 RPT 5 Versamenti
         And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
 
-@runnable
     Scenario: Execute second nodoChiediStatoRPT request
         Given the Execute nodoChiediStatoRPT request scenario executed successfully
         And initial XML nodoChiediStatoRPT
@@ -772,7 +763,7 @@ Feature: process tests for 5 RPT 5 Versamenti
         Then checks stato contains RPT_ACCETTATA_PSP of nodoChiediStatoRPT response
         And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
-@runnable
+
     Scenario: Execute third nodoChiediStatoRPT request
         Given the Execute second nodoChiediStatoRPT request scenario executed successfully
         And initial XML nodoChiediStatoRPT
@@ -795,7 +786,7 @@ Feature: process tests for 5 RPT 5 Versamenti
         Then checks stato contains RPT_ACCETTATA_PSP of nodoChiediStatoRPT response
         And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
-@runnable
+
     Scenario: Execute fourth nodoChiediStatoRPT request
         Given the Execute third nodoChiediStatoRPT request scenario executed successfully
         And initial XML nodoChiediStatoRPT
@@ -818,7 +809,7 @@ Feature: process tests for 5 RPT 5 Versamenti
         Then checks stato contains RPT_ACCETTATA_PSP of nodoChiediStatoRPT response
         And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
-@runnable
+
     Scenario: Execute fifth nodoChiediStatoRPT request
         Given the Execute fourth nodoChiediStatoRPT request scenario executed successfully
         And initial XML nodoChiediStatoRPT
@@ -854,7 +845,7 @@ Feature: process tests for 5 RPT 5 Versamenti
         And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_INVIATA_A_PSP,RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT retrived by the query stati_RPT_new on db nodo_online under macro Mod1
         And checks the value RPT_ACCETTATA_PSP,RPT_ACCETTATA_PSP,RPT_ACCETTATA_PSP,RPT_ACCETTATA_PSP,RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query motivo_annullamento on db nodo_online under macro Mod1
         And checks the value CART_ACCETTATO_PSP of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query motivo_annullamento on db nodo_online under macro Mod1
-@runnable
+
     Scenario: Execute second nodoInviaCarrelloRPT
 		Given the Execute fifth nodoChiediStatoRPT request scenario executed successfully
 		And initial XML nodoInviaCarrelloRPT

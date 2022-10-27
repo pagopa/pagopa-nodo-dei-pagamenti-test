@@ -14,7 +14,6 @@ Feature: GT_08
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
             <soapenv:Header/>
             <soapenv:Body>
-
             <nod:verifyPaymentNoticeReq>
             <idPSP>#psp_AGID#</idPSP>
             <idBrokerPSP>#broker_AGID#</idBrokerPSP>
@@ -25,7 +24,6 @@ Feature: GT_08
             <noticeNumber>$1noticeNumber</noticeNumber>
             </qrCode>
             </nod:verifyPaymentNoticeReq>
-
             </soapenv:Body>
             </soapenv:Envelope>
             """
@@ -39,7 +37,6 @@ Feature: GT_08
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
             <soapenv:Header/>
             <soapenv:Body>
-
             <paf:paGetPaymentRes>
             <outcome>OK</outcome>
             <data>
@@ -75,7 +72,6 @@ Feature: GT_08
             </transferList>
             </data>
             </paf:paGetPaymentRes>
-
             </soapenv:Body>
             </soapenv:Envelope>
             """
@@ -141,7 +137,6 @@ Feature: GT_08
         And checks the value NotNone of the record at column TOKEN_VALID_FROM of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
         #And check token_valid_to is equal to token_valid_from plus default_durata_token_IO
 
-
     @runnable
     Scenario: Execute nodoChiediInformazioniPagamento (Phase 3)
         Given the Execute activateIOPayment (Phase 2) scenario executed successfully
@@ -152,7 +147,6 @@ Feature: GT_08
     Scenario: Execute nodoInoltraEsitoPagamentoCarta (Phase 4)
         Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
         And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
-
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pfn="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
             <soapenv:Header/>
@@ -163,7 +157,6 @@ Feature: GT_08
             </soapenv:Body>
             </soapenv:Envelope>
             """
-
         When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
             """
             {
@@ -173,9 +166,7 @@ Feature: GT_08
                 "tipoVersamento": "CP",
                 "identificativoIntermediario": "#psp#",
                 "identificativoCanale": "#canale#",
-
                 "importoTotalePagato": 10,
-
                 "timestampOperazione": "2021-07-09T17:06:03.100+01:00",
                 "codiceAutorizzativo": "resOK",
                 "esitoTransazioneCarta": "00"
@@ -191,7 +182,6 @@ Feature: GT_08
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
             <soapenv:Header/>
             <soapenv:Body>
-
             <nod:sendPaymentOutcomeReq>
             <idPSP>#psp#</idPSP>
             <idBrokerPSP>#psp#</idBrokerPSP>
@@ -232,7 +222,6 @@ Feature: GT_08
             <transferDate>2021-12-11</transferDate>
             </details>
             </nod:sendPaymentOutcomeReq>
-
             </soapenv:Body>
             </soapenv:Envelope>
             """

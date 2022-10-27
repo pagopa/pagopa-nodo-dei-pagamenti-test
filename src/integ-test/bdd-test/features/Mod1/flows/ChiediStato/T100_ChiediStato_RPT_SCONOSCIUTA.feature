@@ -2,7 +2,7 @@ Feature: process tests for T100_ChiediStato_RPT_SCONOSCIUTA
 
     Background:
         Given systems up
-@runnable 
+
     Scenario: RPT generation
         Given RPT generation
             """

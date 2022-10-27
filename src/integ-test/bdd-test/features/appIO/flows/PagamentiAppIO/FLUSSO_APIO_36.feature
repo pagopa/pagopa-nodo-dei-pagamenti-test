@@ -4,7 +4,6 @@ Feature: FLUSSO_APIO_36
         Given systems up
     @runnable
     Scenario: Execute verifyPaymentNotice (Phase 1)
-
         Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
         And initial XML verifyPaymentNotice
             """
@@ -21,7 +20,6 @@ Feature: FLUSSO_APIO_36
             <noticeNumber>$1noticeNumber</noticeNumber>
             </qrCode>
             </nod:verifyPaymentNoticeReq>
-
             </soapenv:Body>
             </soapenv:Envelope>
             """

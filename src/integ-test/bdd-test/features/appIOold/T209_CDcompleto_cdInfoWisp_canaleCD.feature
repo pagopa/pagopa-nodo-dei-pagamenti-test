@@ -198,13 +198,11 @@ Background:
         </soapenv:Body>
         </soapenv:Envelope>
         """
-
 @runnable
 Scenario: verifyRPT phase
     When PSP sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
     Then check esito is OK of nodoVerificaRPT response
 @runnable
-
 Scenario: attivaRPT phase
     Given the verifyRPT phase scenario executed successfully
     When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
