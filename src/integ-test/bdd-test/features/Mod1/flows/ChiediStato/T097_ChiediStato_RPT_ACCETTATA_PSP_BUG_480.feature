@@ -2,7 +2,7 @@ Feature: process tests for T097_ChiediStato_RPT_ACCETTATA_PSP - BUG_480
 
     Background:
         Given systems up
-    @runnable
+
     Scenario: RPT generation
         Given RPT generation
             """
@@ -81,7 +81,7 @@ Feature: process tests for T097_ChiediStato_RPT_ACCETTATA_PSP - BUG_480
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-    @runnable
+
     Scenario: Execute nodoInviaRPT request
         Given the RPT generation scenario executed successfully
         And initial XML pspInviaRPT
@@ -102,7 +102,6 @@ Feature: process tests for T097_ChiediStato_RPT_ACCETTATA_PSP - BUG_480
             </soapenv:Envelope>
             """
         And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
-
         And initial XML nodoInviaRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">

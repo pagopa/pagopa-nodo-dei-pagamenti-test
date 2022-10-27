@@ -102,9 +102,7 @@ Feature: Syntax checks for pspNotifyPaymentResponse - OK
     When IO sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is OK of activateIOPayment response
 
-
   @runnable
-
   # nodoChiediInformazioniPagamento phase
   Scenario: Execute nodoChiediInformazioniPagamento request
     Given the Execute activateIOPaymentReq request scenario executed successfully

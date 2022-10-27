@@ -1,6 +1,5 @@
 Feature: FLUSSO_APIO_12.3
 
-
     Background:
         Given systems up
         And EC new version
@@ -13,16 +12,13 @@ Feature: FLUSSO_APIO_12.3
             <soapenv:Header/>
             <soapenv:Body>
             <nod:verifyPaymentNoticeReq>
-
             <idPSP>#psp_AGID#</idPSP>
             <idBrokerPSP>#broker_AGID#</idBrokerPSP>
             <idChannel>#canale_AGID#</idChannel>
             <password>pwdpwdpwd</password>
             <qrCode>
-
             <fiscalCode>#creditor_institution_code#</fiscalCode>
             <noticeNumber>$1noticeNumber</noticeNumber>
-
             </qrCode>
             </nod:verifyPaymentNoticeReq>
             </soapenv:Body>
@@ -84,7 +80,6 @@ Feature: FLUSSO_APIO_12.3
             <soapenv:Header/>
             <soapenv:Body>
             <nod:activateIOPaymentReq>
-
             <idPSP>$verifyPaymentNotice.idPSP</idPSP>
             <idBrokerPSP>$verifyPaymentNotice.idBrokerPSP</idBrokerPSP>
             <idChannel>$verifyPaymentNotice.idChannel</idChannel>
@@ -124,7 +119,6 @@ Feature: FLUSSO_APIO_12.3
             <!--Optional:-->
             <e-mail>test.prova@gmail.com</e-mail>
             </payer>
-
             </nod:activateIOPaymentReq>
             </soapenv:Body>
             </soapenv:Envelope>
@@ -220,7 +214,6 @@ Feature: FLUSSO_APIO_12.3
         And checks the value None of the record at column MOTIVO_ANNULLAMENTO of the table PM_SESSION_DATA retrived by the query pm_session on db nodo_online under macro AppIO
         And checks the value None of the record at column CODICE_CONVENZIONE of the table PM_SESSION_DATA retrived by the query pm_session on db nodo_online under macro AppIO
 
-
     @runnable
     Scenario: Check nodoInoltraEsitoCarte1 response after nodoInoltroEsitoCarta
         Given the Execute nodoInoltroEsitoCarta (Phase 4) scenario executed successfully
@@ -290,4 +283,3 @@ Feature: FLUSSO_APIO_12.3
         And checks the value None of the record at column ORIGINAL_PAYMENT_TOKEN of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value Y of the record at column FLAG_IO of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value Y of the record at column RICEVUTA_PM of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
-

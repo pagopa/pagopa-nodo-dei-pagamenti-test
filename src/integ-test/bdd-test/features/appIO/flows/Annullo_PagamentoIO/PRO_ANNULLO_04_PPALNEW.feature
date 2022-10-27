@@ -6,12 +6,11 @@ Feature: FLUSSO_APIO_04_PPALNEW
     Scenario: Execute verifyPaymentNotice (Phase 1)
     Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 8000
         And initial XML verifyPaymentNotice
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+        """
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
             <soapenv:Header/>
             <soapenv:Body>
             <nod:verifyPaymentNoticeReq>
-
                 <idPSP>#psp_AGID#</idPSP>
                 <idBrokerPSP>#broker_AGID#</idBrokerPSP>
                 <idChannel>#canale_AGID#</idChannel>
@@ -20,22 +19,20 @@ Feature: FLUSSO_APIO_04_PPALNEW
                     <fiscalCode>#creditor_institution_code#</fiscalCode>
                     <noticeNumber>#notice_number#</noticeNumber>
                 </qrCode>
-
             </nod:verifyPaymentNoticeReq>
             </soapenv:Body>
-            </soapenv:Envelope>
-            """
+        </soapenv:Envelope>
+        """
         When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of verifyPaymentNotice response
     @runnable
     Scenario: Execute activateIOPayment (Phase 2)
         Given the Execute verifyPaymentNotice (Phase 1) scenario executed successfully
         And initial XML activateIOPayment
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd">
+        """
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd">
             <soapenv:Header/>
             <soapenv:Body>
-
                 <nod:activateIOPaymentReq>
                 <idPSP>$verifyPaymentNotice.idPSP</idPSP>
                 <idBrokerPSP>$verifyPaymentNotice.idBrokerPSP</idBrokerPSP>
@@ -77,10 +74,9 @@ Feature: FLUSSO_APIO_04_PPALNEW
                     <e-mail>test.prova@gmail.com</e-mail>
                 </payer>
                 </nod:activateIOPaymentReq>
-
             </soapenv:Body>
-            </soapenv:Envelope>
-            """
+        </soapenv:Envelope>
+        """
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
 @runnable
@@ -93,7 +89,6 @@ Feature: FLUSSO_APIO_04_PPALNEW
         Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
         And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
             """
-
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pfn="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
             <soapenv:Header/>
             <soapenv:Body>
@@ -105,7 +100,6 @@ Feature: FLUSSO_APIO_04_PPALNEW
             </soapenv:Envelope>
             """
         When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
-
             """
             {
                 "idTransazione": "responseKO",

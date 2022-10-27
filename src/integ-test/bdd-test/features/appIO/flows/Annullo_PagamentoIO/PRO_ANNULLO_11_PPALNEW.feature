@@ -126,13 +126,12 @@ Feature: PRO_ANNULLO_11_PPALNEW
             """
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
+    
     @runnable
-
     Scenario: Execute nodoChiediInformazioniPagamento (Phase 3)
         Given the Execute activateIOPayment (Phase 2) scenario executed successfully
         When WISP sends rest GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200
-
     @runnable
     Scenario: Execute nodoInoltroEsitoPaypal (Phase 4)
         Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
@@ -151,7 +150,6 @@ Feature: PRO_ANNULLO_11_PPALNEW
             """
         And job annullamentoRptMaiRichiesteDaPm triggered after 65 seconds
         And wait 10 seconds for expiration
-
         Then verify the HTTP status code of inoltroEsito/paypal response is 200
         And check esito is OK of inoltroEsito/paypal response
         And checks the value PAYING, PAYMENT_SENT, PAYMENT_ACCEPTED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO

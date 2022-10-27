@@ -2,7 +2,7 @@ Feature: process tests for T099_chiediStato_RT_RIFIUTATA_NODO
 
     Background:
         Given systems up
-@runnable
+
     Scenario: RPT generation
         Given RPT generation
             """
@@ -83,7 +83,6 @@ Feature: process tests for T099_chiediStato_RT_RIFIUTATA_NODO
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-
         And RT generation
             """
             <pay_i:RT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
@@ -172,7 +171,7 @@ Feature: process tests for T099_chiediStato_RT_RIFIUTATA_NODO
             </pay_i:datiPagamento>
             </pay_i:RT>
             """
-@runnable
+
     Scenario: Execute nodoInviaRPT request
         Given the RPT generation scenario executed successfully
         And initial XML pspInviaRPT
@@ -198,11 +197,9 @@ Feature: process tests for T099_chiediStato_RT_RIFIUTATA_NODO
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
             <ppt:intestazionePPT>
-
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
             <identificativoCanale>#canale#</identificativoCanale>
-
             <tipoFirma></tipoFirma>
             <rpt>$rptAttachment</rpt>
             </ws:nodoInviaRPT>
@@ -211,7 +208,7 @@ Feature: process tests for T099_chiediStato_RT_RIFIUTATA_NODO
             """
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
-@runnable
+
     Scenario: Execute nodoInviaRT request
         Given the Execute nodoInviaRPT request scenario executed successfully
         And initial XML nodoInviaRT
@@ -220,13 +217,11 @@ Feature: process tests for T099_chiediStato_RT_RIFIUTATA_NODO
             <soapenv:Header/>
             <soapenv:Body>
             <ws:nodoInviaRT>
-
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
             <identificativoCanale>#canale#</identificativoCanale>
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoDominio>66666666666</identificativoDominio>
-
             <identificativoUnivocoVersamento>$2iuv</identificativoUnivocoVersamento>
             <codiceContestoPagamento>CCD01</codiceContestoPagamento>
             <tipoFirma></tipoFirma>
@@ -238,7 +233,7 @@ Feature: process tests for T099_chiediStato_RT_RIFIUTATA_NODO
             """
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is KO of nodoInviaRT response
-@runnable
+
     Scenario: Execute nodoChiediStatoRPT request
         Given the Execute nodoInviaRT request scenario executed successfully
         And initial XML nodoChiediStatoRPT
@@ -247,12 +242,10 @@ Feature: process tests for T099_chiediStato_RT_RIFIUTATA_NODO
         <soapenv:Header/>
         <soapenv:Body>
             <ws:nodoChiediStatoRPT>
-
                 <identificativoIntermediarioPA>#creditor_institution_code_old#</identificativoIntermediarioPA>
                 <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
                 <password>pwdpwdpwd</password>
                 <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
-
                 <identificativoUnivocoVersamento>$2iuv</identificativoUnivocoVersamento>
                 <codiceContestoPagamento>CCD01</codiceContestoPagamento>
             </ws:nodoChiediStatoRPT>
@@ -266,7 +259,7 @@ Feature: process tests for T099_chiediStato_RT_RIFIUTATA_NODO
         And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
         And checks stato contains RT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And check url field not exists in nodoChiediStatoRPT response
-@runnable
+
    Scenario: Execute second nodoInviaRT request
         Given the Execute nodoChiediStatoRPT request scenario executed successfully
         And initial XML nodoInviaRT
@@ -281,7 +274,6 @@ Feature: process tests for T099_chiediStato_RT_RIFIUTATA_NODO
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoDominio>66666666666</identificativoDominio>
-
             <identificativoUnivocoVersamento>$2iuv</identificativoUnivocoVersamento>
             <codiceContestoPagamento>CCD01</codiceContestoPagamento>
             <tipoFirma></tipoFirma>
@@ -293,7 +285,7 @@ Feature: process tests for T099_chiediStato_RT_RIFIUTATA_NODO
             """
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is KO of nodoInviaRT response
-@runnable
+
     Scenario: Execute second nodoInviaRPT request
         Given the Execute second nodoInviaRT request scenario executed successfully
         And initial XML nodoInviaRPT
@@ -301,11 +293,9 @@ Feature: process tests for T099_chiediStato_RT_RIFIUTATA_NODO
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
             <ppt:intestazionePPT>
-
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
             <identificativoCanale>#canale#</identificativoCanale>
-
             <tipoFirma></tipoFirma>
             <rpt>$rptAttachment</rpt>
             </ws:nodoInviaRPT>
@@ -323,13 +313,11 @@ Feature: process tests for T099_chiediStato_RT_RIFIUTATA_NODO
             <soapenv:Header/>
             <soapenv:Body>
             <ws:nodoInviaRT>
-
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
             <identificativoCanale>#canale#</identificativoCanale>
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp#</identificativoPSP>
-            <identificativoDominio>66666666666</identificativoDominio>
-
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoUnivocoVersamento>$2iuv</identificativoUnivocoVersamento>
             <codiceContestoPagamento>CCD01</codiceContestoPagamento>
             <tipoFirma></tipoFirma>

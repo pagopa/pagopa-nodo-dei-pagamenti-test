@@ -12,7 +12,6 @@ Feature: PRO_ANNULLO_04
             <soapenv:Header/>
             <soapenv:Body>
             <nod:verifyPaymentNoticeReq>
-
             <idPSP>#psp_AGID#</idPSP>
             <idBrokerPSP>#broker_AGID#</idBrokerPSP>
             <idChannel>#canale_AGID#</idChannel>
@@ -21,7 +20,6 @@ Feature: PRO_ANNULLO_04
             <fiscalCode>#creditor_institution_code#</fiscalCode>
             <noticeNumber>$1noticeNumber</noticeNumber>
             </qrCode>
-
             </nod:verifyPaymentNoticeReq>
             </soapenv:Body>
             </soapenv:Envelope>
@@ -36,7 +34,6 @@ Feature: PRO_ANNULLO_04
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
             <soapenv:Header/>
             <soapenv:Body>
-
             <paf:paGetPaymentRes>
             <outcome>OK</outcome>
             <data>
@@ -72,7 +69,6 @@ Feature: PRO_ANNULLO_04
             </transferList>
             </data>
             </paf:paGetPaymentRes>
-
             </soapenv:Body>
             </soapenv:Envelope>
             """

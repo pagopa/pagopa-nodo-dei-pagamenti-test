@@ -235,7 +235,7 @@ Feature: process tests for nodoInviaRT[IRTSEM1]
             <soapenv:Header/>
             <soapenv:Body>
             <ws:nodoInviaRT>
-            <identificativoIntermediarioPSPsconosciuto</identificativoIntermediarioPSP>
+            <identificativoIntermediarioPSP>sconosciuto</identificativoIntermediarioPSP>
             <identificativoCanale>#canaleRtPush#</identificativoCanale>
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp#</identificativoPSP>

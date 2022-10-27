@@ -179,7 +179,7 @@ Feature: T220_RPT_Mod1_faultBeanEsteso
         And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_RIFIUTATA_PSP of nodoChiediStatoRPT response
         And checks stato contains RPT_INVIATA_A_PSP of nodoChiediStatoRPT response
- @runnable
+ @runnable       
     Scenario: Execute nodoInviaRPT1 (Phase 4)
         Given the Execute nodoChiediStatoRPT (Phase 3) scenario executed successfully
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti

@@ -2,7 +2,7 @@ Feature: process tests for T099_C_chiediStato_RT_RIFIUTATA_NODO_Carrello_sblocco
 
     Background:
         Given systems up
-@runnable 
+
     Scenario: RPT generation
         Given RPT generation
             """
@@ -81,7 +81,6 @@ Feature: process tests for T099_C_chiediStato_RT_RIFIUTATA_NODO_Carrello_sblocco
                 </pay_i:datiVersamento>
                 </pay_i:RPT>
             """
-
         And RPT2 generation            
             """
                 <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd "> 
@@ -159,7 +158,6 @@ Feature: process tests for T099_C_chiediStato_RT_RIFIUTATA_NODO_Carrello_sblocco
                 </pay_i:datiVersamento>
                 </pay_i:RPT>
             """
-
         And RT generation
             """"
             <pay_i:RT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
@@ -246,7 +244,6 @@ Feature: process tests for T099_C_chiediStato_RT_RIFIUTATA_NODO_Carrello_sblocco
             </pay_i:datiPagamento>
             </pay_i:RT>
             """
-
         And RT2 generation
             """
             <pay_i:RT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
@@ -333,7 +330,7 @@ Feature: process tests for T099_C_chiediStato_RT_RIFIUTATA_NODO_Carrello_sblocco
             </pay_i:datiPagamento>
             </pay_i:RT>
             """
-@runnable
+
     Scenario: Execute nodoInviaCarrelloRPT
 		Given the RPT generation scenario executed successfully
 		And initial XML nodoInviaCarrelloRPT
@@ -373,7 +370,7 @@ Feature: process tests for T099_C_chiediStato_RT_RIFIUTATA_NODO_Carrello_sblocco
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check url contains acardste of nodoInviaCarrelloRPT response
         And retrieve session token from $nodoInviaCarrelloRPTResponse.url
-@runnable
+
     Scenario: Execution Esito Mod1
         Given the Execute nodoInviaCarrelloRPT scenario executed successfully
         And initial XML pspInviaCarrelloRPT 
@@ -397,19 +394,16 @@ Feature: process tests for T099_C_chiediStato_RT_RIFIUTATA_NODO_Carrello_sblocco
             """
             {
             "idPagamento":"$sessionToken",
-
             "identificativoPsp":"#psp#",
             "tipoVersamento":"BBT",
             "identificativoIntermediario":"#psp#",
             "identificativoCanale":"#canale#",
-
             "tipoOperazione":"web"
             }
             """
         Then check esito is OK of inoltroEsito/mod1 response
         And check urlRedirectPSP field exists in inoltroEsito/mod1 response
 
-@runnable
     Scenario: Execute nodoInviaRT request
         Given the Execution Esito Mod1 scenario executed successfully
         And initial XML nodoInviaRT
@@ -435,7 +429,6 @@ Feature: process tests for T099_C_chiediStato_RT_RIFIUTATA_NODO_Carrello_sblocco
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is KO of nodoInviaRT response
 
-@runnable
    Scenario: Execute second nodoInviaRT request
         Given the Execute nodoInviaRT request scenario executed successfully
         And initial XML nodoInviaRT
@@ -461,7 +454,6 @@ Feature: process tests for T099_C_chiediStato_RT_RIFIUTATA_NODO_Carrello_sblocco
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is KO of nodoInviaRT response
 
-@runnable
     Scenario: Execute nodoChiediStatoRPT request
         Given the Execute second nodoInviaRT request scenario executed successfully
         And initial XML nodoChiediStatoRPT
@@ -486,7 +478,7 @@ Feature: process tests for T099_C_chiediStato_RT_RIFIUTATA_NODO_Carrello_sblocco
         And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ACCETTATA_PSP of nodoChiediStatoRPT response
         And check url field not exists in nodoChiediStatoRPT response
-@runnable
+
     Scenario: Execute second nodoChiediStatoRPT request
         Given the Execute nodoChiediStatoRPT request scenario executed successfully
         And initial XML nodoChiediStatoRPT
@@ -513,14 +505,12 @@ Feature: process tests for T099_C_chiediStato_RT_RIFIUTATA_NODO_Carrello_sblocco
         And checks stato contains RT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And check url field not exists in nodoChiediStatoRPT response
 
-@runnable
     Scenario: Execute nodoNotificaAnnullamento
         Given the Execute nodoChiediStatoRPT request scenario executed successfully
         When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of notificaAnnullamento response is 404
         And check error is Il Pagamento indicato non esiste of notificaAnnullamento response
 
-@runnable
     Scenario: Execute second nodoInviaCarrelloRPT
 		Given the Execute nodoNotificaAnnullamento scenario executed successfully
 		And initial XML nodoInviaCarrelloRPT

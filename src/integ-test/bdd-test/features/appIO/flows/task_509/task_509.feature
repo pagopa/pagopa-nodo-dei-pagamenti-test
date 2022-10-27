@@ -83,7 +83,6 @@ Feature: task_509
         And through the query token_validity retrieve param token_valid_from_activate at position 0 and save it under the key token_valid_from_activate
 
 @runnable  
-
     # [TASK_509_01]
     Scenario: Execute nodoChiediInformazioniPagamento (Phase 3)
         Given the Execute activateIOPayment (Phase 2) scenario executed successfully
@@ -143,7 +142,7 @@ Feature: task_509
         When WISP sends REST GET notificaAnnullamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
         Then verify the HTTP status code of notificaAnnullamento response is 200
         And check esito is OK of notificaAnnullamento response
- @runnable 
+ @runnable   
     # [TASK_509_05]
     Scenario: Execute nodoChiediAvanzamentoPagamento (Phase 4)
         Given the Execute nodoInoltroEsitoCarta (Phase 3) scenario executed successfully
@@ -158,7 +157,7 @@ Feature: task_509
         And execution query token_validity to get value on the table POSITION_ACTIVATE, with the columns TOKEN_VALID_FROM under macro AppIO with db name nodo_online
         And through the query token_validity retrieve param token_valid_from_inoltro at position 0 and save it under the key token_valid_from_inoltro
         And check value $token_valid_from_activate is equal to value $token_valid_from_inoltro
-@runnable 
+@runnable        
     # [TASK_509_07]
     Scenario: Check TOKEN_VALID_TO + 1h (Phase 5)
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 3600000

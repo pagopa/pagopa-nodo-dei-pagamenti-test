@@ -202,7 +202,6 @@ Feature: PRO_ANNULLO_12_PPALNEW
             </soapenv:Body>
             </soapenv:Envelope>
             """
-
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         And job annullamentoRptMaiRichiesteDaPm triggered after 65 seconds
         And wait 15 seconds for expiration

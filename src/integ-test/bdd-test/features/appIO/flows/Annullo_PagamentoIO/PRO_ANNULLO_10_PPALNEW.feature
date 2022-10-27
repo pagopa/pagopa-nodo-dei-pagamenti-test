@@ -127,24 +127,20 @@ Feature: PRO_ANNULLO_10_PPALNEW
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
 @runnable
-
     Scenario: Execute nodoChiediInformazioniPagamento (Phase 3)
         Given the Execute activateIOPayment (Phase 2) scenario executed successfully
         When WISP sends rest GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200
 
 @runnable   
-
     Scenario: Execute nodoInoltroEsitoPaypal (Phase 4)
         Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
         And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
         """
-
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pfn="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
         <soapenv:Header/>
         <soapenv:Body>
             <pfn:pspNotifyPaymentRes>
-
             <outcome>KO</outcome>
             <!--Optional:-->
             <fault>
@@ -154,9 +150,7 @@ Feature: PRO_ANNULLO_10_PPALNEW
                 <!--Optional:-->
                 <description>Errore dal psp</description>
             </fault>
-
             </pfn:pspNotifyPaymentRes>
-
         </soapenv:Body>
         </soapenv:Envelope>
         """

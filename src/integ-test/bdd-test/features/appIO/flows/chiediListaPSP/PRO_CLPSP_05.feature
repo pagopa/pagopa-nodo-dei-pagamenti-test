@@ -237,7 +237,6 @@ Scenario: Execute activateIOPayment1 (Phase 4)
                            <transferAmount>3.00</transferAmount>
                            <fiscalCodePA>90000000001</fiscalCodePA>
                            <IBAN>IT45R0760103200000000001016</IBAN>
-
                            <remittanceInformation>testPaGetPayment</remittanceInformation>
                            <transferCategory>paGetPaymentTest</transferCategory>
                         </transfer>
@@ -245,7 +244,7 @@ Scenario: Execute activateIOPayment1 (Phase 4)
                            <idTransfer>3</idTransfer>
                            <transferAmount>4.00</transferAmount>
                            <fiscalCodePA>90000000002</fiscalCodePA>
-                           <IBAN>IT96R0123454321000000012345</IBAN> <!-- IBAN NON POSTALE -->
+                           <IBAN>IT45R0760103200000000001016</IBAN>
                            <remittanceInformation>testPaGetPayment</remittanceInformation>
                            <transferCategory>paGetPaymentTest</transferCategory>
                         </transfer>
@@ -264,8 +263,6 @@ Scenario: Execute activateIOPayment1 (Phase 4)
          </soapenv:Envelope>
     """
     And EC replies to nodo-dei-pagamenti with the paGetPayment
-
-
     When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is OK of activateIOPayment response
 @runnable

@@ -1,5 +1,5 @@
 Feature: INVIO_MULTICANALE
-
+################## PER ESEGUIRE QUESTO TEST RUNNARE SOLO execute scenario n times TRAMITE TAG ##################
     Background:
         Given systems up
 
@@ -229,7 +229,7 @@ Feature: INVIO_MULTICANALE
             <elementoListaRTResponse>
             <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
             <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
-             <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+            <codiceContestoPagamento>CCD01</codiceContestoPagamento>
             </elementoListaRTResponse>
             </pspChiediListaRTResponse>
             </ws:pspChiediListaRTResponse>
@@ -288,6 +288,7 @@ Feature: INVIO_MULTICANALE
         And job paInviaRt triggered after 10 seconds
         And wait 10 seconds for expiration
         Then check esito is OK of nodoInviaRPT response
+        And replace iuv1 content with $iuv content
 
 
     Scenario: Execute nodoInviaRPT - multicanale_b
@@ -576,66 +577,17 @@ Feature: INVIO_MULTICANALE
         And job paInviaRt triggered after 10 seconds
         And wait 10 seconds for expiration
         Then check esito is OK of nodoInviaRPT response
+        And replace iuv2 content with $iuv content
 
-    @test
+    Scenario: DB check Stati
+        Given the Execute nodoInviaRPT - multicanale_b scenario executed successfully
+        #STATI RPT
+        Then checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_INVIATA_A_PSP, RPT_ACCETTATA_PSP, RT_RICEVUTA_NODO, RT_ACCETTATA_NODO, RT_INVIATA_PA, RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query rpt_id1 on db nodo_online under macro RTPull
+        And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_INVIATA_A_PSP, RPT_ACCETTATA_PSP, RT_RICEVUTA_NODO, RT_ACCETTATA_NODO, RT_INVIATA_PA, RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query rpt_id2 on db nodo_online under macro RTPull
+        #STATI_RPT_SNAPSHOT
+        And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_id1 on db nodo_online under macro RTPull
+        And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_id2 on db nodo_online under macro RTPull
+
+    @runnable
     Scenario: execute scenario n times
-        Then start from Execute nodoInviaRPT - multicanale_b scenario 2 times 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        # And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_INVIATA_A_PSP, RPT_ACCETTATA_PSP, RT_RICEVUTA_NODO, RT_ACCETTATA_NODO, RT_INVIATA_PA, RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro RTPull
-        # And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro RTPull
-        # And verify 0 record for the table RETRY_PA_INVIA_RT retrived by the query rpt_stati on db nodo_online under macro RTPull
-
-
+        Then start from DB check Stati scenario 5 times
