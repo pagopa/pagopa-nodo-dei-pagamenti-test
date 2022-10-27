@@ -5128,7 +5128,7 @@ Feature: flux tests for closePaymentV2
         And the closePayment request scenario executed successfully
         And outcome with KO in v1/closepayment
         And transactionId with $temp_transaction_id in v1/closepayment
-        And key with $temp_psp_transaction_id in v1/closepayment
+        And pspTransactionId with $temp_psp_transaction_id in v1/closepayment
         When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v1/closepayment response is 422
         And check outcome is KO of v1/closepayment response
