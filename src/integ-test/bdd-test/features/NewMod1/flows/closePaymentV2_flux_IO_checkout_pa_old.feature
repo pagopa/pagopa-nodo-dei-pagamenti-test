@@ -5092,35 +5092,6 @@ Feature: flux tests for closePaymentV2
         And check esito is KO of v1/closepayment response
         And check descrizione is Esito già acquisito of v1/closepayment response
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     # FLUSSO_OLD_CP_19
 
     Scenario: FLUSSO_OLD_CP_19 (part 1)
@@ -5287,8 +5258,55 @@ Feature: flux tests for closePaymentV2
         # STATI_RPT_SNAPSHOT
         And checks the value RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
-    @wip
+
     Scenario: FLUSSO_OLD_CP_19 (part 2)
         Given the FLUSSO_OLD_CP_19 (part 1) scenario executed successfully
         When PM sends REST GET avanzamentoPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of avanzamentoPagamento response is 200
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    # FLUSSO_OLD_CP_20
+    @wip
+    Scenario: FLUSSO_OLD_CP_20
+        Given the nodoVerificaRPT scenario executed successfully
+        And the nodoAttivaRPT scenario executed successfully
+        And the nodoInviaRPT scenario executed successfully
+
+        # CD_INFO_PAGAMENTO
+        And checks the value NotNone of the record at column OBJ_ID of the table CD_INFO_PAGAMENTO retrived by the query sessiontoken on db nodo_online under macro NewMod1
+        And checks the value $nodoInviaRPT.identificativoDominio of the record at column IDENT_DOMINIO of the table CD_INFO_PAGAMENTO retrived by the query sessiontoken on db nodo_online under macro NewMod1
+        And checks the value $iuv of the record at column IUV of the table CD_INFO_PAGAMENTO retrived by the query sessiontoken on db nodo_online under macro NewMod1
+        And checks the value $ccp of the record at column CCP of the table CD_INFO_PAGAMENTO retrived by the query sessiontoken on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table CD_INFO_PAGAMENTO retrived by the query sessiontoken on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table CD_INFO_PAGAMENTO retrived by the query sessiontoken on db nodo_online under macro NewMod1
+
+        And the informazioniPagamento scenario executed successfully
+        And the closePaymentV2 request scenario executed successfully
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 200
+        And check outcome is OK of v2/closepayment response
+        And the nodoAttivaRPT scenario executed successfully
