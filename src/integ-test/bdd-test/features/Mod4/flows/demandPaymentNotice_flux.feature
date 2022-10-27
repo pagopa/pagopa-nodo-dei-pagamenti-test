@@ -214,7 +214,7 @@ Feature: flux tests for demandPaymentNotice
             <!--1 to 5 repetitions:-->
             <transfer>
             <idTransfer>1</idTransfer>
-            <transferAmount>10.00</transferAmount>
+            <transferAmount>3.00</transferAmount>
             <fiscalCodePA>$activatePaymentNotice.fiscalCode</fiscalCodePA>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>testPaGetPayment</remittanceInformation>
@@ -222,7 +222,7 @@ Feature: flux tests for demandPaymentNotice
             </transfer>
             <transfer>
             <idTransfer>2</idTransfer>
-            <transferAmount>10.00</transferAmount>
+            <transferAmount>3.00</transferAmount>
             <fiscalCodePA>$activatePaymentNotice.fiscalCode</fiscalCodePA>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>testPaGetPayment</remittanceInformation>
@@ -230,7 +230,7 @@ Feature: flux tests for demandPaymentNotice
             </transfer>
             <transfer>
             <idTransfer>3</idTransfer>
-            <transferAmount>10.00</transferAmount>
+            <transferAmount>4.00</transferAmount>
             <fiscalCodePA>$activatePaymentNotice.fiscalCode</fiscalCodePA>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>testPaGetPayment</remittanceInformation>
@@ -450,3 +450,43 @@ Feature: flux tests for demandPaymentNotice
 
         # POSITION_RECEIPT_TRANSFER
         And verify 3 record for the table POSITION_RECEIPT_TRANSFER JOIN POSITION_TRANSFER ON POSITION_TRANSFER.ID=POSITION_RECEIPT_TRANSFER.FK_POSITION_TRANSFER retrived by the query select_activate on db nodo_online under macro NewMod1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        # F_DPNR_05
+
+    Scenario: F_DPNR_05 (part 1)
+        Given the demandPaymentNotice scenario executed successfully
+        And the activatePaymentNotice request with 3 transfers scenario executed successfully
+        When PSP sends soap activatePaymentNotice to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNotice response
+    @wip
+    Scenario: F_DPNR_05 (part 2)
+        Given the F_DPNR_05 (part 1) scenario executed successfully
+        And the sendPaymentOutcome request scenario executed successfully
+        And outcome with KO in sendPaymentOutcome
+        When PSP sends soap sendPaymentOutcome to nodo-dei-pagamenti
+        Then check outcome is OK of sendPaymentOutcome response
+
+        # POSITION_RECEIPT_TRANSFER
+        And verify 0 record for the table POSITION_RECEIPT_TRANSFER JOIN POSITION_TRANSFER ON POSITION_TRANSFER.ID=POSITION_RECEIPT_TRANSFER.FK_POSITION_TRANSFER retrived by the query select_activate on db nodo_online under macro NewMod1
