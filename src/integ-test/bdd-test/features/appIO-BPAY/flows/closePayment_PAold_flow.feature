@@ -673,16 +673,16 @@ Feature: flow checks for closePayment - PA old
       And verify 0 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_old on db nodo_online under macro AppIO
       And verify 1 record for the table POSITION_RECEIPT_XML retrived by the query payment_status_old on db nodo_online under macro AppIO
       # RT
-      And verify 1 record for the table RT_VERSAMENTI retrived by the query rpt_stati on db nodo_online under macro AppIO
-      And checks the value of the record at column PROGRESSIVO of the table RT_VERSAMENTI retrived by the query rpt_stati on db nodo_online under macro AppIO
-      And checks the value of the record at column IMPORTO_RT of the table RT_VERSAMENTI retrived by the query rpt_stati on db nodo_online under macro AppIO
-      And checks the value of the record at column ESITO of the table RT_VERSAMENTI retrived by the query rpt_stati on db nodo_online under macro AppIO
-      And checks the value of the record at column CAUSALE_VERSAMENTO of the table RT_VERSAMENTI retrived by the query rpt_stati on db nodo_online under macro AppIO
-      And checks the value of the record at column DATI_SPECIFICI_RISCOSSIONE of the table RT_VERSAMENTI retrived by the query rpt_stati on db nodo_online under macro AppIO
-      And checks the value of the record at column COMMISSIONE_APPLICATE_PSP of the table RT_VERSAMENTI retrived by the query rpt_stati on db nodo_online under macro AppIO
-      And checks the value of the record at column FK_RT of the table RT_VERSAMENTI retrived by the query rpt_stati on db nodo_online under macro AppIO
-      And checks the value of the record at column INSERTED_TIMESTAMP of the table RT_VERSAMENTI retrived by the query rpt_stati on db nodo_online under macro AppIO
-      And checks the value of the record at column UPDATED_TIMESTAMP of the table RT_VERSAMENTI retrived by the query rpt_stati on db nodo_online under macro AppIO
+      And verify 1 record for the table RT_VERSAMENTI retrived by the query esito on db nodo_online under macro AppIO
+      And checks the value of the record at column PROGRESSIVO of the table RT_VERSAMENTI retrived by the query esito on db nodo_online under macro AppIO
+      And checks the value of the record at column IMPORTO_RT of the table RT_VERSAMENTI retrived by the query esito on db nodo_online under macro AppIO
+      And checks the value of the record at column ESITO of the table RT_VERSAMENTI retrived by the query esito on db nodo_online under macro AppIO
+      And checks the value of the record at column CAUSALE_VERSAMENTO of the table RT_VERSAMENTI retrived by the query esito on db nodo_online under macro AppIO
+      And checks the value of the record at column DATI_SPECIFICI_RISCOSSIONE of the table RT_VERSAMENTI retrived by the query esito on db nodo_online under macro AppIO
+      And checks the value of the record at column COMMISSIONE_APPLICATE_PSP of the table RT_VERSAMENTI retrived by the query esito on db nodo_online under macro AppIO
+      And checks the value of the record at column FK_RT of the table RT_VERSAMENTI retrived by the query esito on db nodo_online under macro AppIO
+      And checks the value of the record at column INSERTED_TIMESTAMP of the table RT_VERSAMENTI retrived by the query esito on db nodo_online under macro AppIO
+      And checks the value of the record at column UPDATED_TIMESTAMP of the table RT_VERSAMENTI retrived by the query esito on db nodo_online under macro AppIO
       And verify 1 record for the table RT_XML retrived by the query rpt_stati on db nodo_online under macro AppIO
       # RPT STATUS
       And verify 8 record for the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro AppIO
