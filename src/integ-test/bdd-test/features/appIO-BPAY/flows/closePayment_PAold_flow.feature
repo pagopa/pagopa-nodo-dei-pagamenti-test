@@ -295,11 +295,6 @@ Feature: flow checks for closePayment - PA old
       And retrieve session token from $nodoInviaRPTResponse.url
 
    @skip
-   Scenario: informazioniPagamento
-      When WISP sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-      Then verify the HTTP status code of informazioniPagamento response is 200
-
-   @skip
    Scenario: closePayment
       Given initial json v1/closepayment
          """
@@ -675,12 +670,7 @@ Feature: flow checks for closePayment - PA old
       # RECEIPT
       And verify 1 record for the table POSITION_RECEIPT retrived by the query payment_status_old on db nodo_online under macro AppIO
       And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT retrived by the query payment_status_old on db nodo_online under macro AppIO
-      And verify 1 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-      And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-      And checks the value NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-      And verify 3 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-      And checks the value #creditor_institution_code_old# of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-      And checks the value NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+      And verify 0 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_old on db nodo_online under macro AppIO
       And verify 1 record for the table POSITION_RECEIPT_XML retrived by the query payment_status_old on db nodo_online under macro AppIO
       # RT
       And verify 1 record for the table RT_VERSAMENTI retrived by the query rpt_stati on db nodo_online under macro AppIO
@@ -701,59 +691,62 @@ Feature: flow checks for closePayment - PA old
       And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro AppIO
 
 
+   # FLUSSO_CP_02
+   Scenario: FLUSSO_CP_02 (part 1)
+      Given the nodoVerificaRPT scenario executed successfully
+      And the nodoAttivaRPT scenario executed successfully
+      When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
+      Then check esito is OK of nodoAttivaRPT response
 
-# # FLUSSO_CP_02
-# Scenario: FLUSSO_CP_02 (part 1)
-#    Given the nodoVerificaRPT scenario executed successfully
-#    And the nodoAttivaRPT scenario executed successfully
-#    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-#    Then check esito is OK of nodoAttivaRPT response
-#    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-#    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-#    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+   Scenario: FLUSSO_CP_02 (part 2)
+      Given the FLUSSO_CP_02 (part 1) scenario executed successfully
+      And the nodoInviaRPT scenario executed successfully
+      When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
+      Then verify the HTTP status code of informazioniPagamento response is 200
 
-# Scenario: FLUSSO_CP_02 (part 2)
-#    Given the FLUSSO_CP_02 (part 1) scenario executed successfully
-#    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-#    Then verify the HTTP status code of informazioniPagamento response is 200
+   Scenario: FLUSSO_CP_02 (part 3)
+      Given the FLUSSO_CP_02 (part 2) scenario executed successfully
+      And the closePayment scenario executed successfully
+      When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
+      Then verify the HTTP status code of v1/closepayment response is 200
+      And check esito is OK of v1/closepayment response
+      And wait 5 seconds for expiration
 
-# Scenario: FLUSSO_CP_02 (part 3)
-#    Given the FLUSSO_CP_02 (part 2) scenario executed successfully
-#    And the closePayment scenario executed successfully
-#    When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
-#    Then verify the HTTP status code of v1/closepayment response is 200
-#    And check esito is OK of v1/closepayment response
-#    And wait 5 seconds for expiration
-
-# Scenario: FLUSSO_CP_02 (part 4)
-#    Given the FLUSSO_CP_02 (part 3) scenario executed successfully
-#    And the sendPaymentOutcome scenario executed successfully
-#    And outcome with KO in sendPaymentOutcome
-#    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-#    Then check outcome is KO of sendPaymentOutcome response
-#    And check faultCode is PPT_SEMANTICA of sendPaymentOutcome response
-#    And check description is Esito discorde of sendPaymentOutcome response
-#    And wait 5 seconds for expiration
-#    # POSITION & PAYMENT STATUS
-#    And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-#    And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-#    And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-#    And checks the value PAYMENT_ACCEPTED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-#    And verify 1 record for the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-#    And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-#    And verify 4 record for the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-#    And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-#    # POSITION_PAYMENT
-#    And verify 1 record for the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-#    And checks the value None of the record at column OUTCOME of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-#    And checks the value None of the record at column FEE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-#    And checks the value None of the record at column TRANSFER_DATE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-#    And checks the value None of the record at column APPLICATION_DATE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-#    # RECEIPT
-#    And verify 0 record for the table POSITION_RECEIPT retrived by the query payment_status_old on db nodo_online under macro AppIO
-#    And verify 0 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_old on db nodo_online under macro AppIO
-#    And verify 0 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
-#    And verify 0 record for the table POSITION_RECEIPT_XML retrived by the query payment_status_old on db nodo_online under macro AppIO
+   Scenario: FLUSSO_CP_02 (part 4)
+      Given the FLUSSO_CP_02 (part 3) scenario executed successfully
+      And the sendPaymentOutcome scenario executed successfully
+      And outcome with KO in sendPaymentOutcome
+      When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+      And job paInviaRt triggered after 5 seconds
+      Then check outcome is KO of sendPaymentOutcome response
+      And check faultCode is PPT_SEMANTICA of sendPaymentOutcome response
+      And check description is Esito discorde of sendPaymentOutcome response
+      And wait 5 seconds for expiration
+      # POSITION & PAYMENT STATUS
+      And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+      And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+      And checks the value PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+      And checks the value PAYMENT_ACCEPTED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+      And verify 1 record for the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+      And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+      And verify 3 record for the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+      And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
+      # POSITION_PAYMENT
+      And verify 1 record for the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+      And checks the value None of the record at column OUTCOME of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+      And checks the value None of the record at column FEE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+      And checks the value None of the record at column TRANSFER_DATE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+      And checks the value None of the record at column APPLICATION_DATE of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+      # RECEIPT
+      And verify 0 record for the table POSITION_RECEIPT retrived by the query payment_status_old on db nodo_online under macro AppIO
+      And verify 0 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status_old on db nodo_online under macro AppIO
+      And verify 0 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
+      And verify 0 record for the table POSITION_RECEIPT_XML retrived by the query payment_status_old on db nodo_online under macro AppIO
+      # RPT STATUS
+      And verify 4 record for the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro AppIO
+      And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro AppIO
+      And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro AppIO
+      And checks the value RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro AppIO
 
 
 # # FLUSSO_CP_03
@@ -762,12 +755,10 @@ Feature: flow checks for closePayment - PA old
 #    And the nodoAttivaRPT scenario executed successfully
 #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
 #    Then check esito is OK of nodoAttivaRPT response
-#    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-#    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-#    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
 
 # Scenario: FLUSSO_CP_03 (part 2)
 #    Given the FLUSSO_CP_03 (part 1) scenario executed successfully
+#    And the nodoInviaRPT scenario executed successfully
 #    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
 #    Then verify the HTTP status code of informazioniPagamento response is 200
 
@@ -863,12 +854,11 @@ Feature: flow checks for closePayment - PA old
 #    And the nodoAttivaRPT scenario executed successfully
 #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
 #    Then check esito is OK of nodoAttivaRPT response
-#    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-#    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-#    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+
 
 # Scenario: FLUSSO_CP_04 (part 2)
 #    Given the FLUSSO_CP_04 (part 1) scenario executed successfully
+#    And the nodoInviaRPT scenario executed successfully
 #    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
 #    Then verify the HTTP status code of informazioniPagamento response is 200
 
@@ -917,12 +907,11 @@ Feature: flow checks for closePayment - PA old
 #    And the nodoAttivaRPT scenario executed successfully
 #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
 #    Then check esito is OK of nodoAttivaRPT response
-#    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-#    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-#    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+
 
 # Scenario: FLUSSO_CP_05 (part 2)
 #    Given the FLUSSO_CP_05 (part 1) scenario executed successfully
+#    And the nodoInviaRPT scenario executed successfully
 #    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
 #    Then verify the HTTP status code of informazioniPagamento response is 200
 
@@ -983,12 +972,11 @@ Feature: flow checks for closePayment - PA old
 #    And the nodoAttivaRPT scenario executed successfully
 #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
 #    Then check esito is OK of nodoAttivaRPT response
-#    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-#    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-#    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+
 
 # Scenario: FLUSSO_CP_06 (part 2)
 #    Given the FLUSSO_CP_06 (part 1) scenario executed successfully
+#    And the nodoInviaRPT scenario executed successfully
 #    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
 #    Then verify the HTTP status code of informazioniPagamento response is 200
 
@@ -1050,12 +1038,11 @@ Feature: flow checks for closePayment - PA old
 #    And the nodoAttivaRPT scenario executed successfully
 #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
 #    Then check esito is OK of nodoAttivaRPT response
-#    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-#    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-#    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+
 
 # Scenario: FLUSSO_CP_07 (part 2)
 #    Given the FLUSSO_CP_07 (part 1) scenario executed successfully
+#    And the nodoInviaRPT scenario executed successfully
 #    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
 #    Then verify the HTTP status code of informazioniPagamento response is 200
 
@@ -1101,12 +1088,11 @@ Feature: flow checks for closePayment - PA old
 #    And the nodoAttivaRPT scenario executed successfully
 #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
 #    Then check esito is OK of nodoAttivaRPT response
-#    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-#    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-#    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+
 
 # Scenario: FLUSSO_CP_08 (part 2)
 #    Given the FLUSSO_CP_08 (part 1) scenario executed successfully
+#    And the nodoInviaRPT scenario executed successfully
 #    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
 #    Then verify the HTTP status code of informazioniPagamento response is 200
 
@@ -1157,12 +1143,11 @@ Feature: flow checks for closePayment - PA old
 #    And the nodoAttivaRPT scenario executed successfully
 #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
 #    Then check esito is OK of nodoAttivaRPT response
-#    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-#    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-#    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+
 
 # Scenario: FLUSSO_CP_09 (part 2)
 #    Given the FLUSSO_CP_09 (part 1) scenario executed successfully
+#    And the nodoInviaRPT scenario executed successfully
 #    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
 #    Then verify the HTTP status code of informazioniPagamento response is 200
 #    And wait 3 seconds for expiration
@@ -1225,12 +1210,11 @@ Feature: flow checks for closePayment - PA old
 #    And the nodoAttivaRPT scenario executed successfully
 #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
 #    Then check esito is OK of nodoAttivaRPT response
-#    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-#    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-#    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+
 
 # Scenario: FLUSSO_CP_10 (part 2)
 #    Given the FLUSSO_CP_10 (part 1) scenario executed successfully
+#    And the nodoInviaRPT scenario executed successfully
 #    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
 #    Then verify the HTTP status code of informazioniPagamento response is 200
 
@@ -1281,12 +1265,11 @@ Feature: flow checks for closePayment - PA old
 #    And the nodoAttivaRPT scenario executed successfully
 #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
 #    Then check esito is OK of nodoAttivaRPT response
-#    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-#    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-#    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+
 
 # Scenario: FLUSSO_CP_11 (part 2)
 #    Given the FLUSSO_CP_11 (part 1) scenario executed successfully
+#    And the nodoInviaRPT scenario executed successfully
 #    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
 #    Then verify the HTTP status code of informazioniPagamento response is 200
 
@@ -1347,12 +1330,11 @@ Feature: flow checks for closePayment - PA old
 #    And the nodoAttivaRPT scenario executed successfully
 #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
 #    Then check esito is OK of nodoAttivaRPT response
-#    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-#    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-#    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+
 
 # Scenario: FLUSSO_CP_12 (part 2)
 #    Given the FLUSSO_CP_12 (part 1) scenario executed successfully
+#    And the nodoInviaRPT scenario executed successfully
 #    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
 #    Then verify the HTTP status code of informazioniPagamento response is 200
 
@@ -1392,12 +1374,11 @@ Feature: flow checks for closePayment - PA old
 #    And the nodoAttivaRPT scenario executed successfully
 #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
 #    Then check esito is OK of nodoAttivaRPT response
-#    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-#    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-#    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+
 
 # Scenario: FLUSSO_CP_13 (part 2)
 #    Given the FLUSSO_CP_13 (part 1) scenario executed successfully
+#    And the nodoInviaRPT scenario executed successfully
 #    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
 #    Then verify the HTTP status code of informazioniPagamento response is 200
 
@@ -1459,12 +1440,11 @@ Feature: flow checks for closePayment - PA old
 #    And the nodoAttivaRPT scenario executed successfully
 #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
 #    Then check esito is OK of nodoAttivaRPT response
-#    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-#    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-#    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+
 
 # Scenario: FLUSSO_CP_14 (part 2)
 #    Given the FLUSSO_CP_14 (part 1) scenario executed successfully
+#    And the nodoInviaRPT scenario executed successfully
 #    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
 #    Then verify the HTTP status code of informazioniPagamento response is 200
 
@@ -1493,12 +1473,11 @@ Feature: flow checks for closePayment - PA old
 #    And the nodoAttivaRPT scenario executed successfully
 #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
 #    Then check esito is OK of nodoAttivaRPT response
-#    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-#    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-#    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+
 
 # Scenario: FLUSSO_CP_15 (part 2)
 #    Given the FLUSSO_CP_15 (part 1) scenario executed successfully
+#    And the nodoInviaRPT scenario executed successfully
 #    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
 #    Then verify the HTTP status code of informazioniPagamento response is 200
 
@@ -1558,12 +1537,11 @@ Feature: flow checks for closePayment - PA old
 #    And the nodoAttivaRPT scenario executed successfully
 #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
 #    Then check esito is OK of nodoAttivaRPT response
-#    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-#    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-#    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+
 
 # Scenario: FLUSSO_CP_16 (part 2)
 #    Given the FLUSSO_CP_16 (part 1) scenario executed successfully
+#    And the nodoInviaRPT scenario executed successfully
 #    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
 #    Then verify the HTTP status code of informazioniPagamento response is 200
 
@@ -1622,9 +1600,7 @@ Feature: flow checks for closePayment - PA old
 #    And the nodoAttivaRPT scenario executed successfully
 #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
 #    Then check esito is OK of nodoAttivaRPT response
-#    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-#    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-#    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+
 
 # Scenario: FLUSSO_CP_17 (part 2)
 #    Given the FLUSSO_CP_17 (part 1) scenario executed successfully
@@ -1673,12 +1649,11 @@ Feature: flow checks for closePayment - PA old
 #    And the nodoAttivaRPT scenario executed successfully
 #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
 #    Then check esito is OK of nodoAttivaRPT response
-#    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-#    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-#    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+
 
 # Scenario: FLUSSO_CP_18 (part 2)
 #    Given the FLUSSO_CP_18 (part 1) scenario executed successfully
+#    And the nodoInviaRPT scenario executed successfully
 #    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
 #    Then verify the HTTP status code of informazioniPagamento response is 200
 
@@ -1738,12 +1713,11 @@ Feature: flow checks for closePayment - PA old
 #    And the nodoAttivaRPT scenario executed successfully
 #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
 #    Then check esito is OK of nodoAttivaRPT response
-#    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-#    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-#    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+
 
 # Scenario: FLUSSO_CP_19 (part 2)
 #    Given the FLUSSO_CP_19 (part 1) scenario executed successfully
+#    And the nodoInviaRPT scenario executed successfully
 #    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
 #    Then verify the HTTP status code of informazioniPagamento response is 200
 
@@ -1768,12 +1742,11 @@ Feature: flow checks for closePayment - PA old
 #    And the nodoAttivaRPT scenario executed successfully
 #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
 #    Then check esito is OK of nodoAttivaRPT response
-#    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-#    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-#    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+
 
 # Scenario: FLUSSO_CP_20 (part 2)
 #    Given the FLUSSO_CP_20 (part 1) scenario executed successfully
+#    And the nodoInviaRPT scenario executed successfully
 #    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
 #    Then verify the HTTP status code of informazioniPagamento response is 200
 
@@ -1799,12 +1772,11 @@ Feature: flow checks for closePayment - PA old
 #    And the nodoAttivaRPT scenario executed successfully
 #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
 #    Then check esito is OK of nodoAttivaRPT response
-#    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-#    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-#    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+
 
 # Scenario: FLUSSO_CP_21 (part 2)
 #    Given the FLUSSO_CP_21 (part 1) scenario executed successfully
+#    And the nodoInviaRPT scenario executed successfully
 #    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
 #    Then verify the HTTP status code of informazioniPagamento response is 200
 
@@ -1836,12 +1808,11 @@ Feature: flow checks for closePayment - PA old
 #    And the nodoAttivaRPT scenario executed successfully
 #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
 #    Then check esito is OK of nodoAttivaRPT response
-#    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-#    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-#    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+
 
 # Scenario: FLUSSO_CP_22 (part 2)
 #    Given the FLUSSO_CP_22 (part 1) scenario executed successfully
+#    And the nodoInviaRPT scenario executed successfully
 #    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
 #    Then verify the HTTP status code of informazioniPagamento response is 200
 
@@ -1867,12 +1838,11 @@ Feature: flow checks for closePayment - PA old
 #    And the nodoAttivaRPT scenario executed successfully
 #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
 #    Then check esito is OK of nodoAttivaRPT response
-#    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-#    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-#    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+
 
 # Scenario: FLUSSO_CP_23 (part 2)
 #    Given the FLUSSO_CP_23 (part 1) scenario executed successfully
+#    And the nodoInviaRPT scenario executed successfully
 #    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
 #    Then verify the HTTP status code of informazioniPagamento response is 200
 
@@ -1924,6 +1894,7 @@ Feature: flow checks for closePayment - PA old
 
 # Scenario: FLUSSO_CP_25 (part 2)
 #    Given the FLUSSO_CP_25 (part 1) scenario executed successfully
+#    And the nodoInviaRPT scenario executed successfully
 #    When PM sends REST GET informazioniPagamento?idPagamento=$payToken to nodo-dei-pagamenti
 #    Then verify the HTTP status code of informazioniPagamento response is 404
 #    And check error is Il pagamento non esiste of informazioniPagamento response
@@ -1974,6 +1945,7 @@ Feature: flow checks for closePayment - PA old
 
 # Scenario: FLUSSO_CP_26 (part 2)
 #    Given the FLUSSO_CP_26 (part 1) scenario executed successfully
+#    And the nodoInviaRPT scenario executed successfully
 #    When PM sends REST GET informazioniPagamento?idPagamento=$payToken to nodo-dei-pagamenti
 #    Then verify the HTTP status code of informazioniPagamento response is 404
 #    And check error is Il pagamento non esiste of informazioniPagamento response
@@ -2002,12 +1974,11 @@ Feature: flow checks for closePayment - PA old
 #    And the nodoAttivaRPT scenario executed successfully
 #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
 #    Then check esito is OK of nodoAttivaRPT response
-#    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-#    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-#    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+
 
 # Scenario: FLUSSO_CP_27 (part 2)
 #    Given the FLUSSO_CP_27 (part 1) scenario executed successfully
+#    And the nodoInviaRPT scenario executed successfully
 #    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
 #    Then verify the HTTP status code of informazioniPagamento response is 200
 
@@ -2034,12 +2005,11 @@ Feature: flow checks for closePayment - PA old
 #    And the nodoAttivaRPT scenario executed successfully
 #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
 #    Then check esito is OK of nodoAttivaRPT response
-#    And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-#    And checks the value $ccp of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
-#    And checks the value $nodoAttivaRPT.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status_old on db nodo_online under macro AppIO
+
 
 # Scenario: FLUSSO_CP_28 (part 2)
 #    Given the FLUSSO_CP_28 (part 1) scenario executed successfully
+#    And the nodoInviaRPT scenario executed successfully
 #    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
 #    Then verify the HTTP status code of informazioniPagamento response is 200
 
