@@ -205,7 +205,10 @@ Feature: process tests for generazioneRicevute
     # DB check
     Scenario: DB check
         Given the Execute sendPaymentOutcome request scenario executed successfully
+        # POSITION_RECEIPT
         Then verify 1 record for the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
+        # POSITION_RECEIPT_RECIPIENT
+        And verify 1 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt on db nodo_online under macro NewMod3
 
 
 
