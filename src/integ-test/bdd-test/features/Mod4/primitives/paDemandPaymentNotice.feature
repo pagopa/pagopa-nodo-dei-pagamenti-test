@@ -75,10 +75,11 @@ Feature: response tests for paDemandPaymentNotice
         And EC replies to nodo-dei-pagamenti with the paDemandPaymentNotice
         When PSP sends SOAP demandPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of demandPaymentNotice response
-
+    @wip
     Scenario Outline: Check PPT_STAZIONE_INT_PA_ERRORE_RESPONSE error on invalid body element value
         Given the demandPaymentNotice scenario executed successfully
         And the paDemandPaymentNotice scenario executed successfully
+        And idSoggettoServizio with 00103 in demandPaymentNotice
         And <elem> with <value> in paDemandPaymentNotice
         And EC replies to nodo-dei-pagamenti with the paDemandPaymentNotice
         When PSP sends SOAP demandPaymentNotice to nodo-dei-pagamenti
@@ -96,10 +97,11 @@ Feature: response tests for paDemandPaymentNotice
             | outcome                           | PP           | TRES_PDPN_10 |
 
     # TRES_PDPN_11
-
+    @wip
     Scenario: TRES_PDPN_11
         Given the demandPaymentNotice scenario executed successfully
         And the paDemandPaymentNotice scenario executed successfully
+        And idSoggettoServizio with 00103 in demandPaymentNotice
         And outcome with KO in paDemandPaymentNotice
         And qrCode with None in paDemandPaymentNotice
         And paymentList with None in paDemandPaymentNotice
