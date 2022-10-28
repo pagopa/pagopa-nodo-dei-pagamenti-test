@@ -340,7 +340,7 @@ Feature: flux tests for demandPaymentNotice
             <outcome>OK</outcome>
             <data>
             <creditorReferenceId>11$iuv</creditorReferenceId>
-            <paymentAmount>10.00</paymentAmount>
+            <paymentAmount>15.00</paymentAmount>
             <dueDate>2021-12-31</dueDate>
             <!--Optional:-->
             <retentionDate>2021-12-31T12:12:12</retentionDate>
