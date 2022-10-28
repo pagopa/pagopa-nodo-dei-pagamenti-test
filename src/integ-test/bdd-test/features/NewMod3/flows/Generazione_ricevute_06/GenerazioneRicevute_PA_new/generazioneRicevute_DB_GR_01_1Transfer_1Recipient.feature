@@ -26,6 +26,39 @@ Feature: process tests for generazioneRicevute
             </soapenv:Body>
             </soapenv:Envelope>
             """
+
+        And initial xml paVerifyPaymentNotice
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <paf:paVerifyPaymentNoticeRes>
+            <outcome>OK</outcome>
+            <paymentList>
+            <paymentOptionDescription>
+            <amount>1.00</amount>
+            <options>EQ</options>
+            <!--Optional:-->
+            <dueDate>2022-10-28</dueDate>
+            <!--Optional:-->
+            <detailDescription>descrizione dettagliata lato PA</detailDescription>
+            <!--Optional:-->
+            <allCCP>false</allCCP>
+            </paymentOptionDescription>
+            </paymentList>
+            <!--Optional:-->
+            <paymentDescription>/RFB/311$iuv/5.00/TXT/</paymentDescription>
+            <!--Optional:-->
+            <fiscalCodePA>77777777777</fiscalCodePA>
+            <!--Optional:-->
+            <companyName>company PA</companyName>
+            <!--Optional:-->
+            <officeName>office PA</officeName>
+            </paf:paVerifyPaymentNoticeRes>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And EC replies to nodo-dei-pagamenti with the paVerifyPaymentNotice
         When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of verifyPaymentNotice response
 
