@@ -27,7 +27,6 @@ Feature: process tests for accessiConCorrenziali [1d - RPT+SPO]
             </soapenv:Body>
             </soapenv:Envelope>
             """
-
         When psp sends soap activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
 
@@ -36,7 +35,6 @@ Feature: process tests for accessiConCorrenziali [1d - RPT+SPO]
     Scenario: Define RPT
         Given the Execute activatePaymentNotice request scenario executed successfully
         And RPT generation
-
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
@@ -113,6 +111,7 @@ Feature: process tests for accessiConCorrenziali [1d - RPT+SPO]
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
+
     #Test Suit 1b
     Scenario: Excecute nodoInviaRPT
         Given the Define RPT scenario executed successfully
@@ -121,9 +120,9 @@ Feature: process tests for accessiConCorrenziali [1d - RPT+SPO]
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
             <ppt:intestazionePPT>
-            <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
-            <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
-            <identificativoDominio>44444444444</identificativoDominio>
+            <identificativoIntermediarioPA>#id_broker_old#</identificativoIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
+            <identificativoDominio>>#creditor_institution_code_old#</identificativoDominio>
             <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken</codiceContestoPagamento>
             </ppt:intestazionePPT>
@@ -144,8 +143,7 @@ Feature: process tests for accessiConCorrenziali [1d - RPT+SPO]
         Then check esito is KO of nodoInviaRPT response
         And check faultCode is PPT_SINTASSI_XSD of nodoInviaRPT response
 
-
-
+    @runnable
     Scenario: Excecute sendPaymentOutcome request
         Given the Excecute nodoInviaRPT scenario executed successfully
         And initial XML sendPaymentOutcome
@@ -154,9 +152,9 @@ Feature: process tests for accessiConCorrenziali [1d - RPT+SPO]
             <soapenv:Header/>
             <soapenv:Body>
             <nod:sendPaymentOutcomeReq>
-            <idPSP>40000000001</idPSP>
-            <idBrokerPSP>40000000001</idBrokerPSP>
-            <idChannel>40000000001_01</idChannel>
+            <idPSP>#psp#</idPSP>
+            <idBrokerPSP>#psp#</idBrokerPSP>
+            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
             <password>pwdpwdpwd</password>
             <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
             <outcome>KO</outcome>
@@ -170,7 +168,7 @@ Feature: process tests for accessiConCorrenziali [1d - RPT+SPO]
             <payer>
             <uniqueIdentifier>
             <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-            <entityUniqueIdentifierValue>77777777777_01</entityUniqueIdentifierValue>
+            <entityUniqueIdentifierValue>>#creditor_institution_code_old#</entityUniqueIdentifierValue>
             </uniqueIdentifier>
             <fullName>name</fullName>
             <!--Optional:-->
@@ -198,28 +196,19 @@ Feature: process tests for accessiConCorrenziali [1d - RPT+SPO]
         When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcome response
         And check faultCode is PPT_SINTASSI_EXTRAXSD of sendPaymentOutcome response
-
         And calling primitive nodoInviaRPT and sendPaymentOutcome in parallel
-
-
         #DB CHECK-POSITION_PAYMENT_STATUS
         And checks the value PAYING, PAYING_RPT of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
-
         #DB CHECK-POSITION_PAYMENT_STATUS_SNAPSHOT
         And checks the value PAYING_RPT of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro NewMod3
-
         #DB CHECK-POSITION_STATUS
         And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
-
         #DB CHECK-POSITION_STATUS_SNAPSHOT
         And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro NewMod3
-
         #DB CHECK-STATI_RPT
         And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO_MOD3 of the record at column STATO of the table STATI_RPT retrived by the query nodo_invia_rpt_rpt_stati on db nodo_online under macro NewMod3
-
         #DB CHECK-STATI_RPT_SNAPSHOT
         And checks the value RPT_PARCHEGGIATA_NODO_MOD3 of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query nodo_invia_rpt_rpt_stati on db nodo_online under macro NewMod3
-
         #DB CHECK-POSITION_SUBJECT
         And checks the value DEBTOR of the record at column SUBJECT_TYPE of the table POSITION_SUBJECT retrived by the query position_subject_3 on db nodo_online under macro NewMod3
         And checks the value F of the record at column ENTITY_UNIQUE_IDENTIFIER_TYPE of the table POSITION_SUBJECT retrived by the query position_subject_3 on db nodo_online under macro NewMod3
@@ -234,41 +223,29 @@ Feature: process tests for accessiConCorrenziali [1d - RPT+SPO]
         And checks the value gesualdo.riccitelli@poste.it of the record at column EMAIL of the table POSITION_SUBJECT retrived by the query position_subject_3 on db nodo_online under macro NewMod3
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_SUBJECT retrived by the query position_subject_3 on db nodo_online under macro NewMod3
         And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_SUBJECT retrived by the query position_subject_3 on db nodo_online under macro NewMod3
-
         #DB CHECK-POSITION_SERVICE
         And execution query payment_status to get value on the table POSITION_SERVICE, with the columns DEBTOR_ID under macro NewMod3 with db name nodo_online
         And through the query payment_status retrieve param DEBTOR_ID at position 0 and save it under the key DEBTOR_ID
         And checks the value $DEBTOR_ID of the record at column ID of the table POSITION_SERVICE retrived by the query position_subject_3 on db nodo_online under macro NewMod3
-
-
         #DB CHECK-POSITION_PAYMENT
         And execution query payment_status to get value on the table POSITION_PAYMENT, with the columns RPT_ID under macro NewMod3 with db name nodo_online
         And through the query payment_status retrieve param ID at position 0 and save it under the key RPT_ID
         And checks the value $RPT_ID of the record at column ID of the table RPT retrived by the query rpt on db nodo_online under macro NewMod3
-
-
         #DB CHECK-POSITION_TRANSFER
         And execution query payment_status to get value on the table POSITION_TRANSFER, with the columns TRANSFER_CATEGORY under macro NewMod3 with db name nodo_online
         And through the query payment_status retrieve param TRANSFER_CATEGORY at position 0 and save it under the key TRANSFER_CATEGORY
         And checks the value $TRANSFER_CATEGORY of the record at column DATI_SPECIFICI_RISCOSSIONE of the table RPT_VERSAMENTI retrived by the query rpt_versamenti on db nodo_online under macro NewMod3
-
         #DB CHECK-RT
         And verify 0 record for the table RT retrived by the query rt on db nodo_online under macro NewMod3
-
         #DB CHECK-RT_VERSAMENTI
         And verify 0 record for the table RT_VERSAMENTI retrived by the query rt_versamenti on db nodo_online under macro NewMod3
-
         #DB CHECK-POSITION_RECEIPT
         And verify 0 record for the table POSITION_RECEIPT retrived by the query payment_status on db nodo_online under macro NewMod3
-
         #DB CHECK-POSITION_RECEIPT_RECIPIENT
         And verify 0 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query payment_status on db nodo_online under macro NewMod3
-
         #DB CHECK-RT_XML
         And verify 0 record for the table RT_XML retrived by the query rt on db nodo_online under macro NewMod3
-
         #DB CHECK-POSITION_RECEIPT_TRANSFER
         And verify 0 record for the table POSITION_RECEIPT_TRANSFER retrived by the query position_receipt_transfer on db nodo_online under macro NewMod3
-
         #DB CHECK-POSITION_RECEIPT_XML
         And verify 0 record for the table POSITION_RECEIPT_XML retrived by the query payment_status on db nodo_online under macro NewMod3

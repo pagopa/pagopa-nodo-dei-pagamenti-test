@@ -166,11 +166,11 @@ Feature: DB checks for PAG-579_OK
             """
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
-
         And checks the value N of the record at column PAAATTIVARPTRESP of the table RPT_ACTIVATIONS retrived by the query num_avviso on db nodo_online under macro NewMod3
         And checks the value Y of the record at column NODOINVIARPTREQ of the table RPT_ACTIVATIONS retrived by the query num_avviso on db nodo_online under macro NewMod3
         And wait 10 seconds for expiration
 
+    @runnable
     Scenario: Excecute sendPaymentOutcome request
         Given the Excecute nodoInviaRPT request scenario executed successfully
         And initial XML sendPaymentOutcome
@@ -212,7 +212,6 @@ Feature: DB checks for PAG-579_OK
             """
         When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcome response
-
         And checks the value None of the record at column PAAATTIVARPTRESP of the table RPT_ACTIVATIONS retrived by the query num_avviso on db nodo_online under macro NewMod3
         And checks the value None of the record at column NODOINVIARPTREQ of the table RPT_ACTIVATIONS retrived by the query num_avviso on db nodo_online under macro NewMod3
         And checks the value NotNone of the record at column RPT_ID of the table RPT_ACTIVATIONS retrived by the query num_avviso on db nodo_online under macro NewMod3
