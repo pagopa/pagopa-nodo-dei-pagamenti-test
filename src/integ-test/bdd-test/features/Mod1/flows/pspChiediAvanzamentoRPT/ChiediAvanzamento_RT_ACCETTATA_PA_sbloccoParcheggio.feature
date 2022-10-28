@@ -232,6 +232,7 @@ Feature: process tests for ChiediAvanzamento_RT_ACCETTATA_PA_sbloccoParcheggio
         And check error is timeout of inoltroEsito/mod1 response
         And check url field not exists in inoltroEsito/mod1 response
         And replace iuv content with avanzaOK content
+        And replace pa content with #creditor_institution_code_old# content
         And checks the value RPT_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query stati_RPT_noOrder on db nodo_online under macro Mod1
         And verify 1 record for the table RETRY_RPT retrived by the query motivo_annullamento_originale on db nodo_online under macro Mod1
 
