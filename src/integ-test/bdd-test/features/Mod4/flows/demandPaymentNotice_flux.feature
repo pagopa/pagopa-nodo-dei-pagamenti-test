@@ -1640,7 +1640,7 @@ Feature: flux tests for demandPaymentNotice
         # POSITION_PAYMENT_PLAN
         And checks the value NotNone of the record at column ID of the table POSITION_PAYMENT_PLAN retrived by the query select_activate on db nodo_online under macro NewMod1
         And checks the value $paGetPayment.creditorReferenceId of the record at column CREDITOR_REFERENCE_ID of the table POSITION_PAYMENT_PLAN retrived by the query select_activate on db nodo_online under macro NewMod1
-        And checks the value $activatePaymentNotice.dueDate of the record at column DUE_DATE of the table POSITION_PAYMENT_PLAN retrived by the query select_activate on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column DUE_DATE of the table POSITION_PAYMENT_PLAN retrived by the query select_activate on db nodo_online under macro NewMod1
         And checks the value None of the record at column RETENTION_DATE of the table POSITION_PAYMENT_PLAN retrived by the query select_activate on db nodo_online under macro NewMod1
         And checks the value $activatePaymentNotice.amount of the record at column AMOUNT of the table POSITION_PAYMENT_PLAN retrived by the query select_activate on db nodo_online under macro NewMod1
         And checks the value Y of the record at column FLAG_FINAL_PAYMENT of the table POSITION_PAYMENT_PLAN retrived by the query select_activate on db nodo_online under macro NewMod1
