@@ -89,8 +89,8 @@ Feature: process tests for pspInviaRT[IRPTRES2]
             <ws:pspInviaRPTResponse>
             <pspInviaRPTResponse>
             <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
-            <identificativoCarrello>$1iuv</identificativoCarrello>
-            <parametriPagamentoImmediato>CCD01</parametriPagamentoImmediato>
+            <!--<identificativoCarrello>?</identificativoCarrello>
+            <parametriPagamentoImmediato>?</parametriPagamentoImmediato>-->
             <listaErroriRPT>
                <fault>
                   <faultCode>CANALE_BUSTA_ERRATA</faultCode>
@@ -136,8 +136,18 @@ Feature: process tests for pspInviaRT[IRPTRES2]
             When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
             Then check faultCode is <resp_error> of nodoInviaRPT response
             Examples:
-                | field                          | value              | resp_error                   | soapUI test 
-                | soapenv:Body                   | Empty              | PPT_CANALE_ERRORE_RESPONSE   | IRPTRES3
-                | soapenv:Body                   | None               | PPT_CANALE_ERRORE_RESPONSE   | IRPTRES4
-                | ws:pspInviaRPTResponse         | Empty              | PPT_CANALE_ERRORE_RESPONSE   | IRPTRES5
-                |esitoComplessivoOperazione      | None               | PPT_CANALE_ERRORE_RESPONSE   | IRPTRES6
+                | field                          | value                                             | resp_error                   | soapUI test 
+                | soapenv:Body                   | Empty                                             | PPT_CANALE_ERRORE_RESPONSE   | IRPTRES3
+                | soapenv:Body                   | None                                              | PPT_CANALE_ERRORE_RESPONSE   | IRPTRES4
+                | ws:pspInviaRPTResponse         | Empty                                             | PPT_CANALE_ERRORE_RESPONSE   | IRPTRES5
+                | esitoComplessivoOperazione     | None                                              | PPT_CANALE_ERRORE_RESPONSE   | IRPTRES6
+                | listaErroriRPT                 | None                                              | PPT_CANALE_ERRORE_RESPONSE   | IRPTRES7
+                | esitoComplessivoOperazione     | CIAO                                              | PPT_CANALE_ERRORE_RESPONSE   | IRPTRES9
+                | identificativoCarrello         | aaaaaaaaalaaaaaaaaalaaaaaaaaalaaaaaa              | PPT_CANALE_ERRORE_RESPONSE   | IRPTRES10
+                | listaErroriRPT                 | Empty                                             | PPT_CANALE_ERRORE_RESPONSE   | IRPTRES12
+                | fault                          | Empty                                             | PPT_CANALE_ERRORE_RESPONSE   | IRPTRES13
+                | faultCode                      | Empty                                             | PPT_CANALE_ERRORE_RESPONSE   | IRPTRES15
+                | faultCode                      | CIAO                                              | PPT_CANALE_ERRORE_RESPONSE   | IRPTRES16
+                | faultString                    | Empty                                             | PPT_CANALE_ERRORE_RESPONSE   | IRPTRES17
+                | id                             | Empty                                             | PPT_CANALE_ERRORE_RESPONSE   | IRPTRES18
+                | serial                         | CIAO                                              | PPT_CANALE_ERRORE_RESPONSE   | IRPTRES19
