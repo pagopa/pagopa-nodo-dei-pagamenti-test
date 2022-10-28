@@ -9,9 +9,9 @@ Feature: Process tests for retry a token scaduto
           <soapenv:Header/>
           <soapenv:Body>
               <nod:activatePaymentNoticeReq>
-                  <idPSP>70000000001</idPSP>
-                  <idBrokerPSP>70000000001</idBrokerPSP>
-                  <idChannel>70000000001_01</idChannel>
+                  <idPSP>#psp#</idPSP>
+                  <idBrokerPSP>#psp#</idBrokerPSP>
+                  <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
                   <password>pwdpwdpwd</password>
                   <idempotencyKey>#idempotency_key#</idempotencyKey>
                   <qrCode>
@@ -49,9 +49,9 @@ Feature: Process tests for retry a token scaduto
             <soapenv:Header/>
             <soapenv:Body>
                 <nod:activatePaymentNoticeReq>
-                    <idPSP>70000000001</idPSP>
-                    <idBrokerPSP>70000000001</idBrokerPSP>
-                    <idChannel>70000000001_01</idChannel>
+                    <idPSP>#psp#</idPSP>
+                    <idBrokerPSP>#psp#</idBrokerPSP>
+                    <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
                     <password>pwdpwdpwd</password>
                     <idempotencyKey>#idempotency_key#</idempotencyKey>
                     <qrCode>
@@ -84,9 +84,9 @@ Feature: Process tests for retry a token scaduto
          <soapenv:Header/>
          <soapenv:Body>
             <nod:sendPaymentOutcomeReq>
-               <idPSP>70000000001</idPSP>
-               <idBrokerPSP>70000000001</idBrokerPSP>
-               <idChannel>70000000001_01</idChannel>
+               <idPSP>#psp#</idPSP>
+               <idBrokerPSP>#psp#</idBrokerPSP>
+               <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
                <password>pwdpwdpwd</password>
                <paymentToken>$activatePaymentNotice2Response.paymentToken</paymentToken>
                <outcome>KO</outcome>
@@ -118,6 +118,8 @@ Feature: Process tests for retry a token scaduto
     When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
 
+
+   @runnable
     # Payment Outcome Phase outcome OK 
   Scenario: Execute sendPaymentOutcome2 request
     Given the Execute sendPaymentOutcome1 request scenario executed successfully
@@ -127,9 +129,9 @@ Feature: Process tests for retry a token scaduto
          <soapenv:Header/>
          <soapenv:Body>
             <nod:sendPaymentOutcomeReq>
-               <idPSP>70000000001</idPSP>
-               <idBrokerPSP>70000000001</idBrokerPSP>
-               <idChannel>70000000001_01</idChannel>
+               <idPSP>#psp#</idPSP>
+               <idBrokerPSP>#psp#</idBrokerPSP>
+               <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
                <password>pwdpwdpwd</password>
                <paymentToken>$activatePaymentNotice1Response.paymentToken</paymentToken>
                <outcome>OK</outcome>

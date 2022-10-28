@@ -2,7 +2,7 @@ Feature: T220_verifica_attiva_faultBeanEsteso
 
     Background:
         Given systems up
-@runnable
+
     Scenario: Execute nodoVerificaRPT (Phase 1)
         Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
         And initial XML nodoVerificaRPT

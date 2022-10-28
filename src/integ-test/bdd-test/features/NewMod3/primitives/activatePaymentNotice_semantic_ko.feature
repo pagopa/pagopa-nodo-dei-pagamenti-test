@@ -11,7 +11,7 @@ Feature: Semantic checks KO for activatePaymentNoticeReq
               <nod:activatePaymentNoticeReq>
                   <idPSP>70000000001</idPSP>
                   <idBrokerPSP>70000000001</idBrokerPSP>
-                  <idChannel>70000000001_01</idChannel>
+                  <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
                   <password>pwdpwdpwd</password>
                   <idempotencyKey>#idempotency_key#</idempotencyKey>
                   <qrCode>
@@ -87,7 +87,7 @@ Feature: Semantic checks KO for activatePaymentNoticeReq
 
   # password value check: wrong password for an idChannel [SEM_APNR_08]
   Scenario: Check PPT_AUTENTICAZIONE error on password not associated to psp channel
-    Given idChannel with 70000000001_01 in activatePaymentNotice
+    Given idChannel with #canale_ATTIVATO_PRESSO_PSP# in activatePaymentNotice
     And password with wrongPassword in activatePaymentNotice
     When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is KO of activatePaymentNotice response
@@ -118,7 +118,7 @@ Feature: Semantic checks KO for activatePaymentNoticeReq
     Examples:
       # | iKey                   | value              | soapUI test        |
       # | 70000000001_5114567890 | 511456789012345678 | SEM_APNR_12 - aux5 |
-      # | 70000000001_0114567890 | 011456789012345678 | SEM_APNR_12 - aux0 |
+      # | #canale_ATTIVATO_PRESSO_PSP#14567890 | 011456789012345678 | SEM_APNR_12 - aux0 |
       # | 70000000001_3004567890 | 300456789012345678 | SEM_APNR_12 - aux3 |
       | value              | soapUI test        |
       | 511456789012345678 | SEM_APNR_12 - aux5 |

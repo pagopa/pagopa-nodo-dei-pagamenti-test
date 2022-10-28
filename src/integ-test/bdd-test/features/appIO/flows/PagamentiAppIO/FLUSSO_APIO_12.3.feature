@@ -3,7 +3,7 @@ Feature: FLUSSO_APIO_12.3
     Background:
         Given systems up
         And EC new version
-    @runnable
+ 
     Scenario: Execute verifyPaymentNotice (Phase 1)
         Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
         And initial XML verifyPaymentNotice
@@ -26,7 +26,7 @@ Feature: FLUSSO_APIO_12.3
             """
         When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of verifyPaymentNotice response
-    @runnable
+
     Scenario: Execute activateIOPayment (Phase 2)
         Given the Execute verifyPaymentNotice (Phase 1) scenario executed successfully
         And initial XML paGetPayment
@@ -73,7 +73,6 @@ Feature: FLUSSO_APIO_12.3
             </soapenv:Envelope>
             """
         And EC replies to nodo-dei-pagamenti with the paGetPayment
-
         And initial XML activateIOPayment
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd">
@@ -125,12 +124,12 @@ Feature: FLUSSO_APIO_12.3
             """
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
-    @runnable
+
     Scenario: Execute nodoChiediInformazioniPagamento (Phase 3)
         Given the Execute activateIOPayment (Phase 2) scenario executed successfully
         When WISP sends rest GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200
-    @runnable
+
     Scenario: Execute nodoInoltroEsitoCarta (Phase 4)
         Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
         And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment

@@ -35,6 +35,7 @@ Feature: process tests for retry on a PAYING transaction with different token [A
 
 
     #activate phase2
+    @runnable
     Scenario: Execute activatePaymentNotice2 request
         Given the Execute activatePaymentNotice1 request scenario executed successfully
         And initial XML activatePaymentNotice
@@ -68,4 +69,4 @@ Feature: process tests for retry on a PAYING transaction with different token [A
         And checks the value PAYING of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query position_payment_status_1 on db nodo_online under macro NewMod3
         And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query position_status_1 on db nodo_online under macro NewMod3
         And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query position_status_1 on db nodo_online under macro NewMod3
-        
+

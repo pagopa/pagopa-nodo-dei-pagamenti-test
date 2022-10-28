@@ -3,7 +3,7 @@ Feature: GT_08
     Background:
         Given systems up
         And EC new version
-    @runnable
+
     Scenario: Execute verifyPaymentNotice (Phase 1)
         Given nodo-dei-pagamenti has config parameter useIdempotency set to true
         And nodo-dei-pagamenti has config parameter default_durata_token_IO set to 6000
@@ -29,7 +29,7 @@ Feature: GT_08
             """
         When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of verifyPaymentNotice response
-    @runnable
+
     Scenario: Execute activateIOPayment (Phase 2)
         Given the Execute verifyPaymentNotice (Phase 1) scenario executed successfully
         And initial XML paGetPayment
@@ -76,7 +76,6 @@ Feature: GT_08
             </soapenv:Envelope>
             """
         And EC replies to nodo-dei-pagamenti with the paGetPayment
-
         And initial XML activateIOPayment
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd">
@@ -137,13 +136,13 @@ Feature: GT_08
         And checks the value NotNone of the record at column TOKEN_VALID_FROM of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
         #And check token_valid_to is equal to token_valid_from plus default_durata_token_IO
 
-    @runnable
+
     Scenario: Execute nodoChiediInformazioniPagamento (Phase 3)
         Given the Execute activateIOPayment (Phase 2) scenario executed successfully
         When WISP sends rest GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200
         And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro AppIO
-    @runnable
+
     Scenario: Execute nodoInoltraEsitoPagamentoCarta (Phase 4)
         Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
         And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
@@ -174,7 +173,7 @@ Feature: GT_08
             """
         Then verify the HTTP status code of inoltroEsito/carta response is 408
         And check error is Operazione in timeout of inoltroEsito/carta response
-    @runnable
+
     Scenario: Execute sendPaymentOutcome (Phase 5)
         Given the Execute nodoInoltraEsitoPagamentoCarta (Phase 4) scenario executed successfully
         And initial XML sendPaymentOutcome
@@ -233,6 +232,6 @@ Feature: GT_08
         And restore initial configurations
     @runnable
     Scenario: activateIOPayment1
-        Given the sendPaymentOutcome (Phase 5) scenario executed successfully
+        Given the Execute sendPaymentOutcome (Phase 5) scenario executed successfully
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response

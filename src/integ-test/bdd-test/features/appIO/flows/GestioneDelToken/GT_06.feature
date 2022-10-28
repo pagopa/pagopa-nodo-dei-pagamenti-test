@@ -3,7 +3,7 @@ Feature: GT_06
     Background:
         Given systems up
         And EC new version
-@runnable
+
     Scenario: Execute verifyPaymentNotice (Phase 1)
         Given nodo-dei-pagamenti has config parameter useIdempotency set to true
         And initial XML verifyPaymentNotice

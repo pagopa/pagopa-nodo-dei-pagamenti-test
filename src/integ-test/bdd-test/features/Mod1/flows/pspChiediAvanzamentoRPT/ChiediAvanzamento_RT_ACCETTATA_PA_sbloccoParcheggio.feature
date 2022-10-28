@@ -2,7 +2,7 @@ Feature: process tests for ChiediAvanzamento_RT_ACCETTATA_PA_sbloccoParcheggio
 
     Background:
         Given systems up
-@runnable
+
     Scenario: RPT generation
         Given RPT generation
         """
@@ -81,16 +81,13 @@ Feature: process tests for ChiediAvanzamento_RT_ACCETTATA_PA_sbloccoParcheggio
         </pay_i:datiVersamento>
         </pay_i:RPT>
         """
-
-    Scenario: RT generation
-        Given the RPT generation scenario executed successfully
         And RT generation
         """
         <pay_i:RT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
         <pay_i:versioneOggetto>6.0</pay_i:versioneOggetto>
         <pay_i:dominio>
             <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
-            <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
+            <pay_i:identificativoStazioneRichiedente>44444444444_01</pay_i:identificativoStazioneRichiedente>
         </pay_i:dominio>
         <pay_i:identificativoMessaggioRicevuta>IdentificativoMessaggioRicevuta</pay_i:identificativoMessaggioRicevuta>
         <pay_i:dataOraMessaggioRicevuta>#timedate#</pay_i:dataOraMessaggioRicevuta>
@@ -172,7 +169,7 @@ Feature: process tests for ChiediAvanzamento_RT_ACCETTATA_PA_sbloccoParcheggio
         """
 
     Scenario: Execute nodoInviaRPT request
-        Given the RT generation scenario executed successfully
+        Given the RPT generation scenario executed successfully
         And initial XML nodoInviaRPT
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -217,7 +214,7 @@ Feature: process tests for ChiediAvanzamento_RT_ACCETTATA_PA_sbloccoParcheggio
         Then check esito is OK of nodoInviaRPT response
         And check url contains acards of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
-@runnable
+
     Scenario: Execution Esito Mod1
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends REST POST inoltroEsito/mod1 to nodo-dei-pagamenti
@@ -233,9 +230,9 @@ Feature: process tests for ChiediAvanzamento_RT_ACCETTATA_PA_sbloccoParcheggio
              """
         Then verify the HTTP status code of inoltroEsito/mod1 response is 408
         And check error is timeout of inoltroEsito/mod1 response
-        # controllare se serve lo step successivo
         And check url field not exists in inoltroEsito/mod1 response
         And replace iuv content with avanzaOK content
+        And replace pa content with #creditor_institution_code_old# content
         And checks the value RPT_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query stati_RPT_noOrder on db nodo_online under macro Mod1
         And verify 1 record for the table RETRY_RPT retrived by the query motivo_annullamento_originale on db nodo_online under macro Mod1
 
@@ -273,7 +270,8 @@ Feature: process tests for ChiediAvanzamento_RT_ACCETTATA_PA_sbloccoParcheggio
         And wait 10 seconds for expiration
         And verify 0 record for the table RETRY_RPT retrived by the query motivo_annullamento_originale on db nodo_online under macro Mod1
         And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query stati_RPT_noOrder on db nodo_online under macro Mod1
-@runnable
+
+@firstRun
     Scenario: Execute nodoChiediStatoRPT request
         Given the Execute job pspChiediAvanzamentoRPT scenario executed successfully
         And initial XML nodoChiediStatoRPT

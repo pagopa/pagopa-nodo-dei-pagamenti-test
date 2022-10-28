@@ -11,7 +11,7 @@ Feature: check semantic paaVerifyRPT - KO
                     <nod:verifyPaymentNoticeReq>
                         <idPSP>70000000001</idPSP>
                         <idBrokerPSP>70000000001</idBrokerPSP>
-                        <idChannel>70000000001_01</idChannel>
+                        <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
                         <password>pwdpwdpwd</password>
                         <qrCode>
                             <fiscalCode>#creditor_institution_code_old#</fiscalCode>

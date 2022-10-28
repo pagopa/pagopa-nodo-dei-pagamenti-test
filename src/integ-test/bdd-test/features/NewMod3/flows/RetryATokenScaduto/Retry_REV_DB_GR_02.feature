@@ -8,9 +8,9 @@ Feature: process tests Retry_REV_DB_GR_02
                 <soapenv:Header />
                 <soapenv:Body>
                     <nod:verifyPaymentNoticeReq>
-                        <idPSP>70000000001</idPSP>
-                        <idBrokerPSP>70000000001</idBrokerPSP>
-                        <idChannel>70000000001_01</idChannel>
+                        <idPSP>#psp#</idPSP>
+                        <idBrokerPSP>#psp#</idBrokerPSP>
+                        <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
                         <password>pwdpwdpwd</password>
                         <qrCode>
                             <fiscalCode>#creditor_institution_code#</fiscalCode>
@@ -36,9 +36,9 @@ Feature: process tests Retry_REV_DB_GR_02
                 <soapenv:Header/>
                 <soapenv:Body>
                     <nod:activatePaymentNoticeReq>
-                        <idPSP>70000000001</idPSP>
-                        <idBrokerPSP>70000000001</idBrokerPSP>
-                        <idChannel>70000000001_01</idChannel>
+                        <idPSP>#psp#</idPSP>
+                        <idBrokerPSP>#psp#</idBrokerPSP>
+                        <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
                         <password>pwdpwdpwd</password>
                         <idempotencyKey>#idempotency_key#</idempotencyKey>
                         <qrCode>
@@ -70,11 +70,11 @@ Feature: process tests Retry_REV_DB_GR_02
                 <soapenv:Header/>
                 <soapenv:Body>
                     <nod:sendPaymentOutcomeReq>
-                        <idPSP>${psp}</idPSP>
-                        <idBrokerPSP>${intermediarioPSP}</idBrokerPSP>
-                        <idChannel>${canale3}</idChannel>
-                        <password>${password}</password>
-                        <paymentToken>${#TestCase#token}</paymentToken>
+                        <idPSP>#psp#</idPSP>
+                        <idBrokerPSP>#psp#</idBrokerPSP>
+                        <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
+                        <password>pwdpwdpwd</password>
+                        <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
                         <outcome>OK</outcome>
                         <!--Optional:-->
                         <details>
@@ -86,7 +86,7 @@ Feature: process tests Retry_REV_DB_GR_02
                             <payer>
                                 <uniqueIdentifier>
                                     <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-                                    <entityUniqueIdentifierValue>77777777777_01</entityUniqueIdentifierValue>
+                                    <entityUniqueIdentifierValue>#canale_ATTIVATO_PRESSO_PSP#</entityUniqueIdentifierValue>
                                 </uniqueIdentifier>
                                 <fullName>name</fullName>
                                 <!--Optional:-->
@@ -122,7 +122,7 @@ Feature: process tests Retry_REV_DB_GR_02
         When job mod3CancelV2 triggered after 3 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
 
-
+    @runnable
     #db check
     Scenario: DB check
         Given the Execute sendPaymentOutcomeReq request scenario executed successfully

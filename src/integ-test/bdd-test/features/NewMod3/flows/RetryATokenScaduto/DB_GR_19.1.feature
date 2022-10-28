@@ -4,7 +4,7 @@ Feature: process tests for DB_GR_19.1
     Given systems up
     And update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with Y, with where condition FK_PA and where value ('16629') under macro update_query on db nodo_cfg
     And refresh job PA triggered after 10 seconds
-    
+
   Scenario: initial verifyPaymentNotice
     Given initial XML verifyPaymentNotice
       """
@@ -13,7 +13,7 @@ Feature: process tests for DB_GR_19.1
       <soapenv:Body>
       <nod:verifyPaymentNoticeReq>
       <idPSP>#psp#</idPSP>
-      <idBrokerPSP>60000000001</idBrokerPSP>
+      <idBrokerPSP>80000000001</idBrokerPSP>
       <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
       <password>pwdpwdpwd</password>
       <qrCode>
@@ -41,7 +41,7 @@ Feature: process tests for DB_GR_19.1
       <soapenv:Body>
       <nod:activatePaymentNoticeReq>
       <idPSP>#psp#</idPSP>
-      <idBrokerPSP>60000000001</idBrokerPSP>
+      <idBrokerPSP>80000000001</idBrokerPSP>
       <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
       <password>pwdpwdpwd</password>
       <idempotencyKey>#idempotency_key#</idempotencyKey>
@@ -81,7 +81,7 @@ Feature: process tests for DB_GR_19.1
       <debtor>
       <uniqueIdentifier>
       <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-      <entityUniqueIdentifierValue>77777777777</entityUniqueIdentifierValue>
+      <entityUniqueIdentifierValue>#creditor_institution_code_secondary#</entityUniqueIdentifierValue>
       </uniqueIdentifier>
       <fullName>paGetPaymentName</fullName>
       <!--Optional:-->
@@ -105,7 +105,7 @@ Feature: process tests for DB_GR_19.1
       <transfer>
       <idTransfer>1</idTransfer>
       <transferAmount>17.00</transferAmount>
-      <fiscalCodePA>66666666666</fiscalCodePA>
+      <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
       <IBAN>IT45R0760103200000000001016</IBAN>
       <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
       <transferCategory>paGetPaymentTest</transferCategory>
@@ -129,9 +129,9 @@ Feature: process tests for DB_GR_19.1
     Then check outcome is OK of activatePaymentNotice response
 
   #Scenario: Poller Annulli
-    #Given the Execute activatePaymentNotice request scenario executed successfully
-    #When job mod3CancelV2 triggered after 3 seconds
-    #Then verify the HTTP status code of mod3CancelV2 response is 200
+  #Given the Execute activatePaymentNotice request scenario executed successfully
+  #When job mod3CancelV2 triggered after 3 seconds
+  #Then verify the HTTP status code of mod3CancelV2 response is 200
 
   # Payment Outcome Phase outcome OK
   Scenario: Execute sendPaymentOutcome request
@@ -143,7 +143,7 @@ Feature: process tests for DB_GR_19.1
       <soapenv:Body>
       <nod:sendPaymentOutcomeReq>
       <idPSP>#psp#</idPSP>
-      <idBrokerPSP>60000000001</idBrokerPSP>
+      <idBrokerPSP>80000000001</idBrokerPSP>
       <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
       <password>pwdpwdpwd</password>
       <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
@@ -175,9 +175,9 @@ Feature: process tests for DB_GR_19.1
       """
     When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
-    
 
-   Scenario: trigger jobs paSendRt
+
+  Scenario: trigger jobs paSendRt
     Given the Execute sendPaymentOutcome request scenario executed successfully
     When job paSendRt triggered after 5 seconds
     Then verify the HTTP status code of paSendRt response is 200
@@ -204,7 +204,7 @@ Feature: process tests for DB_GR_19.1
     #And checks the value $recipient_station_id of the record at column STATION_ID of the table POSITION_PAYMENT retrived by the query position_status_n on db nodo_online under macro NewMod3
     #And checks the value NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_status_n on db nodo_online under macro NewMod3
     #And checks the value $fk_position_receipt of the record at column ID of the table POSITION_RECEIPT retrived by the query position_status_n on db nodo_online under macro NewMod3
-   # DB Check POSITION_RECEIPT_RECIPIENT_STATUS
+    # DB Check POSITION_RECEIPT_RECIPIENT_STATUS
     #And execution query position_receipt_recipient_status to get value on the table POSITION_RECEIPT_RECIPIENT_STATUS, with the columns * under macro NewMod3 with db name nodo_online
     #And through the query position_receipt_recipient_status retrieve param 1pa_fiscal_code at position 1 and save it under the key 1pa_fiscal_code
     #And through the query position_receipt_recipient_status retrieve param 1notice_id at position 2 and save it under the key 1notice_id
@@ -230,14 +230,15 @@ Feature: process tests for DB_GR_19.1
     And checks the value $activatePaymentNoticeResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
     And checks the value $activatePaymentNotice.fiscalCode of the record at column RECIPIENT_PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
     And checks the value $activatePaymentNotice.fiscalCode of the record at column RECIPIENT_BROKER_PA_ID of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
-    #And checks the value $recipient_station_id of the record at column RECIPIENT_STATION_ID of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
-    #And checks the value NOTICE_GENERATED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
-    #And verify 1 record for the table POSITION_RECEIPT_XML retrived by the query payment_status on db nodo_online under macro NewMod3
-  
+  #And checks the value $recipient_station_id of the record at column RECIPIENT_STATION_ID of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
+  #And checks the value NOTICE_GENERATED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
+  #And verify 1 record for the table POSITION_RECEIPT_XML retrived by the query payment_status on db nodo_online under macro NewMod3
+
+  @runnable
   Scenario: job refresh pa (2)
     Given update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with N, with where condition FK_PA and where value ('16629') under macro update_query on db nodo_cfg
     Then refresh job PA triggered after 10 seconds
-  
+
 
 
 

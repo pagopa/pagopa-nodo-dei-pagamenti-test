@@ -9,8 +9,8 @@ Feature: process tests for pspInviaRT[IRPTRES1]
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-            <pay_i:identificativoDominio>44444444444</pay_i:identificativoDominio>
-            <pay_i:identificativoStazioneRichiedente>44444444444_01</pay_i:identificativoStazioneRichiedente>
+            <pay_i:identificativoDominio>#intermediarioPA#</pay_i:identificativoDominio>
+            <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
             <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
@@ -83,14 +83,39 @@ Feature: process tests for pspInviaRT[IRPTRES1]
             """
     Scenario: Execute nodoInviaRPT request
         Given the RPT generation scenario executed successfully
-        And initial XML nodoInviaRPT
+            And initial XML pspInviaRPT
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soappppppp/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header>
+            </soapenv:Header>
+            <soapenv:Body>
+            <ws:pspInviaRPTResponse>
+            <pspInviaRPTResponse>
+            <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
+            <!--<identificativoCarrello>?</identificativoCarrello>
+            <parametriPagamentoImmediato>?</parametriPagamentoImmediato>-->
+            <listaErroriRPT>
+               <fault>
+                  <faultCode>CANALE_BUSTA_ERRATA</faultCode>
+                  <faultString>Errore di sintassi</faultString>
+                  <id>IDPSPFNZ</id>
+                  <!--<description>boh</description>
+                  <serial>1</serial>-->
+               </fault>
+            </listaErroriRPT>
+            </pspInviaRPTResponse>
+            </ws:pspInviaRPTResponse>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+            And initial XML nodoInviaRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
                 <ppt:intestazionePPT>
-                    <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
-                    <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
-                    <identificativoDominio>44444444444</identificativoDominio>
+                    <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
+                    <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
+                    <identificativoDominio>#creditor_institution_code#</identificativoDominio>
                     <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
                     <codiceContestoPagamento>CCD01</codiceContestoPagamento>
                 </ppt:intestazionePPT>
@@ -98,41 +123,16 @@ Feature: process tests for pspInviaRT[IRPTRES1]
             <soapenv:Body>
                 <ws:nodoInviaRPT>
                     <password>pwdpwdpwd</password>
-                    <identificativoPSP>40000000001</identificativoPSP>
-                    <identificativoIntermediarioPSP>40000000001</identificativoIntermediarioPSP>
-                    <identificativoCanale>40000000001_03</identificativoCanale>
+                    <identificativoPSP>#psp#</identificativoPSP>
+                    <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+                    <identificativoCanale>#canaleRtPush#</identificativoCanale>
                     <tipoFirma></tipoFirma>
                     <rpt>$rptAttachment</rpt>
                 </ws:nodoInviaRPT>
             </soapenv:Body>
             </soapenv:Envelope>
             """
-            And initial XML pspInviaRPT
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/ciao/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header/>
-            <soapenv:Body>
-                <ws:pspInviaRPTResponse>
-                    <pspInviaRPTResponse>
-                        <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
-                        <!--<identificativoCarrello>?</identificativoCarrello>
-                        <parametriPagamentoImmediato>?</parametriPagamentoImmediato>-->
-                        <listaErroriRPT>
-                        
-                        <fault>
-                            <faultCode>CANALE_BUSTA_ERRATA</faultCode>
-                            <faultString>Errore di sintassi</faultString>
-                            <id>IDPSPFNZ</id>
-                            <!--<description>boh</description>
-                            <serial>1</serial>-->
-                        </fault>
-                        </listaErroriRPT>
-                    </pspInviaRPTResponse>
-                </ws:pspInviaRPTResponse>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-            And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
+            And psp replies to nodo-dei-pagamenti with the pspInviaRPT
             When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
             Then check esito is KO of nodoInviaRPT response
-            And check faultCode is PPT_SYSTEM_ERROR of nodoInviaRPT response
+            And check faultCode is PPT_CANALE_ERRORE_RESPONSE of nodoInviaRPT response
