@@ -1,10 +1,8 @@
-Feature: process tests for pspInviaRT[IRPTRES1]
+Feature: process tests for pspInviaRT[IRPTRES2]
     Background:
         Given systems up
         And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
-
-   Scenario: RPT generation
-        Given RPT generation
+        And RPT generation
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
@@ -81,12 +79,11 @@ Feature: process tests for pspInviaRT[IRPTRES1]
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-    Scenario: Execute nodoInviaRPT request
-        Given the RPT generation scenario executed successfully
             And initial XML pspInviaRPT
             """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soappppppp/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
+            <identificativoCarrello>$1iuv</identificativoCarrello>
             </soapenv:Header>
             <soapenv:Body>
             <ws:pspInviaRPTResponse>
@@ -133,6 +130,12 @@ Feature: process tests for pspInviaRT[IRPTRES1]
             </soapenv:Envelope>
             """
             And psp replies to nodo-dei-pagamenti with the pspInviaRPT
+
+        Scenario Outline: Check faultCode error on non-existent or invalid field
+            Given <field> with <value> in pspInviaRPT
             When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-            Then check esito is KO of nodoInviaRPT response
-            And check faultCode is PPT_CANALE_ERRORE_RESPONSE of nodoInviaRPT response
+            Then check faultCode is <resp_error> of nodoInviaRPT response
+            Examples:
+                | field                          | value              | resp_error                   | soapUI test 
+                | soapenv:Body                   | Empty              | PPT_CANALE_ERRORE_RESPONSE   | IRPTRES3
+                | soapenv:Body                   | None               | PPT_CANALE_ERRORE_RESPONSE   | IRPTRES4

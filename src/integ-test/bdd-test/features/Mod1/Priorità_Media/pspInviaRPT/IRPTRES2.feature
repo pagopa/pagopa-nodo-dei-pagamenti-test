@@ -136,4 +136,4 @@ Feature: process tests for pspInviaRT[IRPTRES2]
             And psp replies to nodo-dei-pagamenti with the pspInviaRPT
             When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
             Then check esito is KO of nodoInviaRPT response
-            And check faultCode is PPT_SYSTEM_ERROR of nodoInviaRPT response
+            And check faultCode is PPT_CANALE_ERRORE_RESPONSE of nodoInviaRPT response
