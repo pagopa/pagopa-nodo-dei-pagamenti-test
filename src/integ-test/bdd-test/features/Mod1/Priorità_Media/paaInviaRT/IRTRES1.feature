@@ -215,7 +215,7 @@ Feature: process tests for paaInviaRT[IRTRES1]
 
     @runnable
     Scenario: Execute nodoInviaRT
-        Given the Given the Execute nodoInviaRPT (Phase 1) scenario executed successfully scenario executed successfully
+        Given the Execute nodoInviaRPT (Phase 1) scenario executed successfully 
         And initial XML paaInviaRT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/ciao/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
