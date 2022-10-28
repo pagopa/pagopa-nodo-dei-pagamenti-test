@@ -23,7 +23,7 @@ Feature: response tests for paDemandPaymentNotice
             """
 
     @skip
-    Scenario: paDemandPaymentNotice OK
+    Scenario: paDemandPaymentNotice
         Given initial XML paDemandPaymentNotice
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
@@ -53,9 +53,9 @@ Feature: response tests for paDemandPaymentNotice
             </soapenv:Envelope>
             """
 
-    Scenario Outline: Check paDemandPaymentNotice OK response with missing optional fields
+    Scenario Outline: Check paDemandPaymentNotice response with missing optional fields
         Given the demandPaymentNotice scenario executed successfully
-        And the paDemandPaymentNotice OK scenario executed successfully
+        And the paDemandPaymentNotice scenario executed successfully
         And <elem> with <value> in paDemandPaymentNotice
         And EC replies to nodo-dei-pagamenti with the paDemandPaymentNotice
         When PSP sends SOAP demandPaymentNotice to nodo-dei-pagamenti
@@ -69,9 +69,42 @@ Feature: response tests for paDemandPaymentNotice
 
     # TRES_PDPN_02
 
-    Scenario: soapenv:Header empty
+    Scenario: TRES_PDPN_02
         Given the demandPaymentNotice scenario executed successfully
-        And the paDemandPaymentNotice OK scenario executed successfully
+        And the paDemandPaymentNotice scenario executed successfully
         And EC replies to nodo-dei-pagamenti with the paDemandPaymentNotice
         When PSP sends SOAP demandPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of demandPaymentNotice response
+
+    Scenario Outline: Check PPT_STAZIONE_INT_PA_ERRORE_RESPONSE error on invalid body element value
+        Given the demandPaymentNotice scenario executed successfully
+        And the paDemandPaymentNotice scenario executed successfully
+        And <elem> with <value> in paDemandPaymentNotice
+        And EC replies to nodo-dei-pagamenti with the paDemandPaymentNotice
+        When PSP sends SOAP demandPaymentNotice to nodo-dei-pagamenti
+        Then check outcome is KO of demandPaymentNotice response
+        And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of demandPaymentNotice response
+        Examples:
+            | elem                              | value        | soapUI test  |
+            | soapenv:Body                      | None         | TRES_PDPN_03 |
+            | soapenv:Body                      | Empty        | TRES_PDPN_04 |
+            | paf:paDemandPaymentNoticeResponse | None         | TRES_PDPN_05 |
+            | paf:paDemandPaymentNoticeResponse | RemoveParent | TRES_PDPN_06 |
+            | paf:paDemandPaymentNoticeResponse | Empty        | TRES_PDPN_07 |
+            | outcome                           | None         | TRES_PDPN_08 |
+            | outcome                           | Empty        | TRES_PDPN_09 |
+            | outcome                           | PP           | TRES_PDPN_10 |
+
+    # TRES_PDPN_11
+
+    Scenario: TRES_PDPN_11
+        Given the demandPaymentNotice scenario executed successfully
+        And the paDemandPaymentNotice scenario executed successfully
+        And outcome with KO in paDemandPaymentNotice
+        And qrCode with None in paDemandPaymentNotice
+        And paymentList with None in paDemandPaymentNotice
+        And officeName with None in paDemandPaymentNotice
+        And EC replies to nodo-dei-pagamenti with the paDemandPaymentNotice
+        When PSP sends SOAP demandPaymentNotice to nodo-dei-pagamenti
+        Then check outcome is KO of demandPaymentNotice response
+        And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of demandPaymentNotice response
