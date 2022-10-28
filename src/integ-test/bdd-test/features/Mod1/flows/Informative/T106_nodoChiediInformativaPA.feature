@@ -10,11 +10,11 @@ Feature: process tests for nodoChiediInformativaPA
             <soapenv:Header/>
             <soapenv:Body>
                 <ws:nodoChiediInformativaPA>
-                    <identificativoPSP>40000000001</identificativoPSP>
-                    <identificativoIntermediarioPSP>40000000001</identificativoIntermediarioPSP>
-                    <identificativoCanale>40000000001_03</identificativoCanale>
+                    <identificativoPSP>#psp#</identificativoPSP>
+                    <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+                    <identificativoCanale>#canale#</identificativoCanale>
                     <password>pwdpwdpwd</password>
-                    <identificativoDominio>90000000001</identificativoDominio>
+                    <identificativoDominio>#creditor_institution_code_secondary#</identificativoDominio>
                 </ws:nodoChiediInformativaPA>
             </soapenv:Body>
             </soapenv:Envelope>

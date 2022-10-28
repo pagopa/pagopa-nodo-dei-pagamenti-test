@@ -10,9 +10,9 @@ Feature: process tests for nodoChiediCatalogoServizi
             <soapenv:Header/>
             <soapenv:Body>
                 <ws:nodoChiediCatalogoServizi>
-                    <identificativoPSP>40000000001</identificativoPSP>
-                    <identificativoIntermediarioPSP>40000000001</identificativoIntermediarioPSP>
-                    <identificativoCanale>40000000001_03</identificativoCanale>
+                    <identificativoPSP>#psp#</identificativoPSP>
+                    <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+                    <identificativoCanale>#canale#</identificativoCanale>
                     <password>pwdpwdpwd</password>
                     <!-- questo campo manda in eccezione il Nodo3 ma non il 4 -->
                     <identificativoDominio>00493410583</identificativoDominio>
@@ -33,11 +33,11 @@ Feature: process tests for nodoChiediCatalogoServizi
             <soapenv:Header/>
             <soapenv:Body>
                 <ws:nodoChiediCatalogoServizi>
-                    <identificativoPSP>40000000001</identificativoPSP>
-                    <identificativoIntermediarioPSP>40000000001</identificativoIntermediarioPSP>
-                    <identificativoCanale>40000000001_03</identificativoCanale>
+                    <identificativoPSP>#psp#</identificativoPSP>
+                    <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+                    <identificativoCanale>#canale#</identificativoCanale>
                     <password>pwdpwdpwd</password>
-                    <identificativoDominio>44444444444</identificativoDominio>
+                    <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
                 </ws:nodoChiediCatalogoServizi>
             </soapenv:Body>
             </soapenv:Envelope>
