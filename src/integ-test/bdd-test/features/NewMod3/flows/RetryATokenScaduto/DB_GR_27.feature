@@ -16,7 +16,7 @@ Feature: process tests for DB_GR_27
       <soapenv:Body>
       <nod:verifyPaymentNoticeReq>
       <idPSP>#psp#</idPSP>
-      <idBrokerPSP>60000000001</idBrokerPSP>
+      <idBrokerPSP>80000000001</idBrokerPSP>
       <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
       <password>pwdpwdpwd</password>
       <qrCode>
@@ -44,7 +44,7 @@ Feature: process tests for DB_GR_27
       <soapenv:Body>
       <nod:activatePaymentNoticeReq>
       <idPSP>#psp#</idPSP>
-      <idBrokerPSP>60000000001</idBrokerPSP>
+      <idBrokerPSP>80000000001</idBrokerPSP>
       <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
       <password>pwdpwdpwd</password>
       <idempotencyKey>#idempotency_key#</idempotencyKey>
@@ -108,7 +108,7 @@ Feature: process tests for DB_GR_27
       <transfer>
       <idTransfer>1</idTransfer>
       <transferAmount>10.00</transferAmount>
-      <fiscalCodePA>66666666666</fiscalCodePA>
+      <fiscalCodePA>#creditor_institution_code_secondary#</fiscalCodePA>
       <IBAN>IT45R0760103200000000001016</IBAN>
       <remittanceInformation>testPaGetPayment</remittanceInformation>
       <transferCategory>paGetPaymentTest</transferCategory>
@@ -161,9 +161,9 @@ Feature: process tests for DB_GR_27
       <soapenv:Header/>
       <soapenv:Body>
       <nod:sendPaymentOutcomeReq>
-      <idPSP>70000000001</idPSP>
-      <idBrokerPSP>70000000001</idBrokerPSP>
-      <idChannel>70000000001_01</idChannel>
+      <idPSP>#psp#</idPSP>
+      <idBrokerPSP>#psp#</idBrokerPSP>
+      <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
       <password>pwdpwdpwd</password>
       <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
       <outcome>OK</outcome>
@@ -207,7 +207,7 @@ Feature: process tests for DB_GR_27
     And update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with N, with where condition OBJ_ID and where value ('13','1201') under macro update_query on db nodo_cfg
     
   
-  
+  @runnable
   Scenario: job refresh pa (2)
     Given the DB check + db update scenario executed successfully
     Then refresh job PA triggered after 10 seconds

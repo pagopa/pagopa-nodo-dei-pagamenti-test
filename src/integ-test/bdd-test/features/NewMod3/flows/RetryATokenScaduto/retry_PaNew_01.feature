@@ -8,9 +8,9 @@ Feature: Process tests for retry a token scaduto
         <soapenv:Header />
         <soapenv:Body>
             <nod:verifyPaymentNoticeReq>
-                <idPSP>70000000001</idPSP>
-                <idBrokerPSP>70000000001</idBrokerPSP>
-                <idChannel>70000000001_01</idChannel>
+                <idPSP>#psp#</idPSP>
+                <idBrokerPSP>#psp#</idBrokerPSP>
+                <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
                 <password>pwdpwdpwd</password>
                 <qrCode>
                     <fiscalCode>#creditor_institution_code#</fiscalCode>
@@ -37,9 +37,9 @@ Feature: Process tests for retry a token scaduto
           <soapenv:Header/>
           <soapenv:Body>
               <nod:activatePaymentNoticeReq>
-                  <idPSP>70000000001</idPSP>
-                  <idBrokerPSP>70000000001</idBrokerPSP>
-                  <idChannel>70000000001_01</idChannel>
+                  <idPSP>#psp#</idPSP>
+                  <idBrokerPSP>#psp#</idBrokerPSP>
+                  <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
                   <password>pwdpwdpwd</password>
                   <idempotencyKey>#idempotency_key#</idempotencyKey>
                   <qrCode>
@@ -62,6 +62,7 @@ Feature: Process tests for retry a token scaduto
     Given the Execute activatePaymentNotice request scenario executed successfully
     And PSP waits expirationTime of activatePaymentNotice expires
     
+  @runnable
 # Payment Outcome Phase outcome OK 
   Scenario: Execute sendPaymentOutcome request
     Given the Execute sleep phase1 scenario executed successfully
@@ -71,9 +72,9 @@ Feature: Process tests for retry a token scaduto
          <soapenv:Header/>
          <soapenv:Body>
             <nod:sendPaymentOutcomeReq>
-               <idPSP>70000000001</idPSP>
-               <idBrokerPSP>70000000001</idBrokerPSP>
-               <idChannel>70000000001_01</idChannel>
+               <idPSP>#psp#</idPSP>
+               <idBrokerPSP>#psp#</idBrokerPSP>
+               <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
                <password>pwdpwdpwd</password>
                <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
                <outcome>OK</outcome>
@@ -110,7 +111,7 @@ Feature: Process tests for retry a token scaduto
     #Test2
     And checks the value PAYING,NOTICE_GENERATED,PAID of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
     And checks the value NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro NewMod3
-     #test3
+    #test3
     And checks the value PAYING,PAID of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
     And checks the value NOTIFIED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro NewMod3
     #test4

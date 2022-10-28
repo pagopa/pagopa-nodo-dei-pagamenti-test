@@ -15,9 +15,9 @@ Feature: process tests for Retry_DB_GR_11
       <soapenv:Header/>
       <soapenv:Body>
       <nod:verifyPaymentNoticeReq>
-      <idPSP>70000000001</idPSP>
-      <idBrokerPSP>70000000001</idBrokerPSP>
-      <idChannel>70000000001_01</idChannel>
+      <idPSP>#psp#</idPSP>
+      <idBrokerPSP>#psp#</idBrokerPSP>
+      <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
       <password>pwdpwdpwd</password>
       <qrCode>
       <fiscalCode>#creditor_institution_code#</fiscalCode>
@@ -43,9 +43,9 @@ Feature: process tests for Retry_DB_GR_11
       <soapenv:Header/>
       <soapenv:Body>
       <nod:activatePaymentNoticeReq>
-      <idPSP>70000000001</idPSP>
-      <idBrokerPSP>70000000001</idBrokerPSP>
-      <idChannel>70000000001_01</idChannel>
+      <idPSP>#psp#</idPSP>
+      <idBrokerPSP>#psp#</idBrokerPSP>
+      <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
       <password>pwdpwdpwd</password>
       <idempotencyKey>#idempotency_key#</idempotencyKey>
       <qrCode>
@@ -84,7 +84,7 @@ Feature: process tests for Retry_DB_GR_11
       <debtor>
       <uniqueIdentifier>
       <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-      <entityUniqueIdentifierValue>77777777777</entityUniqueIdentifierValue>
+      <entityUniqueIdentifierValue>#creditor_institution_code_secondary#</entityUniqueIdentifierValue>
       </uniqueIdentifier>
       <fullName>paGetPaymentName</fullName>
       <!--Optional:-->
@@ -108,7 +108,7 @@ Feature: process tests for Retry_DB_GR_11
       <transfer>
       <idTransfer>1</idTransfer>
       <transferAmount>10.00</transferAmount>
-      <fiscalCodePA>77777777777</fiscalCodePA>
+      <fiscalCodePA>#creditor_institution_code_secondary#</fiscalCodePA>
       <IBAN>IT45R0760103200000000001016</IBAN>
       <remittanceInformation>testPaGetPayment</remittanceInformation>
       <transferCategory>paGetPaymentTest</transferCategory>
@@ -161,9 +161,9 @@ Feature: process tests for Retry_DB_GR_11
       <soapenv:Header/>
       <soapenv:Body>
       <nod:sendPaymentOutcomeReq>
-      <idPSP>70000000001</idPSP>
-      <idBrokerPSP>70000000001</idBrokerPSP>
-      <idChannel>70000000001_01</idChannel>
+      <idPSP>#psp#</idPSP>
+      <idBrokerPSP>#psp#</idBrokerPSP>
+      <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
       <password>pwdpwdpwd</password>
       <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
       <outcome>KO</outcome>
@@ -196,6 +196,7 @@ Feature: process tests for Retry_DB_GR_11
     Then check outcome is KO of sendPaymentOutcome response
     And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcome response
 
+  @runnable
   Scenario: DB check + db update
     Given the Execute sendPaymentOutcome request scenario executed successfully
     And verify 0 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3

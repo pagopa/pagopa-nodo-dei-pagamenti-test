@@ -14,7 +14,7 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
             <nod:activatePaymentNoticeReq>
                <idPSP>70000000001</idPSP>
                <idBrokerPSP>70000000001</idBrokerPSP>
-               <idChannel>70000000001_01</idChannel>
+               <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
                <password>pwdpwdpwd</password>
                <idempotencyKey>#idempotency_key#</idempotencyKey>
                <qrCode>
@@ -44,7 +44,7 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
             <nod:activatePaymentNoticeReq>
                <idPSP>70000000001</idPSP>
                <idBrokerPSP>70000000001</idBrokerPSP>
-               <idChannel>70000000001_01</idChannel>
+               <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
                <password>pwdpwdpwd</password>
                <idempotencyKey>#idempotency_key#</idempotencyKey>
                <qrCode>
@@ -74,7 +74,7 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
             <nod:sendPaymentOutcomeReq>
                 <idPSP>70000000001</idPSP>
                 <idBrokerPSP>70000000001</idBrokerPSP>
-                <idChannel>70000000001_01</idChannel>
+                <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
                 <password>pwdpwdpwd</password>
                 <idempotencyKey>#idempotency_key#</idempotencyKey>
                 <paymentToken>$activatePaymentNotice_2Response.paymentToken</paymentToken>
@@ -132,7 +132,7 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
             <nod:sendPaymentOutcomeReq>
                 <idPSP>70000000001</idPSP>
                 <idBrokerPSP>70000000001</idBrokerPSP>
-                <idChannel>70000000001_01</idChannel>
+                <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
                 <password>pwdpwdpwd</password>
                 <idempotencyKey>#idempotency_key#</idempotencyKey>
                 <paymentToken>$activatePaymentNotice_2Response.paymentToken</paymentToken>
@@ -191,7 +191,7 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
             <nod:sendPaymentOutcomeReq>
                 <idPSP>70000000003</idPSP>
                 <idBrokerPSP>70000000001</idBrokerPSP>
-                <idChannel>70000000001_01</idChannel>
+                <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
                 <password>pwdpwdpwd</password>
                 <idempotencyKey>#idempotency_key#</idempotencyKey>
                 <paymentToken>$activatePaymentNotice_1Response.paymentToken</paymentToken>

@@ -233,7 +233,7 @@ Feature: PRO_ANNULLO_08_PPALOLD
         When WISP sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200
 
-    @fixed
+    @fixed1
     Scenario: Execute nodoInoltroEsitoPayPal (Phase 5) - Timeout
         Given the Execute nodoChiediInformazioniPagamento (Phase 4) scenario executed successfully
         And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
@@ -266,6 +266,7 @@ Feature: PRO_ANNULLO_08_PPALOLD
         And wait 15 seconds for expiration
         Then verify the HTTP status code of inoltroEsito/paypal response is 408
         And check error is Operazione in timeout of inoltroEsito/paypal response
+        And replace iuv content with $1iuv content
         And checks the value PAYING, PAYMENT_SENT, PAYMENT_UNKNOWN of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
         And checks the value PAYMENT_UNKNOWN of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
         And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
