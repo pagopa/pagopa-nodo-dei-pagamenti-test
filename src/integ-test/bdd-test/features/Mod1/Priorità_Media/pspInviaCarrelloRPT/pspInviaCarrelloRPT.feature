@@ -93,7 +93,7 @@ Feature: process tests for pspInviaCarrelloRPT
                         <serial>1</serial>
                         </fault>
                         <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
-                        <identificativoCarrello>${idCarrello}</identificativoCarrello>
+                        <identificativoCarrello>$1iuv</identificativoCarrello>
                         
                         <listaErroriRPT>
                         <fault>
