@@ -89,12 +89,12 @@ Scenario: Execute nodoInoltroEsitoCarta (Phase 4)
     Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
     And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
     """
-    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:psp="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
+    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pfn="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
         <soapenv:Header/>
         <soapenv:Body>
-            <psp:pspNotifyPaymentRes>
+            <pfn:pspNotifyPaymentRes>
                 <outcome>Response malformata</outcome>
-            </psp:pspNotifyPaymentRes>
+            </pfn:pspNotifyPaymentRes>
         </soapenv:Body>
     </soapenv:Envelope>
     """
@@ -158,19 +158,19 @@ Scenario: Execute nodoInoltroEsitoCarta (Phase 4)
     And checks the value None of the record at column MOTIVO_ANNULLAMENTO of the table PM_SESSION_DATA retrived by the query pm_session on db nodo_online under macro AppIO
     And checks the value None of the record at column CODICE_CONVENZIONE of the table PM_SESSION_DATA retrived by the query pm_session on db nodo_online under macro AppIO
 
-@runnable
+@fixed
 Scenario: Check nodoInoltroEsitoCarta1 response after nodoInoltroEsitoCarta
     Given the Execute nodoInoltroEsitoCarta (Phase 4) scenario executed successfully
     And nodo-dei-pagamenti has config parameter default_durata_token_IO set to 6000
     And nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
     And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
     """
-    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:psp="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
+    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pfn="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
         <soapenv:Header/>
         <soapenv:Body>
-            <psp:pspNotifyPaymentRes>
+            <pfn:pspNotifyPaymentRes>
                 <outcome>OK</outcome>
-            </psp:pspNotifyPaymentRes>
+            </pfn:pspNotifyPaymentRes>
         </soapenv:Body>
     </soapenv:Envelope>
     """

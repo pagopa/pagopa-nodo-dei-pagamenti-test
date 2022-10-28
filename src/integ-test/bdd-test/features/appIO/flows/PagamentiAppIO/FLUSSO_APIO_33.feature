@@ -79,7 +79,7 @@ Feature: FLUSSO_APIO_33
         When AppIO sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
 
-@runnable
+@fixed
     Scenario: Execute activateIOPayment1 (Phase 3)
         Given nodo-dei-pagamenti has config parameter scheduler.cancelIOPaymentActorMinutesToBack set to 1
         And nodo-dei-pagamenti has config parameter default_durata_token_IO set to 1000

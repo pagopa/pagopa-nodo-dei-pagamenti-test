@@ -14,7 +14,7 @@ Feature: GT_05
                     <nod:verifyPaymentNoticeReq>
                         <idPSP>#psp_AGID#</idPSP>
                         <idBrokerPSP>#broker_AGID#</idBrokerPSP>
-                        <idChannel>canale_AGID</idChannel>
+                        <idChannel>#canale_AGID#</idChannel>
                         <password>pwdpwdpwd</password>
                         <qrCode>
                             <fiscalCode>#creditor_institution_code#</fiscalCode>
@@ -125,7 +125,7 @@ Feature: GT_05
         Then verify the HTTP status code of inoltroEsito/carta response is 200
         And check esito is KO of inoltroEsito/carta response
         And check errorCode is RIFPSP of inoltroEsito/carta response
-@runnable
+@fixed
     Scenario: Execute nodoNotificaAnnullamento (Phase 4)
         Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
         When WISP sends rest GET notificaAnnullamento?idPagamento=$activateIOPaymentResponse.paymentToken&motivoAnnullamento=SESSCA to nodo-dei-pagamenti

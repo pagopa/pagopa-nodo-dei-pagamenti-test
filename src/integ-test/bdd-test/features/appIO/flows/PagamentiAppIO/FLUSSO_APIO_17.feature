@@ -89,10 +89,10 @@ Scenario: Execute nodoInoltroEsitoCarta (Phase 4)
     Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
     And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
     """
-    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:psp="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
+    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pfn="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
         <soapenv:Header/>
         <soapenv:Body>
-            <psp:pspNotifyPaymentRes>
+            <pfn:pspNotifyPaymentRes>
                 <outcome>KO</outcome>
                 <!--Optional:-->
                 <fault>
@@ -102,7 +102,7 @@ Scenario: Execute nodoInoltroEsitoCarta (Phase 4)
                     <!--Optional:-->
                     <description>Errore dal psp</description>
                 </fault>
-            </psp:pspNotifyPaymentRes>
+            </pfn:pspNotifyPaymentRes>
         </soapenv:Body>
     </soapenv:Envelope>
     """
@@ -167,7 +167,7 @@ Scenario: Execute nodoInoltroEsitoCarta (Phase 4)
     And checks the value None of the record at column MOTIVO_ANNULLAMENTO of the table PM_SESSION_DATA retrived by the query pm_session on db nodo_online under macro AppIO
     And checks the value None of the record at column CODICE_CONVENZIONE of the table PM_SESSION_DATA retrived by the query pm_session on db nodo_online under macro AppIO
 
-@runnable
+@fixed
 Scenario: Check nodoNotificaAnnullamento response after nodoInoltroEsitoCarta, and check correctness of database tables
     Given the Execute nodoInoltroEsitoCarta (Phase 4) scenario executed successfully
     When WISP sends rest GET notificaAnnullamento?idPagamento=$activateIOPaymentResponse.paymentToken&motivoAnnullamento=RIFPSP to nodo-dei-pagamenti
