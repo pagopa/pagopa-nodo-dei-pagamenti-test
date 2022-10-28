@@ -6,6 +6,7 @@ Feature: PRO_ANNULLO_08_PPALOLD
 
     Scenario: Execute nodoVerificaRPT (Phase 1)
         Given nodo-dei-pagamenti has config parameter scheduler.cancelIOPaymentActorMinutesToBack set to 1
+        And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr#
         And RPT generation
         """
         <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
@@ -62,15 +63,15 @@ Feature: PRO_ANNULLO_08_PPALOLD
         </pay_i:enteBeneficiario>
         <pay_i:datiVersamento>
         <pay_i:dataEsecuzionePagamento>2016-09-16</pay_i:dataEsecuzionePagamento>
-        <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
+        <pay_i:importoTotaleDaVersare>6.20</pay_i:importoTotaleDaVersare>
         <pay_i:tipoVersamento>PO</pay_i:tipoVersamento>
-        <pay_i:identificativoUnivocoVersamento>#iuv#</pay_i:identificativoUnivocoVersamento>
+        <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
         <pay_i:codiceContestoPagamento>#ccp#</pay_i:codiceContestoPagamento>
         <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
         <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
         <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
         <pay_i:datiSingoloVersamento>
-        <pay_i:importoSingoloVersamento>10.00</pay_i:importoSingoloVersamento>
+        <pay_i:importoSingoloVersamento>6.20</pay_i:importoSingoloVersamento>
         <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
         <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
         <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
@@ -94,14 +95,14 @@ Feature: PRO_ANNULLO_08_PPALOLD
                 <identificativoCanale>#canale_AGID#</identificativoCanale>
                 <password>pwdpwdpwd</password>
                 <codiceContestoPagamento>$ccp</codiceContestoPagamento>
-                <codificaInfrastrutturaPSP>QR-CODE</codificaInfrastrutturaPSP>
+                <codificaInfrastrutturaPSP>BARCODE-128-AIM</codificaInfrastrutturaPSP>
                 <codiceIdRPT>
-                    <qrc:QrCode>
-                        <qrc:CF>#creditor_institution_code_old#</qrc:CF>
-                        <qrc:CodStazPA>#cod_segr#</qrc:CodStazPA>
-                        <qrc:AuxDigit>0</qrc:AuxDigit>
-                        <qrc:CodIUV>$iuv</qrc:CodIUV>
-                    </qrc:QrCode>
+                    <aim:aim128>
+                    <aim:CCPost>#ccPoste#</aim:CCPost>
+                    <aim:CodStazPA>#cod_segr#</aim:CodStazPA>
+                    <aim:AuxDigit>0</aim:AuxDigit>
+                    <aim:CodIUV>$1iuv</aim:CodIUV>
+                    </aim:aim128>
                 </codiceIdRPT>
             </ws:nodoVerificaRPT>
         </soapenv:Body>
@@ -123,16 +124,16 @@ Feature: PRO_ANNULLO_08_PPALOLD
                     <identificativoCanale>$nodoVerificaRPT.identificativoCanale</identificativoCanale>
                     <password>$nodoVerificaRPT.password</password>
                     <codiceContestoPagamento>$nodoVerificaRPT.codiceContestoPagamento</codiceContestoPagamento>
-                    <identificativoIntermediarioPSPPagamento>97735020584</identificativoIntermediarioPSPPagamento>
-                    <identificativoCanalePagamento>97735020584_02</identificativoCanalePagamento>
-                    <codificaInfrastrutturaPSP>QR-CODE</codificaInfrastrutturaPSP>
+                    <identificativoIntermediarioPSPPagamento>#broker_AGID#</identificativoIntermediarioPSPPagamento>
+                    <identificativoCanalePagamento>#canale_AGID_BBT#</identificativoCanalePagamento>
+                    <codificaInfrastrutturaPSP>BARCODE-128-AIM</codificaInfrastrutturaPSP>
                     <codiceIdRPT>
-                        <qrc:QrCode>
-                            <qrc:CF>#creditor_institution_code_old#</qrc:CF>
-                            <qrc:CodStazPA>#cod_segr#</qrc:CodStazPA>
-                            <qrc:AuxDigit>0</qrc:AuxDigit>
-                            <qrc:CodIUV>$iuv</qrc:CodIUV>
-                        </qrc:QrCode>
+                        <aim:aim128>
+                        <aim:CCPost>#ccPoste#</aim:CCPost>
+                        <aim:CodStazPA>#cod_segr#</aim:CodStazPA>
+                        <aim:AuxDigit>0</aim:AuxDigit>
+                        <aim:CodIUV>$1iuv</aim:CodIUV>
+                        </aim:aim128>
                     </codiceIdRPT>
                     <datiPagamentoPSP>
                         <importoSingoloVersamento>10.00</importoSingoloVersamento>
@@ -206,7 +207,7 @@ Feature: PRO_ANNULLO_08_PPALOLD
                     <identificativoIntermediarioPA>#id_broker_old#</identificativoIntermediarioPA>
                     <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
                     <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
-                    <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
+                    <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
                     <codiceContestoPagamento>$nodoAttivaRPT.codiceContestoPagamento</codiceContestoPagamento>
                 </ppt:intestazionePPT>
             </soapenv:Header>
@@ -215,7 +216,7 @@ Feature: PRO_ANNULLO_08_PPALOLD
                     <password>pwdpwdpwd</password>
                     <identificativoPSP>#psp_AGID#</identificativoPSP>
                     <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
-                    <identificativoCanale>97735020584_02</identificativoCanale>
+                    <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
                     <tipoFirma></tipoFirma>
                     <rpt>$rptAttachment</rpt>
                 </ws:nodoInviaRPT>
@@ -232,7 +233,7 @@ Feature: PRO_ANNULLO_08_PPALOLD
         When WISP sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200
 
-    @runnable
+    @fixed
     Scenario: Execute nodoInoltroEsitoPayPal (Phase 5) - Timeout
         Given the Execute nodoChiediInformazioniPagamento (Phase 4) scenario executed successfully
         And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
@@ -251,7 +252,7 @@ Feature: PRO_ANNULLO_08_PPALOLD
         When WISP sends REST POST inoltroEsito/paypal to nodo-dei-pagamenti
         """
         {
-            "idTransazione": "responseKO",
+            "idTransazione": "responseTimeout",
             "idTransazionePsp":"153016btAE",
             "idPagamento": "$sessionToken",
             "identificativoIntermediario": "#psp#",
