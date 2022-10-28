@@ -89,15 +89,15 @@ Feature: process tests for pspInviaRT[IRPTRES2]
             <ws:pspInviaRPTResponse>
             <pspInviaRPTResponse>
             <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
-            <!--<identificativoCarrello>?</identificativoCarrello>
-            <parametriPagamentoImmediato>?</parametriPagamentoImmediato>-->
+            <identificativoCarrello>$1iuv</identificativoCarrello>
+            <parametriPagamentoImmediato>CCD01</parametriPagamentoImmediato>
             <listaErroriRPT>
                <fault>
                   <faultCode>CANALE_BUSTA_ERRATA</faultCode>
                   <faultString>Errore di sintassi</faultString>
                   <id>IDPSPFNZ</id>
-                  <!--<description>boh</description>
-                  <serial>1</serial>-->
+                  <description>boh</description>
+                  <serial>1</serial>
                </fault>
             </listaErroriRPT>
             </pspInviaRPTResponse>
@@ -139,3 +139,5 @@ Feature: process tests for pspInviaRT[IRPTRES2]
                 | field                          | value              | resp_error                   | soapUI test 
                 | soapenv:Body                   | Empty              | PPT_CANALE_ERRORE_RESPONSE   | IRPTRES3
                 | soapenv:Body                   | None               | PPT_CANALE_ERRORE_RESPONSE   | IRPTRES4
+                | ws:pspInviaRPTResponse         | Empty              | PPT_CANALE_ERRORE_RESPONSE   | IRPTRES5
+                |esitoComplessivoOperazione      | None               | PPT_CANALE_ERRORE_RESPONSE   | IRPTRES6
