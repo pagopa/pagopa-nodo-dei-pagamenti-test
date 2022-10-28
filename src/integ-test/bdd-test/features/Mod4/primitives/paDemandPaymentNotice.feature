@@ -47,6 +47,9 @@ Feature: response tests for paDemandPaymentNotice
             <allCCP>false</allCCP>
             </paymentOptionDescription>
             </paymentList>
+            <paymentDescription>paymentDescription</paymentDescription>
+            <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
+            <companyName>companyName</companyName>
             <officeName>officeName</officeName>
             </paf:paDemandPaymentNoticeResponse>
             </soapenv:Body>
