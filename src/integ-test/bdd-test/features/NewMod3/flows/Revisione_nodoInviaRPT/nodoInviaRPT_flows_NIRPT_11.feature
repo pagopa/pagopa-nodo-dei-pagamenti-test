@@ -9,9 +9,9 @@ Feature: process tests for nodoInviaRPT [REV_NIRPT_11]
             <soapenv:Header/>
             <soapenv:Body>
             <nod:verifyPaymentNoticeReq>
-            <idPSP>40000000001</idPSP>
-            <idBrokerPSP>40000000001</idBrokerPSP>
-            <idChannel>40000000001_01</idChannel>
+            <idPSP>#psp#</idPSP>
+            <idBrokerPSP>#psp#</idBrokerPSP>
+            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
             <password>pwdpwdpwd</password>
             <qrCode>
             <fiscalCode>#creditor_institution_code_old#</fiscalCode>
@@ -36,9 +36,9 @@ Feature: process tests for nodoInviaRPT [REV_NIRPT_11]
             <soapenv:Header/>
             <soapenv:Body>
             <nod:activatePaymentNoticeReq>
-            <idPSP>40000000001</idPSP>
-            <idBrokerPSP>40000000001</idBrokerPSP>
-            <idChannel>40000000001_01</idChannel>
+            <idPSP>#psp#</idPSP>
+            <idBrokerPSP>#psp#</idBrokerPSP>
+            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
             <password>pwdpwdpwd</password>
             <idempotencyKey>#idempotency_key#</idempotencyKey>
             <qrCode>
@@ -145,9 +145,9 @@ Feature: process tests for nodoInviaRPT [REV_NIRPT_11]
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
             <ppt:intestazionePPT>
-            <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
-            <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
-            <identificativoDominio>44444444444</identificativoDominio>
+            <identificativoIntermediarioPA>#intermediarioPAOld#</identificativoIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
+            <identificativoDominio>#intermediarioPAOld#</identificativoDominio>
             <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken</codiceContestoPagamento>
             </ppt:intestazionePPT>
@@ -264,6 +264,7 @@ Feature: process tests for nodoInviaRPT [REV_NIRPT_11]
         #DB CHECK-POSITION_STATUS_SNAPSHOT
         And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro NewMod3
 
+    @runnable
     Scenario: Execute activatePaymentNotice1 request
         Given the Trigger mod3Cancel scenario executed successfully
         And initial XML activatePaymentNotice
@@ -272,9 +273,9 @@ Feature: process tests for nodoInviaRPT [REV_NIRPT_11]
             <soapenv:Header/>
             <soapenv:Body>
             <nod:activatePaymentNoticeReq>
-            <idPSP>40000000001</idPSP>
-            <idBrokerPSP>40000000001</idBrokerPSP>
-            <idChannel>40000000001_01</idChannel>
+            <idPSP>#psp#</idPSP>
+            <idBrokerPSP>#psp#</idBrokerPSP>
+            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
             <password>pwdpwdpwd</password>
             <idempotencyKey>#idempotency_key#</idempotencyKey>
             <qrCode>

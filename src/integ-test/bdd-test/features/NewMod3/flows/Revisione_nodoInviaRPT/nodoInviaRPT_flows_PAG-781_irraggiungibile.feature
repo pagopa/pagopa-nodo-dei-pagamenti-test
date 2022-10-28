@@ -96,9 +96,7 @@ Feature: process tests for nodoInviaRPT [PAG-781_irragiungibile]
         And checks the value Y of the record at column PAAATTIVARPTRESP of the table RPT_ACTIVATIONS retrived by the query payment_status on db nodo_online under macro NewMod3
         And checks the value N of the record at column NODOINVIARPTREQ of the table RPT_ACTIVATIONS retrived by the query payment_status on db nodo_online under macro NewMod3
         And checks the value Y of the record at column PAAATTIVARPTERROR of the table RPT_ACTIVATIONS retrived by the query payment_status on db nodo_online under macro NewMod3
-
         And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query by_context_num_avv on db nodo_online under macro NewMod3
-
         And execution query payment_status to get value on the table RPT_ACTIVATIONS, with the columns PAYMENT_TOKEN under macro NewMod3 with db name nodo_online
         And through the query payment_status retrieve param paymentToken at position 0 and save it under the key paymentToken
 
@@ -111,9 +109,7 @@ Feature: process tests for nodoInviaRPT [PAG-781_irragiungibile]
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-
             <pay_i:identificativoDominio>#codicePA_old#</pay_i:identificativoDominio>
-
             <pay_i:identificativoStazioneRichiedente>#id_station_old#</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
@@ -193,11 +189,9 @@ Feature: process tests for nodoInviaRPT [PAG-781_irragiungibile]
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
             <ppt:intestazionePPT>
-
-            <identificativoIntermediarioPA>#codicePA_old#</identificativoIntermediarioPA>
+            <identificativoIntermediarioPA>#intermediarioPAOld#</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
-            <identificativoDominio>#codicePA_old#</identificativoDominio>
-
+            <identificativoDominio>#intermediarioPAOld#</identificativoDominio>
             <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$paymentToken</codiceContestoPagamento>
             </ppt:intestazionePPT>
@@ -289,12 +283,10 @@ Feature: process tests for nodoInviaRPT [PAG-781_irragiungibile]
             <soapenv:Header/>
             <soapenv:Body>
             <ws:nodoChiediCopiaRT>
-
-            <identificativoIntermediarioPA>#codicePA_old#</identificativoIntermediarioPA>
+            <identificativoIntermediarioPA>#intermediarioPAOld#</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
             <password>pwdpwdpwd</password>
-            <identificativoDominio>#codicePA_old#</identificativoDominio>
-
+            <identificativoDominio>#intermediarioPAOld#</identificativoDominio>
             <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$paymentToken</codiceContestoPagamento>
             </ws:nodoChiediCopiaRT>
@@ -405,7 +397,7 @@ Feature: process tests for nodoInviaRPT [PAG-781_irragiungibile]
         When psp sends soap activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
 
-        @prova
+        @runnable
     Scenario: Execute sendPaymentOutcome request
         Given the activatePaymentNotice1 request scenario executed successfully
         And initial XML sendPaymentOutcome

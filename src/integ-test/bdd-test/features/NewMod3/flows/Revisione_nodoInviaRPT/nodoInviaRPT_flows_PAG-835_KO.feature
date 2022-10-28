@@ -9,9 +9,9 @@ Feature: process tests for nodoInviaRPT [PAG-835_KO]
             <soapenv:Header/>
             <soapenv:Body>
             <nod:verifyPaymentNoticeReq>
-            <idPSP>40000000001</idPSP>
-            <idBrokerPSP>40000000001</idBrokerPSP>
-            <idChannel>40000000001_01</idChannel>
+            <idPSP>#psp#</idPSP>
+            <idBrokerPSP>#psp#</idBrokerPSP>
+            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
             <password>pwdpwdpwd</password>
             <qrCode>
             <fiscalCode>#creditor_institution_code_old#</fiscalCode>
@@ -20,7 +20,6 @@ Feature: process tests for nodoInviaRPT [PAG-835_KO]
             </nod:verifyPaymentNoticeReq>
             </soapenv:Body>
             </soapenv:Envelope>
-
             """
 
     # Verify phase
@@ -57,9 +56,9 @@ Feature: process tests for nodoInviaRPT [PAG-835_KO]
             <soapenv:Header/>
             <soapenv:Body>
             <nod:activatePaymentNoticeReq>
-            <idPSP>40000000001</idPSP>
-            <idBrokerPSP>40000000001</idBrokerPSP>
-            <idChannel>40000000001_01</idChannel>
+            <idPSP>#psp#</idPSP>
+            <idBrokerPSP>#psp#</idBrokerPSP>
+            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
             <password>pwdpwdpwd</password>
             <idempotencyKey>#idempotency_key#</idempotencyKey>
             <qrCode>
@@ -89,14 +88,11 @@ Feature: process tests for nodoInviaRPT [PAG-835_KO]
     Scenario: Define RPT
         Given the Execute activatePaymentNotice request scenario executed successfully
         And RPT generation
-
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-
             <pay_i:identificativoDominio>#codicePA_old#</pay_i:identificativoDominio>
-
             <pay_i:identificativoStazioneRichiedente>#id_station_old#</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
@@ -169,7 +165,6 @@ Feature: process tests for nodoInviaRPT [PAG-835_KO]
             </pay_i:RPT>
             """
 
-
     Scenario: Excecute nodoInviaRPT
         Given the Define RPT scenario executed successfully
         And initial XML nodoInviaRPT
@@ -177,9 +172,9 @@ Feature: process tests for nodoInviaRPT [PAG-835_KO]
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
             <ppt:intestazionePPT>
-            <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
-            <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
-            <identificativoDominio>44444444444</identificativoDominio>
+            <identificativoIntermediarioPA>#intermediarioPAOld#</identificativoIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
+            <identificativoDominio>#intermediarioPAOld#</identificativoDominio>
             <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$paymentToken</codiceContestoPagamento>
             </ppt:intestazionePPT>
@@ -240,10 +235,10 @@ Feature: process tests for nodoInviaRPT [PAG-835_KO]
             <soapenv:Header/>
             <soapenv:Body>
             <ws:nodoChiediStatoRPT>
-            <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
-            <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
+            <identificativoIntermediarioPA>#intermediarioPAOld#</identificativoIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
             <password>pwdpwdpwd</password>
-            <identificativoDominio>44444444444</identificativoDominio>
+            <identificativoDominio>#intermediarioPAOld#</identificativoDominio>
             <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$paymentToken</codiceContestoPagamento>
             </ws:nodoChiediStatoRPT>
@@ -279,9 +274,9 @@ Feature: process tests for nodoInviaRPT [PAG-835_KO]
             <soapenv:Header/>
             <soapenv:Body>
             <nod:activatePaymentNoticeReq>
-            <idPSP>40000000001</idPSP>
-            <idBrokerPSP>40000000001</idBrokerPSP>
-            <idChannel>40000000001_01</idChannel>
+            <idPSP>#psp#</idPSP>
+            <idBrokerPSP>#psp#</idBrokerPSP>
+            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
             <password>pwdpwdpwd</password>
             <idempotencyKey>#idempotency_key#</idempotencyKey>
             <qrCode>
@@ -297,6 +292,7 @@ Feature: process tests for nodoInviaRPT [PAG-835_KO]
         When psp sends soap activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
 
+    @runnable
     Scenario: Execute sendPaymentOutcome request
         Given the activatePaymentNotice1 request scenario executed successfully
         And initial XML sendPaymentOutcome
@@ -305,9 +301,9 @@ Feature: process tests for nodoInviaRPT [PAG-835_KO]
             <soapenv:Header/>
             <soapenv:Body>
             <nod:sendPaymentOutcomeReq>
-            <idPSP>40000000001</idPSP>
-            <idBrokerPSP>40000000001</idBrokerPSP>
-            <idChannel>40000000001_01</idChannel>
+            <idPSP>#psp#</idPSP>
+            <idBrokerPSP>#psp#</idBrokerPSP>
+            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
             <password>pwdpwdpwd</password>
             <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
             <outcome>OK</outcome>
