@@ -111,25 +111,16 @@ Feature: process tests for pspInviaRT[IRPTRES2]
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
-                <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+            <identificativoCarrello>$nodoInviaRPT.identificativoUnivocoVersamento</identificativoCarrello>
             </soapenv:Header>
             <soapenv:Body>
-                <ws:pspInviaRPTResponse>
-                    <pspInviaRPTResponse>
-                        <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
-                        <!--<identificativoCarrello>?</identificativoCarrello>
-                        <parametriPagamentoImmediato>?</parametriPagamentoImmediato>-->
-                        <listaErroriRPT>
-                        <fault>
-                            <faultCode>CANALE_BUSTA_ERRATA</faultCode>
-                            <faultString>Errore di sintassi</faultString>
-                            <id>IDPSPFNZ</id>
-                            <!--<description>boh</description>
-                            <serial>1</serial>-->
-                        </fault>
-                        </listaErroriRPT>
-                    </pspInviaRPTResponse>
-                </ws:pspInviaRPTResponse>
+            <ws:pspInviaRPTResponse>
+            <pspInviaRPTResponse>
+            <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
+            <identificativoCarrello>$nodoInviaRPT.identificativoUnivocoVersamento</identificativoCarrello>
+            <parametriPagamentoImmediato>idBruciatura=$nodoInviaRPT.identificativoUnivocoVersamento</parametriPagamentoImmediato>
+            </pspInviaRPTResponse>
+            </ws:pspInviaRPTResponse>
             </soapenv:Body>
             </soapenv:Envelope>
             """
