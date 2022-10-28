@@ -2,15 +2,15 @@ Feature: process tests for ChiediAvanzamento_ACCETTATA_PSP_Carrello_sbloccoParch
 
     Background:
         Given systems up
-@runnable
+
     Scenario: RPT generation
         Given RPT generation
         """
         <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
         <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
         <pay_i:dominio>
-        <pay_i:identificativoDominio>44444444444</pay_i:identificativoDominio>
-        <pay_i:identificativoStazioneRichiedente>44444444444_01</pay_i:identificativoStazioneRichiedente>
+        <pay_i:identificativoDominio>#creditor_institution_code_old#</pay_i:identificativoDominio>
+        <pay_i:identificativoStazioneRichiedente>#id_station_old#</pay_i:identificativoStazioneRichiedente>
         </pay_i:dominio>
         <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
         <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
@@ -81,17 +81,13 @@ Feature: process tests for ChiediAvanzamento_ACCETTATA_PSP_Carrello_sbloccoParch
         </pay_i:datiVersamento>
         </pay_i:RPT>
         """
-
-    Scenario: RPT2 generation
-        Given the RPT generation scenario executed successfully
         And RPT2 generation
-
         """
         <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
         <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
         <pay_i:dominio>
             <pay_i:identificativoDominio>44444444445</pay_i:identificativoDominio>
-            <pay_i:identificativoStazioneRichiedente>44444444444_01</pay_i:identificativoStazioneRichiedente>
+            <pay_i:identificativoStazioneRichiedente>#id_station_old#</pay_i:identificativoStazioneRichiedente>
         </pay_i:dominio>
         <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
         <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
@@ -164,26 +160,26 @@ Feature: process tests for ChiediAvanzamento_ACCETTATA_PSP_Carrello_sbloccoParch
         """
 
     Scenario: Execute nodoInviaCarrelloRPT request
-        Given the RPT2 generation scenario executed successfully
+        Given the RPT generation scenario executed successfully
         And initial XML nodoInviaCarrelloRPT
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
         <soapenv:Header>
             <ppt:intestazioneCarrelloPPT>
-                <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
-                <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
+                <identificativoIntermediarioPA>#creditor_institution_code_old#</identificativoIntermediarioPA>
+                <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
                 <identificativoCarrello>$1ccp</identificativoCarrello>
             </ppt:intestazioneCarrelloPPT>
         </soapenv:Header>
         <soapenv:Body>
             <ws:nodoInviaCarrelloRPT>
                 <password>pwdpwdpwd</password>
-                <identificativoPSP>AGID_01</identificativoPSP>
-                <identificativoIntermediarioPSP>97735020584</identificativoIntermediarioPSP>
-                <identificativoCanale>97735020584_02</identificativoCanale>
+                <identificativoPSP>#psp_AGID#</identificativoPSP>
+                <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
+                <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
                 <listaRPT>
                     <elementoListaRPT>
-                    <identificativoDominio>44444444444</identificativoDominio>
+                    <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
                     <identificativoUnivocoVersamento>avanzaOK</identificativoUnivocoVersamento>
                     <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
                     <rpt>$rptAttachment</rpt>
@@ -256,7 +252,7 @@ Feature: process tests for ChiediAvanzamento_ACCETTATA_PSP_Carrello_sbloccoParch
         Then checks the value CART_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query motivo_annullamento on db nodo_online under macro Mod1
         And checks the value avanzaOK of the record at column IUV of the table RETRY_RPT retrived by the query motivo_annullamento_originale on db nodo_online under macro Mod1
         And checks the value $1ccp of the record at column CCP of the table RETRY_RPT retrived by the query motivo_annullamento_originale on db nodo_online under macro Mod1
-        And checks the value 44444444444 of the record at column ID_DOMINIO of the table RETRY_RPT retrived by the query motivo_annullamento_originale on db nodo_online under macro Mod1
+        And checks the value #creditor_institution_code_old# of the record at column ID_DOMINIO of the table RETRY_RPT retrived by the query motivo_annullamento_originale on db nodo_online under macro Mod1
         And checks the value 0 of the record at column RETRY of the table RETRY_RPT retrived by the query motivo_annullamento_originale on db nodo_online under macro Mod1
         And verify 1 record for the table RETRY_RPT retrived by the query motivo_annullamento_originale on db nodo_online under macro Mod1
         And wait 5 seconds for expiration
@@ -301,7 +297,7 @@ Feature: process tests for ChiediAvanzamento_ACCETTATA_PSP_Carrello_sbloccoParch
         And check esito is OK of inoltroEsito/carta response
         And check url field not exists in inoltroEsito/carta response
 
-@runnable
+@firstRun
     Scenario: Execute third check DB-RPT 
         Given the Execution Esito CartaRetry scenario executed successfully
         Then checks the value RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query stati_RPT_noOrder on db nodo_online under macro Mod1
