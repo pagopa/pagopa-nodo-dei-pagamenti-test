@@ -2,7 +2,8 @@ Feature: Syntax checks OK for nodoChiediElencoFlussiRendicontazione
 
     Background:
         Given systems up
- @runnable   
+
+@runnable   
     Scenario Outline: Syntax checks OK for nodoChiediElencoFlussiRendicontazione
         Given initial XML nodoChiediElencoFlussiRendicontazione
             """
