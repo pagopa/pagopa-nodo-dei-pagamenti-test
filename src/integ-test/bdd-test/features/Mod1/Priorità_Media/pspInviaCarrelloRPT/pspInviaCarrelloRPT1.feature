@@ -2,35 +2,7 @@ Feature: process tests for pspInviaCarrelloRPT
     Background:
         Given systems up
         And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
-        And initial XML nodoInviaCarrelloRPT
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header>
-                <ppt:intestazioneCarrelloPPT>
-                    <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
-                    <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
-                    <identificativoCarrello>$1iuv</identificativoCarrello>
-                </ppt:intestazioneCarrelloPPT>
-            </soapenv:Header>
-            <soapenv:Body>
-                <ws:nodoInviaCarrelloRPT>
-                    <password>pwdpwdpwd</password>
-                    <identificativoPSP>#psp#</identificativoPSP>
-                    <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-                    <identificativoCanale>#canaleRtPush#</identificativoCanale>
-                    <listaRPT>
-                        <!--1 or more repetitions:-->
-                        <elementoListaRPT>
-                        <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-                        <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
-                        <codiceContestoPagamento>CCD01</codiceContestoPagamento>
-                        <rpt>$rptAttachment</rpt>
-                        </elementoListaRPT>
-                    </listaRPT>
-                </ws:nodoInviaCarrelloRPT>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
+        
 
    Scenario: RPT generation
         Given RPT generation
@@ -110,9 +82,38 @@ Feature: process tests for pspInviaCarrelloRPT
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
+        And initial XML nodoInviaCarrelloRPT
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header>
+                <ppt:intestazioneCarrelloPPT>
+                    <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
+                    <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
+                    <identificativoCarrello>$1iuv</identificativoCarrello>
+                </ppt:intestazioneCarrelloPPT>
+            </soapenv:Header>
+            <soapenv:Body>
+                <ws:nodoInviaCarrelloRPT>
+                    <password>pwdpwdpwd</password>
+                    <identificativoPSP>#psp#</identificativoPSP>
+                    <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+                    <identificativoCanale>#canaleRtPush#</identificativoCanale>
+                    <listaRPT>
+                        <!--1 or more repetitions:-->
+                        <elementoListaRPT>
+                        <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+                        <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
+                        <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+                        <rpt>$rptAttachment</rpt>
+                        </elementoListaRPT>
+                    </listaRPT>
+                </ws:nodoInviaCarrelloRPT>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
     Scenario: Execute nodoInviaCarrelloRPT request [CRPTRES16]
         Given the RPT generation scenario executed successfully
-            And initial XML pspInviaCarrelloRPT
+        And initial XML pspInviaCarrelloRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header/>
