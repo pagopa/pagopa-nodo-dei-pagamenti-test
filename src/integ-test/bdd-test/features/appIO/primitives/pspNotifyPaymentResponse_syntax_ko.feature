@@ -123,7 +123,7 @@ Feature: Syntax checks for pspNotifyPaymentResponse - KO
       </soapenv:Envelope>
       """
     And <elem> with <value> in pspNotifyPayment
-    #And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
+    And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
     When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
       """
       {
