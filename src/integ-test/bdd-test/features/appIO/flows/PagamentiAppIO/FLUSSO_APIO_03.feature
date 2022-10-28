@@ -89,10 +89,10 @@ Feature: FLUSSO_APIO_03
         Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
         And initial XML pspNotifyPayment
             """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:psp="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pfn="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
             <soapenv:Header/>
             <soapenv:Body>
-            <psp:pspNotifyPaymentRes>
+            <pfn:pspNotifyPaymentRes>
             <outcome>KO</outcome>
             <!--Optional:-->
             <fault>
@@ -102,7 +102,7 @@ Feature: FLUSSO_APIO_03
             <!--Optional:-->
             <description>Errore dal psp</description>
             </fault>
-            </psp:pspNotifyPaymentRes>
+            </pfn:pspNotifyPaymentRes>
             </soapenv:Body>
             </soapenv:Envelope>
             """
@@ -176,7 +176,7 @@ Feature: FLUSSO_APIO_03
         And checks the value $activateIOPayment.dueDate of the record at column DUE_DATE of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value $activateIOPayment.amount of the record at column AMOUNT of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
-@runnable
+@fixed
     Scenario: Check sendPaymentOutcome response with pspNotifyPayment OK and sendPaymentOutcome KO, and check correctness of database tables
         Given the Execute nodoInoltroEsitoCarta (Phase 4) scenario executed successfully
         And initial XML sendPaymentOutcome
