@@ -47,6 +47,7 @@ Feature: response tests for paDemandPaymentNotice
             <allCCP>false</allCCP>
             </paymentOptionDescription>
             </paymentList>
+            <officeName>officeName</officeName>
             </paf:paDemandPaymentNoticeResponse>
             </soapenv:Body>
             </soapenv:Envelope>
@@ -62,7 +63,15 @@ Feature: response tests for paDemandPaymentNotice
         Examples:
             | elem              | value | soapUI test  |
             | soapenv:Header    | None  | TRES_PDPN_01 |
-            | soapenv:Header    | Empty | TRES_PDPN_02 |
             | dueDate           | None  | TRES_PDPN_39 |
             | detailDescription | None  | TRES_PDPN_42 |
             | officeName        | None  | TRES_PDPN_58 |
+
+    # TRES_PDPN_02
+
+    Scenario: soapenv:Header empty
+        Given the demandPaymentNotice scenario executed successfully
+        And the paDemandPaymentNotice OK scenario executed successfully
+        And EC replies to nodo-dei-pagamenti with the paDemandPaymentNotice
+        When PSP sends SOAP demandPaymentNotice to nodo-dei-pagamenti
+        Then check outcome is OK of demandPaymentNotice response
