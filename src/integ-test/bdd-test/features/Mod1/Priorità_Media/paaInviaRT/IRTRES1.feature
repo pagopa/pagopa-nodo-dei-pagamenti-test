@@ -229,6 +229,7 @@ Feature: process tests for paaInviaRT[IRTRES1]
             </soapenv:Body>
             </soapenv:Envelope>
             """
+        And EC replies to nodo-dei-pagamenti with the paaInviaRT
         And initial XML nodoInviaRT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -249,7 +250,7 @@ Feature: process tests for paaInviaRT[IRTRES1]
             </soapenv:Body>
             </soapenv:Envelope>
             """
-            And EC replies to nodo-dei-pagamenti with the paaInviaRT
+            
             When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
             Then check esito is KO of nodoInviaRT response
             And check faultCode is PPT_SYSTEM_ERROR of nodoInviaRT response
