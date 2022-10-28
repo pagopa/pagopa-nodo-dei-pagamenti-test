@@ -80,7 +80,7 @@ Feature: PRO_ANNULLO_11
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
 
-    @runnable   
+    @fixed   
     Scenario: Execute nodoInoltroEsitoPagamentoCarta (Phase 3)
         Given the Execute activateIOPayment (Phase 2) scenario executed successfully
         When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
@@ -94,7 +94,7 @@ Feature: PRO_ANNULLO_11
         "identificativoCanale":"#canale#",
         "importoTotalePagato":10.00,
         "timestampOperazione":"2021-07-09T17:06:03.100+01:00",
-        "codiceAutorizzativo":"resKO",
+        "codiceAutorizzativo":"resOK",
         "esitoTransazioneCarta":"00"
         }
         """
