@@ -81,7 +81,8 @@ Feature: FLUSSO_APIO_33
 
 @fixed
     Scenario: Execute activateIOPayment1 (Phase 3)
-        Given nodo-dei-pagamenti has config parameter scheduler.cancelIOPaymentActorMinutesToBack set to 1
+        Given nodo-dei-pagamenti has config parameter scheduler.jobName_annullamentoRptMaiRichiesteDaPm.enabled set to true
+        And nodo-dei-pagamenti has config parameter scheduler.cancelIOPaymentActorMinutesToBack set to 1
         And nodo-dei-pagamenti has config parameter default_durata_token_IO set to 1000
         And the Execute activateIOPayment (Phase 2) scenario executed successfully
         When job annullamentoRptMaiRichiesteDaPm triggered after 70 seconds
