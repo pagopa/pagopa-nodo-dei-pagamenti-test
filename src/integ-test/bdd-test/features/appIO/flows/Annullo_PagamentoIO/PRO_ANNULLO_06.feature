@@ -2,7 +2,7 @@ Feature: PRO_ANNULLO_06
 
     Background:
         Given systems up
-@runnable
+
     Scenario: Execute verifyPaymentNotice (Phase 1)
         Given nodo-dei-pagamenti has config parameter default_durata_token_IO set to 6000
         And nodo-dei-pagamenti has config parameter scheduler.cancelIOPaymentActorMinutesToBack set to 1
@@ -26,7 +26,7 @@ Feature: PRO_ANNULLO_06
         """
         When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of verifyPaymentNotice response
-@runnable
+
     Scenario: Execute activateIOPayment (Phase 2)
         Given the Execute verifyPaymentNotice (Phase 1) scenario executed successfully
         And initial XML activateIOPayment

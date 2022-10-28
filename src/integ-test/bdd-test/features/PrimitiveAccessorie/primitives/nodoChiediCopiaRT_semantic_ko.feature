@@ -5,7 +5,6 @@ Feature: Semantic checks for nodoChiediCopiaRT - KO
         And initial XML nodoChiediCopiaRT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-
                 <soapenv:Header/>
                 <soapenv:Body>
                     <ws:nodoChiediCopiaRT>
@@ -21,7 +20,6 @@ Feature: Semantic checks for nodoChiediCopiaRT - KO
             """
 
 @runnable
-
     Scenario Outline: Check semantic errors for nodoChiediCopiaRT primitive
         Given <tag> with <tag_value> in nodoChiediCopiaRT
         When EC sends SOAP nodoChiediCopiaRT to nodo-dei-pagamenti
@@ -39,10 +37,8 @@ Feature: Semantic checks for nodoChiediCopiaRT - KO
             | codiceContestoPagamento               | wrongPaymentContextCode | PPT_RT_SCONOSCIUTA                | CCRTSEM9    |
             | identificativoIntermediarioPA         | 77777777777             | PPT_AUTORIZZAZIONE                | CCRTSEM12   |
 
-
 @runnable
 Scenario Outline: Check semantic errors for nodoChiediCopiaRT primitive
-
         Given replace status content with RPT_ACCETTATA_PSP content
         And replace pa content with #creditor_institution_code_old# content
         And execution query stati_rpt_snapshot to get value on the table STATI_RPT_SNAPSHOT, with the columns IUV, CCP under macro Primitive_accessorie with db name nodo_online
@@ -56,6 +52,4 @@ Scenario Outline: Check semantic errors for nodoChiediCopiaRT primitive
         Examples:
             | iuv_value                       | ccp_value         | error                 | soapUI test |
             | 11000679416493210               | 59050             | PPT_RT_SCONOSCIUTA    | CCRTSEM10   |
-
             | $iuv                            | $ccp              | PPT_RT_NONDISPONIBILE | CCRTSEM11   |
-

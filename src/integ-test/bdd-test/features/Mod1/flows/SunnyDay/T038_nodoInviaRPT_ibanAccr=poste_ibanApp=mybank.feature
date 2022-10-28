@@ -2,7 +2,7 @@ Feature: process tests for nodoInviaRT_ibanAccr_ibanAdd
 
     Background:
         Given systems up
-@runnable
+
     Scenario: RPT generation
         Given RPT generation
             """
@@ -124,7 +124,6 @@ Feature: process tests for nodoInviaRT_ibanAccr_ibanAdd
             </soapenv:Envelope>
             """
         And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
-
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
         And check url field exists in nodoInviaRPT response

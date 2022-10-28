@@ -60,6 +60,7 @@ Feature: Syntax checks for activateIOPaymentReq - KO
         Examples:
             | elem             | attribute     | value                                     | soapUI test  |
             | soapenv:Envelope | xmlns:soapenv | http://schemas.xmlsoap.org/ciao/envelope/ | SIN_AIOPR_01 |
+    
     @runnable
     Scenario Outline: Check PPT_SINTASSI_EXTRASXSD error on invalid body element value
         Given <elem> with <value> in activateIOPayment

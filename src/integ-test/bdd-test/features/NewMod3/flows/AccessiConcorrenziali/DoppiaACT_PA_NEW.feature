@@ -9,9 +9,9 @@ Feature: process PAG-590_01
             <soapenv:Header/>
             <soapenv:Body>
             <nod:activatePaymentNoticeReq>
-            <idPSP>70000000001</idPSP>
-            <idBrokerPSP>70000000001</idBrokerPSP>
-            <idChannel>70000000001_01</idChannel>
+            <idPSP>#psp#</idPSP>
+            <idBrokerPSP>#psp#</idBrokerPSP>
+            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
             <password>pwdpwdpwd</password>
             <idempotencyKey>#idempotency_key#</idempotencyKey>
             <qrCode>
@@ -37,9 +37,9 @@ Feature: process PAG-590_01
             <soapenv:Header/>
             <soapenv:Body>
             <nod:activatePaymentNoticeReq>
-            <idPSP>70000000001</idPSP>
-            <idBrokerPSP>70000000001</idBrokerPSP>
-            <idChannel>70000000001_01</idChannel>
+            <idPSP>#psp#</idPSP>
+            <idBrokerPSP>#psp#</idBrokerPSP>
+            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
             <password>pwdpwdpwd</password>
             <idempotencyKey>#idempotency_key#</idempotencyKey>
             <qrCode>
@@ -55,7 +55,7 @@ Feature: process PAG-590_01
             """
         Then saving activatePaymentNotice request in activatePaymentNotice2
 
-
+    @runnable
     Scenario: parallel calls and test scenario
         Given the Initial activatePaymentNotice2 request scenario executed successfully
         And calling primitive activatePaymentNotice_activatePaymentNotice1 POST and activatePaymentNotice_activatePaymentNotice2 POST in parallel

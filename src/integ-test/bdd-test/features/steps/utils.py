@@ -269,7 +269,7 @@ def single_thread(context, soap_primitive, type):
     primitive = replace_local_variables(primitive, context)
     primitive = replace_context_variables(primitive, context)
     primitive = replace_global_variables(primitive, context)
-    print(soap_primitive.split("_")[1])
+  
     if type == 'GET':
         headers = {'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}
         url_nodo = f"{get_rest_url_nodo(context)}/{primitive}"

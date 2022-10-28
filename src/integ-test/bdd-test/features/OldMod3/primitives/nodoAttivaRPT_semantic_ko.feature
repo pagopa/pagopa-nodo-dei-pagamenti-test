@@ -176,7 +176,6 @@ Feature: Semantic checks KO for nodoAttivaRPT
       | elem         | value | tag        | tag_value           | SoapUI     |
       | aim:AuxDigit | 0     | aim:CodIUV | 12312541281233210   | ARPTSEM13  |
       | aim:AuxDigit | 2     | aim:CodIUV | 123455412812332     | ARPTSEM14  |
-
   
   # codiceIdRPT value check: segregation code check  [ARPTSEM15]
   Scenario: Check PPT_STAZIONE_INT_PA_SCONOSCIUTA error on segregation code not in configuration
@@ -212,8 +211,6 @@ Feature: Semantic checks KO for nodoAttivaRPT
     And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
     When psp sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
     Then check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of nodoAttivaRPT response    
-
-
 
   # identificativoStazioneIntermediarioPA value check [ARPTSEM24]
   Scenario: Check PPT_STAZIONE_INT_PA_SCONOSCIUTA error on identificativoStazioneIntermediarioPA not in configuration
@@ -391,9 +388,7 @@ Feature: Semantic checks KO for nodoAttivaRPT
   Scenario: Check PPT_AUTORIZZAZIONE error on identificativoCanale not in psp configuration
     Given identificativoCanale with #canale# in nodoAttivaRPT
     When psp sends SOAP nodoAttivaRPT to nodo-dei-pagamenti 
-    Then check faultCode is PPT_AUTORIZZAZIONE of nodoAttivaRPT response
-
-  
+    Then check faultCode is PPT_AUTORIZZAZIONE of nodoAttivaRPT response 
   #Scenario Outline: Check PPT_SEMANTICA error 
   #  Given <elem> with <value> in nodoAttivaRPT
   #  And <tag> with <tag_value> in nodoAttivaRPT 
@@ -404,8 +399,6 @@ Feature: Semantic checks KO for nodoAttivaRPT
   #    | elem        | value             | tag         | tag_value   | tag1           | tag_value1             | SoapUI    |
   #    | bc:Gln      | 9000000000111     | bc:AuxDigit | 2           | bc:CodIUV      | 123456789012345        | ARPTSEM29 |
   #    | bc:Gln      | 9000000000111     | bc:AuxDigit | 0           | bc:CodStazPA   | None                   | ARPTSEM30 |
-
-
 
   # Check PPT_SEMANTICA error [ARPTSEM29]
   Scenario: Check PPT_SEMANTICA error on wrong noticeNumber

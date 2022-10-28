@@ -283,7 +283,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             </pay_i:datiSingoliPagamenti>
             </pay_i:FlussoRiversamento>
             """
- @runnable 
+ @runnable   
     Scenario: Send nodoInviaFlussoRendicontazione_dataOraMaggiore primitive
         Given the Create a new REND scenario executed successfully
         And initial XML nodoInviaFlussoRendicontazione

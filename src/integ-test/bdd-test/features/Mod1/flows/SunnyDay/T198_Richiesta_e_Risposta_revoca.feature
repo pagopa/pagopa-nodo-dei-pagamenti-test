@@ -1,19 +1,15 @@
 Feature: process tests for nodoInviaRT
     Background:
         Given systems up
-
-@runnable   
-
+ 
     Scenario: RPT generation
         Given RPT generation
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-
                 <pay_i:identificativoDominio>66666666666</pay_i:identificativoDominio>
                 <pay_i:identificativoStazioneRichiedente>66666666666_01</pay_i:identificativoStazioneRichiedente>
-
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
             <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
@@ -84,7 +80,7 @@ Feature: process tests for nodoInviaRT
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-@runnable
+
     Scenario: RT generation
         Given the RPT generation scenario executed successfully
         And RT generation
@@ -92,10 +88,8 @@ Feature: process tests for nodoInviaRT
             <pay_i:RT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>6.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-
                 <pay_i:identificativoDominio>66666666666</pay_i:identificativoDominio>
                 <pay_i:identificativoStazioneRichiedente>66666666666_01</pay_i:identificativoStazioneRichiedente>
-
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRicevuta>IdentificativoMessaggioRicevuta</pay_i:identificativoMessaggioRicevuta>
             <pay_i:dataOraMessaggioRicevuta>#timedate#</pay_i:dataOraMessaggioRicevuta>
@@ -163,9 +157,7 @@ Feature: process tests for nodoInviaRT
                 <pay_i:codiceEsitoPagamento>0</pay_i:codiceEsitoPagamento>
                 <pay_i:importoTotalePagato>10.00</pay_i:importoTotalePagato>
                 <pay_i:identificativoUnivocoVersamento>$IUV</pay_i:identificativoUnivocoVersamento>
-
                 <pay_i:CodiceContestoPagamento>$1ccp</pay_i:CodiceContestoPagamento>
-
                 <pay_i:datiSingoloPagamento>
                     <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
                     <pay_i:esitoSingoloPagamento>ACCEPTED</pay_i:esitoSingoloPagamento>
@@ -177,7 +169,7 @@ Feature: process tests for nodoInviaRT
             </pay_i:datiPagamento>
             </pay_i:RT>
             """
-@runnable
+
     Scenario: RR generation
         Given the RT generation scenario executed successfully
         And RR generation 
@@ -185,10 +177,8 @@ Feature: process tests for nodoInviaRT
             <pay_i:RR xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/Revoche/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/Revoche/ RR_ER_6_0_1.xsd ">
             <pay_i:versioneOggetto>6.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-
                 <pay_i:identificativoDominio>66666666666</pay_i:identificativoDominio>
                 <pay_i:identificativoStazioneRichiedente>66666666666_01</pay_i:identificativoStazioneRichiedente>
-
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRevoca>1</pay_i:identificativoMessaggioRevoca>
             <pay_i:dataOraMessaggioRevoca>#timedate#</pay_i:dataOraMessaggioRevoca>
@@ -238,9 +228,7 @@ Feature: process tests for nodoInviaRT
             <pay_i:datiRevoca>
                 <pay_i:importoTotaleRevocato>10.00</pay_i:importoTotaleRevocato>
                 <pay_i:identificativoUnivocoVersamento>$IUV</pay_i:identificativoUnivocoVersamento>
-
                 <pay_i:codiceContestoPagamento>$1ccp</pay_i:codiceContestoPagamento>
-
                 <pay_i:tipoRevoca>1</pay_i:tipoRevoca>
                 <pay_i:datiSingolaRevoca>
                     <pay_i:singoloImportoRevocato>10.00</pay_i:singoloImportoRevocato>
@@ -251,10 +239,8 @@ Feature: process tests for nodoInviaRT
             </pay_i:datiRevoca>
             </pay_i:RR>
             """
-
- @runnable          
+         
   # controllare <pay_i:identificativoUnivocoRiscossione>idRiscossioneRR</pay_i:identificativoUnivocoRiscossione> con Mascia
-
     Scenario: ER generation
         Given the RR generation scenario executed successfully
         And ER generation
@@ -262,10 +248,8 @@ Feature: process tests for nodoInviaRT
             <pay_i:ER xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/Revoche/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/Revoche/ RR_ER_6_0_1.xsd ">
             <pay_i:versioneOggetto>6.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-
                 <pay_i:identificativoDominio>66666666666</pay_i:identificativoDominio>
                 <pay_i:identificativoStazioneRichiedente>66666666666_01</pay_i:identificativoStazioneRichiedente>
-
             </pay_i:dominio>
             <pay_i:identificativoMessaggioEsito>1</pay_i:identificativoMessaggioEsito>
             <pay_i:dataOraMessaggioEsito>#timedate#</pay_i:dataOraMessaggioEsito>
@@ -317,9 +301,7 @@ Feature: process tests for nodoInviaRT
             <pay_i:datiRevoca>
                 <pay_i:importoTotaleRevocato>10.00</pay_i:importoTotaleRevocato>
                 <pay_i:identificativoUnivocoVersamento>$IUV</pay_i:identificativoUnivocoVersamento>
-
                 <pay_i:codiceContestoPagamento>$1ccp</pay_i:codiceContestoPagamento>
-
                 <pay_i:datiSingolaRevoca>
                     <pay_i:singoloImportoRevocato>10.00</pay_i:singoloImportoRevocato>
                     <pay_i:identificativoUnivocoRiscossione>$IUV</pay_i:identificativoUnivocoRiscossione>
@@ -329,7 +311,7 @@ Feature: process tests for nodoInviaRT
             </pay_i:datiRevoca>
             </pay_i:ER>
             """
-@runnable
+
     Scenario: Execute nodoInviaRPT request
         Given the ER generation scenario executed successfully
         And initial XML nodoInviaRPT
@@ -337,11 +319,9 @@ Feature: process tests for nodoInviaRT
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
             <ppt:intestazionePPT>
-
             <identificativoPSP>60000000001</identificativoPSP>
             <identificativoIntermediarioPSP>60000000001</identificativoIntermediarioPSP>
             <identificativoCanale>60000000001_07</identificativoCanale>
-
             <tipoFirma></tipoFirma>
             <rpt>$rptAttachment</rpt>
             </ws:nodoInviaRPT>
@@ -367,7 +347,7 @@ Feature: process tests for nodoInviaRT
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
         And check redirect is 1 of nodoInviaRPT response
-@runnable
+
     Scenario: Execute nodoInviaRT request
         Given the Execute nodoInviaRPT request scenario executed successfully
         And initial XML nodoInviaRT
@@ -376,7 +356,6 @@ Feature: process tests for nodoInviaRT
             <soapenv:Header/>
             <soapenv:Body>
                 <ws:nodoInviaRT>
-
                     <identificativoIntermediarioPSP>60000000001</identificativoIntermediarioPSP>
                     <identificativoCanale>60000000001_07</identificativoCanale>
                     <password>pwdpwdpwd</password>
@@ -384,7 +363,6 @@ Feature: process tests for nodoInviaRT
                     <identificativoDominio>66666666666</identificativoDominio>
                     <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
                     <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
-
                     <tipoFirma></tipoFirma>
                     <forzaControlloSegno>1</forzaControlloSegno>
                     <rt>$rtAttachment</rt>
@@ -405,7 +383,6 @@ Feature: process tests for nodoInviaRT
             <soapenv:Header/>
             <soapenv:Body>
                 <ws:nodoInviaRichiestaRevoca>
-
                     <identificativoPSP>60000000001</identificativoPSP>
                     <identificativoIntermediarioPSP>60000000001</identificativoIntermediarioPSP>
                     <identificativoCanale>60000000001_07</identificativoCanale>
@@ -413,7 +390,6 @@ Feature: process tests for nodoInviaRT
                     <identificativoDominio>66666666666</identificativoDominio>
                     <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
                     <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
-
                     <rr>$rrAttachment</rr>
                 </ws:nodoInviaRichiestaRevoca>
             </soapenv:Body>
@@ -430,14 +406,12 @@ Feature: process tests for nodoInviaRT
             <soapenv:Header/>
             <soapenv:Body>
                 <ws:nodoInviaRispostaRevoca>
-
                     <identificativoIntermediarioPA>66666666666</identificativoIntermediarioPA>
                     <identificativoStazioneIntermediarioPA>66666666666_01</identificativoStazioneIntermediarioPA>
                     <password>pwdpwdpwd</password>
                     <identificativoDominio>66666666666</identificativoDominio>
                     <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
                     <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
-
                     <er>$erAttachment</er>
                 </ws:nodoInviaRispostaRevoca>
             </soapenv:Body>

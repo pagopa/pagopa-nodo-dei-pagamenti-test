@@ -11,7 +11,6 @@ Feature: Semantic checks KO for nodoChiediCatalogoServizi
             <ws:nodoChiediCatalogoServizi>
                 <identificativoPSP>#psp#</identificativoPSP>
                 <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-                <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
                 <identificativoCanale>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</identificativoCanale>
                 <password>pwdpwdpwd</password>
                 <!--Optional:-->

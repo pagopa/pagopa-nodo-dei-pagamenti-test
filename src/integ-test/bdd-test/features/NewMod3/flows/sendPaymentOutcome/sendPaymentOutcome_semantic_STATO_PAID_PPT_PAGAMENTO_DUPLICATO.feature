@@ -14,7 +14,7 @@ Feature: semantic checks for sendPaymentOutcomeReq - STATO PAID - PPT_PAGAMENTO_
         <nod:activatePaymentNoticeReq>
           <idPSP>70000000001</idPSP>
           <idBrokerPSP>70000000001</idBrokerPSP>
-          <idChannel>70000000001_01</idChannel>
+          <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
           <password>pwdpwdpwd</password>
           <idempotencyKey>#idempotency_key#</idempotencyKey>
           <qrCode>
@@ -47,7 +47,7 @@ Feature: semantic checks for sendPaymentOutcomeReq - STATO PAID - PPT_PAGAMENTO_
         <nod:activatePaymentNoticeReq>
           <idPSP>70000000001</idPSP>
           <idBrokerPSP>70000000001</idBrokerPSP>
-          <idChannel>70000000001_01</idChannel>
+          <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
           <password>pwdpwdpwd</password>
           <idempotencyKey>#idempotency_key#</idempotencyKey>
           <qrCode>
@@ -74,7 +74,7 @@ Feature: semantic checks for sendPaymentOutcomeReq - STATO PAID - PPT_PAGAMENTO_
         <nod:sendPaymentOutcomeReq>
           <idPSP>70000000001</idPSP>
           <idBrokerPSP>70000000001</idBrokerPSP>
-          <idChannel>70000000001_01</idChannel>
+          <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
           <password>pwdpwdpwd</password>
           <paymentToken>$activatePaymentNotice_2Response.paymentToken</paymentToken>
           <outcome>OK</outcome>
@@ -127,7 +127,7 @@ Feature: semantic checks for sendPaymentOutcomeReq - STATO PAID - PPT_PAGAMENTO_
         <nod:sendPaymentOutcomeReq>
           <idPSP>70000000001</idPSP>
           <idBrokerPSP>70000000001</idBrokerPSP>
-          <idChannel>70000000001_01</idChannel>
+          <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
           <password>pwdpwdpwd</password>
           <paymentToken>$activatePaymentNotice_1Response.paymentToken</paymentToken>
           <outcome>OK</outcome>

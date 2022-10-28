@@ -52,11 +52,11 @@ Feature: semantic checks for pspNotifyPaymentReq - CreditCard [T_02]
       </soapenv:Envelope>
       """
     And EC new version
-@runnable
+
   Scenario: Execute activateIOPaymentReq request
     When IO sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is OK of activateIOPayment response
-@runnable
+
   # nodoChiediInformazioniPagamento phase
   Scenario: Execute nodoChiediInformazioniPagamento request
     Given the Execute activateIOPaymentReq request scenario executed successfully
@@ -70,11 +70,11 @@ Feature: semantic checks for pspNotifyPaymentReq - CreditCard [T_02]
 
     And initial XML pspNotifyPayment
       """
-      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:psp="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
+      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pfn="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
       <soapenv:Body>
-      <psp:pspNotifyPaymentRes>
+      <pfn:pspNotifyPaymentRes>
       <outcome>OK</outcome>
-      </psp:pspNotifyPaymentRes>
+      </pfn:pspNotifyPaymentRes>
       </soapenv:Body>
       </soapenv:Envelope>
       """

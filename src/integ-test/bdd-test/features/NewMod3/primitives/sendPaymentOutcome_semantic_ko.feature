@@ -10,7 +10,7 @@ Feature: Semantic checks for sendPaymentOutcome - KO
               <nod:sendPaymentOutcomeReq>
                  <idPSP>70000000001</idPSP>
                  <idBrokerPSP>70000000001</idBrokerPSP>
-                 <idChannel>70000000001_01</idChannel>
+                 <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
                  <password>pwdpwdpwd</password>
                  <paymentToken>12345678901234567890123456789012</paymentToken>
                  <outcome>OK</outcome>

@@ -2,7 +2,7 @@ Feature: PRO_ANNULLO_15_PPALNEW
 
     Background:
         Given systems up
-@runnable
+
     Scenario: Execute verifyPaymentNotice (Phase 1)
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 10000
         And initial XML verifyPaymentNotice
@@ -25,7 +25,7 @@ Feature: PRO_ANNULLO_15_PPALNEW
         """
         When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of verifyPaymentNotice response
-@runnable
+
     Scenario: Execute activateIOPayment (Phase 2)
         Given the Execute verifyPaymentNotice (Phase 1) scenario executed successfully
         And initial XML activateIOPayment
@@ -79,12 +79,13 @@ Feature: PRO_ANNULLO_15_PPALNEW
         """
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
-@runnable
+
     Scenario: Execute nodoChiediInformazioniPagamento (Phase 3)
         Given the Execute activateIOPayment (Phase 2) scenario executed successfully
         When WISP sends rest GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200
-@runnable
+    
+    @runnable
     Scenario: Execute nodoInoltroEsitoPayPal (Phase 4)
         Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
         When WISP sends REST POST inoltroEsito/paypal to nodo-dei-pagamenti

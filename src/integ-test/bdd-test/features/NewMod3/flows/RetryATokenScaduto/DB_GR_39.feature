@@ -13,7 +13,7 @@ Feature: process tests for DB_GR_39
       <soapenv:Body>
       <nod:verifyPaymentNoticeReq>
       <idPSP>#psp#</idPSP>
-      <idBrokerPSP>60000000001</idBrokerPSP>
+      <idBrokerPSP>80000000001</idBrokerPSP>
       <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
       <password>pwdpwdpwd</password>
       <qrCode>
@@ -41,7 +41,7 @@ Feature: process tests for DB_GR_39
       <soapenv:Body>
       <nod:activatePaymentNoticeReq>
       <idPSP>#psp#</idPSP>
-      <idBrokerPSP>60000000001</idBrokerPSP>
+      <idBrokerPSP>80000000001</idBrokerPSP>
       <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
       <password>pwdpwdpwd</password>
       <idempotencyKey>#idempotency_key#</idempotencyKey>
@@ -81,7 +81,7 @@ Feature: process tests for DB_GR_39
       <debtor>
       <uniqueIdentifier>
       <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-      <entityUniqueIdentifierValue>77777777777</entityUniqueIdentifierValue>
+      <entityUniqueIdentifierValue>#creditor_institution_code_secondary#</entityUniqueIdentifierValue>
       </uniqueIdentifier>
       <fullName>paGetPaymentName</fullName>
       <!--Optional:-->
@@ -105,7 +105,7 @@ Feature: process tests for DB_GR_39
       <transfer>
       <idTransfer>1</idTransfer>
       <transferAmount>17.00</transferAmount>
-      <fiscalCodePA>66666666666</fiscalCodePA>
+      <fiscalCodePA>#creditor_institution_code_secondary#</fiscalCodePA>
       <IBAN>IT45R0760103200000000001016</IBAN>
       <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
       <transferCategory>paGetPaymentTest</transferCategory>
@@ -143,7 +143,7 @@ Feature: process tests for DB_GR_39
       <soapenv:Body>
       <nod:sendPaymentOutcomeReq>
       <idPSP>#psp#</idPSP>
-      <idBrokerPSP>60000000001</idBrokerPSP>
+      <idBrokerPSP>80000000001</idBrokerPSP>
       <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
       <password>pwdpwdpwd</password>
       <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
@@ -182,6 +182,7 @@ Feature: process tests for DB_GR_39
     When job paSendRt triggered after 5 seconds
     Then verify the HTTP status code of paSendRt response is 200
 
+  @runnable
   Scenario: DB check + db update
     Given the trigger jobs paSendRt scenario executed successfully
     And verify 1 record for the table POSITION_RECEIPT_XML retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
@@ -234,6 +235,7 @@ Feature: process tests for DB_GR_39
     #And checks the value NOTICE_GENERATED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
     #And verify 1 record for the table POSITION_RECEIPT_XML retrived by the query payment_status on db nodo_online under macro NewMod3
   
+    @runnable
   Scenario: job refresh pa (2)
     Given update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with N, with where condition FK_PA and where value ('16629') under macro update_query on db nodo_cfg
     Then refresh job PA triggered after 10 seconds

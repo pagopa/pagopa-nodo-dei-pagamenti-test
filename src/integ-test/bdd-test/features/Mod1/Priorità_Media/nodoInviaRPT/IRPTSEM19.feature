@@ -3,7 +3,7 @@ Feature: process tests for nodoInviaRT[IRPTSEM19]
         Given systems up
         And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
 
-           Scenario: RPT generation
+    Scenario: RPT generation
         Given RPT generation
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
@@ -81,6 +81,8 @@ Feature: process tests for nodoInviaRT[IRPTSEM19]
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
+    
+    @runnable
     Scenario: Execute nodoInviaRPT request
         Given the RPT generation scenario executed successfully
         And initial XML nodoInviaRPT
@@ -107,7 +109,6 @@ Feature: process tests for nodoInviaRT[IRPTSEM19]
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is KO of nodoInviaRPT response
         And check faultCode is PPT_CANALE_DISABILITATO of nodoInviaRPT response

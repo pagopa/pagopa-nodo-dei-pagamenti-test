@@ -17,11 +17,9 @@ Feature: process tests for Retry_DB_GR_13
       <soapenv:Header/>
       <soapenv:Body>
       <nod:verifyPaymentNoticeReq>
-
-      <idPSP>70000000001</idPSP>
-      <idBrokerPSP>70000000001</idBrokerPSP>
-      <idChannel>70000000001_01</idChannel>
-
+      <idPSP>#psp#</idPSP>
+      <idBrokerPSP>#psp#</idBrokerPSP>
+      <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
       <password>pwdpwdpwd</password>
       <qrCode>
       <fiscalCode>#creditor_institution_code#</fiscalCode>
@@ -31,6 +29,7 @@ Feature: process tests for Retry_DB_GR_13
       </soapenv:Body>
       </soapenv:Envelope>
       """
+
 
   # Verify phase
   Scenario: Execute verifyPaymentNotice request
@@ -47,18 +46,14 @@ Feature: process tests for Retry_DB_GR_13
       <soapenv:Header/>
       <soapenv:Body>
       <nod:activatePaymentNoticeReq>
-
-      <idPSP>70000000001</idPSP>
-      <idBrokerPSP>70000000001</idBrokerPSP>
-      <idChannel>70000000001_01</idChannel>
-
+      <idPSP>#psp#</idPSP>
+      <idBrokerPSP>#psp#</idBrokerPSP>
+      <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
       <password>pwdpwdpwd</password>
       <idempotencyKey>#idempotency_key#</idempotencyKey>
       <qrCode>
       <fiscalCode>#creditor_institution_code#</fiscalCode>
-
       <noticeNumber>#notice_number#</noticeNumber>
-
       </qrCode>
       <expirationTime>2000</expirationTime>
       <amount>17.00</amount>
@@ -92,7 +87,7 @@ Feature: process tests for Retry_DB_GR_13
       <debtor>
       <uniqueIdentifier>
       <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-      <entityUniqueIdentifierValue>77777777777</entityUniqueIdentifierValue>
+      <entityUniqueIdentifierValue>#creditor_institution_code_secondary#</entityUniqueIdentifierValue>
       </uniqueIdentifier>
       <fullName>paGetPaymentName</fullName>
       <!--Optional:-->
@@ -116,9 +111,7 @@ Feature: process tests for Retry_DB_GR_13
       <transfer>
       <idTransfer>1</idTransfer>
       <transferAmount>10.00</transferAmount>
-
-      <fiscalCodePA>77777777777</fiscalCodePA>
-
+      <fiscalCodePA>#creditor_institution_code_secondary#</fiscalCodePA>
       <IBAN>IT45R0760103200000000001016</IBAN>
       <remittanceInformation>testPaGetPayment</remittanceInformation>
       <transferCategory>paGetPaymentTest</transferCategory>
@@ -171,11 +164,9 @@ Feature: process tests for Retry_DB_GR_13
       <soapenv:Header/>
       <soapenv:Body>
       <nod:sendPaymentOutcomeReq>
-
-      <idPSP>70000000001</idPSP>
-      <idBrokerPSP>70000000001</idBrokerPSP>
-      <idChannel>70000000001_01</idChannel>
-
+      <idPSP>#psp#</idPSP>
+      <idBrokerPSP>#psp#</idBrokerPSP>
+      <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
       <password>pwdpwdpwd</password>
       <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
       <outcome>OK</outcome>
@@ -218,6 +209,7 @@ Feature: process tests for Retry_DB_GR_13
     And verify 3 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
     And update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with N, with where condition OBJ_ID and where value ('13','1201') under macro update_query on db nodo_cfg
 
+  @runnable
   Scenario: job refresh pa (2)
     Given the DB check + db update scenario executed successfully
     Then refresh job PA triggered after 10 seconds

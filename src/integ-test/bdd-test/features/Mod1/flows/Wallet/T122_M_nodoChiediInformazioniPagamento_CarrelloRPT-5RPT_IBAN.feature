@@ -129,7 +129,6 @@ Feature: process tests for 5 RPT 5 Versamenti
     Scenario: RPT2 generation
         Given the RPT generation scenario executed successfully
         And RPT2 generation
-
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.1</pay_i:versioneOggetto>
@@ -254,7 +253,6 @@ Feature: process tests for 5 RPT 5 Versamenti
     Scenario: RPT3 generation
         Given the RPT2 generation scenario executed successfully
         And RPT3 generation
-
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.1</pay_i:versioneOggetto>
@@ -683,6 +681,7 @@ Feature: process tests for 5 RPT 5 Versamenti
         And check url contains acardste of nodoInviaCarrelloRPT response
         And retrieve session token from $nodoInviaCarrelloRPTResponse.url
 
+    @runnable
     Scenario: Execution idPagamento
         Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
         When WISP sends rest GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti

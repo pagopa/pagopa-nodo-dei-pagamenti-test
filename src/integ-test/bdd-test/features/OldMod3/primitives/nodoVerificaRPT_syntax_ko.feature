@@ -75,8 +75,6 @@ Feature: Syntax check OK for nodoVerificaRPT
             | codiceIdRPT | None               | VRPTSIN24   |
             | codiceIdRPT | Empty              | VRPTSIN25   |
 
-
-
     Scenario Outline: Check faultCode PPT_SINTASSI_XSD error on missing or empty body elements
         Given <field> with <value> in nodoVerificaRPT
         When psp sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
@@ -89,6 +87,4 @@ Feature: Syntax check OK for nodoVerificaRPT
             | bc:AuxDigit | Empty              | VRPTSIN29   |
             | bc:AuxDigit | 03                 | VRPTSIN30   |
             | bc:CodIUV   | Empty              | VRPTSIN31   |
-
             | bc:CodIUV   | 123456789012345678 | VRPTSIN32   |
-

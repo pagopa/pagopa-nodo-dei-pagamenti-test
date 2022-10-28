@@ -3,7 +3,7 @@ Feature: FLUSSO_APIO_12
 Background:
     Given systems up
     And Ec new version
-@runnable
+
     Scenario: Execute verifyPaymentNotice (Phase 1)
     Given initial XML verifyPaymentNotice
     """
@@ -25,7 +25,7 @@ Background:
     """
     When AppIO sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of verifyPaymentNotice response
-@runnable
+
 Scenario: Execute activateIOPayment (Phase 2)
     Given the Execute verifyPaymentNotice (Phase 1) scenario executed successfully
     And initial XML activateIOPayment
@@ -79,22 +79,22 @@ Scenario: Execute activateIOPayment (Phase 2)
     """
     When AppIO sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is OK of activateIOPayment response
-@runnable
+
 Scenario: Execute nodoChiediInformazioniPagamento (Phase 3)
     Given the Execute activateIOPayment (Phase 2) scenario executed successfully
     When WISP sends rest GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
     Then verify the HTTP status code of informazioniPagamento response is 200
-@runnable
+
 Scenario: Execute nodoInoltroEsitoCarta (Phase 4)
     Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
     And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
     """
-    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:psp="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
+    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pfn="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
         <soapenv:Header/>
         <soapenv:Body>
-            <psp:pspNotifyPaymentRes>
+            <pfn:pspNotifyPaymentRes>
                 <outcome>Response malformata</outcome>
-            </psp:pspNotifyPaymentRes>
+            </pfn:pspNotifyPaymentRes>
         </soapenv:Body>
     </soapenv:Envelope>
     """
@@ -157,6 +157,7 @@ Scenario: Execute nodoInoltroEsitoCarta (Phase 4)
     And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table PM_SESSION_DATA retrived by the query pm_session on db nodo_online under macro AppIO
     And checks the value None of the record at column MOTIVO_ANNULLAMENTO of the table PM_SESSION_DATA retrived by the query pm_session on db nodo_online under macro AppIO
     And checks the value None of the record at column CODICE_CONVENZIONE of the table PM_SESSION_DATA retrived by the query pm_session on db nodo_online under macro AppIO
+
 @runnable
 Scenario: Check nodoInoltroEsitoCarta1 response after nodoInoltroEsitoCarta
     Given the Execute nodoInoltroEsitoCarta (Phase 4) scenario executed successfully
@@ -164,12 +165,12 @@ Scenario: Check nodoInoltroEsitoCarta1 response after nodoInoltroEsitoCarta
     And nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
     And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
     """
-    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:psp="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
+    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pfn="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
         <soapenv:Header/>
         <soapenv:Body>
-            <psp:pspNotifyPaymentRes>
+            <pfn:pspNotifyPaymentRes>
                 <outcome>OK</outcome>
-            </psp:pspNotifyPaymentRes>
+            </pfn:pspNotifyPaymentRes>
         </soapenv:Body>
     </soapenv:Envelope>
     """

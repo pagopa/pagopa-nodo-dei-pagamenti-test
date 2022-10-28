@@ -11,7 +11,6 @@ Feature: Semantic checks KO for nodoChiediCatalogoServizi
             <ws:nodoChiediCatalogoServizi>
                 <identificativoPSP>#psp#</identificativoPSP>
                 <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-                <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
                 <identificativoCanale>#canale#</identificativoCanale>
                 <password>pwdpwdpwd</password>
                 <!--Optional:-->
@@ -21,4 +20,4 @@ Feature: Semantic checks KO for nodoChiediCatalogoServizi
         </soapenv:Envelope>
         """
     When psp sends SOAP nodoChiediCatalogoServizi to nodo-dei-pagamenti 
-    Then check esito is OK of nodoChiediCatalogoServizi response
+    Then check xmlCatalogoServizi is NotNone of nodoChiediCatalogoServizi response

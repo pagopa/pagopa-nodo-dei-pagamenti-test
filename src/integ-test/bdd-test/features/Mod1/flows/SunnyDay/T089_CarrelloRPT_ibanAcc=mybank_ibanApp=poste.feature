@@ -2,24 +2,19 @@ Feature: process tests for nodoInviaRT_ibanAccr_ibanAdd
     Background:
         Given systems up
 
-    @runnable
-
     Scenario: RPT generation
         Given RPT generation
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-
             <pay_i:identificativoDominio>66666666666</pay_i:identificativoDominio>
             <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
-
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
             <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
             <pay_i:autenticazioneSoggetto>CNS</pay_i:autenticazioneSoggetto>
             <pay_i:soggettoVersante>
-
             <pay_i:identificativoUnivocoVersante>
             <pay_i:tipoIdentificativoUnivoco>F</pay_i:tipoIdentificativoUnivoco>
             <pay_i:codiceIdentificativoUnivoco>RCCGLD09P09H502E</pay_i:codiceIdentificativoUnivoco>
@@ -85,8 +80,8 @@ Feature: process tests for nodoInviaRT_ibanAccr_ibanAdd
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
+    
     @runnable
-
     Scenario: Execute nodoInviaCarrelloRPT request
         Given the RPT generation scenario executed successfully
         And initial XML nodoInviaCarrelloRPT
@@ -115,7 +110,6 @@ Feature: process tests for nodoInviaRT_ibanAccr_ibanAdd
             </elementoListaRPT>
             </listaRPT>
             </ws:nodoInviaCarrelloRPT>
-
             </soapenv:Body>
             </soapenv:Envelope>
             """

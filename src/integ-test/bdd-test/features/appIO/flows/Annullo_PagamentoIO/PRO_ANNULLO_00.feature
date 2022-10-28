@@ -2,7 +2,7 @@ Feature: PRO_ANNULLO_00
 
     Background:
         Given systems up
-    @runnable
+    
     Scenario: Execute verifyPaymentNotice (Phase 1)
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 10000
         And initial XML verifyPaymentNotice
@@ -25,7 +25,7 @@ Feature: PRO_ANNULLO_00
         """
         When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of verifyPaymentNotice response
-    @runnable
+    
     Scenario: Execute activateIOPayment (Phase 2)
         Given the Execute verifyPaymentNotice (Phase 1) scenario executed successfully
         And initial XML activateIOPayment
@@ -79,24 +79,24 @@ Feature: PRO_ANNULLO_00
         """
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
-    @runnable
+    
     Scenario: Execute nodoChiediInformazioniPagamento (Phase 3)
         Given the Execute activateIOPayment (Phase 2) scenario executed successfully
         When WISP sends rest GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200
-    @runnable
+    
     Scenario: Execute nodoInoltraEsitoPagamentoCarta (Phase 4)
         Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
         And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
         """
-        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:psp="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pfn="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
             <soapenv:Header/>
             <soapenv:Body>
-                <psp:pspNotifyPaymentRes>
+                <pfn:pspNotifyPaymentRes>
+                <delay>10000</delay>
                 <outcome>OK</outcome>
                 <!--Optional:-->
-                <wait>20</wait>
-                </psp:pspNotifyPaymentRes>
+                </pfn:pspNotifyPaymentRes>
             </soapenv:Body>
         </soapenv:Envelope>
         """
@@ -164,6 +164,7 @@ Feature: PRO_ANNULLO_00
         And checks the value None of the record at column CODICE_CONVENZIONE of the table PM_SESSION_DATA retrived by the query pm_session on db nodo_online under macro AppIO
         # check correctness POSITION_TRANSFER
         And checks the value Y of the record at column VALID of the table POSITION_TRANSFER retrived by the query payment_status on db nodo_online under macro AppIO
+    
     @runnable 
     Scenario: Execute activateIOPayment (Phase 5)
         Given the Execute nodoInoltraEsitoPagamentoCarta (Phase 4) scenario executed successfully

@@ -29,6 +29,7 @@ Feature: Process for activatePaymentNoticeReq
             """
 
     #pa old
+    @runnable
     Scenario: PRO_APNR_01
         Given the initial activate paold scenario executed successfully
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
@@ -60,6 +61,7 @@ Feature: Process for activatePaymentNoticeReq
             """
     
     #pa new
+    @runnable
     Scenario: PRO_APNR_02
         Given the initial activate panew scenario executed successfully
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti

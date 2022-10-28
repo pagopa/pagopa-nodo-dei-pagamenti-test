@@ -10,7 +10,7 @@ Feature: Checks for EC new and nodoVerificaRPT
               <ws:nodoVerificaRPT>
                   <identificativoPSP>70000000001</identificativoPSP>
                   <identificativoIntermediarioPSP>70000000001</identificativoIntermediarioPSP>
-                  <identificativoCanale>70000000001_01</identificativoCanale>
+                  <identificativoCanale>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanale>
                   <password>pwdpwdpwd</password>
                   <codiceContestoPagamento>120671877019565</codiceContestoPagamento>
                   <codificaInfrastrutturaPSP>QR-CODE</codificaInfrastrutturaPSP>

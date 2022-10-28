@@ -3,9 +3,6 @@ Feature: process tests for DB_GR_19
   Background:
     Given systems up
     
-
-
-
   Scenario: initial verifyPaymentNotice
     Given initial XML verifyPaymentNotice
       """
@@ -14,7 +11,7 @@ Feature: process tests for DB_GR_19
       <soapenv:Body>
       <nod:verifyPaymentNoticeReq>
       <idPSP>#psp#</idPSP>
-      <idBrokerPSP>60000000001</idBrokerPSP>
+      <idBrokerPSP>80000000001</idBrokerPSP>
       <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
       <password>pwdpwdpwd</password>
       <qrCode>
@@ -42,7 +39,7 @@ Feature: process tests for DB_GR_19
       <soapenv:Body>
       <nod:activatePaymentNoticeReq>
       <idPSP>#psp#</idPSP>
-      <idBrokerPSP>60000000001</idBrokerPSP>
+      <idBrokerPSP>80000000001</idBrokerPSP>
       <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
       <password>pwdpwdpwd</password>
       <idempotencyKey>#idempotency_key#</idempotencyKey>
@@ -82,7 +79,7 @@ Feature: process tests for DB_GR_19
       <debtor>
       <uniqueIdentifier>
       <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-      <entityUniqueIdentifierValue>77777777777</entityUniqueIdentifierValue>
+      <entityUniqueIdentifierValue>creditor_institution_code_secondary</entityUniqueIdentifierValue>
       </uniqueIdentifier>
       <fullName>paGetPaymentName</fullName>
       <!--Optional:-->
@@ -144,7 +141,7 @@ Feature: process tests for DB_GR_19
       <soapenv:Body>
       <nod:sendPaymentOutcomeReq>
       <idPSP>#psp#</idPSP>
-      <idBrokerPSP>60000000001</idBrokerPSP>
+      <idBrokerPSP>80000000001</idBrokerPSP>
       <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
       <password>pwdpwdpwd</password>
       <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
@@ -183,6 +180,7 @@ Feature: process tests for DB_GR_19
     When job paSendRt triggered after 5 seconds
     Then verify the HTTP status code of paSendRt response is 200
 
+  @runnable
   Scenario: DB check + db update
     Given the trigger jobs paSendRt scenario executed successfully
     And verify 1 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3

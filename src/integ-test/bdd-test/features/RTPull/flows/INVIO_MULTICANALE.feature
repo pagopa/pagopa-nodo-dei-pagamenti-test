@@ -470,7 +470,7 @@ Feature: INVIO_MULTICANALE
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canale_DIFFERITO_MOD2#</identificativoCanale>
+            <identificativoCanale>#canaleRtPull_sec#</identificativoCanale>
             <tipoFirma></tipoFirma>
             <rpt>$rptAttachment</rpt>
             </ws:nodoInviaRPT>

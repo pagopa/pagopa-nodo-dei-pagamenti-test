@@ -11,9 +11,9 @@ Feature: semantic check for activatePaymentNotice regarding idempotency
       <soapenv:Header/>
       <soapenv:Body>
       <nod:activatePaymentNoticeReq>
-      <idPSP>70000000001</idPSP>
-      <idBrokerPSP>70000000001</idBrokerPSP>
-      <idChannel>70000000001_01</idChannel>
+      <idPSP>#psp#</idPSP>
+      <idBrokerPSP>#psp#</idBrokerPSP>
+      <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
       <password>Password01</password>
       <idempotencyKey>#idempotency_key#</idempotencyKey>
       <qrCode>
@@ -39,9 +39,9 @@ Feature: semantic check for activatePaymentNotice regarding idempotency
       <soapenv:Header/>
       <soapenv:Body>
       <nod:activatePaymentNoticeReq>
-      <idPSP>70000000001</idPSP>
-      <idBrokerPSP>70000000001</idBrokerPSP>
-      <idChannel>70000000001_01</idChannel>
+      <idPSP>#psp#</idPSP>
+      <idBrokerPSP>#psp#</idBrokerPSP>
+      <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
       <password>pwdpwdpwd</password>
       <idempotencyKey>$activatePaymentNotice.idempotencyKey</idempotencyKey>
       <qrCode>
@@ -58,7 +58,9 @@ Feature: semantic check for activatePaymentNotice regarding idempotency
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is KO of activatePaymentNotice response
     And check faultCode is PPT_ERRORE_IDEMPOTENZA of activatePaymentNotice response
+  
   #DB check
+  @runnable
   Scenario: Execute activatePaymentNotice request
     Given the Execute activatePaymentNotice1 request scenario executed successfully
     And verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache_act on db nodo_online under macro NewMod3

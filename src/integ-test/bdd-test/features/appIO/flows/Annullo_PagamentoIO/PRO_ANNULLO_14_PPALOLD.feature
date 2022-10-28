@@ -2,7 +2,7 @@ Feature: PRO_ANNULLO_14_PPALOLD
 
     Background:
         Given systems up
-@runnable
+
     Scenario: Execute nodoVerificaRPT (Phase 1)
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 10000
         And RPT generation
@@ -10,7 +10,7 @@ Feature: PRO_ANNULLO_14_PPALOLD
         <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
         <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
         <pay_i:dominio>
-        <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
+        <pay_i:identificativoDominio>#creditor_institution_code_old#</pay_i:identificativoDominio>
         <pay_i:identificativoStazioneRichiedente>#id_station_old#</pay_i:identificativoStazioneRichiedente>
         </pay_i:dominio>
         <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
@@ -108,7 +108,7 @@ Feature: PRO_ANNULLO_14_PPALOLD
         """
         When IO sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoVerificaRPT response
-@runnable
+
     Scenario: Execute nodoAttivaRPT (Phase 2)
         Given the Execute nodoVerificaRPT (Phase 1) scenario executed successfully
         And initial XML nodoAttivaRPT
@@ -122,8 +122,8 @@ Feature: PRO_ANNULLO_14_PPALOLD
                     <identificativoCanale>$nodoVerificaRPT.identificativoCanale</identificativoCanale>
                     <password>$nodoVerificaRPT.password</password>
                     <codiceContestoPagamento>$nodoVerificaRPT.codiceContestoPagamento</codiceContestoPagamento>
-                    <identificativoIntermediarioPSPPagamento>97735020584</identificativoIntermediarioPSPPagamento>
-                    <identificativoCanalePagamento>97735020584_02</identificativoCanalePagamento>
+                    <identificativoIntermediarioPSPPagamento>#broker_AGID#</identificativoIntermediarioPSPPagamento>
+                    <identificativoCanalePagamento>#canale_AGID_BBT#</identificativoCanalePagamento>
                     <codificaInfrastrutturaPSP>QR-CODE</codificaInfrastrutturaPSP>
                     <codiceIdRPT>
                         <qrc:QrCode>
@@ -194,7 +194,7 @@ Feature: PRO_ANNULLO_14_PPALOLD
         """
         When IO sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoAttivaRPT response
- @runnable       
+       
     Scenario: Execute nodoInviaRPT (Phase 3)
         Given the Execute nodoAttivaRPT (Phase 2) scenario executed successfully
         And initial XML nodoInviaRPT
@@ -214,7 +214,7 @@ Feature: PRO_ANNULLO_14_PPALOLD
                     <password>pwdpwdpwd</password>
                     <identificativoPSP>#psp_AGID#</identificativoPSP>
                     <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
-                    <identificativoCanale>97735020584_02</identificativoCanale>
+                    <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
                     <tipoFirma></tipoFirma>
                     <rpt>$rptAttachment</rpt>
                 </ws:nodoInviaRPT>
@@ -225,12 +225,12 @@ Feature: PRO_ANNULLO_14_PPALOLD
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
         And verify 1 record for the table CD_INFO_PAGAMENTO retrived by the query info_pagamento on db nodo_online under macro AppIO
-@runnable
+
     Scenario: Execute nodoChiediInformazioniPagamento (Phase 4)
         Given the Execute nodoInviaRPT (Phase 3) scenario executed successfully
         When WISP sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200
-@runnable
+
     Scenario: Execute nodoInoltroEsitoPayPal (Phase 5) - Response malformata
         Given the Execute nodoChiediInformazioniPagamento (Phase 4) scenario executed successfully
         When WISP sends REST POST inoltroEsito/paypal to nodo-dei-pagamenti

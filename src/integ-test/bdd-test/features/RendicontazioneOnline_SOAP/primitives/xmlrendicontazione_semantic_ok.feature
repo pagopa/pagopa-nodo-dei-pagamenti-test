@@ -2,10 +2,8 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
 
     Background:
         Given systems up
-
 @runnable
     # [SEM_NIFR_30]
-
     Scenario: Create REND
         Given REND generation
             """
@@ -67,10 +65,8 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaFlussoRendicontazione response
 
-
 @runnable
     # [SEM_NIFR_31]
-
     Scenario: Create REND2
         Given REND generation
             """
@@ -133,10 +129,8 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
         Then check esito is OK of nodoInviaFlussoRendicontazione response
 
 
-
 @runnable
     # [SEM_NIFR_32]
-
     Scenario: Create REND3
         Given REND generation
             """
@@ -198,10 +192,8 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaFlussoRendicontazione response
 
-
 @runnable
     # [SEM_NIFR_39]
-
     Scenario: Create REND4
         Given REND generation
             """
@@ -263,10 +255,8 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaFlussoRendicontazione response
 
-
 @runnable
     # [SEM_NIFR_41]
-
     Scenario: Create REND5
         Given REND generation
             """
@@ -327,10 +317,8 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             """
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaFlussoRendicontazione response
-
 @runnable
     # [SEM_NIFR_33]
-
     Scenario: Create REND6
         Given REND generation
             """

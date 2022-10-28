@@ -10,12 +10,10 @@ Feature: process test for nodoChiediSceltaWISP
             <soapenv:Header/>
             <soapenv:Body>
                 <ws:nodoChiediSceltaWISP>
-
                     <identificativoIntermediarioPA>66666666666</identificativoIntermediarioPA>
                     <identificativoStazioneIntermediarioPA>66666666666_01</identificativoStazioneIntermediarioPA>
                     <password>pwdpwdpwd</password>
                     <identificativoDominio>66666666666</identificativoDominio>
-
                     <keyPA>1307201616361259051cb66f9ac190df6ec</keyPA>
                     <keyWISP>5cc7f140475743938a65021deb74c66b18062923</keyWISP>
                 </ws:nodoChiediSceltaWISP>
