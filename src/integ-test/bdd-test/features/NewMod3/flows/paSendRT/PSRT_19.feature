@@ -185,6 +185,7 @@ Feature: process tests for paSendRT
 
 
   # Send Payment Outcome phase
+  @runnable
   Scenario: Execute sendPaymentOutcome request with lastPayment to 0
     Given the Execute activatePaymentNotice request with lastPayment to 0 scenario executed successfully
     And initial XML paSendRT
@@ -212,9 +213,8 @@ Feature: process tests for paSendRT
   #And check EC receives paSendRT properly with noticeNumber $activatePaymentNotice.noticeNumber
   #And check EC receives paSendRT properly having in the receipt $activatePaymentNotice.fiscalCode as fiscalcode
 
-
-
   # Activate phase [PSRT_04]
+  @runnable
   Scenario: Execute activatePaymentNotice request with lastPayment to 1
     Given the Execute verifyPaymentNotice request scenario executed successfully
     And the Define paGetPayment scenario executed successfully
@@ -255,6 +255,7 @@ Feature: process tests for paSendRT
 
 
   # Send Payment Outcome phase [PSRT_05]
+  @runnable
   Scenario: Execute sendPaymentOutcome request with 3 transfers
     Given the Execute activatePaymentNotice request with 3 transfers scenario executed successfully
     And initial XML paSendRT
@@ -282,8 +283,6 @@ Feature: process tests for paSendRT
   #And check EC receives paSendRT properly with noticeNumber $activatePaymentNotice.noticeNumber
   #And check EC receives paSendRT properly having in the receipt $activatePaymentNotice.fiscalCode as fiscalcode
 
-
-
   # Activate phase - 5 transfers in paGetPayment transferList and broadcast true for secondary EC [PSRT_06]
   Scenario: Execute activatePaymentNotice request with 3 transfers and broadcast true for secondary EC
     Given the Execute verifyPaymentNotice request scenario executed successfully
@@ -297,6 +296,7 @@ Feature: process tests for paSendRT
 
 
   # Send Payment Outcome phase [PSRT_06]
+  @runnable
   Scenario: Execute sendPaymentOutcome request with 3 transfers and broadcast true for secondary EC
     Given the Execute activatePaymentNotice request with 3 transfers and broadcast true for secondary EC scenario executed successfully
     And initial XML paSendRT
@@ -326,9 +326,6 @@ Feature: process tests for paSendRT
   #And check EC receives paSendRT properly having in the transfer with idTransfer 1 the same fiscalCodePA of paGetPayment
   #And check EC receives paSendRT properly having in the transfer with idTransfer 2 the same fiscalCodePA of paGetPayment
 
-
-
-
   # Activate phase - 2 transfers in paGetPayment transferList and broadcast true for 2 stations of secondary EC [PSRT_07]
   Scenario: Execute activatePaymentNotice request with 2 transfers and broadcast true for 2 stations of secondary EC
     Given the Execute verifyPaymentNotice request scenario executed successfully
@@ -343,6 +340,7 @@ Feature: process tests for paSendRT
 
 
   # Send Payment Outcome phase [PSRT_07]
+  @runnable
   Scenario: Execute sendPaymentOutcome request with 2 transfers and broadcast true for 2 stations of secondary EC
     Given the Execute activatePaymentNotice request with 2 transfers and broadcast true for 2 stations of secondary EC scenario executed successfully
     And initial XML paSendRT
@@ -386,6 +384,7 @@ Feature: process tests for paSendRT
 
 
   # Send Payment Outcome phase [PSRT_08]
+  @runnable
   Scenario: Execute sendPaymentOutcome request with 3 transfers, 1 for primary EC and 2 for same secondary EC, and broadcast true for 1 station of secondary EC
     Given the Execute activatePaymentNotice request with 3 transfers, 1 for primary EC and 2 for same secondary EC, and broadcast true for 1 station of secondary EC scenario executed successfully
     And initial XML paSendRT
@@ -428,6 +427,7 @@ Feature: process tests for paSendRT
 
 
   # Send Payment Outcome phase [PSRT_09]
+  @runnable
   Scenario: Execute sendPaymentOutcome request with 3 transfers, 1 for primary EC and 2 for same secondary EC, and broadcast true for 2 stations of secondary EC
     Given the Execute activatePaymentNotice request with 3 transfers, 1 for primary EC and 2 for same secondary EC, and broadcast true for 2 stations of secondary EC scenario executed successfully
     And initial XML paSendRT
@@ -471,6 +471,7 @@ Feature: process tests for paSendRT
 
 
   # Send Payment Outcome phase [PSRT_10]
+  @runnable
   Scenario: Execute sendPaymentOutcome request with 3 transfers, 2 for primary EC and 1 for secondary EC, and broadcast true for 1 station of secondary EC
     Given the Execute activatePaymentNotice request with 3 transfers, 2 for primary EC and 1 for secondary EC, and broadcast true for 1 station of secondary EC scenario executed successfully
     And initial XML paSendRT
@@ -513,6 +514,7 @@ Feature: process tests for paSendRT
 
 
   # Send Payment Outcome phase [PSRT_11]
+  @runnable
   Scenario: Execute sendPaymentOutcome request with 1 transfer for secondary EC and broadcast false for all stations of secondary EC
     Given the Execute activatePaymentNotice request with 1 transfer for secondary EC and broadcast false for all stations of secondary EC scenario executed successfully
     And initial XML paSendRT
@@ -567,6 +569,7 @@ Feature: process tests for paSendRT
 
 
   # Send Payment Outcome phase [PSRT_12]
+  @runnable
   Scenario: Execute sendPaymentOutcome request with 1 transfer and broadcast true for 1 station of primary EC
     Given the Execute activatePaymentNotice request with 1 transfer and broadcast true for 1 station of primary EC scenario executed successfully
     And initial XML paSendRT
@@ -594,12 +597,8 @@ Feature: process tests for paSendRT
   #And check EC receives paSendRT properly with noticeNumber $activatePaymentNotice.noticeNumber
   #And check EC receives paSendRT properly having in the receipt $activatePaymentNotice.fiscalCode as fiscalcode
 
-
-
-
-
-
   # Send Payment Outcome phase [PSRT_13]
+  @runnable
   Scenario: Execute sendPaymentOutcome request with 1 transfer and broadcast true for 1 station of primary EC and outcome KO
     Given the Execute activatePaymentNotice request with 1 transfer and broadcast true for 1 station of primary EC scenario executed successfully
     And initial XML paSendRT
@@ -627,9 +626,8 @@ Feature: process tests for paSendRT
     Then check outcome is OK of sendPaymentOutcome response
   #And check EC receives paSendRT not properly with noticeNumber $activatePaymentNotice.noticeNumber
 
-
-
   # Send Payment Outcome phase [PSRT_14]
+  @runnable
   Scenario: Execute sendPaymentOutcome request with 3 transfers and outcome KO
     Given the Execute activatePaymentNotice request with 3 transfers scenario executed successfully
     And initial XML paSendRT
@@ -657,10 +655,8 @@ Feature: process tests for paSendRT
     Then check outcome is OK of sendPaymentOutcome response
   #And check EC receives paSendRT not properly with noticeNumber $activatePaymentNotice.noticeNumber
 
-
-
-
   # Send Payment Outcome phase [PSRT_15]
+  @runnable
   Scenario: Execute sendPaymentOutcome request with 3 transfers and broadcast true for secondary EC and outcome KO
     Given the Execute activatePaymentNotice request with 3 transfers and broadcast true for secondary EC scenario executed successfully
     And initial XML paSendRT
@@ -690,6 +686,7 @@ Feature: process tests for paSendRT
 
 
   # Mod3Cancel Phase - [PSRT_16]
+  @runnable
   Scenario: Execute mod3Cancel poller with 1 transfer and broadcast true for 1 station of primary EC with expirationTime
     Given the Execute activatePaymentNotice request with 1 transfer and broadcast true for 1 station of primary EC with expirationTime scenario executed successfully
     And initial XML paSendRT
@@ -728,6 +725,7 @@ Feature: process tests for paSendRT
     Then check outcome is OK of activatePaymentNotice response
 
   # Mod3Cancel Phase - [PSRT_17]
+  @runnable
   Scenario: Execute mod3Cancel poller with 3 transfers with expiration time
     Given the Execute activatePaymentNotice request with 3 transfers with expiration time scenario executed successfully
     And initial XML paSendRT
@@ -752,13 +750,6 @@ Feature: process tests for paSendRT
     Then verify the HTTP status code of mod3CancelV2 response is 200
   #And check EC receives paSendRT not properly with noticeNumber $activatePaymentNotice.noticeNumber
 
-
-
-
-
-
-
-
   # Activate phase - 6 transfers in paGetPayment transferList and broadcast true for secondary EC and expiration time [PSRT_18]
   Scenario: Execute activatePaymentNotice request with 3 transfers and broadcast true for secondary EC with expirationTime
     Given the Execute verifyPaymentNotice request scenario executed successfully
@@ -773,6 +764,7 @@ Feature: process tests for paSendRT
 
 
   # Mod3Cancel Phase - [PSRT_18]
+  @runnable
   Scenario: Execute mod3Cancel poller with 3 transfers and broadcast true for secondary EC with expirationTime
     Given the Execute activatePaymentNotice request with 3 transfers and broadcast true for secondary EC with expirationTime scenario executed successfully
     And initial XML paSendRT
