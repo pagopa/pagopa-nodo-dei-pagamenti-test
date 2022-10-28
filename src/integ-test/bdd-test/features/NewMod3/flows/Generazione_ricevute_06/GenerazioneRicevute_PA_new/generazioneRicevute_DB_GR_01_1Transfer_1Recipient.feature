@@ -4,7 +4,11 @@ Feature: process tests for generazioneRicevute
 
     Background:
         Given systems up
-        And initial XML verifyPaymentNotice
+        And EC new version
+
+    # verifyPaymentNotice phase
+    Scenario: Execute verifyPaymentNotice request
+        Given initial XML verifyPaymentNotice
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
             <soapenv:Header/>
@@ -22,10 +26,6 @@ Feature: process tests for generazioneRicevute
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And EC new version
-
-    # Verify phase
-    Scenario: Execute verifyPaymentNotice request
         When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of verifyPaymentNotice response
 
