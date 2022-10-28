@@ -9,7 +9,6 @@ Feature: process tests for accessiConCorrenziali [1b - RPT+SPO]
         Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr_old# and application code NA
         And generate 1 cart with PA #creditor_institution_code_old# and notice number $1noticeNumber  
         And initial XML activatePaymentNotice
-
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
         <soapenv:Header />
@@ -36,7 +35,6 @@ Feature: process tests for accessiConCorrenziali [1b - RPT+SPO]
     Scenario: Define RPT
         Given the Execute activatePaymentNotice request scenario executed successfully
         And RPT1 generation
-
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
@@ -113,6 +111,7 @@ Feature: process tests for accessiConCorrenziali [1b - RPT+SPO]
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
+
     # 1a - RPT + SPO_b
     Scenario: Excecute primitives request
         Given the Define RPT scenario executed successfully
@@ -194,6 +193,7 @@ Feature: process tests for accessiConCorrenziali [1b - RPT+SPO]
             """
         Then saving sendPaymentOutcome request in sendPaymentOutcome
 
+    @runnable
     Scenario: parallel calls and test scenario
         Given the Excecute second primitives request scenario executed successfully
         And calling primitive sendPaymentOutcome_sendPaymentOutcome POST and nodoInviaRPT_nodoInviaRPT POST in parallel

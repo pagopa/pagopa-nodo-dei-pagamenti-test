@@ -535,13 +535,14 @@ Feature: Semantic checks for activateIOPayment - KO
   Scenario Outline: Check OK on idempotencyKey validity
     Given nodo-dei-pagamenti has config parameter useIdempotency set to false
     And the Execute activateIOPayment (Phase 1) scenario executed successfully
+    And generate 5 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
     And <tag> with <value> in activateIOPayment
     When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is OK of activateIOPayment response
     And restore initial configurations
     Examples:
       | tag          | value              | soapUI test |
-      | noticeNumber | 302119138889055636 | SEM_AIPR_22 |
+      | noticeNumber | $5noticeNumber     | SEM_AIPR_22 |
   #| fiscalCode   | 90000000001        | SEM_AIPR_22 |
 
   @runnable
