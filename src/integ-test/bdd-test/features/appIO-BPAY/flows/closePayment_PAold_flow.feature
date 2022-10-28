@@ -405,7 +405,7 @@ Feature: flow checks for closePayment - PA old
          """
          {
             "paymentTokens": [
-               "$ccp"
+               "$sessionToken"
             ],
             "outcome": "KO"
          }
@@ -1878,7 +1878,7 @@ Feature: flow checks for closePayment - PA old
       Given the FLUSSO_OLD_CP_20 (part 3) scenario executed successfully
       When PM sends REST GET avanzamentoPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
       Then verify the HTTP status code of avanzamentoPagamento response is 200
-      And check esito is ACK_UNKNOWN of avanzamentoPagamento response
+      And check esito is PARKED of avanzamentoPagamento response
 
 
    # FLUSSO_OLD_CP_21
