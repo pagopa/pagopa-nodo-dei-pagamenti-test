@@ -20,7 +20,7 @@ Feature: response tests for paDemandPaymentNotice
             """
 
     Scenario Outline: Check paDemandPaymentNotice response with missing optional fields
-        Given idSoggettoServizio with <value> in paDemandPaymentNotice
+        Given idSoggettoServizio with <value> in demandPaymentNotice
         When PSP sends SOAP demandPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of demandPaymentNotice response
         Examples:
@@ -32,7 +32,7 @@ Feature: response tests for paDemandPaymentNotice
             | 00158 | TRES_PDPN_58 |
 
     Scenario Outline: Check PPT_STAZIONE_INT_PA_ERRORE_RESPONSE error on invalid body element value
-        Given idSoggettoServizio with <value> in paDemandPaymentNotice
+        Given idSoggettoServizio with <value> in demandPaymentNotice
         When PSP sends SOAP demandPaymentNotice to nodo-dei-pagamenti
         Then check outcome is KO of demandPaymentNotice response
         And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of demandPaymentNotice response
