@@ -74,7 +74,7 @@ Feature: response tests for paDemandPaymentNotice
             | 00136 | TRES_PDPN_36 |
             | 00137 | TRES_PDPN_37 |
             | 00138 | TRES_PDPN_38 |
-            | 00130 | TRES_PDPN_40 |
+            | 00140 | TRES_PDPN_40 |
             | 00141 | TRES_PDPN_41 |
             | 00143 | TRES_PDPN_43 |
             | 00144 | TRES_PDPN_44 |
