@@ -148,7 +148,7 @@
         "stati_RPT": "SELECT columns FROM table_name WHERE IUV='$iuv' AND CCP= '$1ccp' AND ID_DOMINIO='44444444444' ORDER BY INSERTED_TIMESTAMP",
         "stati_RPT2": "SELECT columns FROM table_name WHERE IUV='$iuv2' AND CCP= '$2CCP' AND ID_DOMINIO='44444444445' ORDER BY INSERTED_TIMESTAMP",
         "stati_RPT_new": "SELECT columns FROM table_name WHERE IUV='$iuv2' AND CCP= '$2CCP' AND ID_DOMINIO='$pa' ORDER BY INSERTED_TIMESTAMP",
-        "stati_RPT_noOrder": "SELECT columns FROM table_name WHERE IUV='$iuv' AND CCP= '$1ccp' AND ID_DOMINIO='44444444444'",
+        "stati_RPT_noOrder": "SELECT columns FROM table_name WHERE IUV='$iuv' AND CCP= '$1ccp' AND ID_DOMINIO='$pa'",
         "stati_RPT2_noOrder": "SELECT columns FROM table_name WHERE IUV='$iuv2' AND CCP= '$2CCP' AND ID_DOMINIO='44444444445'",
         "retry_rpt": "SELECT columns FROM table_name WHERE ID_SESSIONE='$sessionToken' ORDER BY INSERTED_TIMESTAMP",
         "retry_rpt_original": "SELECT columns FROM table_name WHERE ID_SESSIONE_ORIGINALE='$sessionToken' ORDER BY INSERTED_TIMESTAMP",
