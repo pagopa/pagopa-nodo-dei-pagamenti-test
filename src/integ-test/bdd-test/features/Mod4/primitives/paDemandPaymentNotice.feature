@@ -56,7 +56,7 @@ Feature: response tests for paDemandPaymentNotice
         Given the demandPaymentNotice scenario executed successfully
         And the paDemandPaymentNotice OK scenario executed successfully
         And <elem> with <value> in paDemandPaymentNotice
-        And EC replies to nodo-dei-pagamenti with the paDemandPaymentNoticeResponse
+        And EC replies to nodo-dei-pagamenti with the paDemandPaymentNotice
         When PSP sends SOAP demandPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of demandPaymentNotice response
         Examples:
