@@ -53,7 +53,7 @@ Feature: response tests for paDemandPaymentNotice
             </soapenv:Envelope>
             """
 
-    Scenario Outline: Check paDemandPaymentNoticeResponse response with missing optional fields
+    Scenario Outline: Check paDemandPaymentNotice OK response with missing optional fields
         Given the demandPaymentNotice scenario executed successfully
         And the paDemandPaymentNotice OK scenario executed successfully
         And <elem> with <value> in paDemandPaymentNotice
