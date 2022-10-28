@@ -87,7 +87,7 @@ Feature: process tests for pspInviaRT[IRPTRES2]
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
-            <identificativoCarrello>$nodoInviaRPT.identificativoUnivocoVersamento</identificativoCarrello>
+            <identificativoCarrello>$1iuv</identificativoCarrello>
             </soapenv:Header>
             <soapenv:Body>
             <ws:pspInviaRPTResponse>
@@ -133,7 +133,7 @@ Feature: process tests for pspInviaRT[IRPTRES2]
             </soapenv:Body>
             </soapenv:Envelope>
             """
-            And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
+            And psp replies to nodo-dei-pagamenti with the pspInviaRPT
             When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
             Then check esito is KO of nodoInviaRPT response
             And check faultCode is PPT_SYSTEM_ERROR of nodoInviaRPT response
