@@ -14,7 +14,7 @@ Feature: process tests for Retry_DB_GR_31
       <soapenv:Body>
       <nod:verifyPaymentNoticeReq>
       <idPSP>#psp#</idPSP>
-      <idBrokerPSP>60000000001</idBrokerPSP>
+      <idBrokerPSP>80000000001</idBrokerPSP>
       <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
       <password>pwdpwdpwd</password>
       <qrCode>
@@ -42,7 +42,7 @@ Feature: process tests for Retry_DB_GR_31
       <soapenv:Body>
       <nod:activatePaymentNoticeReq>
       <idPSP>#psp#</idPSP>
-      <idBrokerPSP>60000000001</idBrokerPSP>
+      <idBrokerPSP>80000000001</idBrokerPSP>
       <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
       <password>pwdpwdpwd</password>
       <idempotencyKey>#idempotency_key#</idempotencyKey>
@@ -82,7 +82,7 @@ Feature: process tests for Retry_DB_GR_31
       <debtor>
       <uniqueIdentifier>
       <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-      <entityUniqueIdentifierValue>77777777777</entityUniqueIdentifierValue>
+      <entityUniqueIdentifierValue>#creditor_institution_code_secondary#</entityUniqueIdentifierValue>
       </uniqueIdentifier>
       <fullName>paGetPaymentName</fullName>
       <!--Optional:-->
@@ -106,7 +106,7 @@ Feature: process tests for Retry_DB_GR_31
       <transfer>
       <idTransfer>1</idTransfer>
       <transferAmount>10.00</transferAmount>
-      <fiscalCodePA>66666666666</fiscalCodePA>
+      <fiscalCodePA>#creditor_institution_code_secondary#</fiscalCodePA>
       <IBAN>IT45R0760103200000000001016</IBAN>
       <remittanceInformation>testPaGetPayment</remittanceInformation>
       <transferCategory>paGetPaymentTest</transferCategory>
@@ -144,7 +144,7 @@ Feature: process tests for Retry_DB_GR_31
       <soapenv:Body>
       <nod:sendPaymentOutcomeReq>
       <idPSP>#psp#</idPSP>
-      <idBrokerPSP>60000000001</idBrokerPSP>
+      <idBrokerPSP>80000000001</idBrokerPSP>
       <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
       <password>pwdpwdpwd</password>
       <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
@@ -183,6 +183,7 @@ Feature: process tests for Retry_DB_GR_31
     #When job paSendRt triggered after 5 seconds
     #Then verify the HTTP status code of paSendRt response is 200
 
+  @runnable
   Scenario: DB check + db update
     Given the Execute sendPaymentOutcome request scenario executed successfully
     And verify 1 record for the table POSITION_RECEIPT_XML retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3

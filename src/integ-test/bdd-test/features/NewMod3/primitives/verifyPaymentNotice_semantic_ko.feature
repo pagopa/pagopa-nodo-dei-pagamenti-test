@@ -10,7 +10,7 @@ Feature: Semantic checks for verifyPaymentReq - KO
             <nod:verifyPaymentNoticeReq>
                <idPSP>70000000001</idPSP>
                <idBrokerPSP>70000000001</idBrokerPSP>
-               <idChannel>70000000001_01</idChannel>
+               <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
                <password>pwdpwdpwd</password>
                <qrCode>
                   <fiscalCode>#creditor_institution_code#</fiscalCode>
@@ -81,7 +81,7 @@ Feature: Semantic checks for verifyPaymentReq - KO
 
   # password value check: wrong password for an idChannel [SEM_VPNR_08]
   Scenario: Check PPT_AUTENTICAZIONE error on password not associated to psp channel
-    Given idChannel with 70000000001_01 in verifyPaymentNotice
+    Given idChannel with #canale_ATTIVATO_PRESSO_PSP# in verifyPaymentNotice
     Given password with wrongPassword in verifyPaymentNotice
     When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
     Then check outcome is KO of verifyPaymentNotice response

@@ -77,7 +77,7 @@ Feature: process tests for Retry_DB_GR_04
             <debtor>
             <uniqueIdentifier>
             <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-            <entityUniqueIdentifierValue>77777777777</entityUniqueIdentifierValue>
+            <entityUniqueIdentifierValue>#creditor_institution_code_secondary#</entityUniqueIdentifierValue>
             </uniqueIdentifier>
             <fullName>paGetPaymentName</fullName>
             <!--Optional:-->
@@ -101,7 +101,7 @@ Feature: process tests for Retry_DB_GR_04
             <transfer>
             <idTransfer>1</idTransfer>
             <transferAmount>3.00</transferAmount>
-            <fiscalCodePA>77777777777</fiscalCodePA>
+            <fiscalCodePA>#creditor_institution_code_secondary#</fiscalCodePA>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>testPaGetPayment</remittanceInformation>
             <transferCategory>paGetPaymentTest</transferCategory>
@@ -109,7 +109,7 @@ Feature: process tests for Retry_DB_GR_04
             <transfer>
             <idTransfer>2</idTransfer>
             <transferAmount>4.00</transferAmount>
-            <fiscalCodePA>77777777777</fiscalCodePA>
+            <fiscalCodePA>#creditor_institution_code_secondary#</fiscalCodePA>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>testPaGetPayment</remittanceInformation>
             <transferCategory>paGetPaymentTest</transferCategory>
@@ -117,7 +117,7 @@ Feature: process tests for Retry_DB_GR_04
             <transfer>
             <idTransfer>3</idTransfer>
             <transferAmount>3.00</transferAmount>
-            <fiscalCodePA>77777777777</fiscalCodePA>
+            <fiscalCodePA>#creditor_institution_code_secondary#</fiscalCodePA>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>testPaGetPayment</remittanceInformation>
             <transferCategory>paGetPaymentTest</transferCategory>
@@ -140,6 +140,7 @@ Feature: process tests for Retry_DB_GR_04
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
         
+    @runnable
     # Payment Outcome Phase outcome OK
     Scenario: Execute sendPaymentOutcome request
         Given the Execute activatePaymentNotice request scenario executed successfully

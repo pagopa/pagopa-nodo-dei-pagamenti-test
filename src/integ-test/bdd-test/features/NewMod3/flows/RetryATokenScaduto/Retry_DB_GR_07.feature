@@ -8,9 +8,9 @@ Feature: process tests for Retry_DB_GR_07
       <soapenv:Header/>
       <soapenv:Body>
       <nod:verifyPaymentNoticeReq>
-      <idPSP>70000000001</idPSP>
-      <idBrokerPSP>70000000001</idBrokerPSP>
-      <idChannel>70000000001_01</idChannel>
+      <idPSP>#psp#</idPSP>
+      <idBrokerPSP>#psp#</idBrokerPSP>
+      <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
       <password>pwdpwdpwd</password>
       <qrCode>
       <fiscalCode>#creditor_institution_code#</fiscalCode>
@@ -37,9 +37,9 @@ Feature: process tests for Retry_DB_GR_07
       <soapenv:Header/>
       <soapenv:Body>
       <nod:activatePaymentNoticeReq>
-      <idPSP>70000000001</idPSP>
-      <idBrokerPSP>70000000001</idBrokerPSP>
-      <idChannel>70000000001_01</idChannel>
+      <idPSP>#psp#</idPSP>
+      <idBrokerPSP>#psp#</idBrokerPSP>
+      <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
       <password>pwdpwdpwd</password>
       <idempotencyKey>#idempotency_key#</idempotencyKey>
       <qrCode>
@@ -78,7 +78,7 @@ Feature: process tests for Retry_DB_GR_07
       <debtor>
       <uniqueIdentifier>
       <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-      <entityUniqueIdentifierValue>77777777777</entityUniqueIdentifierValue>
+      <entityUniqueIdentifierValue>#creditor_institution_code_secondary#</entityUniqueIdentifierValue>
       </uniqueIdentifier>
       <fullName>paGetPaymentName</fullName>
       <!--Optional:-->
@@ -102,7 +102,7 @@ Feature: process tests for Retry_DB_GR_07
       <transfer>
       <idTransfer>1</idTransfer>
       <transferAmount>10.00</transferAmount>
-      <fiscalCodePA>77777777777</fiscalCodePA>
+      <fiscalCodePA>#creditor_institution_code_secondary#</fiscalCodePA>
       <IBAN>IT45R0760103200000000001016</IBAN>
       <remittanceInformation>testPaGetPayment</remittanceInformation>
       <transferCategory>paGetPaymentTest</transferCategory>
@@ -132,7 +132,7 @@ Feature: process tests for Retry_DB_GR_07
     When job mod3CancelV2 triggered after 3 seconds
     Then verify the HTTP status code of mod3CancelV2 response is 200
 
-
+  @runnable
   # Payment Outcome Phase outcome OK
   Scenario: Execute sendPaymentOutcome request
     Given the Poller Annulli Scenario executed successfully
@@ -142,9 +142,9 @@ Feature: process tests for Retry_DB_GR_07
       <soapenv:Header/>
       <soapenv:Body>
       <nod:sendPaymentOutcomeReq>
-      <idPSP>70000000001</idPSP>
-      <idBrokerPSP>70000000001</idBrokerPSP>
-      <idChannel>70000000001_01</idChannel>
+      <idPSP>#psp#</idPSP>
+      <idBrokerPSP>#psp#</idBrokerPSP>
+      <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
       <password>pwdpwdpwd</password>
       <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
       <outcome>OK</outcome>
@@ -175,7 +175,6 @@ Feature: process tests for Retry_DB_GR_07
       """
     When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is KO of sendPaymentOutcome response
-
     And checks the value NotNone of the record at column ID of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient on db nodo_online under macro NewMod3
     And checks the value $activatePaymentNotice.fiscalCode of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt on db nodo_online under macro NewMod3
     And checks the value $activatePaymentNotice.noticeNumber of the record at column NOTICE_ID of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt on db nodo_online under macro NewMod3
