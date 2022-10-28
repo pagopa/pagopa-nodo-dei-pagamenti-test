@@ -447,6 +447,7 @@ Scenario: Execute sendPaymentOutcome (Phase 5) [SEM_NIEPP_01]
     And checks the value Y of the record at column FLAG_IO of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
     And checks the value Y of the record at column RICEVUTA_PM of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
 
+@runnable
 Scenario: Execute nodoInoltroEsitoPaypal (Phase 6) [SEM_NIEPP_01]
     Given the Execute sendPaymentOutcome (Phase 5) scenario executed successfully
     When WISP sends REST POST inoltroEsito/paypal to nodo-dei-pagamenti
@@ -591,6 +592,7 @@ Scenario: Execute nodoInoltroEsitoPaypal1 (Phase 5) [SEM_NIEPP_02]
     And restore initial configurations
 
 # [SEM_NIEPP_03]
+@runnable
 Scenario: Execute nodoInoltroEsitoPaypal1 (Phase 5) [SEM_NIEPP_03]
     Given the Execute nodoInoltroEsitoPayPal (Phase 4) - OK scenario executed successfully
     When WISP sends REST POST inoltroEsito/paypal to nodo-dei-pagamenti
@@ -655,6 +657,7 @@ Scenario: Execute nodoInoltroEsitoPaypal1 (Phase 5) [SEM_NIEPP_03]
     And checks the value responseOK of the record at column ID_TRANSAZIONE_PM_PAYPAL of the table PM_SESSION_DATA retrived by the query pm_session on db nodo_online under macro AppIO
 
 # [SEM_NIEPP_04]
+@runnable
 Scenario: Execute nodoInoltroEsitoPaypal1 (Phase 5) [SEM_NIEPP_04]
     Given the Execute nodoInoltroEsitoPayPal (Phase 4) - Timeout scenario executed successfully
     When WISP sends REST POST inoltroEsito/paypal to nodo-dei-pagamenti
