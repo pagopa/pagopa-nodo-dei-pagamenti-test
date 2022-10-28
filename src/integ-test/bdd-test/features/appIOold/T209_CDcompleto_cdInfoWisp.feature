@@ -196,16 +196,16 @@ Background:
                  </soapenv:Body>
             </soapenv:Envelope>
             """
-    
-@runnable
+
 Scenario: verifyRPT phase
    When PSP sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
    Then check esito is OK of nodoVerificaRPT response
-@runnable
+
 Scenario: attivaRPT phase
 Given the verifyRPT phase scenario executed successfully
    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
    Then check esito is OK of nodoAttivaRPT response
+
 @runnable
 Scenario: check nodoInviaRPT response
     Given the attivaRPT phase scenario executed successfully
@@ -213,5 +213,3 @@ Scenario: check nodoInviaRPT response
     And retrieve session token from $nodoInviaRPTResponse.url
     Then check esito is OK of nodoInviaRPT response 
     And checks the value $sessionToken of the record at column ID_SESSIONE of the table CD_INFO_PAGAMENTO retrived by the query cd_info_pagamento on db nodo_online under macro AppIOold
-
-

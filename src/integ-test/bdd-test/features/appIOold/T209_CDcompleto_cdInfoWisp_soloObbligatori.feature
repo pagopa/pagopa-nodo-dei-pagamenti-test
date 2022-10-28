@@ -81,7 +81,6 @@ Background:
         </pay_i:datiVersamento>
         </pay_i:RPT>
         """
-
    And initial XML nodoVerificaRPT
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:bc="http://PuntoAccessoPSP.spcoop.gov.it/BarCode_GS1_128_Modified" xmlns:aim="http://PuntoAccessoPSP.spcoop.gov.it/Code_128_AIM_USS-128_tipo_C" xmlns:qrc="http://PuntoAccessoPSP.spcoop.gov.it/QrCode">
@@ -99,7 +98,6 @@ Background:
          </soapenv:Body>
       </soapenv:Envelope>
       """
-
    And initial XML nodoAttivaRPT
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:bc="http://PuntoAccessoPSP.spcoop.gov.it/BarCode_GS1_128_Modified"  xmlns:aim="http://PuntoAccessoPSP.spcoop.gov.it/Code_128_AIM_USS-128_tipo_C" xmlns:qrc="http://PuntoAccessoPSP.spcoop.gov.it/QrCode">
@@ -146,15 +144,16 @@ Background:
       </soapenv:Body>
       </soapenv:Envelope>
       """
-@runnable
+
 Scenario: verifyRPT phase
    When PSP sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
    Then check esito is OK of nodoVerificaRPT response
-@runnable
+
 Scenario: attivaRPT phase
 Given the verifyRPT phase scenario executed successfully
    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
    Then check esito is OK of nodoAttivaRPT response
+
 @runnable
 Scenario: check nodoInviaRPT response
     Given the attivaRPT phase scenario executed successfully
@@ -162,4 +161,3 @@ Scenario: check nodoInviaRPT response
     And retrieve session token from $nodoInviaRPTResponse.url
     Then check esito is OK of nodoInviaRPT response 
     And checks the value $sessionToken of the record at column ID_SESSIONE of the table CD_INFO_PAGAMENTO retrived by the query cd_info_pagamento on db nodo_online under macro AppIOold
-
