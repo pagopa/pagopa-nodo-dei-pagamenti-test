@@ -200,6 +200,99 @@ Feature: flux tests for demandPaymentNotice
         And EC replies to nodo-dei-pagamenti with the paGetPayment
 
     @skip
+    Scenario: activatePaymentNotice request with dueDate
+        Given initial XML activatePaymentNotice
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <nod:activatePaymentNoticeReq>
+            <idPSP>#psp#</idPSP>
+            <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
+            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
+            <password>#password#</password>
+            <idempotencyKey>#idempotency_key#</idempotencyKey>
+            <qrCode>
+            <fiscalCode>#creditor_institution_code#</fiscalCode>
+            <noticeNumber>311$iuv</noticeNumber>
+            </qrCode>
+            <expirationTime>60000</expirationTime>
+            <amount>10.00</amount>
+            <dueDate>2021-04-30</dueDate>
+            <paymentNote>responseFull</paymentNote>
+            </nod:activatePaymentNoticeReq>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And initial XML paGetPayment
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
+            <soapenv:Header />
+            <soapenv:Body>
+            <paf:paGetPaymentRes>
+            <outcome>OK</outcome>
+            <data>
+            <creditorReferenceId>11$iuv</creditorReferenceId>
+            <paymentAmount>10.00</paymentAmount>
+            <dueDate>2021-12-31</dueDate>
+            <!--Optional:-->
+            <retentionDate>2021-12-31T12:12:12</retentionDate>
+            <!--Optional:-->
+            <lastPayment>1</lastPayment>
+            <description>description</description>
+            <!--Optional:-->
+            <companyName>company</companyName>
+            <!--Optional:-->
+            <officeName>office</officeName>
+            <debtor>
+            <uniqueIdentifier>
+            <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
+            <entityUniqueIdentifierValue>77777777777</entityUniqueIdentifierValue>
+            </uniqueIdentifier>
+            <fullName>paGetPaymentName</fullName>
+            <!--Optional:-->
+            <streetName>paGetPaymentStreet</streetName>
+            <!--Optional:-->
+            <civicNumber>paGetPayment99</civicNumber>
+            <!--Optional:-->
+            <postalCode>20155</postalCode>
+            <!--Optional:-->
+            <city>paGetPaymentCity</city>
+            <!--Optional:-->
+            <stateProvinceRegion>paGetPaymentState</stateProvinceRegion>
+            <!--Optional:-->
+            <country>IT</country>
+            <!--Optional:-->
+            <e-mail>paGetPayment@test.it</e-mail>
+            </debtor>
+            <!--Optional:-->
+            <transferList>
+            <!--1 to 5 repetitions:-->
+            <transfer>
+            <idTransfer>1</idTransfer>
+            <transferAmount>10.00</transferAmount>
+            <fiscalCodePA>$activatePaymentNotice.fiscalCode</fiscalCodePA>
+            <IBAN>IT45R0760103200000000001016</IBAN>
+            <remittanceInformation>testPaGetPayment</remittanceInformation>
+            <transferCategory>paGetPaymentTest</transferCategory>
+            </transfer>
+            </transferList>
+            <!--Optional:-->
+            <metadata>
+            <!--1 to 10 repetitions:-->
+            <mapEntry>
+            <key>1</key>
+            <value>22</value>
+            </mapEntry>
+            </metadata>
+            </data>
+            </paf:paGetPaymentRes>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And EC replies to nodo-dei-pagamenti with the paGetPayment
+
+    @skip
     Scenario: activatePaymentNotice request with 3 transfers
         Given initial XML activatePaymentNotice
             """
@@ -1403,30 +1496,6 @@ Feature: flux tests for demandPaymentNotice
     #     And checks the value NOTICE_GENERATED,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query select_activate on db nodo_online under macro NewMod1
     #     And verify 6 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query select_activate on db nodo_online under macro NewMod1
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     # F_DPNR_21
 
     Scenario: F_DPNR_21 (part 1)
@@ -1449,7 +1518,7 @@ Feature: flux tests for demandPaymentNotice
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When PSP sends soap activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-    @wip
+
     Scenario: F_DPNR_21 (part 4)
         Given the F_DPNR_21 (part 3) scenario executed successfully
         When job mod3CancelV2 triggered after 4 seconds
@@ -1484,3 +1553,99 @@ Feature: flux tests for demandPaymentNotice
         And checks the value NotNone of the record at column POSITION_SUBJECT.INSERTED_TIMESTAMP of the table POSITION_SUBJECT JOIN POSITION_SERVICE ON POSITION_SERVICE.DEBTOR_ID = POSITION_SUBJECT.ID retrived by the query select_activate on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column POSITION_SUBJECT.UPDATED_TIMESTAMP of the table POSITION_SUBJECT JOIN POSITION_SERVICE ON POSITION_SERVICE.DEBTOR_ID = POSITION_SUBJECT.ID retrived by the query select_activate on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_SUBJECT JOIN POSITION_SERVICE ON POSITION_SERVICE.DEBTOR_ID = POSITION_SUBJECT.ID retrived by the query select_activate on db nodo_online under macro NewMod1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    # F_DPNR_22
+
+    Scenario: F_DPNR_22 (part 1)
+        Given the demandPaymentNotice scenario executed successfully
+        And the activatePaymentNotice request with dueDate scenario executed successfully
+        When PSP sends soap activatePaymentNotice to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNotice response
+
+    Scenario: F_DPNR_22 (part 2)
+        Given the F_DPNR_22 (part 1) scenario executed successfully
+        And the sendPaymentOutcome request scenario executed successfully
+        And outcome with KO in sendPaymentOutcome
+        When PSP sends soap sendPaymentOutcome to nodo-dei-pagamenti
+        Then check outcome is OK of sendPaymentOutcome response
+
+    Scenario: F_DPNR_22 (part 3)
+        Given the F_DPNR_22 (part 2) scenario executed successfully
+        And random idempotencyKey having $activatePaymentNotice.idPSP as idPSP in activatePaymentNotice
+        And expirationTime with 2000 in activatePaymentNotice
+        And EC replies to nodo-dei-pagamenti with the paGetPayment
+        When PSP sends soap activatePaymentNotice to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNotice response
+    @wip
+    Scenario: F_DPNR_22 (part 4)
+        Given the F_DPNR_22 (part 3) scenario executed successfully
+        When job mod3CancelV2 triggered after 4 seconds
+        Then verify the HTTP status code of mod3CancelV2 response is 200
+
+        # POSITION_RECEIPT
+        And verify 0 record for the table POSITION_RECEIPT retrived by the query select_activate on db nodo_online under macro NewMod1
+
+        # POSITION_SERVICE
+        And checks the value NotNone of the record at column ID of the table POSITION_SERVICE retrived by the query select_activate on db nodo_online under macro NewMod1
+        And checks the value $paGetPayment.description of the record at column DESCRIPTION of the table POSITION_SERVICE retrived by the query select_activate on db nodo_online under macro NewMod1
+        And checks the value $paGetPayment.companyName of the record at column COMPANY_NAME of the table POSITION_SERVICE retrived by the query select_activate on db nodo_online under macro NewMod1
+        And checks the value $paGetPayment.officeName of the record at column OFFICE_NAME of the table POSITION_SERVICE retrived by the query select_activate on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column DEBTOR_ID of the table POSITION_SERVICE retrived by the query select_activate on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_SERVICE retrived by the query select_activate on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_SERVICE retrived by the query select_activate on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_SERVICE retrived by the query select_activate on db nodo_online under macro NewMod1
+
+        # POSITION_SUBJECT
+        And checks the value NotNone of the record at column POSITION_SUBJECT.ID of the table POSITION_SUBJECT JOIN POSITION_SERVICE ON POSITION_SERVICE.DEBTOR_ID = POSITION_SUBJECT.ID retrived by the query select_activate on db nodo_online under macro NewMod1
+        And checks the value DEBTOR of the record at column SUBJECT_TYPE of the table POSITION_SUBJECT JOIN POSITION_SERVICE ON POSITION_SERVICE.DEBTOR_ID = POSITION_SUBJECT.ID retrived by the query select_activate on db nodo_online under macro NewMod1
+        And checks the value $paGetPayment.entityUniqueIdentifierType of the record at column ENTITY_UNIQUE_IDENTIFIER_TYPE of the table POSITION_SUBJECT JOIN POSITION_SERVICE ON POSITION_SERVICE.DEBTOR_ID = POSITION_SUBJECT.ID retrived by the query select_activate on db nodo_online under macro NewMod1
+        And checks the value $paGetPayment.entityUniqueIdentifierValue of the record at column ENTITY_UNIQUE_IDENTIFIER_VALUE of the table POSITION_SUBJECT JOIN POSITION_SERVICE ON POSITION_SERVICE.DEBTOR_ID = POSITION_SUBJECT.ID retrived by the query select_activate on db nodo_online under macro NewMod1
+        And checks the value $paGetPayment.fullName of the record at column FULL_NAME of the table POSITION_SUBJECT JOIN POSITION_SERVICE ON POSITION_SERVICE.DEBTOR_ID = POSITION_SUBJECT.ID retrived by the query select_activate on db nodo_online under macro NewMod1
+        And checks the value $paGetPayment.streetName of the record at column STREET_NAME of the table POSITION_SUBJECT JOIN POSITION_SERVICE ON POSITION_SERVICE.DEBTOR_ID = POSITION_SUBJECT.ID retrived by the query select_activate on db nodo_online under macro NewMod1
+        And checks the value $paGetPayment.civicNumber of the record at column CIVIC_NUMBER of the table POSITION_SUBJECT JOIN POSITION_SERVICE ON POSITION_SERVICE.DEBTOR_ID = POSITION_SUBJECT.ID retrived by the query select_activate on db nodo_online under macro NewMod1
+        And checks the value $paGetPayment.postalCode of the record at column POSTAL_CODE of the table POSITION_SUBJECT JOIN POSITION_SERVICE ON POSITION_SERVICE.DEBTOR_ID = POSITION_SUBJECT.ID retrived by the query select_activate on db nodo_online under macro NewMod1
+        And checks the value $paGetPayment.city of the record at column CITY of the table POSITION_SUBJECT JOIN POSITION_SERVICE ON POSITION_SERVICE.DEBTOR_ID = POSITION_SUBJECT.ID retrived by the query select_activate on db nodo_online under macro NewMod1
+        And checks the value $paGetPayment.stateProvinceRegion of the record at column STATE_PROVINCE_REGION of the table POSITION_SUBJECT JOIN POSITION_SERVICE ON POSITION_SERVICE.DEBTOR_ID = POSITION_SUBJECT.ID retrived by the query select_activate on db nodo_online under macro NewMod1
+        And checks the value $paGetPayment.country of the record at column COUNTRY of the table POSITION_SUBJECT JOIN POSITION_SERVICE ON POSITION_SERVICE.DEBTOR_ID = POSITION_SUBJECT.ID retrived by the query select_activate on db nodo_online under macro NewMod1
+        And checks the value paGetPayment@test.it of the record at column EMAIL of the table POSITION_SUBJECT JOIN POSITION_SERVICE ON POSITION_SERVICE.DEBTOR_ID = POSITION_SUBJECT.ID retrived by the query select_activate on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column POSITION_SUBJECT.INSERTED_TIMESTAMP of the table POSITION_SUBJECT JOIN POSITION_SERVICE ON POSITION_SERVICE.DEBTOR_ID = POSITION_SUBJECT.ID retrived by the query select_activate on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column POSITION_SUBJECT.UPDATED_TIMESTAMP of the table POSITION_SUBJECT JOIN POSITION_SERVICE ON POSITION_SERVICE.DEBTOR_ID = POSITION_SUBJECT.ID retrived by the query select_activate on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_SUBJECT JOIN POSITION_SERVICE ON POSITION_SERVICE.DEBTOR_ID = POSITION_SUBJECT.ID retrived by the query select_activate on db nodo_online under macro NewMod1
+
+        # POSITION_PAYMENT_PLAN
+        And checks the value NotNone of the record at column ID of the table POSITION_PAYMENT_PLAN retrived by the query select_activate on db nodo_online under macro NewMod1
+        And checks the value $paGetPayment.creditorReferenceId of the record at column CREDITOR_REFERENCE_ID of the table POSITION_PAYMENT_PLAN retrived by the query select_activate on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNotice.dueDate of the record at column DUE_DATE of the table POSITION_PAYMENT_PLAN retrived by the query select_activate on db nodo_online under macro NewMod1
+        And checks the value None of the record at column RETENTION_DATE of the table POSITION_PAYMENT_PLAN retrived by the query select_activate on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNotice.amount of the record at column AMOUNT of the table POSITION_PAYMENT_PLAN retrived by the query select_activate on db nodo_online under macro NewMod1
+        And checks the value Y of the record at column FLAG_FINAL_PAYMENT of the table POSITION_PAYMENT_PLAN retrived by the query select_activate on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_PAYMENT_PLAN retrived by the query select_activate on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_PAYMENT_PLAN retrived by the query select_activate on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column METADATA of the table POSITION_PAYMENT_PLAN retrived by the query select_activate on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column FK_POSITION_SERVICE of the table POSITION_PAYMENT_PLAN retrived by the query select_activate on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_PAYMENT_PLAN retrived by the query select_activate on db nodo_online under macro NewMod1
