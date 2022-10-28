@@ -2,7 +2,7 @@ Feature: FLUSSO_APIO_33
 
     Background:
         Given systems up
-@runnable
+
     Scenario: Execute verifyPaymentNotice (Phase 1)
     Given initial XML verifyPaymentNotice
     """
@@ -24,7 +24,7 @@ Feature: FLUSSO_APIO_33
     """
     When AppIO sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of verifyPaymentNotice response
-@runnable
+
     Scenario: Execute activateIOPayment (Phase 2)
         Given the Execute verifyPaymentNotice (Phase 1) scenario executed successfully
         And initial XML activateIOPayment
@@ -78,6 +78,7 @@ Feature: FLUSSO_APIO_33
         """
         When AppIO sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
+
 @runnable
     Scenario: Execute activateIOPayment1 (Phase 3)
         Given nodo-dei-pagamenti has config parameter scheduler.cancelIOPaymentActorMinutesToBack set to 1
