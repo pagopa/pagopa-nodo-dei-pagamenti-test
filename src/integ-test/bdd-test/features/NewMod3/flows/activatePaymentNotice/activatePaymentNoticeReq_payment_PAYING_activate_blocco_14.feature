@@ -42,6 +42,7 @@ Feature: process tests for retry on a cancelled PAYING transaction [Activate_blo
 
 
     #activate phase2
+    @runnable
     Scenario: Execute activatePaymentNotice2 request
         Given the Execute pollerAnnulli job scenario executed successfully
         And initial XML activatePaymentNotice

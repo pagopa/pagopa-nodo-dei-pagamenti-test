@@ -11,9 +11,9 @@ Feature: semantic check for activatePaymentNotice regarding idempotency
       <soapenv:Header/>
       <soapenv:Body>
       <nod:activatePaymentNoticeReq>
-      <idPSP>70000000001</idPSP>
-      <idBrokerPSP>70000000001</idBrokerPSP>
-      <idChannel>70000000001_01</idChannel>
+      <idPSP>#psp#</idPSP>
+      <idBrokerPSP>#psp#</idBrokerPSP>
+      <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
       <password>pwdpwdpwd</password>
       <idempotencyKey>#idempotency_key#</idempotencyKey>
       <qrCode>
@@ -38,9 +38,9 @@ Feature: semantic check for activatePaymentNotice regarding idempotency
       <soapenv:Header/>
       <soapenv:Body>
       <nod:activatePaymentNoticeReq>
-      <idPSP>70000000001</idPSP>
-      <idBrokerPSP>70000000001</idBrokerPSP>
-      <idChannel>70000000001_01</idChannel>
+      <idPSP>#psp#</idPSP>
+      <idBrokerPSP>#psp#</idBrokerPSP>
+      <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
       <password>pwdpwdpwd</password>
       <idempotencyKey>$activatePaymentNotice.idempotencyKey</idempotencyKey>
       <qrCode>
@@ -58,6 +58,7 @@ Feature: semantic check for activatePaymentNotice regarding idempotency
     Then check outcome is OK of activatePaymentNotice response
 
   #DB check
+  @runnable
   Scenario: Execute activatePaymentNotice request
     Given the Execute activatePaymentNotice1 request scenario executed successfully
     And checks the value PAYING of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_pay on db nodo_online under macro NewMod3
