@@ -415,7 +415,7 @@ Feature: flux tests for demandPaymentNotice
             """
         And EC replies to nodo-dei-pagamenti with the paGetPayment
 
-@skip
+    @skip
     Scenario: activatePaymentNotice request with 3 transfers (1.2)
         Given initial XML activatePaymentNotice
             """
@@ -1191,49 +1191,6 @@ Feature: flux tests for demandPaymentNotice
 
     # check XML receipt: da implementare
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     # F_DPNR_17
 
     Scenario: F_DPNR_17 (part 1)
@@ -1270,35 +1227,9 @@ Feature: flux tests for demandPaymentNotice
         And checks the value #id_station#,90000000001_06 of the record at column RECIPIENT_STATION_ID of the table POSITION_RECEIPT_XML retrived by the query select_activate on db nodo_online under macro NewMod1
         And verify 2 record for the table POSITION_RECEIPT_XML retrived by the query select_activate on db nodo_online under macro NewMod1
 
-# check XML receipt: da implementare
+    # check XML receipt: da implementare
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# F_DPNR_18
+    # F_DPNR_18
 
     Scenario: F_DPNR_18 (part 1)
         Given updates through the query update_obj_id_1 of the table PA_STAZIONE_PA the parameter BROADCAST with Y under macro Mod4 on db nodo_cfg
@@ -1307,7 +1238,7 @@ Feature: flux tests for demandPaymentNotice
         And the activatePaymentNotice request with 3 transfers (1.1) scenario executed successfully
         When PSP sends soap activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-    
+
     Scenario: F_DPNR_18 (part 2)
         Given the F_DPNR_18 (part 1) scenario executed successfully
         And the sendPaymentOutcome request scenario executed successfully
@@ -1332,45 +1263,7 @@ Feature: flux tests for demandPaymentNotice
         And checks the value $activatePaymentNotice.fiscalCode,90000000001,90000000001 of the record at column RECIPIENT_BROKER_PA_ID of the table POSITION_RECEIPT_XML retrived by the query select_activate on db nodo_online under macro NewMod1
         And checks the value #id_station#,90000000001_06,90000000001_09 of the record at column RECIPIENT_STATION_ID of the table POSITION_RECEIPT_XML retrived by the query select_activate on db nodo_online under macro NewMod1
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        # F_DPNR_18.1
+    # F_DPNR_18.1
 
     Scenario: F_DPNR_18.1 (part 1)
         Given updates through the query update_obj_id_2 of the table PA_STAZIONE_PA the parameter BROADCAST with Y under macro Mod4 on db nodo_cfg
@@ -1405,3 +1298,65 @@ Feature: flux tests for demandPaymentNotice
         And checks the value $activatePaymentNotice.fiscalCode,90000000001 of the record at column RECIPIENT_BROKER_PA_ID of the table POSITION_RECEIPT_XML retrived by the query select_activate on db nodo_online under macro NewMod1
         And checks the value #id_station#,90000000001_06 of the record at column RECIPIENT_STATION_ID of the table POSITION_RECEIPT_XML retrived by the query select_activate on db nodo_online under macro NewMod1
         And verify 2 record for the table POSITION_RECEIPT_XML retrived by the query select_activate on db nodo_online under macro NewMod1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    # F_DPNR_19
+
+    Scenario: F_DPNR_19 (part 1)
+        Given updates through the query update_fk_pa_1 of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro Mod4 on db nodo_cfg
+        And refresh job PA triggered after 10 seconds
+        Given the demandPaymentNotice scenario executed successfully
+        And the activatePaymentNotice request scenario executed successfully
+        And fiscalCodePA with 90000000001 in paGetPayment
+        And EC replies to nodo-dei-pagamenti with the paGetPayment
+        When PSP sends soap activatePaymentNotice to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNotice response
+    @wip
+    Scenario: F_DPNR_19 (part 2)
+        Given the F_DPNR_19 (part 1) scenario executed successfully
+        And the sendPaymentOutcome request scenario executed successfully
+        When PSP sends soap sendPaymentOutcome to nodo-dei-pagamenti
+        Then check outcome is OK of sendPaymentOutcome response
+        And wait 7 seconds for expiration
+
+        # POSITION_RECEIPT_RECIPIENT
+        And checks the value $paGetPayment.creditorReferenceId of the record at column CREDITOR_REFERENCE_ID of the table POSITION_RECEIPT_RECIPIENT retrived by the query select_activate on db nodo_online under macro NewMod1
+        And checks the value $sendPaymentOutcome.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_RECEIPT_RECIPIENT retrived by the query select_activate on db nodo_online under macro NewMod1
+        And checks the value 90000000001 of the record at column RECIPIENT_PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT retrived by the query select_activate on db nodo_online under macro NewMod1
+        And checks the value 90000000001 of the record at column RECIPIENT_BROKER_PA_ID of the table POSITION_RECEIPT_RECIPIENT retrived by the query select_activate on db nodo_online under macro NewMod1
+        And checks the value 90000000001_06 of the record at column RECIPIENT_STATION_ID of the table POSITION_RECEIPT_RECIPIENT retrived by the query select_activate on db nodo_online under macro NewMod1
+        And checks the value NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT retrived by the query select_activate on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query select_activate on db nodo_online under macro NewMod1
+
+        # POSITION_RECEIPT_XML
+        And checks the value $paGetPayment.creditorReferenceId of the record at column CREDITOR_REFERENCE_ID of the table POSITION_RECEIPT_XML retrived by the query select_activate on db nodo_online under macro NewMod1
+        And checks the value $sendPaymentOutcome.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_RECEIPT_XML retrived by the query select_activate on db nodo_online under macro NewMod1
+        And checks the value 90000000001 of the record at column RECIPIENT_PA_FISCAL_CODE of the table POSITION_RECEIPT_XML retrived by the query select_activate on db nodo_online under macro NewMod1
+        And checks the value 90000000001 of the record at column RECIPIENT_BROKER_PA_ID of the table POSITION_RECEIPT_XML retrived by the query select_activate on db nodo_online under macro NewMod1
+        And checks the value 90000000001_06 of the record at column RECIPIENT_STATION_ID of the table POSITION_RECEIPT_XML retrived by the query select_activate on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_RECEIPT_XML retrived by the query select_activate on db nodo_online under macro NewMod1
