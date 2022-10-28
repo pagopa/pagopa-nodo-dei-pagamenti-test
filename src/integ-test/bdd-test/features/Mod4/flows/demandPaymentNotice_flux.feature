@@ -1469,7 +1469,7 @@ Feature: flux tests for demandPaymentNotice
         And verify 1 record for the table POSITION_SERVICE retrived by the query select_activate on db nodo_online under macro NewMod1
 
         # POSITION_SUBJECT
-        And checks the value NotNone of the record at column ID of the table POSITION_SUBJECT JOIN POSITION_SERVICE ON POSITION_SERVICE.DEBTOR_ID = POSITION_SUBJECT.ID retrived by the query select_activate on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column POSITION_SUBJECT.ID of the table POSITION_SUBJECT JOIN POSITION_SERVICE ON POSITION_SERVICE.DEBTOR_ID = POSITION_SUBJECT.ID retrived by the query select_activate on db nodo_online under macro NewMod1
         And checks the value DEBTOR of the record at column SUBJECT_TYPE of the table POSITION_SUBJECT JOIN POSITION_SERVICE ON POSITION_SERVICE.DEBTOR_ID = POSITION_SUBJECT.ID retrived by the query select_activate on db nodo_online under macro NewMod1
         And checks the value $paGetPayment.entityUniqueIdentifierType of the record at column ENTITY_UNIQUE_IDENTIFIER_TYPE of the table POSITION_SUBJECT JOIN POSITION_SERVICE ON POSITION_SERVICE.DEBTOR_ID = POSITION_SUBJECT.ID retrived by the query select_activate on db nodo_online under macro NewMod1
         And checks the value $paGetPayment.entityUniqueIdentifierValue of the record at column ENTITY_UNIQUE_IDENTIFIER_VALUE of the table POSITION_SUBJECT JOIN POSITION_SERVICE ON POSITION_SERVICE.DEBTOR_ID = POSITION_SUBJECT.ID retrived by the query select_activate on db nodo_online under macro NewMod1
