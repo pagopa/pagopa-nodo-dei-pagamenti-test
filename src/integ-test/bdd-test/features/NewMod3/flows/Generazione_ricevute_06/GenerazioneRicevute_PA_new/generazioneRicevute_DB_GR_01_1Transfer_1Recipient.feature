@@ -88,7 +88,7 @@ Feature: process tests for generazioneRicevute
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And initial xml paGetPaymentNotice
+        And initial xml paGetPayment
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
             <soapenv:Header/>
@@ -154,7 +154,7 @@ Feature: process tests for generazioneRicevute
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And EC replies to nodo-dei-pagamenti with the paGetPaymentNotice
+        And EC replies to nodo-dei-pagamenti with the paGetPayment
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
         And save activatePaymentNotice response in activatePaymentNoticeResponse
