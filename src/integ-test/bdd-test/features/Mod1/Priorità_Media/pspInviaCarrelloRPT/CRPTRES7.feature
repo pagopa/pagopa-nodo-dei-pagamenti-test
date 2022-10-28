@@ -98,7 +98,7 @@ Feature: process tests for pspInviaCarrelloRPT[CRPTRES7]
                         <serial>1</serial>
                         <!--</fault>-->
                         <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
-                        <identificativoCarrello>${idCarrello}</identificativoCarrello>
+                        <identificativoCarrello>$1iuv</identificativoCarrello>
                         <listaErroriRPT>
                         <fault>
                             <faultCode>CANALE_FIRMA_SCONOSCIUTA</faultCode>
