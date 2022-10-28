@@ -1466,7 +1466,7 @@ Feature: flux tests for demandPaymentNotice
         And checks the value NotNone of the record at column DEBTOR_ID of the table POSITION_SERVICE retrived by the query select_activate on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_SERVICE retrived by the query select_activate on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_SERVICE retrived by the query select_activate on db nodo_online under macro NewMod1
-        And verify 0 record for the table POSITION_SERVICE retrived by the query select_activate on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_SERVICE retrived by the query select_activate on db nodo_online under macro NewMod1
 
         # POSITION_SUBJECT
         And checks the value NotNone of the record at column ID of the table POSITION_SUBJECT JOIN POSITION_SERVICE ON POSITION_SERVICE.DEBTOR_ID = POSITION_SUBJECT.ID retrived by the query select_activate on db nodo_online under macro NewMod1
