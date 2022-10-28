@@ -88,7 +88,7 @@ Feature: process tests for generazioneRicevute
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And initial xml paGetPayment
+        And initial xml paGetPaymentNotice
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
             <soapenv:Header/>
