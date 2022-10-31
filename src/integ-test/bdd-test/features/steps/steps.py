@@ -1147,7 +1147,7 @@ def step_impl(context):
 
 @step('current date generation')
 def step_impl(context):
-    date = (datetime.datetime.now() + datetime.timedelta(hours = 2)).strftime("%Y-%m-%d %H:%M:%S")
+    date = (datetime.datetime.now() + datetime.timedelta(hours = 1)).strftime("%Y-%m-%d %H:%M:%S")
     setattr(context, 'date', date)
 
 @step('current date plus {minutes:d} minutes generation')
