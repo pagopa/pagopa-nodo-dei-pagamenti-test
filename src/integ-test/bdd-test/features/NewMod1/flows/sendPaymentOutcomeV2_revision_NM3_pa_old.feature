@@ -368,6 +368,8 @@ Feature: revision checks for sendPaymentOutcomeV2
         And checks the value $activatePaymentNotice.idempotencyKey of the record at column IDEMPOTENCY_KEY of the table POSITION_PAYMENT retrived by the query select_activate on db nodo_online under macro NewMod1
         And checks the value $activatePaymentNotice.amount of the record at column AMOUNT of the table POSITION_PAYMENT retrived by the query select_activate on db nodo_online under macro NewMod1
         And checks the value $sendPaymentOutcomeV2.fee of the record at column FEE of the table POSITION_PAYMENT retrived by the query select_activate on db nodo_online under macro NewMod1
+        #Colonna FEE_SPO: PAG-2154 Gestione fee da closePayment/sendPaymentOutcome
+        And checks the value $sendPaymentOutcomeV2.fee of the record at column FEE_SPO of the table POSITION_PAYMENT retrived by the query select_activate on db nodo_online under macro NewMod1
         And checks the value $sendPaymentOutcomeV2.outcome of the record at column OUTCOME of the table POSITION_PAYMENT retrived by the query select_activate on db nodo_online under macro NewMod1
         And checks the value $sendPaymentOutcomeV2.paymentMethod of the record at column PAYMENT_METHOD of the table POSITION_PAYMENT retrived by the query select_activate on db nodo_online under macro NewMod1
         And checks the value $sendPaymentOutcomeV2.paymentChannel of the record at column PAYMENT_CHANNEL of the table POSITION_PAYMENT retrived by the query select_activate on db nodo_online under macro NewMod1
