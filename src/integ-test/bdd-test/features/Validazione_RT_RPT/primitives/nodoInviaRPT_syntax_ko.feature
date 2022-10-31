@@ -82,8 +82,7 @@ Feature: Syntax checks for nodoInviaRPT - KO
       </pay_i:datiVersamento>
     </pay_i:RPT>
     """
-   
-  @prova
+
   Scenario Outline: Check faultCode PPT_SINTASSI_XSD error on invalid RPT tag
     Given <tag> with <tag_value> in RPT
     And RPT generation
@@ -117,30 +116,91 @@ Feature: Syntax checks for nodoInviaRPT - KO
     When psp sends SOAP nodoInviaRPT to nodo-dei-pagamenti
     Then check esito is KO of nodoInviaRPT response
     And check faultCode is PPT_SINTASSI_XSD of nodoInviaRPT response
-
     Examples: 
-      | SoapUI   | tag                                      | tag_value                                                                                                                                                                                                                                                 |
-      | RPTSIN1  | pay_i:versioneOggetto                    | None                                                                                                                                                                                                                                                      |
-      | RPTSIN2  | pay_i:versioneOggetto                    | Empty                                                                                                                                                                                                                                                     |
-      | RPTSIN3  | pay_i:versioneOggetto                    | Sono17CaratteAlfa                                                                                                                                                                                                                                         |
-      | RPTSIN4  | pay_i:dominio                            | None                                                                                                                                                                                                                                                      |
-      | RPTSIN5  | pay_i:identificativoDominio              | None                                                                                                                                                                                                                                                      |
-      | RPTSIN6   | pay_i:identificativoDominio             | Empty                                                                                                                                                                                                                                                     |
-      | RPTSIN7   | pay_i:identificativoDominio             | QuestiSono36CaratteriAlfaNumericiTT1                                                                                                                                                                                                                      |
-      | RPTSIN8   | pay_i:identificativoStazioneRichiedente | Empty                                                                                                                                                                                                                                                     |
-      | RPTSIN9   | pay_i:identificativoStazioneRichiedente | QuestiSono36CaratteriAlfaNumericiTT1                                                                                                                                                                                                                      |
-      | RPTSIN10  | pay_i:identificativoMessaggioRichiesta  | None                                                                                                                                                                                                                                                      |
-      | RPTSIN11  | pay_i:identificativoMessaggioRichiesta  | Empty                                                                                                                                                                                                                                                     |
-      | RPTSIN12  | pay_i:identificativoMessaggioRichiesta  | QuestiSono36CaratteriAlfaNumericiTT1                                                                                                                                                                                                                      |
-      | RPTSIN13  | pay_i:dataOraMessaggioRichiesta         | None                                                                                                                                                                                                                                                      |
-      | RPTSIN14  | pay_i:dataOraMessaggioRichiesta         | Empty                                                                                                                                                                                                                                                     |
-      | RPTSIN15  | pay_i:dataOraMessaggioRichiesta         | 2001-12-31T12:00:00:0001                                                                                                                                                                                                                                  |
-      | RPTSIN16  | pay_i:dataOraMessaggioRichiesta         | 2001-12-31T12:00                                                                                                                                                                                                                                          |
-      | RPTSIN17  | pay_i:dataOraMessaggioRichiesta         | 31-12-2001T12:00:00                                                                                                                                                                                                                                       |
-      | RPTSIN18  | pay_i:autenticazioneSoggetto            | None                                                                                                                                                                                                                                                      |
-      | RPTSIN19  | pay_i:autenticazioneSoggetto            | Empty                                                                                                                                                                                                                                                     |
-      | RPTSIN20  | pay_i:autenticazioneSoggetto            | ABS12                                                                                                                                                                                                                                                     |
-      | RPTSIN21  | pay_i:autenticazioneSoggetto            | USP                                                                                                                                                                                                                                                       |
-      | RPTSIN22  | pay_i:soggettoVersante                  | RemoveParent                                                                                                                                                                                                                                              |
-      | RPTSIN23  | pay_i:identificativoUnivocoVersante     | None                                                                                                                                                                                                                                                      |
-      | RPTSIN24  | pay_i:identificativoUnivocoVersante     | RemoveParent                                                                                                                                                                                                                                              |
+      | SoapUI    | tag                                     | tag_value                            |
+      | RPTSIN1   | pay_i:versioneOggetto                   | None                                 |
+      | RPTSIN2   | pay_i:versioneOggetto                   | Empty                                |
+      | RPTSIN3   | pay_i:versioneOggetto                   | Sono17CaratteAlfa                    |
+      | RPTSIN4   | pay_i:dominio                           | None                                 |
+      | RPTSIN5   | pay_i:identificativoDominio             | None                                 |
+      | RPTSIN6   | pay_i:identificativoDominio             | Empty                                |
+      | RPTSIN7   | pay_i:identificativoDominio             | QuestiSono36CaratteriAlfaNumericiTT1 |
+      | RPTSIN8   | pay_i:identificativoStazioneRichiedente | Empty                                |
+      | RPTSIN9   | pay_i:identificativoStazioneRichiedente | QuestiSono36CaratteriAlfaNumericiTT1 |
+      | RPTSIN10  | pay_i:identificativoMessaggioRichiesta  | None                                 |
+      | RPTSIN11  | pay_i:identificativoMessaggioRichiesta  | Empty                                |
+      | RPTSIN12  | pay_i:identificativoMessaggioRichiesta  | QuestiSono36CaratteriAlfaNumericiTT1 |
+      | RPTSIN13  | pay_i:dataOraMessaggioRichiesta         | None                                 |
+      | RPTSIN14  | pay_i:dataOraMessaggioRichiesta         | Empty                                |
+      | RPTSIN15  | pay_i:dataOraMessaggioRichiesta         | 2001-12-31T12:00:00:0001             |
+      | RPTSIN16  | pay_i:dataOraMessaggioRichiesta         | 2001-12-31T12:00                     |
+      | RPTSIN17  | pay_i:dataOraMessaggioRichiesta         | 31-12-2001T12:00:00                  |
+      | RPTSIN18  | pay_i:autenticazioneSoggetto            | None                                 |
+      | RPTSIN19  | pay_i:autenticazioneSoggetto            | Empty                                |
+      | RPTSIN20  | pay_i:autenticazioneSoggetto            | ABS12                                |
+      | RPTSIN21  | pay_i:autenticazioneSoggetto            | USP                                  |
+      | RPTSIN22  | pay_i:soggettoVersante                  | RemoveParent                         |
+      | RPTSIN23  | pay_i:identificativoUnivocoVersante     | None                                 |
+      | RPTSIN24  | pay_i:identificativoUnivocoVersante     | RemoveParent                         |
+      | RPTSIN25  | pay_i:tipoIdentificativoUnivoco         | None                                 |
+      | RPTSIN26  | pay_i:tipoIdentificativoUnivoco         | Empty                                |
+      | RPTSIN27  | pay_i:tipoIdentificativoUnivoco         | PP                                   |
+      | RPTSIN28  | pay_i:tipoIdentificativoUnivoco         | A                                    |
+      | RPTSIN29  | pay_i:codiceIdentificativoUnivoco       | None                                 |
+      | RPTSIN30  | pay_i:codiceIdentificativoUnivoco       | Empty                                |
+      | RPTSIN31  | pay_i:codiceIdentificativoUnivoco       | QuestiSono36CaratteriAlfaNumericiTT1 |
+      | RPTSIN32  | pay_i:anagraficaVersante                | None                                 |
+      | RPTSIN33  | pay_i:anagraficaVersante                | Empty                                |
+      | RPTSIN34  | pay_i:anagraficaVersante                | QuestiSono71CaratteriAlfaNumericiQuestiSono71CaratteriAlfaNumerici12345 |
+      | RPTSIN35  | pay_i:indirizzoVersante                 | Empty                                |
+      | RPTSIN36  | pay_i:indirizzoVersante                 | QuestiSono71CaratteriAlfaNumericiQuestiSono71CaratteriAlfaNumerici12345 |
+      | RPTSIN37  | pay_i:civicoVersante                    | Empty                                |
+      | RPTSIN37.1| pay_i:civicoVersante                    | None                                 |
+      | RPTSIN38  | pay_i:civicoVersante                    | Sono17CaratteAlfa                    |
+      | RPTSIN39  | pay_i:capVersante                       | Empty                                |
+      | RPTSIN39.1| pay_i:capVersante                       | None                                 |
+      | RPTSIN40  | pay_i:capVersante                       | Sono17CaratteAlfa                    |
+      | RPTSIN41  | pay_i:localitaVersante                  | Empty                                |
+      | RPTSIN41.1| pay_i:localitaVersante                  | None                                 |
+      | RPTSIN42  | pay_i:localitaVersante                  | QuestiSono36CaratteriAlfaNumericiTT1 |
+      | RPTSIN43  | pay_i:provinciaVersante                 | Empty                                |
+      | RPTSIN43.1| pay_i:provinciaVersante                 | None                                 |
+      | RPTSIN44  | pay_i:provinciaVersante                 | MIprovinciaVersanteprovinciaVersanteprovinciaVersanteprovinciaVersanteprovinciaVersanteprovinciaVersanteprovinciaVersanteprovinciaVersanteprovinciaVersanteprovinciaVersanteprovinciaVersanteprovinciaVersanteprovinciaVersanteprovinciaVersanteprovinciaVersanteprovinciaVersante |
+      | RPTSIN45  | pay_i:nazioneVersante                   | Empty                                |
+      | RPTSIN45.1| pay_i:nazioneVersante                   | None                                 |
+      | RPTSIN46  | pay_i:nazioneVersante                   | AB1                                  |
+      | RPTSIN47  | pay_i:e-mailVersante                    | Empty                                |
+      | RPTSIN47.1| pay_i:e-mailVersante                    | None                                 |
+      | RPTSIN48  | pay_i:e-mailVersante                    | 257DDDDDDDDDDDDDDDDDDDDDDDDDFFFFFFFFFFFFFFDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDFDDDmail |
+      | RPTSIN49  | pay_i:soggettoPagatore                  | None                                 |
+      | RPTSIN50  | pay_i:soggettoPagatore                  | RemoveParent                         |
+      | RPTSIN51  | pay_i:identificativoUnivocoPagatore     | None                                 |
+      | RPTSIN52  | pay_i:identificativoUnivocoPagatore     | RemoveParent                         |
+      | RPTSIN53  | pay_i:tipoIdentificativoUnivoco         | None                                 |
+      | RPTSIN54  | pay_i:tipoIdentificativoUnivoco         | Empty                                |
+      | RPTSIN55  | pay_i:tipoIdentificativoUnivoco         | FF                                   |
+      | RPTSIN56  | pay_i:tipoIdentificativoUnivoco         | H                                    |
+      | RPTSIN57  | pay_i:codiceIdentificativoUnivoco       | None                                 |
+      | RPTSIN58  | pay_i:codiceIdentificativoUnivoco       | Empty                                |
+      | RPTSIN59  | pay_i:codiceIdentificativoUnivoco       | QuestiSono36CaratteriAlfaNumericiTT1 |
+      | RPTSIN60  | pay_i:anagraficaPagatore                | None                                 |
+      | RPTSIN61  | pay_i:anagraficaPagatore                | Empty                                |
+      | RPTSIN62  | pay_i:anagraficaPagatore                | QuestiSono71CaratteriAlfaNumericiQuestiSono71CaratteriAlfaNumerici12345 |
+      | RPTSIN63  | pay_i:indirizzoPagatore                 | Empty                                |
+      | RPTSIN63.1| pay_i:indirizzoPagatore                 | None                                 |
+      | RPTSIN64  | pay_i:indirizzoPagatore                 | QuestiSono71CaratteriAlfaNumericiQuestiSono71CaratteriAlfaNumerici12345 |
+      | RPTSIN65  | pay_i:civicoPagatore                    | Empty                                |
+      | RPTSIN65.1| pay_i:civicoPagatore                    | None                                 |
+      | RPTSIN66  | pay_i:civicoPagatore                    | Sono17CaratteAlfa                    |
+      | RPTSIN67  | pay_i:capPagatore                       | Empty                                |         
+      | RPTSIN67.1| pay_i:capPagatore                       | None                                 |
+      | RPTSIN68  | pay_i:capPagatore                       | Sono17CaratteAlfa                    |
+      | RPTSIN69  | pay_i:localitaPagatore                  | Empty                                |
+      | RPTSIN69.1| pay_i:localitaPagatore                  | None                                 |
+      | RPTSIN70  | pay_i:localitaPagatore                  | QuestiSono36CaratteriAlfaNumericiTT1 |
+      | RPTSIN71  | pay_i:provinciaPagatore                 | Empty                                |
+      | RPTSIN71.1| pay_i:provinciaPagatore                 | None                                 |
+      | RPTSIN72  | pay_i:provinciaPagatore                 | QuestiSono36CaratteriAlfaNumericiTT1 |
+      | RPTSIN73  | pay_i:nazionePagatore                   | Empty                                |
+      | RPTSIN73.1| pay_i:nazionePagatore                   | None                                 |
+      | RPTSIN74  | pay_i:nazionePagatore                   | AB1                                  |
