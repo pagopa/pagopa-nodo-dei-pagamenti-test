@@ -193,7 +193,7 @@ Feature: flow checks for closePayment - PA new
          <paymentMethod>creditCard</paymentMethod>
          <!--Optional:-->
          <paymentChannel>app</paymentChannel>
-         <fee>2.00</fee>
+         <fee>5.00</fee>
          <!--Optional:-->
          <payer>
          <uniqueIdentifier>
@@ -310,7 +310,7 @@ Feature: flow checks for closePayment - PA new
          <paymentMethod>creditCard</paymentMethod>
          <!--Optional:-->
          <paymentChannel>app</paymentChannel>
-         <fee>2.00</fee>
+         <fee>5.00</fee>
          <!--Optional:-->
          <payer>
          <uniqueIdentifier>
@@ -341,7 +341,7 @@ Feature: flow checks for closePayment - PA new
          </soapenv:Envelope>
          """
 
-
+   @wip
    # FLUSSO_CP_01
    Scenario: FLUSSO_CP_01 (part 1)
       Given the verifyPaymentNotice scenario executed successfully
@@ -351,12 +351,12 @@ Feature: flow checks for closePayment - PA new
       And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
       And checks the value $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
       And checks the value $activateIOPayment.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
-
+   @wip
    Scenario: FLUSSO_CP_01 (part 2)
       Given the FLUSSO_CP_01 (part 1) scenario executed successfully
       When PM sends REST GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
       Then verify the HTTP status code of informazioniPagamento response is 200
-
+   @wip
    Scenario: FLUSSO_CP_01 (part 3)
       Given the FLUSSO_CP_01 (part 2) scenario executed successfully
       And the closePayment scenario executed successfully
@@ -387,7 +387,7 @@ Feature: flow checks for closePayment - PA new
       And checks the value #canale_IMMEDIATO_MULTIBENEFICIARIO# of the record at column CHANNEL_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
       And checks the value None of the record at column IDEMPOTENCY_KEY of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
       And checks the value 10 of the record at column AMOUNT of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
-      And checks the value None of the record at column FEE of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
+      And checks the value 2 of the record at column FEE of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
       And checks the value None of the record at column OUTCOME of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
       And checks the value BPAY of the record at column PAYMENT_METHOD of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
       And checks the value WISP of the record at column PAYMENT_CHANNEL of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
@@ -431,7 +431,7 @@ Feature: flow checks for closePayment - PA new
       And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
       And checks the value #psp# of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
    # [TBD] nella POSITION_ACTIVATE la colonna TOKEN_VALID_TO è aggiornata con il timestamp di esecuzione della closePayment+defaultDurataEstensioneTokenIO
-
+   @wip
    Scenario: FLUSSO_CP_01 (part 4)
       Given the FLUSSO_CP_01 (part 3) scenario executed successfully
       And the sendPaymentOutcome scenario executed successfully
@@ -453,6 +453,8 @@ Feature: flow checks for closePayment - PA new
       And checks the value 2 of the record at column FEE of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
       And checks the value NotNone of the record at column TRANSFER_DATE of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
       And checks the value NotNone of the record at column APPLICATION_DATE of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
+      #Colonna FEE_SPO: PAG-2154 Gestione fee da closePayment/sendPaymentOutcome
+      And checks the value 5 of the record at column FEE_SPO of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
       # RECEIPT
       And verify 1 record for the table POSITION_RECEIPT retrived by the query payment_status on db nodo_online under macro AppIO
       And checks the value #creditor_institution_code# of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT retrived by the query payment_status on db nodo_online under macro AppIO
@@ -519,7 +521,7 @@ Feature: flow checks for closePayment - PA new
       And verify 0 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
       And verify 0 record for the table POSITION_RECEIPT_XML retrived by the query payment_status on db nodo_online under macro AppIO
 
-
+   @wip
    # FLUSSO_CP_03
    Scenario: FLUSSO_CP_03 (part 1)
       Given the verifyPaymentNotice scenario executed successfully
@@ -529,12 +531,12 @@ Feature: flow checks for closePayment - PA new
       And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
       And checks the value $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
       And checks the value $activateIOPayment.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
-
+   @wip
    Scenario: FLUSSO_CP_03 (part 2)
       Given the FLUSSO_CP_03 (part 1) scenario executed successfully
       When PM sends REST GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
       Then verify the HTTP status code of informazioniPagamento response is 200
-
+   @wip
    Scenario: FLUSSO_CP_03 (part 3)
       Given the FLUSSO_CP_03 (part 2) scenario executed successfully
       And the closePayment scenario executed successfully
@@ -589,7 +591,7 @@ Feature: flow checks for closePayment - PA new
       And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
       And checks the value $activateIOPayment.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
    # [TBD] nella POSITION_ACTIVATE la colonna TOKEN_VALID_TO = current_timestamp di esecuzione della closePayment
-
+   @wip
    Scenario: FLUSSO_CP_03 (part 4)
       Given the FLUSSO_CP_03 (part 3) scenario executed successfully
       And the sendPaymentOutcome scenario executed successfully

@@ -338,7 +338,7 @@ Feature: flow checks for closePayment - PA old
          <paymentMethod>creditCard</paymentMethod>
          <!--Optional:-->
          <paymentChannel>app</paymentChannel>
-         <fee>2.00</fee>
+         <fee>5.00</fee>
          <!--Optional:-->
          <payer>
          <uniqueIdentifier>
