@@ -689,7 +689,7 @@ Feature: flux tests for closePaymentV2
         And checks the value $nodoAttivaRPT.importoSingoloVersamento of the record at column AMOUNT of the table POSITION_PAYMENT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
         And checks the value 2 of the record at column FEE of the table POSITION_PAYMENT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
         #Colonna FEE_SPO: PAG-2154 Gestione fee da closePayment/sendPaymentOutcome
-        And checks the value 5 of the record at column FEE_SPO of the table POSITION_PAYMENT retrived by the query select_activateio on db nodo_online under macro NewMod1
+        And checks the value 5 of the record at column FEE_SPO of the table POSITION_PAYMENT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
         And checks the value $sendPaymentOutcome.outcome of the record at column OUTCOME of the table POSITION_PAYMENT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
         And checks the value TPAY of the record at column PAYMENT_METHOD of the table POSITION_PAYMENT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
         And checks the value WISP of the record at column PAYMENT_CHANNEL of the table POSITION_PAYMENT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
@@ -717,7 +717,7 @@ Feature: flux tests for closePaymentV2
         And checks the value ESEGUITO of the record at column RT_VERSAMENTI.ESITO of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column CAUSALE_VERSAMENTO of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column DATI_SPECIFICI_RISCOSSIONE of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
-        And checks the value $sendPaymentOutcome.fee of the record at column COMMISSIONE_APPLICATE_PSP of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value 2 of the record at column COMMISSIONE_APPLICATE_PSP of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column FK_RT of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column RT_VERSAMENTI.INSERTED_TIMESTAMP of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column RT_VERSAMENTI.UPDATED_TIMESTAMP of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
@@ -1515,7 +1515,7 @@ Feature: flux tests for closePaymentV2
         And checks the value ESEGUITO of the record at column RT_VERSAMENTI.ESITO of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column CAUSALE_VERSAMENTO of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column DATI_SPECIFICI_RISCOSSIONE of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
-        And checks the value $sendPaymentOutcome.fee of the record at column COMMISSIONE_APPLICATE_PSP of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value 2 of the record at column COMMISSIONE_APPLICATE_PSP of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column FK_RT of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column RT_VERSAMENTI.INSERTED_TIMESTAMP of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column RT_VERSAMENTI.UPDATED_TIMESTAMP of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
@@ -1823,7 +1823,7 @@ Feature: flux tests for closePaymentV2
         And checks the value ESEGUITO of the record at column RT_VERSAMENTI.ESITO of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column CAUSALE_VERSAMENTO of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column DATI_SPECIFICI_RISCOSSIONE of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
-        And checks the value $sendPaymentOutcome.fee of the record at column COMMISSIONE_APPLICATE_PSP of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value 2 of the record at column COMMISSIONE_APPLICATE_PSP of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column FK_RT of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column RT_VERSAMENTI.INSERTED_TIMESTAMP of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column RT_VERSAMENTI.UPDATED_TIMESTAMP of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
@@ -2489,7 +2489,7 @@ Feature: flux tests for closePaymentV2
         And checks the value ESEGUITO of the record at column RT_VERSAMENTI.ESITO of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column CAUSALE_VERSAMENTO of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column DATI_SPECIFICI_RISCOSSIONE of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
-        And checks the value $sendPaymentOutcome.fee of the record at column COMMISSIONE_APPLICATE_PSP of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value 2 of the record at column COMMISSIONE_APPLICATE_PSP of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column FK_RT of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column RT_VERSAMENTI.INSERTED_TIMESTAMP of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column RT_VERSAMENTI.UPDATED_TIMESTAMP of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
@@ -2803,7 +2803,7 @@ Feature: flux tests for closePaymentV2
         And checks the value ESEGUITO of the record at column RT_VERSAMENTI.ESITO of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column CAUSALE_VERSAMENTO of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column DATI_SPECIFICI_RISCOSSIONE of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
-        And checks the value $sendPaymentOutcome.fee of the record at column COMMISSIONE_APPLICATE_PSP of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value 2 of the record at column COMMISSIONE_APPLICATE_PSP of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column FK_RT of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column RT_VERSAMENTI.INSERTED_TIMESTAMP of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column RT_VERSAMENTI.UPDATED_TIMESTAMP of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
@@ -3195,7 +3195,7 @@ Feature: flux tests for closePaymentV2
         And checks the value ESEGUITO of the record at column RT_VERSAMENTI.ESITO of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column CAUSALE_VERSAMENTO of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column DATI_SPECIFICI_RISCOSSIONE of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
-        And checks the value $sendPaymentOutcome.fee of the record at column COMMISSIONE_APPLICATE_PSP of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value 2 of the record at column COMMISSIONE_APPLICATE_PSP of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column FK_RT of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column RT_VERSAMENTI.INSERTED_TIMESTAMP of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column RT_VERSAMENTI.UPDATED_TIMESTAMP of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
@@ -3647,7 +3647,7 @@ Feature: flux tests for closePaymentV2
         And checks the value ESEGUITO of the record at column RT_VERSAMENTI.ESITO of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column CAUSALE_VERSAMENTO of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column DATI_SPECIFICI_RISCOSSIONE of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
-        And checks the value $sendPaymentOutcome.fee of the record at column COMMISSIONE_APPLICATE_PSP of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value 2 of the record at column COMMISSIONE_APPLICATE_PSP of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column FK_RT of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column RT_VERSAMENTI.INSERTED_TIMESTAMP of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column RT_VERSAMENTI.UPDATED_TIMESTAMP of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
@@ -4092,7 +4092,7 @@ Feature: flux tests for closePaymentV2
         And checks the value ESEGUITO of the record at column RT_VERSAMENTI.ESITO of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column CAUSALE_VERSAMENTO of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column DATI_SPECIFICI_RISCOSSIONE of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
-        And checks the value $sendPaymentOutcome.fee of the record at column COMMISSIONE_APPLICATE_PSP of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value 2 of the record at column COMMISSIONE_APPLICATE_PSP of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column FK_RT of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column RT_VERSAMENTI.INSERTED_TIMESTAMP of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column RT_VERSAMENTI.UPDATED_TIMESTAMP of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
@@ -4399,7 +4399,7 @@ Feature: flux tests for closePaymentV2
         And checks the value ESEGUITO of the record at column RT_VERSAMENTI.ESITO of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column CAUSALE_VERSAMENTO of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column DATI_SPECIFICI_RISCOSSIONE of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
-        And checks the value $sendPaymentOutcome.fee of the record at column COMMISSIONE_APPLICATE_PSP of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value 2 of the record at column COMMISSIONE_APPLICATE_PSP of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column FK_RT of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column RT_VERSAMENTI.INSERTED_TIMESTAMP of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column RT_VERSAMENTI.UPDATED_TIMESTAMP of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
@@ -4712,7 +4712,7 @@ Feature: flux tests for closePaymentV2
         And checks the value ESEGUITO of the record at column RT_VERSAMENTI.ESITO of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column CAUSALE_VERSAMENTO of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column DATI_SPECIFICI_RISCOSSIONE of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
-        And checks the value $sendPaymentOutcome.fee of the record at column COMMISSIONE_APPLICATE_PSP of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value 2 of the record at column COMMISSIONE_APPLICATE_PSP of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column FK_RT of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column RT_VERSAMENTI.INSERTED_TIMESTAMP of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column RT_VERSAMENTI.UPDATED_TIMESTAMP of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
@@ -5019,7 +5019,7 @@ Feature: flux tests for closePaymentV2
         And checks the value ESEGUITO of the record at column RT_VERSAMENTI.ESITO of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column CAUSALE_VERSAMENTO of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column DATI_SPECIFICI_RISCOSSIONE of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
-        And checks the value $sendPaymentOutcome.fee of the record at column COMMISSIONE_APPLICATE_PSP of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value 2 of the record at column COMMISSIONE_APPLICATE_PSP of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column FK_RT of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column RT_VERSAMENTI.INSERTED_TIMESTAMP of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column RT_VERSAMENTI.UPDATED_TIMESTAMP of the table RT_VERSAMENTI JOIN RT ON RT_VERSAMENTI.FK_RT=RT.ID retrived by the query iuv on db nodo_online under macro NewMod1
