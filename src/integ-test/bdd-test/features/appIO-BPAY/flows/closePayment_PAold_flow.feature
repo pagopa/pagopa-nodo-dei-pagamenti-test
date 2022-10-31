@@ -411,20 +411,20 @@ Feature: flow checks for closePayment - PA old
          }
          """
 
-   @wip
+   
    # FLUSSO_OLD_CP_01
    Scenario: FLUSSO_OLD_CP_01 (part 1)
       Given the nodoVerificaRPT scenario executed successfully
       And the nodoAttivaRPT scenario executed successfully
       When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
       Then check esito is OK of nodoAttivaRPT response
-   @wip
+   
    Scenario: FLUSSO_OLD_CP_01 (part 2)
       Given the FLUSSO_OLD_CP_01 (part 1) scenario executed successfully
       And the nodoInviaRPT scenario executed successfully
       When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
       Then verify the HTTP status code of informazioniPagamento response is 200
-   @wip
+   
    Scenario: FLUSSO_OLD_CP_01 (part 3)
       Given the FLUSSO_OLD_CP_01 (part 2) scenario executed successfully
       And the closePayment scenario executed successfully
@@ -568,7 +568,7 @@ Feature: flow checks for closePayment - PA old
       And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro AppIO
       And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro AppIO
       And checks the value RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro AppIO
-   @wip
+   
    Scenario: FLUSSO_OLD_CP_01 (part 4)
       Given the FLUSSO_OLD_CP_01 (part 3) scenario executed successfully
       And the sendPaymentOutcome scenario executed successfully
@@ -674,20 +674,20 @@ Feature: flow checks for closePayment - PA old
       And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro AppIO
       And checks the value RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro AppIO
 
-   @wip
+   
    # FLUSSO_OLD_CP_03
    Scenario: FLUSSO_OLD_CP_03 (part 1)
       Given the nodoVerificaRPT scenario executed successfully
       And the nodoAttivaRPT scenario executed successfully
       When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
       Then check esito is OK of nodoAttivaRPT response
-   @wip
+   
    Scenario: FLUSSO_OLD_CP_03 (part 2)
       Given the FLUSSO_OLD_CP_03 (part 1) scenario executed successfully
       And the nodoInviaRPT scenario executed successfully
       When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
       Then verify the HTTP status code of informazioniPagamento response is 200
-   @wip
+   
    Scenario: FLUSSO_OLD_CP_03 (part 3)
       Given the FLUSSO_OLD_CP_03 (part 2) scenario executed successfully
       And the closePayment scenario executed successfully
@@ -725,7 +725,7 @@ Feature: flow checks for closePayment - PA old
       And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_ANNULLATA_WISP,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro AppIO
       And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro AppIO
       And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro AppIO
-   @wip
+   
    Scenario: FLUSSO_OLD_CP_03 (part 4)
       Given the FLUSSO_OLD_CP_03 (part 3) scenario executed successfully
       And the sendPaymentOutcome scenario executed successfully
