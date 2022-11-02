@@ -257,6 +257,7 @@ Feature: process tests for paaInviaRT[IRTRES4]
             """
             
             When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
+            And job paInviaRt triggered after 0 seconds
             Then check esito is KO of nodoInviaRT response
             And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of nodoInviaRT response
 
