@@ -270,7 +270,7 @@ Feature: 3Transfers - 1 receipt
         And checks the value 66666666666_01,66666666666_01,90000000001_06,90000000001_06,90000000001_01,90000000001_01 of the record at column IDENTIFICATIVO_EROGATORE of the table RE retrived by the query select_paSendRT on db re under macro sendPaymentResultV2
         # POSITION_RECEIPT_RECIPIENT_STATUS
         And verify 9 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_receipt on db nodo_online under macro NewMod3
-        And checks the value NOTICE_GENERATED,NOTICE_GENERATED,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED,NOTICE_SENT,NOTIFIED,NOTICE_SENT_NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_receipt on db nodo_online under macro NewMod3
+        And checks the value NOTICE_GENERATED,NOTICE_GENERATED,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED,NOTICE_SENT,NOTIFIED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_receipt on db nodo_online under macro NewMod3
         # POSITION_RECEIPT_XML
         And verify 3 record for the table POSITION_RECEIPT_XML retrived by the query position_receipt on db nodo_online under macro NewMod3
         And checks the value NotNone of the record at column XML of the table POSITION_RECEIPT_XML retrived by the query position_receipt on db nodo_online under macro NewMod3
