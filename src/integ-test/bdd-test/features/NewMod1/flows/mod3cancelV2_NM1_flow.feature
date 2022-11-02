@@ -248,6 +248,36 @@ Feature: flow checks for mod3CancelV2 in NM1
             """
 
     @skip
+    Scenario: pspNotifyPaymentV2 timeout
+        Given initial XML pspNotifyPaymentV2
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pfn="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <pfn:pspNotifyPaymentV2Res>
+            <delay>10000</delay>
+            </pfn:pspNotifyPaymentV2Res>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
+
+    @skip
+    Scenario: pspNotifyPaymentV2 malformata
+        Given initial XML pspNotifyPaymentV2
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pfn="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <pfn:pspNotifyPaymentV2Res>
+            <outcome>OO</outcome>
+            </pfn:pspNotifyPaymentV2Res>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
+
+    @skip
     Scenario: sendPaymentOutcomeV2
         Given initial XML sendPaymentOutcomeV2
             """
@@ -316,6 +346,7 @@ Feature: flow checks for mod3CancelV2 in NM1
 
     Scenario: FLUSSO_NM1_M3CV2_01 (part 3)
         Given the FLUSSO_NM1_M3CV2_01 (part 2) scenario executed successfully
+        And the pspNotifyPaymentV2 timeout scenario executed successfully
         And the closePaymentV2 scenario executed successfully
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
