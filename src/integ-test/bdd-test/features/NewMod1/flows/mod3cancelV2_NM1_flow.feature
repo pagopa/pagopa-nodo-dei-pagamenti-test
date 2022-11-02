@@ -260,7 +260,7 @@ Feature: flow checks for mod3CancelV2 in NM1
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
+        And PSP replies to nodo-dei-pagamenti with the pspNotifyPaymentV2
 
     @skip
     Scenario: pspNotifyPaymentV2 malformata
@@ -275,7 +275,7 @@ Feature: flow checks for mod3CancelV2 in NM1
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
+        And PSP replies to nodo-dei-pagamenti with the pspNotifyPaymentV2
 
     @skip
     Scenario: sendPaymentOutcomeV2
