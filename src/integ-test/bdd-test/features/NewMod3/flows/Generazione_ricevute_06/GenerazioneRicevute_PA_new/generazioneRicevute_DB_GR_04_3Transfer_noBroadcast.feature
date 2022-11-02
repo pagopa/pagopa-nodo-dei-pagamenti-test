@@ -1,6 +1,6 @@
 # Il test verifica che in caso di 3Transfer e nessuna stazione broadcast nella paGetPaymentResponse sia generata una receipt +
 
-Feature: 3Transfers - 1 receipt 
+Feature: 3Transfers - 1 receipt
 
     Background:
         Given systems up
@@ -255,6 +255,16 @@ Feature: 3Transfers - 1 receipt
         And verify 2 record for the table RE retrived by the query select_paSendRT on db re under macro sendPaymentResultV2
         And checks the value REQ,RESP of the record at column SOTTO_TIPO_EVENTO of the table RE retrived by the query select_paSendRT on db re under macro sendPaymentResultV2
         And checks the value 66666666666_01,66666666666_01 of the record at column IDENTIFICATIVO_STAZIONE_INTERMEDIARIO_PA of the table RE retrived by the query select_paSendRT on db re under macro sendPaymentResultV2
+        # POSITION_RECEIPT_RECIPIENT_STATUS
+        And verify 3 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_receipt on db nodo_online under macro NewMod3
+        And checks the value NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_receipt on db nodo_online under macro NewMod3
+        # POSITION_RECEIPT_XML
+        And verify 1 record for the table POSITION_RECEIPT_XML retrived by the query position_receipt on db nodo_online under macro NewMod3
+        And checks the value NotNone of the record at column XML of the table POSITION_RECEIPT_XML retrived by the query position_receipt on db nodo_online under macro NewMod3
+        And checks the value NotNone of the record at column FK_POSITION_RECEIPT of the table POSITION_RECEIPT_XML retrived by the query position_receipt on db nodo_online under macro NewMod3
+        And checks the value 66666666666 of the record at column RECIPIENT_PA_FISCAL_CODE of the table POSITION_RECEIPT_XML retrived by the query position_receipt on db nodo_online under macro NewMod3
+        And checks the value 66666666666 of the record at column RECIPIENT_BROKER_PA_ID of the table POSITION_RECEIPT_XML retrived by the query position_receipt on db nodo_online under macro NewMod3
+        And checks the value 66666666666_01 of the record at column RECIPIENT_STATION_ID of the table POSITION_RECEIPT_XML retrived by the query position_receipt on db nodo_online under macro NewMod3
 
 
 
