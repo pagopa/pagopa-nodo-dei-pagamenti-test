@@ -33,7 +33,7 @@ Feature: flow checks for mod3CancelV2 in NM1
             <nod:activatePaymentNoticeV2Request>
             <idPSP>#psp#</idPSP>
             <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
-            <idChannel>#canale_versione_primitive_2#</idChannel>
+            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
             <password>#password#</password>
             <qrCode>
             <fiscalCode>#creditor_institution_code#</fiscalCode>
@@ -127,7 +127,7 @@ Feature: flow checks for mod3CancelV2 in NM1
             <nod:activatePaymentNoticeV2Request>
             <idPSP>#psp#</idPSP>
             <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
-            <idChannel>#canale_versione_primitive_2#</idChannel>
+            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
             <password>#password#</password>
             <qrCode>
             <fiscalCode>#creditor_institution_code#</fiscalCode>
@@ -347,6 +347,36 @@ Feature: flow checks for mod3CancelV2 in NM1
     Scenario: FLUSSO_NM1_M3CV2_01 (part 3)
         Given the FLUSSO_NM1_M3CV2_01 (part 2) scenario executed successfully
         And the pspNotifyPaymentV2 timeout scenario executed successfully
+        And the closePaymentV2 scenario executed successfully
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 200
+        And check outcome is OK of v2/closepayment response
+        And wait 15 seconds for expiration
+        # NMU_CANCEL_UTILITY
+        And verify 1 record for the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2Response.paymentToken,$activatePaymentNoticeV2_2Response.paymentToken of the record at column PAYMENT_TOKENS of the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
+        And checks the value 2 of the record at column NUM_TOKEN of the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column VALID_TO of the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
+        And checks the value closePayment-v2 of the record at column INSERTED_BY of the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
+
+
+    # FLUSSO_NM1_M3CV2_02
+    Scenario: FLUSSO_NM1_M3CV2_02 (part 1)
+        Given the checkPosition scenario executed successfully
+        And the activatePaymentNoticeV2 scenario executed successfully
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+
+    Scenario: FLUSSO_NM1_M3CV2_02 (part 2)
+        Given the FLUSSO_NM1_M3CV2_02 (part 1) scenario executed successfully
+        And the activatePaymentNoticeV2_2 scenario executed successfully
+        When PSP sends SOAP activatePaymentNoticeV2_2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2_2 response
+
+    Scenario: FLUSSO_NM1_M3CV2_02 (part 3)
+        Given the FLUSSO_NM1_M3CV2_02 (part 2) scenario executed successfully
+        And the pspNotifyPaymentV2 malformata scenario executed successfully
         And the closePaymentV2 scenario executed successfully
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
