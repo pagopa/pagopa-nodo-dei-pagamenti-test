@@ -44,6 +44,7 @@ Feature: flux tests for demandPaymentNotice
             <allCCP>false</allCCP>
             </paymentOptionDescription>
             </paymentList>
+            <companyName>companyName</companyName>
             </paf:paDemandPaymentNoticeResponse>
             </soapenv:Body>
             </soapenv:Envelope>
