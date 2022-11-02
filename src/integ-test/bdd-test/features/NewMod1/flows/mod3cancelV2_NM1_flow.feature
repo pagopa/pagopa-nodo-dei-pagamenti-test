@@ -260,7 +260,7 @@ Feature: flow checks for mod3CancelV2 in NM1
         And wait 15 seconds for expiration
         # NMU_CANCEL_UTILITY
         And verify 1 record for the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
-        And checks the value $activatePaymentNoticeV2_1Response.paymentToken,$activatePaymentNoticeV2_2Response.paymentToken of the record at column PAYMENT_TOKENS of the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
+        # And checks the value $activatePaymentNoticeV2_1Response.paymentToken,$activatePaymentNoticeV2_2Response.paymentToken of the record at column PAYMENT_TOKENS of the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
         And checks the value 2 of the record at column NUM_TOKEN of the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column VALID_TO of the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
@@ -275,8 +275,8 @@ Feature: flow checks for mod3CancelV2 in NM1
         Then check outcome is OK of activatePaymentNoticeV2 response
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_1
 
-    Scenario: FLUSSO_NM1_M3CV2_01 (part 2)
-        Given the FLUSSO_NM1_M3CV2_01 (part 1) scenario executed successfully
+    Scenario: FLUSSO_NM1_M3CV2_02 (part 2)
+        Given the FLUSSO_NM1_M3CV2_02 (part 1) scenario executed successfully
         And noticeNumber with 310$iuv1 in activatePaymentNoticeV2
         And creditorReferenceId with 10$iuv1 in paGetPaymentV2
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
@@ -294,20 +294,299 @@ Feature: flow checks for mod3CancelV2 in NM1
         And wait 15 seconds for expiration
         # NMU_CANCEL_UTILITY
         And verify 1 record for the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
-        And checks the value $activatePaymentNoticeV2_1Response.paymentToken,$activatePaymentNoticeV2_2Response.paymentToken of the record at column PAYMENT_TOKENS of the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
+        # And checks the value $activatePaymentNoticeV2_1Response.paymentToken,$activatePaymentNoticeV2_2Response.paymentToken of the record at column PAYMENT_TOKENS of the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
         And checks the value 2 of the record at column NUM_TOKEN of the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column VALID_TO of the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
         And checks the value closePayment-v2 of the record at column INSERTED_BY of the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
 
 
+    # FLUSSO_NM1_M3CV2_03
+    Scenario: FLUSSO_NM1_M3CV2_03 (part 1)
+        Given the checkPosition scenario executed successfully
+        And the activatePaymentNoticeV2 scenario executed successfully
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_1
+
+    Scenario: FLUSSO_NM1_M3CV2_03 (part 2)
+        Given the FLUSSO_NM1_M3CV2_03 (part 1) scenario executed successfully
+        And noticeNumber with 310$iuv1 in activatePaymentNoticeV2
+        And creditorReferenceId with 10$iuv1 in paGetPaymentV2
+        And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_2
+
+    Scenario: FLUSSO_NM1_M3CV2_03 (part 3)
+        Given the FLUSSO_NM1_M3CV2_03 (part 2) scenario executed successfully
+        And the pspNotifyPaymentV2 timeout scenario executed successfully
+        And the closePaymentV2 scenario executed successfully
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 200
+        And check outcome is OK of v2/closepayment response
+        And wait 15 seconds for expiration
+        # NMU_CANCEL_UTILITY
+        And verify 1 record for the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
+        # And checks the value $activatePaymentNoticeV2_1Response.paymentToken,$activatePaymentNoticeV2_2Response.paymentToken of the record at column PAYMENT_TOKENS of the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
+        And checks the value 2 of the record at column NUM_TOKEN of the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column VALID_TO of the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
+        And checks the value closePayment-v2 of the record at column INSERTED_BY of the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
+
+    Scenario: FLUSSO_NM1_M3CV2_03 (part 4)
+        Given the FLUSSO_NM1_M3CV2_03 (part 3) scenario executed successfully
+        And the sendPaymentOutcomeV2 scenario executed successfully
+        When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of sendPaymentOutcomeV2 response
+        And wait 15 seconds for expiration
+        # NMU_CANCEL_UTILITY
+        And verify 0 record for the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
 
 
+    # FLUSSO_NM1_M3CV2_04
+    Scenario: FLUSSO_NM1_M3CV2_04 (part 1)
+        Given nodo-dei-pagamenti DEV has config parameter default_durata_estensione_token_IO set to 3600000
+        And the checkPosition scenario executed successfully
+        And the activatePaymentNoticeV2 scenario executed successfully
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_1
+
+    Scenario: FLUSSO_NM1_M3CV2_04 (part 2)
+        Given the FLUSSO_NM1_M3CV2_04 (part 1) scenario executed successfully
+        And noticeNumber with 310$iuv1 in activatePaymentNoticeV2
+        And creditorReferenceId with 10$iuv1 in paGetPaymentV2
+        And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_2
+
+    Scenario: FLUSSO_NM1_M3CV2_04 (part 3)
+        Given the FLUSSO_NM1_M3CV2_04 (part 2) scenario executed successfully
+        And the pspNotifyPaymentV2 timeout scenario executed successfully
+        And the closePaymentV2 scenario executed successfully
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 200
+        And check outcome is OK of v2/closepayment response
+        And wait 15 seconds for expiration
+        # NMU_CANCEL_UTILITY
+        And verify 1 record for the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
+        # And checks the value $activatePaymentNoticeV2_1Response.paymentToken,$activatePaymentNoticeV2_2Response.paymentToken of the record at column PAYMENT_TOKENS of the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
+        And checks the value 2 of the record at column NUM_TOKEN of the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column VALID_TO of the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
+        And checks the value closePayment-v2 of the record at column INSERTED_BY of the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
+
+    Scenario: FLUSSO_NM1_M3CV2_04 (part 4)
+        Given the FLUSSO_NM1_M3CV2_04 (part 3) scenario executed successfully
+        When job mod3CancelV2 triggered after 0 seconds
+        Then verify the HTTP status code of mod3CancelV2 response is 200
+        And wait 3 seconds for expiration
+        # NMU_CANCEL_UTILITY
+        And verify 1 record for the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
+        # And checks the value $activatePaymentNoticeV2_1Response.paymentToken,$activatePaymentNoticeV2_2Response.paymentToken of the record at column PAYMENT_TOKENS of the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
+        And checks the value 2 of the record at column NUM_TOKEN of the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column VALID_TO of the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
+        And checks the value closePayment-v2 of the record at column INSERTED_BY of the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
 
 
+    # FLUSSO_NM1_M3CV2_05
+    Scenario: FLUSSO_NM1_M3CV2_05 (part 1)
+        Given nodo-dei-pagamenti DEV has config parameter default_durata_estensione_token_IO set to 16000
+        And the checkPosition scenario executed successfully
+        And the activatePaymentNoticeV2 scenario executed successfully
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_1
+        And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2_1
 
-# Scenario: FLUSSO_NM1_M3CV2_01 (part 3)
-#     Given the FLUSSO_NM1_M3CV2_01 (part 2) scenario executed successfully
-#     And the sendPaymentOutcomeV2 scenario executed successfully
-#     And idChannel with #canale_versione_primitive_2# in sendPaymentOutcomeV2
-#     When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
+    Scenario: FLUSSO_NM1_M3CV2_05 (part 2)
+        Given the FLUSSO_NM1_M3CV2_05 (part 1) scenario executed successfully
+        And noticeNumber with 310$iuv1 in activatePaymentNoticeV2
+        And creditorReferenceId with 10$iuv1 in paGetPaymentV2
+        And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_2
+
+    Scenario: FLUSSO_NM1_M3CV2_05 (part 3)
+        Given the FLUSSO_NM1_M3CV2_05 (part 2) scenario executed successfully
+        And the pspNotifyPaymentV2 timeout scenario executed successfully
+        And the closePaymentV2 scenario executed successfully
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 200
+        And check outcome is OK of v2/closepayment response
+        And wait 15 seconds for expiration
+        # NMU_CANCEL_UTILITY
+        And verify 1 record for the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
+        # And checks the value $activatePaymentNoticeV2_1Response.paymentToken,$activatePaymentNoticeV2_2Response.paymentToken of the record at column PAYMENT_TOKENS of the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
+        And checks the value 2 of the record at column NUM_TOKEN of the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column VALID_TO of the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
+        And checks the value closePayment-v2 of the record at column INSERTED_BY of the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
+
+    Scenario: FLUSSO_NM1_M3CV2_05 (part 4)
+        Given the FLUSSO_NM1_M3CV2_05 (part 3) scenario executed successfully
+        When job mod3CancelV2 triggered after 2 seconds
+        Then verify the HTTP status code of mod3CancelV2 response is 200
+        And wait 3 seconds for expiration
+        And nodo-dei-pagamenti DEV has config parameter default_durata_estensione_token_IO set to 3600000
+        # NMU_CANCEL_UTILITY
+        And verify 0 record for the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
+        # POSITION & PAYMENT STATUS
+        # attivazione 1
+        And verify 2 record for the table POSITION_STATUS retrived by the query select_activatev2_1 on db nodo_online under macro NewMod1
+        And checks the value PAYING,INSERTED of the record at column STATUS of the table POSITION_STATUS retrived by the query select_activatev2_1 on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query select_activatev2_1 on db nodo_online under macro NewMod1
+        And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query select_activatev2_1 on db nodo_online under macro NewMod1
+        And verify 5 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2_1 on db nodo_online under macro NewMod1
+        And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_UNKNOWN,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2_1 on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2_1 on db nodo_online under macro NewMod1
+        And checks the value CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2_1 on db nodo_online under macro NewMod1
+        # attivazione 2
+        And verify 2 record for the table POSITION_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value PAYING,INSERTED of the record at column STATUS of the table POSITION_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 5 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_UNKNOWN,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+
+    # FLUSSO_NM1_M3CV2_06
+    Scenario: FLUSSO_NM1_M3CV2_06 (part 1)
+        Given nodo-dei-pagamenti DEV has config parameter default_durata_estensione_token_IO set to 16000
+        And the checkPosition scenario executed successfully
+        And the activatePaymentNoticeV2 scenario executed successfully
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_1
+        And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2_1
+
+    Scenario: FLUSSO_NM1_M3CV2_06 (part 2)
+        Given the FLUSSO_NM1_M3CV2_06 (part 1) scenario executed successfully
+        And noticeNumber with 310$iuv1 in activatePaymentNoticeV2
+        And creditorReferenceId with 10$iuv1 in paGetPaymentV2
+        And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_2
+
+    Scenario: FLUSSO_NM1_M3CV2_06 (part 3)
+        Given the FLUSSO_NM1_M3CV2_06 (part 2) scenario executed successfully
+        And the pspNotifyPaymentV2 timeout scenario executed successfully
+        And the closePaymentV2 scenario executed successfully
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 200
+        And check outcome is OK of v2/closepayment response
+        And wait 15 seconds for expiration
+        # NMU_CANCEL_UTILITY
+        And verify 1 record for the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
+        # And checks the value $activatePaymentNoticeV2_1Response.paymentToken,$activatePaymentNoticeV2_2Response.paymentToken of the record at column PAYMENT_TOKENS of the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
+        And checks the value 2 of the record at column NUM_TOKEN of the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column VALID_TO of the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
+        And checks the value closePayment-v2 of the record at column INSERTED_BY of the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
+
+    Scenario: FLUSSO_NM1_M3CV2_06 (part 4)
+        Given the FLUSSO_NM1_M3CV2_06 (part 3) scenario executed successfully
+        And updates through the query update_noticeid_pa of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAID under macro NewMod1 on db nodo_online
+        And updates through the query update_noticeid1_pa of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAID under macro NewMod1 on db nodo_online
+        When job mod3CancelV2 triggered after 3 seconds
+        Then verify the HTTP status code of mod3CancelV2 response is 200
+        And wait 3 seconds for expiration
+        And nodo-dei-pagamenti DEV has config parameter default_durata_estensione_token_IO set to 3600000
+        # NMU_CANCEL_UTILITY
+        And verify 0 record for the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
+        # POSITION & PAYMENT STATUS
+        # attivazione 1
+        And verify 1 record for the table POSITION_STATUS retrived by the query select_activatev2_1 on db nodo_online under macro NewMod1
+        And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query select_activatev2_1 on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query select_activatev2_1 on db nodo_online under macro NewMod1
+        And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query select_activatev2_1 on db nodo_online under macro NewMod1
+        And verify 4 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2_1 on db nodo_online under macro NewMod1
+        And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_UNKNOWN of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2_1 on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2_1 on db nodo_online under macro NewMod1
+        And checks the value PAID of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2_1 on db nodo_online under macro NewMod1
+        # attivazione 2
+        And verify 1 record for the table POSITION_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 4 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_UNKNOWN of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value PAID of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+
+    # FLUSSO_NM1_M3CV2_07
+    Scenario: FLUSSO_NM1_M3CV2_07 (part 1)
+        Given nodo-dei-pagamenti DEV has config parameter default_durata_estensione_token_IO set to 16000
+        And the checkPosition scenario executed successfully
+        And the activatePaymentNoticeV2 scenario executed successfully
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_1
+        And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2_1
+
+    Scenario: FLUSSO_NM1_M3CV2_07 (part 2)
+        Given the FLUSSO_NM1_M3CV2_07 (part 1) scenario executed successfully
+        And noticeNumber with 310$iuv1 in activatePaymentNoticeV2
+        And creditorReferenceId with 10$iuv1 in paGetPaymentV2
+        And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_2
+
+    Scenario: FLUSSO_NM1_M3CV2_07 (part 3)
+        Given the FLUSSO_NM1_M3CV2_07 (part 2) scenario executed successfully
+        And the pspNotifyPaymentV2 timeout scenario executed successfully
+        And the closePaymentV2 scenario executed successfully
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 200
+        And check outcome is OK of v2/closepayment response
+        And wait 15 seconds for expiration
+        # NMU_CANCEL_UTILITY
+        And verify 1 record for the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
+        # And checks the value $activatePaymentNoticeV2_1Response.paymentToken,$activatePaymentNoticeV2_2Response.paymentToken of the record at column PAYMENT_TOKENS of the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
+        And checks the value 2 of the record at column NUM_TOKEN of the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column VALID_TO of the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
+        And checks the value closePayment-v2 of the record at column INSERTED_BY of the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
+
+    Scenario: FLUSSO_NM1_M3CV2_07 (part 4)
+        Given the FLUSSO_NM1_M3CV2_07 (part 3) scenario executed successfully
+        And updates through the query update_noticeid_pa of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAID under macro NewMod1 on db nodo_online
+        When job mod3CancelV2 triggered after 3 seconds
+        Then verify the HTTP status code of mod3CancelV2 response is 200
+        And wait 3 seconds for expiration
+        And nodo-dei-pagamenti DEV has config parameter default_durata_estensione_token_IO set to 3600000
+        # NMU_CANCEL_UTILITY
+        And verify 1 record for the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
+        # And checks the value $activatePaymentNoticeV2_1Response.paymentToken,$activatePaymentNoticeV2_2Response.paymentToken of the record at column PAYMENT_TOKENS of the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
+        And checks the value 2 of the record at column NUM_TOKEN of the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column VALID_TO of the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
+        And checks the value closePayment-v2 of the record at column INSERTED_BY of the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
+        # POSITION & PAYMENT STATUS
+        # attivazione 1
+        And verify 1 record for the table POSITION_STATUS retrived by the query select_activatev2_1 on db nodo_online under macro NewMod1
+        And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query select_activatev2_1 on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query select_activatev2_1 on db nodo_online under macro NewMod1
+        And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query select_activatev2_1 on db nodo_online under macro NewMod1
+        And verify 4 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2_1 on db nodo_online under macro NewMod1
+        And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_UNKNOWN of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2_1 on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2_1 on db nodo_online under macro NewMod1
+        And checks the value PAID of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2_1 on db nodo_online under macro NewMod1
+        # attivazione 2
+        And verify 1 record for the table POSITION_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 4 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_UNKNOWN of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value PAYMENT_UNKNOWN of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
