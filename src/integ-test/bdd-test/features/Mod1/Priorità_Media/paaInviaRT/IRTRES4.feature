@@ -218,7 +218,7 @@ Feature: process tests for paaInviaRT[IRTRES4]
         Given the Execute nodoInviaRPT (Phase 1) scenario executed successfully 
         And initial XML paaInviaRT
             """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/ciao/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header/>
             <soapenv:Body>
                 <ws:paaInviaRTRisposta>
