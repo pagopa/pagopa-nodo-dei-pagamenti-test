@@ -3,10 +3,9 @@ Feature: process tests for T095_A_ChiediStato_RPT_ESITO_SCONOSCIUTO_PSP
     Background:
         Given systems up
 
-    @runnable
+
     Scenario: RPT generation
         Given RPT generation
-
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
@@ -21,7 +20,6 @@ Feature: process tests for T095_A_ChiediStato_RPT_ESITO_SCONOSCIUTO_PSP
             <pay_i:identificativoUnivocoVersante>
             <pay_i:tipoIdentificativoUnivoco>F</pay_i:tipoIdentificativoUnivoco>
             <pay_i:codiceIdentificativoUnivoco>RCCGLD09P09H502E</pay_i:codiceIdentificativoUnivoco>
-
             </pay_i:identificativoUnivocoVersante>
             <pay_i:anagraficaVersante>Gesualdo;Riccitelli</pay_i:anagraficaVersante>
             <pay_i:indirizzoVersante>via del gesu</pay_i:indirizzoVersante>
@@ -31,13 +29,11 @@ Feature: process tests for T095_A_ChiediStato_RPT_ESITO_SCONOSCIUTO_PSP
             <pay_i:provinciaVersante>RM</pay_i:provinciaVersante>
             <pay_i:nazioneVersante>IT</pay_i:nazioneVersante>
             <pay_i:e-mailVersante>gesualdo.riccitelli@poste.it</pay_i:e-mailVersante>
-
             </pay_i:soggettoVersante>
             <pay_i:soggettoPagatore>
             <pay_i:identificativoUnivocoPagatore>
             <pay_i:tipoIdentificativoUnivoco>F</pay_i:tipoIdentificativoUnivoco>
             <pay_i:codiceIdentificativoUnivoco>RCCGLD09P09H501E</pay_i:codiceIdentificativoUnivoco>
-
             </pay_i:identificativoUnivocoPagatore>
             <pay_i:anagraficaPagatore>Gesualdo;Riccitelli</pay_i:anagraficaPagatore>
             <pay_i:indirizzoPagatore>via del gesu</pay_i:indirizzoPagatore>
@@ -47,13 +43,11 @@ Feature: process tests for T095_A_ChiediStato_RPT_ESITO_SCONOSCIUTO_PSP
             <pay_i:provinciaPagatore>RM</pay_i:provinciaPagatore>
             <pay_i:nazionePagatore>IT</pay_i:nazionePagatore>
             <pay_i:e-mailPagatore>gesualdo.riccitelli@poste.it</pay_i:e-mailPagatore>
-
             </pay_i:soggettoPagatore>
             <pay_i:enteBeneficiario>
             <pay_i:identificativoUnivocoBeneficiario>
             <pay_i:tipoIdentificativoUnivoco>G</pay_i:tipoIdentificativoUnivoco>
             <pay_i:codiceIdentificativoUnivoco>11111111117</pay_i:codiceIdentificativoUnivoco>
-
             </pay_i:identificativoUnivocoBeneficiario>
             <pay_i:denominazioneBeneficiario>AZIENDA XXX</pay_i:denominazioneBeneficiario>
             <pay_i:codiceUnitOperBeneficiario>123</pay_i:codiceUnitOperBeneficiario>
@@ -64,7 +58,6 @@ Feature: process tests for T095_A_ChiediStato_RPT_ESITO_SCONOSCIUTO_PSP
             <pay_i:localitaBeneficiario>Roma</pay_i:localitaBeneficiario>
             <pay_i:provinciaBeneficiario>RM</pay_i:provinciaBeneficiario>
             <pay_i:nazioneBeneficiario>IT</pay_i:nazioneBeneficiario>
-
             </pay_i:enteBeneficiario>
             <pay_i:datiVersamento>
             <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
@@ -89,11 +82,10 @@ Feature: process tests for T095_A_ChiediStato_RPT_ESITO_SCONOSCIUTO_PSP
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-    @runnable
+
     Scenario: RPT2 generation
         Given the RPT generation scenario executed successfully
         And RPT2 generation
-
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
@@ -148,7 +140,6 @@ Feature: process tests for T095_A_ChiediStato_RPT_ESITO_SCONOSCIUTO_PSP
             <pay_i:nazioneBeneficiario>IT</pay_i:nazioneBeneficiario>
             </pay_i:enteBeneficiario>
             <pay_i:datiVersamento>
-
             <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
             <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
@@ -158,7 +149,6 @@ Feature: process tests for T095_A_ChiediStato_RPT_ESITO_SCONOSCIUTO_PSP
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
             <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
             <pay_i:datiSingoloVersamento>
-
             <pay_i:importoSingoloVersamento>10.00</pay_i:importoSingoloVersamento>
             <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
             <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
@@ -172,7 +162,7 @@ Feature: process tests for T095_A_ChiediStato_RPT_ESITO_SCONOSCIUTO_PSP
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-    @runnable
+
     Scenario: Execute nodoInviaCarrelloRPT request
         Given the RPT2 generation scenario executed successfully
         And initial XML nodoInviaCarrelloRPT
@@ -225,11 +215,10 @@ Feature: process tests for T095_A_ChiediStato_RPT_ESITO_SCONOSCIUTO_PSP
             </soapenv:Envelope>
             """
         And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
-
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
         And check faultCode is PPT_CANALE_ERRORE_RESPONSE of nodoInviaCarrelloRPT response
-    @runnable
+
     Scenario: Execute nodoChiediStatoRPT request
         Given the Execute nodoInviaCarrelloRPT scenario executed successfully
         And initial XML nodoChiediStatoRPT
@@ -255,7 +244,7 @@ Feature: process tests for T095_A_ChiediStato_RPT_ESITO_SCONOSCIUTO_PSP
         And checks stato contains RPT_ESITO_SCONOSCIUTO_PSP of nodoChiediStatoRPT response
         And check url field not exists in nodoChiediStatoRPT response
 
-    @runnable
+ 
     Scenario: Execute second nodoChiediStatoRPT request
         Given the Execute nodoChiediStatoRPT request scenario executed successfully
         And initial XML nodoChiediStatoRPT
