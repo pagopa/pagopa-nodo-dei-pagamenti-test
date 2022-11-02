@@ -97,7 +97,7 @@ Feature: Syntax checks for pspNotifyPaymentResponse - KO
             </soapenv:Envelope>
             """
   Scenario: Execute activateIOPaymentReq request
-    When IO sends SOAP activateIOPayment to nodo-dei-pagamenti
+    When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is OK of activateIOPayment response
 
   # nodoChiediInformazioniPagamento phase
@@ -116,8 +116,8 @@ Feature: Syntax checks for pspNotifyPaymentResponse - KO
       <soapenv:Header/>
       <soapenv:Body>
       <pfn:pspNotifyPaymentRes>
+      <outcome>OK</outcome>
       <delay>10000</delay>
-      <outcome>KO</outcome>
       </pfn:pspNotifyPaymentRes>
       </soapenv:Body>
       </soapenv:Envelope>
@@ -133,9 +133,9 @@ Feature: Syntax checks for pspNotifyPaymentResponse - KO
         "identificativoIntermediario": "#psp#",
         "identificativoPsp": "#psp#",
         "identificativoCanale": "#canale#",
-        "importoTotalePagato": 10,
+        "importoTotalePagato": 10.00,
         "timestampOperazione": "2021-07-09T17:06:03.100+01:00",
-        "codiceAutorizzativo": "resOK",
+        "codiceAutorizzativo": "resTim",
         "esitoTransazioneCarta": "00"
       }
       """
