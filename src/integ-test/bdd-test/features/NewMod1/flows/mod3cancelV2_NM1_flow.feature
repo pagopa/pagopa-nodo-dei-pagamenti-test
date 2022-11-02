@@ -93,11 +93,7 @@ Feature: flow checks for mod3CancelV2 in NM1
             <idTransfer>1</idTransfer>
             <transferAmount>10.00</transferAmount>
             <fiscalCodePA>$activatePaymentNoticeV2.fiscalCode</fiscalCodePA>
-            <richiestaMarcaDaBollo>
-            <hashDocumento>wHpFSLCGZjIvNSXxqtGbxg7275t446DRTk5ZrsdUQ6E=</hashDocumento>
-            <tipoBollo>01</tipoBollo>
-            <provinciaResidenza>MI</provinciaResidenza>
-            </richiestaMarcaDaBollo>
+            <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
             <transferCategory>paGetPaymentTest</transferCategory>
             </transfer>
@@ -187,11 +183,7 @@ Feature: flow checks for mod3CancelV2 in NM1
             <idTransfer>1</idTransfer>
             <transferAmount>10.00</transferAmount>
             <fiscalCodePA>$activatePaymentNoticeV2.fiscalCode</fiscalCodePA>
-            <richiestaMarcaDaBollo>
-            <hashDocumento>wHpFSLCGZjIvNSXxqtGbxg7275t446DRTk5ZrsdUQ6E=</hashDocumento>
-            <tipoBollo>01</tipoBollo>
-            <provinciaResidenza>MI</provinciaResidenza>
-            </richiestaMarcaDaBollo>
+            <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
             <transferCategory>paGetPaymentTest</transferCategory>
             </transfer>
