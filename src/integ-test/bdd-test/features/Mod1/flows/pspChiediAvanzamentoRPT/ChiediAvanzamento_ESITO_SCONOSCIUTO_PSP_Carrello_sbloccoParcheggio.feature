@@ -3,14 +3,19 @@ Feature: process tests for ChiediAvanzamento_ESITO_SCONOSCIUTO_PSP_Carrello_sblo
     Background:
         Given systems up
 
+    Scenario: clean pspChiediAvanzamentoRPT queue
+        When job pspChiediAvanzamentoRpt triggered after 5 seconds
+        And wait 10 seconds for expiration
+
     Scenario: RPT generation
-        Given RPT generation
+        Given the clean pspChiediAvanzamentoRPT queue scenario executed successfully
+        And RPT generation
         """
         <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
         <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
         <pay_i:dominio>
-        <pay_i:identificativoDominio>44444444444</pay_i:identificativoDominio>
-        <pay_i:identificativoStazioneRichiedente>44444444444_01</pay_i:identificativoStazioneRichiedente>
+        <pay_i:identificativoDominio>#creditor_institution_code_old#</pay_i:identificativoDominio>
+        <pay_i:identificativoStazioneRichiedente>#id_station_old#</pay_i:identificativoStazioneRichiedente>
         </pay_i:dominio>
         <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
         <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
@@ -81,13 +86,13 @@ Feature: process tests for ChiediAvanzamento_ESITO_SCONOSCIUTO_PSP_Carrello_sblo
         </pay_i:datiVersamento>
         </pay_i:RPT>
         """
-        And RPT2 generation
+        And RPT3 generation
         """
         <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
         <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
         <pay_i:dominio>
-            <pay_i:identificativoDominio>44444444445</pay_i:identificativoDominio>
-            <pay_i:identificativoStazioneRichiedente>44444444444_01</pay_i:identificativoStazioneRichiedente>
+            <pay_i:identificativoDominio>#creditor_institution_code_secondary#</pay_i:identificativoDominio>
+            <pay_i:identificativoStazioneRichiedente>#id_station_old#</pay_i:identificativoStazioneRichiedente>
         </pay_i:dominio>
         <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
         <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
@@ -140,7 +145,7 @@ Feature: process tests for ChiediAvanzamento_ESITO_SCONOSCIUTO_PSP_Carrello_sblo
             <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
             <pay_i:identificativoUnivocoVersamento>avanzaErrResponse2</pay_i:identificativoUnivocoVersamento>
-            <pay_i:codiceContestoPagamento>#CCP2#</pay_i:codiceContestoPagamento>
+            <pay_i:codiceContestoPagamento>#CCP3#</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
             <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -166,8 +171,8 @@ Feature: process tests for ChiediAvanzamento_ESITO_SCONOSCIUTO_PSP_Carrello_sblo
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
         <soapenv:Header>
             <ppt:intestazioneCarrelloPPT>
-                <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
-                <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
+                <identificativoIntermediarioPA>#creditor_institution_code_old#</identificativoIntermediarioPA>
+                <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
                 <identificativoCarrello>$1ccp</identificativoCarrello>
             </ppt:intestazioneCarrelloPPT>
         </soapenv:Header>
@@ -179,16 +184,16 @@ Feature: process tests for ChiediAvanzamento_ESITO_SCONOSCIUTO_PSP_Carrello_sblo
                 <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
                 <listaRPT>
                     <elementoListaRPT>
-                    <identificativoDominio>44444444444</identificativoDominio>
+                    <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
                     <identificativoUnivocoVersamento>avanzaErrResponse</identificativoUnivocoVersamento>
                     <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
                     <rpt>$rptAttachment</rpt>
                     </elementoListaRPT>
                     <elementoListaRPT>
-                    <identificativoDominio>44444444445</identificativoDominio>
+                    <identificativoDominio>#creditor_institution_code_secondary#</identificativoDominio>
                     <identificativoUnivocoVersamento>avanzaErrResponse2</identificativoUnivocoVersamento>
-                    <codiceContestoPagamento>$2CCP</codiceContestoPagamento>
-                    <rpt>$rpt2Attachment</rpt>
+                    <codiceContestoPagamento>$3CCP</codiceContestoPagamento>
+                    <rpt>$rpt3Attachment</rpt>
                     </elementoListaRPT>
                 </listaRPT>
             </ws:nodoInviaCarrelloRPT>
@@ -202,15 +207,19 @@ Feature: process tests for ChiediAvanzamento_ESITO_SCONOSCIUTO_PSP_Carrello_sblo
 
     Scenario: Execute check DB-RPT
         Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
-        And replace iuv content with avanzaErrResponse content
+        And replace iuv2 content with avanzaErrResponse content
+        And replace pa content with #creditor_institution_code_old# content
+        And replace 2CCP content with $1ccp content
+        Then checks the value $sessionToken of the record at column ID_SESSIONE of the table STATI_RPT retrived by the query stati_RPT_new on db nodo_online under macro Mod1
+        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query stati_RPT_new on db nodo_online under macro Mod1
+        And checks the value nodoInviaCarrelloRPT of the record at column INSERTED_BY of the table STATI_RPT retrived by the query stati_RPT_new on db nodo_online under macro Mod1
+        And verify 3 record for the table STATI_RPT retrived by the query stati_RPT_new on db nodo_online under macro Mod1
         And replace iuv2 content with avanzaErrResponse2 content
-        Then checks the value $sessionToken of the record at column ID_SESSIONE of the table STATI_RPT retrived by the query stati_RPT on db nodo_online under macro Mod1
-        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query stati_RPT on db nodo_online under macro Mod1
-        And checks the value nodoInviaCarrelloRPT of the record at column INSERTED_BY of the table STATI_RPT retrived by the query stati_RPT on db nodo_online under macro Mod1
-        And verify 3 record for the table STATI_RPT retrived by the query stati_RPT on db nodo_online under macro Mod1
-        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query stati_RPT2 on db nodo_online under macro Mod1
-        And checks the value nodoInviaCarrelloRPT of the record at column INSERTED_BY of the table STATI_RPT retrived by the query stati_RPT2 on db nodo_online under macro Mod1
-        And verify 3 record for the table STATI_RPT retrived by the query stati_RPT2 on db nodo_online under macro Mod1
+        And replace pa content with #creditor_institution_code_secondary# content
+        And replace 2CCP content with $3CCP content
+        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query stati_RPT_new on db nodo_online under macro Mod1
+        And checks the value nodoInviaCarrelloRPT of the record at column INSERTED_BY of the table STATI_RPT retrived by the query stati_RPT_new on db nodo_online under macro Mod1
+        And verify 3 record for the table STATI_RPT retrived by the query stati_RPT_new on db nodo_online under macro Mod1
 
     Scenario: Execution Esito Carta
         Given the Execute check DB-RPT scenario executed successfully
@@ -251,13 +260,33 @@ Feature: process tests for ChiediAvanzamento_ESITO_SCONOSCIUTO_PSP_Carrello_sblo
         Then checks the value CART_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query retry_rpt on db nodo_online under macro Mod1
         And checks the value avanzaErrResponse of the record at column IUV of the table RETRY_RPT retrived by the query retry_rpt_original on db nodo_online under macro Mod1
         And checks the value $1ccp of the record at column CCP of the table RETRY_RPT retrived by the query retry_rpt_original on db nodo_online under macro Mod1
-        And checks the value 44444444444 of the record at column ID_DOMINIO of the table RETRY_RPT retrived by the query retry_rpt_original on db nodo_online under macro Mod1
+        And checks the value #creditor_institution_code_old# of the record at column ID_DOMINIO of the table RETRY_RPT retrived by the query retry_rpt_original on db nodo_online under macro Mod1
         And checks the value 0 of the record at column RETRY of the table RETRY_RPT retrived by the query retry_rpt_original on db nodo_online under macro Mod1
         And verify 1 record for the table RETRY_RPT retrived by the query retry_rpt_original on db nodo_online under macro Mod1
         And wait 5 seconds for expiration
     
     Scenario: Execute job pspChiediAvanzamentoRPT
         Given the Execute second check DB-RPT scenario executed successfully
+        And initial XML pspChiediAvanzamentoRPT
+             """
+             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+             <soapenv:Header/>
+             <soapenv:Body>
+             <ws:pspChiediAvanzamentoRPTResponse>
+             <pspChiediAvanzamentoRPTResponse>
+             <delay>10000</delay>
+             <fault>
+             <faultCode>CANALE_RPT_RIFIUTATA</faultCode>
+             <faultString>RPT arrivata al PSP e rifiutata</faultString>
+             <id>#psp#</id>
+             <description>RPT rifiutata dal PSP</description>
+             </fault>
+             </pspChiediAvanzamentoRPTResponse>
+             </ws:pspChiediAvanzamentoRPTResponse>
+             </soapenv:Body>
+             </soapenv:Envelope>
+             """
+        And PSP replies to nodo-dei-pagamenti with the pspChiediAvanzamentoRPT
         When job pspChiediAvanzamentoRpt triggered after 5 seconds
         And wait 10 seconds for expiration
         Then checks the value CART_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query motivo_annullamento on db nodo_online under macro Mod1
@@ -297,16 +326,20 @@ Feature: process tests for ChiediAvanzamento_ESITO_SCONOSCIUTO_PSP_Carrello_sblo
         And check error is Operazione in timeout of inoltroEsito/carta response
         And check url field not exists in inoltroEsito/carta response
 
-@firstRun
+@test
     Scenario: Execute third check DB-RPT 
         Given the Execution retry Esito Carta scenario executed successfully
-        And replace pa content with 44444444444 content
+        And replace pa content with #creditor_institution_code_old# content
+        And replace iuv content with avanzaErrResponse content
         Then checks the value RPT_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query stati_RPT_noOrder on db nodo_online under macro Mod1
-        And checks the value RPT_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query stati_RPT2_noOrder on db nodo_online under macro Mod1
-        And checks the value CART_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query motivo_annullamento on db nodo_online under macro Mod1
-        And checks the value 44444444444 of the record at column ID_DOMINIO of the table RETRY_RPT retrived by the query motivo_annullamento_originale on db nodo_online under macro Mod1
-        And checks the value avanzaErrResponse of the record at column IUV of the table RETRY_RPT retrived by the query motivo_annullamento_originale on db nodo_online under macro Mod1
         And checks the value $1ccp of the record at column CCP of the table RETRY_RPT retrived by the query motivo_annullamento_originale on db nodo_online under macro Mod1
+        And replace iuv content with avanzaErrResponse2 content
+        And replace pa content with #creditor_institution_code_secondary# content
+        And replace 1ccp content with $3CCP content
+        And checks the value RPT_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query stati_RPT_noOrder on db nodo_online under macro Mod1
+        And checks the value CART_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query motivo_annullamento on db nodo_online under macro Mod1
+        And checks the value #creditor_institution_code_old# of the record at column ID_DOMINIO of the table RETRY_RPT retrived by the query motivo_annullamento_originale on db nodo_online under macro Mod1
+        And checks the value avanzaErrResponse of the record at column IUV of the table RETRY_RPT retrived by the query motivo_annullamento_originale on db nodo_online under macro Mod1
         And verify if the records for the table RETRY_RPT retrived by the query motivo_annullamento_originale on db nodo_online under macro Mod1 are not null
         And verify 1 record for the table RETRY_RPT retrived by the query motivo_annullamento_originale on db nodo_online under macro Mod1
         
