@@ -1,6 +1,6 @@
-# Il test verifica che in caso di 3Transfer e nessuna stazione broadcast nella paGetPaymentResponse sia generata una receipt +
+# Il test verifica che in caso di 3Transfer, nessuna stazione broadcast nella paGetPaymentResponse e SPO KO non sia generata alcuna receipt
 
-Feature: 3Transfers - 1 receipt 
+Feature: 3Transfers - spo KO - 0 receipt 
 
     Background:
         Given systems up
