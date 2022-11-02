@@ -130,6 +130,7 @@ Feature: process tests for nodoInoltraPagamentoMod1
          }
          """
         Then verify the HTTP status code of inoltroEsito/mod1 response is 400
+        And check error is Richiesta non valida of inoltroEsito/mod1 response
 
     Scenario: execution nodoInoltraPagamentoMod1 - PM_IPM1_2
         Given the Execute nodoInviaRPT request scenario executed successfully
@@ -145,7 +146,8 @@ Feature: process tests for nodoInoltraPagamentoMod1
             "mobileToken": "123ABC456"
          }
          """
-        Then verify the HTTP status code of inoltroEsito/mod1 response is 400
+        Then verify the HTTP status code of inoltroEsito/mod1 response is 404
+        And check error is Il Pagamento indicato non esiste of inoltroEsito/mod1 response
 
     Scenario: execution nodoInoltraPagamentoMod1 - PM_IPM1_3
         Given the Execute nodoInviaRPT request scenario executed successfully
@@ -161,7 +163,8 @@ Feature: process tests for nodoInoltraPagamentoMod1
             "mobileToken": "123ABC456"
          }
          """
-        Then verify the HTTP status code of inoltroEsito/mod1 response is 400
+        Then verify the HTTP status code of inoltroEsito/mod1 response is 404
+         And check error is Il Pagamento indicato non esiste of inoltroEsito/mod1 response
 
     Scenario: execution nodoInoltraPagamentoMod1 - PM_IPM1_4
         Given the Execute nodoInviaRPT request scenario executed successfully
@@ -178,6 +181,7 @@ Feature: process tests for nodoInoltraPagamentoMod1
          }
          """
         Then verify the HTTP status code of inoltroEsito/mod1 response is 400
+         And check error is Richiesta non valida of inoltroEsito/mod1 response
 
     Scenario: execution nodoInoltraPagamentoMod1 - PM_IPM1_5
         Given the Execute nodoInviaRPT request scenario executed successfully
@@ -193,7 +197,8 @@ Feature: process tests for nodoInoltraPagamentoMod1
             "mobileToken": "123ABC456"
          }
          """
-        Then verify the HTTP status code of inoltroEsito/mod1 response is 400
+        Then verify the HTTP status code of inoltroEsito/mod1 response is 404
+        And check error is Il PSP indicato non esiste of inoltroEsito/mod1 response
 
     Scenario: execution nodoInoltraPagamentoMod1 - PM_IPM1_6
         Given the Execute nodoInviaRPT request scenario executed successfully
@@ -209,7 +214,8 @@ Feature: process tests for nodoInoltraPagamentoMod1
             "mobileToken": "123ABC456"
          }
          """
-        Then verify the HTTP status code of inoltroEsito/mod1 response is 422
+        Then verify the HTTP status code of inoltroEsito/mod1 response is 404
+        And check error is Il PSP indicato non esiste of inoltroEsito/mod1 response
 
     Scenario: execution nodoInoltraPagamentoMod1 - PM_IPM1_7
         Given the Execute nodoInviaRPT request scenario executed successfully
@@ -225,7 +231,9 @@ Feature: process tests for nodoInoltraPagamentoMod1
             "mobileToken": "123ABC456"
          }
          """
-        Then verify the HTTP status code of inoltroEsito/mod1 response is 422
+        Then verify the HTTP status code of inoltroEsito/mod1 response is 404
+        And check error is Il PSP indicato non esiste of inoltroEsito/mod1 response
+
 
     Scenario: execution nodoInoltraPagamentoMod1 - PM_IPM1_8
         Given the Execute nodoInviaRPT request scenario executed successfully
@@ -242,6 +250,7 @@ Feature: process tests for nodoInoltraPagamentoMod1
          }
          """
         Then verify the HTTP status code of inoltroEsito/mod1 response is 422
+        And check error is Tipo Versamento invalido of inoltroEsito/mod1 response
 
     Scenario: execution nodoInoltraPagamentoMod1 - PM_IPM1_8.1
         Given the Execute nodoInviaRPT request scenario executed successfully
@@ -258,6 +267,7 @@ Feature: process tests for nodoInoltraPagamentoMod1
          }
          """
         Then verify the HTTP status code of inoltroEsito/mod1 response is 422
+        And check error is Tipo Versamento invalido of inoltroEsito/mod1 response
 
     Scenario: execution nodoInoltraPagamentoMod1 - PM_IPM1_8.2
         Given the Execute nodoInviaRPT request scenario executed successfully
@@ -274,6 +284,7 @@ Feature: process tests for nodoInoltraPagamentoMod1
          }
          """
         Then verify the HTTP status code of inoltroEsito/mod1 response is 422
+        And check error is Tipo Versamento invalido of inoltroEsito/mod1 response
 
       Scenario: execution nodoInoltraPagamentoMod1 - PM_IPM1_8.3
         Given the Execute nodoInviaRPT request scenario executed successfully
@@ -289,7 +300,8 @@ Feature: process tests for nodoInoltraPagamentoMod1
             "mobileToken": "123ABC456"
          }
          """
-        Then verify the HTTP status code of inoltroEsito/mod1 response is 200
+        Then verify the HTTP status code of inoltroEsito/mod1 response is 400
+        And check error is Richiesta non valida of inoltroEsito/mod1 response
 
     Scenario: execution nodoInoltraPagamentoMod1 - PM_IPM1_8.4
         Given the Execute nodoInviaRPT request scenario executed successfully
@@ -354,6 +366,7 @@ Feature: process tests for nodoInoltraPagamentoMod1
          }
          """
         Then verify the HTTP status code of inoltroEsito/mod1 response is 400
+         And check error is Richiesta non valida of inoltroEsito/mod1 response
 
     Scenario: execution nodoInoltraPagamentoMod1 - PM_IPM1_10
         Given the Execute nodoInviaRPT request scenario executed successfully
@@ -370,6 +383,8 @@ Feature: process tests for nodoInoltraPagamentoMod1
          }
          """
         Then verify the HTTP status code of inoltroEsito/mod1 response is 400
+        And check error is Richiesta non valida of inoltroEsito/mod1 response
+
 
     Scenario: execution nodoInoltraPagamentoMod1 - PM_IPM1_11
         Given the Execute nodoInviaRPT request scenario executed successfully
@@ -385,7 +400,9 @@ Feature: process tests for nodoInoltraPagamentoMod1
             "mobileToken": "123ABC456"
          }
          """
-        Then verify the HTTP status code of inoltroEsito/mod1 response is 422
+        Then verify the HTTP status code of inoltroEsito/mod1 response is 400
+        And check error is Richiesta non valida of inoltroEsito/mod1 response
+
 
     Scenario: execution nodoInoltraPagamentoMod1 - PM_IPM1_12
         Given the Execute nodoInviaRPT request scenario executed successfully
@@ -401,7 +418,8 @@ Feature: process tests for nodoInoltraPagamentoMod1
             "mobileToken": "123ABC456"
          }
          """
-        Then verify the HTTP status code of inoltroEsito/mod1 response is 422
+        Then verify the HTTP status code of inoltroEsito/mod1 response is 400
+        And check error is Richiesta non valida of inoltroEsito/mod1 response
 
      Scenario: execution nodoInoltraPagamentoMod1 - PM_IPM1_13
         Given the Execute nodoInviaRPT request scenario executed successfully
@@ -418,6 +436,8 @@ Feature: process tests for nodoInoltraPagamentoMod1
          }
          """
         Then verify the HTTP status code of inoltroEsito/mod1 response is 400
+         And check error is Richiesta non valida of inoltroEsito/mod1 response
+
 
     Scenario: execution nodoInoltraPagamentoMod1 - PM_IPM1_14
         Given the Execute nodoInviaRPT request scenario executed successfully
@@ -433,7 +453,8 @@ Feature: process tests for nodoInoltraPagamentoMod1
             "mobileToken": "123ABC456"
          }
          """
-        Then verify the HTTP status code of inoltroEsito/mod1 response is 400
+        Then verify the HTTP status code of inoltroEsito/mod1 response is 404
+        And check error is L'Intermediario indicato non esiste of inoltroEsito/mod1 response
 
     Scenario: execution nodoInoltraPagamentoMod1 - PM_IPM1_15
         Given the Execute nodoInviaRPT request scenario executed successfully
@@ -449,7 +470,8 @@ Feature: process tests for nodoInoltraPagamentoMod1
             "mobileToken": "123ABC456"
          }
          """
-        Then verify the HTTP status code of inoltroEsito/mod1 response is 422
+        Then verify the HTTP status code of inoltroEsito/mod1 response is 404
+         And check error is L'Intermediario indicato non esiste of inoltroEsito/mod1 response
 
     Scenario: execution nodoInoltraPagamentoMod1 - PM_IPM1_16
         Given the Execute nodoInviaRPT request scenario executed successfully
@@ -465,7 +487,8 @@ Feature: process tests for nodoInoltraPagamentoMod1
             "mobileToken": "123ABC456"
          }
          """
-        Then verify the HTTP status code of inoltroEsito/mod1 response is 422
+        Then verify the HTTP status code of inoltroEsito/mod1 response is 404
+         And check error is L'Intermediario indicato non esiste of inoltroEsito/mod1 response
 
     Scenario: execution nodoInoltraPagamentoMod1 - PM_IPM1_17
         Given the Execute nodoInviaRPT request scenario executed successfully
@@ -482,6 +505,7 @@ Feature: process tests for nodoInoltraPagamentoMod1
          }
          """
         Then verify the HTTP status code of inoltroEsito/mod1 response is 400
+         And check error is Richiesta non valida of inoltroEsito/mod1 response
 
     Scenario: execution nodoInoltraPagamentoMod1 - PM_IPM1_18
         Given the Execute nodoInviaRPT request scenario executed successfully
@@ -497,7 +521,8 @@ Feature: process tests for nodoInoltraPagamentoMod1
             "mobileToken": "123ABC456"
          }
          """
-        Then verify the HTTP status code of inoltroEsito/mod1 response is 400
+        Then verify the HTTP status code of inoltroEsito/mod1 response is 404
+        And check error is Il Canale indicato non esiste of inoltroEsito/mod1 response
 
     Scenario: execution nodoInoltraPagamentoMod1 - PM_IPM1_19
         Given the Execute nodoInviaRPT request scenario executed successfully
@@ -513,7 +538,8 @@ Feature: process tests for nodoInoltraPagamentoMod1
             "mobileToken": "123ABC456"
          }
          """
-        Then verify the HTTP status code of inoltroEsito/mod1 response is 422
+        Then verify the HTTP status code of inoltroEsito/mod1 response is 404
+        And check error is Il Canale indicato non esiste of inoltroEsito/mod1 response
 
     Scenario: execution nodoInoltraPagamentoMod1 - PM_IPM1_20
         Given the Execute nodoInviaRPT request scenario executed successfully
@@ -529,7 +555,8 @@ Feature: process tests for nodoInoltraPagamentoMod1
             "mobileToken": "123ABC456"
          }
          """
-        Then verify the HTTP status code of inoltroEsito/mod1 response is 422
+        Then verify the HTTP status code of inoltroEsito/mod1 response is 404
+         And check error is Il Canale indicato non esiste of inoltroEsito/mod1 response
 
     Scenario: execution nodoInoltraPagamentoMod1 - PM_IPM1_21
         Given the Execute nodoInviaRPT request scenario executed successfully
@@ -546,6 +573,7 @@ Feature: process tests for nodoInoltraPagamentoMod1
          }
          """
         Then verify the HTTP status code of inoltroEsito/mod1 response is 404
+        And check error is La combinazione PSP-Intermediario-Canale-TipoV Versamento Canale indicata non esiste of inoltroEsito/mod1 response
 
     Scenario: execution nodoInoltraPagamentoMod1 - PM_IPM1_22
         Given the Execute nodoInviaRPT request scenario executed successfully
@@ -561,7 +589,8 @@ Feature: process tests for nodoInoltraPagamentoMod1
             "mobileToken": "123ABC456"
          }
          """
-        Then verify the HTTP status code of inoltroEsito/mod1 response is 400
+        Then verify the HTTP status code of inoltroEsito/mod1 response is 422
+        And check error is Tipo Operazione invalido of inoltroEsito/mod1 response
 
     Scenario: execution nodoInoltraPagamentoMod1 - PM_IPM1_23
         Given the Execute nodoInviaRPT request scenario executed successfully
@@ -578,6 +607,7 @@ Feature: process tests for nodoInoltraPagamentoMod1
          }
          """
         Then verify the HTTP status code of inoltroEsito/mod1 response is 200
+        
 
     Scenario: execution nodoInoltraPagamentoMod1 - PM_IPM1_24
         Given the Execute nodoInviaRPT request scenario executed successfully
@@ -592,7 +622,8 @@ Feature: process tests for nodoInoltraPagamentoMod1
             "tipoOperazione":"mobile"
          }
          """
-        Then verify the HTTP status code of inoltroEsito/mod1 response is 400
+        Then verify the HTTP status code of inoltroEsito/mod1 response is 422
+        And check error is Mobile Token invalido of inoltroEsito/mod1 response
 
     Scenario: execution nodoInoltraPagamentoMod1 - PM_IPM1_25
         Given the Execute nodoInviaRPT request scenario executed successfully
@@ -607,7 +638,8 @@ Feature: process tests for nodoInoltraPagamentoMod1
             "tipoOperazione":""
          }
          """
-        Then verify the HTTP status code of inoltroEsito/mod1 response is 400
+        Then verify the HTTP status code of inoltroEsito/mod1 response is 422
+        And check error is Tipo Operazione invalido of inoltroEsito/mod1 response
 
     Scenario: execution nodoInoltraPagamentoMod1 - PM_IPM1_26
         Given the Execute nodoInviaRPT request scenario executed successfully
@@ -623,7 +655,8 @@ Feature: process tests for nodoInoltraPagamentoMod1
             "mobileToken":""
          }
          """
-        Then verify the HTTP status code of inoltroEsito/mod1 response is 400
+        Then verify the HTTP status code of inoltroEsito/mod1 response is 200
+         
 
     Scenario: execution nodoInoltraPagamentoMod1 - PM_IPM1_27
         Given the Execute nodoInviaRPT request scenario executed successfully
@@ -640,6 +673,7 @@ Feature: process tests for nodoInoltraPagamentoMod1
          }
          """
         Then verify the HTTP status code of inoltroEsito/mod1 response is 200
+       
 
     Scenario: execution nodoInoltraPagamentoMod1 - PM_IPM1_28
         Given the Execute nodoInviaRPT request scenario executed successfully
@@ -655,7 +689,8 @@ Feature: process tests for nodoInoltraPagamentoMod1
             "mobileToken":""
          }
          """
-        Then verify the HTTP status code of inoltroEsito/mod1 response is 400
+        Then verify the HTTP status code of inoltroEsito/mod1 response is 422
+         And check error is Tipo Operazione invalido of inoltroEsito/mod1 response
 
     Scenario: execution nodoInoltraPagamentoMod1 - PM_IPM1_29
         Given the Execute nodoInviaRPT request scenario executed successfully
@@ -671,7 +706,8 @@ Feature: process tests for nodoInoltraPagamentoMod1
             "mobileToken":""
          }
          """
-        Then verify the HTTP status code of inoltroEsito/mod1 response is 422
+        Then verify the HTTP status code of inoltroEsito/mod1 response is 400
+        And check error is Modello pagamento non valido of inoltroEsito/mod1 response
 
 
 
