@@ -171,10 +171,14 @@ Feature: generazioneRicevute spo KO - nessuna receipt
         And wait 15 seconds for expiration
         # POSITION_RECEIPT
         Then verify 0 record for the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
-         # POSITION_RECEIPT_RECIPIENT
+        # POSITION_RECEIPT_RECIPIENT
         And verify 0 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt on db nodo_online under macro NewMod3
         # RE
         And verify 0 record for the table RE retrived by the query select_paSendRT on db re under macro sendPaymentResultV2
+        # POSITION_RECEIPT_XML
+        And verify 0 record for the table POSITION_RECEIPT_XML retrived by the query position_receipt on db nodo_online under macro NewMod3
+        # POSITION_RECEIPT_RECIPIENT_STATUS
+        And verify 0 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_receipt on db nodo_online under macro NewMod3
 
 
 
