@@ -205,6 +205,7 @@ Feature: process tests for generazioneRicevute
     # DB check
     Scenario: DB check
         Given the Execute sendPaymentOutcome request scenario executed successfully
+        And wait 15 seconds for expiration
         # POSITION_RECEIPT
         Then verify 1 record for the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
         And checks the value NotNone of the record at column ID of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
