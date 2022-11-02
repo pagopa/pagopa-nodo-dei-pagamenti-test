@@ -1820,8 +1820,9 @@ def step_impl(context, condition, param):
 
     if not param.isdigit():
         param = getattr(context, 'configurations').get(param)
-        
+
     print(param)
+    print(datetime.timedelta(milliseconds=int(param)))
 
     if condition == 'equal to':
         assert token_valid_to == token_valid_from + datetime.timedelta(milliseconds=int(param)), f"{token_valid_to} != {token_valid_from + datetime.timedelta(milliseconds=int(param))}"
