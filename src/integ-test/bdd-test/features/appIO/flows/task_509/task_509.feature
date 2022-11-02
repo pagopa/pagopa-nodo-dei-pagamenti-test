@@ -181,4 +181,5 @@ Feature: task_509
         When job annullamentoRptMaiRichiesteDaPm triggered after 65 seconds
         And wait 10 seconds for expiration
         Then checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
+        # Assertion Failed: check expected element: INSERTED, obtained: ['PAYING']
         And restore initial configurations
