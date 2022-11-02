@@ -304,7 +304,7 @@ Feature: response tests for paDemandPaymentNotice
         And check originalFaultCode field exists in demandPaymentNotice response
         And check originalFaultString field exists in demandPaymentNotice response
         And check originalDescription field exists in demandPaymentNotice response
-    @wip
+    
     Scenario: TRES_PDPN_61 (part 2)
         Given the TRES_PDPN_61 (part 1) scenario executed successfully
         And updates through the query update_id_intermediario_psp of the table INTERMEDIARI_PSP the parameter FAULT_BEAN_ESTESO with N under macro Mod4 on db nodo_cfg
