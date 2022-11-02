@@ -56,6 +56,96 @@ Feature: response tests for paDemandPaymentNotice
             </soapenv:Envelope>
             """
 
+    @skip
+    Scenario: paDemandPaymentNotice with 2 paymentList
+        Given initial XML paDemandPaymentNotice
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <paf:paDemandPaymentNoticeResponse>
+            <outcome>OK</outcome>
+            <qrCode>
+            <fiscalCode>#creditor_institution_code#</fiscalCode>
+            <noticeNumber>311#iuv#</noticeNumber>
+            </qrCode>
+            <paymentList>
+            <paymentOptionDescription>
+            <amount>10.00</amount>
+            <options>EQ</options>
+            <!--Optional:-->
+            <dueDate>2022-06-25</dueDate>
+            <!--Optional:-->
+            <detailDescription>descrizione dettagliata lato PA</detailDescription>
+            <!--Optional:-->
+            <allCCP>false</allCCP>
+            </paymentOptionDescription>
+            </paymentList>
+            <paymentList>
+            <paymentOptionDescription>
+            <amount>10.00</amount>
+            <options>EQ</options>
+            <!--Optional:-->
+            <dueDate>2022-06-25</dueDate>
+            <!--Optional:-->
+            <detailDescription>descrizione dettagliata lato PA</detailDescription>
+            <!--Optional:-->
+            <allCCP>false</allCCP>
+            </paymentOptionDescription>
+            </paymentList>
+            <paymentDescription>paymentDescription</paymentDescription>
+            <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
+            <companyName>companyName</companyName>
+            <officeName>officeName</officeName>
+            </paf:paDemandPaymentNoticeResponse>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+
+    @skip
+    Scenario: paDemandPaymentNotice with 2 paymentOptionDescription
+        Given initial XML paDemandPaymentNotice
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <paf:paDemandPaymentNoticeResponse>
+            <outcome>OK</outcome>
+            <qrCode>
+            <fiscalCode>#creditor_institution_code#</fiscalCode>
+            <noticeNumber>311#iuv#</noticeNumber>
+            </qrCode>
+            <paymentList>
+            <paymentOptionDescription>
+            <amount>10.00</amount>
+            <options>EQ</options>
+            <!--Optional:-->
+            <dueDate>2022-06-25</dueDate>
+            <!--Optional:-->
+            <detailDescription>descrizione dettagliata lato PA</detailDescription>
+            <!--Optional:-->
+            <allCCP>false</allCCP>
+            </paymentOptionDescription>
+            <paymentOptionDescription>
+            <amount>10.00</amount>
+            <options>EQ</options>
+            <!--Optional:-->
+            <dueDate>2022-06-25</dueDate>
+            <!--Optional:-->
+            <detailDescription>descrizione dettagliata lato PA</detailDescription>
+            <!--Optional:-->
+            <allCCP>false</allCCP>
+            </paymentOptionDescription>
+            </paymentList>
+            <paymentDescription>paymentDescription</paymentDescription>
+            <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
+            <companyName>companyName</companyName>
+            <officeName>officeName</officeName>
+            </paf:paDemandPaymentNoticeResponse>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+
     Scenario Outline: Check paDemandPaymentNotice response with missing optional fields
         Given the demandPaymentNotice scenario executed successfully
         And the paDemandPaymentNotice scenario executed successfully
@@ -89,20 +179,18 @@ Feature: response tests for paDemandPaymentNotice
         And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of demandPaymentNotice response
         Examples:
             | elem                              | value                                                                                                                                           | soapUI test  |
-            | soapenv:Body                      | None                                                                                                                                            | TRES_PDPN_03 |
-            | soapenv:Body                      | Empty                                                                                                                                           | TRES_PDPN_04 |
-            | paf:paDemandPaymentNoticeResponse | None                                                                                                                                            | TRES_PDPN_05 |
-            | paf:paDemandPaymentNoticeResponse | RemoveParent                                                                                                                                    | TRES_PDPN_06 |
+            # | soapenv:Body                      | None                                                                                                                                            | TRES_PDPN_03 |
+            # | soapenv:Body                      | Empty                                                                                                                                           | TRES_PDPN_04 |
+            # | paf:paDemandPaymentNoticeResponse | None                                                                                                                                            | TRES_PDPN_05 |
+            # | paf:paDemandPaymentNoticeResponse | RemoveParent                                                                                                                                    | TRES_PDPN_06 |
             | paf:paDemandPaymentNoticeResponse | Empty                                                                                                                                           | TRES_PDPN_07 |
             | outcome                           | None                                                                                                                                            | TRES_PDPN_08 |
             | outcome                           | Empty                                                                                                                                           | TRES_PDPN_09 |
             | outcome                           | PP                                                                                                                                              | TRES_PDPN_10 |
             | paymentList                       | None                                                                                                                                            | TRES_PDPN_23 |
             | paymentList                       | Empty                                                                                                                                           | TRES_PDPN_25 |
-            # | paymentList                       | Occurrences,2                                                                                                                                   | TRES_PDPN_26 |
             | paymentOptionDescription          | None                                                                                                                                            | TRES_PDPN_27 |
             | paymentOptionDescription          | Empty                                                                                                                                           | TRES_PDPN_28 |
-            # | paymentOptionDescription          | Occurrences,2                                                                                                                                   | TRES_PDPN_29 |
             | amount                            | None                                                                                                                                            | TRES_PDPN_30 |
             | amount                            | Empty                                                                                                                                           | TRES_PDPN_31 |
             | amount                            | 11,34                                                                                                                                           | TRES_PDPN_32 |
@@ -143,6 +231,26 @@ Feature: response tests for paDemandPaymentNotice
         And qrCode with None in paDemandPaymentNotice
         And paymentList with None in paDemandPaymentNotice
         And officeName with None in paDemandPaymentNotice
+        And EC replies to nodo-dei-pagamenti with the paDemandPaymentNotice
+        When PSP sends SOAP demandPaymentNotice to nodo-dei-pagamenti
+        Then check outcome is KO of demandPaymentNotice response
+        And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of demandPaymentNotice response
+
+    # TRES_PDPN_26
+
+    Scenario: TRES_PDPN_26
+        Given the demandPaymentNotice scenario executed successfully
+        And the paDemandPaymentNotice with 2 paymentList scenario executed successfully
+        And EC replies to nodo-dei-pagamenti with the paDemandPaymentNotice
+        When PSP sends SOAP demandPaymentNotice to nodo-dei-pagamenti
+        Then check outcome is KO of demandPaymentNotice response
+        And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of demandPaymentNotice response
+
+    # TRES_PDPN_29
+
+    Scenario: TRES_PDPN_29
+        Given the demandPaymentNotice scenario executed successfully
+        And the paDemandPaymentNotice with 2 paymentOptionDescription scenario executed successfully
         And EC replies to nodo-dei-pagamenti with the paDemandPaymentNotice
         When PSP sends SOAP demandPaymentNotice to nodo-dei-pagamenti
         Then check outcome is KO of demandPaymentNotice response
