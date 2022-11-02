@@ -133,7 +133,7 @@ Feature: process tests for nodoChiediInformazioniPagamento
     Scenario: execution nodoChiediInformazioniPagamento - PM_CIP4
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest GET informazioniPagamento?idPagamento=$sessionToken&importoTotale=100 to nodo-dei-pagamenti
-        Then verify the HTTP status code of informazioniPagamento response is 400
+        Then verify the HTTP status code of informazioniPagamento response is 200
 
     Scenario: execution nodoChiediInformazioniPagamento - PM_CIP5
         Given the Execute nodoInviaRPT request scenario executed successfully
