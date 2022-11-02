@@ -269,6 +269,12 @@ def step_impl(context):
         iuv = 'IUV' + '-' + str(date + '-' + datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3])
         payload = payload.replace('#iuv2#', iuv)
         setattr(context, '2iuv', iuv)
+    
+    if '#IUV_#' in payload:
+        IUV_ = 'IUV' + str(random.randint(0, 10000)) + '_' +  datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
+        payload = payload.replace('#IUV_#', IUV_)
+        setattr(context, 'IUV_', IUV_)
+
 
     if '#IUV#' in payload:
         IUV = 'IUV' + str(random.randint(0, 10000)) + '-' + date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]

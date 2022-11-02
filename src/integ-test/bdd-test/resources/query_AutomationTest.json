@@ -206,5 +206,8 @@
         "payment_status_orderbydesc":"SELECT columns FROM table_name WHERE NOTICE_ID ='$noticeNumber' AND PA_FISCAL_CODE = '$fiscalCode' ORDER BY ID DESC",
         "payment_status_pay_act1":"SELECT columns FROM table_name WHERE NOTICE_ID ='$noticeNumber' AND PA_FISCAL_CODE = '$fiscalCode' AND PAYMENT_TOKEN ='$paymentToken'",
         "rt_v1": "SELECT columns FROM table_name WHERE CCP= '$paymentToken' AND IDENT_DOMINIO= '$fiscalCode'"
+    },
+    "informative":{
+        "cds_ervizio": "SELECT columns FROM table_name WHERE VERSIONE = 1"
     }
 }

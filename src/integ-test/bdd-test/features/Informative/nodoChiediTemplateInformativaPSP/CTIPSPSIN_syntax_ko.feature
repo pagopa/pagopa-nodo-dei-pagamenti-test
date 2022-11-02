@@ -9,7 +9,7 @@ Feature: Syntax checks KO for nodoChiediTemplateInformativaPSP
             <soapenv:Header/>
             <soapenv:Body>
             <ws:nodoChiediTemplateInformativaPSP>
-            <identificativoPSP>sconosciuto</identificativoPSP>
+            <identificativoPSP>#psp#</identificativoPSP>
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
             <identificativoCanale>#canale#</identificativoCanale>
             <password>pwdpwdpwd</password>
@@ -77,20 +77,18 @@ Feature: Syntax checks KO for nodoChiediTemplateInformativaPSP
         When psp sends SOAP nodoChiediTemplateInformativaPSP to nodo-dei-pagamenti
         Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoChiediTemplateInformativaPSP response
 
-    # Scenario: Check error for nodoChiediTemplateInformativaPSP primitive-[CTIPSPSIN5]
-    #     Given initial XML nodoChiediTemplateInformativaPSP
-    #         """
-    #         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-    #         <soapenv:Header/>
-    #         <soapenv:Body>
-    #         <ppt:nodoChiediTemplateInformativaPSP>
-    #         <identificativoPSP>#psp#</identificativoPSP>
-    #         <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-    #         <identificativoCanale>#canale#</identificativoCanale>
-    #         <password>pwdpwdpwd</password>
-    #         </ppt:nodoChiediTemplateInformativaPSP>
-    #         </soapenv:Body>
-    #         </soapenv:Envelope>
-    #         """
-    #     When psp sends SOAP nodoChiediTemplateInformativaPSP to nodo-dei-pagamenti
-    #     Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoChiediTemplateInformativaPSP response
+    Scenario: Check error for nodoChiediTemplateInformativaPSP primitive-[CTIPSPSIN5]
+        Given initial XML nodoChiediTemplateInformativaPSP
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <identificativoPSP>#psp#</identificativoPSP>
+            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canale#</identificativoCanale>
+            <password>pwdpwdpwd</password>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        When psp sends SOAP nodoChiediTemplateInformativaPSP to nodo-dei-pagamenti
+        Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoChiediTemplateInformativaPSP response
