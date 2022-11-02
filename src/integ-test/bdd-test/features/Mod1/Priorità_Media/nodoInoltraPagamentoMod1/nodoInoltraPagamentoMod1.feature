@@ -265,8 +265,8 @@ Feature: process tests for nodoInoltraPagamentoMod1
             "tipoOperazione": "web"
          }
          """
-        Then verify the HTTP status code of inoltroEsito/mod1 response is 422
-        And check error is Tipo Versamento invalido of inoltroEsito/mod1 response
+        Then verify the HTTP status code of inoltroEsito/mod1 response is 200
+        
 
     Scenario: execution nodoInoltraPagamentoMod1 - PM_IPM1_8.2
         Given the Execute nodoInviaRPT request scenario executed successfully
