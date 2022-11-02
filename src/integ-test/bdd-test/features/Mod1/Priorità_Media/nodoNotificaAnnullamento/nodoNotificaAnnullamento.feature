@@ -1,4 +1,4 @@
-Feature: process tests for chiediListaPSP
+Feature: process tests for nodoNotificaAnnullamento
 
     Background:
         Given systems up
@@ -115,92 +115,37 @@ Feature: process tests for chiediListaPSP
         And retrieve session token from $nodoInviaRPTResponse.url
         
 
-    Scenario: execution nodoChiediListaPSP - PM_CLPSP1
+    Scenario: execution nodoNotificaAnnullamento - PM_NA1
         Given the Execute nodoInviaRPT request scenario executed successfully
-        When WISP sends rest GET listaPSP?importoTotale=100&percorsoPagamento=CARTE to nodo-dei-pagamenti
+        When WISP sends rest GET notificaAnnullamento? to nodo-dei-pagamenti
         Then verify the HTTP status code of listaPSP response is 400
 
-   Scenario: execution nodoChiediListaPSP - PM_CLPSP2
+    Scenario: execution nodoChiediListaPSP - PM_NA2
         Given the Execute nodoInviaRPT request scenario executed successfully
-        When WISP sends rest GET listaPSP?idPagamento=&importoTotale=100&percorsoPagamento=CARTE to nodo-dei-pagamenti
+        When WISP sends rest GET notificaAnnullamento?idPagamento= to nodo-dei-pagamenti
         Then verify the HTTP status code of listaPSP response is 400
 
-    Scenario: execution nodoChiediListaPSP - PM_CLPSP3
+    Scenario: execution nodoChiediListaPSP - PM_NA3
         Given the Execute nodoInviaRPT request scenario executed successfully
-        When WISP sends rest GET listaPSP?idPagamento=pippo&importoTotale=100&percorsoPagamento=CARTE to nodo-dei-pagamenti
+        When WISP sends rest GET notificaAnnullamento?idPagamento=ciao to nodo-dei-pagamenti
         Then verify the HTTP status code of listaPSP response is 400
     
-    Scenario: execution nodoChiediListaPSP - PM_CLPSP4
+    Scenario: execution nodoChiediListaPSP - PM_NA4
         Given the Execute nodoInviaRPT request scenario executed successfully
-        When WISP sends rest GET listaPSP?importoTotale=100&idPagamento=$sessionToken&percorsoPagamento=CARTE to nodo-dei-pagamenti
-        Then verify the HTTP status code of listaPSP response is 200
-    
-    Scenario: execution nodoChiediListaPSP - PM_CLPSP5
-        Given the Execute nodoInviaRPT request scenario executed successfully
-        When WISP sends rest GET listaPSP?idPagamento=$sessionToken&percorsoPagamento=CARTE to nodo-dei-pagamenti
+        When WISP sends rest GET notificaAnnullamento?importoTotale=100&idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of listaPSP response is 200
 
-    Scenario: execution nodoChiediListaPSP - PM_CLPSP6
+    Scenario: execution nodoChiediListaPSP - PM_NA5
         Given the Execute nodoInviaRPT request scenario executed successfully
-        When WISP sends rest GET listaPSP?idPagamento=$sessionToken&importoTotale=&percorsoPagamento=CARTE to nodo-dei-pagamenti
-        Then verify the HTTP status code of listaPSP response is 200
-
-    Scenario: execution nodoChiediListaPSP - PM_CLPSP7
-        Given the Execute nodoInviaRPT request scenario executed successfully
-        When WISP sends rest GET listaPSP?idPagamento=$sessionToken&importoTotale=10aa&percorsoPagamento=CARTE to nodo-dei-pagamenti
-        Then verify the HTTP status code of listaPSP response is 200
-
-    Scenario: execution nodoChiediListaPSP - PM_CLPSP8
-        Given the Execute nodoInviaRPT request scenario executed successfully
-        When WISP sends rest GET listaPSP?idPagamento=$sessionToken&importoTotale=10.00&percorsoPagamento=CARTE to nodo-dei-pagamenti
-        Then verify the HTTP status code of listaPSP response is 200
-
-    Scenario: execution nodoChiediListaPSP - PM_CLPSP9
-        Given the Execute nodoInviaRPT request scenario executed successfully
-        When WISP sends rest GET listaPSP?idPagamento=$sessionToken&importoTotale=1234567890123&percorsoPagamento=CARTE to nodo-dei-pagamenti
-        Then verify the HTTP status code of listaPSP response is 200
-
-    Scenario: execution nodoChiediListaPSP - PM_CLPSP10
-        Given the Execute nodoInviaRPT request scenario executed successfully
-        When WISP sends rest GET listaPSP?idPagamento=$sessionToken&importoTotale=10 to nodo-dei-pagamenti
+        When WISP sends rest GET notificaAnnullamento?idPagmento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of listaPSP response is 400
 
-    Scenario: execution nodoChiediListaPSP - PM_CLPSP11
+    Scenario: execution nodoChiediListaPSP - PM_NA6
         Given the Execute nodoInviaRPT request scenario executed successfully
-        When WISP sends rest GET listaPSP?idPagamento=$sessionToken&importoTotale=10&percorsoPagamento= to nodo-dei-pagamenti
-        Then verify the HTTP status code of listaPSP response is 422
-
-    Scenario: execution nodoChiediListaPSP - PM_CLPSP11.1
-        Given the Execute nodoInviaRPT request scenario executed successfully
-        When WISP sends rest GET listaPSP?idPagamento=$sessionToken&importoTotale=10&percorsoPagamento=CC to nodo-dei-pagamenti
-        Then verify the HTTP status code of listaPSP response is 200
-
-    Scenario: execution nodoChiediListaPSP - PM_CLPSP11.2
-        Given the Execute nodoInviaRPT request scenario executed successfully
-        When WISP sends rest GET listaPSP?idPagamento=$sessionToken&importoTotale=10&percorsoPagamento=CARTE to nodo-dei-pagamenti
-        Then verify the HTTP status code of listaPSP response is 200
-
-    Scenario: execution nodoChiediListaPSP - PM_CLPSP11.3
-        Given the Execute nodoInviaRPT request scenario executed successfully
-        When WISP sends rest GET listaPSP?idPagamento=$sessionToken&importoTotale=10&percorsoPagamento=ALTRO to nodo-dei-pagamenti
-        Then verify the HTTP status code of listaPSP response is 200
-
-    Scenario: execution nodoChiediListaPSP - PM_CLPSP12
-        Given the Execute nodoInviaRPT request scenario executed successfully
-        When WISP sends rest GET listaPSP?idPagamento=$sessionToken&importoTotale=10&percorsoPagamento=CIAO to nodo-dei-pagamenti
-        Then verify the HTTP status code of listaPSP response is 422
-
-    Scenario: execution nodoChiediListaPSP - PM_CLPSP13
-        Given the Execute nodoInviaRPT request scenario executed successfully
-        When WISP sends rest GET listaPSP?idPagamento=$sessionToken&importoTotale=10&percorsoPagamento=carte to nodo-dei-pagamenti
-        Then verify the HTTP status code of listaPSP response is 422
-
-    Scenario: execution nodoChiediListaPSP - PM_CLPSP14
-        Given the Execute nodoInviaRPT request scenario executed successfully
-        When WISP sends rest GET listaPSP?idPagamento=$sessionToken?importoTotale=10&percorsoPagamento=carte to nodo-dei-pagamenti
+        When WISP sends rest GET notificaAnnullamento;idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of listaPSP response is 400
 
-    Scenario: execution nodoChiediListaPSP - PM_CLPSP15
+    Scenario: execution nodoChiediListaPSP - PM_NA7
         Given the Execute nodoInviaRPT request scenario executed successfully
-        When WISP sends rest GET listaPSP?idPagamento=$sessionToken&importoTotale=0&percorsoPagamento=CARTE to nodo-dei-pagamenti
+        When WISP sends rest GET notificaAnnullamento;importoTotale=100?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of listaPSP response is 200
