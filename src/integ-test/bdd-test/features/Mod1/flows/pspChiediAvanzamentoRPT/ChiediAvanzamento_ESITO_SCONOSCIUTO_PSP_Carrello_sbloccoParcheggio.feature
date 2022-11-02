@@ -300,6 +300,7 @@ Feature: process tests for ChiediAvanzamento_ESITO_SCONOSCIUTO_PSP_Carrello_sblo
 @firstRun
     Scenario: Execute third check DB-RPT 
         Given the Execution retry Esito Carta scenario executed successfully
+        And replace pa content with 44444444444 content
         Then checks the value RPT_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query stati_RPT_noOrder on db nodo_online under macro Mod1
         And checks the value RPT_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query stati_RPT2_noOrder on db nodo_online under macro Mod1
         And checks the value CART_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query motivo_annullamento on db nodo_online under macro Mod1
