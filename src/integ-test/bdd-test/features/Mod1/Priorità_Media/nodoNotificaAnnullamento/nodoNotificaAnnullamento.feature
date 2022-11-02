@@ -1,21 +1,16 @@
-Feature: NCAP
-
-    #TODO: FARE ULTERIORI CHECK SUL MESSAGGIO DI RISPOSTA DELLA nodoChiediAvanzamentoPagamento
+Feature: process tests for nodoNotificaAnnullamento
 
     Background:
         Given systems up
 
     Scenario: RPT generation
-        Given nodo-dei-pagamenti has config parameter useCountChiediAvanzamento set to true
-        And nodo-dei-pagamenti has config parameter maxChiediAvanzamento set to 3
-        And generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
-        And RPT generation
+        Given RPT generation
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
-            <pay_i:versioneOggetto>1.1</pay_i:versioneOggetto>
+            <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-                <pay_i:identificativoDominio>#creditor_institution_code_old#</pay_i:identificativoDominio>
-                <pay_i:identificativoStazioneRichiedente>#id_station_old#</pay_i:identificativoStazioneRichiedente>
+                <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
+                <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
             <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
@@ -65,23 +60,23 @@ Feature: NCAP
             </pay_i:enteBeneficiario>
             <pay_i:datiVersamento>
                 <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
-                <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
+                <pay_i:importoTotaleDaVersare>6.20</pay_i:importoTotaleDaVersare>
                 <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
-                <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
+                <pay_i:identificativoUnivocoVersamento>#IUV#</pay_i:identificativoUnivocoVersamento>
                 <pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
                 <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
                 <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
                 <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
                 <pay_i:datiSingoloVersamento>
-                <pay_i:importoSingoloVersamento>10.00</pay_i:importoSingoloVersamento>
-                <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
-                <pay_i:ibanAccredito>IT45R0760103200000000001016</pay_i:ibanAccredito> 
-                <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
-                <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio> 
-                <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
-                <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
-                <pay_i:causaleVersamento>pagamento fotocopie pratica RPT</pay_i:causaleVersamento>
-                <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
+                    <pay_i:importoSingoloVersamento>6.20</pay_i:importoSingoloVersamento>
+                    <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
+                    <pay_i:ibanAccredito>IT45R0760103200000000001016</pay_i:ibanAccredito>
+                    <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
+                    <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio>
+                    <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
+                    <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
+                    <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
+                    <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
                 </pay_i:datiSingoloVersamento>
             </pay_i:datiVersamento>
             </pay_i:RPT>
@@ -89,33 +84,17 @@ Feature: NCAP
 
     Scenario: Execute nodoInviaRPT request
         Given the RPT generation scenario executed successfully
-        And initial XML pspInviaRPT
-        """
-        <soapenv:Envelope
-            xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-            xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header/>
-            <soapenv:Body>
-                <ws:pspInviaRPTResponse>
-                    <pspInviaRPTResponse>
-                        <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-                        <identificativoCarrello>$1iuv</identificativoCarrello>
-                        <parametriPagamentoImmediato>idBruciatura=$1iuv</parametriPagamentoImmediato>
-                    </pspInviaRPTResponse>
-                </ws:pspInviaRPTResponse>
-            </soapenv:Body>
-        </soapenv:Envelope>
-        """
-        And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
         And initial XML nodoInviaRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
             <ppt:intestazionePPT>
-            <identificativoIntermediarioPA>#creditor_institution_code_old#</identificativoIntermediarioPA>
-            <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
-            <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
-            <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
+
+            <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+
+            <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
             <codiceContestoPagamento>CCD01</codiceContestoPagamento>
             </ppt:intestazionePPT>
             </soapenv:Header>
@@ -134,22 +113,39 @@ Feature: NCAP
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
+        
 
-        # check STATI_RPT table
-        And replace iuv content with $1iuv content
-        And replace pa content with #creditor_institution_code_old# content
-        And replace noticeNumber content with $1noticeNumber content
-        And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
-        And checks the value RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
-        # check POSITION_PAYMENT
-        And verify 0 record for the table POSITION_PAYMENT_STATUS retrived by the query position_payment on db nodo_online under macro Mod1
-        And verify 0 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query position_payment on db nodo_online under macro Mod1
-        And verify 0 record for the table POSITION_STATUS retrived by the query position_payment on db nodo_online under macro Mod1
-        And verify 0 record for the table POSITION_STATUS_SNAPSHOT retrived by the query position_payment on db nodo_online under macro Mod1
-@firstRun
-    Scenario: Execute nodoChiediAvanzamentoPagamento
+    Scenario: execution nodoNotificaAnnullamento - PM_NA1
         Given the Execute nodoInviaRPT request scenario executed successfully
-        When WISP sends REST GET avanzamentoPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-        Then verify the HTTP status code of avanzamentoPagamento response is 200
-        And check esito is PARKED of avanzamentoPagamento response
-        And restore initial configurations
+        When WISP sends rest GET notificaAnnullamento? to nodo-dei-pagamenti
+        Then verify the HTTP status code of notificaAnnullamento response is 400
+
+    Scenario: execution nodoChiediListaPSP - PM_NA2
+        Given the Execute nodoInviaRPT request scenario executed successfully
+        When WISP sends rest GET notificaAnnullamento?idPagamento= to nodo-dei-pagamenti
+        Then verify the HTTP status code of notificaAnnullamento response is 400
+
+    Scenario: execution nodoChiediListaPSP - PM_NA3
+        Given the Execute nodoInviaRPT request scenario executed successfully
+        When WISP sends rest GET notificaAnnullamento?idPagamento=ciao to nodo-dei-pagamenti
+        Then verify the HTTP status code of notificaAnnullamento response is 400
+    
+    Scenario: execution nodoChiediListaPSP - PM_NA4
+        Given the Execute nodoInviaRPT request scenario executed successfully
+        When WISP sends rest GET notificaAnnullamento?importoTotale=100&idPagamento=$sessionToken to nodo-dei-pagamenti
+        Then verify the HTTP status code of notificaAnnullamento response is 200
+
+    Scenario: execution nodoChiediListaPSP - PM_NA5
+        Given the Execute nodoInviaRPT request scenario executed successfully
+        When WISP sends rest GET notificaAnnullamento?idPagmento=$sessionToken to nodo-dei-pagamenti
+        Then verify the HTTP status code of notificaAnnullamento response is 400
+
+    Scenario: execution nodoChiediListaPSP - PM_NA6
+        Given the Execute nodoInviaRPT request scenario executed successfully
+        When WISP sends rest GET notificaAnnullamento;idPagamento=$sessionToken to nodo-dei-pagamenti
+        Then verify the HTTP status code of notificaAnnullamento response is 400
+
+    Scenario: execution nodoChiediListaPSP - PM_NA7
+        Given the Execute nodoInviaRPT request scenario executed successfully
+        When WISP sends rest GET notificaAnnullamento;importoTotale=100?idPagamento=$sessionToken to nodo-dei-pagamenti
+        Then verify the HTTP status code of notificaAnnullamento response is 200

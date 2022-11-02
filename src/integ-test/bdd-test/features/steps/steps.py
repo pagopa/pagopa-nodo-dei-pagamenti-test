@@ -1815,18 +1815,24 @@ def step_impl(context, condition, param):
         nodo_online_conn, token_validity_query)[0]
     db.closeConnection(nodo_online_conn)
 
+    print(token_valid_to)
+    print(token_valid_from)
+
     if not param.isdigit():
         param = getattr(context, 'configurations').get(param)
 
+    print(param)
+    print(datetime.timedelta(milliseconds=int(param)))
+
     if condition == 'equal to':
-        assert token_valid_to == token_valid_from + datetime.timedelta(milliseconds=int(
-            param)), f"{token_valid_to} != {token_valid_from + datetime.timedelta(milliseconds=int(param))}"
+        assert token_valid_to == token_valid_from + datetime.timedelta(milliseconds=int(param)), f"{token_valid_to} != {token_valid_from + datetime.timedelta(milliseconds=int(param))}"
+    
     elif condition == 'greater than':
-        assert token_valid_to > token_valid_from + datetime.timedelta(milliseconds=int(
-            param)), f"{token_valid_to} <= {token_valid_from + datetime.timedelta(milliseconds=int(param))}"
+        assert token_valid_to > token_valid_from + datetime.timedelta(milliseconds=int(param)), f"{token_valid_to} <= {token_valid_from + datetime.timedelta(milliseconds=int(param))}"
+    
     elif condition == 'smaller than':
-        assert token_valid_to < token_valid_from + datetime.timedelta(milliseconds=int(
-            param)), f"{token_valid_to} >= {token_valid_from + datetime.timedelta(milliseconds=int(param))}"
+        assert token_valid_to < token_valid_from + datetime.timedelta(milliseconds=int(param)), f"{token_valid_to} >= {token_valid_from + datetime.timedelta(milliseconds=int(param))}"
+    
     else:
         assert False
 

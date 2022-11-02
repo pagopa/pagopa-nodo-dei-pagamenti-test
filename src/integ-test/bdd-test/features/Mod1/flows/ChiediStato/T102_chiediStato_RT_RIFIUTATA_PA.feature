@@ -9,8 +9,8 @@ Feature: process tests for T102_chiediStato_RT_RIFIUTATA_PA
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-                <pay_i:identificativoDominio>66666666666</pay_i:identificativoDominio>
-                <pay_i:identificativoStazioneRichiedente>66666666666_01</pay_i:identificativoStazioneRichiedente>
+                <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
+                <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
             <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
@@ -86,8 +86,8 @@ Feature: process tests for T102_chiediStato_RT_RIFIUTATA_PA
             <pay_i:RT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>6.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-                <pay_i:identificativoDominio>66666666666</pay_i:identificativoDominio>
-                <pay_i:identificativoStazioneRichiedente>66666666666_01</pay_i:identificativoStazioneRichiedente>
+                <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
+                <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRicevuta>IdentificativoMessaggioRicevuta</pay_i:identificativoMessaggioRicevuta>
             <pay_i:dataOraMessaggioRicevuta>#timedate#</pay_i:dataOraMessaggioRicevuta>
@@ -217,7 +217,7 @@ Feature: process tests for T102_chiediStato_RT_RIFIUTATA_PA
                     <fault>
                     <faultCode>PAA_RT_DUPLICATA</faultCode>
                     <faultString>tegba</faultString>
-                    <id>66666666666</id>
+                    <id>#creditor_institution_code#</id>
                     </fault>
                     <esito>KO</esito>
                 </paaInviaRTRisposta>
@@ -236,7 +236,7 @@ Feature: process tests for T102_chiediStato_RT_RIFIUTATA_PA
             <identificativoCanale>#canale#</identificativoCanale>
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp#</identificativoPSP>
-            <identificativoDominio>66666666666</identificativoDominio>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
             <tipoFirma></tipoFirma>
@@ -258,10 +258,10 @@ Feature: process tests for T102_chiediStato_RT_RIFIUTATA_PA
         <soapenv:Header/>
         <soapenv:Body>
             <ws:nodoChiediStatoRPT>
-                <identificativoIntermediarioPA>66666666666</identificativoIntermediarioPA>
-                <identificativoStazioneIntermediarioPA>66666666666_01</identificativoStazioneIntermediarioPA>
+                <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
+                <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
                 <password>pwdpwdpwd</password>
-                <identificativoDominio>66666666666</identificativoDominio>
+                <identificativoDominio>#creditor_institution_code#</identificativoDominio>
                 <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
                 <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
             </ws:nodoChiediStatoRPT>
@@ -289,7 +289,7 @@ Feature: process tests for T102_chiediStato_RT_RIFIUTATA_PA
             <identificativoCanale>#canale#</identificativoCanale>
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp#</identificativoPSP>
-            <identificativoDominio>66666666666</identificativoDominio>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
             <tipoFirma></tipoFirma>
@@ -311,10 +311,10 @@ Feature: process tests for T102_chiediStato_RT_RIFIUTATA_PA
             <soapenv:Header/>
             <soapenv:Body>
                 <ws:nodoChiediStatoRPT>
-                    <identificativoIntermediarioPA>66666666666</identificativoIntermediarioPA>
-                    <identificativoStazioneIntermediarioPA>66666666666_01</identificativoStazioneIntermediarioPA>
+                    <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
+                    <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
                     <password>pwdpwdpwd</password>
-                    <identificativoDominio>66666666666</identificativoDominio>
+                    <identificativoDominio>#creditor_institution_code#</identificativoDominio>
                     <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
                     <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
                 </ws:nodoChiediStatoRPT>

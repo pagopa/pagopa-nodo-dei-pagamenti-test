@@ -1,4 +1,4 @@
-Feature: process tests for paaInviaRT[IRTRES1]
+Feature: process tests for paaInviaRT[IRTRES4]
     Background:
         Given systems up
         And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
@@ -218,11 +218,16 @@ Feature: process tests for paaInviaRT[IRTRES1]
         Given the Execute nodoInviaRPT (Phase 1) scenario executed successfully 
         And initial XML paaInviaRT
             """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/ciao/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header/>
             <soapenv:Body>
                 <ws:paaInviaRTRisposta>
                     <paaInviaRTRisposta>
+                        <fault>
+                        <faultCode>PPT_ERRORE_FORMATO_BUSTA_FERMATA</faultCode>
+                        <faultString>La firma è sbagliata</faultString>
+                        <id>NodoDeiPagamentiSPC</id>
+                        </fault>
                         <esito>OK</esito>
                     </paaInviaRTRisposta>
                 </ws:paaInviaRTRisposta>
@@ -237,7 +242,7 @@ Feature: process tests for paaInviaRT[IRTRES1]
             <soapenv:Body>
             <ws:nodoInviaRT>
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canaleRtPush#</identificativoCanale>
+            <identificativoCanale>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanale>
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
@@ -251,9 +256,9 @@ Feature: process tests for paaInviaRT[IRTRES1]
             </soapenv:Envelope>
             """
             
-            When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
+            When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
             Then check esito is KO of nodoInviaRT response
-            And check faultCode is PPT_SYSTEM_ERROR of nodoInviaRT response
+            And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of nodoInviaRT response
 
 
     
