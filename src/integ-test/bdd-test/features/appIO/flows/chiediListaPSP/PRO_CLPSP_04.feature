@@ -130,7 +130,7 @@ Scenario: Execute activateIOPayment (Phase 2)
                            <transferCategory>paGetPaymentTest</transferCategory>
                         </transfer>
                         <transfer>
-                           <idTransfer>1</idTransfer>
+                           <idTransfer>2</idTransfer>
                            <transferAmount>3.00</transferAmount>
                            <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
                            <IBAN>IT45R0760103200000000001016</IBAN>
@@ -138,7 +138,7 @@ Scenario: Execute activateIOPayment (Phase 2)
                            <transferCategory>paGetPaymentTest</transferCategory>
                         </transfer>
                         <transfer>
-                           <idTransfer>1</idTransfer>
+                           <idTransfer>3</idTransfer>
                            <transferAmount>4.00</transferAmount>
                            <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
                            <IBAN>IT45R0760103200000000001016</IBAN>
