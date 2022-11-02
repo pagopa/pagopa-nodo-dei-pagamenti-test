@@ -143,10 +143,10 @@
     "Mod1":{
         "esito": "SELECT v.columns FROM table_name r JOIN RT_VERSAMENTI v ON v.FK_RT=r.ID WHERE r.IUV='$iuv' AND r.CCP= '$nodoInviaRPT.codiceContestoPagamento' AND r.IDENT_DOMINIO='$nodoInviaRPT.identificativoDominio'",
         "esito_2iuv": "SELECT v.columns FROM table_name r JOIN RT_VERSAMENTI v ON v.FK_RT=r.ID WHERE r.IUV=('$IUV','$IUV2') AND r.CCP= '$nodoInviaRPT.codiceContestoPagamento' AND r.IDENT_DOMINIO='$nodoInviaRPT.identificativoDominio'",
-        "esito_3iuv": "SELECT v.columns FROM table_name r JOIN RT_VERSAMENTI v ON v.FK_RT=r.ID WHERE r.IUV=('$IUV','$IUV2') AND r.CCP= '$ccp' AND r.IDENT_DOMINIO='$pa",
+        "esito_3iuv": "SELECT v.columns FROM table_name r JOIN RT_VERSAMENTI v ON v.FK_RT=r.ID WHERE r.IUV=('$IUV','$IUV2') AND r.CCP= '$ccp' AND r.IDENT_DOMINIO='$pa'",
         "motivo_annullamento": "SELECT columns FROM table_name WHERE ID_SESSIONE = '$sessionToken'",
         "motivo_annullamento_originale": "SELECT columns FROM table_name WHERE ID_SESSIONE_ORIGINALE = '$sessionToken'",
-        "stati_RPT": "SELECT columns FROM table_name WHERE IUV='$iuv' AND CCP= '$1ccp' AND ID_DOMINIO='44444444444' ORDER BY INSERTED_TIMESTAMP",
+        "stati_RPT": "SELECT columns FROM table_name WHERE IUV='$iuv' AND CCP= '$1ccp' AND ID_DOMINIO='$pa' ORDER BY INSERTED_TIMESTAMP",
         "stati_RPT2": "SELECT columns FROM table_name WHERE IUV='$iuv2' AND CCP= '$2CCP' AND ID_DOMINIO='44444444445' ORDER BY INSERTED_TIMESTAMP",
         "stati_RPT_new": "SELECT columns FROM table_name WHERE IUV='$iuv2' AND CCP= '$2CCP' AND ID_DOMINIO='$pa' ORDER BY INSERTED_TIMESTAMP",
         "stati_RPT_noOrder": "SELECT columns FROM table_name WHERE IUV='$iuv' AND CCP= '$1ccp' AND ID_DOMINIO='$pa'",
