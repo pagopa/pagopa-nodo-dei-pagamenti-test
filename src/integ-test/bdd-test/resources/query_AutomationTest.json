@@ -159,6 +159,7 @@
         "update_obj_id": "UPDATE table_name SET param = 'value' WHERE OBJ_ID IN ('13', '1201')",
         "update_obj_id_1": "UPDATE table_name SET param = 'value' WHERE OBJ_ID IN ('11993', '1201')",
         "update_obj_id_2": "UPDATE table_name SET param = 'value' WHERE OBJ_ID = '1201'",
-        "update_obj_id_3": "UPDATE table_name SET param = 'value' WHERE OBJ_ID = '1202'"
+        "update_obj_id_3": "UPDATE table_name SET param = 'value' WHERE OBJ_ID = '1202'",
+        "update_id_intermediario_psp": "UPDATE table_name SET param = 'value' WHERE ID_INTERMEDIARIO_PSP = '#psp#'"
     }
 }

@@ -146,6 +146,26 @@ Feature: response tests for paDemandPaymentNotice
             </soapenv:Envelope>
             """
 
+    @skip
+    Scenario: paDemandPaymentNotice KO
+        Given initial XML paDemandPaymentNotice
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <paf:paDemandPaymentNoticeResponse>
+            <outcome>KO</outcome>
+            <fault>
+            <faultCode>PAA_SEMANTICA</faultCode>
+            <faultString>chiamata da rifiutare</faultString>
+            <id>#creditor_institution_code#</id>
+            <description>chiamata da rifiutare</description>
+            </fault>
+            </paf:paDemandPaymentNoticeResponse>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+
     Scenario Outline: Check paDemandPaymentNotice response with missing optional fields
         Given the demandPaymentNotice scenario executed successfully
         And the paDemandPaymentNotice scenario executed successfully
@@ -269,3 +289,29 @@ Feature: response tests for paDemandPaymentNotice
         When PSP sends SOAP demandPaymentNotice to nodo-dei-pagamenti
         Then check outcome is KO of demandPaymentNotice response
         And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of demandPaymentNotice response
+
+    # TRES_PDPN_61
+
+    Scenario: TRES_PDPN_61 (part 1)
+        Given updates through the query update_id_intermediario_psp of the table INTERMEDIARI_PSP the parameter FAULT_BEAN_ESTESO with Y under macro Mod4 on db nodo_cfg
+        And refresh job PSP triggered after 10 seconds
+        And the demandPaymentNotice scenario executed successfully
+        And the paDemandPaymentNotice KO scenario executed successfully
+        And EC replies to nodo-dei-pagamenti with the paDemandPaymentNotice
+        When PSP sends SOAP demandPaymentNotice to nodo-dei-pagamenti
+        Then check outcome is KO of demandPaymentNotice response
+        And check faultCode is PPT_ERRORE_EMESSO_DA_PAA of demandPaymentNotice response
+        And check originalFaultCode field exists in demandPaymentNotice response
+        And check originalFaultString field exists in demandPaymentNotice response
+        And check originalDescription field exists in demandPaymentNotice response
+
+    Scenario: TRES_PDPN_61 (part 2)
+        Given the TRES_PDPN_61 (part 1) scenario executed successfully
+        And updates through the query update_id_intermediario_psp of the table INTERMEDIARI_PSP the parameter FAULT_BEAN_ESTESO with N under macro Mod4 on db nodo_cfg
+        And refresh job PSP triggered after 10 seconds
+        When PSP sends SOAP demandPaymentNotice to nodo-dei-pagamenti
+        Then check outcome is KO of demandPaymentNotice response
+        And check faultCode is PPT_ERRORE_EMESSO_DA_PAA of demandPaymentNotice response
+        And check originalFaultCode field exists in demandPaymentNotice response
+        And check originalFaultString field exists in demandPaymentNotice response
+        And check originalDescription field exists in demandPaymentNotice response
