@@ -173,12 +173,13 @@ Feature: task_509
         Then check token_valid_to is greater than token_valid_from plus default_durata_estensione_token_IO
         And restore initial configurations
     
-    @runnable
+    @ciao
     # [TASK_509_08]
     Scenario: Check debtor position (Phase 3)
         Given nodo-dei-pagamenti has config parameter scheduler.annullamentoRptMaiRichiesteDaPmPollerMinutesToBack set to 1
+        And nodo-dei-pagamenti has config parameter scheduler.jobName_annullamentoRptMaiRichiesteDaPm.enabled set to true
         And the Execute activateIOPayment (Phase 2) scenario executed successfully
-        When job annullamentoRptMaiRichiesteDaPm triggered after 65 seconds
+        When job annullamentoRptMaiRichiestaDaPm triggered after 65 seconds
         And wait 10 seconds for expiration
         Then checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
         # Assertion Failed: check expected element: INSERTED, obtained: ['PAYING']
