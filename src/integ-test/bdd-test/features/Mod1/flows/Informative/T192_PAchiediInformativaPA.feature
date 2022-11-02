@@ -2,7 +2,7 @@ Feature: process tests for nodoPAChiediInformativaPA
 
     Background:
         Given systems up
-@firstRun
+@runnable
     Scenario: Send nodoPAChiediInformativaPA
         Given initial XML nodoPAChiediInformativaPA
             """
