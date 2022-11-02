@@ -167,7 +167,7 @@ Feature: generazioneRicevute spo KO - nessuna receipt
 
     # DB check
     Scenario: DB check
-        Given the Execute sendPaymentOutcome request scenario executed successfully
+        Given the mod3CancelV2 scenario executed successfully
         And wait 15 seconds for expiration
         # POSITION_RECEIPT
         Then verify 0 record for the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
