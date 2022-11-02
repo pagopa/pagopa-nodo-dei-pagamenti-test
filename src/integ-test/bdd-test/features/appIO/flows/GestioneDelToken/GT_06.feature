@@ -47,7 +47,7 @@ Feature: GT_06
                             <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
                         </qrCode>
                         <!--Optional:-->
-                        <expirationTime>12345</expirationTime>
+                        <expirationTime>10000</expirationTime>
                         <amount>10.00</amount>
                         <!--Optional:-->
                         <dueDate>2021-12-12</dueDate>
