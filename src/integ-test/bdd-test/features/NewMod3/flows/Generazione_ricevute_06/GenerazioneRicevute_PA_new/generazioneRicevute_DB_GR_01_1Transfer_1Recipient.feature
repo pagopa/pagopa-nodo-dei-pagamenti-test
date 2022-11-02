@@ -235,7 +235,7 @@ Feature: process tests for generazioneRicevute
         # RE
         And verify 2 record for the table RE retrived by the query select_paSendRT on db re under macro sendPaymentResultV2
         And checks the value REQ,RESP of the record at column SOTTO_TIPO_EVENTO of the table RE retrived by the query select_paSendRT on db re under macro sendPaymentResultV2
-        And checks the value 66666666666_01,66666666666_01 of the record at column IDENTIFICATIVO_STAZIONE_INTERMEDIARIO of the table RE retrived by the query select_paSendRT on db re under macro sendPaymentResultV2
+        And checks the value #id_station#,#id_station# of the record at column IDENTIFICATIVO_STAZIONE_INTERMEDIARIO of the table RE retrived by the query select_paSendRT on db re under macro sendPaymentResultV2
 
 
 
