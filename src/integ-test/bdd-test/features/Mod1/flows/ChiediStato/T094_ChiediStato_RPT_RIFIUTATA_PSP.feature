@@ -3,7 +3,7 @@ Feature: process tests for ChiediStato_RPT_RIFIUTATA_PSP
     Background:
         Given systems up
 
-    @runnable
+
     Scenario: RPT generation
         Given RPT generation
             """
@@ -82,7 +82,6 @@ Feature: process tests for ChiediStato_RPT_RIFIUTATA_PSP
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-    @runnable
 
     Scenario: Execute nodoInviaRPT request
         Given the RPT generation scenario executed successfully
@@ -91,18 +90,25 @@ Feature: process tests for ChiediStato_RPT_RIFIUTATA_PSP
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
             <ppt:intestazionePPT>
-
-            <identificativoPSP>#psp#</identificativoPSP>
-            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>60000000001_07</identificativoCanale>
-
-            <tipoFirma></tipoFirma>
-            <rpt>$rptAttachment</rpt>
+                <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
+                <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
+                <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+                <identificativoUnivocoVersamento>RPTdaRifPsp</identificativoUnivocoVersamento>
+                <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
+            </ppt:intestazionePPT>
+            </soapenv:Header>
+            <soapenv:Body>
+            <ws:nodoInviaRPT>
+                <password>pwdpwdpwd</password>
+                <identificativoPSP>#psp#</identificativoPSP>
+                <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+                <identificativoCanale>#canale#</identificativoCanale>
+                <tipoFirma></tipoFirma>
+                <rpt>$rptAttachment</rpt>
             </ws:nodoInviaRPT>
             </soapenv:Body>
             </soapenv:Envelope>
             """
-
         And initial XML pspInviaRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -124,13 +130,12 @@ Feature: process tests for ChiediStato_RPT_RIFIUTATA_PSP
             </soapenv:Envelope>
             """
         And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
-
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is KO of nodoInviaRPT response
         And check faultCode is PPT_CANALE_ERRORE of nodoInviaRPT response
         #And check description contains CANALE_RPT_DA_RIFIUTARE of nodoInviaRPT response
         And check id is #psp# of nodoInviaRPT response
-    @runnable
+
     Scenario: Execute nodoChiediStatoRPT request
         Given the Execute nodoInviaRPT scenario executed successfully
         And initial XML nodoChiediStatoRPT
@@ -155,6 +160,7 @@ Feature: process tests for ChiediStato_RPT_RIFIUTATA_PSP
         And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
         And check url field not exists in nodoChiediStatoRPT response
+    
     @runnable
     Scenario: Execute second nodoInviaRPT request
         Given the Execute nodoChiediStatoRPT request scenario executed successfully
@@ -163,13 +169,21 @@ Feature: process tests for ChiediStato_RPT_RIFIUTATA_PSP
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
             <ppt:intestazionePPT>
-
-            <identificativoPSP>#psp#</identificativoPSP>
-            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>60000000001_07</identificativoCanale>
-
-            <tipoFirma></tipoFirma>
-            <rpt>$rptAttachment</rpt>
+                <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
+                <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
+                <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+                <identificativoUnivocoVersamento>RPTdaRifPsp</identificativoUnivocoVersamento>
+                <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
+            </ppt:intestazionePPT>
+            </soapenv:Header>
+            <soapenv:Body>
+            <ws:nodoInviaRPT>
+                <password>pwdpwdpwd</password>
+                <identificativoPSP>#psp#</identificativoPSP>
+                <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+                <identificativoCanale>#canale#</identificativoCanale>
+                <tipoFirma></tipoFirma>
+                <rpt>$rptAttachment</rpt>
             </ws:nodoInviaRPT>
             </soapenv:Body>
             </soapenv:Envelope>

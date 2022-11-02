@@ -251,7 +251,7 @@ Feature: process tests for paaInviaRT[IRTRES1]
             </soapenv:Envelope>
             """
             
-            When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
+            When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
             Then check esito is KO of nodoInviaRT response
             And check faultCode is PPT_SYSTEM_ERROR of nodoInviaRT response
 

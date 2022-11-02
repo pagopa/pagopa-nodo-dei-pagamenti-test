@@ -129,7 +129,7 @@ Feature: process tests for T097_ChiediStato_RPT_ACCETTATA_PSP - BUG_480
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
         And replace iuv content with $IUV content
-        And replace ccp content with CCD01 content
+        And replace 1ccp content with CCD01 content
         And replace pa content with #creditor_institution_code# content
         And retrieve session token from $nodoInviaRPTResponse.url
         And verify 4 record for the table STATI_RPT retrived by the query stati_RPT on db nodo_online under macro Mod1

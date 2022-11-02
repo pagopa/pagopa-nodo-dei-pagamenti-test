@@ -3,7 +3,6 @@ Feature: process tests for ChiediAvanzamento_RIFIUTATA_PSP_Carrello_sbloccoParch
     Background:
         Given systems up
 
-
     Scenario: RPT generation
         Given RPT generation
             """
@@ -88,8 +87,8 @@ Feature: process tests for ChiediAvanzamento_RIFIUTATA_PSP_Carrello_sbloccoParch
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-            <pay_i:identificativoDominio>44444444445</pay_i:identificativoDominio>
-            <pay_i:identificativoStazioneRichiedente>44444444444_01</pay_i:identificativoStazioneRichiedente>
+            <pay_i:identificativoDominio>#creditor_institution_code_secondary#</pay_i:identificativoDominio>
+            <pay_i:identificativoStazioneRichiedente>#id_station_old#</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
             <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
@@ -187,7 +186,7 @@ Feature: process tests for ChiediAvanzamento_RIFIUTATA_PSP_Carrello_sbloccoParch
             <rpt>$rptAttachment</rpt>
             </elementoListaRPT>
             <elementoListaRPT>
-            <identificativoDominio>44444444445</identificativoDominio>
+            <identificativoDominio>#creditor_institution_code_secondary#</identificativoDominio>
             <identificativoUnivocoVersamento>avanzaKO</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$2CCP</codiceContestoPagamento>
             <rpt>$rpt2Attachment</rpt>
@@ -214,7 +213,7 @@ Feature: process tests for ChiediAvanzamento_RIFIUTATA_PSP_Carrello_sbloccoParch
         And checks the value nodoInviaCarrelloRPT of the record at column INSERTED_BY of the table STATI_RPT retrived by the query stati_RPT_new on db nodo_online under macro Mod1
         And verify 3 record for the table STATI_RPT retrived by the query stati_RPT_new on db nodo_online under macro Mod1
         And replace 2CCP content with $3CCP content
-        And replace pa content with 44444444445 content
+        And replace pa content with #creditor_institution_code_secondary# content
         And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query stati_RPT_new on db nodo_online under macro Mod1
         And checks the value nodoInviaCarrelloRPT of the record at column INSERTED_BY of the table STATI_RPT retrived by the query stati_RPT_new on db nodo_online under macro Mod1
         And verify 3 record for the table STATI_RPT retrived by the query stati_RPT_new on db nodo_online under macro Mod1
@@ -266,25 +265,25 @@ Feature: process tests for ChiediAvanzamento_RIFIUTATA_PSP_Carrello_sbloccoParch
 
     Scenario: Execute job pspChiediAvanzamentoRPT
         Given the Execute second check DB-RPT scenario executed successfully
-        # And initial XML pspChiediAvanzamentoRPT
-        #     """
-        #     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-        #     <soapenv:Header/>
-        #     <soapenv:Body>
-        #     <ws:pspChiediAvanzamentoRPTResponse>
-        #     <pspChiediAvanzamentoRPTResponse>
-        #     <fault>
-        #     <faultCode>CANALE_RPT_RIFIUTATA</faultCode>
-        #     <faultString>RPT arrivata al PSP e rifiutata</faultString>
-        #     <id>#psp#</id>
-        #     <description>RPT rifiutata dal PSP</description>
-        #     </fault>
-        #     </pspChiediAvanzamentoRPTResponse>
-        #     </ws:pspChiediAvanzamentoRPTResponse>
-        #     </soapenv:Body>
-        #     </soapenv:Envelope>
-        #     """
-        # And PSP replies to nodo-dei-pagamenti with the pspChiediAvanzamentoRPT
+        And initial XML pspChiediAvanzamentoRPT
+             """
+             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+             <soapenv:Header/>
+             <soapenv:Body>
+             <ws:pspChiediAvanzamentoRPTResponse>
+             <pspChiediAvanzamentoRPTResponse>
+             <fault>
+             <faultCode>CANALE_RPT_RIFIUTATA</faultCode>
+             <faultString>RPT arrivata al PSP e rifiutata</faultString>
+             <id>#psp#</id>
+             <description>RPT rifiutata dal PSP</description>
+             </fault>
+             </pspChiediAvanzamentoRPTResponse>
+             </ws:pspChiediAvanzamentoRPTResponse>
+             </soapenv:Body>
+             </soapenv:Envelope>
+             """
+        And PSP replies to nodo-dei-pagamenti with the pspChiediAvanzamentoRPT
         When job pspChiediAvanzamentoRpt triggered after 5 seconds
         And wait 10 seconds for expiration
         Then checks the value CART_RIFIUTATO_PSP of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query motivo_annullamento on db nodo_online under macro Mod1
@@ -306,7 +305,6 @@ Feature: process tests for ChiediAvanzamento_RIFIUTATA_PSP_Carrello_sbloccoParch
             """
         When WISP sends REST POST inoltroEsito/carta to nodo-dei-pagamenti
             """
-
             {
             "idPagamento": "$sessionToken",
             "RRN":123456789,
@@ -324,12 +322,14 @@ Feature: process tests for ChiediAvanzamento_RIFIUTATA_PSP_Carrello_sbloccoParch
         And check esito is KO of inoltroEsito/carta response
         And check url field not exists in inoltroEsito/carta response
 
-@firstRun
+@runnable
     Scenario: Execute third check DB-RPT
         Given the Execution retry Esito Carta scenario executed successfully
         And replace pa content with #creditor_institution_code_old# content
         Then checks the value RPT_RIFIUTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query stati_RPT_noOrder on db nodo_online under macro Mod1
-        And checks the value RPT_RIFIUTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query stati_RPT2_noOrder on db nodo_online under macro Mod1
-        #And checks the value CART_RIFIUTATO_PSP of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query motivo_annullamento on db nodo_online under macro Mod1
-        #And verify 0 record for the table RETRY_RPT retrived by the query motivo_annullamento_originale on db nodo_online under macro Mod1
+        And replace pa content with #creditor_institution_code_secondary# content
+        And replace 1ccp content with $2CCP content
+        And checks the value RPT_RIFIUTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query stati_RPT_noOrder on db nodo_online under macro Mod1
+        And checks the value CART_RIFIUTATO_PSP of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query motivo_annullamento on db nodo_online under macro Mod1
+        And verify 0 record for the table RETRY_RPT retrived by the query motivo_annullamento_originale on db nodo_online under macro Mod1
 

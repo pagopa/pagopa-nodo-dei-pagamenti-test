@@ -1,4 +1,4 @@
-Feature: process tests for nodoInviaRT[IRTSIN12]
+Feature: process tests for paaInviaRT[IRTRES4]
     Background:
         Given systems up
         And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
@@ -88,7 +88,7 @@ Feature: process tests for nodoInviaRT[IRTSIN12]
             <pay_i:versioneOggetto>6.0</pay_i:versioneOggetto>
             <pay_i:dominio>
             <pay_i:identificativoDominio>#creditor_institution_code_old#</pay_i:identificativoDominio>
-            <pay_i:identificativoStazioneRichiedente>#id_station_old#</pay_i:identificativoStazioneRichiedente>
+            <pay_i:identificativoStazioneRichiedente>44444444444_01</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRicevuta>TR0001_20120302-10:37:52.0264-F098</pay_i:identificativoMessaggioRicevuta>
             <pay_i:dataOraMessaggioRicevuta>2012-03-02T10:37:52</pay_i:dataOraMessaggioRicevuta>
@@ -182,9 +182,9 @@ Feature: process tests for nodoInviaRT[IRTSIN12]
             <soapenv:Body>
             <ws:nodoInviaRPT>
             <password>pwdpwdpwd</password>
-            <identificativoPSP>#psp_AGID#</identificativoPSP>
-            <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
+            <identificativoPSP>#psp#</identificativoPSP>
+            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canaleRtPush#</identificativoCanale>
             <tipoFirma></tipoFirma>
             <rpt>$rpt1Attachment</rpt>
             </ws:nodoInviaRPT>
@@ -211,35 +211,39 @@ Feature: process tests for nodoInviaRT[IRTSIN12]
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
 
-    Scenario: Execute nodoInoltroEsitoMod1 (Phase 2)
-        Given the Execute nodoInviaRPT (Phase 1) scenario executed successfully
-        When WISP sends REST POST inoltroEsito/mod1 to nodo-dei-pagamenti
-            """
-            {
-                "idPagamento": "$sessionToken",
-                "identificativoPsp": "#psp#",
-                "tipoVersamento": "BP",
-                "identificativoIntermediario": "#psp#",
-                "identificativoCanale": "#canale#",
-                "tipoOperazione": "web"
-            }
-            """
-        Then verify the HTTP status code of inoltroEsito/mod1 response is 200
-        And check esito is OK of inoltroEsito/mod1 response
-
+    
 
     @runnable
-    Scenario: Execute nodoInviaRT (Phase 3)
-        Given the Execute nodoInoltroEsitoMod1 (Phase 2) scenario executed successfully
+    Scenario: Execute nodoInviaRT
+        Given the Execute nodoInviaRPT (Phase 1) scenario executed successfully 
+        And initial XML paaInviaRT
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+                <ws:paaInviaRTRisposta>
+                    <paaInviaRTRisposta>
+                        <fault>
+                        <faultCode>PPT_ERRORE_FORMATO_BUSTA_FERMATA</faultCode>
+                        <faultString>La firma è sbagliata</faultString>
+                        <id>NodoDeiPagamentiSPC</id>
+                        </fault>
+                        <esito>OK</esito>
+                    </paaInviaRTRisposta>
+                </ws:paaInviaRTRisposta>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And EC replies to nodo-dei-pagamenti with the paaInviaRT
         And initial XML nodoInviaRT
             """
-             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header/>
             <soapenv:Body>
             <ws:nodoInviaRT>
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canaleRtPush#</identificativoCanale>
-            <password>aaaaaaa</password>
+            <identificativoCanale>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanale>
+            <password>pwdpwdpwd</password>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
             <identificativoUnivocoVersamento>$1IUV</identificativoUnivocoVersamento>
@@ -251,9 +255,10 @@ Feature: process tests for nodoInviaRT[IRTSIN12]
             </soapenv:Body>
             </soapenv:Envelope>
             """
-            When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
+            
+            When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
             Then check esito is KO of nodoInviaRT response
-            And check faultCode is PPT_SINTASSI_EXTRAXSD of nodoInviaRT response
+            And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of nodoInviaRT response
 
 
     

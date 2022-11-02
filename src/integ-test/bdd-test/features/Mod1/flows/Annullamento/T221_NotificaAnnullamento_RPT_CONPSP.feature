@@ -82,8 +82,7 @@ Feature: process tests for NotificaAnnullamento_RPT_CONPSP
 
 
     Scenario: Execute nodoInviaRPT request
-        Given the RPT generation scenario executed successfully
-        And initial XML nodoInviaRPT
+        Given initial XML nodoInviaRPT
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
         <soapenv:Header>
@@ -124,7 +123,7 @@ Feature: process tests for NotificaAnnullamento_RPT_CONPSP
         When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken&motivoAnnullamento=CONPSP to nodo-dei-pagamenti
         Then verify the HTTP status code of notificaAnnullamento response is 200
 
-@firstRun
+@runnable
     Scenario: Execution test T221_NotificaAnnullamento_RPT_CONPSP
         Given the Execute nodoNotificaAnnullamento scenario executed successfully
         When job paInviaRt triggered after 5 seconds
