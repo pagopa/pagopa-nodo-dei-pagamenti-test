@@ -204,6 +204,7 @@ Feature: process tests for ChiediAvanzamento_ACCETTATA_PSP_Carrello_sbloccoParch
         Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
         And replace iuv content with avanzaOK content
         And replace iuv2 content with avanzaOK content
+        And replace pa content with 44444444444 content
         Then checks the value $sessionToken of the record at column ID_SESSIONE of the table STATI_RPT retrived by the query stati_RPT on db nodo_online under macro Mod1
         And verify 3 record for the table STATI_RPT retrived by the query stati_RPT on db nodo_online under macro Mod1
         And verify 3 record for the table STATI_RPT retrived by the query stati_RPT2 on db nodo_online under macro Mod1
@@ -300,7 +301,6 @@ Feature: process tests for ChiediAvanzamento_ACCETTATA_PSP_Carrello_sbloccoParch
 @firstRun
     Scenario: Execute third check DB-RPT 
         Given the Execution Esito CartaRetry scenario executed successfully
-        And replace pa content with 44444444444 content
         Then checks the value RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query stati_RPT_noOrder on db nodo_online under macro Mod1
         And checks the value RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query stati_RPT2_noOrder on db nodo_online under macro Mod1
         And checks the value CART_ACCETTATO_PSP of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query motivo_annullamento on db nodo_online under macro Mod1
