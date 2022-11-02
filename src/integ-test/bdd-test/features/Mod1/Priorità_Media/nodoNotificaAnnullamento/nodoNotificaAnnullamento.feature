@@ -118,34 +118,34 @@ Feature: process tests for nodoNotificaAnnullamento
     Scenario: execution nodoNotificaAnnullamento - PM_NA1
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest GET notificaAnnullamento? to nodo-dei-pagamenti
-        Then verify the HTTP status code of listaPSP response is 400
+        Then verify the HTTP status code of notificaAnnullamento response is 400
 
     Scenario: execution nodoChiediListaPSP - PM_NA2
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest GET notificaAnnullamento?idPagamento= to nodo-dei-pagamenti
-        Then verify the HTTP status code of listaPSP response is 400
+        Then verify the HTTP status code of notificaAnnullamento response is 400
 
     Scenario: execution nodoChiediListaPSP - PM_NA3
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest GET notificaAnnullamento?idPagamento=ciao to nodo-dei-pagamenti
-        Then verify the HTTP status code of listaPSP response is 400
+        Then verify the HTTP status code of notificaAnnullamento response is 400
     
     Scenario: execution nodoChiediListaPSP - PM_NA4
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest GET notificaAnnullamento?importoTotale=100&idPagamento=$sessionToken to nodo-dei-pagamenti
-        Then verify the HTTP status code of listaPSP response is 200
+        Then verify the HTTP status code of notificaAnnullamento response is 200
 
     Scenario: execution nodoChiediListaPSP - PM_NA5
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest GET notificaAnnullamento?idPagmento=$sessionToken to nodo-dei-pagamenti
-        Then verify the HTTP status code of listaPSP response is 400
+        Then verify the HTTP status code of notificaAnnullamento response is 400
 
     Scenario: execution nodoChiediListaPSP - PM_NA6
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest GET notificaAnnullamento;idPagamento=$sessionToken to nodo-dei-pagamenti
-        Then verify the HTTP status code of listaPSP response is 400
+        Then verify the HTTP status code of notificaAnnullamento response is 400
 
     Scenario: execution nodoChiediListaPSP - PM_NA7
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest GET notificaAnnullamento;importoTotale=100?idPagamento=$sessionToken to nodo-dei-pagamenti
-        Then verify the HTTP status code of listaPSP response is 200
+        Then verify the HTTP status code of notificaAnnullamento response is 200
