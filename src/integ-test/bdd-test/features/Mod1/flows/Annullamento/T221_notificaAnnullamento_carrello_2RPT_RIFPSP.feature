@@ -216,7 +216,7 @@ Feature: process tests for NotificaAnnullamento_RPT_CONPSP
         And replace IUV content with $iuv content
         And replace IUV2 content with $2iuv content
         And replace pa content with #creditor_institution_code# content
-        And replace cpp content with $nodoInviaCarrelloRPT.codiceContestoPagamento content
+        And replace ccp content with $nodoInviaCarrelloRPT.codiceContestoPagamento content
         Then checks the value Annullato per RPT rifiutata of the record at column ESITO of the table RT retrived by the query esito_3iuv on db nodo_online under macro Mod1
         Then checks the value RIFPSP of the record at column MOTIVO_ANNULLAMENTO of the table PM_SESSION_DATA retrived by the query motivo_annullamento on db nodo_online under macro Mod1
         And checks the value CARRELLO of the record at column TIPO of the table PM_SESSION_DATA retrived by the query motivo_annullamento on db nodo_online under macro Mod1
