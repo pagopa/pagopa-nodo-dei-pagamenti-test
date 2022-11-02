@@ -258,7 +258,7 @@ Feature: process tests for ChiediAvanzamento_ESITO_SCONOSCIUTO_PSP_Carrello_sblo
     
     Scenario: Execute job pspChiediAvanzamentoRPT
         Given the Execute second check DB-RPT scenario executed successfully
-        When job pspChiediAvanzamentoRPT triggered after 5 seconds
+        When job pspChiediAvanzamentoRpt triggered after 5 seconds
         And wait 10 seconds for expiration
         Then checks the value CART_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query motivo_annullamento on db nodo_online under macro Mod1
 
