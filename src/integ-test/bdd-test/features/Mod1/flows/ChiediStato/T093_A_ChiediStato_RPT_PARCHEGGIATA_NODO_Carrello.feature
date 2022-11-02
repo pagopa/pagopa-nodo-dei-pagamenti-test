@@ -3,7 +3,7 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
     Background:
         Given systems up
 
-    @runnable
+
     Scenario: RPT generation
         Given RPT generation
             """
@@ -178,9 +178,9 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
             <soapenv:Body>
             <ws:nodoInviaCarrelloRPT>
             <password>pwdpwdpwd</password>
-            <identificativoPSP>AGID_01</identificativoPSP>
-            <identificativoIntermediarioPSP>97735020584</identificativoIntermediarioPSP>
-            <identificativoCanale>97735020584_02</identificativoCanale>
+            <identificativoPSP>#psp_AGID#</identificativoPSP>
+            <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
             <listaRPT>
             <elementoListaRPT>
             <identificativoDominio>44444444444</identificativoDominio>
@@ -200,7 +200,6 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
             </soapenv:Envelope>
             """
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
-
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
 
         And check url contains acardste of nodoInviaCarrelloRPT response
@@ -221,7 +220,7 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
         And checks the value RPT_PARCHEGGIATA_NODO,RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query motivo_annullamento on db nodo_online under macro Mod1
         And checks the value CART_PARCHEGGIATO_NODO of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query motivo_annullamento on db nodo_online under macro Mod1
 
-    @runnable
+
     Scenario: Execute nodoChiediStatoRPT request
         Given the Execute nodoInviaCarrelloRPT scenario executed successfully
         And initial XML nodoChiediStatoRPT
@@ -244,7 +243,7 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
         #Then checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
         #Then checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         Then check url contains https://acardste.vaservices.eu:1443/wallet of nodoChiediStatoRPT response
-    @runnable
+
     Scenario: Execute second nodoChiediStatoRPT request
         Given the Execute nodoChiediStatoRPT request scenario executed successfully
         And initial XML nodoChiediStatoRPT
@@ -267,6 +266,7 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
         #Then checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
         #Then checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         Then check url contains https://acardste.vaservices.eu:1443/wallet of nodoChiediStatoRPT response
+    
     @runnable
     Scenario: Execute second nodoInviaCarrelloRPT
         Given the Execute second nodoChiediStatoRPT request scenario executed successfully
@@ -284,9 +284,9 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
             <soapenv:Body>
             <ws:nodoInviaCarrelloRPT>
             <password>pwdpwdpwd</password>
-            <identificativoPSP>AGID_01</identificativoPSP>
-            <identificativoIntermediarioPSP>97735020584</identificativoIntermediarioPSP>
-            <identificativoCanale>97735020584_02</identificativoCanale>
+            <identificativoPSP>#psp_AGID#</identificativoPSP>
+            <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
             <listaRPT>
             <elementoListaRPT>
             <identificativoDominio>44444444444</identificativoDominio>
@@ -306,6 +306,5 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
             </soapenv:Envelope>
             """
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
-
         Then check faultCode is PPT_ID_CARRELLO_DUPLICATO of nodoInviaCarrelloRPT response
 
