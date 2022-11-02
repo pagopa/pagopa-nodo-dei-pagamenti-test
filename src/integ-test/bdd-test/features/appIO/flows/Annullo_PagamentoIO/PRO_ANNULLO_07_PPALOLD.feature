@@ -123,7 +123,7 @@ Feature: PRO_ANNULLO_07_PPALOLD
                     <identificativoCanale>$nodoVerificaRPT.identificativoCanale</identificativoCanale>
                     <password>$nodoVerificaRPT.password</password>
                     <codiceContestoPagamento>$nodoVerificaRPT.codiceContestoPagamento</codiceContestoPagamento>
-                    <identificativoIntermediarioPSPPagamento>#broker</identificativoIntermediarioPSPPagamento>
+                    <identificativoIntermediarioPSPPagamento>#broker_AGID#</identificativoIntermediarioPSPPagamento>
                     <identificativoCanalePagamento>#canale_AGID_BBT#</identificativoCanalePagamento>
                     <codificaInfrastrutturaPSP>QR-CODE</codificaInfrastrutturaPSP>
                     <codiceIdRPT>
