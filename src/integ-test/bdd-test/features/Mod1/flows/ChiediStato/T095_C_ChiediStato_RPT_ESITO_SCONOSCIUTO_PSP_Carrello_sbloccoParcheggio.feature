@@ -277,6 +277,7 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
 	    Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
         And check url contains acardste of nodoInviaCarrelloRPT response
         And retrieve session token from $nodoInviaCarrelloRPTResponse.url
+        And replace pa content with 44444444444 content
         And replace iuv content with avanzaErrResponse content
         And replace iuv2 content with avanzaErrResponse content
         And verify 3 record for the table STATI_RPT retrived by the query stati_RPT on db nodo_online under macro Mod1
