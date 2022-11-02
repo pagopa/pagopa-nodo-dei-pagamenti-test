@@ -117,7 +117,7 @@ Feature: process tests for chiediListaPSP
 
     Scenario: execution nodoChiediListaPSP - carte
         Given the Execute nodoInviaRPT request scenario executed successfully
-        When WISP sends rest GET listaPSP?importoTotale=100$percorsoPagamento=CARTE to nodo-dei-pagamenti
+        When WISP sends rest GET listaPSP?importoTotale=100&percorsoPagamento=CARTE to nodo-dei-pagamenti
         Then verify the HTTP status code of listaPSP response is 400
 
    
