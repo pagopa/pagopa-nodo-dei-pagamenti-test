@@ -231,11 +231,11 @@ Feature: process tests for generazioneRicevute
         And checks the value None of the record at column BUNDLE_PA_ID of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
         # POSITION_RECEIPT_RECIPIENT
         And verify 1 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt on db nodo_online under macro NewMod3
-        And checks the value 77777777777_01 of the record at column RECIPIENT_STATION_ID of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt on db nodo_online under macro NewMod3
+        And checks the value 66666666666_01 of the record at column RECIPIENT_STATION_ID of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt on db nodo_online under macro NewMod3
         # RE
         And verify 2 record for the table RE retrived by the query select_paSendRTV2 on db re under macro sendPaymentResultV2
         And checks the value REQ,RESP of the record at column SOTTO_TIPO_EVENTO of the table RE retrived by the query select_paSendRTV2 on db re under macro sendPaymentResultV2
-        And checks the value 77777777777_01,77777777777_01 of the record at column IDENTIFICATIVO_STAZIONE_INTERMEDIARIO of the table RE retrived by the query select_paSendRTV2 on db re under macro sendPaymentResultV2
+        And checks the value 66666666666_01,66666666666_01 of the record at column IDENTIFICATIVO_STAZIONE_INTERMEDIARIO of the table RE retrived by the query select_paSendRTV2 on db re under macro sendPaymentResultV2
 
 
 
