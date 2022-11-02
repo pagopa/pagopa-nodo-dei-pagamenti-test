@@ -262,8 +262,7 @@ Feature: process tests for nodoInoltraPagamentoMod1
             "tipoVersamento": "CP",
             "identificativoIntermediario": "#psp#",
             "identificativoCanale": "#canale#",
-            "tipoOperazione": "mobile",
-            "mobileToken": "123ABC456"
+            "tipoOperazione": "web"
          }
          """
         Then verify the HTTP status code of inoltroEsito/mod1 response is 422
@@ -313,8 +312,7 @@ Feature: process tests for nodoInoltraPagamentoMod1
             "tipoVersamento": "OBEP",
             "identificativoIntermediario": "#psp#",
             "identificativoCanale": "#canale#",
-            "tipoOperazione": "mobile",
-            "mobileToken": "123ABC456"
+            "tipoOperazione": "web"
          }
          """
         Then verify the HTTP status code of inoltroEsito/mod1 response is 200
@@ -329,8 +327,7 @@ Feature: process tests for nodoInoltraPagamentoMod1
             "tipoVersamento": "BBT",
             "identificativoIntermediario": "#psp#",
             "identificativoCanale": "#canale#",
-            "tipoOperazione": "mobile",
-            "mobileToken": "123ABC456"
+            "tipoOperazione": "web"
          }
          """
         Then verify the HTTP status code of inoltroEsito/mod1 response is 200
@@ -345,8 +342,7 @@ Feature: process tests for nodoInoltraPagamentoMod1
             "tipoVersamento": "BP",
             "identificativoIntermediario": "#psp#",
             "identificativoCanale": "#canale#",
-            "tipoOperazione": "mobile",
-            "mobileToken": "123ABC456"
+            "tipoOperazione": "web"
          }
          """
         Then verify the HTTP status code of inoltroEsito/mod1 response is 200
@@ -573,7 +569,7 @@ Feature: process tests for nodoInoltraPagamentoMod1
          }
          """
         Then verify the HTTP status code of inoltroEsito/mod1 response is 404
-        And check error is La combinazione PSP-Intermediario-Canale-TipoV Versamento Canale indicata non esiste of inoltroEsito/mod1 response
+        And check error is Configurazione intermediario-canale non corretta of inoltroEsito/mod1 response
 
     Scenario: execution nodoInoltraPagamentoMod1 - PM_IPM1_22
         Given the Execute nodoInviaRPT request scenario executed successfully
@@ -603,7 +599,7 @@ Feature: process tests for nodoInoltraPagamentoMod1
             "identificativoIntermediario":"#psp#",
             "identificativoCanale": "#canale#",
             "tipoOperazione":"web",
-            "mobileToken": "123ABC456"
+            "mobileToken": "987654"
          }
          """
         Then verify the HTTP status code of inoltroEsito/mod1 response is 200
@@ -668,8 +664,7 @@ Feature: process tests for nodoInoltraPagamentoMod1
             "tipoVersamento":"BBT",
             "identificativoIntermediario":"#psp#",
             "identificativoCanale": "#canale#",
-            "tipoOperazione":"mobile",
-            "mobileToken":""
+            "tipoOperazione":"web"
          }
          """
         Then verify the HTTP status code of inoltroEsito/mod1 response is 200
@@ -681,12 +676,11 @@ Feature: process tests for nodoInoltraPagamentoMod1
          """
          {
             "idPagamento":"$sessionToken",
-            "identificativoPsp"://"#psp#",
+            "identificativoPsp":,
             "tipoVersamento":"BBT",
             "identificativoIntermediario":"#psp#",
             "identificativoCanale": "#canale#",
-            "tipoOperazione":"mobile",
-            "mobileToken":""
+            "tipoOperazione":"web"
          }
          """
         Then verify the HTTP status code of inoltroEsito/mod1 response is 422
