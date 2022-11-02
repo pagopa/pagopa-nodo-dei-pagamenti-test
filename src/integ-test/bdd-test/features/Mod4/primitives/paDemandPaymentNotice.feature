@@ -313,6 +313,6 @@ Feature: response tests for paDemandPaymentNotice
         When PSP sends SOAP demandPaymentNotice to nodo-dei-pagamenti
         Then check outcome is KO of demandPaymentNotice response
         And check faultCode is PPT_ERRORE_EMESSO_DA_PAA of demandPaymentNotice response
-        And check originalFaultCode field exists in demandPaymentNotice response
-        And check originalFaultString field exists in demandPaymentNotice response
-        And check originalDescription field exists in demandPaymentNotice response
+        And check originalFaultCode field not exists in demandPaymentNotice response
+        And check originalFaultString field not exists in demandPaymentNotice response
+        And check originalDescription field not exists in demandPaymentNotice response
