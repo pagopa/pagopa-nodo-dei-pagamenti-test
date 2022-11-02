@@ -136,7 +136,9 @@
         "select_activateio": "SELECT columns FROM table_name WHERE NOTICE_ID = '$activateIOPayment.noticeNumber' AND PA_FISCAL_CODE = '$activateIOPayment.fiscalCode'",
         "update_activateio": "UPDATE table_name SET param = 'value' WHERE NOTICE_ID = '$activateIOPayment.noticeNumber' AND PA_FISCAL_CODE = '$activateIOPayment.fiscalCode'",
         "select_position_transfer_mbd": "SELECT s.columns FROM table_name s JOIN POSITION_TRANSFER pt ON pt.ID = s.FK_POSITION_TRANSFER WHERE pt.NOTICE_ID = '$activatePaymentNoticeV2.noticeNumber' AND pt.PA_FISCAL_CODE = '$activatePaymentNoticeV2.fiscalCode'",
-        "select_activatev2_1": "SELECT columns FROM table_name WHERE NOTICE_ID = '$activatePaymentNoticeV2_1.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNoticeV2.fiscalCode'"
+        "select_activatev2_1": "SELECT columns FROM table_name WHERE NOTICE_ID = '$activatePaymentNoticeV2_1.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNoticeV2.fiscalCode'",
+        "update_noticeid_pa_ver2": "UPDATE table_name SET param = 'value' WHERE NOTICE_ID ='310$iuv' and PA_FISCAL_CODE='#creditor_institution_code#'",
+        "update_noticeid1_pa_ver2": "UPDATE table_name SET param = 'value' WHERE NOTICE_ID ='310$iuv1' and PA_FISCAL_CODE='#creditor_institution_code#'"
     },
     "sendPaymentResultV2": {
         "select_sprV2_old": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN = '$ccp' AND TIPO_EVENTO = 'sendPaymentResult-v2' ORDER BY ID ASC",

@@ -493,8 +493,8 @@ Feature: flow checks for mod3CancelV2 in NM1
 
     Scenario: FLUSSO_NM1_M3CV2_06 (part 4)
         Given the FLUSSO_NM1_M3CV2_06 (part 3) scenario executed successfully
-        And updates through the query update_noticeid_pa of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAID under macro NewMod1 on db nodo_online
-        And updates through the query update_noticeid1_pa of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAID under macro NewMod1 on db nodo_online
+        And updates through the query update_noticeid_pa_ver2 of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAID under macro NewMod1 on db nodo_online
+        And updates through the query update_noticeid1_pa_ver2 of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAID under macro NewMod1 on db nodo_online
         When job mod3CancelV2 triggered after 3 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
         And wait 3 seconds for expiration
@@ -559,7 +559,7 @@ Feature: flow checks for mod3CancelV2 in NM1
 
     Scenario: FLUSSO_NM1_M3CV2_07 (part 4)
         Given the FLUSSO_NM1_M3CV2_07 (part 3) scenario executed successfully
-        And updates through the query update_noticeid_pa of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAID under macro NewMod1 on db nodo_online
+        And updates through the query update_noticeid_pa_ver2 of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAID under macro NewMod1 on db nodo_online
         When job mod3CancelV2 triggered after 3 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
         And wait 3 seconds for expiration
