@@ -699,7 +699,7 @@ Feature: TXX
         And check stato is RPT_ACCETTATA_PSP of nodoChiediStatoRPT response
 
 
-
+    @runnable
     Scenario: Execute nodoInviaRPT4 (Phase 4)
         Given the Execute nodoInviaRPT3 (Phase 3) scenario executed successfully
         And RPT4 generation
