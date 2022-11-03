@@ -135,7 +135,7 @@ Feature: generazioneRicevute spo senza paymentChannel
             <transfer>
             <idTransfer>1</idTransfer>
             <transferAmount>10.00</transferAmount>
-            <fiscalCodePA>44444444444</fiscalCodePA>
+            <fiscalCodePA>66666666666</fiscalCodePA>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
             <transferCategory>test</transferCategory>
