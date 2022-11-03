@@ -231,7 +231,7 @@ Feature: process tests for chiediInformazioniPagamento CANALE ERRORE RESPONSE
             """
         Then verify the HTTP status code of inoltroEsito/mod2 response is 408
         And check url field not exists in inoltroEsito/mod2 response
-        And check error is timeout of inoltroEsito/mod2 response
+        And check error is Operazione in timeout of inoltroEsito/mod2 response
 
     Scenario: Execute nodoChiediStatoRPT request
         Given the Execution Esito mod2 scenario executed successfully
