@@ -257,7 +257,7 @@ Feature: generazioneRicevute 1Transfer paIntestataria con stazione broadcast - 2
         # RE
         And verify 4 record for the table RE retrived by the query select_paSendRT on db re under macro sendPaymentResultV2
         And checks the value REQ,RESP,REQ,RESP of the record at column SOTTO_TIPO_EVENTO of the table RE retrived by the query select_paSendRT on db re under macro sendPaymentResultV2
-        And checks the value 66666666666_01,66666666666_01,66666666666_03,66666666666_03 of the record at column IDENTIFICATIVO_STAZIONE_INTERMEDIARIO_PA of the table RE retrived by the query select_paSendRT on db re under macro sendPaymentResultV2
+        And checks the value 66666666666_01,66666666666_01,66666666666_03,66666666666_03 of the record at column IDENTIFICATIVO_EROGATORE of the table RE retrived by the query select_paSendRT on db re under macro sendPaymentResultV2
 
     #DB update 1
     Scenario: Execute pa_stazione_pa update 1
