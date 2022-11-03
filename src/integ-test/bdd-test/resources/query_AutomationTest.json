@@ -131,6 +131,7 @@
         "position_receipt_recipient_v2_desc": "SELECT columns FROM table_name WHERE NOTICE_ID = '$activatePaymentNoticeV2.noticeNumber' ORDER BY ID DESC",
         "stationUpdateVersione": "UPDATE table_name SET param = 'value' where ID_STAZIONE IN ('90000000001_06','90000000001_01')",
         "stationUpdateBroadcast": "UPDATE table_name SET param = 'value' where OBJ_ID IN ('1201','13')",
-        "stationUpdate2BroadcastSamePA": "UPDATE table_name SET param = 'value' where OBJ_ID IN ('1201','11993')"
+        "stationUpdate2BroadcastSamePA": "UPDATE table_name SET param = 'value' where OBJ_ID IN ('1201','11993')",
+        "stationUpdateBroadcastPaIntestataria": "UPDATE table_name SET param = 'value' where OBJ_ID IN ('16641')"
     }
 }
