@@ -228,7 +228,7 @@ Feature: process tests for T102_D_chiediStato_RT_RIFIUTATA_PA_Annullamento
         """
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
         When job paInviaRt triggered after 20 seconds
-        Then wait 20 seconds for expiration
+        Then wait 130 seconds for expiration
 
 @runnable
     Scenario: Execute nodoChiediStatoRPT request

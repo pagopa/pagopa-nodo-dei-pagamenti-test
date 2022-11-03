@@ -648,7 +648,7 @@ Feature: process tests for nodoInoltraPagamentoMod1
             "identificativoIntermediario":"#psp#",
             "identificativoCanale": "#canale#",
             "tipoOperazione":"mobile",
-            "mobileToken":""
+            "mobileToken": ""
          }
          """
         Then verify the HTTP status code of inoltroEsito/mod1 response is 200
