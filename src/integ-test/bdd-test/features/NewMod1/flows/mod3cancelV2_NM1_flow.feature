@@ -232,7 +232,7 @@ Feature: flow checks for mod3CancelV2 in NM1
             </soapenv:Envelope>
             """
 
-
+    @wip
     # FLUSSO_NM1_M3CV2_01
     Scenario: FLUSSO_NM1_M3CV2_01 (part 1)
         Given the checkPosition scenario executed successfully
@@ -240,7 +240,7 @@ Feature: flow checks for mod3CancelV2 in NM1
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_1
-
+    @wip
     Scenario: FLUSSO_NM1_M3CV2_01 (part 2)
         Given the FLUSSO_NM1_M3CV2_01 (part 1) scenario executed successfully
         And noticeNumber with 310$iuv1 in activatePaymentNoticeV2
@@ -249,7 +249,7 @@ Feature: flow checks for mod3CancelV2 in NM1
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_2
-
+    @wip
     Scenario: FLUSSO_NM1_M3CV2_01 (part 3)
         Given the FLUSSO_NM1_M3CV2_01 (part 2) scenario executed successfully
         And the pspNotifyPaymentV2 timeout scenario executed successfully
@@ -260,9 +260,13 @@ Feature: flow checks for mod3CancelV2 in NM1
         And wait 15 seconds for expiration
         # NMU_CANCEL_UTILITY
         And verify 1 record for the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
-        # And checks the value $activatePaymentNoticeV2_1Response.paymentToken,$activatePaymentNoticeV2_2Response.paymentToken of the record at column PAYMENT_TOKENS of the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
+        And save $activatePaymentNoticeV2_1Response.paymentToken,$activatePaymentNoticeV2_2Response.paymentToken under the key tokens
+        And checks the value tokens of the record at column PAYMENT_TOKENS of the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
         And checks the value 2 of the record at column NUM_TOKEN of the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
-        And checks the value NotNone of the record at column VALID_TO of the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
+        And execution query transactionid to get value on the table NMU_CANCEL_UTILITY, with the columns VALID_TO under macro NewMod1 with db name nodo_online
+        And execution query select_activatev2 to get value on the table POSITION_ACTIVATE, with the columns TOKEN_VALID_TO under macro NewMod1 with db name nodo_online
+        And with the query transactionid check assert beetwen elem VALID_TO in position 0 and elem TOKEN_VALID_TO with position 0 of the query select_activatev2
+        #And checks the value NotNone of the record at column VALID_TO of the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
         And checks the value closePayment-v2 of the record at column INSERTED_BY of the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
 

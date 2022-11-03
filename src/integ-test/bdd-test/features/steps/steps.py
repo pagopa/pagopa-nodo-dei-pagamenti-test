@@ -2344,3 +2344,44 @@ def step_impl(context, primitive):
     payload = utils.replace_context_variables(payload, context)
     payload = utils.replace_global_variables(payload, context)
     setattr(context, primitive, payload)
+
+
+# @step(u"checks the value {value} of the record at column {column} of the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
+# def step_impl(context, value, column, query_name, table_name, db_name, name_macro):
+#     db_config = context.config.userdata.get("db_configuration")
+#     db_selected = db_config.get(db_name)
+
+#     conn = db.getConnection(db_selected.get('host'), db_selected.get(
+#         'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+
+#     selected_query = utils.query_json(context, query_name, name_macro).replace(
+#         "columns", column).replace("table_name", table_name)
+#     print(selected_query)
+#     exec_query = db.executeQuery(conn, selected_query)
+
+#     query_result = [t[0] for t in exec_query]
+#     print('query_result: ', query_result)
+
+#     value = utils.replace_global_variables(value, context)
+#     value = utils.replace_local_variables(value, context)
+#     value = utils.replace_context_variables(value, context)
+    
+#     for i, elem in enumerate(query_result):
+#         if isinstance(elem, str) and elem.isdigit():
+#             query_result[i] = float(elem)
+#         elif isinstance(elem, datetime.date):
+#             query_result[i] = elem.strftime('%Y-%m-%d')
+#     for i, elem in enumerate(value):
+#         if utils.isFloat(elem) or elem.isdigit():
+#             split_value[i] = float(elem)
+#     print("value: ", split_value)
+#     for elem in split_value:
+#         assert elem in query_result, f"check expected element: {value}, obtained: {query_result}"
+
+#     db.closeConnection(conn)
+
+
+# step per salvare nel context una variabile key
+@step("save {element} under the key {key}")
+def step_impl(context, element, key):
+    setattr(context, key, element)
