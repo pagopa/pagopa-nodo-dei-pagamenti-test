@@ -702,9 +702,8 @@ Feature: process tests for nodoInoltraPagamentoEsitoCarta
              "codiceAutorizzativo": "123456"
          }
          """
-        Then verify the HTTP status code of inoltroEsito/carta response is 404
-        And check error is Il Pagamento indicato non esiste of inoltroEsito/carta response
-
+        Then verify the HTTP status code of inoltroEsito/carta response is 200
+        
         Scenario: execution nodoInoltraPagamentoEsitoCarta - PM_IEPC29
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
