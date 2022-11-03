@@ -89,11 +89,21 @@ Feature: process tests for nodoInviaRT_Mod3_PO
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
             <ppt:intestazionePPT>
-            <identificativoPSP>60000000001</identificativoPSP>
-            <identificativoIntermediarioPSP>60000000001</identificativoIntermediarioPSP>
-            <identificativoCanale>60000000001_01</identificativoCanale>
-            <tipoFirma></tipoFirma>
-            <rpt>$rptAttachment</rpt>
+                <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
+                <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
+                <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+                <identificativoUnivocoVersamento>$2iuv</identificativoUnivocoVersamento>
+                <codiceContestoPagamento>test</codiceContestoPagamento>
+            </ppt:intestazionePPT>
+            </soapenv:Header>
+            <soapenv:Body>
+            <ws:nodoInviaRPT>
+                <password>pwdpwdpwd</password>
+                <identificativoPSP>#psp#</identificativoPSP>
+                <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+                <identificativoCanale>#canale#</identificativoCanale>
+                <tipoFirma></tipoFirma>
+                <rpt>$rptAttachment</rpt>
             </ws:nodoInviaRPT>
             </soapenv:Body>
             </soapenv:Envelope>

@@ -188,9 +188,9 @@ Feature: process tests for chiediInformazioniPagamento CANALE ERRORE RESPONSE
             <soapenv:Body>
             <ws:nodoInviaRPT>
             <password>pwdpwdpwd</password>
-            <identificativoPSP>AGID_01</identificativoPSP>
-            <identificativoIntermediarioPSP>97735020584</identificativoIntermediarioPSP>
-            <identificativoCanale>97735020584_02</identificativoCanale>
+            <identificativoPSP>#psp_AGID#</identificativoPSP>
+            <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
             <tipoFirma></tipoFirma>
             <rpt>$rptAttachment</rpt>
             </ws:nodoInviaRPT>
@@ -210,7 +210,7 @@ Feature: process tests for chiediInformazioniPagamento CANALE ERRORE RESPONSE
                     <ws:pspInviaRPTResponse>
                         <pspInviaRPTResponse>
                             <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-                            <wait>timeout</wait>
+                            <delay>10000</delay>
                             <identificativoCarrello>$nodoInviaRPT.identificativoUnivocoVersamento</identificativoCarrello>
                             <parametriPagamentoImmediato>idBruciatura=$nodoInviaRPT.identificativoUnivocoVersamento</parametriPagamentoImmediato>
                         </pspInviaRPTResponse>
@@ -226,7 +226,7 @@ Feature: process tests for chiediInformazioniPagamento CANALE ERRORE RESPONSE
             "identificativoPsp": "#psp#",
             "tipoVersamento": "BP",
             "identificativoIntermediario": "#psp#",
-            "identificativoCanale": "#canale_BBT#"
+            "identificativoCanale": "#canale_DIFFERITO_MOD2#"
             }
             """
         Then verify the HTTP status code of inoltroEsito/mod2 response is 408
