@@ -376,6 +376,114 @@ Feature: revision checks for sendPaymentOutcomeV2
             """
 
     @skip
+    Scenario: paGetPaymentV2 response with 3 transfers (3)
+        Given initial XML paGetPaymentV2
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <paf:paGetPaymentV2Response>
+            <outcome>OK</outcome>
+            <data>
+            <creditorReferenceId>10$iuv</creditorReferenceId>
+            <paymentAmount>10.00</paymentAmount>
+            <dueDate>2021-12-12</dueDate>
+            <!--Optional:-->
+            <retentionDate>2021-12-30T12:12:12</retentionDate>
+            <!--Optional:-->
+            <lastPayment>1</lastPayment>
+            <description>test</description>
+            <!--Optional:-->
+            <companyName>company</companyName>
+            <!--Optional:-->
+            <officeName>office</officeName>
+            <debtor>
+            <uniqueIdentifier>
+            <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
+            <entityUniqueIdentifierValue>44444444444</entityUniqueIdentifierValue>
+            </uniqueIdentifier>
+            <fullName>paGetPaymentName</fullName>
+            <!--Optional:-->
+            <streetName>paGetPaymentStreet</streetName>
+            <!--Optional:-->
+            <civicNumber>paGetPayment99</civicNumber>
+            <!--Optional:-->
+            <postalCode>20155</postalCode>
+            <!--Optional:-->
+            <city>paGetPaymentCity</city>
+            <!--Optional:-->
+            <stateProvinceRegion>paGetPaymentState</stateProvinceRegion>
+            <!--Optional:-->
+            <country>IT</country>
+            <!--Optional:-->
+            <e-mail>paGetPayment@test.it</e-mail>
+            </debtor>
+            <transferList>
+            <!--1 to 5 repetitions:-->
+            <transfer>
+            <idTransfer>1</idTransfer>
+            <transferAmount>3.00</transferAmount>
+            <fiscalCodePA>$activatePaymentNotice.fiscalCode</fiscalCodePA>
+            <IBAN>IT45R0760103200000000001016</IBAN>
+            <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
+            <transferCategory>paGetPaymentTest</transferCategory>
+            <!--Optional:-->
+            <metadata>
+            <!--1 to 10 repetitions:-->
+            <mapEntry>
+            <key>1</key>
+            <value>22</value>
+            </mapEntry>
+            </metadata>
+            </transfer>
+            <transfer>
+            <idTransfer>2</idTransfer>
+            <transferAmount>3.00</transferAmount>
+            <fiscalCodePA>$activatePaymentNotice.fiscalCode</fiscalCodePA>
+            <IBAN>IT45R0760103200000000001016</IBAN>
+            <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
+            <transferCategory>paGetPaymentTest</transferCategory>
+            <!--Optional:-->
+            <metadata>
+            <!--1 to 10 repetitions:-->
+            <mapEntry>
+            <key>1</key>
+            <value>22</value>
+            </mapEntry>
+            </metadata>
+            </transfer>
+            <transfer>
+            <idTransfer>3</idTransfer>
+            <transferAmount>4.00</transferAmount>
+            <fiscalCodePA>90000000001</fiscalCodePA>
+            <IBAN>IT45R0760103200000000001016</IBAN>
+            <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
+            <transferCategory>paGetPaymentTest</transferCategory>
+            <!--Optional:-->
+            <metadata>
+            <!--1 to 10 repetitions:-->
+            <mapEntry>
+            <key>1</key>
+            <value>22</value>
+            </mapEntry>
+            </metadata>
+            </transfer>
+            </transferList>
+            <!--Optional:-->
+            <metadata>
+            <!--1 to 10 repetitions:-->
+            <mapEntry>
+            <key>1</key>
+            <value>22</value>
+            </mapEntry>
+            </metadata>
+            </data>
+            </paf:paGetPaymentV2Response>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+
+    @skip
     Scenario: paGetPaymentV2 response with 2 transfers
         Given initial XML paGetPaymentV2
             """
@@ -772,35 +880,6 @@ Feature: revision checks for sendPaymentOutcomeV2
         And checks the value NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activate on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activate on db nodo_online under macro NewMod1
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     # PSRTV2_ACTV1_09
 
     Scenario: PSRTV2_ACTV1_09 (part 1)
@@ -812,7 +891,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends soap activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-    @wip
+
     Scenario: PSRTV2_ACTV1_09 (part 2)
         Given the PSRTV2_ACTV1_09 (part 1) scenario executed successfully
         And the paSendRTV2 response scenario executed successfully
@@ -831,6 +910,72 @@ Feature: revision checks for sendPaymentOutcomeV2
         # POSITION_RECEIPT_RECIPIENT
         And checks the value NOTIFIED,NOTIFIED,NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT retrived by the query select_activate on db nodo_online under macro NewMod1
         And verify 3 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query select_activate on db nodo_online under macro NewMod1
+
+        # POSITION_PAYMENT_STATUS
+        And checks the value PAYING,PAID,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activate on db nodo_online under macro NewMod1
+        And verify 5 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activate on db nodo_online under macro NewMod1
+
+        # POSITION_PAYMENT_STATUS_SNAPSHOT
+        And checks the value NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activate on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activate on db nodo_online under macro NewMod1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    # PSRTV2_ACTV1_10
+
+    Scenario: PSRTV2_ACTV1_10 (part 1)
+        Given updates through the query update_obj_id_2 of the table PA_STAZIONE_PA the parameter BROADCAST with Y under macro Mod4 on db nodo_cfg
+        And refresh job PA triggered after 10 seconds
+        And the verifyPaymentNotice scenario executed successfully
+        And the activatePaymentNotice request scenario executed successfully
+        And the paGetPaymentV2 response with 3 transfers (3) scenario executed successfully
+        And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
+        When psp sends soap activatePaymentNotice to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNotice response
+    @wip
+    Scenario: PSRTV2_ACTV1_10 (part 2)
+        Given the PSRTV2_ACTV1_10 (part 1) scenario executed successfully
+        And the paSendRTV2 response scenario executed successfully
+        And EC replies to nodo-dei-pagamenti with the paSendRTV2
+        And the sendPaymentOutcome request scenario executed successfully
+        When psp sends soap sendPaymentOutcome to nodo-dei-pagamenti
+        Then check outcome is OK of sendPaymentOutcome response
+        And wait 10 seconds for expiration
+        And updates through the query update_obj_id_2 of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro Mod4 on db nodo_cfg
+        And refresh job PA triggered after 10 seconds
+
+        # POSITION_RECEIPT_RECIPIENT_STATUS
+        And checks the value NOTICE_GENERATED,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query select_activate on db nodo_online under macro NewMod1
+        And verify 6 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query select_activate on db nodo_online under macro NewMod1
+
+        # POSITION_RECEIPT_RECIPIENT
+        And checks the value NOTIFIED,NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT retrived by the query select_activate on db nodo_online under macro NewMod1
+        And verify 2 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query select_activate on db nodo_online under macro NewMod1
 
         # POSITION_PAYMENT_STATUS
         And checks the value PAYING,PAID,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activate on db nodo_online under macro NewMod1
