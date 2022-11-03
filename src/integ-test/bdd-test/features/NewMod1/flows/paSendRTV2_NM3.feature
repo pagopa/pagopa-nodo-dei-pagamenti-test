@@ -1228,7 +1228,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends soap activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-    
+
     Scenario: PSRTV2_ACTV1_18 (part 2)
         Given the PSRTV2_ACTV1_18 (part 1) scenario executed successfully
         And updates through the query update_obj_id of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro Mod4 on db nodo_cfg
@@ -1305,9 +1305,7 @@ Feature: revision checks for sendPaymentOutcomeV2
     @wip
     Scenario: PSRTV2_ACTV1_20 (part 3)
         Given the PSRTV2_ACTV1_20 (part 2) scenario executed successfully
-        And the paSendRTV2 timeout response scenario executed successfully
-        And EC replies to nodo-dei-pagamenti with the paSendRTV2
-        When job paSendRt triggered after 70 seconds
+        When job paSendRt triggered after 12 seconds
         Then verify the HTTP status code of paSendRt response is 200
 
         # POSITION_RECEIPT_RECIPIENT_STATUS
