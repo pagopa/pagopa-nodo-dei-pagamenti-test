@@ -235,7 +235,7 @@ Feature: 3Transfers - 2 stazioni broadcast - 3 receipt
         And checks the value NOTIFIED,NOTIFIED,NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt on db nodo_online under macro NewMod3
         # RE
         And verify 6 record for the table RE retrived by the query select_paSendRT on db re under macro sendPaymentResultV2
-        And checks the value RE,RESP,REQ,RESP,REQ,RESP of the record at column SOTTO_TIPO_EVENTO of the table RE retrived by the query select_paSendRT on db re under macro sendPaymentResultV2
+        And checks the value REQ,RESP,REQ,RESP,REQ,RESP of the record at column SOTTO_TIPO_EVENTO of the table RE retrived by the query select_paSendRT on db re under macro sendPaymentResultV2
         And checks the value 66666666666_01,66666666666_01,90000000001_06,90000000001_06,90000000001_09,90000000001_09 of the record at column IDENTIFICATIVO_EROGATORE of the table RE retrived by the query select_paSendRT on db re under macro sendPaymentResultV2
         # POSITION_RECEIPT_RECIPIENT_STATUS
         And verify 9 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_receipt on db nodo_online under macro NewMod3
