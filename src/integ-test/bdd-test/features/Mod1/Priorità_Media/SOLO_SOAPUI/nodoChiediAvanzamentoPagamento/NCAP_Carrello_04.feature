@@ -185,7 +185,7 @@ Feature: NCAP
         And verify 0 record for the table POSITION_STATUS_SNAPSHOT retrived by the query position_payment on db nodo_online under macro Mod1
 
     Scenario: Execute nodoChiediAvanzamentoPagamento1
-        Given the Execute nodoInoltraPagamentoMod1 scenario executed successfully
+        Given the Execute nodoNotificaAnnullamento scenario executed successfully
         When WISP sends REST GET avanzamentoPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of avanzamentoPagamento response is 200
 
