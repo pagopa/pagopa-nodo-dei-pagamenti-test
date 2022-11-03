@@ -129,7 +129,7 @@ Feature: process tests for nodoChiediInformazioniPagamento
 
     Scenario: execution nodoChiediInformazioniPagamento - PM_CIP3
         Given the Execute nodoInviaRPT request scenario executed successfully
-        When WISP sends rest GET informazioniPagamento?idPagamento=ciao to nodo-dei-pagamenti
+        When WISP sends rest GET informazioniPagamento?idPagamento=stringa-Alfanumerica-Di-36-Caratteri to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 404
         And check error is Il pagamento non esiste of informazioniPagamento response
 
@@ -141,7 +141,8 @@ Feature: process tests for nodoChiediInformazioniPagamento
     Scenario: execution nodoChiediInformazioniPagamento - PM_CIP5
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest GET informazioniPagamento;idPagamento=$sessionToken to nodo-dei-pagamenti
-        Then verify the HTTP status code of informazioniPagamento response is 405
+        Then check error is HTTP method not allowed, supported methods: OPTIONS of informazioniPagamento response
+        #verify the HTTP status code of informazioniPagamento response is 405
 
 
 
