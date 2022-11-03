@@ -132,6 +132,7 @@
         "stationUpdateVersione": "UPDATE table_name SET param = 'value' where ID_STAZIONE IN ('90000000001_06','90000000001_01')",
         "stationUpdateBroadcast": "UPDATE table_name SET param = 'value' where OBJ_ID IN ('1201','13')",
         "stationUpdate2BroadcastSamePA": "UPDATE table_name SET param = 'value' where OBJ_ID IN ('1201','11993')",
-        "stationUpdateBroadcastPaIntestataria": "UPDATE table_name SET param = 'value' where OBJ_ID IN ('16641')"
+        "stationUpdateBroadcastPaIntestataria": "UPDATE table_name SET param = 'value' where OBJ_ID IN ('16641')",
+        "stationUpdateBroadcastUguale": "UPDATE table_name SET param = 'value' where OBJ_ID IN ('4339','13')"
     }
 }
