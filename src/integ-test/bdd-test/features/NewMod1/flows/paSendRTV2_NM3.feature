@@ -733,37 +733,6 @@ Feature: revision checks for sendPaymentOutcomeV2
         And checks the value NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activate on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activate on db nodo_online under macro NewMod1
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     # PSRTV2_ACTV1_08
 
     Scenario: PSRTV2_ACTV1_08 (part 1)
@@ -775,7 +744,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends soap activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-    @wip
+    
     Scenario: PSRTV2_ACTV1_08 (part 2)
         Given the PSRTV2_ACTV1_08 (part 1) scenario executed successfully
         And the paSendRTV2 response scenario executed successfully
