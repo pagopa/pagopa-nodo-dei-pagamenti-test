@@ -1,4 +1,4 @@
-# Il test verifica che in caso di 1Transfer nella paGetPaymentResponse e nessun paymentChannel nella SPO, sia generata una receipt +
+# Il test verifica che in caso di 1Transfer nella paGetPaymentResponse e stazione broadcast, siano generate 2 receipt +
 
 Feature: generazioneRicevute 1Transfer paIntestataria con stazione broadcast - 2 receipt
 
