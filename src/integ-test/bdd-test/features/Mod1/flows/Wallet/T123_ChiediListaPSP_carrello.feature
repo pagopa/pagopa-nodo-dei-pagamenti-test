@@ -2,7 +2,7 @@ Feature: process tests for chiediListaPSP
 
     Background:
         Given systems up
-@runnable
+
     Scenario: RPT generation
         Given RPT generation
             """

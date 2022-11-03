@@ -2,7 +2,7 @@ Feature: process tests for RPT-RT bollo
 
    Background:
       Given systems up
-@runnable
+
    Scenario: MB generation
       Given MB generation
          """

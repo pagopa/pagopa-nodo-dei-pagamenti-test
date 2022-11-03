@@ -409,7 +409,7 @@ Feature: process tests for InoltroEsitoCartaCarrello
         And check oggettoPagamento field exists in informazioniPagamento response
         And check urlRedirectEC field exists in informazioniPagamento response
 
-@runnable
+
     Scenario: Execution Esito Carta
         Given the Execution idPagamento scenario executed successfully
         When WISP sends REST POST inoltroEsito/carta to nodo-dei-pagamenti

@@ -2,7 +2,7 @@ Feature: process tests for InoltroEsitoCartaCarrello_KO
 
     Background:
         Given systems up
-@runnable
+
     Scenario: RPT generation
         Given RPT generation
             """

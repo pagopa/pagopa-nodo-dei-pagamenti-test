@@ -175,10 +175,10 @@ stages:
               export PATH=/usr/local/bin/behave:/usr/bin:/usr/local/bin:$PATH #Add environment variables
              
               # Nicolò
-              behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/appIO --tags=runnable
+              #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/appIO --tags=runnable
               
               # Lorenzo  
-              #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/Mod1/flows/ChiediStato --tags=runnable
+              behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/Mod1/flows --tags=runnable
               
               # Alessandro
               #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/appIO/flows/PagamentiAppIO/FLUSSO_APIO_08.feature
