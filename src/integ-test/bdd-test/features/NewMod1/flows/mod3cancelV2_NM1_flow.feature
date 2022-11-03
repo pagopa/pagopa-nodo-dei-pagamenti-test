@@ -260,12 +260,12 @@ Feature: flow checks for mod3CancelV2 in NM1
         And wait 15 seconds for expiration
         # NMU_CANCEL_UTILITY
         And verify 1 record for the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
+        And under macro NewMod1 on db nodo_online with the query transactionid verify the value $activatePaymentNoticeV2_1Response.paymentToken,$activatePaymentNoticeV2_2Response.paymentToken of the record at column PAYMENT_TOKENS of table NMU_CANCEL_UTILITY 
         #And checks the value $activatePaymentNoticeV2_1Response.paymentToken,$activatePaymentNoticeV2_2Response.paymentToken of the record at column PAYMENT_TOKENS of the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
         And checks the value 2 of the record at column NUM_TOKEN of the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
         And execution query transactionid to get value on the table NMU_CANCEL_UTILITY, with the columns VALID_TO under macro NewMod1 with db name nodo_online
         And execution query select_activatev2 to get value on the table POSITION_ACTIVATE, with the columns TOKEN_VALID_TO under macro NewMod1 with db name nodo_online
         And with the query transactionid check assert beetwen elem VALID_TO in position 0 and elem TOKEN_VALID_TO with position 0 of the query select_activatev2
-        #And checks the value NotNone of the record at column VALID_TO of the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
         And checks the value closePayment-v2 of the record at column INSERTED_BY of the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
 
