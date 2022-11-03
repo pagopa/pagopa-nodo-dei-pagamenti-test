@@ -2,7 +2,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
 
     Background:
         Given systems up
-@runnable
+
     # [SEM_NIFR_30]
     Scenario: Create REND
         Given REND generation
@@ -65,7 +65,6 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaFlussoRendicontazione response
 
-@runnable
     # [SEM_NIFR_31]
     Scenario: Create REND2
         Given REND generation
@@ -128,8 +127,6 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaFlussoRendicontazione response
 
-
-@runnable
     # [SEM_NIFR_32]
     Scenario: Create REND3
         Given REND generation
@@ -192,7 +189,6 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaFlussoRendicontazione response
 
-@runnable
     # [SEM_NIFR_39]
     Scenario: Create REND4
         Given REND generation
@@ -255,7 +251,6 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaFlussoRendicontazione response
 
-@runnable
     # [SEM_NIFR_41]
     Scenario: Create REND5
         Given REND generation
@@ -317,7 +312,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             """
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaFlussoRendicontazione response
-@runnable
+
     # [SEM_NIFR_33]
     Scenario: Create REND6
         Given REND generation
@@ -380,10 +375,8 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaFlussoRendicontazione response
 
-@runnable
     # [SEM_NIFR_35]
-
-    Scenario: Create REND6
+    Scenario: Create REND7
         Given REND generation
             """
             <pay_i:FlussoRiversamento xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ FlussoRendicontazione_v_1_0_1.xsd ">
@@ -422,7 +415,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
 
 @runnable
     Scenario: Check error for nodoInviaFlussoRendicontazione primitive
-        Given the Create REND6 scenario executed successfully
+        Given the Create REND7 scenario executed successfully
         And initial XML nodoInviaFlussoRendicontazione
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -444,10 +437,8 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaFlussoRendicontazione response
 
-@runnable
     # [SEM_NIFR_34]
-
-    Scenario: Create REND7
+    Scenario: Create REND8
         Given REND generation
             """
             <pay_i:FlussoRiversamento xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ FlussoRendicontazione_v_1_0_1.xsd ">
@@ -486,7 +477,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
 
 @runnable
     Scenario: Check error for nodoInviaFlussoRendicontazione primitive
-        Given the Create REND7 scenario executed successfully
+        Given the Create REND8 scenario executed successfully
         And initial XML nodoInviaFlussoRendicontazione
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -508,10 +499,8 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaFlussoRendicontazione response
 
-@runnable
     # [SEM_NIFR_36]
-
-    Scenario: Create REND8
+    Scenario: Create REND08
         Given REND generation
             """
             <pay_i:FlussoRiversamento xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ FlussoRendicontazione_v_1_0_1.xsd ">
@@ -558,7 +547,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
 
 @runnable
     Scenario: Check error for nodoInviaFlussoRendicontazione primitive
-        Given the Create REND8 scenario executed successfully
+        Given the Create REND08 scenario executed successfully
         And initial XML nodoInviaFlussoRendicontazione
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -580,9 +569,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaFlussoRendicontazione response
 
-@runnable
     # [SEM_NIFR_37]
-
     Scenario: Create REND9
         Given REND generation
             """
@@ -652,9 +639,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaFlussoRendicontazione response
 
-@runnable
     # [SEM_NIFR_28]
-
     Scenario: Create REND10
         Given REND generation
             """
@@ -716,10 +701,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaFlussoRendicontazione response
 
-
-@runnable
     # [SEM_NIFR_38]
-
     Scenario: Create REND11
         Given REND generation
             """
@@ -789,9 +771,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaFlussoRendicontazione response
 
-@runnable
     # [SEM_NIFR_39]
-
     Scenario: Create REND12
         Given REND generation
             """
@@ -853,9 +833,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaFlussoRendicontazione response
 
-@runnable
     # [SEM_NIFR_42]
-
     Scenario: Create RT
         Given RT generation
             """
@@ -917,8 +895,8 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             </pay_i:datiPagamento>
             </pay_i:RT>
             """
-@runnable
-    Scenario: Create REND12
+
+    Scenario: Create REND13
         Given REND generation
             """
             <pay_i:FlussoRiversamento xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ FlussoRendicontazione_v_1_0_1.xsd ">
@@ -957,7 +935,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
 
 @runnable
     Scenario: Check error for nodoInviaFlussoRendicontazione primitive
-        Given the Create REND12 scenario executed successfully
+        Given the Create REND13 scenario executed successfully
         And initial XML nodoInviaFlussoRendicontazione
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -978,36 +956,3 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             """
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaFlussoRendicontazione response
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

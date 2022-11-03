@@ -2,7 +2,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - OK
 
     Background:
         Given systems up
-@runnable
+
     Scenario: Generazione rendicontazione
         Given REND generation
             """
@@ -127,7 +127,6 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - OK
             </pay_i:datiSingoliPagamenti>
             </pay_i:FlussoRiversamento>
             """
-
         And <tag> with <tag_value> in REND
         And REND generation
         """
