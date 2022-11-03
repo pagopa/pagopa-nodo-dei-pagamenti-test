@@ -2,7 +2,7 @@ Feature: T218_RT_forzaControlloSegno_esito=0_carrello
 
     Background:
         Given systems up
-@runnable
+
     Scenario: Execute nodoInviaCarrelloRPT (Phase 1)
         Given RPT1 generation
             """
