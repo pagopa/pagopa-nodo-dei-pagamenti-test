@@ -1,4 +1,4 @@
-Feature: Syntax checks for nodoInviaRPT - KO
+Feature: Syntax checks for RPT - KO
 
   Background: 
     Given systems up

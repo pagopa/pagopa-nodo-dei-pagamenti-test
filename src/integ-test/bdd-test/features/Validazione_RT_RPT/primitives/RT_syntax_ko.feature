@@ -1,4 +1,4 @@
-Feature: Syntax checks for nodoInviaRT - KO
+Feature: Syntax checks for RT - KO
 
   Background: 
     Given systems up
